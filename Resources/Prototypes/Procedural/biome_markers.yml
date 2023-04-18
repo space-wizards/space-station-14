@@ -1,8 +1,8 @@
-- type: biomeMobMarkerLayer
+- type: biomeMarkerLayer
   id: Lizards
   proto: MobLizard
-  count: 5
+  groupCount: 5
 
-- type: biomeDungeonMarkerLayer
-  id: Experiment
-  proto: Experiment
+#- type: biomeMarkerLayer
+#  id: Experiment
+#  proto: DungeonMarkerExperiment

@@ -4,8 +4,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Parallax.Biomes.Markers;
 
-[Prototype("biomeMobMarkerLayer")]
-public sealed class BiomeMobMarkerLayerPrototype : IBiomeMarkerLayer
+[Prototype("biomeMarkerLayer")]
+public sealed class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
 {
     [IdDataField] public string ID { get; } = default!;
 

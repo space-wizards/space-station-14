@@ -58,27 +58,14 @@ public sealed partial class BiomeComponent : Component
 
     #region Markers
 
-    // Alas I cannot use interfaces for indexing, alternatively I could just store types alongside these but that seems
-    // subject to issues.
-    // We can probably add in dungeon spawner markers but that can be done later.
-
     /// <summary>
     /// Track what markers we've loaded already to avoid double-loading.
     /// </summary>
-    [DataField("loadedMobMarkers", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<Vector2i>, BiomeMobMarkerLayerPrototype>))]
-    public readonly Dictionary<string, HashSet<Vector2i>> LoadedMobMarkers = new();
+    [DataField("loadedMarkers", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<Vector2i>, BiomeMarkerLayerPrototype>))]
+    public readonly Dictionary<string, HashSet<Vector2i>> LoadedMarkers = new();
 
-    [DataField("mobMarkerLayers", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeMobMarkerLayerPrototype>))]
-    public List<string> MobMarkerLayers = new();
-
-    /// <summary>
-    /// Track what markers we've loaded already to avoid double-loading.
-    /// </summary>
-    [DataField("loadedDungeonMarkers", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<Vector2i>, BiomeDungeonMarkerLayerPrototype>))]
-    public readonly Dictionary<string, HashSet<Vector2i>> LoadedDungeonMarkers = new();
-
-    [DataField("dungeonMarkerLayers", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeDungeonMarkerLayerPrototype>))]
-    public List<string> DungeonMarkerLayers = new();
+    [DataField("markerLayers", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeMarkerLayerPrototype>))]
+    public List<string> MarkerLayers = new();
 
     #endregion
 }

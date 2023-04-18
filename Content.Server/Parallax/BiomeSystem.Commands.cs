@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
+using Content.Shared.Parallax.Biomes.Markers;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
@@ -11,7 +12,40 @@ public sealed partial class BiomeSystem
 {
     private void InitializeCommands()
     {
+        // TODO
+        _console.RegisterCommand("biome_clear", "weh", "weh", BiomeClearCallback, BiomeClearCallbackHelper);
         _console.RegisterCommand("biome_addlayer", "weh", "weh", AddLayerCallback, AddLayerCallbackHelp);
+        _console.RegisterCommand("biome_addmarkerlayer", "weh", "weh", AddMarkerLayerCallback, AddMarkerLayerCallbackHelper);
+    }
+
+    [AdminCommand(AdminFlags.Fun)]
+    private void BiomeClearCallback(IConsoleShell shell, string argstr, string[] args)
+    {
+        if (args.Length != 1)
+        {
+            return;
+        }
+
+        int.TryParse(args[0], out var mapInt);
+        var mapId = new MapId(mapInt);
+
+        if (_mapManager.MapExists(mapId) ||
+            !TryComp<BiomeComponent>(_mapManager.GetMapEntityId(mapId), out var biome))
+        {
+            return;
+        }
+
+        ClearTemplate(biome);
+    }
+
+    private CompletionResult BiomeClearCallbackHelper(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.Components<BiomeComponent>(args[0], EntityManager), "Biome");
+        }
+
+        return CompletionResult.Empty;
     }
 
     [AdminCommand(AdminFlags.Fun)]
@@ -76,6 +110,50 @@ public sealed partial class BiomeSystem
                     return CompletionResult.FromHintOptions(results, "Dummy layer ID");
                 }
             }
+        }
+
+        return CompletionResult.Empty;
+    }
+
+    [AdminCommand(AdminFlags.Fun)]
+    private void AddMarkerLayerCallback(IConsoleShell shell, string argstr, string[] args)
+    {
+        if (args.Length != 2)
+        {
+            return;
+        }
+
+        if (!int.TryParse(args[0], out var mapInt))
+        {
+            return;
+        }
+
+        var mapId = new MapId(mapInt);
+
+        if (!_mapManager.MapExists(mapId) || !TryComp<BiomeComponent>(_mapManager.GetMapEntityId(mapId), out var biome))
+        {
+            return;
+        }
+
+        if (!_proto.HasIndex<BiomeMarkerLayerPrototype>(args[1]))
+        {
+            return;
+        }
+
+        biome.MarkerLayers.Add(args[1]);
+    }
+
+    private CompletionResult AddMarkerLayerCallbackHelper(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.Components<BiomeComponent>(args[0], EntityManager), "Biome");
+        }
+
+        if (args.Length == 2)
+        {
+            return CompletionResult.FromHintOptions(
+                CompletionHelper.PrototypeIDs<BiomeMarkerLayerPrototype>(proto: _proto), "Marker");
         }
 
         return CompletionResult.Empty;
