@@ -38,7 +38,7 @@
   parent: BaseItem
   name: advanced mop
   id: AdvMopItem
-  description: Motorized mop that have a bigger reservoir and can mop multiple puddles at once. Automatic Clown Countermeasure no included.
+  description: Motorized mop that has a bigger reservoir and quickly replaces reagents inside with water. Automatic Clown Countermeasure not included.
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/advmop.rsi
@@ -56,6 +56,17 @@
       pickupAmount: 100
     - type: UseDelay
       delay: 1.0
+    - type: SolutionRegeneration
+      solution: absorbed
+      generated:
+        reagents:
+        - ReagentId: Water
+          Quantity: 5
+    - type: SolutionPurge
+      solution: absorbed
+      preserve:
+      - Water
+      quantity: 10
     - type: SolutionContainerManager
       solutions:
         absorbed:
