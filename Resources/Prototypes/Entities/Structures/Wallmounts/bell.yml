@@ -1,0 +1,32 @@
+- type: entity
+  id: BoxingBell
+  name: boxing bell
+  description: Ding ding!
+  components:
+  - type: WallMount
+  - type: Sprite
+    sprite: Structures/Wallmounts/bell.rsi
+    layers:
+    - state: bell
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessSound:   
+      path: /Audio/Weapons/Boxingbell.ogg
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount

@@ -24,6 +24,9 @@
     fiberMaterial: fibers-leather
     fiberColor: fibers-red
   - type: FingerprintMask
+  - type: Tag
+    tags:
+    - Kangaroo
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed

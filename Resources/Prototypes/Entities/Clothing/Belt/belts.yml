@@ -425,6 +425,9 @@
   - type: Clothing
     sprite: Clothing/Belt/champion.rsi
     quickEquip: true
+  - type: Tag
+    tags:
+    - Kangaroo
 
 - type: entity
   parent: ClothingBeltStorageBase
