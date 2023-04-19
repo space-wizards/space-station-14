@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: 'Added new emotes with sound! Simply type into emote chat: scream, laugh,
-      clap or snap.', type: Add}
-  id: 2952
-  time: '2023-01-25T16:29:42.0000000+00:00'
 - author: lapatison
   changes:
   - {message: diagnoser now properly displays no-cure text, type: Fix}
@@ -2889,3 +2883,8 @@ Entries:
   - {message: Minibomb now does what it says on the tin and gibs bodies, type: Tweak}
   id: 3451
   time: '2023-04-19T04:36:13.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added Stimpack sprite, type: Add}
+  id: 3452
+  time: '2023-04-19T05:41:10.0000000+00:00'
