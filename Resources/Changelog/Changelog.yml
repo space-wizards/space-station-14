@@ -1,16 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: Detectives get a speedloader for their revolver. It can be found in
-      their cabinet., type: Add}
-  - {message: Revolvers can now be alt-clicked to be emptied., type: Tweak}
-  id: 2957
-  time: '2023-01-26T18:15:20.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that was causing issues when cloning zombies., type: Fix}
-  id: 2958
-  time: '2023-01-26T22:04:58.0000000+00:00'
 - author: jamessimo
   changes:
   - {message: Updated Jobs and Departments to be case-correct, type: Tweak}
@@ -2886,3 +2874,14 @@ Entries:
       of the classic white lab coats, type: Add}
   id: 3456
   time: '2023-04-19T07:42:06.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Ninjas have been removed., type: Remove}
+  id: 3457
+  time: '2023-04-19T07:43:09.0000000+00:00'
+- author: Floofi
+  changes:
+  - {message: Added hospital gowns to the medidrobe for use in medical and for prisoners
+      who refuse to wear clothes, type: Add}
+  id: 3458
+  time: '2023-04-19T07:43:57.0000000+00:00'
