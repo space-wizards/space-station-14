@@ -197,10 +197,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("deleted_by_id");
 
-                    b.Property<DateTime?>("ExpiryTime")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("expiry_time");
-
                     b.Property<DateTime>("LastEditedAt")
                         .HasColumnType("TEXT")
                         .HasColumnName("last_edited_at");
@@ -215,29 +211,17 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("message");
 
-                    b.Property<int>("NoteSeverity")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("note_severity");
-
-                    b.Property<int>("NoteType")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("note_type");
-
                     b.Property<Guid>("PlayerUserId")
                         .HasColumnType("TEXT")
                         .HasColumnName("player_user_id");
-
-                    b.Property<TimeSpan>("PlaytimeAtNote")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("playtime_at_note");
 
                     b.Property<int?>("RoundId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("round_id");
 
-                    b.Property<bool>("Secret")
+                    b.Property<bool>("ShownToPlayer")
                         .HasColumnType("INTEGER")
-                        .HasColumnName("secret");
+                        .HasColumnName("shown_to_player");
 
                     b.HasKey("Id")
                         .HasName("PK_admin_notes");
@@ -915,8 +899,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasKey("Id")
                         .HasName("PK_trait");
 
-                    b.HasIndex("ProfileId", "TraitName")
-                        .IsUnique();
+                    b.HasIndex("ProfileId")
+                        .HasDatabaseName("IX_trait_profile_id");
 
                     b.ToTable("trait", (string)null);
                 });
