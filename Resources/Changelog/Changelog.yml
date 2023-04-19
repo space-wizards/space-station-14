@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: diagnoser now properly displays no-cure text, type: Fix}
-  id: 2953
-  time: '2023-01-26T00:31:20.0000000+00:00'
 - author: PixelTK
   changes:
   - {message: Adjusted the speed loaders of light rifles so they can both transfer
@@ -2888,3 +2883,8 @@ Entries:
   - {message: Added Stimpack sprite, type: Add}
   id: 3452
   time: '2023-04-19T05:41:10.0000000+00:00'
+- author: DEATHB4DEFEAT
+  changes:
+  - {message: Added a search bar to marking editors in character creation, type: Add}
+  id: 3453
+  time: '2023-04-19T05:44:37.0000000+00:00'
