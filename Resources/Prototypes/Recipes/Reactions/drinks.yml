@@ -77,14 +77,14 @@
     B52: 3
 
 - type: reaction
- id: Barefoot
- reactants:
-  Cream:
-    amount: 1
-  Vermouth:
-    amount: 1
-  JuiceBerry:
-    amount: 1
+  id: Barefoot
+  reactants:
+    Cream:
+      amount: 1
+    Vermouth:
+      amount: 1
+    JuiceBerry:
+      amount: 1
   products:
     Barefoot: 3
 
