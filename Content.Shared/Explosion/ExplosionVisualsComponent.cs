@@ -7,8 +7,8 @@ namespace Content.Shared.Explosion;
 /// <summary>
 ///     Component that is used to send explosion overlay/visual data to an abstract explosion entity.
 /// </summary>
-[NetworkedComponent]
-public abstract class SharedExplosionVisualsComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class ExplosionVisualsComponent : Component
 {
     public MapCoordinates Epicenter;
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
@@ -52,5 +52,5 @@ public sealed class ExplosionVisualsState : ComponentState
 [Serializable, NetSerializable]
 public enum ExplosionAppearanceData
 {
-    Progress, // iteration index tracker for explosions that are still expanding outwards, 
+    Progress, // iteration index tracker for explosions that are still expanding outwards,
 }
