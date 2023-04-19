@@ -103,7 +103,7 @@ public sealed partial class SalvageSystem
         }
 
         // Last shuttle has left so finish the mission.
-        FinishExpedition(station, expedition, ev.Entity);
+        QueueDel(ev.FromMapUid.Value);
     }
 
     // Runs the expedition
@@ -141,6 +141,7 @@ public sealed partial class SalvageSystem
                     ftlTime = MathF.Max(0, (float) remaining.TotalSeconds - 0.5f);
                 }
 
+                ftlTime = MathF.Min(ftlTime, ShuttleSystem.DefaultStartupTime);
                 var shuttleQuery = AllEntityQuery<ShuttleComponent, TransformComponent>();
 
                 if (TryComp<StationDataComponent>(comp.Station, out var data))

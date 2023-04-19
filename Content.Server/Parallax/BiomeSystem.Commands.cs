@@ -12,10 +12,9 @@ public sealed partial class BiomeSystem
 {
     private void InitializeCommands()
     {
-        // TODO
-        _console.RegisterCommand("biome_clear", "weh", "weh", BiomeClearCallback, BiomeClearCallbackHelper);
-        _console.RegisterCommand("biome_addlayer", "weh", "weh", AddLayerCallback, AddLayerCallbackHelp);
-        _console.RegisterCommand("biome_addmarkerlayer", "weh", "weh", AddMarkerLayerCallback, AddMarkerLayerCallbackHelper);
+        _console.RegisterCommand("biome_clear", Loc.GetString("cmd-biome_clear-desc"), Loc.GetString("cmd-biome_clear-help"), BiomeClearCallback, BiomeClearCallbackHelper);
+        _console.RegisterCommand("biome_addlayer", Loc.GetString("cmd-biome_addlayer-desc"), Loc.GetString("cmd-biome_addlayer-help"), AddLayerCallback, AddLayerCallbackHelp);
+        _console.RegisterCommand("biome_addmarkerlayer", Loc.GetString("cmd-biome_addmarkerlayer-desc"), Loc.GetString("cmd-biome_addmarkerlayer-desc"), AddMarkerLayerCallback, AddMarkerLayerCallbackHelper);
     }
 
     [AdminCommand(AdminFlags.Fun)]
