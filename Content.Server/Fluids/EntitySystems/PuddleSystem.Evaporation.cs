@@ -11,6 +11,8 @@ public sealed partial class PuddleSystem
 
     public const string EvaporationReagent = "Water";
 
+    public const int EvaporationReagentRatio = 3;
+
     private void OnEvaporationMapInit(EntityUid uid, EvaporationComponent component, MapInitEvent args)
     {
         component.NextTick = _timing.CurTime + EvaporationCooldown;

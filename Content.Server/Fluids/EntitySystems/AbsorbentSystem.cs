@@ -135,9 +135,10 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return false;
         }
 
-        var transferAmount = component.PickupAmount < absorberSoln.AvailableVolume ?
-            component.PickupAmount :
-            absorberSoln.AvailableVolume;
+        var transferAmount = component.PickupAmount / PuddleSystem.EvaporationReagentRatio -
+            absorberSoln.GetReagentQuantity(PuddleSystem.EvaporationReagent);
+
+        transferAmount = transferAmount > 0 ? transferAmount : 0;
 
         var water = refillableSolution.RemoveReagent(PuddleSystem.EvaporationReagent, transferAmount);
 
@@ -185,13 +186,23 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return true;
         }
 
+        // hack to compensate loss due to fractions that would be periodical
+        // and make sure (available / Ratio) * Ratio is not less than available
+        // otherwise the absorber would very annoyingly never fill
+        // it's not necessary if the ratio is not periodical in a decimal base
+        if (PuddleSystem.EvaporationReagentRatio % 2 != 0 &&
+                PuddleSystem.EvaporationReagentRatio % 5 != 0){
+            available += FixedPoint2.Epsilon;
+        }
+        available *= PuddleSystem.EvaporationReagentRatio;
+
         var transferMax = absorber.PickupAmount;
         var transferAmount = available > transferMax ? transferMax : available;
 
         var split = puddleSolution.SplitSolutionWithout(transferAmount, PuddleSystem.EvaporationReagent);
 
-        absorberSoln.RemoveReagent(PuddleSystem.EvaporationReagent, split.Volume);
-        puddleSolution.AddReagent(PuddleSystem.EvaporationReagent, split.Volume);
+        absorberSoln.RemoveReagent(PuddleSystem.EvaporationReagent, split.Volume / PuddleSystem.EvaporationReagentRatio);
+        puddleSolution.AddReagent(PuddleSystem.EvaporationReagent, split.Volume / PuddleSystem.EvaporationReagentRatio);
         absorberSoln.AddSolution(split, _prototype);
 
         _solutionSystem.UpdateChemicals(used, absorberSoln);
