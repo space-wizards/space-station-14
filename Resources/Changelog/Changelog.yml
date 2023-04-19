@@ -1,10 +1,4 @@
 Entries:
-- author: sephtasm
-  changes:
-  - {message: Client-side placement mode crash while placing random humanoid mobs,
-    type: Fix}
-  id: 2950
-  time: '2023-01-24T13:42:58.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: 'Added Barratry back into the game, with a remastered new look.', type: Add}
@@ -2888,3 +2882,10 @@ Entries:
   - {message: Sinks now replenish 1u of water per second, type: Add}
   id: 3449
   time: '2023-04-18T20:49:17.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: The drunk effect of having a low blood level is now instantly removed
+      when healthy!, type: Fix}
+  - {message: Dead bodies will persist in bleeding after death!, type: Add}
+  id: 3450
+  time: '2023-04-19T03:09:22.0000000+00:00'
