@@ -287,3 +287,16 @@
   - type: ConditionalSpawner
     prototypes:
       - MobAlexander
+
+- type: entity
+  name: Shiva Spawner
+  id: SpawnMobShiva
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobSpiderShiva

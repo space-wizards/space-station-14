@@ -141,6 +141,9 @@
       sprite: Clothing/Shoes/Specific/jester.rsi
     - type: Clothing
       sprite: Clothing/Shoes/Specific/jester.rsi
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepJester
 
 - type: entity
   parent: ClothingShoesClown
