@@ -1,11 +1,9 @@
-using Content.Shared.Explosion;
 using Robust.Client.Graphics;
 
 namespace Content.Client.Explosion;
 
 [RegisterComponent]
-[ComponentReference(typeof(SharedExplosionVisualsComponent))]
-public sealed class ExplosionVisualsComponent : SharedExplosionVisualsComponent
+public sealed class ExplosionVisualsTexturesComponent : Component
 {
     /// <summary>
     ///     Uid of the client-side point light entity for this explosion.
