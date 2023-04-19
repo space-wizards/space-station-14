@@ -16,7 +16,7 @@ public sealed class SolutionPurgeSystem : EntitySystem
         SubscribeLocalEvent<SolutionPurgeComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
-public override void Update(float frameTime)
+    public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
@@ -26,10 +26,12 @@ public override void Update(float frameTime)
             if (_timing.CurTime < purge.NextPurgeTime)
                 continue;
 
-            // timer ignores if its full, it's just a fixed cycle
+            // timer ignores if it's empty, it's just a fixed cycle
             purge.NextPurgeTime = _timing.CurTime + purge.Duration;
             if (_solutionContainer.TryGetSolution(uid, purge.Solution, out var solution, manager))
-                _solutionContainer.TryAddSolution(uid, solution, purge.Purged);
+            {
+
+            }
         }
     }
 
