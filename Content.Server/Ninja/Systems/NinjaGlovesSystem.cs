@@ -78,7 +78,6 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
-        // FIXME: doesnt work, don't show the console popup
         args.Cancel();
     }
 
