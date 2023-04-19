@@ -33,6 +33,8 @@
         - FloorLowDesert
       entities:
         - AsteroidRock
+    - !type:BiomeDummyLayer
+      id: Loot
     # Fill layer
     - !type:BiomeTileLayer
       threshold: -1
@@ -257,6 +259,8 @@
         - FloorBasalt
       entities:
         - FloorLavaEntity
+    - !type:BiomeDummyLayer
+      id: Loot
     # Fill basalt
     - !type:BiomeTileLayer
       threshold: -1
@@ -355,6 +359,8 @@
         - FloraTreeSnow04
         - FloraTreeSnow05
         - FloraTreeSnow06
+    - !type:BiomeDummyLayer
+      id: Loot
     - !type:BiomeTileLayer
       threshold: -1.0
       tile: FloorSnow
@@ -384,6 +390,8 @@
         - FloorAsteroidSand
       entities:
         - WallRock
+    - !type:BiomeDummyLayer
+      id: Loot
     - !type:BiomeTileLayer
       threshold: -1.0
       tile: FloorAsteroidSand

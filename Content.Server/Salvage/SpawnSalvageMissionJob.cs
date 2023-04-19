@@ -73,7 +73,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     protected override async Task<bool> Process()
     {
         Logger.DebugS("salvage", $"Spawning salvage mission with seed {_missionParams.Seed}");
-        var config = _missionParams.Config;
+        var config = _missionParams.MissionType;
         var mapId = _mapManager.CreateMap();
         var mapUid = _mapManager.GetMapEntityId(mapId);
         _mapManager.AddUninitializedMap(mapId);
@@ -85,7 +85,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         // As we go through the config the rating will deplete so we'll go for most important to least important.
 
         var mission = _entManager.System<SharedSalvageSystem>()
-            .GetMission(_missionParams.Config, _missionParams.Difficulty, _missionParams.Seed);
+            .GetMission(_missionParams.MissionType, _missionParams.Difficulty, _missionParams.Seed);
 
         var missionBiome = _prototypeManager.Index<SalvageBiomeMod>(mission.Biome);
 

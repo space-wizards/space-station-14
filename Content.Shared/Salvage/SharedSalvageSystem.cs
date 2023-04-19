@@ -28,7 +28,8 @@ public abstract class SharedSalvageSystem : EntitySystem
         switch (mission.Mission)
         {
             case SalvageMissionType.Mining:
-                return Loc.GetString("salvage-expedition-desc-mining", ("tax", $"{GetMiningTax(mission.Difficulty) * 100f:0}"));
+                // Taxation: , ("tax", $"{GetMiningTax(mission.Difficulty) * 100f:0}")
+                return Loc.GetString("salvage-expedition-desc-mining");
             case SalvageMissionType.Destruction:
                 var proto = _proto.Index<SalvageFactionPrototype>(mission.Faction).Configs["DefenseStructure"];
 
@@ -120,7 +121,7 @@ public abstract class SharedSalvageSystem : EntitySystem
             mods.Add(time.Description);
         }
 
-        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), GetDifficulty(difficulty) + 1, seed);
+        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), GetDifficulty(difficulty), seed);
         return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots, mods);
     }
 
@@ -184,7 +185,7 @@ public abstract class SharedSalvageSystem : EntitySystem
         throw new InvalidOperationException();
     }
 
-    public Dictionary<string, int> GetLoot(SalvageMissionType mission, List<SalvageLootPrototype> loots, int count, int seed)
+    private Dictionary<string, int> GetLoot(SalvageMissionType mission, List<SalvageLootPrototype> loots, int count, int seed)
     {
         var results = new Dictionary<string, int>();
         var adjustedSeed = new System.Random(seed + 2);

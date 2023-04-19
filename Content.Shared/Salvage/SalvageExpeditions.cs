@@ -78,8 +78,8 @@ public sealed record SalvageMissionParams
     [ViewVariables]
     public ushort Index;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("missionType", required: true)]
-    public SalvageMissionType Config;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public SalvageMissionType MissionType;
 
     [ViewVariables(VVAccess.ReadWrite)] public int Seed;
 

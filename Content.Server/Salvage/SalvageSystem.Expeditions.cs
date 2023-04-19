@@ -25,6 +25,7 @@ public sealed partial class SalvageSystem
     private void InitializeExpeditions()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnSalvageExpStationInit);
+
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ComponentInit>(OnSalvageConsoleInit);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, EntParentChangedMessage>(OnSalvageConsoleParent);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ClaimSalvageMessage>(OnSalvageClaimMessage);
@@ -114,7 +115,7 @@ public sealed partial class SalvageSystem
     private void FinishExpedition(SalvageExpeditionDataComponent component, SalvageExpeditionComponent expedition, EntityUid? shuttle)
     {
         // Finish mission cleanup.
-        switch (expedition.MissionParams.Config)
+        switch (expedition.MissionParams.MissionType)
         {
             // Handles the mining taxation.
             case SalvageMissionType.Mining:
@@ -129,9 +130,10 @@ public sealed partial class SalvageSystem
                     var tax = GetMiningTax(expedition.MissionParams.Difficulty);
                     _random.Shuffle(entities);
 
+                    // TODO: urgh this pr is already taking so long I'll do this later
                     for (var i = 0; i < Math.Ceiling(entities.Count * tax); i++)
                     {
-                        QueueDel(entities[i]);
+                        // QueueDel(entities[i]);
                     }
                 }
 
@@ -141,13 +143,13 @@ public sealed partial class SalvageSystem
         // Payout already handled elsewhere.
         if (expedition.Completed)
         {
-            _sawmill.Debug($"Completed mission {expedition.MissionParams.Config} with seed {expedition.MissionParams.Seed}");
+            _sawmill.Debug($"Completed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + MissionCooldown;
             Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-completed"));
         }
         else
         {
-            _sawmill.Debug($"Failed mission {expedition.MissionParams.Config} with seed {expedition.MissionParams.Seed}");
+            _sawmill.Debug($"Failed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + MissionFailedCooldown;
             Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-failed"));
         }
@@ -194,7 +196,7 @@ public sealed partial class SalvageSystem
                 var mission = new SalvageMissionParams()
                 {
                     Index = component.NextIndex,
-                    Config = config,
+                    MissionType = config,
                     Seed = _random.Next(),
                     Difficulty = rating,
                 };

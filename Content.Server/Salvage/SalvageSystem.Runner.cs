@@ -3,7 +3,11 @@ using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Chat;
 using Content.Shared.Salvage;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage;
@@ -24,9 +28,20 @@ public sealed partial class SalvageSystem
     /// <summary>
     /// Announces status updates to salvage crewmembers on the state of the expedition.
     /// </summary>
-    private void Announce(EntityUid uid, string text)
+    private void Announce(EntityUid mapUid, string text)
     {
-        _chat.TrySendInGameICMessage(uid, text, InGameICChatType.Speak, false);
+        var mapId = Comp<MapComponent>(mapUid).MapId;
+
+        // I love TComms and chat!!!
+        _chat.ChatMessageToManyFiltered(
+            Filter.BroadcastMap(mapId),
+            ChatChannel.Radio,
+            text,
+            text,
+            _mapManager.GetMapEntityId(mapId),
+            false,
+            true,
+            null);
     }
 
     private void OnFTLRequest(ref FTLRequestEvent ev)
