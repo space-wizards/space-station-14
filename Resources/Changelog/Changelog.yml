@@ -1,9 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: 'Added Barratry back into the game, with a remastered new look.', type: Add}
-  id: 2951
-  time: '2023-01-25T06:28:43.0000000+00:00'
 - author: Macoron
   changes:
   - {message: 'Added new emotes with sound! Simply type into emote chat: scream, laugh,
@@ -2889,3 +2884,8 @@ Entries:
   - {message: Dead bodies will persist in bleeding after death!, type: Add}
   id: 3450
   time: '2023-04-19T03:09:22.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Minibomb now does what it says on the tin and gibs bodies, type: Tweak}
+  id: 3451
+  time: '2023-04-19T04:36:13.0000000+00:00'
