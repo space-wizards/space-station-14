@@ -3,6 +3,7 @@ using Content.Shared.Administration;
 using Content.Shared.Roles;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Administration.Commands.Station;
 
@@ -14,6 +15,8 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
     public string Description => "Adjust the job manifest on a station.";
 
     public string Help => "adjstationjob <station id> <job id> <amount>";
+
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -56,5 +59,26 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
         }
 
         stationJobs.TrySetJobSlot(station, job, amount, true);
+    }
+
+    // autofill for station ID
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length != 1)
+        {
+            return CompletionResult.Empty;
+        }
+
+        var stations = _entityManager
+            .System<StationSystem>()
+            .Stations
+            .Select(station =>
+            {
+                var meta = _entityManager.GetComponent<MetaDataComponent>(station);
+
+                return new CompletionOption(station.ToString(), meta.EntityName);
+            });
+
+        return CompletionResult.FromHintOptions(stations, null);
     }
 }
