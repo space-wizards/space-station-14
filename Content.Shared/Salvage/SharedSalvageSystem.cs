@@ -191,7 +191,7 @@ public abstract class SharedSalvageSystem : EntitySystem
 
             foreach (var loot in loots)
             {
-                if (loot.Blacklist.Contains(loot.ID))
+                if (loot.Blacklist.Contains(mission))
                     continue;
 
                 var weh = results.GetOrNew(loot.ID);
