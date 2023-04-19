@@ -87,7 +87,7 @@
     - type: Sprite
       state: cpu_supply
     - type: ComputerBoard
-      prototype: ComputerSalvageExpedition
+      prototype: ComputerCargoShuttle
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -98,7 +98,7 @@
     - type: Sprite
       state: cpu_supply
     - type: ComputerBoard
-      prototype: ComputerCargoOrders
+      prototype: ComputerSalvageExpedition
 
 - type: entity
   parent: BaseComputerCircuitboard

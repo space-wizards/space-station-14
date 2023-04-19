@@ -1,15 +1,11 @@
 # Loot tables
-- type: weightedRandom
-  id: SalvageLowValue
-  weights:
+#- type: weightedRandom
+#  id: SalvageLowValue
+#  weights:
     # Common
-    CrateSalvageAssortedGoodies: 1.0
+#    CrateSalvageAssortedGoodies: 1.0
     # Uncommon
-    AirCanister: 0.25
-    NitrogenCanister: 0.25
-    OxygenCanister: 0.25
-    CarbonDioxideCanister: 0.25
-    WaterVaporCanister: 0.25
+    # TODO:
     # Rare
 
 - type: weightedRandom
@@ -44,7 +40,7 @@
   loots:
     - !type:DungeonClusterLoot
       lootTable: SalvageLowValue
-      clusters: 2
+      clusters: 3
       clusterAmount: 3
 
 - type: salvageLoot
@@ -55,7 +51,7 @@
   loots:
     - !type:DungeonClusterLoot
       lootTable: SalvageHighValue
-      clusters: 2
+      clusters: 5
       clusterAmount: 1
 
 # Ores
