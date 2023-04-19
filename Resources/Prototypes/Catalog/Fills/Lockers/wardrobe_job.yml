@@ -78,7 +78,7 @@
        - id: ClothingUniformJumpsuitScientist
        - id: ClothingBackpackScience
        - id: ClothingShoesColorWhite
-       - id: ClothingOuterCoatLab
+       - id: ClothingOuterCoatRnd
        - id: ClothingUniformJumpskirtScientist
        - id: ClothingEyesGlasses
          prob: 0.5
