@@ -4,8 +4,7 @@ using Content.Shared.Roles;
 
 namespace Content.Server.Traitor
 {
-    [Virtual]
-    public class TraitorRole : Role
+    public sealed class TraitorRole : Role
     {
         public AntagPrototype Prototype { get; }
 
