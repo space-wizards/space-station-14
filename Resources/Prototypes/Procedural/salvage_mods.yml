@@ -91,7 +91,6 @@
   proto: Experiment
   biomeMods:
     - Caves
-    - Grass
     #- LowDesert
     - Snow
     - Grasslands
