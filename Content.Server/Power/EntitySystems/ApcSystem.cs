@@ -1,6 +1,7 @@
 using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.Pow3r;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
@@ -54,7 +55,7 @@ namespace Content.Server.Power.EntitySystems
         }
 
         // Change the APC's state only when the battery state changes, or when it's first created.
-        private void OnBatteryChargeChanged(EntityUid uid, ApcComponent component, ChargeChangedEvent args)
+        private void OnBatteryChargeChanged(EntityUid uid, ApcComponent component, ref ChargeChangedEvent args)
         {
             UpdateApcState(uid, component);
         }
@@ -116,7 +117,7 @@ namespace Content.Server.Power.EntitySystems
 
         public void UpdateApcState(EntityUid uid,
             ApcComponent? apc=null,
-            BatteryComponent? battery=null)
+            PowerNetworkBatteryComponent? battery = null)
         {
             if (!Resolve(uid, ref apc, ref battery))
                 return;
@@ -126,7 +127,7 @@ namespace Content.Server.Power.EntitySystems
                 UpdatePanelAppearance(uid, appearance, apc);
             }
 
-            var newState = CalcChargeState(uid, apc, battery);
+            var newState = CalcChargeState(uid, battery.NetworkBattery);
             if (newState != apc.LastChargeState && apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
             {
                 apc.LastChargeState = newState;
@@ -138,7 +139,7 @@ namespace Content.Server.Power.EntitySystems
                 }
             }
 
-            var extPowerState = CalcExtPowerState(uid, apc, battery);
+            var extPowerState = CalcExtPowerState(uid, battery.NetworkBattery);
             if (extPowerState != apc.LastExternalState
                 || apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
             {
@@ -150,58 +151,43 @@ namespace Content.Server.Power.EntitySystems
 
         public void UpdateUIState(EntityUid uid,
             ApcComponent? apc = null,
-            BatteryComponent? battery = null,
+            PowerNetworkBatteryComponent? netBat = null,
             ServerUserInterfaceComponent? ui = null)
         {
-            if (!Resolve(uid, ref apc, ref battery, ref ui))
+            if (!Resolve(uid, ref apc, ref netBat, ref ui))
                 return;
 
-            var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
-            float power = netBattery is not null ? netBattery.CurrentSupply : 0f;
+            var battery = netBat.NetworkBattery;
 
-            if (_userInterfaceSystem.GetUiOrNull(uid, ApcUiKey.Key, ui) is { } bui)
-            {
-                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess, (int)MathF.Ceiling(power), apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
-            }
+            var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess,
+                (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
+                battery.AvailableSupply / battery.Capacity);
+
+            _userInterfaceSystem.TrySetUiState(uid, ApcUiKey.Key, state, ui: ui);
         }
 
-        public ApcChargeState CalcChargeState(EntityUid uid,
-            ApcComponent? apc=null,
-            BatteryComponent? battery=null)
+        private ApcChargeState CalcChargeState(EntityUid uid, PowerState.Battery battery)
         {
-            if (apc != null && HasComp<EmaggedComponent>(uid))
+            if (HasComp<EmaggedComponent>(uid))
                 return ApcChargeState.Emag;
 
-            if (!Resolve(uid, ref apc, ref battery))
-                return ApcChargeState.Lack;
-
-            var chargeFraction = battery.CurrentCharge / battery.MaxCharge;
-
-            if (chargeFraction > ApcComponent.HighPowerThreshold)
+            if (battery.CurrentStorage / battery.Capacity > ApcComponent.HighPowerThreshold)
             {
                 return ApcChargeState.Full;
             }
 
-            var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
-            var delta = netBattery.CurrentSupply - netBattery.CurrentReceiving;
-
+            var delta = battery.CurrentSupply - battery.CurrentReceiving;
             return delta < 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
         }
 
-        public ApcExternalPowerState CalcExtPowerState(EntityUid uid,
-            ApcComponent? apc=null,
-            BatteryComponent? battery=null)
+        private ApcExternalPowerState CalcExtPowerState(EntityUid uid, PowerState.Battery battery)
         {
-            if (!Resolve(uid, ref apc, ref battery))
-                return ApcExternalPowerState.None;
-
-            var netBat = Comp<PowerNetworkBatteryComponent>(uid);
-            if (netBat.CurrentReceiving == 0 && !MathHelper.CloseTo(battery.CurrentCharge / battery.MaxCharge, 1))
+            if (battery.CurrentReceiving == 0 && !MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 1))
             {
                 return ApcExternalPowerState.None;
             }
 
-            var delta = netBat.CurrentReceiving - netBat.CurrentSupply;
+            var delta = battery.CurrentSupply - battery.CurrentReceiving;
             if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
             {
                 return ApcExternalPowerState.Low;

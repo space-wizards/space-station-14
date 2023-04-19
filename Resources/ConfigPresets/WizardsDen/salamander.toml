@@ -11,7 +11,7 @@ rules_header = "ui-rules-header-rp"
 [whitelist]
 enabled = true
 reason = "whitelist-not-whitelisted-rp"
-min_players = 20
+min_players = 10
 
 [shuttle]
 emergency_early_launch_allowed = true
