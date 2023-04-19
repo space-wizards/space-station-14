@@ -12,6 +12,6 @@ public sealed class LoneOpsSpawnRuleComponent : Component
     [DataField("gameRuleProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string GameRuleProto = "Nukeops";
 
-    [DataField("sisterGameRule")]
-    public EntityUid? SisterGameRule;
+    [DataField("additionalRule")]
+    public EntityUid? AdditionalRule;
 }

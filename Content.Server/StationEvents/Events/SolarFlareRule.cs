@@ -31,9 +31,9 @@ public sealed class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
         //_event.EndAfter = RobustRandom.Next(ev.MinEndAfter, ev.MaxEndAfter);
     }
 
-    protected override void RuleTick(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    protected override void ActiveTick(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
-        base.RuleTick(uid, component, gameRule, frameTime);
+        base.ActiveTick(uid, component, gameRule, frameTime);
 
         _effectTimer -= frameTime;
         if (_effectTimer < 0)

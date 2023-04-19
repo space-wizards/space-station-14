@@ -1,9 +1,7 @@
 using Content.Server.GameTicking.Rules.Components;
-using JetBrains.Annotations;
 
 namespace Content.Server.GameTicking.Rules;
 
-[PublicAPI]
 public abstract class GameRuleSystem<T> : EntitySystem where T : Component
 {
     [Dependency] protected GameTicker GameTicker = default!;
@@ -63,9 +61,9 @@ public abstract class GameRuleSystem<T> : EntitySystem where T : Component
     }
 
     /// <summary>
-    /// Called per gamerule entity in the Update function
+    /// Called on an active gamerule entity in the Update function
     /// </summary>
-    protected virtual void RuleTick(EntityUid uid, T component, GameRuleComponent gameRule, float frameTime)
+    protected virtual void ActiveTick(EntityUid uid, T component, GameRuleComponent gameRule, float frameTime)
     {
 
     }
@@ -80,7 +78,7 @@ public abstract class GameRuleSystem<T> : EntitySystem where T : Component
             if (!GameTicker.IsGameRuleActive(uid, comp2))
                 continue;
 
-            RuleTick(uid, comp1, comp2, frameTime);
+            ActiveTick(uid, comp1, comp2, frameTime);
         }
     }
 }

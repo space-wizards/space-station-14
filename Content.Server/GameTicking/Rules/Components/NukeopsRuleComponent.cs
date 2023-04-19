@@ -1,7 +1,9 @@
 using Content.Shared.Dataset;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Roles;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
@@ -79,6 +81,40 @@ public sealed class NukeopsRuleComponent : Component
 
     [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
     public SoundSpecifier? GreetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
+
+    public WinType _winType = WinType.Neutral;
+
+    public List<WinCondition> _winConditions = new ();
+
+    public MapId? _nukiePlanet;
+
+    // TODO: use components, don't just cache entity UIDs
+    // There have been (and probably still are) bugs where these refer to deleted entities from old rounds.
+    public EntityUid? _nukieOutpost;
+    public EntityUid? _nukieShuttle;
+    public EntityUid? _targetStation;
+
+
+    /// <summary>
+    ///     Cached starting gear prototypes.
+    /// </summary>
+    public readonly Dictionary<string, StartingGearPrototype> _startingGearPrototypes = new ();
+
+    /// <summary>
+    ///     Cached operator name prototypes.
+    /// </summary>
+    public readonly Dictionary<string, List<string>> _operativeNames = new();
+
+    /// <summary>
+    ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
+    /// </summary>
+    public readonly Dictionary<EntityUid, string> _operativeMindPendingData = new();
+
+    /// <summary>
+    ///     Players who played as an operative at some point in the round.
+    ///     Stores the session as well as the entity name
+    /// </summary>
+    public readonly Dictionary<string, IPlayerSession> _operativePlayers = new();
 }
 
 public enum WinType : byte

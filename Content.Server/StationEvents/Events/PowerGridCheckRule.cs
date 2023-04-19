@@ -70,9 +70,9 @@ namespace Content.Server.StationEvents.Events
             component.Unpowered.Clear();
         }
 
-        protected override void RuleTick(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, float frameTime)
+        protected override void ActiveTick(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, float frameTime)
         {
-            base.RuleTick(uid, component, gameRule, frameTime);
+            base.ActiveTick(uid, component, gameRule, frameTime);
 
             //todo figure out this bs
             /*

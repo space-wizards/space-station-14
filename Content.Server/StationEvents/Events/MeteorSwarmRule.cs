@@ -19,9 +19,9 @@ namespace Content.Server.StationEvents.Events
             component._waveCounter = (int) (RobustRandom.Next(component.MinimumWaves, component.MaximumWaves) * mod);
         }
 
-        protected override void RuleTick(EntityUid uid, MeteorSwarmRuleComponent component, GameRuleComponent gameRule, float frameTime)
+        protected override void ActiveTick(EntityUid uid, MeteorSwarmRuleComponent component, GameRuleComponent gameRule, float frameTime)
         {
-            base.RuleTick(uid, component, gameRule, frameTime);
+            base.ActiveTick(uid, component, gameRule, frameTime);
             if (component._waveCounter <= 0)
             {
                 ForceEndSelf(uid, gameRule);

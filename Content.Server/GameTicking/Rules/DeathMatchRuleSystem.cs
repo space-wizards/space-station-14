@@ -74,9 +74,9 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         }
     }
 
-    protected override void RuleTick(EntityUid uid, DeathMatchRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    protected override void ActiveTick(EntityUid uid, DeathMatchRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
-        base.RuleTick(uid, component, gameRule, frameTime);
+        base.ActiveTick(uid, component, gameRule, frameTime);
 
         // If the restart timer is active, that means the round is ending soon, no need to check for winners.
         // TODO: We probably want a sane, centralized round end thingie in GameTicker, RoundEndSystem is no good...

@@ -54,9 +54,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
-    protected override void RuleTick(EntityUid uid, TraitorRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    protected override void ActiveTick(EntityUid uid, TraitorRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
-        base.RuleTick(uid, component, gameRule, frameTime);
+        base.ActiveTick(uid, component, gameRule, frameTime);
 
         if (component.SelectionStatus == TraitorRuleComponent.SelectionState.ReadyToSelect && _gameTiming.CurTime > component._announceAt)
             DoTraitorStart(component);

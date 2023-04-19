@@ -31,19 +31,19 @@ public sealed class LoneOpsSpawnRule : StationEventSystem<LoneOpsSpawnRuleCompon
         _map.TryLoad(shuttleMap, component.LoneOpsShuttlePath, out _, options);
 
         var nukeopsEntity = _gameTicker.AddGameRule(component.GameRuleProto);
+        component.AdditionalRule = nukeopsEntity;
         var nukeopsComp = EntityManager.GetComponent<NukeopsRuleComponent>(nukeopsEntity);
         nukeopsComp.SpawnOutpost = false;
         nukeopsComp.EndsRound = false;
         _gameTicker.StartGameRule(nukeopsEntity);
-        component.SisterGameRule = nukeopsEntity;
     }
 
     protected override void Ended(EntityUid uid, LoneOpsSpawnRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
     {
         base.Ended(uid, component, gameRule, args);
 
-        if (component.SisterGameRule != null)
-            GameTicker.EndGameRule(component.SisterGameRule.Value);
+        if (component.AdditionalRule != null)
+            GameTicker.EndGameRule(component.AdditionalRule.Value);
     }
 }
 
