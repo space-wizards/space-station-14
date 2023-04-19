@@ -88,7 +88,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             {
                 sprite.LayerMapReserveBlank(TextScreenLayerMapKey + i);
                 component.LayerStatesToDraw.Add(TextScreenLayerMapKey + i, null);
-                sprite.LayerSetRSI(TextScreenLayerMapKey + i, new ResourcePath("Effects/text.rsi"));
+                sprite.LayerSetRSI(TextScreenLayerMapKey + i, new ResPath("Effects/text.rsi"));
                 sprite.LayerSetColor(TextScreenLayerMapKey + i, component.Color);
                 sprite.LayerSetState(TextScreenLayerMapKey + i, DefaultState);
             }
