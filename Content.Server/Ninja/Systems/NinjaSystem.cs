@@ -285,14 +285,12 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
     private void OnNinjaMindAdded(EntityUid uid, NinjaComponent comp, MindAddedMessage args)
     {
-        Logger.ErrorS("ninja_testing", "AMONG US 2 RELASED");
         if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
             GreetNinja(mind.Mind);
     }
 
     private void GreetNinja(Mind.Mind mind)
     {
-        Logger.ErrorS("ninja_testing", "GREETING");
         if (!mind.TryGetSession(out var session))
             return;
 
@@ -305,7 +303,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
             AddObjective(mind, objective);
         }
 
-        Logger.ErrorS("ninja_testing", "added role");
         // choose spider charge detonation point
         // currently based on warp points, something better could be done (but would likely require mapping work)
         var warps = new List<EntityUid>();
