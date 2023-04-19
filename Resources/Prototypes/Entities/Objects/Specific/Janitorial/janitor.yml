@@ -124,7 +124,7 @@
   name: mop bucket
   id: MopBucketFull
   parent: MopBucket
-  suffix: full
+  suffix: filled
   components:
     - type: Sprite
       layers:
@@ -137,7 +137,7 @@
           maxVol: 600
           reagents:
             - ReagentId: Water
-              Quantity: 600
+              Quantity: 200
 
 - type: entity
   name: wet floor sign
