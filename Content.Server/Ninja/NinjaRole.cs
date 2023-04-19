@@ -19,7 +19,6 @@ public sealed class NinjaRole : TraitorRole
     /// <summary>
     /// Research nodes that have been downloaded, used for objective
     /// </summary>
-    // TODO: client doesn't need to know what nodes are downloaded, just how many
     [ViewVariables]
     public HashSet<string> DownloadedNodes = new();
 

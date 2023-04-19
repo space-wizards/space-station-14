@@ -25,7 +25,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     {
         base.Initialize();
 
-        // TODO: maybe have suit activation stuff
         SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<NinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloak);
