@@ -35,15 +35,15 @@ public sealed class SolutionPurgeSystem : EntitySystem
                 // We need to calculate how much *per reagent*, excluding reagents that
                 // must be reserved.
                 int reagentsToRemove = solution.Contents.Count;
-                foreach (var reagentId in purge.Preserve) {
-                    if (solution.ContainsReagent(reagentId)) {
+                foreach (var reagentId in purge.Preserve)
+                    if (solution.ContainsReagent(reagentId))
                         reagentsToRemove--;
-                    }
-                }
 
-                if (reagentsToRemove != 0) {
+                if (reagentsToRemove != 0)
+                {
                     FixedPoint2 quantityPerReagent = purge.Quantity / reagentsToRemove;
-                    foreach (var reagent in solution.Contents.ToArray()) {
+                    foreach (var reagent in solution.Contents.ToArray())
+                    {
                         if (purge.Preserve.Contains(reagent.ReagentId))
                             continue;
                         _solutionContainer.TryRemoveReagent(uid, solution, reagent.ReagentId, quantityPerReagent);
