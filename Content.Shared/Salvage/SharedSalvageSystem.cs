@@ -116,7 +116,7 @@ public abstract class SharedSalvageSystem : EntitySystem
             mods.Add(time.Description);
         }
 
-        var loots = GetLoot(_proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), GetDifficulty(difficulty) + 1, seed);
+        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), GetDifficulty(difficulty) + 1, seed);
         return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots, mods);
     }
 
@@ -180,17 +180,25 @@ public abstract class SharedSalvageSystem : EntitySystem
         throw new InvalidOperationException();
     }
 
-    public Dictionary<string, int> GetLoot(List<SalvageLootPrototype> loots, int count, int seed)
+    public Dictionary<string, int> GetLoot(string mission, List<SalvageLootPrototype> loots, int count, int seed)
     {
         var results = new Dictionary<string, int>();
         var adjustedSeed = new System.Random(seed + 2);
 
         for (var i = 0; i < count; i++)
         {
-            var loot = loots[adjustedSeed.Next(loots.Count)];
-            var weh = results.GetOrNew(loot.ID);
-            weh++;
-            results[loot.ID] = weh;
+            adjustedSeed.Shuffle(loots);
+
+            foreach (var loot in loots)
+            {
+                if (loot.Blacklist.Contains(loot.ID))
+                    continue;
+
+                var weh = results.GetOrNew(loot.ID);
+                weh++;
+                results[loot.ID] = weh;
+                break;
+            }
         }
 
         return results;

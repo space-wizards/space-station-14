@@ -1,15 +1,64 @@
-# Loot configs
+# Loot tables
 - type: weightedRandom
-  id: CaveLoot
+  id: SalvageLowValue
   weights:
-    OreGold: 0.5
-    OreGoldSilver: 0.5
-    OrePlasma: 0.25
-    OreSilver: 0.5
-    OreTin: 1.0
-    OreUranium: 0.25
+    # Common
+    CrateSalvageAssortedGoodies: 1.0
+    # Uncommon
+    AirCanister: 0.25
+    NitrogenCanister: 0.25
+    OxygenCanister: 0.25
+    CarbonDioxideCanister: 0.25
+    WaterVaporCanister: 0.25
+    # Rare
 
-# Just vary points / cluster size.
+- type: weightedRandom
+  id: SalvageHighValue
+  weights:
+    # Common
+    CrateMaterialPlasteel: 1.0
+    CrateMaterialWood: 1.0
+    CrateMaterialPlastic: 1.0
+    CrateSalvageEquipment: 1.0
+    CrateMaterialSteel: 1.0
+    CrateMaterialGlass: 1.0
+    # Uncommon
+    SuperCapacitorStockPart: 0.25
+    PhasicScanningModuleStockPart: 0.25
+    PicoManipulatorStockPart: 0.25
+    UltraHighPowerMicroLaserStockPart: 0.25
+    SuperMatterBinStockPart: 0.25
+    # Rare
+    QuadraticCapacitorStockPart: 0.10
+    TriphasicScanningModuleStockPart: 0.10
+    FemtoManipulatorStockPart: 0.10
+    QuadUltraMicroLaserStockPart: 0.10
+    BluespaceMatterBinStockPart: 0.10
+
+# Crates
+- type: salvageLoot
+  id: LowValue
+  desc: Commodities
+  blacklist:
+    - Mining
+  loots:
+    - !type:DungeonClusterLoot
+      lootTable: SalvageLowValue
+      clusters: 2
+      clusterAmount: 3
+
+- type: salvageLoot
+  id: HighValue
+  desc: High-value commodities
+  blacklist:
+    - Mining
+  loots:
+    - !type:DungeonClusterLoot
+      lootTable: SalvageHighValue
+      clusters: 2
+      clusterAmount: 1
+
+# Ores
 # - Low value
 - type: salvageLoot
   id: OreTin
