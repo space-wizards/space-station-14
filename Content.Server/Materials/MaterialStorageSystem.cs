@@ -47,7 +47,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         MaterialComponent? material = null,
         PhysicalCompositionComponent? composition = null)
     {
-        if (!Resolve(receiver, ref storage) || !Resolve(toInsert, ref material, ref composition))
+        if (!Resolve(receiver, ref storage) || !Resolve(toInsert, ref material, ref composition, false))
             return false;
         if (TryComp<ApcPowerReceiverComponent>(receiver, out var power) && !power.Powered)
             return false;
