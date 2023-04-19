@@ -8,8 +8,6 @@
   supervisors: job-supervisors-everyone
   access:
   - Maintenance
-  allowedSpecies:
-  - Human
 
 - type: startingGear
   id: PassengerGear
