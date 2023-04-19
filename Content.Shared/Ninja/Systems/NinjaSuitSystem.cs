@@ -5,7 +5,6 @@ using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Timing;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -26,7 +25,6 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
 
         SubscribeLocalEvent<NinjaSuitComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<NinjaSuitComponent, GetItemActionsEvent>(OnGetItemActions);
-        SubscribeLocalEvent<NinjaSuitComponent, ContainerIsRemovingAttemptEvent>(OnSuitRemoveAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
 
         SubscribeNetworkEvent<SetCloakedMessage>(OnSetCloakedMessage);
@@ -50,12 +48,6 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         args.Actions.Add(comp.CreateSoapAction);
         args.Actions.Add(comp.KatanaDashAction);
         args.Actions.Add(comp.EmpAction);
-    }
-
-    private void OnSuitRemoveAttempt(EntityUid uid, NinjaSuitComponent comp, ContainerIsRemovingAttemptEvent args)
-    {
-        // no removing your battery idiot!!!
-        args.Cancel();
     }
 
     private void OnUnequipped(EntityUid uid, NinjaSuitComponent comp, GotUnequippedEvent args)
