@@ -187,11 +187,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         await SetupMission(mission.Mission, mission, (Vector2i) dungeonOffset, dungeon, mapUid, grid, random);
 
         // Handle loot
-        foreach (var loot in mission.Loot)
+        foreach (var (loot, count) in mission.Loot)
         {
-            var lootProto = _prototypeManager.Index<SalvageLootPrototype>(loot);
-            await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
-
+            for (var i = 0; i < count; i++)
+            {
+                var lootProto = _prototypeManager.Index<SalvageLootPrototype>(loot);
+                await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
+            }
         }
         return true;
     }
@@ -310,7 +312,10 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
         {
             // TODO: Better
-            _biome.AddMarkerLayer(biome, faction.Configs["Mining"]);
+            for (var i = 0; i < (int) mission.Difficulty; i++)
+            {
+                _biome.AddMarkerLayer(biome, faction.Configs["Mining"]);
+            }
         }
     }
 
@@ -342,7 +347,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
     private async Task SpawnMobsRandomRooms(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random)
     {
-        var groupSpawns = _salvage.GetSpawnCount(mission.Difficulty, mission.RemainingDifficulty);
+        var groupSpawns = _salvage.GetSpawnCount(mission.Difficulty);
         var groupSum = faction.MobGroups.Sum(o => o.Prob);
 
         for (var i = 0; i < groupSpawns; i++)

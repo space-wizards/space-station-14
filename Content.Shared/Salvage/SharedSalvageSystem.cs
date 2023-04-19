@@ -7,6 +7,7 @@ using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Salvage;
 
@@ -75,9 +76,9 @@ public abstract class SharedSalvageSystem : EntitySystem
     /// <summary>
     /// How many groups of mobs to spawn for a mission.
     /// </summary>
-    public float GetSpawnCount(DifficultyRating difficulty, float remaining)
+    public float GetSpawnCount(DifficultyRating difficulty)
     {
-        return (int) difficulty * 2 + remaining + 1;
+        return (int) difficulty * 2;
     }
 
     public static string GetFTLName(DatasetPrototype dataset, int seed)
@@ -115,16 +116,8 @@ public abstract class SharedSalvageSystem : EntitySystem
             mods.Add(time.Description);
         }
 
-        if (rand.Prob(0.2f))
-        {
-            var weather = GetMod<SalvageWeatherMod>(rand, ref rating);
-            // mods.Add(weather.Description);
-        }
-
         var loots = GetLoot(_proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), GetDifficulty(difficulty) + 1, seed);
-        rating = MathF.Max(0f, rating);
-
-        return new SalvageMission(seed, difficulty, rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots, mods);
+        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots, mods);
     }
 
     public SalvageDungeonMod GetDungeon(string biome, System.Random rand, ref float rating)
@@ -187,15 +180,17 @@ public abstract class SharedSalvageSystem : EntitySystem
         throw new InvalidOperationException();
     }
 
-    public List<string> GetLoot(List<SalvageLootPrototype> loots, int count, int seed)
+    public Dictionary<string, int> GetLoot(List<SalvageLootPrototype> loots, int count, int seed)
     {
-        var results = new List<string>(count);
+        var results = new Dictionary<string, int>();
         var adjustedSeed = new System.Random(seed + 2);
 
         for (var i = 0; i < count; i++)
         {
             var loot = loots[adjustedSeed.Next(loots.Count)];
-            results.Add(loot.ID);
+            var weh = results.GetOrNew(loot.ID);
+            weh++;
+            results[loot.ID] = weh;
         }
 
         return results;

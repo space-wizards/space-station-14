@@ -205,7 +205,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             {
                 lBox.AddChild(new Label()
                 {
-                    Text = string.Join("\n", mission.Loot.Select(o => "- " + o)).TrimEnd(),
+                    Text = string.Join("\n", mission.Loot.Select(o => "- " + o.Key + (o.Value > 1 ? $" x {o.Value}" : ""))).TrimEnd(),
                     FontColorOverride = StyleNano.ConcerningOrangeFore,
                     HorizontalAlignment = HAlignment.Left,
                     Margin = new Thickness(0f, 0f, 0f, 5f),

@@ -347,7 +347,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 // Load NOW
                 // TODO: Need poisson but crashes whenever I use moony's due to inputs or smth
-                var count = (int) (layerProto.Size * layerProto.Size / layerProto.Radius);
+                var count = (int) ((layerProto.Size - buffer) * (layerProto.Size - buffer) / (layerProto.Radius * layerProto.Radius));
 
                 for (var i = 0; i < count; i++)
                 {

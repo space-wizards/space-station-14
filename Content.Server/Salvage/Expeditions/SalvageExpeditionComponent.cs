@@ -14,7 +14,7 @@ public sealed class SalvageExpeditionComponent : Component
     /// <summary>
     /// When the expeditions ends.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("endTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [ViewVariables(VVAccess.ReadWrite), DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan EndTime;
 
     /// <summary>

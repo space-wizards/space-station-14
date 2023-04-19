@@ -87,7 +87,7 @@ public sealed partial class SalvageSystem
             if (comp.Completed)
                 continue;
 
-            var remaining = comp.EndTime = _timing.CurTime;
+            var remaining = comp.EndTime - _timing.CurTime;
 
             if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(30))
             {

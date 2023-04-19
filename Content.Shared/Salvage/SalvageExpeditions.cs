@@ -96,14 +96,13 @@ public sealed record SalvageMissionParams
 public sealed record SalvageMission(
     int Seed,
     DifficultyRating Difficulty,
-    float RemainingDifficulty,
     string Dungeon,
     string Faction,
     string Mission,
     string Biome,
     Color? Color,
     TimeSpan Duration,
-    List<string> Loot,
+    Dictionary<string, int> Loot,
     List<string> Modifiers)
 {
     /// <summary>
@@ -112,11 +111,9 @@ public sealed record SalvageMission(
     public readonly int Seed = Seed;
 
     /// <summary>
-    /// Base difficulty rating.
+    /// Difficulty rating.
     /// </summary>
     public DifficultyRating Difficulty = Difficulty;
-
-    public float RemainingDifficulty = RemainingDifficulty;
 
     /// <summary>
     /// <see cref="SalvageDungeonMod"/> to be used.
@@ -148,7 +145,7 @@ public sealed record SalvageMission(
     /// </summary>
     public TimeSpan Duration = Duration;
 
-    public List<string> Loot = Loot;
+    public Dictionary<string, int> Loot = Loot;
 
     /// <summary>
     /// Modifiers (outside of the above) applied to the mission.
