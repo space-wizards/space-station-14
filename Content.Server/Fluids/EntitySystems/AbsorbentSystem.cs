@@ -203,7 +203,12 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         absorberSoln.RemoveReagent(PuddleSystem.EvaporationReagent, split.Volume / PuddleSystem.EvaporationReagentRatio);
         puddleSolution.AddReagent(PuddleSystem.EvaporationReagent, split.Volume / PuddleSystem.EvaporationReagentRatio);
-        absorberSoln.AddSolution(split, _prototype);
+        absorberSoln.AddSolution(split.SplitSolution(absorberSoln.AvailableVolume), _prototype);
+        // puts back the excess if any, a hack to circumvent it being a differential equation and prevent the
+        // overflow of the absorber due to residual water not being checked for
+        if (split.Volume > 0){
+            puddleSolution.AddSolution(split, _prototype);
+        }
 
         _solutionSystem.UpdateChemicals(used, absorberSoln);
         _solutionSystem.UpdateChemicals(target, puddleSolution);
