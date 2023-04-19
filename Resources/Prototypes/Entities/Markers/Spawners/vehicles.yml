@@ -39,3 +39,17 @@
   - type: ConditionalSpawner
     prototypes:
       - VehicleATV
+
+- type: entity
+  name: Motobike Spawner
+  id: SpawnVehicleMotobike
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Vehicles/motorbike.rsi
+        state: keys
+  - type: ConditionalSpawner
+    prototypes:
+      - VehicleSkeletonMotorcycle

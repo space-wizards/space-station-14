@@ -147,6 +147,9 @@
   - type: Item
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     size: 30
+  - type: Tag
+    tags:
+    - HighRiskItem
 
 # Filled captain
 - type: entity
@@ -248,7 +251,7 @@
     sprite: Objects/Tanks/Jetpacks/void.rsi
     slots:
       - Back
-      - suitStorage      
+      - suitStorage
 
 # Filled void
 - type: entity
