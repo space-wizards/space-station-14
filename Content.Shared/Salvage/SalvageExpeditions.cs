@@ -154,13 +154,6 @@ public sealed record SalvageMission(
 }
 
 [Serializable, NetSerializable]
-public enum SalvageEnvironment : byte
-{
-    Invalid = 0,
-    Caves,
-}
-
-[Serializable, NetSerializable]
 public enum SalvageConsoleUiKey : byte
 {
     Expedition,
