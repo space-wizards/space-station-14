@@ -2,7 +2,6 @@
 # TODO: Water in desert
 - type: biomeTemplate
   id: LowDesert
-  desc: Desert
   layers:
     - !type:BiomeEntityLayer
       threshold: 0.95
@@ -52,7 +51,6 @@
 # Grass
 - type: biomeTemplate
   id: Grasslands
-  desc: Grasslands
   layers:
     # Sparse vegetation
     - !type:BiomeDecalLayer
@@ -201,7 +199,6 @@
 # Lava
 - type: biomeTemplate
   id: Lava
-  desc: Lava
   layers:
     - !type:BiomeEntityLayer
       threshold: 0.9

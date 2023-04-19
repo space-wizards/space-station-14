@@ -32,16 +32,16 @@
     BluespaceMatterBinStockPart: 0.10
 
 # Crates
-- type: salvageLoot
-  id: LowValue
-  desc: Commodities
-  blacklist:
-    - Mining
-  loots:
-    - !type:DungeonClusterLoot
-      lootTable: SalvageLowValue
-      clusters: 3
-      clusterAmount: 3
+#- type: salvageLoot
+#  id: LowValue
+#  desc: Commodities
+#  blacklist:
+#    - Mining
+#  loots:
+#    - !type:DungeonClusterLoot
+#      lootTable: SalvageLowValue
+#      clusters: 3
+#      clusterAmount: 3
 
 - type: salvageLoot
   id: HighValue

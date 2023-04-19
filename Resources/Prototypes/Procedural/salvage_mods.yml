@@ -88,16 +88,16 @@
 #  For now just simple 1-dungeon setups
 - type: salvageDungeonMod
   id: Experiment
-  config: Experiment
+  proto: Experiment
   biomeMods:
     - Caves
     - Grass
-    - LowDesert
+    #- LowDesert
     - Snow
     - Grasslands
 
 - type: salvageDungeonMod
   id: LavaBrig
-  config: LavaBrig
+  proto: LavaBrig
   biomeMods:
     - Lava
