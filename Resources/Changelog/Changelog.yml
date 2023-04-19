@@ -1,10 +1,4 @@
 Entries:
-- author: jamessimo
-  changes:
-  - {message: Updated Jobs and Departments to be case-correct, type: Tweak}
-  - {message: Character job preferences pages UX improvements, type: Tweak}
-  id: 2959
-  time: '2023-01-26T22:32:15.0000000+00:00'
 - author: jicksaw
   changes:
   - {message: Handcuffing in combat mode should feel more responsive, type: Fix}
@@ -2885,3 +2879,8 @@ Entries:
       who refuse to wear clothes, type: Add}
   id: 3458
   time: '2023-04-19T07:43:57.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced the power of anomaly vessel upgrades., type: Tweak}
+  id: 3459
+  time: '2023-04-19T10:03:08.0000000+00:00'
