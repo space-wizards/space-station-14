@@ -1,5 +1,5 @@
-reagent-name-toxin = toxin
-reagent-desc-toxin = A toxic chemical.
+reagent-name-toxin = cyanide
+reagent-desc-toxin = A toxic and potentially deadly chemical.
 
 reagent-name-carpotoxin = carpotoxin
 reagent-desc-carpotoxin = Toxic secretions of a space carp. Causes a painful burning sensation.

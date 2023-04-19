@@ -17,7 +17,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 4
 
 - type: reagent
   id: CarpoToxin
