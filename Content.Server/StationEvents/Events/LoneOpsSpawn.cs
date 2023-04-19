@@ -15,7 +15,7 @@ public sealed class LoneOpsSpawn : StationEventSystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRuleSystem = default!;
 
-    public override string Prototype => "LoneOps";
+    public override string Prototype => "LoneOpsSpawn";
     public const string LoneOpsShuttlePath = "Maps/Shuttles/striker.yml";
     public const string GameRuleProto = "Nukeops";
 
