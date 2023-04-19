@@ -60,9 +60,8 @@ namespace Content.Server.Medical.CrewMonitoring
                 return;
 
             // update all sensors info
-            var xform = Transform(uid);
             var allSensors = component.ConnectedSensors.Values.ToList();
-            var uiState = new CrewMonitoringState(allSensors, xform.WorldPosition, component.Snap, component.Precision);
+            var uiState = new CrewMonitoringState(allSensors, component.Snap, component.Precision);
             ui.SetState(uiState);
         }
     }

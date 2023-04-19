@@ -56,9 +56,14 @@ public sealed class EncryptionKeySystem : EntitySystem
             _hands.PickupOrDrop(args.User, ent);
         }
 
-        // if tool use ever gets predicted this needs changing.
-        _popup.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
-        _audio.PlayPvs(component.KeyExtractionSound, uid);
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        // TODO add predicted pop-up overrides.
+        if (_net.IsServer)
+            _popup.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
+        
+        _audio.PlayPredicted(component.KeyExtractionSound, uid, args.User);
     }
 
     public void UpdateChannels(EntityUid uid, EncryptionKeyHolderComponent component)
@@ -89,11 +94,25 @@ public sealed class EncryptionKeySystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
     {
-        if ( args.Handled || !TryComp<ContainerManagerComponent>(uid, out var storage))
+        if (args.Handled)
             return;
 
-        args.Handled = true;
+        if (HasComp<EncryptionKeyComponent>(args.Used))
+        {
+            args.Handled = true;
+            TryInsertKey(uid, component, args);
+        }
+        else if (TryComp<ToolComponent>(args.Used, out var tool)
+                 && tool.Qualities.Contains(component.KeysExtractionMethod)
+                 && component.KeyContainer.ContainedEntities.Count > 0) // dont block deconstruction
+        {
+            args.Handled = true;
+            TryRemoveKey(uid, component, args, tool);
+        }
+    }
 
+    private void TryInsertKey(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
+    {
         if (!component.KeysUnlocked)
         {
             if (_net.IsClient && _timing.IsFirstTimePredicted)
@@ -101,18 +120,6 @@ public sealed class EncryptionKeySystem : EntitySystem
             return;
         }
 
-        if (TryComp<EncryptionKeyComponent>(args.Used, out var key))
-        {
-            TryInsertKey(uid, component, args);
-        }
-        else
-        {
-            TryRemoveKey(uid, component, args);
-        }
-    }
-
-    private void TryInsertKey(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
-    {
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
         {
             if (_net.IsClient && _timing.IsFirstTimePredicted)
@@ -137,10 +144,15 @@ public sealed class EncryptionKeySystem : EntitySystem
         }
     }
 
-    private void TryRemoveKey(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
+    private void TryRemoveKey(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args,
+        ToolComponent? tool)
     {
-        if (!TryComp<ToolComponent>(args.Used, out var tool) || !tool.Qualities.Contains(component.KeysExtractionMethod))
+        if (!component.KeysUnlocked)
+        {
+            if (_net.IsClient && _timing.IsFirstTimePredicted)
+                _popup.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
             return;
+        }
 
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
         {

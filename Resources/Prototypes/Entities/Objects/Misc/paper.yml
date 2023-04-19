@@ -31,7 +31,6 @@
     - Trash
   - type: Appearance
   - type: PaperVisuals
-  - type: Recyclable
 
 - type: entity
   name: office paper
@@ -182,7 +181,9 @@
     sprite: Objects/Misc/bureaucracy.rsi
     heldPrefix: pen
     size: 2
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
 
 - type: entity
   name: Cybersun pen
@@ -222,6 +223,20 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen_cap
+
+- type: entity
+  name: Centcom pen
+  parent: CyberPen
+  id: PenCentcom
+  description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen_centcom
+    netsync: false
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    heldPrefix: pen_centcom
 
 - type: entity
   name: hop's fountain pen

@@ -28,7 +28,6 @@
   - Bucket
   - MopItem
   - SprayBottle
-  - BodyBag
 - type: technology
   name: technologies-advanced-cleaning-technology
   id: AdvancedCleaningTechnology
@@ -84,14 +83,6 @@
   - ButchCleaver
   - KitchenKnife
   - MicrowaveMachineCircuitboard
-  - Medkit
-  - MedkitBurn
-  - MedkitToxin
-  - MedkitO2
-  - MedkitBrute
-  - MedkitAdvanced
-  - MedkitRadiation
-  - MedkitCombat
 
 - type: technology
   name: technologies-advanced-botany
@@ -106,8 +97,6 @@
   unlockedRecipes:
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
-  - HandheldHealthAnalyzer
-  - Implanter
 
 - type: technology
   name: technologies-virology
@@ -120,10 +109,6 @@
   requiredTechnologies:
   - BiologicalTechnology
   unlockedRecipes:
-  - ClothingHandsGlovesLatex
-  - ClothingHandsGlovesNitrile
-  - ClothingMaskSterile
-  - DiseaseSwab
   - VaccinatorMachineCircuitboard
   - DiagnoserMachineCircuitboard
 
@@ -364,6 +349,7 @@
   - SheetPlastic
   - SheetRGlass
   - SheetGlass1
+  - MaterialReclaimerMachineCircuitboard
 
 # Electromagnetic Theory Technology Tree
 
@@ -596,6 +582,19 @@
   - HighPowerMicroLaserStockPart
   - NanoManipulatorStockPart
   - AdvancedScanningModuleStockPart
+
+- type: technology
+  name: technologies-magboots-technology
+  id: MagbootsTechnology
+  description: technologies-magboots-technology-description
+  icon:
+    sprite: Clothing/Shoes/Boots/magboots.rsi
+    state: icon
+  requiredPoints: 8500
+  requiredTechnologies:
+    - ScientificTechnology
+  unlockedRecipes:
+    - ClothingShoesBootsMag
 
 - type: technology
   name: technologies-super-parts-technology
