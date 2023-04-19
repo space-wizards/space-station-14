@@ -52,6 +52,8 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: TypingIndicator
+    proto: robot
   - type: Speech
     speechSounds: Vending
   - type: DoAfter
@@ -852,6 +854,36 @@
 
 - type: entity
   parent: VendingMachineSnack
+  id: VendingMachineSustenance
+  name: Sustenance Vendor
+  description: A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement.
+  components:
+  - type: VendingMachine
+    pack: SustenanceInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/sustenance.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#737785"
+
+- type: entity
+  parent: VendingMachineSnack
   id: VendingMachineSnackBlue
   suffix: Blue
   components:
@@ -1573,7 +1605,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Security"]]
+    access: [["Detective"]]
 
 - type: entity
   parent: VendingMachine
@@ -1704,7 +1736,7 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
-   
+
 - type: entity
   parent: VendingMachine
   id: VendingMachineCentDrobe
@@ -1730,7 +1762,7 @@
     radius: 1.5
     energy: 1.6
     color: "#48CF48"
-    
+
 - type: entity
   parent: VendingMachine
   id: VendingMachineHappyHonk

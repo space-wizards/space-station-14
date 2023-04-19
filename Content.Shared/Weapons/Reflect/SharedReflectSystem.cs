@@ -1,12 +1,16 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Audio;
-using Content.Shared.Popups;
-using Robust.Shared.Random;
-using Robust.Shared.Physics.Systems;
 using Content.Shared.Hands.Components;
 using Robust.Shared.GameStates;
 using Content.Shared.Weapons.Ranged.Events;
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Physics.Components;
+using Content.Shared.Popups;
+using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -24,8 +28,8 @@ public abstract class SharedReflectSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SharedHandsComponent, ProjectileReflectAttemptEvent>(OnHandReflectProjectile);
-        SubscribeLocalEvent<SharedHandsComponent, HitScanReflectAttemptEvent>(OnHandsReflectHitscan);
+        SubscribeLocalEvent<HandsComponent, ProjectileReflectAttemptEvent>(OnHandReflectProjectile);
+        SubscribeLocalEvent<HandsComponent, HitScanReflectAttemptEvent>(OnHandsReflectHitscan);
 
         SubscribeLocalEvent<ReflectComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ReflectComponent, ComponentGetState>(OnGetState);
@@ -46,7 +50,7 @@ public abstract class SharedReflectSystem : EntitySystem
         args.State = new ReflectComponentState(component.Enabled, component.ReflectProb, component.Spread);
     }
 
-    private void OnHandReflectProjectile(EntityUid uid, SharedHandsComponent hands, ref ProjectileReflectAttemptEvent args)
+    private void OnHandReflectProjectile(EntityUid uid, HandsComponent hands, ref ProjectileReflectAttemptEvent args)
     {
         if (args.Cancelled)
             return;
@@ -84,7 +88,7 @@ public abstract class SharedReflectSystem : EntitySystem
         return true;
     }
 
-    private void OnHandsReflectHitscan(EntityUid uid, SharedHandsComponent hands, ref HitScanReflectAttemptEvent args)
+    private void OnHandsReflectHitscan(EntityUid uid, HandsComponent hands, ref HitScanReflectAttemptEvent args)
     {
         if (args.Reflected)
             return;

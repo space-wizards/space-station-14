@@ -1,12 +1,9 @@
 using System.Linq;
-using Content.Client.Cuffs;
 using Content.Client.Examine;
-using Content.Client.Hands;
 using Content.Client.Strip;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
-using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
@@ -16,7 +13,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Strip.Components;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -24,7 +20,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Control;
 
