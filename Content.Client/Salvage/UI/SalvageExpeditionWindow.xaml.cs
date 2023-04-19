@@ -48,10 +48,8 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
         for (var i = 0; i < state.Missions.Count; i++)
         {
             var missionParams = state.Missions[i];
-            var config = _prototype.Index<SalvageMissionPrototype>(missionParams.Config);
+            var config = missionParams.Config;
             var mission = _salvage.GetMission(missionParams.Config, missionParams.Difficulty, missionParams.Seed);
-
-            var missionDesc = config.Description;
 
             // Mission title
             var missionStripe = new StripeBack()
@@ -61,7 +59,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
             missionStripe.AddChild(new Label()
             {
-                Text = missionDesc,
+                Text = Loc.GetString($"salvage-expedition-difficulty-{config.ToString()}"),
                 HorizontalAlignment = HAlignment.Center,
                 Margin = new Thickness(0f, 5f, 0f, 5f),
             });

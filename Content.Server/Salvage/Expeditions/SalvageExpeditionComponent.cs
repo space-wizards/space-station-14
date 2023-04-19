@@ -12,6 +12,12 @@ public sealed class SalvageExpeditionComponent : Component
     public SalvageMissionParams MissionParams = default!;
 
     /// <summary>
+    /// Where the dungeon is located for initial announcement.
+    /// </summary>
+    [DataField("dungeonLocation")]
+    public Vector2 DungeonLocation = Vector2.Zero;
+
+    /// <summary>
     /// When the expeditions ends.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]

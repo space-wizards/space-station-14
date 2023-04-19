@@ -18,6 +18,13 @@ salvage-expedition-window-next = Next offer
 salvage-expedition-desc-mining = Collect resources inside the area. You will be taxed {$tax}% of the resources collected.
 salvage-expedition-desc-structure = Destroy {$count} {$structure} inside the area.
 
+salvage-expedition-difficulty-Invalid = Invalid
+salvage-expedition-difficulty-Minor = Minor
+salvage-expedition-difficulty-Moderate = Moderate
+salvage-expedition-difficulty-Hazardous = Hazardous
+salvage-expedition-difficulty-Extreme = Extreme
+
 # Runner
 salvage-expedition-announcement-countdown-minutes = {$duration} minutes remaining to complete the expedition.
 salvage-expedition-announcement-countdown-seconds = {$duration} seconds remaining to complete the expedition.
+salvage-expedition-announcement-dungeon = Dungeon is located {$direction}.

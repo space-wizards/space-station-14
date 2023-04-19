@@ -54,7 +54,7 @@ public sealed partial class SalvageSystem
         // Finish mission
         if (TryComp<SalvageExpeditionDataComponent>(component.Station, out var data))
         {
-            FinishExpedition(data, component);
+            FinishExpedition(data, component, null);
         }
     }
 
@@ -111,8 +111,33 @@ public sealed partial class SalvageSystem
         }
     }
 
-    private void FinishExpedition(SalvageExpeditionDataComponent component, SalvageExpeditionComponent expedition)
+    private void FinishExpedition(SalvageExpeditionDataComponent component, SalvageExpeditionComponent expedition, EntityUid? shuttle)
     {
+        // Finish mission cleanup.
+        switch (expedition.MissionParams.Config)
+        {
+            // Handles the mining taxation.
+            case SalvageMissionType.Mining:
+                expedition.Completed = true;
+
+                if (shuttle != null && TryComp<SalvageMiningExpeditionComponent>(expedition.Owner, out var mining))
+                {
+                    var xformQuery = GetEntityQuery<TransformComponent>();
+                    var entities = new List<EntityUid>();
+                    MiningTax(entities, shuttle.Value, mining, xformQuery);
+
+                    var tax = GetMiningTax(expedition.MissionParams.Difficulty);
+                    _random.Shuffle(entities);
+
+                    for (var i = 0; i < Math.Ceiling(entities.Count * tax); i++)
+                    {
+                        QueueDel(entities[i]);
+                    }
+                }
+
+                break;
+        }
+
         // Payout already handled elsewhere.
         if (expedition.Completed)
         {
@@ -132,12 +157,31 @@ public sealed partial class SalvageSystem
         UpdateConsoles(component);
     }
 
+    /// <summary>
+    /// Deducts ore tax for mining.
+    /// </summary>
+    private void MiningTax(List<EntityUid> entities, EntityUid entity, SalvageMiningExpeditionComponent mining, EntityQuery<TransformComponent> xformQuery)
+    {
+        if (!mining.ExemptEntities.Contains(entity))
+        {
+            entities.Add(entity);
+        }
+
+        var xform = xformQuery.GetComponent(entity);
+        var children = xform.ChildEnumerator;
+
+        while (children.MoveNext(out var child))
+        {
+            MiningTax(entities, child.Value, mining, xformQuery);
+        }
+    }
+
     private void GenerateMissions(SalvageExpeditionDataComponent component)
     {
         component.Missions.Clear();
-        var configs = _prototypeManager.EnumeratePrototypes<SalvageMissionPrototype>().ToArray();
+        var configs = Enum.GetValues<SalvageMissionType>().ToList();
 
-        if (configs.Length == 0)
+        if (configs.Count == 0)
             return;
 
         for (var i = 0; i < MissionLimit; i++)
@@ -147,14 +191,10 @@ public sealed partial class SalvageSystem
 
             foreach (var config in configs)
             {
-                // Don't offer harder missions under easier tiers.
-                if (config.MinDifficulty > i)
-                    continue;
-
                 var mission = new SalvageMissionParams()
                 {
                     Index = component.NextIndex,
-                    Config = config.ID,
+                    Config = config,
                     Seed = _random.Next(),
                     Difficulty = rating,
                 };

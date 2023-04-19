@@ -115,7 +115,7 @@
         frequency: 0.04
         fractalType: None
       entities:
-        - WallRockPlasma
+        - WallRockUranium
     - !type:BiomeTileLayer
       tile: FloorPlanetDirt
       threshold: 0.99

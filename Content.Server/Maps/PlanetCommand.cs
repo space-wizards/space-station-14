@@ -64,7 +64,6 @@ public sealed class PlanetCommand : IConsoleCommand
 
         var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
         var biomeSystem = _entManager.System<BiomeSystem>();
-        biomeSystem.SetPrototype(biome, args[1]);
         biomeSystem.SetSeed(biome, _random.Next());
         biomeSystem.SetTemplate(biome, biomeTemplate);
         _entManager.Dirty(biome);

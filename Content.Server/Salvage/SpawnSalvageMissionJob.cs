@@ -73,7 +73,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     protected override async Task<bool> Process()
     {
         Logger.DebugS("salvage", $"Spawning salvage mission with seed {_missionParams.Seed}");
-        var config = _prototypeManager.Index<SalvageMissionPrototype>(_missionParams.Config);
+        var config = _missionParams.Config;
         var mapId = _mapManager.CreateMap();
         var mapUid = _mapManager.GetMapEntityId(mapId);
         _mapManager.AddUninitializedMap(mapId);
@@ -93,7 +93,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         {
             var biome = _entManager.AddComponent<BiomeComponent>(mapUid);
             var biomeSystem = _entManager.System<BiomeSystem>();
-            biomeSystem.SetPrototype(biome, mission.Biome);
+            biomeSystem.SetTemplate(biome, _prototypeManager.Index<BiomeTemplatePrototype>(missionBiome.BiomePrototype));
             biomeSystem.SetSeed(biome, mission.Seed);
             _entManager.Dirty(biome);
 
@@ -134,7 +134,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         // Don't want consoles to have the incorrect name until refreshed.
         var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
-        _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>(config.NameProto), _missionParams.Seed);
+        _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed);
         _entManager.InitializeAndStartEntity(ftlUid);
 
         var landingPadRadius = 24;
@@ -145,19 +145,18 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         // If the dungeon were to spawn facing the landing pad then bump the offset a bit
         // This isn't robust but fine for now.
-        if ((dungeonRotation - dungeonSpawnRotation).Reduced() > Math.PI / 2)
+        if (Math.Abs((dungeonRotation - dungeonSpawnRotation).Theta) < Math.PI / 2)
         {
             minDungeonOffset += 16;
         }
 
-        Dungeon? dungeon = null;
-        var dungeonOffset = Vector2.Zero;
+        Dungeon dungeon = default!;
 
-        if (config.ID != "Mining")
+        if (config != SalvageMissionType.Mining)
         {
             var maxDungeonOffset = minDungeonOffset + 24;
             var dungeonOffsetDistance = minDungeonOffset + (maxDungeonOffset - minDungeonOffset) * random.NextFloat();
-            dungeonOffset = new Vector2(dungeonOffsetDistance, 0f);
+            var dungeonOffset = new Vector2(dungeonOffsetDistance, 0f);
             dungeonOffset = dungeonSpawnRotation.RotateVec(dungeonOffset);
             var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(mission.Dungeon);
             dungeon =
@@ -169,6 +168,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             {
                 return false;
             }
+
+            expedition.DungeonLocation = dungeonOffset;
         }
 
         List<Vector2i> reservedTiles = new();
@@ -191,7 +192,18 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         grid.SetTiles(tiles);
 
-        await SetupMission(mission.Mission, mission, dungeon, mapUid, grid, random);
+        // Mission setup
+        switch (config)
+        {
+            case SalvageMissionType.Mining:
+                await SetupMining(mission, mapUid);
+                break;
+            case SalvageMissionType.Destruction:
+                await SetupStructure(mission, dungeon, mapUid, grid, random);
+                break;
+            default:
+                throw new NotImplementedException();
+        }
 
         // Handle loot
         foreach (var (loot, count) in mission.Loot)
@@ -275,21 +287,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
     #region Mission Specific
 
-    private async Task SetupMission(string missionMod, SalvageMission mission, Dungeon? dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
-    {
-        switch (missionMod)
-        {
-            case "Mining":
-                await SetupMining(mission, gridUid);
-                return;
-            case "StructureDestroy":
-                await SetupStructure(mission, dungeon!, gridUid, grid, random);
-                return;
-            default:
-                throw new NotImplementedException();
-        }
-    }
-
     private async Task SetupMining(
         SalvageMission mission,
         EntityUid gridUid)
@@ -299,7 +296,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
         {
             // TODO: Better
-            for (var i = 0; i < (int) mission.Difficulty; i++)
+            for (var i = 0; i < _salvage.GetDifficulty(mission.Difficulty); i++)
             {
                 _biome.AddMarkerLayer(biome, faction.Configs["Mining"]);
             }

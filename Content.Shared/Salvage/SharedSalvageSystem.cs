@@ -7,6 +7,7 @@ using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Salvage;
@@ -26,9 +27,9 @@ public abstract class SharedSalvageSystem : EntitySystem
         // Hardcoded in coooooz it's dynamic based on difficulty and I'm lazy.
         switch (mission.Mission)
         {
-            case "Mining":
+            case SalvageMissionType.Mining:
                 return Loc.GetString("salvage-expedition-desc-mining", ("tax", $"{GetMiningTax(mission.Difficulty) * 100f:0}"));
-            case "StructureDestroy":
+            case SalvageMissionType.Destruction:
                 var proto = _proto.Index<SalvageFactionPrototype>(mission.Faction).Configs["DefenseStructure"];
 
                 return Loc.GetString("salvage-expedition-desc-structure",
@@ -59,15 +60,15 @@ public abstract class SharedSalvageSystem : EntitySystem
         switch (rating)
         {
             case DifficultyRating.None:
-                return 0;
-            case DifficultyRating.Minor:
                 return 1;
+            case DifficultyRating.Minor:
+                return 2;
             case DifficultyRating.Moderate:
-                return 3;
+                return 4;
             case DifficultyRating.Hazardous:
                 return 6;
             case DifficultyRating.Extreme:
-                return 10;
+                return 8;
             default:
                 throw new ArgumentOutOfRangeException(nameof(rating), rating, null);
         }
@@ -87,10 +88,13 @@ public abstract class SharedSalvageSystem : EntitySystem
         return $"{dataset.Values[random.Next(dataset.Values.Count)]}-{random.Next(10, 100)}-{(char) (65 + random.Next(26))}";
     }
 
-    public SalvageMission GetMission(string config, DifficultyRating difficulty, int seed)
+    public SalvageMission GetMission(SalvageMissionType config, DifficultyRating difficulty, int seed)
     {
         // This is on shared to ensure the client display for missions and what the server generates are consistent
         var rating = (float) GetDifficulty(difficulty);
+        // Don't want easy missions to have any negative modifiers but also want
+        // easy to be a 1 for difficulty.
+        rating -= 1f;
         var rand = new System.Random(seed);
         var faction = GetMod<SalvageFactionPrototype>(rand, ref rating);
         var biome = GetMod<SalvageBiomeMod>(rand, ref rating);
@@ -180,7 +184,7 @@ public abstract class SharedSalvageSystem : EntitySystem
         throw new InvalidOperationException();
     }
 
-    public Dictionary<string, int> GetLoot(string mission, List<SalvageLootPrototype> loots, int count, int seed)
+    public Dictionary<string, int> GetLoot(SalvageMissionType mission, List<SalvageLootPrototype> loots, int count, int seed)
     {
         var results = new Dictionary<string, int>();
         var adjustedSeed = new System.Random(seed + 2);
@@ -203,4 +207,28 @@ public abstract class SharedSalvageSystem : EntitySystem
 
         return results;
     }
+}
+
+[Serializable, NetSerializable]
+public enum SalvageMissionType : byte
+{
+    /// <summary>
+    /// No dungeon, just ore loot and random mob spawns.
+    /// </summary>
+    Mining,
+
+    /// <summary>
+    /// Destroy the specified structures in a dungeon.
+    /// </summary>
+    Destruction,
+}
+
+[Serializable, NetSerializable]
+public enum DifficultyRating : byte
+{
+    None,
+    Minor,
+    Moderate,
+    Hazardous,
+    Extreme,
 }

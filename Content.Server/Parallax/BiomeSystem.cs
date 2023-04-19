@@ -98,15 +98,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         SetSeed(component, _random.Next());
     }
 
-    public void SetPrototype(BiomeComponent component, string proto)
-    {
-        if (component.Template == proto)
-            return;
-
-        component.Template = proto;
-        Dirty(component);
-    }
-
     public void SetSeed(BiomeComponent component, int seed)
     {
         component.Seed = seed;
@@ -320,6 +311,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
     }
 
+    #region Load
+
     private void LoadChunks(
         BiomeComponent component,
         EntityUid gridUid,
@@ -337,7 +330,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 if (loadedMarkers.TryGetValue(layer, out var mobChunks) && mobChunks.Contains(chunk))
                     continue;
 
-                // TODO: Need buffer region for dungeons around chunks.
                 var layerProto = _proto.Index<BiomeMarkerLayerPrototype>(layer);
                 var buffer = layerProto.Radius / 2f;
                 mobChunks ??= new HashSet<Vector2i>();
@@ -351,13 +343,25 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 for (var i = 0; i < count; i++)
                 {
-                    var point = new Vector2(
-                        chunk.X + buffer * rand.NextFloat() * (layerProto.Size - buffer),
-                        chunk.Y + buffer * rand.NextFloat() * (layerProto.Size - buffer));
-
-                    for (var j = 0; j < layerProto.GroupCount; j++)
+                    for (var j = 0; j < 5; j++)
                     {
-                        Spawn(layerProto.Prototype, new EntityCoordinates(gridUid, point));
+                        var point = new Vector2(
+                            chunk.X + buffer * rand.NextFloat() * (layerProto.Size - buffer),
+                            chunk.Y + buffer * rand.NextFloat() * (layerProto.Size - buffer));
+
+                        var coords = new EntityCoordinates(gridUid, point);
+                        var tile = grid.LocalToTile(coords);
+
+                        // Blocked spawn, try again.
+                        if (grid.GetAnchoredEntitiesEnumerator(tile).MoveNext(out _))
+                            continue;
+
+                        for (var k = 0; k < layerProto.GroupCount; k++)
+                        {
+                            Spawn(layerProto.Prototype, new EntityCoordinates(gridUid, point));
+                        }
+
+                        break;
                     }
                 }
             }
@@ -486,6 +490,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
     }
 
+    #endregion
+
+    #region Unload
+
     private void UnloadChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, FastNoiseLite noise)
     {
         var active = _activeChunks[component];
@@ -574,4 +582,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             component.ModifiedTiles[chunk] = modified;
         }
     }
+
+    #endregion
 }

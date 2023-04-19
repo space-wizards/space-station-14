@@ -3,8 +3,8 @@
   groups:
     - entries:
         - id: MobXeno
-          amount: 5
-          maxAmount: 8
+          amount: 2
+          maxAmount: 3
         - id: MobXenoDrone
           amount: 1
     - entries:

@@ -17,8 +17,8 @@ public sealed class SalvageLootPrototype : IPrototype
     /// <summary>
     /// Mission types this loot is not allowed to spawn for
     /// </summary>
-    [DataField("blacklist", customTypeSerializer:typeof(PrototypeIdListSerializer<SalvageMissionPrototype>))]
-    public List<string> Blacklist = new();
+    [DataField("blacklist")]
+    public List<SalvageMissionType> Blacklist = new();
 
     /// <summary>
     /// All of the loot rules

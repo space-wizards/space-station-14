@@ -52,11 +52,26 @@ public sealed partial class SalvageSystem
             return;
 
         Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", (component.EndTime - _timing.CurTime).Minutes)));
+
+        if (component.DungeonLocation != Vector2.Zero)
+            Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-dungeon", ("direction", component.DungeonLocation.GetDir())));
+
         component.Stage = ExpeditionStage.Running;
     }
 
     private void OnFTLStarted(ref FTLStartedEvent ev)
     {
+        // Started a mining mission so work out exempt entities
+        if (TryComp<SalvageMiningExpeditionComponent>(
+                _mapManager.GetMapEntityId(ev.TargetCoordinates.ToMap(EntityManager, _transform).MapId),
+                out var mining))
+        {
+            var ents = new List<EntityUid>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            MiningTax(ents, ev.Entity, mining, xformQuery);
+            mining.ExemptEntities = ents;
+        }
+
         if (!TryComp<SalvageExpeditionComponent>(ev.FromMapUid, out var expedition) ||
             !TryComp<SalvageExpeditionDataComponent>(expedition.Station, out var station))
         {
@@ -73,7 +88,7 @@ public sealed partial class SalvageSystem
         }
 
         // Last shuttle has left so finish the mission.
-        FinishExpedition(station, expedition);
+        FinishExpedition(station, expedition, ev.Entity);
     }
 
     // Runs the expedition

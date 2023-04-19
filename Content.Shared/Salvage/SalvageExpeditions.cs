@@ -78,8 +78,8 @@ public sealed record SalvageMissionParams
     [ViewVariables]
     public ushort Index;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("config", required: true, customTypeSerializer:typeof(SalvageMissionPrototype))]
-    public string Config = default!;
+    [ViewVariables(VVAccess.ReadWrite), DataField("missionType", required: true)]
+    public SalvageMissionType Config;
 
     [ViewVariables(VVAccess.ReadWrite)] public int Seed;
 
@@ -98,7 +98,7 @@ public sealed record SalvageMission(
     DifficultyRating Difficulty,
     string Dungeon,
     string Faction,
-    string Mission,
+    SalvageMissionType Mission,
     string Biome,
     Color? Color,
     TimeSpan Duration,
@@ -128,7 +128,7 @@ public sealed record SalvageMission(
     /// <summary>
     /// Underlying mission params that generated this.
     /// </summary>
-    public readonly string Mission = Mission;
+    public readonly SalvageMissionType Mission = Mission;
 
     /// <summary>
     /// Biome to be used for the mission.
