@@ -22,6 +22,8 @@
     baseDecayRate: 0.1 # Probably faster than humans?
   - type: Thirst
   # Damage and speed
+  - type: Bloodstream
+    bloodReagent: SpiderBlood
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
