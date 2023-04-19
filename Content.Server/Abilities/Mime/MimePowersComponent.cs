@@ -53,7 +53,7 @@ namespace Content.Server.Abilities.Mime
         /// <summary>
         /// How long it takes the mime to get their powers back
         /// </summary>
-        [DataField("vowCooldown", customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [DataField("vowCooldown")]
         public TimeSpan VowCooldown = TimeSpan.FromMinutes(5);
     }
 }

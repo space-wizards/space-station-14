@@ -2,8 +2,8 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -20,6 +20,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
@@ -41,10 +42,10 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly StomachSystem _stomachSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly PuddleSystem _puddleSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -54,6 +55,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
+            // TODO add InteractNoHandEvent for entities like mice.
             SubscribeLocalEvent<DrinkComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<DrinkComponent, ComponentInit>(OnDrinkInit);
             SubscribeLocalEvent<DrinkComponent, LandEvent>(HandleLand);
@@ -62,7 +64,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
             SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DrinkComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
-            SubscribeLocalEvent<DrinkComponent, DoAfterEvent<DrinkData>>(OnDoAfter);
+            SubscribeLocalEvent<DrinkComponent, ConsumeDoAfterEvent>(OnDoAfter);
         }
 
         public bool IsEmpty(EntityUid uid, DrinkComponent? component = null)
@@ -84,7 +86,7 @@ namespace Content.Server.Nutrition.EntitySystems
             args.Message.AddMarkup($"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
             if (!IsEmpty(uid, component))
             {
-                if (TryComp<ExaminableSolutionComponent>(component.Owner, out var comp))
+                if (TryComp<ExaminableSolutionComponent>(uid, out var comp))
                 {
                     //provide exact measurement for beakers
                     args.Message.AddMarkup($" - {Loc.GetString("drink-component-on-examine-exact-volume", ("amount", _solutionContainerSystem.DrainAvailable(uid)))}");
@@ -159,7 +161,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 UpdateAppearance(component);
 
                 var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.Volume);
-                _spillableSystem.SpillAt(uid, solution, "PuddleSmear");
+                _puddleSystem.TrySpillAt(uid, solution, out _);
 
                 _audio.PlayPvs(_audio.GetSound(component.BurstSound), uid, AudioParams.Default.WithVolume(-4));
             }
@@ -217,7 +219,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private bool TryDrink(EntityUid user, EntityUid target, DrinkComponent drink, EntityUid item)
         {
-            if (!EntityManager.HasComponent<BodyComponent>(target) || drink.Drinking)
+            if (!EntityManager.HasComponent<BodyComponent>(target))
                 return false;
 
             if (!drink.Opened)
@@ -235,16 +237,18 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
+            if (drinkSolution.Name == null)
+                return false;
+
             if (_foodSystem.IsMouthBlocked(target, user))
                 return true;
 
             if (!_interactionSystem.InRangeUnobstructed(user, item, popup: true))
                 return true;
 
-            drink.Drinking = true;
-            drink.ForceDrink = user != target;
+            var forceDrink = user != target;
 
-            if (drink.ForceDrink)
+            if (forceDrink)
             {
                 var userName = Identity.Entity(user, EntityManager);
 
@@ -262,63 +266,70 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(user, drinkSolution);
 
-            var drinkData = new DrinkData(drinkSolution, flavors);
-
-            var doAfterEventArgs = new DoAfterEventArgs(user, drink.ForceDrink ? drink.ForceFeedDelay : drink.Delay,
-                target: target, used: item)
+            var doAfterEventArgs = new DoAfterArgs(
+                user,
+                forceDrink ? drink.ForceFeedDelay : drink.Delay,
+                new ConsumeDoAfterEvent(drinkSolution.Name, flavors),
+                eventTarget: item,
+                target: target,
+                used: item)
             {
-                RaiseOnTarget = user != target,
-                RaiseOnUser = false,
-                BreakOnUserMove = drink.ForceDrink,
+                BreakOnUserMove = forceDrink,
                 BreakOnDamage = true,
-                BreakOnStun = true,
-                BreakOnTargetMove = drink.ForceDrink,
+                BreakOnTargetMove = forceDrink,
                 MovementThreshold = 0.01f,
                 DistanceThreshold = 1.0f,
-                NeedHand = true
+                // Mice and the like can eat without hands.
+                // TODO maybe set this based on some CanEatWithoutHands event or component?
+                NeedHand = forceDrink,
+                CancelDuplicate = false,
             };
 
-            _doAfterSystem.DoAfter(doAfterEventArgs, drinkData);
-
+            _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
             return true;
         }
 
         /// <summary>
         ///     Raised directed at a victim when someone has force fed them a drink.
         /// </summary>
-        private void OnDoAfter(EntityUid uid, DrinkComponent component, DoAfterEvent<DrinkData> args)
+        private void OnDoAfter(EntityUid uid, DrinkComponent component, ConsumeDoAfterEvent args)
         {
-            if (args.Cancelled)
+            if (args.Handled || args.Cancelled || component.Deleted)
+                return;
+
+            if (!TryComp<BodyComponent>(args.Target, out var body))
+                return;
+
+            if (!_solutionContainerSystem.TryGetSolution(args.Used, args.Solution, out var solution))
+                return;
+
+            // TODO this should really be checked every tick.
+            if (_foodSystem.IsMouthBlocked(args.Target.Value))
+                return;
+
+            // TODO this should really be checked every tick.
+            if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value))
+                return;
+
+            var transferAmount = FixedPoint2.Min(component.TransferAmount, solution.Volume);
+            var drained = _solutionContainerSystem.Drain(uid, solution, transferAmount);
+            var forceDrink = args.User != args.Target;
+
+            args.Handled = true;
+            if (transferAmount <= 0)
+                return;
+
+            if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(args.Target.Value, out var stomachs, body))
             {
-                component.ForceDrink = false;
-                component.Drinking = false;
-                return;
-            }
+                _popupSystem.PopupEntity(forceDrink ? Loc.GetString("drink-component-try-use-drink-cannot-drink-other") : Loc.GetString("drink-component-try-use-drink-had-enough"), args.Target.Value, args.User);
 
-            if (args.Handled || component.Deleted)
-                return;
-
-            if (!TryComp<BodyComponent>(args.Args.Target, out var body))
-                return;
-
-            component.Drinking = false;
-
-            var transferAmount = FixedPoint2.Min(component.TransferAmount, args.AdditionalData.DrinkSolution.Volume);
-            var drained = _solutionContainerSystem.Drain(uid, args.AdditionalData.DrinkSolution, transferAmount);
-
-            if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(args.Args.Target.Value, out var stomachs, body))
-            {
-                _popupSystem.PopupEntity(component.ForceDrink ? Loc.GetString("drink-component-try-use-drink-cannot-drink-other") : Loc.GetString("drink-component-try-use-drink-had-enough"), args.Args.Target.Value, args.Args.User);
-
-                if (HasComp<RefillableSolutionComponent>(args.Args.Target.Value))
+                if (HasComp<RefillableSolutionComponent>(args.Target.Value))
                 {
-                    _spillableSystem.SpillAt(args.Args.User, drained, "PuddleSmear");
-                    args.Handled = true;
+                    _puddleSystem.TrySpillAt(args.User, drained, out _);
                     return;
                 }
 
-                _solutionContainerSystem.Refill(args.Args.Target.Value, args.AdditionalData.DrinkSolution, drained);
-                args.Handled = true;
+                _solutionContainerSystem.Refill(args.Target.Value, solution, drained);
                 return;
             }
 
@@ -327,56 +338,59 @@ namespace Content.Server.Nutrition.EntitySystems
             //All stomachs are full or can't handle whatever solution we have.
             if (firstStomach == null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough"), args.Args.Target.Value, args.Args.Target.Value);
+                _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough"), args.Target.Value, args.Target.Value);
 
-                if (component.ForceDrink)
+                if (forceDrink)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"), args.Args.Target.Value, args.Args.User);
-                    _spillableSystem.SpillAt(args.Args.Target.Value, drained, "PuddleSmear");
+                    _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"), args.Target.Value, args.User);
+                    _puddleSystem.TrySpillAt(args.Target.Value, drained, out _);
                 }
                 else
-                    _solutionContainerSystem.TryAddSolution(uid, args.AdditionalData.DrinkSolution, drained);
+                    _solutionContainerSystem.TryAddSolution(uid, solution, drained);
 
-                args.Handled = true;
                 return;
             }
 
-            var flavors = args.AdditionalData.FlavorMessage;
+            var flavors = args.FlavorMessage;
 
-            if (component.ForceDrink)
+            if (forceDrink)
             {
-                var targetName = Identity.Entity(args.Args.Target.Value, EntityManager);
-                var userName = Identity.Entity(args.Args.User, EntityManager);
+                var targetName = Identity.Entity(args.Target.Value, EntityManager);
+                var userName = Identity.Entity(args.User, EntityManager);
 
-                _popupSystem.PopupEntity(Loc.GetString("drink-component-force-feed-success", ("user", userName), ("flavors", flavors)), args.Args.Target.Value, args.Args.Target.Value);
+                _popupSystem.PopupEntity(Loc.GetString("drink-component-force-feed-success", ("user", userName), ("flavors", flavors)), args.Target.Value, args.Target.Value);
 
                 _popupSystem.PopupEntity(
                     Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)),
-                    args.Args.User, args.Args.User);
+                    args.User, args.User);
 
                 // log successful forced drinking
-                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.Args.User):target} to drink {ToPrettyString(component.Owner):drink}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to drink {ToPrettyString(component.Owner):drink}");
             }
             else
             {
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-try-use-drink-success-slurp-taste", ("flavors", flavors)), args.Args.User,
-                    args.Args.User);
+                    Loc.GetString("drink-component-try-use-drink-success-slurp-taste", ("flavors", flavors)), args.User,
+                    args.User);
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-try-use-drink-success-slurp"), args.Args.User, Filter.PvsExcept(args.Args.User), true);
+                    Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.PvsExcept(args.User), true);
 
                 // log successful voluntary drinking
-                _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.Args.User):target} drank {ToPrettyString(uid):drink}");
+                _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(uid):drink}");
             }
 
-            _audio.PlayPvs(_audio.GetSound(component.UseSound), args.Args.Target.Value, AudioParams.Default.WithVolume(-2f));
+            _audio.PlayPvs(_audio.GetSound(component.UseSound), args.Target.Value, AudioParams.Default.WithVolume(-2f));
 
-            _reaction.DoEntityReaction(args.Args.Target.Value, args.AdditionalData.DrinkSolution, ReactionMethod.Ingestion);
+            _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
             //TODO: Grab the stomach UIDs somehow without using Owner
             _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);
 
-            component.ForceDrink = false;
-            args.Handled = true;
+            var comp = EnsureComp<ForensicsComponent>(uid);
+            if (TryComp<DnaComponent>(args.Target, out var dna))
+                comp.DNAs.Add(dna.DNA);
+
+            if (!forceDrink && solution.Volume > 0)
+                args.Repeat = true;
         }
 
         private void AddDrinkVerb(EntityUid uid, DrinkComponent component, GetVerbsEvent<AlternativeVerb> ev)
@@ -415,12 +429,6 @@ namespace Content.Server.Nutrition.EntitySystems
                 remainingString = "drink-component-on-examine-is-half-empty";
 
             return remainingString;
-        }
-
-        private record struct DrinkData(Solution DrinkSolution, string FlavorMessage)
-        {
-            public readonly Solution DrinkSolution = DrinkSolution;
-            public readonly string FlavorMessage = FlavorMessage;
         }
     }
 }

@@ -1,6 +1,4 @@
-using System.Threading;
 using Content.Server.Administration.Logs;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.RCD.Components;
 using Content.Shared.Database;
@@ -23,7 +21,7 @@ namespace Content.Server.RCD.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -59,14 +57,6 @@ namespace Content.Server.RCD.Systems
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (rcd.CancelToken != null)
-            {
-                rcd.CancelToken?.Cancel();
-                rcd.CancelToken = null;
-                args.Handled = true;
-                return;
-            }
-
             if (!args.ClickLocation.IsValid(EntityManager)) return;
 
             var clickLocationMod = args.ClickLocation;
@@ -96,18 +86,18 @@ namespace Content.Server.RCD.Systems
             var user = args.User;
 
             //Using an RCD isn't instantaneous
-            rcd.CancelToken = new CancellationTokenSource();
-            var doAfterEventArgs = new DoAfterEventArgs(user, rcd.Delay, rcd.CancelToken.Token, args.Target)
+            var doAfterEventArgs = new DoAfterArgs(user, rcd.Delay, new AwaitedDoAfterEvent(), null, target: args.Target)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 NeedHand = true,
+                BreakOnHandChange = true,
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true,
+                AttemptFrequency = AttemptFrequency.EveryTick,
                 ExtraCheck = () => IsRCDStillValid(rcd, args, mapGrid, tile, startingMode) //All of the sanity checks are here
             };
 
             var result = await _doAfterSystem.WaitDoAfter(doAfterEventArgs);
-
-            rcd.CancelToken = null;
 
             if (result == DoAfterStatus.Cancelled)
                 return;

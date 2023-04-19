@@ -150,6 +150,16 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         if (!Resolve(uid, ref humanoid))
             return;
 
+        if (!_prototypeManager.TryIndex<SpeciesPrototype>(humanoid.Species, out var species))
+        {
+            return;
+        }
+
+        if (!SkinColor.VerifySkinColor(species.SkinColoration, skinColor))
+        {
+            skinColor = SkinColor.ValidSkinTone(species.SkinColoration, skinColor);
+        }
+
         humanoid.SkinColor = skinColor;
 
         if (sync)
