@@ -1,9 +1,4 @@
 Entries:
-- author: jicksaw
-  changes:
-  - {message: Handcuffing in combat mode should feel more responsive, type: Fix}
-  id: 2960
-  time: '2023-01-27T01:04:26.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix mass scanner on planet maps., type: Fix}
@@ -2884,3 +2879,8 @@ Entries:
   - {message: Reduced the power of anomaly vessel upgrades., type: Tweak}
   id: 3459
   time: '2023-04-19T10:03:08.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added samurai dogi to EMAGGED Autodrobe., type: Add}
+  id: 3460
+  time: '2023-04-19T14:27:39.0000000+00:00'
