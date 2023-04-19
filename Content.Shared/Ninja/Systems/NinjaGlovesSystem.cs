@@ -134,15 +134,18 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     }
 
     /// <summary>
-    /// Helper for glove ability handlers, checks gloves, range, combat mode and stuff.
+    /// Helper for glove ability handlers, checks gloves, suit, range, combat mode and stuff.
     /// </summary>
     protected bool GloveCheck(EntityUid uid, InteractionAttemptEvent args, [NotNullWhen(true)] out NinjaGlovesComponent? gloves,
         out EntityUid user, out EntityUid target)
     {
         if (args.Target != null && TryComp<NinjaGlovesComponent>(uid, out gloves)
             && gloves.User != null
-            && !_combatMode.IsInCombatMode(gloves.User)
             && _timing.IsFirstTimePredicted
+            && !_combatMode.IsInCombatMode(gloves.User)
+            && TryComp<NinjaComponent>(gloves.User, out var ninja)
+            && ninja.Suit != null
+            && !_useDelay.ActiveDelay(ninja.Suit.Value)
             && TryComp<HandsComponent>(gloves.User, out var hands)
             && hands.ActiveHandEntity == null)
         {

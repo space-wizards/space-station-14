@@ -13,7 +13,7 @@ namespace Content.Server.Ninja.Systems;
 
 public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
-    [Dependency] private readonly new NinjaSystem _ninja = default!;
+    [Dependency] private readonly NinjaSystem _ninja = default!;
 
     protected override void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args)
     {
