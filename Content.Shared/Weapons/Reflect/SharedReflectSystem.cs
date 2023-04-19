@@ -1,6 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Audio;
 using Content.Shared.Hands.Components;
+using Robust.Shared.GameStates;
+using Content.Shared.Weapons.Ranged.Events;
+using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Physics.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Events;
@@ -33,55 +37,62 @@ public abstract class SharedReflectSystem : EntitySystem
 
     private static void OnHandleState(EntityUid uid, ReflectComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not ReflectComponentState state) return;
+        if (args.Current is not ReflectComponentState state)
+            return;
+
         component.Enabled = state.Enabled;
-        component.EnergeticChance = state.EnergeticChance;
-        component.KineticChance = state.KineticChance;
+        component.ReflectProb = state.ReflectProb;
         component.Spread = state.Spread;
     }
 
     private static void OnGetState(EntityUid uid, ReflectComponent component, ref ComponentGetState args)
     {
-        args.State = new ReflectComponentState(component.Enabled, component.EnergeticChance, component.KineticChance, component.Spread);
+        args.State = new ReflectComponentState(component.Enabled, component.ReflectProb, component.Spread);
     }
 
     private void OnHandReflectProjectile(EntityUid uid, HandsComponent hands, ref ProjectileReflectAttemptEvent args)
     {
         if (args.Cancelled)
             return;
-        if (TryReflectProjectile(uid, hands.ActiveHandEntity, args.ProjUid, args.Component))
+
+        if (TryReflectProjectile(uid, hands.ActiveHandEntity, args.ProjUid))
             args.Cancelled = true;
     }
-    
-    private bool TryReflectProjectile(EntityUid user, EntityUid? reflector, EntityUid projectile, ProjectileComponent component)
+
+    private bool TryReflectProjectile(EntityUid user, EntityUid? reflector, EntityUid projectile)
     {
-        var isEnergyProjectile = component.Damage.DamageDict.ContainsKey("Heat");
-        var isKineticProjectile = !isEnergyProjectile;
-        if (TryComp<ReflectComponent>(reflector, out var reflect) &&
-            reflect.Enabled && 
-            (isEnergyProjectile && _random.Prob(reflect.EnergeticChance) || isKineticProjectile && _random.Prob(reflect.KineticChance)))
+        if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
+            !reflect.Enabled ||
+            !_random.Prob(reflect.ReflectProb) ||
+            !TryComp<PhysicsComponent>(projectile, out var physics))
         {
-            var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
-
-            var relVel = _physics.GetMapLinearVelocity(projectile) - _physics.GetMapLinearVelocity(user);
-            var newVel = rotation.RotateVec(relVel);
-            _physics.SetLinearVelocity(projectile, newVel);
-
-            var locRot = Transform(projectile).LocalRotation;
-            var newRot = rotation.RotateVec(locRot.ToVec());
-            _transform.SetLocalRotation(projectile, newRot.ToAngle());
-
-            _popup.PopupEntity(Loc.GetString("reflect-shot"), user, PopupType.Small);
-            _audio.PlayPvs(reflect.OnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
-            return true;
+            return false;
         }
-        return false;
+
+        var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
+        var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
+        var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(user);
+        var newVelocity = rotation.RotateVec(relativeVelocity);
+
+        // Have the velocity in world terms above so need to convert it back to local.
+        var difference = newVelocity - existingVelocity;
+
+        _physics.SetLinearVelocity(projectile, physics.LinearVelocity + difference, body: physics);
+
+        var locRot = Transform(projectile).LocalRotation;
+        var newRot = rotation.RotateVec(locRot.ToVec());
+        _transform.SetLocalRotation(projectile, newRot.ToAngle());
+
+        _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
+        _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
+        return true;
     }
 
     private void OnHandsReflectHitscan(EntityUid uid, HandsComponent hands, ref HitScanReflectAttemptEvent args)
     {
         if (args.Reflected)
             return;
+
         if (TryReflectHitscan(uid, hands.ActiveHandEntity, args.Direction, out var dir))
         {
             args.Direction = dir.Value;
@@ -93,14 +104,15 @@ public abstract class SharedReflectSystem : EntitySystem
     {
         if (TryComp<ReflectComponent>(reflector, out var reflect) &&
             reflect.Enabled &&
-            _random.Prob(reflect.EnergeticChance))
+            _random.Prob(reflect.ReflectProb))
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user, PopupType.Small);
-            _audio.PlayPvs(reflect.OnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
+            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
             var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
             newDirection = -spread.RotateVec(direction);
             return true;
         }
+
         newDirection = null;
         return false;
     }
