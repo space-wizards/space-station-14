@@ -22,14 +22,14 @@ public sealed class SolutionPurgeComponent : Component
     /// <summary>
     /// The reagent(s) to be ignored when purging the solution
     /// </summary>
-    [DataField("reserved"), ViewVariables(VVAccess.ReadWrite)]
-    public List<string> Reserve = default!;
+    [DataField("preserve"), ViewVariables(VVAccess.ReadWrite)]
+    public List<string> Preserve = new();
 
     /// <summary>
     /// Amount of reagent(s) that are purged
     /// </summary>
-    [DataField("purgeQuantity", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 Purge = default!;
+    [DataField("quantity", required: true), ViewVariables(VVAccess.ReadWrite)]
+    public FixedPoint2 Quantity = default!;
 
     /// <summary>
     /// How long it takes to purge once.
