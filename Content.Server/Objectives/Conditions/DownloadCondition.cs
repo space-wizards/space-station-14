@@ -24,7 +24,7 @@ public sealed class DownloadCondition : IObjectiveCondition
 
     public string Description => Loc.GetString("objective-condition-download-description");
 
-    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Structures/Machines/server.rsi"), "server");
+    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Structures/Machines/server.rsi"), "server");
 
     public float Progress
     {

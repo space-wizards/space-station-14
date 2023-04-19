@@ -108,7 +108,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Make space ninja",
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Weapons/Melee/energykatana.rsi"), "icon"),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/energykatana.rsi"), "icon"),
             Act = () =>
             {
                 if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)

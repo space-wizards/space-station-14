@@ -18,7 +18,7 @@ public sealed class TerrorCondition : IObjectiveCondition
 
     public string Description => Loc.GetString("objective-condition-terror-description");
 
-    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Structures/Machines/computers.rsi"), "comm_icon");
+    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Structures/Machines/computers.rsi"), "comm_icon");
 
     public float Progress
     {

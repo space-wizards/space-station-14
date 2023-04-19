@@ -10,8 +10,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Ninja.Components;
 
-// TODO: ResourcePath -> ResPath when thing gets merged
-
 /// <summary>
 /// Component for ninja suit abilities and power consumption.
 /// As an implementation detail, dashing with katana is a suit action which isn't ideal.
@@ -61,7 +59,7 @@ public sealed partial class NinjaSuitComponent : Component
     public InstantAction CreateSoapAction = new()
     {
         UseDelay = TimeSpan.FromSeconds(10),
-        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Specific/Janitorial/soap.rsi"), "soap"),
+        Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Specific/Janitorial/soap.rsi"), "soap"),
         ItemIconStyle = ItemActionIconStyle.NoItem,
         DisplayName = "action-name-create-soap",
         Description = "action-desc-create-soap",
@@ -88,7 +86,7 @@ public sealed partial class NinjaSuitComponent : Component
     public InstantAction RecallKatanaAction = new()
     {
         UseDelay = TimeSpan.FromSeconds(1),
-        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Melee/energykatana.rsi"), "icon"),
+        Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Melee/energykatana.rsi"), "icon"),
         ItemIconStyle = ItemActionIconStyle.NoItem,
         DisplayName = "action-name-recall-katana",
         Description = "action-desc-recall-katana",
@@ -102,7 +100,7 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField("katanaDashAction")]
     public WorldTargetAction KatanaDashAction = new()
     {
-        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Magic/magicactions.rsi"), "blink"),
+        Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Magic/magicactions.rsi"), "blink"),
         ItemIconStyle = ItemActionIconStyle.NoItem,
         DisplayName = "action-name-katana-dash",
         Description = "action-desc-katana-dash",
@@ -119,7 +117,7 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField("empAction")]
     public InstantAction EmpAction = new()
     {
-        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Grenades/empgrenade.rsi"), "icon"),
+        Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Grenades/empgrenade.rsi"), "icon"),
         ItemIconStyle = ItemActionIconStyle.BigAction,
         DisplayName = "action-name-em-burst",
         Description = "action-desc-em-burst",

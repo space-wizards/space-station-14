@@ -24,7 +24,7 @@ public sealed class DoorjackCondition : IObjectiveCondition
 
     public string Description => Loc.GetString("objective-condition-doorjack-description", ("count", _target));
 
-    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Tools/emag.rsi"), "icon");
+    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Objects/Tools/emag.rsi"), "icon");
 
     public float Progress
     {

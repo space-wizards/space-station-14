@@ -36,7 +36,7 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
 
     public string Description => Loc.GetString("objective-condition-spider-charge-description");
 
-    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Bombs/spidercharge.rsi"), "icon");
+    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Bombs/spidercharge.rsi"), "icon");
 
     public float Progress
     {
