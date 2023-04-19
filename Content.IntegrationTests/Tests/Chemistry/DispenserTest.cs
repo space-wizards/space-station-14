@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Content.Client.Chemistry.UI;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Chemistry;
 using Content.Shared.Containers.ItemSlots;
@@ -22,13 +23,24 @@ public sealed class DispenserTest : InteractionTest
         Assert.IsNull(Hands.ActiveHandEntity);
 
         // Open BUI
-        await Interact("");
+        await Interact();
 
         // Eject beaker via BUI.
         var ev = new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName);
         await SendBui(ReagentDispenserUiKey.Key, ev);
 
         // Beaker is back in the player's hands
+        Assert.IsNotNull(Hands.ActiveHandEntity);
+        AssertPrototype("Beaker", Hands.ActiveHandEntity);
+
+        // Re-insert the beaker
+        await Interact();
+        Assert.IsNull(Hands.ActiveHandEntity);
+
+        // Re-eject using the button directly instead of sending a BUI event. This test is really just a test of the
+        // bui/window helper methods.
+        await ClickControl<ReagentDispenserWindow>(nameof(ReagentDispenserWindow.EjectButton));
+        await RunTicks(5);
         Assert.IsNotNull(Hands.ActiveHandEntity);
         AssertPrototype("Beaker", Hands.ActiveHandEntity);
     }

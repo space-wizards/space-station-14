@@ -584,6 +584,19 @@
   - AdvancedScanningModuleStockPart
 
 - type: technology
+  name: technologies-magboots-technology
+  id: MagbootsTechnology
+  description: technologies-magboots-technology-description
+  icon:
+    sprite: Clothing/Shoes/Boots/magboots.rsi
+    state: icon
+  requiredPoints: 8500
+  requiredTechnologies:
+    - ScientificTechnology
+  unlockedRecipes:
+    - ClothingShoesBootsMag
+
+- type: technology
   name: technologies-super-parts-technology
   id: SuperPartsTechnology
   description: technologies-super-parts-technology-description
