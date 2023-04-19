@@ -102,18 +102,3 @@
   - type: StepTrigger
   - type: Item
     heldPrefix: omega
-
-- type: entity
-  name: ninja soap
-  id: SoapNinja
-  parent: Soap
-  description: The most important soap in the entire universe, as without it we would all cease to exist. Smells of honor.
-  components:
-  - type: Item
-    heldPrefix: ninja
-  # despawn to prevent ninja killing server
-  - type: TimedDespawn
-    lifetime: 60
-  # no holding ninja hostage and forcing him to make infinite money for cargo
-  - type: StaticPrice
-    price: 0
