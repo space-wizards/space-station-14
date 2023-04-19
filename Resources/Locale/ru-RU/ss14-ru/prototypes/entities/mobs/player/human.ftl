@@ -4,3 +4,7 @@ ent-MobHumanSyndicateAgent = Агент Синдиката
     .desc = { ent-MobHuman.desc }
 ent-MobHumanNukeOp = Ядерный оперативник
     .desc = { ent-MobHuman.desc }
+ent-MobHumanLoneNuclearOperative = Lone Operative
+    .desc = { ent-MobHuman.desc }
+ent-MobHumanSpaceNinja = Space Ninja
+    .desc = { ent-MobHuman.desc }
