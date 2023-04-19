@@ -1,8 +1,10 @@
 using System.Threading;
 using Content.Shared.Doors.Systems;
+using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Doors.Components;
 
@@ -82,6 +84,12 @@ public sealed class AirlockComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float AutoCloseDelayModifier = 1.0f;
+
+    /// <summary>
+    ///     The receiver port for turning off automatic closing.
+    /// </summary>
+    [DataField("autoClosePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+    public string AutoClosePort = "AutoClose";
 }
 
 [Serializable, NetSerializable]
