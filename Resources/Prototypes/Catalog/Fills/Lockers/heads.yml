@@ -89,6 +89,8 @@
       - id: RubberStampHop
       - id: BoxEncryptionKeyPassenger
       - id: BoxEncryptionKeyService
+      - id: ClothingBackpackIan
+        prob: 0.5
 
 - type: entity
   id: LockerChiefEngineerFilled
