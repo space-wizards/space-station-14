@@ -1,23 +1,4 @@
 Entries:
-- author: PixelTK
-  changes:
-  - {message: Adjusted the speed loaders of light rifles so they can both transfer
-      bullets easily between each other and actually work, type: Tweak}
-  id: 2954
-  time: '2023-01-26T00:49:07.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Two new turret types added for misc use., type: Add}
-  id: 2955
-  time: '2023-01-26T04:03:31.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - {message: 'Leather satchels have been added, with sprites from various parts of
-      /TG/Station''s history! Every clothesmate comes with two of them.', type: Add}
-  - {message: 'To make room for the leather satchels, clothesmates now only carry
-      three normal satchels.', type: Tweak}
-  id: 2956
-  time: '2023-01-26T18:14:31.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Detectives get a speedloader for their revolver. It can be found in
@@ -2888,3 +2869,20 @@ Entries:
   - {message: Added a search bar to marking editors in character creation, type: Add}
   id: 3453
   time: '2023-04-19T05:44:37.0000000+00:00'
+- author: RickiTIkkiTawwie
+  changes:
+  - {message: 'Added Ian''s backpack, bark! It has a 50% chance to spawn in HoP''s
+      locker with a round start.', type: Add}
+  id: 3454
+  time: '2023-04-19T07:40:25.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Implanter removal speed increased, type: Tweak}
+  id: 3455
+  time: '2023-04-19T07:41:09.0000000+00:00'
+- author: mhamster
+  changes:
+  - {message: Nanotrasen is now supplying scientists with cool new science coats instead
+      of the classic white lab coats, type: Add}
+  id: 3456
+  time: '2023-04-19T07:42:06.0000000+00:00'
