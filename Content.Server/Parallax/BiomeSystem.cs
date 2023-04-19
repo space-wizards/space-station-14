@@ -1,12 +1,10 @@
 using Content.Server.Decals;
-using Content.Server.Procedural;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Decals;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Parallax.Biomes.Points;
-using Content.Shared.Procedural;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -30,7 +28,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
-    [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<EntityUid> _handledEntities = new();
@@ -160,6 +157,18 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         Dirty(component);
     }
 
+    public void AddMarkerLayer(BiomeComponent component, string marker)
+    {
+        if (!_proto.HasIndex<BiomeMarkerLayerPrototype>(marker))
+        {
+            // TODO: Log when we get a sawmill
+            return;
+        }
+
+        component.MarkerLayers.Add(marker);
+        Dirty(component);
+    }
+
     /// <summary>
     /// Adds the specified template at the specified marker if it exists, withour overriding every layer.
     /// </summary>
@@ -214,7 +223,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             {
                 var chunkOrigin = chunk * proto.Size;
                 var layerChunks = goobers.GetOrNew(proto.ID);
-                layerChunks.Add(chunkOrigin.Value * proto.Size);
+                layerChunks.Add(chunkOrigin.Value);
             }
         }
     }
@@ -334,15 +343,17 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 mobChunks ??= new HashSet<Vector2i>();
                 mobChunks.Add(chunk);
                 loadedMarkers[layer] = mobChunks;
+                var rand = new Random(noise.GetSeed() + chunk.X * 8 + chunk.Y);
 
-                // Load the lizzers NOW
-                // TODO: Poisson disk
+                // Load NOW
+                // TODO: Need poisson but crashes whenever I use moony's due to inputs or smth
+                var count = (int) (layerProto.Size * layerProto.Size / layerProto.Radius);
 
-                for (var i = 0; i < layerProto.Count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     var point = new Vector2(
-                        _random.NextFloat(chunk.X + buffer, chunk.X + layerProto.Size - buffer),
-                        _random.NextFloat(chunk.Y + buffer, chunk.Y + layerProto.Size - buffer));
+                        chunk.X + buffer * rand.NextFloat() * (layerProto.Size - buffer),
+                        chunk.Y + buffer * rand.NextFloat() * (layerProto.Size - buffer));
 
                     for (var j = 0; j < layerProto.GroupCount; j++)
                     {

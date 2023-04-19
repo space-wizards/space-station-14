@@ -202,11 +202,15 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         {
             switch (rule)
             {
-                case BiomeLoot biome:
+                case BiomeTemplateLoot biomeLoot:
+                    if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                    {
+                        _biome.AddTemplate(biome, "Loot", _prototypeManager.Index<BiomeTemplatePrototype>(biomeLoot.Prototype));
+                    }
                     break;
                 // Spawns a cluster (like an ore vein) nearby.
-                case ClusterLoot cluster:
-                    await SpawnClusterLoot(dungeon, cluster, gridUid, grid, random, reservedTiles);
+                case ClusterLoot clusterLoot:
+                    await SpawnClusterLoot(dungeon, clusterLoot, gridUid, grid, random, reservedTiles);
                     break;
             }
         }
@@ -283,14 +287,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     {
         switch (missionMod)
         {
-        case "Mining":
-            await SetupMining(mission, dungeon, gridUid, grid, random);
-            return;
-        case "StructureDestroy":
-            await SetupStructure(mission, dungeon, gridUid, grid, random);
-            return;
-        default:
-            throw new NotImplementedException();
+            case "Mining":
+                await SetupMining(mission, dungeon, gridUid, grid, random);
+                return;
+            case "StructureDestroy":
+                await SetupStructure(mission, dungeon, gridUid, grid, random);
+                return;
+            default:
+                throw new NotImplementedException();
         }
     }
 
@@ -301,7 +305,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         MapGridComponent grid,
         Random random)
     {
+        var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
 
+        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+        {
+            // TODO: Better
+            _biome.AddMarkerLayer(biome, faction.Configs["Mining"]);
+        }
     }
 
     private async Task SetupStructure(

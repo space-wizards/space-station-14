@@ -13,16 +13,8 @@ public sealed class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
     public string Prototype = string.Empty;
 
     /// <inheritdoc />
-    [DataField("variations")]
-    public int Variations { get; } = 4;
-
-    /// <inheritdoc />
     [DataField("radius")]
     public float Radius { get; } = 16f;
-
-    /// <inheritdoc />
-    [DataField("count")]
-    public int Count { get; } = 4;
 
     /// <summary>
     /// How many mobs to spawn in one group.
@@ -32,5 +24,5 @@ public sealed class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
 
     /// <inheritdoc />
     [DataField("size")]
-    public int Size { get; } = 64;
+    public int Size { get; } = 256;
 }

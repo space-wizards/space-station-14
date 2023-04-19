@@ -3,6 +3,10 @@
   proto: MobLizard
   groupCount: 5
 
+- type: biomeMarkerLayer
+  id: Xenos
+  proto: MobXeno
+
 #- type: biomeMarkerLayer
 #  id: Experiment
 #  proto: DungeonMarkerExperiment
