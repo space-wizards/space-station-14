@@ -83,7 +83,7 @@ namespace Content.Server.Medical
                     StartListening(component.Stethoscope, uid, args.Target, stetho); // start doafter
                 },
                 Text = Loc.GetString("stethoscope-verb"),
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("Clothing/Neck/Misc/stethoscope.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Rsi(new ("Clothing/Neck/Misc/stethoscope.rsi"), "icon"),
                 Priority = 2
             };
             args.Verbs.Add(verb);

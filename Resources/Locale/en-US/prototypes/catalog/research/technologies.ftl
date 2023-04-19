@@ -93,3 +93,7 @@ technologies-adv-parts-technology = Advanced parts technology
 
 technologies-super-parts-technology = Super parts technology
 technologies-super-parts-technology-description = New heights of machine performance.
+
+technologies-magboots-technology = Magboots technology
+technologies-magboots-technology-description = Magboots for a space escape from the assistant.
+
