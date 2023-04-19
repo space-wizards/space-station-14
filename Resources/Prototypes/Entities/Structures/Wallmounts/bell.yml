@@ -11,7 +11,7 @@
   - type: InteractionPopup
     successChance: 1
     interactSuccessSound:   
-      path: /Audio/Weapons/Boxingbell.ogg
+      path: /Audio/Weapons/boxingbell.ogg
   - type: Clickable
   - type: Damageable
     damageContainer: Inorganic
