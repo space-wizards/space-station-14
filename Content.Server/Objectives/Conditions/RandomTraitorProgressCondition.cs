@@ -15,8 +15,7 @@ namespace Content.Server.Objectives.Conditions
         {
             //todo shit of a fuck
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            return new RandomTraitorProgressCondition();
-            /*
+
             var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
             List<Traitor.TraitorRole> removeList = new();
 
@@ -26,7 +25,7 @@ namespace Content.Server.Objectives.Conditions
                 {
                     foreach (var condition in objective.Conditions)
                     {
-                        if (condition.GetType() == typeof(RandomTraitorProgressCondition))
+                        if (condition is RandomTraitorProgressCondition)
                         {
                             removeList.Add(traitor);
                         }
@@ -40,7 +39,7 @@ namespace Content.Server.Objectives.Conditions
             }
 
             if (traitors.Count == 0) return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
-            return new RandomTraitorProgressCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };*/
+            return new RandomTraitorProgressCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
         }
 
         public string Title

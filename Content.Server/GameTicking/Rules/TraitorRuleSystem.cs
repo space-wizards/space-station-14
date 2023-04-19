@@ -405,7 +405,22 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
     }
 
-    public IEnumerable<TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind, TraitorRuleComponent component)
+    public List<TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
+    {
+        List<TraitorRole> allTraitors = new();
+        foreach (var traitor in EntityQuery<TraitorRuleComponent>())
+        {
+            foreach (var role in GetOtherTraitorsAliveAndConnected(ourMind, traitor))
+            {
+                if (!allTraitors.Contains(role))
+                    allTraitors.Add(role);
+            }
+        }
+
+        return allTraitors;
+    }
+
+    public List<TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind, TraitorRuleComponent component)
     {
         var traitors = component.Traitors;
         List<TraitorRole> removeList = new();
@@ -415,6 +430,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             .Where(t => t.Mind.Session is not null) // player disconnected
             .Where(t => t.Mind != ourMind) // ourselves
             .Where(t => _mobStateSystem.IsAlive((EntityUid) t.Mind.OwnedEntity!)) // dead
-            .Where(t => t.Mind.CurrentEntity == t.Mind.OwnedEntity); // not in original body
+            .Where(t => t.Mind.CurrentEntity == t.Mind.OwnedEntity).ToList(); // not in original body
     }
 }

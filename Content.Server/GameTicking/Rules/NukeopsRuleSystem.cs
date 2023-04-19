@@ -580,8 +580,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (!component.SpawnOutpost)
             return true;
 
-        component.CanLoneOpsSpawn = false;
-
         var path = component.NukieOutpostMap;
         var shuttlePath = component.NukieShuttleMap;
 

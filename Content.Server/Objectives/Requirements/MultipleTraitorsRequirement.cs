@@ -11,8 +11,7 @@ namespace Content.Server.Objectives.Requirements
 
         public bool CanBeAssigned(Mind.Mind mind)
         {
-            //todo figure this shit out
-            return true; //EntitySystem.Get<TraitorRuleSystem>().TotalTraitors >= _requiredTraitors;
+            return EntitySystem.Get<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).Count >= _requiredTraitors;
         }
     }
 }
