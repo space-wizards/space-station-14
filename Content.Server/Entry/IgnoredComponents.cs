@@ -19,6 +19,7 @@ namespace Content.Server.Entry
             "CableVisualizer",
             "UIFragment",
             "PDABorderColor",
+            "InventorySlots",
         };
     }
 }

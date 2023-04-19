@@ -5,12 +5,13 @@
   suffix: ""
   description: A flying leviathan, loosely related to space carps.
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       allowMovement: true
       allowSpeech: true
       makeSentient: true
       name: Space dragon
       description: Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
+    - type: GhostTakeoverAvailable
     - type: HTN
       rootTask: XenoCompound
     - type: Faction

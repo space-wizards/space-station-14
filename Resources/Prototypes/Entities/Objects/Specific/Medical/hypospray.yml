@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: hypospray
   parent: BaseItem
   description: A sterile injector for rapid administration of drugs to patients.
@@ -248,3 +248,19 @@
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
     price: 75
+
+- type: entity
+  parent: BaseItem
+  id: HypopenBox
+  name: hypopen box
+  description: A small box containing a hypopen. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: hypopen
+    netsync: false
+  - type: SpawnItemsOnUse
+    items:
+    - id: Hypopen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
