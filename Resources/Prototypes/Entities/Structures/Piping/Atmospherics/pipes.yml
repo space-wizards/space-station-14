@@ -68,6 +68,9 @@
     layers:
       - state: pipeHalf
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Misc/gas_pipe.ogg
   - type: Construction
     graph: GasPipe
     node: half
@@ -87,6 +90,9 @@
     layers:
       - state: pipeStraight
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Misc/gas_pipe.ogg
   - type: Construction
     graph: GasPipe
     node: straight
@@ -106,6 +112,9 @@
     layers:
       - state: pipeBend
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Misc/gas_pipe.ogg
   - type: Construction
     graph: GasPipe
     node: bend
@@ -125,6 +134,9 @@
     layers:
       - state: pipeTJunction
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Misc/gas_pipe.ogg
   - type: Construction
     graph: GasPipe
     node: tjunction
@@ -146,6 +158,9 @@
     layers:
       - state: pipeFourway
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Misc/gas_pipe.ogg
   - type: Construction
     graph: GasPipe
     node: fourway
