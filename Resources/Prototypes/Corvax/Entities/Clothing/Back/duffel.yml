@@ -8,3 +8,14 @@
     sprite: Corvax/Back/Duffels/military.rsi
   - type: Storage
     capacity: 200
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelCE
+  name: chief engineer duffel bag
+  description: A large duffel bag for all instruments you need to create singularity.
+  components:
+  - type: Sprite
+    sprite: Corvax/Back/Duffels/ce.rsi
+  - type: Storage
+    capacity: 120

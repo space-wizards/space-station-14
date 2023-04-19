@@ -19,3 +19,14 @@
     sprite: Corvax/Back/Backpacks/deathsquad-backpack.rsi
   - type: Storage
     capacity: 300
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackCE
+  name: chief engineer backpack
+  description: Technicially progressive backpack.
+  components:
+  - type: Sprite
+    sprite: Corvax/Back/Backpacks/ce.rsi
+  - type: Storage
+    capacity: 100
