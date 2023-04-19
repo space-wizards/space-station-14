@@ -119,6 +119,7 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellSmall
+        disableEject: true
   # delay for when attacked while cloaked
   - type: UseDelay
     delay: 5
