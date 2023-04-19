@@ -206,9 +206,9 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
-  id: ClothingOuterHakama
-  name: samurai hakama
-  description: Hakama is a type of traditional Japanese clothing that is often associated with samurai. The hakama is made of heavy, durable fabric, it is practical in combat and stylish in appearance. It is decorated with intricate patterns and embroidery on the back.
+  id: ClothingOuterDogi
+  name: samurai dogi
+  description: Dogi is a type of traditional Japanese clothing. The dogi is made of heavy, durable fabric, it is practical in combat and stylish in appearance. It is decorated with intricate patterns and embroidery on the back.
   components:
   - type: Sprite
     sprite: Clothing\OuterClothing\Coats\hakama.rsi
@@ -218,5 +218,5 @@
     modifiers:
       coefficients:
         Blunt: 0.8
-        Slash: 0.8
+        Slash: 0.65
         Piercing: 0.9
