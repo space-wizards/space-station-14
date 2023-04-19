@@ -10,7 +10,7 @@ public interface IAdminNotesManager
 {
     event Action<SharedAdminNote>? NoteAdded;
     event Action<SharedAdminNote>? NoteModified;
-    event Action<int>? NoteDeleted;
+    event Action<SharedAdminNote>? NoteDeleted;
 
     bool CanCreate(IPlayerSession admin);
     bool CanDelete(IPlayerSession admin);

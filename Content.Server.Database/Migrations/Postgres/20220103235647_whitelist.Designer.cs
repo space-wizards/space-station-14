@@ -15,7 +15,7 @@ namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
     [Migration("20220103235647_whitelist")]
-    partial class whitelist
+    partial class Whitelist
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

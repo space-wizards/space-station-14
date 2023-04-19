@@ -1,0 +1,34 @@
+- type: entity
+  name: pen
+  suffix: Exploding
+  parent: Pen
+  description: A dark ink pen.
+  id: PenExploding
+  components:
+  - type: OnUseTimerTrigger
+    delay: 4
+    examinable: false
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 8
+    intensitySlope: 5
+    totalIntensity: 20
+    canCreateVacuum: false
+  - type: ActivateOnPaperOpened
+  - type: ExplodeOnTrigger
+
+- type: entity
+  parent: BaseItem
+  id: PenExplodingBox
+  name: exploding pen box
+  description: A small box containing an exploding pen. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: exploding_pen
+    netsync: false
+  - type: SpawnItemsOnUse
+    items:
+    - id: PenExploding
+    sound:
+      path: /Audio/Effects/unwrap.ogg

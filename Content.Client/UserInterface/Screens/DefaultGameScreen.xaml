@@ -15,7 +15,14 @@
     <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
         <controls:MainViewport Name="MainViewport"/>
     </LayoutContainer>
-    <menuBar:GameTopMenuBar Name="TopBar" Access="Protected" />
+    <BoxContainer Name="TopLeft" Access="Protected" Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <menuBar:GameTopMenuBar Name="TopBar" Access="Protected" />
+            <!-- Buffer so big votes don't skew it -->
+            <Control/>
+        </BoxContainer>
+        <BoxContainer Name="VoteMenu" Access="Public" Margin="0 10 0 10" Orientation="Vertical"/>
+    </BoxContainer>
     <widgets:GhostGui Name="Ghost" Access="Protected" />
     <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
     <actions:ActionsBar Name="Actions" Access="Protected" />

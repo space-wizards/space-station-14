@@ -1,0 +1,64 @@
+#nullable enable
+using System.Threading.Tasks;
+using Content.IntegrationTests.Tests.Interaction;
+using Content.Server.Climbing;
+using Content.Shared.Climbing;
+using NUnit.Framework;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics.Components;
+
+namespace Content.IntegrationTests.Tests.Climbing;
+
+public sealed class ClimbingTest : MovementTest
+{
+    [Test]
+    public async Task ClimbTableTest()
+    {
+        // Spawn a table to the right of the player.
+        await SpawnTarget("Table");
+        Assert.That(Delta(), Is.GreaterThan(0));
+
+        // Player is not initially climbing anything.
+        var comp = Comp<ClimbingComponent>(Player);
+        Assert.That(comp.IsClimbing, Is.False);
+        Assert.That(comp.DisabledFixtureMasks.Count, Is.EqualTo(0));
+
+        // Attempt (and fail) to walk past the table.
+        await Move(DirectionFlag.East, 1f);
+        Assert.That(Delta(), Is.GreaterThan(0));
+
+        // Try to start climbing
+        var sys = SEntMan.System<ClimbSystem>();
+        await Server.WaitPost(() => sys.TryClimb(Player, Player, Target.Value));
+        await AwaitDoAfters();
+
+        // Player should now be climbing
+        Assert.That(comp.IsClimbing, Is.True);
+        Assert.That(comp.DisabledFixtureMasks.Count, Is.GreaterThan(0));
+
+        // Can now walk over the table.
+        await Move(DirectionFlag.East, 1f);
+        Assert.That(Delta(), Is.LessThan(0));
+
+        // After walking away from the table, player should have stopped climbing.
+        Assert.That(comp.IsClimbing, Is.False);
+        Assert.That(comp.DisabledFixtureMasks.Count, Is.EqualTo(0));
+
+        // Try to walk back to the other side (and fail).
+        await Move(DirectionFlag.West, 1f);
+        Assert.That(Delta(), Is.LessThan(0));
+
+        // Start climbing
+        await Server.WaitPost(() => sys.TryClimb(Player, Player, Target.Value));
+        await AwaitDoAfters();
+        Assert.That(comp.IsClimbing, Is.True);
+        Assert.That(comp.DisabledFixtureMasks.Count, Is.GreaterThan(0));
+
+        // Walk past table and stop climbing again.
+        await Move(DirectionFlag.West, 1f);
+        Assert.That(Delta(), Is.GreaterThan(0));
+        Assert.That(comp.IsClimbing, Is.False);
+        Assert.That(comp.DisabledFixtureMasks.Count, Is.EqualTo(0));
+    }
+}
+

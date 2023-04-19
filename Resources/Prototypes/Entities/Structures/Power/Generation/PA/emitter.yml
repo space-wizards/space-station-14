@@ -17,6 +17,7 @@
       visuals:
         - type: ParticleAcceleratorPartVisualizer
           baseState: unlit
+    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Left
     - type: Construction
@@ -45,6 +46,7 @@
       visuals:
         - type: ParticleAcceleratorPartVisualizer
           baseState: unlit
+    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Center
     - type: Construction
@@ -52,7 +54,7 @@
       node: completed
     - type: GuideHelp
       guides: [ Singularity, Power ]
-      
+
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterRight
@@ -72,6 +74,7 @@
       visuals:
         - type: ParticleAcceleratorPartVisualizer
           baseState: unlit
+    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Right
     - type: Construction
@@ -79,7 +82,7 @@
       node: completed
     - type: GuideHelp
       guides: [ Singularity, Power ]
-      
+
 # Unfinished
 
 - type: entity

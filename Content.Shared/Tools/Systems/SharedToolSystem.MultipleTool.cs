@@ -2,16 +2,12 @@ using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tools;
 
-public abstract class SharedToolSystem : EntitySystem
+public abstract partial class SharedToolSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-
-    public override void Initialize()
+    public void InitializeMultipleTool()
     {
         SubscribeLocalEvent<MultipleToolComponent, ComponentStartup>(OnMultipleToolStartup);
         SubscribeLocalEvent<MultipleToolComponent, ActivateInWorldEvent>(OnMultipleToolActivated);

@@ -9,6 +9,7 @@ public static class AdminNotesExtensions
     {
         return new SharedAdminNote(
             note.Id,
+            note.PlayerUserId,
             note.RoundId,
             note.Round?.Server.Name,
             note.PlaytimeAtNote,

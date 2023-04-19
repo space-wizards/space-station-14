@@ -1,21 +1,20 @@
+using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Stunnable;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Timing;
-using System.Linq;
-using Content.Shared.Tag;
-using Content.Shared.Tools.Components;
-using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -108,9 +107,10 @@ public abstract class SharedDoorSystem : EntitySystem
         if (args.Current is not DoorComponentState state)
             return;
 
-        if (!door.CurrentlyCrushing.Equals(state.CurrentlyCrushing))
+        if (!door.CurrentlyCrushing.SetEquals(state.CurrentlyCrushing))
         {
-            door.CurrentlyCrushing = new(state.CurrentlyCrushing);
+            door.CurrentlyCrushing.Clear();
+            door.CurrentlyCrushing.UnionWith(state.CurrentlyCrushing);
         }
 
         door.State = state.DoorState;
@@ -282,7 +282,7 @@ public abstract class SharedDoorSystem : EntitySystem
         // component, but no actual hands!? What!? Is this the sound of them head-butting the door to get it to open??
         // I'm 99% sure something is wrong here, but I kind of want to keep it this way.
 
-        if (user != null && TryComp(user.Value, out SharedHandsComponent? hands) && hands.Hands.Count == 0)
+        if (user != null && TryComp(user.Value, out HandsComponent? hands) && hands.Hands.Count == 0)
             PlaySound(uid, door.TryOpenDoorSound, AudioParams.Default.WithVolume(-2), user, predicted);
     }
 
@@ -323,7 +323,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         // since both closing/closed and welded are door states, we need to prevent 'closing'
         // a welded door or else there will be weird state bugs
-        if (door.State == DoorState.Welded)
+        if (door.State is DoorState.Welded or DoorState.Closed)
             return false;
 
         var ev = new BeforeDoorClosedEvent(door.PerformCollisionCheck);
@@ -635,4 +635,9 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     protected abstract void PlaySound(EntityUid uid, SoundSpecifier soundSpecifier, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted);
+
+    [Serializable, NetSerializable]
+    protected sealed class DoorPryDoAfterEvent : SimpleDoAfterEvent
+    {
+    }
 }

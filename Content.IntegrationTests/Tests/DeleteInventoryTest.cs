@@ -1,4 +1,4 @@
-using Content.Server.Inventory;
+using System.Threading.Tasks;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
@@ -6,8 +6,6 @@ using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -27,12 +25,11 @@ namespace Content.IntegrationTests.Tests
             await server.WaitAssertion(() =>
             {
                 // Spawn everything.
-                var mapMan = IoCManager.Resolve<IMapManager>();
                 var invSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
 
                 var entMgr = IoCManager.Resolve<IEntityManager>();
                 var container = entMgr.SpawnEntity(null, coordinates);
-                entMgr.EnsureComponent<ServerInventoryComponent>(container);
+                entMgr.EnsureComponent<InventoryComponent>(container);
                 entMgr.EnsureComponent<ContainerManagerComponent>(container);
 
                 var child = entMgr.SpawnEntity(null, coordinates);

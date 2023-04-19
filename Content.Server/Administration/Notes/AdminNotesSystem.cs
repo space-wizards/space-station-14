@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Notes;
 
@@ -44,7 +45,7 @@ public sealed class AdminNotesSystem : EntitySystem, IPostInjectInit
         {
             Text = Loc.GetString("admin-notes-verb-text"),
             Category = VerbCategory.Admin,
-            IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/examine.svg.192dpi.png")),
             Act = () => _console.RemoteExecuteCommand(user, $"{OpenAdminNotesCommand.CommandName} \"{target.UserId}\""),
             Impact = LogImpact.Low
         };

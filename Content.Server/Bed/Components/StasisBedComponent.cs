@@ -6,14 +6,6 @@ namespace Content.Server.Bed.Components
     [RegisterComponent]
     public sealed class StasisBedComponent : Component
     {
-        /// <summary>
-        /// Stores whether or not the stasis bed has been emagged,
-        /// which causes the multiplier to speed up rather than
-        /// slow down. Needs to be stored for machine upgrades.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Emagged = false;
-
         [DataField("baseMultiplier", required: true), ViewVariables(VVAccess.ReadWrite)]
         public float BaseMultiplier = 10f;
 
