@@ -102,13 +102,10 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             return;
         }
 
-        if (!TryComp(uid, out BatteryComponent? battery))
-            return;
-
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
 
-        var frac = battery.CurrentCharge / battery.MaxCharge;
+        var frac = args.Charge / args.MaxCharge;
         var level = (byte) ContentHelpers.RoundToNearestLevels(frac, 1, PowerCellComponent.PowerCellVisualsLevels);
         _sharedAppearanceSystem.SetData(uid, PowerCellVisuals.ChargeLevel, level, appearance);
 
