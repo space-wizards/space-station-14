@@ -51,7 +51,7 @@ public sealed partial class BiomeSystem
     [AdminCommand(AdminFlags.Fun)]
     private void AddLayerCallback(IConsoleShell shell, string argstr, string[] args)
     {
-        if (args.Length != 3)
+        if (args.Length < 3 || args.Length > 4)
         {
             return;
         }
@@ -73,7 +73,14 @@ public sealed partial class BiomeSystem
             return;
         }
 
-        AddTemplate(biome, args[2], template);
+        var offset = 0;
+
+        if (args.Length == 4)
+        {
+            int.TryParse(args[3], out offset);
+        }
+
+        AddTemplate(biome, args[2], template, offset);
     }
 
     private CompletionResult AddLayerCallbackHelp(IConsoleShell shell, string[] args)
@@ -110,6 +117,11 @@ public sealed partial class BiomeSystem
                     return CompletionResult.FromHintOptions(results, "Dummy layer ID");
                 }
             }
+        }
+
+        if (args.Length == 4)
+        {
+            return CompletionResult.FromHint("Seed offset");
         }
 
         return CompletionResult.Empty;

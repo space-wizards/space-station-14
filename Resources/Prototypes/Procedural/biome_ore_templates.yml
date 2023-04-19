@@ -1,12 +1,22 @@
-# TODO: These need hella adjusting.
+# Allowed
+#allowedTiles:
+#- FloorPlanetGrass
+#- FloorPlanetDirt
+#- FloorSnow
+#- FloorBasalt
+#- FloorAsteroidSand
+
 - type: biomeTemplate
   id: OreTin
   layers:
     - !type:BiomeEntityLayer
+      threshold: 0.90
       allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: 0.90
+        - FloorSnow
+        - FloorBasalt
+        - FloorAsteroidSand
       noise:
         seed: 100
         noiseType: OpenSimplex2
@@ -14,14 +24,6 @@
         fractalType: None
       entities:
         - WallRockTin
-    - !type:BiomeTileLayer
-      tile: FloorPlanetDirt
-      threshold: 0.90
-      noise:
-        seed: 100
-        noiseType: OpenSimplex2
-        frequency: 0.04
-        fractalType: None
 
 # Medium value
 # Gold
@@ -29,50 +31,40 @@
   id: OreGold
   layers:
     - !type:BiomeEntityLayer
+      threshold: 0.95
       allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: 0.95
+        - FloorSnow
+        - FloorBasalt
+        - FloorAsteroidSand
       noise:
-        seed: 101
+        seed: 100
         noiseType: OpenSimplex2
         frequency: 0.04
         fractalType: None
       entities:
         - WallRockGold
-    - !type:BiomeTileLayer
-      tile: FloorPlanetDirt
-      threshold: 0.06
-      noise:
-        seed: 101
-        noiseType: OpenSimplex2
-        frequency: 0.04
-        fractalType: None
 
 # Silver
 - type: biomeTemplate
   id: OreSilver
   layers:
     - !type:BiomeEntityLayer
+      threshold: 0.95
       allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: 0.95
+        - FloorSnow
+        - FloorBasalt
+        - FloorAsteroidSand
       noise:
-        seed: 102
+        seed: 100
         noiseType: OpenSimplex2
         frequency: 0.05
         fractalType: None
       entities:
         - WallRockSilver
-    - !type:BiomeTileLayer
-      tile: FloorPlanetDirt
-      threshold: 0.95
-      noise:
-        seed: 102
-        noiseType: OpenSimplex2
-        frequency: 0.05
-        fractalType: None
 
 # High value
 # Plasma
@@ -80,47 +72,37 @@
   id: OrePlasma
   layers:
     - !type:BiomeEntityLayer
+      threshold: 0.99
       allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: 0.99
+        - FloorSnow
+        - FloorBasalt
+        - FloorAsteroidSand
       noise:
-        seed: 103
+        seed: 100
         noiseType: OpenSimplex2
         frequency: 0.04
         fractalType: None
       entities:
         - WallRockPlasma
-    - !type:BiomeTileLayer
-      tile: FloorPlanetDirt
-      threshold: 0.99
-      noise:
-        seed: 103
-        noiseType: OpenSimplex2
-        frequency: 0.04
-        fractalType: None
 
 # Uranium
 - type: biomeTemplate
   id: OreUranium
   layers:
     - !type:BiomeEntityLayer
+      threshold: 0.99
       allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: 0.99
+        - FloorSnow
+        - FloorBasalt
+        - FloorAsteroidSand
       noise:
-        seed: 104
+        seed: 100
         noiseType: OpenSimplex2
         frequency: 0.04
         fractalType: None
       entities:
         - WallRockUranium
-    - !type:BiomeTileLayer
-      tile: FloorPlanetDirt
-      threshold: 0.99
-      noise:
-        seed: 104
-        noiseType: OpenSimplex2
-        frequency: 0.04
-        fractalType: None

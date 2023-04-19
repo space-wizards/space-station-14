@@ -219,14 +219,16 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
     private async Task SpawnDungeonLoot(Dungeon? dungeon, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
     {
-        foreach (var rule in loot.LootRules)
+        for (var i = 0; i < loot.LootRules.Count; i++)
         {
+            var rule = loot.LootRules[i];
+
             switch (rule)
             {
                 case BiomeTemplateLoot biomeLoot:
                     if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
                     {
-                        _biome.AddTemplate(biome, "Loot", _prototypeManager.Index<BiomeTemplatePrototype>(biomeLoot.Prototype));
+                        _biome.AddTemplate(biome, "Loot", _prototypeManager.Index<BiomeTemplatePrototype>(biomeLoot.Prototype), i);
                     }
                     break;
                 // Spawns a cluster (like an ore vein) nearby.

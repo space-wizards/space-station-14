@@ -1,11 +1,11 @@
-using Content.Server.Chat.Systems;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server.Shuttles.Systems;
+using Content.Server.Station.Components;
 using Content.Shared.Chat;
 using Content.Shared.Salvage;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -112,6 +112,7 @@ public sealed partial class SalvageSystem
         // Generic missions
         var query = EntityQueryEnumerator<SalvageExpeditionComponent>();
 
+        // Run the basic mission timers (e.g. announcements, auto-FTL, completion, etc)
         while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.Completed)
@@ -122,13 +123,41 @@ public sealed partial class SalvageSystem
             if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(30))
             {
                 comp.Stage = ExpeditionStage.FinalCountdown;
-                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", (comp.EndTime - _timing.CurTime).Minutes)));
+                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", TimeSpan.FromSeconds(30).Seconds)));
             }
             // TODO: Play song.
             else if (comp.Stage < ExpeditionStage.Countdown && remaining < TimeSpan.FromMinutes(2))
             {
                 comp.Stage = ExpeditionStage.Countdown;
-                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", (comp.EndTime - _timing.CurTime).Minutes)));
+                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
+            }
+            // Auto-FTL out any shuttles
+            else if (remaining < TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime) + TimeSpan.FromSeconds(0.5))
+            {
+                var ftlTime = (float) remaining.TotalSeconds;
+
+                if (remaining < TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime))
+                {
+                    ftlTime = MathF.Max(0, (float) remaining.TotalSeconds - 0.5f);
+                }
+
+                var shuttleQuery = AllEntityQuery<ShuttleComponent, TransformComponent>();
+
+                if (TryComp<StationDataComponent>(comp.Station, out var data))
+                {
+                    foreach (var member in data.Grids)
+                    {
+                        while (shuttleQuery.MoveNext(out var shuttleUid, out var shuttle, out var shuttleXform))
+                        {
+                            if (shuttleXform.MapUid != uid || HasComp<FTLComponent>(shuttleUid))
+                                continue;
+
+                            _shuttle.FTLTravel(shuttleUid, shuttle, member, ftlTime);
+                        }
+
+                        break;
+                    }
+                }
             }
         }
 
