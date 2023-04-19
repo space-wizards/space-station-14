@@ -1,2 +1,2 @@
-ent-ClothingHeadHelmetSecurityMedic = security medic helmet
-    .desc = A standard issue combat helmet for security medics. Has decent tensile strength and armor. Keep your head down.
+ent-ClothingHeadHelmetSecurityMedic = шлем бригмедика
+    .desc = Стандартный боевой шлем медиков службы безопасности. Имеет достойный предел прочности и броню. Не задирайте голову.

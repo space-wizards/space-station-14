@@ -1,6 +1,6 @@
 ent-ClothingOuterVestArmorSec = бронежилет
     .desc = Тонкий бронежилет Типа I, обеспечивающий достойную защиту от большинства видов повреждений.
-ent-ClothingOuterVestArmorMedSec = security medic armor vest
-    .desc = A security medic's armor vest, with little pockets for little things.
-ent-ClothingOuterVestSecurityMedic = security medic vest
-    .desc = A lightweight vest worn by the Security Medic.
+ent-ClothingOuterVestArmorMedSec = бронежилет бригмедика
+    .desc = Бронированный жилет бригмедика, с карманами для мелочёвки.
+ent-ClothingOuterVestSecurityMedic = жилет бригмедика
+    .desc = Легкий жилет, который носят бригмедики.

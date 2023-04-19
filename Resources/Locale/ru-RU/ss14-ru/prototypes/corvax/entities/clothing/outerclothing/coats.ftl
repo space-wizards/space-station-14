@@ -6,5 +6,5 @@ ent-ClothingOuterCoatWardenAlt = куртка смотрителя
     .desc = Темно-синяя бронированная куртка с синими отметками на плечах и нашивкой "/Смотритель/" на одном из нагрудных карманов.
 ent-ClothingOuterCoatSecurityOvercoat = шинель службы безопасности
     .desc = Легкобронированная кожаная шинель, предназначенная для повседневной носки высокопоставленными офицерами. Имеет логотип компании Nanotrasen Security.
-ent-ClothingOuterCoatLabSecurityMedic = security medic labcoat
-    .desc = A suit that protects against minor chemical spills.
+ent-ClothingOuterCoatLabSecurityMedic = лабораторный халат бригмедика
+    .desc = Костюм, защищающий от небольших разливов химикатов.
