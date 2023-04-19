@@ -13,6 +13,7 @@ using Content.Server.Ninja.Components;
 using Content.Server.Objectives;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
 using Content.Server.Warps;
 using Content.Shared.Alert;
@@ -40,6 +41,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
@@ -176,6 +178,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// <summary>
     /// Get the battery component in a ninja's suit, if it's worn.
     /// </summary>
+    // TODO: modify TryGetBatteryFromSlot, return uid as well
     public bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out BatteryComponent? battery)
     {
         if (TryComp<NinjaComponent>(user, out var ninja)
@@ -191,7 +194,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
     public override bool TryUseCharge(EntityUid user, float charge)
     {
-        return GetNinjaBattery(user, out var battery) && battery.TryUseCharge(charge);
+        return GetNinjaBattery(user, out var battery) && _battery.TryUseCharge(battery.Owner, charge, battery);
     }
 
     /// <summary>
@@ -243,10 +246,10 @@ public sealed class NinjaSystem : SharedNinjaSystem
         // higher tier storages can charge more
         var maxDrained = pnb.MaxSupply * drain.DrainTime;
         var input = Math.Min(Math.Min(available, required / drain.DrainEfficiency), maxDrained);
-        if (battery.TryUseCharge(input))
+        if (_battery.TryUseCharge(target, input, battery))
         {
             var output = input * drain.DrainEfficiency;
-            suitBattery.CurrentCharge += output;
+            _battery.SetCharge(suitBattery.Owner, suitBattery.CurrentCharge + output, suitBattery);
             _popups.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
             // TODO: spark effects
             _audio.PlayPvs(drain.SparkSound, target);
