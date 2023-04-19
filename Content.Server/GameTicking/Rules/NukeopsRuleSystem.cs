@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
@@ -48,48 +49,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
 
 
-    private enum WinType
-    {
-        /// <summary>
-        ///     Operative major win. This means they nuked the station.
-        /// </summary>
-        OpsMajor,
-        /// <summary>
-        ///     Minor win. All nukies were alive at the end of the round.
-        ///     Alternatively, some nukies were alive, but the disk was left behind.
-        /// </summary>
-        OpsMinor,
-        /// <summary>
-        ///     Neutral win. The nuke exploded, but on the wrong station.
-        /// </summary>
-        Neutral,
-        /// <summary>
-        ///     Crew minor win. The nuclear authentication disk escaped on the shuttle,
-        ///     but some nukies were alive.
-        /// </summary>
-        CrewMinor,
-        /// <summary>
-        ///     Crew major win. This means they either killed all nukies,
-        ///     or the bomb exploded too far away from the station, or on the nukie moon.
-        /// </summary>
-        CrewMajor
-    }
-
-    private enum WinCondition
-    {
-        NukeExplodedOnCorrectStation,
-        NukeExplodedOnNukieOutpost,
-        NukeExplodedOnIncorrectLocation,
-        NukeActiveInStation,
-        NukeActiveAtCentCom,
-        NukeDiskOnCentCom,
-        NukeDiskNotOnCentCom,
-        NukiesAbandoned,
-        AllNukiesDead,
-        SomeNukiesAlive,
-        AllNukiesAlive
-    }
-
     private WinType _winType = WinType.Neutral;
 
     private WinType RuleWinType
@@ -115,7 +74,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     private EntityUid? _nukieShuttle;
     private EntityUid? _targetStation;
 
-    //private NukeopsRuleConfiguration _nukeopsRuleConfig = new();
 
     /// <summary>
     ///     Cached starting gear prototypes.
@@ -227,15 +185,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
     }
 
-    public void LoadLoneOpsConfig()
-    {
-        //_nukeopsRuleConfig.SpawnOutpost = false;
-        //_nukeopsRuleConfig.EndsRound = false;
-    }
-
+    /// <summary>
+    /// Loneops can only spawn if there is no nukeops active
+    /// </summary>
     public bool CheckLoneOpsSpawn()
     {
-        return true; //_nukeopsRuleConfig.CanLoneOpsSpawn;
+        return !EntityQuery<NukeopsRuleComponent>().Any();
     }
 
     private void OnRoundStart()
@@ -275,7 +230,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
         }
 
-        foreach (var (nuke, nukeTransform) in EntityManager.EntityQuery<NukeComponent, TransformComponent>(true))
+        foreach (var (nuke, nukeTransform) in EntityQuery<NukeComponent, TransformComponent>(true))
         {
             if (nuke.Status != NukeStatus.ARMED)
             {

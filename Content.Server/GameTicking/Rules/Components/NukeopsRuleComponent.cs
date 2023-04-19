@@ -72,12 +72,53 @@ public sealed class NukeopsRuleComponent : Component
     public string NormalNames = "SyndicateNamesNormal";
 
     [DataField("outpostMap", customTypeSerializer: typeof(ResourcePathSerializer))]
-    public ResourcePath? NukieOutpostMap = new("/Maps/nukieplanet.yml");
+    public ResPath? NukieOutpostMap = new("/Maps/nukieplanet.yml");
 
     [DataField("shuttleMap", customTypeSerializer: typeof(ResourcePathSerializer))]
-    public ResourcePath? NukieShuttleMap = new("/Maps/infiltrator.yml");
+    public ResPath? NukieShuttleMap = new("/Maps/infiltrator.yml");
 
     [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
     public SoundSpecifier? GreetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
 }
 
+public enum WinType : byte
+{
+    /// <summary>
+    ///     Operative major win. This means they nuked the station.
+    /// </summary>
+    OpsMajor,
+    /// <summary>
+    ///     Minor win. All nukies were alive at the end of the round.
+    ///     Alternatively, some nukies were alive, but the disk was left behind.
+    /// </summary>
+    OpsMinor,
+    /// <summary>
+    ///     Neutral win. The nuke exploded, but on the wrong station.
+    /// </summary>
+    Neutral,
+    /// <summary>
+    ///     Crew minor win. The nuclear authentication disk escaped on the shuttle,
+    ///     but some nukies were alive.
+    /// </summary>
+    CrewMinor,
+    /// <summary>
+    ///     Crew major win. This means they either killed all nukies,
+    ///     or the bomb exploded too far away from the station, or on the nukie moon.
+    /// </summary>
+    CrewMajor
+}
+
+public enum WinCondition : byte
+{
+    NukeExplodedOnCorrectStation,
+    NukeExplodedOnNukieOutpost,
+    NukeExplodedOnIncorrectLocation,
+    NukeActiveInStation,
+    NukeActiveAtCentCom,
+    NukeDiskOnCentCom,
+    NukeDiskNotOnCentCom,
+    NukiesAbandoned,
+    AllNukiesDead,
+    SomeNukiesAlive,
+    AllNukiesAlive
+}

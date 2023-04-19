@@ -299,3 +299,4 @@
     reoccurrenceDelay: 25
     duration: 1
   - type: LoneOpsSpawnRule
+  - type: NukeopsRule
