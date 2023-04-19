@@ -61,3 +61,6 @@ ent-ClothingOuterNunRobe = монашеская ряса
 ent-ClothingOuterGhostSheet = призрачное одеяло
     .desc = Страшно!!!
     .suffix = { "" }
+ent-ClothingOuterHospitalGown = Больничный халат
+    .desc = Изготовлен из шерсти забитых ягнят. Жестокость делает его более мягким.
+    .suffix = { "" }

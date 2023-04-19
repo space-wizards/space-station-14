@@ -62,3 +62,5 @@ technologies-adv-parts-technology = Технология продвинутых 
 technologies-adv-parts-technology-description = Хорошо подходит для улучшения оборудования.
 technologies-super-parts-technology = Технология супер деталей
 technologies-super-parts-technology-description = Новые высоты производительности машины.
+technologies-magboots-technology = Технология магнитных ботинок
+technologies-magboots-technology-description = Магнитные ботинки для выхода в космос от ассистентов.
