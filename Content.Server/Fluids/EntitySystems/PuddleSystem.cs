@@ -265,7 +265,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             // Make blood stand out more
             // Kinda EH
             // Could potentially do alpha per-solution but future problem.
-            var standoutReagents = new string[] { "Blood", "Slime", "SpiderBlood" };
+            var standoutReagents = new string[] { "Blood", "Slime" };
 
             color = solution.GetColorWithout(_prototypeManager, standoutReagents);
             color = color.WithAlpha(0.7f);

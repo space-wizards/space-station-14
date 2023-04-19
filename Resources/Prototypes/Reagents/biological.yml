@@ -34,7 +34,7 @@
         factor: 1.5
 
 - type: reagent
-  id: SpiderBlood # Hi if you're reading this riddle me this: why are puddle transparencies hardcoded???????
+  id: SpiderBlood
   name: reagent-name-spider-blood
   group: Biological
   desc: reagent-desc-spider-blood
