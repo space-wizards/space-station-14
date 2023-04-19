@@ -4,6 +4,7 @@ using Content.Shared.Ninja.Components;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Timing;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -13,6 +14,7 @@ namespace Content.Shared.Ninja.Systems;
 
 public abstract class SharedNinjaSuitSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] protected readonly SharedNinjaSystem _ninja = default!;
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
@@ -84,10 +86,12 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         {
             comp.Cloaked = false;
             SetCloaked(user, false);
-            // TODO: add the box open thing its funny
 
             if (disableAbilities)
+            {
+                _audio.PlayPredicted(comp.RevealSound, uid, user);
                 _useDelay.BeginDelay(uid);
+            }
         }
     }
 

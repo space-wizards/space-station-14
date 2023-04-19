@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ninja.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -46,6 +47,12 @@ public sealed partial class NinjaSuitComponent : Component
     /// </summary>
     [DataField("cloakWattage")]
     public float CloakWattage = 1.44f;
+
+    /// <summary>
+    /// Sound played when a ninja is hit while cloaked.
+    /// </summary>
+    [DataField("revealSound")]
+    public SoundSpecifier RevealSound = new SoundPathSpecifier("/Audio/Effects/chime.ogg");
 
     /// <summary>
     /// The action for creating throwing soap, in place of ninja throwing stars since embedding doesn't exist.
