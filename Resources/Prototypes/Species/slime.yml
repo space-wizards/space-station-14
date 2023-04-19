@@ -8,6 +8,8 @@
   markingLimits: MobSlimeMarkingLimits
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+  maleFirstNames: names_last_male
+  femaleFirstNames: names_last_female
 
 - type: speciesBaseSprites
   id: MobSlimeSprites

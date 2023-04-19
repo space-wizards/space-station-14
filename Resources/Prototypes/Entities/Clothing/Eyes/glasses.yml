@@ -114,6 +114,9 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
+  - type: ClothingGrantComponent
+    component:
+    - type: ShowJobInfo
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity

@@ -1,0 +1,14 @@
+cmd-dungen-desc = Процедурно генерирует подземелье с заданными пресетом, местоположением, и сидом.
+cmd-dungen-help = dungen <MapId> <DungeonPreset> <PosX> <PosY> [seed]
+cmd-dungen-arg-count = Требуется 4 аргумента.
+cmd-dungen-map-parse = Не удалось спарсить MapId.
+cmd-dungen-mapgrid = Не удалось найти MapGrid.
+cmd-dungen-config = Не удалось найти конфигурацию стуктуры.
+cmd-dungen-pos = Не удалось спарсить местоположение.
+cmd-dungen-seed = Не удалось спарсить сид.
+cmd-dungen-start = Генерация структур с сидом { $seed }
+cmd-dungen-hint-map = Id карты
+cmd-dungen-hint-config = Конфиг структур
+cmd-dungen-hint-posx = Координата X
+cmd-dungen-hint-posy = Координата Y
+cmd-dungen-hint-seed = [Seed]

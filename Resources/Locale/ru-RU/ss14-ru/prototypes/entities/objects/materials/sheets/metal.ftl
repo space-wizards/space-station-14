@@ -1,0 +1,15 @@
+ent-SheetMetalBase = { ent-BaseItem }
+    .desc = Металлический лист, широко применяемый на станции в различных целях.
+    .suffix = { "" }
+ent-SheetSteel = сталь
+    .suffix = Полный
+    .desc = { ent-SheetMetalBase.desc }
+ent-SheetSteel1 = сталь
+    .suffix = Один
+    .desc = { ent-SheetSteel.desc }
+ent-SheetPlasteel = пласталь
+    .suffix = Полный
+    .desc = { ent-SheetMetalBase.desc }
+ent-SheetPlasteel1 = пласталь
+    .suffix = Один
+    .desc = { ent-SheetPlasteel.desc }
