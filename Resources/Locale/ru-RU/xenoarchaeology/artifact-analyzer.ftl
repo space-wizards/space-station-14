@@ -24,11 +24,7 @@ analysis-console-progress-text =
         [few] T-{ $seconds } секунды
        *[other] T-{ $seconds } секунд
     }
-analysis-destroy-window-title = Подтвердить разрушение
-analysis-destroy-window-text = Разрушить артефакт, превратив его в очки исследований?
-analysis-destroy-window-yes = Да
-analysis-destroy-window-no = Нет
 analyzer-artifact-component-upgrade-analysis = длительность анализа
 analysis-console-print-popup = Консоль печатает отчёт.
-analyzer-artifact-destroy-popup = Артефакт распадается на энергию!
+analyzer-artifact-extract-popup = Energy shimmers on the artifact's surface!
 analysis-report-title = Отчёт об артефакте: УЗЕЛ { $id }

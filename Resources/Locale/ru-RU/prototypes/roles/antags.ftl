@@ -12,3 +12,5 @@ roles-antag-nuclear-operative-commander-name = Командир ядерных �
 roles-antag-nuclear-operative-commander-objective = Приведите свой отряд к уничтожению станции.
 roles-antag-nuclear-operative-name = Ядерный оперативник
 roles-antag-nuclear-operative-objective = Найдите ядерный диск и взорвите станцию.
+roles-antag-space-ninja-name = Space Ninja
+roles-antag-space-ninja-objective = Energy sword everything, nom on electrical wires.

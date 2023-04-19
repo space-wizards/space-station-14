@@ -7,3 +7,4 @@ admin-player-actions-window-announce = Сделать объявление
 admin-player-actions-window-shuttle = Вызвать/отозвать шаттл
 admin-player-actions-window-admin-logs = Админ логи
 admin-player-actions-window-admin-notes = Админ записи
+admin-player-actions-window-admin-fax = Admin Fax

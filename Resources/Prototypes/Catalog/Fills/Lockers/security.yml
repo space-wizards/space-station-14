@@ -107,3 +107,103 @@
       - id: ClothingHeadHelmetBombSuit
       - id: ClothingOuterSuitBomb
       - id: ClothingMaskGas
+
+- type: entity
+  id: GunSafeDisabler
+  suffix: Disabler
+  parent: GunSafe
+  name: gun safe disabler
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponDisabler
+        amount: 5
+
+- type: entity
+  id: GunSafePistolMk58
+  suffix: MK58
+  parent: GunSafe
+  name: gun safe Mk58
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponPistolMk58
+        amount: 4
+      - id: MagazinePistol
+        amount: 8
+
+- type: entity
+  id: GunSafeRifleLecter
+  suffix: Lecter
+  parent: GunSafe
+  name: gun safe lecter
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponRifleLecter
+        amount: 2
+      - id: MagazineRifle
+        amount: 4
+
+- type: entity
+  id: GunSafeSubMachineGunVector
+  suffix: Vector
+  parent: GunSafe
+  name: gun safe vector
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponSubMachineGunVector
+        amount: 2
+      - id: MagazineMagnumSubMachineGun
+        amount: 4
+
+- type: entity
+  id: GunSafeShotgunEnforcer
+  suffix: Enforcer
+  parent: GunSafe
+  name: gun safe enforcer
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunEnforcer
+        amount: 2
+      - id: MagazineShotgun
+        amount: 4
+
+- type: entity
+  id: GunSafeShotgunKammerer
+  suffix: Kammerer
+  parent: GunSafe
+  name: gun safe kammerer
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunKammerer
+        amount: 2
+      - id: MagazineShotgun
+        amount: 4
+
+- type: entity
+  id: GunSafeSubMachineGunWt550
+  suffix: Wt550
+  parent: GunSafe
+  name: gun safe Wt550
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponSubMachineGunWt550
+        amount: 2
+      - id: MagazineMagnumSubMachineGun
+        amount: 4
+
+- type: entity
+  id: GunSafeLaserCarbine
+  suffix: Laser Carbine
+  parent: GunSafe
+  name: gun safe laser carbine
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLaserCarbine
+        amount: 3
