@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/vgstation-coders/vgstation13/raw/78a32d846158a67dcd0ca2375e408fec298b46a0/icons/obj/power.dmi",
+    "copyright": "Taken from Goonstation at commit https://github.com/goonstation/goonstation/commit/4f88b9314336631929c9cdddb1567fc08f83bf9e and modified by potato1234x (github) for ss14",
     "states": [
         {
             "name": "light-off"
@@ -23,10 +23,10 @@
             "name": "light-charging",
             "delays": [
                 [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
                 ]
             ]
         },
@@ -34,8 +34,8 @@
             "name": "light-charged",
             "delays": [
                 [
-                    0.5,
-                    0.5
+                    0.6,
+                    0.6
                 ]
             ]
         },
@@ -43,8 +43,8 @@
             "name": "light-empty",
             "delays": [
                 [
-                    0.5,
-                    0.5
+                    0.8,
+                    0.8
                 ]
             ]
         }

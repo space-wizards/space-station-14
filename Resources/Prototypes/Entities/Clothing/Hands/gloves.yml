@@ -241,7 +241,7 @@
   id: ThievingGloves
   suffix: Thieving
   name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
-  description: Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
+  description: Regular black gloves that do not keep you from frying.
   components:
     - type: Tag
       tags: [] # ignore "WhitelistChameleon" tag

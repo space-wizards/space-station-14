@@ -89,6 +89,8 @@
       - id: RubberStampHop
       - id: BoxEncryptionKeyPassenger
       - id: BoxEncryptionKeyService
+      - id: ClothingBackpackIan
+        prob: 0.5
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -161,6 +163,7 @@
       - id: PlushieSlime
         prob: 0.1
       - id: DoorRemoteResearch
+      - id: ClothingHeadHatBeretRND
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
@@ -209,3 +212,4 @@
       - id: SecurityTechFabCircuitboard
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
+      - id: HoloprojectorSecurity
