@@ -1,0 +1,42 @@
+- type: entity
+  id: SignalTimerElectronics
+  parent: BaseElectronics
+  name: signal timer electronics
+  description: An electronics board used in timer circuitry. Looks like you could use a screwdriver to change the board type.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: charger_APC
+  - type: Construction
+    deconstructionTarget: null
+    graph: TimerElectronics
+    node: signal
+  - type: Tag
+    tags:
+    - TimerSignalElectronics
+
+- type: entity
+  id: ScreenTimerElectronics
+  parent: SignalTimerElectronics
+  name: screen timer electronics
+  components:
+  - type: Construction
+    deconstructionTarget: null
+    graph: TimerElectronics
+    node: screen
+  - type: Tag
+    tags:
+    - TimerScreenElectronics
+
+- type: entity
+  id: BrigTimerElectronics
+  parent: SignalTimerElectronics
+  name: brig timer electronics
+  components:
+  - type: Construction
+    deconstructionTarget: null
+    graph: TimerElectronics
+    node: brig
+  - type: Tag
+    tags:
+    - TimerBrigElectronics

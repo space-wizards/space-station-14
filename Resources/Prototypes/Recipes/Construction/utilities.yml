@@ -677,3 +677,57 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition {}
+
+# TIMERS
+- type: construction
+  name: signal timer
+  id: SignalTimer
+  graph: Timer
+  startNode: start
+  targetNode: signal
+  category: construction-category-utilities
+  description: "A wallmounted timer for sending timed signals to things."
+  icon:
+    sprite: Structures/Wallmounts/switch.rsi
+    state: on
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+
+- type: construction
+  name: screen timer
+  id: ScreenTimer
+  graph: Timer
+  startNode: start
+  targetNode: screen
+  category: construction-category-utilities
+  description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text."
+  icon:
+    sprite: Structures/Wallmounts/textscreen.rsi
+    state: textscreen
+  objectType: Structure
+  canRotate: false
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+
+- type: construction
+  name: brig timer
+  id: BrigTimer
+  graph: Timer
+  startNode: start
+  targetNode: brig
+  category: construction-category-utilities
+  description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text and requires security access to use."
+  icon:
+    sprite: Structures/Wallmounts/textscreen.rsi
+    state: textscreen
+  objectType: Structure
+  canRotate: false
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
