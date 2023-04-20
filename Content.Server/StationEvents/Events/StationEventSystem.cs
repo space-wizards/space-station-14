@@ -41,13 +41,6 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : Compon
         Sawmill = Logger.GetSawmill("stationevents");
     }
 
-    //todo move this to event manager
-    private void OnUnpaused(EntityUid uid, StationEventComponent component, ref EntityUnpausedEvent args)
-    {
-        component.StartTime += args.PausedTime;
-        component.EndTime += args.PausedTime;
-    }
-
     /// <inheritdoc/>
     protected override void Added(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {

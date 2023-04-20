@@ -9,7 +9,6 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents;
 
-//todo the api here kinda sucks cock
 public sealed class EventManagerSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
@@ -30,6 +29,14 @@ public sealed class EventManagerSystem : EntitySystem
         _sawmill = Logger.GetSawmill("events");
 
         _configurationManager.OnValueChanged(CCVars.EventsEnabled, SetEnabled, true);
+
+        SubscribeLocalEvent<StationEventComponent, EntityUnpausedEvent>(OnUnpaused);
+    }
+
+    private void OnUnpaused(EntityUid uid, StationEventComponent component, ref EntityUnpausedEvent args)
+    {
+        component.StartTime += args.PausedTime;
+        component.EndTime += args.PausedTime;
     }
 
     public override void Shutdown()
