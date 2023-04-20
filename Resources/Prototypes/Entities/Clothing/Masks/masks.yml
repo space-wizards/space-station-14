@@ -125,7 +125,7 @@
   parent: ClothingMaskBreathMedical
   id: ClothingMaskBreathMedicalSecurity
   name: medical protection mask
-  description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
+  description: A medical mask with a small layer of protection against damage and viruses, similar to the one used in the medical units of the first corporate war.
   components:
   - type: Sprite
     sprite: Clothing/Mask/medicalsecurity.rsi
