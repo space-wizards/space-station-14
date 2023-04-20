@@ -38,7 +38,7 @@ public sealed class MiningSystem : EntitySystem
         var toSpawn = _random.Next(proto.MinOreYield, proto.MaxOreYield);
         for (var i = 0; i < toSpawn; i++)
         {
-            Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.3f)));
+            Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
         }
     }
 

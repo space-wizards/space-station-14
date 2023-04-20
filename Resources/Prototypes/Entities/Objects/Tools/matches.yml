@@ -18,7 +18,6 @@
     tags:
     - Matchstick
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage
   - type: Sprite
     netsync: false
@@ -70,6 +69,23 @@
     sprite: Objects/Tools/matches.rsi
     layers:
       - state: matchbox
+      - state: matchbox-open
+        map: ["openLayer"]
+        visible: False
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - matchbox1
+          - matchbox2
+          - matchbox3
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        openLayer:
+          True: {visible: true}
+          False: {visible: false}
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
@@ -81,18 +97,7 @@
   - type: ItemCounter
     count:
       tags: [Matchstick]
-  - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - matchbox1
-          - matchbox2
-          - matchbox3
-  - type: BagOpenCloseVisualizer
-    openIcon: matchbox-open
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage

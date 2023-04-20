@@ -4,23 +4,13 @@
   name: cigarette pack
   abstract: true
   components:
-  - type: Tag
-    tags:
-    - CigPack
-    - Trash
-  - type: Recyclable
-  - type: SpaceGarbage
-  - type: Storage
-    capacity: 6
-  - type: Item
-    size: 6
-  - type: StorageFill
-    contents:
-    - id: Cigarette
-      amount: 6
-  - type: ItemCounter
-    count:
-      tags: [Cigarette]
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: closed
+    - map: ["openLayer"]
+      state: open
+      visible: False
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -33,8 +23,31 @@
       - cig4
       - cig5
       - cig6
-  - type: BagOpenCloseVisualizer
-    openIcon: open
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        openLayer:
+          True: {visible: true}
+          False: {visible: false}
+  - type: Tag
+    tags:
+    - CigPack
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+  - type: SpaceGarbage
+  - type: Storage
+    capacity: 6
+  - type: Item
+    size: 6
+  - type: StorageFill
+    contents:
+    - id: Cigarette
+      amount: 6
+  - type: ItemCounter
+    count:
+      tags: [Cigarette]
 
 - type: entity
   id: CigPackGreen
@@ -43,10 +56,7 @@
   description: A label on the packaging reads, Wouldn't a slow death make a change?
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
-    layers:
-    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
     size: 6
@@ -58,10 +68,7 @@
   description: The most popular brand of Space Cigarettes, sponsors of the Space Olympics.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
-    layers:
-    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
     size: 6
@@ -73,10 +80,7 @@
   description: For those who somehow want to obtain the record for the most amount of cancerous tumors.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
-    layers:
-    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
     size: 6
@@ -88,10 +92,7 @@
   description: Nomads's extra strong, for when your life is more extra hard.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
-    layers:
-    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
     size: 6
@@ -107,10 +108,7 @@
     - id: CigaretteSyndicate
       amount: 6
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
-    layers:
-    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
     size: 6

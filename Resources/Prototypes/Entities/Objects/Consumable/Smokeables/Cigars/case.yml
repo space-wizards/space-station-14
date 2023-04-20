@@ -9,18 +9,9 @@
     sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
     layers:
     - state: closed
-  - type: Storage
-    capacity: 8
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
-    size: 8
-  - type: StorageFill
-    contents:
-    - id: Cigar
-      amount: 8
-  - type: ItemCounter
-    count:
-      tags: [Cigar]
+    - map: ["openLayer"]
+      state: open
+      visible: False
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -34,8 +25,24 @@
       - cigar6
       - cigar7
       - cigar8
-  - type: BagOpenCloseVisualizer
-    openIcon: open
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        openLayer:
+          True: {visible: true}
+          False: {visible: false}
+  - type: Storage
+    capacity: 8
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
+    size: 8
+  - type: StorageFill
+    contents:
+    - id: Cigar
+      amount: 8
+  - type: ItemCounter
+    count:
+      tags: [Cigar]
 
 - type: entity
   id: CigarGoldCase

@@ -69,11 +69,88 @@
             types:
               Heat: 10
     - type: AtmosExposed
-    - type: Spreader
-      growthResult: Kudzu
-      chance: 1
+    - type: Kudzu
     - type: GrowingKudzu
-      growthTickSkipChance: 0.6666
+      growthTickChance: 0.3
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
+    - type: EdgeSpreader
+    - type: NodeContainer
+      nodes:
+        kudzu:
+          !type:SpreaderNode
+          nodeGroupID: Spreader
+
+
+- type: entity
+  id: WeakKudzu
+  parent: Kudzu
+  suffix: Weak
+  components:
+    - type: Kudzu
+      spreadChance: 0.3
+
+- type: entity
+  id: FleshKudzu
+  name: tendons
+  description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      sprite: Objects/Misc/fleshkudzu.rsi
+      state: base
+      drawdepth: Overdoors
+      netsync: false
+    - type: Appearance
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+      - hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+    - type: Damageable
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: DamageContacts
+      damage:
+        types:
+          Slash: 1.5
+          Piercing: 1.5
+      ignoreWhitelist:
+        tags:
+        - Flesh
+    - type: Kudzu
+    - type: EdgeSpreader
+    - type: NodeContainer
+      nodes:
+        kudzu:
+          !type:SpreaderNode
+          nodeGroupID: Spreader
+    - type: SlowContacts
+      walkSpeedModifier: 0.3
+      sprintSpeedModifier: 0.3
+      ignoreWhitelist:
+        tags:
+        - Flesh

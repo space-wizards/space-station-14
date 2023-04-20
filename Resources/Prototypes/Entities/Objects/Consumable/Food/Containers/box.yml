@@ -15,6 +15,28 @@
     netsync: false
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     state: box
+    layers:
+    - state: box
+    - map: ["openLayer"]
+      state: box-open
+      visible: False
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - box1
+      - pink-box2
+      - box3
+      - pink-box4
+      - box5
+      - pink-box6
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        openLayer:
+          True: {visible: true}
+          False: {visible: false}
   - type: Storage
     capacity: 6
     whitelist:
@@ -33,19 +55,6 @@
   - type: ItemCounter
     count:
       tags: [Donut]
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-      - box1
-      - pink-box2
-      - box3
-      - pink-box4
-      - box5
-      - pink-box6
-  - type: BagOpenCloseVisualizer
-    openIcon: box-open
 
 # Egg
 
@@ -59,21 +68,11 @@
     netsync: false
     sprite: Objects/Consumable/Food/egg.rsi
     state: box-closed
-  - type: Storage
-    capacity: 12
-    whitelist:
-      tags:
-      - Egg
-  - type: Item
-    sprite: Objects/Consumable/Food/egg.rsi
-    size: 12
-  - type: StorageFill
-    contents:
-    - id: FoodEgg
-      amount: 12
-  - type: ItemCounter
-    count:
-      tags: [Egg]
+    layers:
+    - state: box-closed
+    - map: ["openLayer"]
+      state: box-open
+      visible: False
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -91,8 +90,27 @@
       - box10
       - box11
       - box12
-  - type: BagOpenCloseVisualizer
-    openIcon: box-open
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        openLayer:
+          True: {visible: true}
+          False: {visible: false}
+  - type: Storage
+    capacity: 12
+    whitelist:
+      tags:
+      - Egg
+  - type: Item
+    sprite: Objects/Consumable/Food/egg.rsi
+    size: 12
+  - type: StorageFill
+    contents:
+    - id: FoodEgg
+      amount: 12
+  - type: ItemCounter
+    count:
+      tags: [Egg]
   # Someday...
   # - type: DamageOnLand
   # - type: DamageOtherOnHit
@@ -220,6 +238,28 @@
     netsync: false
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     state: box
+    layers:
+    - state: box
+    - map: ["openLayer"]
+      state: box-open
+      visible: False
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - box1
+      - box2
+      - box3
+      - box4
+      - box5
+      - box6
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        openLayer:
+          True: {visible: true}
+          False: {visible: false}
   - type: Storage
     capacity: 6
   - type: Item
@@ -233,19 +273,6 @@
   - type: ItemCounter
     count:
       tags: [Nugget]
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-      - box1
-      - box2
-      - box3
-      - box4
-      - box5
-      - box6
-  - type: BagOpenCloseVisualizer
-    openIcon: box-open
 
 # Donkpocket
 
@@ -382,12 +409,21 @@
     netsync: false
     sprite: Objects/Storage/happyhonk/clown.rsi
     state: box
+    layers:
+    - state: box
+    - map: ["openLayer"]
+      state: box-open
+      visible: False
   - type: Item
     sprite: Objects/Storage/happyhonk/clown.rsi
     heldPrefix: box
   - type: Appearance
-  - type: BagOpenCloseVisualizer
-    openIcon: box-open
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        openLayer:
+          True: {visible: true}
+          False: {visible: false}
   - type: Storage
     capacity: 30
   - type: Tag
@@ -516,6 +552,9 @@
   - type: Item
     sprite: Objects/Storage/happyhonk/cluwne.rsi
     heldPrefix: box
+  - type: StorageFill
+    contents:
+      - id: CluwneHorn
 
 - type: entity
   id: FoodMealHappyHonkClown

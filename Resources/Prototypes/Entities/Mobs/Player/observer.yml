@@ -41,6 +41,7 @@
     - Service
     - Supply
     - Syndicate
+    globalReceive: true
   - type: Sprite
     overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
     netsync: false

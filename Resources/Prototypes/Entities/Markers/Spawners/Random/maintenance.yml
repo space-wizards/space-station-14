@@ -16,6 +16,7 @@
         - ClothingHeadHelmetTemplar
         - ClothingNeckCloakTrans
         - ClothingNeckCloakAdmin
+        - ClothingNeckCloakMoth
         - ClothingNeckCloakGoliathCloak
         - ToySkeleton
         - Basketball
@@ -34,6 +35,7 @@
         - ClothingNeckNonBinaryPin
         - ClothingNeckPansexualPin
         - ClothingNeckTransPin
+        - CluwneHorn
       rareChance: 0.01
       prototypes:
         - Lighter

@@ -1,5 +1,7 @@
 using System.Linq;
+using Content.Server.Administration.Systems;
 using Content.Server.AME.Components;
+using Content.Server.Chat.Managers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
@@ -23,9 +25,10 @@ namespace Content.Server.AME
         [ViewVariables]
         private AMEControllerComponent? _masterController;
 
-        [Dependency] private readonly IRobustRandom _random = default!;
-
+        [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public AMEControllerComponent? MasterController => _masterController;
 
@@ -37,7 +40,6 @@ namespace Content.Server.AME
         {
             base.LoadNodes(groupNodes);
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
             MapGridComponent? grid = null;
 
             foreach (var node in groupNodes)
@@ -46,7 +48,7 @@ namespace Content.Server.AME
                 if (_entMan.TryGetComponent(nodeOwner, out AMEShieldComponent? shield))
                 {
                     var xform = _entMan.GetComponent<TransformComponent>(nodeOwner);
-                    if (xform.GridUid != grid?.Owner && !mapManager.TryGetGrid(xform.GridUid, out grid))
+                    if (xform.GridUid != grid?.Owner && !_mapManager.TryGetGrid(xform.GridUid, out grid))
                         continue;
 
                     if (grid == null)
@@ -133,10 +135,21 @@ namespace Content.Server.AME
                     if (instability != 0)
                     {
                         overloading = true;
+                        var integrityCheck = 100;
                         foreach(AMEShieldComponent core in _cores)
                         {
+                            var oldIntegrity = core.CoreIntegrity;
                             core.CoreIntegrity -= instability;
+
+                            if (oldIntegrity > 95
+                                && core.CoreIntegrity <= 95
+                                && core.CoreIntegrity < integrityCheck)
+                                integrityCheck = core.CoreIntegrity;
                         }
+
+                        // Admin alert
+                        if (integrityCheck != 100 && _masterController != null)
+                            _chat.SendAdminAlert($"AME overloading: {_entMan.ToPrettyString(_masterController.Owner)}");
                     }
                 }
                 // Note the float conversions. The maths will completely fail if not done using floats.

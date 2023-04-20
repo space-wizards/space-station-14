@@ -70,15 +70,15 @@
   components:
   - type: AccessReader
     access: [["External"]]
-    
+
 - type: entity
   parent: AirlockExternal
   id: AirlockExternalCargoLocked
   suffix: External, Cargo, Locked
   components:
   - type: AccessReader
-    access: [["Cargo"]]    
-    
+    access: [["Cargo"]]
+
 - type: entity
   parent: AirlockExternal
   id: AirlockExternalEngineeringLocked
@@ -94,7 +94,7 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
-    
+
 - type: entity
   parent: AirlockFreezer
   id: AirlockFreezerLocked
@@ -261,6 +261,16 @@
 
 - type: entity
   parent: AirlockSecurity
+  id: AirlockDetectiveLocked
+  suffix: Detective, Locked
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
+  - type: Wires
+    LayoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockSecurity
   id: AirlockBrigLocked
   suffix: Brig, Locked
   components:
@@ -327,14 +337,14 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
-    
+
 - type: entity
   parent: AirlockExternalGlass
   id: AirlockExternalGlassEngineeringLocked
   suffix: External, Glass, Engineering, Locked
   components:
   - type: AccessReader
-    access: [["Engineering"]]    
+    access: [["Engineering"]]
 
 - type: entity
   parent: AirlockExternalGlass
@@ -342,8 +352,8 @@
   suffix: External, Glass, Atmospherics, Locked
   components:
   - type: AccessReader
-    access: [["Atmospherics"]]   
-    
+    access: [["Atmospherics"]]
+
 - type: entity
   parent: AirlockGlass
   id: AirlockKitchenGlassLocked
@@ -503,6 +513,14 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockDetectiveGlassLocked
+  suffix: Detective, Locked
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
 
 - type: entity
   parent: AirlockSecurityGlass
@@ -691,6 +709,14 @@
 
 - type: entity
   parent: AirlockMaint
+  id: AirlockMaintDetectiveLocked
+  suffix: Detective, Locked
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
+
+- type: entity
+  parent: AirlockMaint
   id: AirlockMaintHOPLocked
   suffix: HeadOfPersonnel, Locked
   components:
@@ -727,9 +753,25 @@
   id: AirlockExternalGlassShuttleEmergencyLocked
   suffix: External, Emergency, Glass, Docking, Locked
   components:
-    - type: EmergencyDock
+    - type: PriorityDock
+      tag: DockEmergency
     - type: AccessReader
       access: [["External"]]
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleArrivals
+  suffix: External, Arrivals, Glass, Docking
+  components:
+    - type: PriorityDock
+      tag: DockArrivals
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleEscape
+  suffix: External, Escape 3x4, Glass, Docking
+  components:
+    - type: GridFill
 
 #HighSecDoors
 - type: entity

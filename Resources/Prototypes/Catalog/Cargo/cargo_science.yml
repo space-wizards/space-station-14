@@ -17,3 +17,13 @@
   cost: 2000
   category: Science
   group: market
+
+- type: cargoProduct
+  id: ScienceBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/scientist.rsi
+    state: icon
+  product: CrateScienceBiosuit
+  cost: 800
+  category: Science
+  group: market

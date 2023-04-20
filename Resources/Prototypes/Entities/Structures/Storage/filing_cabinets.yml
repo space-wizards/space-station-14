@@ -17,9 +17,18 @@
     sprite: Structures/Storage/cabinets.rsi
     state: filingcabinet
     noRot: true
+    layers:
+    - state: filingcabinet
+    - map: ["openLayer"]
+      state: filingcabinet-open
+      visible: False
   - type: Appearance
-  - type: BagOpenCloseVisualizer
-    openIcon: filingcabinet-open
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        openLayer:
+          True: {visible: true}
+          False: {visible: false}
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
@@ -50,9 +59,11 @@
   - type: Sprite
     sprite: Structures/Storage/cabinets.rsi
     state: tallcabinet
-  - type: Appearance
-  - type: BagOpenCloseVisualizer
-    openIcon: tallcabinet-open
+    layers:
+    - state: tallcabinet
+    - map: ["openLayer"]
+      state: tallcabinet-open
+      visible: False
 
 - type: entity
   name: chest drawer
@@ -73,9 +84,18 @@
     sprite: Structures/Storage/cabinets.rsi
     state: chestdrawer
     noRot: true
+    layers:
+    - state: chestdrawer
+    - map: ["openLayer"]
+      state: chestdrawer-open
+      visible: False
   - type: Appearance
-  - type: BagOpenCloseVisualizer
-    openIcon: chestdrawer-open
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        openLayer:
+          True: {visible: true}
+          False: {visible: false}
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
@@ -106,28 +126,19 @@
       - id: Pen
         prob: 0.5
       - id: PaperOffice
-      - id: PaperOffice
-        prob: 0.5
-      - id: PaperOffice
-        prob: 0.4
-        orGroup: Folder
+        amount: 1
+        maxAmount: 3
       - id: BoxFolderBlue
-        prob: 0.10
         orGroup: Folder
       - id: BoxFolderRed
-        prob: 0.10
         orGroup: Folder
       - id: BoxFolderYellow
-        prob: 0.10
         orGroup: Folder
       - id: BoxFolderWhite
-        prob: 0.10
         orGroup: Folder
       - id: BoxFolderGrey
-        prob: 0.10
         orGroup: Folder
       - id: BoxFolderBlack
-        prob: 0.10
         orGroup: Folder
 
 - type: entity
