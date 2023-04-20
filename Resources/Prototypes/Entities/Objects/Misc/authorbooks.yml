@@ -361,3 +361,29 @@
         - state: book_map
     - type: Paper
       content: book-text-map
+
+- type: entity
+  parent: BookBase
+  id: BookJourney
+  name: a journey of music, mountains, and self-discovery
+  description: The book is in excellent condition, with crisp pages and a glossy cover. The cover features a striking image of a mountain range, with a silhouette of a climber with a guitar on their back in the foreground. The title is bold and eye-catching, with the subtitle "A Journey of Music, Mountains, and Self-Discovery."
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/authorbooks.rsi
+      layers:
+        - state: book_journ_mount
+    - type: Paper
+      content: book-text-journ-mount
+
+- type: entity
+  parent: BookBase
+  id: BookInspiration
+  name: finding inspiration - a writer's journey through the woods
+  description: The book is in a new condition with a cover depicting a serene forest scene with a waterfall and colorful wildflowers. The title of the book "Finding Inspiration - A Writer's Journey Through the Woods" and the author's name are prominently displayed at the bottom.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book6
+    - type: Paper
+      content: book-text-inspiration
