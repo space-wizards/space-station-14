@@ -43,8 +43,7 @@ namespace Content.Shared.Alert
         Debug3,
         Debug4,
         Debug5,
-        Debug6,
-        SuitPower
+        Debug6
     }
 
 }

@@ -1,73 +1,4 @@
 Entries:
-- author: Visne
-  changes:
-  - {message: Emergency pizza delivery now costs 450 spacebucks instead of 550, type: Tweak}
-  id: 2949
-  time: '2023-01-24T00:36:50.0000000+00:00'
-- author: sephtasm
-  changes:
-  - {message: Client-side placement mode crash while placing random humanoid mobs,
-    type: Fix}
-  id: 2950
-  time: '2023-01-24T13:42:58.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: 'Added Barratry back into the game, with a remastered new look.', type: Add}
-  id: 2951
-  time: '2023-01-25T06:28:43.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: 'Added new emotes with sound! Simply type into emote chat: scream, laugh,
-      clap or snap.', type: Add}
-  id: 2952
-  time: '2023-01-25T16:29:42.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: diagnoser now properly displays no-cure text, type: Fix}
-  id: 2953
-  time: '2023-01-26T00:31:20.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: Adjusted the speed loaders of light rifles so they can both transfer
-      bullets easily between each other and actually work, type: Tweak}
-  id: 2954
-  time: '2023-01-26T00:49:07.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Two new turret types added for misc use., type: Add}
-  id: 2955
-  time: '2023-01-26T04:03:31.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - {message: 'Leather satchels have been added, with sprites from various parts of
-      /TG/Station''s history! Every clothesmate comes with two of them.', type: Add}
-  - {message: 'To make room for the leather satchels, clothesmates now only carry
-      three normal satchels.', type: Tweak}
-  id: 2956
-  time: '2023-01-26T18:14:31.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Detectives get a speedloader for their revolver. It can be found in
-      their cabinet., type: Add}
-  - {message: Revolvers can now be alt-clicked to be emptied., type: Tweak}
-  id: 2957
-  time: '2023-01-26T18:15:20.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that was causing issues when cloning zombies., type: Fix}
-  id: 2958
-  time: '2023-01-26T22:04:58.0000000+00:00'
-- author: jamessimo
-  changes:
-  - {message: Updated Jobs and Departments to be case-correct, type: Tweak}
-  - {message: Character job preferences pages UX improvements, type: Tweak}
-  id: 2959
-  time: '2023-01-26T22:32:15.0000000+00:00'
-- author: jicksaw
-  changes:
-  - {message: Handcuffing in combat mode should feel more responsive, type: Fix}
-  id: 2960
-  time: '2023-01-27T01:04:26.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix mass scanner on planet maps., type: Fix}
@@ -2878,8 +2809,8 @@ Entries:
   time: '2023-04-17T22:47:09.0000000+00:00'
 - author: Whisper
   changes:
-  - {message: Debuff of delay per 5u reduced from 1s to 0.5s, type: Tweak}
-  - {message: Delay on crit patients reduced by 25%, type: Tweak}
+  - {message: Syringe debuff of delay per 5u reduced from 1s to 0.5s, type: Tweak}
+  - {message: Syringe delay on crit patients reduced by 25%, type: Tweak}
   id: 3447
   time: '2023-04-18T14:23:54.0000000+00:00'
 - author: deltanedas
@@ -2888,3 +2819,68 @@ Entries:
       experimental welding tools now regenerate 1u of fuel every second.', type: Fix}
   id: 3448
   time: '2023-04-18T14:27:05.0000000+00:00'
+- author: EnDecc
+  changes:
+  - {message: Sinks now replenish 1u of water per second, type: Add}
+  id: 3449
+  time: '2023-04-18T20:49:17.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: The drunk effect of having a low blood level is now instantly removed
+      when healthy!, type: Fix}
+  - {message: Dead bodies will persist in bleeding after death!, type: Add}
+  id: 3450
+  time: '2023-04-19T03:09:22.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Minibomb now does what it says on the tin and gibs bodies, type: Tweak}
+  id: 3451
+  time: '2023-04-19T04:36:13.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added Stimpack sprite, type: Add}
+  id: 3452
+  time: '2023-04-19T05:41:10.0000000+00:00'
+- author: DEATHB4DEFEAT
+  changes:
+  - {message: Added a search bar to marking editors in character creation, type: Add}
+  id: 3453
+  time: '2023-04-19T05:44:37.0000000+00:00'
+- author: RickiTIkkiTawwie
+  changes:
+  - {message: 'Added Ian''s backpack, bark! It has a 50% chance to spawn in HoP''s
+      locker with a round start.', type: Add}
+  id: 3454
+  time: '2023-04-19T07:40:25.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Implanter removal speed increased, type: Tweak}
+  id: 3455
+  time: '2023-04-19T07:41:09.0000000+00:00'
+- author: mhamster
+  changes:
+  - {message: Nanotrasen is now supplying scientists with cool new science coats instead
+      of the classic white lab coats, type: Add}
+  id: 3456
+  time: '2023-04-19T07:42:06.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Ninjas have been removed., type: Remove}
+  id: 3457
+  time: '2023-04-19T07:43:09.0000000+00:00'
+- author: Floofi
+  changes:
+  - {message: Added hospital gowns to the medidrobe for use in medical and for prisoners
+      who refuse to wear clothes, type: Add}
+  id: 3458
+  time: '2023-04-19T07:43:57.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced the power of anomaly vessel upgrades., type: Tweak}
+  id: 3459
+  time: '2023-04-19T10:03:08.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added samurai dogi to EMAGGED Autodrobe., type: Add}
+  id: 3460
+  time: '2023-04-19T14:27:39.0000000+00:00'
