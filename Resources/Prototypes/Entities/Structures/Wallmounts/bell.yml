@@ -19,6 +19,11 @@
     interactSuccessSound:   
       path: /Audio/Weapons/boxingbell.ogg
   - type: Clickable
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/boxingbell.ogg"
   - type: Appearance
   - type: Rotatable
   - type: CollisionWake
@@ -33,10 +38,10 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 150
       behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
