@@ -504,7 +504,7 @@ entities:
         tiles: XgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABPAAAAXgAAAF4AAABeAAAAXgAAAF4AAABbAAADWwAAAV4AAABeAAAAXgAAAE4AAABeAAAAMQAAADEAAAAxAAAAMQAAAFsAAABeAAAATgAAAF4AAABeAAAAXgAAAEMAAAheAAAAXgAAAF4AAABOAAAAXgAAADEAAAAxAAAAMQAAADEAAABbAAACXgAAAE4AAABeAAAAXgAAAF4AAABDAAAAXQAAAF4AAABeAAAATgAAAF4AAAAxAAAAMQAAADEAAAAxAAAAWwAAAF4AAABOAAAAXgAAAF4AAABbAAACXgAAAF0AAABeAAAAXgAAAE4AAABeAAAAMQAAADEAAAAxAAAAMQAAAFsAAAFeAAAATgAAAF4AAABeAAAAXgAAAF4AAABdAAAAXgAAAF4AAABOAAAAXgAAAFsAAAFbAAAAWwAAAFsAAAJcAAACXgAAAE4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABPAAAAXgAAAF4AAABeAAAAXgAAABYAAAFeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAEQAAAFEAAADRAAAAEQAAAFEAAACOAAAAUQAAAJEAAACRAAAAEQAAANEAAAARAAAAUQAAAJEAAACRAAAAUQAAANEAAADRAAAA0QAAAJEAAAARAAAAzgAAAJEAAADRAAAAEQAAANEAAADRAAAA0QAAANEAAACRAAAA0QAAAJEAAABRAAAAkQAAAJEAAAARAAAAkQAAAM4AAAARAAAA0QAAANEAAACRAAAA0QAAAJEAAADRAAAAUQAAAJEAAADRAAAAl4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAARAAAAEQAAANEAAAAXgAAAEQAAAJeAAAARAAAAEQAAAFEAAAARAAAAUQAAANEAAABRAAAAkQAAAAWAAADRAAAA0QAAANEAAAARAAAAUQAAANEAAAAFgAAAUQAAAJEAAAARAAAAkQAAANEAAACRAAAA0QAAANEAAADFgAAAV4AAABEAAACRAAAAEQAAABEAAAARAAAAF4AAABEAAAARAAAAEQAAANEAAABRAAAA0QAAAJEAAAARAAAABYAAAFEAAAARAAAAkQAAANEAAABRAAAAkQAAANeAAAAXgAAAF4AAABeAAAARAAAAl4AAABEAAABXgAAAF4AAABeAAAAXgAAAF4AAABEAAACXgAAAF4AAAA4AAACFgAAAkQAAABEAAABRAAAA0QAAABEAAABRAAAAkQAAAFEAAACRAAAA14AAAAWAAAAFgAAABYAAAJeAAAARAAAAw==
       -2,-1:
         ind: -2,-1
-        tiles: XgAAAEQAAANEAAACRAAAAkQAAABEAAADRAAAAkQAAAFEAAADRAAAABYAAAAWAAABFgAAAxYAAAFeAAAARAAAA0QAAABEAAAARAAAAUQAAANEAAABRAAAAEQAAABEAAABRAAAAEQAAABEAAADXgAAAF4AAABeAAAAXgAAAEQAAABEAAADRAAAAUQAAABEAAAARAAAA0QAAAJEAAABRAAAAUQAAANEAAABRAAAAl4AAAAWAAAAFgAAAV4AAABEAAADRAAAAUQAAAJEAAADXgAAAF4AAABeAAAAXgAAAF4AAABEAAADRAAAA0QAAANEAAABFgAAARYAAABeAAAARAAAAUQAAABEAAACRAAAAl4AAAAWAAACFgAAAxYAAABeAAAARAAAAkQAAANEAAAAXgAAAF4AAABeAAAAXgAAAEQAAAJEAAABRAAAAV4AAABeAAAAFgAAARYAAAAWAAACXgAAAF4AAABEAAACRAAAAl4AAAAWAAABFgAAAV4AAABEAAADRAAAAUQAAAIWAAAAFgAAAxYAAAIWAAADFgAAAxYAAAMWAAAARAAAAEQAAAFEAAAAFgAAAxYAAABeAAAARAAAAUQAAAJEAAACXgAAAF4AAAAWAAACFgAAABYAAANeAAAAXgAAAEQAAAFEAAACXgAAAF4AAABeAAAAXgAAAEQAAAJEAAACRAAAAkQAAAFeAAAAFgAAABYAAAAWAAADXgAAAEQAAAFEAAAARAAAAF4AAABRAAACUQAAA14AAABEAAACRAAAAUQAAANEAAAAXgAAAF4AAAAWAAAAXgAAAF4AAABEAAAARAAAAkQAAAJEAAABUQAAA1EAAAFeAAAARAAAAEQAAABEAAACRAAAA0QAAAJEAAACRAAAA0QAAAJEAAADRAAAAkQAAAJEAAABXgAAABYAAAAWAAABXgAAAEQAAABeAAAARAAAAkQAAAFEAAADRAAAA0QAAABEAAAARAAAAkQAAABEAAAARAAAAV4AAABEAAAARAAAA1EAAANEAAACFgAAAEQAAAJEAAABRAAAAUQAAABEAAACRAAAAUQAAANEAAACRAAAAEQAAAAWAAABRAAAA0QAAABeAAAARAAAAV4AAABEAAACRAAAAkQAAABEAAADRAAAAUQAAANEAAACRAAAAkQAAABEAAADXgAAABYAAAEWAAACXgAAADgAAAFeAAAAPAAAAEQAAAJEAAADXgAAABYAAAJeAAAARAAAAEQAAABeAAAAFgAAA14AAABeAAAAXgAAAF4AAABEAAACPAAAADwAAABEAAACOgAAADoAAAA6AAAAOgAAADoAAABEAAACFgAAARYAAAIWAAADFgAAAl4AAABEAAABRAAAAQ==
+        tiles: XgAAAEQAAANEAAACRAAAAkQAAABEAAADRAAAAkQAAAFEAAADRAAAABYAAAAWAAABFgAAAxYAAAFeAAAARAAAA0QAAABEAAAARAAAAUQAAANEAAABRAAAAEQAAABEAAABRAAAAEQAAABEAAADXgAAAF4AAABeAAAAXgAAAEQAAABEAAADRAAAAUQAAABEAAAARAAAA0QAAAJEAAABRAAAAUQAAANEAAABRAAAAl4AAAAWAAAAFgAAAV4AAABEAAADRAAAAUQAAAJEAAADXgAAAF4AAABeAAAAXgAAAF4AAABEAAADRAAAA0QAAANEAAABFgAAARYAAABeAAAARAAAAUQAAABEAAACRAAAAl4AAAAWAAACFgAAAxYAAABeAAAARAAAAkQAAANEAAAAXgAAAF4AAABeAAAAXgAAAEQAAAJEAAABRAAAAV4AAABeAAAAFgAAARYAAAAWAAACXgAAAF4AAABEAAACRAAAAl4AAAAWAAABFgAAAV4AAABEAAADRAAAAUQAAAJeAAAAFgAAAxYAAAIWAAADFgAAAxYAAANeAAAARAAAAEQAAAFEAAAAFgAAAxYAAABeAAAARAAAAUQAAAJEAAACXgAAAF4AAAAWAAACFgAAABYAAANeAAAAXgAAAEQAAAFEAAACXgAAAF4AAABeAAAAXgAAAEQAAAJEAAACRAAAAkQAAAFeAAAAFgAAABYAAAAWAAADXgAAAEQAAAFEAAAARAAAAF4AAABRAAACUQAAA14AAABEAAACRAAAAUQAAANEAAAAXgAAAF4AAAAWAAAAXgAAAF4AAABEAAAARAAAAkQAAAJEAAABUQAAA1EAAAFeAAAARAAAAEQAAABEAAACRAAAA0QAAAJEAAACRAAAA0QAAAJEAAADRAAAAkQAAAJEAAABXgAAABYAAAAWAAABXgAAAEQAAABeAAAARAAAAkQAAAFEAAADRAAAA0QAAABEAAAARAAAAkQAAABEAAAARAAAAV4AAABEAAAARAAAA1EAAANEAAACFgAAAEQAAAJEAAABRAAAAUQAAABEAAACRAAAAUQAAANEAAACRAAAAEQAAAAWAAABRAAAA0QAAABeAAAARAAAAV4AAABEAAACRAAAAkQAAABEAAADRAAAAUQAAANEAAACRAAAAkQAAABEAAADXgAAABYAAAEWAAACXgAAADgAAAFeAAAAPAAAAEQAAAJEAAADXgAAABYAAAJeAAAARAAAAEQAAABeAAAAFgAAA14AAABeAAAAXgAAAF4AAABEAAACPAAAADwAAABEAAACOgAAADoAAAA6AAAAOgAAADoAAABEAAACFgAAARYAAAIWAAADFgAAAl4AAABEAAABRAAAAQ==
       -2,0:
         ind: -2,0
         tiles: PAAAADwAAABEAAACOgAAADoAAAA6AAAAOgAAADoAAABEAAACWwAAAVsAAAJbAAABWwAAAF4AAABEAAAARAAAADwAAAA8AAAARAAAADoAAAA6AAAAOgAAADoAAAA6AAAARAAAAFsAAANbAAADWwAAAlsAAABeAAAARAAAAkQAAAE8AAAAPAAAAEQAAAA6AAAAOgAAADoAAAA6AAAAOgAAAEQAAAMWAAACFgAAABYAAAIWAAACXgAAAEQAAAFEAAADXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAARAAAARYAAAIWAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAATwAAAEQAAAAWAAAAFgAAAU8AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAE4AAABOAAAATgAAAF4AAABEAAACXgAAAF4AAABeAAAAXgAAAF4AAABPAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAOAAAAEQAAANEAAAARAAAA0QAAAJEAAADRAAAA0QAAAFEAAABRAAAA0QAAANEAAACRAAAA0QAAAFEAAAARAAAAkQAAANEAAABRAAAAUQAAAFEAAABRAAAAEQAAANEAAADRAAAAkQAAABEAAACRAAAAEQAAAFEAAABRAAAAUQAAAFEAAACRAAAAUQAAAJEAAAARAAAAkQAAABEAAACRAAAAkQAAAJEAAADRAAAAkQAAAJEAAAARAAAAkQAAAJEAAABRAAAAhYAAANeAAAAXgAAAF4AAABeAAAARAAAAkQAAANEAAACXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAADgAAAJEAAACFgAAAF4AAAAXAAACWwAAA1sAAAJbAAACWwAAA1sAAAIXAAAAXgAAAF0AAABdAAAAXQAAAF4AAABEAAADDwAAABYAAAJeAAAAFwAAAlsAAANbAAAAWwAAAFsAAAFbAAABFwAAAV4AAAAAAAAAAAAAAAAAAABeAAAARAAAAw8AAABEAAABXgAAABcAAAFbAAAAWwAAAFsAAANbAAADWwAAABcAAAJeAAAAXQAAAF0AAABdAAAAXgAAAEQAAAEPAAAAFgAAAF4AAAAXAAABWwAAAFsAAAFbAAAAWwAAAFsAAAEXAAADXgAAAF4AAABeAAAAXgAAAF4AAABEAAADRAAAARYAAANeAAAAFwAAAFsAAAJbAAABWwAAAVsAAABbAAACFwAAAl4AAAAWAAABFgAAAxYAAABeAAAARAAAAQ==
@@ -9111,7 +9111,7 @@ entities:
     type: GridAtmosphere
   - type: OccluderTree
   - type: Shuttle
-  - nextUpdate: 238.9200166
+  - nextUpdate: 1208.4511172
     type: GridPathfinding
   - nextUpdate: 1
     type: SpreaderGrid
@@ -9201,6 +9201,14 @@ entities:
     pos: -20.5,-12.5
     parent: 60
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Timer
+        uid: 6972
+      AutoClose: []
+    type: SignalReceiver
 - uid: 73
   type: MedkitToxinFilled
   components:
@@ -9257,9 +9265,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 82
-  type: Table
+  type: Grille
   components:
-  - pos: -23.5,-9.5
+  - pos: -29.5,-9.5
     parent: 60
     type: Transform
 - uid: 83
@@ -9544,9 +9552,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 6972
-      - port: Pressed
-        uid: 1488
+        uid: 1471
     type: SignalReceiver
 - uid: 124
   type: ReinforcedWindow
@@ -9695,6 +9701,8 @@ entities:
 - uid: 144
   type: AirlockBrigGlassLocked
   components:
+  - name: Security Lobby
+    type: MetaData
   - pos: -21.5,-18.5
     parent: 60
     type: Transform
@@ -9746,7 +9754,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 6972
+        uid: 1489
     type: SignalReceiver
 - uid: 149
   type: ReinforcedWindow
@@ -9768,6 +9776,14 @@ entities:
     pos: -20.5,-9.5
     parent: 60
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Timer
+        uid: 1488
+      AutoClose: []
+    type: SignalReceiver
 - uid: 152
   type: WallReinforced
   components:
@@ -10005,7 +10021,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 1488
+        uid: 1471
     type: SignalReceiver
 - uid: 186
   type: WallReinforced
@@ -10032,7 +10048,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 6972
+        uid: 1489
     type: SignalReceiver
 - uid: 189
   type: WallReinforced
@@ -10400,6 +10416,14 @@ entities:
     pos: -32.5,-6.5
     parent: 60
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Timer
+        uid: 1468
+      AutoClose: []
+    type: SignalReceiver
 - uid: 231
   type: ReinforcedWindow
   components:
@@ -10485,9 +10509,19 @@ entities:
     pos: -32.5,-12.5
     parent: 60
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Timer
+        uid: 1486
+      AutoClose: []
+    type: SignalReceiver
 - uid: 244
   type: AirlockBrigGlassLocked
   components:
+  - name: Brig
+    type: MetaData
   - pos: -27.5,-17.5
     parent: 60
     type: Transform
@@ -10665,6 +10699,14 @@ entities:
     pos: -32.5,-9.5
     parent: 60
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Timer
+        uid: 1485
+      AutoClose: []
+    type: SignalReceiver
 - uid: 269
   type: ReinforcedWindow
   components:
@@ -10954,6 +10996,8 @@ entities:
 - uid: 307
   type: AirlockBrigGlassLocked
   components:
+  - name: Security Lobby
+    type: MetaData
   - pos: -21.5,-20.5
     parent: 60
     type: Transform
@@ -12873,7 +12917,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 1485
+        uid: 8521
     type: SignalReceiver
 - uid: 553
   type: WallReinforced
@@ -14806,6 +14850,8 @@ entities:
 - uid: 827
   type: HighSecCommandLocked
   components:
+  - name: Gravity Generator
+    type: MetaData
   - pos: -13.5,3.5
     parent: 60
     type: Transform
@@ -14914,6 +14960,14 @@ entities:
     pos: -20.5,-6.5
     parent: 60
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Timer
+        uid: 6971
+      AutoClose: []
+    type: SignalReceiver
 - uid: 844
   type: Grille
   components:
@@ -14928,12 +14982,20 @@ entities:
     parent: 60
     type: Transform
 - uid: 846
-  type: WindoorArmoryLocked
+  type: SignalButton
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -29.5,-9.5
+  - name: Cell 5 Shutters
+    type: MetaData
+  - pos: -27.5,-11.5
     parent: 60
     type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 6206
+      - port: Toggle
+        uid: 6733
+    type: SignalTransmitter
 - uid: 847
   type: WallSolid
   components:
@@ -18168,9 +18230,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 1195
-  type: MopBucket
+  type: WaterTankHighCapacity
   components:
-  - pos: -2.5178943,-28.468857
+  - pos: -2.5,-28.5
     parent: 60
     type: Transform
 - uid: 1196
@@ -20308,15 +20370,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 1461
-  type: WeaponCapacitorRecharger
+  type: SpawnPointWarden
   components:
-  - pos: -25.5,-7.5
+  - pos: -26.5,-9.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 1462
   type: ClosetL3SecurityFilled
   components:
@@ -20342,9 +20400,10 @@ entities:
       - 0
     type: EntityStorage
 - uid: 1463
-  type: SpawnMobMcGriff
+  type: Table
   components:
-  - pos: -27.5,-10.5
+  - rot: 1.5707963267948966 rad
+    pos: -25.5,-7.5
     parent: 60
     type: Transform
 - uid: 1464
@@ -20360,30 +20419,31 @@ entities:
     parent: 60
     type: Transform
 - uid: 1466
-  type: WindoorSecure
+  type: WindoorArmoryLocked
   components:
   - rot: -1.5707963267948966 rad
-    pos: -29.5,-9.5
+    pos: -23.5,-9.5
     parent: 60
     type: Transform
 - uid: 1467
   type: AirlockArmoryGlassLocked
   components:
+  - name: Warden's Office
+    type: MetaData
   - pos: -26.5,-6.5
     parent: 60
     type: Transform
 - uid: 1468
-  type: SignalButton
+  type: BrigTimer
   components:
   - pos: -32.5,-5.5
     parent: 60
     type: Transform
   - outputs:
-      Pressed:
+      Start: []
+      Timer:
       - port: Toggle
-        uid: 6746
-      - port: Toggle
-        uid: 6203
+        uid: 230
     type: SignalTransmitter
 - uid: 1469
   type: ReinforcedWindow
@@ -20399,16 +20459,24 @@ entities:
     parent: 60
     type: Transform
 - uid: 1471
-  type: Table
+  type: SignalButton
   components:
-  - pos: -29.5,-9.5
+  - name: Cell 1 Shutters
+    type: MetaData
+  - pos: -25.5,-10.5
     parent: 60
     type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 123
+      - port: Toggle
+        uid: 185
+    type: SignalTransmitter
 - uid: 1472
-  type: WindoorArmoryLocked
+  type: TableReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -23.5,-9.5
+  - pos: -23.5,-9.5
     parent: 60
     type: Transform
 - uid: 1473
@@ -20492,30 +20560,28 @@ entities:
     parent: 60
     type: Transform
 - uid: 1485
-  type: SignalButton
+  type: BrigTimer
   components:
-  - pos: -20.5,-11.5
+  - pos: -32.5,-8.5
     parent: 60
     type: Transform
   - outputs:
-      Pressed:
+      Start: []
+      Timer:
       - port: Toggle
-        uid: 8002
-      - port: Toggle
-        uid: 552
+        uid: 268
     type: SignalTransmitter
 - uid: 1486
-  type: SignalButton
+  type: BrigTimer
   components:
   - pos: -32.5,-11.5
     parent: 60
     type: Transform
   - outputs:
-      Pressed:
+      Start: []
+      Timer:
       - port: Toggle
-        uid: 6206
-      - port: Toggle
-        uid: 6733
+        uid: 243
     type: SignalTransmitter
 - uid: 1487
   type: AirlockBrigGlassLocked
@@ -20526,24 +20592,32 @@ entities:
     parent: 60
     type: Transform
 - uid: 1488
-  type: SignalButton
+  type: BrigTimer
   components:
   - pos: -20.5,-8.5
     parent: 60
     type: Transform
   - outputs:
-      Pressed:
+      Start: []
+      Timer:
       - port: Toggle
-        uid: 185
-      - port: Toggle
-        uid: 123
+        uid: 151
     type: SignalTransmitter
 - uid: 1489
-  type: Table
+  type: SignalButton
   components:
+  - name: Med Cell Shutters
+    type: MetaData
   - pos: -25.5,-7.5
     parent: 60
     type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 188
+      - port: Toggle
+        uid: 148
+    type: SignalTransmitter
 - uid: 1490
   type: SpawnPointSecurityCadet
   components:
@@ -21022,7 +21096,7 @@ entities:
 - uid: 1556
   type: Wrench
   components:
-  - pos: -25.456688,-11.384605
+  - pos: -27.514538,-11.083304
     parent: 60
     type: Transform
 - uid: 1557
@@ -21280,9 +21354,9 @@ entities:
   - enabled: True
     type: AmbientSound
 - uid: 1593
-  type: AirlockSecurityGlassLocked
+  type: AirlockDetectiveGlassLocked
   components:
-  - name: detective office
+  - name: Detective's Office
     type: MetaData
   - pos: -24.5,-25.5
     parent: 60
@@ -21607,9 +21681,9 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1632
-  type: CrowbarRed
+  type: DrinkShinyFlask
   components:
-  - pos: -25.487938,-11.52523
+  - pos: -25.315727,-7.4930058
     parent: 60
     type: Transform
 - uid: 1633
@@ -22450,7 +22524,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 1732
-  type: Table
+  type: ComputerCriminalRecords
   components:
   - pos: -27.5,-8.5
     parent: 60
@@ -22512,7 +22586,8 @@ entities:
 - uid: 1741
   type: Table
   components:
-  - pos: -27.5,-7.5
+  - rot: 1.5707963267948966 rad
+    pos: -25.5,-10.5
     parent: 60
     type: Transform
 - uid: 1742
@@ -22998,9 +23073,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 1796
-  type: ClusterBangFull
+  type: ComputerStationRecords
   components:
-  - pos: -27.50749,-8.399244
+  - pos: -25.5,-8.5
     parent: 60
     type: Transform
 - uid: 1797
@@ -23178,7 +23253,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 1821
-  type: TableReinforced
+  type: GunSafeShotgunKammerer
   components:
   - pos: -28.5,0.5
     parent: 60
@@ -23302,8 +23377,10 @@ entities:
   - bodyType: Static
     type: Physics
 - uid: 1835
-  type: AirlockSecurityLocked
+  type: AirlockSecurityGlassLocked
   components:
+  - name: Security Locker Room
+    type: MetaData
   - pos: -31.5,-16.5
     parent: 60
     type: Transform
@@ -24021,7 +24098,7 @@ entities:
 - uid: 1911
   type: BoxFolderRed
   components:
-  - pos: -20.476631,-16.393358
+  - pos: -20.313402,-16.57666
     parent: 60
     type: Transform
 - uid: 1912
@@ -24582,6 +24659,8 @@ entities:
 - uid: 1970
   type: AirlockSecurityGlassLocked
   components:
+  - name: Brig Med
+    type: MetaData
   - pos: -20.5,-3.5
     parent: 60
     type: Transform
@@ -25975,9 +26054,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 2133
-  type: ChairOfficeDark
+  type: AcousticGuitarInstrument
   components:
-  - pos: -26.5,-10.5
+  - pos: -25.453274,-10.973929
     parent: 60
     type: Transform
 - uid: 2134
@@ -26346,9 +26425,9 @@ entities:
   - unspawnedCount: 12
     type: BallisticAmmoProvider
 - uid: 2179
-  type: WeaponDisabler
+  type: DogBed
   components:
-  - pos: -27.5802,-8.028072
+  - pos: -24.5,-9.5
     parent: 60
     type: Transform
 - uid: 2180
@@ -33414,9 +33493,9 @@ entities:
   - bodyType: Static
     type: Physics
 - uid: 3070
-  type: TableReinforced
+  type: ChairOfficeDark
   components:
-  - pos: -25.5,-11.5
+  - pos: -26.5,-10.5
     parent: 60
     type: Transform
 - uid: 3071
@@ -33426,10 +33505,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 3072
-  type: ComputerStationRecords
+  type: WeaponCapacitorRecharger
   components:
-  - rot: 3.141592653589793 rad
-    pos: -27.5,-11.5
+  - pos: -20.5,-16.5
     parent: 60
     type: Transform
 - uid: 3073
@@ -34477,6 +34555,8 @@ entities:
 - uid: 3212
   type: GasPressurePump
   components:
+  - name: Air Intake
+    type: MetaData
   - rot: 1.5707963267948966 rad
     pos: 47.5,-13.5
     parent: 60
@@ -52309,10 +52389,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 5567
-  type: ComputerSurveillanceCameraMonitor
+  type: Multitool
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -25.5,-10.5
+  - pos: -27.675102,-7.45018
     parent: 60
     type: Transform
 - uid: 5568
@@ -55344,9 +55423,9 @@ entities:
   - bodyType: Static
     type: Physics
 - uid: 5932
-  type: AcousticGuitarInstrument
+  type: PowerCellRecharger
   components:
-  - pos: -25.723814,-11.4154625
+  - pos: -23.5,-9.5
     parent: 60
     type: Transform
 - uid: 5933
@@ -56444,9 +56523,9 @@ entities:
   - bodyType: Static
     type: Physics
 - uid: 6038
-  type: BoxZiptie
+  type: LockerWardenFilled
   components:
-  - pos: -27.595825,-7.2780724
+  - pos: -28.5,-9.5
     parent: 60
     type: Transform
 - uid: 6039
@@ -56470,15 +56549,16 @@ entities:
   - bodyType: Static
     type: Physics
 - uid: 6041
-  type: Multitool
+  type: CrowbarRed
   components:
-  - pos: -25.489801,-11.618805
+  - pos: -27.436413,-11.161429
     parent: 60
     type: Transform
 - uid: 6042
-  type: SpawnPointWarden
+  type: Table
   components:
-  - pos: -26.5,-9.5
+  - rot: 1.5707963267948966 rad
+    pos: -27.5,-7.5
     parent: 60
     type: Transform
 - uid: 6043
@@ -57779,7 +57859,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 1468
+        uid: 6467
     type: SignalReceiver
 - uid: 6204
   type: CableHV
@@ -57809,7 +57889,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 1486
+        uid: 846
     type: SignalReceiver
 - uid: 6207
   type: WallReinforced
@@ -59177,9 +59257,10 @@ entities:
     parent: 60
     type: Transform
 - uid: 6387
-  type: DrinkShinyFlask
+  type: ComputerSurveillanceCameraMonitor
   components:
-  - pos: -27.408325,-7.5280724
+  - rot: 3.141592653589793 rad
+    pos: -26.5,-11.5
     parent: 60
     type: Transform
 - uid: 6388
@@ -59758,29 +59839,20 @@ entities:
     parent: 60
     type: Transform
 - uid: 6467
-  type: LockerWardenFilled
+  type: SignalButton
   components:
-  - pos: -25.5,-8.5
+  - name: Cell 3 Shutters
+    type: MetaData
+  - pos: -27.5,-7.5
     parent: 60
     type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 293.1496
-      moles:
-      - 1.6495836
-      - 6.2055764
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 6203
+      - port: Toggle
+        uid: 6746
+    type: SignalTransmitter
 - uid: 6468
   type: RandomPosterLegit
   components:
@@ -61445,7 +61517,7 @@ entities:
   type: Poweredlight
   components:
   - rot: -1.5707963267948966 rad
-    pos: -2.5,-27.5
+    pos: -2.5,-26.5
     parent: 60
     type: Transform
   - powerLoad: 0
@@ -61592,13 +61664,12 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 1486
+        uid: 846
     type: SignalReceiver
 - uid: 6734
-  type: WindoorSecure
+  type: FirelockGlass
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.5,-9.5
+  - pos: -23.5,-9.5
     parent: 60
     type: Transform
 - uid: 6735
@@ -61687,7 +61758,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 1468
+        uid: 6467
     type: SignalReceiver
 - uid: 6747
   type: CableApcExtension
@@ -62086,7 +62157,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 6971
+        uid: 7032
     type: SignalReceiver
 - uid: 6797
   type: WallReinforced
@@ -63272,32 +63343,28 @@ entities:
     parent: 60
     type: Transform
 - uid: 6971
-  type: SignalButton
-  components:
-  - pos: -32.5,-8.5
-    parent: 60
-    type: Transform
-  - outputs:
-      Pressed:
-      - port: Toggle
-        uid: 6796
-      - port: Toggle
-        uid: 7045
-    type: SignalTransmitter
-- uid: 6972
-  type: SignalButton
+  type: BrigTimer
   components:
   - pos: -20.5,-5.5
     parent: 60
     type: Transform
   - outputs:
-      Pressed:
+      Start: []
+      Timer:
       - port: Toggle
-        uid: 148
+        uid: 843
+    type: SignalTransmitter
+- uid: 6972
+  type: BrigTimer
+  components:
+  - pos: -20.5,-11.5
+    parent: 60
+    type: Transform
+  - outputs:
+      Start: []
+      Timer:
       - port: Toggle
-        uid: 188
-      - port: Toggle
-        uid: 123
+        uid: 72
     type: SignalTransmitter
 - uid: 6973
   type: GasPassiveVent
@@ -63709,15 +63776,20 @@ entities:
     parent: 60
     type: Transform
 - uid: 7032
-  type: PowerCellRecharger
+  type: SignalButton
   components:
-  - pos: -23.5,-9.5
+  - name: Cell 4 Shutters
+    type: MetaData
+  - pos: -27.5,-10.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 7045
+      - port: Toggle
+        uid: 6796
+    type: SignalTransmitter
 - uid: 7033
   type: GasPipeBend
   components:
@@ -63827,7 +63899,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 6971
+        uid: 7032
     type: SignalReceiver
 - uid: 7046
   type: WallReinforced
@@ -69339,16 +69411,15 @@ entities:
     parent: 60
     type: Transform
 - uid: 7792
-  type: DogBed
+  type: SpawnMobMcGriff
   components:
-  - pos: -27.5,-10.5
+  - pos: -24.5,-9.5
     parent: 60
     type: Transform
 - uid: 7793
-  type: ComputerCriminalRecords
+  type: BoxFlashbang
   components:
-  - rot: 3.141592653589793 rad
-    pos: -26.5,-11.5
+  - pos: -25.348616,-10.845438
     parent: 60
     type: Transform
 - uid: 7794
@@ -70080,6 +70151,8 @@ entities:
 - uid: 7901
   type: AirlockBrigGlassLocked
   components:
+  - name: Brig
+    type: MetaData
   - pos: -25.5,-17.5
     parent: 60
     type: Transform
@@ -70745,7 +70818,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 1485
+        uid: 8521
     type: SignalReceiver
 - uid: 8003
   type: CableHV
@@ -72586,6 +72659,8 @@ entities:
 - uid: 8242
   type: AirlockSecurityLocked
   components:
+  - name: Security Locker Room
+    type: MetaData
   - pos: -31.5,-19.5
     parent: 60
     type: Transform
@@ -74355,9 +74430,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 8502
-  type: FirelockGlass
+  type: ReinforcedWindow
   components:
-  - pos: -23.5,-9.5
+  - pos: -29.5,-9.5
     parent: 60
     type: Transform
 - uid: 8503
@@ -74469,11 +74544,20 @@ entities:
     parent: 60
     type: Transform
 - uid: 8521
-  type: FirelockGlass
+  type: SignalButton
   components:
-  - pos: -29.5,-9.5
+  - name: Cell 2 Shutters
+    type: MetaData
+  - pos: -25.5,-11.5
     parent: 60
     type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 8002
+      - port: Toggle
+        uid: 552
+    type: SignalTransmitter
 - uid: 8522
   type: AirlockExternalGlassLocked
   components:
@@ -76874,13 +76958,23 @@ entities:
     parent: 60
     type: Transform
 - uid: 8889
-  type: VendingMachineWallMedical
+  type: FireAlarm
   components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: 46.5,-23.5
+  - rot: -1.5707963267948966 rad
+    pos: 46.5,-23.5
     parent: 60
     type: Transform
+  - devices:
+    - 5466
+    - 5486
+    - 5488
+    - 94
+    - 8968
+    - 21579
+    - 8961
+    - 3110
+    - 18825
+    type: DeviceList
 - uid: 8890
   type: VendingMachineMedical
   components:
@@ -77818,6 +77912,8 @@ entities:
 - uid: 9016
   type: GasFilter
   components:
+  - name: Exhalation Filter
+    type: MetaData
   - pos: 49.5,-14.5
     parent: 60
     type: Transform
@@ -85141,9 +85237,9 @@ entities:
   - enabled: True
     type: AmbientSound
 - uid: 9989
-  type: AirlockMaintSecLocked
+  type: AirlockMaintDetectiveLocked
   components:
-  - name: detective office
+  - name: Detective's Office
     type: MetaData
   - pos: -23.5,-31.5
     parent: 60
@@ -158015,6 +158111,13 @@ entities:
     pos: 41.5,18.5
     parent: 60
     type: Transform
+- uid: 19863
+  type: Table
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -27.5,-11.5
+    parent: 60
+    type: Transform
 - uid: 19864
   type: CableApcExtension
   components:
@@ -158025,6 +158128,100 @@ entities:
   type: CableApcExtension
   components:
   - pos: 25.5,1.5
+    parent: 60
+    type: Transform
+- uid: 19866
+  type: Table
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -27.5,-10.5
+    parent: 60
+    type: Transform
+- uid: 19867
+  type: Table
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -25.5,-11.5
+    parent: 60
+    type: Transform
+- uid: 19868
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 42.5,-11.5
+    parent: 60
+    type: Transform
+  - devices:
+    - 21579
+    - 8961
+    - 3110
+    - 7030
+    - 12623
+    - 5404
+    type: DeviceList
+- uid: 19869
+  type: BoxZiptie
+  components:
+  - pos: -27.52049,-10.939188
+    parent: 60
+    type: Transform
+- uid: 19870
+  type: RemoteSignaller
+  components:
+  - pos: -27.27049,-7.363508
+    parent: 60
+    type: Transform
+- uid: 19871
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 42.5,-10.5
+    parent: 60
+    type: Transform
+- uid: 19872
+  type: FloorDrain
+  components:
+  - pos: 40.5,-5.5
+    parent: 60
+    type: Transform
+  - fixtures: []
+    type: Fixtures
+- uid: 19873
+  type: MopBucket
+  components:
+  - pos: -3.4904737,-27.546751
+    parent: 60
+    type: Transform
+- uid: 19874
+  type: FloorDrain
+  components:
+  - pos: -3.5,-26.5
+    parent: 60
+    type: Transform
+  - fixtures: []
+    type: Fixtures
+- uid: 19875
+  type: RadioHandheld
+  components:
+  - pos: 42.07676,-1.444672
+    parent: 60
+    type: Transform
+- uid: 19876
+  type: SinkWide
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -2.5,-27.5
+    parent: 60
+    type: Transform
+- uid: 19877
+  type: TrackingImplanter
+  components:
+  - pos: -25.516588,-10.33648
+    parent: 60
+    type: Transform
+- uid: 19878
+  type: TrackingImplanter
+  components:
+  - pos: -25.516588,-10.33648
     parent: 60
     type: Transform
 - uid: 19889
@@ -165480,12 +165677,6 @@ entities:
   - pos: 41.5,26.5
     parent: 60
     type: Transform
-- uid: 21010
-  type: WeaponShotgunKammerer
-  components:
-  - pos: -28.48172,0.6445763
-    parent: 60
-    type: Transform
 - uid: 21011
   type: BoxBeanbag
   components:
@@ -165548,18 +165739,6 @@ entities:
   type: WeaponLaserCarbine
   components:
   - pos: -28.497345,1.6445763
-    parent: 60
-    type: Transform
-- uid: 21022
-  type: WeaponShotgunKammerer
-  components:
-  - pos: -28.466095,1.0352013
-    parent: 60
-    type: Transform
-- uid: 21023
-  type: WeaponShotgunKammerer
-  components:
-  - pos: -28.466095,0.8477013
     parent: 60
     type: Transform
 - uid: 21024
@@ -170376,23 +170555,17 @@ entities:
     parent: 60
     type: Transform
   - devices:
-    - 12623
-    - 5404
-    - 114
-    - 337
-    - invalid
-    - 5831
-    - 5439
-    - 3123
-    - 2878
-    - 21581
-    - 4336
-    - 4154
-    - 7030
+    - 5466
+    - 5486
+    - 5488
+    - 94
+    - 8968
     - 21579
     - 8961
     - 3110
     - 18825
+    - 5831
+    - 5439
     type: DeviceList
 - uid: 21579
   type: FirelockGlass
@@ -172050,12 +172223,13 @@ entities:
   - devices:
     - 5565
     - 5562
-    - 8521
-    - 8502
+    - invalid
+    - invalid
     - 5563
     - 8466
     - 21733
     - 21734
+    - 6734
     type: DeviceList
 - uid: 21737
   type: ExtinguisherCabinetFilled
@@ -172079,12 +172253,6 @@ entities:
   type: ExtinguisherCabinetFilled
   components:
   - pos: 36.5,-32.5
-    parent: 60
-    type: Transform
-- uid: 21741
-  type: ExtinguisherCabinetFilled
-  components:
-  - pos: 42.5,-11.5
     parent: 60
     type: Transform
 - uid: 21742
@@ -184171,13 +184339,10 @@ entities:
     parent: 60
     type: Transform
   - devices:
-    - 7030
     - 21579
     - 8961
     - 3110
-    - 5488
-    - 5486
-    - 5466
+    - 7030
     type: DeviceList
 - uid: 23423
   type: IntercomEngineering

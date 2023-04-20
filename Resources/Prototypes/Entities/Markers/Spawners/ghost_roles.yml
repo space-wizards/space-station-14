@@ -5,10 +5,11 @@
   parent: MarkerBase
   components:
   - type: GhostRole
-    prototype: MobRatKing
     name: Rat King
     description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
     rules: You are an antagonist, scavenge, attack, and grow your hoard!
+  - type: GhostRoleMobSpawner
+    prototype: MobRatKing
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -66,6 +67,26 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanNukeOp
   - type: NukeOperativeSpawner
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Structures/Wallmounts/signs.rsi
+        state: radiation
+
+- type: entity
+  noSpawn: true
+  id: SpawnPointLoneNukeOperative
+  name: ghost role spawn point
+  suffix: loneops
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: Lone Operative
+    description: You are a lone nuclear operative. Destroy the station!
+    rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanLoneNuclearOperative
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
