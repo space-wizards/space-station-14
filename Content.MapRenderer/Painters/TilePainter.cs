@@ -41,7 +41,7 @@ namespace Content.MapRenderer.Painters
 
             grid.GetAllTiles().AsParallel().ForAll(tile =>
             {
-                var path = _sTileDefinitionManager[tile.Tile.TypeId].Sprite.ToString();
+                var path = _sTileDefinitionManager[tile.Tile.TypeId].Sprite?.ToString();
 
                 if (path == null)
                     return;
@@ -70,7 +70,7 @@ namespace Content.MapRenderer.Painters
 
             foreach (var definition in tileDefinitionManager)
             {
-                var path = definition.Sprite.ToString();
+                var path = definition.Sprite?.ToString();
 
                 if (path == null)
                     continue;
