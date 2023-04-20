@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Circuit imprinters now show the correct icons for the boards, type: Fix}
-  id: 2964
-  time: '2023-01-27T19:39:23.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Added two new narcolepsy medications., type: Add}
@@ -2889,3 +2884,8 @@ Entries:
       a SWAT gas mask., type: Tweak}
   id: 3463
   time: '2023-04-20T02:50:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cargo shuttle FTL., type: Fix}
+  id: 3464
+  time: '2023-04-20T03:28:19.0000000+00:00'
