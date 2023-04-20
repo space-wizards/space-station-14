@@ -1,12 +1,15 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Made by brainfood1183 (gtihub) for ss14",
-    "size": {
-        "x": 32,
-        "y": 32
-    },
-    "states": [
-        { "name": "bell" }
-    ]
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by brainfood1183 (github) for ss14",
+  "states": [
+    {
+      "name": "bell",
+      "directions": 4
+    }
+  ]
 }

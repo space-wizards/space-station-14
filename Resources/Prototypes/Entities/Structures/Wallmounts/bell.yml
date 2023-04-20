@@ -13,6 +13,8 @@
     interactSuccessSound:   
       path: /Audio/Weapons/boxingbell.ogg
   - type: Clickable
+  - type: Physics
+  - type: Rotatable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
