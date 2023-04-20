@@ -32,10 +32,17 @@ public sealed class SpreaderSystem : EntitySystem
     {
         SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
+        SubscribeLocalEvent<SpreaderGridComponent, MapInitEvent>(OnSpreaderGridMapInit);
+
         SubscribeLocalEvent<SpreaderGridComponent, EntityUnpausedEvent>(OnGridUnpaused);
 
         SetupPrototypes();
         _prototype.PrototypesReloaded += OnPrototypeReload;
+    }
+
+    private void OnSpreaderGridMapInit(EntityUid uid, SpreaderGridComponent component, MapInitEvent args)
+    {
+        component.NextUpdate = _timing.CurTime;
     }
 
     public override void Shutdown()
@@ -80,12 +87,7 @@ public sealed class SpreaderSystem : EntitySystem
     private void OnGridInit(GridInitializeEvent ev)
     {
         var comp = EnsureComp<SpreaderGridComponent>(ev.EntityUid);
-        var nextUpdate = _timing.CurTime;
 
-        // TODO: I believe we need grid mapinit events so we can set the time correctly only on mapinit
-        // and not touch it on regular init.
-        if (comp.NextUpdate < nextUpdate)
-            comp.NextUpdate = nextUpdate;
     }
 
     /// <inheritdoc/>
