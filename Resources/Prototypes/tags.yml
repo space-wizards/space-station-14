@@ -35,6 +35,12 @@
   id: BorgArm
 
 - type: Tag
+  id: BorgLeftLeg
+
+- type: Tag
+  id: BorgRightLeg
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -622,6 +628,9 @@
 
 - type: Tag
   id: VehicleKey
+
+- type: Tag
+  id: VoiceTrigger
 
 - type: Tag
   id: Wall

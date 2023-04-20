@@ -77,7 +77,7 @@
   id: MechRipley
   parent: BaseMech
   name: Ripley APLU
-  description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Atonomous Power Loading Unit.
+  description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Autonomous Power Loading Unit.
   components:
   - type: FootstepModifier
     footstepSoundCollection:
@@ -108,12 +108,22 @@
     brokenState: ripley-broken
     startingBattery: PowerCellHigh
     mechToPilotDamageMultiplier: 0.75
-  - type: MeleeWeapon
-    hidden: true
-    attackRate: 1
-    damage:
-      types:
-        Blunt: 14
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2.25
-    baseSprintSpeed: 3.6
+
+# Vim!!!!!!!
+
+- type: entity
+  id: MechVim
+  parent: BaseMech
+  name: Vim
+  description: An minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer.
+  components:
+  - type: Mech
+    baseState: vim
+    openState: vim-open
+    brokenState: vim-broken
+    startingBattery: PowerCellHigh
+    # keep mouse safe
+    mechToPilotDamageMultiplier: 0.1
+  # TOOD: buzz / chime actions
+  # TODO: builtin flashlight
+  # TODO: uhhh not be a ripley?

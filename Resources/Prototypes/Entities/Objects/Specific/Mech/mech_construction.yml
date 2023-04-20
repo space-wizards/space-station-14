@@ -88,6 +88,41 @@
     noRot: true
 
 - type: entity
+  parent: BaseMechPart
+  id: VimHarness
+  name: vim harness
+  description: A small mounting bracket for vim parts.
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      vim_helmet+o:
+        whitelist:
+          tags:
+          - HelmetEVA
+      vim_l_leg+o:
+        whitelist:
+          tags:
+          - BorgLeftLeg
+      vim_r_leg+o:
+        whitelist:
+          tags:
+          - BorgRightLeg
+    sprite: Objects/Specific/Mech/vim_construction.rsi
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+  - type: MechAssembly
+    finishedPrototype: VimChassis
+    requiredParts:
+      HelmetEVA: false
+      BorgLeftLeg: false
+      BorgRightLeg: false
+  - type: Sprite
+    state: vim_harness+o
+    noRot: true
+
+- type: entity
   parent: BaseMechPartItem
   id: RipleyLArm
   name: ripley left arm

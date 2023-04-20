@@ -548,6 +548,7 @@
   - ProximitySensor
   - LeftArmBorg
   - RightArmBorg
+  - VimHarness
   - Drone
   - ExosuitFabricatorMachineCircuitboard
 
