@@ -1,16 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: apc events now only affect single station APCs (no power shut offs on
-      shuttles), type: Fix}
-  id: 2970
-  time: '2023-01-28T14:07:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a bug where artifacts would stop functioning properly with the
-      analyzer after teleporting., type: Fix}
-  id: 2971
-  time: '2023-01-28T17:39:52.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Cleaned up some of the syndicate names., type: Fix}
@@ -2886,3 +2874,15 @@ Entries:
     type: Tweak}
   id: 3469
   time: '2023-04-20T13:32:06.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Our beloved Ian is getting some days off. Lisa and Old Ian agreed to
+      work as his replacement., type: Add}
+  id: 3470
+  time: '2023-04-20T23:47:04.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: Added forensic gloves for the detective. They do not leave fibers and
+      fingerprints., type: Add}
+  id: 3471
+  time: '2023-04-20T23:47:48.0000000+00:00'
