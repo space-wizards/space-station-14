@@ -13,6 +13,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Shuttles.Events;
+using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -62,6 +63,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
    private const float ShuttleSpawnBuffer = 1f;
 
    private bool _emergencyShuttleEnabled;
+
+   private const string DockTag = "DockEmergency";
 
    public override void Initialize()
    {
@@ -124,7 +127,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        if (targetGrid == null)
            return;
 
-       var config = _dock.GetDockingConfig(stationData.EmergencyShuttle.Value, targetGrid.Value);
+       var config = _dock.GetDockingConfig(stationData.EmergencyShuttle.Value, targetGrid.Value, DockTag);
        if (config == null)
            return;
 
@@ -161,7 +164,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
        var xformQuery = GetEntityQuery<TransformComponent>();
 
-       if (_shuttle.TryFTLDock(stationData.EmergencyShuttle.Value, shuttle, targetGrid.Value))
+       if (_shuttle.TryFTLDock(stationData.EmergencyShuttle.Value, shuttle, targetGrid.Value, DockTag))
        {
            if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
            {
@@ -283,6 +286,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
        _shuttleIndex += _mapManager.GetGrid(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
        component.EmergencyShuttle = shuttle;
+       EnsureComp<ProtectedGridComponent>(shuttle.Value);
    }
 
    private void CleanupEmergencyShuttle()

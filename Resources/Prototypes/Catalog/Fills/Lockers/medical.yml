@@ -6,14 +6,14 @@
   - type: StorageFill
     contents:
       - id: BoxPillCanister
-        amount: 1
       - id: BoxSyringe
-        amount: 1
       - id: EpinephrineChemistryBottle
         amount: 3
       - id: Brutepack
         amount: 2
       - id: Ointment
+        amount: 2
+      - id: Bloodpack
         amount: 2
 
 - type: entity
@@ -25,14 +25,14 @@
   - type: StorageFill
     contents:
       - id: BoxPillCanister
-        amount: 1
       - id: BoxSyringe
-        amount: 1
       - id: EpinephrineChemistryBottle
         amount: 3
       - id: Brutepack
         amount: 2
       - id: Ointment
+        amount: 2
+      - id: Bloodpack
         amount: 2
 
 
@@ -88,4 +88,4 @@
       - id: BoxBeaker
       - id: BoxPillCanister
       - id: BoxBottle
-      - id: BoxBottle
+        amount: 2
