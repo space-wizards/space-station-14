@@ -1,7 +1,7 @@
 - type: entity
   id: MedalCase
   name: medal case
-  description: A box of decades old military surplus rations. It is surprisingly not rotten.
+  description: Case with medals.
   parent: BaseStorageItem
   components:
   - type: Sprite
