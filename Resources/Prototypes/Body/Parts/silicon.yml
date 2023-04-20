@@ -79,6 +79,7 @@
     tags:
     - Trash
     - BorgLeg
+    - BorgLeftLeg
 
 - type: entity
   id: RightLegBorg
@@ -99,3 +100,4 @@
     tags:
     - Trash
     - BorgLeg
+    - BorgRightLeg
