@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix mass scanner on planet maps., type: Fix}
-  id: 2961
-  time: '2023-01-27T01:13:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Diagonal walls now partially support smoothing., type: Add}
   id: 2962
   time: '2023-01-27T04:03:42.0000000+00:00'
@@ -2884,3 +2879,11 @@ Entries:
   - {message: Added samurai dogi to EMAGGED Autodrobe., type: Add}
   id: 3460
   time: '2023-04-19T14:27:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added a caves biome., type: Add}
+  - {message: Added salvage expeditions. Salvagers can now travel to a planet for
+      a limited time and bring back loot., type: Add}
+  - {message: Added support for procedural mob spawning on planets., type: Add}
+  id: 3461
+  time: '2023-04-20T01:23:26.0000000+00:00'
