@@ -197,7 +197,7 @@ namespace Content.Server.Administration.Managers
             }
 
             // Load flags for engine commands, since those don't have the attributes.
-            if (_res.TryContentFileRead(new ResourcePath("/engineCommandPerms.yml"), out var efs))
+            if (_res.TryContentFileRead(new ResPath("/engineCommandPerms.yml"), out var efs))
             {
                 _commandPermissions.LoadPermissionsFromStream(efs);
             }

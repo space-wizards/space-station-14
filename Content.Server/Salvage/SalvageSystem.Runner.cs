@@ -187,7 +187,7 @@ public sealed partial class SalvageSystem
 
             if (structureAnnounce)
             {
-                Announce(uid, Loc.GetString("salvage-expedition-structures-remaining", ("count", structure.Structures.Count)));
+                Announce(uid, Loc.GetString("salvage-expedition-structure-remaining", ("count", structure.Structures.Count)));
             }
         }
     }

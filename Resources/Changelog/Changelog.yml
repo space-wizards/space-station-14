@@ -1,46 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Diagonal walls now partially support smoothing., type: Add}
-  id: 2962
-  time: '2023-01-27T04:03:42.0000000+00:00'
-- author: joelhed
-  changes:
-  - {message: Fixed weird behaviour when clicking on a table using a dumpable storage
-      item., type: Fix}
-  id: 2963
-  time: '2023-01-27T16:25:08.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Circuit imprinters now show the correct icons for the boards, type: Fix}
-  id: 2964
-  time: '2023-01-27T19:39:23.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Added two new narcolepsy medications., type: Add}
-  - {message: Previous narcolepsy medication has been nerfed in viability. You now
-      need more of the same medicine for it to be as effective., type: Tweak}
-  id: 2965
-  time: '2023-01-27T21:11:06.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed previous examine showing up briefly when rapidly examining multiple
-      things., type: Fix}
-  - {message: Fixed examine sometimes showing up in the top left corner., type: Fix}
-  id: 2966
-  time: '2023-01-27T23:15:39.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Fixed a typo for the Medical Intern role timer, type: Fix}
-  id: 2967
-  time: '2023-01-28T13:27:28.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Ammo boxes can now be printed in the security techlathe., type: Add}
-  - {message: .25 rubber rifle rounds have been swapped for .20 rifle rounds in the
-      security techlathe., type: Tweak}
-  id: 2968
-  time: '2023-01-28T13:59:40.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: vent clog event now only affects single station vents (no more foam
@@ -2887,3 +2845,44 @@ Entries:
   - {message: Added support for procedural mob spawning on planets., type: Add}
   id: 3461
   time: '2023-04-20T01:23:26.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: The Syndicate has half-priced all of their non-bundled guns as per request
+      of several (hundred) agents., type: Tweak}
+  id: 3462
+  time: '2023-04-20T02:49:26.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: Added the new elite SWAT gas mask., type: Add}
+  - {message: Replaced the standard issue Security gas mask in the HoS locker with
+      a SWAT gas mask., type: Tweak}
+  id: 3463
+  time: '2023-04-20T02:50:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cargo shuttle FTL., type: Fix}
+  id: 3464
+  time: '2023-04-20T03:28:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Doubled salvage expedition times., type: Tweak}
+  - {message: Fixed salvage structure localisation., type: Fix}
+  id: 3465
+  time: '2023-04-20T05:51:10.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed apc toggle not working, type: Fix}
+  id: 3466
+  time: '2023-04-20T06:27:59.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The Ripley now moves faster, but is less effective in combat and breaching.',
+    type: Tweak}
+  - {message: The Ripley is now substantially less expensive to produce., type: Tweak}
+  id: 3467
+  time: '2023-04-20T08:04:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cargo selling mobs inside of crates., type: Fix}
+  id: 3468
+  time: '2023-04-20T12:09:49.0000000+00:00'

@@ -145,7 +145,7 @@ public sealed partial class DungeonSystem : EntitySystem
         while (query.MoveNext(out var uid, out comp))
         {
             // Exists
-            if (comp.Path?.Equals(proto.AtlasPath) == true)
+            if (comp.Path.Equals(proto.AtlasPath))
                 return Transform(uid).MapID;
         }
 
