@@ -2,7 +2,13 @@
   id: BoxingBell
   name: boxing bell
   description: Ding ding!
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
+  - type: Transform
+    anchored: true
   - type: WallMount
   - type: Sprite
     sprite: Structures/Wallmounts/bell.rsi
@@ -13,8 +19,10 @@
     interactSuccessSound:   
       path: /Audio/Weapons/boxingbell.ogg
   - type: Clickable
-  - type: Physics
+  - type: Appearance
   - type: Rotatable
+  - type: Physics
+  - type: Fixtures
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -28,7 +36,3 @@
           path: /Audio/Effects/metalbreak.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
