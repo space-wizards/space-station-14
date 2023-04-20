@@ -28,6 +28,7 @@
   - Bucket
   - MopItem
   - SprayBottle
+
 - type: technology
   name: technologies-advanced-cleaning-technology
   id: AdvancedCleaningTechnology
@@ -37,10 +38,10 @@
     state: advmop
   requiredPoints: 5000
   requiredTechnologies:
-    - BasicResearch
     - CleaningTechnology
   unlockedRecipes:
     - AdvMopItem
+    - MegaSprayBottle
 
 # Food/Bev Service Technology Tree
 
