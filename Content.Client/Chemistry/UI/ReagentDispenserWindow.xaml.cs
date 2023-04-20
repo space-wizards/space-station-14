@@ -7,6 +7,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -62,11 +63,21 @@ namespace Content.Client.Chemistry.UI
                     ? p.LocalizedName
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
+                var container = new Control();
                 var button = new DispenseReagentButton(entry, localizedName);
                 button.OnPressed += args => OnDispenseReagentButtonPressed?.Invoke(args, button);
                 button.OnMouseEntered += args => OnDispenseReagentButtonMouseEntered?.Invoke(args, button);
                 button.OnMouseExited += args => OnDispenseReagentButtonMouseExited?.Invoke(args, button);
-                ChemicalList.AddChild(button);
+                
+                var textureRect = new TextureRect();
+                textureRect.Texture = Texture.White;
+                textureRect.Stretch = TextureRect.StretchMode.Scale;
+                if (p != null) 
+                    textureRect.Modulate = p.SubstanceColor;
+
+                container.AddChild(textureRect);
+                container.AddChild(button);
+                ChemicalList.AddChild(container);
             }
         }
 
