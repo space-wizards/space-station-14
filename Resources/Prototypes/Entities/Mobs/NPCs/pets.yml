@@ -68,7 +68,6 @@
     tags:
     - CannotSuicide
 
-
 - type: entity
   name: Lisa
   parent: MobCorgi
