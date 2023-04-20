@@ -9,3 +9,4 @@ construction-category-weapons = Weapons
 construction-category-tiles = Tiles
 construction-category-utilities = Utilities
 construction-category-misc = Misc
+construction-category-clothing = Clothing

@@ -3,7 +3,7 @@
   result: RipleyHarness
   completetime: 10
   materials:
-    Steel: 3000
+    Steel: 1500
     Glass: 1200
 
 - type: latheRecipe
@@ -11,32 +11,32 @@
   result: RipleyLArm
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
+    Steel: 1000
+    Glass: 750
 
 - type: latheRecipe
   id: RipleyLLeg
   result: RipleyLLeg
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
+    Steel: 1000
+    Glass: 750
 
 - type: latheRecipe
   id: RipleyRLeg
   result: RipleyRLeg
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
+    Steel: 1000
+    Glass: 750
 
 - type: latheRecipe
   id: RipleyRArm
   result: RipleyRArm
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
+    Steel: 1000
+    Glass: 750
 
 - type: latheRecipe
   id: MechEquipmentGrabber
