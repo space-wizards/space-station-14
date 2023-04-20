@@ -68,8 +68,6 @@ namespace Content.Client.Physics.Controllers
         private void HandleClientsideMovement(EntityUid player, float frameTime)
         {
             var xformQuery = GetEntityQuery<TransformComponent>();
-            var moverQuery = GetEntityQuery<InputMoverComponent>();
-            var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
 
             if (!TryComp(player, out InputMoverComponent? mover) ||
                 !xformQuery.TryGetComponent(player, out var xform))
@@ -136,10 +134,12 @@ namespace Content.Client.Physics.Controllers
             var inventoryQuery = GetEntityQuery<InventoryComponent>();
             var containerQuery = GetEntityQuery<ContainerManagerComponent>();
             var footQuery = GetEntityQuery<FootstepModifierComponent>();
+            var moverQuery = GetEntityQuery<InputMoverComponent>();
+            var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
             DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(mover, body, xformMover, frameTime, xformQuery, mobQuery, inventoryQuery, containerQuery, footQuery, out var dirtyMover, out var linearVelocity, out var sound, out var audio);
+            HandleMobMovement(mover.Owner, mover, body.Owner, body, xformMover, frameTime, xformQuery, relayTargetQuery, moverQuery, mobQuery, inventoryQuery, containerQuery, footQuery, out var dirtyMover, out var linearVelocity, out var sound, out var audio);
 
             MetaDataComponent? metadata = null;
 
@@ -150,8 +150,8 @@ namespace Content.Client.Physics.Controllers
 
             if (linearVelocity != null)
             {
-                PhysicsSystem.SetLinearVelocity(body, linearVelocity.Value, false);
-                PhysicsSystem.SetAngularVelocity(body, 0f, false);
+                PhysicsSystem.SetLinearVelocity(body.Owner, linearVelocity.Value, false, body: body);
+                PhysicsSystem.SetAngularVelocity(body.Owner, 0f, false, body: body);
                 Dirty(body, metadata);
             }
 

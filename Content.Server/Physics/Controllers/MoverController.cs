@@ -70,19 +70,17 @@ namespace Content.Server.Physics.Controllers
 
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
             var relayQuery = GetEntityQuery<RelayInputMoverComponent>();
-            var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
-            var moverQuery = GetEntityQuery<InputMoverComponent>();
 
             var movers = AllEntityQuery<InputMoverComponent>();
             var totalCount = EntityManager.Count<InputMoverComponent>();
-            var moveInput = ArrayPool<(InputMoverComponent Mover, TransformComponent Transform, PhysicsComponent Physics)>.Shared.Rent(totalCount);
+            var moveInput = ArrayPool<(InputMoverComponent Mover, TransformComponent Transform, EntityUid PhysicsUid, PhysicsComponent Physics)>.Shared.Rent(totalCount);
             var count = 0;
 
             while (movers.MoveNext(out var mover))
             {
                 var uid = mover.Owner;
-                EntityUid physicsUid = uid;
+                var physicsUid = uid;
 
                 if (relayQuery.HasComponent(uid))
                     continue;
@@ -114,7 +112,7 @@ namespace Content.Server.Physics.Controllers
 
                 // To avoid threading issues on adding dictionary entries later.
                 UsedMobMovement[mover.Owner] = false;
-                moveInput[count++] = (mover, xform, body);
+                moveInput[count++] = (mover, xform, physicsUid, body);
             }
 
             var moveResults = ArrayPool<(bool DirtyMover, Vector2? LinearVelocity, SoundSpecifier? sound, AudioParams audio)>.Shared.Rent(count);
@@ -122,6 +120,8 @@ namespace Content.Server.Physics.Controllers
             var inventoryQuery = GetEntityQuery<InventoryComponent>();
             var containerQuery = GetEntityQuery<ContainerManagerComponent>();
             var footQuery = GetEntityQuery<FootstepModifierComponent>();
+            var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
+            var moverQuery = GetEntityQuery<InputMoverComponent>();
 
             var options = new ParallelOptions()
             {
@@ -130,8 +130,8 @@ namespace Content.Server.Physics.Controllers
 
             Parallel.For(0, count, options, i =>
             {
-                var (mover, xform, body) = moveInput[i];
-                HandleMobMovement(mover, body, xform, frameTime, xformQuery, mobQuery, inventoryQuery, containerQuery, footQuery, out var dirtyMover, out var linearVelocity, out var sound, out var audio);
+                var (mover, xform, physicsUid, body) = moveInput[i];
+                HandleMobMovement(mover.Owner, mover, physicsUid, body, xform, frameTime, xformQuery, relayTargetQuery, moverQuery, mobQuery, inventoryQuery, containerQuery, footQuery, out var dirtyMover, out var linearVelocity, out var sound, out var audio);
                 moveResults[i] = (dirtyMover, linearVelocity, sound, audio);
             });
 
@@ -153,8 +153,8 @@ namespace Content.Server.Physics.Controllers
                 if (results.LinearVelocity != null)
                 {
                     metadata ??= metaQuery.GetComponent(input.Physics.Owner);
-                    PhysicsSystem.SetLinearVelocity(input.Physics, results.LinearVelocity.Value, false);
-                    PhysicsSystem.SetAngularVelocity(input.Physics, 0f, false);
+                    PhysicsSystem.SetLinearVelocity(input.PhysicsUid, results.LinearVelocity.Value, false, body: input.Physics);
+                    PhysicsSystem.SetAngularVelocity(input.PhysicsUid, 0f, false, body: input.Physics);
                     Dirty(input.Physics, metadata);
                 }
 
@@ -167,7 +167,7 @@ namespace Content.Server.Physics.Controllers
             }
 
             ArrayPool<(bool DirtyMover, Vector2? LinearVelocity, SoundSpecifier? Sound, AudioParams Audio)>.Shared.Return(moveResults);
-            ArrayPool<(InputMoverComponent, TransformComponent, PhysicsComponent)>.Shared.Return(moveInput);
+            ArrayPool<(InputMoverComponent, TransformComponent, EntityUid, PhysicsComponent)>.Shared.Return(moveInput);
             HandleShuttleMovement(frameTime);
         }
 

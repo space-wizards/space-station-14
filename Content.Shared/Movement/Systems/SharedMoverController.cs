@@ -41,7 +41,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] protected readonly SharedAudioSystem Audio = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly TagSystem _tags = default!;
 
@@ -110,10 +110,21 @@ namespace Content.Shared.Movement.Systems
             TransformComponent xform,
             float frameTime,
             EntityQuery<TransformComponent> xformQuery,
+            EntityQuery<MovementRelayTargetComponent> relayTargetQuery,
             EntityQuery<InputMoverComponent> moverQuery,
-            EntityQuery<MovementRelayTargetComponent> relayTargetQuery)
+            EntityQuery<MobMoverComponent> mobQuery,
+            EntityQuery<InventoryComponent> inventoryQuery,
+            EntityQuery<ContainerManagerComponent> containerQuery,
+            EntityQuery<FootstepModifierComponent> footQuery,
+            out bool dirtyMover,
+            out Vector2? linearVelocity,
+            out SoundSpecifier? sound,
+            out AudioParams audio)
         {
-            DebugTools.Assert(!UsedMobMovement.ContainsKey(uid));
+            dirtyMover = false;
+            linearVelocity = null;
+            sound = null;
+            audio = default;
 
             bool canMove = mover.CanMove;
             if (relayTargetQuery.TryGetComponent(uid, out var relayTarget) && relayTarget.Entities.Count > 0)
@@ -180,7 +191,6 @@ namespace Content.Shared.Movement.Systems
                 || physicsComponent.BodyStatus != BodyStatus.OnGround
                 || TryComp(uid, out SharedPullableComponent? pullable) && pullable.BeingPulled)
             {
-                UsedMobMovement[uid] = false;
                 return;
             }
 
@@ -277,12 +287,12 @@ namespace Content.Shared.Movement.Systems
                     {
                         foreach (var ent in relayTarget.Entities)
                         {
-                            _audio.PlayPredicted(sound, uid, ent, audioParams);
+                            Audio.PlayPredicted(sound, uid, ent, audioParams);
                         }
                     }
                     else
                     {
-                        _audio.PlayPredicted(sound, uid, uid, audioParams);
+                        Audio.PlayPredicted(sound, uid, uid, audioParams);
                     }
                 }
             }
@@ -413,7 +423,6 @@ namespace Content.Shared.Movement.Systems
             if (mobMover.StepSoundDistance < distanceNeeded) return false;
 
             mobMover.StepSoundDistance -= distanceNeeded;
-            EntityUid? shoes = null;
 
             if (TryComp<FootstepModifierComponent>(mover.Owner, out var moverModifier))
             {

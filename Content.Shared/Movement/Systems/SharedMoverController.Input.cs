@@ -200,7 +200,7 @@ namespace Content.Shared.Movement.Systems
             var rotation = mover.RelativeRotation;
 
             if (TryComp<TransformComponent>(mover.RelativeEntity, out var relativeXform))
-                return (relativeXform.WorldRotation + rotation);
+                return _transform.GetWorldRotation(relativeXform) + rotation;
 
             return rotation;
         }
@@ -227,7 +227,7 @@ namespace Content.Shared.Movement.Systems
                 component.RelativeEntity = relative;
                 component.TargetRelativeRotation = Angle.Zero;
                 component.RelativeRotation = Angle.Zero;
-                component.LerpAccumulator = 0f;
+                component.LerpTarget = TimeSpan.Zero;
                 Dirty(component);
                 return;
             }
