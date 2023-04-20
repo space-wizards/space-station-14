@@ -15,7 +15,6 @@
       # Sounds legit nuff
       litSound:
         path: /Audio/Items/Flare/flare_on.ogg
-      loopedSound: /Audio/Items/Flare/flare_burn.ogg
     - type: Sprite
       sprite: Objects/Misc/torch.rsi
       layers:
@@ -42,6 +41,9 @@
       radius: 1.0
       energy: 5.0
       netsync: false
+    - type: IgnitionSource
+      temperature: 400
+      ignited: false
     - type: LightBehaviour
       behaviours:
         - !type:RandomizeBehaviour # immediately make it bright and flickery

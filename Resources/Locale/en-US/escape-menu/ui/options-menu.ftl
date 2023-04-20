@@ -94,6 +94,7 @@ ui-options-function-camera-rotate-right = Rotate right
 ui-options-function-camera-reset = Reset
 
 ui-options-function-use = Use
+ui-options-function-use-secondary = Use secondary
 ui-options-function-alt-use = Alt use
 ui-options-function-wide-attack = Wide attack
 ui-options-function-activate-item-in-hand = Activate item in hand
@@ -126,13 +127,18 @@ ui-options-function-open-character-menu = Open character menu
 ui-options-function-open-context-menu = Open context menu
 ui-options-function-open-crafting-menu = Open crafting menu
 ui-options-function-open-inventory-menu = Open inventory
-ui-options-function-open-ahelp = Open admin help
+ui-options-function-open-a-help = Open admin help
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
 ui-options-function-open-tile-spawn-window = Open tile spawn menu
 ui-options-function-open-decal-spawn-window = Open decal spawn menu
 ui-options-function-open-admin-menu = Open admin menu
+ui-options-function-open-guidebook = Open guidebook
+ui-options-function-window-close-all = Close all windows
+ui-options-function-window-close-recent = Close recent window
+ui-options-function-show-escape-menu = Toggle game menu
+ui-options-function-escape-context = Close recent window or toggle game menu
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
@@ -168,6 +174,7 @@ ui-options-function-loadout6 = Hotbar Loadout 6
 ui-options-function-loadout7 = Hotbar Loadout 7
 ui-options-function-loadout8 = Hotbar Loadout 8
 ui-options-function-loadout9 = Hotbar Loadout 9
+ui-options-function-loadout0 = Hotbar Loadout 0
 
 ui-options-function-shuttle-strafe-up = Strafe up
 ui-options-function-shuttle-strafe-right = Strafe right
@@ -208,3 +215,7 @@ ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will
                                        out-of-view entities. Lowering this can help reduce
                                        stuttering when walking around, but could occasionally
                                        lead to mispredicts and other issues.
+
+## Toggle window console command
+cmd-options-desc = Opens options menu, optionally with a specific tab selected.
+cmd-options-help = Usage: options [tab]

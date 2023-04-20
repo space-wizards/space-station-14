@@ -1,7 +1,8 @@
-using Content.Server.Cuffs.Components;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Station.Components;
+using Content.Shared.Cuffs.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
@@ -38,7 +39,7 @@ namespace Content.Server.Objectives.Conditions
                 return false;
             }
 
-            return shuttleXform.WorldMatrix.TransformBox(shuttleGrid.Grid.LocalAABB).Contains(agentXform.WorldPosition);
+            return shuttleXform.WorldMatrix.TransformBox(shuttleGrid.LocalAABB).Contains(agentXform.WorldPosition);
         }
 
         public float Progress

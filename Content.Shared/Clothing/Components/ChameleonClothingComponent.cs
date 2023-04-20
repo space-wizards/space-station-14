@@ -27,6 +27,12 @@ public sealed class ChameleonClothingComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField("default", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? SelectedId;
+
+    /// <summary>
+    ///     Current user that wears chameleon clothing.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? User;
 }
 
 [Serializable, NetSerializable]

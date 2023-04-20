@@ -83,6 +83,6 @@ namespace Content.Shared.Chemistry.Reagent
         FixedPoint2 Quantity,
         IEntityManager EntityManager,
         ReactionMethod? Method,
-        ReagentEffectsEntry? MetabolismEffects
+        float Scale
     );
 }

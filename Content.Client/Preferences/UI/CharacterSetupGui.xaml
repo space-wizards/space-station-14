@@ -1,7 +1,6 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-         xmlns:parallax="clr-namespace:Content.Client.Parallax"
          xmlns:style="clr-namespace:Content.Client.Stylesheets"
          VerticalExpand="True">
     <Control>

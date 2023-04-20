@@ -24,6 +24,9 @@
             ]
         },
         {
+            "name": "anomaly2"
+        },
+        {
             "name": "armory",
             "delays": [
                 [

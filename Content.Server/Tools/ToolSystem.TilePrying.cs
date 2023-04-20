@@ -1,6 +1,8 @@
 using System.Threading;
 using Content.Server.Fluids.Components;
 using Content.Server.Tools.Components;
+using Content.Shared.DoAfter;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
@@ -18,18 +20,22 @@ public sealed partial class ToolSystem
     private void InitializeTilePrying()
     {
         SubscribeLocalEvent<TilePryingComponent, AfterInteractEvent>(OnTilePryingAfterInteract);
-        SubscribeLocalEvent<TilePryingComponent, TilePryingCompleteEvent>(OnTilePryComplete);
-        SubscribeLocalEvent<TilePryingComponent, TilePryingCancelledEvent>(OnTilePryCancelled);
+        SubscribeLocalEvent<TilePryingComponent, TilePryingDoAfterEvent>(OnTilePryComplete);
     }
 
-    private void OnTilePryCancelled(EntityUid uid, TilePryingComponent component, TilePryingCancelledEvent args)
+    private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
     {
-        component.CancelToken = null;
+        if (args.Handled || !args.CanReach || (args.Target != null && !HasComp<PuddleComponent>(args.Target))) return;
+
+        if (TryPryTile(uid, args.User, component, args.ClickLocation))
+            args.Handled = true;
     }
 
-    private void OnTilePryComplete(EntityUid uid, TilePryingComponent component, TilePryingCompleteEvent args)
+    private void OnTilePryComplete(EntityUid uid, TilePryingComponent component, TilePryingDoAfterEvent args)
     {
-        component.CancelToken = null;
+        if (args.Cancelled)
+            return;
+
         var gridUid = args.Coordinates.GetGridUid(EntityManager);
         if (!_mapManager.TryGetGrid(gridUid, out var grid))
         {
@@ -37,28 +43,16 @@ public sealed partial class ToolSystem
             return;
         }
 
-        grid.GetTileRef(args.Coordinates).PryTile(_mapManager, _tileDefinitionManager, EntityManager);
+        var tile = grid.GetTileRef(args.Coordinates);
+        _tile.PryTile(tile);
     }
 
-    private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
+    private bool TryPryTile(EntityUid toolEntity, EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
     {
-        if (args.Handled || !args.CanReach || (args.Target != null && !HasComp<PuddleComponent>(args.Target))) return;
-
-        if (TryPryTile(args.User, component, args.ClickLocation))
-            args.Handled = true;
-    }
-
-    private bool TryPryTile(EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
-    {
-        if (component.CancelToken != null)
-        {
-            return true;
-        }
-
-        if (!TryComp<ToolComponent?>(component.Owner, out var tool) && component.ToolComponentNeeded)
+        if (!TryComp<ToolComponent?>(toolEntity, out var tool) && component.ToolComponentNeeded)
             return false;
 
-        if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))
+        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out var mapGrid))
             return false;
 
         var tile = mapGrid.GetTileRef(clickLocation);
@@ -73,38 +67,8 @@ public sealed partial class ToolSystem
         if (!tileDef.CanCrowbar)
             return false;
 
-        var token = new CancellationTokenSource();
-        component.CancelToken = token;
+        var ev = new TilePryingDoAfterEvent(coordinates);
 
-        bool success = UseTool(
-            component.Owner,
-            user,
-            null,
-            0f,
-            component.Delay,
-            new [] {component.QualityNeeded},
-            new TilePryingCompleteEvent
-            {
-                Coordinates = clickLocation,
-            },
-            new TilePryingCancelledEvent(),
-            toolComponent: tool,
-            doAfterEventTarget: component.Owner,
-            cancelToken: token.Token);
-
-        if (!success)
-            component.CancelToken = null;
-
-        return true;
-    }
-
-    private sealed class TilePryingCompleteEvent : EntityEventArgs
-    {
-        public EntityCoordinates Coordinates { get; init; }
-    }
-
-    private sealed class TilePryingCancelledEvent : EntityEventArgs
-    {
-
+        return UseTool(toolEntity, user, toolEntity, component.Delay, component.QualityNeeded, ev, toolComponent: tool);
     }
 }

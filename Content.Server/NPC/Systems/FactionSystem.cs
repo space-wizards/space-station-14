@@ -36,6 +36,9 @@ namespace Content.Server.NPC.Systems
 
         private void OnProtoReload(PrototypesReloadedEventArgs obj)
         {
+            if (!obj.ByType.ContainsKey(typeof(FactionPrototype)))
+                return;
+
             RefreshFactions();
         }
 
@@ -49,6 +52,9 @@ namespace Content.Server.NPC.Systems
         /// </summary>
         private void RefreshFactions(FactionComponent component)
         {
+            component.FriendlyFactions.Clear();
+            component.HostileFactions.Clear();
+
             foreach (var faction in component.Factions)
             {
                 // YAML Linter already yells about this
@@ -137,6 +143,14 @@ namespace Content.Server.NPC.Systems
 
                 yield return comp.Owner;
             }
+        }
+
+        public bool IsFriendly(EntityUid uidA, EntityUid uidB, FactionComponent? factionA = null, FactionComponent? factionB = null)
+        {
+            if (!Resolve(uidA, ref factionA, false) || !Resolve(uidB, ref factionB, false))
+                return false;
+
+            return factionA.Factions.Overlaps(factionB.Factions) || factionA.FriendlyFactions.Overlaps(factionB.Factions);
         }
 
         /// <summary>

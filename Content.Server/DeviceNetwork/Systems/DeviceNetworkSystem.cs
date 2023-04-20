@@ -48,18 +48,22 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="address">The address of the entity that the packet gets sent to. If null, the message is broadcast to all devices on that frequency (except the sender)</param>
         /// <param name="frequency">The frequency to send on</param>
         /// <param name="data">The data to be sent</param>
-        public void QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, DeviceNetworkComponent? device = null)
+        /// <returns>Returns true when the packet was successfully enqueued.</returns>
+        public bool QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, DeviceNetworkComponent? device = null)
         {
             if (!Resolve(uid, ref device, false))
-                return;
+                return false;
 
             if (device.Address == string.Empty)
-                return;
+                return false;
 
             frequency ??= device.TransmitFrequency;
 
-            if (frequency != null)
-                _packets.Enqueue(new DeviceNetworkPacketEvent(device.DeviceNetId, address, frequency.Value, device.Address, uid, data));
+            if (frequency == null)
+                return false;
+
+            _packets.Enqueue(new DeviceNetworkPacketEvent(device.DeviceNetId, address, frequency.Value, device.Address, uid, data));
+            return true;
         }
 
         private void OnExamine(EntityUid uid, DeviceNetworkComponent device, ExaminedEvent args)
@@ -137,6 +141,32 @@ namespace Content.Server.DeviceNetwork.Systems
             return GetNetwork(device.DeviceNetId).Remove(device);
         }
 
+        /// <summary>
+        /// Checks if a device is already connected to its network
+        /// </summary>
+        /// <returns>True if the device was found in the network with its corresponding network id</returns>
+        public bool IsDeviceConnected(EntityUid uid, DeviceNetworkComponent? device)
+        {
+            if (!Resolve(uid, ref device, false))
+                return false;
+
+            if (!_networks.TryGetValue(device.DeviceNetId, out var deviceNet))
+                return false;
+
+            return deviceNet.Devices.ContainsValue(device);
+        }
+
+        /// <summary>
+        /// Checks if an address exists in the network with the given netId
+        /// </summary>
+        public bool IsAddressPresent(int netId, string? address)
+        {
+            if (address == null || !_networks.TryGetValue(netId, out var network))
+                return false;
+
+            return network.Devices.ContainsKey(address);
+        }
+
         public void SetReceiveFrequency(EntityUid uid, uint? frequency, DeviceNetworkComponent? device = null)
         {
             if (!Resolve(uid, ref device, false))
@@ -174,7 +204,7 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!Resolve(uid, ref device, false))
                 return;
 
-            if (device.Address == address && device.CustomAddress == true) return;
+            if (device.Address == address && device.CustomAddress) return;
 
             var deviceNet = GetNetwork(device.DeviceNetId);
             deviceNet.Remove(device);

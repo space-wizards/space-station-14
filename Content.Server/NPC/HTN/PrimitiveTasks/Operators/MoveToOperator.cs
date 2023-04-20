@@ -17,6 +17,7 @@ public sealed class MoveToOperator : HTNOperator
     [Dependency] private readonly IMapManager _mapManager = default!;
     private NPCSteeringSystem _steering = default!;
     private PathfindingSystem _pathfind = default!;
+    private SharedTransformSystem _transform = default!;
 
     /// <summary>
     /// Should we assume the MovementTarget is reachable during planning or should we pathfind to it?
@@ -55,12 +56,13 @@ public sealed class MoveToOperator : HTNOperator
         base.Initialize(sysManager);
         _pathfind = sysManager.GetEntitySystem<PathfindingSystem>();
         _steering = sysManager.GetEntitySystem<NPCSteeringSystem>();
+        _transform = sysManager.GetEntitySystem<SharedTransformSystem>();
     }
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)
     {
-        if (!blackboard.TryGetValue<EntityCoordinates>(TargetKey, out var targetCoordinates))
+        if (!blackboard.TryGetValue<EntityCoordinates>(TargetKey, out var targetCoordinates, _entManager))
         {
             return (false, null);
         }
@@ -77,14 +79,14 @@ public sealed class MoveToOperator : HTNOperator
             return (false, null);
         }
 
-        var range = blackboard.GetValueOrDefault<float>(RangeKey);
+        var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
 
         if (xform.Coordinates.TryDistance(_entManager, targetCoordinates, out var distance) && distance <= range)
         {
             // In range
             return (true, new Dictionary<string, object>()
             {
-                {NPCBlackboard.OwnerCoordinates, blackboard.GetValueOrDefault<EntityCoordinates>(NPCBlackboard.OwnerCoordinates)}
+                {NPCBlackboard.OwnerCoordinates, blackboard.GetValueOrDefault<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, _entManager)}
             });
         }
 
@@ -126,21 +128,22 @@ public sealed class MoveToOperator : HTNOperator
         // Need to remove the planning value for execution.
         blackboard.Remove<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
         var targetCoordinates = blackboard.GetValue<EntityCoordinates>(TargetKey);
+        var uid = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
         // Re-use the path we may have if applicable.
-        var comp = _steering.Register(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner), targetCoordinates);
+        var comp = _steering.Register(uid, targetCoordinates);
 
-        if (blackboard.TryGetValue<float>(RangeKey, out var range))
+        if (blackboard.TryGetValue<float>(RangeKey, out var range, _entManager))
         {
             comp.Range = range;
         }
 
-        if (blackboard.TryGetValue<PathResultEvent>(PathfindKey, out var result))
+        if (blackboard.TryGetValue<PathResultEvent>(PathfindKey, out var result, _entManager))
         {
-            if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates))
+            if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
             {
-                var mapCoords = coordinates.ToMap(_entManager);
-                _steering.PrunePath(mapCoords, targetCoordinates.ToMapPos(_entManager) - mapCoords.Position, result.Path);
+                var mapCoords = coordinates.ToMap(_entManager, _transform);
+                _steering.PrunePath(uid, mapCoords, targetCoordinates.ToMapPos(_entManager, _transform) - mapCoords.Position, result.Path);
             }
 
             comp.CurrentPath = result.Path;
@@ -152,7 +155,7 @@ public sealed class MoveToOperator : HTNOperator
         base.Shutdown(blackboard, status);
 
         // Cleanup the blackboard and remove steering.
-        if (blackboard.TryGetValue<CancellationTokenSource>(MovementCancelToken, out var cancelToken))
+        if (blackboard.TryGetValue<CancellationTokenSource>(MovementCancelToken, out var cancelToken, _entManager))
         {
             cancelToken.Cancel();
             blackboard.Remove<CancellationTokenSource>(MovementCancelToken);

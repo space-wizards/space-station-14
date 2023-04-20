@@ -14,26 +14,26 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedCartridgeLoaderComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<SharedCartridgeLoaderComponent, ComponentRemove>(OnComponentRemove);
+        SubscribeLocalEvent<CartridgeLoaderComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<CartridgeLoaderComponent, ComponentRemove>(OnComponentRemove);
 
-        SubscribeLocalEvent<SharedCartridgeLoaderComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
-        SubscribeLocalEvent<SharedCartridgeLoaderComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
+        SubscribeLocalEvent<CartridgeLoaderComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
+        SubscribeLocalEvent<CartridgeLoaderComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
 
         SubscribeLocalEvent<CartridgeComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<CartridgeComponent, ComponentHandleState>(OnHandleState);
 
     }
 
-    private void OnComponentInit(EntityUid uid, SharedCartridgeLoaderComponent loader, ComponentInit args)
+    private void OnComponentInit(EntityUid uid, CartridgeLoaderComponent loader, ComponentInit args)
     {
-        _itemSlotsSystem.AddItemSlot(uid, SharedCartridgeLoaderComponent.CartridgeSlotId, loader.CartridgeSlot);
+        _itemSlotsSystem.AddItemSlot(uid, CartridgeLoaderComponent.CartridgeSlotId, loader.CartridgeSlot);
     }
 
     /// <summary>
     /// Marks installed program entities for deletion when the component gets removed
     /// </summary>
-    private void OnComponentRemove(EntityUid uid, SharedCartridgeLoaderComponent loader, ComponentRemove args)
+    private void OnComponentRemove(EntityUid uid, CartridgeLoaderComponent loader, ComponentRemove args)
     {
         _itemSlotsSystem.RemoveItemSlot(uid, loader.CartridgeSlot);
 
@@ -43,12 +43,12 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
         }
     }
 
-    protected virtual void OnItemInserted(EntityUid uid, SharedCartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)
+    protected virtual void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)
     {
         UpdateAppearanceData(uid, loader);
     }
 
-    protected virtual void OnItemRemoved(EntityUid uid, SharedCartridgeLoaderComponent loader, EntRemovedFromContainerMessage args)
+    protected virtual void OnItemRemoved(EntityUid uid, CartridgeLoaderComponent loader, EntRemovedFromContainerMessage args)
     {
         UpdateAppearanceData(uid, loader);
     }
@@ -69,7 +69,7 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
         component.InstallationStatus = state.InstallationStatus;
     }
 
-    private void UpdateAppearanceData(EntityUid uid, SharedCartridgeLoaderComponent loader)
+    private void UpdateAppearanceData(EntityUid uid, CartridgeLoaderComponent loader)
     {
         _appearanceSystem.SetData(uid, CartridgeLoaderVisuals.CartridgeInserted, loader.CartridgeSlot.HasItem);
     }

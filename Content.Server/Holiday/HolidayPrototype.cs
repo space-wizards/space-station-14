@@ -12,7 +12,7 @@ namespace Content.Server.Holiday
         [DataField("name")] public string Name { get; private set; } = string.Empty;
 
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("beginDay")]

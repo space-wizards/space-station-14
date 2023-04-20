@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 
@@ -63,13 +62,7 @@ namespace Content.Server.Chemistry.Components
         [DataField("delay")]
         public float Delay = 5;
 
-        /// <summary>
-        ///     Token for interrupting a do-after action (e.g., injection another player). If not null, implies
-        ///     component is currently "in use".
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
-
-        private InjectorToggleMode _toggleState;
+        [DataField("toggleState")] private InjectorToggleMode _toggleState;
 
         /// <summary>
         /// The state of the injector. Determines it's attack behavior. Containers must have the
@@ -77,7 +70,6 @@ namespace Content.Server.Chemistry.Components
         /// only ever be set to Inject
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("toggleState")]
         public InjectorToggleMode ToggleState
         {
             get => _toggleState;

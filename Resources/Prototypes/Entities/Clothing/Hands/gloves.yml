@@ -8,7 +8,6 @@
     sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
-  - type: BoxingGloves
   - type: StaminaDamageOnHit
     damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
     # This needs to be moved to boxinggloves
@@ -242,7 +241,7 @@
   id: ThievingGloves
   suffix: Thieving
   name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
-  description: Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
+  description: Regular black gloves that do not keep you from frying.
   components:
     - type: Tag
       tags: [] # ignore "WhitelistChameleon" tag
@@ -257,3 +256,12 @@
       fiberMaterial: fibers-synthetic
       fiberColor: fibers-black
     - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesColorWhite
+  id: ClothingHandsGlovesCluwne
+  name: cluwne hands
+  suffix: Unremoveable
+  description:  A cursed pair of cluwne hands.
+  components:
+  - type: Unremoveable

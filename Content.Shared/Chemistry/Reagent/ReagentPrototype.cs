@@ -5,12 +5,14 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Reagent
 {
@@ -19,7 +21,7 @@ namespace Content.Shared.Chemistry.Reagent
     public sealed class ReagentPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("name", required: true)]
@@ -69,8 +71,14 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("meltingPoint")]
         public float? MeltingPoint { get; }
 
-        [DataField("spritePath")]
-        public string SpriteReplacementPath { get; } = string.Empty;
+        [DataField("metamorphicSprite")]
+        public SpriteSpecifier? MetamorphicSprite { get; } = null;
+
+        /// <summary>
+        /// If this reagent is part of a puddle is it slippery.
+        /// </summary>
+        [DataField("slippery")]
+        public bool Slippery = false;
 
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
@@ -84,26 +92,11 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("plantMetabolism", serverOnly: true)]
         public readonly List<ReagentEffect> PlantMetabolisms = new(0);
 
-        [DataField("pricePerUnit")]
-        public float PricePerUnit { get; }
+        [DataField("pricePerUnit")] public float PricePerUnit;
 
-        /// <summary>
-        /// If the substance color is too dark we user a lighter version to make the text color readable when the user examines a solution.
-        /// </summary>
-        public Color GetSubstanceTextColor()
-        {
-            var highestValue = MathF.Max(SubstanceColor.R, MathF.Max(SubstanceColor.G, SubstanceColor.B));
-            var difference = 0.5f - highestValue;
-
-            if (difference > 0f)
-            {
-                return new Color(SubstanceColor.R + difference,
-                                SubstanceColor.G + difference,
-                                SubstanceColor.B + difference);
-            }
-
-            return SubstanceColor;
-        }
+        // TODO: Pick the highest reagent for sounds and add sticky to cola, juice, etc.
+        [DataField("footstepSound")]
+        public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater");
 
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume)
         {
@@ -133,7 +126,7 @@ namespace Content.Shared.Chemistry.Reagent
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null, null);
+            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null, 1f);
             foreach (var plantMetabolizable in PlantMetabolisms)
             {
                 if (!plantMetabolizable.ShouldApply(args, random))

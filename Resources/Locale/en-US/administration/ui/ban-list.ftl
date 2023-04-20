@@ -6,7 +6,8 @@ ban-list-header-expires = Expires
 ban-list-header-banning-admin = Banning admin
 
 ban-list-title = Bans for {$player}
-ban-list-hidden = Hidden
+ban-list-view = View
+ban-list-id = ID: {$id}
 ban-list-ip = IP: {$ip}
 ban-list-hwid = HWID: {$hwid}
 ban-list-guid = GUID: {$guid}

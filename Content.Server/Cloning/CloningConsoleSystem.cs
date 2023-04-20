@@ -1,20 +1,25 @@
+using System.Linq;
 using JetBrains.Annotations;
+using Robust.Shared.Timing;
+using Content.Server.Administration.Logs;
 using Content.Server.Medical.Components;
 using Content.Server.Cloning.Components;
+using Content.Server.MachineLinking.Components;
 using Content.Server.Power.Components;
 using Content.Server.Mind.Components;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.UserInterface;
-using Content.Server.MobState;
-using Content.Shared.MobState.Components;
 using Content.Server.Power.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Cloning;
+using Content.Shared.Database;
 using Content.Shared.MachineLinking.Events;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Cloning
 {
@@ -22,6 +27,7 @@ namespace Content.Server.Cloning
     public sealed class CloningConsoleSystem : EntitySystem
     {
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -34,6 +40,7 @@ namespace Content.Server.Cloning
             SubscribeLocalEvent<CloningConsoleComponent, UiButtonPressedMessage>(OnButtonPressed);
             SubscribeLocalEvent<CloningConsoleComponent, AfterActivatableUIOpenEvent>(OnUIOpen);
             SubscribeLocalEvent<CloningConsoleComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<CloningConsoleComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<CloningConsoleComponent, NewLinkEvent>(OnNewLink);
             SubscribeLocalEvent<CloningConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<CloningConsoleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -61,6 +68,27 @@ namespace Content.Server.Cloning
         private void OnPowerChanged(EntityUid uid, CloningConsoleComponent component, ref PowerChangedEvent args)
         {
             UpdateUserInterface(component);
+        }
+
+        private void OnMapInit(EntityUid uid, CloningConsoleComponent component, MapInitEvent args)
+        {
+            if (!TryComp<SignalTransmitterComponent>(uid, out var receiver))
+                return;
+
+            foreach (var port in receiver.Outputs.Values.SelectMany(ports => ports))
+            {
+                if (TryComp<MedicalScannerComponent>(port.Uid, out var scanner))
+                {
+                    component.GeneticScanner = port.Uid;
+                    scanner.ConnectedConsole = uid;
+                }
+
+                if (TryComp<CloningPodComponent>(port.Uid, out var pod))
+                {
+                    component.CloningPod = port.Uid;
+                    pod.ConnectedConsole = uid;
+                }
+            }
         }
 
         private void OnNewLink(EntityUid uid, CloningConsoleComponent component, NewLinkEvent args)
@@ -107,15 +135,17 @@ namespace Content.Server.Cloning
 
         public void UpdateUserInterface(CloningConsoleComponent consoleComponent)
         {
+            var ui = _uiSystem.GetUiOrNull(consoleComponent.Owner, CloningConsoleUiKey.Key);
+            if (ui == null)
+                return;
             if (!_powerReceiverSystem.IsPowered(consoleComponent.Owner))
             {
-                _uiSystem.GetUiOrNull(consoleComponent.Owner, CloningConsoleUiKey.Key)?.CloseAll();
+                _uiSystem.CloseAll(ui);
                 return;
             }
 
             var newState = GetUserInterfaceState(consoleComponent);
-
-            _uiSystem.GetUiOrNull(consoleComponent.Owner, CloningConsoleUiKey.Key)?.SetState(newState);
+            _uiSystem.SetUiState(ui, newState);
         }
 
         public void TryClone(EntityUid uid, EntityUid cloningPodUid, EntityUid scannerUid, CloningPodComponent? cloningPod = null, MedicalScannerComponent? scannerComp = null, CloningConsoleComponent? consoleComponent = null)
@@ -142,7 +172,8 @@ namespace Content.Server.Cloning
             if (mind == null || mind.UserId.HasValue == false || mind.Session == null)
                 return;
 
-            _cloningSystem.TryCloning(cloningPodUid, body.Value, mind, cloningPod, scannerComp.CloningFailChanceMultiplier);
+            if (_cloningSystem.TryCloning(cloningPodUid, body.Value, mind, cloningPod, scannerComp.CloningFailChanceMultiplier))
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(uid)} successfully cloned {ToPrettyString(body.Value)}.");
         }
 
         public void RecheckConnections(EntityUid console, EntityUid? cloningPod, EntityUid? scanner, CloningConsoleComponent? consoleComp = null)
@@ -171,8 +202,8 @@ namespace Content.Server.Cloning
             string scanBodyInfo = Loc.GetString("generic-unknown");
             bool scannerConnected = false;
             bool scannerInRange = consoleComponent.GeneticScannerInRange;
-            if (consoleComponent.GeneticScanner != null && TryComp<MedicalScannerComponent>(consoleComponent.GeneticScanner, out var scanner)) {
-
+            if (consoleComponent.GeneticScanner != null && TryComp<MedicalScannerComponent>(consoleComponent.GeneticScanner, out var scanner))
+            {
                 scannerConnected = true;
                 EntityUid? scanBody = scanner.BodyContainer.ContainedEntity;
 
@@ -191,7 +222,7 @@ namespace Content.Server.Cloning
                     }
                     else
                     {
-                        if (mindComp == null || mindComp.Mind == null || mindComp.Mind.UserId == null || !_playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var client))
+                        if (mindComp == null || mindComp.Mind == null || mindComp.Mind.UserId == null || !_playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out _))
                         {
                             clonerStatus = ClonerStatus.NoMindDetected;
                         }

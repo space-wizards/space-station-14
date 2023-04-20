@@ -118,7 +118,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
             && _inputManager.MouseScreenPosition.IsValid)
         {
             var mousePosWorld = vp.ScreenToMap(_inputManager.MouseScreenPosition.Position);
-            entityToClick = screen.GetEntityUnderPosition(mousePosWorld);
+            entityToClick = screen.GetClickedEntity(mousePosWorld);
 
             if (vp is ScalingViewport svp)
             {

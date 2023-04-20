@@ -19,7 +19,8 @@ namespace Content.Shared.Gravity
             {
                 if (Enabled == value) return;
                 Enabled = value;
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new GravityChangedEvent(Owner, value));
+                var ev = new GravityChangedEvent(Owner, value);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ref ev);
                 Dirty();
             }
         }

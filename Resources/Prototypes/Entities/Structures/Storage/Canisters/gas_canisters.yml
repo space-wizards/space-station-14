@@ -41,6 +41,12 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
+            damage: 600
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
             damage: 300
           behaviors:
             - !type:PlaySoundBehavior
@@ -53,6 +59,7 @@
                   max: 1
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
+            - !type:DumpCanisterBehavior
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -107,9 +114,18 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 # Water vapor
+          - 0 # Miasma
+          - 0 # N2O
+          - 0 # Frezon
         temperature: 293.15
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -124,6 +140,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
 
 # Filled canisters, contain 1871.71051 moles each
 
@@ -145,6 +162,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
@@ -157,6 +180,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -175,6 +199,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
@@ -187,6 +217,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -206,6 +237,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -218,6 +255,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -238,6 +276,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -250,6 +294,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
     - type: Lock
       locked: true
 
@@ -271,6 +316,12 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -310,6 +361,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -322,6 +379,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
     - type: Lock
       locked: true
 
@@ -347,6 +405,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -359,6 +423,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -383,6 +448,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -395,6 +466,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
     - type: Lock
       locked: true
 
@@ -422,6 +494,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -434,6 +512,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -453,10 +532,17 @@
       - 0 # Tritium
       - 0 #  Water vapor
       - 0 # Miasma
+      - 0 # N2O
       - 1871.71051 # Frezon
       temperature: 293.15
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -471,17 +557,24 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
   - type: Lock
     locked: true
 
 # Broke Entities
 
 - type: entity
-  parent: BaseStructure
+  parent: BaseStructureDynamic
   id: GasCanisterBrokenBase
   components:
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 100
@@ -515,6 +608,11 @@
         - MachineMask
         layer:
         - MachineLayer
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 500
+    - type: StaticPrice
+      price: 60
 
 - type: entity
   parent: GasCanisterBrokenBase

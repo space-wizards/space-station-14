@@ -1,5 +1,6 @@
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Prototypes;
-using Content.Shared.GameTicking;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -9,6 +10,7 @@ namespace Content.Shared.Atmos.EntitySystems
     {
         public const byte ChunkSize = 8;
         protected float AccumulatedFrameTime;
+        protected bool PvsEnabled;
 
         [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
 
@@ -20,8 +22,7 @@ namespace Content.Shared.Atmos.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            SubscribeLocalEvent<GasTileOverlayComponent, ComponentGetState>(OnGetState);
 
             List<int> visibleGases = new();
 
@@ -35,7 +36,27 @@ namespace Content.Shared.Atmos.EntitySystems
             VisibleGasId = visibleGases.ToArray();
         }
 
-        public abstract void Reset(RoundRestartCleanupEvent ev);
+        private void OnGetState(EntityUid uid, GasTileOverlayComponent component, ref ComponentGetState args)
+        {
+            if (PvsEnabled && !args.ReplayState)
+                return;
+
+            // Should this be a full component state or a delta-state?
+            if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
+            {
+                args.State = new GasTileOverlayState(component.Chunks);
+                return;
+            }
+
+            var data = new Dictionary<Vector2i, GasOverlayChunk>();
+            foreach (var (index, chunk) in component.Chunks)
+            {
+                if (chunk.LastUpdate >= args.FromTick)
+                    data[index] = chunk;
+            }
+
+            args.State = new GasTileOverlayState(data) { AllChunks = new(component.Chunks.Keys) };
+        }
 
         public static Vector2i GetGasChunkIndices(Vector2i indices)
         {

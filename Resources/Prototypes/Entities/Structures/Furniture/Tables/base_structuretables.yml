@@ -19,6 +19,7 @@
       - TableMask
       layer:
       - TableLayer
+  - type: SpriteFade
   - type: Sprite
     netsync: false
   - type: Icon
@@ -27,10 +28,27 @@
     key: state
     base: state_
   - type: Climbable
-    bonk: true
+  - type: Bonkable
     bonkDamage:
       types:
         Blunt: 4
     bonkSound: !type:SoundCollectionSpecifier
       collection: TrayHit
   - type: Clickable
+
+- type: entity
+  id: CounterBase
+  parent: TableBase
+  name: counter
+  abstract: true
+  components:
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      density: 55
+      mask:
+      - TableMask
+      layer:
+      - TableLayer

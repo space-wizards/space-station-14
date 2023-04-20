@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
@@ -7,10 +6,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Botany;
-
-
 
 [Prototype("seed")]
 public sealed class SeedPrototype : SeedData, IPrototype
@@ -69,40 +67,25 @@ public struct SeedChemQuantity
 public class SeedData
 {
     #region Tracking
-    private string _name = String.Empty;
-    private string _noun = String.Empty;
-    private string _displayName = String.Empty;
-    
+
     /// <summary>
     ///     The name of this seed. Determines the name of seed packets.
     /// </summary>
     [DataField("name")]
-    public string Name
-    {
-        get => _name;
-        private set => _name = Loc.GetString(value);
-    }
+    public string Name { get; private set; } = "";
 
     /// <summary>
     ///     The noun for this type of seeds. E.g. for fungi this should probably be "spores" instead of "seeds". Also
     ///     used to determine the name of seed packets.
     /// </summary>
     [DataField("noun")]
-    public string Noun
-    {
-        get => _noun;
-        private set => _noun = Loc.GetString(value);
-    }
+    public string Noun { get; private set; } = "";
 
     /// <summary>
     ///     Name displayed when examining the hydroponics tray. Describes the actual plant, not the seed itself.
     /// </summary>
     [DataField("displayName")]
-    public string DisplayName
-    {
-        get => _displayName;
-        private set => _displayName = Loc.GetString(value);
-    }
+    public string DisplayName { get; private set; } = "";
 
     [DataField("mysterious")] public bool Mysterious;
 
@@ -159,6 +142,8 @@ public class SeedData
 
     [DataField("weedTolerance")] public float WeedTolerance = 5f;
 
+    [DataField("weedHighLevelThreshold")] public float WeedHighLevelThreshold = 10f;
+
     #endregion
 
     #region General traits
@@ -170,6 +155,8 @@ public class SeedData
     [DataField("maturation")] public float Maturation;
     [DataField("production")] public float Production;
     [DataField("growthStages")] public int GrowthStages = 6;
+
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("harvestRepeat")] public HarvestType HarvestRepeat = HarvestType.NoRepeat;
 
     [DataField("potency")] public float Potency = 1f;
@@ -223,12 +210,20 @@ public class SeedData
 
     [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
 
-    [DataField("bioluminescent")] public bool Bioluminescent;
+    [DataField("screamSound")]
+    public SoundSpecifier ScreamSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_1.ogg");
 
+
+    [DataField("screaming")] public bool CanScream;
+
+    [DataField("bioluminescent")] public bool Bioluminescent;
     [DataField("bioluminescentColor")] public Color BioluminescentColor { get; set; } = Color.White;
 
     public float BioluminescentRadius = 2f;
 
+    [DataField("kudzuPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string KudzuPrototype = "WeakKudzu";
+
+    [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
 
     #endregion
@@ -280,6 +275,8 @@ public class SeedData
             PlantRsi = PlantRsi,
             PlantIconState = PlantIconState,
             Bioluminescent = Bioluminescent,
+            CanScream = CanScream,
+            TurnIntoKudzu = TurnIntoKudzu,
             BioluminescentColor = BioluminescentColor,
             SplatPrototype = SplatPrototype,
 

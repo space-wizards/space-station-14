@@ -5,7 +5,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
@@ -41,7 +41,7 @@ public sealed class PickNearbyInjectableOperator : HTNOperator
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!blackboard.TryGetValue<float>(RangeKey, out var range))
+        if (!blackboard.TryGetValue<float>(RangeKey, out var range, _entManager))
             return (false, null);
 
         var damageQuery = _entManager.GetEntityQuery<DamageableComponent>();

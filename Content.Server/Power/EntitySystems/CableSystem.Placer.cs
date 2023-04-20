@@ -1,13 +1,18 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
+using Content.Shared.Stacks;
 using Robust.Shared.Map;
 
 namespace Content.Server.Power.EntitySystems;
 
 public sealed partial class CableSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
     private void InitializeCablePlacer()
     {
         SubscribeLocalEvent<CablePlacerComponent, AfterInteractEvent>(OnCablePlacerAfterInteract);
@@ -37,7 +42,9 @@ public sealed partial class CableSystem
         if (TryComp<StackComponent>(component.Owner, out var stack) && !_stack.Use(component.Owner, 1, stack))
             return;
 
-        EntityManager.SpawnEntity(component.CablePrototypeId, grid.GridTileToLocal(snapPos));
+        var newCable = EntityManager.SpawnEntity(component.CablePrototypeId, grid.GridTileToLocal(snapPos));
+        _adminLogger.Add(LogType.Construction, LogImpact.Low,
+            $"{ToPrettyString(args.User):player} placed {ToPrettyString(newCable):cable} at {Transform(newCable).Coordinates}");
         args.Handled = true;
     }
 }

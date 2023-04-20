@@ -10,6 +10,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -100,7 +101,7 @@ public sealed class StationSystem : EntitySystem
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.SinglePlayer(e.Session));
+            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), e.Session);
         }
     }
 
@@ -243,10 +244,10 @@ public sealed class StationSystem : EntitySystem
         foreach (var gridUid in component.Grids)
         {
             if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-                grid.Grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
+                grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
                 continue;
 
-            largestBounds = grid.Grid.LocalAABB;
+            largestBounds = grid.LocalAABB;
             largestGrid = gridUid;
         }
 
@@ -348,7 +349,7 @@ public sealed class StationSystem : EntitySystem
 
         // TODO SERIALIZATION The station data needs to be saveable somehow, but when a map gets saved, this entity
         // won't be included because its in null-space. Also, what happens to shuttles on other maps?
-        _transform.DetachParentToNull(Transform(station));
+        _transform.DetachParentToNull(station, Transform(station));
 
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);

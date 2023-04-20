@@ -4,10 +4,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Disease.Components
 {
-    [RegisterComponent]
     /// <summary>
     /// For shared behavior between both disease machines
     /// </summary>
+    [RegisterComponent]
     public sealed class DiseaseMachineComponent : Component
     {
         [DataField("delay")]

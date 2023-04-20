@@ -20,7 +20,7 @@ namespace Content.Client.Tools
         }
 
         public override void SetMultipleTool(EntityUid uid,
-        SharedMultipleToolComponent? multiple = null,
+        MultipleToolComponent? multiple = null,
         ToolComponent? tool = null,
         bool playSound = false,
         EntityUid? user = null)
@@ -29,7 +29,7 @@ namespace Content.Client.Tools
                 return;
 
             base.SetMultipleTool(uid, multiple, tool, playSound, user);
-            ((MultipleToolComponent)multiple).UiUpdateNeeded = true;
+            multiple.UiUpdateNeeded = true;
 
             // TODO replace this with appearance + visualizer
             // in order to convert this to a specifier, the manner in which the sprite is specified in yaml needs to be updated.

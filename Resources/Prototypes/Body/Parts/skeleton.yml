@@ -14,6 +14,9 @@
         ents: []
   - type: StaticPrice
     price: 20
+  - type: Tag
+    tags:
+      - Trash
 
 - type: entity
   id: TorsoSkeleton
@@ -54,8 +57,10 @@
     - type: SkeletonAccent
     - type: Actions
     - type: Vocal
-      maleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
-      femaleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
+      sounds:
+        Male: Skeleton
+        Female: Skeleton
+        Unsexed: Skeleton
     - type: Emoting
     - type: Grammar
       attributes:
@@ -63,8 +68,8 @@
     - type: Examiner
     - type: DoAfter
     - type: MobState
-      thresholds:
-        0: Alive
+      allowedStates:
+        - Alive
     - type: Tag
       tags:
         - MindTransferTarget
@@ -149,6 +154,7 @@
     - type: BodyPart
       partType: Leg
       symmetry: Left
+    - type: MovementSpeedModifier
 
 - type: entity
   id: RightLegSkeleton
@@ -165,6 +171,7 @@
     - type: BodyPart
       partType: Leg
       symmetry: Right
+    - type: MovementSpeedModifier
 
 - type: entity
   id: LeftFootSkeleton

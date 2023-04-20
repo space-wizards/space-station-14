@@ -8,6 +8,7 @@ store-category-misc = Misc
 store-category-bundles = Bundles
 store-category-tools = Tools
 store-category-utility = Utility
+store-category-implants = Implants
 store-category-job = Job
 store-category-armor = Armor
 store-category-pointless = Pointless

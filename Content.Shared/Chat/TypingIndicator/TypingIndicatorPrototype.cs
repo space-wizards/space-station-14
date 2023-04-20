@@ -9,7 +9,7 @@ namespace Content.Shared.Chat.TypingIndicator;
 [Prototype("typingIndicator")]
 public sealed class TypingIndicatorPrototype : IPrototype
 {
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
 
     [DataField("spritePath")]

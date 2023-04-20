@@ -92,7 +92,7 @@ namespace Content.IntegrationTests.Tests
             var mapFolder = new ResourcePath("/Maps");
             var maps = resourceManager
                 .ContentFindFiles(mapFolder)
-                .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith("."))
+                .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                 .ToArray();
 
             foreach (var map in maps)
@@ -100,7 +100,7 @@ namespace Content.IntegrationTests.Tests
                 var rootedPath = map.ToRootedPath();
 
                 // ReSharper disable once RedundantLogicalConditionalExpressionOperand
-                if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath))
+                if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath, StringComparison.Ordinal))
                 {
                     continue;
                 }
@@ -202,11 +202,11 @@ namespace Content.IntegrationTests.Tests
                 var memberQuery = entManager.GetEntityQuery<StationMemberComponent>();
 
                 var grids = mapManager.GetAllMapGrids(mapId).ToList();
-                var gridUids = grids.Select(o => o.GridEntityId).ToList();
+                var gridUids = grids.Select(o => o.Owner).ToList();
 
                 foreach (var grid in grids)
                 {
-                    if (!memberQuery.HasComponent(grid.GridEntityId))
+                    if (!memberQuery.HasComponent(grid.Owner))
                         continue;
 
                     var area = grid.LocalAABB.Width * grid.LocalAABB.Height;
@@ -214,17 +214,18 @@ namespace Content.IntegrationTests.Tests
                     if (area > largest)
                     {
                         largest = area;
-                        targetGrid = grid.GridEntityId;
+                        targetGrid = grid.Owner;
                     }
                 }
 
                 // Test shuttle can dock.
                 // This is done inside gamemap test because loading the map takes ages and we already have it.
                 var station = entManager.GetComponent<StationMemberComponent>(targetGrid!.Value).Station;
-                var shuttlePath = entManager.GetComponent<StationDataComponent>(station).EmergencyShuttlePath
-                    .ToString();
-                var shuttle = mapLoader.LoadGrid(shuttleMap, entManager.GetComponent<StationDataComponent>(station).EmergencyShuttlePath.ToString());
-                Assert.That(shuttle != null && shuttleSystem.TryFTLDock(entManager.GetComponent<ShuttleComponent>(shuttle.Value), targetGrid.Value), $"Unable to dock {shuttlePath} to {mapProto}");
+                var stationConfig = entManager.GetComponent<StationDataComponent>(station).StationConfig;
+                Assert.IsNotNull(stationConfig, $"{entManager.ToPrettyString(station)} had null StationConfig.");
+                var shuttlePath = stationConfig.EmergencyShuttlePath.ToString();
+                var shuttle = mapLoader.LoadGrid(shuttleMap, shuttlePath);
+                Assert.That(shuttle != null && shuttleSystem.TryFTLDock(shuttle.Value, entManager.GetComponent<ShuttleComponent>(shuttle.Value), targetGrid.Value), $"Unable to dock {shuttlePath} to {mapProto}");
 
                 mapManager.DeleteMap(shuttleMap);
 
@@ -258,7 +259,7 @@ namespace Content.IntegrationTests.Tests
                     .Where(spawnpoint => spawnpoint.SpawnType == SpawnPointType.Job)
                     .Select(spawnpoint => spawnpoint.Job.ID)
                     .Distinct();
-                List<string> missingSpawnPoints = new() { };
+                List<string> missingSpawnPoints = new();
                 foreach (var spawnpoint in jobList.Except(spawnPoints))
                 {
                     if (protoManager.Index<JobPrototype>(spawnpoint).SetPreference)
@@ -301,7 +302,7 @@ namespace Content.IntegrationTests.Tests
                     var mapFolder = new ResourcePath("/Maps");
                     var maps = resourceManager
                         .ContentFindFiles(mapFolder)
-                        .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith("."))
+                        .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                         .ToArray();
                     var mapNames = new List<string>();
                     foreach (var map in maps)
@@ -309,7 +310,7 @@ namespace Content.IntegrationTests.Tests
                         var rootedPath = map.ToRootedPath();
 
                         // ReSharper disable once RedundantLogicalConditionalExpressionOperand
-                        if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath) ||
+                        if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath, StringComparison.Ordinal) ||
                             gameMaps.Contains(map))
                         {
                             continue;

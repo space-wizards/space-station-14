@@ -22,6 +22,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.FocusDeadChat);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelForward);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelBackward);
+            common.AddFunction(ContentKeyFunctions.EscapeContext);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
             common.AddFunction(ContentKeyFunctions.OpenAHelp);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
@@ -82,7 +83,14 @@ namespace Content.Client.Input
             aghost.AddFunction(EngineKeyFunctions.Walk);
             aghost.AddFunction(ContentKeyFunctions.SwapHands);
             aghost.AddFunction(ContentKeyFunctions.Drop);
+            aghost.AddFunction(ContentKeyFunctions.UseItemInHand);
+            aghost.AddFunction(ContentKeyFunctions.AltUseItemInHand);
+            aghost.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             aghost.AddFunction(ContentKeyFunctions.ThrowItemInHand);
+            aghost.AddFunction(ContentKeyFunctions.AltActivateItemInWorld);
+            aghost.AddFunction(ContentKeyFunctions.TryPullObject);
+            aghost.AddFunction(ContentKeyFunctions.MovePulledObject);
+            aghost.AddFunction(ContentKeyFunctions.ReleasePulledObject);
 
             var ghost = contexts.New("ghost", "human");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
@@ -96,6 +104,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenTileSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenDecalSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenAdminMenu);
+            common.AddFunction(ContentKeyFunctions.OpenGuidebook);
         }
     }
 }

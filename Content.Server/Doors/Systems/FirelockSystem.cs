@@ -11,8 +11,10 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Popups;
 using Microsoft.Extensions.Options;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Doors.Systems
@@ -23,7 +25,7 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
         [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private static float _visualUpdateInterval = 0.5f;
         private float _accumulatedFrameTime;
@@ -143,12 +145,12 @@ namespace Content.Server.Doors.Systems
             if (state.Fire)
             {
                 _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-fire-message"),
-                    uid, Filter.Pvs(uid, entityManager: EntityManager));
+                    uid, args.User, PopupType.MediumCaution);
             }
             else if (state.Pressure)
             {
                 _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-pressure-message"),
-                    uid, Filter.Pvs(uid, entityManager: EntityManager));
+                    uid, args.User, PopupType.MediumCaution);
             }
 
             if (state.Fire || state.Pressure)
@@ -233,7 +235,7 @@ namespace Content.Server.Doors.Systems
             if (!TryComp(xform.ParentUid, out GridAtmosphereComponent? gridAtmosphere))
                 return (false, false);
 
-            var grid = Comp<MapGridComponent>(xform.ParentUid).Grid;
+            var grid = Comp<MapGridComponent>(xform.ParentUid);
             var pos = grid.CoordinatesToTile(xform.Coordinates);
             var minPressure = float.MaxValue;
             var maxPressure = float.MinValue;

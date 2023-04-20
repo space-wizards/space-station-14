@@ -141,6 +141,28 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitVirology
+  name: virology jumpsuit
+  description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/virology.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/virology.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGenetics
+  name: genetics jumpsuit
+  description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/genetics.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/genetics.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitClown
   name: clown suit
   description: HONK!
@@ -243,23 +265,33 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoS
   name: head of security's jumpsuit
-  description: It's bright red and rather crisp, much like security's victims tend to be.
+  description: It's bright red and rather crisp, much like security's victims tend to be. Its sturdy fabric provides minor protection from slash and pierce damage.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Piercing: 0.9  
 
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSAlt
   name: head of security's turtleneck
-  description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security. Its sturdy fabric provides minor protection from mechanical damage.
+  description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security. Its sturdy fabric provides minor protection from slash and pierce damage.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hos_alt.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hos_alt.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Piercing: 0.9  
 
 - type: entity
   parent: ClothingUniformBase
@@ -355,6 +387,19 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBrigmedic
+  name: brigmedic jumpsuit
+  description: The uniform is issued to qualified persons who have been trained, but no one cares that the training took place half a day.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
+  - type: DiseaseProtection
+    protection: 0.1
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitPrisoner
   name: prisoner jumpsuit
   description: Busted.
@@ -400,6 +445,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitScientistFormal
+  name: scientist's formal jumpsuit
+  description: A uniform for sophisticated scientists, best worn with its matching tie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/scientist_formal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/scientist_formal.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -802,13 +858,24 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAtmos
-  name: atmosheric technician jumpsuit
+  name: atmospheric technician jumpsuit
   description: I am at work. I can't leave work. Work is breathing. I am testing air quality.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/atmos.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/atmos.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAtmosCasual
+  name: atmospheric technician's casual jumpsuit
+  description: Might as well relax with a job as easy as yours.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/atmos_casual.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/atmos_casual.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -886,3 +953,115 @@
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTEngineer
+  name: ERT engineering uniform
+  description: A special suit made for the elite engineers under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTJanitor
+  name: ERT janitorial uniform
+  description: A special suit made for the elite janitors under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+  - type: DiseaseProtection
+    protection: 0.1
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTLeader
+  name: ERT leader uniform
+  description: A special suit made for the best of the elites under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTMedic
+  name: ERT medical uniform
+  description: A special suit made for the elite medics under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+  - type: DiseaseProtection
+    protection: 0.15
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTSecurity
+  name: ERT security uniform
+  description: A special suit made for the elite security under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+
+- type: entity
+  parent: ClothingUniformJumpsuitClown
+  id: ClothingUniformJumpsuitCluwne
+  name: cluwne suit
+  suffix: Unremoveable
+  description: Cursed cluwne suit.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
+  - type: Unremoveable
+  
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitDameDane
+  name: yakuza outfit
+  description: Baka mitai...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPirate
+  name: pirate slops
+  description: A pirate variation of a space sailor's jumpsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
+  - type: AddAccentClothing
+    accent: PirateAccent

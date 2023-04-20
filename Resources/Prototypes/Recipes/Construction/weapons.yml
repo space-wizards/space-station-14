@@ -6,7 +6,7 @@
   targetNode: spear
   category: construction-category-weapons
   description: A crude spear for when you need to put holes in somebody.
-  icon: Objects/Weapons/Melee/spear.rsi/spear.png
+  icon: { sprite: Objects/Weapons/Melee/spear.rsi, state: spear }
   objectType: Item
 
 - type: construction
@@ -17,7 +17,7 @@
   targetNode: bola
   category: construction-category-weapons
   description: A simple weapon for tripping someone at a distance.
-  icon: Objects/Weapons/Throwable/bola.rsi/icon.png
+  icon: { sprite: Objects/Weapons/Throwable/bola.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -28,7 +28,7 @@
   targetNode: woodenBuckler
   category: construction-category-weapons
   description: A nicely carved wooden shield!
-  icon: Objects/Weapons/Melee/shields.rsi/buckler-icon.png
+  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: buckler-icon }
   objectType: Item
 
 - type: construction
@@ -39,5 +39,5 @@
   targetNode: makeshiftShield
   category: construction-category-weapons
   description: Crude and falling apart. Why would you make this?
-  icon: Objects/Weapons/Melee/shields.rsi/makeshift-icon.png
+  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: makeshift-icon }
   objectType: Item

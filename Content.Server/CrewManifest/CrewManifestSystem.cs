@@ -1,22 +1,17 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.EUI;
-using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
+using Content.Server.StationRecords.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.GameTicking;
-using Content.Shared.Roles;
 using Content.Shared.StationRecords;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
-using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.CrewManifest;
 
@@ -88,13 +83,13 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
     {
-         var owningStation = _stationSystem.GetOwningStation(uid);
-         if (owningStation == null || ev.Session is not IPlayerSession sessionCast)
-         {
-             return;
-         }
+        var owningStation = _stationSystem.GetOwningStation(uid);
+        if (owningStation == null || ev.Session is not IPlayerSession sessionCast)
+        {
+            return;
+        }
 
-         CloseEui(owningStation.Value, sessionCast, uid);
+        CloseEui(owningStation.Value, sessionCast, uid);
     }
 
     /// <summary>
@@ -214,6 +209,8 @@ public sealed class CrewManifestSystem : EntitySystem
 
             entries.Entries.Add(entry);
         }
+
+        entries.Entries = entries.Entries.OrderBy(e => e.JobTitle).ThenBy(e => e.Name).ToList();
 
         if (_cachedEntries.ContainsKey(station))
         {

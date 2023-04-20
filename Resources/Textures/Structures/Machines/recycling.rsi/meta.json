@@ -8,7 +8,7 @@
     "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/icons/obj/recycling.dmi",
     "states": [
         {
-            "name": "grinder-a0",
+            "name": "grinder-a0"
 
         },
         {
@@ -23,7 +23,7 @@
             ]
         },
         {
-            "name": "grinder-b0",
+            "name": "grinder-b0"
 
         },
         {
@@ -40,11 +40,11 @@
             ]
         },
         {
-            "name": "grinder-o0",
+            "name": "grinder-o0"
 
         },
         {
-            "name": "grinder-o0bld",
+            "name": "grinder-o0bld"
 
         },
         {
@@ -70,15 +70,15 @@
             ]
         },
         {
-            "name": "separator-",
+            "name": "separator-"
 
         },
         {
-            "name": "separator-0",
+            "name": "separator-0"
 
         },
         {
-            "name": "separator-A0",
+            "name": "separator-A0"
 
         },
         {
@@ -93,7 +93,7 @@
             ]
         },
         {
-            "name": "separator-AO0",
+            "name": "separator-AO0"
 
         },
         {
@@ -107,11 +107,11 @@
             ]
         },
         {
-            "name": "separator-B0",
+            "name": "separator-B0"
 
         },
         {
-            "name": "separator-BO0",
+            "name": "separator-BO0"
 
         }
     ]

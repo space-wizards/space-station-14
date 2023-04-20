@@ -3,7 +3,8 @@ using Content.Server.Administration.Commands;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -23,6 +24,7 @@ namespace Content.IntegrationTests.Tests.Commands
   - type: Damageable
     damageContainer: Biological
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       100: Critical
@@ -37,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Commands
             var entManager = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var mobStateSystem = entManager.EntitySysManager.GetEntitySystem<Server.MobState.MobStateSystem>();
+            var mobStateSystem = entManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
             var damSystem = entManager.EntitySysManager.GetEntitySystem<DamageableSystem>();
 
             await server.WaitAssertion(() =>

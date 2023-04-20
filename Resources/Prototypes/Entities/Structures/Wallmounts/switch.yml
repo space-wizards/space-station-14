@@ -12,6 +12,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -42,6 +43,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: dead
@@ -63,6 +65,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 80
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 40
@@ -87,6 +95,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
+      canCollide: false
     - type: Transform
       anchored: true
     - type: Sprite

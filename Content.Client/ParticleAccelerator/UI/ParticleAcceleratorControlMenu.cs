@@ -339,7 +339,7 @@ namespace Content.Client.ParticleAccelerator.UI
             return (n >= 0 && n <= 3 && !_blockSpinBox);
         }
 
-        private void PowerStateChanged(object? sender, ValueChangedEventArgs e)
+        private void PowerStateChanged(ValueChangedEventArgs e)
         {
             ParticleAcceleratorPowerState newState;
             switch (e.Value)

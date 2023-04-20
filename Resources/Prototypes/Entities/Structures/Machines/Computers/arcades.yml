@@ -16,21 +16,13 @@
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
     layers:
-    - state: arcade
-      map: ["enum.ComputerVisualizer+Layers.Body"]
-    - state: invaders
-      shader: unshaded
-      map: ["enum.ComputerVisualizer+Layers.Screen"]
+    - map: ["computerLayerBody"]
+      state: arcade
+    - map: ["computerLayerScreen"]
+      state: invaders
   - type: Icon
     sprite: Structures/Machines/arcade.rsi
     state: arcade
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      screen: invaders
-      key: ""
-      body: arcade
-      bodyBroken: arcade
   - type: Anchorable
   - type: Pullable
   - type: StaticPrice
@@ -38,9 +30,11 @@
 
 - type: entity
   id: SpaceVillainArcade
+  name: space villain arcade
   parent: ArcadeBase
   components:
   - type: SpaceVillainArcade
+    rewardAmount: 0
   - type: Wires
     LayoutId: Arcade
     BoardName: "Arcade"
@@ -57,11 +51,27 @@
     board: SpaceVillainArcadeComputerCircuitboard
 
 - type: entity
+  id: SpaceVillainArcadeFilled
+  parent: SpaceVillainArcade
+  suffix: Filled
+  components:
+  - type: SpaceVillainArcade
+    rewardMinAmount: 5
+    rewardMaxAmount: 8
+    
+- type: entity
   id: BlockGameArcade
   description: An arcade cabinet with a strangely familiar game.
   name: NT block game
   parent: ArcadeBase
   components:
+  - type: Sprite
+    sprite: Structures/Machines/arcade.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: arcade
+    - map: ["computerLayerScreen"]
+      state: blockgame
   - type: BlockGameArcade
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
@@ -77,10 +87,3 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      screen: blockgame
-      key: ""
-      body: arcade
-      bodyBroken: arcade

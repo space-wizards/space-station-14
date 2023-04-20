@@ -5,7 +5,7 @@ namespace Content.Shared.Body.Prototypes
     [Prototype("metabolismGroup")]
     public sealed class MetabolismGroupPrototype : IPrototype
     {
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
     }
 }

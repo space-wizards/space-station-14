@@ -10,7 +10,6 @@
     flavors:
       - food
   - type: Food
-  - type: Recyclable
   - type: SpaceGarbage
   - type: Sprite
     netsync: false
@@ -27,4 +26,6 @@
   abstract: true
   components:
   - type: InjectableSolution
+    solution: food
+  - type: RefillableSolution
     solution: food

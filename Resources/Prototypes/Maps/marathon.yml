@@ -7,6 +7,7 @@
   stations:
     Marathon:
       mapNameTemplate: '{0} Marathon Station {1}'
+      emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
@@ -46,3 +47,4 @@
         SecurityCadet: [ 2, 2 ]
         Psychologist: [ 1, 1 ]
         Detective: [ 1, 1 ]
+        ResearchAssistant: [ 2, 2 ]

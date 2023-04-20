@@ -17,10 +17,39 @@
     netsync: false
   - type: DiseaseDiagnoser
   - type: DiseaseMachine
-    machineOutput: Paper
+    machineOutput: DiagnosisReportPaper
   - type: Appearance
   - type: DiseaseMachineVisuals
     idleState: icon
     runningState: running
   - type: Machine
     board: DiagnoserMachineCircuitboard
+
+- type: entity
+  name: disease diagnoser report
+  parent: Paper
+  id: DiagnosisReportPaper
+  description: 'A chilling medical receipt.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
+    layers:
+    - state: paper_receipt
+    - state: paper_receipt_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_virus.svg.96dpi.png"
+    headerMargin: 0.0, 0.0, 0.0, 6.0
+    backgroundImageTile: true
+    backgroundPatchMargin: 0.0, 6.0, 0.0, 6.0
+    contentMargin: 12.0, 0.0, 12.0, 0.0
+    # This is a narrow piece of paper
+    maxWritableArea: 128.0, 0.0
+
+

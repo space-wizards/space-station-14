@@ -33,7 +33,7 @@ namespace Content.Server.Power.Pow3r
             foreach (var group in state.GroupedNets)
             {
                 // Note that many net-layers only have a handful of networks.
-                // E.g., the number of nets from lowest to heights for box and saltern are:
+                // E.g., the number of nets from lowest to highest for box and saltern are:
                 // Saltern: 1477, 11, 2, 2, 3.
                 // Box:     3308, 20, 1, 5.
                 //
@@ -164,7 +164,7 @@ namespace Content.Server.Power.Pow3r
                     battery.AvailableSupply = Math.Min(scaledSpace, supplyAndPassthrough);
                     battery.LoadingNetworkDemand = unmet;
 
-                    battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage / frameTime, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency); 
+                    battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage / frameTime, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency);
                     totalBatterySupply += battery.AvailableSupply;
                     totalMaxBatterySupply += battery.MaxEffectiveSupply;
                 }
@@ -174,7 +174,7 @@ namespace Content.Server.Power.Pow3r
             network.LastCombinedMaxSupply = totalMaxSupply + totalMaxBatterySupply;
 
             var met = Math.Min(demand, network.LastCombinedSupply);
-            if (met == 0) 
+            if (met == 0)
                 return;
 
             var supplyRatio = met / demand;
@@ -228,7 +228,7 @@ namespace Content.Server.Power.Pow3r
                     supply.SupplyRampTarget = supply.MaxSupply * targetRelativeSupplyOutput;
                 }
             }
-            
+
             if (unmet <= 0 || totalBatterySupply <= 0)
                 return;
 
@@ -252,13 +252,20 @@ namespace Content.Server.Power.Pow3r
                 // available supply. IMO this is undesirable, but I can't think of an easy fix ATM.
 
                 battery.CurrentStorage -= frameTime * battery.CurrentSupply;
-                DebugTools.Assert(battery.CurrentStorage >= 0 || MathHelper.CloseTo(battery.CurrentStorage, 0, 1e-5));
+#if DEBUG
+                // Manual "MathHelper.CloseToPercent" using the subtracted value to define the relative error.
+                if (battery.CurrentStorage < 0)
+                {
+                    float epsilon = Math.Max(frameTime * battery.CurrentSupply, 1) * 1e-4f;
+                    DebugTools.Assert(battery.CurrentStorage > -epsilon);
+                }
+#endif
                 battery.CurrentStorage = MathF.Max(0, battery.CurrentStorage);
 
                 battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;
 
                 DebugTools.Assert(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency <= battery.LoadingNetworkDemand
-                    || MathHelper.CloseTo(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency, battery.LoadingNetworkDemand, 0.01));
+                    || MathHelper.CloseToPercent(battery.SupplyRampTarget + battery.CurrentReceiving * battery.Efficiency, battery.LoadingNetworkDemand, 0.001));
             }
         }
 

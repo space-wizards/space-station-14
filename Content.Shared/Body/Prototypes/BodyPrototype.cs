@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Body.Prototypes;
 
@@ -7,14 +8,8 @@ public sealed class BodyPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
-    private string _name = string.Empty;
-
     [DataField("name")]
-    public string Name
-    {
-        get => _name;
-        private set => _name = Loc.GetString(value);
-    }
+    public string Name { get; private set; } = "";
 
     [DataField("root")] public string Root { get; } = string.Empty;
 
@@ -34,18 +29,19 @@ public sealed class BodyPrototype : IPrototype
 [DataRecord]
 public sealed record BodyPrototypeSlot
 {
-    [DataField("part", required: true)] public readonly string Part = default!;
+    [DataField("part", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public readonly string? Part;
     public readonly HashSet<string> Connections = new();
     public readonly Dictionary<string, string> Organs = new();
 
-    public BodyPrototypeSlot(string part, HashSet<string>? connections, Dictionary<string, string>? organs)
+    public BodyPrototypeSlot(string? part, HashSet<string>? connections, Dictionary<string, string>? organs)
     {
         Part = part;
         Connections = connections ?? new HashSet<string>();
         Organs = organs ?? new Dictionary<string, string>();
     }
 
-    public void Deconstruct(out string part, out HashSet<string> connections, out Dictionary<string, string> organs)
+    public void Deconstruct(out string? part, out HashSet<string> connections, out Dictionary<string, string> organs)
     {
         part = Part;
         connections = Connections;

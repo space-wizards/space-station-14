@@ -1,5 +1,6 @@
-﻿using Content.Server.Fluids.Components;
+using Content.Server.Fluids.Components;
 using Content.Shared.Fluids;
+using Content.Shared.Fluids.Components;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -10,6 +11,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly PuddleSystem _puddle = default!;
 
     private readonly HashSet<IPlayerSession> _playerObservers = new();
 
@@ -59,7 +61,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
             foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBounds))
             {
                 var data = new List<PuddleDebugOverlayData>();
-                var gridUid = grid.GridEntityId;
+                var gridUid = grid.Owner;
 
                 if (!Exists(gridUid))
                     continue;
@@ -72,7 +74,8 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
                         continue;
 
                     var pos = xform.Coordinates.ToVector2i(EntityManager, _mapManager);
-                    data.Add(new PuddleDebugOverlayData(pos, puddle.CurrentVolume));
+                    var vol = _puddle.CurrentVolume(uid, puddle);
+                    data.Add(new PuddleDebugOverlayData(pos, vol));
                 }
 
                 RaiseNetworkEvent(new PuddleOverlayDebugMessage(gridUid, data.ToArray()));

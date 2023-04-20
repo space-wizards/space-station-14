@@ -2,6 +2,7 @@
 using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Administration.Commands;
@@ -38,11 +39,11 @@ public sealed class VariantizeCommand : IConsoleCommand
             return;
         }
 
-        foreach (var tile in gridComp.Grid.GetAllTiles())
+        foreach (var tile in gridComp.GetAllTiles())
         {
             var def = tile.GetContentTileDefinition();
             var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, random.Pick(def.PlacementVariants));
-            gridComp.Grid.SetTile(tile.GridIndices, newTile);
+            gridComp.SetTile(tile.GridIndices, newTile);
         }
     }
 }

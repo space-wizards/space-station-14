@@ -1,6 +1,5 @@
 ﻿<DefaultWindow
     xmlns="https://spacestation14.io"
-    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'lathe-queue-menu-title'}"
     MinSize="300 450"
     SetSize="300 450">

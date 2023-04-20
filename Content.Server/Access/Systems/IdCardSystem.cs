@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
@@ -6,10 +7,8 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.Popups;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Linq;
 
 namespace Content.Server.Access.Systems
 {
@@ -40,33 +39,43 @@ namespace Content.Server.Access.Systems
                 // if really unlucky, burn card
                 if (randomPick <= 0.15f)
                 {
-                    TryComp<TransformComponent>(uid, out TransformComponent? transformComponent);
+                    TryComp(uid, out TransformComponent? transformComponent);
                     if (transformComponent != null)
                     {
                         _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
-                         transformComponent.Coordinates, Filter.Pvs(uid), PopupType.Medium);
+                         transformComponent.Coordinates, PopupType.Medium);
                         EntityManager.SpawnEntity("FoodBadRecipe",
                             transformComponent.Coordinates);
                     }
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(args.Microwave)} burnt {ToPrettyString(uid):entity}");
                     EntityManager.QueueDeleteEntity(uid);
                     return;
                 }
                 // If they're unlucky, brick their ID
                 if (randomPick <= 0.25f)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)),
-                        uid, Filter.Pvs(uid));
+                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)), uid);
+
                     access.Tags.Clear();
+                    Dirty(access);
+
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(args.Microwave)} cleared access on {ToPrettyString(uid):entity}");
                 }
                 else
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-safe", ("id", uid)),
-                        uid, Filter.Pvs(uid), PopupType.Medium);
+                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-safe", ("id", uid)), uid, PopupType.Medium);
                 }
 
                 // Give them a wonderful new access to compensate for everything
                 var random = _random.Pick(_prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().ToArray());
+
                 access.Tags.Add(random.ID);
+                Dirty(access);
+
+                _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
             }
         }
 
@@ -86,14 +95,16 @@ namespace Content.Server.Access.Systems
             {
                 jobTitle = jobTitle.Trim();
 
-                if (jobTitle.Length > SharedIdCardConsoleComponent.MaxJobTitleLength)
-                    jobTitle = jobTitle[..SharedIdCardConsoleComponent.MaxJobTitleLength];
+                if (jobTitle.Length > IdCardConsoleComponent.MaxJobTitleLength)
+                    jobTitle = jobTitle[..IdCardConsoleComponent.MaxJobTitleLength];
             }
             else
             {
                 jobTitle = null;
             }
 
+            if (id.JobTitle == jobTitle)
+                return true;
             id.JobTitle = jobTitle;
             Dirty(id);
             UpdateEntityName(uid, id);
@@ -121,14 +132,16 @@ namespace Content.Server.Access.Systems
             if (!string.IsNullOrWhiteSpace(fullName))
             {
                 fullName = fullName.Trim();
-                if (fullName.Length > SharedIdCardConsoleComponent.MaxFullNameLength)
-                    fullName = fullName[..SharedIdCardConsoleComponent.MaxFullNameLength];
+                if (fullName.Length > IdCardConsoleComponent.MaxFullNameLength)
+                    fullName = fullName[..IdCardConsoleComponent.MaxFullNameLength];
             }
             else
             {
                 fullName = null;
             }
 
+            if (id.FullName == fullName)
+                return true;
             id.FullName = fullName;
             Dirty(id);
             UpdateEntityName(uid, id);

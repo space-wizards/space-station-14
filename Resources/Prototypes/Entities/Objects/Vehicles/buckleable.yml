@@ -50,6 +50,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:DoActsBehavior
@@ -73,31 +79,31 @@
   - type: StaticPrice
     price: 750 # Grand Theft Auto.
 
+
 - type: entity
-  id: VehiclePussyWagon
+  id: VehicleJanicart
   parent: BaseVehicle
   name: janicart
   description: The janitor's trusty steed.
   components:
   - type: Vehicle
+    southOver: true
+    westOver: true
+    eastOver: true
     northOverride: -0.15
     southOverride: 0.22
   - type: Sprite
-    sprite: Objects/Vehicles/pussywagon.rsi
+    sprite: Objects/Vehicles/janicart.rsi
     layers:
     - state: vehicle
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     netsync: false
     noRot: true
-  - type: Access
-    tags:
-    - Maintenance
-    - Janitor
   - type: UnpoweredFlashlight
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
   - type: PointLight
@@ -110,6 +116,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 500
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 250
       behaviors:
       - !type:DoActsBehavior
@@ -120,7 +132,7 @@
       - !type:ExplodeBehavior
       - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
         spawn:
-          VehiclePussyWagonDestroyed:
+          VehicleJanicartDestroyed:
             min: 1
             max: 1
   - type: ItemSlots
@@ -131,7 +143,7 @@
           requireAll: true
           tags:
           - VehicleKey
-          - PussyWagonKeys
+          - JanicartKeys
         insertSound:
           path: /Audio/Effects/Vehicle/vehiclestartup.ogg
           params:
@@ -147,17 +159,16 @@
         whitelist:
           tags:
             - TrashBag
-    sprite: Objects/Vehicles/pussywagon.rsi
+    sprite: Objects/Vehicles/janicart.rsi
   - type: Appearance
 
 - type: entity
-  id: VehiclePussyWagonDestroyed
+  id: VehicleJanicartDestroyed
   parent: MachineFrameDestroyed
   name: destroyed janicart
-  description: R.I.P. (Rest In Pussy)
   components:
   - type: Sprite
-    sprite: Objects/Vehicles/pussywagon.rsi
+    sprite: Objects/Vehicles/janicart.rsi
     state: destroyed
     netsync: false
 
@@ -168,7 +179,9 @@
   description: The future of transportation. Popularized by St. James, the patron saint of security officers and internet forum moderators.
   components:
   - type: Vehicle
-    northOnly: true
+    northOver: true
+    westOver: true
+    eastOver: true
     northOverride: -0.1
     southOverride: 0.1
     hornSound:
@@ -180,12 +193,6 @@
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     netsync: false
     noRot: true
-  - type: Access
-    tags:
-    - Security
-    - Brig
-    - Maintenance
-    - Service
   - type: Strap
     buckleOffset: "0.15, -0.05"
     maxBuckleDistance: 1
@@ -221,6 +228,8 @@
   description: All-Tile Vehicle.
   components:
   - type: Vehicle
+    southOver: true
+    northOver: true
     northOverride: -0.1
     southOverride: 0.1
   - type: Sprite
@@ -230,10 +239,6 @@
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     netsync: false
     noRot: true
-  - type: Access
-    tags:
-    - Cargo
-    - Maintenance
   - type: RandomMetadata
     descriptionSegments: [ATVDescriptions]
   - type: MovementSpeedModifier
@@ -248,7 +253,7 @@
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
   - type: PointLight
@@ -278,7 +283,9 @@
   description: Be an enemy of the corporation, in style.
   components:
     - type: Vehicle
-      northOnly: true
+      southOver: true
+      westOver: true
+      eastOver: true
       northOverride: -0.1
       southOverride: 0.1
       hornSound:
@@ -290,10 +297,6 @@
           map: ["enum.VehicleVisualLayers.AutoAnimate"]
       netsync: false
       noRot: true
-    - type: Access
-      tags:
-        - Maintenance
-        - Service
     - type: Strap
       buckleOffset: "0.15, -0.05"
       maxBuckleDistance: 1
@@ -324,6 +327,8 @@
   description: Bad to the Bone.
   components:
     - type: Vehicle
+      southOver: true
+      northOver: true
       northOverride: -0.1
       southOverride: 0.1
     - type: Sprite
@@ -340,12 +345,12 @@
       acceleration: 2
       friction: 1.5
       baseWalkSpeed: 4.5
-      baseSprintSpeed: 7 
+      baseSprintSpeed: 7
     - type: UnpoweredFlashlight
       toggleAction:
         name: action-name-toggle-light
         description: action-description-toggle-light
-        icon: Objects/Tools/flashlight.rsi/flashlight.png
+        icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
         iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
         event: !type:ToggleActionEvent
     - type: PointLight

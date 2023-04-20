@@ -2,11 +2,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Atmos.Miasma
 {
-    [RegisterComponent]
     /// <summary>
     /// This makes mobs eventually start rotting when they die.
     /// It may be expanded to food at some point, but it's just for mobs right now.
     /// </summary>
+    [RegisterComponent]
     public sealed class PerishableComponent : Component
     {
         /// <summary>

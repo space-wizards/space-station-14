@@ -1,5 +1,7 @@
 using Content.Server.Shuttles.Systems;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Damage;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Shuttles.Components
 {
@@ -41,8 +43,10 @@ namespace Content.Server.Shuttles.Components
         public bool IsOn;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("thrust")]
-        public float Thrust = 750f;
+        public float Thrust;
+
+        [DataField("baseThrust"), ViewVariables(VVAccess.ReadWrite)]
+        public float BaseThrust = 750f;
 
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;
@@ -68,6 +72,12 @@ namespace Content.Server.Shuttles.Components
         public List<EntityUid> Colliding = new();
 
         public bool Firing = false;
+
+        [DataField("machinePartThrust", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartThrust = "Laser";
+
+        [DataField("partRatingThrustMultiplier")]
+        public float PartRatingThrustMultiplier = 1.5f;
     }
 
     public enum ThrusterType

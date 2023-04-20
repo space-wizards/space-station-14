@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -41,7 +40,7 @@ public abstract partial class InventorySystem
     protected void QuickEquip(EntityUid uid, ClothingComponent component, UseInHandEvent args)
     {
         if (!TryComp(args.User, out InventoryComponent? inv)
-            || !TryComp(args.User, out SharedHandsComponent? hands)
+            || !TryComp(args.User, out HandsComponent? hands)
             || !_prototypeManager.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var prototype))
             return;
 
@@ -105,10 +104,10 @@ public abstract partial class InventorySystem
     /// </summary>
     private void OnUseSlot(UseSlotNetworkMessage ev, EntitySessionEventArgs eventArgs)
     {
-        if (eventArgs.SenderSession.AttachedEntity is not EntityUid { Valid: true } actor)
+        if (eventArgs.SenderSession.AttachedEntity is not { Valid: true } actor)
             return;
 
-        if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<SharedHandsComponent>(actor, out var hands))
+        if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<HandsComponent>(actor, out var hands))
             return;
 
         var held = hands.ActiveHandEntity;
@@ -140,7 +139,7 @@ public abstract partial class InventorySystem
         if (!CanEquip(actor, held.Value, ev.Slot, out var reason))
         {
             if (_gameTiming.IsFirstTimePredicted)
-                _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
+                _popup.PopupCursor(Loc.GetString(reason));
             return;
         }
 
@@ -166,7 +165,7 @@ public abstract partial class InventorySystem
         if (!Resolve(target, ref inventory, false))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
-                _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"));
             return false;
         }
 
@@ -177,21 +176,21 @@ public abstract partial class InventorySystem
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
-                _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"));
             return false;
         }
 
         if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, clothing))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
-                _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
+                _popup.PopupCursor(Loc.GetString(reason));
             return false;
         }
 
         if (!slotContainer.Insert(itemUid))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
-                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
 
@@ -243,9 +242,9 @@ public abstract partial class InventorySystem
         // that requires server/client specific code.
         // Uhhh TODO, fix this. This doesn't even fucking check if the target item is IN the targets inventory.
         return actor != target &&
-            HasComp<SharedStrippableComponent>(target) &&
-            HasComp<SharedStrippingComponent>(actor) &&
-            HasComp<SharedHandsComponent>(actor);
+            HasComp<StrippableComponent>(target) &&
+            HasComp<StrippingComponent>(actor) &&
+            HasComp<HandsComponent>(actor);
     }
 
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason,
@@ -342,14 +341,14 @@ public abstract partial class InventorySystem
         if (!Resolve(target, ref inventory, false))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
-                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
 
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
-                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
 
@@ -360,7 +359,7 @@ public abstract partial class InventorySystem
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
         {
             if(!silent && _gameTiming.IsFirstTimePredicted)
-                _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
+                _popup.PopupCursor(Loc.GetString(reason));
             return false;
         }
 

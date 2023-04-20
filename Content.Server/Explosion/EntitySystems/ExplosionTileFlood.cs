@@ -44,7 +44,7 @@ public abstract class ExplosionTileFlood
         {
             var freeDirections = ignoreLocalBlocker ? AtmosDirection.All : GetUnblockedDirectionOrAll(tile);
 
-            // Get the free directions of the directly adjacent tiles            
+            // Get the free directions of the directly adjacent tiles
             var freeDirectionsN = GetUnblockedDirectionOrAll(tile.Offset(AtmosDirection.North));
             var freeDirectionsE = GetUnblockedDirectionOrAll(tile.Offset(AtmosDirection.East));
             var freeDirectionsS = GetUnblockedDirectionOrAll(tile.Offset(AtmosDirection.South));
@@ -123,7 +123,7 @@ public abstract class ExplosionTileFlood
 ///     This is a data structure can be used to ensure the uniqueness of Vector2i indices.
 /// </summary>
 /// <remarks>
-///     This basically exists to replace the use of HashSet<Vector2i> if all you need is the the functions Contains()
+///     This basically exists to replace the use of HashSet&lt;Vector2i&gt; if all you need is the the functions Contains()
 ///     and Add(). This is both faster and apparently allocates less. Does not support iterating over contents
 /// </remarks>
 public sealed class UniqueVector2iSet

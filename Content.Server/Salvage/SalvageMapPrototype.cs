@@ -7,11 +7,11 @@ namespace Content.Server.Salvage
     public sealed class SalvageMapPrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         /// <summary>
-        /// Relative directory path to the given map, i.e. `Maps/Salvage/test.yml`
+        /// Relative directory path to the given map, i.e. `Maps/Salvage/template.yml`
         /// </summary>
         [DataField("mapPath", required: true)]
         public ResourcePath MapPath { get; } = default!;

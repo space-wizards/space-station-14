@@ -1,6 +1,7 @@
 using Content.Server.Explosion.Components;
 using Content.Shared.Physics;
 using Content.Shared.Trigger;
+using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
@@ -10,6 +11,8 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class TriggerSystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     /// <summary>
     /// Anything that has stuff touching it (to check speed) or is on cooldown.
     /// </summary>
@@ -57,13 +60,16 @@ public sealed partial class TriggerSystem
 
         SetProximityAppearance(uid, component);
 
-        if (!TryComp<PhysicsComponent>(uid, out var body)) return;
+        if (!TryComp<PhysicsComponent>(uid, out var body))
+            return;
 
-        _fixtures.TryCreateFixture(body, new Fixture(body, component.Shape)
-        {
+        _fixtures.TryCreateFixture(
+            uid,
+            component.Shape,
+            TriggerOnProximityComponent.FixtureID,
+            hard: false,
             // TODO: Should probably have these settable via datafield but I'm lazy and it's a pain
-            CollisionLayer = (int) (CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable), Hard = false, ID = TriggerOnProximityComponent.FixtureID
-        });
+            collisionLayer: (int) (CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable));
     }
 
     private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, ref StartCollideEvent args)
@@ -83,9 +89,9 @@ public sealed partial class TriggerSystem
 
     private void SetProximityAppearance(EntityUid uid, TriggerOnProximityComponent component)
     {
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
+        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
         {
-            appearanceComponent.SetData(ProximityTriggerVisualState.State, component.Enabled ? ProximityTriggerVisuals.Inactive : ProximityTriggerVisuals.Off);
+            _appearance.SetData(uid, ProximityTriggerVisualState.State, component.Enabled ? ProximityTriggerVisuals.Inactive : ProximityTriggerVisuals.Off, appearance);
         }
     }
 
@@ -104,9 +110,9 @@ public sealed partial class TriggerSystem
             component.Accumulator += component.Cooldown;
         }
 
-        if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
+        if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
         {
-            appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active);
+            _appearance.SetData(appearance.Owner, ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active, appearance);
         }
 
         Trigger(component.Owner);

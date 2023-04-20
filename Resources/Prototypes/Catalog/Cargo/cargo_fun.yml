@@ -1,20 +1,60 @@
 - type: cargoProduct
-  id: FunInstruments
+  id: FunInstrumentsVariety
   icon:
     sprite: Objects/Fun/Instruments/accordion.rsi
     state: icon
-  product: CrateFunInstruments
-  cost: 3000
+  product: CrateFunInstrumentsVariety
+  cost: 2000
   category: Fun
   group: market
 
 - type: cargoProduct
-  id: FunBrass
+  id: FunInstrumentsBrass
   icon:
     sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: tuba
-  product: CrateFunBrass
+  product: CrateFunInstrumentsBrass
   cost: 2500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunInstrumentsString
+  icon:
+    sprite: Objects/Fun/Instruments/bassguitar.rsi
+    state: icon
+  product: CrateFunInstrumentsString
+  cost: 2500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunInstrumentsWoodwind
+  icon:
+    sprite: Objects/Fun/Instruments/harmonica.rsi
+    state: icon
+  product: CrateFunInstrumentsWoodwind
+  cost: 2500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunInstrumentsKeyedPercussion
+  icon:
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: icon
+  product: CrateFunInstrumentsKeyedPercussion
+  cost: 2500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunInstrumentsSpecial
+  icon:
+    sprite: Objects/Fun/Instruments/gunpet.rsi
+    state: icon
+  product: CrateFunInstrumentsSpecial
+  cost: 10000
   category: Fun
   group: market
 
@@ -25,6 +65,16 @@
     state: box
   product: CrateFunArtSupplies
   cost: 500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunParty
+  icon:
+    sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: birthday
+  product: CrateFunParty
+  cost: 1000
   category: Fun
   group: market
 
@@ -42,7 +92,7 @@
   id: FunBoardGames
   icon:
     sprite: Objects/Fun/dice.rsi
-    state: d66
+    state: d6_6
   product: CrateFunBoardGames
   cost: 1500
   category: Fun
@@ -55,5 +105,35 @@
     state: vehicle
   product: CrateFunATV
   cost: 1500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunSadTromboneImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateFunSadTromboneImplants
+  cost: 1000
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunLightImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateFunLightImplants
+  cost: 1000
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunPirate
+  icon:
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    state: crate_icon
+  product: CrateFunPirate
+  cost: 400
   category: Fun
   group: market

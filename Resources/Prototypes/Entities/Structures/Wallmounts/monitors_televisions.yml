@@ -1,67 +1,85 @@
 - type: entity
+  parent: ComputerSurveillanceWirelessCameraMonitor
+  id: ComputerTelevision
+  name: wooden television
+  description: Finally, some decent reception around here...
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: television
+    - map: ["computerLayerScreen"]
+      state: detective_television
+  - type: Computer
+    board: ComputerTelevisionCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 200
+        mask:
+          - TabletopMachineMask
+        layer:
+          - TabletopMachineLayer
+
+- type: entity
   parent: BaseComputer
   id: WallmountTelescreenFrame
   name: telescreen frame
   description: Finally, some decent reception around here...
   components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          body: telescreen
-          bodyBroken: telescreen_broken
-          screen: telescreen
-    - type: Construction
-      graph: WallmountTelescreen
-      node: TelescreenFrame
-    - type: Sprite
-      drawdepth: WallMountedItems
-      netsync: false
-      sprite: Structures/Machines/computers.rsi
-      layers:
-        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Body"]
-          state: television
-        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
-          state: telescreen
-          shader: shaded
-    - type: Fixtures
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.20,-0.10,0.25,0.35"
-          density: 250
-          mask:
-            - FullTileMask
-          layer:
-            - WallLayer
-    - type: WallMount
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 200
-        behaviors: #excess damage, don't spawn entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SheetSteel1:
-              min: 1
-              max: 1
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - type: Transform
-      anchored: true
+  - type: Construction
+    graph: WallmountTelescreen
+    node: TelescreenFrame
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Machines/computers.rsi
+    layers:
+      - map: ["computerLayerBody"]
+        state: telescreen_frame
+      - map: ["computerLayerScreen"]
+        state: telescreen
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.20,-0.10,0.25,0.35"
+        density: 250
+        mask:
+          - FullTileMask
+        layer:
+          - WallLayer
+  - type: WallMount
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Transform
+    anchored: true
 
 - type: entity
   parent: WallmountTelescreenFrame
@@ -70,27 +88,27 @@
   name: telescreen
   description: Finally, some decent reception around here...
   components:
-    - type: Construction
-      graph: WallmountTelescreen
-      node: Telescreen
-    - type: PointLight
-      radius: 1.5
-      energy: 1.6
-      color: "#b89f25"
-    - type: DeviceNetwork
-      deviceNetId: Wired
-      receiveFrequencyId: SurveillanceCamera
-      transmitFrequencyId: SurveillanceCamera
-    - type: WiredNetworkConnection
-    - type: DeviceNetworkRequiresPower
-    - type: SurveillanceCameraMonitor
-    - type: ActivatableUI
-      key: enum.SurveillanceCameraMonitorUiKey.Key
-    - type: ActivatableUIRequiresPower
-    - type: UserInterface
-      interfaces:
-        - key: enum.SurveillanceCameraMonitorUiKey.Key
-          type: SurveillanceCameraMonitorBoundUserInterface
+  - type: Construction
+    graph: WallmountTelescreen
+    node: Telescreen
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
+  - type: SurveillanceCameraMonitor
+  - type: ActivatableUI
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraMonitorUiKey.Key
+        type: SurveillanceCameraMonitorBoundUserInterface
 
 # Wall Televisions
 
@@ -100,40 +118,28 @@
   name: television frame
   description: Finally, some decent reception around here...
   components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          key: television_wall
-          body: television_wall
-          bodyBroken: television_wallbroken
-          screen: television_wall
-    - type: Fixtures
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.75,-0.10,0.75,0.35"
-          density: 75
-          mask:
-            - FullTileMask
-          layer:
-            - WallLayer
-    - type: Construction
-      graph: WallmountTelevision
-      node: TelevisionFrame
-    - type: Sprite
-      drawdepth: WallMountedItems
-      netsync: false
-      sprite: Structures/Wallmounts/flatscreentv.rsi
-      layers:
-        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Body"]
-          state: television_wall
-        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
-          state: television_wall
-          shader: shaded
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.75,-0.10,0.75,0.35"
+        density: 75
+        mask:
+          - FullTileMask
+        layer:
+          - WallLayer
+  - type: Construction
+    graph: WallmountTelevision
+    node: TelevisionFrame
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Wallmounts/flatscreentv.rsi
+    layers:
+      - map: ["computerLayerBody"]
+        state: television_wall
+      - map: ["computerLayerScreen"]
+        state: television_wallscreen
 
 - type: entity
   parent: WallmountTelevisionFrame
@@ -142,34 +148,27 @@
   name: television
   description: Finally, some decent reception around here...
   components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          key: television_wall
-          body: television_wall
-          bodyBroken: television_wallbroken
-          screen: television_wallscreen
-    - type: Construction
-      graph: WallmountTelevision
-      node: Television
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: SurveillanceCamera
-      transmitFrequencyId: SurveillanceCamera
-    - type: WirelessNetworkConnection
-      range: 200
-    - type: DeviceNetworkRequiresPower
-    - type: Speech
-    - type: SurveillanceCameraSpeaker
-    - type: SurveillanceCameraMonitor
-    - type: ActivatableUI
-      key: enum.SurveillanceCameraMonitorUiKey.Key
-    - type: ActivatableUIRequiresPower
-    - type: UserInterface
-      interfaces:
-        - key: enum.SurveillanceCameraMonitorUiKey.Key
-          type: SurveillanceCameraMonitorBoundUserInterface
-    - type: PointLight
-      radius: 1.5
-      energy: 1.6
-      color: "#b89f25"
+  - type: Construction
+    graph: WallmountTelevision
+    node: Television
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceNetworkRequiresPower
+  - type: Speech
+  - type: SurveillanceCameraSpeaker
+  - type: SurveillanceCameraMonitor
+  - type: ActivatableUI
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraMonitorUiKey.Key
+        type: SurveillanceCameraMonitorBoundUserInterface
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"

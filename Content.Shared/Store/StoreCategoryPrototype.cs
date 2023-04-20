@@ -17,11 +17,7 @@ public sealed class StoreCategoryPrototype : IPrototype
     public string ID { get; } = default!;
 
     [DataField("name")]
-    public string Name
-    {
-        get => _name;
-        private set => _name = Loc.GetString(value);
-    }
+    public string Name { get; private set; } = "";
 
     [DataField("priority")]
     public int Priority { get; } = 0;

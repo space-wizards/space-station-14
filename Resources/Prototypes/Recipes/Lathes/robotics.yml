@@ -1,8 +1,5 @@
 - type: latheRecipe
   id: ProximitySensor
-  icon:
-    sprite: Objects/Misc/proximity_sensor.rsi
-    state: icon
   result: ProximitySensor
   completetime: 2
   materials:
@@ -11,9 +8,6 @@
 
 - type: latheRecipe
   id: LeftArmBorg
-  icon:
-    sprite: Mobs/Silicon/drone.rsi
-    state: "l_hand"
   result: LeftArmBorg
   completetime: 2
   materials:
@@ -22,9 +16,6 @@
 
 - type: latheRecipe
   id: RightArmBorg
-  icon:
-    sprite: Mobs/Silicon/drone.rsi
-    state: "r_hand"
   result: RightArmBorg
   completetime: 2
   materials:

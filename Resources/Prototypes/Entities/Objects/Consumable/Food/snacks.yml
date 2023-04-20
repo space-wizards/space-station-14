@@ -387,7 +387,9 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0
@@ -532,6 +534,8 @@
   - type: Sprite
     state: fortune
   - type: Item
+  - type: RandomMetadata
+    descriptionSegments: [CookieFortuneDescriptions]
 
 - type: entity
   noSpawn: true

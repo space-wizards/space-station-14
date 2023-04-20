@@ -6,7 +6,7 @@
   targetNode: MetalRod
   category: construction-category-materials
   description: A sturdy metal rod that can be used for various purposes.
-  icon: Objects/Materials/parts.rsi/rods.png
+  icon: { sprite: Objects/Materials/parts.rsi, state: rods }
   objectType: Item
 
 - type: construction
@@ -17,7 +17,7 @@
   startNode: start
   targetNode: SheetRGlass
   category: construction-category-materials
-  icon: Objects/Materials/Sheets/glass.rsi/rglass.png
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rglass }
   objectType: Item
 
 - type: construction
@@ -28,7 +28,7 @@
   startNode: start
   targetNode: SheetPGlass
   category: construction-category-materials
-  icon: Objects/Materials/Sheets/glass.rsi/pglass.png
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: pglass }
   objectType: Item
 
 - type: construction
@@ -39,7 +39,7 @@
   startNode: start
   targetNode: SheetRPGlass
   category: construction-category-materials
-  icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rpglass }
   objectType: Item
 
 - type: construction
@@ -50,5 +50,5 @@
   targetNode: MaterialDurathread
   category: construction-category-materials
   description: A high-quality thread used to make durable clothes.
-  icon: Objects/Materials/materials.rsi/durathread.png
+  icon: { sprite: Objects/Materials/materials.rsi, state: durathread }
   objectType: Item

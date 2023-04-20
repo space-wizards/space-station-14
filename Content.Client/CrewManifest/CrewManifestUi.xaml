@@ -1,7 +1,7 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'crew-manifest-window-title'}"
-               MinSize="450 750">
+               SetSize="450 750">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
         <controls:StripeBack Name="StationNameContainer">
             <PanelContainer>

@@ -6,7 +6,7 @@ namespace Content.Shared.Inventory;
 [Prototype("inventoryTemplate")]
 public sealed class InventoryTemplatePrototype : IPrototype
 {
-    [IdDataFieldAttribute] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; } = string.Empty;
 
     [DataField("slots")] public SlotDefinition[] Slots { get; } = Array.Empty<SlotDefinition>();
 }

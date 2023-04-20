@@ -11,12 +11,21 @@ namespace Content.Shared.Interaction.Events
         }
         public void SetHandled(SuicideKind kind)
         {
-            if (Handled) throw new InvalidOperationException("Suicide was already handled");
+            if (Handled)
+                throw new InvalidOperationException("Suicide was already handled");
+
             Kind = kind;
         }
-        
+
+        public void BlockSuicideAttempt(bool suicideAttempt)
+        {
+            if (suicideAttempt)
+                AttemptBlocked = suicideAttempt;
+        }
+
         public SuicideKind? Kind { get; private set; }
         public EntityUid Victim { get; private set; }
+        public bool AttemptBlocked { get; private set; }
         public bool Handled => Kind != null;
     }
 

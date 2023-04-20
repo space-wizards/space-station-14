@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Explosion;
 using Content.Shared.Nuke;
@@ -172,8 +173,6 @@ namespace Content.Server.Nuke
         ///     Check if nuke has already played last alert sound
         /// </summary>
         public bool PlayedAlertSound = false;
-
-        public CancellationToken? DisarmCancelToken = null;
 
         public IPlayingAudioStream? AlertAudioStream = default;
     }

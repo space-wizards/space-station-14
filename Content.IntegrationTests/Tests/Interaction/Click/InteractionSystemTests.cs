@@ -1,6 +1,5 @@
 #nullable enable annotations
 using System.Threading.Tasks;
-using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -93,6 +92,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing);
             });
 
+            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -155,6 +155,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
             });
 
+            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -215,6 +216,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing);
             });
 
+            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -276,6 +278,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
             });
 
+            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -331,7 +334,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
                 Assert.That(container.Insert(user));
-                Assert.That(sEntities.GetComponent<TransformComponent>(user).Parent.Owner, Is.EqualTo(containerEntity));
+                Assert.That(sEntities.GetComponent<TransformComponent>(user).ParentUid, Is.EqualTo(containerEntity));
 
                 testInteractionSystem.InteractUsingEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent     = (ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity)); interactHand = true; };
@@ -353,6 +356,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.True);
             });
 
+            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -367,6 +371,12 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 base.Initialize();
                 SubscribeLocalEvent<InteractUsingEvent>((e) => InteractUsingEvent?.Invoke(e));
                 SubscribeLocalEvent<InteractHandEvent>((e) => InteractHandEvent?.Invoke(e));
+            }
+
+            public void ClearHandlers()
+            {
+                InteractUsingEvent = null;
+                InteractHandEvent = null;
             }
         }
 

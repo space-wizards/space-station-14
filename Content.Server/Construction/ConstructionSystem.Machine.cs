@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Construction.Components;
 using Content.Server.Examine;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -52,10 +53,18 @@ public sealed partial class ConstructionSystem
             Text = Loc.GetString("machine-upgrade-examinable-verb-text"),
             Message = Loc.GetString("machine-upgrade-examinable-verb-message"),
             Category = VerbCategory.Examine,
-            IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"))
         };
 
         args.Verbs.Add(verb);
+    }
+
+    public List<MachinePartComponent> GetAllParts(EntityUid uid, MachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return new List<MachinePartComponent>();
+
+        return GetAllParts(component);
     }
 
     public List<MachinePartComponent> GetAllParts(MachineComponent component)

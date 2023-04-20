@@ -39,12 +39,32 @@
   group: market
 
 - type: cargoProduct
+  id: MaterialTextiles
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cloth_3
+  product: CrateMaterialTextiles
+  cost: 1000
+  category: Materials
+  group: market
+
+- type: cargoProduct
   id: MaterialPlasma
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
     state: plasma_3
   product: CrateMaterialPlasma
   cost: 2000
+  category: Materials
+  group: market
+
+- type: cargoProduct
+  id: CardboardMaterial
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cardboard_3
+  product: CrateMaterialCardboard
+  cost: 750
   category: Materials
   group: market
 

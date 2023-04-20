@@ -6,32 +6,33 @@
   - type: StorageFill
     contents:
       - id: BoxPillCanister
-        amount: 1
       - id: BoxSyringe
-        amount: 1
       - id: EpinephrineChemistryBottle
         amount: 3
       - id: Brutepack
         amount: 2
       - id: Ointment
         amount: 2
+      - id: Bloodpack
+        amount: 2
 
 - type: entity
   id: LockerWallMedicalFilled
+  name: medicine wall locker
   suffix: Filled
   parent: LockerWallMedical
   components:
   - type: StorageFill
     contents:
       - id: BoxPillCanister
-        amount: 1
       - id: BoxSyringe
-        amount: 1
       - id: EpinephrineChemistryBottle
         amount: 3
       - id: Brutepack
         amount: 2
       - id: Ointment
+        amount: 2
+      - id: Bloodpack
         amount: 2
 
 
@@ -71,6 +72,12 @@
       - id: ClothingMaskSterile
 
 - type: entity
+  id: LockerWallMedicalDoctorFilled
+  name: medical doctor's wall locker
+  suffix: Filled
+  parent: ["LockerWallMedical", "LockerMedicalFilled"]
+
+- type: entity
   id: LockerChemistryFilled
   suffix: Filled
   parent: LockerChemistry
@@ -81,4 +88,4 @@
       - id: BoxBeaker
       - id: BoxPillCanister
       - id: BoxBottle
-      - id: BoxBottle
+        amount: 2

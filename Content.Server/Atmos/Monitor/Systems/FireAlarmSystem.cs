@@ -74,7 +74,7 @@ public sealed class FireAlarmSystem : EntitySystem
         }
     }
 
-    private void OnEmagged(EntityUid uid, FireAlarmComponent component, GotEmaggedEvent args)
+    private void OnEmagged(EntityUid uid, FireAlarmComponent component, ref GotEmaggedEvent args)
     {
         if (TryComp<AtmosAlarmableComponent>(uid, out var alarmable))
         {

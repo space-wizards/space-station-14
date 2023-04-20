@@ -1,26 +1,33 @@
-﻿namespace Content.Server.Singularity.Components
+﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
+using Content.Server.Singularity.EntitySystems;
+
+namespace Content.Server.Singularity.Components;
+
+[RegisterComponent]
+public sealed class SingularityGeneratorComponent : Component
 {
-    [RegisterComponent]
-    public sealed class SingularityGeneratorComponent : Component
-    {
-        [Dependency] private readonly IEntityManager _entMan = default!;
+    /// <summary>
+    /// The amount of power this generator has accumulated.
+    /// If you want to set this use <see  cref="SingularityGeneratorSystem.SetPower"/>
+    /// </summary>
+    [DataField("power")]
+    [Access(friends:typeof(SingularityGeneratorSystem))]
+    public float Power = 0;
 
-        [ViewVariables] private int _power;
+    /// <summary>
+    /// The power threshold at which this generator will spawn a singularity.
+    /// If you want to set this use <see  cref="SingularityGeneratorSystem.SetThreshold"/>
+    /// </summary>
+    [DataField("threshold")]
+    [Access(friends:typeof(SingularityGeneratorSystem))]
+    public float Threshold = 16;
 
-        public int Power
-        {
-            get => _power;
-            set
-            {
-                if(_power == value) return;
-
-                _power = value;
-                if (_power > 15)
-                {
-                    _entMan.SpawnEntity("Singularity", _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
-                    //dont delete ourselves, just wait to get eaten
-                }
-            }
-        }
-    }
+    /// <summary>
+    ///     The prototype ID used to spawn a singularity.
+    /// </summary>
+    [DataField("spawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string? SpawnPrototype = "Singularity";
 }

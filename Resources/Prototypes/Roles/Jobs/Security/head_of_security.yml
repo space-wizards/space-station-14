@@ -1,6 +1,7 @@
 - type: job
   id: HeadOfSecurity
   name: job-name-hos
+  description: job-description-hos
   playTimeTracker: JobHeadOfSecurity
   requirements:
     - !type:RoleTimeRequirement
@@ -26,12 +27,13 @@
   - Maintenance
   - Service
   - External
+  - Detective
 
 - type: startingGear
   id: HoSGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoS
-    back: ClothingBackpackSecurityFilled
+    back: ClothingBackpackHOSFilled
     shoes: ClothingShoesBootsCombatFilled
     outerClothing: ClothingOuterCoatHoSTrench
     eyes: ClothingEyesGlassesSecurity
@@ -41,5 +43,5 @@
     ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
   innerclothingskirt: ClothingUniformJumpskirtHoS
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+  satchel: ClothingBackpackSatchelHOSFilled
+  duffelbag: ClothingBackpackDuffelHOSFilled

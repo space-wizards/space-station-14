@@ -62,7 +62,7 @@ sealed class TileReplaceCommand : IConsoleCommand
             return;
         }
 
-        if (!entityManager.EntityExists(grid.GridEntityId))
+        if (!entityManager.EntityExists(grid.Owner))
         {
             shell.WriteLine($"Grid {gridId} doesn't have an associated grid entity.");
             return;

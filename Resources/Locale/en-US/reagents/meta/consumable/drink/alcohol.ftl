@@ -121,8 +121,8 @@ reagent-desc-doctors-delight = A gulp a day keeps the MediBot away. That's proba
 reagent-name-driest-martini = driest martini
 reagent-desc-driest-martini = Only for the experienced. You think you see sand floating in the glass.
 
-reagent-name-erika-suprise = erika suprise
-reagent-desc-erika-suprise = The surprise is, it's green!
+reagent-name-erika-surprise = erika surprise
+reagent-desc-erika-surprise = The surprise is, it's green!
 
 reagent-name-gargle-blaster = Pan-Galactic Gargle Blaster
 reagent-desc-gargle-blaster = Whoah, this stuff looks volatile!

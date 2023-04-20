@@ -6,7 +6,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Objects/Specific/Janitorial/soap.rsi/soap.png
+      - sprite: Objects/Specific/Janitorial/soap.rsi
+        state: soap
   - type: RandomSpawner
     prototypes:
       - Soap

@@ -35,11 +35,8 @@ namespace Content.Server.Abilities.Mime
             Event = new InvisibleWallActionEvent(),
         };
 
-
-        /// The vow zone lies below
-
+        // The vow zone lies below
         public bool VowBroken = false;
-
 
         /// <summary>
         /// Whether this mime is ready to take the vow again.
@@ -55,8 +52,8 @@ namespace Content.Server.Abilities.Mime
 
         /// <summary>
         /// How long it takes the mime to get their powers back
-
-        [DataField("vowCooldown", customTypeSerializer: typeof(TimeOffsetSerializer))]
+        /// </summary>
+        [DataField("vowCooldown")]
         public TimeSpan VowCooldown = TimeSpan.FromMinutes(5);
     }
 }

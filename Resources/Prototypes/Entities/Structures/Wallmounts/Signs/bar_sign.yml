@@ -33,20 +33,21 @@
   name: bar sign
   suffix: Random
 
-- type: entity
-  id: LargeBarSign
-  name: large bar sign
-  noSpawn: true
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Wallmounts/sylphs.rsi
-    state: sylph
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
-  - type: BarSign
+# Missing appearance components & various other sprite issues.
+#- type: entity
+#  id: LargeBarSign
+#  name: large bar sign
+#  noSpawn: true
+#  components:
+#  - type: Clickable
+#  - type: InteractionOutline
+#  - type: Sprite
+#    drawdepth: WallTops
+#    sprite: Structures/Wallmounts/sylphs.rsi
+#    state: sylph
+#  - type: ApcPowerReceiver
+#  - type: ExtensionCableReceiver
+#  - type: BarSign
    
 - type: entity
   parent: BaseBarSign

@@ -17,6 +17,7 @@
       visuals:
         - type: ParticleAcceleratorPartVisualizer
           baseState: unlit
+    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorPowerBox
     - type: PowerConsumer
       voltage: High
@@ -29,6 +30,8 @@
     - type: Construction
       graph: ParticleAcceleratorPowerBox
       node: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -46,3 +49,5 @@
       graph: ParticleAcceleratorPowerBox
       node: start
       defaultTarget: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]

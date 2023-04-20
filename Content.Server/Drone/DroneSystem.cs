@@ -14,11 +14,13 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
+using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -32,6 +34,8 @@ namespace Content.Server.Drone
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly InnateToolSystem _innateToolSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -80,7 +84,7 @@ namespace Content.Server.Drone
 
         private void OnMobStateChanged(EntityUid uid, DroneComponent drone, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == DamageState.Dead)
+            if (args.NewMobState == MobState.Dead)
             {
                 if (TryComp<InnateToolComponent>(uid, out var innate))
                     _innateToolSystem.Cleanup(uid, innate);
@@ -94,8 +98,7 @@ namespace Content.Server.Drone
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.On);
-            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid,
-                Filter.Pvs(uid), PopupType.Large);
+            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, PopupType.Large);
         }
 
         private void OnMindRemoved(EntityUid uid, DroneComponent drone, MindRemovedMessage args)
@@ -119,7 +122,7 @@ namespace Content.Server.Drone
         {
             if (TryComp<AppearanceComponent>(uid, out var appearance))
             {
-                appearance.SetData(DroneVisuals.Status, status);
+                _appearance.SetData(uid, DroneVisuals.Status, status, appearance);
             }
         }
 
@@ -132,10 +135,10 @@ namespace Content.Server.Drone
                 if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
                     // Filter out dead ghost roles. Dead normal players are intended to block.
-                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && entityMobState.IsDead()))
+                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && _mobStateSystem.IsDead(entity, entityMobState)))
                         continue;
                     if (_gameTiming.IsFirstTimePredicted)
-                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, Filter.Entities(uid));
+                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, uid);
                     return true;
                 }
             }

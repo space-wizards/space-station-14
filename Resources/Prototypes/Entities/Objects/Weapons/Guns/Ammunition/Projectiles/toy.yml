@@ -7,6 +7,7 @@
     - type: Tag
       tags:
         - BulletFoam
+        - Trash
     - type: Ammo
     - type: Sprite
       sprite: Objects/Fun/toys.rsi

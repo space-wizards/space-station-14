@@ -55,12 +55,16 @@
     accent: mouse
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:
       types:
         Piercing: 5
   - type: NoSlip
+  - type: Puller
+    needsHands: true
 
 - type: entity
   name: bee
@@ -69,10 +73,6 @@
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
@@ -94,6 +94,7 @@
       layer:
       - FlyingMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       5: Critical
@@ -118,6 +119,8 @@
   - type: NoSlip
   - type: MobPrice
     price: 50
+  - type: Puller
+    needsHands: true
 
 - type: entity
   name: bee
@@ -127,10 +130,6 @@
   description: How nice a bee. Oh no, it looks angry and wants my pizza.
   components:
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -200,6 +199,8 @@
     accent: chicken
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: Puller
+    needsHands: true
 
 - type: entity
   name: mallard duck #Quack
@@ -324,6 +325,7 @@
       layer:
       - FlyingMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       5: Critical
@@ -346,6 +348,8 @@
   - type: NoSlip
   - type: MobPrice
     price: 50
+  - type: Puller
+    needsHands: true
 
 - type: entity
   name: cow
@@ -413,7 +417,7 @@
   name: crab
   parent: SimpleMobBase
   id: MobCrab
-  description: A folk legend goes around that his claw snaps spacemen out of existance over distasteful remarks. Be polite and tolerant for your own safety.
+  description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -640,7 +644,6 @@
   description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
   components:
   - type: CombatMode
-    disarm: null
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -678,13 +681,13 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: CombatMode
-    disarm: null
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-primate
   - type: Inventory
     templateId: monkey
+  - type: InventorySlots
   - type: Fixtures
     fixtures:
     - shape:
@@ -711,6 +714,7 @@
     speechSounds: Monkey
   - type: Body
     prototype: Primate
+    requiredLegs: 1 # TODO: More than 1 leg
   - type: DamageStateVisuals
     states:
       Alive:
@@ -733,17 +737,27 @@
   - type: CanHostGuardian
 
 - type: entity
+  name: guidebook monkey
+  parent: MobMonkey
+  noSpawn: true
+  id: MobGuidebookMonkey
+  description: A hopefully helpful monkey whose only purpose in life is for you to click on. Does this count as having a monkey give you a tutorial?
+  components:
+    - type: GuidebookControlsTest
+
+- type: entity
   name: mouse
   parent: SimpleMobBase
   id: MobMouse
   description: Squeak!
   components:
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     allowSpeech: true
     allowMovement: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
+  - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
   - type: Sprite
@@ -772,6 +786,7 @@
       layer:
       - SmallMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       10: Critical
@@ -811,7 +826,6 @@
     tags:
     - Trash
     - CannotSuicide
-  - type: Recyclable
   - type: Respirator
     damage:
       types:
@@ -824,10 +838,10 @@
       types:
         Blunt: 0.1
   - type: Vocal
-    # mice are gender neutral who cares
-    maleScream: /Audio/Animals/mouse_squeak.ogg
-    femaleScream: /Audio/Animals/mouse_squeak.ogg
-    unsexedScream: /Audio/Animals/mouse_squeak.ogg
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
     wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
@@ -835,10 +849,6 @@
       enabled: false
       autoPopulate: false
       name: action-name-combat
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
@@ -847,6 +857,8 @@
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
+  - type: Puller
+    needsHands: true
 
 - type: entity
   parent: MobMouse
@@ -890,11 +902,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: mouse-1
+        Base: mouse-2
       Critical:
-        Base: dead-1
+        Base: dead-2
       Dead:
-        Base: splat-1
+        Base: splat-2
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier
@@ -950,6 +962,9 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+  - type: Puller
+    needsHands: true
+
 
 - type: entity
   name: slug
@@ -1044,6 +1059,8 @@
       path: /Audio/Animals/frog_ribbit.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Puller
+    needsHands: true
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -1145,8 +1162,8 @@
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 7
-    baseSprintSpeed : 7
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 5
   - type: InputMover
   - type: MobMover
   - type: HTN
@@ -1204,6 +1221,13 @@
     intensitySlope: 20
     totalIntensity: 225
   - type: ExplodeOnTrigger
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:ExplodeBehavior
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
@@ -1250,6 +1274,8 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+  - type: Puller
+    needsHands: true
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -1290,17 +1316,30 @@
     - id: FoodMeatSpider
       amount: 2
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Critical
+      150: Dead
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 12
+        Poison: 4
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
-  - type: Puller
+  - type: NoSlip
+  - type: Spider
+  - type: IgnoreSpiderWeb
 
 - type: entity
   name: tarantula
@@ -1315,10 +1354,11 @@
     - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       makeSentient: true
       name: ghost-role-information-giant-spider-name
       description: ghost-role-information-giant-spider-description
+    - type: GhostTakeoverAvailable
 
 - type: entity
   name: possum
@@ -1347,6 +1387,7 @@
   - type: Inventory
     speciesId: possum
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1401,6 +1442,7 @@
   - type: Inventory
     speciesId: possum #close enough
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1455,6 +1497,7 @@
   - type: Inventory
     speciesId: fox
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1510,6 +1553,7 @@
   - type: Inventory
     speciesId: dog
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1567,6 +1611,8 @@
         Base: narsian_dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:
@@ -1589,19 +1635,11 @@
       gender: epicene
   - type: Bloodstream
     bloodReagent: DemonsBlood
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Infernal
   - type: Temperature
-    heatDamageThreshold: 4000 #They come from hell, so...
+    heatDamageThreshold: 4000 #They come from hell, so..
     coldDamageThreshold: 260
     currentTemperature: 310.15
     coldDamage:
@@ -1628,6 +1666,7 @@
   - type: Inventory
     speciesId: puppy
     templateId: pet
+  - type: InventorySlots
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1667,6 +1706,7 @@
   - type: Inventory
     speciesId: cat
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1809,6 +1849,7 @@
   - type: Inventory
     speciesId: sloth
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1863,6 +1904,7 @@
   - type: Inventory
     speciesId: fox #close enough
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1890,3 +1932,169 @@
   - type: Grammar
     attributes:
       gender: epicene
+
+- type: entity
+  name: hamster
+  parent: SimpleMobBase
+  id: MobHamster
+  description: A cute, fluffy, robust hamster.
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-hamster-name
+    description: ghost-role-information-hamster-description
+  - type: GhostTakeoverAvailable
+  - type: Speech
+    speechSounds: Squeak
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/hamster.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: hamster-0
+  - type: Item
+    size: 5
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      density: 120
+      mask:
+      - SmallMobMask
+      layer:
+      - SmallMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      40: Critical
+      60: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: hamster-0
+      Critical:
+        Base: dead-0
+      Dead:
+        Base: splat-0
+  - type: Food
+  - type: Hunger
+    baseDecayRate: 0.3
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Blood
+          Quantity: 60
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: ReplacementAccent
+    accent: mouse
+  - type: Tag
+    tags:
+    - Trash
+    - CannotSuicide
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.25
+    damageRecovery:
+      types:
+        Asphyxiation: -0.25
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
+  - type: CombatMode
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 2
+  - type: InteractionPopup
+    successChance: 0.4
+    interactSuccessString: petting-success-hamster
+    interactFailureString: petting-failure-hamster
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 60
+  - type: CanEscapeInventory
+  - type: MobPrice
+    price: 60
+
+- type: entity
+  name: pig
+  parent: SimpleMobBase
+  id: MobPig
+  description: Oink.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: pig
+      sprite: Mobs/Animals/pig.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 250
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+  - type: Inventory
+    speciesId: pig
+    templateId: pet
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: pig
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 6
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-pig
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: ReplacementAccent
+    accent: pig
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic

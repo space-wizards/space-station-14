@@ -105,7 +105,7 @@
   name: Vector
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunVector
-  description: An excellent fully automatic Heavy SMG. Uses .40 magnum ammo.
+  description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
@@ -205,7 +205,7 @@
   name: Vector
   parent: WeaponSubMachineGunVector
   id: WeaponSubMachineGunVectorRubber
-  description: An excellent fully automatic Heavy SMG. Uses .40 magnum ammo.
+  description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
   suffix: Non-Lethal
   components:
   - type: ItemSlots

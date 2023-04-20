@@ -4,64 +4,39 @@ using Content.Shared.Wires;
 
 namespace Content.Server.VendingMachines;
 
-[DataDefinition]
-public sealed class VendingMachineEjectItemWireAction : BaseWireAction
+public sealed class VendingMachineEjectItemWireAction : ComponentWireAction<VendingMachineComponent>
 {
     private VendingMachineSystem _vendingMachineSystem = default!;
 
-    private Color _color = Color.Red;
-    private string _text = "VEND";
+    public override Color Color { get; set; } = Color.Red;
+    public override string Name { get; set; } = "wire-name-vending-eject";
+
     public override object? StatusKey { get; } = EjectWireKey.StatusKey;
 
-    public override StatusLightData? GetStatusLightData(Wire wire)
-    {
-        var lightState = StatusLightState.Off;
-
-        if (IsPowered(wire.Owner)
-            && EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
-        {
-            lightState = vending.CanShoot
-                ? StatusLightState.BlinkingFast
-                : StatusLightState.On;
-        }
-
-        return new StatusLightData(
-            _color,
-            lightState,
-            _text);
-    }
+    public override StatusLightState? GetLightState(Wire wire, VendingMachineComponent comp)
+        => comp.CanShoot ? StatusLightState.BlinkingFast : StatusLightState.On;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
+        _vendingMachineSystem = EntityManager.System<VendingMachineSystem>();
     }
 
-    public override bool Cut(EntityUid user, Wire wire)
+    public override bool Cut(EntityUid user, Wire wire, VendingMachineComponent vending)
     {
-        if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
-        {
-            _vendingMachineSystem.SetShooting(wire.Owner, true, vending);
-        }
-
+        _vendingMachineSystem.SetShooting(wire.Owner, true, vending);
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire)
+    public override bool Mend(EntityUid user, Wire wire, VendingMachineComponent vending)
     {
-        if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
-        {
-            _vendingMachineSystem.SetShooting(wire.Owner, false, vending);
-        }
-
+        _vendingMachineSystem.SetShooting(wire.Owner, false, vending);
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire)
+    public override void Pulse(EntityUid user, Wire wire, VendingMachineComponent vending)
     {
-        _vendingMachineSystem.EjectRandom(wire.Owner, true);
-
-        return true;
+        _vendingMachineSystem.EjectRandom(wire.Owner, true, vendComponent: vending);
     }
 }

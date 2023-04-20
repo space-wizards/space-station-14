@@ -1,3 +1,4 @@
+using Content.Client.Parallax.Data;
 using Content.Client.Parallax.Managers;
 using Content.Shared.Parallax;
 using Robust.Client.Graphics;
@@ -15,6 +16,7 @@ public sealed class ParallaxSystem : SharedParallaxSystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     private const string Fallback = "Default";
+    public const int ParallaxZIndex = 0;
 
     public override void Initialize()
     {
@@ -26,6 +28,9 @@ public sealed class ParallaxSystem : SharedParallaxSystem
 
     private void OnReload(PrototypesReloadedEventArgs obj)
     {
+        if (!obj.ByType.ContainsKey(typeof(ParallaxPrototype)))
+            return;
+
         _parallax.UnloadParallax(Fallback);
         _parallax.LoadDefaultParallax();
 

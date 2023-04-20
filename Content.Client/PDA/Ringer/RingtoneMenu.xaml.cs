@@ -9,16 +9,16 @@ namespace Content.Client.PDA.Ringer
     [GenerateTypedNameReferences]
     public sealed partial class RingtoneMenu : DefaultWindow
     {
-        public string[] PreviousNoteInputs = new string[] { "A", "A", "A", "A"};
-        public LineEdit[] RingerNoteInputs  = default!;
+        public string[] PreviousNoteInputs = new[] { "A", "A", "A", "A" };
+        public LineEdit[] RingerNoteInputs = default!;
 
         public RingtoneMenu()
         {
             RobustXamlLoader.Load(this);
 
-            RingerNoteInputs = new LineEdit[] { RingerNoteOneInput, RingerNoteTwoInput, RingerNoteThreeInput, RingerNoteFourInput };
+            RingerNoteInputs = new[] { RingerNoteOneInput, RingerNoteTwoInput, RingerNoteThreeInput, RingerNoteFourInput };
 
-            for (int i = 0; i < RingerNoteInputs.Length;  i++)
+            for (int i = 0; i < RingerNoteInputs.Length; i++)
             {
                 var input = RingerNoteInputs[i];
                 int index = i;

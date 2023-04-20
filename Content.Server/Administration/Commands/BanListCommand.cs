@@ -1,53 +1,73 @@
-﻿using Content.Server.Administration.BanList;
+﻿using System.Linq;
+using Content.Server.Administration.BanList;
+using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
-namespace Content.Server.Administration.Commands
-{
-    [AdminCommand(AdminFlags.Ban)]
-    public sealed class BanListCommand : IConsoleCommand
-    {
-        public string Command => "banlist";
-        public string Description => "Opens the ban list panel.";
-        public string Help => $"Usage: {Command} <userid or username>";
+namespace Content.Server.Administration.Commands;
 
-        public async void Execute(IConsoleShell shell, string argStr, string[] args)
+/// <summary>
+///     Lists someones active Ban Ids or opens a window to see them.
+/// </summary>
+[AdminCommand(AdminFlags.Ban)]
+public sealed class BanListCommand : LocalizedCommands
+{
+    [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private readonly EuiManager _eui = default!;
+    [Dependency] private readonly IPlayerLocator _locator = default!;
+
+    public override string Command => "banlist";
+
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 1)
         {
-            if (shell.Player is not IPlayerSession player)
+            shell.WriteError(Help);
+            return;
+        }
+
+        var data = await _locator.LookupIdByNameOrIdAsync(args[0]);
+
+        if (data == null)
+        {
+            shell.WriteError(Loc.GetString("cmd-ban-player"));
+            return;
+        }
+
+        if (shell.Player is not IPlayerSession player)
+        {
+            var bans = await _dbManager.GetServerBansAsync(data.LastAddress, data.UserId, data.LastHWId, false);
+
+            if (bans.Count == 0)
             {
-                shell.WriteError("This does not work from the server console.");
+                shell.WriteLine(Loc.GetString("cmd-banlist-empty", ("user", data.Username)));
                 return;
             }
 
-            Guid banListPlayer;
-
-            switch (args.Length)
+            foreach (var ban in bans)
             {
-                case 1 when Guid.TryParse(args[0], out banListPlayer):
-                    break;
-                case 1:
-                    var locator = IoCManager.Resolve<IPlayerLocator>();
-                    var dbGuid = await locator.LookupIdByNameAsync(args[0]);
-
-                    if (dbGuid == null)
-                    {
-                        shell.WriteError($"Unable to find {args[0]} netuserid");
-                        return;
-                    }
-
-                    banListPlayer = dbGuid.UserId;
-                    break;
-                default:
-                    shell.WriteError($"Invalid arguments.\n{Help}");
-                    return;
+                var msg = $"{ban.Id}: {ban.Reason}";
+                shell.WriteLine(msg);
             }
 
-            var euis = IoCManager.Resolve<EuiManager>();
-            var ui = new BanListEui();
-            euis.OpenEui(ui, player);
-            await ui.ChangeBanListPlayer(banListPlayer);
+            return;
         }
+
+        var ui = new BanListEui();
+        _eui.OpenEui(ui, player);
+        await ui.ChangeBanListPlayer(data.UserId);
+    }
+
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length != 1)
+            return CompletionResult.Empty;
+
+        var playerMgr = IoCManager.Resolve<IPlayerManager>();
+        var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
+        return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-banlist-hint"));
     }
 }

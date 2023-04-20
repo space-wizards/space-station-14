@@ -2,6 +2,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Temperature.Components
 {
@@ -14,6 +15,7 @@ namespace Content.Server.Temperature.Components
     public sealed class TemperatureComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("currentTemperature")]
         public float CurrentTemperature { get; set; } = Atmospherics.T20C;
 
         [DataField("heatDamageThreshold")]
@@ -23,6 +25,18 @@ namespace Content.Server.Temperature.Components
         [DataField("coldDamageThreshold")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ColdDamageThreshold = 260f;
+
+        /// <summary>
+        /// Overrides HeatDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float? ParentHeatDamageThreshold;
+
+        /// <summary>
+        /// Overrides ColdDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float? ParentColdDamageThreshold;
 
         [DataField("specificHeat")]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -39,7 +53,7 @@ namespace Content.Server.Temperature.Components
         {
             get
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(Owner, out var physics) && physics.FixturesMass != 0)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent>(Owner, out var physics) && physics.FixturesMass != 0)
                 {
                     return SpecificHeat * physics.FixturesMass;
                 }

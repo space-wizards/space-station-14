@@ -1,7 +1,9 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
-                      Title="{Loc 'shuttle-console-window-title'}">
+                      Title="{Loc 'shuttle-console-window-title'}"
+                      SetSize="1180 648"
+                      MinSize="788 320">
     <GridContainer Columns="3"
                   HorizontalAlignment="Stretch"
                   Margin="5 5 5 5">
@@ -9,6 +11,7 @@
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
                       MinWidth="256"
+                      MaxWidth="256"
                       Align="Center"
                       Orientation="Vertical">
             <BoxContainer Orientation="Vertical">
@@ -26,17 +29,27 @@
                               Orientation="Vertical"/>
             </BoxContainer>
         </BoxContainer>
-        <PanelContainer>
+        <PanelContainer MinSize="256 256"
+                        HorizontalAlignment = "Stretch"
+                        HorizontalExpand = "True"
+                        VerticalExpand = "True">
             <ui:RadarControl Name="RadarScreen"
-                             MouseFilter="Stop"/>
+                             MouseFilter="Stop"
+                             Margin="4"
+                             HorizontalExpand = "True"
+                             VerticalExpand = "True"/>
             <ui:DockingControl Name="DockingScreen"
                                Visible="False"
-                               MouseFilter="Stop"/>
+                               MouseFilter="Stop"
+                               Margin="4"
+                               HorizontalExpand = "True"
+                               VerticalExpand = "True"/>
         </PanelContainer>
         <BoxContainer Name="RightDisplay"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Right"
                       MinWidth="256"
+                      MaxWidth="256"
                       Align="Center"
                       Orientation="Vertical">
             <controls:StripeBack>

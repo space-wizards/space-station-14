@@ -10,6 +10,8 @@
     baseSprintSpeed : 5.00
   - type: InputMover
   - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -36,12 +38,15 @@
       layer:
       - SmallMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       150: Critical
       200: Dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -50,6 +55,23 @@
         Piercing: 8
   - type: Body
     prototype: Rat
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: Hunger # probably should be prototyped
+    thresholds:
+      Overfed: 200
+      Okay: 150
+      Peckish: 100
+      Starving: 50
+      Dead: 0
+    baseDecayRate: 0.01666666666
+  - type: Thirst
+    thresholds:
+      OverHydrated: 600
+      Okay: 450
+      Thirsty: 300
+      Parched: 150
+      Dead: 0
+    baseDecayRate: 0.1
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -60,13 +82,12 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Puller
-    needsHands: false
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: Rat King
     description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
     rules: You are an antagonist, scavenge, attack, and grow your hoard!
+  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide
@@ -126,12 +147,15 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       300: Critical
       350: Dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0
     attackRate: 0.75
     animation: WeaponArcFist
@@ -193,14 +217,17 @@
       layer:
       - SmallMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
-      40: Critical
-      60: Dead
+      15: Critical
+      30: Dead
   - type: Stamina
     excess: 60
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -209,6 +236,23 @@
         Piercing: 3
   - type: Body
     prototype: Rat
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: Hunger # probably should be prototyped
+    thresholds:
+      Overfed: 200
+      Okay: 150
+      Peckish: 100
+      Starving: 50
+      Dead: 0
+    baseDecayRate: 0.01666666666
+  - type: Thirst
+    thresholds:
+      OverHydrated: 600
+      Okay: 450
+      Thirsty: 300
+      Parched: 150
+      Dead: 0
+    baseDecayRate: 0.1
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -219,8 +263,10 @@
         Base: dead-3
       Dead:
         Base: splat-3
-  - type: Puller
-    needsHands: false
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatRat
+      amount: 1
   - type: DiseaseCarrier
     carrierDiseases:
     - VentCough
@@ -233,15 +279,17 @@
     - Plague
     - TongueTwister
   - type: Vocal
-    # mice are gender neutral who cares
-    maleScream: /Audio/Animals/mouse_squeak.ogg
-    femaleScream: /Audio/Animals/mouse_squeak.ogg
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
     wilhelmProbability: 0.001
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: Rat Servant
     description: You are a Rat Servant. You must follow your king's orders.
     rules: You are an antagonist, scavenge, attack, and serve your king!
+  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide

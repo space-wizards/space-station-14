@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Tabletop
 {
@@ -19,6 +20,7 @@ namespace Content.Server.Tabletop
 
         public override void Initialize()
         {
+            base.Initialize();
             SubscribeNetworkEvent<TabletopStopPlayingEvent>(OnStopPlaying);
             SubscribeLocalEvent<TabletopGameComponent, ActivateInWorldEvent>(OnTabletopActivate);
             SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
@@ -27,7 +29,21 @@ namespace Content.Server.Tabletop
             SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
 
             InitializeMap();
-            InitializeDraggable();
+        }
+
+        protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession is not IPlayerSession playerSession)
+                return;
+
+            if (!TryComp(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+                return;
+
+            // Check if player is actually playing at this table
+            if (!session.Players.ContainsKey(playerSession))
+                return;
+
+            base.OnTabletopMove(msg, args);
         }
 
         /// <summary>
@@ -43,7 +59,7 @@ namespace Content.Server.Tabletop
 
             ActivationVerb verb = new();
             verb.Text = Loc.GetString("tabletop-verb-play-game");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/die.svg.192dpi.png";
+            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/die.svg.192dpi.png"));
             verb.Act = () => OpenSessionFor(actor.PlayerSession, uid);
             args.Verbs.Add(verb);
         }
@@ -95,7 +111,7 @@ namespace Content.Server.Tabletop
                 {
                     EntityManager.RemoveComponent<TabletopGamerComponent>(gamer.Owner);
                     return;
-                };
+                }
 
                 var gamerUid = (gamer).Owner;
 

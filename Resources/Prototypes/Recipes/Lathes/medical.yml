@@ -1,6 +1,5 @@
 - type: latheRecipe
   id: Scalpel
-  icon: Objects/Specific/Medical/Surgery/scalpel.rsi/scalpel.png
   result: Scalpel
   completetime: 2
   materials:
@@ -8,15 +7,13 @@
 
 - type: latheRecipe
   id: Retractor
-  icon: Objects/Specific/Medical/Surgery/scissors.rsi/retractor.png
-  result: Scalpel
+  result: Retractor
   completetime: 2
   materials:
     Steel: 200
 
 - type: latheRecipe
   id: Cautery
-  icon: Objects/Specific/Medical/Surgery/cautery.rsi/cautery.png
   result: Cautery
   completetime: 2
   materials:
@@ -24,7 +21,6 @@
 
 - type: latheRecipe
   id: Drill
-  icon: Objects/Specific/Medical/Surgery/drill.rsi/drill.png
   result: Drill
   completetime: 2
   materials:
@@ -33,7 +29,6 @@
 
 - type: latheRecipe
   id: Saw
-  icon: Objects/Specific/Medical/Surgery/saw.rsi/saw.png
   result: Saw
   completetime: 2
   materials:
@@ -41,7 +36,6 @@
 
 - type: latheRecipe
   id: Hemostat
-  icon: Objects/Specific/Medical/Surgery/scissors.rsi/hemostat.png
   result: Hemostat
   completetime: 2
   materials:
@@ -49,7 +43,6 @@
 
 - type: latheRecipe
   id: BodyBag
-  icon: Objects/Specific/Medical/Morgue/bodybags.rsi/bag_folded.png
   result: BodyBag_Folded
   completetime: 2
   materials:
@@ -57,7 +50,6 @@
 
 - type: latheRecipe
   id: HandheldCrewMonitor
-  icon: Objects/Specific/Medical/handheldcrewmonitor.rsi/icon.png
   result: HandheldCrewMonitor
   completetime: 2
   materials:
@@ -67,7 +59,6 @@
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer
-  icon: Objects/Specific/Medical/healthanalyzer.rsi/icon.png
   result: HandheldHealthAnalyzer
   completetime: 4
   materials:
@@ -76,7 +67,6 @@
 
 - type: latheRecipe
   id: ClothingHandsGlovesLatex
-  icon: Clothing/Hands/Gloves/latex.rsi/icon.png
   result: ClothingHandsGlovesLatex
   completetime: 2
   materials:
@@ -84,7 +74,6 @@
 
 - type: latheRecipe
   id: ClothingHandsGlovesNitrile
-  icon: Clothing/Hands/Gloves/Color/blue.rsi/icon.png
   result: ClothingHandsGlovesNitrile
   completetime: 2
   materials:
@@ -93,7 +82,6 @@
 
 - type: latheRecipe
   id: ClothingMaskSterile
-  icon: Clothing/Mask/sterile.rsi/icon.png
   result: ClothingMaskSterile
   completetime: 2
   materials:
@@ -101,9 +89,80 @@
 
 - type: latheRecipe
   id: DiseaseSwab
-  icon: Objects/Specific/Medical/mouth_swab.rsi/icon.png
   result: DiseaseSwab
   completetime: 1
   materials:
     Cloth: 20
     Plastic: 20
+
+- type: latheRecipe
+  id: Implanter
+  result: Implanter
+  completetime: 1
+  materials:
+    Glass: 500
+    Steel: 500
+
+- type: latheRecipe
+  id: Medkit
+  result: Medkit
+  name: first aid kit (empty)
+  completetime: 2
+  materials:
+    Plastic: 300
+
+- type: latheRecipe
+  id: MedkitBurn
+  result: MedkitBurn
+  name: burn treatment kit (empty)
+  completetime: 2
+  materials:
+    Plastic: 300
+
+- type: latheRecipe
+  id: MedkitToxin
+  result: MedkitToxin
+  name: toxin treatment kit (empty)
+  completetime: 2
+  materials:
+    Plastic: 300
+
+- type: latheRecipe
+  id: MedkitO2
+  result: MedkitO2
+  name: oxygen deprivation treatment kit (empty)
+  completetime: 2
+  materials:
+    Plastic: 300
+
+- type: latheRecipe
+  id: MedkitBrute
+  result: MedkitBrute
+  name: brute trauma treatment kit (empty)
+  completetime: 2
+  materials:
+    Plastic: 300
+
+- type: latheRecipe
+  id: MedkitAdvanced
+  result: MedkitAdvanced
+  name: advanced first aid kit (empty)
+  completetime: 2
+  materials:
+    Plastic: 300
+
+- type: latheRecipe
+  id: MedkitRadiation
+  result: MedkitRadiation
+  name: radiation treatment kit (empty)
+  completetime: 2
+  materials:
+    Plastic: 300
+
+- type: latheRecipe
+  id: MedkitCombat
+  result: MedkitCombat
+  name: combat medical kit (empty)
+  completetime: 2
+  materials:
+    Plastic: 300

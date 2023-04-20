@@ -84,7 +84,7 @@ public sealed class StatValuesCommand : IConsoleCommand
             if (price == 0)
                 continue;
 
-            values.Add(new string[]
+            values.Add(new[]
             {
                 id,
                 $"{price:0}",
@@ -154,7 +154,6 @@ public sealed class StatValuesCommand : IConsoleCommand
     {
         var values = new List<string[]>();
         var protoManager = IoCManager.Resolve<IPrototypeManager>();
-        var factory = IoCManager.Resolve<IComponentFactory>();
         var priceSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
 
         foreach (var proto in protoManager.EnumeratePrototypes<LatheRecipePrototype>())
@@ -167,7 +166,7 @@ public sealed class StatValuesCommand : IConsoleCommand
                 cost += materialPrice * count;
             }
 
-            var sell = priceSystem.GetEstimatedPrice(protoManager.Index<EntityPrototype>(proto.Result), factory);
+            var sell = priceSystem.GetEstimatedPrice(protoManager.Index<EntityPrototype>(proto.Result));
 
             values.Add(new[]
             {

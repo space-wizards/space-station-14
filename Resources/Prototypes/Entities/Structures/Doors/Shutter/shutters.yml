@@ -10,6 +10,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Shutters/shutters.rsi
+    drawdepth: Overdoors
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]

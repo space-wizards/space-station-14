@@ -1,4 +1,7 @@
 - type: parallax
+  id: Blank
+
+- type: parallax
   id: Default
   layers:
     - texture:

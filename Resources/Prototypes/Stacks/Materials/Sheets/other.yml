@@ -1,27 +1,27 @@
 - type: stack
   id: Paper
   name: paper
-  icon: /Textures/Objects/Materials/Sheets/other.rsi/paper.png
+  icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: paper }
   spawn: SheetPaper1
   maxCount: 30
 
 - type: stack
   id: Plasma
   name: plasma
-  icon: /Textures/Objects/Materials/Sheets/other.rsi/plasma.png
+  icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: plasma }
   spawn: SheetPlasma1
   maxCount: 30
 
 - type: stack
   id: Plastic
   name: plastic
-  icon: /Textures/Objects/Materials/Sheets/other.rsi/plastic.png
+  icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: plastic }
   spawn: SheetPlastic1
   maxCount: 30
 
 - type: stack
   id: Uranium
   name: uranium
-  icon: /Textures/Objects/Materials/Sheets/other.rsi/uranium.png
+  icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: uranium }
   spawn: SheetUranium1
   maxCount: 30

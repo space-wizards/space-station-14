@@ -60,7 +60,7 @@ public partial class RadiationSystem
 
         foreach (var grid in _mapManager.GetAllGrids())
         {
-            var gridUid = grid.GridEntityId;
+            var gridUid = grid.Owner;
             if (!query.TryGetComponent(gridUid, out var resistance))
                 continue;
 

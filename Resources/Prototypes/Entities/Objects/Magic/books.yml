@@ -91,3 +91,20 @@
   - type: Spellbook
     worldSpells:
       Fireball: -1
+
+- type: entity
+  id: ScrollRunes
+  name: scroll of runes
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: Spellbook
+    instantSpells:
+      FlashRune: -1
+      ExplosionRune: -1
+      IgniteRune: -1
+      StunRune: -1

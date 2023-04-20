@@ -19,7 +19,7 @@
     bloodlossHealDamage:
       types:
         Bloodloss:
-          -0.25
+          -1
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -38,8 +38,6 @@
     noRot: true
     drawdepth: Mobs
     netsync: false
-  - type: Recyclable
-    safe: false
   - type: Faction
     factions:
     - SimpleNeutral
@@ -73,6 +71,10 @@
     - DoorBumpOpener
     - ShoesRequiredStepTriggerImmune
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       120: Dead
@@ -110,24 +112,31 @@
     launchForwardsMultiplier: 6.0
   - type: StepTrigger
     intersectRatio: 0.2
+  - type: Physics
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      id: "slips"
+      hard: false
+      layer:
+        - SlipLayer
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
       density: 20
       mask:
       - MobMask
-      layer:
-      - MobLayer
-      - SlipLayer
   - type: Construction
     graph: HonkBot
     node: bot
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: honkbot
     description: An artificial being of pure evil.
+  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-honkbot
     interactFailureString: petting-failure-honkbot

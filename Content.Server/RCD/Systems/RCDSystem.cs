@@ -1,9 +1,8 @@
-using System.Threading;
 using Content.Server.Administration.Logs;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.RCD.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -11,6 +10,7 @@ using Content.Shared.Maps;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.RCD.Systems
@@ -21,7 +21,7 @@ namespace Content.Server.RCD.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -57,14 +57,6 @@ namespace Content.Server.RCD.Systems
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (rcd.CancelToken != null)
-            {
-                rcd.CancelToken?.Cancel();
-                rcd.CancelToken = null;
-                args.Handled = true;
-                return;
-            }
-
             if (!args.ClickLocation.IsValid(EntityManager)) return;
 
             var clickLocationMod = args.ClickLocation;
@@ -94,18 +86,18 @@ namespace Content.Server.RCD.Systems
             var user = args.User;
 
             //Using an RCD isn't instantaneous
-            rcd.CancelToken = new CancellationTokenSource();
-            var doAfterEventArgs = new DoAfterEventArgs(user, rcd.Delay, rcd.CancelToken.Token, args.Target)
+            var doAfterEventArgs = new DoAfterArgs(user, rcd.Delay, new AwaitedDoAfterEvent(), null, target: args.Target)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 NeedHand = true,
+                BreakOnHandChange = true,
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true,
+                AttemptFrequency = AttemptFrequency.EveryTick,
                 ExtraCheck = () => IsRCDStillValid(rcd, args, mapGrid, tile, startingMode) //All of the sanity checks are here
             };
 
             var result = await _doAfterSystem.WaitDoAfter(doAfterEventArgs);
-
-            rcd.CancelToken = null;
 
             if (result == DoAfterStatus.Cancelled)
                 return;
@@ -138,12 +130,12 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Walls:
                     var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
                     Transform(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.GridEntityId}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Owner}");
                     break;
                 case RcdMode.Airlock:
                     var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
                     Transform(airlock).LocalRotation = Transform(rcd.Owner).LocalRotation; //Now apply icon smoothing.
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.GridEntityId}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Owner}");
                     break;
                 default:
                     args.Handled = true;
@@ -155,12 +147,12 @@ namespace Content.Server.RCD.Systems
             args.Handled = true;
         }
 
-        private bool IsRCDStillValid(RCDComponent rcd, AfterInteractEvent eventArgs, IMapGrid mapGrid, TileRef tile, RcdMode startingMode)
+        private bool IsRCDStillValid(RCDComponent rcd, AfterInteractEvent eventArgs, MapGridComponent mapGrid, TileRef tile, RcdMode startingMode)
         {
             //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
             if (rcd.CurrentAmmo <= 0)
             {
-                _popup.PopupEntity(Loc.GetString("rcd-component-no-ammo-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                _popup.PopupEntity(Loc.GetString("rcd-component-no-ammo-message"), rcd.Owner, eventArgs.User);
                 return false;
             }
 
@@ -182,7 +174,7 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Floors:
                     if (!tile.Tile.IsEmpty)
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-floor-tile-not-empty-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-floor-tile-not-empty-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
 
@@ -197,13 +189,13 @@ namespace Content.Server.RCD.Systems
                     //They tried to decon a turf but the turf is blocked
                     if (eventArgs.Target == null && tile.IsBlockedTurf(true))
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
                     //They tried to decon a non-turf but it's not in the whitelist
                     if (eventArgs.Target != null && !_tagSystem.HasTag(eventArgs.Target.Value, "RCDDeconstructWhitelist"))
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
 
@@ -212,25 +204,25 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Walls:
                     if (tile.Tile.IsEmpty)
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-wall-tile-not-empty-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-wall-tile-not-empty-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
 
                     if (tile.IsBlockedTurf(true))
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
                     return true;
                 case RcdMode.Airlock:
                     if (tile.Tile.IsEmpty)
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-airlock-tile-not-empty-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-airlock-tile-not-empty-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
                     if (tile.IsBlockedTurf(true))
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
                     return true;
@@ -248,7 +240,7 @@ namespace Content.Server.RCD.Systems
             rcd.Mode = (RcdMode) mode;
 
             var msg = Loc.GetString("rcd-component-change-mode", ("mode", rcd.Mode.ToString()));
-            _popup.PopupEntity(msg, rcd.Owner, Filter.Entities(user));
+            _popup.PopupEntity(msg, rcd.Owner, user);
         }
     }
 }

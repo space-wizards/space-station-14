@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Ranged;
 public sealed class HitscanPrototype : IPrototype, IShootable
 {
     [ViewVariables]
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("staminaDamage")]

@@ -9,7 +9,6 @@
   - type: DiseaseProtection
     protection: 1
   - type: CombatMode
-    disarm: null
   - type: InputMover
   - type: MobMover
   - type: HTN
@@ -54,21 +53,17 @@
       layer:
       - MobLayer
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
+      50: Dead
   - type: Stamina
     excess: 200
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -77,7 +72,7 @@
     animation: WeaponArcBite
     damage:
       groups:
-        Brute: 12
+        Brute: 6
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -94,13 +89,14 @@
     spawned:
     - id: FoodMeatXeno
       amount: 5
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     allowMovement: true
     allowSpeech: true
     makeSentient: true
     name: xeno
     description: You are a xeno, co-operate with your hive to kill all crewmembers!
     rules: You are an antagonist, smack, slash, and wack!
+  - type: GhostTakeoverAvailable
   - type: TypingIndicator
     proto: alien
   - type: Temperature
@@ -129,9 +125,13 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      75: Dead
   - type: Stamina
     excess: 300
   - type: SlowOnDamage
@@ -161,17 +161,22 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
+      150: Dead
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 5
   - type: Stamina
     excess: 200
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.0
     baseSprintSpeed : 5.5
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      150: 0.7
   - type: Fixtures
     fixtures:
     - shape:
@@ -196,9 +201,13 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
-      1500: Dead
+      300: Dead
   - type: Stamina
     excess: 1500
   - type: MovementSpeedModifier
@@ -208,7 +217,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 40
+       Brute: 20
   - type: SlowOnDamage
     speedModifierThresholds:
       1000: 0.7
@@ -236,9 +245,13 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
-      550: Dead
+      200: Dead
   - type: Stamina
     excess: 550
   - type: MovementSpeedModifier
@@ -248,7 +261,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 20
+       Brute: 10
   - type: SlowOnDamage
     speedModifierThresholds:
       450: 0.7
@@ -276,9 +289,13 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
-      250: Dead
+      50: Dead
   - type: Stamina
     excess: 250
   - type: MovementSpeedModifier
@@ -288,15 +305,12 @@
     hidden: true
     damage:
      groups:
-       Brute: 8
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      200: 0.7
+       Brute: 3
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.45
+        radius: 0.35
       density: 235
       mask:
       - MobMask
@@ -326,9 +340,13 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      75: Dead
   - type: Stamina
     excess: 300
   - type: SlowOnDamage

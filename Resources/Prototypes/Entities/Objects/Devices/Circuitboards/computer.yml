@@ -13,6 +13,11 @@
         - DroneUsable
     - type: StaticPrice
       price: 100
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 400
+      chemicalComposition:
+        Silicon: 20
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -68,6 +73,10 @@
       prototype: ComputerCargoOrders
     - type: StaticPrice
       price: 750
+    - type: Tag
+      tags:
+      - DroneUsable
+      - HighRiskItem
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -79,6 +88,17 @@
       state: cpu_supply
     - type: ComputerBoard
       prototype: ComputerCargoShuttle
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SalvageExpeditionsComputerCircuitboard
+  name: salvage expeditions computer board
+  description: A computer printed circuit board for a salvage expeditions computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerSalvageExpedition
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -126,16 +146,6 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
-  id: PowerMonitoringComputerCircuitboard
-  name: power monitoring computer board
-  components:
-    - type: Sprite
-      state: cpu_engineering
-    - type: ComputerBoard
-      prototype: ComputerPowerMonitoring
-
-- type: entity
-  parent: BaseComputerCircuitboard
   id: ResearchComputerCircuitboard
   name: R&D computer board
   description: A computer printed circuit board for a R&D console.
@@ -158,6 +168,17 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: TechDiskComputerCircuitboard
+  name: technology disk terminal board
+  description: A computer printed circuit board for a technology disk terminal.
+  components:
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerTechnologyDiskTerminal
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: CrewMonitoringComputerCircuitboard
   name: crew monitoring computer board
   description: A computer printed circuit board for a crew monitoring console.
@@ -177,6 +198,10 @@
       prototype: ComputerId
     - type: StaticPrice
       price: 750
+    - type: Tag
+      tags:
+      - DroneUsable
+      - HighRiskItem
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -285,3 +310,23 @@
       state: cpu_medical
     - type: ComputerBoard
       prototype: ComputerCloningConsole
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerIFFCircuitboard
+  name: IFF console board
+  description: Allows you to control the IFF characteristics of this vessel.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: ComputerIFF
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerIFFSyndicateCircuitboard
+  name: syndicate IFF console board
+  description: Allows you to control the IFF and stealth characteristics of this vessel.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerIFFSyndicate

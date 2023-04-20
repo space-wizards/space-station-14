@@ -23,6 +23,9 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
 
 - type: entity
   parent: ClothingBackpack
@@ -35,6 +38,18 @@
   - type: Storage
     storageOpenSound:
       collection: BikeHorn
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackIan
+  name: Ian's backpack
+  description: Sometimes he wears it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ian.rsi
+  - type: Storage
+    storageOpenSound:
+      collection: IanBark
 
 - type: entity
   parent: ClothingBackpack
@@ -93,11 +108,11 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackHydroponics
-  name: botany backpack
+  name: hydroponics backpack
   description: It's a backpack made of all-natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/botany.rsi
+    sprite: Clothing/Back/Backpacks/hydroponics.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -119,6 +134,15 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingBackpackGenetics
+  name: genetics backpack
+  description: A backpack designed to be super tough, just in case someone hulks out on you.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/genetics.rsi
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingBackpackSalvage
   name: salvage bag
   description: A robust backpack for stashing your loot.
@@ -130,7 +154,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackERTLeader
-  name: ERT commander backpack
+  name: ERT leader backpack
   description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
   components:
   - type: Sprite
@@ -201,3 +225,14 @@
     equippedPrefix: holding
   - type: Storage
     capacity: 9999
+
+- type: entity
+  parent: ClothingBackpackClown
+  id: ClothingBackpackCluwne
+  name: cursed giggles von honkerton
+  suffix: Unremoveable
+  description: Cursed giggles von honkerton backpack.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/cluwne.rsi
+  - type: Unremoveable

@@ -81,6 +81,7 @@
       - map: [ "pocket2" ]
   - type: Body
     prototype: Vox
+    requiredLegs: 2
   # Vox nitrogen stuff is handled in their metabolism
   - type: Respirator
     damage:
@@ -89,25 +90,32 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: Humanoid
+  - type:  HumanoidAppearance
     species: Vox
     # canColorHair: false
     # canColorFacialHair: false
   - type: Inventory
     speciesId: vox
+  - type: InventorySlots
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeatChicken
       amount: 5
+  - type: Vocal
+    sounds:
+      Male: UnisexVox
+      Female: UnisexVox
+      Unsexed: UnisexVox
 
 - type: entity
   id: MobVoxDummy
   parent: MobHumanDummy
   noSpawn: true
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Vox
   - type: Body
     prototype: Vox
+    requiredLegs: 2
 

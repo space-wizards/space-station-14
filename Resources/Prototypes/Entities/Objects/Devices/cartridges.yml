@@ -11,7 +11,7 @@
   - type: Icon
     sprite: Objects/Devices/cartridge.rsi
     state: cart-y
-  - type: CartridgeUi
+  - type: UIFragment
     ui: !type:NotekeeperUi
   - type: Cartridge
     programName: notekeeper-program-name
@@ -33,7 +33,7 @@
     - type: Icon
       sprite: Objects/Devices/cartridge.rsi
       state: cart-y
-    - type: CartridgeUi
+    - type: UIFragment
       ui: !type:NetProbeUi
     - type: Cartridge
       programName: net-probe-program-name

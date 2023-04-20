@@ -3,14 +3,12 @@ using Content.Shared.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
-using Content.Server.DoAfter;
 using Content.Server.GameTicking;
 using Content.Shared.Stunnable;
 using Content.Shared.Revenant;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Content.Shared.StatusEffect;
-using Content.Server.MobState;
 using Content.Server.Visible;
 using Content.Shared.Examine;
 using Robust.Shared.Prototypes;
@@ -18,9 +16,10 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Player;
 using Content.Shared.Maps;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Revenant.Components;
 
@@ -33,7 +32,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
@@ -80,7 +79,7 @@ public sealed partial class RevenantSystem : EntitySystem
         }
 
         //ghost vision
-        if (TryComp(component.Owner, out EyeComponent? eye))
+        if (TryComp(uid, out EyeComponent? eye))
             eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
 
         var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
@@ -131,7 +130,7 @@ public sealed partial class RevenantSystem : EntitySystem
             FixedPoint2.Min(component.Essence, component.EssenceRegenCap);
 
         if (TryComp<StoreComponent>(uid, out var store))
-            _store.UpdateUserInterface(uid, store);
+            _store.UpdateUserInterface(uid, uid, store);
 
         _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Clamp(Math.Round(component.Essence.Float() / 10f), 0, 16));
 
@@ -146,7 +145,7 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         if (component.Essence <= abilityCost)
         {
-            _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, Filter.Entities(uid));
+            _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, uid);
             return false;
         }
 
@@ -155,7 +154,7 @@ public sealed partial class RevenantSystem : EntitySystem
         {
             if(_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
             {
-                _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, Filter.Entities(uid));
+                _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, uid);
                 return false;
             }
         }
@@ -172,7 +171,7 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         if (!TryComp<StoreComponent>(uid, out var store))
             return;
-        _store.ToggleUi(uid, store);
+        _store.ToggleUi(uid, uid, store);
     }
 
     public void MakeVisible(bool visible)

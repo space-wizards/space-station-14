@@ -1,0 +1,20 @@
+- type: vendingMachineInventory
+  id: ChefvendInventory
+  startingInventory:
+    ReagentContainerFlour: 2
+    ReagentContainerSugar: 2
+    ReagentContainerRice: 2
+    FoodCondimentPacketSalt: 4
+    FoodCondimentBottleEnzyme: 2
+    FoodCondimentBottleHotsauce: 1
+    FoodCondimentBottleKetchup: 1
+    FoodCondimentBottleBBQ: 1
+    FoodCondimentBottleSmallVinegar: 2
+    ReagentContainerOliveoil: 2
+    MonkeyCubeBox: 1
+    FoodContainerEgg: 1
+    ReagentContainerMilk: 2
+    ReagentContainerMilkSoy: 1
+    FoodButter: 4
+    FoodCheese: 1
+    FoodMeat: 6

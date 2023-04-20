@@ -6,7 +6,8 @@
   id: RandomHumanoidSpawnerERTLeader
   name: ERT leader
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: ertleader
     - type: RandomMetadata
@@ -20,9 +21,10 @@
   id: ERTLeader
   randomizeName: false
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: ERT Leader
       description: Lead a team of specialists to resolve the stations issues.
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
     - type: RandomMetadata
@@ -36,7 +38,8 @@
   name: ERT leader
   suffix: EVA
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: ertleadereva
     - type: RandomHumanoidSpawner
@@ -46,9 +49,10 @@
   id: ERTLeaderEVA
   parent: ERTLeader
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: ERT Leader
       description: Lead a team of specialists to resolve the stations issues.
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
 
@@ -59,7 +63,8 @@
   parent: RandomHumanoidSpawnerERTLeader
   name: ERT janitor
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: ertjanitor
     - type: RandomMetadata
@@ -73,9 +78,10 @@
   id: ERTJanitor
   parent: ERTLeader
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: ERT Janitor
       description: Assist with custodial efforts to resolve the stations issues.
+    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -89,7 +95,8 @@
   name: ERT janitor
   suffix: EVA
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: ertjanitoreva
     - type: RandomHumanoidSpawner
@@ -99,9 +106,10 @@
   id: ERTJanitorEVA
   parent: ERTJanitor
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: ERT Janitor
       description: Assist with custodial efforts to resolve the stations issues.
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTJanitorGearEVA ]
 
@@ -112,7 +120,8 @@
   parent: RandomHumanoidSpawnerERTLeader
   name: ERT engineer
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: ertengineer
     - type: RandomMetadata
@@ -126,9 +135,10 @@
   id: ERTEngineer
   parent: ERTLeader
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: ERT Engineer
       description: Assist with engineering efforts to resolve the stations issues.
+    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -142,7 +152,8 @@
   name: ERT engineer
   suffix: EVA
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: ertengineereva
     - type: RandomHumanoidSpawner
@@ -152,9 +163,10 @@
   id: ERTEngineerEVA
   parent: ERTEngineer
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: ERT Engineer
       description: Assist with engineering efforts to resolve the stations issues.
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
 
@@ -165,7 +177,8 @@
   parent: RandomHumanoidSpawnerERTLeader
   name: ERT security
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: ertsecurity
     - type: RandomMetadata
@@ -179,9 +192,10 @@
   id: ERTSecurity
   parent: ERTLeader
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: ERT Security
       description: Assist with security efforts to resolve the stations issues.
+    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -195,7 +209,8 @@
   name: ERT security
   suffix: EVA
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: ertsecurityeva
     - type: RandomHumanoidSpawner
@@ -205,9 +220,10 @@
   id: ERTSecurityEVA
   parent: ERTSecurity
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: ERT Security
       description: Assist with security efforts to resolve the stations issues.
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
 
@@ -218,7 +234,8 @@
   parent: RandomHumanoidSpawnerERTLeader
   name: ERT medic
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: ertmedical
     - type: RandomMetadata
@@ -232,9 +249,10 @@
   id: ERTMedical
   parent: ERTLeader
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: ERT Medical
       description: Assist with medicaling efforts to resolve the stations issues.
+    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -248,7 +266,8 @@
   name: ERT medic
   suffix: EVA
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: ertmedicaleva
     - type: RandomHumanoidSpawner
@@ -258,9 +277,10 @@
   id: ERTMedicalEVA
   parent: ERTMedical
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: ERT Medical
       description: Assist with medicaling efforts to resolve the stations issues.
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
 
@@ -270,6 +290,10 @@
   id: RandomHumanoidSpawnerCBURNUnit
   name: CBURN Agent
   components:
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: cburn
     - type: RandomHumanoidSpawner
       settings: CBURNAgent
 
@@ -278,9 +302,10 @@
   components:
     - type: Loadout
       prototypes: [CBURNGear]
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: CBURN Agent
       description: A highly trained CentCom agent, capable of dealing with various threats.
+    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -291,7 +316,8 @@
   name: CentCom official
   id: RandomHumanoidSpawnerCentcomOfficial
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Markers/jobs.rsi
       state: centcom
     - type: RandomHumanoidSpawner
@@ -300,9 +326,10 @@
 - type: randomHumanoidSettings
   id: CentcomOfficial
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       name: CentCom official
       description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ CentcomGear ]
 
@@ -312,7 +339,8 @@
   id: RandomHumanoidSpawnerSyndicateAgent
   name: Syndicate Agent
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomMetadata
@@ -330,7 +358,8 @@
   id: RandomHumanoidSpawnerNukeOp
   name: Nuclear Operative
   components:
-    - type: Icon
+    - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomHumanoidSpawner
@@ -340,3 +369,30 @@
   id: NukeOp
   components:
     - type: NukeOperative
+
+- type: entity
+  id: RandomHumanoidSpawnerCluwne
+  name: Cluwne
+  suffix: spawns a cluwne
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: cluwne
+    - type: RandomHumanoidSpawner
+      settings: Cluwne
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+
+- type: randomHumanoidSettings
+  id: Cluwne
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: Cluwne
+      description: Become a pitiful cluwne, your only goal in life is to find a sweet release from your suffering (usually by being beaten to death). A cluwne is not an antagonist but may defend itself. Crewmembers may murder cluwnes freely.
+    - type: GhostTakeoverAvailable
+    - type: Cluwne

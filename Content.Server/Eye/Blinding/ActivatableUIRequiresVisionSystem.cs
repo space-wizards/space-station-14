@@ -26,7 +26,7 @@ namespace Content.Server.Eye.Blinding
 
             if (TryComp<BlindableComponent>(args.User, out var blindable) && blindable.Sources > 0)
             {
-                _popupSystem.PopupCursor(Loc.GetString("blindness-fail-attempt"), Filter.Entities(args.User), Shared.Popups.PopupType.MediumCaution);
+                _popupSystem.PopupCursor(Loc.GetString("blindness-fail-attempt"), args.User, Shared.Popups.PopupType.MediumCaution);
                 args.Cancel();
             }
         }

@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos.Visuals;
+using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -7,6 +8,7 @@ namespace Content.Server.Atmos.EntitySystems;
 public sealed class AtmosPlaqueSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -27,10 +29,10 @@ public sealed class AtmosPlaqueSystem : EntitySystem
         // 45% LINDA
         else component.Type = PlaqueType.Linda;
 
-        UpdateSign(component);
+        UpdateSign(uid, component);
     }
 
-    public void UpdateSign(AtmosPlaqueComponent component)
+    public void UpdateSign(EntityUid uid, AtmosPlaqueComponent component)
     {
         var metaData = MetaData(component.Owner);
 
@@ -70,7 +72,7 @@ public sealed class AtmosPlaqueSystem : EntitySystem
         {
             var state = component.Type == PlaqueType.Zumos ? "zumosplaque" : "atmosplaque";
 
-            appearance.SetData(AtmosPlaqueVisuals.State, state);
+            _appearance.SetData(uid, AtmosPlaqueVisuals.State, state, appearance);
         }
     }
 }

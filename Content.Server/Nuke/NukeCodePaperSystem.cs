@@ -1,17 +1,22 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Chat.Systems;
-using Content.Server.Communications;
+using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Nuke
 {
     public sealed class NukeCodePaperSystem : EntitySystem
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly StationSystem _station = default!;
-
-        private const string NukePaperPrototype = "NukeCodePaper";
+        [Dependency] private readonly PaperSystem _paper = default!;
+        [Dependency] private readonly FaxSystem _faxSystem = default!;
 
         public override void Initialize()
         {
@@ -22,37 +27,24 @@ namespace Content.Server.Nuke
 
         private void OnMapInit(EntityUid uid, NukeCodePaperComponent component, MapInitEvent args)
         {
-            SetupPaper(uid);
+            SetupPaper(uid, component);
         }
 
-        private void SetupPaper(EntityUid uid, EntityUid? station = null, PaperComponent? paper = null)
+        private void SetupPaper(EntityUid uid, NukeCodePaperComponent? component = null, EntityUid? station = null)
         {
-            if (!Resolve(uid, ref paper))
-            {
+            if (!Resolve(uid, ref component))
                 return;
-            }
 
-            var owningStation = station ?? _station.GetOwningStation(uid);
-            var transform = Transform(uid);
-
-            // Find the first nuke that matches the paper's location.
-            foreach (var nuke in EntityQuery<NukeComponent>())
+            if (TryGetRelativeNukeCode(uid, out var paperContent, station, onlyCurrentStation: component.AllNukesAvailable))
             {
-                if (owningStation == null && nuke.OriginMapGrid != (transform.MapID, transform.GridUid)
-                    || nuke.OriginStation != owningStation)
-                {
-                    continue;
-                }
-
-                paper.Content += $"{MetaData(nuke.Owner).EntityName} - {nuke.Code}";
-                break;
+                _paper.SetContent(uid, paperContent);
             }
         }
 
         /// <summary>
-        ///     Send a nuclear code to all communication consoles
+        ///     Send a nuclear code to all faxes on that station which are authorized to receive nuke codes.
         /// </summary>
-        /// <returns>True if at least one console received codes</returns>
+        /// <returns>True if at least one fax received codes</returns>
         public bool SendNukeCodes(EntityUid station)
         {
             if (!HasComp<StationDataComponent>(station))
@@ -60,20 +52,22 @@ namespace Content.Server.Nuke
                 return false;
             }
 
-            // todo: this should probably be handled by fax system
+            var faxes = EntityQueryEnumerator<FaxMachineComponent>();
             var wasSent = false;
-            var consoles = EntityQuery<CommunicationsConsoleComponent, TransformComponent>();
-            foreach (var (console, transform) in consoles)
+            while (faxes.MoveNext(out var faxEnt, out var fax))
             {
-                var owningStation = _station.GetOwningStation(console.Owner);
-                if (owningStation == null || owningStation != station)
+                if (!fax.ReceiveNukeCodes || !TryGetRelativeNukeCode(faxEnt, out var paperContent, station))
                 {
                     continue;
                 }
 
-                var consolePos = transform.MapPosition;
-                var uid = Spawn(NukePaperPrototype, consolePos);
-                SetupPaper(uid, station);
+                var printout = new FaxPrintout(
+                    paperContent,
+                    Loc.GetString("nuke-codes-fax-paper-name"),
+                    null,
+                    "paper_stamp-cent",
+                    new() { Loc.GetString("stamp-component-stamped-name-centcom") });
+                _faxSystem.Receive(faxEnt, printout, null, fax);
 
                 wasSent = true;
             }
@@ -85,6 +79,45 @@ namespace Content.Server.Nuke
             }
 
             return wasSent;
+        }
+
+        private bool TryGetRelativeNukeCode(
+            EntityUid uid,
+            [NotNullWhen(true)] out string? nukeCode,
+            EntityUid? station = null,
+            TransformComponent? transform = null,
+            bool onlyCurrentStation = false)
+        {
+            nukeCode = null;
+            if (!Resolve(uid, ref transform))
+            {
+                return false;
+            }
+
+            var owningStation = station ?? _station.GetOwningStation(uid);
+
+            var codesMessage = new FormattedMessage();
+            // Find the first nuke that matches the passed location.
+            var query = EntityQuery<NukeComponent>().ToList();
+            _random.Shuffle(query);
+            foreach (var nuke in query)
+            {
+                if (!onlyCurrentStation &&
+                    (owningStation == null &&
+                    nuke.OriginMapGrid != (transform.MapID, transform.GridUid) ||
+                    nuke.OriginStation != owningStation))
+                {
+                    continue;
+                }
+
+                codesMessage.PushNewline();
+                codesMessage.AddMarkup(Loc.GetString("nuke-codes-list", ("name", MetaData(nuke.Owner).EntityName), ("code", nuke.Code)));
+                break;
+            }
+
+            if (!codesMessage.IsEmpty)
+                nukeCode = Loc.GetString("nuke-codes-message")+codesMessage;
+            return !codesMessage.IsEmpty;
         }
     }
 }

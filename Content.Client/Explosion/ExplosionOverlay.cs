@@ -1,3 +1,4 @@
+using Content.Shared.Explosion;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -10,26 +11,10 @@ namespace Content.Client.Explosion;
 [UsedImplicitly]
 public sealed class ExplosionOverlay : Overlay
 {
-    /// <summary>
-    ///     The explosion that needs to be drawn. This explosion is currently being processed by the server and
-    ///     expanding outwards.
-    /// </summary>
-    internal Explosion? ActiveExplosion;
-
-    /// <summary>
-    ///     This index specifies what parts of the currently expanding explosion should be drawn.
-    /// </summary>
-    public int Index;
-
-    /// <summary>
-    ///     These explosions have finished expanding, but we will draw for a few more frames. This is important for
-    ///     small explosions, as otherwise they disappear far too quickly.
-    /// </summary>
-    internal List<Explosion> CompletedExplosions = new ();
-
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
@@ -38,7 +23,7 @@ public sealed class ExplosionOverlay : Overlay
     public ExplosionOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
+        _shader = _proto.Index<ShaderPrototype>("unshaded").Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -47,46 +32,55 @@ public sealed class ExplosionOverlay : Overlay
         drawHandle.UseShader(_shader);
 
         var xforms = _entMan.GetEntityQuery<TransformComponent>();
+        var query = _entMan
+            .EntityQuery<ExplosionVisualsComponent, ExplosionVisualsTexturesComponent, AppearanceComponent>(true);
 
-        if (ActiveExplosion != null && ActiveExplosion.Map == args.Viewport.Eye?.Position.MapId)
+        foreach (var (visuals, textures, appearance) in query)
         {
-            DrawExplosion(drawHandle, args.WorldBounds, ActiveExplosion, Index, xforms);
-        }
+            if (visuals.Epicenter.MapId != args.MapId)
+                continue;
 
-        foreach (var exp in CompletedExplosions)
-        {
-            if (exp.Map == args.Viewport.Eye?.Position.MapId)
-                DrawExplosion(drawHandle, args.WorldBounds, exp, exp.Intensity.Count, xforms);
+            if (!appearance.TryGetData(ExplosionAppearanceData.Progress, out int index))
+                continue;
+
+            index = Math.Min(index, visuals.Intensity.Count - 1);
+            DrawExplosion(drawHandle, args.WorldBounds, visuals, index, xforms, textures);
         }
 
         drawHandle.SetTransform(Matrix3.Identity);
         drawHandle.UseShader(null);
     }
 
-    private void DrawExplosion(DrawingHandleWorld drawHandle, Box2Rotated worldBounds, Explosion exp, int index, EntityQuery<TransformComponent> xforms)
+    private void DrawExplosion(
+        DrawingHandleWorld drawHandle,
+        Box2Rotated worldBounds,
+        ExplosionVisualsComponent visuals,
+        int index,
+        EntityQuery<TransformComponent> xforms,
+        ExplosionVisualsTexturesComponent textures)
     {
         Box2 gridBounds;
-        foreach (var (gridId, tiles) in exp.Tiles)
+        foreach (var (gridId, tiles) in visuals.Tiles)
         {
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 continue;
 
-            var xform = xforms.GetComponent(grid.GridEntityId);
+            var xform = xforms.GetComponent(grid.Owner);
             var (_, _, worldMatrix, invWorldMatrix) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
             gridBounds = invWorldMatrix.TransformBox(worldBounds).Enlarged(grid.TileSize * 2);
             drawHandle.SetTransform(worldMatrix);
 
-            DrawTiles(drawHandle, gridBounds, index, tiles, exp, grid.TileSize);
+            DrawTiles(drawHandle, gridBounds, index, tiles, visuals, grid.TileSize, textures);
         }
 
-        if (exp.SpaceTiles == null)
+        if (visuals.SpaceTiles == null)
             return;
 
-        gridBounds = Matrix3.Invert(exp.SpaceMatrix).TransformBox(worldBounds).Enlarged(2);
-        drawHandle.SetTransform(exp.SpaceMatrix);
+        gridBounds = Matrix3.Invert(visuals.SpaceMatrix).TransformBox(worldBounds).Enlarged(2);
+        drawHandle.SetTransform(visuals.SpaceMatrix);
 
-        DrawTiles(drawHandle, gridBounds, index, exp.SpaceTiles, exp, exp.SpaceTileSize);
+        DrawTiles(drawHandle, gridBounds, index, visuals.SpaceTiles, visuals, visuals.SpaceTileSize, textures);
     }
 
     private void DrawTiles(
@@ -94,26 +88,27 @@ public sealed class ExplosionOverlay : Overlay
         Box2 gridBounds,
         int index,
         Dictionary<int, List<Vector2i>> tileSets,
-        Explosion exp,
-        ushort tileSize)
+        ExplosionVisualsComponent visuals,
+        ushort tileSize,
+        ExplosionVisualsTexturesComponent textures)
     {
-        for (var j = 0; j < index; j++)
+        for (var j = 0; j <= index; j++)
         {
             if (!tileSets.TryGetValue(j, out var tiles))
                 continue;
 
-            var frameIndex = (int) Math.Min(exp.Intensity[j] / exp.IntensityPerState, exp.FireFrames.Count - 1);
-            var frames = exp.FireFrames[frameIndex];
+            var frameIndex = (int) Math.Min(visuals.Intensity[j] / textures.IntensityPerState, textures.FireFrames.Count - 1);
+            var frames = textures.FireFrames[frameIndex];
 
             foreach (var tile in tiles)
             {
-                Vector2 centre = ((Vector2) tile + 0.5f) * tileSize;
+                var centre = ((Vector2) tile + 0.5f) * tileSize;
 
                 if (!gridBounds.Contains(centre))
                     continue;
 
                 var texture = _robustRandom.Pick(frames);
-                drawHandle.DrawTextureRect(texture, Box2.CenteredAround(centre, (tileSize, tileSize)), exp.FireColor);
+                drawHandle.DrawTextureRect(texture, Box2.CenteredAround(centre, (tileSize, tileSize)), textures.FireColor);
             }
         }
     }

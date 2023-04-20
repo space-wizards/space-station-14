@@ -1,4 +1,5 @@
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
@@ -25,11 +26,13 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
                                     plantHolderComp.Seed.Immutable)
                 return;
 
+
+            var plantHolder = args.EntityManager.System<PlantHolderSystem>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
             if (plantHolderComp.Seed.Potency < PotencyLimit)
             {
-                plantHolderComp.EnsureUniqueSeed();
+                plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
                 plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + PotencyIncrease, PotencyLimit);
 
                 if (plantHolderComp.Seed.Potency > PotencySeedlessThreshold)
@@ -40,7 +43,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             else if (plantHolderComp.Seed.Yield > 1 && random.Prob(0.1f))
             {
                 // Too much of a good thing reduces yield
-                plantHolderComp.EnsureUniqueSeed();
+                plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
                 plantHolderComp.Seed.Yield--;
             }
         }

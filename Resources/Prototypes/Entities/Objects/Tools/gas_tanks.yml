@@ -26,10 +26,20 @@
         sprite: Interface/Alerts/internals.rsi
         state: internal1
       event: !type:ToggleActionEvent
-      useDelay: 1.0
+      useDelay: 1
   - type: Explosive
     explosionType: Default
     maxIntensity: 20
+  - type: MeleeWeapon
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 10
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   parent: GasTankBase
@@ -100,6 +110,13 @@
     - Pocket
     - Belt
     - suitStorage
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -144,6 +161,11 @@
     - Pocket
     - Belt
     - suitStorage
+  - type: MeleeWeapon
+    attackRate: 0.9
+    damage:
+      types:
+        Blunt: 7.5
 
 - type: entity
   parent: GasTankBase

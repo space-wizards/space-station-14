@@ -46,13 +46,16 @@ public sealed partial class BanListControl : Control
         ClosePopup();
 
         var ban = line.Ban;
+        var id = ban.Id == null ? string.Empty : Loc.GetString("ban-list-id", ("id", ban.Id.Value));
         var ip = ban.Address == null
             ? string.Empty
             : Loc.GetString("ban-list-ip", ("ip", ban.Address.Value.address));
-        var hwid =  ban.HWId == null ? string.Empty : Loc.GetString("ban-list-hwid", ("hwid", ban.HWId));
-        var guid = ban.UserId == null ? string.Empty : Loc.GetString("ban-list-guid", ("guid", ban.UserId.Value.ToString()));
+        var hwid = ban.HWId == null ? string.Empty : Loc.GetString("ban-list-hwid", ("hwid", ban.HWId));
+        var guid = ban.UserId == null
+            ? string.Empty
+            : Loc.GetString("ban-list-guid", ("guid", ban.UserId.Value.ToString()));
 
-        _popup = new BanListIdsPopup(ip, hwid, guid);
+        _popup = new BanListIdsPopup(id, ip, hwid, guid);
 
         var box = UIBox2.FromDimensions(UserInterfaceManager.MousePositionScaled.Position, (1, 1));
         _popup.Open(box);

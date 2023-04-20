@@ -228,7 +228,7 @@
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkRumBottleFull
-  name: captain pete's cuban spiced rum
+  name: captain pete's Cuban spiced rum
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
   components:
   - type: SolutionContainerManager

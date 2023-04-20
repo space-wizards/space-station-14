@@ -16,6 +16,8 @@
       - key: enum.HealthAnalyzerUiKey.Key
         type: HealthAnalyzerBoundUserInterface
   - type: HealthAnalyzer
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: Tag
     tags:
     - DiscreteHealthAnalyzer

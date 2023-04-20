@@ -18,7 +18,8 @@ namespace Content.Server.Atmos.Commands
 
             foreach (var gasPrototype in atmosSystem.Gases)
             {
-                shell.WriteLine($"{gasPrototype.Name} ID: {gasPrototype.ID}");
+                var gasName = Loc.GetString(gasPrototype.Name);
+                shell.WriteLine($"{gasName} ID: {gasPrototype.ID}");
             }
         }
     }

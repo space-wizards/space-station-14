@@ -1,39 +1,6 @@
 - type: entity
-  id: BaseMagazineMagnum
-  name: "Lamia magazine (.40 magnum)"
-  parent: BaseItem
-  abstract: true
-  components:
-  - type: Tag
-    tags:
-      - MagazineMagnum
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeMagnum
-    capacity: 10
-  - type: Item
-    size: 5
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: mag
-    steps: 5
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
   id: BaseMagazineMagnumSubMachineGun
-  name: "Vector magazine (.40 magnum)"
+  name: "Vector magazine (.45 magnum)"
   parent: BaseItem
   abstract: true
   components:
@@ -41,6 +8,7 @@
     tags:
       - MagazineMagnumSubMachineGun
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgeMagnum
@@ -65,64 +33,8 @@
   - type: Appearance
 
 - type: entity
-  id: MagazineMagnum
-  name: "Lamia magazine (.40 magnum)"
-  parent: BaseMagazineMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnum
-  - type: Sprite
-    layers:
-    - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineMagnumHighVelocity
-  name: "Lamia magazine (.40 magnum high-velocity)"
-  parent: BaseMagazineMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumHighVelocity
-  - type: Sprite
-    layers:
-    - state: high_velocity
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineMagnumPractice
-  name: "Lamia magazine (.40 magnum practice)"
-  parent: BaseMagazineMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumPractice
-  - type: Sprite
-    layers:
-    - state: practice
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineMagnumRubber
-  name: "Lamia magazine (.40 magnum rubber)"
-  parent: BaseMagazineMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumRubber
-  - type: Sprite
-    layers:
-    - state: rubber
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
   id: MagazineMagnumSubMachineGun
-  name: "Vector magazine (.40 magnum)"
+  name: "Vector magazine (.45 magnum)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -136,7 +48,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunHighVelocity
-  name: "Vector magazine (.40 magnum High-Velocity)"
+  name: "Vector magazine (.45 magnum High-Velocity)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -150,7 +62,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunPractice
-  name: "Vector magazine (.40 magnum practice)"
+  name: "Vector magazine (.45 magnum practice)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -164,7 +76,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunRubber
-  name: "Vector magazine (.40 magnum rubber)"
+  name: "Vector magazine (.45 magnum rubber)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider

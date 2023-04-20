@@ -14,7 +14,7 @@ namespace Content.Server.Wires;
 [Prototype("wireLayout")]
 public sealed class WireLayoutPrototype : IPrototype, IInheritingPrototype
 {
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
 
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<WireLayoutPrototype>))]

@@ -14,6 +14,7 @@ using Content.Shared.Examine;
 using Content.Shared.Standing;
 using Content.Shared.Storage;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Storage.Components;
 
 namespace Content.Server.Morgue;
 
@@ -41,17 +42,23 @@ public sealed class CrematoriumSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        if (appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
+        if (_appearance.TryGetData<bool>(uid, CrematoriumVisuals.Burning, out var isBurning, appearance) && isBurning)
+        {
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", uid)));
-        if (appearance.TryGetData(StorageVisuals.HasContents, out bool hasContents) && hasContents)
+        }
+        if (_appearance.TryGetData<bool>(uid, StorageVisuals.HasContents, out var hasContents, appearance) && hasContents)
+        {
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
+        }
         else
+        {
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
+        }
     }
 
-    private void OnAttemptOpen(EntityUid uid, ActiveCrematoriumComponent component, StorageOpenAttemptEvent args)
+    private void OnAttemptOpen(EntityUid uid, ActiveCrematoriumComponent component, ref StorageOpenAttemptEvent args)
     {
-        args.Cancel();
+        args.Cancelled = true;
     }
 
     private void AddCremateVerb(EntityUid uid, CrematoriumComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -140,13 +147,13 @@ public sealed class CrematoriumSystem : EntitySystem
 
             if (mind.OwnedEntity is { Valid: true } entity)
             {
-                _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity, Filter.Pvs(entity));
+                _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity);
             }
         }
 
         _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message-others",
             ("victim", Identity.Entity(victim, EntityManager))),
-            victim, Filter.PvsExcept(victim), PopupType.LargeCaution);
+            victim, Filter.PvsExcept(victim), true, PopupType.LargeCaution);
 
         if (_entityStorage.CanInsert(uid))
         {

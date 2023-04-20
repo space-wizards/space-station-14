@@ -21,6 +21,15 @@
       steps:
       - material: Cable
         doAfter: 0.5
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 2
 
   - node: wiredCase
     entity: ModularGrenade      

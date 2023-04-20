@@ -18,7 +18,7 @@ namespace Content.Client.Stack
             args.Controls.Add(new StackStatusControl(component));
         }
 
-        public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
+        public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -28,7 +28,7 @@ namespace Content.Client.Stack
             // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
             if (component.Count <= 0)
             {
-                Xform.DetachParentToNull(Transform(uid));
+                Xform.DetachParentToNull(uid, Transform(uid));
                 return;
             }
 

@@ -1,10 +1,11 @@
-﻿using Content.Shared.CartridgeLoader.Cartridges;
+﻿using Content.Client.UserInterface.Fragments;
+using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
-public sealed class NetProbeUi : CartridgeUI
+public sealed class NetProbeUi : UIFragment
 {
     private NetProbeUiFragment? _fragment;
 
@@ -13,7 +14,7 @@ public sealed class NetProbeUi : CartridgeUI
         return _fragment!;
     }
 
-    public override void Setup(BoundUserInterface userInterface)
+    public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
         _fragment = new NetProbeUiFragment();
     }

@@ -149,11 +149,11 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             ops[i] = _random.PickAndTake(ev.PlayerPool);
         }
 
-        var map = "/Maps/pirate.yml";
+        var map = "/Maps/Shuttles/pirate.yml";
         var xformQuery = GetEntityQuery<TransformComponent>();
 
         var aabbs = _stationSystem.Stations.SelectMany(x =>
-            Comp<StationDataComponent>(x).Grids.Select(x => xformQuery.GetComponent(x).WorldMatrix.TransformBox(_mapManager.GetGridComp(x).Grid.LocalAABB))).ToArray();
+            Comp<StationDataComponent>(x).Grids.Select(x => xformQuery.GetComponent(x).WorldMatrix.TransformBox(_mapManager.GetGridComp(x).LocalAABB))).ToArray();
 
         var aabb = aabbs[0];
 
@@ -256,7 +256,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-no-one-ready"));
             ev.Cancel();
-            return;
         }
     }
 }

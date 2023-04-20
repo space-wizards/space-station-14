@@ -1,0 +1,34 @@
+﻿<Document>
+# Atmospherics
+
+Atmospherics setups are a necessity for your long-term comfort but are generally undocumented, resulting in them being a bit tricky to set up. The following attempts to cover the basics.
+
+## Standard Mix
+Breathing pure O2 or pure N2 is generally bad for the health of your crew, and it is recommended to instead aim for a mix of [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color] It's recommended that your gas mixer setup be set to output at least 1000kPa for faster re-pressurization of rooms.
+<Box>
+<GuideEntityEmbed Entity="OxygenCanister"/>
+<GuideEntityEmbed Entity="NitrogenCanister"/>
+<GuideEntityEmbed Entity="AirCanister"/>
+</Box>
+Variations on this mix may be necessary for the long-term comfort of atypical crew, for example crew who require a plasma gas mix to survive. For atypical crew, it is recommended to try and give them their own personal space, isolated by either airlock or disposals section. Keep in mind both methods are leaky and you will need scrubbers on both sides of the lock to clean up any leaked gasses.
+<Box>
+<GuideEntityEmbed Entity="PlasmaCanister"/>
+<GuideEntityEmbed Entity="StorageCanister"/>
+</Box>
+## Vents and Scrubbers
+Vents and scrubbers are core atmospherics devices that fill and cleanse rooms, respectively. They can be reconfigured by installing an air alarm, allowing you to change them from their default settings. By default, they are configured for filling rooms to standard pressure (101.24kPa) and to remove all non-O2/N2 gasses from a room.
+<Box>
+<GuideEntityEmbed Entity="GasVentPump"/>
+<GuideEntityEmbed Entity="GasVentScrubber"/>
+</Box>
+During standard operation, if a vent detects that the outside environment is space, it will automatically cease operation until a minimum pressure is reached to avoid destruction of necessary gasses. This can be fixed by pressurizing the room up to that minimum pressure by refilling it with gas canister (potentially multiple, if the room is of significant size).
+
+Should you encounter a situation where scrubbers aren't cleaning a room fast enough, employ portable scrubbers by dragging them to the affected location and wrenching them down. They work much faster than typical scrubbers and can clean up a room quite quickly. Large spills may require you to employ multiple.
+<Box>
+<GuideEntityEmbed Entity="PortableScrubber"/>
+</Box>
+## Reference Sheet
+- Standard atmospheric mix is [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color]
+- Gas obeys real math. You can use the equation PV = nRT (Pressure kPa * Volume L = Moles * R * Temperature K) to derive information you might need to know about a gas. R is approximately 8.31446
+
+</Document>

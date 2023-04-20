@@ -16,13 +16,13 @@ public sealed class TargetInRangePrecondition : HTNPrecondition
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        if (!blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates))
+        if (!blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
             return false;
 
-        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target) ||
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager) ||
             !_entManager.TryGetComponent<TransformComponent>(target, out var targetXform))
             return false;
 
-        return coordinates.InRange(_entManager, targetXform.Coordinates, blackboard.GetValueOrDefault<float>(RangeKey));
+        return coordinates.InRange(_entManager, targetXform.Coordinates, blackboard.GetValueOrDefault<float>(RangeKey, _entManager));
     }
 }

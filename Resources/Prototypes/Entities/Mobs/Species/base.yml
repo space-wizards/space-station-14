@@ -39,7 +39,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.15 #per second, scales with pressure and other constants.
+        Blunt: 0.35 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -65,7 +65,7 @@
     bloodlossHealDamage:
       types:
         Bloodloss:
-          -0.25
+          -1
   - type: Stamina
   - type: StatusEffects
     allowed:
@@ -86,6 +86,7 @@
   - type: Blindable
   # Other
   - type: Inventory
+  - type: InventorySlots
   - type: Clickable
   - type: InteractionOutline
   - type: Icon
@@ -142,6 +143,10 @@
       - map: [ "head" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
+      - map: [ "clownedon" ] # Dynamically generated
+        sprite: "Effects/creampie.rsi"
+        state: "creampie_human"
+        visible: false
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -173,10 +178,11 @@
     heatDamage:
       types:
         Heat: 0.1 #per second, scales with temperature & other constants
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Human
   - type: Body
     prototype: Human
+    requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
   - type: RadiationReceiver
@@ -190,6 +196,7 @@
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       100: Critical
@@ -223,11 +230,14 @@
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: RotationVisualizer
-      - type: BuckleVisualizer
-      - type: CreamPiedVisualizer
-        state: creampie_human
+      enum.CreamPiedVisuals.Creamed:
+        clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
+          True: {visible: true}
+          False: {visible: false}
+  - type: RotationVisuals
+  - type: FloatingVisuals
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
@@ -271,17 +281,22 @@
     spawned:
       - id: FoodMeat
         amount: 5
-  #  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
-  #    safe: false
   - type: Speech
     speechSounds: Alto
   - type: Vocal
+    sounds:
+      Male: MaleHuman
+      Female: FemaleHuman
+      Unsexed: MaleHuman
   - type: Emoting
+  - type: BodyEmotes
+    soundsId: GeneralBodyEmotes
   - type: Grammar
     attributes:
       proper: true
   - type: StandingState
   - type: Fingerprint
+  - type: Dna
   - type: MobPrice
     price: 1500 # Kidnapping a living person and selling them for cred is a good move.
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
@@ -295,6 +310,7 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: InventorySlots
     - type: ContainerContainer
     - type: Icon
       sprite: Mobs/Species/Human/parts.rsi
@@ -362,20 +378,20 @@
         - MobMask
         layer:
         - MobLayer
-    - type: Humanoid
+    - type: HumanoidAppearance
       species: Human
     - type: Body
       prototype: Human
+      requiredLegs: 2
+    - type: Appearance
     - type: Damageable
       damageContainer: Biological
     - type: MobState
+    - type: MobThresholds
       thresholds:
         0: Alive
         100: Critical
         200: Dead
-    - type: Appearance
-      visuals:
-      - type: RotationVisualizer
     - type: UserInterface
       interfaces:
         - key: enum.HumanoidMarkingModifierKey.Key # sure, this can go here too

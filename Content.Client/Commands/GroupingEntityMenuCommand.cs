@@ -12,7 +12,7 @@ namespace Content.Client.Commands
 
         public string Description => "Sets the entity menu grouping type.";
 
-        public string Help => $"Usage: entitymenug <0:{EntityMenuPresenter.GroupingTypesCount}>";
+        public string Help => $"Usage: entitymenug <0:{EntityMenuUIController.GroupingTypesCount}>";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -27,7 +27,7 @@ namespace Content.Client.Commands
                 return;
             }
 
-            if (id < 0 ||id > EntityMenuPresenter.GroupingTypesCount - 1)
+            if (id < 0 ||id > EntityMenuUIController.GroupingTypesCount - 1)
             {
                 shell.WriteLine($"{args[0]} is not a valid integer.");
                 return;

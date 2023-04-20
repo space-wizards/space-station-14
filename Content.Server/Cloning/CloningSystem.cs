@@ -1,6 +1,5 @@
 using Content.Shared.GameTicking;
 using Content.Shared.Damage;
-using Content.Shared.Stacks;
 using Content.Shared.Examine;
 using Content.Shared.Cloning;
 using Content.Shared.Atmos;
@@ -13,16 +12,17 @@ using Content.Server.EUI;
 using Content.Server.Humanoid;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
-using Content.Server.MobState;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction;
-using Content.Server.Construction.Components;
 using Content.Server.Materials;
 using Content.Server.Stack;
 using Content.Server.Jobs;
+using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Zombies;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Containers;
 using Robust.Server.Player;
@@ -31,6 +31,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Cloning
 {
@@ -41,7 +42,7 @@ namespace Content.Server.Cloning
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly EuiManager _euiManager = null!;
         [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
-        [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
@@ -49,9 +50,7 @@ namespace Content.Server.Cloning
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedStackSystem _stackSystem = default!;
-        [Dependency] private readonly StackSystem _serverStackSystem = default!;
-        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly PuddleSystem _puddleSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
@@ -66,7 +65,6 @@ namespace Content.Server.Cloning
             SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<CloningPodComponent, RefreshPartsEvent>(OnPartsRefreshed);
             SubscribeLocalEvent<CloningPodComponent, UpgradeExamineEvent>(OnUpgradeExamine);
-            SubscribeLocalEvent<CloningPodComponent, MachineDeconstructedEvent>(OnDeconstruct);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
             SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
@@ -93,11 +91,6 @@ namespace Content.Server.Cloning
         {
             args.AddPercentageUpgrade("cloning-pod-component-upgrade-speed", component.BaseCloningTime / component.CloningTime);
             args.AddPercentageUpgrade("cloning-pod-component-upgrade-biomass-requirement", component.BiomassRequirementMultiplier);
-        }
-
-        private void OnDeconstruct(EntityUid uid, CloningPodComponent component, MachineDeconstructedEvent args)
-        {
-            _serverStackSystem.SpawnMultiple(component.MaterialCloningOutput, _material.GetMaterialAmount(uid, component.RequiredMaterial), Transform(uid).Coordinates);
         }
 
         internal void TransferMindToClone(Mind.Mind mind)
@@ -178,7 +171,7 @@ namespace Content.Server.Cloning
             if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
                 return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
 
-            if (!TryComp<HumanoidComponent>(bodyToClone, out var humanoid))
+            if (!TryComp<HumanoidAppearanceComponent>(bodyToClone, out var humanoid))
                 return false; // whatever body was to be cloned, was not a humanoid
 
             if (!_prototype.TryIndex<SpeciesPrototype>(humanoid.Species, out var speciesPrototype))
@@ -229,7 +222,11 @@ namespace Content.Server.Cloning
             var mob = Spawn(speciesPrototype.Prototype, Transform(clonePod.Owner).MapPosition);
             _humanoidSystem.CloneAppearance(bodyToClone, mob);
 
-            MetaData(mob).EntityName = MetaData(bodyToClone).EntityName;
+            var ev = new CloningEvent(bodyToClone, mob);
+            RaiseLocalEvent(bodyToClone, ref ev);
+
+            if (!ev.NameHandled)
+                MetaData(mob).EntityName = MetaData(bodyToClone).EntityName;
 
             var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
             cloneMindReturn.Mind = mind;
@@ -319,10 +316,9 @@ namespace Content.Server.Cloning
                 if (_robustRandom.Prob(0.2f))
                     i++;
             }
-            _spillableSystem.SpillAt(uid, bloodSolution, "PuddleBlood");
+            _puddleSystem.TrySpillAt(uid, bloodSolution, out _);
 
-            var biomassStack = Spawn(clonePod.MaterialCloningOutput, transform.Coordinates);
-            _stackSystem.SetCount(biomassStack, _robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)));
+            _material.SpawnMultipleFromMaterial(_robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)), clonePod.RequiredMaterial, Transform(uid).Coordinates);
 
             clonePod.UsedBiomass = 0;
             RemCompDeferred<ActiveCloningPodComponent>(uid);
@@ -331,6 +327,23 @@ namespace Content.Server.Cloning
         public void Reset(RoundRestartCleanupEvent ev)
         {
             ClonesWaitingForMind.Clear();
+        }
+    }
+
+    /// <summary>
+    /// Raised after a new mob got spawned when cloning a humanoid
+    /// </summary>
+    [ByRefEvent]
+    public struct CloningEvent
+    {
+        public bool NameHandled = false;
+
+        public readonly EntityUid Source;
+        public readonly EntityUid Target;
+
+        public CloningEvent(EntityUid source, EntityUid target) {
+            Source = source;
+            Target = target;
         }
     }
 }

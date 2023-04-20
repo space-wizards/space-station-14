@@ -37,6 +37,8 @@ namespace Content.Server.Body.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var fac = IoCManager.Resolve<IComponentFactory>();
+
             if (!entityManager.TryGetComponent(attached, out BodyComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
@@ -51,7 +53,7 @@ namespace Content.Server.Body.Commands
 
             foreach (var organ in bodySystem.GetBodyOrgans(body.Owner, body))
             {
-                if (organ.Component.Name.ToLowerInvariant() == mechanismName)
+                if (fac.GetComponentName(organ.Component.GetType()).ToLowerInvariant() == mechanismName)
                 {
                     bodySystem.DeleteOrgan(organ.Id, organ.Component);
                     shell.WriteLine($"Mechanism with name {mechanismName} has been destroyed.");

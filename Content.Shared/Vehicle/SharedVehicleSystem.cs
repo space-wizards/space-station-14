@@ -1,3 +1,5 @@
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Actions;
 using Content.Shared.Buckle.Components;
@@ -9,6 +11,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Containers;
 using Content.Shared.Tag;
 using Content.Shared.Audio;
+using Serilog;
 
 namespace Content.Shared.Vehicle;
 
@@ -24,6 +27,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!;
 
     private const string KeySlot = "key_slot";
 
@@ -37,6 +41,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnVehicleRotate);
         SubscribeLocalEvent<VehicleComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<VehicleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        SubscribeLocalEvent<VehicleComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
     }
 
     /// <summary>
@@ -46,7 +51,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     private void OnEntInserted(EntityUid uid, VehicleComponent component, EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID != KeySlot ||
-            !_tagSystem.HasTag(args.Entity, "VehicleKey")) return;
+            !_tagSystem.HasTag(args.Entity, "VehicleKey"))
+            return;
 
         // Enable vehicle
         var inVehicle = EnsureComp<InVehicleComponent>(args.Entity);
@@ -103,7 +109,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         }
 
         UpdateBuckleOffset(args.Component, component);
-        UpdateDrawDepth(uid, GetDrawDepth(args.Component, component.NorthOnly));
+        if (TryComp<InputMoverComponent>(uid, out var mover))
+            UpdateDrawDepth(uid, GetDrawDepth(args.Component, component, mover.RelativeRotation));
     }
 
     private void OnVehicleStartup(EntityUid uid, VehicleComponent component, ComponentStartup args)
@@ -111,7 +118,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         UpdateDrawDepth(uid, 2);
 
         // This code should be purged anyway but with that being said this doesn't handle components being changed.
-        if (TryComp<SharedStrapComponent>(uid, out var strap))
+        if (TryComp<StrapComponent>(uid, out var strap))
         {
             component.BaseBuckleOffset = strap.BuckleOffset;
             strap.BuckleOffsetUnclamped = Vector2.Zero;
@@ -125,25 +132,35 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// change its draw depth. Vehicles can choose between special drawdetph
     /// when facing north or south. East and west are easy.
     /// </summary>
-    protected int GetDrawDepth(TransformComponent xform, bool northOnly)
+    protected int GetDrawDepth(TransformComponent xform, VehicleComponent component, Angle cameraAngle)
     {
-        // TODO: I can't even
-        if (northOnly)
+        var itemDirection = cameraAngle.GetDir() switch
         {
-            return xform.LocalRotation.Degrees switch
-            {
-                < 135f => (int) DrawDepth.DrawDepth.Doors,
-                <= 225f => (int) DrawDepth.DrawDepth.WallMountedItems,
-                _ => 5
-            };
-        }
-        return xform.LocalRotation.Degrees switch
+            Direction.South => xform.LocalRotation.GetDir(),
+            Direction.North => xform.LocalRotation.RotateDir(Direction.North),
+            Direction.West => xform.LocalRotation.RotateDir(Direction.East),
+            Direction.East => xform.LocalRotation.RotateDir(Direction.West),
+            _ => Direction.South
+        };
+
+        return itemDirection switch
         {
-            < 45f =>  (int) DrawDepth.DrawDepth.Doors,
-            <= 315f =>  (int) DrawDepth.DrawDepth.WallMountedItems,
-            _ =>  (int) DrawDepth.DrawDepth.Doors,
+            Direction.North => component.NorthOver
+                ? (int) DrawDepth.DrawDepth.Doors
+                : (int) DrawDepth.DrawDepth.WallMountedItems,
+            Direction.South => component.SouthOver
+                ? (int) DrawDepth.DrawDepth.Doors
+                : (int) DrawDepth.DrawDepth.WallMountedItems,
+            Direction.West => component.WestOver
+                ? (int) DrawDepth.DrawDepth.Doors
+                : (int) DrawDepth.DrawDepth.WallMountedItems,
+            Direction.East => component.EastOver
+                ? (int) DrawDepth.DrawDepth.Doors
+                : (int) DrawDepth.DrawDepth.WallMountedItems,
+            _ => (int) DrawDepth.DrawDepth.WallMountedItems
         };
     }
+
 
     /// <summary>
     /// Change the buckle offset based on what direction the vehicle is facing and
@@ -152,7 +169,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// </summary>
     protected void UpdateBuckleOffset(TransformComponent xform, VehicleComponent component)
     {
-        if (!TryComp<SharedStrapComponent>(component.Owner, out var strap))
+        if (!TryComp<StrapComponent>(component.Owner, out var strap))
             return;
 
         // TODO: Strap should handle this but buckle E/C moment.
@@ -175,6 +192,17 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             var buckleXform = Transform(buckledEntity);
             _transform.SetLocalPositionNoLerp(buckleXform, strap.BuckleOffset);
         }
+    }
+
+    private void OnGetAdditionalAccess(EntityUid uid, VehicleComponent component, ref GetAdditionalAccessEvent args)
+    {
+        if (component.Rider == null)
+            return;
+        var rider = component.Rider.Value;
+
+        args.Entities.Add(rider);
+        _access.FindAccessItemsInventory(rider, out var items);
+        args.Entities.UnionWith(items);
     }
 
     /// <summary>

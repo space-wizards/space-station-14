@@ -7,10 +7,20 @@ namespace Content.Shared.Inventory;
 public partial class InventorySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IViewVariablesManager _vvm = default!;
 
     private void InitializeSlots()
     {
         SubscribeLocalEvent<InventoryComponent, ComponentInit>(OnInit);
+
+        _vvm.GetTypeHandler<InventoryComponent>()
+            .AddHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
+    }
+
+    private void ShutdownSlots()
+    {
+        _vvm.GetTypeHandler<InventoryComponent>()
+            .RemoveHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
     }
 
     protected virtual void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)
@@ -97,6 +107,21 @@ public partial class InventorySystem : EntitySystem
     {
         if (!Resolve(uid, ref inventoryComponent)) throw new InvalidOperationException();
         return _prototypeManager.Index<InventoryTemplatePrototype>(inventoryComponent.TemplateId).Slots;
+    }
+
+    private ViewVariablesPath? HandleViewVariablesSlots(EntityUid uid, InventoryComponent comp, string relativePath)
+    {
+        return TryGetSlotEntity(uid, relativePath, out var entity, comp)
+            ? ViewVariablesPath.FromObject(entity)
+            : null;
+    }
+
+    private IEnumerable<string> ListViewVariablesSlots(EntityUid uid, InventoryComponent comp)
+    {
+        foreach (var slotDef in GetSlots(uid, comp))
+        {
+            yield return slotDef.Name;
+        }
     }
 
     public struct ContainerSlotEnumerator

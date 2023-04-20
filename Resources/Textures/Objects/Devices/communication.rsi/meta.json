@@ -48,6 +48,9 @@
       "name": "walkietalkie-on"
     },
     {
+      "name": "walkietalkie-off"
+    },
+    {
       "name": "walkietalkie-active"
     },
     {

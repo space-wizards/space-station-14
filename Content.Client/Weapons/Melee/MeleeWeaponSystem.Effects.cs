@@ -15,7 +15,6 @@ public sealed partial class MeleeWeaponSystem
     /// </summary>
     private const float DamageAnimationLength = 0.30f;
 
-    private const string AnimationKey = "melee-animation";
     private const string DamageAnimationKey = "damage-effect";
     private const string FadeAnimationKey = "melee-fade";
     private const string SlashAnimationKey = "melee-slash";
@@ -114,7 +113,7 @@ public sealed partial class MeleeWeaponSystem
     /// <summary>
     /// Does all of the melee effects for a player that are predicted, i.e. character lunge and weapon animation.
     /// </summary>
-    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation)
+    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true)
     {
         if (!Timing.IsFirstTimePredicted)
             return;
@@ -125,47 +124,45 @@ public sealed partial class MeleeWeaponSystem
         _animation.Stop(user, MeleeLungeKey);
         _animation.Play(user, lunge, MeleeLungeKey);
 
-        // Clientside entity to spawn
-        if (animation != null)
+        if (localPos == Vector2.Zero || animation == null)
+            return;
+
+        if (!TryComp<TransformComponent>(user, out var userXform) || userXform.MapID == MapId.Nullspace)
+            return;
+
+        var animationUid = Spawn(animation, userXform.Coordinates);
+
+        if (!TryComp<SpriteComponent>(animationUid, out var sprite)
+            || !TryComp<WeaponArcVisualsComponent>(animationUid, out var arcComponent))
+            return;
+
+        sprite.NoRotation = true;
+        sprite.Rotation = localPos.ToWorldAngle();
+        var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
+
+        switch (arcComponent.Animation)
         {
-            if (!TryComp<TransformComponent>(user, out var userXform))
-                return;
-
-            var coords = userXform.Coordinates;
-            var animationUid = Spawn(animation, coords);
-
-            if (localPos != Vector2.Zero && TryComp<SpriteComponent>(animationUid, out var sprite))
-            {
-                if (TryComp<WeaponArcVisualsComponent>(animationUid, out var arcComponent))
-                {
-                    sprite.NoRotation = true;
-                    sprite.Rotation = localPos.ToWorldAngle();
-
-                    var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
-
-                    switch (arcComponent.Animation)
-                    {
-                        case WeaponArcAnimation.Slash:
-                            _animation.Play(animationUid, GetSlashAnimation(sprite, angle), SlashAnimationKey);
-                            if (arcComponent.Fadeout)
-                                _animation.Play(animationUid, GetFadeAnimation(sprite, 0.065f, 0.065f + 0.05f), FadeAnimationKey);
-                            break;
-                        case WeaponArcAnimation.Thrust:
-                            _animation.Play(animationUid, GetThrustAnimation(sprite, distance), ThrustAnimationKey);
-                            if (arcComponent.Fadeout)
-                                _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
-                            break;
-                        case WeaponArcAnimation.None:
-                            var mapPos = userXform.WorldPosition;
-                            var xform = Transform(animationUid);
-                            xform.AttachToGridOrMap();
-                            xform.WorldPosition = mapPos + (userXform.WorldRotation - userXform.LocalRotation).RotateVec(localPos);
-                            if (arcComponent.Fadeout)
-                                _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
-                            break;
-                    }
-                }
-            }
+            case WeaponArcAnimation.Slash:
+                _animation.Play(animationUid, GetSlashAnimation(sprite, angle), SlashAnimationKey);
+                if (arcComponent.Fadeout)
+                    _animation.Play(animationUid, GetFadeAnimation(sprite, 0.065f, 0.065f + 0.05f), FadeAnimationKey);
+                break;
+            case WeaponArcAnimation.Thrust:
+                _animation.Play(animationUid, GetThrustAnimation(sprite, distance), ThrustAnimationKey);
+                if (arcComponent.Fadeout)
+                    _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
+                break;
+            case WeaponArcAnimation.None:
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                var (mapPos, mapRot) = _transform.GetWorldPositionRotation(userXform, xformQuery);
+                var xform = xformQuery.GetComponent(animationUid);
+                xform.AttachToGridOrMap();
+                var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
+                var newLocalPos = _transform.GetInvWorldMatrix(xform.ParentUid, xformQuery).Transform(worldPos);
+                _transform.SetLocalPositionNoLerp(xform, newLocalPos);
+                if (arcComponent.Fadeout)
+                    _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
+                break;
         }
     }
 

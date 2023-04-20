@@ -41,6 +41,9 @@
       - FullTileMask
       layer:
       - AirlockLayer
+  - type: LayerChangeOnWeld
+    unWeldedLayer: AirlockLayer
+    weldedLayer: WallLayer
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
@@ -80,6 +83,7 @@
       Open: []
       Close: []
       Toggle: []
+      AutoClose: []
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key

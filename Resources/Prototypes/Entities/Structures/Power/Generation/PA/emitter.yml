@@ -17,11 +17,15 @@
       visuals:
         - type: ParticleAcceleratorPartVisualizer
           baseState: unlit
+    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Left
     - type: Construction
       graph: ParticleAcceleratorEmitterLeft
       node: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
+
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -42,11 +46,14 @@
       visuals:
         - type: ParticleAcceleratorPartVisualizer
           baseState: unlit
+    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Center
     - type: Construction
       graph: ParticleAcceleratorEmitterCenter
       node: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -67,11 +74,14 @@
       visuals:
         - type: ParticleAcceleratorPartVisualizer
           baseState: unlit
+    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Right
     - type: Construction
       graph: ParticleAcceleratorEmitterRight
       node: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
 
 # Unfinished
 
@@ -91,6 +101,8 @@
       graph: ParticleAcceleratorEmitterLeft
       node: start
       defaultTarget: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -108,6 +120,8 @@
       graph: ParticleAcceleratorEmitterCenter
       node: start
       defaultTarget: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -125,3 +139,5 @@
       graph: ParticleAcceleratorEmitterRight
       node: start
       defaultTarget: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]

@@ -44,6 +44,11 @@
   priority: 6
 
 - type: storeCategory
+  id: UplinkImplants
+  name: store-category-implants
+  priority: 6
+
+- type: storeCategory
   id: UplinkJob
   name: store-category-job
   priority: 7

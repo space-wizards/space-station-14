@@ -21,4 +21,17 @@ namespace Content.Shared.Access.Components
         [DataField("groups", readOnly: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessGroupPrototype>))]
         public readonly HashSet<string> Groups = new();
     }
+
+    /// <summary>
+    /// Event raised on an entity to find additional entities which provide access.
+    /// </summary>
+    [ByRefEvent]
+    public struct GetAdditionalAccessEvent
+    {
+        public HashSet<EntityUid> Entities = new();
+
+        public GetAdditionalAccessEvent()
+        {
+        }
+    }
 }

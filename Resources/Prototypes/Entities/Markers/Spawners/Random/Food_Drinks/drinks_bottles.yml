@@ -9,7 +9,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Objects/Consumable/Drinks/ginbottle.rsi/icon.png 
+      - sprite: Objects/Consumable/Drinks/ginbottle.rsi
+        state: icon
   - type: RandomSpawner
   #small item
     prototypes:

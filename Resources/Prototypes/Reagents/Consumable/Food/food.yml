@@ -1,5 +1,6 @@
-﻿- type: reagent
-  id: Nutriment
+﻿# End points - the eventual goal is that almost all foods and drinks metabolize into either these, or reagents that build up (e.g. theobromine, caffeine,... )
+- type: reagent
+  id: Nutriment #Anything that isn't better suited to vitamin, protein, or sugar. we aren't doing a super in-depth simulator.
   name: reagent-name-nutriment
   group: Foods
   desc: reagent-desc-nutriment
@@ -18,7 +19,7 @@
   pricePerUnit: 2
 
 - type: reagent
-  id: Vitamin
+  id: Vitamin #Anything "healthy"
   name: reagent-name-vitamin
   group: Foods
   desc: reagent-desc-vitamin
@@ -41,7 +42,7 @@
   pricePerUnit: 2.5
 
 - type: reagent
-  id: Protein
+  id: Protein #Meat and beans
   name: reagent-name-protein
   group: Foods
   desc: reagent-desc-protein
@@ -61,3 +62,28 @@
       - !type:SatiateHunger
   pricePerUnit: 3
 
+- type: reagent
+  id: Sugar #Candy and grains
+  name: reagent-name-sugar
+  group: Foods
+  desc: reagent-desc-sugar
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: sweet
+  color: white
+  meltingPoint: 146.0
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:ReagentThreshold #Only satiates when eaten with nutriment
+          reagent: Nutriment
+          min: 0.1
+        factor: 1
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustWeeds
+    amount: 2
+  - !type:PlantAdjustPests
+    amount: 2

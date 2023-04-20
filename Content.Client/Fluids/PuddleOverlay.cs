@@ -59,7 +59,7 @@ public sealed class PuddleOverlay : Overlay
             gridBounds = invWorldMatrix.TransformBox(args.WorldBounds).Enlarged(mapGrid.TileSize * 2);
             drawHandle.SetTransform(worldMatrix);
 
-            foreach (var debugOverlayData in _debugOverlaySystem.GetData(mapGrid.GridEntityId))
+            foreach (var debugOverlayData in _debugOverlaySystem.GetData(mapGrid.Owner))
             {
                 var centre = ((Vector2) debugOverlayData.Pos + 0.5f) * mapGrid.TileSize;
 
@@ -91,7 +91,7 @@ public sealed class PuddleOverlay : Overlay
             var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
             var gridBounds = invMatrix.TransformBox(args.WorldBounds).Enlarged(mapGrid.TileSize * 2);
 
-            foreach (var debugOverlayData in _debugOverlaySystem.GetData(mapGrid.GridEntityId))
+            foreach (var debugOverlayData in _debugOverlaySystem.GetData(mapGrid.Owner))
             {
                 var centre = ((Vector2) debugOverlayData.Pos + 0.5f) * mapGrid.TileSize;
 

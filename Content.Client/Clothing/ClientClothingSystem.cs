@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Inventory;
-using Content.Client.Humanoid;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -45,7 +44,7 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -53,21 +52,20 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         SubscribeLocalEvent<ClothingComponent, GetEquipmentVisualsEvent>(OnGetVisuals);
 
-        SubscribeLocalEvent<ClientInventoryComponent, VisualsChangedEvent>(OnVisualsChanged);
+        SubscribeLocalEvent<InventoryComponent, VisualsChangedEvent>(OnVisualsChanged);
         SubscribeLocalEvent<SpriteComponent, DidUnequipEvent>(OnDidUnequip);
-        SubscribeLocalEvent<ClientInventoryComponent, AppearanceChangeEvent>(OnAppearanceUpdate);
+        SubscribeLocalEvent<InventoryComponent, AppearanceChangeEvent>(OnAppearanceUpdate);
     }
 
-    private void OnAppearanceUpdate(EntityUid uid, ClientInventoryComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceUpdate(EntityUid uid, InventoryComponent component, ref AppearanceChangeEvent args)
     {
         // May need to update jumpsuit stencils if the sex changed. Also required to properly set the stencil on init
         // when sex is first loaded from the profile.
         if (!TryComp(uid, out SpriteComponent? sprite) || !sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var layer))
             return;
 
-        if (!args.AppearanceData.TryGetValue(HumanoidVisualizerKey.Key, out object? obj)
-            || obj is not HumanoidVisualizerData data
-            || data.Sex != Sex.Female
+        if (!TryComp(uid, out HumanoidAppearanceComponent? humanoid)
+            || humanoid.Sex != Sex.Female
             || !_inventorySystem.TryGetSlotEntity(uid, "jumpsuit", out var suit, component)
             || !TryComp(suit, out ClothingComponent? clothing))
         {
@@ -86,7 +84,7 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     private void OnGetVisuals(EntityUid uid, ClothingComponent item, GetEquipmentVisualsEvent args)
     {
-        if (!TryComp(args.Equipee, out ClientInventoryComponent? inventory))
+        if (!TryComp(args.Equipee, out InventoryComponent? inventory))
             return;
 
         List<PrototypeLayerData>? layers = null;
@@ -143,9 +141,15 @@ public sealed class ClientClothingSystem : ClothingSystem
         var correctedSlot = slot;
         TemporarySlotMap.TryGetValue(correctedSlot, out correctedSlot);
 
-        var state = (clothing.EquippedPrefix == null)
-            ? $"equipped-{correctedSlot}"
-            : $"{clothing.EquippedPrefix}-equipped-{correctedSlot}";
+
+
+        var state = $"equipped-{correctedSlot}";
+
+        if (clothing.EquippedPrefix != null)
+            state = $"{clothing.EquippedPrefix}-equipped-{correctedSlot}";
+
+        if (clothing.EquippedState != null)
+            state = $"{clothing.EquippedState}";
 
         // species specific
         if (speciesId != null && rsi.TryGetState($"{state}-{speciesId}", out _))
@@ -165,7 +169,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         return true;
     }
 
-    private void OnVisualsChanged(EntityUid uid, ClientInventoryComponent component, VisualsChangedEvent args)
+    private void OnVisualsChanged(EntityUid uid, InventoryComponent component, VisualsChangedEvent args)
     {
         if (!TryComp(args.Item, out ClothingComponent? clothing) || clothing.InSlot == null)
             return;
@@ -175,22 +179,22 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     private void OnDidUnequip(EntityUid uid, SpriteComponent component, DidUnequipEvent args)
     {
-        if (!TryComp(uid, out ClientInventoryComponent? inventory) || !TryComp(uid, out SpriteComponent? sprite))
+        if (!TryComp(uid, out InventoryComponent? inventory) || !TryComp(uid, out InventorySlotsComponent? inventorySlots))
             return;
 
-        if (!inventory.VisualLayerKeys.TryGetValue(args.Slot, out var revealedLayers))
+        if (!inventorySlots.VisualLayerKeys.TryGetValue(args.Slot, out var revealedLayers))
             return;
 
         // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
         // may eventually bloat the player with lots of invisible layers.
         foreach (var layer in revealedLayers)
         {
-            sprite.RemoveLayer(layer);
+            component.RemoveLayer(layer);
         }
         revealedLayers.Clear();
     }
 
-    public void InitClothing(EntityUid uid, ClientInventoryComponent? component = null, SpriteComponent? sprite = null)
+    public void InitClothing(EntityUid uid, InventoryComponent? component = null, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite, ref component) || !_inventorySystem.TryGetSlots(uid, out var slots, component))
             return;
@@ -212,16 +216,18 @@ public sealed class ClientClothingSystem : ClothingSystem
     }
 
     private void RenderEquipment(EntityUid equipee, EntityUid equipment, string slot,
-        ClientInventoryComponent? inventory = null, SpriteComponent? sprite = null, ClothingComponent? clothingComponent = null)
+        InventoryComponent? inventory = null, SpriteComponent? sprite = null, ClothingComponent? clothingComponent = null,
+        InventorySlotsComponent? inventorySlots = null)
     {
-        if(!Resolve(equipee, ref inventory, ref sprite) || !Resolve(equipment, ref clothingComponent, false))
+        if (!Resolve(equipee, ref inventory, ref sprite, ref inventorySlots) ||
+           !Resolve(equipment, ref clothingComponent, false))
+        {
             return;
+        }
 
         if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var suitLayer))
         {
-            if (_appearance.TryGetData(equipee, HumanoidVisualizerKey.Key, out object? obj)
-                && obj is HumanoidVisualizerData data
-                && data.Sex == Sex.Female)
+            if (TryComp(equipee, out HumanoidAppearanceComponent? humanoid) && humanoid.Sex == Sex.Female)
             {
                 sprite.LayerSetState(suitLayer, clothingComponent.FemaleMask switch
                 {
@@ -240,7 +246,7 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
         // may eventually bloat the player with lots of invisible layers.
-        if (inventory.VisualLayerKeys.TryGetValue(slot, out var revealedLayers))
+        if (inventorySlots.VisualLayerKeys.TryGetValue(slot, out var revealedLayers))
         {
             foreach (var key in revealedLayers)
             {
@@ -251,11 +257,11 @@ public sealed class ClientClothingSystem : ClothingSystem
         else
         {
             revealedLayers = new();
-            inventory.VisualLayerKeys[slot] = revealedLayers;
+            inventorySlots.VisualLayerKeys[slot] = revealedLayers;
         }
 
         var ev = new GetEquipmentVisualsEvent(equipee, slot);
-        RaiseLocalEvent(equipment, ev, false);
+        RaiseLocalEvent(equipment, ev);
 
         if (ev.Layers.Count == 0)
         {

@@ -27,7 +27,7 @@ namespace Content.Server.Jobs
                 component.Owner = mob;
 
                 var temp = (object) component;
-                serializationManager.Copy(data.Component, ref temp);
+                serializationManager.CopyTo(data.Component, ref temp);
                 entityManager.AddComponent(mob, (Component)temp!);
             }
         }

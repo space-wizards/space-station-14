@@ -44,7 +44,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         args.CanMove = true;
     }
 
-    private void OnJetpackUserGravityChanged(GravityChangedEvent ev)
+    private void OnJetpackUserGravityChanged(ref GravityChangedEvent ev)
     {
         var gridUid = ev.ChangedGridIndex;
         var jetpackQuery = GetEntityQuery<JetpackComponent>();
@@ -55,7 +55,7 @@ public abstract class SharedJetpackSystem : EntitySystem
                 jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack))
             {
                 if (_timing.IsFirstTimePredicted)
-                    _popups.PopupEntity(Loc.GetString("jetpack-to-grid"), user.Jetpack, Filter.Entities(user.Owner));
+                    _popups.PopupEntity(Loc.GetString("jetpack-to-grid"), user.Jetpack, user.Owner);
 
                 SetEnabled(jetpack, false, user.Owner);
             }
@@ -94,7 +94,7 @@ public abstract class SharedJetpackSystem : EntitySystem
             SetEnabled(jetpack, false, uid);
 
             if (_timing.IsFirstTimePredicted && _network.IsClient)
-                _popups.PopupEntity(Loc.GetString("jetpack-to-grid"), uid, Filter.Entities(uid));
+                _popups.PopupEntity(Loc.GetString("jetpack-to-grid"), uid, uid);
         }
     }
 
@@ -120,7 +120,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (TryComp<TransformComponent>(uid, out var xform) && !CanEnableOnGrid(xform.GridUid))
         {
             if (_timing.IsFirstTimePredicted)
-                _popups.PopupEntity(Loc.GetString("jetpack-no-station"), uid, Filter.Entities(args.Performer));
+                _popups.PopupEntity(Loc.GetString("jetpack-no-station"), uid, args.Performer);
 
             return;
         }

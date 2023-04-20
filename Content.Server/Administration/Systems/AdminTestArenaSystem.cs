@@ -1,6 +1,7 @@
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Systems;
@@ -34,7 +35,7 @@ public sealed class AdminTestArenaSystem : EntitySystem
         }
 
         ArenaMap[admin.UserId] = _mapManager.GetMapEntityId(_mapManager.CreateMap());
-        var grids = _map.LoadMap(Comp<MapComponent>(ArenaMap[admin.UserId]).WorldMap, ArenaMapPath);
+        var grids = _map.LoadMap(Comp<MapComponent>(ArenaMap[admin.UserId]).MapId, ArenaMapPath);
         ArenaGrid[admin.UserId] = grids.Count == 0 ? null : grids[0];
 
         return (ArenaMap[admin.UserId], ArenaGrid[admin.UserId]);

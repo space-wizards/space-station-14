@@ -68,7 +68,8 @@ namespace Content.Client.Suspicion
             }
 
             _overlayActive = true;
-            var overlay = new TraitorOverlay(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IPlayerManager>(), _resourceCache);
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var overlay = new TraitorOverlay(entManager, IoCManager.Resolve<IPlayerManager>(), _resourceCache, entManager.System<EntityLookupSystem>());
             _overlayManager.AddOverlay(overlay);
         }
 
@@ -106,7 +107,7 @@ namespace Content.Client.Suspicion
         public void AddUI()
         {
             // TODO move this out of the component
-            _gui = _ui.ActiveScreen?.GetOrNewWidget<SuspicionGui>();
+            _gui = _ui.ActiveScreen?.GetOrAddWidget<SuspicionGui>();
             _gui!.UpdateLabel();
             SetAnchorAndMarginPreset(_gui, LayoutPreset.BottomLeft);
 

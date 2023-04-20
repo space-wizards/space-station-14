@@ -15,14 +15,18 @@ air-alarm-ui-window-resync-devices-label = Resync
 air-alarm-ui-window-mode-label = Mode
 
 air-alarm-ui-window-pressure = {$pressure} kPa
+air-alarm-ui-window-pressure-indicator = Pressure: [color={$color}]{$pressure} kPa[/color]
 air-alarm-ui-window-temperature = {$tempC} C ({$temperature} K)
-air-alarm-ui-window-alarm-state = {$state}
+air-alarm-ui-window-temperature-indicator = Temperature: [color={$color}]{$tempC} C ({$temperature} K)[/color]
+air-alarm-ui-window-alarm-state = [color={$color}]{$state}[/color]
+air-alarm-ui-window-alarm-state-indicator = Status: [color={$color}]{$state}[/color]
 
 air-alarm-ui-window-tab-vents = Vents
 air-alarm-ui-window-tab-scrubbers = Scrubbers
 air-alarm-ui-window-tab-sensors = Sensors
 
 air-alarm-ui-gases = {$gas}: {$amount} mol ({$percentage}%)
+air-alarm-ui-gases-indicator = {$gas}: [color={$color}]{$amount} mol ({$percentage}%)[/color]
 
 air-alarm-ui-mode-filtering = Filtering
 air-alarm-ui-mode-wide-filtering = Filtering (wide)
@@ -55,10 +59,10 @@ air-alarm-ui-scrubber-wide-net-label = WideNet
 
 air-alarm-ui-sensor-gases = Gases
 air-alarm-ui-sensor-thresholds = Thresholds
-air-alarm-ui-thresholds-pressure-title = Pressure (kPa)
-air-alarm-ui-thresholds-temperature-title = Temperature (K)
-air-alarm-ui-thresholds-gas-title = {$gas} (%)
-air-alarm-ui-thresholds-upper-bound = Upper bound
-air-alarm-ui-thresholds-lower-bound = Lower bound
-air-alarm-ui-thresholds-upper-warning-bound = Upper warning bound
-air-alarm-ui-thresholds-lower-warning-bound = Lower warning bound
+air-alarm-ui-thresholds-pressure-title = Thresholds (kPa)
+air-alarm-ui-thresholds-temperature-title = Thresholds (K)
+air-alarm-ui-thresholds-gas-title = Thresholds (%)
+air-alarm-ui-thresholds-upper-bound = Danger above
+air-alarm-ui-thresholds-lower-bound = Danger below
+air-alarm-ui-thresholds-upper-warning-bound = Warning above
+air-alarm-ui-thresholds-lower-warning-bound = Warning below

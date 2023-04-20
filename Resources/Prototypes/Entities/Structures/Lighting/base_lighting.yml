@@ -90,10 +90,9 @@
     receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Appearance
-    visuals:
-    - type: PoweredLightVisualizer
-      blinkingSound:
-        path: "/Audio/Machines/light_tube_on.ogg"
+  - type: PoweredLightVisuals
+    blinkingSound:
+      path: "/Audio/Machines/light_tube_on.ogg"
   - type: SignalReceiver
     inputs:
       On: []
@@ -103,7 +102,7 @@
 - type: entity
   id: Poweredlight
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix:
+  suffix: ""
   parent: PoweredlightEmpty
   components:
   - type: Sprite
@@ -263,8 +262,7 @@
     receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Appearance
-    visuals:
-    - type: PoweredLightVisualizer
+  - type: PoweredLightVisuals
   - type: SignalReceiver
     inputs:
       On: []
@@ -273,7 +271,7 @@
 
 - type: entity
   id: PoweredSmallLight
-  suffix:
+  suffix: ""
   parent: PoweredSmallLightEmpty
   components:
   - type: Sprite
@@ -290,7 +288,7 @@
   name: emergency light
   description: A small light with an internal battery that turns on as soon as it stops receiving any power. Nanotrasen technology allows it to adapt its color to alert crew to the conditions of the station.
   parent: AlwaysPoweredWallLight
-  suffix:
+  suffix: ""
   components:
   - type: PointLight
     enabled: false
@@ -309,13 +307,16 @@
     sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
     layers:
     - state: base
-      map: ["enum.EmergencyLightVisualLayers.Base"]
+      map: [ "enum.EmergencyLightVisualLayers.Base" ]
     - state: emergency_light_off
-      map: ["enum.EmergencyLightVisualLayers.Light"]
+      map: [ "enum.EmergencyLightVisualLayers.LightOff" ]
       color: "#FF4020"
+    - state: emergency_light_on
+      map: [ "enum.EmergencyLightVisualLayers.LightOn" ]
+      color: "#FF4020"
+      shader: "unshaded"
+      visible: false
   - type: Appearance
-    visuals:
-    - type: EmergencyLightVisualizer
   - type: AmbientSound
     sound:
       path: /Audio/Ambience/Objects/alarm.ogg
