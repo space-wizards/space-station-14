@@ -1,11 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed previous examine showing up briefly when rapidly examining multiple
-      things., type: Fix}
-  - {message: Fixed examine sometimes showing up in the top left corner., type: Fix}
-  id: 2966
-  time: '2023-01-27T23:15:39.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Fixed a typo for the Medical Intern role timer, type: Fix}
@@ -2888,3 +2881,8 @@ Entries:
   - {message: Fixed salvage structure localisation., type: Fix}
   id: 3465
   time: '2023-04-20T05:51:10.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed apc toggle not working, type: Fix}
+  id: 3466
+  time: '2023-04-20T06:27:59.0000000+00:00'
