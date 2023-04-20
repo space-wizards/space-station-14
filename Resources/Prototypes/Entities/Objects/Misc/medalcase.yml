@@ -1,0 +1,22 @@
+- type: entity
+  id: MedalCase
+  name: medal case
+  description: A box of decades old military surplus rations. It is surprisingly not rotten.
+  parent: BaseStorageItem
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/medalcase.rsi
+  - type: Item
+    sprite: Objects/Storage/medalcase.rsi
+  - type: Storage
+    capacity: 80
+  - type: StorageFill
+    contents:
+    - id: ClothingNeckGoldmedal
+    - id: ClothingNeckBronzeheart
+    - id: ClothingNeckCargomedal
+    - id: ClothingNeckEngineermedal
+    - id: ClothingNeckMedicalmedal
+    - id: ClothingNeckSciencemedal
+    - id: ClothingNeckSecuritymedal
+    - id: ClothingNeckClownmedal
