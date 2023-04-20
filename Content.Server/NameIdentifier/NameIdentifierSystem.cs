@@ -26,15 +26,15 @@ public sealed class NameIdentifierSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NameIdentifierComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<NameIdentifierComponent, ComponentRemove>(OnComponentRemove);
+        SubscribeLocalEvent<NameIdentifierComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NameIdentifierComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupIds);
 
         InitialSetupPrototypes();
         _prototypeManager.PrototypesReloaded += OnReloadPrototypes;
     }
 
-    private void OnComponentRemove(EntityUid uid, NameIdentifierComponent component, ComponentRemove args)
+    private void OnComponentShutdown(EntityUid uid, NameIdentifierComponent component, ComponentShutdown args)
     {
         if (CurrentIds.TryGetValue(component.Group, out var ids))
         {
@@ -64,7 +64,7 @@ public sealed class NameIdentifierSystem : EntitySystem
         var entityName = Name(uid);
         if (!CurrentIds.TryGetValue(proto.ID, out var set))
             return entityName;
-        
+
         if (set.Count == 0)
         {
             // Oh jeez. We're outta numbers.
@@ -79,7 +79,7 @@ public sealed class NameIdentifierSystem : EntitySystem
             : $"{randomVal}";
     }
 
-    private void OnComponentInit(EntityUid uid, NameIdentifierComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, NameIdentifierComponent component, MapInitEvent args)
     {
         if (!_prototypeManager.TryIndex<NameIdentifierGroupPrototype>(component.Group, out var group))
             return;
