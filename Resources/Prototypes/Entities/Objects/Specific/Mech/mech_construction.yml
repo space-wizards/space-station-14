@@ -185,3 +185,19 @@
   - type: Sprite
     state: harness
     noRot: true
+
+- type: entity
+  id: VimChassis
+  parent: BaseMechConstruct
+  name: vim chassis
+  description: An in-progress construction of the Vim exosuit.
+  components:
+  - type: Sprite
+    noRot: true
+    state: vim0
+  - type: Construction
+    graph: Vim
+    node: start
+    defaultTarget: vim
+  - type: MechAssemblyVisuals
+    statePrefix: vim
