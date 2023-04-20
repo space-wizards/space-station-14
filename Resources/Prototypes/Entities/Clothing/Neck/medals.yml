@@ -80,7 +80,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckClownmedal
   name: clown medal
-  description: Given for the best joke in the whole space. HONK!
+  description: Given for the best joke in the universe. HONK!
   components:
   - type: Sprite
     sprite: Clothing/Neck/Medals/clownmedal.rsi
