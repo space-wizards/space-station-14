@@ -1,13 +1,6 @@
 Entries:
 - author: AlexMorgan3817
   changes:
-  - {message: Added encryption keys for headsets. These chips provide access to radio
-      channels. You can eject them with a screwdriver and then install in other headsets.,
-    type: Add}
-  id: 2973
-  time: '2023-01-29T00:53:08.0000000+00:00'
-- author: AlexMorgan3817
-  changes:
   - {message: Fixed bug causing radio channels to be available even after encryption
       keys get removed., type: Fix}
   id: 2974
@@ -2886,3 +2879,9 @@ Entries:
   - {message: Ian will no longer get hurt by mouse traps, type: Tweak}
   id: 3472
   time: '2023-04-20T23:51:11.0000000+00:00'
+- author: AsikKEsel
+  changes:
+  - {message: 'added Cargo medal, engineer medal, medical meda, security medal, science
+      medal, case with all medals and... clown medal?', type: Add}
+  id: 3473
+  time: '2023-04-20T23:54:31.0000000+00:00'
