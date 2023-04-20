@@ -68,47 +68,46 @@ public sealed class NukeopsRuleComponent : Component
     public string NormalNames = "SyndicateNamesNormal";
 
     [DataField("outpostMap", customTypeSerializer: typeof(ResourcePathSerializer))]
-    public ResourcePath? NukieOutpostMap = new("/Maps/nukieplanet.yml");
+    public ResPath? NukieOutpostMap = new("/Maps/nukieplanet.yml");
 
     [DataField("shuttleMap", customTypeSerializer: typeof(ResourcePathSerializer))]
-    public ResourcePath? NukieShuttleMap = new("/Maps/infiltrator.yml");
+    public ResPath? NukieShuttleMap = new("/Maps/infiltrator.yml");
 
     [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
     public SoundSpecifier? GreetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
 
-    public WinType _winType = WinType.Neutral;
+    public WinType WinType = WinType.Neutral;
 
-    public List<WinCondition> _winConditions = new ();
+    public List<WinCondition> WinConditions = new ();
 
-    public MapId? _nukiePlanet;
+    public MapId? NukiePlanet;
 
     // TODO: use components, don't just cache entity UIDs
     // There have been (and probably still are) bugs where these refer to deleted entities from old rounds.
-    public EntityUid? _nukieOutpost;
-    public EntityUid? _nukieShuttle;
-    public EntityUid? _targetStation;
-
+    public EntityUid? NukieOutpost;
+    public EntityUid? NukieShuttle;
+    public EntityUid? TargetStation;
 
     /// <summary>
     ///     Cached starting gear prototypes.
     /// </summary>
-    public readonly Dictionary<string, StartingGearPrototype> _startingGearPrototypes = new ();
+    public readonly Dictionary<string, StartingGearPrototype> StartingGearPrototypes = new ();
 
     /// <summary>
     ///     Cached operator name prototypes.
     /// </summary>
-    public readonly Dictionary<string, List<string>> _operativeNames = new();
+    public readonly Dictionary<string, List<string>> OperativeNames = new();
 
     /// <summary>
     ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
     /// </summary>
-    public readonly Dictionary<EntityUid, string> _operativeMindPendingData = new();
+    public readonly Dictionary<EntityUid, string> OperativeMindPendingData = new();
 
     /// <summary>
     ///     Players who played as an operative at some point in the round.
     ///     Stores the session as well as the entity name
     /// </summary>
-    public readonly Dictionary<string, IPlayerSession> _operativePlayers = new();
+    public readonly Dictionary<string, IPlayerSession> OperativePlayers = new();
 }
 
 public enum WinType : byte
