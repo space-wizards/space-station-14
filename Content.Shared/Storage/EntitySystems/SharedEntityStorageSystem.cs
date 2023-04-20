@@ -146,13 +146,13 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (component.Open)
         {
             verb.Text = Loc.GetString("verb-common-close");
-            verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
+            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
         }
         else
         {
             verb.Text = Loc.GetString("verb-common-open");
             verb.Icon = new SpriteSpecifier.Texture(
-                new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
+                new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
         }
         verb.Act = () => ToggleOpen(args.User, args.Target, component);
         args.Verbs.Add(verb);

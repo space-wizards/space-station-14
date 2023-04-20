@@ -226,8 +226,8 @@ public sealed class LockSystem : EntitySystem
                 () => TryLock(uid, args.User, component),
             Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock"),
             Icon = component.Locked ?
-                new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")) :
-                new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
+                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")) :
+                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
         };
         args.Verbs.Add(verb);
     }

@@ -16,7 +16,7 @@ public sealed class ImageParallaxTextureSource : IParallaxTextureSource
     /// Texture path.
     /// </summary>
     [DataField("path", required: true)]
-    public ResPath Path { get; } = default!;
+    public ResourcePath Path { get; } = default!;
 
     Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel)
     {

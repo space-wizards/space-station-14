@@ -28,11 +28,11 @@ namespace Content.Client.PDA
 
             ViewContainer.OnChildAdded += control => control.Visible = false;
 
-            HomeButton.IconTexture = new SpriteSpecifier.Texture(new ("/Textures/Interface/home.png"));
-            FlashLightToggleButton.IconTexture = new SpriteSpecifier.Texture(new ("/Textures/Interface/light.png"));
-            EjectPenButton.IconTexture = new SpriteSpecifier.Texture(new ("/Textures/Interface/pencil.png"));
-            EjectIdButton.IconTexture = new SpriteSpecifier.Texture(new ("/Textures/Interface/eject.png"));
-            ProgramCloseButton.IconTexture = new SpriteSpecifier.Texture(new ("/Textures/Interface/Nano/cross.svg.png"));
+            HomeButton.IconTexture = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/home.png"));
+            FlashLightToggleButton.IconTexture = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/light.png"));
+            EjectPenButton.IconTexture = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/pencil.png"));
+            EjectIdButton.IconTexture = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/eject.png"));
+            ProgramCloseButton.IconTexture = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Nano/cross.svg.png"));
 
 
             HomeButton.OnPressed += _ => ToHomeScreen();

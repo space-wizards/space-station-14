@@ -50,7 +50,7 @@ namespace Content.Tests.Shared.Alert
         public void GetsIconPath(short? severity, string expected)
         {
             var alert = GetTestPrototype();
-            Assert.That(alert.GetIcon(severity), Is.EqualTo(new SpriteSpecifier.Texture(new (expected))));
+            Assert.That(alert.GetIcon(severity), Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath(expected))));
         }
 
         [TestCase(null, "/Textures/Interface/Alerts/Human/human.rsi/human0.png")]

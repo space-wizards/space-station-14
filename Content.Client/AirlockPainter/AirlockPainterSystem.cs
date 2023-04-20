@@ -28,7 +28,7 @@ namespace Content.Client.AirlockPainter
                     continue;
                 }
 
-                RSIResource doorRsi = _resourceCache.GetResource<RSIResource>(TextureRoot / new ResPath(iconPath));
+                RSIResource doorRsi = _resourceCache.GetResource<RSIResource>(TextureRoot / new ResourcePath(iconPath));
                 if (!doorRsi.RSI.TryGetState("closed", out var icon))
                 {
                     Entries.Add(new AirlockPainterEntry(style, null));
