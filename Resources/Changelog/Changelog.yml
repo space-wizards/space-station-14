@@ -1,12 +1,6 @@
 Entries:
 - author: Slava0135
   changes:
-  - {message: vent clog event now only affects single station vents (no more foam
-      in nukie ship), type: Tweak}
-  id: 2969
-  time: '2023-01-28T14:06:40.0000000+00:00'
-- author: Slava0135
-  changes:
   - {message: apc events now only affect single station APCs (no power shut offs on
       shuttles), type: Fix}
   id: 2970
@@ -2886,3 +2880,9 @@ Entries:
   - {message: Fix cargo selling mobs inside of crates., type: Fix}
   id: 3468
   time: '2023-04-20T12:09:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix mob spawn positions and nerf mob spawn rates for salvage expeditions.,
+    type: Tweak}
+  id: 3469
+  time: '2023-04-20T13:32:06.0000000+00:00'
