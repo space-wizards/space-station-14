@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Fixed a typo for the Medical Intern role timer, type: Fix}
-  id: 2967
-  time: '2023-01-28T13:27:28.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Ammo boxes can now be printed in the security techlathe., type: Add}
@@ -2886,3 +2881,10 @@ Entries:
   - {message: fixed apc toggle not working, type: Fix}
   id: 3466
   time: '2023-04-20T06:27:59.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The Ripley now moves faster, but is less effective in combat and breaching.',
+    type: Tweak}
+  - {message: The Ripley is now substantially less expensive to produce., type: Tweak}
+  id: 3467
+  time: '2023-04-20T08:04:57.0000000+00:00'
