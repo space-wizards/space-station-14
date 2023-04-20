@@ -375,6 +375,12 @@
       state: rag
     - type: Spillable
       solution: absorbed
+    - type: MeleeWeapon
+      soundNoDamage:
+        path: "/Audio/Effects/Fluids/splat.ogg"
+      damage:
+        types:
+          Blunt: 0
     - type: Item
       size: 10
       sprite: Objects/Specific/Janitorial/rag.rsi
