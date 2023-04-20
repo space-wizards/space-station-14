@@ -1,0 +1,3 @@
+- files: ["book-authorbooks.ftl"]
+  license: "CC-BY-SA-3.0"
+  copyright: "all books are written by KT#4444 (user luckyshotpictures in space station 14)"
