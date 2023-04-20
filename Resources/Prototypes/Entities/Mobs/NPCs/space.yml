@@ -180,6 +180,13 @@
     accent: kangaroo
   - type: InventorySlots
   - type: Strippable
+  - type: Bloodstream
+    bloodMaxVolume: 300
+    bloodReagent: Cryoxadone
+  - type: CombatMode
+  - type: Temperature
+    heatDamageThreshold: 500
+    coldDamageThreshold: 0
   - type: UserInterface
     interfaces:
     - key: enum.StrippingUiKey.Key
