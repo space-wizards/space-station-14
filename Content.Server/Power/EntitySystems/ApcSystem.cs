@@ -144,7 +144,7 @@ namespace Content.Server.Power.EntitySystems
                 (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
                 battery.AvailableSupply / battery.Capacity);
 
-            _userInterfaceSystem.TrySetUiState(uid, ApcUiKey.Key, state, ui: ui);
+            _ui.TrySetUiState(uid, ApcUiKey.Key, state, ui: ui);
         }
 
         private ApcChargeState CalcChargeState(EntityUid uid, PowerState.Battery battery)
