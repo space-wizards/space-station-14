@@ -1,9 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Cleaned up some of the syndicate names., type: Fix}
-  id: 2972
-  time: '2023-01-28T19:09:23.0000000+00:00'
 - author: AlexMorgan3817
   changes:
   - {message: Added encryption keys for headsets. These chips provide access to radio
@@ -2886,3 +2881,8 @@ Entries:
       fingerprints., type: Add}
   id: 3471
   time: '2023-04-20T23:47:48.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Ian will no longer get hurt by mouse traps, type: Tweak}
+  id: 3472
+  time: '2023-04-20T23:51:11.0000000+00:00'
