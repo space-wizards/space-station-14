@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Dataset;
 using Robust.Shared.Random;
@@ -54,10 +55,24 @@ namespace Content.Shared.Humanoid
                         return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.FemaleFirstNames).Values);
             }
         }
-
-        public string GetLastName(SpeciesPrototype speciesProto)
+        public string GetLastName(SpeciesPrototype speciesProto, Gender? gender = null)
         {
-            return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.LastNames).Values);
+            switch (gender)
+            {
+                case Gender.Male:
+                    return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.MaleLastNames).Values);
+                case Gender.Female:
+                    return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.FemaleLastNames).Values);
+                default:
+                    if (_random.Prob(0.5f))
+                        return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.MaleLastNames).Values);
+                    else
+                        return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.FemaleLastNames).Values);
+            }
         }
+        /*public string GetLastName(SpeciesPrototype speciesProto){
+
+                return _random.Pick(_prototypeManager.Index<DatasetPrototype>(speciesProto.LastNames).Values);
+        }*/
     }
 }
