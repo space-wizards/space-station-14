@@ -59,7 +59,7 @@
   parent: BaseRipleyPart
   id: RipleyHarness
   name: ripley harness
-  description: The core of the ripley mech
+  description: The core of the Ripley APLU.
   components:
   - type: Appearance
   - type: ItemMapper
@@ -99,7 +99,7 @@
   parent: BaseRipleyPartItem
   id: RipleyLArm
   name: ripley left arm
-  description: Ripley mech left arm
+  description: The left arm of the Ripley APLU. It belongs on the chassis of the mech.
   components:
   - type: Sprite
     state: ripley_l_arm
@@ -111,7 +111,7 @@
   parent: BaseRipleyPartItem
   id: RipleyLLeg
   name: ripley left leg
-  description: Ripley mech left leg
+  description: The left leg of the Ripley APLU. It belongs on the chassis of the mech.
   components:
   - type: Sprite
     state: ripley_l_leg
@@ -123,7 +123,7 @@
   parent: BaseRipleyPartItem
   id: RipleyRLeg
   name: ripley right leg
-  description: Ripley mech right leg
+  description: The right leg of the Ripley APLU. It belongs on the chassis of the mech.
   components:
   - type: Sprite
     state: ripley_r_leg
@@ -135,7 +135,7 @@
   parent: BaseRipleyPartItem
   id: RipleyRArm
   name: ripley right arm
-  description: Ripley mech right arm
+  description: The right arm of the Ripley APLU. It belongs on the chassis of the mech.
   components:
   - type: Sprite
     state: ripley_r_arm
@@ -147,7 +147,7 @@
   id: RipleyChassis
   parent: BaseRipleyConstruct
   name: ripley chassis
-  description: An in-progress construction of a ripley mech.
+  description: An in-progress construction of the Ripley APLU mech.
   components:
   - type: Sprite
     noRot: true

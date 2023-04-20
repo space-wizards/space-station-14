@@ -1,3 +1,5 @@
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Pinpointer;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
@@ -21,6 +23,15 @@ public sealed class NavMapSystem : SharedNavMapSystem
         SubscribeLocalEvent<ReAnchorEvent>(OnReAnchor);
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<NavMapComponent, GridSplitEvent>(OnNavMapSplit);
+        SubscribeLocalEvent<StationGridAddedEvent>(OnStationInit);
+    }
+
+    private void OnStationInit(StationGridAddedEvent ev)
+    {
+        var comp = EnsureComp<NavMapComponent>(ev.GridId);
+        var physicsQuery = GetEntityQuery<PhysicsComponent>();
+        var tagQuery = GetEntityQuery<TagComponent>();
+        RefreshGrid(comp, Comp<MapGridComponent>(ev.GridId), physicsQuery, tagQuery);
     }
 
     private void OnNavMapSplit(EntityUid uid, NavMapComponent component, ref GridSplitEvent args)
@@ -51,6 +62,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
             if (!component.Chunks.TryGetValue(chunkOrigin, out var chunk))
             {
                 chunk = new NavMapChunk(chunkOrigin);
+                component.Chunks[chunkOrigin] = chunk;
             }
 
             RefreshTile(grid, component, chunk, tile.Value.GridIndices, physicsQuery, tagQuery);

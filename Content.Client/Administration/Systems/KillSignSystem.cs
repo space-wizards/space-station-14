@@ -33,7 +33,7 @@ public sealed class KillSignSystem : EntitySystem
 
         var adj = sprite.Bounds.Height / 2 + ((1.0f/32) * 6.0f);
 
-        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/killsign.rsi"), "sign"));
+        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResPath("Objects/Misc/killsign.rsi"), "sign"));
         sprite.LayerMapSet(KillSignKey.Key, layer);
 
         sprite.LayerSetOffset(layer, new Vector2(0.0f, adj));

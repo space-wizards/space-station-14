@@ -236,6 +236,7 @@
       - PowerCellHigh
       - SynthesizerInstrument
       - RPED
+      - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
 
@@ -466,13 +467,11 @@
     idleState: icon
     runningState: icon
     machinePartPrintSpeed: Laser
-    dynamicRecipes:
+    staticRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
-      - ClothingHandsGlovesNitrile
       - ClothingMaskSterile
       - DiseaseSwab
-      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -496,6 +495,9 @@
       - MedkitAdvanced
       - MedkitRadiation
       - MedkitCombat
+    dynamicRecipes:
+      - HandheldCrewMonitor
+      - ClothingHandsGlovesNitrile
   - type: Machine
     board: MedicalTechFabCircuitboard
 

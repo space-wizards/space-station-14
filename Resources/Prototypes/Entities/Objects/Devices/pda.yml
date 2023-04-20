@@ -553,14 +553,23 @@
     state: pda-security
 
 - type: entity
-  parent: PassengerPDA
+  parent: BasePDA
   id: CentcomPDA
   name: CentCom PDA
-  description: Colored the numbing grey of bureaucracy.
+  description: Light green sign of walking bureaucracy.
   components:
   - type: PDA
     id: CentcomIDCardSyndie
-    state: pda
+    state: pda-centcom
+    penSlot:
+      startingItem: PenCentcom
+      whitelist:
+        tags:
+        - Write
+  - type: PDABorderColor
+    borderColor: "#32CD32"
+  - type: Icon
+    state: pda-centcom
 
 - type: entity
   parent: BasePDA
