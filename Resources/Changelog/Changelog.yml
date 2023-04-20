@@ -1,10 +1,4 @@
 Entries:
-- author: AlexMorgan3817
-  changes:
-  - {message: Fixed bug causing radio channels to be available even after encryption
-      keys get removed., type: Fix}
-  id: 2974
-  time: '2023-01-29T18:32:09.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Some high-risk targets (SMESes, emitterse, substations) are now slightly
@@ -2885,3 +2879,11 @@ Entries:
       medal, case with all medals and... clown medal?', type: Add}
   id: 3473
   time: '2023-04-20T23:54:31.0000000+00:00'
+- author: Kade
+  changes:
+  - {message: Uniform printers have been updated to include more of a variety of winter
+      coats and a couple new jumpsuits., type: Add}
+  - {message: Non head winter coats now only cost 500 Cloth instead of 300 cloth and
+      300 Durathread., type: Tweak}
+  id: 3474
+  time: '2023-04-20T23:58:03.0000000+00:00'
