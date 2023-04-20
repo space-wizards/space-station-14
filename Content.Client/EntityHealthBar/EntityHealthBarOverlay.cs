@@ -33,7 +33,7 @@ public sealed class EntityHealthBarOverlay : Overlay
         _mobStateSystem = _entManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
         _mobThresholdSystem = _entManager.EntitySysManager.GetEntitySystem<MobThresholdSystem>();
 
-        var sprite = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/health_bar.rsi"), "icon");
+        var sprite = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/health_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
 
         _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();

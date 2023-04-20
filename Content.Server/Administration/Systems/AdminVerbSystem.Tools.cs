@@ -68,8 +68,8 @@ public sealed partial class AdminVerbSystem
                     Text = bolts.BoltsDown ? "Unbolt" : "Bolt",
                     Category = VerbCategory.Tricks,
                     Icon = bolts.BoltsDown
-                        ? new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/unbolt.png"))
-                        : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
+                        ? new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/unbolt.png"))
+                        : new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/bolt.png")),
                     Act = () =>
                     {
                         _boltsSystem.SetBoltsWithAudio(args.Target, bolts, !bolts.BoltsDown);

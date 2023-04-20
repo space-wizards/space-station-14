@@ -336,6 +336,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         var verb = new UtilityVerb
         {
             Act = () => OnUsed(uid, configurator, args.Target, args.User),
+                new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")) :
+                new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
             Impact = LogImpact.Low
         };
 
@@ -374,7 +376,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             AlternativeVerb verb = new()
             {
                 Text = Loc.GetString("network-configurator-save-device"),
-                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
                 Act = () => TryAddNetworkDevice(args.Target, args.Using.Value, args.User),
                 Impact = LogImpact.Low
             };
