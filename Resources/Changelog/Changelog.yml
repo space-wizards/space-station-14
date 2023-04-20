@@ -1,11 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: Added two new narcolepsy medications., type: Add}
-  - {message: Previous narcolepsy medication has been nerfed in viability. You now
-      need more of the same medicine for it to be as effective., type: Tweak}
-  id: 2965
-  time: '2023-01-27T21:11:06.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed previous examine showing up briefly when rapidly examining multiple
@@ -2889,3 +2882,9 @@ Entries:
   - {message: Fix cargo shuttle FTL., type: Fix}
   id: 3464
   time: '2023-04-20T03:28:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Doubled salvage expedition times., type: Tweak}
+  - {message: Fixed salvage structure localisation., type: Fix}
+  id: 3465
+  time: '2023-04-20T05:51:10.0000000+00:00'
