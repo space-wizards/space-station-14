@@ -7,7 +7,7 @@
   description: uplink-pistol-viper-desc
   productEntity: WeaponPistolViper
   cost:
-    Telecrystal: 6
+    Telecrystal: 3
   categories:
   - UplinkWeapons
 
@@ -17,7 +17,7 @@
   description: uplink-revolver-python-desc
   productEntity: WeaponRevolverPython
   cost:
-    Telecrystal: 8
+    Telecrystal: 4
   categories:
   - UplinkWeapons
 
@@ -28,7 +28,7 @@
   description: uplink-pistol-cobra-desc
   productEntity: WeaponPistolCobra
   cost:
-    Telecrystal: 8
+    Telecrystal: 4
   categories:
   - UplinkWeapons
 
@@ -39,7 +39,7 @@
   description: uplink-rifle-mosin-desc
   productEntity: WeaponSniperMosin
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
   - UplinkWeapons
 
@@ -59,7 +59,7 @@
   name: uplink-edagger-name
   description: uplink-edagger-desc
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
-  productEntity: EnergyDagger
+  productEntity: EnergyDaggerBox
   cost:
     Telecrystal: 3
   categories:
@@ -156,7 +156,8 @@
   id: UplinkExplodingPen
   name: uplink-exploding-pen-name
   description: uplink-exploding-pen-desc
-  productEntity: PenExploding
+  icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
+  productEntity: PenExplodingBox
   cost:
     Telecrystal: 5
   categories:
@@ -206,7 +207,7 @@
   description: uplink-mosin-ammo-desc
   productEntity: BoxMagazineLightRifle
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
   - UplinkAmmo
 
@@ -314,7 +315,8 @@
   id: UplinkHypopen
   name: uplink-hypopen-name
   description: uplink-hypopen-desc
-  productEntity: Hypopen
+  icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
+  productEntity: HypopenBox
   cost:
     Telecrystal: 6
   categories:
@@ -327,6 +329,16 @@
   productEntity: ClothingMaskGasVoiceChameleon
   cost:
     Telecrystal: 6
+  categories:
+  - UplinkUtility
+
+- type: listing
+  id: UplinkRadioJammer
+  name: uplink-radio-jammer-name
+  description: uplink-radio-jammer-desc
+  productEntity: RadioJammer
+  cost:
+    Telecrystal: 5
   categories:
   - UplinkUtility
 

@@ -4,4 +4,4 @@
   noSpawn: true
   components:
   - type: Stomach
-    maxVolume: 50
+    maxVol: 50

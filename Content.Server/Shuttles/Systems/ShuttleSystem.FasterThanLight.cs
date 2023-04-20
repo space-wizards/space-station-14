@@ -150,6 +150,8 @@ public sealed partial class ShuttleSystem
         hyperspace.Dock = false;
         hyperspace.PriorityTag = priorityTag;
         _console.RefreshShuttleConsoles();
+        var ev = new FTLRequestEvent(_mapManager.GetMapEntityId(coordinates.ToMap(EntityManager, _transform).MapId));
+        RaiseLocalEvent(shuttleUid, ref ev, true);
     }
 
     /// <summary>
@@ -249,8 +251,10 @@ public sealed partial class ShuttleSystem
 
                     SetDockBolts(uid, true);
                     _console.RefreshShuttleConsoles(uid);
-                    var ev = new FTLStartedEvent(fromMapUid, fromMatrix, fromRotation);
-                    RaiseLocalEvent(uid, ref ev);
+                    var target = comp.TargetUid != null ? new EntityCoordinates(comp.TargetUid.Value, Vector2.Zero) : comp.TargetCoordinates;
+
+                    var ev = new FTLStartedEvent(uid, target, fromMapUid, fromMatrix, fromRotation);
+                    RaiseLocalEvent(uid, ref ev, true);
 
                     if (comp.TravelSound != null)
                     {
@@ -344,7 +348,7 @@ public sealed partial class ShuttleSystem
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(uid);
                     _mapManager.SetMapPaused(mapId, false);
-                    var ftlEvent = new FTLCompletedEvent();
+                    var ftlEvent = new FTLCompletedEvent(uid, _mapManager.GetMapEntityId(mapId));
                     RaiseLocalEvent(uid, ref ftlEvent, true);
                     break;
                 case FTLState.Cooldown:
@@ -499,6 +503,7 @@ public sealed partial class ShuttleSystem
     public bool TryFTLProximity(EntityUid shuttleUid, ShuttleComponent component, EntityUid targetUid, TransformComponent? xform = null, TransformComponent? targetXform = null)
     {
         if (!Resolve(targetUid, ref targetXform) ||
+            targetXform.GridUid == null ||
             targetXform.MapUid == null ||
             !targetXform.MapUid.Value.IsValid() ||
             !Resolve(shuttleUid, ref xform))
@@ -577,6 +582,23 @@ public sealed partial class ShuttleSystem
 
         // TODO: This is pretty crude for multiple landings.
         if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid))
+        {
+            var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
+            spawnPos = targetAABB.Center + _random.NextVector2(minRadius, minRadius + 64f);
+        }
+        else if (shuttleBody != null)
+        {
+            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+            var transform = new Transform(targetPos, targetRot);
+            spawnPos = Robust.Shared.Physics.Transform.Mul(transform, -shuttleBody.LocalCenter);
+        }
+        else
+        {
+            spawnPos = _transform.GetWorldPosition(targetXform, xformQuery);
+        }
+
+        // TODO: This is pretty crude for multiple landings.
+        if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid.Value))
         {
             var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
             spawnPos = targetAABB.Center + _random.NextVector2(minRadius, minRadius + 64f);
