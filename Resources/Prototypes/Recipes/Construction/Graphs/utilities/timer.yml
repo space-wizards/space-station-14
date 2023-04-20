@@ -79,7 +79,7 @@
       - to: parts
         steps:
         - tool: Prying
-          doafter: 1
+          doAfter: 1
         completed:
         - !type:EmptyAllContainers {}
 
@@ -93,7 +93,7 @@
       - to: parts
         steps:
         - tool: Prying
-          doafter: 1
+          doAfter: 1
         completed:
         - !type:EmptyAllContainers {}
 
@@ -107,7 +107,7 @@
       - to: parts
         steps:
         - tool: Prying
-          doafter: 1
+          doAfter: 1
         completed:
         - !type:EmptyAllContainers {}
 
@@ -117,7 +117,7 @@
       - to: screenElectronics
         steps:
         - tool: Prying
-          doafter: 1
+          doAfter: 1
         completed:
         - !type:GivePrototype
           prototype: SheetGlass1
@@ -133,7 +133,7 @@
       - to: brigElectronics
         steps:
         - tool: Prying
-          doafter: 1
+          doAfter: 1
         completed:
         - !type:GivePrototype
           prototype: SheetGlass1
