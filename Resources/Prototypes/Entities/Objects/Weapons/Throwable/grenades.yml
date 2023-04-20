@@ -45,6 +45,11 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/double_beep.ogg"
+    initialBeepDelay: 0
+    beepInterval: 666 # single beep at start
 
 - type: entity
   name: flashbang
