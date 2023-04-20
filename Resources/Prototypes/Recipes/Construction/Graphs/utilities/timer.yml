@@ -80,6 +80,9 @@
         steps:
         - tool: Prying
           doAfter: 1
+        conditions:
+        - !type:ContainerNotEmpty
+          container: board
         completed:
         - !type:EmptyAllContainers {}
 
@@ -94,6 +97,9 @@
         steps:
         - tool: Prying
           doAfter: 1
+        conditions:
+        - !type:ContainerNotEmpty
+          container: board
         completed:
         - !type:EmptyAllContainers {}
 
@@ -108,6 +114,9 @@
         steps:
         - tool: Prying
           doAfter: 1
+        conditions:
+        - !type:ContainerNotEmpty
+          container: board
         completed:
         - !type:EmptyAllContainers {}
 
@@ -165,5 +174,4 @@
       - to: brigGlass
         steps:
         - tool: Screwing
-          # extra long for brig timer to reduce trolling
-          doAfter: 4
+          doAfter: 2
