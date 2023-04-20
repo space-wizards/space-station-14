@@ -503,7 +503,6 @@ public sealed partial class ShuttleSystem
     public bool TryFTLProximity(EntityUid shuttleUid, ShuttleComponent component, EntityUid targetUid, TransformComponent? xform = null, TransformComponent? targetXform = null)
     {
         if (!Resolve(targetUid, ref targetXform) ||
-            targetXform.GridUid == null ||
             targetXform.MapUid == null ||
             !targetXform.MapUid.Value.IsValid() ||
             !Resolve(shuttleUid, ref xform))
@@ -598,7 +597,7 @@ public sealed partial class ShuttleSystem
         }
 
         // TODO: This is pretty crude for multiple landings.
-        if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid.Value))
+        if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid))
         {
             var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
             spawnPos = targetAABB.Center + _random.NextVector2(minRadius, minRadius + 64f);

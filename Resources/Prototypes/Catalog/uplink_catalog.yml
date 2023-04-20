@@ -7,7 +7,7 @@
   description: uplink-pistol-viper-desc
   productEntity: WeaponPistolViper
   cost:
-    Telecrystal: 6
+    Telecrystal: 3
   categories:
   - UplinkWeapons
 
@@ -17,7 +17,7 @@
   description: uplink-revolver-python-desc
   productEntity: WeaponRevolverPython
   cost:
-    Telecrystal: 8
+    Telecrystal: 4
   categories:
   - UplinkWeapons
 
@@ -28,7 +28,7 @@
   description: uplink-pistol-cobra-desc
   productEntity: WeaponPistolCobra
   cost:
-    Telecrystal: 8
+    Telecrystal: 4
   categories:
   - UplinkWeapons
 
@@ -39,7 +39,7 @@
   description: uplink-rifle-mosin-desc
   productEntity: WeaponSniperMosin
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
   - UplinkWeapons
 
@@ -207,7 +207,7 @@
   description: uplink-mosin-ammo-desc
   productEntity: BoxMagazineLightRifle
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
   - UplinkAmmo
 
