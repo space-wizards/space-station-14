@@ -32,7 +32,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnBatteryRejuvenate(EntityUid uid, BatteryComponent component, RejuvenateEvent args)
         {
-            component.CurrentCharge = component.MaxCharge;
+            SetCharge(uid, component.MaxCharge, component);
         }
 
         private void OnExamine(EntityUid uid, ExaminableBatteryComponent component, ExaminedEvent args)
@@ -80,11 +80,12 @@ namespace Content.Server.Power.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (comp, batt) in EntityManager.EntityQuery<BatterySelfRechargerComponent, BatteryComponent>())
+            var query = EntityQueryEnumerator<BatterySelfRechargerComponent, BatteryComponent>();
+            while (query.MoveNext(out var uid, out var comp, out var batt))
             {
                 if (!comp.AutoRecharge) continue;
                 if (batt.IsFullyCharged) continue;
-                batt.CurrentCharge += comp.AutoRechargeRate * frameTime;
+                SetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt);
             }
         }
 
