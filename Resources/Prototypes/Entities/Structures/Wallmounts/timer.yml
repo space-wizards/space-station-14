@@ -40,6 +40,8 @@
     usesApcPower: true
   - type: ExtensionCableReceiver
   - type: ActivatableUIRequiresPower
+  - type: Machine
+    board: SignalTimerElectronics
   - type: Construction
     graph: Timer
     node: signal
@@ -57,6 +59,8 @@
     sprite: Structures/Wallmounts/textscreen.rsi
     state: textscreen
     noRot: true
+  - type: Machine
+    board: ScreenTimerElectronics
   - type: Construction
     graph: Timer
     node: screen
@@ -69,6 +73,8 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+  - type: Machine
+    board: BrigTimerElectronics
   - type: Construction
     graph: Timer
     node: brig
