@@ -206,7 +206,7 @@ public class SeedData
     #region Cosmetics
 
     [DataField("plantRsi", required: true)]
-    public ResPath PlantRsi { get; set; } = default!;
+    public ResourcePath PlantRsi { get; set; } = default!;
 
     [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
 

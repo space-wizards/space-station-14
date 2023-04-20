@@ -205,7 +205,7 @@ namespace Content.Client.Audio
             string key;
 
             if (ambientComp.Sound is SoundPathSpecifier path)
-                key = path.Path.ToString();
+                key = path.Path?.ToString() ?? string.Empty;
             else
                 key = ((SoundCollectionSpecifier) ambientComp.Sound).Collection ?? string.Empty;
 

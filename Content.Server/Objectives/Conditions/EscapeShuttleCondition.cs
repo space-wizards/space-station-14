@@ -24,7 +24,7 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-escape-shuttle-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Structures/Furniture/chairs.rsi"), "shuttle");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Structures/Furniture/chairs.rsi"), "shuttle");
 
         private bool IsAgentOnShuttle(TransformComponent agentXform, EntityUid? shuttle)
         {

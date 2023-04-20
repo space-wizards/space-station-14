@@ -168,6 +168,11 @@ namespace Content.Shared.APC
         Remote = 3,
 
         /// <summary>
+        /// The number of valid states charge states the APC can be in.
+        /// </summary>
+        NumStates = 4,
+
+        /// <summary>
         /// APC is emagged (and not displaying other useful power colors at a glance)
         /// </summary>
         Emag = -1,

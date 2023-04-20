@@ -27,9 +27,9 @@ namespace Content.IntegrationTests.Tests
             var xformSystem = sEntities.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
             var resManager = server.ResolveDependency<IResourceManager>();
 
-            await server.WaitAssertion(() =>
+            await server.WaitPost(() =>
             {
-                var dir = new ResPath(mapPath).Directory;
+                var dir = new ResourcePath(mapPath).Directory;
                 resManager.UserData.CreateDir(dir);
 
                 var mapId = mapManager.CreateMap();
@@ -50,17 +50,14 @@ namespace Content.IntegrationTests.Tests
                 Assert.Multiple(() => mapLoader.SaveMap(mapId, mapPath));
                 Assert.Multiple(() => mapManager.DeleteMap(mapId));
             });
-
             await server.WaitIdleAsync();
 
-            await server.WaitAssertion(() =>
+            await server.WaitPost(() =>
             {
                 Assert.Multiple(() => mapLoader.LoadMap(new MapId(10), mapPath));
 
             });
-
             await server.WaitIdleAsync();
-
             await server.WaitAssertion(() =>
             {
                 {
@@ -87,7 +84,6 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, (TileRenderFlag)1, 254)));
                 }
             });
-
             await pairTracker.CleanReturnAsync();
         }
     }

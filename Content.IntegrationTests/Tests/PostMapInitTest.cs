@@ -89,7 +89,7 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
 
             var resourceManager = server.ResolveDependency<IResourceManager>();
-            var mapFolder = new ResPath("/Maps");
+            var mapFolder = new ResourcePath("/Maps");
             var maps = resourceManager
                 .ContentFindFiles(mapFolder)
                 .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
@@ -299,7 +299,7 @@ namespace Content.IntegrationTests.Tests
 
                     var gameMaps = protoManager.EnumeratePrototypes<GameMapPrototype>().Select(o => o.MapPath).ToHashSet();
 
-                    var mapFolder = new ResPath("/Maps");
+                    var mapFolder = new ResourcePath("/Maps");
                     var maps = resourceManager
                         .ContentFindFiles(mapFolder)
                         .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))

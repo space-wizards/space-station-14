@@ -1,8 +1,7 @@
 # Desert
 # TODO: Water in desert
-- type: biome
+- type: biomeTemplate
   id: LowDesert
-  desc: Desert
   layers:
     - !type:BiomeEntityLayer
       threshold: 0.95
@@ -33,6 +32,8 @@
         - FloorLowDesert
       entities:
         - AsteroidRock
+    - !type:BiomeDummyLayer
+      id: Loot
     # Fill layer
     - !type:BiomeTileLayer
       threshold: -1
@@ -48,9 +49,8 @@
         frequency: 0.1
 
 # Grass
-- type: biome
+- type: biomeTemplate
   id: Grasslands
-  desc: Grasslands
   layers:
     # Sparse vegetation
     - !type:BiomeDecalLayer
@@ -142,6 +142,8 @@
         cellularReturnType: Distance2
       entities:
         - WallRock
+    - !type:BiomeDummyLayer
+      id: Loot
     # Water
     - !type:BiomeEntityLayer
       allowedTiles:
@@ -195,9 +197,8 @@
         cellularReturnType: Distance2
 
 # Lava
-- type: biome
+- type: biomeTemplate
   id: Lava
-  desc: Lava
   layers:
     - !type:BiomeEntityLayer
       threshold: 0.9
@@ -255,6 +256,8 @@
         - FloorBasalt
       entities:
         - FloorLavaEntity
+    - !type:BiomeDummyLayer
+      id: Loot
     # Fill basalt
     - !type:BiomeTileLayer
       threshold: -1
@@ -263,7 +266,7 @@
       tile: FloorBasalt
 
 # Snow
-- type: biome
+- type: biomeTemplate
   id: Snow # Similar to Grasslands... but snow
   layers:
     # Sparse vegetation
@@ -353,6 +356,8 @@
         - FloraTreeSnow04
         - FloraTreeSnow05
         - FloraTreeSnow06
+    - !type:BiomeDummyLayer
+      id: Loot
     - !type:BiomeTileLayer
       threshold: -1.0
       tile: FloorSnow
@@ -363,3 +368,27 @@
         seed: 0
         frequency: 0.02
         fractalType: None
+
+# Caves
+- type: biomeTemplate
+  id: Caves
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: -0.5
+      invert: true
+      noise:
+        seed: 0
+        noiseType: Perlin
+        fractalType: Ridged
+        octaves: 1
+        frequency: 0.1
+        gain: 0
+      allowedTiles:
+        - FloorAsteroidSand
+      entities:
+        - WallRock
+    - !type:BiomeDummyLayer
+      id: Loot
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: FloorAsteroidSand

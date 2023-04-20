@@ -17,5 +17,5 @@ public sealed class LobbyBackgroundPrototype : IPrototype
     /// The sprite to use as the background. This should ideally be 1920x1080.
     /// </summary>
     [DataField("background", required: true)]
-    public ResPath Background = default!;
+    public ResourcePath Background = default!;
 }

@@ -8,67 +8,67 @@
   },
   "states": [
     {
-      "name": "apc0"
+      "name": "base"
     },
     {
-      "name": "apc1"
+      "name": "base-frame"
     },
     {
-      "name": "broken"
+      "name": "base-broken"
     },
     {
       "name": "panel"
     },
     {
-      "name": "apcox0-0"
+      "name": "lock0-0"
     },
     {
-      "name": "apcox0-1"
+      "name": "lock0-1"
     },
     {
-      "name": "apcox1-0"
+      "name": "lock1-0"
     },
     {
-      "name": "apcox1-1"
+      "name": "lock1-1"
     },
     {
-      "name": "apco0-0"
+      "name": "channel0-auto_off"
     },
     {
-      "name": "apco0-1"
+      "name": "channel0-manual_off"
     },
     {
-      "name": "apco0-2"
+      "name": "channel0-auto_on"
     },
     {
-      "name": "apco0-3"
+      "name": "channel0-manual_on"
     },
     {
-      "name": "apco1-0"
+      "name": "channel1-auto_off"
     },
     {
-      "name": "apco1-1"
+      "name": "channel1-manual_off"
     },
     {
-      "name": "apco1-2"
+      "name": "channel1-auto_on"
     },
     {
-      "name": "apco1-3"
+      "name": "channel1-manual_on"
     },
     {
-      "name": "apco2-0"
+      "name": "channel2-auto_off"
     },
     {
-      "name": "apco2-1"
+      "name": "channel2-manual_off"
     },
     {
-      "name": "apco2-2"
+      "name": "channel2-auto_on"
     },
     {
-      "name": "apco2-3"
+      "name": "channel2-manual_on"
     },
     {
-      "name": "apco3-0",
+      "name": "display-lack",
       "delays": [
         [
           1,
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "name": "apco3-1",
+      "name": "display-charging",
       "delays": [
         [
           0.1,
@@ -90,7 +90,7 @@
       ]
     },
     {
-      "name": "apco3-2",
+      "name": "display-full",
       "delays": [
         [
           1,
@@ -99,7 +99,7 @@
       ]
     },
     {
-      "name": "apco3-3",
+      "name": "display-remote",
       "delays": [
         [
           0.1,
