@@ -79,6 +79,7 @@ namespace Content.Server.Power.EntitySystems
             {
                 component.HasAccess = false;
             }
+            UpdateApcState(uid, component);
         }
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
         {
