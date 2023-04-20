@@ -192,7 +192,7 @@
       - id: ClothingUniformJumpskirtHoSParadeMale
         prob: 0.1
       - id: ClothingOuterHardsuitSecurityRed
-      - id: ClothingMaskGasSecurity
+      - id: ClothingMaskGasSwat
       - id: ClothingShoeSlippersDuck
         prob: 0.2
       - id: DrinkVacuumFlask
