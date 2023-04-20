@@ -359,7 +359,7 @@
   description: technologies-electromagnetic-theory-description
   icon:
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    state: base
   requiredPoints: 10000
   requiredTechnologies:
   - BasicResearch
