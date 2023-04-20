@@ -125,7 +125,7 @@ namespace Content.Server.Entry
             var dest = configManager.GetCVar(CCVars.DestinationFile);
             if (!string.IsNullOrEmpty(dest))
             {
-                var resPath = new ResPath(dest).ToRootedPath();
+                var resPath = new ResourcePath(dest).ToRootedPath();
                 var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
                 ChemistryJsonGenerator.PublishJson(file);
                 file.Flush();

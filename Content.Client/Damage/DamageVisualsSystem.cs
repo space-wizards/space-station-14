@@ -328,7 +328,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     {
         var newLayer = spriteComponent.AddLayer(
             new SpriteSpecifier.Rsi(
-                new (sprite.Sprite), state
+                new ResourcePath(sprite.Sprite), state
             ), index);
         spriteComponent.LayerMapSet(mapKey, newLayer);
         if (sprite.Color != null)
@@ -461,7 +461,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
             threshold = damageVisComp.Thresholds[1];
         spriteLayer = spriteComponent.AddLayer(
             new SpriteSpecifier.Rsi(
-                new (sprite.Sprite),
+                new ResourcePath(sprite.Sprite),
                 $"{statePrefix}_{threshold}"
             ),
             spriteLayer);

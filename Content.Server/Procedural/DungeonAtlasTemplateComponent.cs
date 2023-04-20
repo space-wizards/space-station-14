@@ -9,5 +9,5 @@ namespace Content.Server.Procedural;
 public sealed class DungeonAtlasTemplateComponent : Component
 {
     [DataField("path", required: true)]
-    public ResPath Path;
+    public ResourcePath? Path;
 }
