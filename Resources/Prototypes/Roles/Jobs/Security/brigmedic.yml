@@ -32,7 +32,7 @@
     head: ClothingHeadHatSurgcapBlue
     id: BrigmedPDA
     ears: ClothingHeadsetBrigmedic
-    mask: ClothingMaskSterile
+    mask: ClothingMaskBreathMedicalSecurity
     belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtBrigmedic
   satchel: ClothingBackpackSatchelSecurityFilled
