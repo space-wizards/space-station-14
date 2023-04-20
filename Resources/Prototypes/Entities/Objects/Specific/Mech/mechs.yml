@@ -77,7 +77,7 @@
   id: MechRipley
   parent: BaseMech
   name: Ripley APLU
-  description: A versatile, lightly armored mech. Useful for almost any heavy work scenario, from mining operations to cargo hauling.
+  description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Atonomous Power Loading Unit.
   components:
   - type: FootstepModifier
     footstepSoundCollection:
