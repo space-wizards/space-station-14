@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Diagonal walls now partially support smoothing., type: Add}
-  id: 2962
-  time: '2023-01-27T04:03:42.0000000+00:00'
-- author: joelhed
-  changes:
-  - {message: Fixed weird behaviour when clicking on a table using a dumpable storage
-      item., type: Fix}
-  id: 2963
-  time: '2023-01-27T16:25:08.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Circuit imprinters now show the correct icons for the boards, type: Fix}
@@ -2887,3 +2876,16 @@ Entries:
   - {message: Added support for procedural mob spawning on planets., type: Add}
   id: 3461
   time: '2023-04-20T01:23:26.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: The Syndicate has half-priced all of their non-bundled guns as per request
+      of several (hundred) agents., type: Tweak}
+  id: 3462
+  time: '2023-04-20T02:49:26.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: Added the new elite SWAT gas mask., type: Add}
+  - {message: Replaced the standard issue Security gas mask in the HoS locker with
+      a SWAT gas mask., type: Tweak}
+  id: 3463
+  time: '2023-04-20T02:50:16.0000000+00:00'
