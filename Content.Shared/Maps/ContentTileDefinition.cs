@@ -27,9 +27,9 @@ namespace Content.Shared.Maps
 
         [DataField("name")]
         public string Name { get; private set; } = "";
-        [DataField("sprite")] public ResPath? Sprite { get; }
+        [DataField("sprite")] public ResourcePath? Sprite { get; }
 
-        [DataField("edgeSprites")] public Dictionary<Direction, ResPath> EdgeSprites { get; } = new();
+        [DataField("edgeSprites")] public Dictionary<Direction, ResourcePath> EdgeSprites { get; } = new();
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
