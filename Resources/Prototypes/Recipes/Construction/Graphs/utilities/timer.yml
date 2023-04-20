@@ -11,7 +11,7 @@
           doAfter: 2
 
     - node: frame
-      entity: BaseTimerFrame
+      entity: TimerFrame
       edges:
       - to: start
         steps:
@@ -31,7 +31,7 @@
           doAfter: 2
 
     - node: parts
-      entity: BaseTimerFrame
+      entity: TimerFrame
       edges:
       - to: signalElectronics
         steps:
@@ -70,7 +70,7 @@
           amount: 2
 
     - node: signalElectronics
-      entity: BaseTimerFrame
+      entity: TimerFrame
       edges:
       - to: signal
         steps:
@@ -112,7 +112,7 @@
         - !type:EmptyAllContainers {}
 
     - node: screenGlass
-      entity: BaseTimerFrame
+      entity: TimerFrame
       edges:
       - to: screenElectronics
         steps:
@@ -128,7 +128,7 @@
           doAfter: 1
 
     - node: brigGlass
-      entity: BaseTimerFrame
+      entity: TimerFrame
       edges:
       - to: brigElectronics
         steps:
