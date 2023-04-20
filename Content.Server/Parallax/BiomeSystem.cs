@@ -193,7 +193,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         if (!TryComp<BiomeComponent>(targetMapUid, out var biome))
             return;
 
-        var targetArea = new Box2(targetMap.Position - 64f, targetMap.Position + 64f);
+        var targetArea = new Box2(targetMap.Position - 32f, targetMap.Position + 32f);
         Preload(targetMapUid, biome, targetArea);
     }
 
@@ -346,8 +346,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     for (var j = 0; j < 5; j++)
                     {
                         var point = new Vector2(
-                            chunk.X + buffer * rand.NextFloat() * (layerProto.Size - buffer),
-                            chunk.Y + buffer * rand.NextFloat() * (layerProto.Size - buffer));
+                            chunk.X + buffer + rand.NextFloat() * (layerProto.Size - buffer),
+                            chunk.Y + buffer + rand.NextFloat() * (layerProto.Size - buffer));
 
                         var coords = new EntityCoordinates(gridUid, point);
                         var tile = grid.LocalToTile(coords);
