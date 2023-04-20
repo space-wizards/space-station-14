@@ -15,14 +15,12 @@
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
           data: 1
-
       - tool: Screwing
         doAfter: 1
         completed:
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
           data: 2
-
       - tag: VoiceTrigger
         name: a voice trigger
         icon:
@@ -32,8 +30,7 @@
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
           data: 3
-
   - node: vim
     actions:
     - !type:BuildMech
-      mechPrototype: MechRipley
+      mechPrototype: MechVim
