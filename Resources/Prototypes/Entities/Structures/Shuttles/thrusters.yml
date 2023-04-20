@@ -38,7 +38,7 @@
           - !type:DoActsBehavior
             acts: ["Destruction"]
     - type: StaticPrice
-      price: 1000
+      price: 300
   placement:
     mode: SnapgridCenter
 

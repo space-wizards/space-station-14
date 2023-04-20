@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
 using Content.Server.EUI;
@@ -16,6 +17,11 @@ namespace Content.Server.UserInterface;
 [AdminCommand(AdminFlags.Debug)]
 public sealed class StatValuesCommand : IConsoleCommand
 {
+    [Dependency] private readonly EuiManager _eui = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+
     public string Command => "showvalues";
     public string Description => Loc.GetString("stat-values-desc");
     public string Help => $"{Command} <cargosell / lathsell / melee>";
@@ -51,10 +57,19 @@ public sealed class StatValuesCommand : IConsoleCommand
                 return;
         }
 
-        var euiManager = IoCManager.Resolve<EuiManager>();
         var eui = new StatValuesEui();
-        euiManager.OpenEui(eui, pSession);
+        _eui.OpenEui(eui, pSession);
         eui.SendMessage(message);
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromOptions(new[] { "cargosell", "lathesell", "melee" });
+        }
+
+        return CompletionResult.Empty;
     }
 
     private StatValuesEuiMessage GetCargo()
@@ -63,12 +78,12 @@ public sealed class StatValuesCommand : IConsoleCommand
         // So we'll just get the first value for each prototype ID which is probably good enough for the majority.
 
         var values = new List<string[]>();
-        var entManager = IoCManager.Resolve<IEntityManager>();
-        var priceSystem = entManager.System<PricingSystem>();
-        var metaQuery = entManager.GetEntityQuery<MetaDataComponent>();
+        var priceSystem = _entManager.System<PricingSystem>();
+        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
         var prices = new HashSet<string>(256);
+        var ents = _entManager.GetEntities().ToArray();
 
-        foreach (var entity in entManager.GetEntities())
+        foreach (var entity in ents)
         {
             if (!metaQuery.TryGetComponent(entity, out var meta))
                 continue;
@@ -107,15 +122,13 @@ public sealed class StatValuesCommand : IConsoleCommand
 
     private StatValuesEuiMessage GetMelee()
     {
-        var compFactory = IoCManager.Resolve<IComponentFactory>();
-        var protoManager = IoCManager.Resolve<IPrototypeManager>();
-
         var values = new List<string[]>();
+        var meleeName = _factory.GetComponentName(typeof(MeleeWeaponComponent));
 
-        foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
+        foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {
             if (proto.Abstract ||
-                !proto.Components.TryGetValue(compFactory.GetComponentName(typeof(MeleeWeaponComponent)),
+                !proto.Components.TryGetValue(meleeName,
                     out var meleeComp))
             {
                 continue;
@@ -153,20 +166,19 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetLatheMessage()
     {
         var values = new List<string[]>();
-        var protoManager = IoCManager.Resolve<IPrototypeManager>();
-        var priceSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
+        var priceSystem = _entManager.System<PricingSystem>();
 
-        foreach (var proto in protoManager.EnumeratePrototypes<LatheRecipePrototype>())
+        foreach (var proto in _proto.EnumeratePrototypes<LatheRecipePrototype>())
         {
             var cost = 0.0;
 
             foreach (var (material, count) in proto.RequiredMaterials)
             {
-                var materialPrice = protoManager.Index<MaterialPrototype>(material).Price;
+                var materialPrice = _proto.Index<MaterialPrototype>(material).Price;
                 cost += materialPrice * count;
             }
 
-            var sell = priceSystem.GetEstimatedPrice(protoManager.Index<EntityPrototype>(proto.Result));
+            var sell = priceSystem.GetEstimatedPrice(_proto.Index<EntityPrototype>(proto.Result));
 
             values.Add(new[]
             {
