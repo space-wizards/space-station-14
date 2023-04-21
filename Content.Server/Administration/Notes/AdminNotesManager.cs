@@ -22,7 +22,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 
     public event Action<SharedAdminNote>? NoteAdded;
     public event Action<SharedAdminNote>? NoteModified;
-    public event Action<int>? NoteDeleted;
+    public event Action<SharedAdminNote>? NoteDeleted;
 
     private ISawmill _sawmill = default!;
 
@@ -66,6 +66,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         var note = new SharedAdminNote(
             noteId,
             round,
+            player,
             message,
             createdBy.Name,
             createdBy.Name,
@@ -89,7 +90,17 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         var deletedAt = DateTime.UtcNow;
         await _db.DeleteAdminNote(noteId, deletedBy.UserId, deletedAt);
 
-        NoteDeleted?.Invoke(noteId);
+        var sharedNote = new SharedAdminNote(
+            noteId,
+            note.RoundId,
+            note.PlayerUserId,
+            note.Message,
+            note.CreatedBy.LastSeenUserName,
+            note.LastEditedBy.LastSeenUserName,
+            note.CreatedAt,
+            note.LastEditedAt
+        );
+        NoteDeleted?.Invoke(sharedNote);
     }
 
     public async Task ModifyNote(int noteId, IPlayerSession editedBy, string message)
@@ -110,6 +121,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         var sharedNote = new SharedAdminNote(
             noteId,
             note.RoundId,
+            note.PlayerUserId,
             message,
             note.CreatedBy.LastSeenUserName,
             editedBy.Name,

@@ -359,7 +359,7 @@
   description: technologies-electromagnetic-theory-description
   icon:
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    state: base
   requiredPoints: 10000
   requiredTechnologies:
   - BasicResearch
@@ -582,6 +582,19 @@
   - HighPowerMicroLaserStockPart
   - NanoManipulatorStockPart
   - AdvancedScanningModuleStockPart
+
+- type: technology
+  name: technologies-magboots-technology
+  id: MagbootsTechnology
+  description: technologies-magboots-technology-description
+  icon:
+    sprite: Clothing/Shoes/Boots/magboots.rsi
+    state: icon
+  requiredPoints: 8500
+  requiredTechnologies:
+    - ScientificTechnology
+  unlockedRecipes:
+    - ClothingShoesBootsMag
 
 - type: technology
   name: technologies-super-parts-technology

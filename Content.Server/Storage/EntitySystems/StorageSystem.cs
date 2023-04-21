@@ -124,13 +124,13 @@ namespace Content.Server.Storage.EntitySystems
             {
                 verb.Text = Loc.GetString("verb-common-close-ui");
                 verb.Icon = new SpriteSpecifier.Texture(
-                    new ResourcePath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
+                    new ("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
             }
             else
             {
                 verb.Text = Loc.GetString("verb-common-open-ui");
                 verb.Icon = new SpriteSpecifier.Texture(
-                    new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
+                    new ("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
             }
             args.Verbs.Add(verb);
         }
