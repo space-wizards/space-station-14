@@ -584,6 +584,10 @@
       Min: 1
       Max: 20
       PotencyDivisor: 10
+    SpaceDrugs:
+      Min: 5
+      Max: 20
+      PotencyDivisor: 5
     MindbreakerToxin:
       Min: 1
       Max: 20

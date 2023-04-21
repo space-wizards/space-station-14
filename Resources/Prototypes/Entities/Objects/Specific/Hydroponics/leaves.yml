@@ -80,6 +80,8 @@
         reagents:
         - ReagentId: THCOil
           Quantity: 10
+        - ReagentId: SpaceDrugs
+          Quantity: 20
         - ReagentId: MindbreakerToxin
           Quantity: 10
 
