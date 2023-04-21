@@ -1,3 +1,3 @@
 ent-XenoWardingTower = Башня охраны Ксено
-    .desc = а
+    .desc = { "" }
     .suffix = { "" }

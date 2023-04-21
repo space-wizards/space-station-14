@@ -46,3 +46,6 @@ ent-ClothingMaskPlague = маска чумного доктора
 ent-ClothingMaskCluwne = лицо и волосы клувна
     .desc = Проклятые клувнское лицо и волосы.
     .suffix = Неснимаемые
+ent-ClothingMaskGasSwat = противогаз спецназа
+    .desc = Элитный противогаз службы безопасности.
+    .suffix = { "" }
