@@ -46,5 +46,6 @@ public enum ExpeditionStage : byte
     Added,
     Running,
     Countdown,
+    MusicCountdown,
     FinalCountdown,
 }

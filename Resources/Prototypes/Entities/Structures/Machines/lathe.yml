@@ -221,6 +221,7 @@
       - MopItem
       - AdvMopItem
       - SprayBottle
+      - MegaSprayBottle
       - FireExtinguisher
       - KitchenKnife
       - ButchCleaver
