@@ -75,6 +75,16 @@
   categories:
   - UplinkWeapons
 
+- type: listing
+  id: UplinkGlovesNorthStar
+  name: uplink-gloves-north-star-name
+  description: uplink-gloves-north-star-desc
+  productEntity: ClothingHandsGlovesNorthStar
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkWeapons
+
 # Explosives
 
 - type: listing
