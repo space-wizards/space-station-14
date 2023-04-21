@@ -13,8 +13,6 @@ public sealed class LizardAccentSystem : EntitySystem
 
     private void OnAccent(EntityUid uid, LizardAccentComponent component, AccentGetEvent args)
     {
-        var message = args.Message;
-
         // hissss
         message = Regex.Replace(message, "s+", "sss");
         // hiSSS
@@ -26,6 +24,56 @@ public sealed class LizardAccentSystem : EntitySystem
         // eckS
         message = Regex.Replace(message, @"\bX([\-|r|R]|\b)", "ECKS$1");
 
+        // Corvax-Localization-Start
+        // c => ссс
+        message = Regex.Replace(
+            message,
+            "с+",
+            _random.Pick(new List<string>() { "сс", "ссс" })
+        );
+        // С => CCC
+        message = Regex.Replace(
+            message,
+            "С+",
+            _random.Pick(new List<string>() { "Сс", "Ссс" })
+        );
+        // з => ссс
+        message = Regex.Replace(
+            message,
+            "з+",
+            _random.Pick(new List<string>() { "сс", "ссс" })
+        );
+        // З => CCC
+        message = Regex.Replace(
+            message,
+            "З+",
+            _random.Pick(new List<string>() { "Сс", "Ссс" })
+        );
+        // ш => шшш
+        message = Regex.Replace(
+            message,
+            "ш+",
+            _random.Pick(new List<string>() { "шш", "шшш" })
+        );
+        // Ш => ШШШ
+        message = Regex.Replace(
+            message,
+            "Ш+",
+            _random.Pick(new List<string>() { "Шш", "Шшш" })
+        );
+        // ч => щщщ
+        message = Regex.Replace(
+            message,
+            "ч+",
+            _random.Pick(new List<string>() { "щщ", "щщщ" })
+        );
+        // Ч => ЩЩЩ
+        message = Regex.Replace(
+            message,
+            "Ч+",
+            _random.Pick(new List<string>() { "Щщ", "Щщщ" })
+        );
+        // Corvax-Localization-End
         args.Message = message;
     }
 }
