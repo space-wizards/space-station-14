@@ -1,20 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added paper bins., type: Add}
-  id: 2976
-  time: '2023-01-31T22:03:27.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: catwalks now can be built on lattice, type: Fix}
-  id: 2977
-  time: '2023-02-01T02:33:35.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: solar panels now can be built on lattice, type: Fix}
-  - {message: grille now can be built on lattice, type: Fix}
-  id: 2978
-  time: '2023-02-01T02:34:04.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Uranium now visually stacks like other materials, type: Tweak}
@@ -2887,3 +2871,18 @@ Entries:
       will now go through glass!', type: Fix}
   id: 3475
   time: '2023-04-21T00:26:40.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs prying doors., type: Fix}
+  id: 3476
+  time: '2023-04-21T05:05:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disabled ghost roles for salvage expeditions., type: Tweak}
+  id: 3477
+  time: '2023-04-21T05:06:22.0000000+00:00'
+- author: qtqt
+  changes:
+  - {message: Added song for salvage at the 2 minute timer (for expeditions)., type: Add}
+  id: 3478
+  time: '2023-04-21T05:06:35.0000000+00:00'
