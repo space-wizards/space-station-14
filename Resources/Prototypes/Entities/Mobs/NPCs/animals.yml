@@ -735,6 +735,10 @@
   - type: MonkeyAccent
   - type: Puller
   - type: CanHostGuardian
+  - type: GhostRole
+    makeSentient: true
+    name: monkey
+    description: Ook ook!
 
 - type: entity
   name: guidebook monkey
