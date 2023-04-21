@@ -19,8 +19,6 @@
     state: on
   - type: Appearance
   - type: Rotatable
-  - type: Physics
-  - type: Fixtures
   - type: SignalTimer
     canEditLabel: false
   - type: SignalTransmitter
@@ -40,7 +38,7 @@
     usesApcPower: true
   - type: ExtensionCableReceiver
   - type: ActivatableUIRequiresPower
-      
+
 - type: entity
   id: ScreenTimer
   parent: SignalTimer
