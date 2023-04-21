@@ -6,6 +6,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Shared.Chat;
 using Content.Shared.Salvage;
+using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -125,10 +126,17 @@ public sealed partial class SalvageSystem
                 comp.Stage = ExpeditionStage.FinalCountdown;
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", TimeSpan.FromSeconds(30).Seconds)));
             }
-            // TODO: Play song.
-            else if (comp.Stage < ExpeditionStage.Countdown && remaining < TimeSpan.FromMinutes(2))
+            else if (comp.Stage < ExpeditionStage.Countdown && remaining < TimeSpan.FromMinutes(5))
             {
                 comp.Stage = ExpeditionStage.Countdown;
+                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(5).Minutes)));
+            }
+            else if (comp.Stage < ExpeditionStage.MusicCountdown && remaining < TimeSpan.FromMinutes(2))
+            {
+                // TODO: Some way to play audio attached to a map for players.
+               comp.Stream = _audio.PlayGlobal(new SoundPathSpecifier("/Audio/Misc/salvage.ogg"),
+                    Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true, AudioParams.Default.WithVolume(-7));
+                comp.Stage = ExpeditionStage.MusicCountdown;
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
             }
             // Auto-FTL out any shuttles
@@ -188,6 +196,12 @@ public sealed partial class SalvageSystem
             if (structureAnnounce)
             {
                 Announce(uid, Loc.GetString("salvage-expedition-structure-remaining", ("count", structure.Structures.Count)));
+            }
+
+            if (structure.Structures.Count == 0)
+            {
+                comp.Completed = true;
+                Announce(uid, Loc.GetString("salvage-expedition-completed"));
             }
         }
     }
