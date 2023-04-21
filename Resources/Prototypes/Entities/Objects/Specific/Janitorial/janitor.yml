@@ -26,9 +26,9 @@
   - type: SolutionContainerManager
     solutions:
       absorbed:
-        maxVol: 60
+        maxVol: 100
   - type: UseDelay
-    delay: 1.5
+    delay: 1
   - type: Tag
     tags:
       - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
