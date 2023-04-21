@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Storage/medalcase.rsi
+    state: icon
   - type: Item
     sprite: Objects/Storage/medalcase.rsi
     size: 80
