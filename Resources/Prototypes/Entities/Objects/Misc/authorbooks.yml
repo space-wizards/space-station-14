@@ -314,7 +314,7 @@
   parent: BookBase
   id: BookMedicalOfficer
   name: horizon's battle - a medical officer's tale of trust and survival
-  description: The cover features Smith, the medical officer, in her uniform, looking determined and ready to face any challenge. The backdrop shows the SS Horizon under attack, with explosions and smoke filling the space station. In the foreground, a wizard with a staff can be seen, adding an element of mystery and intrigue to the scene. The title is prominently displayed in bold letters, with the author's name and a tagline indicating the book's action-packed and suspenseful nature.
+  description: The cover features Smith, the medical officer, in his uniform, looking determined and ready to face any challenge. The backdrop shows the SS Horizon under attack, with explosions and smoke filling the space station. In the foreground, a wizard with a staff can be seen, adding an element of mystery and intrigue to the scene. The title is prominently displayed in bold letters, with the author's name and a tagline indicating the book's action-packed and suspenseful nature.
   components:
     - type: Sprite
       sprite: Objects/Misc/authorbooks.rsi
