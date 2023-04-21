@@ -5,7 +5,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 /// <summary>
 /// Configures the <see cref="InactivityTimeRestartRuleSystem"/> game rule.
 /// </summary>
-[RegisterComponent, Access(typeof(MaxTimeRestartRuleSystem))]
+[RegisterComponent]
 public sealed class MaxTimeRestartRuleComponent : Component
 {
     /// <summary>
