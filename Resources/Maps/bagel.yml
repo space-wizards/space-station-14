@@ -9202,12 +9202,16 @@ entities:
     parent: 60
     type: Transform
   - inputs:
-      Open: []
-      Close: []
-      Toggle:
+      Open:
       - port: Timer
         uid: 6972
-      AutoClose: []
+      Close:
+      - port: Start
+        uid: 6972
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 6972
     type: SignalReceiver
 - uid: 73
   type: MedkitToxinFilled
@@ -9777,12 +9781,16 @@ entities:
     parent: 60
     type: Transform
   - inputs:
-      Open: []
-      Close: []
-      Toggle:
+      Open:
       - port: Timer
         uid: 1488
-      AutoClose: []
+      Close:
+      - port: Start
+        uid: 1488
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 1488
     type: SignalReceiver
 - uid: 152
   type: WallReinforced
@@ -10417,12 +10425,16 @@ entities:
     parent: 60
     type: Transform
   - inputs:
-      Open: []
-      Close: []
-      Toggle:
+      Open:
       - port: Timer
         uid: 1468
-      AutoClose: []
+      Close:
+      - port: Start
+        uid: 1468
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 1468
     type: SignalReceiver
 - uid: 231
   type: ReinforcedWindow
@@ -10510,12 +10522,16 @@ entities:
     parent: 60
     type: Transform
   - inputs:
-      Open: []
-      Close: []
-      Toggle:
+      Open:
       - port: Timer
         uid: 1486
-      AutoClose: []
+      Close:
+      - port: Start
+        uid: 1486
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 1486
     type: SignalReceiver
 - uid: 244
   type: AirlockBrigGlassLocked
@@ -10700,12 +10716,16 @@ entities:
     parent: 60
     type: Transform
   - inputs:
-      Open: []
-      Close: []
-      Toggle:
+      Open:
       - port: Timer
         uid: 1485
-      AutoClose: []
+      Close:
+      - port: Start
+        uid: 1485
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 1485
     type: SignalReceiver
 - uid: 269
   type: ReinforcedWindow
@@ -14961,12 +14981,16 @@ entities:
     parent: 60
     type: Transform
   - inputs:
-      Open: []
-      Close: []
-      Toggle:
+      Open:
       - port: Timer
         uid: 6971
-      AutoClose: []
+      Close:
+      - port: Start
+        uid: 6971
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 6971
     type: SignalReceiver
 - uid: 844
   type: Grille
@@ -20440,9 +20464,13 @@ entities:
     parent: 60
     type: Transform
   - outputs:
-      Start: []
+      Start:
+      - port: Close
+        uid: 230
       Timer:
-      - port: Toggle
+      - port: AutoClose
+        uid: 230
+      - port: Open
         uid: 230
     type: SignalTransmitter
 - uid: 1469
@@ -20566,9 +20594,13 @@ entities:
     parent: 60
     type: Transform
   - outputs:
-      Start: []
+      Start:
+      - port: Close
+        uid: 268
       Timer:
-      - port: Toggle
+      - port: AutoClose
+        uid: 268
+      - port: Open
         uid: 268
     type: SignalTransmitter
 - uid: 1486
@@ -20578,9 +20610,13 @@ entities:
     parent: 60
     type: Transform
   - outputs:
-      Start: []
+      Start:
+      - port: Close
+        uid: 243
       Timer:
-      - port: Toggle
+      - port: AutoClose
+        uid: 243
+      - port: Open
         uid: 243
     type: SignalTransmitter
 - uid: 1487
@@ -20598,9 +20634,13 @@ entities:
     parent: 60
     type: Transform
   - outputs:
-      Start: []
+      Start:
+      - port: Close
+        uid: 151
       Timer:
-      - port: Toggle
+      - port: AutoClose
+        uid: 151
+      - port: Open
         uid: 151
     type: SignalTransmitter
 - uid: 1489
@@ -41039,6 +41079,62 @@ entities:
     pos: -12.5,-43.5
     parent: 60
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      mask: []
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: conveyor
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.15,-0.15
+        - 0.15,0.15
+        - -0.15,0.15
+        - -0.15,-0.15
+      mask: []
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: brrt
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      layer:
+      - BulletImpassable
+      - Opaque
+      density: 1
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: collision
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -63349,9 +63445,13 @@ entities:
     parent: 60
     type: Transform
   - outputs:
-      Start: []
+      Start:
+      - port: Close
+        uid: 843
       Timer:
-      - port: Toggle
+      - port: AutoClose
+        uid: 843
+      - port: Open
         uid: 843
     type: SignalTransmitter
 - uid: 6972
@@ -63361,9 +63461,13 @@ entities:
     parent: 60
     type: Transform
   - outputs:
-      Start: []
+      Start:
+      - port: Close
+        uid: 72
       Timer:
-      - port: Toggle
+      - port: AutoClose
+        uid: 72
+      - port: Open
         uid: 72
     type: SignalTransmitter
 - uid: 6973
@@ -158224,6 +158328,20 @@ entities:
   - pos: -25.516588,-10.33648
     parent: 60
     type: Transform
+- uid: 19879
+  type: Poweredlight
+  components:
+  - pos: -28.5,-2.5
+    parent: 60
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+- uid: 19880
+  type: CrateNPCHamlet
+  components:
+  - pos: -3.5,1.5
+    parent: 60
+    type: Transform
 - uid: 19889
   type: SignSecureMed
   components:
@@ -172223,7 +172341,6 @@ entities:
   - devices:
     - 5565
     - 5562
-    - invalid
     - invalid
     - 5563
     - 8466

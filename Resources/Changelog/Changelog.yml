@@ -1,61 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: apc events now only affect single station APCs (no power shut offs on
-      shuttles), type: Fix}
-  id: 2970
-  time: '2023-01-28T14:07:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a bug where artifacts would stop functioning properly with the
-      analyzer after teleporting., type: Fix}
-  id: 2971
-  time: '2023-01-28T17:39:52.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Cleaned up some of the syndicate names., type: Fix}
-  id: 2972
-  time: '2023-01-28T19:09:23.0000000+00:00'
-- author: AlexMorgan3817
-  changes:
-  - {message: Added encryption keys for headsets. These chips provide access to radio
-      channels. You can eject them with a screwdriver and then install in other headsets.,
-    type: Add}
-  id: 2973
-  time: '2023-01-29T00:53:08.0000000+00:00'
-- author: AlexMorgan3817
-  changes:
-  - {message: Fixed bug causing radio channels to be available even after encryption
-      keys get removed., type: Fix}
-  id: 2974
-  time: '2023-01-29T18:32:09.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Some high-risk targets (SMESes, emitterse, substations) are now slightly
-      more resilient to damage.', type: Tweak}
-  id: 2975
-  time: '2023-01-31T01:43:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added paper bins., type: Add}
-  id: 2976
-  time: '2023-01-31T22:03:27.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: catwalks now can be built on lattice, type: Fix}
-  id: 2977
-  time: '2023-02-01T02:33:35.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: solar panels now can be built on lattice, type: Fix}
-  - {message: grille now can be built on lattice, type: Fix}
-  id: 2978
-  time: '2023-02-01T02:34:04.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Uranium now visually stacks like other materials, type: Tweak}
-  id: 2979
-  time: '2023-02-01T14:21:34.0000000+00:00'
 - author: adamsogm
   changes:
   - {message: Fixed dice being unable to roll their max value., type: Fix}
@@ -2886,3 +2829,60 @@ Entries:
     type: Tweak}
   id: 3469
   time: '2023-04-20T13:32:06.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Our beloved Ian is getting some days off. Lisa and Old Ian agreed to
+      work as his replacement., type: Add}
+  id: 3470
+  time: '2023-04-20T23:47:04.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: Added forensic gloves for the detective. They do not leave fibers and
+      fingerprints., type: Add}
+  id: 3471
+  time: '2023-04-20T23:47:48.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Ian will no longer get hurt by mouse traps, type: Tweak}
+  id: 3472
+  time: '2023-04-20T23:51:11.0000000+00:00'
+- author: AsikKEsel
+  changes:
+  - {message: 'added Cargo medal, engineer medal, medical meda, security medal, science
+      medal, case with all medals and... clown medal?', type: Add}
+  id: 3473
+  time: '2023-04-20T23:54:31.0000000+00:00'
+- author: Kade
+  changes:
+  - {message: Uniform printers have been updated to include more of a variety of winter
+      coats and a couple new jumpsuits., type: Add}
+  - {message: Non head winter coats now only cost 500 Cloth instead of 300 cloth and
+      300 Durathread., type: Tweak}
+  id: 3474
+  time: '2023-04-20T23:58:03.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: 'Thanks to improved emitter technology, emitter and APE projectiles
+      will now go through glass!', type: Fix}
+  id: 3475
+  time: '2023-04-21T00:26:40.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs prying doors., type: Fix}
+  id: 3476
+  time: '2023-04-21T05:05:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disabled ghost roles for salvage expeditions., type: Tweak}
+  id: 3477
+  time: '2023-04-21T05:06:22.0000000+00:00'
+- author: qtqt
+  changes:
+  - {message: Added song for salvage at the 2 minute timer (for expeditions)., type: Add}
+  id: 3478
+  time: '2023-04-21T05:06:35.0000000+00:00'
+- author: emisse
+  changes:
+  - {message: Added a shuttle for salvage., type: Add}
+  id: 3479
+  time: '2023-04-21T05:36:32.0000000+00:00'
