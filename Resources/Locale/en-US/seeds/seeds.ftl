@@ -77,3 +77,5 @@ seeds-watermelon-name = watermelon
 seeds-watermelon-display-name = watermelon plant
 seeds-grape-name = grape
 seeds-grape-display-name = grape plant
+seeds-shroominal-pod-name = shroominal
+seeds-shroominal-pod-display-name = shroominal pod

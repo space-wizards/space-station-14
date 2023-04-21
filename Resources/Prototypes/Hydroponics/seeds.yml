@@ -594,6 +594,23 @@
       PotencyDivisor: 10
 
 - type: seed
+  id: shroominal_pod
+  name: seeds-shroominal-pod-name
+  noun: seeds-noun-spores
+  displayName: seeds-shroominal-pod-display-name
+  plantRsi: Objects/Specific/Hydroponics/shroominal.rsi
+  productPrototypes:
+    - MobShroomin
+  lifespan: 85
+  maturation: 10
+  production: 12
+  yield: 1
+  potency: 20
+  growthStages: 1
+  idealLight: 2
+  idealHeat: 288
+
+- type: seed
   id: tobacco
   name: seeds-tobacco-name
   noun: seeds-noun-seeds
@@ -727,6 +744,8 @@
   plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
   productPrototypes:
     - FoodLingzhi
+  altSpeciesPrototype:
+    - shroominal_pod
   lifespan: 25
   maturation: 10
   production: 1

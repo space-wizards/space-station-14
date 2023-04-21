@@ -37,6 +37,7 @@ public class MutationSystem : EntitySystem
         // Stats (30*2 = 60)
         MutateFloat(ref seed.Endurance             , 50f   , 150f , 5 , totalbits , 2*severity);
         MutateInt(ref seed.Yield                   , 3     , 10   , 5 , totalbits , 2*severity);
+        MutateInt(ref seed.AltSeedPacketProb       , 1     , 10   , 5 , totalbits,  2*severity);
         MutateFloat(ref seed.Lifespan              , 10f   , 80f  , 5 , totalbits , 2*severity);
         MutateFloat(ref seed.Maturation            , 3f    , 8f   , 5 , totalbits , 2*severity);
         MutateFloat(ref seed.Production            , 1f    , 10f  , 5 , totalbits , 2*severity);
@@ -47,7 +48,6 @@ public class MutationSystem : EntitySystem
 
         // Fun (90)
         MutateBool(ref seed.Seedless       , true  , 10 , totalbits , severity);
-        MutateInt(ref seed.AltSeedPacketProb, 0    , 100, 5, totalbits, severity);
         MutateBool(ref seed.Slip           , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Sentient       , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Ligneous       , true  , 10 , totalbits , severity);
@@ -65,33 +65,34 @@ public class MutationSystem : EntitySystem
 
         result.Chemicals = random(0.5f) ? a.Chemicals : result.Chemicals;
 
-        CrossFloat(ref result.NutrientConsumption, a.NutrientConsumption);
-        CrossFloat(ref result.WaterConsumption, a.WaterConsumption);
-        CrossFloat(ref result.IdealHeat, a.IdealHeat);
-        CrossFloat(ref result.HeatTolerance, a.HeatTolerance);
-        CrossFloat(ref result.IdealLight, a.IdealLight);
-        CrossFloat(ref result.LightTolerance, a.LightTolerance);
-        CrossFloat(ref result.ToxinsTolerance, a.ToxinsTolerance);
-        CrossFloat(ref result.LowPressureTolerance, a.LowPressureTolerance);
+        CrossFloat(ref result.NutrientConsumption,   a.NutrientConsumption);
+        CrossFloat(ref result.WaterConsumption,      a.WaterConsumption);
+        CrossFloat(ref result.IdealHeat,             a.IdealHeat);
+        CrossFloat(ref result.HeatTolerance,         a.HeatTolerance);
+        CrossFloat(ref result.IdealLight,            a.IdealLight);
+        CrossFloat(ref result.LightTolerance,        a.LightTolerance);
+        CrossFloat(ref result.ToxinsTolerance,       a.ToxinsTolerance);
+        CrossFloat(ref result.LowPressureTolerance,  a.LowPressureTolerance);
         CrossFloat(ref result.HighPressureTolerance, a.HighPressureTolerance);
-        CrossFloat(ref result.PestTolerance, a.PestTolerance);
-        CrossFloat(ref result.WeedTolerance, a.WeedTolerance);
+        CrossFloat(ref result.PestTolerance,         a.PestTolerance);
+        CrossFloat(ref result.WeedTolerance,         a.WeedTolerance);
 
-        CrossFloat(ref result.Endurance, a.Endurance);
-        CrossInt(ref result.Yield, a.Yield);
-        CrossFloat(ref result.Lifespan, a.Lifespan);
-        CrossFloat(ref result.Maturation, a.Maturation);
-        CrossFloat(ref result.Production, a.Production);
-        CrossFloat(ref result.Potency, a.Potency);
+        CrossFloat(ref result.Endurance,             a.Endurance);
+        CrossInt(ref result.Yield,                   a.Yield);
+        CrossFloat(ref result.Lifespan,              a.Lifespan);
+        CrossFloat(ref result.Maturation,            a.Maturation);
+        CrossFloat(ref result.Production,            a.Production);
+        CrossFloat(ref result.Potency,               a.Potency);
+        CrossInt(ref result.AltSeedPacketProb,       a.AltSeedPacketProb);
 
-        CrossBool(ref result.Seedless, a.Seedless);
-        CrossBool(ref result.Viable, a.Viable);
-        CrossBool(ref result.Slip, a.Slip);
-        CrossBool(ref result.Sentient, a.Sentient);
-        CrossBool(ref result.Ligneous, a.Ligneous);
-        CrossBool(ref result.Bioluminescent, a.Bioluminescent);
-        CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
-        CrossBool(ref result.CanScream, a.CanScream);
+        CrossBool(ref result.Seedless,               a.Seedless);
+        CrossBool(ref result.Viable,                 a.Viable);
+        CrossBool(ref result.Slip,                   a.Slip);
+        CrossBool(ref result.Sentient,               a.Sentient);
+        CrossBool(ref result.Ligneous,               a.Ligneous);
+        CrossBool(ref result.Bioluminescent,         a.Bioluminescent);
+        CrossBool(ref result.TurnIntoKudzu,          a.TurnIntoKudzu);
+        CrossBool(ref result.CanScream,              a.CanScream);
         result.BioluminescentColor = random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
 
         // Hybrids have a high chance of being seedless. Balances very

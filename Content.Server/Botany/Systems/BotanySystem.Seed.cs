@@ -206,14 +206,12 @@ public sealed partial class BotanySystem : EntitySystem
     }
 
     public String GetAlternateSpeciesOrNormal(SeedData proto){
-        var rng = _robustRandom.Next(0, 100);
-        if (_robustRandom.Next(0, 100) > proto.AltSeedPacketProb){
+        var rng = _robustRandom.Next(0, 5);
+        if (rng > proto.AltSeedPacketProb || proto.AltSpeciesPrototype.Count == 0){
             return proto.PacketPrototype;
         }
 
-        var max = proto.AltSpeciesPrototype.Count - 1;
-        var i = _robustRandom.Next(0, max);
-        var resultProto = proto.AltSpeciesPrototype[i];
+        var resultProto = _robustRandom.Pick(proto.AltSpeciesPrototype);
         return resultProto;
     }
 

@@ -112,3 +112,27 @@
           icon: ""
       - enum.DamageStateVisualLayers.Base:
           white: ""
+
+- type: entity
+  parent: FoodEggBase
+  id: FoodShregg
+  name: Shregg
+  description: A mutant crossbreed between chicken egg and fungus. It's squishy!
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/shregg.rsi
+    layers:
+      - state: shregg
+        map: ["enum.DamageStateVisualLayers.Base"]
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Egg
+          Quantity: 3
+        - ReagentId: SpaceDrugs
+          Quantity: 10
+        - ReagentId: Blood
+          Quantity: 25

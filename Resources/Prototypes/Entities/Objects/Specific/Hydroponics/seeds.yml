@@ -228,13 +228,24 @@
 - type: entity
   parent: SeedBase
   name: packet of rainbow cannabis seeds
-  description: "Taxable."
+  description: "Taste the rainbow!"
   id: RainbowCannabisSeeds
   components:
     - type: Seed
       seedId: rainbow_cannabis
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of shroominal pod spores
+  description: "Zoology redone."
+  id: ShroominalPodSeeds
+  components:
+    - type: Seed
+      seedId: shroominal_pod
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/shroominal.rsi
 
 - type: entity
   parent: SeedBase

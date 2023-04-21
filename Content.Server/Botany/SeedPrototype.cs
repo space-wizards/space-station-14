@@ -176,7 +176,7 @@ public class SeedData
     [DataField("seedless")] public bool Seedless = false;
 
     /// <summary>
-    ///     The probability that the current seed can mutate into another (max 100)
+    ///     The probability that the current seed can mutate into another (max 10)
     [DataField("produceAltSeedsProb")] public int AltSeedPacketProb = 0;
 
     /// <summary>
