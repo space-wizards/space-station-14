@@ -4,7 +4,6 @@ using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
-using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Popups;
