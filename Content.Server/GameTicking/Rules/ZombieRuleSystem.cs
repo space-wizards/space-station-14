@@ -95,7 +95,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         var healthy = GetHealthyHumans();
         //Gets a bunch of the living players and displays them if they're under a threshold.
         //InitialInfected is used for the threshold because it scales with the player count well.
-        if (healthy.Count > 0 && healthy.Count <= _initialInfectedNames.Count)
+        if (healthy.Count > 0 && healthy.Count <= 2 * _initialInfectedNames.Count)
         {
             ev.AddLine("");
             ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", healthy.Count)));
