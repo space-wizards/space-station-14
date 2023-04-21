@@ -17,4 +17,4 @@ ghost-roles-window-request-role-button = Запросить
 ghost-roles-window-request-role-button-timer = Запросить ({ $time }сек.)
 ghost-roles-window-follow-role-button = Следовать
 ghost-roles-window-no-roles-available-label = В настоящее время нет доступных ролей призраков.
-ghost-roles-window-rules-footer = Кнопка станет доступна через { $time } секунд (эта задержка нужна, чтобы убедиться, что вы прочитали правила).
+ghost-roles-window-rules-footer = Кнопка станет доступна через { $time } секунд (эта задержка нужна, чтобы убедиться, что Вы прочитали правила).

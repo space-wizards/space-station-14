@@ -9,7 +9,7 @@ shell-invalid-command = Неверная команда.
 shell-invalid-command-specific = Неверная команда { $commandName }.
 shell-cannot-run-command-from-server = Вы не можете выполнить эту команду с сервера.
 shell-only-players-can-run-this-command = Только игроки могут выполнять эту команду.
-shell-must-be-attached-to-entity = Для выполнения этой команды вы должны быть прикреплены к сущности.
+shell-must-be-attached-to-entity = Для выполнения этой команды Вы должны быть прикреплены к сущности.
 
 ## Arguments
 
