@@ -7,7 +7,7 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class SlimesSpawn : StationEventSystem
 {
-    public static string[] SpawnedPrototypeChoices =
+    public static List<string> SpawnedPrototypeChoices = new()
         {"MobAdultSlimesBlueAngry", "MobAdultSlimesGreenAngry", "MobAdultSlimesYellowAngry"};
 
     public override string Prototype => "SlimesSpawn";
