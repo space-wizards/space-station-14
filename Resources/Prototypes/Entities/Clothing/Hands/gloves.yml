@@ -278,7 +278,7 @@
   - type: Sprite
     sprite: Clothing/Hands/Gloves/Northstar.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Northstar.rsi 
+    sprite: Clothing/Hands/Gloves/Northstar.rsi    #might be worth making the worn sprite more noticeable, they're pretty powerful for a stealthy weapon
   - type: MeleeWeapon
     attackRate: 6
     damage:
