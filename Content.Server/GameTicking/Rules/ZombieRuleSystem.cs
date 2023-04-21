@@ -70,16 +70,16 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             return;
 
         //this is just the general condition thing used for determining the win/lose text
-        var percent = GetInfectedPercentage();
+        var fraction = GetInfectedFraction();
 
-        if (percent <= 0)
+        if (fraction <= 0)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
-        else if (percent <= 0.25)
+        else if (fraction <= 0.25)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-low"));
-        else if (percent <= 0.5)
-            ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", Math.Round((percent * 100), 2).ToString(CultureInfo.InvariantCulture))));
-        else if (percent < 1)
-            ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", Math.Round((percent * 100), 2).ToString(CultureInfo.InvariantCulture))));
+        else if (fraction <= 0.5)
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", Math.Round((fraction * 100), 2).ToString(CultureInfo.InvariantCulture))));
+        else if (fraction < 1)
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", Math.Round((fraction * 100), 2).ToString(CultureInfo.InvariantCulture))));
         else
             ev.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
@@ -151,11 +151,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         if (!HasComp<HumanoidAppearanceComponent>(target))
             return;
 
-        var percent = GetInfectedPercentage();
+        var fraction = GetInfectedFraction();
         var healthy = GetHealthyHumans();
         if (healthy.Count == 1) //only one human left. spooky
            _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
-        if (percent >= 1) //oops, all zombies
+        if (fraction >= 1) //oops, all zombies
             _roundEndSystem.EndRound();
     }
 
@@ -195,7 +195,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         _action.RemoveAction(uid, action);
     }
 
-    private float GetInfectedPercentage()
+    private float GetInfectedFraction()
     {
         var players = EntityQuery<HumanoidAppearanceComponent>(true);
         var zombers = EntityQuery<HumanoidAppearanceComponent, ZombieComponent>(true);
