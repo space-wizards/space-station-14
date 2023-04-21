@@ -13,7 +13,7 @@ public sealed class CargoShuttlePrototype : IPrototype
     public string ID { get; } = default!;
 
     [DataField("path")]
-    public ResourcePath Path = default!;
+    public ResPath Path = default!;
 
     [DataField("nameDataset", customTypeSerializer:typeof(PrototypeIdSerializer<DatasetPrototype>))]
     public string NameDataset = "CargoShuttleNames";
