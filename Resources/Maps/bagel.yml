@@ -9209,7 +9209,9 @@ entities:
       - port: Start
         uid: 6972
       Toggle: []
-      AutoClose: []
+      AutoClose:
+      - port: Timer
+        uid: 6972
     type: SignalReceiver
 - uid: 73
   type: MedkitToxinFilled
@@ -9786,7 +9788,9 @@ entities:
       - port: Start
         uid: 1488
       Toggle: []
-      AutoClose: []
+      AutoClose:
+      - port: Timer
+        uid: 1488
     type: SignalReceiver
 - uid: 152
   type: WallReinforced
@@ -10428,7 +10432,9 @@ entities:
       - port: Start
         uid: 1468
       Toggle: []
-      AutoClose: []
+      AutoClose:
+      - port: Timer
+        uid: 1468
     type: SignalReceiver
 - uid: 231
   type: ReinforcedWindow
@@ -10523,7 +10529,9 @@ entities:
       - port: Start
         uid: 1486
       Toggle: []
-      AutoClose: []
+      AutoClose:
+      - port: Timer
+        uid: 1486
     type: SignalReceiver
 - uid: 244
   type: AirlockBrigGlassLocked
@@ -10715,7 +10723,9 @@ entities:
       - port: Start
         uid: 1485
       Toggle: []
-      AutoClose: []
+      AutoClose:
+      - port: Timer
+        uid: 1485
     type: SignalReceiver
 - uid: 269
   type: ReinforcedWindow
@@ -14978,7 +14988,9 @@ entities:
       - port: Start
         uid: 6971
       Toggle: []
-      AutoClose: []
+      AutoClose:
+      - port: Timer
+        uid: 6971
     type: SignalReceiver
 - uid: 844
   type: Grille
@@ -20456,6 +20468,8 @@ entities:
       - port: Close
         uid: 230
       Timer:
+      - port: AutoClose
+        uid: 230
       - port: Open
         uid: 230
     type: SignalTransmitter
@@ -20584,6 +20598,8 @@ entities:
       - port: Close
         uid: 268
       Timer:
+      - port: AutoClose
+        uid: 268
       - port: Open
         uid: 268
     type: SignalTransmitter
@@ -20598,6 +20614,8 @@ entities:
       - port: Close
         uid: 243
       Timer:
+      - port: AutoClose
+        uid: 243
       - port: Open
         uid: 243
     type: SignalTransmitter
@@ -20620,6 +20638,8 @@ entities:
       - port: Close
         uid: 151
       Timer:
+      - port: AutoClose
+        uid: 151
       - port: Open
         uid: 151
     type: SignalTransmitter
@@ -63429,6 +63449,8 @@ entities:
       - port: Close
         uid: 843
       Timer:
+      - port: AutoClose
+        uid: 843
       - port: Open
         uid: 843
     type: SignalTransmitter
@@ -63443,6 +63465,8 @@ entities:
       - port: Close
         uid: 72
       Timer:
+      - port: AutoClose
+        uid: 72
       - port: Open
         uid: 72
     type: SignalTransmitter
