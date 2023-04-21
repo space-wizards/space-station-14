@@ -5,6 +5,7 @@ using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Salvage;
 
@@ -22,6 +23,9 @@ public sealed partial class SalvageSystem
     private readonly List<(SpawnSalvageMissionJob Job, CancellationTokenSource CancelToken)> _salvageJobs = new();
     private const double SalvageJobTime = 0.002;
 
+    private float _cooldown;
+    private float _failedCooldown;
+
     private void InitializeExpeditions()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnSalvageExpStationInit);
@@ -36,6 +40,46 @@ public sealed partial class SalvageSystem
         SubscribeLocalEvent<SalvageExpeditionComponent, EntityUnpausedEvent>(OnExpeditionUnpaused);
 
         SubscribeLocalEvent<SalvageStructureComponent, ExaminedEvent>(OnStructureExamine);
+
+        _cooldown = _configurationManager.GetCVar(CCVars.SalvageExpeditionCooldown);
+        _failedCooldown = _configurationManager.GetCVar(CCVars.SalvageExpeditionFailedCooldown);
+        _configurationManager.OnValueChanged(CCVars.SalvageExpeditionCooldown, SetCooldownChange);
+        _configurationManager.OnValueChanged(CCVars.SalvageExpeditionFailedCooldown, SetFailedCooldownChange);
+    }
+
+    private void ShutdownExpeditions()
+    {
+        _configurationManager.UnsubValueChanged(CCVars.SalvageExpeditionCooldown, SetCooldownChange);
+        _configurationManager.UnsubValueChanged(CCVars.SalvageExpeditionFailedCooldown, SetFailedCooldownChange);
+    }
+
+    private void SetCooldownChange(float obj)
+    {
+        // Update the active cooldowns if we change it.
+        var diff = obj - _cooldown;
+
+        var query = AllEntityQuery<SalvageExpeditionDataComponent>();
+
+        while (query.MoveNext(out var comp))
+        {
+            comp.NextOffer += TimeSpan.FromSeconds(diff);
+        }
+
+        _cooldown = obj;
+    }
+
+    private void SetFailedCooldownChange(float obj)
+    {
+        var diff = obj - _failedCooldown;
+
+        var query = AllEntityQuery<SalvageExpeditionDataComponent>();
+
+        while (query.MoveNext(out var comp))
+        {
+            comp.NextOffer += TimeSpan.FromSeconds(diff);
+        }
+
+        _failedCooldown = obj;
     }
 
     private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ComponentShutdown args)
@@ -96,7 +140,7 @@ public sealed partial class SalvageSystem
                 continue;
 
             comp.Cooldown = false;
-            comp.NextOffer += MissionCooldown;
+            comp.NextOffer += TimeSpan.FromSeconds(_cooldown);
             GenerateMissions(comp);
             UpdateConsoles(comp);
         }
@@ -144,13 +188,13 @@ public sealed partial class SalvageSystem
         if (expedition.Completed)
         {
             _sawmill.Debug($"Completed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
-            component.NextOffer = _timing.CurTime + MissionCooldown;
+            component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_cooldown);
             Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-completed"));
         }
         else
         {
             _sawmill.Debug($"Failed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
-            component.NextOffer = _timing.CurTime + MissionFailedCooldown;
+            component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_failedCooldown);
             Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-failed"));
         }
 

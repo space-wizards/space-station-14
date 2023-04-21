@@ -71,6 +71,12 @@ namespace Content.Server.Salvage
             InitializeRunner();
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            ShutdownExpeditions();
+        }
+
         private void OnRoundEnd(GameRunLevelChangedEvent ev)
         {
             if(ev.New != GameRunLevel.InRound)
