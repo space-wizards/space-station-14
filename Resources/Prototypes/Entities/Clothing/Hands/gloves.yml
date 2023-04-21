@@ -265,3 +265,29 @@
   description:  A cursed pair of cluwne hands.
   components:
   - type: Unremoveable
+  
+  #---------------------------------------------------------------------------------
+#Similar to boxing gloves, you can hold these in hand and it'll let you attack quickly with them. Let me know if this is a problem
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesNorthStar
+  name: gloves of the northern star
+  description: These gloves allow you to attack incredibly fast
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi 
+  - type: MeleeWeapon
+    attackRate: 6
+    damage:
+      types:
+       Blunt: 5    #time to kill on unarmored is a bit slower than cap's sabre(Also the small hits don't cause much bleed), might be worth upping damage to 6 or 7. It is a syndicate item after all. Or could just balance it by making the price low.
+    soundHit:
+      collection: BoxingHit
+    animation: WeaponArcFist
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-red
+  - type: FingerprintMask
