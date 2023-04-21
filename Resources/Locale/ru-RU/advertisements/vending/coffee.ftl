@@ -9,5 +9,5 @@ advertisement-coffee-8 = М-м-м-м… Ничто не сравнится с к
 advertisement-coffee-9 = Я обожаю кофе, а Вы?
 advertisement-coffee-10 = Кофе помогает работать!
 advertisement-coffee-11 = Попробуйте чайку.
-advertisement-coffee-12 = Надеемся, вы предпочитаете лучшее!
+advertisement-coffee-12 = Надеемся, Вы предпочитаете лучшее!
 advertisement-coffee-13 = Отведайте наш новый шоколад!

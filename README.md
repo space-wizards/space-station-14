@@ -4,9 +4,9 @@
 
 Space Station 14 это ремейк SS13, который работает на собственном движке [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), написанном на C#.
 
-Это репозиторий русскоязычной версии Space Station 14 основной целью которого является перевод и только перевод игры на русский язык. Если вы хотите использовать наши (от Workbench Team) наработки для игры, перейдите в [arumoon-server ветку](https://git.arumoon.ru/Workbench-Team/space-station-14/-/tree/arumoon-server).
+Это репозиторий русскоязычной версии Space Station 14 основной целью которого является перевод и только перевод игры на русский язык. Если Вы хотите использовать наши (от Workbench Team) наработки для игры, перейдите в [arumoon-server ветку](https://git.arumoon.ru/Workbench-Team/space-station-14/-/tree/arumoon-server).
 
-Если вам нужно захостить русскоязычный сервер для SS14, этот репозиторий это то что вам нужно. Если вы хотите делать нововведения для основной версии игры, перейдите в [репозиторий официальной версии игры](https://github.com/space-wizards/space-station-14).
+Если Вам нужно захостить русскоязычный сервер для SS14, этот репозиторий это то что Вам нужно. Если Вы хотите делать нововведения для основной версии игры, перейдите в [репозиторий официальной версии игры](https://github.com/space-wizards/space-station-14).
 
 ## Ссылки
 
@@ -18,13 +18,13 @@ Space Station 14 это ремейк SS13, который работает на 
 
 ## Вклад
 
-Если вы хотите предложить перевод или редактирование уже переведённого контента, мы с радостью ждём ваши изменения на нашем [основном репозитории GitLab](https://git.arumoon.ru/Workbench-Team/space-station-14) (рекомендуется) или [зеркале GitHub](https://github.com/Workbench-Team/space-station-14). Если вам нужна помощь, посмотрите текущие [обсуждения в GitLab](https://git.arumoon.ru/Workbench-Team/space-station-14/-/issues) или лучше перейдите на Discord или Revolt сервер Workbench Team для более удобной коммуникации.
+Если Вы хотите предложить перевод или редактирование уже переведённого контента, мы с радостью ждём Ваши изменения на нашем [основном репозитории GitLab](https://git.arumoon.ru/Workbench-Team/space-station-14) (рекомендуется) или [зеркале GitHub](https://github.com/Workbench-Team/space-station-14). Если Вам нужна помощь, посмотрите текущие [обсуждения в GitLab](https://git.arumoon.ru/Workbench-Team/space-station-14/-/issues) или лучше перейдите на Discord или Revolt сервер Workbench Team для более удобной коммуникации.
 
 ## Готовая сборка
 
 Статус сборки: [![pipeline status](https://git.arumoon.ru/Workbench-Team/space-station-14/badges/master-ru/pipeline.svg)](https://git.arumoon.ru/Workbench-Team/space-station-14/-/commits/master-ru)
 
-Готовые билды сборки вы можете скачать из [CDN хостинга (быстро)](https://ss14.lolicon.monster/builds/master-ru-builds.html) или [артефактов CI/CD (медленно)](https://git.arumoon.ru/Workbench-Team/space-station-14/-/pipelines?page=1&scope=all&ref=master-ru&status=success)
+Готовые билды сборки Вы можете скачать из [CDN хостинга (быстро)](https://ss14.lolicon.monster/builds/master-ru-builds.html) или [артефактов CI/CD (медленно)](https://git.arumoon.ru/Workbench-Team/space-station-14/-/pipelines?page=1&scope=all&ref=master-ru&status=success)
 
 ## Самостоятельная сборка
 
@@ -40,4 +40,4 @@ Space Station 14 это ремейк SS13, который работает на 
 
 Большинство ассетов лицензированы под [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) если не имеют иное. Ассеты имеют свою лицензию и авторские права в файле метаданных. [Пример](https://git.arumoon.ru/Workbench-Team/space-station-14/blob/master-ru/Resources/Textures/Objects/Tools/crowbar.rsi/meta.json).
 
-Обратите внимание, что некоторые ассеты лицензированы на некоммерческой основе [CC-BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) или аналогичной некоммерческой лицензией, и их необходимо удалить, если вы хотите использовать этот проект в коммерческих целях.
+Обратите внимание, что некоторые ассеты лицензированы на некоммерческой основе [CC-BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) или аналогичной некоммерческой лицензией, и их необходимо удалить, если Вы хотите использовать этот проект в коммерческих целях.
