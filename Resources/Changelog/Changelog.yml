@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Uranium now visually stacks like other materials, type: Tweak}
-  id: 2979
-  time: '2023-02-01T14:21:34.0000000+00:00'
 - author: adamsogm
   changes:
   - {message: Fixed dice being unable to roll their max value., type: Fix}
@@ -2886,3 +2881,8 @@ Entries:
   - {message: Added song for salvage at the 2 minute timer (for expeditions)., type: Add}
   id: 3478
   time: '2023-04-21T05:06:35.0000000+00:00'
+- author: emisse
+  changes:
+  - {message: Added a shuttle for salvage., type: Add}
+  id: 3479
+  time: '2023-04-21T05:36:32.0000000+00:00'
