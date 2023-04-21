@@ -210,7 +210,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         var zombers = GetEntityQuery<ZombieComponent>();
         while (players.MoveNext(out var uid, out _, out var mob))
         {
-            if (_mobState.IsAlive(uid) && !zombers.HasComponent(uid))
+            if (_mobState.IsAlive(uid, mob) && !zombers.HasComponent(uid))
             {
                 healthy.Add(uid);
             }
