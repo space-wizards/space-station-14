@@ -51,6 +51,28 @@
 
 # Command
 - type: entity
+  id: LockerSafe
+  parent: LockerBaseSecure
+  name: command safe locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: safe
+      state_open: safe_open
+      state_closed: safe_door
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: AccessReader
+    access: [["Command"]]
+
+- type: entity
   id: LockerCaptain
   parent: LockerBaseSecure
   name: captain's locker
@@ -288,6 +310,20 @@
       state: hos
       state_open: hos_open
       state_closed: hos_door
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+
+- type: entity
+  id: LockerSafeHeadOfSecurity
+  parent: LockerSafe
+  name: head of security's safe locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: safe
+      state_open: safe_open
+      state_closed: safe_door
   - type: AccessReader
     access: [["HeadOfSecurity"]]
 

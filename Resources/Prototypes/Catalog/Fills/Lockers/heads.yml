@@ -212,3 +212,19 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+
+- type: entity
+  id: LockerSafeHoS
+  suffix: Filled
+  parent: LockerSafeHeadOfSecurity
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponSubMachineGunWt550
+        amount: 1
+      - id: MagazineMagnumSubMachineGun
+        amount: 3
+      - id: DrinkAtomicBombGlass
+        amount: 1
+      - id: DrinkShotGlass
+        amount: 1
