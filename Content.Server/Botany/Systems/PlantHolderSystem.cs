@@ -251,7 +251,7 @@ namespace Content.Server.Botany.Systems
                 }
 
                 component.Seed.Unique = false;
-                var seed = _botanySystem.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User);
+                var seed = _botanySystem.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, true);
                 seed.RandomOffset(0.25f);
                 var displayName = Loc.GetString(component.Seed.DisplayName);
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",

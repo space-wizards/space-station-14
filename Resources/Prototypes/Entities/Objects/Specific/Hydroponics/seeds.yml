@@ -227,6 +227,17 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of rainbow cannabis seeds
+  description: "Taxable."
+  id: RainbowCannabisSeeds
+  components:
+    - type: Seed
+      seedId: rainbow_cannabis
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of nettle seeds
   description: "Handle with gloves."
   id: NettleSeeds
@@ -375,7 +386,7 @@
       seedId: watermelon
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/watermelon.rsi
-      
+
 - type: entity
   parent: SeedBase
   name: packet of grape seeds
@@ -385,4 +396,3 @@
       seedId: grape
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/grape.rsi
-      

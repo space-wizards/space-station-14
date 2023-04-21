@@ -47,6 +47,7 @@ public class MutationSystem : EntitySystem
 
         // Fun (90)
         MutateBool(ref seed.Seedless       , true  , 10 , totalbits , severity);
+        MutateInt(ref seed.AltSeedPacketProb, 0    , 100, 5, totalbits, severity);
         MutateBool(ref seed.Slip           , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Sentient       , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Ligneous       , true  , 10 , totalbits , severity);

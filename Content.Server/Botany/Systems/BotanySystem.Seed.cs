@@ -93,10 +93,17 @@ public sealed partial class BotanySystem : EntitySystem
     /// <summary>
     /// Spawns a new seed packet on the floor at a position, then tries to put it in the user's hands if possible.
     /// </summary>
-    public EntityUid SpawnSeedPacket(SeedData proto, EntityCoordinates coords, EntityUid user)
+    public EntityUid SpawnSeedPacket(SeedData proto, EntityCoordinates coords, EntityUid user, bool clipped = false)
     {
+        // Wasn't sure if I could reasign "proto" without overriding it so I'm just calling the function
+        // again (recursion shouldn't happen since clipped is always false in the second call)
+        if (clipped && _prototypeManager.TryIndex(GetAlternateSpeciesOrNormal(proto), out SeedPrototype? protoSeed)){
+            return SpawnSeedPacket(protoSeed, coords, user);
+        }
+
         var seed = Spawn(proto.PacketPrototype, coords);
         var seedComp = EnsureComp<SeedComponent>(seed);
+
         seedComp.Seed = proto;
 
         if (TryComp(seed, out SpriteComponent? sprite))
@@ -196,6 +203,18 @@ public sealed partial class BotanySystem : EntitySystem
         }
 
         return products;
+    }
+
+    public String GetAlternateSpeciesOrNormal(SeedData proto){
+        var rng = _robustRandom.Next(0, 100);
+        if (_robustRandom.Next(0, 100) > proto.AltSeedPacketProb){
+            return proto.PacketPrototype;
+        }
+
+        var max = proto.AltSpeciesPrototype.Count - 1;
+        var i = _robustRandom.Next(0, max);
+        var resultProto = proto.AltSpeciesPrototype[i];
+        return resultProto;
     }
 
     public bool CanHarvest(SeedData proto, EntityUid? held = null)

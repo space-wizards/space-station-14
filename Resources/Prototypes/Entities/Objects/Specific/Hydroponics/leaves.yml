@@ -64,6 +64,27 @@
       - Smokable
 
 - type: entity
+  name: rainbow cannabis leaves
+  parent: ProduceBase
+  id: RainbowLeavesCannabis
+  description: "Am I high or is this cannabis leaf glowing rainbow colors??"
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+  - type: Produce
+    seedId: rainbow_cannabis
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: THCOil
+          Quantity: 10
+        - ReagentId: MindbreakerToxin
+          Quantity: 10
+
+
+- type: entity
   name: tobacco leaves
   parent: ProduceBase
   id: LeavesTobacco
@@ -118,3 +139,4 @@
   - type: Tag
     tags:
       - Smokable
+

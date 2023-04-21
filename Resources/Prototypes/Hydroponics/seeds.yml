@@ -545,6 +545,8 @@
   plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
   productPrototypes:
     - LeavesCannabis
+  altSpeciesPrototype:
+    - rainbow_cannabis
   harvestRepeat: Repeat
   lifespan: 75
   maturation: 8
@@ -558,6 +560,33 @@
     THC:
       Min: 1
       Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: rainbow_cannabis
+  name: seeds-rainbow-cannabis-name
+  noun: seeds-noun-seeds
+  displayName: seeds-rainbow-cannabis-display-name
+  plantRsi: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+  productPrototypes:
+    - RainbowLeavesCannabis
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 8
+  production: 12
+  yield: 2
+  potency: 20
+  growthStages: 1
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    THC:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 10
+    MindbreakerToxin:
+      Min: 1
+      Max: 20
       PotencyDivisor: 10
 
 - type: seed

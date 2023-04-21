@@ -109,6 +109,14 @@ public class SeedData
     [DataField("packetPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string PacketPrototype = "SeedBase";
 
+
+    /// <summary>
+    ///     Other species prototypes this seed's plant can produce apon being clipped
+    /// </summary>
+    [DataField("altSpeciesPrototype", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string> AltSpeciesPrototype = new();
+
+
     /// <summary>
     ///     The entity prototype this seed spawns when it gets harvested.
     /// </summary>
@@ -166,6 +174,10 @@ public class SeedData
     ///     mutations.
     /// </summary>
     [DataField("seedless")] public bool Seedless = false;
+
+    /// <summary>
+    ///     The probability that the current seed can mutate into another (max 100)
+    [DataField("produceAltSeedsProb")] public int AltSeedPacketProb = 0;
 
     /// <summary>
     ///     If true, rapidly decrease health while growing. Used to kill off
@@ -267,6 +279,7 @@ public class SeedData
             Potency = Potency,
 
             Seedless = Seedless,
+            AltSeedPacketProb = AltSeedPacketProb,
             Viable = Viable,
             Slip = Slip,
             Sentient = Sentient,
