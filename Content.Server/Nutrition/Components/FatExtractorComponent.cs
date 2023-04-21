@@ -1,4 +1,5 @@
-﻿using Content.Shared.Construction.Prototypes;
+﻿using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -10,9 +11,15 @@ namespace Content.Server.Nutrition.Components;
 /// <summary>
 /// This is used for a machine that extracts hunger from entities and creates meat. Yum!
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(FatExtractorSystem))]
 public sealed class FatExtractorComponent : Component
 {
+    /// <summary>
+    /// Whether or not the extractor is currently extracting fat from someone
+    /// </summary>
+    [DataField("processing")]
+    public bool Processing = true;
+
     /// <summary>
     /// How much nutrition is extracted per second.
     /// </summary>
@@ -84,13 +91,4 @@ public sealed class FatExtractorComponent : Component
     /// </summary>
     [DataField("minHungerThreshold")]
     public HungerThreshold MinHungerThreshold = HungerThreshold.Okay;
-}
-
-/// <summary>
-/// Tracks <see cref="FatExtractorComponent"/> that are currently processing.
-/// </summary>
-[RegisterComponent]
-public sealed class ActiveFatExtractorComponent : Component
-{
-
 }

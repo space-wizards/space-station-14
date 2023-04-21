@@ -1,19 +1,15 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Chat.Systems;
 using Content.Server.Construction;
 using Content.Server.Nutrition.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Storage.Components;
-using Content.Shared.Dataset;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage.Components;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Nutrition.EntitySystems;
@@ -24,12 +20,9 @@ namespace Content.Server.Nutrition.EntitySystems;
 public sealed class FatExtractorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -40,8 +33,7 @@ public sealed class FatExtractorSystem : EntitySystem
         SubscribeLocalEvent<FatExtractorComponent, GotEmaggedEvent>(OnGotEmagged);
         SubscribeLocalEvent<FatExtractorComponent, StorageAfterCloseEvent>(OnClosed);
         SubscribeLocalEvent<FatExtractorComponent, StorageAfterOpenEvent>(OnOpen);
-
-        SubscribeLocalEvent<ActiveFatExtractorComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<FatExtractorComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
     private void OnRefreshParts(EntityUid uid, FatExtractorComponent component, RefreshPartsEvent args)
@@ -76,10 +68,10 @@ public sealed class FatExtractorSystem : EntitySystem
         StopProcessing(uid, component);
     }
 
-    private void OnPowerChanged(EntityUid uid, ActiveFatExtractorComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, FatExtractorComponent component, ref PowerChangedEvent args)
     {
         if (!args.Powered)
-            StopProcessing(uid, active: component);
+            StopProcessing(uid, component);
     }
 
     public void StartProcessing(EntityUid uid, FatExtractorComponent? component = null, EntityStorageComponent? storage = null)
@@ -87,7 +79,7 @@ public sealed class FatExtractorSystem : EntitySystem
         if (!Resolve(uid, ref component, ref storage))
             return;
 
-        if (HasComp<ActiveFatExtractorComponent>(uid))
+        if (component.Processing)
             return;
 
         if (!this.IsPowered(uid, EntityManager))
@@ -96,18 +88,21 @@ public sealed class FatExtractorSystem : EntitySystem
         if (!TryGetValidOccupant(uid, out _, component, storage))
             return;
 
-        EnsureComp<ActiveFatExtractorComponent>(uid);
+        component.Processing = true;
         _appearance.SetData(uid, FatExtractorVisuals.Processing, true);
         component.Stream = _audio.PlayPvs(component.ProcessSound, uid);
         component.NextUpdate = _timing.CurTime + component.UpdateTime;
     }
 
-    public void StopProcessing(EntityUid uid, FatExtractorComponent? component = null, ActiveFatExtractorComponent? active = null)
+    public void StopProcessing(EntityUid uid, FatExtractorComponent? component = null)
     {
-        if (!Resolve(uid, ref component, ref active, false))
+        if (!Resolve(uid, ref component))
             return;
 
-        RemComp(uid, active);
+        if (!component.Processing)
+            return;
+
+        component.Processing = false;
         _appearance.SetData(uid, FatExtractorVisuals.Processing, false);
         component.Stream?.Stop();
     }
@@ -136,18 +131,26 @@ public sealed class FatExtractorSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<ActiveFatExtractorComponent, FatExtractorComponent, EntityStorageComponent>();
-        while (query.MoveNext(out var uid, out var active, out var fat, out var storage))
+        var query = EntityQueryEnumerator<FatExtractorComponent, EntityStorageComponent>();
+        while (query.MoveNext(out var uid, out var fat, out var storage))
         {
-            if (_timing.CurTime < fat.NextUpdate)
-                continue;
-            fat.NextUpdate = _timing.CurTime + fat.UpdateTime;
-
-            if (!TryGetValidOccupant(uid, out var occupant, fat, storage))
+            if (TryGetValidOccupant(uid, out var occupant, fat, storage))
             {
-                StopProcessing(uid, fat, active);
+                if (!fat.Processing)
+                    StartProcessing(uid, fat, storage);
+            }
+            else
+            {
+                StopProcessing(uid, fat);
                 continue;
             }
+
+            if (!fat.Processing)
+                continue;
+
+            if (_timing.CurTime < fat.NextUpdate)
+                continue;
+            fat.NextUpdate += fat.UpdateTime;
 
             _hunger.ModifyHunger(occupant.Value, -fat.NutritionPerSecond);
             fat.NutrientAccumulator += fat.NutritionPerSecond;
@@ -156,14 +159,6 @@ public sealed class FatExtractorSystem : EntitySystem
                 fat.NutrientAccumulator -= fat.NutrientPerMeat;
                 Spawn(fat.MeatPrototype, Transform(uid).Coordinates);
             }
-        }
-
-        // we have to add an extra query here in case you gain hunger while inside.
-        // sorry for activecomp betrayal.
-        var checkQuery = EntityQueryEnumerator<FatExtractorComponent, EntityStorageComponent>();
-        while (checkQuery.MoveNext(out var uid, out var fat, out var storage))
-        {
-            StartProcessing(uid, fat, storage);
         }
     }
 }
