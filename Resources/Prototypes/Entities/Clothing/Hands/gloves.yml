@@ -272,13 +272,13 @@
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesNorthStar
-  name: gloves of the northern star
-  description: These gloves allow you to attack incredibly fast
+  name: gloves of the north star
+  description: These gloves allow you to punch incredibly fast
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
+    sprite: Clothing/Hands/Gloves/Northstar.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi 
+    sprite: Clothing/Hands/Gloves/Northstar.rsi 
   - type: MeleeWeapon
     attackRate: 6
     damage:
@@ -289,5 +289,5 @@
     animation: WeaponArcFist
   - type: Fiber
     fiberMaterial: fibers-leather
-    fiberColor: fibers-red
+    fiberColor: fibers-blue
   - type: FingerprintMask
