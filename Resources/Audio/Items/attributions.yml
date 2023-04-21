@@ -15,7 +15,7 @@
 
 - files: ["rped.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Time immemorial"
+  copyright: "Created by Cuboos"
   source: "https://github.com/tgstation/tgstation/blob/172b533d0257fcc1f8a05406f1c9fad514c14d88/sound/items/rped.ogg"
 
 - files: ["scary_horn.ogg"]
