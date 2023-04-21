@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the research assistant role, for all the new people wanting to
-      get into the science department.', type: Add}
-  id: 2981
-  time: '2023-02-02T17:23:55.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Rat King AI is no longer friendly and will attack players., type: Fix}
@@ -2888,3 +2882,9 @@ Entries:
   - {message: You can adjust the solution transfer amount of spray bottles., type: Tweak}
   id: 3480
   time: '2023-04-21T09:16:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduce the standard salvage expedition time from 18-20 minutes to 15
+      minutes., type: Tweak}
+  id: 3481
+  time: '2023-04-21T10:26:17.0000000+00:00'
