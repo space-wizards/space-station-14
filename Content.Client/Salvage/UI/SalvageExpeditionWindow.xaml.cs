@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Client.Computer;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.CCVar;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural.Loot;
 using Content.Shared.Salvage;
@@ -12,6 +13,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -21,6 +23,7 @@ namespace Content.Client.Salvage.UI;
 public sealed partial class SalvageExpeditionWindow : FancyWindow,
     IComputerWindow<EmergencyConsoleBoundUserInterfaceState>
 {
+    private readonly IConfigurationManager _cfgManager;
     private readonly IGameTiming _timing;
     private readonly IPrototypeManager _prototype;
     private readonly SharedSalvageSystem _salvage;
@@ -33,6 +36,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
     public SalvageExpeditionWindow()
     {
         RobustXamlLoader.Load(this);
+        _cfgManager = IoCManager.Resolve<IConfigurationManager>();
         _timing = IoCManager.Resolve<IGameTiming>();
         _prototype = IoCManager.Resolve<IPrototypeManager>();
         _salvage = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<SharedSalvageSystem>();
@@ -80,7 +84,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
             switch (missionParams.Difficulty)
             {
-                case DifficultyRating.None:
+                case DifficultyRating.Minimal:
                     difficultyColor = Color.FromHex("#52B4E996");
                     break;
                 case DifficultyRating.Minor:
@@ -287,8 +291,8 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
         else
         {
             var cooldown = _cooldown
-                ? SharedSalvageSystem.MissionFailedCooldown
-                : SharedSalvageSystem.MissionCooldown;
+                ? TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.SalvageExpeditionFailedCooldown))
+                : TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.SalvageExpeditionCooldown));
 
             NextOfferBar.Value = 1f - (float) (remaining / cooldown);
             NextOfferText.Text = $"{remaining.Minutes:00}:{remaining.Seconds:00}";
