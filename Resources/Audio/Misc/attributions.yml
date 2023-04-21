@@ -9,7 +9,7 @@
   source: "https://github.com/tgstation/tgstation/commit/3e34eb9e3fec7ff55c2db11ba2e7d3b4156443fa"
   source: "https://freesound.org/people/maximej/sounds/596530/"
 
-- files: ["ninja_greeting.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "Taken from TG station."
-  source: "https://github.com/tgstation/tgstation/commit/b02b93ce2ab891164511a973493cdf951b4120f7"
+- files: ["salvage.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Created by qwertyquerty / discord coconatsu#4342"
+  source: "https://www.example.com/wagoogus" # It was sent via DM what do you want
