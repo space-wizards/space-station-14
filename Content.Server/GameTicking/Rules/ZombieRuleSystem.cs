@@ -71,7 +71,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             return;
 
         //this is just the general condition thing used for determining the win/lose text
-        var percent = GetInfectedPercentage(out var livingHumans);
+        var percent = GetInfectedPercentage();
 
         if (percent <= 0)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
@@ -92,13 +92,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                 ("username", player.Value)));
         }
 
+        var healthy = GetHealthyHumans();
         //Gets a bunch of the living players and displays them if they're under a threshold.
         //InitialInfected is used for the threshold because it scales with the player count well.
-        if (livingHumans.Count > 0 && livingHumans.Count <= _initialInfectedNames.Count)
+        if (healthy.Count > 0 && healthy.Count <= _initialInfectedNames.Count)
         {
             ev.AddLine("");
-            ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", livingHumans.Count)));
-            foreach (var survivor in livingHumans)
+            ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", healthy.Count)));
+            foreach (var survivor in healthy)
             {
                 var meta = MetaData(survivor);
                 var username = string.Empty;
@@ -151,9 +152,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         if (!HasComp<HumanoidAppearanceComponent>(target))
             return;
 
-        var percent = GetInfectedPercentage(out var num);
-        if (num.Count == 1) //only one human left. spooky
-           _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], num[0]);
+        var percent = GetInfectedPercentage();
+        var healthy = GetHealthyHumans();
+        if (healthy.Count == 1) //only one human left. spooky
+           _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
         if (percent >= 1) //oops, all zombies
             _roundEndSystem.EndRound();
     }
@@ -194,29 +196,27 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         _action.RemoveAction(uid, action);
     }
 
-    private float GetInfectedPercentage(out List<EntityUid> livingHumans)
+    private float GetInfectedPercentage()
     {
-        var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>(true);
-        var allZombers = GetEntityQuery<ZombieComponent>();
+        var players = EntityQuery<HumanoidAppearanceComponent>(true);
+        var zombers = EntityQuery<HumanoidAppearanceComponent, ZombieComponent>(true);
 
-        var totalPlayers = new List<EntityUid>();
-        var livingZombies = new List<EntityUid>();
+        return zombers.Count() / (float) players.Count();
+    }
 
-        livingHumans = new();
-
-        foreach (var (_, mob) in allPlayers)
+    private List<EntityUid> GetHealthyHumans()
+    {
+        var healthy = new List<EntityUid>();
+        var players = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
+        var zombers = GetEntityQuery<ZombieComponent>();
+        while (players.MoveNext(out var uid, out _, out var mob))
         {
-            if (_mobState.IsAlive(mob.Owner, mob))
+            if (_mobState.IsAlive(uid) && !zombers.HasComponent(uid))
             {
-                totalPlayers.Add(mob.Owner);
-
-                if (allZombers.HasComponent(mob.Owner))
-                    livingZombies.Add(mob.Owner);
-                else
-                    livingHumans.Add(mob.Owner);
+                healthy.Add(uid);
             }
         }
-        return livingZombies.Count / (float) totalPlayers.Count;
+        return healthy;
     }
 
     /// <summary>
