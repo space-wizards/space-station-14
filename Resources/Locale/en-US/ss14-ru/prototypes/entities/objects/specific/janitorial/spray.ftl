@@ -1,6 +1,9 @@
 ent-SprayBottle = spray bottle
     .desc = A spray bottle with an unscrewable top.
     .suffix = Empty
+ent-MegaSprayBottle = mega spray bottle
+    .desc = A huge spray bottle, capable of unrivaled janitorial power.
+    .suffix = Empty
 ent-SprayBottleWater = spray bottle
     .suffix = Filled
     .desc = { ent-SprayBottle.desc }
@@ -9,4 +12,7 @@ ent-SprayBottleSpaceCleaner = space cleaner
     .suffix = { "" }
 ent-Vapor = vapor
     .desc = { "" }
+    .suffix = { "" }
+ent-BigVapor = { ent-Vapor }
+    .desc = { ent-Vapor.desc }
     .suffix = { "" }

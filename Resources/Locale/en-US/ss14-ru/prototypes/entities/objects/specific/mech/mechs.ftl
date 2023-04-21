@@ -1,8 +1,8 @@
 ent-BaseMech = { "" }
     .desc = { "" }
     .suffix = { "" }
-ent-MechRipley = ripley
-    .desc = Cargo's favorite robotic box hauling friend.
+ent-MechRipley = Ripley APLU
+    .desc = Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Atonomous Power Loading Unit.
     .suffix = { "" }
 ent-MechRipleyBattery = { ent-MechRipley }
     .suffix = Battery

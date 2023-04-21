@@ -46,3 +46,6 @@ ent-ThievingGloves = black gloves
 ent-ClothingHandsGlovesCluwne = cluwne hands
     .desc = A cursed pair of cluwne hands.
     .suffix = Unremoveable
+ent-ForensicGloves = forensic gloves
+    .desc = Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.
+    .suffix = { "" }
