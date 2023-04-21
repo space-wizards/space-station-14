@@ -23,7 +23,7 @@ salvage-expedition-desc-structure = Destroy {$count} {$structure} inside the are
 salvage-expedition-type-Mining = Mining
 salvage-expedition-type-Destruction = Destruction
 
-salvage-expedition-difficulty-None = None
+salvage-expedition-difficulty-None = Minimal
 salvage-expedition-difficulty-Minor = Minor
 salvage-expedition-difficulty-Moderate = Moderate
 salvage-expedition-difficulty-Hazardous = Hazardous
