@@ -368,6 +368,14 @@
       state: shotguncase
       state_open: shotguncase_open
       state_closed: shotguncase_door
+   - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: AccessReader
     access: [["Security"]]
 
