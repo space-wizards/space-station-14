@@ -1,4 +1,5 @@
 using Content.Shared.Salvage;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Salvage.Expeditions;
@@ -33,6 +34,11 @@ public sealed class SalvageExpeditionComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("stage")]
     public ExpeditionStage Stage = ExpeditionStage.Added;
+
+    /// <summary>
+    /// Countdown audio stream.
+    /// </summary>
+    public IPlayingAudioStream? Stream = null;
 }
 
 public enum ExpeditionStage : byte
