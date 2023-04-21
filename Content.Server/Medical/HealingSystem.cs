@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Medical.Components;
@@ -69,14 +70,23 @@ public sealed class HealingSystem : EntitySystem
         _stacks.Use(args.Used.Value, 1);
 
         if (uid != args.User)
+        {
             _adminLogger.Add(LogType.Healed,
                 $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {total:damage} damage");
+        }
         else
+        {
             _adminLogger.Add(LogType.Healed,
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
+        }
 
         _audio.PlayPvs(healing.HealingEndSound, uid, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
 
+        args.Repeat = false;
+        foreach (var _ in healing.Damage.DamageDict.Where(type => component.Damage.DamageDict[type.Key].Value > 0))
+        {
+            args.Repeat = true;
+        }
         args.Handled = true;
     }
 
@@ -117,8 +127,10 @@ public sealed class HealingSystem : EntitySystem
             return false;
 
         if (component.HealingBeginSound != null)
+        {
             _audio.PlayPvs(component.HealingBeginSound, uid,
                 AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
+        }
 
         var isNotSelf = user != target;
 
