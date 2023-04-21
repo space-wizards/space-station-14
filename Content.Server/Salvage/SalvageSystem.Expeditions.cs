@@ -84,6 +84,8 @@ public sealed partial class SalvageSystem
 
     private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ComponentShutdown args)
     {
+        component.Stream?.Stop();
+
         foreach (var (job, cancelToken) in _salvageJobs.ToArray())
         {
             if (job.Station == component.Station)
