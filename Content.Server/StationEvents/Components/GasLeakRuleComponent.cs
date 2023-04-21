@@ -1,10 +1,10 @@
-﻿using Content.Shared.Atmos;
-using Nett;
+﻿using Content.Server.StationEvents.Events;
+using Content.Shared.Atmos;
 using Robust.Shared.Map;
 
 namespace Content.Server.StationEvents.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(GasLeakRule))]
 public sealed class GasLeakRuleComponent : Component
 {
     public readonly Gas[] LeakableGases =
@@ -18,7 +18,7 @@ public sealed class GasLeakRuleComponent : Component
     /// <summary>
     ///     Running cooldown of how much time until another leak.
     /// </summary>
-    public float _timeUntilLeak;
+    public float TimeUntilLeak;
 
     /// <summary>
     ///     How long between more gas being added to the tile.
@@ -26,15 +26,14 @@ public sealed class GasLeakRuleComponent : Component
     public float LeakCooldown = 1.0f;
 
     // Event variables
-    public EntityUid _targetStation;
-    public EntityUid _targetGrid;
-    public Vector2i _targetTile;
-    public EntityCoordinates _targetCoords;
-    public bool _foundTile;
-    public Gas _leakGas;
-    public float _molesPerSecond;
-    public int MinimumMolesPerSecond = 20;
-    public TimeSpan _endAfter = TimeSpan.MaxValue;
+    public EntityUid TargetStation;
+    public EntityUid TargetGrid;
+    public Vector2i TargetTile;
+    public EntityCoordinates TargetCoords;
+    public bool FoundTile;
+    public Gas LeakGas;
+    public float MolesPerSecond;
+    public readonly int MinimumMolesPerSecond = 20;
 
     /// <summary>
     ///     Don't want to make it too fast to give people time to flee.

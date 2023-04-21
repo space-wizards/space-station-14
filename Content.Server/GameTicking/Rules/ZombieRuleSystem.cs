@@ -75,8 +75,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             else
                 ev.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
-            ev.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", zombie._initialInfectedNames.Count)));
-            foreach (var player in zombie._initialInfectedNames)
+            ev.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", zombie.InitialInfectedNames.Count)));
+            foreach (var player in zombie.InitialInfectedNames)
             {
                 ev.AddLine(Loc.GetString("zombie-round-end-user-was-initial",
                     ("name", player.Key),
@@ -85,7 +85,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
             //Gets a bunch of the living players and displays them if they're under a threshold.
             //InitialInfected is used for the threshold because it scales with the player count well.
-            if (livingHumans.Count > 0 && livingHumans.Count <= zombie._initialInfectedNames.Count)
+            if (livingHumans.Count > 0 && livingHumans.Count <= zombie.InitialInfectedNames.Count)
             {
                 ev.AddLine("");
                 ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", livingHumans.Count)));
@@ -301,7 +301,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
                 //gets the names now in case the players leave.
                 //this gets unhappy if people with the same name get chose. Probably shouldn't happen.
-                component._initialInfectedNames.Add(inCharacterName, mind.Session.Name);
+                component.InitialInfectedNames.Add(inCharacterName, mind.Session.Name);
 
                 // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
                 // You got a free T-shirt!?!?

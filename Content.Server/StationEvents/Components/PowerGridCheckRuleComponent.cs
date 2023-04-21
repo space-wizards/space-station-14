@@ -1,8 +1,9 @@
 ﻿using System.Threading;
+using Content.Server.StationEvents.Events;
 
 namespace Content.Server.StationEvents.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(PowerGridCheckRule))]
 public sealed class PowerGridCheckRuleComponent : Component
 {
     public CancellationTokenSource? AnnounceCancelToken;
@@ -15,5 +16,4 @@ public sealed class PowerGridCheckRuleComponent : Component
     public int NumberPerSecond = 0;
     public float UpdateRate => 1.0f / NumberPerSecond;
     public float FrameTimeAccumulator = 0.0f;
-    public float EndAfter = 0.0f;
 }

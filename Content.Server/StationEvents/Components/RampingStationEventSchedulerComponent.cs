@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.StationEvents.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(RampingStationEventSchedulerSystem))]
 public sealed class RampingStationEventSchedulerComponent : Component
 {
     [DataField("endTime"), ViewVariables(VVAccess.ReadWrite)]

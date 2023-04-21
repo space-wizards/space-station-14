@@ -19,13 +19,6 @@ namespace Content.Server.StationEvents.Events
     {
         [Dependency] private readonly ApcSystem _apcSystem = default!;
 
-        protected override void Added(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
-        {
-            base.Added(uid, component, gameRule, args);
-
-            component.EndAfter = RobustRandom.Next(60, 120);
-        }
-
         protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
             base.Started(uid, component, gameRule, args);
@@ -51,9 +44,10 @@ namespace Content.Server.StationEvents.Events
 
             foreach (var entity in component.Unpowered)
             {
-                if (EntityManager.Deleted(entity)) continue;
+                if (Deleted(entity))
+                    continue;
 
-                if (EntityManager.TryGetComponent(entity, out ApcComponent? apcComponent))
+                if (TryComp(entity, out ApcComponent? apcComponent))
                 {
                     if(!apcComponent.MainBreakerEnabled)
                         _apcSystem.ApcToggleBreaker(entity, apcComponent);
@@ -73,14 +67,6 @@ namespace Content.Server.StationEvents.Events
         protected override void ActiveTick(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, float frameTime)
         {
             base.ActiveTick(uid, component, gameRule, frameTime);
-
-            //todo figure out this bs
-            /*
-            if (Elapsed > _endAfter)
-            {
-                ForceEndSelf();
-                return;
-            }*/
 
             var updates = 0;
             component.FrameTimeAccumulator += frameTime;

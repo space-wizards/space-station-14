@@ -1,7 +1,8 @@
-﻿namespace Content.Server.StationEvents.Components;
+﻿using Content.Server.StationEvents.Events;
 
+namespace Content.Server.StationEvents.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(BluespaceLockerRule))]
 public sealed class BluespaceLockerRuleComponent : Component
 {
 

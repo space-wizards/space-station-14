@@ -55,6 +55,12 @@ public sealed class StationEventComponent : Component
     public TimeSpan Duration = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    ///     The max amount of time the event lasts.
+    /// </summary>
+    [DataField("maxDuration")]
+    public TimeSpan? MaxDuration;
+
+    /// <summary>
     ///     How many players need to be present on station for the event to run
     /// </summary>
     /// <remarks>

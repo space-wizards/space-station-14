@@ -1,9 +1,10 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Server.StationEvents.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.StationEvents.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(LoneOpsSpawnRule))]
 public sealed class LoneOpsSpawnRuleComponent : Component
 {
     [DataField("loneOpsShuttlePath")]

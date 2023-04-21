@@ -1,3 +1,4 @@
+using Content.Server.StationEvents.Events;
 using Content.Shared.Radio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
@@ -6,21 +7,9 @@ namespace Content.Server.StationEvents.Components;
 /// <summary>
 ///     Solar Flare event specific configuration
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SolarFlareRule))]
 public sealed class SolarFlareRuleComponent : Component
 {
-    /// <summary>
-    ///     In seconds, most early moment event can end
-    /// </summary>
-    [DataField("minEndAfter")]
-    public int MinEndAfter;
-
-    /// <summary>
-    ///     In seconds, most late moment event can end
-    /// </summary>
-    [DataField("maxEndAfter")]
-    public int MaxEndAfter;
-
     /// <summary>
     ///     If true, only headsets affected, but e.g. handheld radio will still work
     /// </summary>

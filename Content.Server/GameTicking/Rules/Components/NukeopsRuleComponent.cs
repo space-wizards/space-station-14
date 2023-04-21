@@ -1,3 +1,4 @@
+using Content.Server.StationEvents.Events;
 using Content.Shared.Dataset;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Roles;
@@ -10,9 +11,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(NukeopsRuleSystem), typeof(LoneOpsSpawnRule))]
 public sealed class NukeopsRuleComponent : Component
 {
+    /// <summary>
+    /// The minimum needed amount of players
+    /// </summary>
     [DataField("minPlayers")]
     public int MinPlayers = 15;
 
@@ -36,9 +40,6 @@ public sealed class NukeopsRuleComponent : Component
     /// </summary>
     [DataField("spawnOutpost")]
     public bool SpawnOutpost = true;
-
-    [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
-    public string RandomHumanoidSettingsPrototype = "NukeOp";
 
     [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string SpawnPointPrototype = "SpawnPointNukies";
@@ -76,8 +77,10 @@ public sealed class NukeopsRuleComponent : Component
     [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
     public SoundSpecifier? GreetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
 
+    [DataField("winType")]
     public WinType WinType = WinType.Neutral;
 
+    [DataField("winConditions")]
     public List<WinCondition> WinConditions = new ();
 
     public MapId? NukiePlanet;
@@ -91,22 +94,27 @@ public sealed class NukeopsRuleComponent : Component
     /// <summary>
     ///     Cached starting gear prototypes.
     /// </summary>
+    [DataField("startingGearPrototypes")]
     public readonly Dictionary<string, StartingGearPrototype> StartingGearPrototypes = new ();
 
     /// <summary>
     ///     Cached operator name prototypes.
     /// </summary>
+    [DataField("operativeNames")]
     public readonly Dictionary<string, List<string>> OperativeNames = new();
 
     /// <summary>
     ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
     /// </summary>
+    [DataField("operativeMindPendingData")]
     public readonly Dictionary<EntityUid, string> OperativeMindPendingData = new();
 
     /// <summary>
     ///     Players who played as an operative at some point in the round.
     ///     Stores the session as well as the entity name
     /// </summary>
+    /// todo: don't store sessions, dingus
+    [DataField("operativePlayers")]
     public readonly Dictionary<string, IPlayerSession> OperativePlayers = new();
 }
 

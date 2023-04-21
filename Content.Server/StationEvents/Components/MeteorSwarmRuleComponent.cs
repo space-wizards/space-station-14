@@ -1,6 +1,8 @@
-﻿namespace Content.Server.StationEvents.Components;
+﻿using Content.Server.StationEvents.Events;
 
-[RegisterComponent]
+namespace Content.Server.StationEvents.Components;
+
+[RegisterComponent, Access(typeof(MeteorSwarmRule))]
 public sealed class MeteorSwarmRuleComponent : Component
 {
     public float _cooldown;

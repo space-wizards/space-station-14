@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Server.StationEvents.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.StationEvents.Components;
@@ -6,7 +7,7 @@ namespace Content.Server.StationEvents.Components;
 /// <summary>
 /// Used an event that spawns an anomaly somewhere random on the map.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(AnomalySpawnRule))]
 public sealed class AnomalySpawnRuleComponent : Component
 {
     [DataField("anomalySpawnerPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

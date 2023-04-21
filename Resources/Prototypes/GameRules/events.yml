@@ -178,6 +178,8 @@
       params:
        volume: -4
     startAfter: 12
+    duration: 60
+    maxDuration: 120
   - type: PowerGridCheckRule
 
 - type: entity
@@ -203,9 +205,9 @@
     endAnnouncement: station-event-solar-flare-end-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
+    duration: 120
+    maxDuration: 240
   - type: SolarFlareRule
-    minduration: 120
-    maxduration: 240
     onlyJamHeadsets: true
     affectedChannels:
     - Common

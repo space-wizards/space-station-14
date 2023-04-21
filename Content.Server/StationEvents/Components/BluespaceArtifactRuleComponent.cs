@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Server.StationEvents.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.StationEvents.Components;
@@ -7,7 +8,7 @@ namespace Content.Server.StationEvents.Components;
 /// This is used for an event that spawns an artifact
 /// somewhere random on the station.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(BluespaceArtifactRule))]
 public sealed class BluespaceArtifactRuleComponent : Component
 {
     [DataField("artifactSpawnerPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

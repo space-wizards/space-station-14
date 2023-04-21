@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.GameTicking.Rules.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(PiratesRuleSystem))]
 public sealed class PiratesRuleComponent : Component
 {
     [ViewVariables]

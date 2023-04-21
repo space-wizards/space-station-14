@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.GameTicking.Rules.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SandboxRuleSystem))]
 public sealed class SandboxRuleComponent : Component
 {
 

@@ -23,14 +23,6 @@ public sealed class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
         SubscribeLocalEvent<RadioReceiveAttemptEvent>(OnRadioSendAttempt);
     }
 
-    protected override void Started(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
-    {
-        base.Started(uid, component, gameRule, args);
-
-        //todo WHY  GOD
-        //_event.EndAfter = RobustRandom.Next(ev.MinEndAfter, ev.MaxEndAfter);
-    }
-
     protected override void ActiveTick(EntityUid uid, SolarFlareRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
@@ -52,14 +44,6 @@ public sealed class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
                     _door.TryToggleDoor(airlockEnt, door);
             }
         }
-
-        //todo this is bs
-        /*
-        if (Elapsed > _event.EndAfter)
-        {
-            ForceEndSelf();
-            return;
-        }*/
     }
 
     private void OnRadioSendAttempt(ref RadioReceiveAttemptEvent args)

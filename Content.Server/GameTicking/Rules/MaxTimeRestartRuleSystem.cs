@@ -33,14 +33,14 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRule
 
     public void RestartTimer(MaxTimeRestartRuleComponent component)
     {
-        component._timerCancel.Cancel();
-        component._timerCancel = new CancellationTokenSource();
-        Timer.Spawn(component.RoundMaxTime, () => TimerFired(component), component._timerCancel.Token);
+        component.TimerCancel.Cancel();
+        component.TimerCancel = new CancellationTokenSource();
+        Timer.Spawn(component.RoundMaxTime, () => TimerFired(component), component.TimerCancel.Token);
     }
 
     public void StopTimer(MaxTimeRestartRuleComponent component)
     {
-        component._timerCancel.Cancel();
+        component.TimerCancel.Cancel();
     }
 
     private void TimerFired(MaxTimeRestartRuleComponent component)

@@ -69,7 +69,11 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : Compon
             return;
 
         AdminLogManager.Add(LogType.EventStarted, LogImpact.High, $"Event started: {ToPrettyString(uid)}");
-        stationEvent.EndTime = _timing.CurTime + stationEvent.Duration;
+        var duration = stationEvent.MaxDuration == null
+            ? stationEvent.Duration
+            : TimeSpan.FromSeconds(RobustRandom.NextDouble(stationEvent.Duration.TotalSeconds,
+                stationEvent.MaxDuration.Value.TotalSeconds));
+        stationEvent.EndTime = _timing.CurTime + duration;
     }
 
     /// <inheritdoc/>

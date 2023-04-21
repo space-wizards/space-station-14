@@ -1,23 +1,23 @@
 ﻿using Content.Server.Traitor;
-using Content.Shared.CCVar;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(TraitorRuleSystem))]
 public sealed class TraitorRuleComponent : Component
 {
-    public readonly SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
+    public readonly SoundSpecifier AddedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
     public List<TraitorRole> Traitors = new();
 
-    public string TraitorPrototypeID = "Traitor";
-    public string TraitorUplinkPresetId = "StorePresetUplink";
+    [DataField("traitorPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+    public string TraitorPrototypeId = "Traitor";
 
     public int TotalTraitors => Traitors.Count;
     public string[] Codewords = new string[3];
-
 
     public enum SelectionState
     {
@@ -27,6 +27,6 @@ public sealed class TraitorRuleComponent : Component
     }
 
     public SelectionState SelectionStatus = SelectionState.WaitingForSpawn;
-    public TimeSpan _announceAt = TimeSpan.Zero;
-    public Dictionary<IPlayerSession, HumanoidCharacterProfile> _startCandidates = new();
+    public TimeSpan AnnounceAt = TimeSpan.Zero;
+    public Dictionary<IPlayerSession, HumanoidCharacterProfile> StartCandidates = new();
 }

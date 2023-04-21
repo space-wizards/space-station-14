@@ -1,6 +1,8 @@
-﻿namespace Content.Server.StationEvents.Components;
+﻿using Content.Server.StationEvents.Events;
 
-[RegisterComponent]
+namespace Content.Server.StationEvents.Components;
+
+[RegisterComponent, Access(typeof(BureaucraticErrorRule))]
 public sealed class BureaucraticErrorRuleComponent : Component
 {
 

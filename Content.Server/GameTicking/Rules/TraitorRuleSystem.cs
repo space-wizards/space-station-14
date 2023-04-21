@@ -58,7 +58,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
 
-        if (component.SelectionStatus == TraitorRuleComponent.SelectionState.ReadyToSelect && _gameTiming.CurTime > component._announceAt)
+        if (component.SelectionStatus == TraitorRuleComponent.SelectionState.ReadyToSelect && _gameTiming.CurTime > component.AnnounceAt)
             DoTraitorStart(component);
     }
 
@@ -105,14 +105,14 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
     private void DoTraitorStart(TraitorRuleComponent component)
     {
-        if (!component._startCandidates.Any())
+        if (!component.StartCandidates.Any())
         {
             _sawmill.Error("Tried to start Traitor mode without any candidates.");
             return;
         }
 
-        var numTraitors = MathHelper.Clamp(component._startCandidates.Count / PlayersPerTraitor, 1, MaxTraitors);
-        var traitorPool = FindPotentialTraitors(component._startCandidates, component);
+        var numTraitors = MathHelper.Clamp(component.StartCandidates.Count / PlayersPerTraitor, 1, MaxTraitors);
+        var traitorPool = FindPotentialTraitors(component.StartCandidates, component);
         var selectedTraitors = PickTraitors(numTraitors, traitorPool);
 
         foreach (var traitor in selectedTraitors)
@@ -135,14 +135,14 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
                 if (!ev.Profiles.ContainsKey(player.UserId))
                     continue;
 
-                traitor._startCandidates[player] = ev.Profiles[player.UserId];
+                traitor.StartCandidates[player] = ev.Profiles[player.UserId];
             }
 
             var delay = TimeSpan.FromSeconds(
                 _cfg.GetCVar(CCVars.TraitorStartDelay) +
                 _random.NextFloat(0f, _cfg.GetCVar(CCVars.TraitorStartDelayVariance)));
 
-            traitor._announceAt = _gameTiming.CurTime + delay;
+            traitor.AnnounceAt = _gameTiming.CurTime + delay;
 
             traitor.SelectionStatus = TraitorRuleComponent.SelectionState.ReadyToSelect;
         }
@@ -173,7 +173,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         foreach (var player in list)
         {
             var profile = candidates[player];
-            if (profile.AntagPreferences.Contains(component.TraitorPrototypeID))
+            if (profile.AntagPreferences.Contains(component.TraitorPrototypeId))
             {
                 prefList.Add(player);
             }
@@ -238,7 +238,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (!_uplink.AddUplink(mind.OwnedEntity!.Value, startingBalance))
             return false;
 
-        var antagPrototype = _prototypeManager.Index<AntagPrototype>(traitorRule.TraitorPrototypeID);
+        var antagPrototype = _prototypeManager.Index<AntagPrototype>(traitorRule.TraitorPrototypeId);
         var traitorRole = new TraitorRole(mind, antagPrototype);
         mind.AddRole(traitorRole);
         traitorRule.Traitors.Add(traitorRole);
@@ -263,7 +263,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         //give traitors their codewords to keep in their character info menu
         traitorRole.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", traitorRule.Codewords)));
 
-        _audioSystem.PlayGlobal(traitorRule._addedSound, Filter.Empty().AddPlayer(traitor), false, AudioParams.Default);
+        _audioSystem.PlayGlobal(traitorRule.AddedSound, Filter.Empty().AddPlayer(traitor), false, AudioParams.Default);
         return true;
     }
 
@@ -279,7 +279,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
                 continue;
             if (!ev.LateJoin)
                 continue;
-            if (!ev.Profile.AntagPreferences.Contains(traitor.TraitorPrototypeID))
+            if (!ev.Profile.AntagPreferences.Contains(traitor.TraitorPrototypeId))
                 continue;
 
             if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
@@ -291,7 +291,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             // Before the announcement is made, late-joiners are considered the same as players who readied.
             if (traitor.SelectionStatus < TraitorRuleComponent.SelectionState.SelectionMade)
             {
-                traitor._startCandidates[ev.Player] = ev.Profile;
+                traitor.StartCandidates[ev.Player] = ev.Profile;
                 continue;
             }
 

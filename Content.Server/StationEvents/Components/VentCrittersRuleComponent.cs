@@ -1,6 +1,8 @@
-﻿namespace Content.Server.StationEvents.Components;
+﻿using Content.Server.StationEvents.Events;
 
-[RegisterComponent]
+namespace Content.Server.StationEvents.Components;
+
+[RegisterComponent, Access(typeof(VentCrittersRule))]
 public sealed class VentCrittersRuleComponent : Component
 {
     [DataField("spawnedPrototypeChoices")]
