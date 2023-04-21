@@ -44,18 +44,6 @@
     size: 50
 
 - type: entity
-  id: BaseRipleyConstruct
-  parent: BaseRipleyPart
-  abstract: true
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      battery-container: !type:Container
-  - type: MechAssemblyVisuals
-    statePrefix: ripley
-
-- type: entity
   parent: BaseRipleyPart
   id: RipleyHarness
   name: ripley harness
@@ -145,10 +133,16 @@
 
 - type: entity
   id: RipleyChassis
-  parent: BaseRipleyConstruct
+  parent: BaseRipleyPart
   name: ripley chassis
   description: An in-progress construction of the Ripley APLU mech.
   components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: ripley
   - type: Sprite
     noRot: true
     state: ripley0
@@ -177,18 +171,6 @@
   components:
   - type: Item
     size: 50
-
-- type: entity
-  id: BaseHonkerConstruct
-  parent: BaseHonkerPart
-  abstract: true
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      battery-container: !type:Container
-  - type: MechAssemblyVisuals
-    statePrefix: honker
 
 - type: entity
   parent: BaseHonkerPart
@@ -280,10 +262,16 @@
 
 - type: entity
   id: HonkerChassis
-  parent: BaseHonkerConstruct
+  parent: BaseHonkerPart
   name: H.O.N.K. chassis
   description: An in-progress construction of a H.O.N.K. mech. Contains chuckle unit, bananium core and honk support systems.
   components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: honker
   - type: Sprite
     noRot: true
     state: honker0
