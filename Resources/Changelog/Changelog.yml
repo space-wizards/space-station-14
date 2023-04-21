@@ -1,125 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix mass scanner on planet maps., type: Fix}
-  id: 2961
-  time: '2023-01-27T01:13:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Diagonal walls now partially support smoothing., type: Add}
-  id: 2962
-  time: '2023-01-27T04:03:42.0000000+00:00'
-- author: joelhed
-  changes:
-  - {message: Fixed weird behaviour when clicking on a table using a dumpable storage
-      item., type: Fix}
-  id: 2963
-  time: '2023-01-27T16:25:08.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Circuit imprinters now show the correct icons for the boards, type: Fix}
-  id: 2964
-  time: '2023-01-27T19:39:23.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Added two new narcolepsy medications., type: Add}
-  - {message: Previous narcolepsy medication has been nerfed in viability. You now
-      need more of the same medicine for it to be as effective., type: Tweak}
-  id: 2965
-  time: '2023-01-27T21:11:06.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed previous examine showing up briefly when rapidly examining multiple
-      things., type: Fix}
-  - {message: Fixed examine sometimes showing up in the top left corner., type: Fix}
-  id: 2966
-  time: '2023-01-27T23:15:39.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Fixed a typo for the Medical Intern role timer, type: Fix}
-  id: 2967
-  time: '2023-01-28T13:27:28.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Ammo boxes can now be printed in the security techlathe., type: Add}
-  - {message: .25 rubber rifle rounds have been swapped for .20 rifle rounds in the
-      security techlathe., type: Tweak}
-  id: 2968
-  time: '2023-01-28T13:59:40.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: vent clog event now only affects single station vents (no more foam
-      in nukie ship), type: Tweak}
-  id: 2969
-  time: '2023-01-28T14:06:40.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: apc events now only affect single station APCs (no power shut offs on
-      shuttles), type: Fix}
-  id: 2970
-  time: '2023-01-28T14:07:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a bug where artifacts would stop functioning properly with the
-      analyzer after teleporting., type: Fix}
-  id: 2971
-  time: '2023-01-28T17:39:52.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Cleaned up some of the syndicate names., type: Fix}
-  id: 2972
-  time: '2023-01-28T19:09:23.0000000+00:00'
-- author: AlexMorgan3817
-  changes:
-  - {message: Added encryption keys for headsets. These chips provide access to radio
-      channels. You can eject them with a screwdriver and then install in other headsets.,
-    type: Add}
-  id: 2973
-  time: '2023-01-29T00:53:08.0000000+00:00'
-- author: AlexMorgan3817
-  changes:
-  - {message: Fixed bug causing radio channels to be available even after encryption
-      keys get removed., type: Fix}
-  id: 2974
-  time: '2023-01-29T18:32:09.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Some high-risk targets (SMESes, emitterse, substations) are now slightly
-      more resilient to damage.', type: Tweak}
-  id: 2975
-  time: '2023-01-31T01:43:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added paper bins., type: Add}
-  id: 2976
-  time: '2023-01-31T22:03:27.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: catwalks now can be built on lattice, type: Fix}
-  id: 2977
-  time: '2023-02-01T02:33:35.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: solar panels now can be built on lattice, type: Fix}
-  - {message: grille now can be built on lattice, type: Fix}
-  id: 2978
-  time: '2023-02-01T02:34:04.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Uranium now visually stacks like other materials, type: Tweak}
-  id: 2979
-  time: '2023-02-01T14:21:34.0000000+00:00'
-- author: adamsogm
-  changes:
-  - {message: Fixed dice being unable to roll their max value., type: Fix}
-  id: 2980
-  time: '2023-02-01T17:27:05.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the research assistant role, for all the new people wanting to
-      get into the science department.', type: Add}
-  id: 2981
-  time: '2023-02-02T17:23:55.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Rat King AI is no longer friendly and will attack players., type: Fix}
@@ -2884,3 +2763,128 @@ Entries:
   - {message: Added samurai dogi to EMAGGED Autodrobe., type: Add}
   id: 3460
   time: '2023-04-19T14:27:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added a caves biome., type: Add}
+  - {message: Added salvage expeditions. Salvagers can now travel to a planet for
+      a limited time and bring back loot., type: Add}
+  - {message: Added support for procedural mob spawning on planets., type: Add}
+  id: 3461
+  time: '2023-04-20T01:23:26.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: The Syndicate has half-priced all of their non-bundled guns as per request
+      of several (hundred) agents., type: Tweak}
+  id: 3462
+  time: '2023-04-20T02:49:26.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: Added the new elite SWAT gas mask., type: Add}
+  - {message: Replaced the standard issue Security gas mask in the HoS locker with
+      a SWAT gas mask., type: Tweak}
+  id: 3463
+  time: '2023-04-20T02:50:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cargo shuttle FTL., type: Fix}
+  id: 3464
+  time: '2023-04-20T03:28:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Doubled salvage expedition times., type: Tweak}
+  - {message: Fixed salvage structure localisation., type: Fix}
+  id: 3465
+  time: '2023-04-20T05:51:10.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed apc toggle not working, type: Fix}
+  id: 3466
+  time: '2023-04-20T06:27:59.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The Ripley now moves faster, but is less effective in combat and breaching.',
+    type: Tweak}
+  - {message: The Ripley is now substantially less expensive to produce., type: Tweak}
+  id: 3467
+  time: '2023-04-20T08:04:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cargo selling mobs inside of crates., type: Fix}
+  id: 3468
+  time: '2023-04-20T12:09:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix mob spawn positions and nerf mob spawn rates for salvage expeditions.,
+    type: Tweak}
+  id: 3469
+  time: '2023-04-20T13:32:06.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Our beloved Ian is getting some days off. Lisa and Old Ian agreed to
+      work as his replacement., type: Add}
+  id: 3470
+  time: '2023-04-20T23:47:04.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: Added forensic gloves for the detective. They do not leave fibers and
+      fingerprints., type: Add}
+  id: 3471
+  time: '2023-04-20T23:47:48.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Ian will no longer get hurt by mouse traps, type: Tweak}
+  id: 3472
+  time: '2023-04-20T23:51:11.0000000+00:00'
+- author: AsikKEsel
+  changes:
+  - {message: 'added Cargo medal, engineer medal, medical meda, security medal, science
+      medal, case with all medals and... clown medal?', type: Add}
+  id: 3473
+  time: '2023-04-20T23:54:31.0000000+00:00'
+- author: Kade
+  changes:
+  - {message: Uniform printers have been updated to include more of a variety of winter
+      coats and a couple new jumpsuits., type: Add}
+  - {message: Non head winter coats now only cost 500 Cloth instead of 300 cloth and
+      300 Durathread., type: Tweak}
+  id: 3474
+  time: '2023-04-20T23:58:03.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: 'Thanks to improved emitter technology, emitter and APE projectiles
+      will now go through glass!', type: Fix}
+  id: 3475
+  time: '2023-04-21T00:26:40.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs prying doors., type: Fix}
+  id: 3476
+  time: '2023-04-21T05:05:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disabled ghost roles for salvage expeditions., type: Tweak}
+  id: 3477
+  time: '2023-04-21T05:06:22.0000000+00:00'
+- author: qtqt
+  changes:
+  - {message: Added song for salvage at the 2 minute timer (for expeditions)., type: Add}
+  id: 3478
+  time: '2023-04-21T05:06:35.0000000+00:00'
+- author: emisse
+  changes:
+  - {message: Added a shuttle for salvage., type: Add}
+  id: 3479
+  time: '2023-04-21T05:36:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added mega spray bottles to advanced cleaning tech. They have bigger
+      spray and more capacity., type: Add}
+  - {message: You can adjust the solution transfer amount of spray bottles., type: Tweak}
+  id: 3480
+  time: '2023-04-21T09:16:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduce the standard salvage expedition time from 18-20 minutes to 15
+      minutes., type: Tweak}
+  id: 3481
+  time: '2023-04-21T10:26:17.0000000+00:00'

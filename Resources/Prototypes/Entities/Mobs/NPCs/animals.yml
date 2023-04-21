@@ -735,6 +735,11 @@
   - type: MonkeyAccent
   - type: Puller
   - type: CanHostGuardian
+  - type: GhostRole
+    makeSentient: true
+    name: monkey
+    description: Ook ook!
+  - type: GhostTakeoverAvailable
 
 - type: entity
   name: guidebook monkey
@@ -1545,7 +1550,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      density: 30
+      density: 50
       mask:
       - MobMask
       layer:
