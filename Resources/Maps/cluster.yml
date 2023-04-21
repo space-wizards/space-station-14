@@ -98193,15 +98193,15 @@ entities:
     parent: 1
     type: Transform
 - uid: 12442
-  type: SpawnPointLawyer
+  type: SpawnPointIAA
   components:
-  - pos: 42.5,32.5
+  - pos: 42.5,34.5
     parent: 1
     type: Transform
 - uid: 12443
   type: SpawnPointLawyer
   components:
-  - pos: 43.5,32.5
+  - pos: 45.5,30.5
     parent: 1
     type: Transform
 - uid: 12444
@@ -98527,6 +98527,12 @@ entities:
   type: BrbSign
   components:
   - pos: 0.4449376,21.546635
+    parent: 1
+    type: Transform
+- uid: 12485
+  type: SpawnPointLawyer
+  components:
+  - pos: 40.5,30.5
     parent: 1
     type: Transform
 ...

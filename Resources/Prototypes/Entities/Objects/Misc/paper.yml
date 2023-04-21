@@ -45,6 +45,17 @@
     contentMargin: 16.0, 16.0, 16.0, 16.0
 
 - type: entity
+  parent: Paper
+  id: StationGoalPaper
+  name: station goal centcomm message
+  description: 'It looks like you have a lot of work to do.'
+  components:
+    - type: Paper
+      stampState: paper_stamp-cent
+      stampedBy:
+        - CentComm
+
+- type: entity
   name: artifact analyzer printout
   parent: Paper
   id: PaperArtifactAnalyzer
@@ -572,3 +583,16 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-ce
+
+- type: entity
+  name: law office's rubber stamp
+  parent: RubberStampMime
+  id: RubberStampIAA
+  components:
+    - type: Stamp
+      stampedName: stamp-component-stamped-name-iaa
+      stampState: "paper_stamp-iaa"
+    - type: Sprite
+      sprite: Objects/Misc/bureaucracy.rsi
+      state: stamp-iaa
+

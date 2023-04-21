@@ -48891,6 +48891,32 @@ entities:
   - pos: -16.5,29.5
     parent: 0
     type: Transform
+- uid: 5344
+  type: SpawnPointIAA
+  components:
+  - pos: 11.5,20.5
+    parent: 0
+    type: Transform
+- uid: 5345
+  type: FaxMachineBase
+  components:
+  - pos: 13.5,20.5
+    parent: 0
+    type: Transform
+  - name: Lawyer's Office
+    type: FaxMachine
+- uid: 5346
+  type: SpawnPointLawyer
+  components:
+  - pos: 11.5,18.5
+    parent: 0
+    type: Transform
+- uid: 5347
+  type: SpawnPointLawyer
+  components:
+  - pos: 12.5,18.5
+    parent: 0
+    type: Transform
 - uid: 5355
   type: AirlockExternalGlass
   components:
@@ -79328,12 +79354,6 @@ entities:
   - pos: -35.5,37.5
     parent: 0
     type: Transform
-- uid: 9399
-  type: Pen
-  components:
-  - pos: 13.340509,20.649384
-    parent: 0
-    type: Transform
 - uid: 9400
   type: ReinforcedWindow
   components:
@@ -84704,18 +84724,6 @@ entities:
   type: filingCabinet
   components:
   - pos: 10.5,20.5
-    parent: 0
-    type: Transform
-- uid: 10130
-  type: SpawnPointLawyer
-  components:
-  - pos: 11.5,20.5
-    parent: 0
-    type: Transform
-- uid: 10131
-  type: SpawnPointLawyer
-  components:
-  - pos: 13.5,18.5
     parent: 0
     type: Transform
 - uid: 10132
@@ -154407,7 +154415,7 @@ entities:
   - pos: 9.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16701.521
     state: Closing
     type: Door
   - inputs:
@@ -154423,7 +154431,7 @@ entities:
   - pos: 10.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16701.521
     state: Closing
     type: Door
   - inputs:
@@ -154439,7 +154447,7 @@ entities:
   - pos: 11.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16701.521
     state: Closing
     type: Door
   - inputs:
@@ -154455,7 +154463,7 @@ entities:
   - pos: 13.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16701.521
     state: Closing
     type: Door
   - inputs:
@@ -154471,7 +154479,7 @@ entities:
   - pos: 14.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16701.521
     state: Closing
     type: Door
   - inputs:
@@ -154487,7 +154495,7 @@ entities:
   - pos: 15.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16701.521
     state: Closing
     type: Door
   - inputs:

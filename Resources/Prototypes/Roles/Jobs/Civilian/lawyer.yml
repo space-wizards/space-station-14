@@ -5,7 +5,7 @@
   playTimeTracker: JobLawyer
   startingGear: LawyerGear
   icon: "Lawyer"
-  supervisors: job-supervisors-hop
+  supervisors: job-supervisors-iaa
   access:
   - Service
   - Brig
