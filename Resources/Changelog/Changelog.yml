@@ -1,9 +1,4 @@
 Entries:
-- author: adamsogm
-  changes:
-  - {message: Fixed dice being unable to roll their max value., type: Fix}
-  id: 2980
-  time: '2023-02-01T17:27:05.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added the research assistant role, for all the new people wanting to
@@ -2886,3 +2881,10 @@ Entries:
   - {message: Added a shuttle for salvage., type: Add}
   id: 3479
   time: '2023-04-21T05:36:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added mega spray bottles to advanced cleaning tech. They have bigger
+      spray and more capacity., type: Add}
+  - {message: You can adjust the solution transfer amount of spray bottles., type: Tweak}
+  id: 3480
+  time: '2023-04-21T09:16:33.0000000+00:00'
