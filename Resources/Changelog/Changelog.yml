@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed not being able to select a research server on certain machines.,
-    type: Fix}
-  id: 2983
-  time: '2023-02-03T03:46:51.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix construction errors., type: Fix}
@@ -2889,3 +2883,8 @@ Entries:
       let the excess food fall off into meat. Unlock it at science today!, type: Add}
   id: 3482
   time: '2023-04-22T07:03:50.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Added decorative crystals., type: Add}
+  id: 3483
+  time: '2023-04-22T07:10:51.0000000+00:00'
