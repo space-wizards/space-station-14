@@ -57,7 +57,7 @@ namespace Content.Server.Storage.EntitySystems
                     StartDoAfter(uid, args.Target, args.User, dumpable);//Had multiplier of 0.6f
                 },
                 Text = Loc.GetString("dump-verb-name"),
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/drop.svg.192dpi.png")),
             };
             args.Verbs.Add(verb);
         }

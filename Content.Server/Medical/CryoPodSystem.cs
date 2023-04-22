@@ -110,7 +110,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         }
     }
 
-    public override void EjectBody(EntityUid uid, SharedCryoPodComponent? cryoPodComponent)
+    public override void EjectBody(EntityUid uid, CryoPodComponent? cryoPodComponent)
     {
         if (!Resolve(uid, ref cryoPodComponent))
             return;
@@ -165,8 +165,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     {
         _userInterfaceSystem.TrySendUiMessage(
             uid,
-            SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key,
-            new SharedHealthAnalyzerComponent.HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity));
+            HealthAnalyzerUiKey.Key,
+            new HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)
@@ -205,7 +205,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         else
         {
             RemComp<ActiveCryoPodComponent>(uid);
-            _uiSystem.TryCloseAll(uid, SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key);
+            _uiSystem.TryCloseAll(uid, HealthAnalyzerUiKey.Key);
         }
         UpdateAppearance(uid, component);
     }
@@ -221,17 +221,24 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
 
         if (!nodeContainer.TryGetNode(cryoPod.PortName, out PortablePipeNode? portNode))
             return;
-        _atmosphereSystem.React(cryoPod.Air, portNode);
+
+        if (!TryComp(uid, out CryoPodAirComponent? cryoPodAir))
+            return;
+
+        _atmosphereSystem.React(cryoPodAir.Air, portNode);
 
         if (portNode.NodeGroup is PipeNet {NodeCount: > 1} net)
         {
-            _gasCanisterSystem.MixContainerWithPipeNet(cryoPod.Air, net.Air);
+            _gasCanisterSystem.MixContainerWithPipeNet(cryoPodAir.Air, net.Air);
         }
     }
 
     private void OnGasAnalyzed(EntityUid uid, CryoPodComponent component, GasAnalyzerScanEvent args)
     {
-        var gasMixDict = new Dictionary<string, GasMixture?> { { Name(uid), component.Air } };
+        if (!TryComp(uid, out CryoPodAirComponent? cryoPodAir))
+            return;
+
+        var gasMixDict = new Dictionary<string, GasMixture?> { { Name(uid), cryoPodAir.Air } };
         // If it's connected to a port, include the port side
         if (TryComp(uid, out NodeContainerComponent? nodeContainer))
         {

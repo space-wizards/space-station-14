@@ -20,3 +20,8 @@
     node: boxcardboard
     containers:
       - entity_storage
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 100
+  - type: StaticPrice
+    price: 10
