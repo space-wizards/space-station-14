@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Voice Masks now use their set names on radio, instead of your ID.',
-    type: Tweak}
-  id: 2991
-  time: '2023-02-05T15:38:14.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Ripleys can no longer grab walls, doors, and portals.', type: Fix}
@@ -2885,3 +2879,11 @@ Entries:
       now can be ordered from cargo', type: Add}
   id: 3490
   time: '2023-04-22T11:13:05.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: 'added hot potato. When activated you can''t drop it, hit others to
+      transfer until it explodes!', type: Add}
+  - {message: 'added hot potato to chef, botanist, clown and mime uplink (4 TC)',
+    type: Add}
+  id: 3491
+  time: '2023-04-22T11:40:37.0000000+00:00'
