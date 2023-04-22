@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix construction errors., type: Fix}
-  id: 2984
-  time: '2023-02-03T12:46:47.0000000+00:00'
 - author: Cripes
   changes:
   - {message: Broken light bulbs on disposal units have been replaced., type: Fix}
@@ -2888,3 +2883,8 @@ Entries:
   - {message: Added decorative crystals., type: Add}
   id: 3483
   time: '2023-04-22T07:10:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix xeno ravagers not being able to pry doors on expeditions., type: Fix}
+  id: 3484
+  time: '2023-04-22T08:57:20.0000000+00:00'
