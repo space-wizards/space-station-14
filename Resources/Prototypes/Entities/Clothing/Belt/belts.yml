@@ -474,7 +474,7 @@
   parent: ClothingBeltStorageBase
   id: ClothingBeltSalvageWebbing
   name: salvage rig
-  description: universal unloading system for work in space.
+  description: Universal unloading system for work in space.
   components:
   - type: Sprite
     sprite: Clothing/Belt/salvagewebbing.rsi
