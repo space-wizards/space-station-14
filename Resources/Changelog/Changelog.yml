@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Ripleys can no longer grab walls, doors, and portals.', type: Fix}
-  id: 2992
-  time: '2023-02-05T19:44:36.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Added virology lab coats to the virodrobe, type: Add}
@@ -2887,3 +2882,9 @@ Entries:
     type: Add}
   id: 3491
   time: '2023-04-22T11:40:37.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: 'Rigged Boxing Gloves are now available in the uplink for 5 TC, if you''re
+      a Passenger or Boxer.', type: Add}
+  id: 3492
+  time: '2023-04-22T23:08:33.0000000+00:00'
