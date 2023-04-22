@@ -564,3 +564,14 @@
     modifiers:
       coefficients:
         Blunt: 0.95
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHetmanHat
+  name: Hetman hat
+  description: From the Zaporozhian Sich with love.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/hetman_hat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/hetman_hat.rsi
