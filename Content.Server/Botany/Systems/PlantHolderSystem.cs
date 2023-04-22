@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
@@ -24,6 +25,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Botany.Systems
 {
@@ -332,7 +334,7 @@ namespace Content.Server.Botany.Systems
 
             // Process mutations
             if (component.MutationLevel > 0)
-            {
+            {  // Logger.Debug($"Mutation! " + component.MutationMod.ToString() + "Уровень мутации: "+ component.MutationLevel.ToString() );
                 Mutate(uid, Math.Min(component.MutationLevel, 25), component);
                 component.MutationLevel = 0;
             }

@@ -18,6 +18,8 @@ public class MutationSystem : EntitySystem
     /// </summary>
     public void MutateSeed(SeedData seed, float severity)
     {
+
+
         // Add up everything in the bits column and put the number here.
         const int totalbits = 245;
 
@@ -42,16 +44,16 @@ public class MutationSystem : EntitySystem
         MutateFloat(ref seed.Production            , 1f    , 10f  , 5 , totalbits , 2*severity);
         MutateFloat(ref seed.Potency               , 30f   , 100f , 5 , totalbits , 2*severity);
 
-        // Kill the plant (30)
-        MutateBool(ref seed.Viable         , false , 30 , totalbits , severity);
+        // Very Bad Mutations (50)
+        MutateBoolConst(ref seed.Viable         , false , 30 , totalbits, 2);  //24% chance
+        MutateBoolConst(ref seed.TurnIntoKudzu  , true  , 10 , totalbits, 2) ; //8% chance
+        MutateBoolConst(ref seed.Seedless       , true  , 10 , totalbits, 5);  //20% chance
 
-        // Fun (90)
-        MutateBool(ref seed.Seedless       , true  , 10 , totalbits , severity);
+        // Fun (60)
         MutateBool(ref seed.Slip           , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Sentient       , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Ligneous       , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Bioluminescent , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.TurnIntoKudzu  , true  , 10 , totalbits , severity);
         MutateBool(ref seed.CanScream      , true  , 10 , totalbits , severity);
         seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
         // ConstantUpgade (10)
@@ -169,6 +171,17 @@ public class MutationSystem : EntitySystem
     {
         // Probability that a bit flip happens for this value.
         float p = mult*bits/totalbits;
+        if (!random(p))
+        {
+            return;
+        }
+
+        val = polarity;
+    }
+    private void MutateBoolConst(ref bool val, bool polarity, int bits, int totalbits, int multconst)
+    {
+        // Probability that a bit flip happens for this value.
+        float p = multconst*bits/totalbits;
         if (!random(p))
         {
             return;
