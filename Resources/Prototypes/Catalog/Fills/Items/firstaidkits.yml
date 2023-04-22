@@ -57,7 +57,7 @@
         amount: 2
       - id: AntiPoisonMedipen
       - id: PillDylovene
-        amount: 5
+        amount: 7
 
 - type: entity
   id: MedkitOxygenFilled
@@ -71,7 +71,7 @@
       - id: EmergencyMedipen
       - id: SyringeInaprovaline
       - id: PillDexalin
-        amount: 5
+        amount: 7
 
 - type: entity
   id: MedkitRadiationFilled
@@ -81,11 +81,11 @@
   - type: StorageFill
     contents:
       - id: Ointment
-        amount: 2
+        amount: 3
       - id: EmergencyMedipen
         amount: 2
       - id: PillHyronalin
-        amount: 10
+        amount: 9
 
 - type: entity
   id: MedkitAdvancedFilled
@@ -96,8 +96,8 @@
     contents:
       - id: Brutepack
         amount: 2 # TO DO: Advanced fills
-      - id: Gauze
       - id: Ointment
+      - id: Gauze
       - id: Bloodpack
         amount: 2
 
@@ -113,6 +113,8 @@
       - id: SyringeTranexamicAcid
       - id: AntiPoisonMedipen
       - id: Bloodpack
+        amount: 2
+      - id: PillTricordrazine
         amount: 2
 
 - type: entity
