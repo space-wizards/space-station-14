@@ -1,4 +1,5 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Radio;
 using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Robust.Shared.Map;
@@ -17,6 +18,9 @@ public sealed class EmpSystem : SharedEmpSystem
         SubscribeLocalEvent<EmpDisabledComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<EmpDisabledComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<EmpOnTriggerComponent, TriggerEvent>(HandleEmpTrigger);
+
+        SubscribeLocalEvent<EmpDisabledComponent, RadioSendAttemptEvent>(OnRadioSendAttempt);
+        SubscribeLocalEvent<EmpDisabledComponent, RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
     }
 
     public void EmpPulse(MapCoordinates coordinates, float range, float energyConsumption, float duration)
@@ -69,6 +73,16 @@ public sealed class EmpSystem : SharedEmpSystem
     {
         EmpPulse(Transform(uid).MapPosition, comp.Range, comp.EnergyConsumption, comp.DisableDuration);
         args.Handled = true;
+    }
+
+    private void OnRadioSendAttempt(EntityUid uid, EmpDisabledComponent component, ref RadioSendAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
+    private void OnRadioReceiveAttempt(EntityUid uid, EmpDisabledComponent component, ref RadioReceiveAttemptEvent args)
+    {
+        args.Cancelled = true;
     }
 }
 
