@@ -249,6 +249,17 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of shroomanoid pod spores
+  description: "What could go wrong?"
+  id: ShroomanoidPodSeeds
+  components:
+    - type: Seed
+      seedId: shroomanoid_pod
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/shroomanoid.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of nettle seeds
   description: "Handle with gloves."
   id: NettleSeeds

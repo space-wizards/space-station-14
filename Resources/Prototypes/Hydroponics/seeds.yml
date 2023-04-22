@@ -601,12 +601,31 @@
   plantRsi: Objects/Specific/Hydroponics/shroominal.rsi
   productPrototypes:
     - MobShroomin
+  altSpeciesPrototype:
+    - shroomanoid_pod
   lifespan: 85
-  maturation: 10
-  production: 12
+  maturation: 20
+  production: 25
+  yield: 3
+  potency: 20
+  growthStages: 2
+  idealLight: 2
+  idealHeat: 288
+
+- type: seed
+  id: shroomanoid_pod
+  name: seeds-shroomanoid-pod-name
+  noun: seeds-noun-spores
+  displayName: seeds-shroomanoid-pod-display-name
+  plantRsi: Objects/Specific/Hydroponics/shroomanoid.rsi
+  productPrototypes:
+    - MobShrooman
+  lifespan: 100
+  maturation: 30
+  production: 35
   yield: 1
   potency: 20
-  growthStages: 1
+  growthStages: 2
   idealLight: 2
   idealHeat: 288
 

@@ -1,0 +1,49 @@
+- type: entity
+  save: false
+  name: Urist McPlants
+  parent: BaseMobOrganic
+  id: BaseMobShrooman
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Shrooman
+  - type: Hunger
+  - type: Thirst
+    baseDecayRate: 0.3
+  - type: Icon
+    sprite: Mobs/Species/Shrooman/parts.rsi
+    state: full
+  #- type: Body TODO: Add body parts
+  #  prototype: Diona
+  #  requiredLegs: 2
+  - type: Damageable
+    damageContainer: Biological
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatPlant
+        amount: 5
+  - type: Bloodstream
+    bloodReagent: SpaceDrugs
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 100
+        restitution: 0.0
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: InventorySlots
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
+  - type: Vocal
+    sounds:
+      Male: UnisexDiona
+      Female: UnisexDiona
+      Unsexed: UnisexDiona
+  - type: BodyEmotes
+    soundsId: DionaBodyEmotes

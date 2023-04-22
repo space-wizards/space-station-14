@@ -79,3 +79,5 @@ seeds-grape-name = grape
 seeds-grape-display-name = grape plant
 seeds-shroominal-pod-name = shroominal
 seeds-shroominal-pod-display-name = shroominal pod
+seeds-shroomanoid-pod-name = shroomanoid
+seeds-shroomanoid-pod-display-name = shroomanoid pod

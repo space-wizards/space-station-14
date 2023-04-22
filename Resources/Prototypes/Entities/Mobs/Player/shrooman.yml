@@ -1,0 +1,37 @@
+- type: entity
+  save: false
+  name: Urist McPlants
+  parent: BaseMobShrooman
+  id: MobShrooman
+  components:
+    - type: CombatMode
+      canDisarm: true
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: hugging-success-generic
+      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+      messagePerceivedByOthers: hugging-success-generic-others
+    - type: Mind
+      showExamineInfo: true
+    - type: Input
+      context: "human"
+    - type: MobMover
+    - type: InputMover
+    - type: Alerts
+    - type: Eye
+    - type: CameraRecoil
+    - type: Examiner
+    - type: Faction
+      factions:
+        - NanoTrasen
+
+- type: entity
+  name: Shrooman
+  parent: MobShrooman
+  id: RandomShrooman
+  - type: GhostRole
+    name: Shrooman
+    description: Obey and protect your creators at all costs
+    rules: You may not harm your creators or cause them any grief, but you must protect them and do whatever they say.
+  - type: GhostTakeoverAvailable
+  - type: RandomHumanoidAppearance
