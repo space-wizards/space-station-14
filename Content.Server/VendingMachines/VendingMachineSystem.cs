@@ -437,9 +437,10 @@ namespace Content.Server.VendingMachines
                     }
                 }
             }
-            foreach (var (comp, _) in EntityQuery<VendingMachineComponent, EmpDisabledComponent>())
+            var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent>();
+            while (disabled.MoveNext(out var uid, out _, out var comp))
             {
-                EjectRandom(comp.Owner, true, false, comp);
+                EjectRandom(uid, true, false, comp);
             }
         }
 
