@@ -8,8 +8,6 @@
   markingLimits: MobSlimeMarkingLimits
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
-  maleFirstNames: names_last_male
-  femaleFirstNames: names_last_female
 
 - type: speciesBaseSprites
   id: MobSlimeSprites
@@ -27,6 +25,9 @@
     RLeg: MobSlimeRLeg
     LFoot: MobSlimeLFoot
     RFoot: MobSlimeRFoot
+    HeadTop: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
+    
 
 - type: markingPoints
   id: MobSlimeMarkingLimits
@@ -36,6 +37,12 @@
       required: false
     FacialHair:
       points: 1
+      required: false
+    Tail: # :despair:
+      points: 1 # Corvax Sponsors
+      required: false
+    HeadTop: # :skull:
+      points: 1 # Corvax Sponsors
       required: false
     Legs:
       points: 2
