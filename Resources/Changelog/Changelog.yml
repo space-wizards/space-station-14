@@ -1,9 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Rat King AI is no longer friendly and will attack players., type: Fix}
-  id: 2982
-  time: '2023-02-02T17:31:38.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed not being able to select a research server on certain machines.,
@@ -2888,3 +2883,9 @@ Entries:
       minutes., type: Tweak}
   id: 3481
   time: '2023-04-21T10:26:17.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the lipid extractor. Simply place a well-fed spaceman inside and
+      let the excess food fall off into meat. Unlock it at science today!, type: Add}
+  id: 3482
+  time: '2023-04-22T07:03:50.0000000+00:00'
