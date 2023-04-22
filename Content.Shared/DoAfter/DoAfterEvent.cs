@@ -15,6 +15,12 @@ public abstract class DoAfterEvent : HandledEntityEventArgs
     [NonSerialized]
     public DoAfter DoAfter = default!;
 
+    //TODO: User pref to toggle repeat on specific doafters
+    /// <summary>
+    ///     If set to true while handling this event, then the DoAfter will automatically be repeated.
+    /// </summary>
+    public bool Repeat = false;
+
     /// <summary>
     ///     Duplicate the current event. This is used by state handling, and should copy by value unless the reference
     ///     types are immutable.

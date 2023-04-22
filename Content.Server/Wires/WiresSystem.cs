@@ -2,11 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Logs;
-using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
-using Content.Shared.DoAfter;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools;
@@ -463,12 +463,16 @@ public sealed class WiresSystem : SharedWiresSystem
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
             if (TryComp(args.User, out ActorComponent? actor))
+            {
                 _uiSystem.TryOpen(uid, WiresUiKey.Key, actor.PlayerSession);
+                args.Handled = true;
+            }
         }
         else if (_toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, "Screwing", new WirePanelDoAfterEvent(), toolComponent: tool))
         {
             _adminLogger.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(args.User):user} is screwing {ToPrettyString(uid):target}'s {(panel.Open ? "open" : "closed")} maintenance panel at {Transform(uid).Coordinates:targetlocation}");
+            args.Handled = true;
         }
     }
 

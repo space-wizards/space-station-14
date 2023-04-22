@@ -25,7 +25,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool checkActionBlocker = true,
         bool animateUser = false,
         bool animate = true,
-        SharedHandsComponent? handsComp = null,
+        HandsComponent? handsComp = null,
         ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
@@ -54,7 +54,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool checkActionBlocker = true,
         bool animateUser = false,
         bool animate = true,
-        SharedHandsComponent? handsComp = null,
+        HandsComponent? handsComp = null,
         ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
@@ -73,7 +73,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool checkActionBlocker = true,
         bool animateUser = false,
         bool animate = true,
-        SharedHandsComponent? handsComp = null,
+        HandsComponent? handsComp = null,
         ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
@@ -104,7 +104,30 @@ public abstract partial class SharedHandsSystem : EntitySystem
         return true;
     }
 
-    public bool CanPickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null, ItemComponent? item = null)
+    /// <summary>
+    ///     Tries to pick up an entity into any hand, forcing to drop an item if there are no free hands
+    ///     By default it does check if it's possible to drop items
+    /// </summary>
+    public bool TryForcePickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
+    {
+        if (!Resolve(uid, ref handsComp, false))
+            return false;
+
+        if (TryPickupAnyHand(uid, entity, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
+            return true;
+
+        foreach (var hand in handsComp.Hands.Values)
+        {
+            if (TryDrop(uid, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp) &&
+                TryPickup(uid, entity, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool CanPickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -118,7 +141,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Checks whether a given item will fit into a specific user's hand. Unless otherwise specified, this will also check the general CanPickup action blocker.
     /// </summary>
-    public bool CanPickupToHand(EntityUid uid, EntityUid entity, Hand hand, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null, ItemComponent? item = null)
+    public bool CanPickupToHand(EntityUid uid, EntityUid entity, Hand hand, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -149,7 +172,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool checkActionBlocker = true,
         bool animateUser = false,
         bool animate = true,
-        SharedHandsComponent? handsComp = null,
+        HandsComponent? handsComp = null,
         ItemComponent? item = null)
     {
         if (uid == null
@@ -166,7 +189,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Puts an entity into the player's hand, assumes that the insertion is allowed. In general, you should not be calling this function directly.
     /// </summary>
-    public virtual void DoPickup(EntityUid uid, Hand hand, EntityUid entity, SharedHandsComponent? hands = null)
+    public virtual void DoPickup(EntityUid uid, Hand hand, EntityUid entity, HandsComponent? hands = null)
     {
         if (!Resolve(uid, ref hands))
             return;

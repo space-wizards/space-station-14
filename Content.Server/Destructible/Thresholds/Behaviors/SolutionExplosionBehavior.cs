@@ -33,7 +33,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 // Spill the solution out into the world
                 // Spill before exploding in anticipation of a future where the explosion can light the solution on fire.
                 var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
-                system.SpillableSystem.SpillAt(explodingSolution, coordinates, "PuddleSmear", combine: true);
+                system.PuddleSystem.TrySpillAt(coordinates, explodingSolution, out _);
 
                 // Explode
                 // Don't delete the object here - let other processes like physical damage from the
