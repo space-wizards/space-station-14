@@ -2,3 +2,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/commit/97945e7d08d1457ffc27e46526a48c0453cc95e4"
+
+- files: ["salvage.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Created by qwertyquerty / discord coconatsu#4342"
+  source: "https://www.example.com/wagoogus" # It was sent via DM what do you want
