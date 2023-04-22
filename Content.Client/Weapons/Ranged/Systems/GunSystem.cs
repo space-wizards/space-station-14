@@ -15,6 +15,7 @@ using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -28,6 +29,10 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
 
+    [Dependency] private readonly IOverlayManager _overlayManager = default!;
+
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+
     public bool SpreadOverlay
     {
         get => _spreadOverlay;
@@ -37,11 +42,10 @@ public sealed partial class GunSystem : SharedGunSystem
                 return;
 
             _spreadOverlay = value;
-            var overlayManager = IoCManager.Resolve<IOverlayManager>();
 
             if (_spreadOverlay)
             {
-                overlayManager.AddOverlay(new GunSpreadOverlay(
+                _overlayManager.AddOverlay(new GunSpreadOverlay(
                     EntityManager,
                     _eyeManager,
                     Timing,
@@ -51,7 +55,7 @@ public sealed partial class GunSystem : SharedGunSystem
             }
             else
             {
-                overlayManager.RemoveOverlay<GunSpreadOverlay>();
+                _overlayManager.RemoveOverlay<GunSpreadOverlay>();
             }
         }
     }
@@ -70,6 +74,22 @@ public sealed partial class GunSystem : SharedGunSystem
 
         InitializeMagazineVisuals();
         InitializeSpentAmmo();
+
+        _overlayManager.AddOverlay(new GunCrosshairOverlay(
+            EntityManager,
+            _eyeManager,
+            Timing,
+            _inputManager,
+            _player,
+            _protoManager,
+            this
+        ));
+    }
+
+    public override void Shutdown()
+    {
+        _overlayManager.RemoveOverlay<GunCrosshairOverlay>();
+        base.Shutdown();
     }
 
     private void OnMuzzleFlash(MuzzleFlashEvent args)
@@ -335,6 +355,6 @@ public sealed partial class GunSystem : SharedGunSystem
         var uidPlayer = EnsureComp<AnimationPlayerComponent>(uid);
 
         _animPlayer.Stop(uid, uidPlayer, "muzzle-flash-light");
-        _animPlayer.Play(uid, uidPlayer, animTwo,"muzzle-flash-light");
+        _animPlayer.Play(uid, uidPlayer, animTwo, "muzzle-flash-light");
     }
 }
