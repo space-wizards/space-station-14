@@ -1,14 +1,6 @@
 Entries:
 - author: 778b
   changes:
-  - {message: Added sterile swab box to Omega's virology!, type: Add}
-  - {message: Added warp point to Omega's anomaly lab!, type: Add}
-  - {message: Added spawn point of research assistant to Omega!, type: Add}
-  - {message: Added EngiDrobe to Omega!, type: Add}
-  id: 2988
-  time: '2023-02-05T10:21:59.0000000+00:00'
-- author: 778b
-  changes:
   - {message: Added surveillance camera to Cluster's anomaly lab!, type: Add}
   - {message: Added warp point to Cluster's anomaly lab!, type: Add}
   - {message: Added spawn point of research assistant to Cluster!, type: Add}
@@ -2888,3 +2880,9 @@ Entries:
   - {message: Substation now have a right sound for buzzing., type: Tweak}
   id: 3487
   time: '2023-04-22T10:40:58.0000000+00:00'
+- author: Menshin
+  changes:
+  - {message: Magboots sprite now updates on toggling. The toggling verb works properly
+      too., type: Fix}
+  id: 3488
+  time: '2023-04-22T10:42:37.0000000+00:00'
