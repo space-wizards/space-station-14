@@ -71,7 +71,7 @@ namespace Content.Server.Power.EntitySystems
         {
             if (HasComp<EmpDisabledComponent>(uid))
             {
-                _popupSystem.PopupCursor(Loc.GetString("apc-component-on-emp-disabled"),
+                _popup.PopupCursor(Loc.GetString("apc-component-on-emp-disabled"),
                     args.Session, PopupType.Medium);
                 return;
             }
