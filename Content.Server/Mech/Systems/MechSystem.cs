@@ -98,7 +98,7 @@ public sealed class MechSystem : SharedMechSystem
 
     private void OnInsertBattery(EntityUid uid, MechComponent component, EntInsertedIntoContainerMessage args)
     {
-        if (!TryComp<BatteryComponent>(args.Entity, out var battery))
+        if (args.Container != component.BatterySlot || !TryComp<BatteryComponent>(args.Entity, out var battery))
             return;
 
         component.Energy = battery.CurrentCharge;
