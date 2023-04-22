@@ -5,6 +5,21 @@
   description: The all-in-one hacking solution. The thinking man's lockpick. The iconic EMAG.
   components:
   - type: Emag
+  - type: LimitedCharges
+  - type: AutoRecharge
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Tools/emag.rsi
+    state: icon
+
+- type: entity
+  parent: BaseItem
+  id: EmagUnlimited
+  suffix: Unlimited
+  name: cryptographic sequencer
+  description: The all-in-one hacking solution. The thinking man's lockpick. The iconic EMAG.
+  components:
+  - type: Emag
   - type: Sprite
     netsync: false
     sprite: Objects/Tools/emag.rsi

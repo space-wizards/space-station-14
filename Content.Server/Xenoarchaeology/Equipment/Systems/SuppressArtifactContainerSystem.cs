@@ -6,6 +6,8 @@ namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
 public sealed class SuppressArtifactContainerSystem : EntitySystem
 {
+    [Dependency] private readonly ArtifactSystem _artifact = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -15,17 +17,17 @@ public sealed class SuppressArtifactContainerSystem : EntitySystem
 
     private void OnInserted(EntityUid uid, SuppressArtifactContainerComponent component, EntInsertedIntoContainerMessage args)
     {
-        if (!TryComp(args.Entity, out ArtifactComponent? artifact))
+        if (!TryComp<ArtifactComponent>(args.Entity, out var artifact))
             return;
 
-        artifact.IsSuppressed = true;
+        _artifact.SetIsSuppressed(args.Entity, true, artifact);
     }
 
     private void OnRemoved(EntityUid uid, SuppressArtifactContainerComponent component, EntRemovedFromContainerMessage args)
     {
-        if (!TryComp(args.Entity, out ArtifactComponent? artifact))
+        if (!TryComp<ArtifactComponent>(args.Entity, out var artifact))
             return;
 
-        artifact.IsSuppressed = false;
+        _artifact.SetIsSuppressed(args.Entity, false, artifact);
     }
 }

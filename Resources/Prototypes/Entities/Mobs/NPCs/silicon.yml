@@ -19,7 +19,7 @@
     bloodlossHealDamage:
       types:
         Bloodloss:
-          -0.25
+          -1
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -38,8 +38,6 @@
     noRot: true
     drawdepth: Mobs
     netsync: false
-  - type: Recyclable
-    safe: false
   - type: Faction
     factions:
     - SimpleNeutral
@@ -134,10 +132,11 @@
   - type: Construction
     graph: HonkBot
     node: bot
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: honkbot
     description: An artificial being of pure evil.
+  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-honkbot
     interactFailureString: petting-failure-honkbot

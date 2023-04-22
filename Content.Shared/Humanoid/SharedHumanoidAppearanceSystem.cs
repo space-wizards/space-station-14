@@ -129,7 +129,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         humanoid.Species = species;
-        humanoid.MarkingSet.FilterSpecies(species, _markingManager);
+        humanoid.MarkingSet.EnsureSpecies(species, humanoid.SkinColor, _markingManager);
         var oldMarkings = humanoid.MarkingSet.GetForwardEnumerator().ToList();
         humanoid.MarkingSet = new(oldMarkings, prototype.MarkingPoints, _markingManager, _prototypeManager);
 
@@ -149,6 +149,16 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     {
         if (!Resolve(uid, ref humanoid))
             return;
+
+        if (!_prototypeManager.TryIndex<SpeciesPrototype>(humanoid.Species, out var species))
+        {
+            return;
+        }
+
+        if (!SkinColor.VerifySkinColor(species.SkinColoration, skinColor))
+        {
+            skinColor = SkinColor.ValidSkinTone(species.SkinColoration, skinColor);
+        }
 
         humanoid.SkinColor = skinColor;
 

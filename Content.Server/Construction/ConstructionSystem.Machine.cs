@@ -5,6 +5,7 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction;
@@ -28,8 +29,8 @@ public sealed partial class ConstructionSystem
 
     private void OnMachineMapInit(EntityUid uid, MachineComponent component, MapInitEvent args)
     {
-        CreateBoardAndStockParts(component);
-        RefreshParts(component);
+        CreateBoardAndStockParts(uid, component);
+        RefreshParts(uid, component);
     }
 
     private void OnMachineExaminableVerb(EntityUid uid, MachineComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -53,10 +54,18 @@ public sealed partial class ConstructionSystem
             Text = Loc.GetString("machine-upgrade-examinable-verb-text"),
             Message = Loc.GetString("machine-upgrade-examinable-verb-message"),
             Category = VerbCategory.Examine,
-            IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"))
         };
 
         args.Verbs.Add(verb);
+    }
+
+    public List<MachinePartComponent> GetAllParts(EntityUid uid, MachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return new List<MachinePartComponent>();
+
+        return GetAllParts(component);
     }
 
     public List<MachinePartComponent> GetAllParts(MachineComponent component)
@@ -91,21 +100,21 @@ public sealed partial class ConstructionSystem
         return output;
     }
 
-    public void RefreshParts(MachineComponent component)
+    public void RefreshParts(EntityUid uid, MachineComponent component)
     {
         var parts = GetAllParts(component);
-        EntityManager.EventBus.RaiseLocalEvent(component.Owner, new RefreshPartsEvent
+        EntityManager.EventBus.RaiseLocalEvent(uid, new RefreshPartsEvent
         {
             Parts = parts,
             PartRatings = GetPartsRatings(parts),
         }, true);
     }
 
-    public void CreateBoardAndStockParts(MachineComponent component)
+    private void CreateBoardAndStockParts(EntityUid uid, MachineComponent component)
     {
         // Entity might not be initialized yet.
-        var boardContainer = _container.EnsureContainer<Container>(component.Owner, MachineFrameComponent.BoardContainerName);
-        var partContainer = _container.EnsureContainer<Container>(component.Owner, MachineFrameComponent.PartContainerName);
+        var boardContainer = _container.EnsureContainer<Container>(uid, MachineFrameComponent.BoardContainerName);
+        var partContainer = _container.EnsureContainer<Container>(uid, MachineFrameComponent.PartContainerName);
 
         if (string.IsNullOrEmpty(component.BoardPrototype))
             return;
@@ -114,11 +123,11 @@ public sealed partial class ConstructionSystem
         if (boardContainer.ContainedEntities.Count > 0)
             return;
 
-        var board = EntityManager.SpawnEntity(component.BoardPrototype, Transform(component.Owner).Coordinates);
+        var board = EntityManager.SpawnEntity(component.BoardPrototype, Transform(uid).Coordinates);
 
         if (!component.BoardContainer.Insert(board))
         {
-            throw new Exception($"Couldn't insert board with prototype {component.BoardPrototype} to machine with prototype {MetaData(component.Owner).EntityPrototype?.ID ?? "N/A"}!");
+            throw new Exception($"Couldn't insert board with prototype {component.BoardPrototype} to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}!");
         }
 
         if (!TryComp<MachineBoardComponent?>(board, out var machineBoard))
@@ -126,7 +135,7 @@ public sealed partial class ConstructionSystem
             throw new Exception($"Entity with prototype {component.BoardPrototype} doesn't have a {nameof(MachineBoardComponent)}!");
         }
 
-        var xform = Transform(component.Owner);
+        var xform = Transform(uid);
         foreach (var (part, amount) in machineBoard.Requirements)
         {
             var partProto = _prototypeManager.Index<MachinePartPrototype>(part);
@@ -141,20 +150,20 @@ public sealed partial class ConstructionSystem
 
         foreach (var (stackType, amount) in machineBoard.MaterialRequirements)
         {
-            var stack = _stackSystem.Spawn(amount, stackType, Transform(component.Owner).Coordinates);
+            var stack = _stackSystem.Spawn(amount, stackType, Transform(uid).Coordinates);
 
             if (!partContainer.Insert(stack))
-                throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {MetaData(component.Owner).EntityPrototype?.ID ?? "N/A"}");
+                throw new Exception($"Couldn't insert machine material of type {stackType} to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
         }
 
         foreach (var (compName, info) in machineBoard.ComponentRequirements)
         {
             for (var i = 0; i < info.Amount; i++)
             {
-                var c = EntityManager.SpawnEntity(info.DefaultPrototype, Transform(component.Owner).Coordinates);
+                var c = EntityManager.SpawnEntity(info.DefaultPrototype, Transform(uid).Coordinates);
 
                 if(!partContainer.Insert(c))
-                    throw new Exception($"Couldn't insert machine component part with default prototype '{compName}' to machine with prototype {MetaData(component.Owner).EntityPrototype?.ID ?? "N/A"}");
+                    throw new Exception($"Couldn't insert machine component part with default prototype '{compName}' to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
             }
         }
 
@@ -162,10 +171,10 @@ public sealed partial class ConstructionSystem
         {
             for (var i = 0; i < info.Amount; i++)
             {
-                var c = EntityManager.SpawnEntity(info.DefaultPrototype, Transform(component.Owner).Coordinates);
+                var c = EntityManager.SpawnEntity(info.DefaultPrototype, Transform(uid).Coordinates);
 
                 if(!partContainer.Insert(c))
-                    throw new Exception($"Couldn't insert machine component part with default prototype '{tagName}' to machine with prototype {MetaData(component.Owner).EntityPrototype?.ID ?? "N/A"}");
+                    throw new Exception($"Couldn't insert machine component part with default prototype '{tagName}' to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
             }
         }
     }

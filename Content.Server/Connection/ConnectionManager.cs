@@ -28,6 +28,7 @@ namespace Content.Server.Connection
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly ILocalizationManager _loc = default!;
 
         public void Initialize()
         {
@@ -147,14 +148,15 @@ namespace Content.Server.Connection
             if (bans.Count > 0)
             {
                 var firstBan = bans[0];
-                return (ConnectionDenyReason.Ban, firstBan.DisconnectMessage, bans);
+                var message = firstBan.FormatBanMessage(_cfg, _loc);
+                return (ConnectionDenyReason.Ban, message, bans);
             }
 
             if (_cfg.GetCVar(CCVars.WhitelistEnabled))
             {
                 var min = _cfg.GetCVar(CCVars.WhitelistMinPlayers);
                 var max = _cfg.GetCVar(CCVars.WhitelistMaxPlayers);
-                var playerCountValid = _plyMgr.PlayerCount > min && _plyMgr.PlayerCount < max;
+                var playerCountValid = _plyMgr.PlayerCount >= min && _plyMgr.PlayerCount < max;
 
                 if (playerCountValid && await _db.GetWhitelistStatusAsync(userId) == false
                                      && adminData is null)

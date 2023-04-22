@@ -8,7 +8,6 @@
     tags:
     - Flare
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage
   - type: ExpendableLight
     spentName: expendable-light-spent-flare-name

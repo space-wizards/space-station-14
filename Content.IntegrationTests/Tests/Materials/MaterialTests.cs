@@ -63,6 +63,8 @@ namespace Content.IntegrationTests.Tests.Materials
 
                 mapManager.DeleteMap(testMap.MapId);
             });
+
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

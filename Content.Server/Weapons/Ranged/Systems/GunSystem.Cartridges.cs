@@ -5,6 +5,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -37,7 +38,7 @@ public sealed partial class GunSystem
             Text = Loc.GetString("damage-examinable-verb-text"),
             Message = Loc.GetString("damage-examinable-verb-message"),
             Category = VerbCategory.Examine,
-            IconTexture = "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
         };
 
         args.Verbs.Add(verb);
