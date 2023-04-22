@@ -115,12 +115,6 @@ public sealed class MechSystem : SharedMechSystem
         component.Integrity = component.MaxIntegrity;
         component.Energy = component.MaxEnergy;
 
-        if (component.StartingBattery != null)
-        {
-            var battery = Spawn(component.StartingBattery, Transform(uid).Coordinates);
-            InsertBattery(uid, battery, component);
-        }
-
         _actionBlocker.UpdateCanMove(uid);
         Dirty(component);
     }
