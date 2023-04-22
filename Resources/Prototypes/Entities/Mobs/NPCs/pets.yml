@@ -59,10 +59,14 @@
     attributes:
       proper: true
       gender: male
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
+    - id: SheetSteel1
   - type: Tag
     tags:
     - CannotSuicide
-
 
 - type: entity
   name: Lisa
@@ -89,6 +93,10 @@
     attributes:
       proper: true
       gender: female
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
   - type: Tag
     tags:
     - CannotSuicide
