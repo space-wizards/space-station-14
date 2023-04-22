@@ -1,9 +1,4 @@
 Entries:
-- author: Cripes
-  changes:
-  - {message: Broken light bulbs on disposal units have been replaced., type: Fix}
-  id: 2985
-  time: '2023-02-03T22:26:50.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Space Tick AI is no longer friendly and will attack players., type: Fix}
@@ -2888,3 +2883,8 @@ Entries:
   - {message: Fix xeno ravagers not being able to pry doors on expeditions., type: Fix}
   id: 3484
   time: '2023-04-22T08:57:20.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fix holofan charges loc string missing, type: Fix}
+  id: 3485
+  time: '2023-04-22T09:54:42.0000000+00:00'
