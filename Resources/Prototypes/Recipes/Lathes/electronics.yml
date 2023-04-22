@@ -293,6 +293,14 @@
     Gold: 100
 
 - type: latheRecipe
+  id: MaterialReclaimerMachineCircuitboard
+  result: MaterialReclaimerMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
   id: OreProcessorMachineCircuitboard
   result: OreProcessorMachineCircuitboard
   completetime: 4
@@ -417,6 +425,14 @@
      Glass: 900
 
 - type: latheRecipe
+  id: FatExtractorMachineCircuitboard
+  result: FatExtractorMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: SurveillanceCameraRouterCircuitboard
   result: SurveillanceCameraRouterCircuitboard
   completetime: 4
@@ -523,6 +539,14 @@
 - type: latheRecipe
   id: SodaDispenserMachineCircuitboard
   result: SodaDispenserMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: TelecomServerCircuitboard
+  result: TelecomServerCircuitboard
   completetime: 4
   materials:
      Steel: 100

@@ -125,7 +125,7 @@ namespace Content.Server.Entry
             var dest = configManager.GetCVar(CCVars.DestinationFile);
             if (!string.IsNullOrEmpty(dest))
             {
-                var resPath = new ResourcePath(dest).ToRootedPath();
+                var resPath = new ResPath(dest).ToRootedPath();
                 var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
                 ChemistryJsonGenerator.PublishJson(file);
                 file.Flush();
@@ -199,7 +199,7 @@ namespace Content.Server.Entry
 
         private static void LoadBuildConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)
         {
-#if !FULL_RELEASE
+#if TOOLS
             Load(CCVars.ConfigPresetDevelopment, "development");
 #endif
 #if DEBUG

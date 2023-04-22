@@ -25,9 +25,7 @@ namespace Content.Shared.Timing
         [DataField("remainingDelay")]
         public TimeSpan? RemainingDelay;
 
-        public CancellationTokenSource? CancellationTokenSource;
-
-        public bool ActiveDelay => CancellationTokenSource is { Token: { IsCancellationRequested: false } };
+        public bool ActiveDelay => DelayEndTime != null;
     }
 
     [Serializable, NetSerializable]

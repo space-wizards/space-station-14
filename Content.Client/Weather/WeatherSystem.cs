@@ -17,13 +17,8 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-
-    // Consistency isn't really important, just want to avoid sharp changes and there's no way to lerp on engine nicely atm.
-    private float _lastAlpha;
-    private float _lastOcclusion;
 
     private const float OcclusionLerpRate = 4f;
     private const float AlphaLerpRate = 4f;
@@ -41,9 +36,9 @@ public sealed class WeatherSystem : SharedWeatherSystem
         _overlayManager.RemoveOverlay<WeatherOverlay>();
     }
 
-    protected override void Run(EntityUid uid, WeatherComponent component, WeatherPrototype weather, WeatherState state, float frameTime)
+    protected override void Run(EntityUid uid, WeatherData weather, WeatherPrototype weatherProto, float frameTime)
     {
-        base.Run(uid, component, weather, state, frameTime);
+        base.Run(uid, weather, weatherProto, frameTime);
 
         var ent = _playerManager.LocalPlayer?.ControlledEntity;
 
@@ -56,21 +51,21 @@ public sealed class WeatherSystem : SharedWeatherSystem
         // Maybe have the viewports manage this?
         if (mapUid == null || entXform.MapUid != mapUid)
         {
-            _lastOcclusion = 0f;
-            _lastAlpha = 0f;
-            component.Stream?.Stop();
-            component.Stream = null;
+            weather.LastOcclusion = 0f;
+            weather.LastAlpha = 0f;
+            weather.Stream?.Stop();
+            weather.Stream = null;
             return;
         }
 
-        if (!Timing.IsFirstTimePredicted || weather.Sound == null)
+        if (!Timing.IsFirstTimePredicted || weatherProto.Sound == null)
             return;
 
-        component.Stream ??= _audio.PlayGlobal(weather.Sound, Filter.Local(), true);
-        var volumeMod = MathF.Pow(10, weather.Sound.Params.Volume / 10f);
+        weather.Stream ??= _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true);
+        var volumeMod = MathF.Pow(10, weatherProto.Sound.Params.Volume / 10f);
 
-        var stream = (AudioSystem.PlayingStream) component.Stream!;
-        var alpha = GetPercent(component, mapUid.Value, weather);
+        var stream = (AudioSystem.PlayingStream) weather.Stream!;
+        var alpha = weather.LastAlpha;
         alpha = MathF.Pow(alpha, 2f) * volumeMod;
         // TODO: Lerp this occlusion.
         var occlusion = 0f;
@@ -87,6 +82,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
             // If we don't have a nearest node don't play any sound.
             EntityCoordinates? nearestNode = null;
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
+            var weatherIgnoreQuery = GetEntityQuery<IgnoreWeatherComponent>();
             var visited = new HashSet<Vector2i>();
 
             while (frontier.TryDequeue(out var node))
@@ -94,7 +90,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 if (!visited.Add(node.GridIndices))
                     continue;
 
-                if (!CanWeatherAffect(grid, node, bodyQuery))
+                if (!CanWeatherAffect(grid, node, weatherIgnoreQuery, bodyQuery))
                 {
                     // Add neighbors
                     // TODO: Ideally we pick some deterministically random direction and use that
@@ -138,65 +134,45 @@ public sealed class WeatherSystem : SharedWeatherSystem
             }
         }
 
-        if (MathHelper.CloseTo(_lastOcclusion, occlusion, 0.01f))
-            _lastOcclusion = occlusion;
+        if (MathHelper.CloseTo(weather.LastOcclusion, occlusion, 0.01f))
+            weather.LastOcclusion = occlusion;
         else
-            _lastOcclusion += (occlusion - _lastOcclusion) * OcclusionLerpRate * frameTime;
+            weather.LastOcclusion += (occlusion - weather.LastOcclusion) * OcclusionLerpRate * frameTime;
 
-        if (MathHelper.CloseTo(_lastAlpha, alpha, 0.01f))
-            _lastAlpha = alpha;
+        if (MathHelper.CloseTo(weather.LastAlpha, alpha, 0.01f))
+            weather.LastAlpha = alpha;
         else
-            _lastAlpha += (alpha - _lastAlpha) * AlphaLerpRate * frameTime;
+            weather.LastAlpha += (alpha - weather.LastAlpha) * AlphaLerpRate * frameTime;
 
         // Full volume if not on grid
-        stream.Source.SetVolumeDirect(_lastAlpha);
-        stream.Source.SetOcclusion(_lastOcclusion);
+        stream.Source.SetVolumeDirect(weather.LastAlpha);
+        stream.Source.SetOcclusion(weather.LastOcclusion);
     }
 
-    public float GetPercent(WeatherComponent component, EntityUid mapUid, WeatherPrototype weatherProto)
+    protected override void EndWeather(EntityUid uid, WeatherComponent component, string proto)
     {
-        var pauseTime = _metadata.GetPauseTime(mapUid);
-        var elapsed = Timing.CurTime - (component.StartTime + pauseTime);
-        var duration = component.Duration;
-        var remaining = duration - elapsed;
-        float alpha;
+        base.EndWeather(uid, component, proto);
 
-        if (elapsed < weatherProto.StartupTime)
-        {
-            alpha = (float) (elapsed / weatherProto.StartupTime);
-        }
-        else if (remaining < weatherProto.ShutdownTime)
-        {
-            alpha = (float) (remaining / weatherProto.ShutdownTime);
-        }
-        else
-        {
-            alpha = 1f;
-        }
+        if (!component.Weather.TryGetValue(proto, out var weather))
+            return;
 
-        return alpha;
+        weather.LastAlpha = 0f;
+        weather.LastOcclusion = 0f;
     }
 
-    protected override bool SetState(EntityUid uid, WeatherComponent component, WeatherState state, WeatherPrototype prototype)
+    protected override bool SetState(WeatherState state, WeatherComponent comp, WeatherData weather, WeatherPrototype weatherProto)
     {
-        if (!base.SetState(uid, component, state, prototype))
+        if (!base.SetState(state, comp, weather, weatherProto))
             return false;
 
         if (!Timing.IsFirstTimePredicted)
             return true;
 
-        // TODO: Fades
-        component.Stream?.Stop();
-        component.Stream = null;
-        component.Stream = _audio.PlayGlobal(prototype.Sound, Filter.Local(), true);
+        // TODO: Fades (properly)
+        weather.Stream?.Stop();
+        weather.Stream = null;
+        weather.Stream = _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true);
         return true;
-    }
-
-    protected override void EndWeather(WeatherComponent component)
-    {
-        _lastOcclusion = 0f;
-        _lastAlpha = 0f;
-        base.EndWeather(component);
     }
 
     private void OnWeatherHandleState(EntityUid uid, WeatherComponent component, ref ComponentHandleState args)
@@ -204,15 +180,29 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (args.Current is not WeatherComponentState state)
             return;
 
-        if (component.Weather != state.Weather || !component.EndTime.Equals(state.EndTime) || !component.StartTime.Equals(state.StartTime))
+        foreach (var (proto, weather) in component.Weather)
         {
-            EndWeather(component);
+            // End existing one
+            if (!state.Weather.TryGetValue(proto, out var stateData))
+            {
+                EndWeather(uid, component, proto);
+                continue;
+            }
 
-            if (state.Weather != null)
-                StartWeather(component, ProtoMan.Index<WeatherPrototype>(state.Weather));
+            // Data update?
+            weather.StartTime = stateData.StartTime;
+            weather.EndTime = stateData.EndTime;
+            weather.State = stateData.State;
         }
 
-        component.EndTime = state.EndTime;
-        component.StartTime = state.StartTime;
+        foreach (var (proto, weather) in state.Weather)
+        {
+            if (component.Weather.ContainsKey(proto))
+                continue;
+
+            // New weather
+            StartWeather(component, ProtoMan.Index<WeatherPrototype>(proto), weather.EndTime);
+            weather.LastAlpha = 0f;
+        }
     }
 }

@@ -1,40 +1,37 @@
 using Content.Server.Construction.Components;
-using Content.Server.Tools;
 using Content.Server.Stack;
+using Content.Shared.Construction;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
-using Content.Shared.Tools.Components;
+using Content.Shared.Tools;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction
 {
     public sealed class RefiningSystem : EntitySystem
     {
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<WelderRefinableComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<WelderRefinableComponent, WelderRefineDoAfterEvent>(OnDoAfter);
         }
 
-        private async void OnInteractUsing(EntityUid uid, WelderRefinableComponent component, InteractUsingEvent args)
+        private void OnInteractUsing(EntityUid uid, WelderRefinableComponent component, InteractUsingEvent args)
         {
-            // check if object is welder
-            if (!HasComp<ToolComponent>(args.Used))
+            if (args.Handled)
                 return;
 
-            // check if someone is already welding object
-            if (component.BeingWelded)
-                return;
+            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, component.RefineTime, component.QualityNeeded, new WelderRefineDoAfterEvent(), component.RefineFuel);
+        }
 
-            component.BeingWelded = true;
-
-            if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.RefineFuel, component.RefineTime, component.QualityNeeded))
-            {
-                // failed to veld - abort refine
-                component.BeingWelded = false;
+        private void OnDoAfter(EntityUid uid, WelderRefinableComponent component, WelderRefineDoAfterEvent args)
+        {
+            if (args.Cancelled)
                 return;
-            }
 
             // get last owner coordinates and delete it
             var resultPosition = Transform(uid).Coordinates;
@@ -48,7 +45,7 @@ namespace Content.Server.Construction
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.
                 if (TryComp<StackComponent?>(droppedEnt, out var stack))
-                    _stackSystem.SetCount(droppedEnt,1, stack);
+                    _stackSystem.SetCount(droppedEnt, 1, stack);
             }
         }
     }

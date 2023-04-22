@@ -8,6 +8,7 @@ using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 
@@ -41,15 +42,12 @@ public sealed class FollowerSystem : EntitySystem
         {
             var verb = new AlternativeVerb
             {
-                Priority = 10,
-                Act = (() =>
-                {
-                    StartFollowingEntity(ev.User, ev.Target);
-                }),
-                Impact = LogImpact.Low,
-                Text = Loc.GetString("verb-follow-text"),
-                IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png",
-            };
+                StartFollowingEntity(ev.User, ev.Target);
+            }),
+            Impact = LogImpact.Low,
+            Text = Loc.GetString("verb-follow-text"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
+        };
 
             ev.Verbs.Add(verb);
         }

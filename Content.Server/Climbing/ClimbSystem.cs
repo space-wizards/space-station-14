@@ -1,6 +1,5 @@
 using Content.Server.Body.Systems;
 using Content.Server.Climbing.Components;
-using Content.Server.DoAfter;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
@@ -11,6 +10,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
@@ -18,8 +18,6 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -34,18 +32,15 @@ namespace Content.Server.Climbing;
 [UsedImplicitly]
 public sealed class ClimbSystem : SharedClimbSystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly BonkSystem _bonkSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -60,7 +55,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
         SubscribeLocalEvent<ClimbableComponent, DragDropTargetEvent>(OnClimbableDragDrop);
 
-        SubscribeLocalEvent<ClimbingComponent, ClimbFinishedEvent>(OnClimbFinished);
+        SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
         SubscribeLocalEvent<ClimbingComponent, ComponentGetState>(OnClimbingGetState);
@@ -98,38 +93,48 @@ public sealed class ClimbSystem : SharedClimbSystem
         // TODO VERBS ICON add a climbing icon?
         args.Verbs.Add(new AlternativeVerb
         {
-            Act = () => TryMoveEntity(component, args.User, args.User, args.Target),
+            Act = () => TryClimb(args.User, args.User, args.Target, component),
             Text = Loc.GetString("comp-climbable-verb-climb")
         });
     }
 
     private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, ref DragDropTargetEvent args)
     {
-        TryMoveEntity(component, args.User, args.Dragged, uid);
+        TryClimb(args.User, args.Dragged, uid, component);
     }
 
-    private void TryMoveEntity(ClimbableComponent component, EntityUid user, EntityUid entityToMove,
-        EntityUid climbable)
+    public void TryClimb(EntityUid user,
+        EntityUid entityToMove,
+        EntityUid climbable,
+        ClimbableComponent? comp = null,
+        ClimbingComponent? climbing = null)
     {
-        if (!TryComp(entityToMove, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
+        if (!Resolve(climbable, ref comp) || !Resolve(entityToMove, ref climbing))
             return;
 
-        if (_bonkSystem.TryBonk(entityToMove, climbable))
+        // Note, IsClimbing does not mean a DoAfter is active, it means the target has already finished a DoAfter and
+        // is currently on top of something..
+        if (climbing.IsClimbing)
             return;
 
-        _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, default, climbable, entityToMove)
+        var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
-            BreakOnDamage = true,
-            BreakOnStun = true,
-            UsedFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
-        });
+            BreakOnDamage = true
+        };
+
+        _doAfterSystem.TryStartDoAfter(args);
     }
 
-    private void OnClimbFinished(EntityUid uid, ClimbingComponent climbing, ClimbFinishedEvent args)
+    private void OnDoAfter(EntityUid uid, ClimbingComponent component, ClimbDoAfterEvent args)
     {
-        Climb(uid, args.User, args.Instigator, args.Climbable, climbing: climbing);
+        if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
+            return;
+
+        Climb(uid, args.Args.User, args.Args.Used.Value, args.Args.Target.Value, climbing: component);
+
+        args.Handled = true;
     }
 
     private void Climb(EntityUid uid, EntityUid user, EntityUid instigator, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
@@ -428,20 +433,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     {
         _fixtureRemoveQueue.Clear();
     }
-}
 
-internal sealed class ClimbFinishedEvent : EntityEventArgs
-{
-    public ClimbFinishedEvent(EntityUid user, EntityUid climbable, EntityUid instigator)
-    {
-        User = user;
-        Climbable = climbable;
-        Instigator = instigator;
-    }
-
-    public EntityUid User { get; }
-    public EntityUid Climbable { get; }
-    public EntityUid Instigator { get; }
 }
 
 /// <summary>

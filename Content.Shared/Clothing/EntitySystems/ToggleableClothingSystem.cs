@@ -1,13 +1,18 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Clothing.Components;
+using Content.Shared.DoAfter;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
+using Content.Shared.Strip;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -18,7 +23,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedStrippableSystem _strippable = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     private Queue<EntityUid> _toInsert = new();
 
@@ -36,6 +44,92 @@ public sealed class ToggleableClothingSystem : EntitySystem
         SubscribeLocalEvent<AttachedClothingComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AttachedClothingComponent, GotUnequippedEvent>(OnAttachedUnequip);
         SubscribeLocalEvent<AttachedClothingComponent, ComponentRemove>(OnRemoveAttached);
+
+        SubscribeLocalEvent<ToggleableClothingComponent, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>>(GetRelayedVerbs);
+        SubscribeLocalEvent<ToggleableClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<AttachedClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetAttachedStripVerbsEvent);
+        SubscribeLocalEvent<ToggleableClothingComponent, ToggleClothingDoAfterEvent>(OnDoAfterComplete);
+    }
+
+    private void GetRelayedVerbs(EntityUid uid, ToggleableClothingComponent component, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
+    {
+        OnGetVerbs(uid, component, args.Args);
+    }
+
+    private void OnGetVerbs(EntityUid uid, ToggleableClothingComponent component, GetVerbsEvent<EquipmentVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || component.ClothingUid == null || component.Container == null)
+            return;
+
+        var text = component.VerbText ?? component.ToggleAction?.DisplayName;
+        if (text == null)
+            return;
+
+        if (!_inventorySystem.InSlotWithFlags(uid, component.RequiredFlags))
+            return;
+
+        var wearer = Transform(uid).ParentUid;
+        if (args.User != wearer && component.StripDelay == null)
+            return;
+
+        var verb = new EquipmentVerb()
+        {
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+            Text = Loc.GetString(text),
+        };
+
+        if (args.User == wearer)
+        {
+            verb.EventTarget = uid;
+            verb.ExecutionEventArgs = new ToggleClothingEvent() { Performer = args.User };
+        }
+        else
+        {
+            verb.Act = () => StartDoAfter(args.User, uid, Transform(uid).ParentUid, component);
+        }
+
+        args.Verbs.Add(verb);
+    }
+
+    private void StartDoAfter(EntityUid user, EntityUid item, EntityUid wearer, ToggleableClothingComponent component)
+    {
+        if (component.StripDelay == null)
+            return;
+
+        var (time, stealth) = _strippable.GetStripTimeModifiers(user, wearer, (float) component.StripDelay.Value.TotalSeconds);
+
+        var args = new DoAfterArgs(user, time, new ToggleClothingDoAfterEvent(), item, wearer, item)
+        {
+            BreakOnDamage = true,
+            BreakOnTargetMove = true,
+            // This should just re-use the BUI range checks & cancel the do after if the BUI closes. But that is all
+            // server-side at the moment.
+            // TODO BUI REFACTOR.
+            DistanceThreshold = 2,
+        };
+
+        if (!_doAfter.TryStartDoAfter(args))
+            return;
+
+        if (!stealth)
+        {
+            var popup = Loc.GetString("strippable-component-alert-owner-interact", ("user", Identity.Entity(user, EntityManager)), ("item", item));
+            _popupSystem.PopupEntity(popup, wearer, wearer, PopupType.Large);
+        }
+    }
+
+    private void OnGetAttachedStripVerbsEvent(EntityUid uid, AttachedClothingComponent component, GetVerbsEvent<EquipmentVerb> args)
+    {
+        // redirect to the attached entity.
+        OnGetVerbs(component.AttachedUid, Comp<ToggleableClothingComponent>(component.AttachedUid), args);
+    }
+
+    private void OnDoAfterComplete(EntityUid uid, ToggleableClothingComponent component, ToggleClothingDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        ToggleClothing(args.User, uid, component);
     }
 
     public override void Update(float frameTime)
@@ -137,21 +231,28 @@ public sealed class ToggleableClothingSystem : EntitySystem
     /// </summary>
     private void OnToggleClothing(EntityUid uid, ToggleableClothingComponent component, ToggleClothingEvent args)
     {
-        if (args.Handled || component.Container == null || component.ClothingUid == null)
+        if (args.Handled)
             return;
 
-        var parent = Transform(uid).ParentUid;
+        args.Handled = true;
+        ToggleClothing(args.Performer, uid, component);
+    }
+
+    private void ToggleClothing(EntityUid user, EntityUid target, ToggleableClothingComponent component)
+    {
+        if (component.Container == null || component.ClothingUid == null)
+            return;
+
+        var parent = Transform(target).ParentUid;
         if (component.Container.ContainedEntity == null)
-            _inventorySystem.TryUnequip(parent, component.Slot);
+            _inventorySystem.TryUnequip(user, parent, component.Slot);
         else if (_inventorySystem.TryGetSlotEntity(parent, component.Slot, out var existing))
         {
             _popupSystem.PopupEntity(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
-                args.Performer, args.Performer);
+                user, user);
         }
         else
-            _inventorySystem.TryEquip(parent, component.ClothingUid.Value, component.Slot);
-
-        args.Handled = true;
+            _inventorySystem.TryEquip(user, parent, component.ClothingUid.Value, component.Slot);
     }
 
     private void OnGetActions(EntityUid uid, ToggleableClothingComponent component, GetItemActionsEvent args)
@@ -208,4 +309,11 @@ public sealed class ToggleableClothingSystem : EntitySystem
     }
 }
 
-public sealed class ToggleClothingEvent : InstantActionEvent { }
+public sealed class ToggleClothingEvent : InstantActionEvent
+{
+}
+
+[Serializable, NetSerializable]
+public sealed class ToggleClothingDoAfterEvent : SimpleDoAfterEvent
+{
+}

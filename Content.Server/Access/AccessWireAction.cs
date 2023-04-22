@@ -16,27 +16,33 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
 
     public override StatusLightState? GetLightState(Wire wire, AccessReaderComponent comp)
     {
-        return EntityManager.HasComponent<EmaggedComponent>(comp.Owner) ? StatusLightState.On : StatusLightState.Off;
+        return comp.Enabled ? StatusLightState.On : StatusLightState.Off;
     }
 
-    public override object StatusKey { get; } = AccessWireActionKey.Status;
+    public override object StatusKey => AccessWireActionKey.Status;
 
     public override bool Cut(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
-        EntityManager.RemoveComponent<EmaggedComponent>(comp.Owner);
+        comp.Enabled = false;
+        EntityManager.Dirty(comp);
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
-        EntityManager.AddComponent<EmaggedComponent>(comp.Owner);
+        if (!EntityManager.HasComponent<EmaggedComponent>(wire.Owner))
+        {
+            comp.Enabled = true;
+            EntityManager.Dirty(comp);
+        }
         return true;
     }
 
     public override void Pulse(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
-        EntityManager.RemoveComponent<EmaggedComponent>(comp.Owner);
+        comp.Enabled = false;
+        EntityManager.Dirty(comp);
         WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));
     }
 
@@ -52,10 +58,10 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
     {
         if (!wire.IsCut)
         {
-            // check is still here incase you somehow TOCTOU it into unemagging something it shouldn't
-            if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
+            if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access) && !EntityManager.HasComponent<EmaggedComponent>(wire.Owner))
             {
-                EntityManager.RemoveComponent<EmaggedComponent>(wire.Owner);
+                access.Enabled = true;
+                EntityManager.Dirty(access);
             }
         }
     }

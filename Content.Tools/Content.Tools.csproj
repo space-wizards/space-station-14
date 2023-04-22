@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>$(TargetFramework)</TargetFramework>
@@ -13,4 +12,5 @@
       <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
     </ItemGroup>
 
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 </Project>
