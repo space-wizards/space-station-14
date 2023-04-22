@@ -280,6 +280,7 @@ public class SeedData
 
             Seedless = Seedless,
             AltSeedPacketProb = AltSeedPacketProb,
+            AltSpeciesPrototype = AltSpeciesPrototype,
             Viable = Viable,
             Slip = Slip,
             Sentient = Sentient,

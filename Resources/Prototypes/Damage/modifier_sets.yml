@@ -119,6 +119,17 @@
     Shock: 1.2
 
 - type: damageModifierSet
+  id: Fungus # Fragile, highly flamable but cold resistant.
+  coefficients:
+    Blunt: 1.5
+    Slash: 1.4
+    Heat: 3.0
+    Cold: 0.0
+    Shock: 1.6
+    Poison: 0.5
+    Asphyxiation: 0.1
+
+- type: damageModifierSet
   id: Zombie #Blunt resistent and immune to biological threats, but can be hacked apart and burned
   coefficients:
     Blunt: 0.5

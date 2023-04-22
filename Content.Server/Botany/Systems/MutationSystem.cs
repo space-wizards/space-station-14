@@ -229,6 +229,6 @@ public class MutationSystem : EntitySystem
 
     private bool random(float p)
     {
-        return _robustRandom.Prob(p);
+        return _robustRandom.Prob(Math.Clamp(p, 0.0f, 1.0f)); // Chance must be in the range 0-1
     }
 }

@@ -603,9 +603,9 @@
     - MobShroomin
   altSpeciesPrototype:
     - shroomanoid_pod
-  lifespan: 85
-  maturation: 20
-  production: 25
+  lifespan: 35
+  maturation: 5
+  production: 7
   yield: 3
   potency: 20
   growthStages: 2
@@ -620,9 +620,9 @@
   plantRsi: Objects/Specific/Hydroponics/shroomanoid.rsi
   productPrototypes:
     - RandomShrooman
-  lifespan: 100
-  maturation: 30
-  production: 35
+  lifespan: 50
+  maturation: 15
+  production: 16
   yield: 1
   potency: 20
   growthStages: 2
@@ -763,8 +763,6 @@
   plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
   productPrototypes:
     - FoodLingzhi
-  altSpeciesPrototype:
-    - shroominal_pod
   lifespan: 25
   maturation: 10
   production: 1
@@ -848,6 +846,8 @@
   plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
   productPrototypes:
     - FoodFlyAmanita
+  altSpeciesPrototype:
+    - shroominal_pod
   lifespan: 25
   maturation: 10
   production: 1

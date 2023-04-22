@@ -9,7 +9,7 @@
     species: Shrooman
   - type: Hunger
   - type: Thirst
-    baseDecayRate: 0.3
+    baseDecayRate: 0.5
   - type: Icon
     sprite: Mobs/Species/Shrooman/parts.rsi
     state: full
@@ -18,13 +18,14 @@
   #  requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
+    damageModifierSet: Fungus
   - type: Butcherable
     butcheringType: Spike
     spawned:
       - id: FoodMeatPlant
         amount: 5
   - type: Bloodstream
-    bloodReagent: SpaceDrugs
+    bloodReagent: SpaceDrugs # Because shrooms.
   - type: Fixtures
     fixtures:
       - shape:
