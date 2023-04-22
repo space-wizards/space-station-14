@@ -135,6 +135,8 @@ namespace Content.Server.GameTicking
             var bev = new PlayerBeforeSpawnEvent(player, character, jobId, lateJoin, station);
             RaiseLocalEvent(bev);
 
+
+
             // Do nothing, something else has handled spawning this player for us!
             if (bev.Handled)
             {
@@ -164,6 +166,30 @@ namespace Content.Server.GameTicking
                 _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
+
+            JobPrototype currentJob = _prototypeManager.Index<JobPrototype>(jobId);
+            if (currentJob.allowedSpecies != Array.Empty<string>()) {
+                if  (!currentJob.allowedSpecies.Contains(character.Species)) {
+                    _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-cant-join-as-not-allowed-species"));
+                    foreach (string species in currentJob.allowedSpecies) {
+                        _chatManager.DispatchServerMessage(player, species);
+                    }
+                    _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-trying-find-suitable-char-in-preferences"));
+                    bool characterNotFound = true;
+                    foreach (HumanoidCharacterProfile playerCharacter in _prefsManager.GetPreferences(player.UserId).Characters.Values) {
+                        if (currentJob.allowedSpecies.Contains(playerCharacter.Species)) {
+                            character = playerCharacter;
+                            characterNotFound = false;
+                            break;
+                        }
+                    }
+                    if (characterNotFound){
+                        _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-cant-find-suitable-char-in-preferences"));
+                        character = HumanoidCharacterProfile.RandomWithSpecies();
+                    }
+                }
+            }
+
 
             PlayerJoinGame(player);
 
