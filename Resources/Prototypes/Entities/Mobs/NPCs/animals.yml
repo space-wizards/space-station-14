@@ -739,6 +739,7 @@
     makeSentient: true
     name: monkey
     description: Ook ook!
+  - type: GhostTakeoverAvailable
 
 - type: entity
   name: guidebook monkey

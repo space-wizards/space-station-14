@@ -221,6 +221,7 @@
       - MopItem
       - AdvMopItem
       - SprayBottle
+      - MegaSprayBottle
       - FireExtinguisher
       - KitchenKnife
       - ButchCleaver
@@ -299,6 +300,7 @@
       - ReagentGrinderMachineCircuitboard
       - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
+      - FatExtractorMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
