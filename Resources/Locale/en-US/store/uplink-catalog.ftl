@@ -157,6 +157,9 @@ uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and mag
 uplink-banana-peel-explosive-name = Explosive Banana Peel
 uplink-banana-peel-explosive-desc = They will burst into laughter when they slip on it!
 
+uplink-hot-potato-name = Hot Potato
+uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only passed to someone else!
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!

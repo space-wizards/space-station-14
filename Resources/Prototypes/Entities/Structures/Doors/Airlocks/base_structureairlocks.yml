@@ -30,6 +30,7 @@
       shader: unshaded
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -65,8 +66,6 @@
     time: 3
   - type: Airlock
   - type: Appearance
-    visuals:
-    - type: AirlockVisualizer
   - type: WiresVisuals
   - type: ApcPowerReceiver
     powerLoad: 20
