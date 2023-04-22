@@ -8,7 +8,7 @@ namespace Content.Server.Holosign;
 
 public sealed class HolosignSystem : EntitySystem
 {
-    [Dependency] private readonly PowerCellSystem _cellSystem = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
     public override void Initialize()
     {
@@ -21,7 +21,7 @@ public sealed class HolosignSystem : EntitySystem
     {
         // TODO: This should probably be using an itemstatus
         // TODO: I'm too lazy to do this rn but it's literally copy-paste from emag.
-        _cellSystem.TryGetBatteryFromSlot(uid, out var battery);
+        _powerCell.TryGetBatteryFromSlot(uid, out var battery);
         var charges = UsesRemaining(component, battery);
         var maxCharges = MaxUses(component, battery);
 
@@ -36,7 +36,7 @@ public sealed class HolosignSystem : EntitySystem
     private void OnUse(EntityUid uid, HolosignProjectorComponent component, UseInHandEvent args)
     {
         if (args.Handled ||
-            !_cellSystem.TryGetBatteryFromSlot(uid, out var battery) ||
+            !_powerCell.TryGetBatteryFromSlot(uid, out var battery) ||
             !battery.TryUseCharge(component.ChargeUse))
             return;
 
