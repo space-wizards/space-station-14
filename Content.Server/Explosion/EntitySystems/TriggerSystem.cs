@@ -36,6 +36,12 @@ namespace Content.Server.Explosion.EntitySystems
         }
     }
 
+    /// <summary>
+    /// Raised when timer trigger becomes active.
+    /// </summary>
+    [ByRefEvent]
+    public readonly record struct ActiveTimerTriggerEvent(EntityUid Triggered, EntityUid? User);
+
     [UsedImplicitly]
     public sealed partial class TriggerSystem : EntitySystem
     {
@@ -183,6 +189,9 @@ namespace Content.Server.Explosion.EntitySystems
             active.BeepSound = beepSound;
             active.BeepInterval = beepInterval;
             active.TimeUntilBeep = initialBeepDelay == null ? active.BeepInterval : initialBeepDelay.Value;
+
+            var ev = new ActiveTimerTriggerEvent(uid, user);
+            RaiseLocalEvent(uid, ref ev);
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
                 _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Primed, appearance);
