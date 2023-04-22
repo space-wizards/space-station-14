@@ -1,42 +1,51 @@
 using Content.Shared.Interaction.Events;
-using Content.Shared.Examine;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
+using Content.Shared.Charges.Systems;
 
 namespace Content.Server.Holosign;
 
 public sealed class HolosignSystem : EntitySystem
 {
-    [Dependency] private readonly PowerCellSystem _cellSystem = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<HolosignProjectorComponent, UseInHandEvent>(OnUse);
-        SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<HolosignProjectorComponent, ExaminedChargesEvent>(OnExamineCharges);
     }
 
-    private void OnExamine(EntityUid uid, HolosignProjectorComponent component, ExaminedEvent args)
+    private void OnExamineCharges(EntityUid uid, HolosignProjectorComponent component, ref ExaminedChargesEvent args)
     {
         // TODO: This should probably be using an itemstatus
-        // TODO: I'm too lazy to do this rn but it's literally copy-paste from emag.
-        _cellSystem.TryGetBatteryFromSlot(uid, out var battery);
-        var charges = UsesRemaining(component, battery);
-        var maxCharges = MaxUses(component, battery);
+        _powerCell.TryGetBatteryFromSlot(uid, out var battery);
+        _charges.SetCharges(uid, ChargesRemaining(component, battery));
+        _charges.SetMaxCharges(uid, MaxCharges(component, battery));
+    }
 
-        args.PushMarkup(Loc.GetString("emag-charges-remaining", ("charges", charges)));
+    private int ChargesRemaining(HolosignProjectorComponent component, BatteryComponent? battery = null)
+    {
+        if (battery == null ||
+            component.ChargeUse == 0f) return 0;
 
-        if (charges > 0 && charges == maxCharges)
-        {
-            args.PushMarkup(Loc.GetString("emag-max-charges"));
-        }
+        return (int) (battery.CurrentCharge / component.ChargeUse);
+    }
+
+    private int MaxCharges(HolosignProjectorComponent component, BatteryComponent? battery = null)
+    {
+        if (battery == null ||
+            component.ChargeUse == 0f) return 0;
+
+        return (int) (battery.MaxCharge / component.ChargeUse);
     }
 
     private void OnUse(EntityUid uid, HolosignProjectorComponent component, UseInHandEvent args)
     {
         if (args.Handled ||
-            !_cellSystem.TryGetBatteryFromSlot(uid, out var battery) ||
+            !_powerCell.TryGetBatteryFromSlot(uid, out var battery) ||
             !battery.TryUseCharge(component.ChargeUse))
             return;
 
@@ -47,19 +56,4 @@ public sealed class HolosignSystem : EntitySystem
         args.Handled = true;
     }
 
-    private int UsesRemaining(HolosignProjectorComponent component, BatteryComponent? battery = null)
-    {
-        if (battery == null ||
-            component.ChargeUse == 0f) return 0;
-
-        return (int) (battery.CurrentCharge / component.ChargeUse);
-    }
-
-    private int MaxUses(HolosignProjectorComponent component, BatteryComponent? battery = null)
-    {
-        if (battery == null ||
-            component.ChargeUse == 0f) return 0;
-
-        return (int) (battery.MaxCharge / component.ChargeUse);
-    }
 }
