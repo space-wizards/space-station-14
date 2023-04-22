@@ -25,11 +25,11 @@ public sealed class HolosignSystem : EntitySystem
         var charges = UsesRemaining(component, battery);
         var maxCharges = MaxUses(component, battery);
 
-        args.PushMarkup(Loc.GetString("emag-charges-remaining", ("charges", charges)));
+        args.PushMarkup(Loc.GetString("limited-charges-charges-remaining", ("charges", charges)));
 
         if (charges > 0 && charges == maxCharges)
         {
-            args.PushMarkup(Loc.GetString("emag-max-charges"));
+            args.PushMarkup(Loc.GetString("limited-charges-max-charges"));
         }
     }
 
