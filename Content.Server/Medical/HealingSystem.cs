@@ -44,6 +44,8 @@ public sealed class HealingSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, DamageableComponent component, HealingDoAfterEvent args)
     {
+        var dontRepeat = false;
+
         if (!TryComp(args.Used, out HealingComponent? healing))
             return;
 
@@ -60,7 +62,7 @@ public sealed class HealingSystem : EntitySystem
             _bloodstreamSystem.TryModifyBleedAmount(uid, healing.BloodlossModifier);
             if (isBleeding != uid.EnsureComponent<BloodstreamComponent>().BleedAmount > 0)
             {
-                args.Repeat = false;
+                dontRepeat = true;
                 _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), uid);
             }
         }
@@ -93,8 +95,8 @@ public sealed class HealingSystem : EntitySystem
         _audio.PlayPvs(healing.HealingEndSound, uid, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
 
         // Logic to determine the whether or not to repeat the healing action
-        args.Repeat = HasDamage(component, healing);
-        if (!args.Repeat)
+        args.Repeat = (HasDamage(component, healing) && !dontRepeat);
+        if (!args.Repeat && !dontRepeat)
             _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), uid);
         args.Handled = true;
     }
