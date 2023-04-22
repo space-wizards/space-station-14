@@ -16,6 +16,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Physics.Systems;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -28,10 +29,9 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
-
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
-
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public bool SpreadOverlay
     {
@@ -82,6 +82,7 @@ public sealed partial class GunSystem : SharedGunSystem
             _inputManager,
             _player,
             _protoManager,
+            _physics,
             this
         ));
     }

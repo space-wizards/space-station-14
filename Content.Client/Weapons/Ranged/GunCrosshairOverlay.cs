@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Weapons.Ranged.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -5,9 +6,12 @@ using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged;
-using Robust.Shared.Prototypes;
+using Content.Shared.Physics;
 
 namespace Content.Client.Weapons.Ranged;
 
@@ -21,11 +25,11 @@ public sealed class GunCrosshairOverlay : Overlay
     private readonly IInputManager _input;
     private readonly IPlayerManager _player;
     private readonly GunSystem _guns;
-
     private readonly IPrototypeManager _protoManager;
+    private readonly SharedPhysicsSystem _physics;
 
-    public GunCrosshairOverlay(IEntityManager entManager, IEyeManager eyeManager,
-        IGameTiming timing, IInputManager input, IPlayerManager player, IPrototypeManager prototypes, GunSystem system)
+    public GunCrosshairOverlay(IEntityManager entManager, IEyeManager eyeManager, IGameTiming timing, IInputManager input,
+        IPlayerManager player, IPrototypeManager prototypes, SharedPhysicsSystem physics, GunSystem system)
     {
         _entManager = entManager;
         _eye = eyeManager;
@@ -34,11 +38,12 @@ public sealed class GunCrosshairOverlay : Overlay
         _player = player;
         _guns = system;
         _protoManager = prototypes;
+        _physics = physics;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var worldHandle = args.WorldHandle;
+        DrawingHandleWorld worldHandle = args.WorldHandle;
 
         var player = _player.LocalPlayer?.ControlledEntity;
 
@@ -56,12 +61,15 @@ public sealed class GunCrosshairOverlay : Overlay
         if (!_guns.TryGetGun(player.Value, out var gunUid, out var gun))
             return;
 
-        // use here CollisionGroup
+        int collisionMask;
         if (_entManager.TryGetComponent<HitscanBatteryAmmoProviderComponent>(
             gunUid, out var hitscan))
         {
-            var collisionMask = _protoManager.Index<HitscanPrototype>(hitscan.Prototype).CollisionMask;
-            Logger.Debug($"collision mask for hitscan {collisionMask}");
+            collisionMask = _protoManager.Index<HitscanPrototype>(hitscan.Prototype).CollisionMask;
+        }
+        else
+        {
+            collisionMask = (int) CollisionGroup.BulletImpassable;
         }
 
         var mouseScreenPos = _input.MouseScreenPosition;
@@ -70,14 +78,42 @@ public sealed class GunCrosshairOverlay : Overlay
         if (mapPos.MapId != mousePos.MapId)
             return;
 
-        // (☞ﾟヮﾟ)☞
-        // var maxSpread = gun.MaxAngle;
-        // var minSpread = gun.MinAngle;
-        // var timeSinceLastFire = (_timing.CurTime - gun.NextFire).TotalSeconds;
-        // var currentAngle = new Angle(MathHelper.Clamp(gun.CurrentAngle.Theta - gun.AngleDecay.Theta * timeSinceLastFire,
-        //     gun.MinAngle.Theta, gun.MaxAngle.Theta));
         var direction = (mousePos.Position - mapPos.Position);
 
+        var ray = new CollisionRay(mapPos.Position, direction.Normalized, collisionMask);
+        var rayCastResults =
+            _physics.IntersectRay(mapPos.MapId, ray, 20f, player, false).ToList();
+
+        Color crosshairColor = Color.DarkGreen;
+
+        if (rayCastResults.Any())
+        {
+            RayCastResults result = rayCastResults[0];
+            var mouseDistance = direction.Length;
+
+            if (1 > (result.HitPos - mousePos.Position).Length)
+            {
+                crosshairColor = Color.LightGreen;
+            }
+            else if (mouseDistance > result.Distance)
+            {
+                DrawОbstacleSign(worldHandle, result.HitPos);
+                crosshairColor = Color.Red;
+            }
+        }
+
+        DrawCrosshair(worldHandle, mousePos.Position, crosshairColor);
         worldHandle.DrawLine(mapPos.Position, mousePos.Position + direction, Color.Orange);
+    }
+
+    private void DrawОbstacleSign(DrawingHandleWorld handle, Vector2 posCircle)
+    {
+        float radius = 1f;
+        handle.DrawCircle(posCircle, radius, Color.Red.WithAlpha(0.75f));
+    }
+
+    private void DrawCrosshair(DrawingHandleWorld handle, Vector2 posCircle, Color color)
+    {
+        handle.DrawCircle(posCircle, 0.5f, color);
     }
 }
