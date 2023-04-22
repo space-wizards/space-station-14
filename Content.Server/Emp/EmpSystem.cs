@@ -1,19 +1,15 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Robust.Shared.Map;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Emp;
 
-public sealed class EmpSystem : EntitySystem
+public sealed class EmpSystem : SharedEmpSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     public const string EmpPulseEffectPrototype = "EffectEmpPulse";
-    public const string EmpDisabledEffectPrototype = "EffectEmpDisabled";
 
     public override void Initialize()
     {
@@ -36,7 +32,7 @@ public sealed class EmpSystem : EntitySystem
             if (ev.Disabled)
             {
                 var disabled = EnsureComp<EmpDisabledComponent>(uid);
-                disabled.DisabledUntil = _timing.CurTime + TimeSpan.FromSeconds(duration);
+                disabled.DisabledUntil = Timing.CurTime + TimeSpan.FromSeconds(duration);
             }
         }
         Spawn(EmpPulseEffectPrototype, coordinates);
@@ -46,21 +42,15 @@ public sealed class EmpSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<EmpDisabledComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var transform))
+        var query = EntityQueryEnumerator<EmpDisabledComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.DisabledUntil < _timing.CurTime)
+            if (comp.DisabledUntil < Timing.CurTime)
             {
                 RemComp<EmpDisabledComponent>(uid);
                 var ev = new EmpDisabledRemoved();
                 RaiseLocalEvent(uid, ref ev);
                 continue;
-            }
-
-            if (_timing.CurTime > comp.TargetTime)
-            {
-                comp.TargetTime = _timing.CurTime + _random.NextFloat(0.8f, 1.2f) * TimeSpan.FromSeconds(comp.EffectCooldown);
-                Spawn(EmpDisabledEffectPrototype, transform.Coordinates);
             }
         }
     }

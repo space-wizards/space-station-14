@@ -7,6 +7,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Emp;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;

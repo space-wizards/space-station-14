@@ -15,6 +15,7 @@ using Robust.Shared.Map;
 using Content.Shared.Radio.Components;
 using Content.Server.Power.Components;
 using Content.Server.Emp;
+using Content.Shared.Emp;
 
 namespace Content.Server.Radio.EntitySystems;
 

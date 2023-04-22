@@ -1,13 +1,14 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Emp;
+namespace Content.Shared.Emp;
 
 /// <summary>
 /// While entity has this component it is "disabled" by EMP.
 /// Add desired behaviour in other systems 
 /// </summary>
-[RegisterComponent]
-[Access(typeof(EmpSystem))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedEmpSystem))]
 public sealed class EmpDisabledComponent : Component
 {
     /// <summary>
