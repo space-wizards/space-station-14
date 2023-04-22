@@ -98,8 +98,6 @@
   - type: Airlock
     keepOpenIfClicked: true
     openPanelVisible: true
-    openingAnimationTime: 0.9 # Should be synced with the equivalent on DoorComponent or things will break
-    closingAnimationTime: 0.9
     denyAnimationTime: 0.4
     animatePanel: false
     openUnlitVisible: true
