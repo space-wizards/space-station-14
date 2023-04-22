@@ -46,7 +46,7 @@
   components:
     - type: Sprite
       sprite: Structures/Decoration/crystal.rsi
-      state: crystal-grey
+      state: crystal_grey
     - type: PointLight
       radius: 3
       energy: 3
@@ -60,8 +60,37 @@
   components:
     - type: Sprite
       sprite: Structures/Decoration/crystal.rsi
-      state: crystal-orange
+      state: crystal_orange
     - type: PointLight
       radius: 3
       energy: 3
       color: "#E8820F"
+
+- type: entity
+  id: CrystalBlue
+  parent: CrystalGreen
+  name: blue crystal
+  description: It's a shiny blue crystal.
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/crystal.rsi
+      state: crystal_blue
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#1843D4"
+
+- type: entity
+  id: CrystalCyan
+  parent: CrystalGreen
+  name: cyan crystal
+  description: It's a shiny cyan crystal.
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/crystal.rsi
+      state: crystal_cyan
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#18C9D4"
+

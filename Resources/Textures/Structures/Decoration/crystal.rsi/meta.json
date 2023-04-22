@@ -14,10 +14,16 @@
       "name": "crystal_pink"
     },
     {
-      "name": "crystal-orange"
+      "name": "crystal_orange"
     },
     {
-      "name": "crystal-grey"
+      "name": "crystal_blue"
+    },
+    {
+      "name": "crystal_cyan"
+    },
+    {
+      "name": "crystal_grey"
     }
   ]
 }
