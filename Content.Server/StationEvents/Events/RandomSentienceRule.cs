@@ -14,7 +14,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
         HashSet<EntityUid> stationsToNotify = new();
 
         var mod = GetSeverityModifier();
-        var targetList = EntityManager.EntityQuery<SentienceTargetComponent>().ToList();
+        var targetList = EntityQuery<SentienceTargetComponent>().ToList();
         RobustRandom.Shuffle(targetList);
 
         var toMakeSentient = (int) (RobustRandom.Next(2, 5) * Math.Sqrt(mod));
@@ -25,10 +25,10 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
             if (toMakeSentient-- == 0)
                 break;
 
-            EntityManager.RemoveComponent<SentienceTargetComponent>(target.Owner);
-            var ghostRole = AddComp<GhostRoleComponent>(target.Owner);
-            AddComp<GhostTakeoverAvailableComponent>(target.Owner);
-            ghostRole.RoleName = EntityManager.GetComponent<MetaDataComponent>(target.Owner).EntityName;
+            RemComp<SentienceTargetComponent>(target.Owner);
+            var ghostRole = EnsureComp<GhostRoleComponent>(target.Owner);
+            EnsureComp<GhostTakeoverAvailableComponent>(target.Owner);
+            ghostRole.RoleName = MetaData(target.Owner).EntityName;
             ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
             groups.Add(Loc.GetString(target.FlavorKind));
         }
@@ -41,18 +41,15 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
         var kind2 = groupList.Count > 1 ? groupList[1] : "???";
         var kind3 = groupList.Count > 2 ? groupList[2] : "???";
 
-        var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();
-        var stationSystem = entSysMgr.GetEntitySystem<StationSystem>();
-        var chatSystem = entSysMgr.GetEntitySystem<ChatSystem>();
         foreach (var target in targetList)
         {
-            var station = stationSystem.GetOwningStation(target.Owner);
+            var station = StationSystem.GetOwningStation(target.Owner);
             if(station == null) continue;
             stationsToNotify.Add((EntityUid) station);
         }
         foreach (var station in stationsToNotify)
         {
-            chatSystem.DispatchStationAnnouncement(
+            ChatSystem.DispatchStationAnnouncement(
                 station,
                 Loc.GetString("station-event-random-sentience-announcement",
                     ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
