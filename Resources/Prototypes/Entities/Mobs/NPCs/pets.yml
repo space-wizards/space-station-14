@@ -30,9 +30,6 @@
     spawned:
     - id: FoodMeatCorgi
       amount: 2
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Old Ian
@@ -59,9 +56,11 @@
     attributes:
       proper: true
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
+    - id: SheetSteel1
 
 
 - type: entity
@@ -89,9 +88,10 @@
     attributes:
       proper: true
       gender: female
-  - type: Tag
-    tags:
-    - CannotSuicide
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
 
 - type: entity
   name: Runtime
@@ -102,9 +102,6 @@
   - type: Grammar
     attributes:
       gender: female
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Exception
@@ -115,9 +112,6 @@
   - type: Grammar
     attributes:
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Floppa
@@ -138,9 +132,6 @@
   - type: Grammar
     attributes:
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Bandito
@@ -151,9 +142,6 @@
   - type: Grammar
     attributes:
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: bingus
@@ -212,6 +200,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: mcgriff
@@ -273,6 +262,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Paperwork
@@ -307,9 +297,6 @@
     attributes:
       proper: true
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Walter
@@ -371,6 +358,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Morty
@@ -384,9 +372,6 @@
     attributes:
       proper: true
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Morticia
@@ -400,9 +385,6 @@
     attributes:
       proper: true
       gender: female
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Alexander
@@ -413,9 +395,6 @@
   - type: Grammar
     attributes:
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Renault
@@ -435,9 +414,6 @@
     attributes:
       proper: true
       gender: female
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Hamlet
@@ -462,9 +438,6 @@
     attributes:
       proper: true
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Shiva
@@ -535,3 +508,4 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot

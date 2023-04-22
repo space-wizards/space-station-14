@@ -115,15 +115,44 @@
   id: MechVim
   parent: BaseMech
   name: Vim
-  description: An minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer.
+  description: A minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer.
   components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: vim
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/mechmove03.ogg
+      params:
+        volume: -10
   - type: Mech
     baseState: vim
     openState: vim-open
     brokenState: vim-broken
-    startingBattery: PowerCellHigh
+    maxEquipmentAmount: 0
     # keep mouse safe
     mechToPilotDamageMultiplier: 0.1
+    airtight: true
+    pilotWhitelist:
+      tags:
+      - VimPilot
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6
   # TOOD: buzz / chime actions
   # TODO: builtin flashlight
-  # TODO: uhhh not be a ripley?
+
+- type: entity
+  id: MechVimBattery
+  parent: MechVim
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh

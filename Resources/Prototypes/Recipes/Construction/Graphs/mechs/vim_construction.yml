@@ -6,24 +6,23 @@
     edges:
     - to: vim
       steps:
-      - component: PowerCell
-        name: a power cell
-        store: battery-container
-        icon:
-          sprite: Objects/Power/power_cells.rsi
-          state: small
-        completed:
-        - !type:VisualizerDataInt
-          key: "enum.MechAssemblyVisuals.State"
-          data: 1
-      - tool: Screwing
-        doAfter: 1
       - tag: VoiceTrigger
         name: a voice trigger
         icon:
           sprite: "Objects/Devices/voice.rsi"
           state: "voice"
         completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 1
+      - component: PowerCell
+        name: a power cell
+        store: battery-container
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+      - tool: Screwing
+        doAfter: 1
   - node: vim
     actions:
     - !type:BuildMech

@@ -152,7 +152,26 @@
 # Vim!!!!!!
 
 - type: entity
+  id: BaseVimPart
   parent: BaseMechPart
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Items
+    noRot: false
+    netsync: false
+    sprite: Objects/Specific/Mech/vim_construction.rsi
+
+- type: entity
+  id: BaseVimPartItem
+  parent: BaseVimPart
+  abstract: true
+  components:
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: BaseVimPartItem
   id: VimHarness
   name: vim harness
   description: A small mounting bracket for vim parts.
@@ -188,10 +207,16 @@
 
 - type: entity
   id: VimChassis
-  parent: BaseMechConstruct
+  parent: BaseVimPart
   name: vim chassis
   description: An in-progress construction of the Vim exosuit.
   components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: vim
   - type: Sprite
     noRot: true
     state: vim0
@@ -199,5 +224,3 @@
     graph: Vim
     node: start
     defaultTarget: vim
-  - type: MechAssemblyVisuals
-    statePrefix: vim

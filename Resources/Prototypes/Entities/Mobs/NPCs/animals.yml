@@ -65,6 +65,9 @@
   - type: NoSlip
   - type: Puller
     needsHands: true
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: bee
@@ -201,6 +204,9 @@
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Puller
     needsHands: true
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: mallard duck #Quack
@@ -252,6 +258,9 @@
     accent: duck
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: white duck #Quack
@@ -455,6 +464,9 @@
     interactFailureString: petting-failure-crab
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: goat
@@ -826,6 +838,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - VimPilot
   - type: Respirator
     damage:
       types:
@@ -964,6 +977,9 @@
     damageModifierSet: Scale
   - type: Puller
     needsHands: true
+  - type: Tag
+    tags:
+    - VimPilot
 
 
 - type: entity
@@ -1061,6 +1077,9 @@
     bloodMaxVolume: 50
   - type: Puller
     needsHands: true
+  - type: Tag
+    tags:
+    - VimPilot
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -1154,6 +1173,9 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/penguin_squawk.ogg
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: grenade penguin
@@ -1228,6 +1250,9 @@
         damage: 50
       behaviors:
       - !type:ExplodeBehavior
+  - type: Tag
+    tags:
+    - VimPilot
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
@@ -1414,6 +1439,10 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: raccoon
@@ -1469,6 +1498,10 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: fox
@@ -1526,6 +1559,10 @@
       gender: epicene
   - type: Bloodstream
     bloodMaxVolume: 100
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: corgi
@@ -1587,6 +1624,10 @@
   - type: Puller
   - type: MobPrice
     price: 200
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: corrupted corgi
@@ -1737,6 +1778,10 @@
       gender: epicene
   - type: MobPrice
     price: 200
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: calico cat
@@ -1876,6 +1921,10 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: ferret
@@ -1932,6 +1981,10 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: hamster
@@ -2008,6 +2061,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - VimPilot
   - type: Respirator
     damage:
       types:
@@ -2098,3 +2152,7 @@
     accent: pig
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot

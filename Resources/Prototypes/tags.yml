@@ -630,6 +630,9 @@
   id: VehicleKey
 
 - type: Tag
+  id: VimPilot
+
+- type: Tag
   id: VoiceTrigger
 
 - type: Tag

@@ -466,10 +466,12 @@
       "name": "hauler-broken"
     },
     {
-      "name": "vim"
+      "name": "vim",
+      "directions": 4
     },
     {
-      "name": "vim-open"
+      "name": "vim-open",
+      "directions": 4
     }
   ]
 }
