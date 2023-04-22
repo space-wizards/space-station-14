@@ -89,7 +89,10 @@ namespace Content.Server.Construction
             }
 
             RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, used));
-            _transform.AnchorEntity(uid, xform);
+
+            if (!xform.Anchored)
+                _transform.AnchorEntity(uid, xform);
+
             RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, used));
 
             _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid);
