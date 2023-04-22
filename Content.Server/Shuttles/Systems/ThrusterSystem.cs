@@ -270,7 +270,7 @@ public sealed class ThrusterSystem : EntitySystem
                     component.BurnPoly.Count > 0)
                 {
                     var shape = new PolygonShape();
-                    shape.SetVertices(component.BurnPoly);
+                    shape.Set(component.BurnPoly);
                     _fixtureSystem.TryCreateFixture(uid, shape, BurnFixture, hard: false, collisionLayer: (int) CollisionGroup.FullTileMask, body: physicsComponent);
                 }
 
