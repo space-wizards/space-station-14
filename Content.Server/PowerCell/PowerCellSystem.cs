@@ -11,6 +11,7 @@ using Robust.Shared.Containers;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Server.PowerCell;
 
@@ -29,12 +30,18 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         SubscribeLocalEvent<PowerCellComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<PowerCellComponent, SolutionChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<PowerCellComponent, RejuvenateEvent>(OnRejuvenate);
 
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
 
         // funny
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
         SubscribeLocalEvent<BatteryComponent, BeingMicrowavedEvent>(OnMicrowaved);
+    }
+
+    private void OnRejuvenate(EntityUid uid, PowerCellComponent component, RejuvenateEvent args)
+    {
+        component.IsRigged = false;
     }
 
     private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
@@ -56,24 +63,21 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         args.Handled = true;
 
         // What the fuck are you doing???
-        Explode(uid, component);
+        Explode(uid, component, args.User);
     }
 
-    private void OnChargeChanged(EntityUid uid, PowerCellComponent component, ChargeChangedEvent args)
+    private void OnChargeChanged(EntityUid uid, PowerCellComponent component, ref ChargeChangedEvent args)
     {
         if (component.IsRigged)
         {
-            Explode(uid);
+            Explode(uid, cause: null);
             return;
         }
-
-        if (!TryComp(uid, out BatteryComponent? battery))
-            return;
 
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
 
-        var frac = battery.CurrentCharge / battery.MaxCharge;
+        var frac = args.Charge / args.MaxCharge;
         var level = (byte) ContentHelpers.RoundToNearestLevels(frac, 1, PowerCellComponent.PowerCellVisualsLevels);
         _sharedAppearanceSystem.SetData(uid, PowerCellVisuals.ChargeLevel, level, appearance);
 
@@ -87,16 +91,14 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         }
     }
 
-    private void Explode(EntityUid uid, BatteryComponent? battery = null)
+    private void Explode(EntityUid uid, BatteryComponent? battery = null, EntityUid? cause = null)
     {
-        _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
-
         if (!Resolve(uid, ref battery))
             return;
 
-        var radius = MathF.Min(5, MathF.Ceiling(MathF.Sqrt(battery.CurrentCharge) / 30));
+        var radius = MathF.Min(5, MathF.Sqrt(battery.CurrentCharge) / 9);
 
-        _explosionSystem.TriggerExplosive(uid, radius: radius);
+        _explosionSystem.TriggerExplosive(uid, radius: radius, user:cause);
         QueueDel(uid);
     }
 

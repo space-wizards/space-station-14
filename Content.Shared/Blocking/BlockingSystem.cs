@@ -14,7 +14,6 @@ using Content.Shared.Popups;
 using Content.Shared.Toggleable;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -85,7 +84,7 @@ public sealed partial class BlockingSystem : EntitySystem
             return;
 
         var blockQuery = GetEntityQuery<BlockingComponent>();
-        var handQuery = GetEntityQuery<SharedHandsComponent>();
+        var handQuery = GetEntityQuery<HandsComponent>();
 
         if (!handQuery.TryGetComponent(args.Performer, out var hands))
             return;
@@ -173,7 +172,7 @@ public sealed partial class BlockingSystem : EntitySystem
             }
 
             //Don't allow someone to block if they're somehow not anchored.
-            _transformSystem.AnchorEntity(xform);
+            _transformSystem.AnchorEntity(user, xform);
             if (!xform.Anchored)
             {
                 CantBlockError(user);
@@ -238,7 +237,7 @@ public sealed partial class BlockingSystem : EntitySystem
                                                      && TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
             if (xform.Anchored)
-                _transformSystem.Unanchor(xform);
+                _transformSystem.Unanchor(user, xform);
 
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);
@@ -265,7 +264,7 @@ public sealed partial class BlockingSystem : EntitySystem
             StopBlocking(uid, component, user);
 
         var userQuery = GetEntityQuery<BlockingUserComponent>();
-        var handQuery = GetEntityQuery<SharedHandsComponent>();
+        var handQuery = GetEntityQuery<HandsComponent>();
 
         if (!handQuery.TryGetComponent(user, out var hands))
             return;

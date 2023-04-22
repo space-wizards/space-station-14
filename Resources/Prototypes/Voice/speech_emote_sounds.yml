@@ -8,6 +8,22 @@
       collection: MaleScreams
     Laugh:
       collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: MaleYawn
+    Snore:
+      collection: Snores
 
 - type: emoteSounds
   id: FemaleHuman
@@ -18,6 +34,22 @@
       collection: FemaleScreams
     Laugh:
       collection: FemaleLaugh
+    Sneeze:
+      collection: FemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: FemaleYawn
+    Snore:
+      collection: Snores
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -36,6 +68,27 @@
     params:
       variation: 0.125
 
+- type: emoteSounds
+  id: UnisexDiona
+  sounds:
+    Scream:
+      path: /Audio/Voice/Diona/diona_scream.ogg
+    Laugh:
+      collection: DionaLaugh
+  params:
+    variation: 0.125
+
+- type: emoteSounds
+  id: UnisexDwarf
+  sounds:
+    Scream:
+      collection: MaleScreams
+    Laugh:
+      collection: MaleLaugh
+  params:
+    variation: 0.125
+    pitchscale: 0.75
+
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes
@@ -46,6 +99,16 @@
       collection: Snaps
       params:
         volume: -6
+
+- type: emoteSounds
+  id: DionaBodyEmotes
+  sounds:
+    Clap:
+      path: /Audio/Voice/Diona/diona_clap.ogg
+    Snap:
+      path: /Audio/Voice/Diona/diona_snap.ogg
+      params:
+        volume: -10
 
 # mobs
 - type: emoteSounds
@@ -66,5 +129,26 @@
   id: Mouse
   sound:
     path: /Audio/Animals/mouse_squeak.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Cluwne
+  sound:
+    collection: CluwneScreams
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Bear
+  sound:
+    path: /Audio/Animals/bear.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Cerberus
+  sound:
+    path: /Audio/Animals/cerberus.ogg
     params:
       variation: 0.125

@@ -59,6 +59,12 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 400
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 200
         behaviors:
         - !type:PlaySoundBehavior
@@ -81,3 +87,5 @@
     access: [[ "Engineering" ]]
   - type: Machine
     board: EmitterCircuitboard
+  - type: GuideHelp
+    guides: [ Singularity, Power ]

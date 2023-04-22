@@ -126,6 +126,22 @@
       - id: VendingMachineRestockGetmoreChocolateCorp
 
 - type: entity
+  id: CrateVendingMachineRestockVendomatFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: VendingMachineRestockVendomat
+
+- type: entity
+  id: CrateVendingMachineRestockRoboticsFilled
+  parent: CrateScienceSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: VendingMachineRestockRobotics
+
+- type: entity
   id: CrateVendingMachineRestockTankDispenserFilled
   parent: CratePlastic
   components:

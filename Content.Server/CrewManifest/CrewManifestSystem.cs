@@ -1,22 +1,17 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.EUI;
-using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
+using Content.Server.StationRecords.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.GameTicking;
-using Content.Shared.Roles;
 using Content.Shared.StationRecords;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
-using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.CrewManifest;
 
