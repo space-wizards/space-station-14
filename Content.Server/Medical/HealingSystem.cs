@@ -86,7 +86,7 @@ public sealed class HealingSystem : EntitySystem
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = HasDamage(component, healing);
         if (!args.Repeat)
-            _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using"), uid);
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), uid);
         args.Handled = true;
     }
 
@@ -130,7 +130,7 @@ public sealed class HealingSystem : EntitySystem
 
         if (HasDamage(targetDamage, component) == false)
         {
-            _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use"), uid);
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid);
             return false;
         }
 

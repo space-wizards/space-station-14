@@ -1,2 +1,2 @@
-﻿medical-item-finished-using = You can't heal with this item anymore!
-medical-item-cant-use = They don't have any damage you can heal with this item!
+﻿medical-item-finished-using = You have finished healing with the {$item}
+medical-item-cant-use = There is no damage you can heal with the {$item}
