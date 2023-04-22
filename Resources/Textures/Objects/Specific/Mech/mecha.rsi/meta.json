@@ -464,6 +464,12 @@
     },
     {
       "name": "hauler-broken"
+    },
+    {
+      "name": "vim"
+    },
+    {
+      "name": "vim-open"
     }
   ]
 }

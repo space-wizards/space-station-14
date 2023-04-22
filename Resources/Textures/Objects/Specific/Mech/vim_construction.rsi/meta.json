@@ -8,16 +8,19 @@
   },
   "states": [
     {
-      "name": "vim_chassis"
+      "name": "chassis"
     },
     {
-      "name": "vim_harness"
+      "name": "harness"
     },
     {
       "name": "left_leg"
     },
     {
       "name": "right_leg"
+    },
+    {
+      "name": "helmet"
     },
     {
       "name": "vim0"
