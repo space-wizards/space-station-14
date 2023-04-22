@@ -619,7 +619,7 @@
   displayName: seeds-shroomanoid-pod-display-name
   plantRsi: Objects/Specific/Hydroponics/shroomanoid.rsi
   productPrototypes:
-    - MobShrooman
+    - RandomShrooman
   lifespan: 100
   maturation: 30
   production: 35

@@ -29,9 +29,17 @@
   name: Shrooman
   parent: MobShrooman
   id: RandomShrooman
+  components:
   - type: GhostRole
     name: Shrooman
     description: Obey and protect your creators at all costs
     rules: You may not harm your creators or cause them any grief, but you must protect them and do whatever they say.
   - type: GhostTakeoverAvailable
   - type: RandomHumanoidAppearance
+  - type: ReplacementAccent
+    accent: mumble
+  - type: SeeingRainbows
+  - type: RandomMetadata
+    nameSegments:
+      - names_mushman_first
+      - names_mushman_last
