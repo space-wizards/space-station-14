@@ -50,7 +50,6 @@ public sealed class EmpSystem : SharedEmpSystem
                 RemComp<EmpDisabledComponent>(uid);
                 var ev = new EmpDisabledRemoved();
                 RaiseLocalEvent(uid, ref ev);
-                continue;
             }
         }
     }
