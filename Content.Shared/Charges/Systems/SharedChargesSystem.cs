@@ -17,9 +17,6 @@ public abstract class SharedChargesSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        var ev = new ExaminedChargesEvent();
-        RaiseLocalEvent(uid, ref ev);
-
         args.PushMarkup(Loc.GetString("limited-charges-charges-remaining", ("charges", comp.Charges)));
         if (comp.Charges == comp.MaxCharges)
         {
@@ -62,28 +59,4 @@ public abstract class SharedChargesSystem : EntitySystem
         if (Resolve(uid, ref comp, false))
             AddCharges(uid, -1, comp);
     }
-
-    public void SetCharges(EntityUid uid, int charge, LimitedChargesComponent? comp = null)
-    {
-        if (Resolve(uid, ref comp, false))
-        {
-            comp.Charges = charge;
-            AddCharges(uid, 0, comp);
-        }
-    }
-
-    public void SetMaxCharges(EntityUid uid, int maxCharge, LimitedChargesComponent? comp = null)
-    {
-        if (Resolve(uid, ref comp, false))
-        {
-            comp.MaxCharges = maxCharge;
-            AddCharges(uid, 0, comp);
-        }
-    }
 }
-
-/// <summary>
-/// Use this event to update charges before examine if needed
-/// </summary>
-[ByRefEvent]
-public record struct ExaminedChargesEvent();
