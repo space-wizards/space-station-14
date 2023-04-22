@@ -26,7 +26,6 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _stationRecordsSystem = default!;
     [Dependency] private readonly RadioSystem _radioSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
 
     public override void Initialize()
     {
@@ -140,7 +139,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecordsComponent))
         {
-            _userInterface.GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?.SetState(new GeneralCriminalRecordConsoleState(null, null, null));
+            _userInterface.GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?.SetState(new GeneralCriminalRecordConsoleState(null, null, null, null));
             return;
         }
 
@@ -149,25 +148,31 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         var listing = new Dictionary<StationRecordKey, string>();
         foreach (var pair in enumerator)
         {
-            if (pair.Item2.Status.HasValue)
-                listing.Add(pair.Item1, pair.Item2.Name);
+            listing.Add(pair.Item1, pair.Item2.Name);
         }
 
         if (listing.Count == 0)
         {
-            _userInterface.GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?.SetState(new GeneralCriminalRecordConsoleState(null, null, null));
+            _userInterface.GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?.SetState(new GeneralCriminalRecordConsoleState(null, null, null, null));
             return;
         }
 
-        GeneralStationRecord? record = null;
+        GeneralStationRecord? stationRecord = null;
         if (console.ActiveKey != null)
         {
-            _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out record,
+            _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out stationRecord,
+                stationRecordsComponent);
+        }
+
+        GeneralCriminalRecord? criminalRecord = null;
+        if (console.ActiveKey != null)
+        {
+            _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out criminalRecord,
                 stationRecordsComponent);
         }
 
         _userInterface
             .GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?
-            .SetState(new GeneralCriminalRecordConsoleState(console.ActiveKey, record, listing));
+            .SetState(new GeneralCriminalRecordConsoleState(console.ActiveKey, stationRecord, criminalRecord, listing));
     }
 }

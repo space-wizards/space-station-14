@@ -31,17 +31,19 @@ public sealed class GeneralCriminalRecordConsoleState : BoundUserInterfaceState
     ///     Current selected key.
     /// </summary>
     public StationRecordKey? SelectedKey { get; }
-    public GeneralStationRecord? Record { get; }
+    public GeneralCriminalRecord? CriminalRecord { get; }
+    public GeneralStationRecord? StationRecord { get; }
     public Dictionary<StationRecordKey, string>? RecordListing { get; }
 
-    public GeneralCriminalRecordConsoleState(StationRecordKey? key, GeneralStationRecord? record, Dictionary<StationRecordKey, string>? recordListing)
+    public GeneralCriminalRecordConsoleState(StationRecordKey? key, GeneralStationRecord? stationRecord, GeneralCriminalRecord? criminalRecord, Dictionary<StationRecordKey, string>? recordListing)
     {
         SelectedKey = key;
-        Record = record;
+        StationRecord = stationRecord;
+        CriminalRecord = criminalRecord;
         RecordListing = recordListing;
     }
 
-    public bool IsEmpty() => SelectedKey == null && Record == null && RecordListing == null;
+    public bool IsEmpty() => SelectedKey == null && StationRecord == null && CriminalRecord == null && RecordListing == null;
 }
 
 [Serializable, NetSerializable]
@@ -80,5 +82,18 @@ public sealed class CriminalStatusOptionButtonSelected : BoundUserInterfaceMessa
         Status = status;
         Reason = reason;
         Name = name;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CriminalRecordConsoleDataUIMessage
+{
+    public readonly GeneralStationRecord StationRecord;
+    public readonly GeneralCriminalRecord CriminalRecord;
+
+    public CriminalRecordConsoleDataUIMessage(GeneralStationRecord stationRecord, GeneralCriminalRecord criminalRecord)
+    {
+        StationRecord = stationRecord;
+        CriminalRecord = criminalRecord;
     }
 }

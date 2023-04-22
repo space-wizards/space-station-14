@@ -247,6 +247,13 @@
   name: criminal records computer
   description: This can be used to check criminal records.
   components:
+  - type: GeneralStationRecordConsole
+  - type: UserInterface
+    interfaces:
+      - key: enum.GeneralCriminalRecordConsoleKey.Key
+        type: GeneralCriminalRecordConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.GeneralCriminalRecordConsoleKey.Key
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -270,13 +277,6 @@
   name: station records computer
   description: This can be used to check station records.
   components:
-  - type: GeneralStationRecordConsole
-  - type: UserInterface
-    interfaces:
-      - key: enum.GeneralStationRecordConsoleKey.Key
-        type: GeneralStationRecordConsoleBoundUserInterface
-  - type: ActivatableUI
-    key: enum.GeneralStationRecordConsoleKey.Key
   - type: PointLight
     radius: 1.5
     energy: 1.6
