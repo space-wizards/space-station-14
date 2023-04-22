@@ -140,7 +140,7 @@ namespace Content.Server.Construction
 
             if (step == null)
             {
-                _sawmill.Warning($"Called {nameof(HandleEdge)} on entity {uid} but the current state is not valid for that!");
+                _sawmill.Warning($"Called {nameof(HandleEdge)} on entity {ToPrettyString(uid)} but the current state is not valid for that!");
                 return HandleResult.False;
             }
 
@@ -163,6 +163,10 @@ namespace Content.Server.Construction
             {
                 // Edge finished!
                 PerformActions(uid, user, edge.Completed);
+
+                if (construction.Deleted)
+                    return HandleResult.True;
+
                 construction.TargetEdgeIndex = null;
                 construction.EdgeIndex = null;
                 construction.StepIndex = 0;
@@ -470,28 +474,17 @@ namespace Content.Server.Construction
                 {
 #endif
 
-                // temporary code for debugging a grafana exception. Something is fishy with the girder graph.
-                object? prev = null;
-                var queued = string.Join(", ", construction.InteractionQueue.Select(x => x.GetType().Name));
-
                 // Handle all queued interactions!
                 while (construction.InteractionQueue.TryDequeue(out var interaction))
                 {
                     if (construction.Deleted)
                     {
-                        // I suspect the error might just happen if two users try to deconstruction or otherwise modify an entity at the exact same tick?
-                        // In which case this isn't really an error, but should just be a `if (deleted) -> break`
-                        // But might as well verify this.
-
                         _sawmill.Error($"Construction component was deleted while still processing interactions." +
                             $"Entity {ToPrettyString(uid)}, graph: {construction.Graph}, " +
-                            $"Previous: {prev?.GetType()?.Name ?? "null"}, " +
                             $"Next: {interaction.GetType().Name}, " +
-                            $"Initial Queue: {queued}, " +
                             $"Remaining Queue: {string.Join(", ", construction.InteractionQueue.Select(x => x.GetType().Name))}");
                         break;
                     }
-                    prev = interaction;
 
                     // We set validation to false because we actually want to perform the interaction here.
                     HandleEvent(uid, interaction, false, construction);
