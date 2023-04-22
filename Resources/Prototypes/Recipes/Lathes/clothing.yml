@@ -207,6 +207,22 @@
     Durathread: 100
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitHoSAlt
+  result: ClothingUniformJumpsuitHoSAlt
+  completetime: 4
+  materials:
+    Cloth: 300
+    Durathread: 100
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtHoSAlt
+  result: ClothingUniformJumpskirtHoSAlt
+  completetime: 4
+  materials:
+    Cloth: 300
+    Durathread: 100
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitHydroponics
   result: ClothingUniformJumpsuitHydroponics
   completetime: 4
@@ -377,6 +393,20 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitBrigmedic
+  result: ClothingUniformJumpsuitBrigmedic
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtBrigmedic
+  result: ClothingUniformJumpskirtBrigmedic
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitWarden
   result: ClothingUniformJumpsuitWarden
   completetime: 4
@@ -499,16 +529,14 @@
   result: ClothingOuterWinterMusician
   completetime: 3.2
   materials:
-    Cloth: 300
-    Durathread: 300
+    Cloth: 500
 
 - type: latheRecipe
   id: ClothingOuterWinterClown
   result: ClothingOuterWinterClown
   completetime: 3.2
   materials:
-    Cloth: 300
-    Durathread: 300
+    Cloth: 500
 
 - type: latheRecipe
   id: ClothingOuterWinterMime

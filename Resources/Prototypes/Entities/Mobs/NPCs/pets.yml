@@ -62,7 +62,6 @@
       amount: 2
     - id: SheetSteel1
 
-
 - type: entity
   name: Lisa
   parent: MobCorgi
