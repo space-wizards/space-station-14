@@ -346,17 +346,34 @@
       ballistic-ammo: !type:Container
       storagebase: !type:Container
 
+# Shotgun base boxes
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseMagazineBoxShotgun
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - ShellShotgun
+    capacity: 12
+  - type: Item
+    size: 12
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Appearance
+
 # Shotgun Shells
 - type: entity
   name: box of shotgun beanbag cartridges
-  parent: BoxMagazine
+  parent: BaseMagazineBoxShotgun
   id: BoxBeanbag
   description: A box full of beanbag shots, designed for riot shotguns.
   components:
-    - type: StorageFill
-      contents:
-        - id: ShellShotgunBeanbag
-          amount: 12
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunBeanbag
     - type: Sprite
       layers:
         - state: boxwide
@@ -364,14 +381,12 @@
 
 - type: entity
   name: box of shotgun lethal cartridges
-  parent: BoxMagazine
+  parent: BaseMagazineBoxShotgun
   id: BoxLethalshot
   description: A box full of lethal pellet shots, designed for riot shotguns.
   components:
-    - type: StorageFill
-      contents:
-        - id: ShellShotgun
-          amount: 12
+    - type: BallisticAmmoProvider
+      proto: ShellShotgun
     - type: Sprite
       layers:
         - state: boxwide
@@ -379,14 +394,12 @@
 
 - type: entity
   name: box of shotgun slug cartridges
-  parent: BoxMagazine
+  parent: BaseMagazineBoxShotgun
   id: BoxShotgunSlug
   description: A box full of shotgun slugs, designed for riot shotguns.
   components:
-    - type: StorageFill
-      contents:
-        - id: ShellShotgunSlug
-          amount: 12
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunSlug
     - type: Sprite
       layers:
         - state: boxwide
@@ -394,14 +407,12 @@
 
 - type: entity
   name: box of shotgun flare cartridges
-  parent: BoxMagazine
+  parent: BaseMagazineBoxShotgun
   id: BoxShotgunFlare
   description: A box full of shotgun flare cartridges, designed for riot shotguns.
   components:
-    - type: StorageFill
-      contents:
-        - id: ShellShotgunFlare
-          amount: 12
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunFlare
     - type: Sprite
       layers:
         - state: boxwide
@@ -409,14 +420,12 @@
 
 - type: entity
   name: box of shotgun incendiary cartridges
-  parent: BoxMagazine
+  parent: BaseMagazineBoxShotgun
   id: BoxShotgunIncendiary
   description: A box full of shotgun incendiary cartridges, designed for riot shotguns.
   components:
-    - type: StorageFill
-      contents:
-        - id: ShellShotgunIncendiary
-          amount: 12
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunIncendiary
     - type: Sprite
       layers:
         - state: boxwide
@@ -424,14 +433,12 @@
 
 - type: entity
   name: box of shotgun practice cartridges
-  parent: BoxMagazine
+  parent: BaseMagazineBoxShotgun
   id: BoxShotgunPractice
   description: A box full of shotgun practice cartridges, designed for riot shotguns.
   components:
-    - type: StorageFill
-      contents:
-        - id: ShellShotgunPractice
-          amount: 12
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunPractice
     - type: Sprite
       layers:
         - state: boxwide
@@ -439,14 +446,12 @@
 
 - type: entity
   name: box of tranquilizer cartridges
-  parent: BoxMagazine
+  parent: BaseMagazineBoxShotgun
   id: BoxShellTranquilizer
   description: A box full of tranquilizer cartridges, designed for riot shotguns.
   components:
-    - type: StorageFill
-      contents:
-        - id: ShellTranquilizer
-          amount: 12
+    - type: BallisticAmmoProvider
+      proto: ShellTranquilizer
     - type: Sprite
       layers:
         - state: boxwide
