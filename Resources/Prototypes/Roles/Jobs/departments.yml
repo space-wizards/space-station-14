@@ -39,6 +39,7 @@
   color: "#334E6D"
   roles:
   - Captain
+  - IAA
   - CentralCommandOfficial
   - ChiefEngineer
   - ChiefMedicalOfficer

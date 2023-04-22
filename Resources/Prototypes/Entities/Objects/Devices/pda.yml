@@ -120,6 +120,26 @@
 
 - type: entity
   parent: BasePDA
+  id: IAAPDA
+  name: internal affairs agent PDA
+  description: Corporation and profit are best friends.
+  components:
+  - type: PDA
+    id: IAAIDCard
+    state: pda-iaa
+    penSlot:
+      startingItem: CyberPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: PDABorderColor
+    borderColor: "#50645c"
+  - type: Icon
+    state: pda-iaa
+
+- type: entity
+  parent: BasePDA
   id: TechnicalAssistantPDA
   name: technical assistant PDA
   description: Why isn't it yellow?

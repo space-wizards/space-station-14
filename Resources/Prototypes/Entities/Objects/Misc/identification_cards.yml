@@ -47,6 +47,18 @@
     - state: idintern-tech
 
 - type: entity
+  parent: IDCardStandard
+  id: IAAIDCard
+  name: internal affairs agent ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: silver
+        - state: idiaa
+    - type: PresetIdCard
+      job: IAA
+
+- type: entity
   parent: PassengerIDCard
   id: MedicalInternIDCard
   name: medical intern ID card

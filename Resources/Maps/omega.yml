@@ -40052,6 +40052,103 @@ entities:
   - pos: -23.5,24.5
     parent: 0
     type: Transform
+- uid: 4809
+  type: WindowReinforcedDirectional
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -18.5,17.5
+    parent: 0
+    type: Transform
+- uid: 4810
+  type: WindowReinforcedDirectional
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -18.5,16.5
+    parent: 0
+    type: Transform
+- uid: 4811
+  type: SpawnPointLawyer
+  components:
+  - pos: -18.5,16.5
+    parent: 0
+    type: Transform
+- uid: 4812
+  type: ChairOfficeDark
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -18.5,16.5
+    parent: 0
+    type: Transform
+- uid: 4813
+  type: WaterCooler
+  components:
+  - pos: -19.5,17.5
+    parent: 0
+    type: Transform
+- uid: 4814
+  type: TableWood
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -18.5,17.5
+    parent: 0
+    type: Transform
+- uid: 4815
+  type: Lamp
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -17.361332,15.086681
+    parent: 0
+    type: Transform
+- uid: 4816
+  type: BoxFolderGrey
+  components:
+  - pos: -18.455082,17.508556
+    parent: 0
+    type: Transform
+- uid: 4817
+  type: LampGold
+  components:
+  - pos: -18.705082,18.211681
+    parent: 0
+    type: Transform
+- uid: 4818
+  type: Pen
+  components:
+  - pos: -18.345707,17.774181
+    parent: 0
+    type: Transform
+- uid: 4819
+  type: SpawnPointIAA
+  components:
+  - pos: -17.5,15.5
+    parent: 0
+    type: Transform
+- uid: 4820
+  type: FaxMachineBase
+  components:
+  - pos: -18.5,15.5
+    parent: 0
+    type: Transform
+  - name: Lawyer's Office
+    type: FaxMachine
+- uid: 4821
+  type: Pen
+  components:
+  - pos: -18.564457,15.086681
+    parent: 0
+    type: Transform
+- uid: 4822
+  type: BoxFolderGrey
+  components:
+  - pos: -17.736332,14.524181
+    parent: 0
+    type: Transform
+- uid: 4823
+  type: PaperBin10
+  components:
+  - pos: -18.5,14.5
+    parent: 0
+    type: Transform
 - uid: 4826
   type: GasOutletInjector
   components:
@@ -64296,26 +64393,6 @@ entities:
     pos: -18.5,15.5
     parent: 0
     type: Transform
-- uid: 8285
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -18.5,16.5
-    parent: 0
-    type: Transform
-- uid: 8286
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -18.5,17.5
-    parent: 0
-    type: Transform
-- uid: 8287
-  type: WindowReinforcedDirectional
-  components:
-  - pos: -18.5,16.5
-    parent: 0
-    type: Transform
 - uid: 8288
   type: PottedPlantRandom
   components:
@@ -64353,41 +64430,6 @@ entities:
     pos: -19.5,15.5
     parent: 0
     type: Transform
-- uid: 8293
-  type: Chair
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -18.5,17.5
-    parent: 0
-    type: Transform
-- uid: 8294
-  type: TableWood
-  components:
-  - pos: -19.5,17.5
-    parent: 0
-    type: Transform
-- uid: 8295
-  type: BoxFolderRed
-  components:
-  - pos: -19.475779,17.57452
-    parent: 0
-    type: Transform
-- uid: 8296
-  type: LampGold
-  components:
-  - pos: -18.397654,15.527645
-    parent: 0
-    type: Transform
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot
-        showEnts: False
-        occludes: True
-        ent: null
-      cell_slot: !type:ContainerSlot
-        showEnts: False
-        occludes: True
-        ent: null
-    type: ContainerContainer
 - uid: 8297
   type: GasPipeStraight
   components:
@@ -64489,12 +64531,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-- uid: 8308
-  type: SpawnPointLawyer
-  components:
-  - pos: -17.5,16.5
-    parent: 0
-    type: Transform
 - uid: 8309
   type: SignDirectionalSec
   components:
