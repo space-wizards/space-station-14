@@ -38,7 +38,6 @@
   - type: Tag
     tags:
     - FootstepSound
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
