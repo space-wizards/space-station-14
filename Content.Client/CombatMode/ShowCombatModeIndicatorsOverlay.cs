@@ -82,7 +82,7 @@ namespace Content.Client.CombatMode
             }, Color.Transparent);
 
             screen.DrawTexture(_renderBackbuffer.Texture,
-                mousePos - halfBufferSize, Color.White.WithAlpha(08f));
+                mousePos - halfBufferSize, Color.White.WithAlpha(0.8f));
         }
         private void DrawSight(Texture? sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
         {
