@@ -43,7 +43,7 @@ namespace Content.Client.CombatMode
         private Texture GetTextureFromRsi(string _spriteName)
         {
             var sprite = new SpriteSpecifier.Rsi(
-                new ResourcePath("/Textures/Interface/Misc/pointer_sights.rsi"), _spriteName);
+                new ResPath("/Textures/Interface/Misc/pointer_sights.rsi"), _spriteName);
             return _entMan.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
         }
 
@@ -82,7 +82,7 @@ namespace Content.Client.CombatMode
             }, Color.Transparent);
 
             screen.DrawTexture(_renderBackbuffer.Texture,
-                mousePos - halfBufferSize, Color.White.WithAlpha(0.95f));
+                mousePos - halfBufferSize, Color.White.WithAlpha(08f));
         }
         private void DrawSight(Texture? sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
         {
