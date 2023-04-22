@@ -441,7 +441,8 @@ namespace Content.Server.VendingMachines
             var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent>();
             while (disabled.MoveNext(out var uid, out _, out var comp))
             {
-                EjectRandom(uid, true, false, comp);
+                if (_random.Prob(0.15f * frameTime)) // more lag friendly
+                    EjectRandom(uid, true, false, comp);
             }
         }
 
