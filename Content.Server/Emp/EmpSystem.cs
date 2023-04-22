@@ -49,7 +49,7 @@ public sealed class EmpSystem : EntitySystem
         var query = EntityQueryEnumerator<EmpDisabledComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var comp, out var transform))
         {
-            if (comp.DisabledUntil >= _timing.CurTime)
+            if (comp.DisabledUntil < _timing.CurTime)
             {
                 RemComp<EmpDisabledComponent>(uid);
                 var ev = new EmpDisabledRemoved();
