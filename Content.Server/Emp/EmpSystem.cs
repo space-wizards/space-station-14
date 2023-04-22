@@ -18,8 +18,9 @@ public sealed class EmpSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<EmpOnTriggerComponent, TriggerEvent>(HandleEmpTrigger);
+        SubscribeLocalEvent<EmpDisabledComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<EmpDisabledComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<EmpOnTriggerComponent, TriggerEvent>(HandleEmpTrigger);
     }
 
     public void EmpPulse(MapCoordinates coordinates, float range, float energyConsumption, float duration)
@@ -35,7 +36,7 @@ public sealed class EmpSystem : EntitySystem
             if (ev.Disabled)
             {
                 var disabled = EnsureComp<EmpDisabledComponent>(uid);
-                disabled.TimeLeft += duration;
+                disabled.DisabledUntil = _timing.CurTime + TimeSpan.FromSeconds(duration);
             }
         }
         Spawn(EmpPulseEffectPrototype, coordinates);
@@ -48,8 +49,7 @@ public sealed class EmpSystem : EntitySystem
         var query = EntityQueryEnumerator<EmpDisabledComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var comp, out var transform))
         {
-            comp.TimeLeft -= frameTime;
-            if (comp.TimeLeft <= 0)
+            if (comp.DisabledUntil >= _timing.CurTime)
             {
                 RemComp<EmpDisabledComponent>(uid);
                 var ev = new EmpDisabledRemoved();
@@ -63,6 +63,12 @@ public sealed class EmpSystem : EntitySystem
                 Spawn(EmpDisabledEffectPrototype, transform.Coordinates);
             }
         }
+    }
+
+    private void OnUnpaused(EntityUid uid, EmpDisabledComponent component, ref EntityUnpausedEvent args)
+    {
+        component.DisabledUntil += args.PausedTime;
+        component.TargetTime += args.PausedTime;
     }
 
     private void OnExamine(EntityUid uid, EmpDisabledComponent component, ExaminedEvent args)

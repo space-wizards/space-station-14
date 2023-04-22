@@ -1,3 +1,5 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Server.Emp;
 
 /// <summary>
@@ -9,10 +11,10 @@ namespace Content.Server.Emp;
 public sealed class EmpDisabledComponent : Component
 {
     /// <summary>
-    /// When this timer hits 0 component will be removed
+    /// Moment of time when component is removed and entity stops being "disabled"
     /// </summary>
-    [DataField("timeLeft"), ViewVariables(VVAccess.ReadWrite)]
-    public float TimeLeft;
+    [DataField("timeLeft", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan DisabledUntil;
 
     [DataField("effectCoolDown"), ViewVariables(VVAccess.ReadWrite)]
     public float EffectCooldown = 3f;
