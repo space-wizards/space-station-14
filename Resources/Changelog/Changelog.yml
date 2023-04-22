@@ -1,9 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Space Tick AI is no longer friendly and will attack players., type: Fix}
-  id: 2986
-  time: '2023-02-04T02:02:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed tile name not displaying correctly when another player would point
@@ -2888,3 +2883,8 @@ Entries:
   - {message: fix holofan charges loc string missing, type: Fix}
   id: 3485
   time: '2023-04-22T09:54:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Admins and ghosts can now scrollin and scrollout., type: Add}
+  id: 3486
+  time: '2023-04-22T10:26:41.0000000+00:00'
