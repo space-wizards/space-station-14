@@ -175,6 +175,21 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatRd
+  name: research director's coat
+  description: A mix between a labcoat and just a regular coat. It's made out of a special anti-bacterial, anti-acidic, and anti-biohazardous synthetic fabric.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_rd.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_rd.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPirate
   name: pirate garb
   description: Yarr.

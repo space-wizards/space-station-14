@@ -163,6 +163,7 @@
         prob: 0.1
       - id: DoorRemoteResearch
       - id: ClothingHeadHatBeretRND
+      - id: ClothingOuterCoatRd
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
