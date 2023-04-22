@@ -213,25 +213,21 @@ public sealed class DoorComponent : Component
 
     /// <summary>
     /// The animation used when the door opens.
-    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
-    /// </summary>\
+    /// </summary>
     public object OpeningAnimation = default!;
 
     /// <summary>
     /// The animation used when the door closes.
-    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
     /// </summary>
     public object ClosingAnimation = default!;
 
     /// <summary>
     /// The animation used when the door denies access.
-    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
     /// </summary>
     public object DenyingAnimation = default!;
 
     /// <summary>
     /// The animation used when the door is emagged.
-    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
     /// </summary>
     public object EmaggingAnimation = default!;
 

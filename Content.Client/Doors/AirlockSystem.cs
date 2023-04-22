@@ -17,23 +17,27 @@ public sealed class AirlockSystem : SharedAirlockSystem
         SubscribeLocalEvent<AirlockComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-
     private void OnComponentStartup(EntityUid uid, AirlockComponent comp, ComponentStartup args)
-    {   // Has to be on component startup because we don't know what order components initialize in and running this before DoorComponent inits _will_ crash.
+    {
+        // Has to be on component startup because we don't know what order components initialize in and running this before DoorComponent inits _will_ crash.
         if(!TryComp<DoorComponent>(uid, out var door))
             return;
-        
-        if (comp.OpenUnlitVisible) // Otherwise there are flashes of the fallback sprite between clicking on the door and the door closing animation starting.
-            door.OpenSpriteStates.Add((DoorVisualLayers.BaseUnlit, comp.OpenSpriteState));
-        door.ClosedSpriteStates.Add((DoorVisualLayers.BaseUnlit, comp.ClosedSpriteState));
 
-        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
+        if (comp.OpenUnlitVisible) // Otherwise there are flashes of the fallback sprite between clicking on the door and the door closing animation starting.
+        {
+            door.OpenSpriteStates.Add((DoorVisualLayers.BaseUnlit, comp.OpenSpriteState));
+            door.ClosedSpriteStates.Add((DoorVisualLayers.BaseUnlit, comp.ClosedSpriteState));
+        }
+
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+            {
                 LayerKey = DoorVisualLayers.BaseUnlit,
                 KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.OpeningSpriteState, 0f) },
             }
         );
 
-        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
+        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+            {
                 LayerKey = DoorVisualLayers.BaseUnlit,
                 KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.ClosingSpriteState, 0f) },
             }
@@ -55,12 +59,14 @@ public sealed class AirlockSystem : SharedAirlockSystem
         if(!comp.AnimatePanel)
             return;
 
-        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+        {
             LayerKey = WiresVisualLayers.MaintenancePanel,
             KeyFrames = {new AnimationTrackSpriteFlick.KeyFrame(comp.OpeningPanelSpriteState, 0f)},
         });
-        
-        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
+
+        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick
+        {
             LayerKey = WiresVisualLayers.MaintenancePanel,
             KeyFrames = {new AnimationTrackSpriteFlick.KeyFrame(comp.ClosingPanelSpriteState, 0f)},
         });
