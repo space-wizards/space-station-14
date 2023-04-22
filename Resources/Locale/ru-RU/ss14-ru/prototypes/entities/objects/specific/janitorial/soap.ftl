@@ -10,5 +10,5 @@ ent-SoapHomemade = мыло
     .desc = Самодельный брусок мыла. Пахнет... уф....
 ent-SoapOmega = омега мыло
     .desc = Самое совершенное мыло, известное человечеству. Пахнет блюспейсом.
-ent-SoapNinja = ninja soap
-    .desc = The most important soap in the entire universe, as without it we would all cease to exist. Smells of honor.
+ent-SoapNinja = мыло ниндзя
+    .desc = Самое важное мыло во всей Вселенной, так как без него мы все перестали бы существовать. Пахнет честью.

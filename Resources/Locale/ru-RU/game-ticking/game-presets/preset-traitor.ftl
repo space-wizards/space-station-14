@@ -15,12 +15,12 @@ traitor-user-was-a-traitor-with-objectives = [color=gray]{ $user }[/color] бы�
 traitor-user-was-a-traitor-with-objectives-named = [color=White]{ $name }[/color] ([color=gray]{ $user }[/color]) был(а) предателем со следующими целями:
 traitor-was-a-traitor-with-objectives-named = [color=White]{ $name }[/color] был(а) предателем со следующими целями:
 preset-traitor-objective-issuer-syndicate = [color=#87cefa]Синдикат[/color]
-preset-traitor-objective-issuer-spiderclan = [color=#33cc00]Spider Clan[/color]
+preset-traitor-objective-issuer-spiderclan = [color=#33cc00]Клан Паука[/color]
 # Shown at the end of a round of Traitor
 traitor-objective-condition-success = { $condition } | [color={ $markupColor }]Успех![/color]
 # Shown at the end of a round of Traitor
 traitor-objective-condition-fail = { $condition } | [color={ $markupColor }]Провал![/color] ({ $progress }%)
-traitor-title = Предатель
+traitor-title = Предатели
 traitor-description = Среди нас есть предатели...
 traitor-not-enough-ready-players = Недостаточно игроков готовы к игре! Из { $minimumPlayers } необходимых игроков готовы { $readyPlayersCount }.
 traitor-no-one-ready = Нет готовых игроков! Не удалось начать режим Предателя.
