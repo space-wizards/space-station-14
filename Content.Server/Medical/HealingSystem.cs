@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
@@ -54,7 +55,15 @@ public sealed class HealingSystem : EntitySystem
 
         // Heal some bloodloss damage.
         if (healing.BloodlossModifier != 0)
+        {
+            var isBleeding = uid.EnsureComponent<BloodstreamComponent>().BleedAmount > 0;
             _bloodstreamSystem.TryModifyBleedAmount(uid, healing.BloodlossModifier);
+            if (isBleeding != uid.EnsureComponent<BloodstreamComponent>().BleedAmount > 0)
+            {
+                args.Repeat = false;
+                _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), uid);
+            }
+        }
 
         // Restores missing blood
         if (healing.ModifyBloodLevel != 0)
@@ -128,12 +137,6 @@ public sealed class HealingSystem : EntitySystem
         if (_mobStateSystem.IsDead(target) || !TryComp<DamageableComponent>(target, out var targetDamage))
             return false;
 
-        if (HasDamage(targetDamage, component) == false)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid);
-            return false;
-        }
-
         if (component.DamageContainerID is not null &&
             !component.DamageContainerID.Equals(targetDamage.DamageContainerID))
             return false;
@@ -143,6 +146,12 @@ public sealed class HealingSystem : EntitySystem
 
         if (!TryComp<StackComponent>(uid, out var stack) || stack.Count < 1)
             return false;
+
+        if (HasDamage(targetDamage, component) == false)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid);
+            return false;
+        }
 
         if (component.HealingBeginSound != null)
         {
