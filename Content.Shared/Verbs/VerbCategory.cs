@@ -31,7 +31,7 @@ namespace Content.Shared.Verbs
         public VerbCategory(string text, string? icon, bool iconsOnly = false)
         {
             Text = Loc.GetString(text);
-            Icon = icon == null ? null : new SpriteSpecifier.Texture(new ResourcePath(icon));
+            Icon = icon == null ? null : new SpriteSpecifier.Texture(new(icon));
             IconsOnly = iconsOnly;
         }
 

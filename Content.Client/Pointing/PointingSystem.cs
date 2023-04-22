@@ -55,7 +55,7 @@ public sealed class PointingSystem : SharedPointingSystem
         Verb verb = new()
         {
             Text = Loc.GetString("pointing-verb-get-data-text"),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/point.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/point.svg.192dpi.png")),
             ClientExclusive = true,
             Act = () => RaiseNetworkEvent(new PointingAttemptEvent(args.Target))
         };

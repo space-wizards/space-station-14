@@ -22,11 +22,15 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.FocusDeadChat);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelForward);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelBackward);
+            common.AddFunction(ContentKeyFunctions.EscapeContext);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
             common.AddFunction(ContentKeyFunctions.OpenAHelp);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
             common.AddFunction(ContentKeyFunctions.Point);
+            common.AddFunction(ContentKeyFunctions.ZoomOut);
+            common.AddFunction(ContentKeyFunctions.ZoomIn);
+            common.AddFunction(ContentKeyFunctions.ResetZoom);
 
             // Not in engine, because engine cannot check for sanbox/admin status before starting placement.
             common.AddFunction(ContentKeyFunctions.EditorCopyObject);
