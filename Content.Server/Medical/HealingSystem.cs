@@ -58,9 +58,12 @@ public sealed class HealingSystem : EntitySystem
         // Heal some bloodloss damage.
         if (healing.BloodlossModifier != 0)
         {
-            var isBleeding = uid.EnsureComponent<BloodstreamComponent>().BleedAmount > 0;
+            /*var isBleeding = uid.EnsureComponent<BloodstreamComponent>().BleedAmount > 0;*/
+            if (!TryComp<BloodstreamComponent>(uid, out var bloodstream))
+                return;
+            var isBleeding = bloodstream.BleedAmount > 0;
             _bloodstreamSystem.TryModifyBleedAmount(uid, healing.BloodlossModifier);
-            if (isBleeding != uid.EnsureComponent<BloodstreamComponent>().BleedAmount > 0)
+            if (isBleeding != bloodstream.BleedAmount > 0)
             {
                 dontRepeat = true;
                 _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), uid);
@@ -97,7 +100,10 @@ public sealed class HealingSystem : EntitySystem
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(component, healing) && !dontRepeat);
         if (!args.Repeat && !dontRepeat)
+        {
             _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), uid);
+        }
+
         args.Handled = true;
     }
 
@@ -149,7 +155,7 @@ public sealed class HealingSystem : EntitySystem
         if (!TryComp<StackComponent>(uid, out var stack) || stack.Count < 1)
             return false;
 
-        if (HasDamage(targetDamage, component) == false)
+        if (!HasDamage(targetDamage, component))
         {
             _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid);
             return false;
