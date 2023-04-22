@@ -37,7 +37,7 @@
     radius: 1.1
     color: darkorange
   - type: Appearance
-  - type: BurnStateVisualizer
+  - type: BurnStateVisuals
     unlitIcon: match_unlit
     litIcon: match_lit
     burntIcon: match_burnt
