@@ -11,13 +11,13 @@ public sealed class NetworkResourceUploadMessage : NetMessage
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
     public byte[] Data { get; set; } = Array.Empty<byte>();
-    public ResourcePath RelativePath { get; set; } = ResourcePath.Self;
+    public ResPath RelativePath { get; set; } = ResPath.Self;
 
     public NetworkResourceUploadMessage()
     {
     }
 
-    public NetworkResourceUploadMessage(byte[] data, ResourcePath relativePath)
+    public NetworkResourceUploadMessage(byte[] data, ResPath relativePath)
     {
         Data = data;
         RelativePath = relativePath;
@@ -27,7 +27,8 @@ public sealed class NetworkResourceUploadMessage : NetMessage
     {
         var dataLength = buffer.ReadVariableInt32();
         Data = buffer.ReadBytes(dataLength);
-        RelativePath = new ResourcePath(buffer.ReadString(), buffer.ReadString());
+        // What is the second argument here?
+        RelativePath = new ResPath(buffer.ReadString());
     }
 
     public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
@@ -35,6 +36,6 @@ public sealed class NetworkResourceUploadMessage : NetMessage
         buffer.WriteVariableInt32(Data.Length);
         buffer.Write(Data);
         buffer.Write(RelativePath.ToString());
-        buffer.Write(RelativePath.Separator);
+        buffer.Write(ResPath.Separator);
     }
 }

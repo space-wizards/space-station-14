@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
@@ -22,6 +21,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Shared.DoAfter;
+using Content.Server.Emp;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -39,7 +39,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -62,7 +62,8 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
 
-            SubscribeLocalEvent<PoweredLightComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
         }
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
@@ -137,11 +138,10 @@ namespace Content.Server.Light.EntitySystems
             }
 
             // removing a working bulb, so require a delay
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, light.EjectBulbDelay, target:uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(userUid, light.EjectBulbDelay, new PoweredLightDoAfterEvent(), uid, target: uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true
             });
 
             args.Handled = true;
@@ -420,6 +420,12 @@ namespace Content.Server.Light.EntitySystems
             EjectBulb(args.Args.Target.Value, args.Args.User, component);
 
             args.Handled = true;
+        }
+
+        private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)
+        {
+            args.Affected = true;
+            TryDestroyBulb(uid, component);
         }
     }
 }

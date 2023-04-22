@@ -24,6 +24,7 @@ using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Clothing.Components;
@@ -43,6 +44,7 @@ using Content.Shared.Popups;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -51,7 +53,9 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Audio;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Shared.Cluwne;
 
 namespace Content.Server.Administration.Systems;
 
@@ -71,7 +75,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly GodmodeSystem _godmodeSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
-    [Dependency] private readonly PolymorphableSystem _polymorphableSystem = default!;
+    [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -98,7 +102,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Explode",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
             Act = () =>
             {
                 var coords = Transform(args.Target).MapPosition;
@@ -118,7 +122,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Chess Dimension",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Fun/Tabletop/chessboard.rsi"), "chessboard"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Fun/Tabletop/chessboard.rsi"), "chessboard"),
             Act = () =>
             {
                 _godmodeSystem.EnableGodmode(args.Target); // So they don't suffocate.
@@ -146,7 +150,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Set Alight",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Alerts/Fire/fire.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/Alerts/Fire/fire.png")),
                 Act = () =>
                 {
                     // Fuck you. Burn Forever.
@@ -168,10 +172,10 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Monkeyify",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Mobs/Animals/monkey.rsi"), "dead"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Animals/monkey.rsi"), "dead"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminMonkeySmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminMonkeySmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-monkeyify-description")
@@ -182,10 +186,10 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Garbage Can",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Structures/Piping/disposal.rsi"), "disposal"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Structures/Piping/disposal.rsi"), "disposal"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminDisposalsSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminDisposalsSmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-garbage-can-description")
@@ -198,7 +202,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Lung Cancer",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Mobs/Species/Human/organs.rsi"), "lung-l"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Species/Human/organs.rsi"), "lung-l"),
                 Act = () =>
                 {
                     _diseaseSystem.TryInfect(carrier, _prototypeManager.Index<DiseasePrototype>("StageIIIALungCancer"),
@@ -217,7 +221,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Electrocute",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Clothing/Hands/Gloves/Color/yellow.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Clothing/Hands/Gloves/Color/yellow.rsi"), "icon"),
                 Act = () =>
                 {
                     int damageToDeal;
@@ -262,7 +266,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Creampie",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Consumable/Food/Baked/pie.rsi"), "plain-slice"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Consumable/Food/Baked/pie.rsi"), "plain-slice"),
                 Act = () =>
                 {
                     _creamPieSystem.SetCreamPied(args.Target, creamPied, true);
@@ -279,7 +283,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Remove blood",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Fluids/tomato_splat.rsi"), "puddle-1"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Fluids/tomato_splat.rsi"), "puddle-1"),
                 Act = () =>
                 {
                     _bloodstreamSystem.SpillAllSolutions(args.Target, bloodstream);
@@ -302,7 +306,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Vomit organs",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Fluids/vomit_toxin.rsi"), "vomit_toxin-1"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Fluids/vomit_toxin.rsi"), "vomit_toxin-1"),
                 Act = () =>
                 {
                     _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
@@ -331,7 +335,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Remove hands",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/AdminActions/remove-hands.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/remove-hands.png")),
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
@@ -353,7 +357,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Remove hands",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/AdminActions/remove-hand.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/remove-hand.png")),
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
@@ -376,7 +380,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Stomach Removal",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Mobs/Species/Human/organs.rsi"), "stomach"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Species/Human/organs.rsi"), "stomach"),
                 Act = () =>
                 {
                     foreach (var (component, _) in _bodySystem.GetBodyOrganComponents<StomachComponent>(args.Target, body))
@@ -396,7 +400,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Lungs Removal",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Mobs/Species/Human/organs.rsi"), "lung-r"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Species/Human/organs.rsi"), "lung-r"),
                 Act = () =>
                 {
                     foreach (var (component, _) in _bodySystem.GetBodyOrganComponents<LungComponent>(args.Target, body))
@@ -419,7 +423,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Pinball",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Fun/toys.rsi"), "basketball"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Fun/toys.rsi"), "basketball"),
                 Act = () =>
                 {
                     var xform = Transform(args.Target);
@@ -453,7 +457,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Yeet",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
                 Act = () =>
                 {
                     var xform = Transform(args.Target);
@@ -484,10 +488,10 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Become Bread",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Consumable/Food/Baked/bread.rsi"), "plain"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Consumable/Food/Baked/bread.rsi"), "plain"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-become-bread-description")
@@ -498,10 +502,10 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Become Mouse",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Mobs/Animals/mouse.rsi"), "icon-0"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Animals/mouse.rsi"), "icon-0"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminMouseSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminMouseSmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-become-mouse-description")
@@ -514,7 +518,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Ghostkick",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/gavel.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/gavel.svg.192dpi.png")),
                 Act = () =>
                 {
                     _ghostKickManager.DoDisconnect(actorComponent.PlayerSession.ConnectedClient, "Smitten.");
@@ -530,7 +534,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Nyanify",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Clothing/Head/Hats/catears.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Clothing/Head/Hats/catears.rsi"), "icon"),
                 Act = () =>
                 {
                     var ears = Spawn("ClothingHeadHatCatEars", Transform(args.Target).Coordinates);
@@ -547,7 +551,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Kill sign",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Misc/killsign.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Misc/killsign.rsi"), "icon"),
                 Act = () =>
                 {
                     EnsureComp<KillSignComponent>(args.Target);
@@ -557,31 +561,27 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(killSign);
 
-            // TODO: Port cluwne outfit.
-            Verb clown = new()
+            Verb cluwne = new()
             {
-                Text = "Clown",
+                Text = "Cluwne",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Fun/bikehorn.rsi"), "icon"),
+
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Clothing/Mask/cluwne.rsi"), "icon"),
+
                 Act = () =>
                 {
-                    SetOutfitCommand.SetOutfit(args.Target, "ClownGear", EntityManager, (_, clothing) =>
-                    {
-                        if (HasComp<ClothingComponent>(clothing))
-                            EnsureComp<UnremoveableComponent>(clothing);
-                        EnsureComp<ClumsyComponent>(args.Target);
-                    });
+                    EnsureComp<CluwneComponent>(args.Target);
                 },
                 Impact = LogImpact.Extreme,
-                Message = Loc.GetString("admin-smite-clown-description")
+                Message = Loc.GetString("admin-smite-cluwne-description")
             };
-            args.Verbs.Add(clown);
+            args.Verbs.Add(cluwne);
 
             Verb maiden = new()
             {
                 Text = "Maid",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Clothing/Uniforms/Jumpskirt/janimaid.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Clothing/Uniforms/Jumpskirt/janimaid.rsi"), "icon"),
                 Act = () =>
                 {
                     SetOutfitCommand.SetOutfit(args.Target, "JanitorMaidGear", EntityManager, (_, clothing) =>
@@ -601,7 +601,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Anger Pointing Arrows",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/pointing.rsi"), "pointing"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/pointing.rsi"), "pointing"),
             Act = () =>
             {
                 EnsureComp<PointingArrowAngeringComponent>(args.Target);
@@ -615,7 +615,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Dust",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Materials/materials.rsi"), "ash"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Materials/materials.rsi"), "ash"),
             Act = () =>
             {
                 EntityManager.QueueDeleteEntity(args.Target);
@@ -631,7 +631,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Buffering",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Misc/buffering_smite_icon.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/Misc/buffering_smite_icon.png")),
             Act = () =>
             {
                 EnsureComp<BufferingComponent>(args.Target);
@@ -645,10 +645,10 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Become Instrument",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Fun/Instruments/h_synthesizer.rsi"), "icon"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Fun/Instruments/h_synthesizer.rsi"), "icon"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminInstrumentSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminInstrumentSmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-become-instrument-description"),
@@ -659,7 +659,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Remove gravity",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Structures/Machines/gravity_generator.rsi"), "off"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Structures/Machines/gravity_generator.rsi"), "off"),
             Act = () =>
             {
                 var grav = EnsureComp<MovementIgnoreGravityComponent>(args.Target);
@@ -676,10 +676,10 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Reptilian Species Swap",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Fun/toys.rsi"), "plushie_lizard"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Fun/toys.rsi"), "plushie_lizard"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminLizardSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminLizardSmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-reptilian-species-swap-description"),
@@ -690,7 +690,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Locker stuff",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Structures/Storage/closet.rsi"), "generic"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Structures/Storage/closet.rsi"), "generic"),
             Act = () =>
             {
                 var xform = Transform(args.Target);
@@ -712,7 +712,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Headstand",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/refresh.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/refresh.svg.192dpi.png")),
             Act = () =>
             {
                 EnsureComp<HeadstandComponent>(args.Target);
@@ -726,7 +726,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Zoom in",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/AdminActions/zoom.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/zoom.png")),
             Act = () =>
             {
                 var eye = EnsureComp<EyeComponent>(args.Target);
@@ -744,7 +744,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Flip eye",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/AdminActions/flip.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/flip.png")),
             Act = () =>
             {
                 var eye = EnsureComp<EyeComponent>(args.Target);
@@ -762,7 +762,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Run Walk Swap",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/AdminActions/run-walk-swap.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/run-walk-swap.png")),
             Act = () =>
             {
                 var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(args.Target);
@@ -782,7 +782,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Speak Backwards",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/AdminActions/help-backwards.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/help-backwards.png")),
             Act = () =>
             {
                 EnsureComp<BackwardsAccentComponent>(args.Target);
@@ -796,7 +796,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Disarm Prone",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Actions/disarm.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/Actions/disarm.png")),
             Act = () =>
             {
                 EnsureComp<DisarmProneComponent>(args.Target);
@@ -810,7 +810,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Super speed",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/AdminActions/super_speed.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/super_speed.png")),
             Act = () =>
             {
                 var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(args.Target);

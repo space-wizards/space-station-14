@@ -1,6 +1,6 @@
-using System.Threading;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -24,6 +24,13 @@ namespace Content.Server.Medical.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float BloodlossModifier = 0.0f;
 
+        /// <summary>
+        ///     Restore missing blood.
+        /// </summary>
+        [DataField("ModifyBloodLevel")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ModifyBloodLevel = 0.0f;
+
         /// <remarks>
         ///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. For a
         ///     HealingComponent this filters what damage container type this component should work on. If null,
@@ -38,12 +45,6 @@ namespace Content.Server.Medical.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("delay")]
         public float Delay = 3f;
-
-        /// <summary>
-        /// Cancel token to prevent rapid healing
-        /// </summary>
-        [DataField("cancelToken")]
-        public CancellationTokenSource? CancelToken;
 
         /// <summary>
         /// Delay multiplier when healing yourself.

@@ -65,6 +65,12 @@
   files:
   - /Audio/Effects/Footsteps/clownstep1.ogg
   - /Audio/Effects/Footsteps/clownstep2.ogg
+  
+- type: soundCollection
+  id: FootstepJester
+  files:
+  - /Audio/Effects/Footsteps/jesterstep1.ogg
+  - /Audio/Effects/Footsteps/jesterstep2.ogg
 
 - type: soundCollection
   id: FootstepDuck
@@ -101,6 +107,14 @@
   - /Audio/Effects/Footsteps/grass2.ogg
   - /Audio/Effects/Footsteps/grass3.ogg
   - /Audio/Effects/Footsteps/grass4.ogg
+
+- type: soundCollection
+  id: FootstepWater
+  files:
+    - /Audio/Effects/Footsteps/water1.ogg
+    - /Audio/Effects/Footsteps/water2.ogg
+    - /Audio/Effects/Footsteps/water3.ogg
+    - /Audio/Effects/Footsteps/water4.ogg
 
 - type: soundCollection
   id: BarestepHard

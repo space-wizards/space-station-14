@@ -37,7 +37,5 @@ namespace Content.Server.Animals.Components
         public float UpdateRate = 5;
 
         public float AccumulatedFrameTime;
-
-        public bool BeingMilked;
     }
 }

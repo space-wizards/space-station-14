@@ -29,14 +29,17 @@ public sealed partial class HumanoidAppearanceSystem
         {
             Text = "Modify markings",
             Category = VerbCategory.Tricks,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Mobs/Customization/reptilian_parts.rsi"), "tail_smooth"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Customization/reptilian_parts.rsi"), "tail_smooth"),
             Act = () =>
             {
                 _uiSystem.TryOpen(uid, HumanoidMarkingModifierKey.Key, actor.PlayerSession);
                 _uiSystem.TrySetUiState(
                     uid,
                     HumanoidMarkingModifierKey.Key,
-                    new HumanoidMarkingModifierState(component.MarkingSet, component.Species, component.SkinColor, component.CustomBaseLayers));
+                    new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
+                        component.SkinColor,
+                        component.CustomBaseLayers
+                    ));
             }
         });
     }
@@ -66,7 +69,10 @@ public sealed partial class HumanoidAppearanceSystem
             _uiSystem.TrySetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
-                new HumanoidMarkingModifierState(component.MarkingSet, component.Species, component.SkinColor, component.CustomBaseLayers));
+                new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
+                        component.SkinColor,
+                        component.CustomBaseLayers
+                    ));
         }
     }
 
@@ -87,7 +93,10 @@ public sealed partial class HumanoidAppearanceSystem
             _uiSystem.TrySetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
-                new HumanoidMarkingModifierState(component.MarkingSet, component.Species, component.SkinColor, component.CustomBaseLayers));
+                new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
+                        component.SkinColor,
+                        component.CustomBaseLayers
+                    ));
         }
 
     }

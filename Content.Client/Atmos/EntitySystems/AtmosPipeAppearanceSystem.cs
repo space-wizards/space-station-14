@@ -44,6 +44,18 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         }
     }
 
+    private void HideAllPipeConnection(SpriteComponent sprite)
+    {
+        foreach (PipeConnectionLayer layerKey in Enum.GetValues(typeof(PipeConnectionLayer)))
+        {
+            if (!sprite.LayerMapTryGet(layerKey, out var key))
+                continue;
+
+            var layer = sprite[key];
+            layer.Visible = false;
+        }
+    }
+
     private void OnAppearanceChanged(EntityUid uid, PipeAppearanceComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -56,11 +68,14 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
             return;
         }
 
+        if (!_appearance.TryGetData<PipeDirection>(uid, PipeVisuals.VisualState, out var worldConnectedDirections, args.Component))
+        {
+            HideAllPipeConnection(args.Sprite);
+            return;
+        }
+
         if (!_appearance.TryGetData<Color>(uid, PipeColorVisuals.Color, out var color, args.Component))
             color = Color.White;
-
-        if (!_appearance.TryGetData<PipeDirection>(uid, PipeVisuals.VisualState, out var worldConnectedDirections, args.Component))
-            return;
 
         // transform connected directions to local-coordinates
         var connectedDirections = worldConnectedDirections.RotatePipeDirection(-Transform(uid).LocalRotation);

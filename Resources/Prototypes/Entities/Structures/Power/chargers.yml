@@ -29,6 +29,12 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 80
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 40
         behaviors:
           - !type:EmptyAllContainersBehaviour
@@ -81,7 +87,7 @@
 - type: entity
   name: wall recharger
   id: WallWeaponCapacitorRecharger
-  parent: PowerCellRecharger
+  parent: WeaponCapacitorRecharger
   components:
   - type: Sprite
     sprite: Structures/Power/wall_recharger.rsi

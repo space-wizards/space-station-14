@@ -9,6 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Payload.Components;
+using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Trigger;
 using JetBrains.Annotations;
@@ -34,6 +35,12 @@ namespace Content.Server.Explosion.EntitySystems
             User = user;
         }
     }
+
+    /// <summary>
+    /// Raised when timer trigger becomes active.
+    /// </summary>
+    [ByRefEvent]
+    public readonly record struct ActiveTimerTriggerEvent(EntityUid Triggered, EntityUid? User);
 
     [UsedImplicitly]
     public sealed partial class TriggerSystem : EntitySystem
@@ -61,6 +68,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
+            SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
@@ -122,6 +130,11 @@ namespace Content.Server.Explosion.EntitySystems
             Trigger(uid, args.Tripper);
         }
 
+        private void OnSlipTriggered(EntityUid uid, TriggerOnSlipComponent component, ref SlipEvent args)
+        {
+            Trigger(uid, args.Slipped);
+        }
+
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
@@ -176,6 +189,9 @@ namespace Content.Server.Explosion.EntitySystems
             active.BeepSound = beepSound;
             active.BeepInterval = beepInterval;
             active.TimeUntilBeep = initialBeepDelay == null ? active.BeepInterval : initialBeepDelay.Value;
+
+            var ev = new ActiveTimerTriggerEvent(uid, user);
+            RaiseLocalEvent(uid, ref ev);
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
                 _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Primed, appearance);

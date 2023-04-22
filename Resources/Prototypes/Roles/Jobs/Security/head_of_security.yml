@@ -27,12 +27,13 @@
   - Maintenance
   - Service
   - External
+  - Detective
 
 - type: startingGear
   id: HoSGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoS
-    back: ClothingBackpackSecurityFilled
+    back: ClothingBackpackHOSFilled
     shoes: ClothingShoesBootsCombatFilled
     outerClothing: ClothingOuterCoatHoSTrench
     eyes: ClothingEyesGlassesSecurity
@@ -42,5 +43,5 @@
     ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
   innerclothingskirt: ClothingUniformJumpskirtHoS
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+  satchel: ClothingBackpackSatchelHOSFilled
+  duffelbag: ClothingBackpackDuffelHOSFilled

@@ -1,5 +1,4 @@
 ﻿using Content.Server.Body.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
@@ -9,6 +8,7 @@ using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.Kitchen;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
@@ -21,7 +21,7 @@ public sealed class SharpSystem : EntitySystem
 {
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
@@ -32,7 +32,7 @@ public sealed class SharpSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SharpComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<SharpComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<SharpComponent, SharpDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<ButcherableComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
     }
@@ -63,22 +63,27 @@ public sealed class SharpSystem : EntitySystem
             return;
 
         var doAfter =
-            new DoAfterEventArgs(user, sharp.ButcherDelayModifier * butcher.ButcherDelay, target: target, used: knife)
+            new DoAfterArgs(user, sharp.ButcherDelayModifier * butcher.ButcherDelay, new SharpDoAfterEvent(), knife, target: target, used: knife)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 NeedHand = true
             };
 
-        _doAfterSystem.DoAfter(doAfter);
+        _doAfterSystem.TryStartDoAfter(doAfter);
     }
 
     private void OnDoAfter(EntityUid uid, SharpComponent component, DoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || !TryComp<ButcherableComponent>(args.Args.Target, out var butcher))
+        if (args.Handled || !TryComp<ButcherableComponent>(args.Args.Target, out var butcher))
             return;
+
+        if (args.Cancelled)
+        {
+            component.Butchering.Remove(args.Args.Target.Value);
+            return;
+        }
 
         component.Butchering.Remove(args.Args.Target.Value);
 
@@ -117,13 +122,13 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (component.Type != ButcheringType.Knife || args.Hands == null)
+        if (component.Type != ButcheringType.Knife || args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
 
         bool disabled = false;
         string? message = null;
 
-        if (args.Using is null || !HasComp<SharpComponent>(args.Using))
+        if (!HasComp<SharpComponent>(args.Using))
         {
             disabled = true;
             message = Loc.GetString("butcherable-need-knife",
@@ -150,7 +155,7 @@ public sealed class SharpSystem : EntitySystem
             },
             Message = message,
             Disabled = disabled,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
             Text = Loc.GetString("butcherable-verb-name"),
         };
 

@@ -1,5 +1,7 @@
 ﻿using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -17,8 +19,10 @@ namespace Content.Server.Chemistry.ReagentEffects
         //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
         public override void Effect(ReagentEffectArgs args)
         {
-            if (args.EntityManager.TryGetComponent(args.SolutionEntity, out HungerComponent? hunger))
-                hunger.UpdateFood(NutritionFactor * (float) args.Quantity);
+            var entman = args.EntityManager;
+            if (!entman.TryGetComponent(args.SolutionEntity, out HungerComponent? hunger))
+                return;
+            entman.System<HungerSystem>().ModifyHunger(args.SolutionEntity, NutritionFactor * (float) args.Quantity, hunger);
         }
     }
 }
