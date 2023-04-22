@@ -57,6 +57,14 @@ namespace Content.Server.Administration.Managers
             return null;
         }
 
+        public AdminData? GetAdminData(EntityUid uid, bool includeDeAdmin = false)
+        {
+            if (_playerManager.TryGetSessionByEntity(uid, out var session) && session is IPlayerSession playerSession)
+                return GetAdminData(playerSession, includeDeAdmin);
+
+            return null;
+        }
+
         public void DeAdmin(IPlayerSession session)
         {
             if (!_admins.TryGetValue(session, out var reg))
@@ -189,7 +197,7 @@ namespace Content.Server.Administration.Managers
             }
 
             // Load flags for engine commands, since those don't have the attributes.
-            if (_res.TryContentFileRead(new ResourcePath("/engineCommandPerms.yml"), out var efs))
+            if (_res.TryContentFileRead(new ResPath("/engineCommandPerms.yml"), out var efs))
             {
                 _commandPermissions.LoadPermissionsFromStream(efs);
             }

@@ -82,22 +82,6 @@ public sealed class SingularityComponent : Component
 
     #endregion Audio
 
-    #region Appearance
-
-    /// <summary>
-    /// The sprite layer the singularity appearance is attached to.
-    /// </summary>
-    [DataField("layer")]
-    public int Layer { get; } = 0;
-
-    /// <summary>
-    /// The base sprite file and state of the singularity.
-    /// </summary>
-    [DataField("baseSprite")]
-    public SpriteSpecifier.Rsi BaseSprite = new SpriteSpecifier.Rsi(new ResourcePath("Structures/Power/Generation/Singularity/singularity"), "singularity");
-
-    #endregion Appearance
-
     #region Update Timing
 
     /// <summary>

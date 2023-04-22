@@ -18,7 +18,7 @@
       - MobMouse2
 
 - type: entity
-  name: Ian Spawner
+  name: HoP Corgi Spawner
   id: SpawnMobCorgi
   parent: MarkerBase
   components:
@@ -29,6 +29,8 @@
   - type: ConditionalSpawner
     prototypes:
       - MobCorgiIan
+      - MobCorgiIanOld
+      - MobCorgiLisa
 
 - type: entity
   name: Possum Morty Spawner
@@ -219,6 +221,48 @@
     - MobBearSpace
 
 - type: entity
+  name: Space Carp Spawner
+  id: SpawnMobCarp
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/space.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCarp
+
+- type: entity
+  name: Magicarp Spawner
+  id: SpawnMobCarpMagic
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/magic.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCarpMagic
+
+- type: entity
+  name: Holocarp Spawner
+  id: SpawnMobCarpHolo
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/holo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCarpHolo
+
+- type: entity
   name: Hamster Hamlet Spawner
   id: SpawnMobHamsterHamlet
   parent: MarkerBase
@@ -245,3 +289,16 @@
   - type: ConditionalSpawner
     prototypes:
       - MobAlexander
+
+- type: entity
+  name: Shiva Spawner
+  id: SpawnMobShiva
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobSpiderShiva

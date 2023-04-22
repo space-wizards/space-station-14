@@ -41,13 +41,14 @@ public sealed class BureaucraticError : StationEventSystem
             var lower = (int) (jobList.Count * Math.Min(1.0f, 0.20 * mod));
             var upper = (int) (jobList.Count * Math.Min(1.0f, 0.30 * mod));
             // Changing every role is maybe a bit too chaotic so instead change 20-30% of them.
-            for (var i = 0; i < RobustRandom.Next(lower, upper); i++)
+            var num = RobustRandom.Next(lower, upper);
+            for (var i = 0; i < num; i++)
             {
                 var chosenJob = RobustRandom.PickAndTake(jobList);
                 if (_stationJobs.IsJobUnlimited(chosenStation, chosenJob))
                     continue;
 
-                _stationJobs.TryAdjustJobSlot(chosenStation, chosenJob, RobustRandom.Next(-3, 6));
+                _stationJobs.TryAdjustJobSlot(chosenStation, chosenJob, RobustRandom.Next(-3, 6), clamp: true);
             }
         }
     }

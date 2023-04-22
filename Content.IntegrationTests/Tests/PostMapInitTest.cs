@@ -89,7 +89,7 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
 
             var resourceManager = server.ResolveDependency<IResourceManager>();
-            var mapFolder = new ResourcePath("/Maps");
+            var mapFolder = new ResPath("/Maps");
             var maps = resourceManager
                 .ContentFindFiles(mapFolder)
                 .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
@@ -225,7 +225,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.IsNotNull(stationConfig, $"{entManager.ToPrettyString(station)} had null StationConfig.");
                 var shuttlePath = stationConfig.EmergencyShuttlePath.ToString();
                 var shuttle = mapLoader.LoadGrid(shuttleMap, shuttlePath);
-                Assert.That(shuttle != null && shuttleSystem.TryFTLDock(entManager.GetComponent<ShuttleComponent>(shuttle.Value), targetGrid.Value), $"Unable to dock {shuttlePath} to {mapProto}");
+                Assert.That(shuttle != null && shuttleSystem.TryFTLDock(shuttle.Value, entManager.GetComponent<ShuttleComponent>(shuttle.Value), targetGrid.Value), $"Unable to dock {shuttlePath} to {mapProto}");
 
                 mapManager.DeleteMap(shuttleMap);
 
@@ -299,7 +299,7 @@ namespace Content.IntegrationTests.Tests
 
                     var gameMaps = protoManager.EnumeratePrototypes<GameMapPrototype>().Select(o => o.MapPath).ToHashSet();
 
-                    var mapFolder = new ResourcePath("/Maps");
+                    var mapFolder = new ResPath("/Maps");
                     var maps = resourceManager
                         .ContentFindFiles(mapFolder)
                         .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))

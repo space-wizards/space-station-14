@@ -24,6 +24,7 @@
       - id: DoorRemoteCargo
       - id: RubberStampQm
       - id: ClothingHeadsetAltCargo
+      - id: BoxEncryptionKeyCargo
 
 - type: entity
   id: LockerCaptainFilled
@@ -54,11 +55,10 @@
       - id: ClothingNeckCloakCapFormal
       - id: ClothingUniformJumpsuitCapFormal
       - id: ClothingUniformJumpskirtCapFormalDress
-      - id: ClothingNeckBronzeheart
-      - id: ClothingNeckGoldmedal
       - id: RubberStampCaptain
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
+      - id: MedalCase
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -70,7 +70,6 @@
       - id: ClothingNeckCloakHop
       - id: ClothingHeadHatHopcap
       - id: HoPIDCard
-        prob: 0.9
       - id: ClothingHeadsetCommand
       - id: BoxPDA
       - id: BoxID
@@ -87,6 +86,10 @@
       - id: DoorRemoteService
       - id: ClothingNeckGoldmedal
       - id: RubberStampHop
+      - id: BoxEncryptionKeyPassenger
+      - id: BoxEncryptionKeyService
+      - id: ClothingBackpackIan
+        prob: 0.5
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -111,6 +114,7 @@
       - id: RubberStampCE
       - id: JetpackVoidFilled
       - id: ClothingHeadsetAltEngineering
+      - id: BoxEncryptionKeyEngineering
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -139,6 +143,7 @@
       - id: MedicalTechFabCircuitboard
       - id: MaterialBiomass
         amount: 3
+      - id: BoxEncryptionKeyMedical
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -157,8 +162,11 @@
       - id: PlushieSlime
         prob: 0.1
       - id: DoorRemoteResearch
+      - id: ClothingHeadHatBeretRND
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
+      - id: BoxEncryptionKeyScience
+      - id: BoxEncryptionKeyRobo
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -183,7 +191,7 @@
       - id: ClothingUniformJumpskirtHoSParadeMale
         prob: 0.1
       - id: ClothingOuterHardsuitSecurityRed
-      - id: ClothingMaskGasSecurity
+      - id: ClothingMaskGasSwat
       - id: ClothingShoeSlippersDuck
         prob: 0.2
       - id: DrinkVacuumFlask
@@ -202,3 +210,5 @@
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
       - id: JetpackSecurityFilled
+      - id: BoxEncryptionKeySecurity
+      - id: HoloprojectorSecurity

@@ -46,6 +46,9 @@ signal-port-description-med-scanner-sender = Medical scanner signal sender
 signal-port-name-med-scanner-receiver = Medical scanner
 signal-port-description-med-scanner-receiver = Medical scanner signal receiver
 
+signal-port-name-hold-open = Hold
+signal-port-description-hold-open = Turns off automatic closing.
+
 signal-port-name-artifact-analyzer-sender = Console
 signal-port-description-artifact-analyzer-sender = Analysis console signal sender
 

@@ -44,6 +44,18 @@
 
 - type: entity
   parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelClown
+  name: clown satchel
+  description: For fast running from security.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/clown.rsi
+  - type: Storage
+    storageOpenSound:
+      collection: BikeHorn
+
+- type: entity
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelMedical
   name: medical satchel
   description: A sterile satchel used in medical departments.
@@ -59,7 +71,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/chemistry.rsi
-    
+
 - type: entity
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelVirology
@@ -68,6 +80,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/virology.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelGenetics
+  name: genetics satchel
+  description: A sterile satchel with geneticist colours.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/genetics.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel

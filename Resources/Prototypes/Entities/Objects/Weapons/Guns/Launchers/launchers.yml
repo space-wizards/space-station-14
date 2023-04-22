@@ -119,6 +119,38 @@
     zeroVisible: true
   - type: Appearance
 
+- type: entity
+  name: pirate cannon
+  parent: BaseWeaponLauncher
+  id: WeaponLauncherPirateCannon
+  description: Kaboom!
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
+      layers:
+        - state: icon
+          map: ["enum.GunVisualLayers.Base"]
+    - containers:
+        balistic-ammo: !type:Container
+          ents: []
+        ballistic-ammo: !type:Container
+          ents: []
+      type: ContainerContainer
+    - type: Clothing
+      sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
+    - type: Gun
+      fireRate: 1
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
+    - type: BallisticAmmoProvider
+      whitelist:
+        tags:
+          - Grenade
+      capacity: 1
+      proto: CannonBall
+      soundInsert:
+        path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+
 # Admeme
 - type: entity
   name: meteor launcher

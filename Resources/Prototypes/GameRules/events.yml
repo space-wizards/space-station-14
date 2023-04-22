@@ -177,7 +177,8 @@
     affectedChannels:
     - Common
     - Service
-    lightBreakChance: 0.05
+    lightBreakChancePerSecond: 0.0003
+    doorToggleChancePerSecond: 0.001
 
 - type: gameRule
   id: VentClog
@@ -220,4 +221,15 @@
     id: Zombie
     earliestStart: 50
     weight: 2.5
+    endAfter: 1
+
+- type: gameRule
+  id: LoneOpsSpawn
+  config:
+    !type:StationEventRuleConfiguration
+    id: LoneOpsSpawn
+    earliestStart: 55
+    weight: 5
+    minimumPlayers: 10
+    reoccurrenceDelay: 25
     endAfter: 1

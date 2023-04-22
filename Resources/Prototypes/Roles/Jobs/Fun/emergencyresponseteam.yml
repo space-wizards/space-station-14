@@ -21,7 +21,7 @@
     head: ClothingHeadHelmetHelmet
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
-    outerclothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
@@ -37,7 +37,7 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTLeader
-    suitStorage: OxygenTankFilled
+    suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityFilled
@@ -82,7 +82,7 @@
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesColorYellow
     outerClothing: ClothingOuterHardsuitERTEngineer
-    suitStorage: OxygenTankFilled
+    suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
@@ -127,7 +127,7 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTSecurity
-    suitStorage: OxygenTankFilled
+    suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
@@ -173,7 +173,7 @@
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTMedical
-    suitStorage: OxygenTankFilled
+    suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltMedicalFilled
@@ -217,7 +217,7 @@
     mask: ClothingMaskBreath
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTJanitor
-    suitStorage: OxygenTankFilled
+    suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltJanitorFilled
