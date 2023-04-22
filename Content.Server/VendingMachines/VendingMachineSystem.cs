@@ -458,8 +458,8 @@ namespace Content.Server.VendingMachines
 
         private void OnEmpPulse(EntityUid uid, VendingMachineComponent component, ref EmpPulseEvent args)
         {
-            args.Affected = !component.Broken;
-            args.Disabled = !component.Broken;
+            args.Affected = !component.Broken && this.IsPowered(uid, EntityManager);
+            args.Disabled = !component.Broken && this.IsPowered(uid, EntityManager);
         }
     }
 }
