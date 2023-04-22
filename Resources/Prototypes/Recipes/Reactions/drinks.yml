@@ -376,7 +376,7 @@
   reactants:
     Beer:
       amount: 10
-    FrostOil:
+    Frostoil:
       amount: 1
   products:
     IcedBeer: 10
@@ -528,10 +528,8 @@
       amount: 2
     JuiceLime:
       amount: 1
-    TripleSec:
-      amount: 1
   products:
-    Margarita: 4
+    Margarita: 3
 
 - type: reaction
   id: Martini
@@ -797,7 +795,7 @@
   reactants:
     Vodka:
       amount: 2
-    Tonic:
+    TonicWater:
       amount: 1
   products:
     VodkaTonic: 3
@@ -825,7 +823,7 @@
 - type: reaction
   id: WhiskeySoda
   reactants:
-    Soda:
+    SodaWater:
       amount: 1
     Whiskey:
       amount: 2
