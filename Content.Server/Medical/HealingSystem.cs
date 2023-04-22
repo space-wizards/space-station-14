@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Medical.Components;
@@ -83,13 +82,23 @@ public sealed class HealingSystem : EntitySystem
         _audio.PlayPvs(healing.HealingEndSound, uid, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
 
         // Logic to determine the whether or not to repeat the healing action
-        args.Repeat = false;
-        foreach (var _ in healing.Damage.DamageDict.Where(type => component.Damage.DamageDict[type.Key].Value > 0))
-        {
-            args.Repeat = true;
-            break;
-        }
+        args.Repeat = HasDamage(component, healing);
         args.Handled = true;
+    }
+
+    private bool HasDamage(DamageableComponent component, HealingComponent healing)
+    {
+        var damageableDict = component.Damage.DamageDict;
+        var healingDict = healing.Damage.DamageDict;
+        foreach (var type in healingDict)
+        {
+            if (damageableDict[type.Key].Value > 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void OnHealingUse(EntityUid uid, HealingComponent component, UseInHandEvent args)
@@ -115,7 +124,7 @@ public sealed class HealingSystem : EntitySystem
         if (_mobStateSystem.IsDead(target) || !TryComp<DamageableComponent>(target, out var targetDamage))
             return false;
 
-        if (targetDamage.TotalDamage == 0)
+        if (HasDamage(targetDamage, component) == false)
             return false;
 
         if (component.DamageContainerID is not null &&
