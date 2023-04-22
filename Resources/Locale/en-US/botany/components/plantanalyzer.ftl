@@ -18,5 +18,6 @@ plant-analyzer-mutation-ligneous = [color=green]Ligneous[/color]
 plant-analyzer-mutation-bioluminescent = [color=green]Bioluminescent[/color]
 plant-analyzer-mutation-canscream = [color=green]Mandragora[/color]
 
+plant-analyzer-mutation-test = test
 
 
