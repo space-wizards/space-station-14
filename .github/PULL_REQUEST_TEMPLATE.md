@@ -1,39 +1,36 @@
-<!-- Please read these guidelines before opening your PR: https://docs.spacestation14.io/en/getting-started/pr-guideline -->
-<!-- The text between the arrows are comments - they will not be visible on your PR. -->
+<!-- ЭТО ШАБЛОН ВАШЕГО PULL REQUEST. Текст между стрелками - это комментарии - они не будут видны в PR. -->
 
-## About the PR
-<!-- What does it change? What other things could this impact? -->
+## Описание PR
+<!-- Ниже опишите ваш Pull Request. Что он изменяет? На что еще это может повлиять? Постарайтесь описать все внесённые вами изменения! -->
 
+**Медиа**
+<!-- Если приемлемо, добавьте скриншоты для демонстрации вашего PR. Если ваш PR представляет собой визуальное изменение, добавьте
+скриншоты, иначе он может быть закрыт. -->
 
-**Media**
-<!-- 
-PRs which make ingame changes (adding clothing, items, new features, etc) are required to have media attached that showcase the changes.
-Small fixes/refactors are exempt.
-Any media may be used in SS14 progress reports, with clear credit given.
+**Проверки**
+<!-- Выполнение всех следующих действий, если это приемлемо для вида изменений сильно ускорит разбор вашего PR -->
+- [ ] PR полностью завершён и мне не нужна помощь чтобы его закончить.
+- [ ] Я внимательно просмотрел все свои изменения и багов в них не нашёл.
+- [ ] Я запускал локальный сервер со своими изменениями и всё протестировал.
+- [ ] Я добавил скриншот/видео демонстрации PR в игре, **или** этот PR этого не требует.
 
-If you're unsure whether your PR will require media, ask a maintainer.
-
-Check the box below to confirm that you have in fact seen this (put an X in the brackets, like [X]):
--->
-
-- [ ] I have added screenshots/videos to this PR showcasing its changes ingame, **or** this PR does not require an ingame showcase
-
-**Changelog**
+**Изменения**
 <!--
-Here you can fill out a changelog that will automatically be added to the game when your PR is merged.
+Здесь вы можете написать список изменений, который будет автоматически добавлен в игру, когда ваш PR будет принят.
 
-Only put changes that are visible and important to the player on the changelog.
+В журнал изменений следует помещать только то, что действительно важно игрокам.
 
-Don't consider the entry type suffix (e.g. add) to be "part" of the sentence:
-bad: - add: a new tool for engineers
-good: - add: added a new tool for engineers
+В списке изменений тип значка не является часть предложения, поэтому явно указывайте - Добавлен, Удалён, Изменён.
+плохо: - add: Новый инструмент для инженеров
+хорошо: - add: Добавлен новый инструмент для инженеров
 
-Putting a name after the :cl: symbol will change the name that shows in the changelog (otherwise it takes your GitHub username)
-Like so: :cl: PJB
+Вы можете указать своё имя после символа :cl: именно оно будет отображаться в журнале изменений (иначе будет использоваться ваше имя на GitHub)
+Например: :cl: Spider
+
 -->
 
 :cl:
-- add: Added fun!
-- remove: Removed fun!
-- tweak: Changed fun!
-- fix: Fixed fun!
+- add: Добавлено веселье!
+- remove: Убрано веселье!
+- tweak: Изменено веселье!
+- fix: Исправлено веселье!
