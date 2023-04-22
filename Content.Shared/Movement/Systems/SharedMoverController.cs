@@ -102,6 +102,7 @@ namespace Content.Shared.Movement.Systems
         protected void HandleMobMovement(
             EntityUid uid,
             InputMoverComponent mover,
+            EntityUid physicsUid,
             PhysicsComponent physicsComponent,
             TransformComponent xform,
             float frameTime,
@@ -230,7 +231,7 @@ namespace Content.Shared.Movement.Systems
 
             UsedMobMovement[uid] = true;
             // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-            var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
+            var weightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
             var (walkDir, sprintDir) = GetVelocityInput(mover);
             var touching = false;
 
@@ -336,10 +337,10 @@ namespace Content.Shared.Movement.Systems
             if (!weightless || touching)
                 Accelerate(ref velocity, in worldTotal, accel, frameTime);
 
-            PhysicsSystem.SetLinearVelocity(uid, velocity, body: physicsComponent);
+            PhysicsSystem.SetLinearVelocity(physicsUid, velocity, body: physicsComponent);
 
             // Ensures that players do not spiiiiiiin
-            PhysicsSystem.SetAngularVelocity(uid, 0, body: physicsComponent);
+            PhysicsSystem.SetAngularVelocity(physicsUid, 0, body: physicsComponent);
         }
 
         private void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref Vector2 velocity)
@@ -465,10 +466,9 @@ namespace Content.Shared.Movement.Systems
         private bool TryGetFootstepSound(TransformComponent xform, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
             sound = null;
-            MapGridComponent? grid;
 
             // Fallback to the map?
-            if (xform.GridUid == null)
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
                 if (TryComp<FootstepModifierComponent>(xform.MapUid, out var modifier))
                 {
@@ -479,8 +479,8 @@ namespace Content.Shared.Movement.Systems
                 return false;
             }
 
-            grid = _mapManager.GetGrid(xform.GridUid.Value);
             var position = grid.LocalToTile(xform.Coordinates);
+            var soundEv = new GetFootstepSoundEvent(xform.Owner);
 
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound
@@ -488,6 +488,14 @@ namespace Content.Shared.Movement.Systems
 
             while (anchored.MoveNext(out var maybeFootstep))
             {
+                RaiseLocalEvent(maybeFootstep.Value, ref soundEv);
+
+                if (soundEv.Sound != null)
+                {
+                    sound = soundEv.Sound;
+                    return true;
+                }
+
                 if (TryComp<FootstepModifierComponent>(maybeFootstep, out var footstep))
                 {
                     sound = footstep.Sound;

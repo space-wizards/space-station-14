@@ -1,5 +1,6 @@
 using System.Threading;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.DoAfter;
 using Content.Shared.NPC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -57,7 +58,7 @@ public sealed class NPCSteeringComponent : Component
     [DataField("lastStuckTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan LastStuckTime;
 
-    public const float StuckDistance = 0.5f;
+    public const float StuckDistance = 1f;
 
     /// <summary>
     /// Have we currently requested a path.
@@ -96,6 +97,12 @@ public sealed class NPCSteeringComponent : Component
     [ViewVariables] public SteeringStatus Status = SteeringStatus.Moving;
 
     [ViewVariables(VVAccess.ReadWrite)] public PathFlags Flags = PathFlags.None;
+
+    /// <summary>
+    /// If the NPC is using a do_after to clear an obstacle.
+    /// </summary>
+    [DataField("doAfterId")]
+    public DoAfterId? DoAfterId = null;
 }
 
 public enum SteeringStatus : byte

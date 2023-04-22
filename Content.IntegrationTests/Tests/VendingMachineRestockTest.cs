@@ -9,11 +9,12 @@ using Robust.Shared.Prototypes;
 using Content.Server.Storage.Components;
 using Content.Server.VendingMachines;
 using Content.Server.VendingMachines.Restock;
-using Content.Server.Wires;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.VendingMachines;
+using Content.Shared.Wires;
+using Content.Server.Wires;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -188,7 +189,7 @@ namespace Content.IntegrationTests.Tests
             VendingMachineComponent machineComponent;
             VendingMachineRestockComponent restockRightComponent;
             VendingMachineRestockComponent restockWrongComponent;
-            WiresComponent machineWires;
+            WiresPanelComponent machineWiresPanel;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
 
@@ -206,7 +207,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(entityManager.TryGetComponent(machine, out machineComponent!), $"Machine has no {nameof(VendingMachineComponent)}");
                 Assert.True(entityManager.TryGetComponent(packageRight, out restockRightComponent!), $"Correct package has no {nameof(VendingMachineRestockComponent)}");
                 Assert.True(entityManager.TryGetComponent(packageWrong, out restockWrongComponent!), $"Wrong package has no {nameof(VendingMachineRestockComponent)}");
-                Assert.True(entityManager.TryGetComponent(machine, out machineWires!), $"Machine has no {nameof(WiresComponent)}");
+                Assert.True(entityManager.TryGetComponent(machine, out machineWiresPanel!), $"Machine has no {nameof(WiresPanelComponent)}");
 
                 var systemRestock = entitySystemManager.GetEntitySystem<VendingMachineRestockSystem>();
                 var systemMachine = entitySystemManager.GetEntitySystem<VendingMachineSystem>();
@@ -215,8 +216,9 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(systemRestock.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.False, "Right package is able to restock without opened access panel");
                 Assert.That(systemRestock.TryAccessMachine(packageWrong, restockWrongComponent, machineComponent, user, machine), Is.False, "Wrong package is able to restock without opened access panel");
 
+                var systemWires = entitySystemManager.GetEntitySystem<WiresSystem>();
                 // Open the panel.
-                machineWires.IsPanelOpen = true;
+                systemWires.TogglePanel(machine, machineWiresPanel, true);
 
                 // Test that the right package works for the right machine.
                 Assert.That(systemRestock.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Correct package is unable to restock with access panel opened");

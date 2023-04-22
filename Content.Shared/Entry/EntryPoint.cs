@@ -1,3 +1,4 @@
+using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Humanoid.Markings;
@@ -8,6 +9,7 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Entry
@@ -39,15 +41,11 @@ namespace Content.Shared.Entry
             InitTileDefinitions();
             IoCManager.Resolve<MarkingManager>().Initialize();
 
-            var configMan = IoCManager.Resolve<IConfigurationManager>();
 #if DEBUG
+            var configMan = IoCManager.Resolve<IConfigurationManager>();
             configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
             configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
             configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
-
-            // fake lag rand leads to messages arriving out of order. Sadly, networking is not robust enough, so for now
-            // just leaving this disabled.
-            // configMan.OverrideDefault(CVars.NetFakeLagRand, 0.01f);
 #endif
         }
 

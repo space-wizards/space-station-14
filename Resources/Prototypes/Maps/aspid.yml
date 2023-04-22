@@ -2,7 +2,7 @@
   id: Aspid
   mapName: 'NCS Aspid'
   mapPath: /Maps/aspid.yml
-  minPlayers: 0
+  minPlayers: 25
   maxPlayers: 70
   stations:
     Aspid:

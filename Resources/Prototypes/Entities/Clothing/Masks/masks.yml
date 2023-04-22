@@ -103,14 +103,6 @@
         Heat: 0.95
 
 - type: entity
-  parent: ClothingMaskGas
-  id: ClothingMaskGasVoiceMasker
-  name: gas mask
-  suffix: Voice Mask
-  components:
-    - type: VoiceMasker
-
-- type: entity
   parent: ClothingMaskPullableBase
   id: ClothingMaskBreathMedical
   name: medical mask
@@ -127,6 +119,7 @@
   - type: Tag
     tags:
     - PetWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -145,7 +138,11 @@
   - type: Tag
     tags:
     - PetWearable
-  - type: Recyclable
+    - WhitelistChameleon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 100
 
 - type: entity
   parent: ClothingMaskBase
@@ -244,6 +241,17 @@
     sprite: Clothing/Mask/cluwne.rsi
   - type: Clothing
     sprite: Clothing/Mask/cluwne.rsi
-  - type: Unremoveable 
+  - type: Unremoveable
   - type: AddAccentClothing
     accent: StutteringAccent
+
+- type: entity
+  parent: ClothingMaskGasExplorer
+  id: ClothingMaskGasSwat
+  name: swat gas mask
+  description: A elite issue Security gas mask.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/swat.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/swat.rsi

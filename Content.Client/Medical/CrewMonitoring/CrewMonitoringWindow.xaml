@@ -1,23 +1,33 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
-            Title="{Loc 'crew-monitoring-user-interface-title'}"
-            SetSize="775 400">
-    <ScrollContainer HorizontalExpand="True"
-                     VerticalExpand="True">
-        <GridContainer Name="SensorsTable"
-                       HorizontalExpand="True"
-                       VerticalExpand="True"
-                       HSeparationOverride="5"
-                       VSeparationOverride="20"
-                       Columns="3">
-            <!-- Table header -->
-            <Label Text="{Loc 'crew-monitoring-user-interface-name'}"
-                   StyleClasses="LabelHeading"/>
-            <Label Text="{Loc 'crew-monitoring-user-interface-status'}"
-                   StyleClasses="LabelHeading"/>
-            <Label Text="{Loc 'crew-monitoring-user-interface-location'}"
-                   StyleClasses="LabelHeading"/>
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               Title="{Loc 'crew-monitoring-user-interface-title'}"
+               SetSize="1130 700"
+               MinSize="1130 700">
+    <BoxContainer Orientation="Horizontal">
+        <ScrollContainer HorizontalExpand="True"
+                         VerticalExpand="True"
+                         Margin="0, 0, 8, 0">
+            <GridContainer Name="SensorsTable"
+                           HorizontalExpand="True"
+                           VerticalExpand="True"
+                           HSeparationOverride="5"
+                           VSeparationOverride="20"
+                           Columns="4">
+                <!-- Table header -->
+                <Label Text="{Loc 'crew-monitoring-user-interface-name'}"
+                       StyleClasses="LabelHeading"/>
+                <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
+                       StyleClasses="LabelHeading"/>
+                <Label Text="{Loc 'crew-monitoring-user-interface-status'}"
+                       StyleClasses="LabelHeading"/>
+                <Label Text="{Loc 'crew-monitoring-user-interface-location'}"
+                       StyleClasses="LabelHeading"/>
 
-            <!-- Table rows are filled by code -->
-        </GridContainer>
-    </ScrollContainer>
-</DefaultWindow>
+                <!-- Table rows are filled by code -->
+            </GridContainer>
+        </ScrollContainer>
+        <ui:NavMapControl Name="NavMap"
+                          Margin="5 5"/>
+    </BoxContainer>
+</controls:FancyWindow>

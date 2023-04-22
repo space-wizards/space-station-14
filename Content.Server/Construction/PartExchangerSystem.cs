@@ -1,22 +1,22 @@
 using System.Linq;
 using Content.Server.Construction.Components;
-using Content.Server.DoAfter;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Wires;
 using Content.Shared.DoAfter;
 using Content.Shared.Construction.Components;
+using Content.Shared.Exchanger;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
+using Content.Shared.Wires;
 
 namespace Content.Server.Construction;
 
 public sealed class PartExchangerSystem : EntitySystem
 {
     [Dependency] private readonly ConstructionSystem _construction = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -26,18 +26,14 @@ public sealed class PartExchangerSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<PartExchangerComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<PartExchangerComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<PartExchangerComponent, ExchangerDoAfterEvent>(OnDoAfter);
     }
 
     private void OnDoAfter(EntityUid uid, PartExchangerComponent component, DoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || args.Args.Target == null)
-        {
-            component.AudioStream?.Stop();
-            return;
-        }
-
         component.AudioStream?.Stop();
+        if (args.Cancelled || args.Handled || args.Args.Target == null)
+            return;
 
         if (!TryComp<MachineComponent>(args.Args.Target.Value, out var machine))
             return;
@@ -87,7 +83,7 @@ public sealed class PartExchangerSystem : EntitySystem
             storage.Storage.Insert(unused.Owner);
             _storage.Insert(uid, unused.Owner, null, false);
         }
-        _construction.RefreshParts(machine);
+        _construction.RefreshParts(args.Args.Target.Value, machine);
 
         args.Handled = true;
     }
@@ -103,7 +99,7 @@ public sealed class PartExchangerSystem : EntitySystem
         if (!HasComp<MachineComponent>(args.Target))
             return;
 
-        if (TryComp<WiresComponent>(args.Target, out var wires) && !wires.IsPanelOpen)
+        if (TryComp<WiresPanelComponent>(args.Target, out var panel) && !panel.Open)
         {
             _popup.PopupEntity(Loc.GetString("construction-step-condition-wire-panel-open"),
                 args.Target.Value);
@@ -112,11 +108,11 @@ public sealed class PartExchangerSystem : EntitySystem
 
         component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid);
 
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ExchangeDuration, target:args.Target, used:args.Used)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
-            BreakOnStun = true,
             BreakOnUserMove = true
         });
     }
+
 }
