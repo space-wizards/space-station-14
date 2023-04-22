@@ -14,6 +14,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Stacks;
+using Content.Server.Popups;
 using Robust.Shared.Random;
 
 namespace Content.Server.Medical;
@@ -30,6 +31,7 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -83,6 +85,8 @@ public sealed class HealingSystem : EntitySystem
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = HasDamage(component, healing);
+        if (!args.Repeat)
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using"), uid);
         args.Handled = true;
     }
 
@@ -125,7 +129,10 @@ public sealed class HealingSystem : EntitySystem
             return false;
 
         if (HasDamage(targetDamage, component) == false)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use"), uid);
             return false;
+        }
 
         if (component.DamageContainerID is not null &&
             !component.DamageContainerID.Equals(targetDamage.DamageContainerID))
