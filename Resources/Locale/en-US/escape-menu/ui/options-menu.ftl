@@ -92,6 +92,9 @@ ui-options-function-walk = Walk
 ui-options-function-camera-rotate-left = Rotate left
 ui-options-function-camera-rotate-right = Rotate right
 ui-options-function-camera-reset = Reset
+ui-options-function-zoom-in = Zoom in
+ui-options-function-zoom-out = Zoom out
+ui-options-function-reset-zoom = Reset zoom
 
 ui-options-function-use = Use
 ui-options-function-use-secondary = Use secondary
@@ -137,6 +140,8 @@ ui-options-function-open-admin-menu = Open admin menu
 ui-options-function-open-guidebook = Open guidebook
 ui-options-function-window-close-all = Close all windows
 ui-options-function-window-close-recent = Close recent window
+ui-options-function-show-escape-menu = Toggle game menu
+ui-options-function-escape-context = Close recent window or toggle game menu
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)

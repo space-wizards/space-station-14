@@ -93,6 +93,9 @@ uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instan
 uplink-voice-mask-name = Voice Mask
 uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever you can think of. Also utilizes cutting-edge chameleon technology.
 
+uplink-radio-jammer-name = Radio Jammer
+uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication when activated.
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!
@@ -154,6 +157,9 @@ uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and mag
 uplink-banana-peel-explosive-name = Explosive Banana Peel
 uplink-banana-peel-explosive-desc = They will burst into laughter when they slip on it!
 
+uplink-hot-potato-name = Hot Potato
+uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only passed to someone else!
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
@@ -214,7 +220,7 @@ uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
 uplink-revolver-cap-gun-name = Cap Gun
 uplink-revolver-cap-gun-desc = Looks almost like the real thing! Ages 8 and up.
 
-uplink-syndicate-stamp-name = Syndicate Rubber Btamp
+uplink-syndicate-stamp-name = Syndicate Rubber Stamp
 uplink-syndicate-stamp-desc = A rubber stamp for stamping important documents.
 
 uplink-cat-ears-name = Cat Ears

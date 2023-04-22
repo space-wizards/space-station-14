@@ -221,6 +221,7 @@
       - MopItem
       - AdvMopItem
       - SprayBottle
+      - MegaSprayBottle
       - FireExtinguisher
       - KitchenKnife
       - ButchCleaver
@@ -236,6 +237,7 @@
       - PowerCellHigh
       - SynthesizerInstrument
       - RPED
+      - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
 
@@ -298,6 +300,7 @@
       - ReagentGrinderMachineCircuitboard
       - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
+      - FatExtractorMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
@@ -461,13 +464,11 @@
     idleState: icon
     runningState: icon
     machinePartPrintSpeed: Laser
-    dynamicRecipes:
+    staticRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
-      - ClothingHandsGlovesNitrile
       - ClothingMaskSterile
       - DiseaseSwab
-      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -491,6 +492,9 @@
       - MedkitAdvanced
       - MedkitRadiation
       - MedkitCombat
+    dynamicRecipes:
+      - HandheldCrewMonitor
+      - ClothingHandsGlovesNitrile
   - type: Machine
     board: MedicalTechFabCircuitboard
 
@@ -544,6 +548,8 @@
       - ClothingUniformJumpskirtHoP
       - ClothingUniformJumpsuitHoS
       - ClothingUniformJumpskirtHoS
+      - ClothingUniformJumpsuitHoSAlt
+      - ClothingUniformJumpskirtHoSAlt
       - ClothingUniformJumpsuitHydroponics
       - ClothingUniformJumpskirtHydroponics
       - ClothingUniformJumpsuitJanitor
@@ -568,6 +574,8 @@
       - ClothingUniformJumpskirtScientist
       - ClothingUniformJumpsuitSec
       - ClothingUniformJumpskirtSec
+      - ClothingUniformJumpsuitBrigmedic
+      - ClothingUniformJumpskirtBrigmedic
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
       - ClothingOuterWinterCap
@@ -586,6 +594,23 @@
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime
+      - ClothingOuterWinterCoat
+      - ClothingOuterWinterJani
+      - ClothingOuterWinterBar
+      - ClothingOuterWinterChef
+      - ClothingOuterWinterHydro
+      - ClothingOuterWinterAtmos
+      - ClothingOuterWinterEngi
+      - ClothingOuterWinterCargo
+      - ClothingOuterWinterMiner
+      - ClothingOuterWinterMed
+      - ClothingOuterWinterPara
+      - ClothingOuterWinterChem
+      - ClothingOuterWinterGen
+      - ClothingOuterWinterViro
+      - ClothingOuterWinterSci
+      - ClothingOuterWinterRobo
+      - ClothingOuterWinterSec
   - type: MaterialStorage
     whitelist:
       tags:
