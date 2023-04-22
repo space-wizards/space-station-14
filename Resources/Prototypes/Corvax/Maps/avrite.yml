@@ -13,7 +13,7 @@
       overflowJobs:
         - Passenger
       availableJobs:
-        CargoTechnician: [ 3, 3 ]
+        CargoTechnician: [ 4, 4 ]
         Passenger: [ -1, -1 ]
         Bartender: [ 1, 1 ]
         Botanist: [ 3, 3 ]
@@ -34,12 +34,12 @@
         ResearchDirector: [ 1, 1 ]
         Scientist: [ 4, 4 ]
         HeadOfSecurity: [ 1, 1 ]
-        SecurityOfficer: [ 5, 5 ]
+        SecurityOfficer: [ 6, 6 ]
         Chaplain: [ 1, 1 ]
         Warden: [ 1, 1 ]
         Librarian: [ 1, 1 ]
         Quartermaster: [ 1, 1 ]
-        SalvageSpecialist: [ 3, 3 ]
+        SalvageSpecialist: [ 4, 4 ]
         Musician: [ 1, 1 ]
         AtmosphericTechnician: [ 3, 3 ]
         TechnicalAssistant: [ 3, 3 ]
@@ -49,3 +49,5 @@
         SecurityCadet: [ 6, 6 ]
         Psychologist: [ 1, 1 ]
         Detective: [ 1, 1 ]
+        Brigmedic: [ 1, 1 ]
+        Boxer: [ 2, 2]
