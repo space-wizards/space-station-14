@@ -23,7 +23,6 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Kitchen;
-using Content.Shared.Module;
 
 namespace Content.Server.IoC
 {

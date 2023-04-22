@@ -17,33 +17,28 @@ public sealed class ReflectComponent : Component
     public bool Enabled = true;
 
     /// <summary>
-    /// Reflect chance for hitscan weapons (lasers) and projectiles with heat damage (disabler)
+    /// Probability for a projectile to be reflected.
     /// </summary>
-    [DataField("energeticChance"), ViewVariables(VVAccess.ReadWrite)]
-    public float EnergeticChance;
-
-    [DataField("kineticChance"), ViewVariables(VVAccess.ReadWrite)]
-    public float KineticChance;
+    [DataField("reflectProb"), ViewVariables(VVAccess.ReadWrite)]
+    public float ReflectProb;
 
     [DataField("spread"), ViewVariables(VVAccess.ReadWrite)]
     public Angle Spread = Angle.FromDegrees(5);
 
-    [DataField("onReflect")]
-    public SoundSpecifier? OnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
+    [DataField("soundOnReflect")]
+    public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
 }
 
 [Serializable, NetSerializable]
 public sealed class ReflectComponentState : ComponentState
 {
     public bool Enabled;
-    public float EnergeticChance;
-    public float KineticChance;
+    public float ReflectProb;
     public Angle Spread;
-    public ReflectComponentState(bool enabled, float energeticChance, float kineticChance, Angle spread)
+    public ReflectComponentState(bool enabled, float reflectProb, Angle spread)
     {
         Enabled = enabled;
-        EnergeticChance = energeticChance;
-        KineticChance = kineticChance;
+        ReflectProb = reflectProb;
         Spread = spread;
     }
 }

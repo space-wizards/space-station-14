@@ -1,5 +1,5 @@
-using Content.Server.Medical.Components;
 using Content.Server.Disease;
+using Content.Server.Medical.Components;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -8,7 +8,6 @@ using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
-using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
 namespace Content.Server.Medical
 {

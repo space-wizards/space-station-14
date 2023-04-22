@@ -7,7 +7,7 @@
   components:
   - type: Sprite
     netsync: false
-    snapCardinals: true
+    noRot: true
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
