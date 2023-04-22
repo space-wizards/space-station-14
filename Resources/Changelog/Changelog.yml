@@ -1,11 +1,4 @@
 Entries:
-- author: 778b
-  changes:
-  - {message: Added surveillance camera to Cluster's anomaly lab!, type: Add}
-  - {message: Added warp point to Cluster's anomaly lab!, type: Add}
-  - {message: Added spawn point of research assistant to Cluster!, type: Add}
-  id: 2989
-  time: '2023-02-05T10:22:14.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Added various encryption keys to the PTech., type: Tweak}
@@ -2886,3 +2879,8 @@ Entries:
       too., type: Fix}
   id: 3488
   time: '2023-04-22T10:42:37.0000000+00:00'
+- author: jick
+  changes:
+  - {message: Fixed sleepwalking after being stunned, type: Fix}
+  id: 3489
+  time: '2023-04-22T11:06:45.0000000+00:00'
