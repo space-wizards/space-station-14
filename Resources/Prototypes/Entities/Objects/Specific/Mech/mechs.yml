@@ -99,9 +99,7 @@
   parent: MechRipley
   suffix: Battery
   components:
-  - type: Mech
-    baseState: ripley
-    openState: ripley-open
-    brokenState: ripley-broken
-    startingBattery: PowerCellHigh
-    mechToPilotDamageMultiplier: 0.75
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
