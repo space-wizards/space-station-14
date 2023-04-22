@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Added various encryption keys to the PTech., type: Tweak}
-  id: 2990
-  time: '2023-02-05T10:29:39.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Voice Masks now use their set names on radio, instead of your ID.',
@@ -2884,3 +2879,9 @@ Entries:
   - {message: Fixed sleepwalking after being stunned, type: Fix}
   id: 3489
   time: '2023-04-22T11:06:45.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Boxing equipment crates, empty boxes crates, and medical body bag crates
+      now can be ordered from cargo', type: Add}
+  id: 3490
+  time: '2023-04-22T11:13:05.0000000+00:00'
