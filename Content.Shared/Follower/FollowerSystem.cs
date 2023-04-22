@@ -40,15 +40,14 @@ public sealed class FollowerSystem : EntitySystem
 
         if (HasComp<SharedGhostComponent>(ev.User))
         {
-            var verb = new AlternativeVerb
+            var verb = new AlternativeVerb()
             {
-                StartFollowingEntity(ev.User, ev.Target);
-            }),
-            Impact = LogImpact.Low,
-            Text = Loc.GetString("verb-follow-text"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
-        };
-
+                Priority = 10,
+                Act = () => StartFollowingEntity(ev.User, ev.Target),
+                Impact = LogImpact.Low,
+                Text = Loc.GetString("verb-follow-text"),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"))
+            };
             ev.Verbs.Add(verb);
         }
 
@@ -60,13 +59,10 @@ public sealed class FollowerSystem : EntitySystem
             var verb = new AlternativeVerb
             {
                 Priority = 10,
-                Act = (() =>
-                {
-                    StartFollowingEntity(ev.Target, ev.User);
-                }),
+                Act = () => StartFollowingEntity(ev.Target, ev.User),
                 Impact = LogImpact.Low,
                 Text = Loc.GetString("verb-follow-me-text"),
-                IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
             };
 
             ev.Verbs.Add(verb);
@@ -85,7 +81,7 @@ public sealed class FollowerSystem : EntitySystem
 
     private void OnGotEquippedHand(EntityUid uid, FollowerComponent component, GotEquippedHandEvent args)
     {
-        StopFollowingEntity(uid, component.Following, deparent:false);
+        StopFollowingEntity(uid, component.Following);
     }
 
     // Since we parent our observer to the followed entity, we need to detach
@@ -118,10 +114,13 @@ public sealed class FollowerSystem : EntitySystem
         _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
 
         var xform = Transform(follower);
-        _containerSystem.AttachParentToContainerOrGrid(xform);  // In case it is an item in an inventory
-        _transform.SetParent(follower, xform, entity);
-        xform.LocalPosition = Vector2.Zero;
-        xform.LocalRotation = Angle.Zero;
+        _containerSystem.AttachParentToContainerOrGrid(xform);
+
+        // If we didn't get to parent's container.
+        if (xform.ParentUid != Transform(xform.ParentUid).ParentUid)
+        {
+            _transform.SetCoordinates(follower, xform, new EntityCoordinates(entity, Vector2.Zero), rotation: Angle.Zero);
+        }
 
         EnsureComp<OrbitVisualsComponent>(follower);
 
@@ -136,8 +135,7 @@ public sealed class FollowerSystem : EntitySystem
     ///     Forces an entity to stop following another entity, if it is doing so.
     /// </summary>
     /// <param name="deparent">Should the entity deparent itself</param>
-    public void StopFollowingEntity(EntityUid uid, EntityUid target,
-        FollowedComponent? followed=null, bool deparent = true)
+    public void StopFollowingEntity(EntityUid uid, EntityUid target, FollowedComponent? followed = null)
     {
         if (!Resolve(target, ref followed, false))
             return;
@@ -148,26 +146,25 @@ public sealed class FollowerSystem : EntitySystem
         followed.Following.Remove(uid);
         if (followed.Following.Count == 0)
             RemComp<FollowedComponent>(target);
+
         RemComp<FollowerComponent>(uid);
-
-        if (deparent)
-        {
-            var xform = Transform(uid);
-            xform.AttachToGridOrMap();
-            if (xform.MapID == MapId.Nullspace)
-            {
-                Del(uid);
-                return;
-            }
-        }
-
         RemComp<OrbitVisualsComponent>(uid);
-
         var uidEv = new StoppedFollowingEntityEvent(target, uid);
         var targetEv = new EntityStoppedFollowingEvent(target, uid);
 
-        RaiseLocalEvent(uid, uidEv, true);
-        RaiseLocalEvent(target, targetEv, false);
+        RaiseLocalEvent(uid, uidEv);
+        RaiseLocalEvent(target, targetEv);
+
+        if (!Deleted(uid))
+        {
+            var xform = Transform(uid);
+            _transform.AttachToGridOrMap(uid, xform);
+            if (xform.MapUid == null)
+            {
+                QueueDel(uid);
+                return;
+            }
+        }
     }
 
     /// <summary>
