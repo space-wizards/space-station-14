@@ -3,8 +3,6 @@ using Content.Shared.Examine;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
-using Content.Shared.PowerCell.Components;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Holosign
 {
