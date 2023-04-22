@@ -16,6 +16,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
 namespace Content.Server.Mech.Systems;
@@ -41,6 +42,7 @@ public sealed class MechSystem : SharedMechSystem
         _sawmill = Logger.GetSawmill("mech");
 
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
@@ -69,6 +71,7 @@ public sealed class MechSystem : SharedMechSystem
         if (component.Broken || component.Integrity <= 0 || component.Energy <= 0)
             args.Cancel();
     }
+
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
@@ -91,6 +94,18 @@ public sealed class MechSystem : SharedMechSystem
 
             _doAfter.TryStartDoAfter(doAfterEventArgs);
         }
+    }
+
+    private void OnInsertBattery(EntityUid uid, MechComponent component, EntInsertedIntoContainerMessage args)
+    {
+        if (!TryComp<BatteryComponent>(args.Entity, out var battery))
+            return;
+
+        component.Energy = battery.CurrentCharge;
+        component.MaxEnergy = battery.MaxCharge;
+
+        Dirty(component);
+        _actionBlocker.UpdateCanMove(uid);
     }
 
     private void OnRemoveBattery(EntityUid uid, MechComponent component, RemoveBatteryEvent args)
