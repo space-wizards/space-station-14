@@ -58,7 +58,6 @@ public sealed class HealingSystem : EntitySystem
         // Heal some bloodloss damage.
         if (healing.BloodlossModifier != 0)
         {
-            /*var isBleeding = uid.EnsureComponent<BloodstreamComponent>().BleedAmount > 0;*/
             if (!TryComp<BloodstreamComponent>(uid, out var bloodstream))
                 return;
             var isBleeding = bloodstream.BleedAmount > 0;
