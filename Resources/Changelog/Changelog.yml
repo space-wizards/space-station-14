@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: APEs are now much lighter and easier to move around., type: Tweak}
-  id: 3009
-  time: '2023-02-08T02:10:27.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix NPC prototype reloading for realsies., type: Fix}
@@ -2891,3 +2886,8 @@ Entries:
     type: Tweak}
   id: 3508
   time: '2023-04-23T08:20:04.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: APCs now show correct charge and state, type: Fix}
+  id: 3509
+  time: '2023-04-23T08:22:09.0000000+00:00'
