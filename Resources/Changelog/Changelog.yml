@@ -1,9 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added the NCS Aspid, type: Add}
-  id: 3006
-  time: '2023-02-07T14:22:45.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix NPCs breaking on prototype reloads., type: Fix}
@@ -2888,3 +2883,8 @@ Entries:
       as you approach anomalies. Happy hunting!', type: Add}
   id: 3505
   time: '2023-04-23T05:39:33.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: Adds 7 new animal masks., type: Add}
+  id: 3506
+  time: '2023-04-23T06:56:23.0000000+00:00'
