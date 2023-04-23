@@ -1,14 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: The anomaly generator now has an animation while it creates anomalies.,
-    type: Add}
-  - {message: The anomaly generator now broadcasts a message on the science radio
-      alerting scientists that a new anomaly has been made., type: Add}
-  id: 3004
-  time: '2023-02-06T19:54:00.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Bluespace anomalies no longer... crash everything., type: Fix}
   id: 3005
   time: '2023-02-06T21:11:20.0000000+00:00'
@@ -2889,3 +2881,9 @@ Entries:
   - {message: Fix railing / windoor bounds., type: Fix}
   id: 3503
   time: '2023-04-23T05:23:03.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Eating and drinking interactions can once again be cancelled by using
+      the item a second time., type: Tweak}
+  id: 3504
+  time: '2023-04-23T05:35:58.0000000+00:00'
