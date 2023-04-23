@@ -40,7 +40,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
                 Solution generated;
                 if (amount == regen.Generated.Volume)
                 {
-                    generated = regen.Regenerated;
+                    generated = regen.Generated;
                 }
                 else
                 {
