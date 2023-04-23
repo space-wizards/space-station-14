@@ -7,7 +7,7 @@ namespace Content.Server.Pinpointer;
 /// This is used for an item that beeps based on
 /// proximity to a specified component.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ProximityBeeperSystem))]
 public sealed class ProximityBeeperComponent : Component
 {
     /// <summary>
