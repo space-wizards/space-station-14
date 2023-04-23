@@ -1,6 +1,3 @@
-# Bounds Guide
-#1D2L3U4R
-
 - type: entity
   name: bat
   parent: SimpleMobBase
@@ -715,14 +712,6 @@
   - type: Body
     prototype: Primate
     requiredLegs: 1 # TODO: More than 1 leg
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: monkey
-      Critical:
-        Base: dead
-      Dead:
-        Base: dead
   - type: Appearance
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
