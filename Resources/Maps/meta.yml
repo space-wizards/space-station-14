@@ -48891,6 +48891,91 @@ entities:
   - pos: -16.5,29.5
     parent: 0
     type: Transform
+- uid: 5344
+  type: BrigTimer
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -5.5,29.5
+    parent: 0
+    type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 8057
+      Timer:
+      - port: AutoClose
+        uid: 8057
+      - port: Open
+        uid: 8057
+    type: SignalTransmitter
+- uid: 5345
+  type: SignalButton
+  components:
+  - pos: -9.5,32.5
+    parent: 0
+    type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 7745
+      - port: Toggle
+        uid: 6259
+      - port: Toggle
+        uid: 7746
+      - port: Toggle
+        uid: 6260
+      - port: Toggle
+        uid: 6261
+      - port: Toggle
+        uid: 7749
+    type: SignalTransmitter
+- uid: 5346
+  type: CrateNPCHamlet
+  components:
+  - pos: -0.5,3.5
+    parent: 0
+    type: Transform
+- uid: 5347
+  type: BrigTimer
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -8.5,29.5
+    parent: 0
+    type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 8058
+      Timer:
+      - port: AutoClose
+        uid: 8058
+      - port: Open
+        uid: 8058
+    type: SignalTransmitter
+- uid: 5348
+  type: BrigTimer
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -11.5,29.5
+    parent: 0
+    type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 8059
+      Timer:
+      - port: AutoClose
+        uid: 8059
+      - port: Open
+        uid: 8059
+    type: SignalTransmitter
+- uid: 5349
+  type: IntercomSecurity
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -13.5,36.5
+    parent: 0
+    type: Transform
 - uid: 5355
   type: AirlockExternalGlass
   components:
@@ -55452,26 +55537,12 @@ entities:
   - pos: -3.5,26.5
     parent: 0
     type: Transform
-  - inputs:
-      Open: []
-      Close: []
-      Toggle:
-      - port: Pressed
-        uid: 7750
-    type: SignalReceiver
 - uid: 6251
   type: ShuttersNormalOpen
   components:
   - pos: -1.5,26.5
     parent: 0
     type: Transform
-  - inputs:
-      Open: []
-      Close: []
-      Toggle:
-      - port: Pressed
-        uid: 7750
-    type: SignalReceiver
 - uid: 6252
   type: Grille
   components:
@@ -55525,7 +55596,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 7750
+        uid: 5345
     type: SignalReceiver
 - uid: 6260
   type: ShuttersNormalOpen
@@ -55538,7 +55609,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 7750
+        uid: 5345
     type: SignalReceiver
 - uid: 6261
   type: ShuttersNormalOpen
@@ -55551,7 +55622,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 7750
+        uid: 5345
     type: SignalReceiver
 - uid: 6262
   type: CableMV
@@ -67266,7 +67337,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 7750
+        uid: 5345
     type: SignalReceiver
 - uid: 7746
   type: ShuttersNormalOpen
@@ -67279,7 +67350,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 7750
+        uid: 5345
     type: SignalReceiver
 - uid: 7747
   type: Grille
@@ -67304,33 +67375,8 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 7750
+        uid: 5345
     type: SignalReceiver
-- uid: 7750
-  type: SignalButton
-  components:
-  - pos: -5.5,29.5
-    parent: 0
-    type: Transform
-  - outputs:
-      Pressed:
-      - port: Toggle
-        uid: 6250
-      - port: Toggle
-        uid: 6251
-      - port: Toggle
-        uid: 7749
-      - port: Toggle
-        uid: 6261
-      - port: Toggle
-        uid: 6260
-      - port: Toggle
-        uid: 7746
-      - port: Toggle
-        uid: 6259
-      - port: Toggle
-        uid: 7745
-    type: SignalTransmitter
 - uid: 7751
   type: Grille
   components:
@@ -69363,18 +69409,54 @@ entities:
   - pos: -6.5,29.5
     parent: 0
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 5344
+      Close:
+      - port: Start
+        uid: 5344
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 5344
+    type: SignalReceiver
 - uid: 8058
   type: WindoorSecurityLocked
   components:
   - pos: -9.5,29.5
     parent: 0
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 5347
+      Close:
+      - port: Start
+        uid: 5347
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 5347
+    type: SignalReceiver
 - uid: 8059
   type: WindoorSecurityLocked
   components:
   - pos: -12.5,29.5
     parent: 0
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 5348
+      Close:
+      - port: Start
+        uid: 5348
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 5348
+    type: SignalReceiver
 - uid: 8060
   type: AirlockSecurityGlassLocked
   components:
@@ -79541,6 +79623,62 @@ entities:
   - pos: -40.5,38.5
     parent: 0
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      mask: []
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: conveyor
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.15,-0.15
+        - 0.15,0.15
+        - -0.15,0.15
+        - -0.15,-0.15
+      mask: []
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: brrt
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      layer:
+      - BulletImpassable
+      - Opaque
+      density: 1
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: collision
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -154407,7 +154545,7 @@ entities:
   - pos: 9.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16693.814
     state: Closing
     type: Door
   - inputs:
@@ -154423,7 +154561,7 @@ entities:
   - pos: 10.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16693.814
     state: Closing
     type: Door
   - inputs:
@@ -154439,7 +154577,7 @@ entities:
   - pos: 11.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16693.814
     state: Closing
     type: Door
   - inputs:
@@ -154455,7 +154593,7 @@ entities:
   - pos: 13.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16693.814
     state: Closing
     type: Door
   - inputs:
@@ -154471,7 +154609,7 @@ entities:
   - pos: 14.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16693.814
     state: Closing
     type: Door
   - inputs:
@@ -154487,7 +154625,7 @@ entities:
   - pos: 15.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16613.098
+  - SecondsUntilStateChange: -16693.814
     state: Closing
     type: Door
   - inputs:
@@ -195964,12 +196102,6 @@ entities:
   type: IntercomScience
   components:
   - pos: 8.5,-22.5
-    parent: 0
-    type: Transform
-- uid: 24798
-  type: IntercomSecurity
-  components:
-  - pos: -9.5,32.5
     parent: 0
     type: Transform
 - uid: 24799

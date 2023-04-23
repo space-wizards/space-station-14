@@ -96,9 +96,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         var puddleQuery = GetEntityQuery<PuddleComponent>();
 
+        // For overflows, we never go to a fully evaporative tile just to avoid continuously having to mop it.
+
         // First we overflow to neighbors with overflow capacity
-        // Then we go to free tiles
-        // Then we go to anything else.
         if (args.Neighbors.Count > 0)
         {
             _random.Shuffle(args.Neighbors);
@@ -107,7 +107,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             foreach (var neighbor in args.Neighbors)
             {
                 if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
-                    !_solutionContainerSystem.TryGetSolution(neighbor, puddle.SolutionName, out var neighborSolution))
+                    !_solutionContainerSystem.TryGetSolution(neighbor, puddle.SolutionName, out var neighborSolution) ||
+                    CanFullyEvaporate(neighborSolution))
                 {
                     continue;
                 }
@@ -136,10 +137,20 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             }
         }
 
+        // Then we go to free tiles -> only overflow if we can go up to capacity at least.
         if (args.NeighborFreeTiles.Count > 0 && args.Updates > 0)
         {
+            // We'll only spill if we have the minimum threshold per tile.
+            var spillCount = (int) Math.Floor(overflow.Volume.Float() / component.OverflowVolume.Float());
+
+            if (spillCount == 0)
+            {
+                return;
+            }
+
             _random.Shuffle(args.NeighborFreeTiles);
-            var spillAmount = overflow.Volume / args.NeighborFreeTiles.Count;
+            spillCount = Math.Min(args.NeighborFreeTiles.Count, spillCount);
+            var spillAmount = overflow.Volume / spillCount;
 
             foreach (var tile in args.NeighborFreeTiles)
             {
@@ -155,6 +166,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return;
         }
 
+        // Then we go to anything else.
         if (overflow.Volume > FixedPoint2.Zero && args.Neighbors.Count > 0 && args.Updates > 0)
         {
             var spillPerNeighbor = overflow.Volume / args.Neighbors.Count;
@@ -165,6 +177,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 // This is to avoid diluting solutions too much.
                 if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
                     !_solutionContainerSystem.TryGetSolution(neighbor, puddle.SolutionName, out var neighborSolution) ||
+                    CanFullyEvaporate(neighborSolution) ||
                     neighborSolution.Volume >= puddle.OverflowVolume)
                 {
                     continue;

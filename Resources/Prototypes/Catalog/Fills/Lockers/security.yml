@@ -87,6 +87,7 @@
       - id: WeaponRevolverInspector
       - id: DrinkDetFlask
       - id: SpeedLoaderMagnum
+      - id: ForensicGloves
 
 - type: entity
   id: ClosetBombFilled

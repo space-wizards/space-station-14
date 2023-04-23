@@ -146,8 +146,6 @@ namespace Content.Server.Nutrition.EntitySystems
                 // Mice and the like can eat without hands.
                 // TODO maybe set this based on some CanEatWithoutHands event or component?
                 NeedHand = forceFeed,
-                //Works better with cancel duplicate on because you can just use again to stop
-                CancelDuplicate = false,
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterArgs);
@@ -281,7 +279,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     TryFeed(ev.User, ev.User, uid, component);
                 },
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
                 Text = Loc.GetString("food-system-verb-eat"),
                 Priority = -1
             };

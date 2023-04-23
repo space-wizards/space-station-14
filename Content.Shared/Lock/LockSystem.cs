@@ -203,7 +203,7 @@ public sealed class LockSystem : EntitySystem
     private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReaderComponent? reader = null, bool quiet = true)
     {
         // Not having an AccessComponent means you get free access. woo!
-        if (!Resolve(uid, ref reader))
+        if (!Resolve(uid, ref reader, false))
             return true;
 
         if (_accessReader.IsAllowed(user, reader))
@@ -226,15 +226,15 @@ public sealed class LockSystem : EntitySystem
                 () => TryLock(uid, args.User, component),
             Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock"),
             Icon = component.Locked ?
-                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")) :
-                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
+                new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")) :
+                new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
         };
         args.Verbs.Add(verb);
     }
 
     private void OnEmagged(EntityUid uid, LockComponent component, ref GotEmaggedEvent args)
     {
-        if (!component.Locked)
+        if (!component.Locked || !component.BreakOnEmag)
             return;
         _audio.PlayPredicted(component.UnlockSound, uid, null, AudioParams.Default.WithVolume(-5));
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);

@@ -74,11 +74,11 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     [DataField("normalNames", customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
     public string NormalNames = "SyndicateNamesNormal";
 
-    [DataField("outpostMap", customTypeSerializer: typeof(ResourcePathSerializer))]
-    public ResourcePath? NukieOutpostMap = new("/Maps/nukieplanet.yml");
+    [DataField("outpostMap", customTypeSerializer: typeof(ResPathSerializer))]
+    public ResPath NukieOutpostMap = new("/Maps/nukieplanet.yml");
 
-    [DataField("shuttleMap", customTypeSerializer: typeof(ResourcePathSerializer))]
-    public ResourcePath? NukieShuttleMap = new("/Maps/infiltrator.yml");
+    [DataField("shuttleMap", customTypeSerializer: typeof(ResPathSerializer))]
+    public ResPath NukieShuttleMap = new("/Maps/infiltrator.yml");
 
     [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
     public SoundSpecifier? GreetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
