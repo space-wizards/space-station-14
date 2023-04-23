@@ -31,37 +31,6 @@
       - HideContextMenu
 
 - type: entity
-  id: VapeSmoke
-  name: smoke
-  noSpawn: true
-  components:
-  - type: Sprite
-    drawdepth: Effects
-    sprite: Effects/chemsmoke.rsi
-    state: chemsmoke
-  - type: Appearance
-  - type: SmokeVisuals
-  - type: Transform
-    anchored: true
-  - type: Smoke
-  - type: NodeContainer
-    nodes:
-      smoke:
-        !type:SpreaderNode
-        nodeGroupID: Spreader
-  - type: EdgeSpreader
-  - type: SolutionContainerManager
-    solutions:
-      solutionArea:
-        maxVol: 200
-        canReact: false
-  - type: TimedDespawn
-    lifetime: 10
-  - type: Tag
-    tags:
-      - HideContextMenu
-
-- type: entity
   id: Foam
   name: foam
   noSpawn: true

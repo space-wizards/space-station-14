@@ -1,22 +1,22 @@
 using Content.Server.Nutrition.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Server.Body.Components;
 using Content.Shared.Interaction;
 using Content.Server.DoAfter;
 using System.Threading;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Damage;
-using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Popups;
 using Content.Shared.IdentityManagement;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Emag.Components;
-using Content.Server.Fluids.EntitySystems;
-using Content.Server.Coordinates.Helpers;
-using Content.Server.Chemistry.Components;
 using Content.Shared.Nutrition;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos;
 
+/// <summary>
+/// System for vapes
+/// </summary>
 namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem
@@ -26,8 +26,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly FlavorProfileSystem _flavorProfileSystem = default!;
-        [Dependency] private readonly SmokeSystem _smokeSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         private void InitializeVapes()
         {
@@ -65,9 +64,9 @@ namespace Content.Server.Nutrition.EntitySystems
             }
             else
             {
-                foreach (var name in comp.ExplodableSolutions)
+                foreach (var name in solution.Contents)
                 {
-                    if (solution.ContainsReagent(name))
+                    if (name.ReagentId != comp.SolutionNeeded)
                     {
                         exploded = true;
                         _explosionSystem.QueueExplosion(uid, "Default", comp.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);
@@ -122,33 +121,23 @@ namespace Content.Server.Nutrition.EntitySystems
 
             comp.CancelToken = null;
 
-            if (args.Handled || args.Args.Target == null)
+            if (args.Handled
+            || args.Args.Target == null)
                 return;
-            
-            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(args.Args.User, args.Solution);
 
-            if (args.Solution.Volume != 0)
+            var environment = _atmosphereSystem.GetContainingMixture(args.Args.Target.Value, true, true);
+            if (environment == null)
             {
-                args.Solution.ScaleSolution(0.3f);
-
-                var ent = EntityManager.SpawnEntity(comp.SmokePrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
-                if (EntityManager.TryGetComponent<SmokeComponent>(ent, out var smokeComponent))
-                {
-                    _smokeSystem.Start(ent, smokeComponent, args.Solution, comp.SmokeDuration);
-                }
-                else
-                {
-                    EntityManager.DeleteEntity(ent);
-                }
+                return;
             }
 
             //Smoking kills(your lungs, but there is no organ damage yet)
             _damageableSystem.TryChangeDamage(args.Args.Target.Value, comp.Damage, true);
 
-            if (TryComp<BloodstreamComponent>(args.Target, out var bloodstream))
-            {
-                _bloodstreamSystem.TryAddToChemicals(args.Args.Target.Value, args.Solution, bloodstream);
-            }
+            var merger = new GasMixture(1) { Temperature = args.Solution.Temperature};
+            merger.SetMoles(comp.GasType, args.Solution.Volume.Value / comp.ReductionFactor);
+
+            _atmosphereSystem.Merge(environment, merger);
 
             args.Solution.RemoveAllSolution();
             
@@ -158,7 +147,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 var userName = Identity.Entity(args.Args.User, EntityManager);
 
                 _popupSystem.PopupEntity(
-                    Loc.GetString("vape-component-vape-success-taste-forced", ("flavors", flavors), ("user", userName)), args.Args.Target.Value,
+                    Loc.GetString("vape-component-vape-success-forced", ("user", userName)), args.Args.Target.Value,
                     args.Args.Target.Value);
                 
                 _popupSystem.PopupEntity(
@@ -168,7 +157,7 @@ namespace Content.Server.Nutrition.EntitySystems
             else
             {
                 _popupSystem.PopupEntity(
-                    Loc.GetString("vape-component-vape-success-taste", ("flavors", flavors)), args.Args.Target.Value,
+                    Loc.GetString("vape-component-vape-success"), args.Args.Target.Value,
                     args.Args.Target.Value);
             }
         }

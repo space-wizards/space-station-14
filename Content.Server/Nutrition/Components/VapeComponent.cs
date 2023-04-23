@@ -1,7 +1,11 @@
 using System.Threading;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Damage;
+using Content.Shared.Atmos;
 
+/// <summary>
+/// Component for vapes
+/// </summary>
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Access(typeof(SmokingSystem))] 
@@ -15,14 +19,6 @@ namespace Content.Server.Nutrition.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float UserDelay { get; set; } = 2;
 
-        [DataField("smokeAmount")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int SmokeAmount { get; set; } = 0;
-
-        [DataField("smokeDuration")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float SmokeDuration { get; set; } = 3f;
-
         [DataField("explosionIntensity")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ExplosionIntensity { get; set; } = 2.5f;
@@ -35,15 +31,20 @@ namespace Content.Server.Nutrition.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
-        [DataField("smokePrototype")]
-        public string SmokePrototype = "VapeSmoke";
+        [DataField("gasType")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Gas GasType { get; set; } = Gas.WaterVapor;
 
-        [DataField("explodableSolutions")]
-        public List<string> ExplodableSolutions { get; set; } = new(){
-            "Water",
-            "Plasma",
-            "WeldingFuel"
-        };
+        /// <summary>
+        /// Solution volume will be divided by this number and converted to the gas
+        /// </summary>
+        [DataField("reductionFactor")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ReductionFactor { get; set; } = 300f;
+
+        [DataField("solutionNeeded")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string SolutionNeeded = "Water";
 
         public CancellationTokenSource? CancelToken;
     }
