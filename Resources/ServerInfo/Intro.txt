@@ -1,4 +1,4 @@
-Welcome to Space Station 14! You have just started your shift aboard a Nanotrasen space station and along with your crewmates should cooperate, perform your job role to the best of your ability and have fun (not at the expense of others hopefully).
+ENG: Welcome to Space Station 14! You have just started your shift aboard a Nanotrasen space station and along with your crewmates should cooperate, perform your job role to the best of your ability and have fun (not at the expense of others hopefully).
 
 Please make sure you understand the server rules (F1) and if you have any questions, consult this guide, your colleagues on shift in person or over radio or via discord. You can also ask admins for help (ahelp) by hitting the escape key > admin help and typing a message to any online admins. Especially do this if you witness someone breaking rules.
 
@@ -6,3 +6,12 @@ To reiterate, you are all a crew of people who work together (even the clown) an
 
 
 Instead of intents, we have combat mode. Check controls below for its keybind. You can't attack anybody with it off, so no more hitting yourself with your own crowbar.
+* * *
+RU: Добро пожаловать на космическую станцию 14! Вы только что начали свою смену на борту космической станции Nanotrasen и вместе с членами экипажа должны сотрудничать, выполнять свою работу наилучшим образом и веселиться (надеюсь, не за счет других).
+
+Убедитесь, что вы поняли правила сервера (F1), и если у вас возникли вопросы, обратитесь к этому руководству, к своим коллегам по смене лично, по радио или через discord. Вы также можете обратиться за помощью к администраторам (ahelp), нажав клавишу escape > Помощь администратора и набрав сообщение любому онлайн-администратору. Особенно делайте это, если вы стали свидетелем того, как кто-то нарушает правила.
+
+Повторяю, вы все - команда людей, которые работают вместе (кроме клоуна), и вы не должны вредить друг другу, если только у вас нет чрезвычайно веской причины (самозащита), и даже тогда, вызовите охрану по радио, оглушите и задержите, не совершайте убийства как неантагонист (см. антагонист далее).
+
+
+Вместо намерений у нас есть боевой режим. Смотрите элементы управления ниже, чтобы узнать привязку клавиш. Вы не можете никого атаковать, если он выключен.
