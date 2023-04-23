@@ -25,8 +25,12 @@
     jumpsuit: ClothingUniformJumpsuitColorRed
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSunglasses
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
+    pocket1: Handcuffs
+    pocket2: FlashlightSeclite
+    belt: Stunbaton
   innerclothingskirt: ClothingUniformJumpskirtColorRed
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled
