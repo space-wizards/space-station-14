@@ -1,11 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: you can now put explosives with timer in cream pie. Prank your friend!
-      (just imagine their face), type: Add}
-  - {message: cream pie now leaves pie tin after throw, type: Fix}
-  id: 2996
-  time: '2023-02-05T20:07:52.0000000+00:00'
 - author: jick
   changes:
   - {message: Unrandomized airlock painter styles, type: Fix}
@@ -2893,3 +2886,9 @@ Entries:
       (i.e when close enough), type: Add}
   id: 3495
   time: '2023-04-23T03:05:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove lobby starting soon showing up 20 seconds before roundstart.,
+    type: Fix}
+  id: 3496
+  time: '2023-04-23T03:14:26.0000000+00:00'
