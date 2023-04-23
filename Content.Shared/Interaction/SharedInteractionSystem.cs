@@ -145,17 +145,10 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void OnUnequip(EntityUid uid, UnremoveableComponent item, GotUnequippedEvent args)
         {
-
-            {
-                if (item.DeleteOnDrop == true)
-                {
-                    if (_net.IsServer)
-                        QueueDel(uid);
-                }
-
-                if (item.DeleteOnDrop == false)
-                    RemComp<UnremoveableComponent>(uid);
-            }
+            if (!item.DeleteOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
+            else if (_net.IsServer)
+                QueueDel(uid);
         }
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
