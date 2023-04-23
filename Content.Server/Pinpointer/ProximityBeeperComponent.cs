@@ -11,6 +11,12 @@ namespace Content.Server.Pinpointer;
 public sealed class ProximityBeeperComponent : Component
 {
     /// <summary>
+    /// Whether or not it's on.
+    /// </summary>
+    [DataField("enabled")]
+    public bool Enabled;
+
+    /// <summary>
     /// The target component that is being searched for
     /// </summary>
     [DataField("component", required: true), ViewVariables(VVAccess.ReadWrite)]
@@ -34,18 +40,15 @@ public sealed class ProximityBeeperComponent : Component
     [DataField("minBeepInterval"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan MinBeepInterval = TimeSpan.FromSeconds(0.25f);
 
+    /// <summary>
+    /// When the next beep will occur
+    /// </summary>
     [DataField("nextBeepTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextBeepTime;
 
+    /// <summary>
+    /// The sound played when the locator beeps.
+    /// </summary>
     [DataField("beepSound")]
     public SoundSpecifier? BeepSound;
-}
-
-/// <summary>
-/// Active tracking comp for <see cref="ProximityBeeperComponent"/>
-/// </summary>
-[RegisterComponent]
-public sealed class ActiveProximityBeeperComponent : Component
-{
-
 }

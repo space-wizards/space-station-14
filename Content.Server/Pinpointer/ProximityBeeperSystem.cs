@@ -22,10 +22,10 @@ public sealed class ProximityBeeperSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ProximityBeeperComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<ProximityBeeperComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ProximityBeeperComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<ActiveProximityBeeperComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
+        SubscribeLocalEvent<ProximityBeeperComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
     }
-
     private void OnUseInHand(EntityUid uid, ProximityBeeperComponent component, UseInHandEvent args)
     {
         if (args.Handled)
@@ -34,26 +34,33 @@ public sealed class ProximityBeeperSystem : EntitySystem
         args.Handled = TryToggle(uid, component, args.User);
     }
 
+    private void OnInit(EntityUid uid, ProximityBeeperComponent component, ComponentInit args)
+    {
+        if (component.NextBeepTime < _timing.CurTime)
+            component.NextBeepTime = _timing.CurTime;
+    }
+
     private void OnUnpaused(EntityUid uid, ProximityBeeperComponent component, ref EntityUnpausedEvent args)
     {
         component.NextBeepTime += args.PausedTime;
     }
 
-    private void OnPowerCellSlotEmpty(EntityUid uid, ActiveProximityBeeperComponent component, ref PowerCellSlotEmptyEvent args)
+    private void OnPowerCellSlotEmpty(EntityUid uid, ProximityBeeperComponent component, ref PowerCellSlotEmptyEvent args)
     {
-        TryDisable(uid, active: component);
+        if (component.Enabled)
+            TryDisable(uid, component);
     }
 
     /// <summary>
     /// Beeps the proximitybeeper as well as sets the time for the next beep
     /// based on proximity to entities with the target component.
     /// </summary>
-    public void UpdateBeep(EntityUid uid, ProximityBeeperComponent? component = null, ActiveProximityBeeperComponent? active = null, bool playBeep = true)
+    public void UpdateBeep(EntityUid uid, ProximityBeeperComponent? component = null, bool playBeep = true)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        if (!Resolve(uid, ref active, false))
+        if (!component.Enabled)
         {
             component.NextBeepTime += component.MinBeepInterval;
             return;
@@ -101,10 +108,10 @@ public sealed class ProximityBeeperSystem : EntitySystem
         if (!_powerCell.HasActivatableCharge(uid, battery: draw, user: user))
             return false;
 
-        var active = EnsureComp<ActiveProximityBeeperComponent>(uid);
+        component.Enabled = true;
         _appearance.SetData(uid, ProximityBeeperVisuals.Enabled, true);
         component.NextBeepTime = _timing.CurTime;
-        UpdateBeep(uid, component, active, false);
+        UpdateBeep(uid, component, false);
         if (draw != null)
             draw.Enabled = true;
         return true;
@@ -113,12 +120,15 @@ public sealed class ProximityBeeperSystem : EntitySystem
     /// <summary>
     /// disables the proximity beeper
     /// </summary>
-    public bool TryDisable(EntityUid uid, ProximityBeeperComponent? component = null, ActiveProximityBeeperComponent? active = null)
+    public bool TryDisable(EntityUid uid, ProximityBeeperComponent? component = null)
     {
-        if (!Resolve(uid, ref component, ref active))
+        if (!Resolve(uid, ref component))
             return false;
 
-        RemComp(uid, active);
+        if (!component.Enabled)
+            return false;
+
+        component.Enabled = false;
         _appearance.SetData(uid, ProximityBeeperVisuals.Enabled, false);
         if (TryComp<PowerCellDrawComponent>(uid, out var draw))
             draw.Enabled = true;
@@ -134,8 +144,8 @@ public sealed class ProximityBeeperSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        return TryComp<ActiveProximityBeeperComponent>(uid, out var active)
-            ? TryDisable(uid, component, active)
+        return component.Enabled
+            ? TryDisable(uid, component)
             : TryEnable(uid, component, user);
     }
 
@@ -143,12 +153,15 @@ public sealed class ProximityBeeperSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<ActiveProximityBeeperComponent, ProximityBeeperComponent>();
-        while (query.MoveNext(out var uid, out var active, out var beeper))
+        var query = EntityQueryEnumerator<ProximityBeeperComponent>();
+        while (query.MoveNext(out var uid, out var beeper))
         {
+            if (!beeper.Enabled)
+                continue;
+
             if (_timing.CurTime < beeper.NextBeepTime)
                 continue;
-            UpdateBeep(uid, beeper, active);
+            UpdateBeep(uid, beeper);
         }
     }
 }
