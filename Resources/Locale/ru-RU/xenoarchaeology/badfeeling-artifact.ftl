@@ -1,6 +1,6 @@
 badfeeling-artifact-1 = Что-то не так.
-badfeeling-artifact-2 = У вас внутри возникает странное ощущение.
-badfeeling-artifact-3 = Ваши инстинкты пытаются предупредить вас о чём-то.
+badfeeling-artifact-2 = У Вас внутри возникает странное ощущение.
+badfeeling-artifact-3 = Ваши инстинкты пытаются предупредить Вас о чём-то.
 badfeeling-artifact-4 = Вы непроизвольно вздрагиваете.
 badfeeling-artifact-5 = В воздухе витает странное чувство.
 badfeeling-artifact-6 = В воздухе стоит странный запах.
@@ -8,7 +8,7 @@ badfeeling-artifact-7 = В кончиках пальцев ощущается п
 badfeeling-artifact-8 = Вы чувствуете заколдованность.
 badfeeling-artifact-9 = Вы испытываете ужасное предчувствие.
 badfeeling-artifact-10 = У вас появляется плохое предчувствие.
-badfeeling-artifact-11 = Поверхность вашей головы начинает зудеть.
+badfeeling-artifact-11 = Поверхность Вашей головы начинает зудеть.
 badfeeling-artifact-12 = Кажется, свет мерцает.
 badfeeling-artifact-13 = Тени словно удлиняются.
 badfeeling-artifact-14 = Стены становятся все ближе.

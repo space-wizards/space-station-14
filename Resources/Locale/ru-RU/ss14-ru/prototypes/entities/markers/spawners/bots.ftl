@@ -1,6 +1,6 @@
-ent-SpawnMobMedibot = спавнер медибот
+ent-SpawnMobMedibot = спавнер медибота
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
-ent-SpawnMobCleanBot = спавнер чистобот
+ent-SpawnMobCleanBot = спавнер чистобота
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }

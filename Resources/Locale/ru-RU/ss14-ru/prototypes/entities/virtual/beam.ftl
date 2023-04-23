@@ -1,3 +1,3 @@
-ent-VirtualBeamEntityController = СУЩНОСТЬ ЛУЧА ВЫ НЕ ДОЛЖНЫ ВИДЕТЬ ЭТОГО
+ent-VirtualBeamEntityController = СУЩНОСТЬ ЛУЧА, ВЫ НЕ ДОЛЖНЫ ВИДЕТЬ ЭТОГО
     .desc = { "" }
     .suffix = { "" }

@@ -1,5 +1,5 @@
 ent-SeatBase = стул
-    .desc = Вы сидите в нём. Либо по вашей воле, либо по принуждению.
+    .desc = Вы сидите в нём. Либо по Вашей воле, либо по принуждению.
     .suffix = { "" }
 ent-Chair = стул
     .desc = { ent-SeatBase.desc }
@@ -32,7 +32,7 @@ ent-ChairCursed = проклятый стул
     .desc = Он смотрит в ответ.
     .suffix = { "" }
 ent-ChairFolding = раскладной стул
-    .desc = Если вы унесёте шесть за раз - вы станете самым крутым парнем в актовом зале.
+    .desc = Если Вы унесёте шесть за раз - Вы станете самым крутым парнем в актовом зале.
     .suffix = { "" }
 ent-ChairFoldingSpawnFolded = { ent-ChairFolding }
     .desc = { ent-ChairFolding.desc }

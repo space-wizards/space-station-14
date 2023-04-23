@@ -4,6 +4,6 @@ ent-AITimedSpawner = периодический спавнер ИИ
 ent-XenoAITimedSpawner = периодический спавнер ксено ИИ
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
-ent-MouseTimedSpawner = периодический спавнер мышь
+ent-MouseTimedSpawner = периодический спавнер мыши
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }

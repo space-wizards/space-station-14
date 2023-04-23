@@ -1,3 +1,3 @@
-ent-RandomFoodBakedWhole = спавнер случайная выпечка
+ent-RandomFoodBakedWhole = спавнер случайной выпечки
     .suffix = Целиком
     .desc = { ent-MarkerBase.desc }
