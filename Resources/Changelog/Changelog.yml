@@ -1,15 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Increased point generation from anomalies., type: Tweak}
-  - {message: Made the pyroclastic anomaly less dangerous and electricity anomaly
-      more dangerous., type: Tweak}
-  - {message: Anomalies should no longer spawn in walls as much., type: Fix}
-  - {message: 'Added two new types of anomalies: flesh and bluespace.', type: Add}
-  id: 2999
-  time: '2023-02-06T05:03:54.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Fixed red kuzdu., type: Fix}
   id: 3000
   time: '2023-02-06T12:27:06.0000000+00:00'
@@ -2892,3 +2883,8 @@ Entries:
   - {message: Medipen prick popup is now centered on you, type: Tweak}
   id: 3498
   time: '2023-04-23T03:43:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix medical PDA not working., type: Fix}
+  id: 3499
+  time: '2023-04-23T03:46:48.0000000+00:00'
