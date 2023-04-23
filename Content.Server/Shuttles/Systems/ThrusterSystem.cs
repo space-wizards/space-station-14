@@ -295,6 +295,36 @@ public sealed class ThrusterSystem : EntitySystem
         }
 
         _ambient.SetAmbience(uid, true);
+        RefreshCenter(uid, shuttleComponent);
+    }
+
+    /// <summary>
+    /// Refreshes the center of thrust for movement calculations.
+    /// </summary>
+    private void RefreshCenter(EntityUid uid, ShuttleComponent shuttle)
+    {
+        var center = Vector2.Zero;
+        var thrustQuery = GetEntityQuery<ThrusterComponent>();
+        var count = 0;
+
+        foreach (var dir in new[]
+                     { Direction.South, Direction.East, Direction.North, Direction.West })
+        {
+            var pop = shuttle.LinearThrusters[(int) dir / 2];
+
+            foreach (var ent in pop)
+            {
+                if (!thrustQuery.TryGetComponent(ent, out var thruster))
+                    continue;
+
+                center += thruster.Thrust;
+            }
+
+            count += pop.Count;
+        }
+
+        center /= count;
+        shuttle.CenterOfThrust = center;
     }
 
     public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
@@ -358,6 +388,7 @@ public sealed class ThrusterSystem : EntitySystem
         }
 
         component.Colliding.Clear();
+        RefreshCenter(uid, shuttleComponent);
     }
 
     public bool CanEnable(EntityUid uid, ThrusterComponent component)

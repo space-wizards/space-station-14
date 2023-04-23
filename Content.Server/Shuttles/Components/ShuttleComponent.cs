@@ -6,6 +6,9 @@ namespace Content.Server.Shuttles.Components
         [ViewVariables]
         public bool Enabled = true;
 
+        [ViewVariables]
+        public Vector2 CenterOfThrust;
+
         /// <summary>
         /// The cached thrust available for each cardinal direction
         /// </summary>

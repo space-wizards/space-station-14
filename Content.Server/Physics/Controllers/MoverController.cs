@@ -310,17 +310,6 @@ namespace Content.Server.Physics.Controllers
                 angularInput /= count;
                 brakeInput /= count;
 
-                /*
-                 * So essentially:
-                 * 1. We do the same calcs for braking as we do for linear thrust so it's similar to a player pressing it
-                 * but we also need to handle when they get close to 0 hence why it sets velocity directly.
-                 *
-                 * 2. We do a similar calculation to mob movement where the closer you are to your speed cap the slower you accelerate
-                 *
-                 * TODO: Could combine braking linear input and thrust more but my brain was just not working debugging
-                 * TODO: Need to have variable speed caps based on thruster count or whatever
-                 */
-
                 // Handle shuttle movement
                 if (brakeInput > 0f)
                 {
@@ -365,40 +354,15 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         var impulse = force * brakeInput;
-                        var wishDir = impulse.Normalized;
-                        // TODO: Adjust max possible speed based on total thrust in particular direction.
-                        var wishSpeed = 20f;
+                        var maxImpulse = shuttleVelocity * body.InvMass;
 
-                        var currentSpeed = Vector2.Dot(shuttleVelocity, wishDir);
-                        var addSpeed = wishSpeed - currentSpeed;
-
-                        if (addSpeed > 0f)
+                        if (impulse.LengthSquared > maxImpulse.LengthSquared)
                         {
-                            var accelSpeed = impulse.Length * frameTime;
-                            accelSpeed = MathF.Min(accelSpeed, addSpeed);
-                            impulse = impulse.Normalized * accelSpeed * body.InvMass;
-
-                            // Cap inputs
-                            if (shuttleVelocity.X < 0f)
-                            {
-                                impulse.X = MathF.Min(impulse.X, -shuttleVelocity.X);
-                            }
-                            else if (shuttleVelocity.X > 0f)
-                            {
-                                impulse.X = MathF.Max(impulse.X, -shuttleVelocity.X);
-                            }
-
-                            if (shuttleVelocity.Y < 0f)
-                            {
-                                impulse.Y = MathF.Min(impulse.Y, -shuttleVelocity.Y);
-                            }
-                            else if (shuttleVelocity.Y > 0f)
-                            {
-                                impulse.Y = MathF.Max(impulse.Y, -shuttleVelocity.Y);
-                            }
-
-                            PhysicsSystem.SetLinearVelocity(shuttle.Owner, body.LinearVelocity + shuttleNorthAngle.RotateVec(impulse), body: body);
+                            impulse = -maxImpulse;
                         }
+
+                        PhysicsSystem.ApplyForce(shuttle.Owner, shuttleNorthAngle.RotateVec(impulse), body: body);
+
                     }
                     else
                     {
@@ -408,31 +372,15 @@ namespace Content.Server.Physics.Controllers
                     if (body.AngularVelocity != 0f)
                     {
                         var impulse = shuttle.AngularThrust * brakeInput * (body.AngularVelocity > 0f ? -1f : 1f);
-                        var wishSpeed = MathF.PI;
+                        var maxImpulse = body.AngularVelocity * body.InvI;
 
-                        if (impulse < 0f)
-                            wishSpeed *= -1f;
-
-                        var currentSpeed = body.AngularVelocity;
-                        var addSpeed = wishSpeed - currentSpeed;
-
-                        if (!addSpeed.Equals(0f))
+                        if (Math.Abs(impulse) > Math.Abs(maxImpulse))
                         {
-                            var accelSpeed = impulse * body.InvI * frameTime;
-
-                            if (accelSpeed < 0f)
-                                accelSpeed = MathF.Max(accelSpeed, addSpeed);
-                            else
-                                accelSpeed = MathF.Min(accelSpeed, addSpeed);
-
-                            if (body.AngularVelocity < 0f && body.AngularVelocity + accelSpeed > 0f)
-                                accelSpeed = -body.AngularVelocity;
-                            else if (body.AngularVelocity > 0f && body.AngularVelocity + accelSpeed < 0f)
-                                accelSpeed = -body.AngularVelocity;
-
-                            PhysicsSystem.SetAngularVelocity(shuttle.Owner, body.AngularVelocity + accelSpeed, body: body);
-                            _thruster.SetAngularThrust(shuttle, true);
+                            impulse = -maxImpulse;
                         }
+
+                        PhysicsSystem.ApplyTorque(shuttle.Owner, impulse, body: body);
+                        _thruster.SetAngularThrust(shuttle, true);
                     }
                 }
 
@@ -442,11 +390,6 @@ namespace Content.Server.Physics.Controllers
 
                     if (brakeInput.Equals(0f))
                         _thruster.DisableLinearThrusters(shuttle);
-
-                    if (body.LinearVelocity.Length < 0.08)
-                    {
-                        PhysicsSystem.SetLinearVelocity(shuttle.Owner, Vector2.Zero, body: body);
-                    }
                 }
                 else
                 {
@@ -455,7 +398,7 @@ namespace Content.Server.Physics.Controllers
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
 
-                    var totalForce = new Vector2();
+                    var totalForce = Vector2.Zero;
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -502,59 +445,21 @@ namespace Content.Server.Physics.Controllers
                         _thruster.EnableLinearThrustDirection(shuttle, dir);
                     }
 
-                    // We don't want to touch damping if no inputs are given
-                    // so we'll just add an artifical drag to the velocity input.
-                    var shuttleVelocity = (-shuttleNorthAngle).RotateVec(body.LinearVelocity);
-
-                    var wishDir = totalForce.Normalized;
-                    // TODO: Adjust max possible speed based on total thrust in particular direction.
-                    var wishSpeed = 20f;
-
-                    var currentSpeed = Vector2.Dot(shuttleVelocity, wishDir);
-                    var addSpeed = wishSpeed - currentSpeed;
-
-                    if (addSpeed > 0f)
-                    {
-                        var accelSpeed = totalForce.Length * frameTime;
-                        accelSpeed = MathF.Min(accelSpeed, addSpeed);
-                        PhysicsSystem.ApplyLinearImpulse(shuttle.Owner, shuttleNorthAngle.RotateVec(totalForce.Normalized * accelSpeed), body: body);
-                    }
+                    var impulse = totalForce * linearInput.Length;
+                    PhysicsSystem.ApplyForce(shuttle.Owner, shuttleNorthAngle.RotateVec(impulse), body: body);
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
                 {
                     _thruster.SetAngularThrust(shuttle, false);
                     PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, true);
-
-                    if (Math.Abs(body.AngularVelocity) < 0.01f)
-                    {
-                        PhysicsSystem.SetAngularVelocity(shuttle.Owner, 0f, body: body);
-                    }
                 }
                 else
                 {
                     PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, false);
                     var impulse = shuttle.AngularThrust * -angularInput;
-                    var wishSpeed = MathF.PI;
-
-                    if (impulse < 0f)
-                        wishSpeed *= -1f;
-
-                    var currentSpeed = body.AngularVelocity;
-                    var addSpeed = wishSpeed - currentSpeed;
-
-                    if (!addSpeed.Equals(0f))
-                    {
-                        var accelSpeed = impulse * body.InvI * frameTime;
-
-                        if (accelSpeed < 0f)
-                            accelSpeed = MathF.Max(accelSpeed, addSpeed);
-                        else
-                            accelSpeed = MathF.Min(accelSpeed, addSpeed);
-
-                        PhysicsSystem.SetAngularVelocity(shuttle.Owner, body.AngularVelocity + accelSpeed, body: body);
-                        _thruster.SetAngularThrust(shuttle, true);
-                    }
+                    PhysicsSystem.ApplyTorque(shuttle.Owner, impulse, body: body);
+                    _thruster.SetAngularThrust(shuttle, true);
                 }
             }
         }
