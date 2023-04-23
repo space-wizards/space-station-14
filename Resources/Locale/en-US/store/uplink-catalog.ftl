@@ -84,8 +84,8 @@ uplink-stealth-box-desc = A box outfitted with stealth technology, sneak around 
 uplink-headset-name = Syndicate Over-ear Headset
 uplink-headset-desc = A headset that allows you to communicate with other syndicate operatives. Has 4 slots for encryption keys.
 
-uplink-encryption-key-name = Syndicate Encryption Key
-uplink-encryption-key-desc = An encryption key for access to the secret frequency of our special agents. No one will know about your special channel with friends... or rivals.
+uplink-encryption-key-name = Syndicate Encryption Keys
+uplink-encryption-key-desc = Two encryption keys for access to the secret frequency of our special agents. Give the spare to a friend, but make sure it doesn't fall into enemy hands.
 
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Starts empty.
