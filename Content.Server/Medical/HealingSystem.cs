@@ -81,7 +81,7 @@ public sealed class HealingSystem : EntitySystem
 
         var total = healed?.Total ?? FixedPoint2.Zero;
 
-        // Reverify that we can heal the damage.
+        // Re-verify that we can heal the damage.
         _stacks.Use(args.Used.Value, 1);
 
         if (uid != args.User)
@@ -100,10 +100,7 @@ public sealed class HealingSystem : EntitySystem
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(component, healing) && !dontRepeat);
         if (!args.Repeat && !dontRepeat)
-        {
             _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), uid);
-        }
-
         args.Handled = true;
     }
 
