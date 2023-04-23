@@ -100,7 +100,6 @@
     excess: 10
   - type: Appearance
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: 0
