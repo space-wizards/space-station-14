@@ -1,5 +1,9 @@
+using Content.Client.Movement.Systems;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Console;
 
 namespace Content.Client.Commands;
@@ -7,7 +11,9 @@ namespace Content.Client.Commands;
 [UsedImplicitly]
 public sealed class ZoomCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IEyeManager _eyeMan = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public string Command => "zoom";
     public string Description => Loc.GetString("zoom-command-description");
@@ -51,6 +57,14 @@ public sealed class ZoomCommand : IConsoleCommand
                 shell.WriteError(Loc.GetString("zoom-command-error"));
                 return;
             }
+        }
+
+        var player = _playerManager.LocalPlayer?.ControlledEntity;
+
+        if (_entManager.TryGetComponent<ContentEyeComponent>(player, out var content))
+        {
+            _entManager.System<ContentEyeSystem>().RequestZoom(player.Value, zoom, content);
+            return;
         }
 
         _eyeMan.CurrentEye.Zoom = zoom;
