@@ -1,8 +1,8 @@
 using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Chemistry.Components;
 
@@ -22,7 +22,8 @@ public sealed class SolutionPurgeComponent : Component
     /// <summary>
     /// The reagent(s) to be ignored when purging the solution
     /// </summary>
-    [DataField("preserve"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("preserve", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public List<string> Preserve = new();
 
     /// <summary>
@@ -40,6 +41,6 @@ public sealed class SolutionPurgeComponent : Component
     /// <summary>
     /// The time when the next purge will occur.
     /// </summary>
-    [DataField("nextChargeTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("nextPurgeTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextPurgeTime = TimeSpan.FromSeconds(0);
 }
