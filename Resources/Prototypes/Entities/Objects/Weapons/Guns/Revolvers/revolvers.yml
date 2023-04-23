@@ -129,7 +129,7 @@
 - type: entity
   id: WeaponPistolCHIMP
   parent: BaseWeaponRevolver
-  name: C.H.I.M.P handcannon
+  name: C.H.I.M.P. handcannon
   description: Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
   components:
   - type: Sprite
