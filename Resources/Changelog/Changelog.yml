@@ -1,9 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: PDAs no longer disappear when inhand, type: Fix}
-  id: 3003
-  time: '2023-02-06T19:53:24.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The anomaly generator now has an animation while it creates anomalies.,
@@ -2889,3 +2884,8 @@ Entries:
       deal on Syndicate Encryption Keys. Give the spare to a friend (or enemy)!, type: Tweak}
   id: 3502
   time: '2023-04-23T05:08:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix railing / windoor bounds., type: Fix}
+  id: 3503
+  time: '2023-04-23T05:23:03.0000000+00:00'
