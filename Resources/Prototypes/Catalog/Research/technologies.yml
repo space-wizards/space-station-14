@@ -219,7 +219,7 @@
   description: technologies-security-basic-description
   icon:
     sprite: Objects/Misc/handcuffs.rsi
-    state: handcuffs
+    state: handcuff
   requiredPoints: 5000
   requiredTechnologies:
     - BasicResearch
@@ -229,7 +229,7 @@
     - RiotShield
     - RiotLaserShield
     - RiotBulletShield
-    - ClothingGlassesEyesSecurity
+    - ClothingEyesGlassesSecurity
     - FlashlightSeclite
 
 - type: technology
@@ -258,9 +258,9 @@
     - ForensicsEquipmentTechnology
     - BallisticMagazinesTechnology
   unlockedRecipes:
-    - SpeedLoaderRubber
+    - SpeedLoaderMagnumRubber
     - SpeedLoaderMagnum
-    - SpeedLoaderHighVelocity
+    - SpeedLoaderMagnumHighVelocity
 
 - type: technology
   name: technologies-ballistic-magazines
@@ -268,7 +268,7 @@
   description: technologies-ballistic-magazines-description
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
-    state: icon
+    state: base
   requiredPoints: 10000
   requiredTechnologies:
     - BasicSecurityTechnology
@@ -302,15 +302,15 @@
   requiredTechnologies:
     - BasicSecurityTechnology
   unlockedRecipes:
-    - Disabler
-    - Flashbang
+    - WeaponDisabler
+    - GrenadeFlashBang
     - Flash
     - FlashPayload
-    - StunBaton
+    - Stunbaton
     - Bola
     - MagazineRifleRubber
     - MagazinePistolRubber
-    - ShotgunShellBeanbag
+    - ShellShotgunBeanbag
     - ShellTranquilizer
 
 - type: technology
@@ -376,7 +376,7 @@
   requiredPoints: 10000
   requiredTechnologies:
     - NonLethalTechnology
-  unlockedrecipes:
+  unlockedRecipes:
     - ClothingOuterVestKevlar
     - ClothingHeadHelmetHelmet
     - ClothingHeadHelmetOld
@@ -391,7 +391,7 @@
   requiredPoints: 10000
   requiredTechnologies:
     - BasicArmorTechnology
-  unlockedrecipes:
+  unlockedRecipes:
     - ClothingHeadHelmetRiot
     - ClothingOuterArmorRiot
     - ClothingHandsGlovesCombat
@@ -406,7 +406,7 @@
   requiredPoints: 5000
   requiredTechnologies:
     - BasicArmorTechnology
-  unlockedrecipes:
+  unlockedRecipes:
     - ClothingOuterArmorReflective
     - ClothingOuterArmorBulletproof
 
@@ -420,7 +420,7 @@
   requiredPoints: 10000
   requiredTechnologies:
     - RiotArmorTechnology
-  unlockedrecipes:
+  unlockedRecipes:
     - ClothingOuterHardsuitSecurity
     - JetpackSecurity
 

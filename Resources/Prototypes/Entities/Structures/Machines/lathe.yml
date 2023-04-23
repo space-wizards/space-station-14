@@ -431,6 +431,8 @@
       - TargetHuman
       - TargetSyndicate
       - TargetClown
+      - ForensicScanner
+      - ForensicPad
       - ClothingOuterVestKevlar
       - ClothingHeadHelmetHelmet
       - ClothingHeadHelmetOld
@@ -455,7 +457,7 @@
       - MagazineRifle
       - MagazineRifleHighVelocity
       - MagazineRifleRubber
-      - MagazinePistolSubMachineGunTopMounted
+      - MagazinePistolSMGTopMounted
       - MagazinePistol
       - MagazinePistolHighVelocity
       - MagazinePistolRubber

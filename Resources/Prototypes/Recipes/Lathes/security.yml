@@ -62,8 +62,8 @@
     Steel: 100
 
 - type: latheRecipe
-  id: Flashbang
-  result: Flashbang
+  id: GrenadeFlashBang
+  result: GrenadeFlashBang
   completetime: 3
   materials:
     Glass: 200
@@ -331,8 +331,8 @@
     Glass: 375
 
 - type: latheRecipe
-  id: MagazinePistolSMGTopMounted
-  result: MagazinePistolSMGTopMounted
+  id: MagazinePistolSubMachineGunTopMounted
+  result: MagazinePistolSubMachineGunTopMounted
   completetime: 5
   materials:
     Steel: 400
@@ -368,8 +368,8 @@
     Steel: 500
 
 - type: latheRecipe
-  id: Disabler
-  result: Disabler
+  id: WeaponDisabler
+  result: WeaponDisabler
   completetime: 10
   materials:
     Steel: 500
@@ -392,24 +392,24 @@
     Cloth: 500
 
 - type: latheRecipe
-  id: ClothingOuterHelmetHelmet
-  result: ClothingOuterHelmetHelmet
+  id: ClothingHeadHelmetHelmet
+  result: ClothingHeadHelmetHelmet
   completetime: 5
   materials:
     Steel: 300
     Plastic: 300
 
 - type: latheRecipe
-  id: ClothingOuterHelmetOld
-  result: ClothingOuterHelmetOld
+  id: ClothingHeadHelmetOld
+  result: ClothingHeadHelmetOld
   completetime: 5
   materials:
     Steel: 300
     Plastic: 300
 
 - type: latheRecipe
-  id: ClothingOuterHelmetRiot
-  result: ClothingOuterHelmetRiot
+  id: ClothingHeadHelmetRiot
+  result: ClothingHeadHelmetRiot
   completetime: 5
   materials:
     Steel: 300
