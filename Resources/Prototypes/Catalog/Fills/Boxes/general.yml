@@ -376,3 +376,18 @@
     contents:
       - id: EncryptionKeyService
         amount: 6
+
+- type: entity
+  name: syndicate encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeySyndie
+  description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
+  components:
+  - type: Item
+    size: 15
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeySyndie
+        amount: 2
+  - type: Storage
+    capacity: 15

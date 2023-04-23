@@ -282,7 +282,6 @@ namespace Content.Server.Nutrition.EntitySystems
                 // Mice and the like can eat without hands.
                 // TODO maybe set this based on some CanEatWithoutHands event or component?
                 NeedHand = forceDrink,
-                CancelDuplicate = false,
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
@@ -411,7 +410,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     TryDrink(ev.User, ev.User, component, uid);
                 },
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/drink.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/drink.svg.192dpi.png")),
                 Text = Loc.GetString("drink-system-verb-drink"),
                 Priority = 2
             };

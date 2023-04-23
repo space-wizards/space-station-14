@@ -19541,18 +19541,54 @@ entities:
   - pos: -43.5,41.5
     parent: 30
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 1982
+      Close:
+      - port: Start
+        uid: 1982
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 1982
+    type: SignalReceiver
 - uid: 1760
   type: WindoorSecurityLocked
   components:
   - pos: -39.5,41.5
     parent: 30
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 1993
+      Close:
+      - port: Start
+        uid: 1993
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 1993
+    type: SignalReceiver
 - uid: 1761
   type: WindoorSecurityLocked
   components:
   - pos: -47.5,41.5
     parent: 30
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 1981
+      Close:
+      - port: Start
+        uid: 1981
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 1981
+    type: SignalReceiver
 - uid: 1762
   type: WardrobePrisonFilled
   components:
@@ -20768,7 +20804,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 1940
-  type: TableReinforced
+  type: GunSafeRifleLecter
   components:
   - pos: -41.5,53.5
     parent: 30
@@ -20780,7 +20816,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 1942
-  type: Rack
+  type: GunSafeLaserCarbine
   components:
   - pos: -37.5,54.5
     parent: 30
@@ -21035,23 +21071,56 @@ entities:
   - unspawnedCount: 4
     type: BallisticAmmoProvider
 - uid: 1980
-  type: WeaponLaserCarbine
+  type: FireAlarm
   components:
-  - pos: -37.501694,54.356064
+  - rot: 1.5707963267948966 rad
+    pos: -49.5,42.5
     parent: 30
     type: Transform
+  - devices:
+    - 2223
+    - 2222
+    - 2221
+    - 2646
+    - 2647
+    - 2648
+    - 1443
+    - 21911
+    type: DeviceList
 - uid: 1981
-  type: WeaponLaserCarbine
+  type: BrigTimer
   components:
-  - pos: -37.501694,54.481064
+  - rot: -1.5707963267948966 rad
+    pos: -45.5,41.5
     parent: 30
     type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 1761
+      Timer:
+      - port: AutoClose
+        uid: 1761
+      - port: Open
+        uid: 1761
+    type: SignalTransmitter
 - uid: 1982
-  type: WeaponLaserCarbine
+  type: BrigTimer
   components:
-  - pos: -37.501694,54.606064
+  - rot: -1.5707963267948966 rad
+    pos: -41.5,41.5
     parent: 30
     type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 1759
+      Timer:
+      - port: AutoClose
+        uid: 1759
+      - port: Open
+        uid: 1759
+    type: SignalTransmitter
 - uid: 1983
   type: ClosetBombFilled
   components:
@@ -21131,17 +21200,22 @@ entities:
     parent: 30
     type: Transform
 - uid: 1993
-  type: WeaponRifleLecter
+  type: BrigTimer
   components:
-  - pos: -41.502182,53.48419
+  - rot: -1.5707963267948966 rad
+    pos: -37.5,41.5
     parent: 30
     type: Transform
-- uid: 1994
-  type: WeaponRifleLecter
-  components:
-  - pos: -41.502182,53.312317
-    parent: 30
-    type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 1760
+      Timer:
+      - port: AutoClose
+        uid: 1760
+      - port: Open
+        uid: 1760
+    type: SignalTransmitter
 - uid: 1995
   type: MagazineRifle
   components:
@@ -21158,12 +21232,6 @@ entities:
   type: WallSolidRust
   components:
   - pos: -4.5,-15.5
-    parent: 30
-    type: Transform
-- uid: 1998
-  type: WeaponRifleLecter
-  components:
-  - pos: -41.517807,53.656067
     parent: 30
     type: Transform
 - uid: 1999
@@ -117929,6 +117997,62 @@ entities:
     pos: 53.5,22.5
     parent: 30
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      mask: []
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: conveyor
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.15,-0.15
+        - 0.15,0.15
+        - -0.15,0.15
+        - -0.15,-0.15
+      mask: []
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: brrt
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      layer:
+      - BulletImpassable
+      - Opaque
+      density: 1
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: collision
+    type: Fixtures
   - inputs:
       Off:
       - port: Middle
@@ -170863,42 +170987,6 @@ entities:
   - pos: -39.5,47.5
     parent: 30
     type: Transform
-- uid: 21909
-  type: FireAlarm
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -41.5,41.5
-    parent: 30
-    type: Transform
-  - devices:
-    - 2646
-    - 2647
-    - 2648
-    - 1443
-    - 2223
-    - 2222
-    - 2221
-    - 21911
-    type: DeviceList
-- uid: 21910
-  type: AirAlarm
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -45.5,41.5
-    parent: 30
-    type: Transform
-  - devices:
-    - 2646
-    - 2647
-    - 2648
-    - 1443
-    - 2223
-    - 2222
-    - 2221
-    - 21911
-    - 2644
-    - 2645
-    type: DeviceList
 - uid: 21911
   type: AirSensor
   components:

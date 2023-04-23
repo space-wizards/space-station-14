@@ -103,7 +103,7 @@ namespace Content.Client.Credits
 
         private IEnumerable<PatronEntry> LoadPatrons()
         {
-            var yamlStream = _resourceManager.ContentFileReadYaml(new ResourcePath("/Credits/Patrons.yml"));
+            var yamlStream = _resourceManager.ContentFileReadYaml(new ("/Credits/Patrons.yml"));
             var sequence = (YamlSequenceNode) yamlStream.Documents[0].RootNode;
 
             return sequence
