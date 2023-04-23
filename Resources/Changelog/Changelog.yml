@@ -1,10 +1,4 @@
 Entries:
-- author: QuietlyWhisper
-  changes:
-  - {message: Carps now "Fly" and will no longer be harmed by lava or glass shards.,
-    type: Add}
-  id: 3017
-  time: '2023-02-11T01:39:24.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Changed job icons for scientist and research director., type: Tweak}
@@ -2898,3 +2892,8 @@ Entries:
     type: Tweak}
   id: 3516
   time: '2023-04-23T17:29:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added a generic bonk sound to items that collide with stuff., type: Add}
+  id: 3517
+  time: '2023-04-23T17:42:09.0000000+00:00'
