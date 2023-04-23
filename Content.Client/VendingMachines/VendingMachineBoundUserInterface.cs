@@ -2,6 +2,7 @@ using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.GameObjects;
 using System.Linq;
+using Robust.Shared.Map;
 
 namespace Content.Client.VendingMachines
 {
@@ -27,7 +28,12 @@ namespace Content.Client.VendingMachines
 
             _cachedInventory = vendingMachineSys.GetAllInventory(Owner.Owner);
 
-            _menu = new VendingMachineMenu {Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
+            var meta = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner);
+
+            _menu = new VendingMachineMenu(meta.EntityPrototype!.ID)
+            {
+                Title = meta.EntityName,
+            };
 
             _menu.OnClose += Close;
             _menu.OnItemSelected += OnItemSelected;
@@ -72,6 +78,7 @@ namespace Content.Client.VendingMachines
 
             _entityManager.DeleteEntity(_menu.ent);
             foreach (var entity in _menu.ents) _entityManager.DeleteEntity(entity);
+
             _menu.OnItemSelected -= OnItemSelected;
             _menu.OnClose -= Close;
             _menu.Dispose();

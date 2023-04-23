@@ -25,7 +25,7 @@ namespace Content.Client.VendingMachines.UI
         public EntityUid ent = EntityUid.Invalid;
         public List<EntityUid> ents = new();
 
-        public VendingMachineMenu()
+        public VendingMachineMenu(string prototype)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
@@ -36,7 +36,7 @@ namespace Content.Client.VendingMachines.UI
             };
 
             // Placeholder VendingInfo
-            ent = _entityManager.SpawnEntity("VendingMachineCola", MapCoordinates.Nullspace);
+            ent = _entityManager.SpawnEntity(prototype, MapCoordinates.Nullspace);
             var sprite = _entityManager.GetComponent<SpriteComponent>(ent);
             VendingInfo.AddChild(new SpriteView
             {
@@ -171,7 +171,7 @@ namespace Content.Client.VendingMachines.UI
 
             VendingInfo.Children.Clear();
 
-            var ent = _entityManager.SpawnEntity(name ?? "ClothingUniformJumpsuitAncient", MapCoordinates.Nullspace);
+            ent = _entityManager.SpawnEntity(name ?? "ClothingUniformJumpsuitAncient", MapCoordinates.Nullspace);
 
             var metaData = _entityManager.GetComponent<MetaDataComponent>(ent);
             _entityManager.TryGetComponent<SpriteComponent>(ent, out var sprite);
