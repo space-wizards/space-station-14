@@ -43,14 +43,8 @@ technologies-surveillance-description = Retro-styled cameras straight from the y
 technologies-security-basic = Basic Security Technology
 technologies-security-basic-description = Basic equipment for security personnel.
 
-technologies-ballistic-ammunition = Ballistic ammunition
-technologies-ballistic-ammunition-description = Because a gun without any bullets is just a fancy paperweight.
-
 technologies-ballistic-magazines = Ballistic magazines
 technologies-ballistic-magazines-description = Discover the wonders of not having to find a recharger for your gun.
-
-technologies-ballistic-weaponry = Ballistic weaponry
-technologies-ballistic-weaponry-description = Energy weapons may be the future, but ballistics are what you need in the present.
 
 technologies-non-lethal = Non-Lethal Technology
 technologies-non-lethal-description = Because not every situation needs to be escalated.
@@ -77,7 +71,7 @@ technologies-specialized-armor = Specialized Armor
 technologies-specialized-armor-description = Types of armor specifically designed for certain threats.
 
 technologies-spaceproof-armor = Spaceproof Armor
-technologies-spaceproof-description = Let nothing stop you from your pursuit of justice.
+technologies-spaceproof-description = Not even the empty void of space will stop you from your pursuit of justice.
 
 technologies-industrial-engineering = Industrial engineering
 technologies-industrial-engineering-description = A refresher course on modern engineering technology.
@@ -129,7 +123,6 @@ technologies-ripley-technology-description = The latest and greatest in mechaniz
 
 technologies-adv-parts-technology-description = Like the previous ones, but better!
 technologies-adv-parts-technology = Advanced parts technology
-
 
 technologies-super-parts-technology = Super parts technology
 technologies-super-parts-technology-description = New heights of machine performance.

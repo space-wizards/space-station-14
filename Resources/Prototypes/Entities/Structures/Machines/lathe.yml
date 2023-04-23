@@ -241,10 +241,6 @@
       - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
-      - WeaponLaserCarbine
-      - WeaponAdvancedLaser
-      - WeaponLaserCannon
-      - WeaponXrayCannon
 
 - type: entity
   parent: Protolathe
@@ -415,9 +411,6 @@
       - Disabler
       - Bola
       - Flashbang
-      - FoodBoxDonut
-      - ForensicPad
-      - ForensicScanner
       - ClothingEyesGlassesSecurity
       - FlashlightSeclite
       - RiotShield
@@ -447,7 +440,7 @@
       - ClothingOuterArmorReflective
       - ClothingOuterArmorBulletproof
       - ClothingOuterHardsuitSecurity
-      - JetpackSecurityFilled
+      - JetpackSecurity
       - MagazineBoxPistol
       - MagazineBoxPistolRubber
       - MagazineBoxMagnum
@@ -466,11 +459,6 @@
       - MagazinePistol
       - MagazinePistolHighVelocity
       - MagazinePistolRubber
-      - WeaponRifleLecter
-      - WeaponSubMachineGunWt550
-      - WeaponShotgunEnforcer
-      - WeaponRevolverInspector
-      - WeaponPistolMk58
       - WeaponLaserCarbine
       - WeaponAdvancedLaser
       - WeaponLaserCannon

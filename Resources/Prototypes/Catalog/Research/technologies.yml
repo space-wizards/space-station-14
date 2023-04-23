@@ -232,30 +232,8 @@
     - RiotBulletShield
     - Flash
     - FlashPayload
-    - ForensicPad
-    - ForensicScanner
     - ClothingGlassesEyesSecurity
     - FlashlightSeclite
-
-- type: technology
-  name: technologies-ballistic-ammunition
-  id: BallisticAmmunitionTechnology
-  description: technologies-ballistic-ammunition-description
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
-    state: base-6
-  requiredPoints: 5000
-  requiredTechnologies:
-    - BasicSecurityTechnology
-  unlockedRecipes:
-    - MagazineBoxPistol
-    - MagazineBoxPistolRubber
-    - MagazineBoxMagnum
-    - MagazineBoxMagnumRubber
-    - MagazineBoxRifle
-    - MagazineBoxRifleRubber
-    - MagazineBoxLightRifle
-    - MagazineBoxLightRifleRubber
 
 - type: technology
   name: technologies-ballistic-magazines
@@ -266,7 +244,7 @@
     state: red-icon
   requiredPoints: 10000
   requiredTechnologies:
-    - BallisticAmmunitionTechnology
+    - BasicSecurityTechnology
   unlockedRecipes:
     - SpeedLoaderMagnum
     - SpeedLoaderMagnumHighVelocity
@@ -278,24 +256,6 @@
     - MagazinePistol
     - MagazinePistolHighVelocity
     - MagazinePistolRubber
-
-- type: technology
-  name: technologies-ballistic-weaponry
-  id: BallisticWeaponryTechnology
-  description: technologies-ballistic-weaponry-description
-  icon:
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
-    state: icon
-  requiredPoints: 20000
-  requiredTechnologies:
-    - BasicSecurityTechnology
-    - BallisticMagazinesTechnology
-  unlockedRecipes:
-    - WeaponRifleLecter
-    - WeaponSubMachineGunWt550
-    - WeaponShotgunEnforcer
-    - WeaponRevolverInspector
-    - WeaponPistolMk58
 
 - type: technology
   name: technologies-non-lethal
@@ -311,7 +271,6 @@
     - Disabler
     - Flashbang
     - Bola
-    - FoodBoxDonut
 
 - type: technology
   name: technologies-energy-weaponry
@@ -423,7 +382,7 @@
     - RiotArmorTechnology
   unlockedrecipes:
     - ClothingOuterHardsuitSecurity
-    - JetpackSecurityFilled
+    - JetpackSecurity
 
 #
 # - type: technology

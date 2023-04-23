@@ -79,8 +79,8 @@
   id: XrayLaser
   damage:
     types:
-      Heat: 10
-      Radiation: 10
+      Heat: 15
+      Radiation: 15
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_xray
@@ -90,13 +90,13 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_xray
-  collisionMask: CollisionGroup.XrayImpassable
+  collisionMask: CollisionGroup.MobImpassable
 
 - type: hitscan
   id: RedHeavyLaser
   damage:
     types:
-      Heat: 28
+      Heat: 33
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_beam_heavy
@@ -111,7 +111,7 @@
   id: Pulse
   damage:
     types:
-      Heat: 35
+      Heat: 50
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_blue

@@ -14,7 +14,7 @@ namespace Content.Shared.Physics;
 public enum CollisionGroup
 {
     None               = 0,
-    XrayImpassable     = 1 << 0, // 1 Ignores walls, can only hit mobs
+    MobImpassable      = 1 << 0, // 1 Can only hit mobs, ignores everything else
     Opaque             = 2 << 1, // 2 Blocks light, can be hit by lasers
     Impassable         = 2 << 2, // 4 Walls, objects impassable by any means
     MidImpassable      = 2 << 3, // 8 Mobs, players, crabs, etc
@@ -31,13 +31,13 @@ public enum CollisionGroup
 
     // Humanoids, etc.
     MobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
-    MobLayer = Opaque | BulletImpassable | XrayImpassable,
+    MobLayer = Opaque | BulletImpassable | MobImpassable,
     // Mice, drones
     SmallMobMask = Impassable | LowImpassable,
-    SmallMobLayer = Opaque | BulletImpassable | XrayImpassable,
+    SmallMobLayer = Opaque | BulletImpassable | MobImpassable,
     // Birds/other small flyers
     FlyingMobMask = Impassable | HighImpassable,
-    FlyingMobLayer = Opaque | BulletImpassable | XrayImpassable,
+    FlyingMobLayer = Opaque | BulletImpassable | MobImpassable,
 
     // Mechs
     LargeMobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,

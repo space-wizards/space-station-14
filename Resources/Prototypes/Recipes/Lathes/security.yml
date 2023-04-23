@@ -21,13 +21,6 @@
     Plastic: 300
 
 - type: latheRecipe
-  id: ForensicPad
-  result: ForensicPad
-  completetime: 4
-  materials:
-    Plastic: 100
-
-- type: latheRecipe
   id: ClothingEyesGlassesSecurity
   result: ClothingEyesGlassesSecurity
   completetime: 2
@@ -194,49 +187,12 @@
     Steel: 500
 
 - type: latheRecipe
-  id: WeaponRifleLecter
-  result: WeaponRifleLecter
-  completetime: 10
-  materials:
-    Steel: 1000
-    Plastic: 1000
-
-- type: latheRecipe
-  id: WeaponSubMachineGunWt550
-  result: WeaponSubMachineGunWt550
-  completetime: 10
-  materials:
-    Steel: 1500
-    Plastic: 500
-
-- type: latheRecipe
-  id: WeaponShotgunEnforcer
-  result: WeaponShotgunEnforcer
-  completetime: 10
-  materials:
-    Steel: 1500
-
-- type: latheRecipe
-  id: WeaponRevolverInspector
-  result: WeaponRevolverInspector
-  completetime: 10
-  materials:
-    Steel: 1000
-
-- type: latheRecipe
-  id: WeaponPistolMk58
-  result: WeaponPistolMk58
-  completetime: 10
-  materials:
-    Steel: 1000
-
-- type: latheRecipe
   id: WeaponLaserCarbine
   result: WeaponLaserCarbine
   completetime: 10
   materials:
-    Steel: 1000
-    Glass: 500
+    Steel: 1200
+    Glass: 800
     Gold: 100
 
 - type: latheRecipe
@@ -244,28 +200,28 @@
   result: WeaponAdvancedLaser
   completetime: 10
   materials:
-    Steel: 500
-    Plastic: 500
-    Plasma: 1000
+    Steel: 1000
+    Plastic: 1000
+    Plasma: 1500
 
 - type: latheRecipe
   id: WeaponLaserCannon
   result: WeaponLaserCannon
   completetime: 10
   materials:
-    Steel: 200
-    Glass: 1000
+    Steel: 500
+    Glass: 2000
     Gold: 500
-    Plasma: 300
+    Plasma: 750
 
 - type: latheRecipe
   id: WeaponXrayCannon
   result: WeaponXrayCannon
   completetime: 10
   materials:
-    Steel: 500
-    Glass: 500
-    Plasma: 500
+    Steel: 1500
+    Glass: 1500
+    Plasma: 1000
     Uranium: 500
 
 - type: latheRecipe
@@ -327,7 +283,6 @@
   materials:
     Steel: 350
     Plastic: 600
-
 
 - type: latheRecipe
   id: SpeedLoaderMagnum
@@ -406,22 +361,8 @@
     Glass: 225
 
 - type: latheRecipe
-  id: FoodBoxDonut
-  result: FoodBoxDonut
-  completetime: 5
-  materials:
-    Plastic: 200
-
-- type: latheRecipe
   id: FlashlightSeclite
   result: FlashlightSeclite
-  completetime: 5
-  materials:
-    Steel: 500
-
-- type: latheRecipe
-  id: ForensicScanner
-  result: ForensicScanner
   completetime: 5
   materials:
     Steel: 500
@@ -515,8 +456,8 @@
     Plastic: 1500
 
 - type: latheRecipe
-  id: JetpackSecurityFilled
-  result: JetpackSecurityFilled
+  id: JetpackSecurity
+  result: JetpackSecurity
   completetime: 10
   materials:
     Steel: 1000

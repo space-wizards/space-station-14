@@ -60,7 +60,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
+    proto: RedLaser
     fireCost: 62.5
   - type: MagazineVisuals
     magState: mag
@@ -202,7 +202,11 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
   - type: Gun
-    fireRate: 1.5
+    selectedMode: FullAuto
+    fireRate: 3
+    availableModes:
+      - SemiAuto
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
@@ -255,6 +259,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: Gun
+    fireRate: 1
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
@@ -388,7 +393,7 @@
     fireCost: 100
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 40
+    autoRechargeRate: 50
   - type: MagazineVisuals
     magState: mag
     steps: 5
