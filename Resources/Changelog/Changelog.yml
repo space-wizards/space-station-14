@@ -1,10 +1,4 @@
 Entries:
-- author: nikthechampiongr
-  changes:
-  - {message: Nanotrasen has delivered new Judge robes to the courtrooms of certain
-      stations., type: Tweak}
-  id: 3015
-  time: '2023-02-10T19:32:33.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Mops now have an ItemStatus showing how full they are., type: Add}
@@ -2897,3 +2891,9 @@ Entries:
   - {message: Space Gru has returned the stars he stole and is very sorry., type: Fix}
   id: 3514
   time: '2023-04-23T10:28:41.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Added Disease protection for CBURN, ERT, and Syndie Elite (hardsuits
+      and their helmets)', type: Add}
+  id: 3515
+  time: '2023-04-23T17:22:08.0000000+00:00'
