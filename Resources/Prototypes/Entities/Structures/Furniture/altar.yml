@@ -414,9 +414,6 @@
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/bananium.rsi
     state: full
-  - type: Icon
-    sprite: Structures/Furniture/Altars/Cults/bananium.rsi
-    state: full
   - type: Construction
     graph: BananiumAltarGraph
     node: bananiumAltar

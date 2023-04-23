@@ -11,9 +11,6 @@
     drawdepth: FloorTiles
     layers:
       - state: bananium
-  - type: Icon
-    sprite: Tiles/Misc/bananium.rsi
-    state: bananium
   - type: Transform
     anchored: true
   - type: FootstepModifier
@@ -52,10 +49,8 @@
     launchForwardsMultiplier: 1.5
   - type: StepTrigger
     intersectRatio: 0.2
-  - type: CollisionWake
-    enabled: false
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
   - type: Fixtures
     fixtures:
     - shape:

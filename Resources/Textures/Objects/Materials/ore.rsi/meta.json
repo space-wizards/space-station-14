@@ -14,15 +14,7 @@
       "name": "ammonia"
     },
     {
-      "name": "bananium",
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
+      "name": "bananium"
     },
     {
       "name": "gold"

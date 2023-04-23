@@ -14,26 +14,10 @@
       "name": "alienhide"
     },
     {
-      "name": "bananium",
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
+      "name": "bananium"
     },
     {
-      "name": "bananium_1",
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
+      "name": "bananium_1"
     },
     {
       "name": "bearpelt"
@@ -136,15 +120,7 @@
       "name": "phoron_gem"
     },
     {
-      "name": "peel",
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
+      "name": "peel"
     },
     {
       "name": "phoron_gem_spent"

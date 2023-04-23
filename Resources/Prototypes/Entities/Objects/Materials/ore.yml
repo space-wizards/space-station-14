@@ -174,8 +174,6 @@
   name: bananium ore
   suffix: Full
   components:
-  - type: RadiationSource
-    intensity: 0.6
   - type: Stack
     stackType: BananiumOre
   - type: Sprite

@@ -220,7 +220,6 @@
   name: bananium peel
   parent: TrashBananaPeel
   id: TrashBananiumPeel
-  description: Radioactive trash.
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
@@ -231,8 +230,6 @@
   - type: Slippery
     paralyzeTime: 4
     launchForwardsMultiplier: 5
-  - type: RadiationSource
-    intensity: 0.3
 
 - type: entity
   name: banana peel
