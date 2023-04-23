@@ -149,7 +149,7 @@
     - SecurityOfficerGear
     - SecurityOfficerGear
     - DetectiveGear
-    - CorpseWardenGear
+    - WardenGear
     - HoSGear                 # Chance 1/10
 
 - type: randomHumanoidSettings
