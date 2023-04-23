@@ -10,21 +10,21 @@ using Content.Shared.Rounding;
 using Robust.Shared.Containers;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Kitchen.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
-using Content.Shared.UserInterface;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.PowerCell;
 
 public sealed class PowerCellSystem : SharedPowerCellSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActivatableUISystem _activatable = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
@@ -58,7 +58,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             if (!TryGetBatteryFromSlot(uid, out var battery, slot))
                 continue;
 
-            if (battery.TryUseCharge(comp.DrawRate * frameTime))
+            if (_battery.TryUseCharge(uid, comp.DrawRate * frameTime, battery))
                 continue;
 
             comp.Enabled = false;
@@ -79,7 +79,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             if (slot.Item == null)
                 return;
 
-            RaiseLocalEvent(slot.Item.Value, args, false);
+            RaiseLocalEvent(slot.Item.Value, args);
         }
     }
 
@@ -115,7 +115,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             && _itemSlotsSystem.TryGetSlot(container.Owner, slot.CellSlotId, out ItemSlot? itemSlot))
         {
             if (itemSlot.Item == uid)
-                RaiseLocalEvent(container.Owner, new PowerCellChangedEvent(false), false);
+                RaiseLocalEvent(container.Owner, new PowerCellChangedEvent(false));
         }
     }
 
@@ -138,8 +138,9 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     /// <param name="user">Popup to this user with the relevant detail if specified.</param>
     public bool HasActivatableCharge(EntityUid uid, PowerCellDrawComponent? battery = null, PowerCellSlotComponent? cell = null, EntityUid? user = null)
     {
+        // Default to true if we don't have the components.
         if (!Resolve(uid, ref battery, ref cell, false))
-            return false;
+            return true;
 
         return HasCharge(uid, battery.UseRate, cell, user);
     }
@@ -150,8 +151,9 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     /// <param name="user">Popup to this user with the relevant detail if specified.</param>
     public bool TryUseActivatableCharge(EntityUid uid, PowerCellDrawComponent? battery = null, PowerCellSlotComponent? cell = null, EntityUid? user = null)
     {
+        // Default to true if we don't have the components.
         if (!Resolve(uid, ref battery, ref cell, false))
-            return false;
+            return true;
 
         if (TryUseCharge(uid, battery.UseRate, cell, user))
         {
@@ -202,7 +204,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             return false;
         }
 
-        if (!battery.TryUseCharge(charge))
+        if (!_battery.TryUseCharge(uid, charge, battery))
         {
             if (user != null)
                 _popup.PopupEntity(Loc.GetString("power-cell-insufficient"), uid, user.Value);
