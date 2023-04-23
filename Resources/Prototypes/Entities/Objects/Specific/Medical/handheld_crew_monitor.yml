@@ -31,9 +31,9 @@
     price: 500
 
 - type: entity
-  id: HandheldCrewMonitorNoBattery
+  id: HandheldCrewMonitorEmpty
   parent: HandheldCrewMonitor
-  suffix: No Battery
+  suffix: Empty
   components:
   - type: ItemSlots
     slots:

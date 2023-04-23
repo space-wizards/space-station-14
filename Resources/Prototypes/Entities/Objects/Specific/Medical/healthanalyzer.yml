@@ -29,9 +29,9 @@
     - DiscreteHealthAnalyzer
 
 - type: entity
-  id: HandheldHealthAnalyzerNoBattery
+  id: HandheldHealthAnalyzerEmpty
   parent: HandheldHealthAnalyzer
-  suffix: No Battery
+  suffix: Empty
   components:
   - type: ItemSlots
     slots:
