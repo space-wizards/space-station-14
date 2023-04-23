@@ -213,6 +213,9 @@
     - state: onestar_boss_screen
       sprite: Mobs/Silicon/onestar.rsi
       shader: unshaded
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
@@ -223,7 +226,7 @@
       mask:
       - LargeMobMask
       layer:
-      - LargeMobLayer
+      - MobLayer
   - type: Appearance
     rotate: true
     states:
@@ -232,3 +235,7 @@
       Dead:
         Base: onestar_boss_wrecked
   - type: CombatMode
+  - type: Tag
+    tags:
+      - FootstepSound
+

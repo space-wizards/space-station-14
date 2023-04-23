@@ -136,7 +136,7 @@ namespace Content.Client.Gameplay
                     return cmp;
                 }
 
-                cmp = y.bottom.CompareTo(x.bottom);
+                cmp = -y.bottom.CompareTo(x.bottom);
 
                 if (cmp != 0)
                 {

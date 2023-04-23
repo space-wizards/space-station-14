@@ -345,11 +345,10 @@ public sealed class StationSystem : EntitySystem
     /// <returns>The initialized station.</returns>
     public EntityUid InitializeNewStation(StationConfig? stationConfig, IEnumerable<EntityUid>? gridIds, string? name = null)
     {
-        var station = Spawn(null, new MapCoordinates(0, 0, _gameTicker.DefaultMap));
+        var station = Spawn(null, MapCoordinates.Nullspace);
 
         // TODO SERIALIZATION The station data needs to be saveable somehow, but when a map gets saved, this entity
         // won't be included because its in null-space. Also, what happens to shuttles on other maps?
-        _transform.DetachParentToNull(station, Transform(station));
 
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);
