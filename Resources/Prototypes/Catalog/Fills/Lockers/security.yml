@@ -59,6 +59,8 @@
       - id: BoxSterileMask
       - id: ClothingUniformJumpsuitBrigmedic
       - id: ClothingUniformJumpskirtBrigmedic
+      - id: ClothingUniformJumpskirtOfLife
+        prob: 0.3
       - id: MedkitFilled
       - id: MedkitCombatFilled
         prob: 0.6
