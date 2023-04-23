@@ -40,8 +40,6 @@
     stackType: Gold
   - type: Sprite
     state: gold_3
-  - type: Item
-    heldPrefix: gold
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -49,6 +47,16 @@
       - gold
       - gold_2
       - gold_3
+  - type: Item
+    heldPrefix: gold
+  - type: Extractable
+    grindableSolutionName: gold
+  - type: SolutionContainerManager
+    solutions:
+      gold:
+        reagents:
+        - ReagentId: Gold
+          Quantity: 10
 
 - type: entity
   parent: IngotGold
