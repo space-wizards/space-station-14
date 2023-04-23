@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Broken shooting targets no longer drop 100 times more steel than they
-      cost., type: Tweak}
-  id: 2998
-  time: '2023-02-06T02:51:58.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Increased point generation from anomalies., type: Tweak}
@@ -2893,3 +2887,8 @@ Entries:
       have fun!', type: Tweak}
   id: 3497
   time: '2023-04-23T03:17:59.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: Medipen prick popup is now centered on you, type: Tweak}
+  id: 3498
+  time: '2023-04-23T03:43:47.0000000+00:00'
