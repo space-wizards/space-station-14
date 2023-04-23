@@ -1,9 +1,4 @@
 Entries:
-- author: Aleksh
-  changes:
-  - {message: Added Dame Dane clothing set. EEYIKES!, type: Add}
-  id: 3020
-  time: '2023-02-11T03:14:04.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: Message for nuke codes being sent to station now gives the correct destination.,
@@ -2899,3 +2894,8 @@ Entries:
       your uplink!, type: Add}
   id: 3519
   time: '2023-04-23T21:00:42.0000000+00:00'
+- author: ProPandaBear
+  changes:
+  - {message: The "Spacebucks" barsign was added., type: Add}
+  id: 3520
+  time: '2023-04-23T22:13:32.0000000+00:00'
