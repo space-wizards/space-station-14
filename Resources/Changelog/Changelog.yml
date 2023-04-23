@@ -1,10 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: Automatically called shuttles will take 10 minutes to get to the station
-      instead of 4., type: Tweak}
-  id: 3001
-  time: '2023-02-06T12:49:16.0000000+00:00'
 - author: Furontier
   changes:
   - {message: Added singularity guidebook entry, type: Add}
@@ -2885,6 +2879,12 @@ Entries:
   time: '2023-04-23T03:46:48.0000000+00:00'
 - author: 778b
   changes:
-  - {message: Stop Onestar mecha colliding with items and also use the mech footstep sounds for it., type: Fix}
+  - {message: Stop Onestar mecha colliding with items and also use the mech footstep
+      sounds for it., type: Fix}
   id: 3500
   time: '2023-04-23T03:55:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix monkeys standing up in crit., type: Fix}
+  id: 3501
+  time: '2023-04-23T04:29:56.0000000+00:00'
