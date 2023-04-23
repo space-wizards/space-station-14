@@ -32,6 +32,7 @@
   - ServiceWorker
   - TechnicalAssistant
   - ResearchAssistant
+  - StationMaid
 
 - type: department
   id: Command

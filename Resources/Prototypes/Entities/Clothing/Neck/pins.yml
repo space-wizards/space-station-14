@@ -151,3 +151,19 @@
     clothingVisuals:
       neck:
       - state: trans-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckMaidPin
+  name: maid pin
+  description: Fine display of your affiliation with station maids. Be proud of your position as you are a treasure to an entire station!
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: maid
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: maid-equipped

@@ -59,6 +59,18 @@
       job: IAA
 
 - type: entity
+  parent: IDCardStandard
+  id: StationMaidIDCard
+  name: maid ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: silver
+        - state: idmaid
+    - type: PresetIdCard
+      job: StationMaid
+
+- type: entity
   parent: PassengerIDCard
   id: MedicalInternIDCard
   name: medical intern ID card

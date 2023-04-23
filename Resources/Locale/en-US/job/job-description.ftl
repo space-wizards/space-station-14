@@ -42,3 +42,4 @@ job-description-security = Catch criminals and enemies of the station, enforce t
 job-description-serviceworker = Learn the basics of bartending, cooking, and growing plants.
 job-description-warden = Patrol the security department, ensure that no one is stealing from the armory, and make sure that all prisoners are processed and let out when their time is up.
 job-description-zookeeper = Put on a joyful display of cute animals and space carps for all the crew to see. Not available on all maps!
+job-description-stationmaid = Be a better (and cuter) version of both janitor and a service worker. Provide emotional support for the capitan. Pride yourself as a station talisman.

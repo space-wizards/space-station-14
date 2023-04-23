@@ -1,0 +1,37 @@
+- type: job
+  id: StationMaid
+  name: job-name-stationmaid
+  description: job-description-stationmaid
+  playTimeTracker: JobStationMaid
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobJanitor
+      time: 10800
+    - !type:OverallPlaytimeRequirement
+      time: 36000
+  startingGear: StationMaidGear
+  icon: "StationMaid"
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  - Maintenance
+  - Janitor
+  - Bar
+  - Kitchen
+  extendedAccess:
+  - Hydroponics
+
+- type: startingGear
+  id: StationMaidGear
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtJanimaid
+    head: ClothingHeadHatCatEars
+    neck: ClothingNeckMaidPin
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesMaid
+    id: StationMaidPDA
+    ears: ClothingHeadsetService
+    gloves: ClothingHandsGlovesColorWhite
+    belt: ClothingBeltMaidFilled
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

@@ -130,3 +130,10 @@ ent-SpawnPointPsychologist = психолог
 ent-SpawnPointZookeeper = зоотехник
     .desc = { ent-SpawnPointJobBase.desc }
     .suffix = { "" }
+ent-SpawnPointIAA = агент внутренних дел
+    .desc = { ent-SpawnPointJobBase.desc }
+    .suffix = { "" }
+ent-SpawnPointStationMaid = кошкогорничная
+    .desc = { ent-SpawnPointJobBase.desc }
+    .suffix = { "" }
+
