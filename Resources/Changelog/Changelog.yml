@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPC prototype reloading for realsies., type: Fix}
-  id: 3010
-  time: '2023-02-08T14:01:27.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixed wallmounts working when boards are removed., type: Fix}
@@ -2891,3 +2886,8 @@ Entries:
   - {message: APCs now show correct charge and state, type: Fix}
   id: 3509
   time: '2023-04-23T08:22:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Update the salvage expedition song to the final version., type: Tweak}
+  id: 3510
+  time: '2023-04-23T09:13:38.0000000+00:00'
