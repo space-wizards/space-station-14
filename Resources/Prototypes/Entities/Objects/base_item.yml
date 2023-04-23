@@ -56,3 +56,36 @@
       storagebase: !type:Container
         ents: []
 
+
+# PowerCellSlot parents
+- type: entity
+  name: a
+  id: PowerCellSlotSmallItem
+  abstract: true
+  components:
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot { }
+    - type: PowerCellSlot
+      cellSlotId: cell_slot
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellSmall
+
+- type: entity
+  name: a
+  id: PowerCellSlotMediumItem
+  abstract: true
+  components:
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot { }
+    - type: PowerCellSlot
+      cellSlotId: cell_slot
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellMedium
