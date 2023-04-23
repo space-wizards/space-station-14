@@ -54,6 +54,6 @@
     sprite: Objects/Weapons/Guns/Revolvers/rex.rsi
     state: icon
   product: CrateRevolver
-  cost: 1100
+  cost: 1400
   category: Armory
   group: market
