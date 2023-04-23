@@ -1,9 +1,4 @@
 Entries:
-- author: Furontier
-  changes:
-  - {message: Added singularity guidebook entry, type: Add}
-  id: 3002
-  time: '2023-02-06T13:10:07.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: PDAs no longer disappear when inhand, type: Fix}
@@ -2888,3 +2883,9 @@ Entries:
   - {message: Fix monkeys standing up in crit., type: Fix}
   id: 3501
   time: '2023-04-23T04:29:56.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: The Syndicate has elected to introduce a permanent two-for-the-price-of-one
+      deal on Syndicate Encryption Keys. Give the spare to a friend (or enemy)!, type: Tweak}
+  id: 3502
+  time: '2023-04-23T05:08:13.0000000+00:00'
