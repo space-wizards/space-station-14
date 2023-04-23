@@ -66,8 +66,8 @@ public sealed class ProximityBeeperSystem : EntitySystem
             return;
         }
 
-        var xform = Transform(uid);
         var xformQuery = GetEntityQuery<TransformComponent>();
+        var xform = xformQuery.GetComponent(uid);
         var comp = EntityManager.ComponentFactory.GetRegistration(component.Component).Type;
         float? closestDistance = null;
         foreach (var targetXform in _entityLookup.GetComponentsInRange<TransformComponent>(xform.MapPosition, component.MaximumDistance))
