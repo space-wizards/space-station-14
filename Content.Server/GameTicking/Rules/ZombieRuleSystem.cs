@@ -2,9 +2,6 @@ using System.Globalization;
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
-using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Popups;
@@ -38,7 +35,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-    [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -49,7 +45,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     public override string Prototype => "Zombie";
 
     private const string PatientZeroPrototypeID = "InitialInfected";
-    private const string InitialZombieVirusPrototype = "PassiveZombieVirus";
     private const string ZombifySelfActionPrototype = "TurnUndead";
 
     public override void Initialize()
@@ -235,7 +230,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         var prefList = new List<IPlayerSession>();
         foreach (var player in allPlayers)
         {
-            if (player.AttachedEntity != null && HasComp<DiseaseCarrierComponent>(player.AttachedEntity))
+            if (player.AttachedEntity != null)
             {
                 playerList.Add(player);
 
@@ -289,7 +284,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             var inCharacterName = string.Empty;
             if (mind.OwnedEntity != null)
             {
-                _diseaseSystem.TryAddDisease(mind.OwnedEntity.Value, InitialZombieVirusPrototype);
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
 
                 var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombifySelfActionPrototype));

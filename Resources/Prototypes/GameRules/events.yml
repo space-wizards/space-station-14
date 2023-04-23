@@ -46,20 +46,6 @@
     endAfter: 1
 
 - type: gameRule
-  id: DiseaseOutbreak
-  config:
-    !type:StationEventRuleConfiguration
-    startAnnouncement: station-event-disease-outbreak-announcement
-    startAudio:
-      path: /Audio/Announcements/outbreak7.ogg
-      params:
-        volume: -4
-    id: DiseaseOutbreak
-    weight: 5
-    endAfter: 1
-    earliestStart: 15
-
-- type: gameRule
   id: Dragon
   config:
     !type:StationEventRuleConfiguration

@@ -1,7 +1,6 @@
 using System.Text;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Disease.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.MedicalScanner;
@@ -32,19 +31,10 @@ namespace Content.Client.HealthAnalyzer.UI
                     entities.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out var metaData))
                     entityName = Identity.Name(msg.TargetEntity.Value, entities);
 
-                IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup = damageable.DamagePerGroup;
-                IReadOnlyDictionary<string, FixedPoint2> DamagePerType = damageable.Damage.DamageDict;
+                IReadOnlyDictionary<string, FixedPoint2> damagePerGroup = damageable.DamagePerGroup;
+                IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
 
                 text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n");
-
-                // Status Effects / Components
-                if (entities.HasComponent<DiseasedComponent>(msg.TargetEntity))
-                {
-                    text.Append($"{Loc.GetString("disease-scanner-diseased")}\n");
-                }else
-                {
-                    text.Append($"{Loc.GetString("disease-scanner-not-diseased")}\n");
-                }
 
                 // Damage
                 text.Append($"\n{Loc.GetString("health-analyzer-window-entity-damage-total-text", ("amount", damageable.TotalDamage))}\n");
@@ -54,14 +44,14 @@ namespace Content.Client.HealthAnalyzer.UI
                 var protos = IoCManager.Resolve<IPrototypeManager>();
 
                 // Show the total damage and type breakdown for each damage group.
-                foreach (var (damageGroupId, damageAmount) in DamagePerGroup)
+                foreach (var (damageGroupId, damageAmount) in damagePerGroup)
                 {
                     text.Append($"\n{Loc.GetString("health-analyzer-window-damage-group-text", ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)), ("amount", damageAmount))}");
                     // Show the damage for each type in that group.
                     var group = protos.Index<DamageGroupPrototype>(damageGroupId);
                     foreach (var type in group.DamageTypes)
                     {
-                        if (DamagePerType.TryGetValue(type, out var typeAmount))
+                        if (damagePerType.TryGetValue(type, out var typeAmount))
                         {
                             // If damage types are allowed to belong to more than one damage group, they may appear twice here. Mark them as duplicate.
                             if (!shownTypes.Contains(type))

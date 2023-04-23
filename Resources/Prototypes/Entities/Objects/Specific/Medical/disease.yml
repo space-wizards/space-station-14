@@ -13,7 +13,6 @@
   - type: Tag
     tags:
     - Recyclable
-  - type: DiseaseSwab
   - type: BotanySwab
 
 - type: entity
@@ -28,4 +27,3 @@
     sprite: Objects/Specific/Medical/medipen.rsi
     netsync: false
     state: salpen
-  - type: DiseaseVaccine
