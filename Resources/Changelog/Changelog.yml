@@ -1,9 +1,4 @@
 Entries:
-- author: jick
-  changes:
-  - {message: Unrandomized airlock painter styles, type: Fix}
-  id: 2997
-  time: '2023-02-05T20:22:37.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Broken shooting targets no longer drop 100 times more steel than they
@@ -2892,3 +2887,9 @@ Entries:
     type: Fix}
   id: 3496
   time: '2023-04-23T03:14:26.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Remote signaller can now be used as a payload in grenades and mines,
+      have fun!', type: Tweak}
+  id: 3497
+  time: '2023-04-23T03:17:59.0000000+00:00'
