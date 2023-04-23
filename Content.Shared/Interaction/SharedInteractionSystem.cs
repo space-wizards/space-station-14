@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -25,6 +26,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -137,12 +139,22 @@ namespace Content.Shared.Interaction
             args.Cancel();
         }
 
+        /// <summary>
+        ///     If item has DeleteOnDrop true then item will be deleted if removed from inventory, if it is false then item
+        ///     loses Unremoveable when removed from inventory (gibbing).
+        /// </summary>
         private void OnUnequipp(EntityUid uid, UnremoveableComponent item, GotUnequippedEvent args)
         {
-            if (item.DeleteOnDrop)
-			{
-                if (_net.IsServer)
-                    QueueDel(uid);
+
+            {
+                if (item.DeleteOnDrop == true)
+                {
+                    if (_net.IsServer)
+                        QueueDel(uid);
+                }
+
+                if (item.DeleteOnDrop == false)
+                    RemComp<UnremoveableComponent>(uid);
             }
         }
 
