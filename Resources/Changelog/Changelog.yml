@@ -1,10 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: Message for nuke codes being sent to station now gives the correct destination.,
-    type: Fix}
-  id: 3021
-  time: '2023-02-11T19:26:33.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: Solar Flare event. By default disables Common and Service channels in
@@ -2899,3 +2893,9 @@ Entries:
   - {message: The "Spacebucks" barsign was added., type: Add}
   id: 3520
   time: '2023-04-23T22:13:32.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: 'Added secure chemicals crates, and jugs for greater chemical storage.',
+    type: Add}
+  id: 3521
+  time: '2023-04-23T23:53:18.0000000+00:00'
