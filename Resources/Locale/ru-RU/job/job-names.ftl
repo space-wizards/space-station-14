@@ -43,6 +43,7 @@ job-name-boxer = боксёр
 job-name-zookeeper = зоотехник
 job-name-paramed = парамедик
 job-name-brigmedic = бригмедик
+job-name-stationmaid = кошкогорничная
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = атмосферный техник
 JobBartender = бармен
@@ -83,6 +84,7 @@ JobSecurityCadet = кадет СБ
 JobSecurityOfficer = офицер СБ
 JobServiceWorker = сервисный работник
 JobStationEngineer = инженер
+JobStationMaid = кошкогорничная
 JobTechnicalAssistant = технический ассистент
 JobWarden = смотритель
 JobBoxer = боксёр

@@ -1,10 +1,13 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
 public sealed class LizardAccentSystem : EntitySystem
 {
+    [Dependency] private readonly IRobustRandom _random = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -13,6 +16,8 @@ public sealed class LizardAccentSystem : EntitySystem
 
     private void OnAccent(EntityUid uid, LizardAccentComponent component, AccentGetEvent args)
     {
+        var message = args.Message;
+
         // hissss
         message = Regex.Replace(message, "s+", "sss");
         // hiSSS

@@ -47,6 +47,9 @@
   id: Bottle
 
 - type: Tag
+  id: BoxDonut
+
+- type: Tag
   id: BoxHug
 
 - type: Tag
@@ -130,6 +133,9 @@
 
 - type: Tag
   id: HelmetEVA
+
+- type: Tag
+  id: CatEars
 
 - type: Tag
   id: ClownRecorder
@@ -262,6 +268,9 @@
 
 - type: Tag
   id: Folder
+
+- type: Tag
+  id: Food
 
 - type: Tag
   id: FootstepSound

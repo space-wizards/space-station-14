@@ -103,6 +103,9 @@
     {
       "name": "idlawyer"
     },
+	{
+		"name": "idmaid"
+	},
     {
       "name": "idmedicaldoctor"
     },

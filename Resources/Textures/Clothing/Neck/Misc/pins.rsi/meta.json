@@ -69,6 +69,13 @@
     {
       "name": "trans-equipped",
       "directions": 4
+    },
+	{
+      "name": "maid"
+    },
+    {
+      "name": "maid-equipped",
+      "directions": 4
     }
   ]
 }

@@ -10,6 +10,7 @@
   - type: Tag
     tags:
     - Donut
+    - Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     netsync: false

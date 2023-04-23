@@ -47,3 +47,5 @@
         SecurityCadet: [ 1, 1 ]
         SalvageSpecialist: [ 2, 2 ]
         Quartermaster: [ 1, 1 ]
+        StationMaid: [ 1, 1 ]
+        Brigmedic: [ 1, 1 ]

@@ -15,6 +15,9 @@
     netsync: false
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     state: box
+  - type: Tag
+    tags:
+    - BoxDonut
   - type: Storage
     capacity: 6
     whitelist:
@@ -46,6 +49,49 @@
       - pink-box4
       - box5
       - pink-box6
+
+- type: entity
+  parent: BoxCardboard
+  id: FoodBoxDonutJellySlugcat
+  name: jelly slugcat donut box
+  description: Tasty slugcat donuts for your maids!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
+    state: box
+  - type: Tag
+    tags:
+    - BoxDonut
+  - type: Storage
+    capacity: 6
+    whitelist:
+      tags:
+      - Donut
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
+    size: 6
+    heldPrefix: box
+  - type: StorageFill
+    contents:
+    - id: FoodDonutJellySlugcat
+      amount: 6
+  - type: ItemCounter
+    count:
+      tags: [Donut]
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: box-open
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - box1
+      - box2
+      - box3
+      - box4
+      - box5
+      - box6
 
 # Egg
 

@@ -222,6 +222,51 @@
 
 - type: entity
   parent: ClothingBeltStorageBase
+  id: ClothingBeltMaid
+  name: maidbelt
+  description: A belt used to hold all your maid cleaning belongings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/maid.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/maid.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - Wrench
+        - Bottle
+        - Spray
+        - Soap
+        - Flashlight
+        - CigPack
+        - TrashBag
+        - WetFloorSign
+        - HolosignProjector
+        - CatEars
+        - BoxDonut
+        - Donut
+        - Food
+      components:
+        - LightReplacer
+  - type: ItemMapper
+    mapLayers:
+      bottle:
+        whitelist:
+          tags:
+          - Bottle
+      bottle_spray:
+        whitelist:
+          tags:
+          - Spray
+      wrench:
+        whitelist:
+          tags:
+          - Wrench
+    sprite: Clothing/Belt/belt_overlay.rsi
+  - type: Appearance
+
+- type: entity
+  parent: ClothingBeltStorageBase
   id: ClothingBeltMedical
   name: medical belt
   description: Can hold various medical equipment.

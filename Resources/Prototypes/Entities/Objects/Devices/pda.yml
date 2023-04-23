@@ -392,6 +392,20 @@
 
 - type: entity
   parent: BasePDA
+  id: StationMaidPDA
+  name: maid PDA
+  description: A PDA colored like a maid itself! It does well to represent its owner.
+  components:
+  - type: PDA
+    id: StationMaidIDCard
+    state: pda-maid
+  - type: PDABorderColor
+    borderColor: "#474c67"
+  - type: Icon
+    state: pda-maid
+
+- type: entity
+  parent: BasePDA
   id: CaptainPDA
   name: captain PDA
   description: Surprisingly no different from your PDA.

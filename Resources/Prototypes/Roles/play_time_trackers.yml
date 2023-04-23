@@ -138,3 +138,6 @@
 
 - type: playTimeTracker
   id: JobIAA
+
+- type: playTimeTracker
+  id: JobStationMaid

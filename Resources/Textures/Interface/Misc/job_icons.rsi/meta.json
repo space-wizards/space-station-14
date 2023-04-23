@@ -149,6 +149,9 @@
             "name": "SecurityCadet"
         },
         {
+            "name": "StationMaid"
+        },
+        {
             "name": "Zookeeper"
         }
     ]
