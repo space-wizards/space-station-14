@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Anomaly Vessel beeping is now much louder., type: Fix}
-  id: 3013
-  time: '2023-02-09T16:37:25.0000000+00:00'
 - author: Emisse
   changes:
   - {message: 'Add Fland Installation, a high population map', type: Add}
@@ -2893,3 +2888,12 @@ Entries:
   - {message: Fix follower eye rotation not being reset on map changes., type: Fix}
   id: 3512
   time: '2023-04-23T10:01:16.0000000+00:00'
+- author: Endecc
+  changes:
+  - {message: 'Centcomm has actually TURNED ON the motors of the Advanced Mop, allowing
+      it to actually be an upgrade Janitors will want!', type: Tweak}
+  - {message: 'To accommodate for this actual running motor, the plastic cost for
+      the Advanced Mop at the lathe has been increased from 100 > 400 to reinforce
+      the structure', type: Tweak}
+  id: 3513
+  time: '2023-04-23T10:17:21.0000000+00:00'
