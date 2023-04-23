@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Changed job icons for scientist and research director., type: Tweak}
-  id: 3018
-  time: '2023-02-11T01:51:48.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Added missing satchel and duffel virology bags to the ViroDrobe., type: Add}
@@ -2897,3 +2892,8 @@ Entries:
   - {message: Added a generic bonk sound to items that collide with stuff., type: Add}
   id: 3517
   time: '2023-04-23T17:42:09.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Fixed theatrical performances crate now have name and desc., type: Fix}
+  id: 3518
+  time: '2023-04-23T20:45:16.0000000+00:00'
