@@ -29,7 +29,7 @@
     outerClothing: ClothingOuterVestDetective
     id: DetectivePDA
     ears: ClothingHeadsetSecurity
-    pocket1: ForensicPad
+    pocket1: HandLabeler
     pocket2: ForensicScanner
     belt: ClothingBeltHolster
   innerclothingskirt: ClothingUniformJumpskirtDetective
