@@ -52,3 +52,43 @@
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumRubber
+
+- type: entity
+  id: BaseAnomalousCartridge
+  parent: BaseCartridgeMagnum
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/anomalous_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeCHIMP
+
+- type: entity
+  id: CartridgeAnomalousParticleDelta
+  parent: BaseAnomalousCartridge
+  name: cartridge (delta particle)
+  components:
+  - type: CartridgeAmmo
+    proto: AnomalousParticleDelta
+
+- type: entity
+  id: CartridgeAnomalousParticleEpsilon
+  parent: BaseAnomalousCartridge
+  name: cartridge (epsilon particle)
+  components:
+  - type: CartridgeAmmo
+    proto: AnomalousParticleEpsilon
+
+- type: entity
+  id: CartridgeAnomalousParticleZeta
+  parent: BaseAnomalousCartridge
+  name: cartridge (zeta particle)
+  components:
+  - type: CartridgeAmmo
+    proto: AnomalousParticleZeta

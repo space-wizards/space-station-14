@@ -338,7 +338,7 @@
   - type: Projectile
     damage:
       types:
-        Heat: 3
+        Heat: 5
   - type: TimedDespawn
     lifetime: 3
 
