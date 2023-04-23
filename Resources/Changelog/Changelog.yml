@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: You can now print tier 3 machine parts at lathes., type: Add}
-  id: 3008
-  time: '2023-02-08T00:39:08.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: APEs are now much lighter and easier to move around., type: Tweak}
   id: 3009
   time: '2023-02-08T02:10:27.0000000+00:00'
@@ -2888,3 +2883,11 @@ Entries:
   - {message: add salvage rig, type: Add}
   id: 3507
   time: '2023-04-23T07:36:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Puddles now only overflow when they can fully occupy a tile., type: Tweak}
+  - {message: Puddles will now never overflow to a water puddle., type: Tweak}
+  - {message: Bumped mop volume from 60 to 100 and reduced cooldown from 1.5s to 1s.,
+    type: Tweak}
+  id: 3508
+  time: '2023-04-23T08:20:04.0000000+00:00'
