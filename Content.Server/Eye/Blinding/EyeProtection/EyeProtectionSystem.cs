@@ -48,9 +48,10 @@ namespace Content.Server.Eye.Blinding.EyeProtection
             if (time <= 0)
                 return;
 
-            // Add permanent eye damage if they had zero protection, also scale their temporary blindness by how much they already accumulated.
+            // Add permanent eye damage if they had zero protection, also somewhat scale their temporary blindness by
+            // how much damage they already accumulated.
             _blindingSystem.AdjustEyeDamage(args.User, 1, blindable);
-            var statusTimeSpan = TimeSpan.FromSeconds(time * (blindable.EyeDamage + 1));
+            var statusTimeSpan = TimeSpan.FromSeconds(time * MathF.Sqrt(blindable.EyeDamage));
             _statusEffectsSystem.TryAddStatusEffect(args.User, TemporaryBlindnessSystem.BlindingStatusEffect,
                 statusTimeSpan, false, TemporaryBlindnessSystem.BlindingStatusEffect);
         }
