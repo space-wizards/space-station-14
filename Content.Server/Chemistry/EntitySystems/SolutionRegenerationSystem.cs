@@ -36,9 +36,16 @@ public sealed class SolutionRegenerationSystem : EntitySystem
                     continue;
 
                 // dont bother cloning and splitting if adding the whole thing
-                var generated = amount == regen.Generated.Volume
-                    ? regen.Generated
-                    : regen.Generated.Clone().SplitSolution(amount);
+                Solution generated;
+                if (amount == regen.Generated.Volume)
+                {
+                    generated = regen.Regenerated;
+                }
+                else
+                {
+                    generated = regen.Generated.Clone().SplitSolution(amount);
+                }
+
                 _solutionContainer.TryAddSolution(uid, solution, generated);
             }
         }
