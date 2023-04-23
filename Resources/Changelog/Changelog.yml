@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Bluespace anomalies no longer... crash everything., type: Fix}
-  id: 3005
-  time: '2023-02-06T21:11:20.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added the NCS Aspid, type: Add}
@@ -2887,3 +2882,9 @@ Entries:
       the item a second time., type: Tweak}
   id: 3504
   time: '2023-04-23T05:35:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the anomaly locator. When powered with a battery, it will beep
+      as you approach anomalies. Happy hunting!', type: Add}
+  id: 3505
+  time: '2023-04-23T05:39:33.0000000+00:00'
