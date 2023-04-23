@@ -14,6 +14,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     {
         SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleEntityInserted);
     }
+
     protected virtual void HandleEntityInserted(EntityUid uid, HandsComponent hands, EntInsertedIntoContainerMessage args)
     {
         if (!TryGetHand(uid, args.Container.ID, out var hand))
@@ -25,7 +26,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         RaiseLocalEvent(uid, didEquip, false);
 
         var gotEquipped = new GotEquippedHandEvent(uid, args.Entity, hand);
-        RaiseLocalEvent(args.Entity, gotEquipped, true);
+        RaiseLocalEvent(args.Entity, gotEquipped, false);
     }
 
     /// <summary>

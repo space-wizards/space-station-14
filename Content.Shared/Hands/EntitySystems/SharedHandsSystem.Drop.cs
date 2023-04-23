@@ -23,7 +23,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         RaiseLocalEvent(args.Entity, gotUnequipped, false);
 
         var didUnequip = new DidUnequipHandEvent(uid, args.Entity, hand);
-        RaiseLocalEvent(uid, didUnequip, true);
+        RaiseLocalEvent(uid, didUnequip, false);
     }
 
     /// <summary>
