@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: CargoTechnicianCorpse
-  suffix: Dead, Cargo Technician
-  components:
-  - type: Loadout
-    prototypes: [ CargoTechGear ]

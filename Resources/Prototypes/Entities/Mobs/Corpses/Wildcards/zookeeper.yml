@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: ZookeeperCorpse
-  suffix: Dead, Zookeeper
-  components:
-  - type: Loadout
-    prototypes: [ ZookeeperGear ]

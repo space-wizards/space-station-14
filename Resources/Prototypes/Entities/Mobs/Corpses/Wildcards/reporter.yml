@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: ReporterCorpse
-  suffix: Dead, Reporter
-  components:
-  - type: Loadout
-    prototypes: [ ReporterGear ]

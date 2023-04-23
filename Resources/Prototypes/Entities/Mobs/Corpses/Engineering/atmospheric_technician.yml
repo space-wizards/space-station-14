@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: AtmosphericTechnicianCorpse
-  suffix: Dead, Atmospheric Technician
-  components:
-  - type: Loadout
-    prototypes: [ AtmosphericTechnicianGear ]

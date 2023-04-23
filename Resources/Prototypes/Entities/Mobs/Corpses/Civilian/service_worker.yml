@@ -1,7 +1,0 @@
-﻿- type: entity
-  parent: SalvageHumanCorpse
-  id: ServiceWorkerCorpse
-  suffix: Dead, Service Worker
-  components:
-  - type: Loadout
-    prototypes: [ ServiceWorkerGear ]

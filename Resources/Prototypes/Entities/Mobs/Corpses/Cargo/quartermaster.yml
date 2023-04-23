@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: QuartermasterCorpse
-  suffix: Dead, Quartermaster
-  components:
-  - type: Loadout
-    prototypes: [ QuartermasterGear ]

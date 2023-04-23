@@ -1,7 +1,0 @@
-﻿- type: entity
-  parent: SalvageHumanCorpse
-  id: TechnicalAssistantCorpse
-  suffix: Dead, Technical Assistant
-  components:
-  - type: Loadout
-    prototypes: [ TechnicalAssistantGear ]

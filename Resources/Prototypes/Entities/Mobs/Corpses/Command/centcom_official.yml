@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: CentcomCorpse
-  suffix: Dead, Centcom
-  components:
-  - type: Loadout
-    prototypes: [ CentcomGear ]

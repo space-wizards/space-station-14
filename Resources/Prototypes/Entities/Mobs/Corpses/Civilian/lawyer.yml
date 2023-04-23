@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: LawyerCorpse
-  suffix: Dead, Lawyer
-  components:
-  - type: Loadout
-    prototypes: [ LawyerGear ]

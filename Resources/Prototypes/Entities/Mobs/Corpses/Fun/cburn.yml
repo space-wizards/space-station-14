@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: CBURNCorpse
-  suffix: Dead, CBURN
-  components:
-  - type: Loadout
-    prototypes: [ CBURNGear ]

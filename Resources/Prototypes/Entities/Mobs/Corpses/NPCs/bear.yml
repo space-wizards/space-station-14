@@ -1,9 +1,0 @@
-﻿- type: entity
-  parent: MobBearSpace
-  id: MobBearSpaceCorpse
-  suffix: Dead
-  components:
-  - type: Damageable
-    damage:
-      types:
-        Blunt: 150

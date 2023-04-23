@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: BotanistCorpse
-  suffix: Dead, Botanist
-  components:
-  - type: Loadout
-    prototypes: [ BotanistGear ]

@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: DeathSquadCorpse
-  suffix: Dead, Death Squad
-  components:
-  - type: Loadout
-    prototypes: [ DeadsquadGear ]

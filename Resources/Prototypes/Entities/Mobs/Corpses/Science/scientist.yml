@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: ScientistCorpse
-  suffix: Dead, Scientist
-  components:
-  - type: Loadout
-    prototypes: [ ScientistGear ]

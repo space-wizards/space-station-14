@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: ChiefEngineerCorpse
-  suffix: Dead, Chief Engineer
-  components:
-  - type: Loadout
-    prototypes: [ ChiefEngineerGear ]

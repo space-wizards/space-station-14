@@ -1,0 +1,177 @@
+- type: randomHumanoidSettings
+  id: RandomServiceCorpse
+  randomizeName: false
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 49
+        Asphyxiation: 76
+        Slash: 56
+        Blunt: 19
+  - type: Inventory
+    templateId: corpse
+  - type: Loadout
+    prototypes:
+    - ClownGear
+    - MimeGear
+    - JanitorGear
+    - JanitorGear
+    - ServiceWorkerGear
+    - ServiceWorkerGear
+    - MusicianGear
+    - BotanistGear
+    - BotanistGear
+    - ChefGear
+    - ChaplainGear
+    - PassengerGear
+    - PassengerGear
+    - PassengerGear
+    - HoPGear                     # Chance 1/15
+
+- type: randomHumanoidSettings
+  id: RandomCargoCorpse
+  randomizeName: false
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 49
+        Asphyxiation: 76
+        Slash: 56
+        Blunt: 19
+  - type: Inventory
+    templateId: corpse
+  - type: Loadout
+    prototypes:
+    - CargoTechGear
+    - CargoTechGear
+    - CargoTechGear
+    - SalvageSpecialistGear
+    - SalvageSpecialistGear
+    - QuartermasterGear           # Chance 1/6
+
+- type: randomHumanoidSettings
+  id: RandomEngineerCorpse
+  randomizeName: false
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 49
+        Asphyxiation: 76
+        Slash: 56
+        Blunt: 19
+  - type: Inventory
+    templateId: corpse
+  - type: Loadout
+    prototypes:
+    - TechnicalAssistantGear
+    - TechnicalAssistantGear
+    - TechnicalAssistantGear
+    - AtmosphericTechnicianGear
+    - AtmosphericTechnicianGear
+    - ChiefEngineerGear           # Chance 1/10
+    - StationEngineerGear
+    - StationEngineerGear
+    - StationEngineerGear
+    - StationEngineerGear
+
+- type: randomHumanoidSettings
+  id: RandomMedicCorpse
+  randomizeName: false
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 49
+        Asphyxiation: 76
+        Slash: 56
+        Blunt: 19
+  - type: Inventory
+    templateId: corpse
+  - type: Loadout
+    prototypes:
+    - MedicalInternGear
+    - MedicalInternGear
+    - MedicalInternGear
+    - PsychologistGear
+    - ChemistGear
+    - ChemistGear
+    - CMOGear                     # Chance 1/10
+    - DoctorGear
+    - DoctorGear
+    - DoctorGear
+
+- type: randomHumanoidSettings
+  id: RandomScienceCorpse
+  randomizeName: false
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 49
+        Asphyxiation: 76
+        Slash: 56
+        Blunt: 19
+  - type: Inventory
+    templateId: corpse
+  - type: Loadout
+    prototypes:
+    - ResearchAssistantGear
+    - ResearchAssistantGear
+    - ResearchAssistantGear
+    - ScientistGear
+    - ScientistGear
+    - ScientistGear
+    - ResearchDirectorGear        # Chance 1/7
+
+- type: randomHumanoidSettings
+  id: RandomSecurityCorpse
+  randomizeName: false
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 49
+        Asphyxiation: 76
+        Slash: 56
+        Blunt: 19
+  - type: Inventory
+    templateId: corpse
+  - type: Loadout
+    prototypes:
+    - SecurityCadetGear
+    - SecurityCadetGear
+    - SecurityCadetGear
+    - SecurityOfficerGear
+    - SecurityOfficerGear
+    - SecurityOfficerGear
+    - SecurityOfficerGear
+    - DetectiveGear
+    - CorpseWardenGear
+    - HoSGear                 # Chance 1/10
+
+- type: randomHumanoidSettings
+  id: RandomCommandCorpse
+  randomizeName: false
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 49
+        Asphyxiation: 76
+        Slash: 56
+        Blunt: 19
+  - type: Inventory
+    templateId: corpse
+  - type: Loadout
+    prototypes:
+    - HoPGear
+    - CentcomGear
+    - CaptainGear
+    - HoSGear
+    - ResearchDirectorGear
+    - CMOGear
+    - ChiefEngineerGear
+    - QuartermasterGear

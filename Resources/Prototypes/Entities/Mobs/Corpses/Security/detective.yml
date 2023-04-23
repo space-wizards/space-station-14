@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: DetectiveCorpse
-  suffix: Dead, Detective
-  components:
-  - type: Loadout
-    prototypes: [ DetectiveGear ]

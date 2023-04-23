@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: ChefCorpse
-  suffix: Dead, Chef
-  components:
-  - type: Loadout
-    prototypes: [ ChefGear ]

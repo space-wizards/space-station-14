@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: ClownCorpse
-  suffix: Dead, Clown
-  components:
-  - type: Loadout
-    prototypes: [ ClownGear ]

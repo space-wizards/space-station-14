@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: MimeCorpse
-  suffix: Dead, Mime
-  components:
-  - type: Loadout
-    prototypes: [ MimeGear ]

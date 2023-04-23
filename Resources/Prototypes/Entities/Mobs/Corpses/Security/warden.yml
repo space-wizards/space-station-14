@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: WardenCorpse
-  suffix: Dead, Warden
-  components:
-  - type: Loadout
-    prototypes: [ WardenGear ]

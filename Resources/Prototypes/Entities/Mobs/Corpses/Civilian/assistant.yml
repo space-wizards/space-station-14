@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: PassengerCorpse
-  suffix: Dead, Passenger
-  components:
-  - type: Loadout
-    prototypes: [ PassengerGear ]

@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: ResearchDirectorCorpse
-  suffix: Dead, Research Director
-  components:
-  - type: Loadout
-    prototypes: [ ResearchDirectorGear ]

@@ -1,0 +1,69 @@
+- type: entity
+  parent: MobHuman
+  id: MobRandomServiceCorpse
+  name: unidentified corpse
+  description: I think he's dead.
+  suffix: Dead, Service
+  components:
+  - type: RandomHumanoidSpawner
+    settings: RandomServiceCorpse
+
+- type: entity
+  parent: MobHuman
+  id: MobRandomEngineerCorpse
+  name: unidentified corpse
+  description: I think he's dead.
+  suffix: Dead, Engineer
+  components:
+  - type: RandomHumanoidSpawner
+    settings: RandomEngineerCorpse
+
+- type: entity
+  parent: MobHuman
+  id: MobRandomCargoCorpse
+  name: unidentified corpse
+  description: I think he's dead.
+  suffix: Dead, Cargo
+  components:
+  - type: RandomHumanoidSpawner
+    settings: RandomCargoCorpse
+
+- type: entity
+  parent: MobHuman
+  id: MobRandomMedicCorpse
+  name: unidentified corpse
+  description: I think he's dead.
+  suffix: Dead, Medic
+  components:
+  - type: RandomHumanoidSpawner
+    settings: RandomMedicCorpse
+
+- type: entity
+  parent: MobHuman
+  id: MobRandomScienceCorpse
+  name: unidentified corpse
+  description: I think he's dead.
+  suffix: Dead, Science
+  components:
+  - type: RandomHumanoidSpawner
+    settings: RandomScienceCorpse
+
+- type: entity
+  parent: MobHuman
+  id: MobRandomSecurityCorpse
+  name: unidentified corpse
+  description: I think he's dead.
+  suffix: Dead, Security
+  components:
+  - type: RandomHumanoidSpawner
+    settings: RandomSecurityCorpse
+
+- type: entity
+  parent: MobHuman
+  id: MobRandomSecurityCorpse
+  name: unidentified corpse
+  description: I think he's dead.
+  suffix: Dead, Command
+  components:
+  - type: RandomHumanoidSpawner
+    settings: RandomCommandCorpse

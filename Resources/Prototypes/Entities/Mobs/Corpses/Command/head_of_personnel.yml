@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: HeadOfPersonnelCorpse
-  suffix: Dead, Head of personnel
-  components:
-  - type: Loadout
-    prototypes: [ HoPGear ]

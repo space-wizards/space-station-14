@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: JanitorCorpse
-  suffix: Dead, Janitor
-  components:
-  - type: Loadout
-    prototypes: [ JanitorGear ]

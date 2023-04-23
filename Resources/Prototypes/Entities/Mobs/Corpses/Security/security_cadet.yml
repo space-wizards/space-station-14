@@ -1,7 +1,0 @@
-﻿- type: entity
-  parent: SalvageHumanCorpse
-  id: SecurityCadetCorpse
-  suffix: Dead, Security Cadet
-  components:
-  - type: Loadout
-    prototypes: [ SecurityCadetGear ]

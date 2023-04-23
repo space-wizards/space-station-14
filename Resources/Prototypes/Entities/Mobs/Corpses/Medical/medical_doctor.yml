@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: MedicalDoctorCorpse
-  suffix: Dead, Medical Doctor
-  components:
-  - type: Loadout
-    prototypes: [ DoctorGear ]

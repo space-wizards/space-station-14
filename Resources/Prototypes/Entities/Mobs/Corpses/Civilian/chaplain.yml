@@ -1,7 +1,0 @@
-- type: entity
-  parent: SalvageHumanCorpse
-  id: ChaplainCorpse
-  suffix: Dead, Chaplain
-  components:
-  - type: Loadout
-    prototypes: [ ChaplainGear ]
