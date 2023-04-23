@@ -354,9 +354,9 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         var impulse = force * brakeInput;
-                        var maxImpulse = shuttleVelocity * body.InvMass;
+                        var maxImpulse = shuttleVelocity * body.Mass;
 
-                        if (impulse.LengthSquared > maxImpulse.LengthSquared)
+                        if ((impulse * frameTime).LengthSquared > maxImpulse.LengthSquared)
                         {
                             impulse = -maxImpulse;
                         }
@@ -372,9 +372,9 @@ namespace Content.Server.Physics.Controllers
                     if (body.AngularVelocity != 0f)
                     {
                         var impulse = shuttle.AngularThrust * brakeInput * (body.AngularVelocity > 0f ? -1f : 1f);
-                        var maxImpulse = body.AngularVelocity * body.InvI;
+                        var maxImpulse = body.AngularVelocity * body.Inertia;
 
-                        if (Math.Abs(impulse) > Math.Abs(maxImpulse))
+                        if (Math.Abs(impulse * frameTime) > Math.Abs(maxImpulse))
                         {
                             impulse = -maxImpulse;
                         }
