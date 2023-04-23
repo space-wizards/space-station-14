@@ -56,6 +56,7 @@
 - type: entity
   id: BaseAnomalousCartridge
   parent: BaseCartridgeMagnum
+  description: Packs twice the punch of a standard A.P.E. particle.
   abstract: true
   components:
   - type: Sprite
@@ -81,7 +82,7 @@
     - state: overlay
       color: crimson
   - type: CartridgeAmmo
-    proto: AnomalousParticleDelta
+    proto: AnomalousParticleDeltaStrong
 
 - type: entity
   id: CartridgeAnomalousParticleEpsilon
@@ -95,7 +96,7 @@
     - state: overlay
       color: plum
   - type: CartridgeAmmo
-    proto: AnomalousParticleEpsilon
+    proto: AnomalousParticleEpsilonStrong
 
 - type: entity
   id: CartridgeAnomalousParticleZeta
@@ -109,4 +110,4 @@
     - state: overlay
       color: goldenrod
   - type: CartridgeAmmo
-    proto: AnomalousParticleZeta
+    proto: AnomalousParticleZetaStrong
