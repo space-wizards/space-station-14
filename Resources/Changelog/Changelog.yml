@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Mops now have an ItemStatus showing how full they are., type: Add}
-  id: 3016
-  time: '2023-02-11T01:39:01.0000000+00:00'
 - author: QuietlyWhisper
   changes:
   - {message: Carps now "Fly" and will no longer be harmed by lava or glass shards.,
@@ -2897,3 +2892,9 @@ Entries:
       and their helmets)', type: Add}
   id: 3515
   time: '2023-04-23T17:22:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduced water tank price from 2k -> 1k and fuel tank from 2k -> 1.5k.,
+    type: Tweak}
+  id: 3516
+  time: '2023-04-23T17:29:22.0000000+00:00'
