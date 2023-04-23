@@ -6,7 +6,7 @@ namespace Content.Shared.Parallax;
 /// <summary>
 /// Handles per-map parallax
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class ParallaxComponent : Component
 {
     // I wish I could use a typeserializer here but parallax is extremely client-dependent.
