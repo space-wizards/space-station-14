@@ -14,6 +14,7 @@
   roles:
   - Bartender
   - Botanist
+  - Boxer
   - Chaplain
   - Chef
   - Clown
@@ -77,6 +78,7 @@
   - SecurityOfficer
   - Detective
   - Warden
+  - Brigmedic
 
 - type: department
   id: Science

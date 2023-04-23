@@ -157,7 +157,7 @@ namespace Content.Server.PDA.Ringer
 
         private string GetSound(Note note)
         {
-            return new ResourcePath("/Audio/Effects/RingtoneNotes/" + note.ToString().ToLower()) + ".ogg";
+            return new ResPath("/Audio/Effects/RingtoneNotes/" + note.ToString().ToLower()) + ".ogg";
         }
     }
 }
