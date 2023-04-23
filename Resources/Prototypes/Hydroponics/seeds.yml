@@ -56,6 +56,34 @@
   plantRsi: Objects/Specific/Hydroponics/banana.rsi
   productPrototypes:
     - FoodBanana
+  plantTransmutations:
+    - PinkBanana
+  harvestRepeat: Repeat
+  lifespan: 50
+  maturation: 6
+  production: 6
+  yield: 3
+  idealLight: 9
+  waterConsumption: 6
+  idealHeat: 298
+  chemicals:
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
+
+- type: seed
+  id: pink_banana
+  name: seeds-pink-banana-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pink-banana-display-name
+  plantRsi: Objects/Specific/Hydroponics/pink_banana.rsi
+  productPrototypes:
+    - FoodPinkBanana
   harvestRepeat: Repeat
   lifespan: 50
   maturation: 6
@@ -545,8 +573,8 @@
   plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
   productPrototypes:
     - LeavesCannabis
-  altSpeciesPrototype:
-    - rainbow_cannabis
+  plantTransmutations:
+    - RainbowCannabis
   harvestRepeat: Repeat
   lifespan: 75
   maturation: 8
@@ -601,8 +629,9 @@
   plantRsi: Objects/Specific/Hydroponics/shroominal.rsi
   productPrototypes:
     - MobShroomin
-  altSpeciesPrototype:
-    - shroomanoid_pod
+  plantTransmutations:
+    - ShroomanoidPod
+  harvestRepeat: SelfHarvest
   lifespan: 35
   maturation: 5
   production: 7
@@ -620,6 +649,7 @@
   plantRsi: Objects/Specific/Hydroponics/shroomanoid.rsi
   productPrototypes:
     - RandomShrooman
+  harvestRepeat: SelfHarvest
   lifespan: 50
   maturation: 15
   production: 16
@@ -846,8 +876,8 @@
   plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
   productPrototypes:
     - FoodFlyAmanita
-  altSpeciesPrototype:
-    - shroominal_pod
+  plantTransmutations:
+    - ShroominalPod
   lifespan: 25
   maturation: 10
   production: 1

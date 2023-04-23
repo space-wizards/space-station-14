@@ -168,6 +168,32 @@
         Quantity: 10
 
 - type: entity
+  name: pink banana
+  description: This banana is pink! Its oozing some kind of yellow liquid.
+  parent: FoodBanana
+  id: FoodPinkBanana
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pink_banana.rsi
+    - type: Produce
+      seedId: pink_banana
+    - type: Food
+      trash: TrashPinkBananaPeel
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 6
+          reagents:
+            - ReagentId: Laughtex
+              Quantity: 6
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Laughtex
+          Quantity: 10
+
+
+- type: entity
   name: banana peel
   parent: BaseItem
   id: TrashBananaPeel
@@ -215,6 +241,18 @@
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
+
+- type: entity
+  name: pink banana peel
+  id: TrashPinkBananaPeel
+  parent: TrashBananaPeel
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pink_banana.rsi
+      state: peel
+    - type: Item
+      sprite: Objects/Specific/Hydroponics/pink_banana.rsi
+      heldPrefix: peel
 
 - type: entity
   name: banana peel

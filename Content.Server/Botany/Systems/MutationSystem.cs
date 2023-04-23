@@ -19,7 +19,7 @@ public class MutationSystem : EntitySystem
     public void MutateSeed(SeedData seed, float severity)
     {
         // Add up everything in the bits column and put the number here.
-        const int totalbits = 245;
+        const int totalbits = 260;
 
         // Tolerances (55)
         MutateFloat(ref seed.NutrientConsumption   , 0.05f , 1.2f , 5 , totalbits , severity);
@@ -37,11 +37,15 @@ public class MutationSystem : EntitySystem
         // Stats (30*2 = 60)
         MutateFloat(ref seed.Endurance             , 50f   , 150f , 5 , totalbits , 2*severity);
         MutateInt(ref seed.Yield                   , 3     , 10   , 5 , totalbits , 2*severity);
-        MutateInt(ref seed.AltSeedPacketProb       , 1     , 10   , 5 , totalbits,  2*severity);
         MutateFloat(ref seed.Lifespan              , 10f   , 80f  , 5 , totalbits , 2*severity);
         MutateFloat(ref seed.Maturation            , 3f    , 8f   , 5 , totalbits , 2*severity);
         MutateFloat(ref seed.Production            , 1f    , 10f  , 5 , totalbits , 2*severity);
         MutateFloat(ref seed.Potency               , 30f   , 100f , 5 , totalbits , 2*severity);
+
+        // Transmutation (15)
+        MutateInt(ref seed.TRA.T                   , 1     , 9  , 5 , totalbits , severity);
+        MutateInt(ref seed.TRA.R                   , 1     , 9  , 5 , totalbits , severity);
+        MutateInt(ref seed.TRA.A                   , 1     , 9  , 5 , totalbits , severity);
 
         // Kill the plant (30)
         MutateBool(ref seed.Viable         , false , 30 , totalbits , severity);
@@ -83,7 +87,10 @@ public class MutationSystem : EntitySystem
         CrossFloat(ref result.Maturation,            a.Maturation);
         CrossFloat(ref result.Production,            a.Production);
         CrossFloat(ref result.Potency,               a.Potency);
-        CrossInt(ref result.AltSeedPacketProb,       a.AltSeedPacketProb);
+
+        CrossInt(ref result.TRA.T,                   a.TRA.T);
+        CrossInt(ref result.TRA.R,                   a.TRA.R);
+        CrossInt(ref result.TRA.A,                   a.TRA.A);
 
         CrossBool(ref result.Seedless,               a.Seedless);
         CrossBool(ref result.Viable,                 a.Viable);

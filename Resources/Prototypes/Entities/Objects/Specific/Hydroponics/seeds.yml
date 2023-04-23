@@ -45,6 +45,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of pink banana seeds
+  id: PinkBananaSeeds
+  components:
+    - type: Seed
+      seedId: pink_banana
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pink_banana.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of carrot seeds
   id: CarrotSeeds
   components:

@@ -61,6 +61,7 @@ public struct SeedChemQuantity
     [DataField("PotencyDivisor")] public int PotencyDivisor;
 }
 
+
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
 [Virtual, DataDefinition]
 [Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(ReagentEffect), typeof(MutationSystem))]
@@ -102,20 +103,25 @@ public class SeedData
     public bool Unique = false; // seed-prototypes or yaml-defined seeds for entity prototypes will not generally be unique.
     #endregion
 
+    #region Transmutation
+
+    /// <summary>
+    ///     Other species prototypes this seed's plant can produce apon being clipped
+    /// </summary>
+    [DataField("plantTransmutations", customTypeSerializer: typeof(PrototypeIdListSerializer<TransmuationPrototype>))]
+    public List<string> PlantTransmutations = new();
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TRASequence TRA = new(0,0,0);
+
+    #endregion
+
     #region Output
     /// <summary>
     ///     The entity prototype that is spawned when this type of seed is extracted from produce using a seed extractor.
     /// </summary>
     [DataField("packetPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string PacketPrototype = "SeedBase";
-
-
-    /// <summary>
-    ///     Other species prototypes this seed's plant can produce apon being clipped
-    /// </summary>
-    [DataField("altSpeciesPrototype", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> AltSpeciesPrototype = new();
-
 
     /// <summary>
     ///     The entity prototype this seed spawns when it gets harvested.
@@ -174,10 +180,6 @@ public class SeedData
     ///     mutations.
     /// </summary>
     [DataField("seedless")] public bool Seedless = false;
-
-    /// <summary>
-    ///     The probability that the current seed can mutate into another (max 10)
-    [DataField("produceAltSeedsProb")] public int AltSeedPacketProb = 0;
 
     /// <summary>
     ///     If true, rapidly decrease health while growing. Used to kill off
@@ -279,8 +281,8 @@ public class SeedData
             Potency = Potency,
 
             Seedless = Seedless,
-            AltSeedPacketProb = AltSeedPacketProb,
-            AltSpeciesPrototype = AltSpeciesPrototype,
+            PlantTransmutations = PlantTransmutations,
+            TRA = TRA,
             Viable = Viable,
             Slip = Slip,
             Sentient = Sentient,

@@ -1,0 +1,27 @@
+- type: transmutation
+  id: RainbowCannabis
+  t: 4
+  r: 2
+  a: 0
+  plantPrototype: rainbow_cannabis
+
+- type: transmutation
+  id: PinkBanana
+  t: 6
+  r: 2
+  a: 4
+  plantPrototype: pink_banana
+
+- type: transmutation
+  id: ShroomanoidPod
+  t: 5
+  r: 5
+  a: 1
+  plantPrototype: shroomanoid_pod
+
+- type: transmutation
+  id: ShroominalPod
+  t: 3
+  r: 3
+  a: 5
+  plantPrototype: shroominal_pod

@@ -86,6 +86,11 @@ public sealed partial class BotanySystem : EntitySystem
         args.PushMarkup(Loc.GetString($"seed-component-description", ("seedName", name)));
         args.PushMarkup(Loc.GetString($"seed-component-plant-yield-text", ("seedYield", seed.Yield)));
         args.PushMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", seed.Potency)));
+
+        // TODO: Remove this in favor of the scanner
+        args.PushMarkup("T: " + seed.TRA.T);
+        args.PushMarkup("R: " + seed.TRA.R);
+        args.PushMarkup("A: " + seed.TRA.A);
     }
 
     #region SeedPrototype prototype stuff
@@ -93,28 +98,27 @@ public sealed partial class BotanySystem : EntitySystem
     /// <summary>
     /// Spawns a new seed packet on the floor at a position, then tries to put it in the user's hands if possible.
     /// </summary>
-    public EntityUid SpawnSeedPacket(SeedData proto, EntityCoordinates coords, EntityUid user, bool clipped = false)
+    public EntityUid SpawnSeedPacket(SeedData seedData, EntityCoordinates coords, EntityUid user, bool sampled = false)
     {
-        // Wasn't sure if I could reasign "proto" without overriding it so I'm just calling the function
-        // again (recursion shouldn't happen since clipped is always false in the second call)
-        if (clipped && _prototypeManager.TryIndex(GetAlternateSpeciesOrNormal(proto), out SeedPrototype? protoSeed)){
-            return SpawnSeedPacket(protoSeed, coords, user);
+        // If the plant was sampled then try to match the plant's TRA match the requirements
+        if (sampled){
+            return SpawnSeedPacket(GetPossibleTransmutation(seedData), coords, user);
         }
 
-        var seed = Spawn(proto.PacketPrototype, coords);
+        var seed = Spawn(seedData.PacketPrototype, coords);
         var seedComp = EnsureComp<SeedComponent>(seed);
 
-        seedComp.Seed = proto;
+        seedComp.Seed = seedData;
 
         if (TryComp(seed, out SpriteComponent? sprite))
         {
             // TODO visualizer
             // SeedPrototype state will always be seed. Blame the spriter if that's not the case!
-            sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(proto.PlantRsi, "seed"));
+            sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(seedData.PlantRsi, "seed"));
         }
 
-        var name = Loc.GetString(proto.Name);
-        var noun = Loc.GetString(proto.Noun);
+        var name = Loc.GetString(seedData.Name);
+        var noun = Loc.GetString(seedData.Noun);
         var val = Loc.GetString("botany-seed-packet-name", ("seedName", name), ("seedNoun", noun));
         MetaData(seed).EntityName = val;
 
@@ -205,14 +209,27 @@ public sealed partial class BotanySystem : EntitySystem
         return products;
     }
 
-    public String GetAlternateSpeciesOrNormal(SeedData proto){
-        var rng = _robustRandom.Next(0, 10);
-        if (rng > proto.AltSeedPacketProb || proto.AltSpeciesPrototype.Count == 0){
-            return proto.PacketPrototype;
+    /// <summary>
+    ///     Checks if the provided seed data's TRA matches any of it's transmutations TRA values and returns the transmutation's seed data
+    ///     If not then returns the plants regular data
+    /// </summary>
+    public SeedData GetPossibleTransmutation(SeedData seedData){
+        foreach(var tra_proto in seedData.PlantTransmutations){
+            if (!_prototypeManager.TryIndex(tra_proto, out TransmuationPrototype? transmuation)) {
+                Logger.Error($"Unknown transmutation prototype: {tra_proto}");
+                continue;
+            }
+            if (!_prototypeManager.TryIndex(transmuation.prototype, out SeedPrototype? newSeedData)){
+                Logger.Error($"Transmutation plant prototype does not exist: {transmuation.prototype}");
+                continue;
+            }
+            if (transmuation.T == seedData.TRA.T && transmuation.R == seedData.TRA.R && transmuation.A == seedData.TRA.R){
+                Logger.Info($"TRA sequences match, returning new seed data for: {newSeedData.Name}");
+                return newSeedData;
+            }
         }
 
-        var resultProto = _robustRandom.Pick(proto.AltSpeciesPrototype);
-        return resultProto;
+        return seedData;
     }
 
     public bool CanHarvest(SeedData proto, EntityUid? held = null)

@@ -151,6 +151,47 @@
         probability: 0.33
 
 - type: reagent
+  id: Laughtex
+  name: reagent-name-laugh-tox
+  group: Toxins
+  desc: reagent-desc-laugh-tox
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: funny
+  color: "#FFFF4F"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+        - !type:Emote
+          emote: Laugh
+          probability: 0.8
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: [ "reagent-cant-stop-laughing", "generic-reagent-effect-cant-breath" ]
+          probability: 0.1
+        - !type:HealthChange
+          damage:
+            types:
+              Asphyxiation: 2.0
+  metabolisms:
+    Poison:
+      effects:
+        - !type:Emote
+          emote: Laugh
+          probability: 0.8
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: [ "reagent-cant-stop-laughing", "generic-reagent-effect-cant-breath" ]
+          probability: 0.1
+        - !type:HealthChange
+          damage:
+            types:
+              Asphyxiation: 5.0 # You're laughing so hard you can't breath
+
+
+- type: reagent
   id: FluorosulfuricAcid
   name: reagent-name-fluorosulfuric-acid
   group: Toxins
