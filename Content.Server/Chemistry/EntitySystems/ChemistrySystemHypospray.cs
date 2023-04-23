@@ -100,8 +100,6 @@ namespace Content.Server.Chemistry.EntitySystems
             if (target != user)
             {
                 _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target.Value);
-                // var meleeSys = EntitySystem.Get<MeleeWeaponSystem>();
-                // var angle = Angle.FromWorldVec(_entMan.GetComponent<TransformComponent>(target.Value).WorldPosition - _entMan.GetComponent<TransformComponent>(user).WorldPosition);
                 // TODO: This should just be using melee attacks...
                 // meleeSys.SendLunge(angle, user);
             }
