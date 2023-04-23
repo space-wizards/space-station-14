@@ -93,19 +93,6 @@
         damage:
           types:
             Poison: 1
-      - !type:ChemCauseRandomDisease
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Mold
-          min: 1
-        diseases:
-          - VentCough
-          - SpaceCold
-          - SpaceFlu
-          - BirdFlew
-          - Plague
-          - TongueTwister
-          - MemeticAmirmir
 
 - type: reagent
   id: PolytrinicAcid
