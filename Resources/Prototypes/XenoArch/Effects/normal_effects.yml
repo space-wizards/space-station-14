@@ -406,21 +406,6 @@
       maxAmount: 2
 
 - type: artifactEffect
-  id: EffectDisease
-  targetDepth: 3
-  effectHint: artifact-effect-hint-biochemical
-  components:
-  - type: DiseaseArtifact
-    diseasePrototypes:
-    - VanAusdallsRobovirus
-    - OwOnavirus
-    - BleedersBite
-    - Ultragigacancer
-    - MemeticAmirmir
-    - TongueTwister
-    - AMIV
-
-- type: artifactEffect
   id: EffectRareMaterialSpawn
   targetDepth: 3
   effectHint: artifact-effect-hint-creation
