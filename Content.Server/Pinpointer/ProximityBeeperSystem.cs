@@ -118,7 +118,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
     }
 
     /// <summary>
-    /// disables the proximity beeper
+    /// Disables the proximity beeper
     /// </summary>
     public bool TryDisable(EntityUid uid, ProximityBeeperComponent? component = null)
     {
