@@ -37,8 +37,8 @@ public sealed class ChangelingComponent : Component
     /// <summary>
     /// Chemical amount limit
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("chemicalCap")]
-    public int ChemicalCap = 75;
+    [ViewVariables(VVAccess.ReadWrite), DataField("chemicalRegenCap")]
+    public int ChemicalRegenCap = 75;
 
     #endregion
 

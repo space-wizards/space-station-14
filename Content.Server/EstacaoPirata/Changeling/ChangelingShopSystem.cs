@@ -5,18 +5,23 @@ using Content.Shared.PDA;
 using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Changeling;
 
-namespace Content.Server.Changeling.EvolutionMenu
+namespace Content.Server.Changeling.Shop
 {
-    public sealed class EvolutionMenuSystem : EntitySystem //mudar tudo
+    public sealed class ChangelingShopSystem : EntitySystem //mudar tudo
     {
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly StoreSystem _store = default!;
 
-        [Dependency] private readonly SharedActionsSystem acoes = default!; // ver se isso funciona
+        [Dependency] private readonly SharedActionsSystem actions = default!; // ver se isso funciona
+        //[Dependency] private readonly ChangelingShopActionEvent _changelingShop = default!;
 
         public const string TelecrystalCurrencyPrototype = "Telecrystal";
+
+        public const string ChemicalCurrencyPrototype = "Chemical";
 
         /// <summary>
         ///     Gets the amount of TC on an "uplink"
@@ -24,10 +29,10 @@ namespace Content.Server.Changeling.EvolutionMenu
         /// </summary>
         /// <param name="component"></param>
         /// <returns>the amount of TC</returns>
-        public int GetTCBalance(StoreComponent component)
+        public int GetChemicalBalance(StoreComponent component)
         {
-            FixedPoint2? tcBalance = component.Balance.GetValueOrDefault(TelecrystalCurrencyPrototype);
-            return tcBalance?.Int() ?? 0;
+            FixedPoint2? chemBalance = component.Balance.GetValueOrDefault(ChemicalCurrencyPrototype);
+            return chemBalance?.Int() ?? 0;
         }
 
         /// <summary>
@@ -62,6 +67,20 @@ namespace Content.Server.Changeling.EvolutionMenu
             // TODO add BUI. Currently can't be done outside of yaml -_-
 
             return true;
+        }
+
+        public bool AddEvolutionMenu(EntityUid user, ActionType action, FixedPoint2? balance, string evoMenuPresetId = "StorePresetUplink", EntityUid? evoMenuEntity = null)
+        {
+            
+            actions.AddAction(user, action, null); // alvo, acao, o que da a acao (no caso nulo)
+
+            var store = new StoreComponent();
+            //if(evoMenuEntity == null)
+            //{
+                
+            //}
+
+            return false;
         }
 
         private EntityUid? FindUplinkTarget(EntityUid user)
