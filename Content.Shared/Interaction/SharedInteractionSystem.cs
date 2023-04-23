@@ -81,7 +81,7 @@ namespace Content.Shared.Interaction
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
             SubscribeLocalEvent<UnremoveableComponent, ContainerGettingRemovedAttemptEvent>(OnRemoveAttempt);
-            SubscribeLocalEvent<UnremoveableComponent, GotUnequippedEvent>(OnUnequipp);
+            SubscribeLocalEvent<UnremoveableComponent, GotUnequippedEvent>(OnUnequip);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.AltActivateItemInWorld,
@@ -143,7 +143,7 @@ namespace Content.Shared.Interaction
         ///     If item has DeleteOnDrop true then item will be deleted if removed from inventory, if it is false then item
         ///     loses Unremoveable when removed from inventory (gibbing).
         /// </summary>
-        private void OnUnequipp(EntityUid uid, UnremoveableComponent item, GotUnequippedEvent args)
+        private void OnUnequip(EntityUid uid, UnremoveableComponent item, GotUnequippedEvent args)
         {
 
             {
