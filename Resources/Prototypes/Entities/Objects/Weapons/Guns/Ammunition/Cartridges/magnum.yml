@@ -74,6 +74,12 @@
   parent: BaseAnomalousCartridge
   name: cartridge (delta particle)
   components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+    - state: overlay
+      color: crimson
   - type: CartridgeAmmo
     proto: AnomalousParticleDelta
 
@@ -82,6 +88,12 @@
   parent: BaseAnomalousCartridge
   name: cartridge (epsilon particle)
   components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+    - state: overlay
+      color: plum
   - type: CartridgeAmmo
     proto: AnomalousParticleEpsilon
 
@@ -90,5 +102,11 @@
   parent: BaseAnomalousCartridge
   name: cartridge (zeta particle)
   components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+    - state: overlay
+      color: goldenrod
   - type: CartridgeAmmo
     proto: AnomalousParticleZeta
