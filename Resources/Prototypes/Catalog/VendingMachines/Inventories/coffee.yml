@@ -2,4 +2,8 @@
   id: HotDrinksMachineInventory
   startingInventory:
     DrinkHotCoffee: 10
+    DrinkCafeLatte: 10
     DrinkTeacup: 10
+    DrinkGreenTea: 10
+  emaggedInventory:
+    DrinkNothing: 2
