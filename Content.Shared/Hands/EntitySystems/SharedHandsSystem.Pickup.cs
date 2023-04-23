@@ -104,6 +104,29 @@ public abstract partial class SharedHandsSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///     Tries to pick up an entity into any hand, forcing to drop an item if there are no free hands
+    ///     By default it does check if it's possible to drop items
+    /// </summary>
+    public bool TryForcePickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
+    {
+        if (!Resolve(uid, ref handsComp, false))
+            return false;
+
+        if (TryPickupAnyHand(uid, entity, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
+            return true;
+
+        foreach (var hand in handsComp.Hands.Values)
+        {
+            if (TryDrop(uid, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp) &&
+                TryPickup(uid, entity, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public bool CanPickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))

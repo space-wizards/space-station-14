@@ -1,4 +1,3 @@
-using Content.Shared.Interaction.Events;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 
