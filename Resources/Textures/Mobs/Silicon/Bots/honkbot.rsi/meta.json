@@ -9,6 +9,10 @@
       {
          "directions" : 1,
          "name" : "honkbot"
+      },
+      {
+         "directions" : 1,
+         "name" : "jonkbot"
       }
    ],
    "version" : 1
