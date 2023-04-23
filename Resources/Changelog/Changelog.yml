@@ -1,49 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added the NCS Aspid, type: Add}
-  id: 3006
-  time: '2023-02-07T14:22:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPCs breaking on prototype reloads., type: Fix}
-  id: 3007
-  time: '2023-02-07T21:27:35.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can now print tier 3 machine parts at lathes., type: Add}
-  id: 3008
-  time: '2023-02-08T00:39:08.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: APEs are now much lighter and easier to move around., type: Tweak}
-  id: 3009
-  time: '2023-02-08T02:10:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPC prototype reloading for realsies., type: Fix}
-  id: 3010
-  time: '2023-02-08T14:01:27.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed wallmounts working when boards are removed., type: Fix}
-  id: 3011
-  time: '2023-02-09T16:14:39.0000000+00:00'
-- author: BismarckShuffle
-  changes:
-  - {message: Added Radio Channel guidebook entry., type: Add}
-  id: 3012
-  time: '2023-02-09T16:15:01.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Anomaly Vessel beeping is now much louder., type: Fix}
-  id: 3013
-  time: '2023-02-09T16:37:25.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: 'Add Fland Installation, a high population map', type: Add}
-  id: 3014
-  time: '2023-02-10T11:54:17.0000000+00:00'
 - author: nikthechampiongr
   changes:
   - {message: Nanotrasen has delivered new Judge robes to the courtrooms of certain
@@ -2888,3 +2843,57 @@ Entries:
       as you approach anomalies. Happy hunting!', type: Add}
   id: 3505
   time: '2023-04-23T05:39:33.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: Adds 7 new animal masks., type: Add}
+  id: 3506
+  time: '2023-04-23T06:56:23.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: add salvage rig, type: Add}
+  id: 3507
+  time: '2023-04-23T07:36:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Puddles now only overflow when they can fully occupy a tile., type: Tweak}
+  - {message: Puddles will now never overflow to a water puddle., type: Tweak}
+  - {message: Bumped mop volume from 60 to 100 and reduced cooldown from 1.5s to 1s.,
+    type: Tweak}
+  id: 3508
+  time: '2023-04-23T08:20:04.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: APCs now show correct charge and state, type: Fix}
+  id: 3509
+  time: '2023-04-23T08:22:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Update the salvage expedition song to the final version., type: Tweak}
+  id: 3510
+  time: '2023-04-23T09:13:38.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'We have restricted the access to skin color dyes to our fellow undead
+      crewmembers. Now their cracked, broken skin will show that flourishing rot that
+      screams ''kill me, now''!', type: Fix}
+  id: 3511
+  time: '2023-04-23T09:16:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix follower eye rotation not being reset on map changes., type: Fix}
+  id: 3512
+  time: '2023-04-23T10:01:16.0000000+00:00'
+- author: Endecc
+  changes:
+  - {message: 'Centcomm has actually TURNED ON the motors of the Advanced Mop, allowing
+      it to actually be an upgrade Janitors will want!', type: Tweak}
+  - {message: 'To accommodate for this actual running motor, the plastic cost for
+      the Advanced Mop at the lathe has been increased from 100 > 400 to reinforce
+      the structure', type: Tweak}
+  id: 3513
+  time: '2023-04-23T10:17:21.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Space Gru has returned the stars he stole and is very sorry., type: Fix}
+  id: 3514
+  time: '2023-04-23T10:28:41.0000000+00:00'
