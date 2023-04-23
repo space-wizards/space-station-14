@@ -1,58 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: You can now print tier 3 machine parts at lathes., type: Add}
-  id: 3008
-  time: '2023-02-08T00:39:08.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: APEs are now much lighter and easier to move around., type: Tweak}
-  id: 3009
-  time: '2023-02-08T02:10:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPC prototype reloading for realsies., type: Fix}
-  id: 3010
-  time: '2023-02-08T14:01:27.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed wallmounts working when boards are removed., type: Fix}
-  id: 3011
-  time: '2023-02-09T16:14:39.0000000+00:00'
-- author: BismarckShuffle
-  changes:
-  - {message: Added Radio Channel guidebook entry., type: Add}
-  id: 3012
-  time: '2023-02-09T16:15:01.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Anomaly Vessel beeping is now much louder., type: Fix}
-  id: 3013
-  time: '2023-02-09T16:37:25.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: 'Add Fland Installation, a high population map', type: Add}
-  id: 3014
-  time: '2023-02-10T11:54:17.0000000+00:00'
-- author: nikthechampiongr
-  changes:
-  - {message: Nanotrasen has delivered new Judge robes to the courtrooms of certain
-      stations., type: Tweak}
-  id: 3015
-  time: '2023-02-10T19:32:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Mops now have an ItemStatus showing how full they are., type: Add}
-  id: 3016
-  time: '2023-02-11T01:39:01.0000000+00:00'
-- author: QuietlyWhisper
-  changes:
-  - {message: Carps now "Fly" and will no longer be harmed by lava or glass shards.,
-    type: Add}
-  id: 3017
-  time: '2023-02-11T01:39:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Changed job icons for scientist and research director., type: Tweak}
   id: 3018
   time: '2023-02-11T01:51:48.0000000+00:00'
@@ -2888,3 +2836,64 @@ Entries:
   - {message: add salvage rig, type: Add}
   id: 3507
   time: '2023-04-23T07:36:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Puddles now only overflow when they can fully occupy a tile., type: Tweak}
+  - {message: Puddles will now never overflow to a water puddle., type: Tweak}
+  - {message: Bumped mop volume from 60 to 100 and reduced cooldown from 1.5s to 1s.,
+    type: Tweak}
+  id: 3508
+  time: '2023-04-23T08:20:04.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: APCs now show correct charge and state, type: Fix}
+  id: 3509
+  time: '2023-04-23T08:22:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Update the salvage expedition song to the final version., type: Tweak}
+  id: 3510
+  time: '2023-04-23T09:13:38.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'We have restricted the access to skin color dyes to our fellow undead
+      crewmembers. Now their cracked, broken skin will show that flourishing rot that
+      screams ''kill me, now''!', type: Fix}
+  id: 3511
+  time: '2023-04-23T09:16:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix follower eye rotation not being reset on map changes., type: Fix}
+  id: 3512
+  time: '2023-04-23T10:01:16.0000000+00:00'
+- author: Endecc
+  changes:
+  - {message: 'Centcomm has actually TURNED ON the motors of the Advanced Mop, allowing
+      it to actually be an upgrade Janitors will want!', type: Tweak}
+  - {message: 'To accommodate for this actual running motor, the plastic cost for
+      the Advanced Mop at the lathe has been increased from 100 > 400 to reinforce
+      the structure', type: Tweak}
+  id: 3513
+  time: '2023-04-23T10:17:21.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Space Gru has returned the stars he stole and is very sorry., type: Fix}
+  id: 3514
+  time: '2023-04-23T10:28:41.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Added Disease protection for CBURN, ERT, and Syndie Elite (hardsuits
+      and their helmets)', type: Add}
+  id: 3515
+  time: '2023-04-23T17:22:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduced water tank price from 2k -> 1k and fuel tank from 2k -> 1.5k.,
+    type: Tweak}
+  id: 3516
+  time: '2023-04-23T17:29:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added a generic bonk sound to items that collide with stuff., type: Add}
+  id: 3517
+  time: '2023-04-23T17:42:09.0000000+00:00'
