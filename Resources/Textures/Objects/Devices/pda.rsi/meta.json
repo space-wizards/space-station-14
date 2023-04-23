@@ -84,6 +84,12 @@
       "name": "pda-lawyer"
     },
     {
+      "name": "pda-iaa"
+    },
+    {
+      "name": "pda-maid"
+    },
+    {
       "name": "pda-library",
       "delays": [
         [

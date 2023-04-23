@@ -7,8 +7,6 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobHumanDummy
   skinColoration: HumanToned
-  maleFirstNames: names_last_male
-  femaleFirstNames: names_last_female
 
 # The lack of a layer means that
 # this person cannot have round-start anything
@@ -34,6 +32,7 @@
     RFoot: MobHumanRFoot
     HeadTop: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking
+    
 
 - type: markingPoints
   id: MobHumanMarkingLimits

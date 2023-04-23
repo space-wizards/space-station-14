@@ -242,6 +242,18 @@
       - state: janitor
 
 - type: entity
+  id: SpawnPointStationMaid
+  parent: SpawnPointJobBase
+  name: station maid
+  components:
+  - type: SpawnPoint
+    job_id: StationMaid
+  - type: Sprite
+    layers:
+      - state: green
+      - state: janitor
+
+- type: entity
   id: SpawnPointMusician
   parent: SpawnPointJobBase
   name: musician
@@ -278,6 +290,18 @@
     layers:
       - state: green
       - state: captain
+
+- type: entity
+  id: SpawnPointIAA
+  parent: SpawnPointJobBase
+  name: IAA
+  components:
+  - type: SpawnPoint
+    job_id: IAA
+  - type: Sprite
+    layers:
+      - state: green
+      - state: lawyer
 
 - type: entity
   id: SpawnPointHeadOfPersonnel

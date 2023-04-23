@@ -1,6 +1,9 @@
 ent-FoodBoxDonut = коробка пончиков
     .desc = Ммм, пончики.
     .suffix = { "" }
+ent-FoodBoxDonutJellySlugcat = коробка слизнекотовых желейных пончиков
+    .desc = Вкусные слизнекотовые желейные пончики специально для ваших горничных!
+    .suffix = { "" }
 ent-FoodContainerEgg = картонная упаковка яиц
     .desc = Не урони!
     .suffix = { "" }

@@ -52,6 +52,19 @@
       - id: FlashlightLantern
 
 - type: entity
+  id: ClothingBeltMaidFilled
+  parent: ClothingBeltMaid
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Soap
+      - id: SprayBottleSpaceCleaner
+      - id: FoodBoxDonutJellySlugcat
+      - id: ClothingHeadHatCatEars
+      - id: FlashlightLantern
+
+- type: entity
   id: ClothingBeltMedicalFilled
   parent: ClothingBeltMedical
   suffix: Filled

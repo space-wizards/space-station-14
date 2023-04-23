@@ -42,6 +42,8 @@ job-name-ertmedic = ERT Medic
 job-name-ertjanitor = ERT Janitor
 job-name-boxer = Boxer
 job-name-zookeeper = Zookeeper
+job-name-iaa = Internal Affairs Agent
+job-name-stationmaid = Catmaid
 
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Atmospheric Technician
@@ -66,6 +68,7 @@ JobERTMedical = ERT Medical
 JobERTSecurity = ERT Security
 JobHeadOfPersonnel = Head of Personnel
 JobHeadOfSecurity = Head of Security
+JobIAA = Internal Affairs Agent
 JobJanitor = Janitor
 JobLawyer = Lawyer
 JobLibrarian = Librarian
@@ -85,6 +88,7 @@ JobSecurityCadet = Security Cadet
 JobSecurityOfficer = Security Officer
 JobServiceWorker = Service Worker
 JobStationEngineer = Station Engineer
+JobStationMaid = Catmaid
 JobTechnicalAssistant = Technical Assistant
 JobWarden = Warden
 JobZookeeper = Zookeeper

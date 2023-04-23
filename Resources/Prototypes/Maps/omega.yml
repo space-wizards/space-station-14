@@ -22,6 +22,7 @@
         Janitor: [ 1, 1 ]
         Mime: [ 1, 1 ]
         Captain: [ 1, 1 ]
+        IAA: [ 1, 1 ]
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
         StationEngineer: [ 3, 3 ]
@@ -46,3 +47,5 @@
         SecurityCadet: [ 1, 1 ]
         SalvageSpecialist: [ 2, 2 ]
         Quartermaster: [ 1, 1 ]
+        StationMaid: [ 1, 1 ]
+        Brigmedic: [ 1, 1 ]

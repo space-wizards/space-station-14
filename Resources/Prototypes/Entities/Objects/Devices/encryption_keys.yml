@@ -29,6 +29,24 @@
 
 - type: entity
   parent: EncryptionKey
+  id: EncryptionKeyIAA
+  name: iaa encryption key
+  description: An encryption key used by the most meticulous person.
+  components:
+    - type: EncryptionKey
+      channels:
+      - Common
+      - Command
+      - Security
+      defaultChannel: Command
+    - type: Sprite
+      sprite: Objects/Devices/encryption_keys.rsi
+      layers:
+      - state: crypt_gray
+      - state: nano_label
+
+- type: entity
+  parent: EncryptionKey
   id: EncryptionKeyCargo
   name: cargo encryption key
   description: An encryption key used by supply employees.

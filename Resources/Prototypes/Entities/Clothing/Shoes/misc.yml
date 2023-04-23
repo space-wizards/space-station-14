@@ -61,6 +61,18 @@
 
 - type: entity
   parent: ClothingShoesBaseButcherable
+  id: ClothingShoesMaid
+  name: maid sandals
+  description: These sandals are exclusively produced by nanotrasen for special use by maids on its stations. Finest materials make them slip-resistant and comfortable.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/maid.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/maid.rsi
+  - type: NoSlip
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesDameDane
   name: yakuza shoes
   description: At last...

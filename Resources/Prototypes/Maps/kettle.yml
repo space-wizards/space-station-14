@@ -22,6 +22,7 @@
         Janitor: [ 4, 4 ]
         Mime: [ 1, 2 ]
         Captain: [ 1, 1 ]
+        IAA: [ 1, 1 ]
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
         StationEngineer: [ 4, 6 ]
@@ -48,3 +49,4 @@
         Detective: [ 1, 1 ]
         Brigmedic: [ 1, 1 ]
         Zookeeper: [1, 1]
+        StationMaid: [ 2, 2 ]

@@ -3,6 +3,7 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Human]
+  sponsorOnly: false
   coloring:
     default:
       type:
@@ -26,6 +27,7 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Human]
+  sponsorOnly: false
   coloring:
     default:
       type:

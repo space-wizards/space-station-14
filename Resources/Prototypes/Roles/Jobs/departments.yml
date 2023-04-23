@@ -32,6 +32,7 @@
   - ServiceWorker
   - TechnicalAssistant
   - ResearchAssistant
+  - StationMaid
 
 - type: department
   id: Command
@@ -39,6 +40,7 @@
   color: "#334E6D"
   roles:
   - Captain
+  - IAA
   - CentralCommandOfficial
   - ChiefEngineer
   - ChiefMedicalOfficer
