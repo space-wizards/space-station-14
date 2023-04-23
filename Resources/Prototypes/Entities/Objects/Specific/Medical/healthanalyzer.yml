@@ -1,6 +1,8 @@
 - type: entity
   name: health analyzer
-  parent: BaseItem
+  parent:
+    - BaseItem
+    - PowerCellSlotSmallItem
   id: HandheldHealthAnalyzer
   description: A hand-held body scanner capable of distinguishing vital signs of the subject.
   components:
@@ -8,6 +10,10 @@
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
     netsync: false
     state: analyzer
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 20
+  - type: ActivatableUIRequiresPowerCell
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
     closeOnHandDeselect: false

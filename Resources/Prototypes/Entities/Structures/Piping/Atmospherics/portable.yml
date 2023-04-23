@@ -51,8 +51,12 @@
     powerLoad: 2000
   - type: ExtensionCableReceiver
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: PowerDeviceVisualizer
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {visible: true}
+          False: {visible: false}
   - type: PortableScrubberVisuals
     idleState: icon
     runningState: icon-running
@@ -71,6 +75,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300

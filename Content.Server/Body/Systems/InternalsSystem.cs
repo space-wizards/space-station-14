@@ -49,7 +49,7 @@ public sealed class InternalsSystem : EntitySystem
                 ToggleInternals(uid, args.User, false, component);
             },
             Message = Loc.GetString("action-description-internals-toggle"),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/dot.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/dot.svg.192dpi.png")),
             Text = Loc.GetString("action-name-internals-toggle"),
         };
 
