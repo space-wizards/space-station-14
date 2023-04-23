@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: 'Changed the rat king sprite, boss says!', type: Tweak}
-  id: 2994
-  time: '2023-02-05T19:49:03.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Anomaly vessels now visually change depending on the stability of their
@@ -2889,3 +2884,8 @@ Entries:
       power.', type: Tweak}
   id: 3493
   time: '2023-04-23T02:25:13.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Removed the jackboot walking sound., type: Remove}
+  id: 3494
+  time: '2023-04-23T02:51:04.0000000+00:00'
