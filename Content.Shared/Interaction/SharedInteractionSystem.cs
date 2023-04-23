@@ -8,6 +8,7 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
@@ -82,6 +83,8 @@ namespace Content.Shared.Interaction
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
             SubscribeLocalEvent<UnremoveableComponent, ContainerGettingRemovedAttemptEvent>(OnRemoveAttempt);
             SubscribeLocalEvent<UnremoveableComponent, GotUnequippedEvent>(OnUnequip);
+            SubscribeLocalEvent<UnremoveableComponent, GotUnequippedHandEvent>(OnUnequipHand);
+            SubscribeLocalEvent<UnremoveableComponent, DroppedEvent>(OnDropped);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.AltActivateItemInWorld,
@@ -150,6 +153,23 @@ namespace Content.Shared.Interaction
             else if (_net.IsServer)
                 QueueDel(uid);
         }
+
+        private void OnUnequipHand(EntityUid uid, UnremoveableComponent item, GotUnequippedHandEvent args)
+        {
+            if (!item.DeleteOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
+            else if (_net.IsServer)
+                QueueDel(uid);
+        }
+
+        private void OnDropped(EntityUid uid, UnremoveableComponent item, DroppedEvent args)
+        {
+            if (!item.DeleteOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
+            else if (_net.IsServer)
+                QueueDel(uid);
+        }
+
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
