@@ -25,7 +25,7 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-hijack-shuttle-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Tools/emag.rsi"), "icon");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Objects/Tools/emag.rsi"), "icon");
 
         private bool IsShuttleHijacked(TransformComponent agentXform, EntityUid? shuttle)
         {
