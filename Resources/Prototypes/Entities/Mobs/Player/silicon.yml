@@ -225,7 +225,7 @@
       mask:
       - LargeMobMask
       layer:
-      - MobLayer # Must be LargeMobLayer, but now LargeMobLayerWork incorrectly
+      - MobLayer
   - type: Appearance
     rotate: true
     states:
