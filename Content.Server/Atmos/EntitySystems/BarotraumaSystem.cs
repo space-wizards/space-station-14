@@ -47,7 +47,6 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 barotrauma.Immuned = false;
             }
-
         }
 
         private void OnPressureProtectionInit(EntityUid uid, PressureProtectionComponent pressureImmunity, ComponentInit args)
@@ -64,7 +63,6 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 UpdateCachedResistances(uid, barotrauma);
             }
-
         }
 
         private void OnPressureProtectionEquipped(EntityUid uid, PressureProtectionComponent pressureProtection, GotEquippedEvent args)
@@ -73,7 +71,6 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 UpdateCachedResistances(args.Equipee, barotrauma);
             }
-
         }
 
         private void OnPressureProtectionUnequipped(EntityUid uid, PressureProtectionComponent pressureProtection, GotUnequippedEvent args)
@@ -120,7 +117,6 @@ namespace Content.Server.Atmos.EntitySystems
                     hPMultiplier = Math.Max(hPMultiplier, protection.HighPressureMultiplier);
                     lPModifier = Math.Min(lPModifier, protection.LowPressureModifier);
                     lPMultiplier = Math.Min(lPMultiplier, protection.LowPressureMultiplier);
-
                 }
 
                 barotrauma.HighPressureModifier = hPModifier;
@@ -137,7 +133,6 @@ namespace Content.Server.Atmos.EntitySystems
                 barotrauma.LowPressureModifier += innatePressureProtection.LowPressureModifier;
                 barotrauma.LowPressureMultiplier *= innatePressureProtection.LowPressureMultiplier;
             }
-
         }
 
         /// <summary>
