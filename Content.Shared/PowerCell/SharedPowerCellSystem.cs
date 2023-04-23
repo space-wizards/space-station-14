@@ -52,7 +52,7 @@ public abstract class SharedPowerCellSystem : EntitySystem
         RaiseLocalEvent(uid, new PowerCellChangedEvent(false), false);
     }
 
-    private void OnCellRemoved(EntityUid uid, PowerCellSlotComponent component, EntRemovedFromContainerMessage args)
+    protected virtual void OnCellRemoved(EntityUid uid, PowerCellSlotComponent component, EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID != component.CellSlotId)
             return;

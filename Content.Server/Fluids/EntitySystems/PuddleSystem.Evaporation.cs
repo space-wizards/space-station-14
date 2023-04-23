@@ -49,7 +49,7 @@ public sealed partial class PuddleSystem
                 continue;
 
             var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds;
-            puddleSolution.RemoveReagent(EvaporationReagent, reagentTick);
+            _solutionContainerSystem.TryRemoveReagent(uid, puddleSolution, EvaporationReagent, reagentTick);
 
             // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)

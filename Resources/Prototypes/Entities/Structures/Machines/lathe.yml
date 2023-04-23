@@ -170,6 +170,7 @@
       - ConveyorBeltAssembly
       - AppraisalTool
       - AnomalyScanner
+      - AnomalyLocator
       - RCD
       - RCDAmmo
       - HydroponicsToolScythe
