@@ -170,6 +170,7 @@
       - ConveyorBeltAssembly
       - AppraisalTool
       - AnomalyScanner
+      - AnomalyLocator
       - RCD
       - RCDAmmo
       - HydroponicsToolScythe
@@ -300,6 +301,7 @@
       - ReagentGrinderMachineCircuitboard
       - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
+      - FatExtractorMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
