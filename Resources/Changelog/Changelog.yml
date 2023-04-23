@@ -1,12 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Anomaly vessels now visually change depending on the stability of their
-      linked anomaly., type: Add}
-  - {message: Anomaly vessels have a beep that speeds up as the anomaly destabilizes.
-      Almost sounds like a bomb..., type: Add}
-  id: 2995
-  time: '2023-02-05T19:52:30.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: you can now put explosives with timer in cream pie. Prank your friend!
@@ -2889,3 +2881,15 @@ Entries:
   - {message: Removed the jackboot walking sound., type: Remove}
   id: 3494
   time: '2023-04-23T02:51:04.0000000+00:00'
+- author: Menshin
+  changes:
+  - {message: Heaters/freezers aren't constantly updating UI/sprite when turned off
+      anymore. It should now be possible to set temperature in such cases., type: Fix}
+  - {message: 'Heaters/freezers now uses power only when actually running. That also
+      means, they have to be powered to run now.', type: Add}
+  - {message: Visual feedback for when heaters/freezers maintenance panel is open,
+    type: Add}
+  - {message: Heaters/freezers set temperature should now appear on detailed examined
+      (i.e when close enough), type: Add}
+  id: 3495
+  time: '2023-04-23T03:05:33.0000000+00:00'
