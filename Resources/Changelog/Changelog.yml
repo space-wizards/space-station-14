@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed red kuzdu., type: Fix}
-  id: 3000
-  time: '2023-02-06T12:27:06.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: Automatically called shuttles will take 10 minutes to get to the station
@@ -2888,3 +2883,8 @@ Entries:
   - {message: Fix medical PDA not working., type: Fix}
   id: 3499
   time: '2023-04-23T03:46:48.0000000+00:00'
+- author: 778b
+  changes:
+  - {message: Collision and sound for onestar mecha!, type: Fix}
+  id: 3500
+  time: '2023-04-23T03:55:44.0000000+00:00'
