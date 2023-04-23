@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPCs breaking on prototype reloads., type: Fix}
-  id: 3007
-  time: '2023-02-07T21:27:35.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: You can now print tier 3 machine parts at lathes., type: Add}
@@ -2888,3 +2883,8 @@ Entries:
   - {message: Adds 7 new animal masks., type: Add}
   id: 3506
   time: '2023-04-23T06:56:23.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: add salvage rig, type: Add}
+  id: 3507
+  time: '2023-04-23T07:36:01.0000000+00:00'
