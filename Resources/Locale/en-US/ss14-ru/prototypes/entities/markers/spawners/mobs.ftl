@@ -1,6 +1,6 @@
 ent-SpawnMobMouse = Mouse Spawner
     .desc = { ent-MarkerBase.desc }
-ent-SpawnMobCorgi = Ian Spawner
+ent-SpawnMobCorgi = HoP Corgi Spawner
     .desc = { ent-MarkerBase.desc }
 ent-SpawnMobPossumMorty = Possum Morty Spawner
     .desc = { ent-MarkerBase.desc }

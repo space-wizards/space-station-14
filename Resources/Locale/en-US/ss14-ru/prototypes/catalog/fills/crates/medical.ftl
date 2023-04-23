@@ -20,5 +20,7 @@ ent-CrateEmergencyAdvancedKit = { ent-CrateMedical }
     .desc = { ent-CrateMedical.desc }
 ent-CrateEmergencyRadiationKit = { ent-CrateMedical }
     .desc = { ent-CrateMedical.desc }
+ent-CrateBodyBags = { ent-CrateMedical }
+    .desc = { ent-CrateMedical.desc }
 ent-CrateVirologyBiosuit = { ent-CrateMedicalSecure }
     .desc = { ent-CrateMedicalSecure.desc }

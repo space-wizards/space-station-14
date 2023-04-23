@@ -42,3 +42,5 @@ ent-ClothingOuterNunRobe = nun robe
     .desc = Maximum piety in this star system.
 ent-ClothingOuterGhostSheet = ghost sheet
     .desc = Spooky!!!
+ent-ClothingOuterHospitalGown = Hospital Gown
+    .desc = Made from the wool of slaughtered baby lambs.  The cruelty makes it softer.

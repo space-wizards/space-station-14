@@ -13,6 +13,3 @@ ent-SpawnPointGhostNukeOperative = спавнер роли призрак
 ent-SpawnPointLoneNukeOperative = спавнер роли призрак
     .suffix = Одинокий оперативник
     .desc = { ent-MarkerBase.desc }
-ent-SpawnPointGhostSpaceNinja = спавнер роли призрак
-    .suffix = Космический ниндзя
-    .desc = { ent-MarkerBase.desc }

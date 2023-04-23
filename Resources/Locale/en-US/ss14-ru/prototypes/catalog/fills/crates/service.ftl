@@ -16,5 +16,7 @@ ent-CrateServicePersonnel = { ent-CrateCommandSecure }
     .desc = { ent-CrateCommandSecure.desc }
 ent-CrateServiceBooks = { ent-CrateGenericSteel }
     .desc = { ent-CrateGenericSteel.desc }
+ent-CrateServiceBox = { ent-CratePlastic }
+    .desc = { ent-CratePlastic.desc }
 ent-CrateJanitorBiosuit = { ent-CratePlastic }
     .desc = { ent-CratePlastic.desc }
