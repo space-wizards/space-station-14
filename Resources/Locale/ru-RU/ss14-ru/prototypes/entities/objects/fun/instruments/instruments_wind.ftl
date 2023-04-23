@@ -1,5 +1,5 @@
 ent-SaxophoneInstrument = саксофон
-    .desc = Инструмент. Вероятно, вы можете перемолоть его в сырой джаз.
+    .desc = Инструмент. Вероятно, Вы можете перемолоть его в сырой джаз.
     .suffix = { "" }
 ent-AccordionInstrument = аккордеон
     .desc = { ent-BaseHandheldInstrument.desc }

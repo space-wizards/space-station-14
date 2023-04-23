@@ -6,11 +6,11 @@ strippable-component-cannot-put-message = { $owner } не может полож�
 strippable-component-item-slot-free-message = { $owner } не имеет тут ничего!
 strippable-component-cannot-unequip-message = { $owner } не может экипировать это!
 strippable-component-cannot-drop-message = { $owner } не может отпустить это!
-strippable-component-alert-owner = { $user } снимает с вас { $item }!
-strippable-component-alert-owner-hidden = Вы чувствуете, как кто-то копается в вашем { $slot }!
-strippable-component-alert-owner-insert = { $user } надевает на вас { $item }!
+strippable-component-alert-owner = { $user } снимает с Вас { $item }!
+strippable-component-alert-owner-hidden = Вы чувствуете, как кто-то копается в Вашем { $slot }!
+strippable-component-alert-owner-insert = { $user } надевает на Вас { $item }!
 # generic warning for when a user interacts with your equipped items.
-strippable-component-alert-owner-interact = { $user } возится с вашим { $item }!
+strippable-component-alert-owner-interact = { $user } возится с Вашим { $item }!
 # StripVerb
 strip-verb-get-data-text = Обыскать
 

@@ -5,7 +5,7 @@
 
 cmd-createvote-desc = Создает голосование
 cmd-createvote-help = Использование: createvote <'restart'|'preset'|'map'>
-cmd-createvote-cannot-call-vote-now = Сейчас вы не можете запустить голосование!
+cmd-createvote-cannot-call-vote-now = Сейчас Вы не можете запустить голосование!
 cmd-createvote-invalid-vote-type = Неверный тип голосования
 cmd-createvote-arg-vote-type = <vote type>
 
@@ -22,7 +22,7 @@ cmd-customvote-arg-option-n = <option{ $n }>
 
 cmd-vote-desc = Голосует в активном голосовании
 cmd-vote-help = vote <voteId> <option>
-cmd-vote-cannot-call-vote-now = Сейчас вы не можете запустить голосование!
+cmd-vote-cannot-call-vote-now = Сейчас Вы не можете запустить голосование!
 cmd-vote-on-execute-error-must-be-player = Должен быть игроком
 cmd-vote-on-execute-error-invalid-vote-id = Неверное ID голосования
 cmd-vote-on-execute-error-invalid-vote-options = Неверные параметры голосования
