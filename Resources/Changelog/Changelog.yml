@@ -1,9 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Added virology lab coats to the virodrobe, type: Add}
-  id: 2993
-  time: '2023-02-05T19:47:52.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: 'Changed the rat king sprite, boss says!', type: Tweak}
@@ -2888,3 +2883,9 @@ Entries:
       a Passenger or Boxer.', type: Add}
   id: 3492
   time: '2023-04-22T23:08:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Health analyzer, handheld crew monitor, and handheld station maps require
+      power.', type: Tweak}
+  id: 3493
+  time: '2023-04-23T02:25:13.0000000+00:00'
