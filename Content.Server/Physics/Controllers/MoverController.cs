@@ -353,7 +353,7 @@ namespace Content.Server.Physics.Controllers
                             force.Y -= shuttle.LinearThrust[index];
                         }
 
-                        var impulse = force * brakeInput;
+                        var impulse = force * brakeInput * ShuttleComponent.BrakeCoefficient;
                         var maxImpulse = shuttleVelocity * body.Mass;
 
                         if ((impulse * frameTime).LengthSquared > maxImpulse.LengthSquared)
@@ -371,7 +371,7 @@ namespace Content.Server.Physics.Controllers
 
                     if (body.AngularVelocity != 0f)
                     {
-                        var impulse = shuttle.AngularThrust * brakeInput * (body.AngularVelocity > 0f ? -1f : 1f);
+                        var impulse = shuttle.AngularThrust * brakeInput * (body.AngularVelocity > 0f ? -1f : 1f) * ShuttleComponent.BrakeCoefficient;
                         var maxImpulse = body.AngularVelocity * body.Inertia;
 
                         if (Math.Abs(impulse * frameTime) > Math.Abs(maxImpulse))
@@ -398,8 +398,6 @@ namespace Content.Server.Physics.Controllers
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
 
-                    var totalForce = Vector2.Zero;
-
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
                     {
@@ -421,32 +419,32 @@ namespace Content.Server.Physics.Controllers
                             continue;
                         }
 
+                        var force = Vector2.Zero;
                         var index = (int) Math.Log2((int) dir);
                         var thrust = shuttle.LinearThrust[index];
 
                         switch (dir)
                         {
                             case DirectionFlag.North:
-                                totalForce.Y += thrust;
+                                force.Y += thrust;
                                 break;
                             case DirectionFlag.South:
-                                totalForce.Y -= thrust;
+                                force.Y -= thrust;
                                 break;
                             case DirectionFlag.East:
-                                totalForce.X += thrust;
+                                force.X += thrust;
                                 break;
                             case DirectionFlag.West:
-                                totalForce.X -= thrust;
+                                force.X -= thrust;
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
 
                         _thruster.EnableLinearThrustDirection(shuttle, dir);
+                        var impulse = force * linearInput.Length;
+                        PhysicsSystem.ApplyForce(shuttle.Owner, shuttleNorthAngle.RotateVec(impulse), body: body);
                     }
-
-                    var impulse = totalForce * linearInput.Length;
-                    PhysicsSystem.ApplyForce(shuttle.Owner, shuttleNorthAngle.RotateVec(impulse), body: body);
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))

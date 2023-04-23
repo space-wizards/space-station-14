@@ -13,6 +13,7 @@ using Content.Shared.Shuttles.Components;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -303,28 +304,30 @@ public sealed class ThrusterSystem : EntitySystem
     /// </summary>
     private void RefreshCenter(EntityUid uid, ShuttleComponent shuttle)
     {
+        // TODO: Only refresh relevant directions.
         var center = Vector2.Zero;
         var thrustQuery = GetEntityQuery<ThrusterComponent>();
-        var count = 0;
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var dir in new[]
                      { Direction.South, Direction.East, Direction.North, Direction.West })
         {
-            var pop = shuttle.LinearThrusters[(int) dir / 2];
+            var index = (int) dir / 2;
+            var pop = shuttle.LinearThrusters[index];
+            var totalThrust = 0f;
 
             foreach (var ent in pop)
             {
-                if (!thrustQuery.TryGetComponent(ent, out var thruster))
+                if (!thrustQuery.TryGetComponent(ent, out var thruster) || !xformQuery.TryGetComponent(ent, out var xform))
                     continue;
 
-                center += thruster.Thrust;
+                center += xform.LocalPosition * thruster.Thrust;
+                totalThrust += thruster.Thrust;
             }
 
-            count += pop.Count;
+            center /= pop.Count * totalThrust;
+            shuttle.CenterOfThrust[index] = center;
         }
-
-        center /= count;
-        shuttle.CenterOfThrust = center;
     }
 
     public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
