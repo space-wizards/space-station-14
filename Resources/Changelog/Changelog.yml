@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Solar Flare event. By default disables Common and Service channels in
-      headsets. Also breaks some lights., type: Add}
-  id: 3022
-  time: '2023-02-11T20:24:46.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Added infinite procedural generation for planetary biomes. The preset
@@ -2899,3 +2893,9 @@ Entries:
     type: Add}
   id: 3521
   time: '2023-04-23T23:53:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the CHIMP handcannon, a hand-held version of science''s APE.
+      Each bullet packs twice the punch of a normal APE.', type: Add}
+  id: 3522
+  time: '2023-04-23T23:58:45.0000000+00:00'
