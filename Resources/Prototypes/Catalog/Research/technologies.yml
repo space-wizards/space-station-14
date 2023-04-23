@@ -405,7 +405,7 @@
   description: technologies-advanced-atmospherics-technology-description
   icon:
     sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-    state: freezer_off
+    state: freezerOff
   requiredPoints: 7500
   requiredTechnologies:
   - ElectricalEngineering
