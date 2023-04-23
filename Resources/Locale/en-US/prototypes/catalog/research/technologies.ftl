@@ -52,9 +52,6 @@ technologies-speed-loader-description = Always be the quickest on the draw in an
 technologies-ballistic-magazines = Ballistic Magazines
 technologies-ballistic-magazines-description = Discover the wonders of not having to find a recharger for your gun.
 
-technologies-ballistic-weaponry = Ballistic Weaponry
-technologies-ballistic-weaponry-description = Energy weapons may be the future, but ballistics are what you need in the present.
-
 technologies-high-velocity-magazines = High Velocity Magazines
 technologies-high-velocity-magazines-description = It's been scientifically proven that painting bullets red makes them go faster.
 

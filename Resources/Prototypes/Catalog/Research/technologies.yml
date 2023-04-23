@@ -253,7 +253,7 @@
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
     state: base-6
-  requiredPoints: 10000
+  requiredPoints: 5000
   requiredTechnologies:
     - ForensicsEquipmentTechnology
     - BallisticMagazinesTechnology
@@ -292,30 +292,13 @@
     - MagazinePistolHighVelocity
 
 - type: technology
-  name: technologies-ballistic-weaponry
-  id: BallisticWeaponryTechnology
-  description: technologies-ballistic-weaponry-description
-  icon:
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
-    state: icon
-  requiredPoints: 20000
-  requiredTechnologies:
-    - BallisticMagazinesTechnology
-  unlockedRecipes:
-    - WeaponRifleLecter
-    - WeaponSubMachineGunWt550
-    - WeaponShotgunEnforcer
-    - WeaponRevolverInspector
-    - WeaponPistolMk58
-
-- type: technology
   name: technologies-non-lethal
   id: NonLethalTechnology
   description: technologies-non-lethal-description
   icon:
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
     state: base
-  requiredPoints: 10000
+  requiredPoints: 5000
   requiredTechnologies:
     - BasicSecurityTechnology
   unlockedRecipes:
@@ -351,7 +334,7 @@
   icon:
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     state: icon
-  requiredPoints: 30000
+  requiredPoints: 25000
   requiredTechnologies:
     - EnergyWeaponryTechnology
   unlockedRecipes:
@@ -364,7 +347,7 @@
   icon:
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     state: icon
-  requiredPoints: 30000
+  requiredPoints: 25000
   requiredTechnologies:
     - EnergyWeaponryTechnology
   unlockedRecipes:
@@ -377,7 +360,7 @@
   icon:
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
     state: icon
-  requiredPoints: 20000
+  requiredPoints: 25000
   requiredTechnologies:
     - EnergyWeaponryTechnology
   unlockedRecipes:
