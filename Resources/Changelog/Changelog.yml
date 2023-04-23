@@ -1,9 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Added missing satchel and duffel virology bags to the ViroDrobe., type: Add}
-  id: 3019
-  time: '2023-02-11T01:52:45.0000000+00:00'
 - author: Aleksh
   changes:
   - {message: Added Dame Dane clothing set. EEYIKES!, type: Add}
@@ -2897,3 +2892,10 @@ Entries:
   - {message: Fixed theatrical performances crate now have name and desc., type: Fix}
   id: 3518
   time: '2023-04-23T20:45:16.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate has added a ringtone code lock to uplinks. Operatives
+      are told the code when they are briefed. Set your ringtone to the code to open
+      your uplink!, type: Add}
+  id: 3519
+  time: '2023-04-23T21:00:42.0000000+00:00'
