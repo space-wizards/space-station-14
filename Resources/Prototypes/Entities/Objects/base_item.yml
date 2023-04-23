@@ -59,7 +59,6 @@
 
 # PowerCellSlot parents
 - type: entity
-  name: a
   id: PowerCellSlotSmallItem
   abstract: true
   components:
@@ -75,7 +74,6 @@
           startingItem: PowerCellSmall
 
 - type: entity
-  name: a
   id: PowerCellSlotMediumItem
   abstract: true
   components:
