@@ -43,6 +43,6 @@ public sealed class SolutionPurgeSystem : EntitySystem
     private void OnMapInit(EntityUid uid, SolutionPurgeComponent comp, MapInitEvent args)
     {
         if (comp.NextPurgeTime < _timing.CurTime)
-            comp.NextPurgeTime = _timing.CurTime + comp.Duration;
+            comp.NextPurgeTime = _timing.CurTime;
     }
 }
