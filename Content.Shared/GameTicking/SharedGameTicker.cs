@@ -45,7 +45,6 @@ namespace Content.Shared.GameTicking
         public bool YouAreReady { get; }
         // UTC.
         public TimeSpan StartTime { get; }
-        public TimeSpan PreloadTime { get; }
         public TimeSpan RoundStartTimeSpan { get; }
         public bool Paused { get; }
 
@@ -56,7 +55,6 @@ namespace Content.Shared.GameTicking
             LobbyBackground = lobbyBackground;
             YouAreReady = youAreReady;
             StartTime = startTime;
-            PreloadTime = preloadTime;
             RoundStartTimeSpan = roundStartTimeSpan;
             Paused = paused;
         }

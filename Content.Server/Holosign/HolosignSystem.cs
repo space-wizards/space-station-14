@@ -3,66 +3,63 @@ using Content.Shared.Examine;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
-using Content.Shared.PowerCell.Components;
-using Robust.Shared.Timing;
 
-namespace Content.Server.Holosign
+namespace Content.Server.Holosign;
+
+public sealed class HolosignSystem : EntitySystem
 {
-    public sealed class HolosignSystem : EntitySystem
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly PowerCellSystem _cellSystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<HolosignProjectorComponent, UseInHandEvent>(OnUse);
+        SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
+    }
 
-        public override void Initialize()
+    private void OnExamine(EntityUid uid, HolosignProjectorComponent component, ExaminedEvent args)
+    {
+        // TODO: This should probably be using an itemstatus
+        // TODO: I'm too lazy to do this rn but it's literally copy-paste from emag.
+        _powerCell.TryGetBatteryFromSlot(uid, out var battery);
+        var charges = UsesRemaining(component, battery);
+        var maxCharges = MaxUses(component, battery);
+
+        args.PushMarkup(Loc.GetString("limited-charges-charges-remaining", ("charges", charges)));
+
+        if (charges > 0 && charges == maxCharges)
         {
-            base.Initialize();
-            SubscribeLocalEvent<HolosignProjectorComponent, UseInHandEvent>(OnUse);
-            SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
+            args.PushMarkup(Loc.GetString("limited-charges-max-charges"));
         }
+    }
 
-        private void OnExamine(EntityUid uid, HolosignProjectorComponent component, ExaminedEvent args)
-        {
-            // TODO: This should probably be using an itemstatus
-            // TODO: I'm too lazy to do this rn but it's literally copy-paste from emag.
-            _cellSystem.TryGetBatteryFromSlot(uid, out var battery);
-            var charges = UsesRemaining(component, battery);
-            var maxCharges = MaxUses(component, battery);
+    private void OnUse(EntityUid uid, HolosignProjectorComponent component, UseInHandEvent args)
+    {
+        if (args.Handled ||
+            !_powerCell.TryGetBatteryFromSlot(uid, out var battery) ||
+            !battery.TryUseCharge(component.ChargeUse))
+            return;
 
-            args.PushMarkup(Loc.GetString("emag-charges-remaining", ("charges", charges)));
+        // TODO: Too tired to deal
+        var holo = EntityManager.SpawnEntity(component.SignProto, Transform(args.User).Coordinates.SnapToGrid(EntityManager));
+        Transform(holo).Anchored = true;
 
-            if (charges > 0 && charges == maxCharges)
-            {
-                args.PushMarkup(Loc.GetString("emag-max-charges"));
-            }
-        }
+        args.Handled = true;
+    }
 
-        private void OnUse(EntityUid uid, HolosignProjectorComponent component, UseInHandEvent args)
-        {
-            if (args.Handled ||
-                !_cellSystem.TryGetBatteryFromSlot(uid, out var battery) ||
-                !battery.TryUseCharge(component.ChargeUse))
-                return;
+    private int UsesRemaining(HolosignProjectorComponent component, BatteryComponent? battery = null)
+    {
+        if (battery == null ||
+            component.ChargeUse == 0f) return 0;
 
-            // TODO: Too tired to deal
-            var holo = EntityManager.SpawnEntity(component.SignProto, Transform(args.User).Coordinates.SnapToGrid(EntityManager));
-            Transform(holo).Anchored = true;
+        return (int) (battery.CurrentCharge / component.ChargeUse);
+    }
 
-            args.Handled = true;
-        }
+    private int MaxUses(HolosignProjectorComponent component, BatteryComponent? battery = null)
+    {
+        if (battery == null ||
+            component.ChargeUse == 0f) return 0;
 
-        private int UsesRemaining(HolosignProjectorComponent component, BatteryComponent? battery = null)
-        {
-            if (battery == null ||
-                component.ChargeUse == 0f) return 0;
-
-            return (int) (battery.CurrentCharge / component.ChargeUse);
-        }
-
-        private int MaxUses(HolosignProjectorComponent component, BatteryComponent? battery = null)
-        {
-            if (battery == null ||
-                component.ChargeUse == 0f) return 0;
-
-            return (int) (battery.MaxCharge / component.ChargeUse);
-        }
+        return (int) (battery.MaxCharge / component.ChargeUse);
     }
 }
