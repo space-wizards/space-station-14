@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixed wallmounts working when boards are removed., type: Fix}
-  id: 3011
-  time: '2023-02-09T16:14:39.0000000+00:00'
 - author: BismarckShuffle
   changes:
   - {message: Added Radio Channel guidebook entry., type: Add}
@@ -2891,3 +2886,10 @@ Entries:
   - {message: Update the salvage expedition song to the final version., type: Tweak}
   id: 3510
   time: '2023-04-23T09:13:38.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'We have restricted the access to skin color dyes to our fellow undead
+      crewmembers. Now their cracked, broken skin will show that flourishing rot that
+      screams ''kill me, now''!', type: Fix}
+  id: 3511
+  time: '2023-04-23T09:16:59.0000000+00:00'
