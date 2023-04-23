@@ -72,8 +72,12 @@
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: PowerDeviceVisualizer
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {visible: true}
+          False: {visible: false}
   - type: Destructible
     thresholds:
     - trigger:
