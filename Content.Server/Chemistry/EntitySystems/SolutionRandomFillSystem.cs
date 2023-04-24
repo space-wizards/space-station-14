@@ -20,19 +20,19 @@ public sealed class SolutionRandomFillSystem : EntitySystem
     {
 
         var target = _solutionsSystem.EnsureSolution(uid, component.Solution);
-        var sumOfWeights = 0;
+        var sumOfWeights = 0f;
 
         foreach (var picked  in component.RandomList)
         {
-            sumOfWeights += (int) picked.Weight;
+            sumOfWeights += picked.Weight;
         }
 
-        sumOfWeights = _random.Next(sumOfWeights);
+        sumOfWeights = _random.NextFloat(sumOfWeights);
         Solution? randSolution = null;
 
         foreach (var picked in component.RandomList)
         {
-            sumOfWeights -= (int) picked.Weight;
+            sumOfWeights -= picked.Weight;
 
             if (sumOfWeights <= 0)
             {

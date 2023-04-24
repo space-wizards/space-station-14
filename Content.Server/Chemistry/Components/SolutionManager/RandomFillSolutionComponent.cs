@@ -1,3 +1,4 @@
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Chemistry.Components.SolutionManager;
@@ -5,7 +6,7 @@ namespace Content.Server.Chemistry.Components.SolutionManager;
 /// <summary>
 ///     Fills a solution container randomly using a weighted list
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SolutionRandomFillSystem))]
 public sealed class RandomFillSolutionComponent : Component
 {
     /// <summary>
