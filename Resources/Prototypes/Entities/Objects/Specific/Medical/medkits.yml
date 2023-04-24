@@ -93,4 +93,8 @@
   - type: Sprite
     state: blackkit
   - type: Item
-    heldPrefix: blackkit
+    heldPrefix: blackkit  
+    size: 50
+  - type: Storage
+    capacity: 50
+    
