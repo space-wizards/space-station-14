@@ -61,7 +61,11 @@ namespace Content.Server.Traitor.Uplink
             return true;
         }
 
-        private EntityUid? FindUplinkTarget(EntityUid user)
+        /// <summary>
+        /// Finds the entity that can hold an uplink for a user.
+        /// Usually this is a pda in their pda slot, but can also be in their hands. (but not pockets or inside bag, etc.)
+        /// </summary>
+        public EntityUid? FindUplinkTarget(EntityUid user)
         {
             // Try to find PDA in inventory
             if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))

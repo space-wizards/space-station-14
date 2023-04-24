@@ -1,8 +1,10 @@
 - type: entity
-  id: StationMap
+  id: HandheldStationMap
   name: station map
   description: Displays a readout of the current station.
-  parent: BaseItem
+  parent:
+    - BaseItem
+    - PowerCellSlotSmallItem
   suffix: Handheld
   components:
     - type: StationMap
@@ -13,6 +15,10 @@
         - state: tablet
         - state: generic
           shader: unshaded
+    - type: PowerCellDraw
+      drawRate: 0
+      useRate: 20
+    - type: ActivatableUIRequiresPowerCell
     - type: ActivatableUI
       inHandsOnly: true
       singleUser: true

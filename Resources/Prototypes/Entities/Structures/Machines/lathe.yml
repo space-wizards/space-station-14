@@ -170,6 +170,7 @@
       - ConveyorBeltAssembly
       - AppraisalTool
       - AnomalyScanner
+      - AnomalyLocator
       - RCD
       - RCDAmmo
       - HydroponicsToolScythe
@@ -222,6 +223,7 @@
       - MopItem
       - AdvMopItem
       - SprayBottle
+      - MegaSprayBottle
       - FireExtinguisher
       - KitchenKnife
       - ButchCleaver
@@ -235,6 +237,10 @@
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
+      - WeaponPistolCHIMP
+      - CartridgeAnomalousParticleDelta
+      - CartridgeAnomalousParticleEpsilon
+      - CartridgeAnomalousParticleZeta
       - SynthesizerInstrument
       - RPED
       - ClothingShoesBootsMag
@@ -301,6 +307,7 @@
       - ReagentGrinderMachineCircuitboard
       - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
+      - FatExtractorMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
@@ -548,6 +555,8 @@
       - ClothingUniformJumpskirtHoP
       - ClothingUniformJumpsuitHoS
       - ClothingUniformJumpskirtHoS
+      - ClothingUniformJumpsuitHoSAlt
+      - ClothingUniformJumpskirtHoSAlt
       - ClothingUniformJumpsuitHydroponics
       - ClothingUniformJumpskirtHydroponics
       - ClothingUniformJumpsuitJanitor
@@ -572,6 +581,8 @@
       - ClothingUniformJumpskirtScientist
       - ClothingUniformJumpsuitSec
       - ClothingUniformJumpskirtSec
+      - ClothingUniformJumpsuitBrigmedic
+      - ClothingUniformJumpskirtBrigmedic
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
       - ClothingOuterWinterCap
@@ -590,6 +601,23 @@
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime
+      - ClothingOuterWinterCoat
+      - ClothingOuterWinterJani
+      - ClothingOuterWinterBar
+      - ClothingOuterWinterChef
+      - ClothingOuterWinterHydro
+      - ClothingOuterWinterAtmos
+      - ClothingOuterWinterEngi
+      - ClothingOuterWinterCargo
+      - ClothingOuterWinterMiner
+      - ClothingOuterWinterMed
+      - ClothingOuterWinterPara
+      - ClothingOuterWinterChem
+      - ClothingOuterWinterGen
+      - ClothingOuterWinterViro
+      - ClothingOuterWinterSci
+      - ClothingOuterWinterRobo
+      - ClothingOuterWinterSec
   - type: MaterialStorage
     whitelist:
       tags:

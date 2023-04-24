@@ -15,7 +15,7 @@ public sealed class UploadFolder : IConsoleCommand
     public string Description => Loc.GetString("uploadfolder-command-description");
     public string Help => Loc.GetString("uploadfolder-command-help");
 
-    private static readonly ResourcePath BaseUploadFolderPath = new("/UploadFolder");
+    private static readonly ResPath BaseUploadFolderPath = new("/UploadFolder");
 
     [Dependency] private IResourceManager _resourceManager = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
@@ -37,7 +37,7 @@ public sealed class UploadFolder : IConsoleCommand
             shell.WriteLine( Loc.GetString("uploadfolder-command-help"));
             return;
         }
-        var folderPath = new ResourcePath(BaseUploadFolderPath + $"/{args[0]}");
+        var folderPath = new ResPath(BaseUploadFolderPath + $"/{args[0]}");
 
         if (!_resourceManager.UserData.Exists(folderPath.ToRootedPath()))
         {
@@ -63,7 +63,7 @@ public sealed class UploadFolder : IConsoleCommand
                 var netManager = IoCManager.Resolve<INetManager>();
                 var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
 
-                msg.RelativePath = new ResourcePath($"{filepath.ToString().Remove(0,14)}"); //removes /UploadFolder/ from path
+                msg.RelativePath = new ResPath($"{filepath.ToString().Remove(0,14)}"); //removes /UploadFolder/ from path
                 msg.Data = data;
 
                 netManager.ClientSendMessage(msg);
