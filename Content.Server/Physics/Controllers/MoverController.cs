@@ -315,6 +315,9 @@ namespace Content.Server.Physics.Controllers
                 {
                     if (body.LinearVelocity.Length > 0f)
                     {
+                        // Minimum brake velocity for a direction to show its thrust appearance.
+                        var appearanceThreshold = 0.1f;
+
                         // Get velocity relative to the shuttle so we know which thrusters to fire
                         var shuttleVelocity = (-shuttleNorthAngle).RotateVec(body.LinearVelocity);
                         var force = Vector2.Zero;
@@ -322,7 +325,9 @@ namespace Content.Server.Physics.Controllers
                         if (shuttleVelocity.X < 0f)
                         {
                             _thruster.DisableLinearThrustDirection(shuttle, DirectionFlag.West);
-                            _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.East);
+
+                            if (shuttleVelocity.X < -appearanceThreshold)
+                                _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.East);
 
                             var index = (int) Math.Log2((int) DirectionFlag.East);
                             force.X += shuttle.LinearThrust[index];
@@ -330,7 +335,9 @@ namespace Content.Server.Physics.Controllers
                         else if (shuttleVelocity.X > 0f)
                         {
                             _thruster.DisableLinearThrustDirection(shuttle, DirectionFlag.East);
-                            _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.West);
+
+                            if (shuttleVelocity.X > appearanceThreshold)
+                                _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.West);
 
                             var index = (int) Math.Log2((int) DirectionFlag.West);
                             force.X -= shuttle.LinearThrust[index];
@@ -339,7 +346,9 @@ namespace Content.Server.Physics.Controllers
                         if (shuttleVelocity.Y < 0f)
                         {
                             _thruster.DisableLinearThrustDirection(shuttle, DirectionFlag.South);
-                            _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.North);
+
+                            if (shuttleVelocity.Y < -appearanceThreshold)
+                                _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.North);
 
                             var index = (int) Math.Log2((int) DirectionFlag.North);
                             force.Y += shuttle.LinearThrust[index];
@@ -347,7 +356,9 @@ namespace Content.Server.Physics.Controllers
                         else if (shuttleVelocity.Y > 0f)
                         {
                             _thruster.DisableLinearThrustDirection(shuttle, DirectionFlag.North);
-                            _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.South);
+
+                            if (shuttleVelocity.Y > appearanceThreshold)
+                                _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.South);
 
                             var index = (int) Math.Log2((int) DirectionFlag.South);
                             force.Y -= shuttle.LinearThrust[index];
@@ -382,6 +393,10 @@ namespace Content.Server.Physics.Controllers
                         PhysicsSystem.ApplyTorque(shuttle.Owner, impulse, body: body);
                         _thruster.SetAngularThrust(shuttle, true);
                     }
+                    else
+                    {
+                        _thruster.SetAngularThrust(shuttle, false);
+                    }
                 }
 
                 if (linearInput.Length.Equals(0f))
@@ -397,6 +412,7 @@ namespace Content.Server.Physics.Controllers
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
+                    var totalForce = Vector2.Zero;
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -443,20 +459,37 @@ namespace Content.Server.Physics.Controllers
 
                         _thruster.EnableLinearThrustDirection(shuttle, dir);
                         var impulse = force * linearInput.Length;
-                        PhysicsSystem.ApplyForce(shuttle.Owner, shuttleNorthAngle.RotateVec(impulse), body: body);
+                        totalForce += impulse;
+                    }
+
+                    totalForce = shuttleNorthAngle.RotateVec(totalForce);
+
+                    if ((body.LinearVelocity + totalForce / body.Mass * frameTime).Length <= ShuttleComponent.MaxLinearVelocity)
+                    {
+                        PhysicsSystem.ApplyForce(shuttle.Owner, totalForce, body: body);
                     }
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
                 {
-                    _thruster.SetAngularThrust(shuttle, false);
                     PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, true);
+
+                    if (brakeInput <= 0f)
+                        _thruster.SetAngularThrust(shuttle, false);
                 }
                 else
                 {
                     PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, false);
                     var impulse = shuttle.AngularThrust * -angularInput;
-                    PhysicsSystem.ApplyTorque(shuttle.Owner, impulse, body: body);
+                    var tickChange = impulse * frameTime * body.InvI;
+
+                    // If the rotation brings it above speedcap then noop.
+                    if (Math.Sign(body.AngularVelocity) != Math.Sign(tickChange) ||
+                        Math.Abs(body.AngularVelocity + tickChange) <= ShuttleComponent.MaxAngularVelocity)
+                    {
+                        PhysicsSystem.ApplyTorque(shuttle.Owner, impulse, body: body);
+                    }
+
                     _thruster.SetAngularThrust(shuttle, true);
                 }
             }
