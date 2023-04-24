@@ -18,6 +18,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -46,6 +47,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly BodySystem _body = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
         {
@@ -195,6 +197,7 @@ namespace Content.Server.Explosion.EntitySystems
             UpdateProximity(frameTime);
             UpdateTimer(frameTime);
             UpdateTimedCollide(frameTime);
+            UpdateRandom(frameTime);
         }
 
         private void UpdateTimer(float frameTime)
@@ -227,6 +230,28 @@ namespace Content.Server.Explosion.EntitySystems
                 // In case this is a re-usable grenade, un-prime it.
                 if (TryComp<AppearanceComponent>(uid, out var appearance))
                     _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Unprimed, appearance);
+            }
+        }
+
+        private void UpdateRandom(float frameTime){
+            foreach (var random in EntityQuery<TriggerRandomlyComponent>()){
+                random.Accumulator += frameTime;
+
+                if (random.Accumulator >= random.UpdateCooldown && _robustRandom.Prob(random.TriggerChance)){
+                    if(random.TimerTime == 0.0){
+                        Trigger(random.Owner);
+                        return;
+                    }
+
+                    if (!TryComp<AppearanceComponent>(random.Owner, out var appearance)){
+                        return;
+                    }
+
+                    _appearance.SetData(random.Owner, TriggerVisuals.VisualState, TriggerVisualState.Primed, appearance);
+                    var timer = EntityManager.EnsureComponent<ActiveTimerTriggerComponent>(random.Owner);
+                    timer.TimeRemaining = random.TimerTime;
+                    EntityManager.RemoveComponent<TriggerRandomlyComponent>(random.Owner);
+                }
             }
         }
     }

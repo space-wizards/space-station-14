@@ -25,3 +25,10 @@
   r: 3
   a: 5
   plantPrototype: shroominal_pod
+
+- type: transmutation
+  id: HellLemon
+  t: 6
+  r: 6
+  a: 6
+  plantPrototype: hell_lemon

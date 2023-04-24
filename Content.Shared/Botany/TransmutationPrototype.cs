@@ -14,20 +14,3 @@ public sealed class TransmuationPrototype : IPrototype
     [DataField("a")] public int A = 0;
 }
 
-public sealed class TRASequence
-{
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int T;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int R;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int A;
-
-    public TRASequence(int t,int r,int a){
-        T = t;
-        R = r;
-        A = a;
-    }
-}

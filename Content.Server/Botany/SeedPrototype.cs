@@ -61,6 +61,23 @@ public struct SeedChemQuantity
     [DataField("PotencyDivisor")] public int PotencyDivisor;
 }
 
+public struct TRASequence
+{
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int T;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int R;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int A;
+
+    public TRASequence(int t, int r, int a)
+    {
+        T = t;
+        R = r;
+        A = a;
+    }
+}
+
 
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
 [Virtual, DataDefinition]
@@ -282,7 +299,7 @@ public class SeedData
 
             Seedless = Seedless,
             PlantTransmutations = PlantTransmutations,
-            TRA = TRA,
+            TRA = new TRASequence(TRA.T, TRA.R, TRA.A),
             Viable = Viable,
             Slip = Slip,
             Sentient = Sentient,

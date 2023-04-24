@@ -223,7 +223,7 @@ public sealed partial class BotanySystem : EntitySystem
                 Logger.Error($"Transmutation plant prototype does not exist: {transmuation.prototype}");
                 continue;
             }
-            if (transmuation.T == seedData.TRA.T && transmuation.R == seedData.TRA.R && transmuation.A == seedData.TRA.R){
+            if (transmuation.T == seedData.TRA.T && transmuation.R == seedData.TRA.R && transmuation.A == seedData.TRA.A){
                 Logger.Info($"TRA sequences match, returning new seed data for: {newSeedData.Name}");
                 return newSeedData;
             }

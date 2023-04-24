@@ -19,7 +19,7 @@ public class MutationSystem : EntitySystem
     public void MutateSeed(SeedData seed, float severity)
     {
         // Add up everything in the bits column and put the number here.
-        const int totalbits = 260;
+        const int totalbits = 275;
 
         // Tolerances (55)
         MutateFloat(ref seed.NutrientConsumption   , 0.05f , 1.2f , 5 , totalbits , severity);
@@ -42,10 +42,10 @@ public class MutationSystem : EntitySystem
         MutateFloat(ref seed.Production            , 1f    , 10f  , 5 , totalbits , 2*severity);
         MutateFloat(ref seed.Potency               , 30f   , 100f , 5 , totalbits , 2*severity);
 
-        // Transmutation (15)
-        MutateInt(ref seed.TRA.T                   , 1     , 9  , 5 , totalbits , severity);
-        MutateInt(ref seed.TRA.R                   , 1     , 9  , 5 , totalbits , severity);
-        MutateInt(ref seed.TRA.A                   , 1     , 9  , 5 , totalbits , severity);
+        // Transmutation (15*2 = 30)
+        MutateInt(ref seed.TRA.T                   , 0     , 9  , 5 , totalbits , 2*severity);
+        MutateInt(ref seed.TRA.R                   , 0     , 9  , 5 , totalbits , 2*severity);
+        MutateInt(ref seed.TRA.A                   , 0     , 9  , 5 , totalbits , 2*severity);
 
         // Kill the plant (30)
         MutateBool(ref seed.Viable         , false , 30 , totalbits , severity);

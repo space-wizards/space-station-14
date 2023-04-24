@@ -75,6 +75,10 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+    Laughtex:
+      Min: 3
+      Max: 10
+      PotencyDivisor: 25
 
 - type: seed
   id: pink_banana
@@ -135,6 +139,8 @@
   plantRsi: Objects/Specific/Hydroponics/lemon.rsi
   productPrototypes:
     - FoodLemon
+  plantTransmutations:
+    - HellLemon
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -151,6 +157,35 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+
+- type: seed
+  id: hell_lemon
+  name: seeds-hell-lemon-name
+  noun: seeds-noun-seeds
+  displayName: seeds-hell-lemon-display-name
+  plantRsi: Objects/Specific/Hydroponics/hell_lemon.rsi
+  productPrototypes:
+    - FoodHellLemon
+  harvestRepeat: SelfHarvest
+  lifespan: 25
+  maturation: 3
+  production: 4
+  yield: 5
+  potency: 10
+  idealLight: 8
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Napalm:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 50
 
 - type: seed
   id: lime

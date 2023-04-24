@@ -48,6 +48,31 @@
         - !type:OrganType
           type: Plant
 
+
+- type: reagent
+  id: TRA-05
+  name: reagent-name-tra-shift-pos
+  group: Botanical
+  desc: reagent-desc-tra-shift-pos
+  flavor: bitter
+  color: "#00FFDD"
+  physicalDesc: reagent-physical-desc-shift-pos
+  plantMetabolism:
+    - !type:PlantShiftTRA
+      amount: 1.0
+
+- type: reagent
+  id: TRA-91
+  name: reagent-name-tra-shift-negative
+  group: Botanical
+  desc: reagent-desc-tra-shift-negative
+  flavor: bitter
+  color: "#00A2FF"
+  physicalDesc: reagent-physical-desc-shift-negative
+  plantMetabolism:
+    - !type:PlantShiftTRA
+      amount: -1.0
+
 - type: reagent
   id: PestKiller
   name: reagent-name-pest-killer
@@ -120,6 +145,9 @@
     - !type:PlantAdjustPests
       prob: 0.025
       amount: 1
+    - !type:PlantAdjustMutationMod
+      prob: 0.3
+      amount: -0.2
     - !type:RobustHarvest {}
   metabolisms:
     Poison:

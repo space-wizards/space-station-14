@@ -165,6 +165,7 @@
         - !type:Emote
           emote: Laugh
           probability: 0.8
+          showInChat: true
         - !type:PopupMessage
           type: Local
           visualType: Large
@@ -180,6 +181,7 @@
         - !type:Emote
           emote: Laugh
           probability: 0.8
+          showInChat: true
         - !type:PopupMessage
           type: Local
           visualType: Large
