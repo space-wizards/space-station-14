@@ -63,11 +63,8 @@
       - id: TrashBag
         amount: 2
       - id: LightReplacer
-        amount: 1
       - id: BoxLightMixed
-        amount: 1
       - id: Holoprojector
-        amount: 1
       - id: SoapNT
         amount: 2
       - id: FlashlightLantern

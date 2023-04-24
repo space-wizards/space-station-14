@@ -387,7 +387,9 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0

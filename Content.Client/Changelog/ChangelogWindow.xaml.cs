@@ -182,7 +182,7 @@ namespace Content.Client.Changelog
 
             return new TextureRect
             {
-                Texture = _resourceCache.GetTexture(new ResourcePath($"/Textures/Interface/Changelog/{file}")),
+                Texture = _resourceCache.GetTexture(new ResPath($"/Textures/Interface/Changelog/{file}")),
                 VerticalAlignment = VAlignment.Top,
                 TextureScale = (0.5f, 0.5f),
                 Margin = new Thickness(2, 4, 6, 2),

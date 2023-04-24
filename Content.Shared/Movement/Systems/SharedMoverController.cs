@@ -466,10 +466,9 @@ namespace Content.Shared.Movement.Systems
         private bool TryGetFootstepSound(TransformComponent xform, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
             sound = null;
-            MapGridComponent? grid;
 
             // Fallback to the map?
-            if (xform.GridUid == null)
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
                 if (TryComp<FootstepModifierComponent>(xform.MapUid, out var modifier))
                 {
@@ -480,8 +479,8 @@ namespace Content.Shared.Movement.Systems
                 return false;
             }
 
-            grid = _mapManager.GetGrid(xform.GridUid.Value);
             var position = grid.LocalToTile(xform.Coordinates);
+            var soundEv = new GetFootstepSoundEvent(xform.Owner);
 
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound
@@ -489,6 +488,14 @@ namespace Content.Shared.Movement.Systems
 
             while (anchored.MoveNext(out var maybeFootstep))
             {
+                RaiseLocalEvent(maybeFootstep.Value, ref soundEv);
+
+                if (soundEv.Sound != null)
+                {
+                    sound = soundEv.Sound;
+                    return true;
+                }
+
                 if (TryComp<FootstepModifierComponent>(maybeFootstep, out var footstep))
                 {
                     sound = footstep.Sound;
