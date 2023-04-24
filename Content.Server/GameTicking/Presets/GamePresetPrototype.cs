@@ -1,4 +1,4 @@
-
+using Content.Server.GameTicking.Rules;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -14,24 +14,24 @@ namespace Content.Server.GameTicking.Presets
         public string ID { get; } = default!;
 
         [DataField("alias")]
-        public readonly string[] Alias = Array.Empty<string>();
+        public string[] Alias { get; } = Array.Empty<string>();
 
         [DataField("name")]
-        public readonly string ModeTitle = "????";
+        public string ModeTitle { get; } = "????";
 
         [DataField("description")]
-        public readonly string Description = string.Empty;
+        public string Description { get; } = string.Empty;
 
         [DataField("showInVote")]
-        public readonly bool ShowInVote;
+        public bool ShowInVote { get; } = false;
 
         [DataField("minPlayers")]
-        public readonly int? MinPlayers;
+        public int? MinPlayers { get; } = null;
 
         [DataField("maxPlayers")]
-        public readonly int? MaxPlayers;
+        public int? MaxPlayers { get; } = null;
 
-        [DataField("rules", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+        [DataField("rules", customTypeSerializer:typeof(PrototypeIdListSerializer<GameRulePrototype>))]
         public IReadOnlyList<string> Rules { get; } = Array.Empty<string>();
     }
 }

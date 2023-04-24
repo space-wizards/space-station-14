@@ -1,303 +1,244 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.GameTicking.Rules.Components;
+using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.Administration;
-using Content.Shared.Prototypes;
-using JetBrains.Annotations;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
-namespace Content.Server.GameTicking;
-
-public sealed partial class GameTicker
+namespace Content.Server.GameTicking
 {
-    [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
-
-    /// <summary>
-    ///     A list storing the start times of all game rules that have been started this round.
-    ///     Game rules can be started and stopped at any time, including midround.
-    /// </summary>
-    public IReadOnlyList<(TimeSpan, string)> AllPreviousGameRules => _allPreviousGameRules;
-
-    private void InitializeGameRules()
+    public sealed partial class GameTicker
     {
-        // Add game rule command.
-        _consoleHost.RegisterCommand("addgamerule",
-            string.Empty,
-            "addgamerule <rules>",
-            AddGameRuleCommand,
-            AddGameRuleCompletions);
+        // No duplicates.
+        [ViewVariables] private readonly HashSet<GameRulePrototype> _addedGameRules = new();
 
-        // End game rule command.
-        _consoleHost.RegisterCommand("endgamerule",
-            string.Empty,
-            "endgamerule <rules>",
-            EndGameRuleCommand,
-            EndGameRuleCompletions);
+        /// <summary>
+        ///     Holds all currently added game rules.
+        /// </summary>
+        public IReadOnlySet<GameRulePrototype> AddedGameRules => _addedGameRules;
 
-        // Clear game rules command.
-        _consoleHost.RegisterCommand("cleargamerules",
-            string.Empty,
-            "cleargamerules",
-            ClearGameRulesCommand);
-    }
+        [ViewVariables] private readonly HashSet<GameRulePrototype> _startedGameRules = new();
 
-    private void ShutdownGameRules()
-    {
-        _consoleHost.UnregisterCommand("addgamerule");
-        _consoleHost.UnregisterCommand("endgamerule");
-        _consoleHost.UnregisterCommand("cleargamerules");
-    }
+        /// <summary>
+        ///     Holds all currently started game rules.
+        /// </summary>
+        public IReadOnlySet<GameRulePrototype> StartedGameRules => _startedGameRules;
 
-    /// <summary>
-    /// Adds a game rule to the list, but does not
-    /// start it yet, instead waiting until the rule is actually started by other code (usually roundstart)
-    /// </summary>
-    /// <returns>The entity for the added gamerule</returns>
-    public EntityUid AddGameRule(string ruleId)
-    {
-        var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
-        _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
+        [ViewVariables] private readonly List<(TimeSpan, GameRulePrototype)> _allPreviousGameRules = new();
 
-        var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
-        RaiseLocalEvent(ruleEntity, ref ev, true);
-        return ruleEntity;
-    }
+        /// <summary>
+        ///     A list storing the start times of all game rules that have been started this round.
+        ///     Game rules can be started and stopped at any time, including midround.
+        /// </summary>
+        public IReadOnlyList<(TimeSpan, GameRulePrototype)> AllPreviousGameRules => _allPreviousGameRules;
 
-    /// <summary>
-    /// Game rules can be 'started' separately from being added. 'Starting' them usually
-    /// happens at round start while they can be added and removed before then.
-    /// </summary>
-    public bool StartGameRule(string ruleId)
-    {
-        return StartGameRule(ruleId, out _);
-    }
+        private void InitializeGameRules()
+        {
+            // Add game rule command.
+            _consoleHost.RegisterCommand("addgamerule",
+                string.Empty,
+                "addgamerule <rules>",
+                AddGameRuleCommand,
+                AddGameRuleCompletions);
 
-    /// <summary>
-    /// Game rules can be 'started' separately from being added. 'Starting' them usually
-    /// happens at round start while they can be added and removed before then.
-    /// </summary>
-    public bool StartGameRule(string ruleId, out EntityUid ruleEntity)
-    {
-        ruleEntity = AddGameRule(ruleId);
-        return StartGameRule(ruleEntity);
-    }
+            // End game rule command.
+            _consoleHost.RegisterCommand("endgamerule",
+                string.Empty,
+                "endgamerule <rules>",
+                EndGameRuleCommand,
+                EndGameRuleCompletions);
 
-    /// <summary>
-    /// Game rules can be 'started' separately from being added. 'Starting' them usually
-    /// happens at round start while they can be added and removed before then.
-    /// </summary>
-    public bool StartGameRule(EntityUid ruleEntity, GameRuleComponent? ruleData = null)
-    {
-        if (!Resolve(ruleEntity, ref ruleData))
-            ruleData ??= EnsureComp<GameRuleComponent>(ruleEntity);
+            // Clear game rules command.
+            _consoleHost.RegisterCommand("cleargamerules",
+                string.Empty,
+                "cleargamerules",
+                ClearGameRulesCommand);
+        }
 
-        // can't start an already active rule
-        if (ruleData.Active || ruleData.Ended)
+        private void ShutdownGameRules()
+        {
+            _consoleHost.UnregisterCommand("addgamerule");
+            _consoleHost.UnregisterCommand("endgamerule");
+            _consoleHost.UnregisterCommand("cleargamerules");
+        }
+
+        /// <summary>
+        ///     Game rules can be 'started' separately from being added. 'Starting' them usually
+        ///     happens at round start while they can be added and removed before then.
+        /// </summary>
+        public void StartGameRule(GameRulePrototype rule)
+        {
+            if (!IsGameRuleAdded(rule))
+                AddGameRule(rule);
+
+            _allPreviousGameRules.Add((RoundDuration(), rule));
+            _sawmill.Info($"Started game rule {rule.ID}");
+
+            if (_startedGameRules.Add(rule))
+                RaiseLocalEvent(new GameRuleStartedEvent(rule));
+        }
+
+        /// <summary>
+        ///     Ends a game rule.
+        ///     This always includes removing it (from added game rules) so that behavior
+        ///     is not separate from this.
+        /// </summary>
+        /// <param name="rule"></param>
+        public void EndGameRule(GameRulePrototype rule)
+        {
+            if (!IsGameRuleAdded(rule))
+                return;
+
+            _addedGameRules.Remove(rule);
+            _sawmill.Info($"Ended game rule {rule.ID}");
+
+            if (IsGameRuleStarted(rule))
+                _startedGameRules.Remove(rule);
+            RaiseLocalEvent(new GameRuleEndedEvent(rule));
+        }
+
+        /// <summary>
+        ///     Adds a game rule to the list, but does not
+        ///     start it yet, instead waiting until the rule is actually started by other code (usually roundstart)
+        /// </summary>
+        public bool AddGameRule(GameRulePrototype rule)
+        {
+            if (!_addedGameRules.Add(rule))
+                return false;
+
+            _sawmill.Info($"Added game rule {rule.ID}");
+            RaiseLocalEvent(new GameRuleAddedEvent(rule));
+            return true;
+        }
+
+        public bool IsGameRuleAdded(GameRulePrototype rule)
+        {
+            return _addedGameRules.Contains(rule);
+        }
+
+        public bool IsGameRuleAdded(string rule)
+        {
+            foreach (var ruleProto in _addedGameRules)
+            {
+                if (ruleProto.ID.Equals(rule))
+                    return true;
+            }
+
             return false;
+        }
 
-        if (MetaData(ruleEntity).EntityPrototype?.ID is not { } id) // you really fucked up
+        public bool IsGameRuleStarted(GameRulePrototype rule)
+        {
+            return _startedGameRules.Contains(rule);
+        }
+
+        public bool IsGameRuleStarted(string rule)
+        {
+            foreach (var ruleProto in _startedGameRules)
+            {
+                if (ruleProto.ID.Equals(rule))
+                    return true;
+            }
+
             return false;
+        }
 
-        _allPreviousGameRules.Add((RoundDuration(), id));
-        _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
+        public void ClearGameRules()
+        {
+            foreach (var rule in _addedGameRules.ToArray())
+            {
+                EndGameRule(rule);
+            }
+        }
 
-        ruleData.Active = true;
-        var ev = new GameRuleStartedEvent(ruleEntity, id);
-        RaiseLocalEvent(ruleEntity, ref ev, true);
-        return true;
+        #region Command Implementations
+
+        [AdminCommand(AdminFlags.Fun)]
+        private void AddGameRuleCommand(IConsoleShell shell, string argstr, string[] args)
+        {
+            if (args.Length == 0)
+                return;
+
+            foreach (var ruleId in args)
+            {
+                if (!_prototypeManager.TryIndex<GameRulePrototype>(ruleId, out var rule))
+                    continue;
+
+                AddGameRule(rule);
+
+                // Start rule if we're already in the middle of a round
+                if(RunLevel == GameRunLevel.InRound)
+                    StartGameRule(rule);
+            }
+        }
+
+        private CompletionResult AddGameRuleCompletions(IConsoleShell shell, string[] args)
+        {
+            var activeIds = _addedGameRules.Select(c => c.ID);
+            return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GameRulePrototype>().Where(p => !activeIds.Contains(p.Value)),
+                "<rule>");
+        }
+
+        [AdminCommand(AdminFlags.Fun)]
+        private void EndGameRuleCommand(IConsoleShell shell, string argstr, string[] args)
+        {
+            if (args.Length == 0)
+                return;
+
+            foreach (var ruleId in args)
+            {
+                if (!_prototypeManager.TryIndex<GameRulePrototype>(ruleId, out var rule))
+                    continue;
+
+                EndGameRule(rule);
+            }
+        }
+
+        private CompletionResult EndGameRuleCompletions(IConsoleShell shell, string[] args)
+        {
+            return CompletionResult.FromHintOptions(_addedGameRules.Select(c => new CompletionOption(c.ID)),
+                "<added rule>");
+        }
+
+        [AdminCommand(AdminFlags.Fun)]
+        private void ClearGameRulesCommand(IConsoleShell shell, string argstr, string[] args)
+        {
+            ClearGameRules();
+        }
+
+        #endregion
     }
 
     /// <summary>
-    /// Ends a game rule.
+    ///     Raised broadcast when a game rule is selected, but not started yet.
     /// </summary>
-    [PublicAPI]
-    public bool EndGameRule(EntityUid ruleEntity, GameRuleComponent? ruleData = null)
+    public sealed class GameRuleAddedEvent
     {
-        if (!Resolve(ruleEntity, ref ruleData))
-            return false;
+        public GameRulePrototype Rule { get; }
 
-        // don't end it multiple times
-        if (ruleData.Ended)
-            return false;
-
-        if (MetaData(ruleEntity).EntityPrototype?.ID is not { } id) // you really fucked up
-            return false;
-
-        ruleData.Active = false;
-        ruleData.Ended = true;
-        _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
-
-        var ev = new GameRuleEndedEvent(ruleEntity, id);
-        RaiseLocalEvent(ruleEntity, ref ev, true);
-        return true;
-    }
-
-    public bool IsGameRuleAdded(EntityUid ruleEntity, GameRuleComponent? component = null)
-    {
-        return Resolve(ruleEntity, ref component) && !component.Ended;
-    }
-
-    public bool IsGameRuleAdded(string rule)
-    {
-        foreach (var ruleEntity in GetAddedGameRules())
+        public GameRuleAddedEvent(GameRulePrototype rule)
         {
-            if (MetaData(ruleEntity).EntityPrototype?.ID == rule)
-                return true;
-        }
-
-        return false;
-    }
-
-    public bool IsGameRuleActive(EntityUid ruleEntity, GameRuleComponent? component = null)
-    {
-        return Resolve(ruleEntity, ref component) && component.Active;
-    }
-
-    public bool IsGameRuleActive(string rule)
-    {
-        foreach (var ruleEntity in GetActiveGameRules())
-        {
-            if (MetaData(ruleEntity).EntityPrototype?.ID == rule)
-                return true;
-        }
-
-        return false;
-    }
-
-    public void ClearGameRules()
-    {
-        foreach (var rule in GetAddedGameRules())
-        {
-            EndGameRule(rule);
+            Rule = rule;
         }
     }
 
-    /// <summary>
-    /// Gets all the gamerule entities which are currently active.
-    /// </summary>
-    public IEnumerable<EntityUid> GetAddedGameRules()
+    public sealed class GameRuleStartedEvent
     {
-        var query = EntityQueryEnumerator<GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var ruleData))
+        public GameRulePrototype Rule { get; }
+
+        public GameRuleStartedEvent(GameRulePrototype rule)
         {
-            if (IsGameRuleAdded(uid, ruleData))
-                yield return uid;
+            Rule = rule;
         }
     }
 
-    /// <summary>
-    /// Gets all the gamerule entities which are currently active.
-    /// </summary>
-    public IEnumerable<EntityUid> GetActiveGameRules()
+    public sealed class GameRuleEndedEvent
     {
-        var query = EntityQueryEnumerator<GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var ruleData))
+        public GameRulePrototype Rule { get; }
+
+        public GameRuleEndedEvent(GameRulePrototype rule)
         {
-            if (ruleData.Active)
-                yield return uid;
+            Rule = rule;
         }
-    }
-
-    /// <summary>
-    /// Gets all gamerule prototypes
-    /// </summary>
-    public IEnumerable<EntityPrototype> GetAllGameRulePrototypes()
-    {
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
-        {
-            if (proto.Abstract)
-                continue;
-
-            if (proto.HasComponent<GameRuleComponent>())
-                yield return proto;
-        }
-    }
-
-    #region Command Implementations
-
-    [AdminCommand(AdminFlags.Fun)]
-    private void AddGameRuleCommand(IConsoleShell shell, string argstr, string[] args)
-    {
-        if (args.Length == 0)
-            return;
-
-        foreach (var rule in args)
-        {
-            var ent = AddGameRule(rule);
-
-            // Start rule if we're already in the middle of a round
-            if(RunLevel == GameRunLevel.InRound)
-                StartGameRule(ent);
-        }
-    }
-
-    private CompletionResult AddGameRuleCompletions(IConsoleShell shell, string[] args)
-    {
-        return CompletionResult.FromHintOptions(GetAllGameRulePrototypes().Select(p => p.ID), "<rule>");
-    }
-
-    [AdminCommand(AdminFlags.Fun)]
-    private void EndGameRuleCommand(IConsoleShell shell, string argstr, string[] args)
-    {
-        if (args.Length == 0)
-            return;
-
-        foreach (var rule in args)
-        {
-            if (!EntityUid.TryParse(rule, out var ruleEnt))
-                continue;
-
-            EndGameRule(ruleEnt);
-        }
-    }
-
-    private CompletionResult EndGameRuleCompletions(IConsoleShell shell, string[] args)
-    {
-        return CompletionResult.FromHintOptions(GetAddedGameRules().Select(u => u.ToString()), "<added rule>");
-    }
-
-    [AdminCommand(AdminFlags.Fun)]
-    private void ClearGameRulesCommand(IConsoleShell shell, string argstr, string[] args)
-    {
-        ClearGameRules();
-    }
-
-    #endregion
-}
-
-/*
-/// <summary>
-///     Raised broadcast when a game rule is selected, but not started yet.
-/// </summary>
-public sealed class GameRuleAddedEvent
-{
-    public GameRulePrototype Rule { get; }
-
-    public GameRuleAddedEvent(GameRulePrototype rule)
-    {
-        Rule = rule;
     }
 }
-
-public sealed class GameRuleStartedEvent
-{
-    public GameRulePrototype Rule { get; }
-
-    public GameRuleStartedEvent(GameRulePrototype rule)
-    {
-        Rule = rule;
-    }
-}
-
-public sealed class GameRuleEndedEvent
-{
-    public GameRulePrototype Rule { get; }
-
-    public GameRuleEndedEvent(GameRulePrototype rule)
-    {
-        Rule = rule;
-    }
-}
-*/

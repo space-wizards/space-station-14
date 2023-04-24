@@ -1,0 +1,28 @@
+- type: entity
+  id: TraitorDMRedemptionMachine
+  parent: BaseMachinePowered
+  name: traitor deathmatch pda redemption machine
+  description: Put someone else's PDA into this to get telecrystals.
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Structures/Machines/traitordm.rsi
+        state: redemption
+      - sprite: Structures/Machines/traitordm.rsi
+        state: redemption-unshaded
+        shader: unshaded
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.25,0.25,0.25"
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: TraitorDeathMatchRedemption
+  placement:
+    mode: AlignTileAny

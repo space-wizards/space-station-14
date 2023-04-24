@@ -1,84 +1,94 @@
-using Content.Server.GameTicking.Rules.Components;
+using Content.Server.GameTicking.Rules.Configurations;
+using JetBrains.Annotations;
 
 namespace Content.Server.GameTicking.Rules;
 
-public abstract class GameRuleSystem<T> : EntitySystem where T : Component
+[PublicAPI]
+public abstract class GameRuleSystem : EntitySystem
 {
     [Dependency] protected GameTicker GameTicker = default!;
+
+    /// <summary>
+    ///     Whether this GameRule is currently added or not.
+    ///     Be sure to check this before doing anything rule-specific.
+    /// </summary>
+    public bool RuleAdded { get; protected set; }
+
+    /// <summary>
+    ///     Whether this game rule has been started after being added.
+    ///     You probably want to check this before doing any update loop stuff.
+    /// </summary>
+    public bool RuleStarted { get; protected set; }
+
+    /// <summary>
+    ///     When the GameRule prototype with this ID is added, this system will be enabled.
+    ///     When it gets removed, this system will be disabled.
+    /// </summary>
+    public new abstract string Prototype { get; }
+
+    /// <summary>
+    ///     Holds the current configuration after the event has been added.
+    ///     This should not be getting accessed before the event is enabled, as usual.
+    /// </summary>
+    public GameRuleConfiguration Configuration = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<T, GameRuleAddedEvent>(OnGameRuleAdded);
-        SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
-        SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
+        SubscribeLocalEvent<GameRuleAddedEvent>(OnGameRuleAdded);
+
+        SubscribeLocalEvent<GameRuleStartedEvent>(OnGameRuleStarted);
+        SubscribeLocalEvent<GameRuleEndedEvent>(OnGameRuleEnded);
     }
 
-    private void OnGameRuleAdded(EntityUid uid, T component, ref GameRuleAddedEvent args)
+    private void OnGameRuleAdded(GameRuleAddedEvent ev)
     {
-        if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+        if (ev.Rule.Configuration.Id != Prototype)
             return;
-        Added(uid, component, ruleData, args);
+
+        Configuration = ev.Rule.Configuration;
+        RuleAdded = true;
+
+        Added();
     }
 
-    private void OnGameRuleStarted(EntityUid uid, T component, ref GameRuleStartedEvent args)
+    private void OnGameRuleStarted(GameRuleStartedEvent ev)
     {
-        if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+        if (ev.Rule.Configuration.Id != Prototype)
             return;
-        Started(uid, component, ruleData, args);
+
+        RuleStarted = true;
+
+        Started();
     }
 
-    private void OnGameRuleEnded(EntityUid uid, T component, ref GameRuleEndedEvent args)
+    private void OnGameRuleEnded(GameRuleEndedEvent ev)
     {
-        if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+        if (ev.Rule.Configuration.Id != Prototype)
             return;
-        Ended(uid, component, ruleData, args);
+
+        RuleAdded = false;
+        RuleStarted = false;
+        Ended();
     }
 
     /// <summary>
-    /// Called when the gamerule is added
+    ///     Called when the game rule has been added.
+    ///     You should avoid using this in favor of started--they are not the same thing.
     /// </summary>
-    protected virtual void Added(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAddedEvent args)
-    {
-
-    }
+    /// <remarks>
+    ///     This is virtual because it doesn't actually have to be used, and most of the time shouldn't be.
+    /// </remarks>
+    public virtual void Added() { }
 
     /// <summary>
-    /// Called when the gamerule begins
+    ///     Called when the game rule has been started.
     /// </summary>
-    protected virtual void Started(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleStartedEvent args)
-    {
-
-    }
+    public abstract void Started();
 
     /// <summary>
-    /// Called when the gamerule ends
+    ///     Called when the game rule has ended.
     /// </summary>
-    protected virtual void Ended(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleEndedEvent args)
-    {
-
-    }
-
-    /// <summary>
-    /// Called on an active gamerule entity in the Update function
-    /// </summary>
-    protected virtual void ActiveTick(EntityUid uid, T component, GameRuleComponent gameRule, float frameTime)
-    {
-
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<T, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var comp1, out var comp2))
-        {
-            if (!GameTicker.IsGameRuleActive(uid, comp2))
-                continue;
-
-            ActiveTick(uid, comp1, comp2, frameTime);
-        }
-    }
+    public abstract void Ended();
 }

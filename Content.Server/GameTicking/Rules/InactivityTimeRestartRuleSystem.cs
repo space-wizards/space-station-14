@@ -1,109 +1,98 @@
 using System.Threading;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Components;
+using Content.Server.GameTicking.Rules.Configurations;
 using Robust.Server.Player;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityRuleComponent>
+public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+    public override string Prototype => "InactivityTimeRestart";
+
+    private CancellationTokenSource _timerCancel = new();
+
+    public TimeSpan InactivityMaxTime { get; set; } = TimeSpan.FromMinutes(10);
+    public TimeSpan RoundEndDelay { get; set; } = TimeSpan.FromSeconds(10);
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
+    }
+
+    public override void Started()
+    {
+        if (Configuration is not InactivityGameRuleConfiguration inactivityConfig)
+            return;
+        InactivityMaxTime = inactivityConfig.InactivityMaxTime;
+        RoundEndDelay = inactivityConfig.RoundEndDelay;
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
 
-    public override void Shutdown()
+    public override void Ended()
     {
-        base.Shutdown();
         _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
+
+        StopTimer();
     }
 
-    protected override void Ended(EntityUid uid, InactivityRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+    public void RestartTimer()
     {
-        base.Ended(uid, component, gameRule, args);
-
-        StopTimer(uid, component);
+        _timerCancel.Cancel();
+        _timerCancel = new CancellationTokenSource();
+        Timer.Spawn(InactivityMaxTime, TimerFired, _timerCancel.Token);
     }
 
-    public void RestartTimer(EntityUid uid, InactivityRuleComponent? component = null)
+    public void StopTimer()
     {
-        if (!Resolve(uid, ref component))
-            return;
-
-        component.TimerCancel.Cancel();
-        component.TimerCancel = new CancellationTokenSource();
-        Timer.Spawn(component.InactivityMaxTime, () => TimerFired(uid, component), component.TimerCancel.Token);
+        _timerCancel.Cancel();
     }
 
-    public void StopTimer(EntityUid uid, InactivityRuleComponent? component = null)
+    private void TimerFired()
     {
-        if (!Resolve(uid, ref component))
-            return;
-
-        component.TimerCancel.Cancel();
-    }
-
-    private void TimerFired(EntityUid uid, InactivityRuleComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
         GameTicker.EndRound(Loc.GetString("rule-time-has-run-out"));
 
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds",(int) component.RoundEndDelay.TotalSeconds)));
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds",(int) RoundEndDelay.TotalSeconds)));
 
-        Timer.Spawn(component.RoundEndDelay, () => GameTicker.RestartRound());
+        Timer.Spawn(RoundEndDelay, () => GameTicker.RestartRound());
     }
 
     private void RunLevelChanged(GameRunLevelChangedEvent args)
     {
-        var query = EntityQueryEnumerator<InactivityRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var inactivity, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                return;
+        if (!RuleAdded)
+            return;
 
-            switch (args.New)
-            {
-                case GameRunLevel.InRound:
-                    RestartTimer(uid, inactivity);
-                    break;
-                case GameRunLevel.PreRoundLobby:
-                case GameRunLevel.PostRound:
-                    StopTimer(uid, inactivity);
-                    break;
-            }
+        switch (args.New)
+        {
+            case GameRunLevel.InRound:
+                RestartTimer();
+                break;
+            case GameRunLevel.PreRoundLobby:
+            case GameRunLevel.PostRound:
+                StopTimer();
+                break;
         }
     }
 
     private void PlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
-        var query = EntityQueryEnumerator<InactivityRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var inactivity, out var gameRule))
+        if (GameTicker.RunLevel != GameRunLevel.InRound)
         {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                return;
+            return;
+        }
 
-            if (GameTicker.RunLevel != GameRunLevel.InRound)
-            {
-                return;
-            }
-
-            if (_playerManager.PlayerCount == 0)
-            {
-                RestartTimer(uid, inactivity);
-            }
-            else
-            {
-                StopTimer(uid, inactivity);
-            }
+        if (_playerManager.PlayerCount == 0)
+        {
+            RestartTimer();
+        }
+        else
+        {
+            StopTimer();
         }
     }
 }
