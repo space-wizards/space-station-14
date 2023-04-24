@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Added infinite procedural generation for planetary biomes. The preset
-      ones are desert, snow, grass, and lava.', type: Add}
-  id: 3023
-  time: '2023-02-12T02:15:26.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: You can open cabinets with alt click., type: Tweak}
@@ -2899,3 +2893,8 @@ Entries:
       Each bullet packs twice the punch of a normal APE.', type: Add}
   id: 3522
   time: '2023-04-23T23:58:45.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Autolathe icons for screwdrivers and wirecutters are now correct., type: Fix}
+  id: 3523
+  time: '2023-04-24T00:01:54.0000000+00:00'
