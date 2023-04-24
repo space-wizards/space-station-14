@@ -725,7 +725,7 @@
   description: I wonder whose pulse is on the screen? I hope he doesnt stop... PDA has a built-in health analyzer.
   components:
   - type: PDA
-    id: BrigmedIDCard
+    id: BrigmedicIDCard
     state: pda-brigmedic
   - type: PDABorderColor
     borderColor: "#A32D26"
