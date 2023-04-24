@@ -1,10 +1,4 @@
 Entries:
-- author: Visne
-  changes:
-  - {message: 'Added laughing, clapping, and snapping sounds for Dionae.', type: Add}
-  - {message: Dionae don't scream like humans anymore., type: Fix}
-  id: 3029
-  time: '2023-02-12T20:51:19.0000000+00:00'
 - author: jick
   changes:
   - {message: Unlit welders are ATEX certified again. Lit welders are definitely not.,
@@ -2899,3 +2893,9 @@ Entries:
   - {message: First aid kits are now more thoroughly stocked, type: Tweak}
   id: 3528
   time: '2023-04-24T02:15:21.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Solar's Best Hot Drinks has more best hot drinks, type: Tweak}
+  - {message: Emmaged Hot Drinks will give you cup with nothing, type: Tweak}
+  id: 3529
+  time: '2023-04-24T02:27:28.0000000+00:00'
