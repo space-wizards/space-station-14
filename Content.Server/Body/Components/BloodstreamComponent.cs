@@ -154,5 +154,6 @@ namespace Content.Server.Body.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float DrunkTime;
+        public float StutterTime;
     }
 }
