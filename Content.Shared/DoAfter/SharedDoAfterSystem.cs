@@ -356,7 +356,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (doAfter.Cancelled)
             return DoAfterStatus.Cancelled;
 
-        if (GameTiming.CurTime - doAfter.StartTime < doAfter.Args.Delay)
+        if (!doAfter.Completed)
             return DoAfterStatus.Running;
 
         // Theres the chance here that the DoAfter hasn't actually finished yet if the system's update hasn't run yet.
