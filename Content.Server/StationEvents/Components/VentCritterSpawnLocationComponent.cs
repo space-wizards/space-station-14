@@ -1,8 +1,6 @@
-﻿using Content.Server.StationEvents.Events;
+﻿namespace Content.Server.StationEvents.Components;
 
-namespace Content.Server.StationEvents.Components;
-
-[RegisterComponent, Access(typeof(VentClogRule))]
+[RegisterComponent]
 public sealed class VentCritterSpawnLocationComponent : Component
 {
 

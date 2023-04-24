@@ -1,8 +1,8 @@
-
+using Content.Server.GameTicking.Rules.Configurations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
-/*
 [Prototype("gameRule")]
 public sealed class GameRulePrototype : IPrototype
 {
@@ -12,4 +12,3 @@ public sealed class GameRulePrototype : IPrototype
     [DataField("config", required: true)]
     public GameRuleConfiguration Configuration { get; } = default!;
 }
-*/

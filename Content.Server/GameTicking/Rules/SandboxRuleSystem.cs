@@ -1,21 +1,21 @@
-using Content.Server.GameTicking.Rules.Components;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Sandbox;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class SandboxRuleSystem : GameRuleSystem<SandboxRuleComponent>
+public sealed class SandboxRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly SandboxSystem _sandbox = default!;
 
-    protected override void Started(EntityUid uid, SandboxRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    public override string Prototype => "Sandbox";
+
+    public override void Started()
     {
-        base.Started(uid, component, gameRule, args);
         _sandbox.IsSandboxEnabled = true;
     }
 
-    protected override void Ended(EntityUid uid, SandboxRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+    public override void Ended()
     {
-        base.Ended(uid, component, gameRule, args);
         _sandbox.IsSandboxEnabled = false;
     }
 }

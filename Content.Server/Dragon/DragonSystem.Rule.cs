@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules.Components;
+using Content.Server.StationEvents.Components;
 using Content.Shared.Dragon;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
@@ -10,6 +10,8 @@ namespace Content.Server.Dragon;
 
 public sealed partial class DragonSystem
 {
+    public override string Prototype => "Dragon";
+
     private int RiftsMet(DragonComponent component)
     {
         var finished = 0;
@@ -26,11 +28,9 @@ public sealed partial class DragonSystem
         return finished;
     }
 
-    protected override void Started(EntityUid uid, DragonRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    public override void Started()
     {
-        base.Started(uid, component, gameRule, args);
-
-        var spawnLocations = EntityQuery<MapGridComponent, TransformComponent>().ToList();
+        var spawnLocations = EntityManager.EntityQuery<MapGridComponent, TransformComponent>().ToList();
 
         if (spawnLocations.Count == 0)
             return;
@@ -39,8 +39,16 @@ public sealed partial class DragonSystem
         Spawn("MobDragon", location.Item2.MapPosition);
     }
 
+    public override void Ended()
+    {
+        return;
+    }
+
     private void OnRiftRoundEnd(RoundEndTextAppendEvent args)
     {
+        if (!RuleAdded)
+            return;
+
         var dragons = EntityQuery<DragonComponent>(true).ToList();
 
         if (dragons.Count == 0)
