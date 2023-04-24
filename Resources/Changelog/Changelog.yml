@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added rocks with ore veins., type: Add}
-  id: 3026
-  time: '2023-02-12T12:41:13.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Players may need to readjust their light related graphics options as
@@ -2900,3 +2895,8 @@ Entries:
     type: Tweak}
   id: 3525
   time: '2023-04-24T00:11:24.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: cossacks jumpsuit and hat, type: Add}
+  id: 3526
+  time: '2023-04-24T01:46:15.0000000+00:00'
