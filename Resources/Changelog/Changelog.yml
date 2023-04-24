@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Players may need to readjust their light related graphics options as
-      some of the option have been renamed., type: Tweak}
-  id: 3027
-  time: '2023-02-12T17:09:13.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Flesh Anomaly's tendons now grow slower but deal damage on contact.,
@@ -2900,3 +2894,9 @@ Entries:
   - {message: cossacks jumpsuit and hat, type: Add}
   id: 3526
   time: '2023-04-24T01:46:15.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: Added construction for curtains. They can be disassembled using wire
+      cutters., type: Add}
+  id: 3527
+  time: '2023-04-24T02:12:11.0000000+00:00'
