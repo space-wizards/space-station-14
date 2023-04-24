@@ -602,8 +602,8 @@
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed: 4
-    baseSprintSpeed: 6
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 4.5
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -622,48 +622,67 @@
       - MobLayer
   - type: Physics
   - type: Appearance
+  - type: Inventory
+    speciesId: kangaroo
+    templateId: kangaroo
+  - type: ReplacementAccent
+    accent: kangaroo
+  - type: InventorySlots
+  - type: Strippable
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
         Base: kangaroo
       # SKIPPY NO!
       Critical:
-        Base: kangaroo-dead
+        Base: kangaroo-crit
       Dead:
         Base: kangaroo-dead
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+  - type: GhostRole
+    prob: 0.25
+    name: kangaroo
+    description: |
+      You're a kangaroo! Do whatever kangaroos do.
+  - type: GhostTakeoverAvailable
+  - type: Vocal
+    sounds:
+      Unsexed: Kangaroo
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBounce
   - type: Puller
+    needsHands: false
+  - type: StaminaDamageOnHit
+    damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
+    # This needs to be moved to boxinggloves
+    #knockdownSound: /Audio/Weapons/boxingbell.ogg
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 0.4
+    soundHit:
+      collection: BoxingHit
+    animation: WeaponArcFist
 
 - type: entity
   name: boxing kangaroo
   parent: MobKangaroo
-  id: MobKangarooBoxer
-  description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
+  id: MobBoxingKangaroo
   components:
-  - type: CombatMode
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-      - map: ["enum.DamageStateVisualLayers.Base"]
-        state: kangaroo-boxing
-        sprite: Mobs/Animals/kangaroo.rsi
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: kangaroo-boxing
-      Critical:
-        Base: kangaroo-boxing-dead
-      Dead:
-        Base: kangaroo-boxing-dead
-  - type: MeleeWeapon
-    hidden: true
-    angle: 0
-    animation: WeaponArcClaw
-    damage:
-      types:
-        Blunt: 10
-  - type: InputMover
-  - type: MobMover
+  - type: Loadout
+    prototypes: [ BoxingKangarooGear ]
   - type: HTN
     rootTask: SimpleHostileCompound
   - type: Faction
@@ -1970,6 +1989,15 @@
     baseWalkSpeed : 4
     baseSprintSpeed : 4
   - type: Appearance
+  - type: Inventory
+    speciesId: hamster
+    templateId: pet
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2031,6 +2059,7 @@
   - type: Bloodstream
     bloodMaxVolume: 60
   - type: CanEscapeInventory
+    BaseResistTime: 3
   - type: MobPrice
     price: 60
 

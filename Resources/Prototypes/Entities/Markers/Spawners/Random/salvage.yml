@@ -170,3 +170,16 @@
     chance: 0.75
     offset: 0.2
 
+- type: entity
+  name: Salvage Space Kangaroo Spawner
+  id: SpawnMobKangarooSalvage
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: kangaroo-space
+      sprite: Mobs/Animals/kangaroo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobKangarooSpaceSalvage

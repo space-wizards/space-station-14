@@ -209,6 +209,31 @@
 
 - type: entity
   parent: DrinkBaseCup
+  id: DrinkCafeLatte
+  name: Cafe latte
+  description: Light coffee-creamy drink. It has latte art on it.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: CafeLatte
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
   id: DrinkTeacup
   name: Teacup
   description: A plain white porcelain teacup.
@@ -221,6 +246,56 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkGreenTea
+  name: Green tea
+  description: A plain white porcelain teacup.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: GreenTea
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkNothing
+  name: Nothing
+  description: Is that cup empty?
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Nothing
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
     layers:
       - state: icon-0
       - map: ["enum.SolutionContainerLayers.Fill"]

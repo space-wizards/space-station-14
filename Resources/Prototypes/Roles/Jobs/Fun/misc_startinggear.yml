@@ -184,3 +184,9 @@
   equipment:
     neck: ClothingNeckCloakHonk
     pocket1: CluwneHorn
+    
+- type: startingGear
+  id: BoxingKangarooGear
+  equipment:
+    gloves: ClothingHandsGlovesBoxingBlue
+
