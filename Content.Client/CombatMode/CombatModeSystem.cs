@@ -21,7 +21,7 @@ namespace Content.Client.CombatMode
             base.Initialize();
 
             SubscribeLocalEvent<CombatModeComponent, ComponentHandleState>(OnHandleState);
-            _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay(this));
+            _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay(_playerManager, this));
         }
 
         private void OnHandleState(EntityUid uid, CombatModeComponent component, ref ComponentHandleState args)

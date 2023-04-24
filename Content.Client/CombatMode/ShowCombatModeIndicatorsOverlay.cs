@@ -1,13 +1,15 @@
-using Content.Client.Hands.Systems;
 using Content.Shared.CCVar;
+using Content.Client.Hands.Systems;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
+using Robust.Client.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Utility;
+using Robust.Shared.Map;
 
 namespace Content.Client.CombatMode
 {
@@ -17,16 +19,19 @@ namespace Content.Client.CombatMode
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IClyde _clyde = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEyeManager _eye = default!;
         private readonly IRenderTexture _renderBackbuffer;
         private Texture? _gunSight;
         private Texture? _meleeSight;
         private CombatModeSystem _combatSystem;
+        private IPlayerManager _player;
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
-        public ShowCombatModeIndicatorsOverlay(CombatModeSystem combatSys)
+        public ShowCombatModeIndicatorsOverlay(IPlayerManager playerManager, CombatModeSystem combatSys)
         {
             IoCManager.InjectDependencies(this);
 
             _combatSystem = combatSys;
+            _player = playerManager;
 
             _gunSight = GetTextureFromRsi("gunsight");
             _meleeSight = GetTextureFromRsi("meleesight");
@@ -59,30 +64,44 @@ namespace Content.Client.CombatMode
             if (!_cfg.GetCVar(CCVars.HudHeldItemShow))
                 return;
 
-            bool isCombatMode = _combatSystem.IsInCombatMode();
+            var player = _player.LocalPlayer?.ControlledEntity;
 
-            if (!isCombatMode)
+            if (player == null ||
+                !_entMan.TryGetComponent<TransformComponent>(player, out var xform))
+            {
+                return;
+            }
+
+            if (!_combatSystem.IsInCombatMode(player.Value))
+                return;
+
+            var xMapPos = xform.MapPosition;
+
+            var mouseScreen = _inputManager.MouseScreenPosition;
+            var mousePosMap = _eye.ScreenToMap(mouseScreen);
+
+            if (xMapPos.MapId != mousePosMap.MapId)
                 return;
 
             EntityUid? handEntity = EntitySystem.Get<HandsSystem>().GetActiveHandEntity();
             bool isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
 
             var screen = args.ScreenHandle;
-            var mousePos = _inputManager.MouseScreenPosition.Position;
+            var mousePos = mouseScreen.Position;
             var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
             float limetedScale = uiScale > 1.25f ? 1.25f : uiScale;
             var halfBufferSize = _renderBackbuffer.Size / 2;
 
             screen.RenderInRenderTarget(_renderBackbuffer, () =>
             {
-                    if (isHandGunItem)
-                        DrawSight(_gunSight, screen, halfBufferSize, limetedScale);
-                    else
-                        DrawSight(_meleeSight, screen, halfBufferSize, limetedScale);
+                if (isHandGunItem)
+                    DrawSight(_gunSight, screen, halfBufferSize, limetedScale);
+                else
+                    DrawSight(_meleeSight, screen, halfBufferSize, limetedScale);
             }, Color.Transparent);
 
             screen.DrawTexture(_renderBackbuffer.Texture,
-                mousePos - halfBufferSize, Color.White.WithAlpha(0.8f));
+                mousePos - halfBufferSize, Color.White.WithAlpha(0.9f));
         }
         private void DrawSight(Texture? sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
         {
