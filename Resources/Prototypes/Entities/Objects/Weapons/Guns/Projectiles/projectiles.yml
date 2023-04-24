@@ -409,8 +409,7 @@
         shader: unshaded
   - type: AnomalousParticle
     particleType: Default
-    anomalyStabilizer: true
-    anomalyWeakener: true
+    destabilzingOverride: true
     anomalySeverityIncreaser: true
     severityPerSeverityHit: 0.1
     stabilityPerDestabilizingHit: 0.05
