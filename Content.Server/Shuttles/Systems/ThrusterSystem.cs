@@ -305,13 +305,13 @@ public sealed class ThrusterSystem : EntitySystem
     private void RefreshCenter(EntityUid uid, ShuttleComponent shuttle)
     {
         // TODO: Only refresh relevant directions.
-        var center = Vector2.Zero;
         var thrustQuery = GetEntityQuery<ThrusterComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var dir in new[]
                      { Direction.South, Direction.East, Direction.North, Direction.West })
         {
+            var center = Vector2.Zero;
             var index = (int) dir / 2;
             var pop = shuttle.LinearThrusters[index];
             var totalThrust = 0f;
@@ -321,11 +321,11 @@ public sealed class ThrusterSystem : EntitySystem
                 if (!thrustQuery.TryGetComponent(ent, out var thruster) || !xformQuery.TryGetComponent(ent, out var xform))
                     continue;
 
-                center += xform.LocalPosition * thruster.Thrust;
+                center += xform.LocalPosition;
                 totalThrust += thruster.Thrust;
             }
 
-            center /= pop.Count * totalThrust;
+            center /= pop.Count;
             shuttle.CenterOfThrust[index] = center;
         }
     }

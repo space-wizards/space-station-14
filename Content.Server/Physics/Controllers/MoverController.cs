@@ -413,6 +413,7 @@ namespace Content.Server.Physics.Controllers
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
                     var totalForce = Vector2.Zero;
+                    var point = Vector2.Zero;
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -460,13 +461,22 @@ namespace Content.Server.Physics.Controllers
                         _thruster.EnableLinearThrustDirection(shuttle, dir);
                         var impulse = force * linearInput.Length;
                         totalForce += impulse;
+                        point += shuttle.CenterOfThrust[index];
                     }
 
                     totalForce = shuttleNorthAngle.RotateVec(totalForce);
+                    var shuttleVelocity = body.LinearVelocity.Length;
 
-                    if ((body.LinearVelocity + totalForce / body.Mass * frameTime).Length <= ShuttleComponent.MaxLinearVelocity)
+                    if (shuttleVelocity < ShuttleComponent.MaxLinearVelocity)
                     {
-                        PhysicsSystem.ApplyForce(shuttle.Owner, totalForce, body: body);
+                        var total = body.LinearVelocity + totalForce / body.Mass * frameTime;
+
+                        if (total.Length > ShuttleComponent.MaxLinearVelocity)
+                        {
+                            totalForce = (total - total.Normalized * ShuttleComponent.MaxLinearVelocity) / body.Mass / frameTime;
+                        }
+
+                        PhysicsSystem.ApplyForce(shuttle.Owner, totalForce, point, body: body);
                     }
                 }
 
