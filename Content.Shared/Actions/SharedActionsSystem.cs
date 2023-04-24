@@ -361,7 +361,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         // for client-exclusive actions, the client shouldn't mark the comp as dirty. Otherwise that just leads to
         // unnecessary prediction resetting and state handling.
-        if (dirty)
+        if (dirty && !action.ClientExclusive)
             Dirty(comp);
     }
 
@@ -380,12 +380,15 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         comp ??= EnsureComp<ActionsComponent>(uid);
 
+        bool allClientExclusive = true;
+
         foreach (var action in actions)
         {
             AddAction(uid, action, provider, comp, false);
+            allClientExclusive = allClientExclusive && action.ClientExclusive;
         }
 
-        if (dirty)
+        if (dirty && !allClientExclusive)
             Dirty(comp);
     }
 
