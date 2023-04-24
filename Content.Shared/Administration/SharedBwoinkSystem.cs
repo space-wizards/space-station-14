@@ -46,20 +46,20 @@ namespace Content.Shared.Administration
                 Text = text;
             }
         }
+    }
 
-        /// <summary>
-        ///     Sent by the server to notify all clients when the webhook url is sent.
-        ///     The webhook url itself is not and should not be sent.
-        /// </summary>
-        [Serializable, NetSerializable]
-        public sealed class BwoinkDiscordRelayUpdated : EntityEventArgs
+    /// <summary>
+    ///     Sent by the server to notify all clients when the webhook url is sent.
+    ///     The webhook url itself is not and should not be sent.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class BwoinkDiscordRelayUpdated : EntityEventArgs
+    {
+        public bool DiscordRelayEnabled { get; }
+
+        public BwoinkDiscordRelayUpdated(bool enabled)
         {
-            public bool DiscordRelayEnabled { get; }
-
-            public BwoinkDiscordRelayUpdated(bool enabled)
-            {
-                DiscordRelayEnabled = enabled;
-            }
+            DiscordRelayEnabled = enabled;
         }
     }
 }

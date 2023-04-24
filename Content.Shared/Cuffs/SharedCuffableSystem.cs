@@ -151,7 +151,7 @@ namespace Content.Shared.Cuffs
 
         public void UpdateCuffState(EntityUid uid, CuffableComponent component)
         {
-            var canInteract = TryComp(uid, out SharedHandsComponent? hands) && hands.Hands.Count > component.CuffedHandCount;
+            var canInteract = TryComp(uid, out HandsComponent? hands) && hands.Hands.Count > component.CuffedHandCount;
 
             if (canInteract == component.CanStillInteract)
                 return;
@@ -344,7 +344,7 @@ namespace Content.Shared.Cuffs
             }
 
             var dirty = false;
-            var handCount = CompOrNull<SharedHandsComponent>(owner)?.Count ?? 0;
+            var handCount = CompOrNull<HandsComponent>(owner)?.Count ?? 0;
 
             while (cuffable.CuffedHandCount > handCount && cuffable.CuffedHandCount > 0)
             {
@@ -374,7 +374,7 @@ namespace Content.Shared.Cuffs
             // TODO we probably don't just want to use the generic virtual-item entity, and instead
             // want to add our own item, so that use-in-hand triggers an uncuff attempt and the like.
 
-            if (!TryComp<SharedHandsComponent>(uid, out var handsComponent))
+            if (!TryComp<HandsComponent>(uid, out var handsComponent))
                 return;
 
             var freeHands = 0;
@@ -427,7 +427,7 @@ namespace Content.Shared.Cuffs
             if (!Resolve(handcuff, ref handcuffComponent) || !Resolve(target, ref cuffable, false))
                 return;
 
-            if (!TryComp<SharedHandsComponent?>(target, out var hands))
+            if (!TryComp<HandsComponent?>(target, out var hands))
             {
                 if (_net.IsServer)
                 {

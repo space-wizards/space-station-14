@@ -11,5 +11,4 @@
     - Cartridge
   - type: Item
     size: 1
-  - type: Recyclable
   - type: SpaceGarbage

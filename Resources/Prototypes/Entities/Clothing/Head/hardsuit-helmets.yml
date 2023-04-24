@@ -233,6 +233,34 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitBrigmed
+  noSpawn: true
+  name: brigmed hardsuit helmet
+  description: The lightweight helmet of the brigmed hardsuit. Protects against viruses, and clowns.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/brigmed.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/brigmed.rsi
+  - type: PointLight
+    color: "#00FFFF"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+        Radiation: 0.90
+        Caustic: 0.90
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 5500
+  - type: DiseaseProtection
+    protection: 0.15
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitWarden
   noSpawn: true
   name: warden's hardsuit helmet
@@ -412,6 +440,8 @@
         Piercing: 0.8
         Heat: 0.2
         Radiation: 0.5
+  - type: DiseaseProtection
+    protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -454,11 +484,46 @@
         Shock: 0.1
         Cold: 0.2
         Radiation: 0.2
+  - type: DiseaseProtection
+    protection: 0.25
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitPirateCap
+  noSpawn: true
+  name: ancient hardsuit helmet
+  suffix: Pirate
+  description: Special hardsuit helmet, made for the captain of a pirate ship.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitPirateEVA
+  noSpawn: true
+  name: deep space EVA helmet
+  suffix: Pirate
+  description: A deep space EVA helmet, very heavy but provides good protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
 
 #ERT
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitERTLeader
+  noSpawn: true
   name: ERT leader hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
@@ -472,6 +537,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTEngineer
+  noSpawn: true
   name: ERT engineer hardsuit helmet
   components:
   - type: Sprite
@@ -484,6 +550,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTMedical
+  noSpawn: true
   name: ERT medic hardsuit helmet
   components:
   - type: Sprite
@@ -492,10 +559,13 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: PointLight
     color: "#adffec"
+  - type: DiseaseProtection
+    protection: 0.20
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTSecurity
+  noSpawn: true
   name: ERT security hardsuit helmet
   components:
   - type: Sprite
@@ -508,6 +578,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTJanitor
+  noSpawn: true
   name: ERT janitor hardsuit helmet
   components:
   - type: Sprite
@@ -516,3 +587,23 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: PointLight
     color: "#cbadff"
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurity
+  id: ClothingHeadHelmetHardsuitClown
+  noSpawn: true
+  name: clown hardsuit helmet
+  description: A clown hardsuit helmet.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/clown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/clown.rsi
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Effects/Emotes/parp1.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95

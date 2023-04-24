@@ -125,7 +125,7 @@ public sealed class MechSystem : SharedMechSystem
         Dirty(component);
     }
 
-    private void OnRemoveEquipmentMessage(EntityUid uid, SharedMechComponent component, MechEquipmentRemoveMessage args)
+    private void OnRemoveEquipmentMessage(EntityUid uid, MechComponent component, MechEquipmentRemoveMessage args)
     {
         if (!Exists(args.Equipment) || Deleted(args.Equipment))
             return;
@@ -224,7 +224,7 @@ public sealed class MechSystem : SharedMechSystem
         args.Handled = true;
     }
 
-    private void OnDamageChanged(EntityUid uid, SharedMechComponent component, DamageChangedEvent args)
+    private void OnDamageChanged(EntityUid uid, MechComponent component, DamageChangedEvent args)
     {
         var integrity = component.MaxIntegrity - args.Damageable.TotalDamage;
         SetIntegrity(uid, integrity, component);
@@ -264,7 +264,7 @@ public sealed class MechSystem : SharedMechSystem
         }
     }
 
-    public override void UpdateUserInterface(EntityUid uid, SharedMechComponent? component = null)
+    public override void UpdateUserInterface(EntityUid uid, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -285,7 +285,7 @@ public sealed class MechSystem : SharedMechSystem
         _ui.SetUiState(ui, state);
     }
 
-    public override bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
+    public override bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -293,9 +293,7 @@ public sealed class MechSystem : SharedMechSystem
         if (!base.TryInsert(uid, toInsert, component))
             return false;
 
-        var mech = (MechComponent) component;
-
-        if (mech.Airtight)
+        if (component.Airtight && TryComp(uid, out MechAirComponent? mechAir))
         {
             var coordinates = Transform(uid).MapPosition;
             if (_map.TryFindGridAt(coordinates, out var grid))
@@ -304,14 +302,14 @@ public sealed class MechSystem : SharedMechSystem
 
                 if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is {} environment)
                 {
-                    _atmosphere.Merge(mech.Air, environment.RemoveVolume(MechComponent.GasMixVolume));
+                    _atmosphere.Merge(mechAir.Air, environment.RemoveVolume(MechAirComponent.GasMixVolume));
                 }
             }
         }
         return true;
     }
 
-    public override bool TryEject(EntityUid uid, SharedMechComponent? component = null)
+    public override bool TryEject(EntityUid uid, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -319,9 +317,7 @@ public sealed class MechSystem : SharedMechSystem
         if (!base.TryEject(uid, component))
             return false;
 
-        var mech = (MechComponent) component;
-
-        if (mech.Airtight)
+        if (component.Airtight && TryComp(uid, out MechAirComponent? mechAir))
         {
             var coordinates = Transform(uid).MapPosition;
             if (_map.TryFindGridAt(coordinates, out var grid))
@@ -330,8 +326,8 @@ public sealed class MechSystem : SharedMechSystem
 
                 if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is {} environment)
                 {
-                    _atmosphere.Merge(environment, mech.Air);
-                    mech.Air.Clear();
+                    _atmosphere.Merge(environment, mechAir.Air);
+                    mechAir.Air.Clear();
                 }
             }
         }
@@ -339,7 +335,7 @@ public sealed class MechSystem : SharedMechSystem
         return true;
     }
 
-    public override void BreakMech(EntityUid uid, SharedMechComponent? component = null)
+    public override void BreakMech(EntityUid uid, MechComponent? component = null)
     {
         base.BreakMech(uid, component);
 
@@ -347,7 +343,7 @@ public sealed class MechSystem : SharedMechSystem
         _actionBlocker.UpdateCanMove(uid);
     }
 
-    public override bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, SharedMechComponent? component = null)
+    public override bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -409,20 +405,26 @@ public sealed class MechSystem : SharedMechSystem
     #region Atmos Handling
     private void OnInhale(EntityUid uid, MechPilotComponent component, InhaleLocationEvent args)
     {
-        if (!TryComp<MechComponent>(component.Mech, out var mech))
+        if (!TryComp<MechComponent>(component.Mech, out var mech) ||
+            !TryComp<MechAirComponent>(component.Mech, out var mechAir))
+        {
             return;
+        }
 
         if (mech.Airtight)
-            args.Gas = mech.Air;
+            args.Gas = mechAir.Air;
     }
 
     private void OnExhale(EntityUid uid, MechPilotComponent component, ExhaleLocationEvent args)
     {
-        if (!TryComp<MechComponent>(component.Mech, out var mech))
+        if (!TryComp<MechComponent>(component.Mech, out var mech) ||
+            !TryComp<MechAirComponent>(component.Mech, out var mechAir))
+        {
             return;
+        }
 
         if (mech.Airtight)
-            args.Gas = mech.Air;
+            args.Gas = mechAir.Air;
     }
 
     private void OnExpose(EntityUid uid, MechPilotComponent component, ref AtmosExposedGetAirEvent args)
@@ -430,10 +432,13 @@ public sealed class MechSystem : SharedMechSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<MechComponent>(component.Mech, out var mech))
+        if (!TryComp<MechComponent>(component.Mech, out var mech) ||
+            !TryComp<MechAirComponent>(component.Mech, out var mechAir))
+        {
             return;
+        }
 
-        args.Gas = mech.Airtight ? mech.Air : _atmosphere.GetContainingMixture(component.Mech);
+        args.Gas = mech.Airtight ? mechAir.Air : _atmosphere.GetContainingMixture(component.Mech);
 
         args.Handled = true;
     }

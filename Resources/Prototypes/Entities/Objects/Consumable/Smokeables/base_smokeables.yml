@@ -13,7 +13,6 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage
   - type: StaticPrice
     price: 5
@@ -50,14 +49,14 @@
       bowl_slot: !type:ContainerSlot
   - type: ItemSlots
   - type: SmokingPipe
-    bowl_slot: 
+    bowl_slot:
       name: Bowl
       whitelist:
         tags:
           - Smokable
-      insertSound: 
+      insertSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
-      ejectSound: 
+      ejectSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: SolutionContainerManager
     solutions:

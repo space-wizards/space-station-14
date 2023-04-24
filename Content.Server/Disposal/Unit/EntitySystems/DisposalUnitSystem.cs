@@ -4,7 +4,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
-using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -27,9 +26,9 @@ using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
@@ -96,7 +95,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 AlternativeVerb flushVerb = new();
                 flushVerb.Act = () => Engage(uid, component);
                 flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-                flushVerb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"));
+                flushVerb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"));
                 flushVerb.Priority = 1;
                 args.Verbs.Add(flushVerb);
 
@@ -469,7 +468,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!Resolve(unitId, ref unit))
                 return false;
 
-            if (userId.HasValue && !HasComp<SharedHandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
+            if (userId.HasValue && !HasComp<HandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
             {
                 _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId.Value, userId.Value, PopupType.SmallCaution);
                 return false;

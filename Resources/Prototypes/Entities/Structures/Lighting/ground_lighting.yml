@@ -22,6 +22,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -35,7 +41,6 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
-
 
 - type: entity
   parent: BaseLightStructure
@@ -59,7 +64,6 @@
     energy: 0.8
     softness: 1
     offset: "0, -0.5"
-
 
 - type: entity
   id: PoweredLightPostSmallEmpty
@@ -118,3 +122,9 @@
         Heat: 20
   - type: StaticPrice
     price: 25
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -15
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/light_hum.ogg

@@ -7,7 +7,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Weapons.Ranged.Components;
 
 [RegisterComponent, NetworkedComponent, Virtual]
-public class GunComponent : Component
+[AutoGenerateComponentState]
+public partial class GunComponent : Component
 {
     #region Sound
 
@@ -40,6 +41,7 @@ public class GunComponent : Component
     /// What the current spread is for shooting. This gets changed every time the gun fires.
     /// </summary>
     [DataField("currentAngle")]
+    [AutoNetworkedField]
     public Angle CurrentAngle;
 
     /// <summary>
@@ -58,12 +60,14 @@ public class GunComponent : Component
     /// The maximum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("maxAngle")]
+    [AutoNetworkedField]
     public Angle MaxAngle = Angle.FromDegrees(2);
 
     /// <summary>
     /// The minimum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("minAngle")]
+    [AutoNetworkedField]
     public Angle MinAngle = Angle.FromDegrees(1);
 
     #endregion
@@ -78,12 +82,14 @@ public class GunComponent : Component
     /// Used for tracking semi-auto / burst
     /// </summary>
     [ViewVariables]
+    [AutoNetworkedField]
     public int ShotCounter = 0;
 
     /// <summary>
     /// How many times it shoots per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("fireRate")]
+    [AutoNetworkedField]
     public float FireRate = 8f;
 
     /// <summary>
@@ -97,18 +103,21 @@ public class GunComponent : Component
     /// Can be set multiple times in a single tick due to guns firing faster than a single tick time.
     /// </summary>
     [DataField("nextFire", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField]
     public TimeSpan NextFire = TimeSpan.Zero;
 
     /// <summary>
     /// What firemodes can be selected.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("availableModes")]
+    [AutoNetworkedField]
     public SelectiveFire AvailableModes = SelectiveFire.SemiAuto;
 
     /// <summary>
     /// What firemode is currently selected.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("selectedMode")]
+    [AutoNetworkedField]
     public SelectiveFire SelectedMode = SelectiveFire.SemiAuto;
 
     [DataField("selectModeAction")]
