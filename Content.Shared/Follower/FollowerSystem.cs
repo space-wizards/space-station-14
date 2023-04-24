@@ -106,7 +106,9 @@ public sealed class FollowerSystem : EntitySystem
         followerComp.Following = entity;
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
-        followedComp.Following.Add(follower);
+
+        if (!followedComp.Following.Add(follower))
+            return;
 
         if (TryComp<JointComponent>(follower, out var joints))
             _jointSystem.ClearJoints(follower, joints);
@@ -127,8 +129,9 @@ public sealed class FollowerSystem : EntitySystem
         var followerEv = new StartedFollowingEntityEvent(entity, follower);
         var entityEv = new EntityStartedFollowingEvent(entity, follower);
 
-        RaiseLocalEvent(follower, followerEv, true);
-        RaiseLocalEvent(entity, entityEv, false);
+        RaiseLocalEvent(follower, followerEv);
+        RaiseLocalEvent(entity, entityEv);
+        Dirty(followedComp);
     }
 
     /// <summary>
@@ -152,6 +155,9 @@ public sealed class FollowerSystem : EntitySystem
         var uidEv = new StoppedFollowingEntityEvent(target, uid);
         var targetEv = new EntityStoppedFollowingEvent(target, uid);
 
+        RaiseLocalEvent(uid, uidEv, true);
+        RaiseLocalEvent(target, targetEv, false);
+        Dirty(followed);
         RaiseLocalEvent(uid, uidEv);
         RaiseLocalEvent(target, targetEv);
 
@@ -162,7 +168,6 @@ public sealed class FollowerSystem : EntitySystem
             if (xform.MapUid == null)
             {
                 QueueDel(uid);
-                return;
             }
         }
     }
