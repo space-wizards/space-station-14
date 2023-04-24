@@ -233,15 +233,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitBrigmed
+  id: ClothingHeadHelmetHardsuitBrigmedic
   noSpawn: true
-  name: brigmed hardsuit helmet
-  description: The lightweight helmet of the brigmed hardsuit. Protects against viruses, and clowns.
+  name: brigmedic hardsuit helmet
+  description: The lightweight helmet of the brigmedic hardsuit. Protects against viruses, and clowns.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/brigmed.rsi
+    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/brigmed.rsi
+    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
   - type: PointLight
     color: "#00FFFF"
   - type: Armor

@@ -54,7 +54,7 @@
       - id: WeaponDisabler
       - id: TrackingImplanter
         amount: 2
-      - id: ClothingOuterHardsuitBrigmed
+      - id: ClothingOuterHardsuitBrigmedic
       - id: BoxSterileMask
       - id: ClothingHeadHatBeretBrigmedic
       - id: ClothingOuterCoatAMG
