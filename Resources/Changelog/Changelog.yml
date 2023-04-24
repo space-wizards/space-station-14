@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Flesh Anomaly's tendons now grow slower but deal damage on contact.,
-    type: Tweak}
-  id: 3028
-  time: '2023-02-12T20:18:10.0000000+00:00'
 - author: Visne
   changes:
   - {message: 'Added laughing, clapping, and snapping sounds for Dionae.', type: Add}
@@ -2900,3 +2894,8 @@ Entries:
       cutters., type: Add}
   id: 3527
   time: '2023-04-24T02:12:11.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: First aid kits are now more thoroughly stocked, type: Tweak}
+  id: 3528
+  time: '2023-04-24T02:15:21.0000000+00:00'
