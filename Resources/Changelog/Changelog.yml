@@ -1,10 +1,4 @@
 Entries:
-- author: jick
-  changes:
-  - {message: Unlit welders are ATEX certified again. Lit welders are definitely not.,
-    type: Fix}
-  id: 3030
-  time: '2023-02-12T21:16:51.0000000+00:00'
 - author: 778b
   changes:
   - {message: Minor changes to Omega, type: Tweak}
@@ -2899,3 +2893,8 @@ Entries:
   - {message: Emmaged Hot Drinks will give you cup with nothing, type: Tweak}
   id: 3529
   time: '2023-04-24T02:27:28.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Jonkbots can now be constructed., type: Add}
+  id: 3530
+  time: '2023-04-24T02:32:33.0000000+00:00'
