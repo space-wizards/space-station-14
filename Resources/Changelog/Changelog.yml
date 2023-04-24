@@ -1,104 +1,4 @@
 Entries:
-- author: nikthechampiongr
-  changes:
-  - {message: Nanotrasen has delivered new Judge robes to the courtrooms of certain
-      stations., type: Tweak}
-  id: 3015
-  time: '2023-02-10T19:32:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Mops now have an ItemStatus showing how full they are., type: Add}
-  id: 3016
-  time: '2023-02-11T01:39:01.0000000+00:00'
-- author: QuietlyWhisper
-  changes:
-  - {message: Carps now "Fly" and will no longer be harmed by lava or glass shards.,
-    type: Add}
-  id: 3017
-  time: '2023-02-11T01:39:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Changed job icons for scientist and research director., type: Tweak}
-  id: 3018
-  time: '2023-02-11T01:51:48.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Added missing satchel and duffel virology bags to the ViroDrobe., type: Add}
-  id: 3019
-  time: '2023-02-11T01:52:45.0000000+00:00'
-- author: Aleksh
-  changes:
-  - {message: Added Dame Dane clothing set. EEYIKES!, type: Add}
-  id: 3020
-  time: '2023-02-11T03:14:04.0000000+00:00'
-- author: Chief-Engineer
-  changes:
-  - {message: Message for nuke codes being sent to station now gives the correct destination.,
-    type: Fix}
-  id: 3021
-  time: '2023-02-11T19:26:33.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Solar Flare event. By default disables Common and Service channels in
-      headsets. Also breaks some lights., type: Add}
-  id: 3022
-  time: '2023-02-11T20:24:46.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Added infinite procedural generation for planetary biomes. The preset
-      ones are desert, snow, grass, and lava.', type: Add}
-  id: 3023
-  time: '2023-02-12T02:15:26.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can open cabinets with alt click., type: Tweak}
-  id: 3024
-  time: '2023-02-12T02:35:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix duplicate trees in biomes., type: Fix}
-  id: 3025
-  time: '2023-02-12T11:49:13.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added rocks with ore veins., type: Add}
-  id: 3026
-  time: '2023-02-12T12:41:13.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Players may need to readjust their light related graphics options as
-      some of the option have been renamed., type: Tweak}
-  id: 3027
-  time: '2023-02-12T17:09:13.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Flesh Anomaly's tendons now grow slower but deal damage on contact.,
-    type: Tweak}
-  id: 3028
-  time: '2023-02-12T20:18:10.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: 'Added laughing, clapping, and snapping sounds for Dionae.', type: Add}
-  - {message: Dionae don't scream like humans anymore., type: Fix}
-  id: 3029
-  time: '2023-02-12T20:51:19.0000000+00:00'
-- author: jick
-  changes:
-  - {message: Unlit welders are ATEX certified again. Lit welders are definitely not.,
-    type: Fix}
-  id: 3030
-  time: '2023-02-12T21:16:51.0000000+00:00'
-- author: 778b
-  changes:
-  - {message: Minor changes to Omega, type: Tweak}
-  id: 3031
-  time: '2023-02-12T21:29:04.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Deployable barriers and canisters now lock correctly again., type: Fix}
-  - {message: Deployable barriers now stop being pulled when they are locked., type: Fix}
-  id: 3032
-  time: '2023-02-13T12:22:54.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Artifact gas triggers can no longer be activated from Frezon., type: Tweak}
@@ -2897,3 +2797,107 @@ Entries:
   - {message: Space Gru has returned the stars he stole and is very sorry., type: Fix}
   id: 3514
   time: '2023-04-23T10:28:41.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Added Disease protection for CBURN, ERT, and Syndie Elite (hardsuits
+      and their helmets)', type: Add}
+  id: 3515
+  time: '2023-04-23T17:22:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduced water tank price from 2k -> 1k and fuel tank from 2k -> 1.5k.,
+    type: Tweak}
+  id: 3516
+  time: '2023-04-23T17:29:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added a generic bonk sound to items that collide with stuff., type: Add}
+  id: 3517
+  time: '2023-04-23T17:42:09.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Fixed theatrical performances crate now have name and desc., type: Fix}
+  id: 3518
+  time: '2023-04-23T20:45:16.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate has added a ringtone code lock to uplinks. Operatives
+      are told the code when they are briefed. Set your ringtone to the code to open
+      your uplink!, type: Add}
+  id: 3519
+  time: '2023-04-23T21:00:42.0000000+00:00'
+- author: ProPandaBear
+  changes:
+  - {message: The "Spacebucks" barsign was added., type: Add}
+  id: 3520
+  time: '2023-04-23T22:13:32.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: 'Added secure chemicals crates, and jugs for greater chemical storage.',
+    type: Add}
+  id: 3521
+  time: '2023-04-23T23:53:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the CHIMP handcannon, a hand-held version of science''s APE.
+      Each bullet packs twice the punch of a normal APE.', type: Add}
+  id: 3522
+  time: '2023-04-23T23:58:45.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Autolathe icons for screwdrivers and wirecutters are now correct., type: Fix}
+  id: 3523
+  time: '2023-04-24T00:01:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Printed health analyzers and crew monitors no longer come pre-loaded
+      with batteries., type: Fix}
+  id: 3524
+  time: '2023-04-24T00:07:41.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Electricity anomalies will now create an EMP when going supercritical.,
+    type: Tweak}
+  id: 3525
+  time: '2023-04-24T00:11:24.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: cossacks jumpsuit and hat, type: Add}
+  id: 3526
+  time: '2023-04-24T01:46:15.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: Added construction for curtains. They can be disassembled using wire
+      cutters., type: Add}
+  id: 3527
+  time: '2023-04-24T02:12:11.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: First aid kits are now more thoroughly stocked, type: Tweak}
+  id: 3528
+  time: '2023-04-24T02:15:21.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Solar's Best Hot Drinks has more best hot drinks, type: Tweak}
+  - {message: Emmaged Hot Drinks will give you cup with nothing, type: Tweak}
+  id: 3529
+  time: '2023-04-24T02:27:28.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Jonkbots can now be constructed., type: Add}
+  id: 3530
+  time: '2023-04-24T02:32:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Entities that draw battery power should now draw at a consistent rate.,
+    type: Fix}
+  - {message: Anomaly locators now consume less power while active., type: Tweak}
+  id: 3531
+  time: '2023-04-24T03:35:19.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: Healing items like bruise packs will now repeatedly heal until the patient
+      can't be healed of that type any more!, type: Add}
+  - {message: Added a popup when bleeding stops because of a healing item, type: Add}
+  id: 3532
+  time: '2023-04-24T04:34:18.0000000+00:00'
