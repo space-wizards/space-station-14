@@ -65,6 +65,7 @@
     fuel: 3
     time: 3
   - type: Airlock
+    openUnlitVisible: true # Corvax-Resprite-Airlocks
   - type: Appearance
   - type: WiresVisuals
   - type: ApcPowerReceiver
