@@ -86,6 +86,8 @@ public sealed partial class BotanySystem : EntitySystem
         args.PushMarkup(Loc.GetString($"seed-component-description", ("seedName", name)));
         args.PushMarkup(Loc.GetString($"seed-component-plant-yield-text", ("seedYield", seed.Yield)));
         args.PushMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", seed.Potency)));
+
+
     }
 
     #region SeedPrototype prototype stuff
