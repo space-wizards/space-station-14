@@ -30,7 +30,7 @@
     gloves: ClothingHandsGlovesNitrile
     eyes: ClothingEyesHudMedical
     head: ClothingHeadHatSurgcapBlue
-    id: BrigmedPDA
+    id: BrigmedicPDA
     ears: ClothingHeadsetBrigmedic
     mask: ClothingMaskBreathMedicalSecurity
     belt: ClothingBeltMedicalFilled
