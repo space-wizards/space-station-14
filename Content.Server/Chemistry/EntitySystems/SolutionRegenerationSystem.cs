@@ -1,5 +1,7 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -29,7 +31,24 @@ public sealed class SolutionRegenerationSystem : EntitySystem
             // timer ignores if its full, it's just a fixed cycle
             regen.NextRegenTime = _timing.CurTime + regen.Duration;
             if (_solutionContainer.TryGetSolution(uid, regen.Solution, out var solution, manager))
-                _solutionContainer.TryAddSolution(uid, solution, regen.Generated);
+            {
+                var amount = FixedPoint2.Min(solution.AvailableVolume, regen.Generated.Volume);
+                if (amount <= FixedPoint2.Zero)
+                    continue;
+
+                // dont bother cloning and splitting if adding the whole thing
+                Solution generated;
+                if (amount == regen.Generated.Volume)
+                {
+                    generated = regen.Generated;
+                }
+                else
+                {
+                    generated = regen.Generated.Clone().SplitSolution(amount);
+                }
+
+                _solutionContainer.TryAddSolution(uid, solution, generated);
+            }
         }
     }
 

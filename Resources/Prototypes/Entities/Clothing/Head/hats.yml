@@ -552,7 +552,7 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadClothingHeadHatWatermelon
+  id: ClothingHeadHatWatermelon
   name: watermelon helmet
   description: A carelessly cut half of a watermelon, gutted from the inside, to be worn as a helmet. It can soften the blow to the head.
   components:
