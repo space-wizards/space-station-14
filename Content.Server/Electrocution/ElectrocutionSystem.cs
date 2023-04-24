@@ -85,7 +85,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void UpdateElectrocutions(float frameTime)
     {
-        var query = AllEntityQuery<ElectrocutionComponent, PowerConsumerComponent>();
+        var query = EntityQueryEnumerator<ElectrocutionComponent, PowerConsumerComponent>();
         while (query.MoveNext(out var uid, out var electrocution, out var consumer))
         {
             var timePassed = Math.Min(frameTime, electrocution.TimeLeft);
