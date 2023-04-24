@@ -79,7 +79,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         {
             ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerDestabilizingHit), component);
         }
-        else if (particle.ParticleType == component.SeverityParticleType || particle.AnomalySeverityIncreaser)
+        if (particle.ParticleType == component.SeverityParticleType || particle.AnomalySeverityIncreaser)
         {
             ChangeAnomalySeverity(uid, VaryValue(particle.SeverityPerSeverityHit), component);
         }
