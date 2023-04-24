@@ -51,7 +51,7 @@
 
 - type: latheRecipe
   id: AnomalyLocator
-  result: AnomalyLocatorNoBattery
+  result: AnomalyLocatorEmpty
   completetime: 3
   materials:
     Steel: 400

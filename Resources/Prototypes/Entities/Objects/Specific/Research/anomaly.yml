@@ -55,9 +55,9 @@
         volume: -8
 
 - type: entity
-  id: AnomalyLocatorNoBattery
+  id: AnomalyLocatorEmpty
   parent: AnomalyLocator
-  suffix: No Battery
+  suffix: Empty
   components:
   - type: ItemSlots
     slots:
