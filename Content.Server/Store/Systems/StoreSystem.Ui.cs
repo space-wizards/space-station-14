@@ -20,6 +20,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     private void InitializeUi()
     {
