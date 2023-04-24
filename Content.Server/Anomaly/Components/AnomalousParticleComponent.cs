@@ -50,12 +50,21 @@ public sealed class AnomalousParticleComponent : Component
     [DataField("stabilityPerWeakeningeHit")]
     public float StabilityPerWeakeningeHit = -0.1f;
 
+    /// <summary>
+    /// If this is true then the particle will always effect the stability of the anomaly.
+    /// </summary>
     [DataField("destabilzingOverride")]
     public bool DestabilzingOverride = false;
 
+    /// <summary>
+    /// If this is true then the particle will always effect the weakeness of the anomaly.
+    /// </summary>
     [DataField("weakeningOverride")]
     public bool WeakeningOverride = false;
 
+    /// <summary>
+    /// If this is true then the particle will always effect the severity of the anomaly.
+    /// </summary
     [DataField("severityOverride")]
     public bool SeverityOverride = false;
 }
