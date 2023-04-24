@@ -117,17 +117,19 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 message = change['message']
                 content.write(f"{emoji} {message}\n")
 
-    body = {
-        "content": content.getvalue(),
-        # Do not allow any mentions.
-        "allowed_mentions": {
-            "parse": []
-        },
-        # SUPPRESS_EMBEDS
-        "flags": 1 << 2
-    }
+    content.seek(0) # Corvax
+    for chunk in iter(lambda: content.read(2000), ''): # Corvax: Split big changelogs messages
+        body = {
+            "content": chunk,
+            # Do not allow any mentions.
+            "allowed_mentions": {
+                "parse": []
+            },
+            # SUPPRESS_EMBEDS
+            "flags": 1 << 2
+        }
 
-    requests.post(DISCORD_WEBHOOK_URL, json=body)
+        requests.post(DISCORD_WEBHOOK_URL, json=body)
 
 
 main()
