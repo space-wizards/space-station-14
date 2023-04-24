@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: You can open cabinets with alt click., type: Tweak}
-  id: 3024
-  time: '2023-02-12T02:35:21.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix duplicate trees in biomes., type: Fix}
@@ -2898,3 +2893,9 @@ Entries:
   - {message: Autolathe icons for screwdrivers and wirecutters are now correct., type: Fix}
   id: 3523
   time: '2023-04-24T00:01:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Printed health analyzers and crew monitors no longer come pre-loaded
+      with batteries., type: Fix}
+  id: 3524
+  time: '2023-04-24T00:07:41.0000000+00:00'
