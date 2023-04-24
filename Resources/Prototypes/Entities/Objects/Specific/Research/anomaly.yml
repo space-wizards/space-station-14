@@ -44,7 +44,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: PowerCellDraw
-    drawRate: 10
+    drawRate: 5
     useRate: 0
   - type: ProximityBeeper
     component: Anomaly
