@@ -7,7 +7,6 @@ using Content.Shared.Popups;
 using Content.Shared.Store;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
@@ -21,7 +20,6 @@ public sealed partial class StoreSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -84,10 +82,7 @@ public sealed partial class StoreSystem : EntitySystem
 
     private void OnImplantActivate(EntityUid uid, StoreComponent component, OpenUplinkImplantEvent args)
     {
-        if (!TryComp<ActorComponent>(args.Performer, out var actor))
-            return;
-
-        _ui.TryToggleUi(uid, StoreUiKey.Key, actor.PlayerSession);
+        ToggleUi(args.Performer, uid, component);
     }
 
     /// <summary>
