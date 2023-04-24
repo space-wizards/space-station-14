@@ -15,12 +15,14 @@ using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
+using Robust.Shared.Timing;
 
 namespace Content.Server.PowerCell;
 
 public sealed class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ActivatableUISystem _activatable = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
@@ -40,6 +42,9 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
 
+        SubscribeLocalEvent<PowerCellDrawComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<PowerCellDrawComponent, EntityUnpausedEvent>(OnUnpaused);
+
         // funny
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
         SubscribeLocalEvent<BatteryComponent, BeingMicrowavedEvent>(OnMicrowaved);
@@ -55,10 +60,14 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             if (!comp.Enabled)
                 continue;
 
+            if (_timing.CurTime < comp.NextUpdateTime)
+                continue;
+            comp.NextUpdateTime += TimeSpan.FromSeconds(1);
+
             if (!TryGetBatteryFromSlot(uid, out var batteryEnt, out var battery, slot))
                 continue;
 
-            if (_battery.TryUseCharge(batteryEnt.Value, comp.DrawRate * frameTime, battery))
+            if (_battery.TryUseCharge(batteryEnt.Value, comp.DrawRate, battery))
                 continue;
 
             comp.Enabled = false;
@@ -125,6 +134,17 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         var ev = new PowerCellSlotEmptyEvent();
         RaiseLocalEvent(uid, ref ev);
+    }
+
+    private void OnMapInit(EntityUid uid, PowerCellDrawComponent component, MapInitEvent args)
+    {
+        if (component.NextUpdateTime < _timing.CurTime)
+            component.NextUpdateTime = _timing.CurTime;
+    }
+
+    private void OnUnpaused(EntityUid uid, PowerCellDrawComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextUpdateTime += args.PausedTime;
     }
 
     private void Explode(EntityUid uid, BatteryComponent? battery = null, EntityUid? cause = null)
