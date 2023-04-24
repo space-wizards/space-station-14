@@ -119,7 +119,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         while (query.MoveNext(out var uid, out var activated, out var electrified, out var transform))
         {
             activated.TimeLeft -= frameTime;
-            if (activated.TimeLeft <= 0 || !IsPowered(uid, electrified, transform)) {
+            if (activated.TimeLeft <= 0 || !IsPowered(uid, electrified, transform))
+            {
                 _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, false);
                 RemComp<ActivatedElectrifiedComponent>(uid);
             }
