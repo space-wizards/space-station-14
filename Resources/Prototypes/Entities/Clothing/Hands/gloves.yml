@@ -267,7 +267,7 @@
   - type: Unremoveable
   
   #---------------------------------------------------------------------------------
-#Similar to boxing gloves, you can hold these in hand and it'll let you attack quickly with them. Let me know if this is a problem
+
 
 - type: entity
   parent: ClothingHandsBase
@@ -278,7 +278,7 @@
   - type: Sprite
     sprite: Clothing/Hands/Gloves/Northstar.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Northstar.rsi    #might be worth making the worn sprite more noticeable, they're pretty powerful for a stealthy weapon
+    sprite: Clothing/Hands/Gloves/Northstar.rsi    #might be worth making the worn sprite more noticeable, they're pretty powerful for a stealthy weapon  #Yet somehow less powerful than the rigged boxing gloves?!??!!?!
   - type: MeleeWeapon
     attackRate: 6
     damage:
@@ -291,3 +291,5 @@
     fiberMaterial: fibers-leather
     fiberColor: fibers-blue
   - type: FingerprintMask
+  - type: MeleeSpeech
+    phrase: "AT"
