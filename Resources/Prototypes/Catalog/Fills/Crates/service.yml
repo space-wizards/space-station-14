@@ -122,6 +122,15 @@
           amount: 10
 
 - type: entity
+  id: CrateServiceBox
+  parent: CratePlastic
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxCardboard
+          amount: 6
+
+- type: entity
   id: CrateJanitorBiosuit
   parent: CratePlastic
   components:

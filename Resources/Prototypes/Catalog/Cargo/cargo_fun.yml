@@ -129,6 +129,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunBoxing
+  icon:
+    sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
+    state: icon
+  product: CrateFunBoxing
+  cost: 500
+  category: Fun
+  group: market
+
+- type: cargoProduct
   id: FunPirate
   icon:
     sprite: Structures/Storage/Crates/piratechest.rsi

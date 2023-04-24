@@ -1162,7 +1162,7 @@
   - type: Butcherable
     butcheringType: Knife
     spawned:
-    - id: ClothingHeadClothingHeadHatWatermelon
+    - id: ClothingHeadHatWatermelon
 
 - type: entity
   name: watermelon slice

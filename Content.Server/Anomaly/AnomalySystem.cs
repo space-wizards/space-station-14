@@ -66,27 +66,27 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
     private void OnStartCollide(EntityUid uid, AnomalyComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<AnomalousParticleComponent>(args.OtherFixture.Body.Owner, out var particleComponent))
+        if (!TryComp<AnomalousParticleComponent>(args.OtherFixture.Body.Owner, out var particle))
             return;
 
-        if (args.OtherFixture.ID != particleComponent.FixtureId)
+        if (args.OtherFixture.ID != particle.FixtureId)
             return;
 
         // small function to randomize because it's easier to read like this
         float VaryValue(float v) => v * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
 
-        if (particleComponent.ParticleType == component.DestabilizingParticleType)
+        if (particle.ParticleType == component.DestabilizingParticleType)
         {
-            ChangeAnomalyStability(uid, VaryValue(component.StabilityPerDestabilizingHit), component);
+            ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerDestabilizingHit), component);
         }
-        else if (particleComponent.ParticleType == component.SeverityParticleType)
+        else if (particle.ParticleType == component.SeverityParticleType)
         {
-            ChangeAnomalySeverity(uid, VaryValue(component.SeverityPerSeverityHit), component);
+            ChangeAnomalySeverity(uid, VaryValue(particle.SeverityPerSeverityHit), component);
         }
-        else if (particleComponent.ParticleType == component.WeakeningParticleType)
+        else if (particle.ParticleType == component.WeakeningParticleType)
         {
-            ChangeAnomalyHealth(uid, VaryValue(component.HealthPerWeakeningeHit), component);
-            ChangeAnomalyStability(uid, VaryValue(component.StabilityPerWeakeningeHit), component);
+            ChangeAnomalyHealth(uid, VaryValue(particle.HealthPerWeakeningeHit), component);
+            ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerWeakeningeHit), component);
         }
     }
 
