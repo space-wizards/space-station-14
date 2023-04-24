@@ -47,7 +47,7 @@
     canCreateVacuum: false
   - type: OnUseTimerTrigger
     beepSound:
-      path: "/Audio/Effects/double_beep.ogg"
+      path: "/Audio/Effects/beep1.ogg"
     initialBeepDelay: 0
     beepInterval: 666 # single beep at start
 
