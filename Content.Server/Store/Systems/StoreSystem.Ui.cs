@@ -1,6 +1,8 @@
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
+using Content.Server.Stack;
 using Content.Server.Store.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
@@ -8,8 +10,6 @@ using Content.Shared.Store;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using System.Linq;
-using Content.Server.Stack;
-using Content.Server.UserInterface;
 
 namespace Content.Server.Store.Systems;
 
@@ -20,7 +20,6 @@ public sealed partial class StoreSystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     private void InitializeUi()
     {

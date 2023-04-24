@@ -397,6 +397,17 @@
         components:
           - SurplusBundle
 
+- type: listing
+  id: UplinkUplinkImplanter # uplink uplink real
+  name: uplink-uplink-implanter-name
+  description: uplink-uplink-implanter-desc
+  icon: { sprite: /Textures/Objects/Devices/communication.rsi, state: old-radio }
+  productEntity: UplinkImplanter
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkImplants
+
 # Bundles
 
 - type: listing

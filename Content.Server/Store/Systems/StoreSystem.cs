@@ -1,13 +1,15 @@
 using Content.Server.Store.Components;
+using Content.Server.UserInterface;
 using Content.Shared.FixedPoint;
+using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Store;
-using Robust.Shared.Prototypes;
-using System.Linq;
-using Content.Server.UserInterface;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Store.Systems;
 
@@ -19,6 +21,7 @@ public sealed partial class StoreSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -30,6 +33,7 @@ public sealed partial class StoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
 
         InitializeUi();
         InitializeCommand();
@@ -76,6 +80,14 @@ public sealed partial class StoreSystem : EntitySystem
             _popup.PopupEntity(msg, args.Target.Value);
             QueueDel(args.Used);
         }
+    }
+
+    private void OnImplantActivate(EntityUid uid, StoreComponent component, OpenUplinkImplantEvent args)
+    {
+        if (!TryComp<ActorComponent>(args.Performer, out var actor))
+            return;
+
+        _ui.TryToggleUi(uid, StoreUiKey.Key, actor.PlayerSession);
     }
 
     /// <summary>
