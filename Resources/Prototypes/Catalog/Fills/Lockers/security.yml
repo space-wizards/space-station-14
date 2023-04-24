@@ -61,7 +61,7 @@
       - id: ClothingUniformJumpsuitBrigmedic
       - id: ClothingUniformJumpskirtBrigmedic
       - id: ClothingUniformJumpskirtOfLife
-        prob: 0.3
+        prob: 0.1
       - id: MedkitFilled
       - id: MedkitCombatFilled
         prob: 0.6
@@ -76,7 +76,7 @@
       - id: MedkitBurnFilled
         prob: 0.7
       - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
-        prob: 0.1
+        prob: 0.15
 
 - type: entity
   id: LockerDetectiveFilled
