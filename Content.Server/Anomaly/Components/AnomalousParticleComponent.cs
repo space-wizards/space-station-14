@@ -1,4 +1,4 @@
-﻿using Content.Shared.Anomaly;
+using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 
 namespace Content.Server.Anomaly.Components;
@@ -49,4 +49,13 @@ public sealed class AnomalousParticleComponent : Component
     /// </summary>
     [DataField("stabilityPerWeakeningeHit")]
     public float StabilityPerWeakeningeHit = -0.1f;
+
+    [DataField("AnomalyStabilizer")]
+    public bool AnomalyStabilizer = false;
+
+    [DataField("anomalyWeakener")]
+    public bool AnomalyWeakener = false;
+
+    [DataField("anomalySeverityIncreaser")]
+    public bool AnomalySeverityIncreaser = false;
 }

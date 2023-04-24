@@ -111,3 +111,17 @@
       color: goldenrod
   - type: CartridgeAmmo
     proto: AnomalousParticleZetaStrong
+
+- type: entity
+  id: CartridgeAnomalousParticleOmega
+  parent: BaseAnomalousCartridge
+  name: cartridge (omega particle)
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+    - state: overlay
+      color: green
+  - type: CartridgeAmmo
+    proto: AnomalousParticleOmegaStrong
