@@ -26845,6 +26845,8 @@ entities:
 - uid: 3239
   type: GasPressurePump
   components:
+  - name: waste pump
+    type: MetaData
   - pos: 38.5,-2.5
     parent: 1
     type: Transform
@@ -27261,7 +27263,6 @@ entities:
   - pos: 31.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3302
   type: AirlockMaintLocked
   components:
@@ -29217,6 +29218,62 @@ entities:
     pos: -33.5,24.5
     parent: 1
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      mask: []
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: conveyor
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.15,-0.15
+        - 0.15,0.15
+        - -0.15,0.15
+        - -0.15,-0.15
+      mask: []
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: brrt
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      layer:
+      - BulletImpassable
+      - Opaque
+      density: 1
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: collision
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -29309,7 +29366,6 @@ entities:
     pos: -0.5,-25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3582
   type: AirlockGlass
   components:
@@ -42823,12 +42879,36 @@ entities:
   - pos: 12.5,7.5
     parent: 1
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 12485
+      Close:
+      - port: Start
+        uid: 12485
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 12485
+    type: SignalReceiver
 - uid: 5536
   type: WindoorSecurityLocked
   components:
   - pos: 15.5,7.5
     parent: 1
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 12486
+      Close:
+      - port: Start
+        uid: 12486
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 12486
+    type: SignalReceiver
   - type: Followed
 - uid: 5537
   type: WindoorSecurityLocked
@@ -42836,6 +42916,18 @@ entities:
   - pos: 18.5,7.5
     parent: 1
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 12487
+      Close:
+      - port: Start
+        uid: 12487
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 12487
+    type: SignalReceiver
 - uid: 5538
   type: Chair
   components:
@@ -46259,9 +46351,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 6041
-  type: SpawnPointSecurityOfficer
+  type: CrayonBox
   components:
-  - pos: 15.5,9.5
+  - pos: -9.510162,-31.109522
     parent: 1
     type: Transform
 - uid: 6042
@@ -51794,6 +51886,8 @@ entities:
 - uid: 6841
   type: GasFilterFlipped
   components:
+  - name: plasma filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-15.5
     parent: 1
@@ -51803,6 +51897,8 @@ entities:
 - uid: 6842
   type: GasFilterFlipped
   components:
+  - name: water vapor filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-13.5
     parent: 1
@@ -51812,6 +51908,8 @@ entities:
 - uid: 6843
   type: GasFilterFlipped
   components:
+  - name: n2o filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-11.5
     parent: 1
@@ -51821,6 +51919,8 @@ entities:
 - uid: 6844
   type: GasFilterFlipped
   components:
+  - name: co2 filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-9.5
     parent: 1
@@ -51830,6 +51930,8 @@ entities:
 - uid: 6845
   type: GasFilterFlipped
   components:
+  - name: o2 filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-7.5
     parent: 1
@@ -51839,6 +51941,8 @@ entities:
 - uid: 6846
   type: GasFilterFlipped
   components:
+  - name: n2 filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-5.5
     parent: 1
@@ -52079,6 +52183,8 @@ entities:
 - uid: 6868
   type: GasPressurePump
   components:
+  - name: n2 pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-4.5
     parent: 1
@@ -52088,6 +52194,8 @@ entities:
 - uid: 6869
   type: GasPressurePump
   components:
+  - name: o2 pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-6.5
     parent: 1
@@ -52097,6 +52205,8 @@ entities:
 - uid: 6870
   type: GasPressurePump
   components:
+  - name: co2 pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-8.5
     parent: 1
@@ -52106,6 +52216,8 @@ entities:
 - uid: 6871
   type: GasPressurePump
   components:
+  - name: n2o pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-10.5
     parent: 1
@@ -52115,6 +52227,8 @@ entities:
 - uid: 6872
   type: GasPressurePump
   components:
+  - name: water vapor pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-12.5
     parent: 1
@@ -52124,6 +52238,8 @@ entities:
 - uid: 6873
   type: GasPressurePump
   components:
+  - name: plasma pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-14.5
     parent: 1
@@ -52750,6 +52866,8 @@ entities:
 - uid: 6932
   type: GasMixerFlipped
   components:
+  - name: distro mixer
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 35.5,-6.5
     parent: 1
@@ -52858,6 +52976,8 @@ entities:
 - uid: 6942
   type: GasMixer
   components:
+  - name: n2 + o2 to mix
+    type: MetaData
   - pos: 37.5,-7.5
     parent: 1
     type: Transform
@@ -52866,6 +52986,8 @@ entities:
 - uid: 6943
   type: GasMixerFlipped
   components:
+  - name: co2 to mix
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 37.5,-8.5
     parent: 1
@@ -52875,6 +52997,8 @@ entities:
 - uid: 6944
   type: GasMixerFlipped
   components:
+  - name: n2o to mix
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 37.5,-10.5
     parent: 1
@@ -52884,6 +53008,8 @@ entities:
 - uid: 6945
   type: GasMixerFlipped
   components:
+  - name: water vapor to mix
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 37.5,-12.5
     parent: 1
@@ -52893,6 +53019,8 @@ entities:
 - uid: 6946
   type: GasMixerFlipped
   components:
+  - name: plasma to mix
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 37.5,-14.5
     parent: 1
@@ -53080,6 +53208,8 @@ entities:
 - uid: 6964
   type: GasPressurePump
   components:
+  - name: distro pump
+    type: MetaData
   - pos: 35.5,-9.5
     parent: 1
     type: Transform
@@ -53188,6 +53318,8 @@ entities:
 - uid: 6976
   type: GasPressurePump
   components:
+  - name: mix to space pump
+    type: MetaData
   - pos: 35.5,-17.5
     parent: 1
     type: Transform
@@ -53196,6 +53328,8 @@ entities:
 - uid: 6977
   type: GasPressurePump
   components:
+  - name: mix pump
+    type: MetaData
   - pos: 36.5,-18.5
     parent: 1
     type: Transform
@@ -53225,6 +53359,8 @@ entities:
 - uid: 6980
   type: GasPressurePump
   components:
+  - name: mix output pump
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 34.5,-17.5
     parent: 1
@@ -69352,6 +69488,7 @@ entities:
   - pos: 35.5,17.5
     parent: 1
     type: Transform
+  - type: Followed
 - uid: 9342
   type: NitrogenCanister
   components:
@@ -79413,6 +79550,7 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
+  - type: Followed
 - uid: 10563
   type: GasPipeStraight
   components:
@@ -88055,6 +88193,7 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
+  - type: Followed
 - uid: 11364
   type: GasPipeStraight
   components:
@@ -97560,6 +97699,7 @@ entities:
   - enabled: True
     type: AmbientSound
   - type: ActiveEmergencyLight
+  - type: Followed
 - uid: 12370
   type: EmergencyLight
   components:
@@ -98529,4 +98669,55 @@ entities:
   - pos: 0.4449376,21.546635
     parent: 1
     type: Transform
+- uid: 12485
+  type: BrigTimer
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 11.5,7.5
+    parent: 1
+    type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 5535
+      Timer:
+      - port: AutoClose
+        uid: 5535
+      - port: Open
+        uid: 5535
+    type: SignalTransmitter
+- uid: 12486
+  type: BrigTimer
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 14.5,7.5
+    parent: 1
+    type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 5536
+      Timer:
+      - port: AutoClose
+        uid: 5536
+      - port: Open
+        uid: 5536
+    type: SignalTransmitter
+- uid: 12487
+  type: BrigTimer
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 17.5,7.5
+    parent: 1
+    type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 5537
+      Timer:
+      - port: AutoClose
+        uid: 5537
+      - port: Open
+        uid: 5537
+    type: SignalTransmitter
 ...
