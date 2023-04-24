@@ -4,10 +4,10 @@ namespace Content.Client.Smoking;
     public sealed class BurnStateVisualsComponent : Component
     {
         [DataField("burntIcon")]
-        public string burntIcon = "burnt-icon";
+        public string BurntIcon = "burnt-icon";
         [DataField("litIcon")]
-        public string litIcon = "lit-icon";
+        public string LitIcon = "lit-icon";
         [DataField("unlitIcon")]
-        public string unlitIcon = "icon";
+        public string UnlitIcon = "icon";
     }
 
