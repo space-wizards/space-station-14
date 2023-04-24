@@ -232,6 +232,9 @@ uplink-cat-ears-desc = UwU
 uplink-outlaw-hat-name = Outlaw Hat
 uplink-outlaw-hat-desc = A hat that makes you look like you carry a notched pistol, numbered one and nineteen more.
 
+uplink-outlaw-glasses-name = Outlaw Glasses
+uplink-outlaw-glasses-desc = A must for every self-respecting undercover agent.
+
 uplink-costume-pyjama-name = Syndicate Pyjama Duffel Bag
 uplink-costume-pyjama-desc = Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
 
