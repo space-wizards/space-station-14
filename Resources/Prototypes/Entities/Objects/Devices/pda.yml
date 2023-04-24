@@ -98,6 +98,8 @@
       type: InstrumentBoundUserInterface
     - key: enum.HealthAnalyzerUiKey.Key
       type: HealthAnalyzerBoundUserInterface
+    - key:  enum.PlantAnalyzerUiKey.Key
+      type: PlantAnalyzerBoundUserInterface
   - type: CrewManifestViewer
     unsecure: true
   - type: Tag
@@ -207,6 +209,7 @@
     state: pda-hydro
   - type: Icon
     state: pda-hydro
+  - type: PlantAnalyzer
 
 - type: entity
   parent: BasePDA

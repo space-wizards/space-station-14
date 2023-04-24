@@ -11,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
 
+
 namespace Content.Server.Botany.Systems;
 
 public sealed class SeedScannerSystem : EntitySystem
@@ -21,6 +22,8 @@ public sealed class SeedScannerSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+
+    private  PlantHolderComponent _plantHolder = default!;
 
     public override void Initialize()
     {
@@ -79,24 +82,62 @@ public sealed class SeedScannerSystem : EntitySystem
 
     public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid target, PlantAnalyzerComponent? plantAnalyzer)
     {
+
         if (!Resolve(uid, ref plantAnalyzer)) return;
 
         if (target == null || plantAnalyzer.UserInterface == null) return;
 
-        if (!TryComp<SeedComponent>(target, out var component) ) return;
+        if (!TryComp<SeedComponent>(target, out var component) & !TryComp<PlantHolderComponent>(target, out var comp)) return;
 
+        if (comp is { Seed: null })
+            return;
 
         OpenUserInterface(user, plantAnalyzer);
 
-      var state = ObtainingGeneData(component, target);
+        var state = default(PlantAnalyzerScannedSeedPlantInformation);
+        var seedDat = default(SeedData);
 
-        _uiSystem.TrySetUiState(uid, PlantAnalyzerUiKey.Key, state);
+        if (component != null)    //where check seed
+        {
+
+
+            if (component?.SeedId != null)
+            {
+                var seedId=  PrototypeManager.Index<SeedPrototype>(component.SeedId);
+                state = ObtainingGeneDataSeedProt(seedId, target);
+
+            }
+            else if (component?.Seed != null)
+            {
+                seedDat = component.Seed;
+                state = ObtainingGeneDataSeed(seedDat, target, false);
+
+            }
+
+        }
+        else if (comp !=null)    //where check if we poke the plant, it checks the plant
+        {
+            _plantHolder = comp;
+            seedDat = comp.Seed;
+
+            if (seedDat != null)
+            {
+                state = ObtainingGeneDataSeed(seedDat, target, true);
+
+            }
+
+
+        }
+        if(state != null)
+            _uiSystem.TrySetUiState(uid, PlantAnalyzerUiKey.Key, state);
+
+
     }
 
     /// <summary>
-    ///Analysis of seed/plant characteristics occurs here .
+    ///Analysis of seed from prototip
     /// </summary>
-    public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneData(SeedComponent comp, EntityUid target )
+    public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeedProt(SeedPrototype comp, EntityUid target )
     {
         string Chem = "";
         string plantYeild= "";
@@ -104,73 +145,118 @@ public sealed class SeedScannerSystem : EntitySystem
         string plantHarvestType;
         string plantMut = "";
 
-        var environment = _atmosphere.GetContainingMixture(target, true, true) ?? GasMixture.SpaceGas;
         float plantMinTemp;
         float plantMaxTemp;
-
         float plantEndurance;
 
-        if (comp?.Seed == null && comp?.SeedId != null )
-        {
-            //analyz seed from prototipe
-            var seedId=  PrototypeManager.Index<SeedPrototype>(comp.SeedId);
+        var plantString = comp.Name;
+        var seedYeild = comp.Yield;
+        var seedPotency = comp.Potency;
 
-          var seedYeild = seedId.Yield;
-          var seedPotency = seedId.Potency;
-          if (seedId.HarvestRepeat == HarvestType.Repeat)
+
+          if (comp.HarvestRepeat == HarvestType.Repeat)
               plantHarvestType = "Repeat";
           else
               plantHarvestType = "No Repeat";
 
 
-          Chem += String.Join(", ", seedId.Chemicals.Select(item => item.Key.ToString()));
+          Chem += String.Join(", ", comp.Chemicals.Select(item => item.Key.ToString()));
 
           plantMinTemp = 283f;
           plantMaxTemp =  303f;
 
-          plantEndurance = seedId.Endurance;
+          plantEndurance = comp.Endurance;
 
 
-          return new PlantAnalyzerScannedSeedPlantInformation(target,plantEndurance, seedYeild.ToString(), seedPotency.ToString(),plantHarvestType, Chem,plantMinTemp ,plantMaxTemp, plantMut);
+
+          return new PlantAnalyzerScannedSeedPlantInformation(target, plantEndurance, seedYeild.ToString(), seedPotency.ToString(),
+              plantHarvestType, Chem,plantMinTemp ,plantMaxTemp, plantMut, plantString, 0f, " ", false );
         }
-        else
+
+
+
+    /// <summary>
+    ///Analysis of seed/plant characteristics occurs here .
+    /// </summary>
+    public PlantAnalyzerScannedSeedPlantInformation ObtainingGeneDataSeed(SeedData comp, EntityUid target, bool trayChecker )    //analyze seed from hydroponic
+    {
+        string Chem = "";
+        string plantYeild= "";
+        string plantPotency = "";
+        string plantHarvestType;
+        string plantMut = "";
+        string plantProblems = "";
+
+        float plantHealth = 0f;
+
+        var yeild = comp.Yield;
+        var potency = comp.Potency;
+        var plantMinTemp = comp.IdealHeat - comp.HeatTolerance;
+        var plantMaxTemp = comp.IdealHeat + comp.HeatTolerance;
+        var plantEndurance = comp.Endurance;
+        var plantString = comp.Name;
+
+
+        plantYeild = yeild.ToString();
+        plantPotency = potency.ToString();
+        if (comp.HarvestRepeat == HarvestType.Repeat) plantHarvestType = "Repeat"; else plantHarvestType = "No Repeat";
+        Chem += String.Join(", ", comp.Chemicals.Select(item => item.Key.ToString()));
+
+        plantMut= CheckAllMutation(comp, plantMut);
+
+        if (trayChecker)
         {
-            //analyz seed from hydroponic
-
-            var Yeild = comp?.Seed?.Yield;
-            var Potency = comp?.Seed?.Potency;
-
-            plantYeild = Yeild?.ToString() ?? "0";
-            plantPotency = Potency?.ToString() ?? "0";
-
-            if (comp?.Seed?.HarvestRepeat == HarvestType.Repeat) plantHarvestType = "Repeat"; else plantHarvestType = "No Repeat";
-            if (comp?.Seed != null) Chem += String.Join(", ", comp.Seed.Chemicals.Select(item => item.Key.ToString()));
-
-             plantMinTemp = comp?.Seed?.IdealHeat - comp?.Seed?.HeatTolerance ?? 0;
-             plantMaxTemp =  comp?.Seed?.IdealHeat + comp?.Seed?.HeatTolerance ?? 0;
-
-             plantEndurance = comp?.Seed?.Endurance ?? 0;
-
-          if(comp!= null) plantMut= CheckAllMutation(comp, plantMut);
-
-            return new PlantAnalyzerScannedSeedPlantInformation(target, plantEndurance, plantYeild, plantPotency, plantHarvestType, Chem, plantMinTemp, plantMaxTemp, plantMut );
+            plantHealth = _plantHolder.Health;
+            plantProblems = CheckAllProblems(_plantHolder, plantProblems, target);
         }
+
+
+        return new PlantAnalyzerScannedSeedPlantInformation(target, plantEndurance, plantYeild, plantPotency, plantHarvestType, Chem,
+            plantMinTemp, plantMaxTemp, plantMut, plantString,  plantHealth,  plantProblems, trayChecker );
     }
 
-    public string CheckAllMutation(SeedComponent comp,  string plantMut)
-    {
-      var Plant = comp.Seed;
-      if (Plant?.Viable == false) plantMut += $"{Loc.GetString("plant-analyzer-mutation-unviable")}"+ ", ";
-      if (Plant?.TurnIntoKudzu == true) plantMut += $"{Loc.GetString("plant-analyzer-mutation-turnintokudzu")}"+ ", ";
-      if (Plant?.Seedless == true) plantMut += $"{Loc.GetString("plant-analyzer-mutation-seedless")}"+ ", ";
-      if (Plant?.Slip == true) plantMut += $"{Loc.GetString("plant-analyzer-mutation-slip")}"+ ", ";
-      if (Plant?.Sentient == true) plantMut += $"{Loc.GetString("plant-analyzer-mutation-sentient")}"+ ", ";
-      if (Plant?.Ligneous == true) plantMut += $"{Loc.GetString("plant-analyzer-mutation-ligneous")}"+ ", ";
-      if (Plant?.Bioluminescent == true) plantMut += $"{Loc.GetString("plant-analyzer-mutation-bioluminescent")}"+ ", ";
-      if (Plant?.CanScream == true) plantMut += $"{Loc.GetString("plant-analyzer-mutation-canscream")}"+ ", ";
-      plantMut = plantMut.TrimEnd(',', ' ');
-      return plantMut;
 
+
+
+
+
+
+
+
+    public string CheckAllMutation(SeedData plant,  string plantMut)
+    {
+        if (plant.Viable == false) plantMut += $"{Loc.GetString("plant-analyzer-mutation-unviable")}"+ ", ";
+        if (plant.TurnIntoKudzu) plantMut += $"{Loc.GetString("plant-analyzer-mutation-turnintokudzu")}"+ ", ";
+        if (plant.Seedless) plantMut += $"{Loc.GetString("plant-analyzer-mutation-seedless")}"+ ", ";
+        if (plant.Slip) plantMut += $"{Loc.GetString("plant-analyzer-mutation-slip")}"+ ", ";
+        if (plant.Sentient) plantMut += $"{Loc.GetString("plant-analyzer-mutation-sentient")}"+ ", ";
+        if (plant.Ligneous) plantMut += $"{Loc.GetString("plant-analyzer-mutation-ligneous")}"+ ", ";
+        if (plant.Bioluminescent) plantMut += $"{Loc.GetString("plant-analyzer-mutation-bioluminescent")}"+ ", ";
+        if (plant.CanScream) plantMut += $"{Loc.GetString("plant-analyzer-mutation-canscream")}"+ ", ";
+        plantMut = plantMut.TrimEnd(',', ' ');
+        return plantMut;
+    }
+
+    public string CheckAllProblems(PlantHolderComponent plant, string plantProblems, EntityUid target)
+    {
+        var environment = _atmosphere.GetContainingMixture(target, true, true) ?? GasMixture.SpaceGas;
+        var pressure = environment.Pressure;
+
+        if (plant.Seed == null) return plantProblems;
+
+
+        if (plant.WaterLevel < 10) plantProblems += $"{Loc.GetString("plant-analyzer-problems-water")}"+ ", ";
+        if (plant.Toxins > 0) plantProblems += $"{Loc.GetString("plant-analyzer-problems-toxins")}"+ ", ";
+        if (MathF.Abs(environment.Temperature - plant.Seed.IdealHeat) > plant.Seed.HeatTolerance)
+            plantProblems+=  $"{Loc.GetString("plant-analyzer-problems-temperature")}"+ ", ";
+        if (pressure < plant.Seed.LowPressureTolerance || pressure > plant.Seed.HighPressureTolerance)
+            plantProblems+=  $"{Loc.GetString("plant-analyzer-problems-pressure")}"+ ", ";
+        if( plant.PestLevel > 0) plantProblems+=  $"{Loc.GetString("plant-analyzer-problems-pests")}"+ ", ";
+        if (plant.Age > plant.Seed.Lifespan)
+            plantProblems+=  $"{Loc.GetString("plant-analyzer-problems-age")}"+ ", ";
+
+        plantProblems = plantProblems.TrimEnd(',', ' ');
+        return plantProblems;
     }
 
 }

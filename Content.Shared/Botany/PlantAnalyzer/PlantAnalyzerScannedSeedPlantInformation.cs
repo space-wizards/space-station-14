@@ -12,7 +12,6 @@ namespace Content.Shared.Botany.PlantAnalyzer;
 public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfaceState
 {
     public readonly EntityUid? TargetEntity;
-
     public readonly float seedEndurance;
 
     public readonly string seedYield = "";
@@ -25,7 +24,15 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
 
     public readonly string seedMut = "";
 
-    public PlantAnalyzerScannedSeedPlantInformation(EntityUid? targetEntity,float SeedEndurance, string SeedYield, string SeedPotency, string seedharvestType, string SeedChem,float SeedMinTemp, float SeedMaxTemp, string PlantMut)
+    public readonly  string seedName = " ";
+    public readonly float seedHealth;
+    public readonly string seedProblems;
+
+    public readonly bool isTray;
+
+    public PlantAnalyzerScannedSeedPlantInformation(EntityUid? targetEntity,float SeedEndurance, string SeedYield, string SeedPotency,
+        string seedharvestType, string SeedChem,float SeedMinTemp, float SeedMaxTemp, string PlantMut, string SeedName,
+        float SeedHealth, string SeedProblems, bool IsTray )
     {
         TargetEntity = targetEntity;
         seedEndurance = SeedEndurance;
@@ -36,7 +43,12 @@ public sealed class PlantAnalyzerScannedSeedPlantInformation : BoundUserInterfac
         seedHarvestType = seedharvestType;
         seedMinTemp = SeedMinTemp;
         seedMaxTemp = SeedMaxTemp;
-
         seedMut = PlantMut;
+
+        seedName = SeedName;
+        seedHealth = SeedHealth;
+        seedProblems = SeedProblems;
+
+        isTray = IsTray;
     }
 }

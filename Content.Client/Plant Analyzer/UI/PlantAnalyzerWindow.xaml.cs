@@ -33,9 +33,9 @@ public sealed partial class PlantAnalyzerWindow : DefaultWindow
 
         if (msg.TargetEntity != null &&
             entities.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out var metaData))
-            plantName = Identity.Name(msg.TargetEntity.Value, entities);
+            plantName = msg.seedName;
 
-        PlantName.Text = Loc.GetString(("plant-analyzer-window-label-name-scanned-plant"), ("plantname",plantName));
+        PlantName.Text = Loc.GetString(("plant-analyzer-window-label-name-scanned-plant")) +" "+ Loc.GetString(msg.seedName);
 
         PlantHP.SetMarkup($"\n{Loc.GetString($"plant-analyzer-plant-endurance-text", ("seedEndurance", msg.seedEndurance))}");
         text.Append($"{Loc.GetString($"plant-analyzer-plant-yield-text", ("seedYield", msg.seedYield))}");
@@ -49,6 +49,12 @@ public sealed partial class PlantAnalyzerWindow : DefaultWindow
         Temperature.SetMarkup($"{Loc.GetString($"plant-analyzer-plant-temp-comfort-text", ("seedMin", Math.Round(msg.seedMinTemp)),("seedMax", Math.Round(msg.seedMaxTemp)), ("seedMinC", seedMinC), ("seedMaxC", seedMaxC ))}");
         TraitsName.SetMarkup($"{Loc.GetString($"plant-analyzer-plant-mutations-text")+" "+(msg.seedMut)}\n");
 
+        if (msg.isTray)
+        {
+            PlantTray.Text =  $"{Loc.GetString($"plant-analyzer-plant-holder")}";
+            HealthName.SetMarkup($"\n{Loc.GetString($"plant-analyzer-plant-holder-health", ("seedHealth", msg.seedHealth))}");
+            ProblemsName.SetMarkup($"{Loc.GetString($"plant-analyzer-plant-holder-problems")+" "+(msg.seedProblems)}");
+        }
 
       }
 }

@@ -334,7 +334,7 @@ namespace Content.Server.Botany.Systems
 
             // Process mutations
             if (component.MutationLevel > 0)
-            {  // Logger.Debug($"Mutation! " + component.MutationMod.ToString() + "Уровень мутации: "+ component.MutationLevel.ToString() );
+            {
                 Mutate(uid, Math.Min(component.MutationLevel, 25), component);
                 component.MutationLevel = 0;
             }

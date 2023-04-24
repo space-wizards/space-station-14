@@ -22,6 +22,15 @@
         <RichTextLabel
             Name="TraitsName"
         />
+        <Label
+            Name="PlantTray"
+            Align="Left" />
+        <RichTextLabel
+            Name="HealthName"
+        />
+        <RichTextLabel
+            Name="ProblemsName"
+        />
 
     </BoxContainer>
 </DefaultWindow>
