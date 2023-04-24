@@ -1,9 +1,4 @@
 Entries:
-- author: 778b
-  changes:
-  - {message: Minor changes to Omega, type: Tweak}
-  id: 3031
-  time: '2023-02-12T21:29:04.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Deployable barriers and canisters now lock correctly again., type: Fix}
@@ -2898,3 +2893,10 @@ Entries:
   - {message: Jonkbots can now be constructed., type: Add}
   id: 3530
   time: '2023-04-24T02:32:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Entities that draw battery power should now draw at a consistent rate.,
+    type: Fix}
+  - {message: Anomaly locators now consume less power while active., type: Tweak}
+  id: 3531
+  time: '2023-04-24T03:35:19.0000000+00:00'
