@@ -101,6 +101,10 @@ public static class PoolManager
             }
         };
 
+        var logHandler = new PoolTestLogHandler("SERVER");
+        logHandler.ActivateContext(testOut);
+        options.OverrideLogHandler = () => logHandler;
+
         options.BeforeStart += () =>
         {
             IoCManager.Resolve<IEntitySystemManager>()
@@ -116,12 +120,9 @@ public static class PoolManager
             IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
             IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestDestructibleListenerSystem>();
             IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
+            IoCManager.Resolve<IConfigurationManager>()
+                .OnValueChanged(RTCVars.FailureLogLevel, value => logHandler.FailureLevel = value, true);
         };
-
-        var logHandler = new PoolTestLogHandler("SERVER");
-        logHandler.ActivateContext(testOut);
-
-        options.OverrideLogHandler = () => logHandler;
 
         SetupCVars(poolSettings, options);
 
@@ -199,6 +200,10 @@ public static class PoolManager
             // LoadContentResources = !poolSettings.NoLoadContent
         };
 
+        var logHandler = new PoolTestLogHandler("CLIENT");
+        logHandler.ActivateContext(testOut);
+        options.OverrideLogHandler = () => logHandler;
+
         options.BeforeStart += () =>
         {
             IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ClientModuleTestingCallbacks
@@ -211,13 +216,11 @@ public static class PoolManager
                         .RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
                     IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
                     IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
+                    IoCManager.Resolve<IConfigurationManager>()
+                        .OnValueChanged(RTCVars.FailureLogLevel, value => logHandler.FailureLevel = value, true);
                 }
             });
         };
-
-        var logHandler = new PoolTestLogHandler("CLIENT");
-        logHandler.ActivateContext(testOut);
-        options.OverrideLogHandler = () => logHandler;
 
         SetupCVars(poolSettings, options);
 
