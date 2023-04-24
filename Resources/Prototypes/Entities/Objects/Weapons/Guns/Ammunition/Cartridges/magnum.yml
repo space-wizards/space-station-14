@@ -116,6 +116,7 @@
   id: CartridgeAnomalousParticleOmega
   parent: BaseAnomalousCartridge
   name: cartridge (omega particle)
+  description: An experimental and often dangerous particle.
   components:
   - type: Sprite
     layers:
