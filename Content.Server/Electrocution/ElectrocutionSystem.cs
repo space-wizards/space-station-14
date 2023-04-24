@@ -109,7 +109,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                         $"{ToPrettyString(electrocution.Electrocuting):entity} received {actual.Total:damage} powered electrocution damage from {ToPrettyString(electrocution.Source):source}");
                 }
             }
-            EntityManager.DeleteEntity(uid);
+            QueueDel(uid);
         }
     }
 
