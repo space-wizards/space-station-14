@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix duplicate trees in biomes., type: Fix}
-  id: 3025
-  time: '2023-02-12T11:49:13.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Added rocks with ore veins., type: Add}
   id: 3026
   time: '2023-02-12T12:41:13.0000000+00:00'
@@ -2899,3 +2894,9 @@ Entries:
       with batteries., type: Fix}
   id: 3524
   time: '2023-04-24T00:07:41.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Electricity anomalies will now create an EMP when going supercritical.,
+    type: Tweak}
+  id: 3525
+  time: '2023-04-24T00:11:24.0000000+00:00'
