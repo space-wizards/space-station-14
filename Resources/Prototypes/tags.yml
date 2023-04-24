@@ -141,6 +141,9 @@
   id: ClownRubberStamp
 
 - type: Tag
+  id: CluwneHorn
+
+- type: Tag
   id: Crayon
 
 - type: Tag
@@ -304,6 +307,10 @@
 
 - type: Tag
   id: Handcuffs
+
+- type: Tag
+  id: HappyHonk
+
 
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
