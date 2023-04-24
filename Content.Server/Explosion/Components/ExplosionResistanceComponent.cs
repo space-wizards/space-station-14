@@ -1,6 +1,4 @@
 using Content.Server.Explosion.EntitySystems;
-using Content.Shared.Explosion;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Explosion.Components;
 
@@ -20,11 +18,4 @@ public sealed class ExplosionResistanceComponent : Component
     /// </summary>
     [DataField("damageCoefficient")]
     public float DamageCoefficient = 1;
-
-    /// <summary>
-    ///     Like <see cref="GlobalResistance"/>, but specified specific to each explosion type for more customizability.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("resistances", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, ExplosionPrototype>))]
-    public Dictionary<string, float> Resistances = new();
 }

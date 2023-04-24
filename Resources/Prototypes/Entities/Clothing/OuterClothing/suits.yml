@@ -8,7 +8,7 @@
     sprite: Clothing/OuterClothing/Suits/bombsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/bombsuit.rsi
-  - type: Armor #explosion damage ignores "normal" armor, see ExplosionResistance.
+  - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.5
@@ -16,7 +16,7 @@
         Piercing: 0.9
         Heat: 0.75
   - type: ExplosionResistance
-    damageCoefficient: 0.65
+    damageCoefficient: 0.2
   - type: GroupExamine
   - type: Tag
     tags:
