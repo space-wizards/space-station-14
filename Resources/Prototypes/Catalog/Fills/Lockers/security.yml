@@ -75,6 +75,8 @@
         prob: 0.3
       - id: MedkitBurnFilled
         prob: 0.7
+      - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
+        prob: 0.1
 
 - type: entity
   id: LockerDetectiveFilled
