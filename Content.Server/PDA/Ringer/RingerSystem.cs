@@ -1,17 +1,21 @@
+using Content.Server.Store.Components;
+using Content.Server.Store.Systems;
 using Content.Server.UserInterface;
-using Content.Shared.PDA.Ringer;
-using Robust.Shared.Audio;
-using Robust.Server.Player;
-using Robust.Shared.Player;
 using Content.Shared.PDA;
+using Content.Shared.PDA.Ringer;
+using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.PDA.Ringer
 {
     public sealed class RingerSystem : SharedRingerSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly StoreSystem _store = default!;
 
         public override void Initialize()
         {
@@ -19,10 +23,13 @@ namespace Content.Server.PDA.Ringer
 
             // General Event Subscriptions
             SubscribeLocalEvent<RingerComponent, MapInitEvent>(RandomizeRingtone);
+            SubscribeLocalEvent<RingerUplinkComponent, ComponentInit>(RandomizeUplinkCode);
             // RingerBoundUserInterface Subscriptions
             SubscribeLocalEvent<RingerComponent, RingerSetRingtoneMessage>(OnSetRingtone);
+            SubscribeLocalEvent<RingerUplinkComponent, RingerSetRingtoneMessage>(OnSetUplinkRingtone);
             SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(RingerPlayRingtone);
             SubscribeLocalEvent<RingerComponent, RingerRequestUpdateInterfaceMessage>(UpdateRingerUserInterfaceDriver);
+
         }
 
         //Event Functions
@@ -46,7 +53,30 @@ namespace Content.Server.PDA.Ringer
             UpdateRingerRingtone(ringer, args.Ringtone);
         }
 
+        private void OnSetUplinkRingtone(EntityUid uid, RingerUplinkComponent uplink, RingerSetRingtoneMessage args)
+        {
+            if (uplink.Code.SequenceEqual(args.Ringtone) &&
+                args.Session.AttachedEntity != null &&
+                TryComp<StoreComponent>(uid, out var store))
+            {
+                var user = args.Session.AttachedEntity.Value;
+                _store.ToggleUi(args.Session.AttachedEntity.Value, uid, store);
+            }
+        }
+
         public void RandomizeRingtone(EntityUid uid, RingerComponent ringer, MapInitEvent args)
+        {
+            UpdateRingerRingtone(ringer, GenerateRingtone());
+        }
+
+        public void RandomizeUplinkCode(EntityUid uid, RingerUplinkComponent uplink, ComponentInit args)
+        {
+            uplink.Code = GenerateRingtone();
+        }
+
+        //Non Event Functions
+
+        private Note[] GenerateRingtone()
         {
             // Default to using C pentatonic so it at least sounds not terrible.
             var notes = new[]
@@ -65,11 +95,8 @@ namespace Content.Server.PDA.Ringer
                 ringtone[i] = _random.Pick(notes);
             }
 
-            UpdateRingerRingtone(ringer, ringtone);
-
+            return ringtone;
         }
-
-        //Non Event Functions
 
         private bool UpdateRingerRingtone(RingerComponent ringer, Note[] ringtone)
         {
