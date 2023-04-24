@@ -255,3 +255,87 @@
     sprite: Clothing/Mask/swat.rsi
   - type: Clothing
     sprite: Clothing/Mask/swat.rsi
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskRat
+  name: rat mask
+  description: A mask of a rat that looks like a rat. Perhaps they will take you for a fellow rat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/rat.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/rat.rsi
+  - type: BreathMask
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskFox
+  name: fox mask
+  description: What does the fox say?
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/fox.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/fox.rsi
+  - type: BreathMask
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskBee
+  name: bee mask
+  description: For the queen!
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/bee.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/bee.rsi
+  - type: BreathMask
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskBear
+  name: bear mask
+  description: I'm a cloudy, cloudy, cloudy, I'm not a bear at all.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/bear.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/bear.rsi
+  - type: BreathMask
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskRaven
+  name: raven mask
+  description: Where I am, death... or glitter.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/raven.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/raven.rsi
+  - type: BreathMask
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskJackal
+  name: jackal mask
+  description: It is better not to turn your back to the owner of the mask, it may bite.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/jackal.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/jackal.rsi
+  - type: BreathMask
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskBat
+  name: bat mask
+  description: A bloodsucker by night, and a cute, blinded beast by day.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/bat.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/bat.rsi
+  - type: BreathMask

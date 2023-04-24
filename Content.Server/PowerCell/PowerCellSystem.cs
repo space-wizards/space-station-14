@@ -55,10 +55,10 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             if (!comp.Enabled)
                 continue;
 
-            if (!TryGetBatteryFromSlot(uid, out var battery, slot))
+            if (!TryGetBatteryFromSlot(uid, out var batteryEnt, out var battery, slot))
                 continue;
 
-            if (_battery.TryUseCharge(uid, comp.DrawRate * frameTime, battery))
+            if (_battery.TryUseCharge(batteryEnt.Value, comp.DrawRate * frameTime, battery))
                 continue;
 
             comp.Enabled = false;
@@ -117,6 +117,14 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             if (itemSlot.Item == uid)
                 RaiseLocalEvent(container.Owner, new PowerCellChangedEvent(false));
         }
+    }
+
+    protected override void OnCellRemoved(EntityUid uid, PowerCellSlotComponent component, EntRemovedFromContainerMessage args)
+    {
+        base.OnCellRemoved(uid, component, args);
+
+        var ev = new PowerCellSlotEmptyEvent();
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void Explode(EntityUid uid, BatteryComponent? battery = null, EntityUid? cause = null)
@@ -217,17 +225,28 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     public bool TryGetBatteryFromSlot(EntityUid uid, [NotNullWhen(true)] out BatteryComponent? battery, PowerCellSlotComponent? component = null)
     {
+        return TryGetBatteryFromSlot(uid, out _, out battery, component);
+    }
+
+    public bool TryGetBatteryFromSlot(EntityUid uid,
+        [NotNullWhen(true)] out EntityUid? batteryEnt,
+        [NotNullWhen(true)] out BatteryComponent? battery,
+        PowerCellSlotComponent? component = null)
+    {
         if (!Resolve(uid, ref component, false))
         {
+            batteryEnt = null;
             battery = null;
             return false;
         }
 
         if (_itemSlotsSystem.TryGetSlot(uid, component.CellSlotId, out ItemSlot? slot))
         {
+            batteryEnt = slot.Item;
             return TryComp(slot.Item, out battery);
         }
 
+        batteryEnt = null;
         battery = null;
         return false;
     }
