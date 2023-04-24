@@ -1,7 +1,8 @@
 ﻿- type: entity
-  name: space bear
-  id: MobBearSpace
+  name: basic
+  id: MobSpaceBasic
   parent: SimpleSpaceMobBase
+  abstract: true
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: HTN
@@ -36,22 +37,6 @@
       150: Dead
   - type: Stamina
     excess: 150
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: bear
-        BaseUnshaded: glow
-      Critical:
-        Base: bear_dead
-      Dead:
-        Base: bear_dead
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatBear
-      amount: 3
-    - id: MaterialHideBear
-      amount: 1
-      prob: 0.3
   - type: Bloodstream
     bloodMaxVolume: 300
     bloodReagent: Cryoxadone
@@ -75,6 +60,44 @@
     - FootstepSound
   - type: Puller
     needsHands: false
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#4faffb"
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: space bear
+  id: MobBearSpace
+  parent: MobSpaceBasic
+  description: It looks friendly. Why don't you give it a hug?
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    sprite: Mobs/Animals/bear.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bear
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: bear
+        BaseUnshaded: glow
+      Critical:
+        Base: bear_dead
+      Dead:
+        Base: bear_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatBear
+      amount: 3
+    - id: MaterialHideBear
+      amount: 1
+      prob: 0.3
   - type: ReplacementAccent
     accent: genericAggressive
   - type: Vocal
@@ -86,16 +109,11 @@
     interactFailureString: petting-failure-bear
     interactSuccessSound:
       path: /Audio/Animals/sloth_squeak.ogg
-  - type: PointLight
-    radius: 1.2
-    energy: 2
-    color: "#4faffb"
   - type: GhostRole
     prob: 0.25
     name: space bear
     description: |
       You're a bear! Do bear things.
-  - type: GhostTakeoverAvailable
 
 - type: entity
   id: MobBearSpaceSalvage
@@ -107,20 +125,14 @@
     name: space bear on salvage wreck
     description: |
       Defend the loot inside the salvage wreck!
-  - type: GhostTakeoverAvailable
   - type: SalvageMobRestrictions
 
 - type: entity
   name: space kangaroo
   id: MobKangarooSpace
-  parent: SimpleSpaceMobBase
+  parent: MobSpaceBasic
   description: It looks friendly. Why don't you give it a hug?
   components:
-  - type: HTN
-    rootTask: SimpleHostileCompound
-  - type: Faction
-    factions:
-    - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
     netsync: false
@@ -131,16 +143,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: glow
       shader: unshaded
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.40
-      density: 100
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
   - type: MeleeWeapon
     hidden: true
     soundHit:
@@ -168,30 +170,16 @@
   - type: Inventory
     speciesId: kangaroo
     templateId: spacekangaroo
-  - type: Tag
-    tags:
-    - DoorBumpOpener
-    - FootstepSound
-  - type: PointLight
   - type: Vocal
     sounds:
       Unsexed: Kangaroo
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepBounce
-  - type: Puller
-    needsHands: false
   - type: ReplacementAccent
     accent: kangaroo
   - type: InventorySlots
   - type: Strippable
-  - type: Bloodstream
-    bloodMaxVolume: 300
-    bloodReagent: Cryoxadone
-  - type: CombatMode
-  - type: Temperature
-    heatDamageThreshold: 500
-    coldDamageThreshold: 0
   - type: UserInterface
     interfaces:
     - key: enum.StrippingUiKey.Key
@@ -204,7 +192,6 @@
     name: space kangaroo
     description: |
       You're a kangaroo! Do kangaroo things.
-  - type: GhostTakeoverAvailable
 
 - type: entity
   id: MobKangarooSpaceSalvage
@@ -216,5 +203,4 @@
     name: space kangaroo on salvage wreck
     description: |
       Defend the loot inside the salvage wreck!
-  - type: GhostTakeoverAvailable
   - type: SalvageMobRestrictions

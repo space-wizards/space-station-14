@@ -667,6 +667,31 @@
       collection: FootstepBounce
   - type: Puller
     needsHands: false
+  - type: StaminaDamageOnHit
+    damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
+    # This needs to be moved to boxinggloves
+    #knockdownSound: /Audio/Weapons/boxingbell.ogg
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 0.4
+    soundHit:
+      collection: BoxingHit
+    animation: WeaponArcFist
+
+- type: entity
+  name: boxing kangaroo
+  parent: MobKangaroo
+  id: MobBoxingKangaroo
+  components:
+  - type: Loadout
+    prototypes: [ BoxingKangarooGear ]
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
+    factions:
+    - SimpleHostile
 
 - type: entity
   name: monkey

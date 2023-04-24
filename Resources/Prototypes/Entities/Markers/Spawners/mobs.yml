@@ -328,3 +328,17 @@
   - type: ConditionalSpawner
     prototypes:
     - MobKangarooSpace
+
+- type: entity
+  name: Boxing Kangaroo Spawner
+  id: SpawnMobBoxingKangaroo
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: kangaroo
+      sprite: Mobs/Animals/kangaroo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBoxingKangaroo
