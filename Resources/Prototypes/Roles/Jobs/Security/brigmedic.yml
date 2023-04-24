@@ -26,7 +26,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBrigmedic
     outerClothing: ClothingOuterCoatAMG
-    back: ClothingBackpackSecurityFilled
+    back: ClothingBackpackBrigmedicFilled
     shoes: ClothingShoesColorRed
     gloves: ClothingHandsGlovesNitrile
     eyes: ClothingEyesHudMedical
@@ -36,5 +36,5 @@
     mask: ClothingMaskBreathMedicalSecurity
     belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtBrigmedic
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+  satchel: ClothingBackpackSatchelBrigmedicFilled
+  duffelbag: ClothingBackpackDuffelBrigmedicFilled
