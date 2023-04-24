@@ -28,6 +28,7 @@ namespace Content.Client.Actions
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -189,9 +190,7 @@ namespace Content.Client.Actions
                 _popupSystem.PopupEntity(msg, user);
             }
 
-            if (action.Sound != null)
-                SoundSystem.Play(action.Sound.GetSound(), Filter.Local(), user, action.AudioParams);
-
+            _audio.Play(action.Sound, Filter.Local(), user, false);
             return performedAction;
         }
 

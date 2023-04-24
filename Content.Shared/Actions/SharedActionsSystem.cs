@@ -323,7 +323,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var filter = predicted ? Filter.PvsExcept(performer) : Filter.Pvs(performer);
 
-        _audio.Play(action.Sound, filter, performer, true, action.AudioParams);
+        _audio.Play(action.Sound, filter, performer, true);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;
