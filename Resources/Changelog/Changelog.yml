@@ -1,12 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: 'Glass shards are destroyed when stepped on, no more infinite death
-      traps. Piep!', type: Tweak}
-  id: 3036
-  time: '2023-02-13T21:28:26.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: The Syndicate has done a better job of hiding switches on Voice Masks.,
     type: Tweak}
   id: 3037
@@ -2903,3 +2897,8 @@ Entries:
   - {message: 'Spreaders (kudzu, puddles, smoke) can now travel across docks.', type: Add}
   id: 3535
   time: '2023-04-24T20:04:50.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: NT added appraisal tool to cargodrobe and cargo lockers, type: Tweak}
+  id: 3536
+  time: '2023-04-24T20:44:10.0000000+00:00'
