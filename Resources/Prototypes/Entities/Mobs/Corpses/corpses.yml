@@ -60,7 +60,7 @@
 
 - type: entity
   parent: MobHuman
-  id: MobRandomSecurityCorpse
+  id: MobRandomCommandCorpse
   name: unidentified corpse
   description: I think he's dead.
   suffix: Dead, Command
