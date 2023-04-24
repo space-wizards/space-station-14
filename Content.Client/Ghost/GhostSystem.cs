@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Ghost;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
@@ -17,6 +18,7 @@ namespace Content.Client.Ghost
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly ILightManager _lightManager = default!;
         [Dependency] private readonly IEyeManager _eye = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
 
@@ -89,6 +91,7 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
+            _popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup"), args.Performer);
             _lightManager.Enabled = !_lightManager.Enabled;
             args.Handled = true;
         }
@@ -98,6 +101,7 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
+            _popup.PopupEntity(Loc.GetString("ghost-gui-toggle-fov-popup"), args.Performer);
             _eye.CurrentEye.DrawFov = !_eye.CurrentEye.DrawFov;
             args.Handled = true;
         }
@@ -107,6 +111,7 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
+            _popup.PopupEntity(Loc.GetString("ghost-gui-toggle-ghost-visibility-popup"), args.Performer);
             ToggleGhostVisibility();
             args.Handled = true;
         }
