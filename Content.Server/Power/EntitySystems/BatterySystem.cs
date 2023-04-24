@@ -4,6 +4,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
 {
@@ -31,7 +32,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnBatteryRejuvenate(EntityUid uid, BatteryComponent component, RejuvenateEvent args)
         {
-            component.CurrentCharge = component.MaxCharge;
+            SetCharge(uid, component.MaxCharge, component);
         }
 
         private void OnExamine(EntityUid uid, ExaminableBatteryComponent component, ExaminedEvent args)
@@ -61,8 +62,9 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
             while (enumerator.MoveNext(out var netBat, out var bat))
             {
+                DebugTools.Assert(bat.Charge <= bat.MaxCharge && bat.Charge >= 0);
                 netBat.NetworkBattery.Capacity = bat.MaxCharge;
-                netBat.NetworkBattery.CurrentStorage = bat.CurrentCharge;
+                netBat.NetworkBattery.CurrentStorage = bat.Charge;
             }
         }
 
@@ -72,21 +74,18 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
             while (enumerator.MoveNext(out var uid, out var netBat, out var bat))
             {
-                var netCharge = netBat.NetworkBattery.CurrentStorage;
-                if (MathHelper.CloseTo(bat.CurrentCharge, netCharge))
-                    continue;
-
-                bat.CurrentCharge = netCharge;
+                SetCharge(uid, netBat.NetworkBattery.CurrentStorage, bat);
             }
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var (comp, batt) in EntityManager.EntityQuery<BatterySelfRechargerComponent, BatteryComponent>())
+            var query = EntityQueryEnumerator<BatterySelfRechargerComponent, BatteryComponent>();
+            while (query.MoveNext(out var uid, out var comp, out var batt))
             {
                 if (!comp.AutoRecharge) continue;
                 if (batt.IsFullyCharged) continue;
-                batt.CurrentCharge += comp.AutoRechargeRate * frameTime;
+                SetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt);
             }
         }
 
@@ -101,7 +100,61 @@ namespace Content.Server.Power.EntitySystems
         private void OnEmpPulse(EntityUid uid, BatteryComponent component, ref EmpPulseEvent args)
         {
             args.Affected = true;
-            component.UseCharge(args.EnergyConsumption);
+            UseCharge(uid, args.EnergyConsumption, component);
+        }
+
+        public float UseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
+        {
+            if (value <= 0 ||  !Resolve(uid, ref battery) || battery.CurrentCharge == 0)
+                return 0;
+
+            var newValue = Math.Clamp(0, battery.CurrentCharge - value, battery._maxCharge);
+            var delta = newValue - battery.Charge;
+            battery.Charge = newValue;
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
+            RaiseLocalEvent(uid, ref ev);
+            return delta;
+        }
+
+        public void SetMaxCharge(EntityUid uid, float value, BatteryComponent? battery = null)
+        {
+            if (!Resolve(uid, ref battery))
+                return;
+
+            var old = battery._maxCharge;
+            battery._maxCharge = Math.Max(value, 0);
+            battery.Charge = Math.Min(battery.Charge, battery._maxCharge);
+            if (MathHelper.CloseTo(battery._maxCharge, old))
+                return;
+
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
+            RaiseLocalEvent(uid, ref ev);
+        }
+
+        public void SetCharge(EntityUid uid, float value, BatteryComponent? battery = null)
+        {
+            if (!Resolve(uid, ref battery))
+                return;
+
+            var old = battery.Charge;
+            battery.Charge = MathHelper.Clamp(value, 0, battery._maxCharge);
+            if (MathHelper.CloseTo(battery.Charge, old))
+                return;
+
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
+            RaiseLocalEvent(uid, ref ev);
+        }
+
+        /// <summary>
+        ///     If sufficient charge is available on the battery, use it. Otherwise, don't.
+        /// </summary>
+        public bool TryUseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
+        {
+            if (!Resolve(uid, ref battery, false) || value > battery.Charge)
+                return false;
+
+            UseCharge(uid, value, battery);
+            return true;
         }
     }
 }

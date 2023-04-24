@@ -54,8 +54,6 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
 
-            SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
-
             SubscribeLocalEvent<HandsComponent, BodyPartAddedEvent>(HandleBodyPartAdded);
             SubscribeLocalEvent<HandsComponent, BodyPartRemovedEvent>(HandleBodyPartRemoved);
 
@@ -109,8 +107,10 @@ namespace Content.Server.Hands.Systems
             RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition), filter);
         }
 
-        private void HandleEntityRemoved(EntityUid uid, HandsComponent component, EntRemovedFromContainerMessage args)
+        protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)
         {
+            base.HandleEntityRemoved(uid, hands, args);
+
             if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
                 _virtualSystem.Delete(@virtual, uid);
         }
