@@ -41,11 +41,12 @@
         Blunt: 0
 
 - type: entity
-  parent: BikeHorn
+  parent: BaseItem
   id: CluwneHorn
   name: broken bike horn
   description: A broken horn off of a bicycle.
   components:
+  - type: ItemCooldown
   - type: Sprite
     sprite: Objects/Fun/cluwnehorn.rsi
     state: icon
@@ -56,11 +57,29 @@
     sprite: Objects/Fun/cluwnehorn.rsi
     slots: [Belt]
     quickEquip: false
+  - type: Tag
+    tags:
+    - Payload # yes, you can make re-usable prank grenades
+    - CluwneHorn
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: CluwneHorn
+      params:
+        variation: 0.125
   - type: EmitSoundOnUse
     sound:
       collection: CluwneHorn
       params:
         variation: 0.246
+  - type: MeleeWeapon
+    soundHit:
+      collection: CluwneHorn
+      params:
+        variation: 0.125
+    damage:
+      types:
+        Blunt: 5
+
 
 - type: entity
   parent: BikeHorn
