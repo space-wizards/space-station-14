@@ -75,15 +75,15 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         // small function to randomize because it's easier to read like this
         float VaryValue(float v) => v * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
 
-        if (particle.ParticleType == component.DestabilizingParticleType || particle.AnomalyStabilizer)
+        if (particle.ParticleType == component.DestabilizingParticleType || particle.DestabilzingOverride)
         {
             ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerDestabilizingHit), component);
         }
-        if (particle.ParticleType == component.SeverityParticleType || particle.AnomalySeverityIncreaser)
+        if (particle.ParticleType == component.SeverityParticleType || particle.SeverityOverride)
         {
             ChangeAnomalySeverity(uid, VaryValue(particle.SeverityPerSeverityHit), component);
         }
-        if (particle.ParticleType == component.WeakeningParticleType || particle.AnomalyWeakener)
+        if (particle.ParticleType == component.WeakeningParticleType || particle.WeakeningOverride)
         {
             ChangeAnomalyHealth(uid, VaryValue(particle.HealthPerWeakeningeHit), component);
             ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerWeakeningeHit), component);
