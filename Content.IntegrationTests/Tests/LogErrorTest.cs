@@ -22,16 +22,12 @@ public sealed class LogErrorTest
 
         // Default cvar is properly configured
         Assert.That(cfg.GetCVar(RTCVars.FailureLogLevel), Is.EqualTo(LogLevel.Error));
-        
+
         // Warnings don't cause tests to fail.
         await server.WaitPost(() => Logger.Warning("test"));
 
         // But errors do
         await server.WaitPost(() => Assert.Throws<AssertionException>(() => Logger.Error("test")));
         await client.WaitPost(() => Assert.Throws<AssertionException>(() => Logger.Error("test")));
-
-        // If we got this far, ignore the caught assert failures.
-        // This seems very hacky.
-        Assert.Ignore();
     }
 }
