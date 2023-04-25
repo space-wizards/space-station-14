@@ -1084,6 +1084,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> CargoShuttles =
             CVarDef.Create("shuttle.cargo", true, CVar.SERVERONLY);
+        
+        /// <summary>
+        /// Whether to automatically spawn escape shuttles.
+        /// </summary>
+        public static readonly CVarDef<bool> DisableGridFill =
+            CVarDef.Create("shuttle.disable_grid_fill", false, CVar.SERVERONLY);
 
         /*
          * Emergency
