@@ -133858,7 +133858,6 @@ entities:
   - devices:
     - 16585
     - 4085
-    - invalid
     - 1393
     - 1392
     - 10185
@@ -133912,7 +133911,6 @@ entities:
   - devices:
     - 16585
     - 4085
-    - invalid
     - 1393
     - 1392
     type: DeviceList
@@ -191996,7 +191994,6 @@ entities:
     - 5642
     - 5660
     - 5661
-    - invalid
     - 24338
     - 26485
     - 26484
@@ -193259,7 +193256,6 @@ entities:
     - 2369
     - 2368
     - 2367
-    - invalid
     - 24460
     - 3265
     - 3264
@@ -193280,7 +193276,6 @@ entities:
     - 2369
     - 2368
     - 2367
-    - invalid
     - 24460
     - 3265
     - 3264
@@ -193586,7 +193581,6 @@ entities:
     type: Transform
   - devices:
     - 2676
-    - invalid
     - 2698
     - 24487
     type: DeviceList
@@ -193981,7 +193975,6 @@ entities:
     type: Transform
   - devices:
     - 20779
-    - invalid
     - 21003
     - 20780
     - 24527
@@ -207736,7 +207729,6 @@ entities:
     - 5642
     - 5660
     - 5661
-    - invalid
     - 24338
     - 26485
     - 26484
