@@ -133,6 +133,7 @@
   - type: MeleeChemicalInjector
     transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
     solution: food
+    pierceArmor: false
   - type: Extractable
     grindableSolutionName: food
 
@@ -213,8 +214,26 @@
           Quantity: 4
   - type: Extractable
     grindableSolutionName: food
-  - type: Recyclable
   - type: SpaceGarbage
+
+- type: entity
+  name: banana peel
+  suffix: Explosive
+  parent: TrashBananaPeel
+  id: TrashBananaPeelExplosive
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/banana.rsi
+      state: primed
+    - type: TriggerOnSlip
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 2
+      totalIntensity: 10
+      canCreateVacuum: false
+    - type: DeleteOnTrigger
+    - type: AnimationPlayer
 
 - type: entity
   name: carrot
@@ -271,6 +290,31 @@
     seedId: cabbage
 
 - type: entity
+  name: garlic
+  parent: FoodProduceBase
+  id: FoodGarlic
+  description: Delicious, but with a potentially overwhelming odor.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - garlic
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Allicin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/garlic.rsi
+  - type: Produce
+    seedId: garlic
+
+- type: entity
   name: lemon
   parent: FoodProduceBase
   id: FoodLemon
@@ -296,6 +340,44 @@
     juiceSolution:
       reagents:
       - ReagentId: JuiceLemon
+        Quantity: 10
+
+- type: entity
+  name: lime
+  parent: FoodLemon
+  id: FoodLime
+  description: Cures Space Scurvy, allows you to act like a Space Pirate.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sour
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lime.rsi
+  - type: Produce
+    seedId: lime
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceLime
+        Quantity: 10
+
+- type: entity
+  name: orange
+  parent: FoodLemon
+  id: FoodOrange
+  description: Healthy, very orange.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - orange
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/orange.rsi
+  - type: Produce
+    seedId: orange
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceOrange
         Quantity: 10
 
 - type: entity
@@ -419,24 +501,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
-- type: entity
-  name: tomato
-  id: PuddleTomato
-  parent: PuddleBase
-  description: Splat.
-  components:
-  - type: Sprite
-    sprite: Fluids/tomato_splat.rsi
-    state: puddle-0
-    netsync: false
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: JuiceTomato
-          Quantity: 10
 
 - type: entity
   name: eggplant
@@ -905,3 +969,171 @@
     seedId: gatfruit
   - type: Food
     trash: WeaponRevolverPython
+
+- type: entity
+  name: rice bushel
+  description: Can be ground into rice, perfect for pudding or sake.
+  id: RiceBushel
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/rice.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Rice
+          Quantity: 10
+  - type: Produce
+    seedId: rice
+
+- type: entity
+  name: soybeans
+  description: For those who can't stand seeing good old meat.
+  id: FoodSoybeans
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/soybeans.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+  - type: Produce
+    seedId: soybeans
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: MilkSoy
+        Quantity: 5
+
+- type: entity
+  name: watermelon
+  parent: FoodProduceBase
+  id: FoodWatermelon
+  description: Round green object that you can slice and eat.
+  components:
+  - type: Item
+    size: 10
+  - type: FlavorProfile
+    flavors:
+      - watermelon
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/watermelon.rsi
+  - type: Produce
+    seedId: watermelon
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceWatermelon
+        Quantity: 20
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 1
+  - type: Damageable
+    damageContainer: Biological
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PuddleWatermelon:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: SliceableFood
+    count: 5
+    slice: FoodWatermelonSlice
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingHeadHatWatermelon
+
+- type: entity
+  name: watermelon slice
+  parent: ProduceSliceBase
+  id: FoodWatermelonSlice
+  description: Juicy green and red slice.
+  components:
+  - type: Item
+    size: 2
+  - type: FlavorProfile
+    flavors:
+      - watermelon
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/watermelon.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Water
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceWatermelon
+        Quantity: 4
+
+- type: entity
+  name: grapes
+  parent: FoodProduceBase
+  id: FoodGrape
+  description: The food of emperors, Space France inhabitants (usually as wine) and soccer moms. One day it could be used in wine production for the bartender if he ever runs out.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - grape
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 9
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/grape.rsi
+  - type: Produce
+    seedId: grape
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceGrape
+        Quantity: 10

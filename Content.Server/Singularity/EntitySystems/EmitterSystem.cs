@@ -298,7 +298,7 @@ namespace Content.Server.Singularity.EntitySystems
             _projectile.SetShooter(proj, uid);
 
             var targetPos = new EntityCoordinates(uid, (0, -1));
-            _gun.Shoot(guncomp, ent, xform.Coordinates, targetPos);
+            _gun.Shoot(uid, guncomp, ent, xform.Coordinates, targetPos);
         }
 
         private void UpdateAppearance(EmitterComponent component)

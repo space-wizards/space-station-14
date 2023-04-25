@@ -16,6 +16,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
 
         _window = new();
         _window.OnKeySelected += OnKeySelected;
+        _window.OnFiltersChanged += OnFiltersChanged;
         _window.OnClose += Close;
 
         _window.OpenCentered();
@@ -24,6 +25,13 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
     private void OnKeySelected(StationRecordKey? key)
     {
         SendMessage(new SelectGeneralStationRecord(key));
+    }
+
+    private void OnFiltersChanged(
+        GeneralStationRecordFilterType type, string filterValue)
+    {
+        GeneralStationRecordsFilterMsg msg = new(type, filterValue);
+        SendMessage(msg);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

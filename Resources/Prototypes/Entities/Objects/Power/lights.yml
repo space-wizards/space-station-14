@@ -60,7 +60,9 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
   - type: SpaceGarbage
 
 - type: entity

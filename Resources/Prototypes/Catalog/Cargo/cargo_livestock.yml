@@ -167,3 +167,23 @@
   cost: 2800
   category: Livestock
   group: market
+
+- type: cargoProduct
+  id: LivestockLizard
+  icon:
+    sprite: Mobs/Animals/lizard.rsi
+    state: lizard
+  product: CrateNPCLizard
+  cost: 1000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockKangaroo
+  icon:
+    sprite: Mobs/Animals/kangaroo.rsi
+    state: kangaroo
+  product: CrateNPCKangaroo
+  cost: 2800
+  category: Livestock
+  group: market

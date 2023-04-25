@@ -33,7 +33,7 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
         _cfgManager.OnValueChanged(CCVars.ResourceUploadingStoreEnabled, value => StoreUploaded = value, true);
 
         AutoDelete(_cfgManager.GetCVar(CCVars.ResourceUploadingStoreDeletionDays));
-        //_replay.OnRecordingStarted += OnStartReplayRecording;
+        _replay.OnRecordingStarted += OnStartReplayRecording;
     }
 
     private void OnStartReplayRecording((MappingDataNode, List<object>) initReplayData)

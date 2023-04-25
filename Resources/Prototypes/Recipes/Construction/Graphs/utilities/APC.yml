@@ -36,7 +36,7 @@
               prototype: APCElectronics
               amount: 1
           conditions:
-            - !type:ApcPanel
+            - !type:WirePanel
               open: true
           steps:
             - tool: Prying

@@ -1,24 +1,22 @@
 ﻿using System.Linq;
-using System.Threading;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
-using Content.Server.Tools;
-using Content.Server.Wires;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Wires;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
 namespace Content.Server.Mech.Systems;
@@ -29,7 +27,7 @@ public sealed class MechSystem : SharedMechSystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -44,15 +42,13 @@ public sealed class MechSystem : SharedMechSystem
         _sawmill = Logger.GetSawmill("mech");
 
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
-        SubscribeLocalEvent<MechComponent, MechEntryFinishedEvent>(OnEntryFinished);
-        SubscribeLocalEvent<MechComponent, MechEntryCanclledEvent>(OnEntryExitCancelled);
-        SubscribeLocalEvent<MechComponent, MechExitFinishedEvent>(OnExitFinished);
-        SubscribeLocalEvent<MechComponent, MechExitCanclledEvent>(OnEntryExitCancelled);
-        SubscribeLocalEvent<MechComponent, MechRemoveBatteryFinishedEvent>(OnRemoveBatteryFinished);
-        SubscribeLocalEvent<MechComponent, MechRemoveBatteryCancelledEvent>(OnRemoveBatteryCancelled);
+        SubscribeLocalEvent<MechComponent, RemoveBatteryEvent>(OnRemoveBattery);
+        SubscribeLocalEvent<MechComponent, MechEntryEvent>(OnMechEntry);
+        SubscribeLocalEvent<MechComponent, MechExitEvent>(OnMechExit);
 
         SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
@@ -75,9 +71,10 @@ public sealed class MechSystem : SharedMechSystem
         if (component.Broken || component.Integrity <= 0 || component.Energy <= 0)
             args.Cancel();
     }
+
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
-        if (TryComp<WiresComponent>(uid, out var wires) && !wires.IsPanelOpen)
+        if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
             return;
 
         if (component.BatterySlot.ContainedEntity == null && TryComp<BatteryComponent>(args.Used, out var battery))
@@ -87,32 +84,39 @@ public sealed class MechSystem : SharedMechSystem
             return;
         }
 
-        if (component.EntryTokenSource == null &&
-            TryComp<ToolComponent>(args.Used, out var tool) &&
-            tool.Qualities.Contains("Prying") &&
-            component.BatterySlot.ContainedEntity != null)
+        if (TryComp<ToolComponent>(args.Used, out var tool) && tool.Qualities.Contains("Prying") && component.BatterySlot.ContainedEntity != null)
         {
-            component.EntryTokenSource = new();
-            _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.BatteryRemovalDelay, component.EntryTokenSource.Token, uid, args.Target)
+            var doAfterEventArgs = new DoAfterArgs(args.User, component.BatteryRemovalDelay, new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                TargetFinishedEvent = new MechRemoveBatteryFinishedEvent(),
-                TargetCancelledEvent = new MechRemoveBatteryCancelledEvent()
-            });
+            };
+
+            _doAfter.TryStartDoAfter(doAfterEventArgs);
         }
     }
 
-    private void OnRemoveBatteryFinished(EntityUid uid, MechComponent component, MechRemoveBatteryFinishedEvent args)
+    private void OnInsertBattery(EntityUid uid, MechComponent component, EntInsertedIntoContainerMessage args)
     {
-        component.EntryTokenSource = null;
-        RemoveBattery(uid, component);
+        if (args.Container != component.BatterySlot || !TryComp<BatteryComponent>(args.Entity, out var battery))
+            return;
+
+        component.Energy = battery.CurrentCharge;
+        component.MaxEnergy = battery.MaxCharge;
+
+        Dirty(component);
         _actionBlocker.UpdateCanMove(uid);
     }
 
-    private void OnRemoveBatteryCancelled(EntityUid uid, MechComponent component, MechRemoveBatteryCancelledEvent args)
+    private void OnRemoveBattery(EntityUid uid, MechComponent component, RemoveBatteryEvent args)
     {
-        component.EntryTokenSource = null;
+        if (args.Cancelled || args.Handled)
+            return;
+
+        RemoveBattery(uid, component);
+        _actionBlocker.UpdateCanMove(uid);
+
+        args.Handled = true;
     }
 
     private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
@@ -126,17 +130,11 @@ public sealed class MechSystem : SharedMechSystem
         component.Integrity = component.MaxIntegrity;
         component.Energy = component.MaxEnergy;
 
-        if (component.StartingBattery != null)
-        {
-            var battery = Spawn(component.StartingBattery, Transform(uid).Coordinates);
-            InsertBattery(uid, battery, component);
-        }
-
         _actionBlocker.UpdateCanMove(uid);
         Dirty(component);
     }
 
-    private void OnRemoveEquipmentMessage(EntityUid uid, SharedMechComponent component, MechEquipmentRemoveMessage args)
+    private void OnRemoveEquipmentMessage(EntityUid uid, MechComponent component, MechEquipmentRemoveMessage args)
     {
         if (!Exists(args.Equipment) || Deleted(args.Equipment))
             return;
@@ -171,16 +169,12 @@ public sealed class MechSystem : SharedMechSystem
                 Text = Loc.GetString("mech-verb-enter"),
                 Act = () =>
                 {
-                    if (component.EntryTokenSource != null)
-                        return;
-                    component.EntryTokenSource = new CancellationTokenSource();
-                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.EntryDelay, component.EntryTokenSource.Token, uid)
+                    var doAfterEventArgs = new DoAfterArgs(args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
                     {
                         BreakOnUserMove = true,
-                        BreakOnStun = true,
-                        TargetFinishedEvent = new MechEntryFinishedEvent(args.User),
-                        TargetCancelledEvent = new MechEntryCanclledEvent()
-                    });
+                    };
+
+                    _doAfter.TryStartDoAfter(doAfterEventArgs);
                 }
             };
             var openUiVerb = new AlternativeVerb //can't hijack someone else's mech
@@ -199,48 +193,47 @@ public sealed class MechSystem : SharedMechSystem
                 Priority = 1, // Promote to top to make ejecting the ALT-click action
                 Act = () =>
                 {
-                    if (component.EntryTokenSource != null)
-                        return;
-                    if (args.User == component.PilotSlot.ContainedEntity)
+                    if (args.User == uid || args.User == component.PilotSlot.ContainedEntity)
                     {
                         TryEject(uid, component);
                         return;
                     }
 
-                    component.EntryTokenSource = new CancellationTokenSource();
-                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ExitDelay, component.EntryTokenSource.Token, uid)
+                    var doAfterEventArgs = new DoAfterArgs(args.User, component.ExitDelay, new MechExitEvent(), uid, target: uid)
                     {
                         BreakOnUserMove = true,
                         BreakOnTargetMove = true,
-                        BreakOnStun = true,
-                        TargetFinishedEvent = new MechExitFinishedEvent(),
-                        TargetCancelledEvent = new MechExitCanclledEvent()
-                    });
+                    };
+
+                    _doAfter.TryStartDoAfter(doAfterEventArgs);
                 }
             };
             args.Verbs.Add(ejectVerb);
         }
     }
 
-    private void OnEntryFinished(EntityUid uid, MechComponent component, MechEntryFinishedEvent args)
+    private void OnMechEntry(EntityUid uid, MechComponent component, MechEntryEvent args)
     {
-        component.EntryTokenSource = null;
-        TryInsert(uid, args.User, component);
+        if (args.Cancelled || args.Handled)
+            return;
+
+        TryInsert(uid, args.Args.User, component);
         _actionBlocker.UpdateCanMove(uid);
+
+        args.Handled = true;
     }
 
-    private void OnExitFinished(EntityUid uid, MechComponent component, MechExitFinishedEvent args)
+    private void OnMechExit(EntityUid uid, MechComponent component, MechExitEvent args)
     {
-        component.EntryTokenSource = null;
+        if (args.Cancelled || args.Handled)
+            return;
+
         TryEject(uid, component);
+
+        args.Handled = true;
     }
 
-    private void OnEntryExitCancelled(EntityUid uid, MechComponent component, EntityEventArgs args)
-    {
-        component.EntryTokenSource = null;
-    }
-
-    private void OnDamageChanged(EntityUid uid, SharedMechComponent component, DamageChangedEvent args)
+    private void OnDamageChanged(EntityUid uid, MechComponent component, DamageChangedEvent args)
     {
         var integrity = component.MaxIntegrity - args.Damageable.TotalDamage;
         SetIntegrity(uid, integrity, component);
@@ -280,7 +273,7 @@ public sealed class MechSystem : SharedMechSystem
         }
     }
 
-    public override void UpdateUserInterface(EntityUid uid, SharedMechComponent? component = null)
+    public override void UpdateUserInterface(EntityUid uid, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -301,7 +294,7 @@ public sealed class MechSystem : SharedMechSystem
         _ui.SetUiState(ui, state);
     }
 
-    public override bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
+    public override bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -309,9 +302,7 @@ public sealed class MechSystem : SharedMechSystem
         if (!base.TryInsert(uid, toInsert, component))
             return false;
 
-        var mech = (MechComponent) component;
-
-        if (mech.Airtight)
+        if (component.Airtight && TryComp(uid, out MechAirComponent? mechAir))
         {
             var coordinates = Transform(uid).MapPosition;
             if (_map.TryFindGridAt(coordinates, out var grid))
@@ -320,14 +311,14 @@ public sealed class MechSystem : SharedMechSystem
 
                 if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is {} environment)
                 {
-                    _atmosphere.Merge(mech.Air, environment.RemoveVolume(MechComponent.GasMixVolume));
+                    _atmosphere.Merge(mechAir.Air, environment.RemoveVolume(MechAirComponent.GasMixVolume));
                 }
             }
         }
         return true;
     }
 
-    public override bool TryEject(EntityUid uid, SharedMechComponent? component = null)
+    public override bool TryEject(EntityUid uid, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -335,9 +326,7 @@ public sealed class MechSystem : SharedMechSystem
         if (!base.TryEject(uid, component))
             return false;
 
-        var mech = (MechComponent) component;
-
-        if (mech.Airtight)
+        if (component.Airtight && TryComp(uid, out MechAirComponent? mechAir))
         {
             var coordinates = Transform(uid).MapPosition;
             if (_map.TryFindGridAt(coordinates, out var grid))
@@ -346,8 +335,8 @@ public sealed class MechSystem : SharedMechSystem
 
                 if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is {} environment)
                 {
-                    _atmosphere.Merge(environment, mech.Air);
-                    mech.Air.Clear();
+                    _atmosphere.Merge(environment, mechAir.Air);
+                    mechAir.Air.Clear();
                 }
             }
         }
@@ -355,7 +344,7 @@ public sealed class MechSystem : SharedMechSystem
         return true;
     }
 
-    public override void BreakMech(EntityUid uid, SharedMechComponent? component = null)
+    public override void BreakMech(EntityUid uid, MechComponent? component = null)
     {
         base.BreakMech(uid, component);
 
@@ -363,7 +352,7 @@ public sealed class MechSystem : SharedMechSystem
         _actionBlocker.UpdateCanMove(uid);
     }
 
-    public override bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, SharedMechComponent? component = null)
+    public override bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -425,20 +414,26 @@ public sealed class MechSystem : SharedMechSystem
     #region Atmos Handling
     private void OnInhale(EntityUid uid, MechPilotComponent component, InhaleLocationEvent args)
     {
-        if (!TryComp<MechComponent>(component.Mech, out var mech))
+        if (!TryComp<MechComponent>(component.Mech, out var mech) ||
+            !TryComp<MechAirComponent>(component.Mech, out var mechAir))
+        {
             return;
+        }
 
         if (mech.Airtight)
-            args.Gas = mech.Air;
+            args.Gas = mechAir.Air;
     }
 
     private void OnExhale(EntityUid uid, MechPilotComponent component, ExhaleLocationEvent args)
     {
-        if (!TryComp<MechComponent>(component.Mech, out var mech))
+        if (!TryComp<MechComponent>(component.Mech, out var mech) ||
+            !TryComp<MechAirComponent>(component.Mech, out var mechAir))
+        {
             return;
+        }
 
         if (mech.Airtight)
-            args.Gas = mech.Air;
+            args.Gas = mechAir.Air;
     }
 
     private void OnExpose(EntityUid uid, MechPilotComponent component, ref AtmosExposedGetAirEvent args)
@@ -446,10 +441,13 @@ public sealed class MechSystem : SharedMechSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<MechComponent>(component.Mech, out var mech))
+        if (!TryComp<MechComponent>(component.Mech, out var mech) ||
+            !TryComp<MechAirComponent>(component.Mech, out var mechAir))
+        {
             return;
+        }
 
-        args.Gas = mech.Airtight ? mech.Air : _atmosphere.GetContainingMixture(component.Mech);
+        args.Gas = mech.Airtight ? mechAir.Air : _atmosphere.GetContainingMixture(component.Mech);
 
         args.Handled = true;
     }

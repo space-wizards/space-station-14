@@ -220,7 +220,7 @@
   - type: Sprite
     layers:
       - state: box
-      - state: writing
+      - state: inflatable
   - type: Tag
     tags:
       - DroneUsable
@@ -252,7 +252,7 @@
   - type: Sprite
     layers:
       - state: box
-      - state: writing
+      - state: flare
 
 - type: entity
   name: trashbag box
@@ -272,7 +272,122 @@
   - type: Sprite
     layers:
       - state: box
-      - state: writing
+      - state: trashbag
   - type: Tag
     tags:
       - DroneUsable
+
+- type: entity
+  name: passenger encryption key box
+  parent: BoxCardboard
+  id: BoxEncryptionKeyPassenger
+  description: A box of spare encryption keys.
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyCommon
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: encryptokey
+  - type: Storage
+    capacity: 30
+    whitelist:
+      components:
+      - EncryptionKey
+
+- type: entity
+  name: cargo encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeyCargo
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyCargo
+        amount: 6
+
+- type: entity
+  name: engineering encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeyEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyEngineering
+        amount: 6
+
+- type: entity
+  name: med-sci encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeyMedicalScience
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyMedicalScience
+        amount: 6
+
+- type: entity
+  name: medical encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeyMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyMedical
+        amount: 6
+
+- type: entity
+  name: robotech encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeyRobo
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyRobo
+        amount: 6
+
+- type: entity
+  name: science encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeyScience
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyScience
+        amount: 6
+
+- type: entity
+  name: security encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeySecurity
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeySecurity
+        amount: 6
+
+- type: entity
+  name: service encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeyService
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyService
+        amount: 6
+
+- type: entity
+  name: syndicate encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeySyndie
+  description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
+  components:
+  - type: Item
+    size: 15
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeySyndie
+        amount: 2
+  - type: Storage
+    capacity: 15

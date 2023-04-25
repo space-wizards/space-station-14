@@ -14,16 +14,16 @@
           shader: unshaded
           visible: false
     - type: Appearance
-      visuals:
-        - type: ParticleAcceleratorPartVisualizer
-          baseState: unlit
+    - type: ParticleAcceleratorPartVisuals
+      stateBase: unlit
+    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorFuelChamber
     - type: Construction
       graph: ParticleAcceleratorFuelChamber
       node: completed
     - type: GuideHelp
       guides: [ Singularity, Power ]
-      
+
 # Unfinished
 
 - type: entity

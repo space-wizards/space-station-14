@@ -1,7 +1,7 @@
+using Content.Client.Parallax.Data;
 using Content.Client.Parallax.Managers;
 using Content.Shared.Parallax;
 using Robust.Client.Graphics;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -21,12 +21,16 @@ public sealed class ParallaxSystem : SharedParallaxSystem
     {
         base.Initialize();
         _overlay.AddOverlay(new ParallaxOverlay());
-        SubscribeLocalEvent<ParallaxComponent, ComponentHandleState>(OnParallaxHandleState);
         _protoManager.PrototypesReloaded += OnReload;
+
+        SubscribeLocalEvent<ParallaxComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
     }
 
     private void OnReload(PrototypesReloadedEventArgs obj)
     {
+        if (!obj.ByType.ContainsKey(typeof(ParallaxPrototype)))
+            return;
+
         _parallax.UnloadParallax(Fallback);
         _parallax.LoadDefaultParallax();
 
@@ -44,11 +48,8 @@ public sealed class ParallaxSystem : SharedParallaxSystem
         _protoManager.PrototypesReloaded -= OnReload;
     }
 
-    private void OnParallaxHandleState(EntityUid uid, ParallaxComponent component, ref ComponentHandleState args)
+    private void OnAfterAutoHandleState(EntityUid uid, ParallaxComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (args.Current is not ParallaxComponentState state) return;
-        component.Parallax = state.Parallax;
-
         if (!_parallax.IsLoaded(component.Parallax))
         {
             _parallax.LoadParallaxByName(component.Parallax);

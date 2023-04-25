@@ -1,0 +1,45 @@
+- type: emote
+  id: Sneeze
+  category: Vocal
+  chatMessages: [sneezes]
+    
+- type: emote
+  id: Cough
+  category: Vocal
+  chatMessages: [coughs]
+  chatTriggers:
+    - cough
+    - coughs
+
+- type: emote
+  id: CatMeow
+  category: Vocal
+  chatMessages: [meows]
+
+- type: emote
+  id: CatHisses
+  category: Vocal
+  chatMessages: [hisses]
+
+- type: emote
+  id: MonkeyScreeches
+  category: Vocal
+  chatMessages: [screeches]
+
+- type: emote
+  id: RobotBeep
+  category: Vocal
+  chatMessages: [beeps]
+
+- type: emote
+  id: Yawn
+  category: Vocal
+  chatMessages: [yawns]
+  chatTriggers:
+    - yawn
+    - yawns
+
+- type: emote
+  id: Snore
+  category: Vocal
+  chatMessages: [snores]
