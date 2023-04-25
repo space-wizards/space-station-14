@@ -148,6 +148,8 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     /// </remarks>
     [DataField("temporary")]
     public bool Temporary;
+    // TODO re-add support for this
+    // UI refactor seems to have just broken it.
 
     /// <summary>
     ///     Determines the appearance of the entity-icon for actions that are enabled via some entity.
@@ -167,9 +169,6 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     /// </summary>
     [DataField("sound")]
     public SoundSpecifier? Sound;
-
-    [DataField("audioParams")]
-    public AudioParams? AudioParams;
 
     /// <summary>
     ///     A pop-up to show the user when performing this action. Gets passed through localization.
@@ -260,7 +259,6 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         Speech = toClone.Speech;
         UseDelay = toClone.UseDelay;
         Sound = toClone.Sound;
-        AudioParams = toClone.AudioParams;
         UserPopup = toClone.UserPopup;
         Popup = toClone.Popup;
         PopupToggleSuffix = toClone.PopupToggleSuffix;

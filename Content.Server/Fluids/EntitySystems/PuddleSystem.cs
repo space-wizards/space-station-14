@@ -86,14 +86,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return;
         }
 
-        var xform = Transform(uid);
-
-        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
-        {
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
-            return;
-        }
-
         var puddleQuery = GetEntityQuery<PuddleComponent>();
 
         // For overflows, we never go to a fully evaporative tile just to avoid continuously having to mop it.
@@ -152,10 +144,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             spillCount = Math.Min(args.NeighborFreeTiles.Count, spillCount);
             var spillAmount = overflow.Volume / spillCount;
 
-            foreach (var tile in args.NeighborFreeTiles)
+            foreach (var neighbor in args.NeighborFreeTiles)
             {
                 var split = overflow.SplitSolution(spillAmount);
-                TrySpillAt(grid.GridTileToLocal(tile), split, out _, false);
+                TrySpillAt(neighbor.Grid.GridTileToLocal(neighbor.Tile), split, out _, false);
                 args.Updates--;
 
                 if (args.Updates <= 0)
