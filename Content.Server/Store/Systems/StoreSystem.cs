@@ -71,7 +71,6 @@ public sealed partial class StoreSystem : EntitySystem
 
         // require the store to be open before inserting currency
         var user = args.User;
-        Logger.DebugS("TEMP_error", $"open: {_ui.SessionHasOpenUi(uid, StoreUiKey.Key, Comp<ActorComponent>(user).PlayerSession)}");
         if (!TryComp<ActorComponent>(user, out var actor) || !_ui.SessionHasOpenUi(uid, StoreUiKey.Key, actor.PlayerSession))
             return;
 
