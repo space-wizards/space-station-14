@@ -117,3 +117,47 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
+
+- type: entity
+  id: MechHauler
+  parent: MechRipley
+  name: Hauler APLU
+  description: A stripped down version of the Ripley, designed to cut costs & further aid in cargo transfer. It is not as bulky as the standard Ripley.
+  components:
+  - type: Mech
+    baseState: hauler
+    openState: hauler-open
+    brokenState: hauler-broken
+    mechToPilotDamageMultiplier: 0.85
+    maxEquipmentAmount: 2
+    maxIntegrity: 150
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 10
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.40
+    baseSprintSpeed: 3.80
+
+- type: entity
+  id: MechHaulerBattery
+  parent: MechHauler
+  name: Hauler APLU
+  suffix: Battery
+  components:
+  - type: Mech
+    startingBattery: PowerCellHigh
+
+#this doesn't show up in the spawnmenu for some reason (which is why it's commented out.)
+#- type: entity
+#  id: MechHaulerRoundstart
+#  parent: MechHauler
+#  name: Hauler APLU
+#  suffix: Battery, Hydraulic Clamp
+#  components:
+#  - type: Mech
+#    startingBattery: PowerCellHigh
+#    startingEquipment: MechEquipmentGrabber
+#
