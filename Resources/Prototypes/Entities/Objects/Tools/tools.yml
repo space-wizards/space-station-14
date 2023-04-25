@@ -304,6 +304,16 @@
     charges: 0
 
 - type: entity
+  id: RCDExperimental
+  parent: RCD
+  suffix: Admeme
+  name: experimental rcd
+  description: A bluespace-enhanced RCD that regenerates charges passively.
+  components:
+  - type: AutoRecharge
+    rechargeDuration: 5
+
+- type: entity
   name: RCD Ammo
   parent: BaseItem
   id: RCDAmmo
