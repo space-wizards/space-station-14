@@ -1,3 +1,5 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Server.PowerCell;
 
 /// <summary>
@@ -22,4 +24,10 @@ public sealed class PowerCellDrawComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("useRate")]
     public float UseRate = 0f;
+
+    /// <summary>
+    /// When the next automatic power draw will occur
+    /// </summary>
+    [DataField("nextUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextUpdateTime;
 }
