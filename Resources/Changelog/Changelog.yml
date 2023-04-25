@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has done a better job of hiding switches on Voice Masks.,
-    type: Tweak}
-  id: 3037
-  time: '2023-02-13T21:45:13.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: CBURN exosuit helmet now has the right name., type: Fix}
@@ -2902,3 +2896,8 @@ Entries:
   - {message: NT added appraisal tool to cargodrobe and cargo lockers, type: Tweak}
   id: 3536
   time: '2023-04-24T20:44:10.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: The security holoprojector sprite has been changed., type: Tweak}
+  id: 3537
+  time: '2023-04-25T11:58:35.0000000+00:00'
