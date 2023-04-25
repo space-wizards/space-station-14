@@ -14,10 +14,10 @@ namespace Content.Server.Shuttles.Components
         /// Whether the thruster has been force to be enabled / disabled (e.g. VV, interaction, etc.)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("enabled")]
         public bool Enabled
         {
             get => _enabled;
+            [Obsolete("Use the system method")]
             set
             {
                 if (_enabled == value) return;
@@ -36,6 +36,7 @@ namespace Content.Server.Shuttles.Components
             }
         }
 
+        [DataField("enabled")]
         private bool _enabled = true;
 
         /// <summary>
