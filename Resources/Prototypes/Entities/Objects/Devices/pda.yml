@@ -295,6 +295,7 @@
     state: pda-qm
   - type: Icon
     state: pda-qm
+  - type: PriceGun
 
 - type: entity
   parent: BasePDA
@@ -307,6 +308,7 @@
     state: pda-cargo
   - type: Icon
     state: pda-cargo
+  - type: PriceGun
 
 - type: entity
   parent: BasePDA
@@ -319,6 +321,7 @@
     state: pda-miner
   - type: Icon
     state: pda-miner
+  - type: PriceGun
 
 - type: entity
   parent: BasePDA
