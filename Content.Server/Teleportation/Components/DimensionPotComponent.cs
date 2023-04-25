@@ -1,7 +1,6 @@
+using Content.Server.Teleportation.Systems;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -9,36 +8,55 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Teleportation.Components;
 
 /// <summary>
-///     Creates portals. If two are created, both are linked together--otherwise the first teleports randomly.
-///     Using it with both portals active deactivates both.
+/// Creates a pocket dimension map on spawn.
+/// When activated by alt verb, spawns a portal to this dimension or closes it.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
+[Access(typeof(DimensionPotSystem))]
 public sealed class DimensionPotComponent : Component
 {
-    [ViewVariables, DataField("potPortal")]
+    /// <summary>
+    /// The portal on the pot, if it is open right now.
+    /// </summary>
+    [DataField("potPortal")]
     public EntityUid? PotPortal = null;
 
-    [ViewVariables, DataField("dimensionPortal")]
+    /// <summary>
+    /// The portal in the pocket dimension, usually exists.
+    /// </summary>
+    [DataField("dimensionPortal")]
     public EntityUid? DimensionPortal = null;
-	
-	[ViewVariables, DataField("portalsActive")]
-	public bool PortalsActive = false;
-	
-	[DataField("pocketDimensionMap")];
-	public MapId PocketDimensionMap = MapId.Nullspace;
 
+    /// <summary>
+    /// Map of the pocket dimension, usually exists.
+    /// </summary>
+    [ViewVariables]
+    public MapId PocketDimensionMap = MapId.Nullspace;
+
+    /// <summary>
+    /// Path to the pocket dimension's map file
+    /// </summary>
+    [DataField("pocketDimensionPath")]
+    public string PocketDimensionPath = "Maps/Misc/pocket_dimension.yml";
+
+    /// <summary>
+    /// The prototype to spawn for the portal spawned on the pot.
+    /// </summary>
     [DataField("potPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string PotPortalPrototype = "PortalRed";
 
+    /// <summary>
+    /// The prototype to spawn for the portal spawned in the pocket dimension.
+    /// </summary>
     [DataField("dimensionPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string DimensionPortalPrototype = "PortalBlue";
 
-    [DataField("openPortalsSound")] public SoundSpecifier OpenPortalsSound =
-        new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
-        {
-            Params = AudioParams.Default.WithVolume(-2f)
-        };
+    [DataField("openPortalSound")]
+    public SoundSpecifier OpenPortalsSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-2f)
+    };
 
-    [DataField("clearPortalsSound")]
+    [DataField("closePortalSound")]
     public SoundSpecifier ClearPortalsSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 }
