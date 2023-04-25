@@ -78,14 +78,18 @@ public sealed class RadioSystem : EntitySystem
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
 
+        var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
+        RaiseLocalEvent(ref sendAttemptEv);
+        var canSend = !sendAttemptEv.Cancelled;
+
         var sourceMapId = Transform(radioSource).MapID;
         var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
         var hasMicro = HasComp<RadioMicrophoneComponent>(radioSource);
 
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
-        var radioQuery = AllEntityQuery<ActiveRadioComponent, TransformComponent>();
+        var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
         var sentAtLeastOnce = false;
-        while (radioQuery.MoveNext(out var receiver, out var radio, out var transform))
+        while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
             if (!radio.Channels.Contains(channel.ID))
                 continue;

@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.UserInterface;
 using Content.Shared.Disease;
 using Content.Shared.MedicalScanner;
@@ -12,8 +11,7 @@ namespace Content.Server.Medical.Components
     ///    After scanning, retrieves the target Uid to use with its related UI.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(SharedHealthAnalyzerComponent))]
-    public sealed class HealthAnalyzerComponent : SharedHealthAnalyzerComponent
+    public sealed class HealthAnalyzerComponent : Component
     {
         /// <summary>
         /// How long it takes to scan someone.
@@ -27,13 +25,13 @@ namespace Content.Server.Medical.Components
         ///     Sound played on scanning begin
         /// </summary>
         [DataField("scanningBeginSound")]
-        public SoundSpecifier? ScanningBeginSound = null;
+        public SoundSpecifier? ScanningBeginSound;
 
         /// <summary>
         ///     Sound played on scanning end
         /// </summary>
         [DataField("scanningEndSound")]
-        public SoundSpecifier? ScanningEndSound = null;
+        public SoundSpecifier? ScanningEndSound;
 
         /// <summary>
         /// The disease this will give people.

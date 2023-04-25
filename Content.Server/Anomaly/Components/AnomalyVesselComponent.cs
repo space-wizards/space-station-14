@@ -39,7 +39,7 @@ public sealed class AnomalyVesselComponent : Component
     /// with the corresponding part rating.
     /// </summary>
     [DataField("partRatingPointModifier")]
-    public float PartRatingPointModifier = 1.5f;
+    public float PartRatingPointModifier = 1.25f;
 
     /// <summary>
     /// The maximum time between each beep

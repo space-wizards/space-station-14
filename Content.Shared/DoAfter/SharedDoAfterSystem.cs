@@ -83,6 +83,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     private void RaiseDoAfterEvents(DoAfter doAfter, DoAfterComponent component)
     {
         var ev = doAfter.Args.Event;
+        ev.Handled = false;
+        ev.Repeat = false;
         ev.DoAfter = doAfter;
 
         if (Exists(doAfter.Args.EventTarget))
@@ -122,7 +124,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         else
             EnsureComp<ActiveDoAfterComponent>(uid);
     }
-
 
     #region Creation
     /// <summary>
@@ -203,7 +204,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // (or if there is no item there we need to keep it free).
         if (args.NeedHand && args.BreakOnHandChange)
         {
-            if (!TryComp(args.User, out SharedHandsComponent? handsComponent))
+            if (!TryComp(args.User, out HandsComponent? handsComponent))
                 return false;
 
             doAfter.InitialHand = handsComponent.ActiveHand?.Name;
@@ -211,7 +212,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         // Inital checks
-        if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<SharedHandsComponent>()))
+        if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<HandsComponent>()))
             return false;
 
         if (args.AttemptFrequency == AttemptFrequency.StartAndEnd && !TryAttemptEvent(doAfter))
@@ -355,7 +356,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (doAfter.Cancelled)
             return DoAfterStatus.Cancelled;
 
-        if (GameTiming.CurTime - doAfter.StartTime < doAfter.Args.Delay)
+        if (!doAfter.Completed)
             return DoAfterStatus.Running;
 
         // Theres the chance here that the DoAfter hasn't actually finished yet if the system's update hasn't run yet.

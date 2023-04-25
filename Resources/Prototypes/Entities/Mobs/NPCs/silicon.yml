@@ -38,8 +38,6 @@
     noRot: true
     drawdepth: Mobs
     netsync: false
-  - type: Recyclable
-    safe: false
   - type: Faction
     factions:
     - SimpleNeutral
@@ -84,6 +82,11 @@
     excess: 120
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:TriggerBehavior
     - trigger:
         !type:DamageTrigger
         damage: 120
@@ -134,15 +137,52 @@
   - type: Construction
     graph: HonkBot
     node: bot
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: honkbot
     description: An artificial being of pure evil.
+  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-honkbot
     interactFailureString: petting-failure-honkbot
     interactSuccessSound:
       path: /Audio/Items/bikehorn.ogg
+
+- type: entity
+  parent: MobHonkBot
+  id: MobJonkBot
+  name: jonkbot
+  description: Horrifying.
+  components:
+  - type: SpamEmitSound
+    sound:
+      collection: CluwneHorn
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/honkbot.rsi
+    state: jonkbot
+  - type: Slippery
+    launchForwardsMultiplier: 7.0
+  - type: Construction
+    graph: JonkBot
+    node: bot
+  - type: GhostRole
+    makeSentient: true
+    name: jonkbot
+    description: An artificial being of pure evil.
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Items/brokenbikehorn.ogg
+  - type: Vocal
+    sounds:
+      Unsexed: Cluwne
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+    totalIntensity: 10
+    intensitySlope: 5
+    canCreateVacuum: false
 
 - type: entity
   parent: MobSiliconBase
