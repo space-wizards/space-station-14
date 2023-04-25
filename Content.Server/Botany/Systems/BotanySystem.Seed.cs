@@ -100,11 +100,6 @@ public sealed partial class BotanySystem : EntitySystem
     /// </summary>
     public EntityUid SpawnSeedPacket(SeedData seedData, EntityCoordinates coords, EntityUid user, bool sampled = false)
     {
-        // If the plant was sampled then try to match the plant's TRA match the requirements
-        if (sampled){
-            return SpawnSeedPacket(GetPossibleTransmutation(seedData), coords, user);
-        }
-
         var seed = Spawn(seedData.PacketPrototype, coords);
         var seedComp = EnsureComp<SeedComponent>(seed);
 
@@ -207,29 +202,6 @@ public sealed partial class BotanySystem : EntitySystem
         }
 
         return products;
-    }
-
-    /// <summary>
-    ///     Checks if the provided seed data's TRA matches any of it's transmutations TRA values and returns the transmutation's seed data
-    ///     If not then returns the plants regular data
-    /// </summary>
-    public SeedData GetPossibleTransmutation(SeedData seedData){
-        foreach(var tra_proto in seedData.PlantTransmutations){
-            if (!_prototypeManager.TryIndex(tra_proto, out TransmuationPrototype? transmuation)) {
-                Logger.Error($"Unknown transmutation prototype: {tra_proto}");
-                continue;
-            }
-            if (!_prototypeManager.TryIndex(transmuation.prototype, out SeedPrototype? newSeedData)){
-                Logger.Error($"Transmutation plant prototype does not exist: {transmuation.prototype}");
-                continue;
-            }
-            if (transmuation.T == seedData.TRA.T && transmuation.R == seedData.TRA.R && transmuation.A == seedData.TRA.A){
-                Logger.Info($"TRA sequences match, returning new seed data for: {newSeedData.Name}");
-                return newSeedData;
-            }
-        }
-
-        return seedData;
     }
 
     public bool CanHarvest(SeedData proto, EntityUid? held = null)

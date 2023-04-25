@@ -20,10 +20,11 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 
             var oldTra = plantHolderComp.Seed.TRA;
 
-            plantHolderComp.Seed.TRA = new(oldTra.T += (int)Amount,
-                oldTra.R += (int)Amount,
-                oldTra.A += (int)Amount);
-
+            plantHolderComp.Seed.TRA = new(
+                Math.Clamp(oldTra.T += (int)Amount, 0, 9),
+                Math.Clamp(oldTra.R += (int)Amount, 0, 9),
+                Math.Clamp(oldTra.A += (int)Amount, 0, 9)
+            );
         }
     }
 }

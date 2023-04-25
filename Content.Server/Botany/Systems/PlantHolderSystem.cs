@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
@@ -40,6 +41,7 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 4f;
@@ -335,6 +337,16 @@ namespace Content.Server.Botany.Systems
             {
                 Mutate(uid, Math.Min(component.MutationLevel, 25), component);
                 component.MutationLevel = 0;
+            }
+
+            // Try to transmutate into another plant
+            if (component.Seed != null && TryToTransmutate(component.Seed, out SeedData? newSeed))
+            {
+                component.Seed = newSeed;
+                EnsureUniqueSeed(uid, component); // Just in case
+                component.Harvest = false;
+                UpdateSprite(uid, component);
+                return;
             }
 
             // Weeds like water and nutrients! They may appear even if there's not a seed planted.
@@ -754,6 +766,29 @@ namespace Content.Server.Botany.Systems
             component.ImproperHeat = false;
 
             UpdateSprite(uid, component);
+        }
+
+        /// <summary>
+        ///     Checks if the provided seed data's TRA matches any of it's transmutation prototypes' TRA values
+        /// </summary>
+        public bool TryToTransmutate(SeedData seedData, [NotNullWhen(true)] out SeedData? seed){
+            foreach(var tra_proto in seedData.PlantTransmutations){
+                if (!_prototypeManager.TryIndex(tra_proto, out TransmuationPrototype? transmuation)) {
+                    Logger.Error($"Unknown transmutation prototype: {tra_proto}");
+                    continue;
+                }
+                if (!_prototypeManager.TryIndex(transmuation.prototype, out SeedPrototype? newSeedData)){
+                    Logger.Error($"Transmutation plant prototype does not exist: {transmuation.prototype}");
+                    continue;
+                }
+                if (transmuation.T == seedData.TRA.T && transmuation.R == seedData.TRA.R && transmuation.A == seedData.TRA.A){
+                    seed = newSeedData;
+                    return true;
+                }
+            }
+
+            seed = null;
+            return false;
         }
 
         public void AffectGrowth(EntityUid uid, int amount, PlantHolderComponent? component = null)

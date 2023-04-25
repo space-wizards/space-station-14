@@ -60,6 +60,13 @@
   plantMetabolism:
     - !type:PlantShiftTRA
       amount: 1.0
+    - !type:PlantAdjustNutrition # You would be hungry and thirsty too if you started to turn into a giraffe
+      amount: -10.0
+    - !type:PlantAdjustWater
+      amount: -10.0
+    - !type:PlantAdjustMutationMod
+      prob: 0.7
+      amount: 0.5
 
 - type: reagent
   id: TRA-91
@@ -72,6 +79,13 @@
   plantMetabolism:
     - !type:PlantShiftTRA
       amount: -1.0
+    - !type:PlantAdjustNutrition
+      amount: -5
+    - !type:PlantAdjustWater
+      amount: -5.0
+    - !type:PlantAdjustMutationMod
+      prob: 0.6
+      amount: -0.5
 
 - type: reagent
   id: PestKiller
