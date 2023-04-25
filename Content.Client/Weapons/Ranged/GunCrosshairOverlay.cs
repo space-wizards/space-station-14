@@ -20,7 +20,6 @@ namespace Content.Client.Weapons.Ranged;
 public sealed class GunCrosshairOverlay : Overlay
 {
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
-
     private IEntityManager _entManager;
     private readonly IEyeManager _eye;
     private readonly IGameTiming _timing;
@@ -116,15 +115,18 @@ public sealed class GunCrosshairOverlay : Overlay
                 var screenHitPosition = _eye.WorldToScreen(result.HitPos);
                 var screenPlayerPos = _eye.CoordinatesToScreen(xform.Coordinates).Position;
                 DrawОbstacleSign(screen, _crosssign, screenHitPosition, screenPlayerPos);
-            } 
+            }
         }
 
         DrawCrosshair(screen, _crosshair, mouseScreen.Position, crosshairType);
     }
 
-    private UIBox2 GetBoxForTexture(Texture texture, Vector2 pos) {
+    private UIBox2 GetBoxForTexture(Texture texture, Vector2 pos, float? expandedSize = null)
+    {
         // Vector2 textureSize = textureSize.Size * scale;
         Vector2 textureSize = texture.Size;
+        if (expandedSize != null)
+            textureSize += (float) expandedSize;
         Vector2 halfTextureSize = textureSize / 2;
         Vector2 beginPos = pos - halfTextureSize;
         return UIBox2.FromDimensions(beginPos, textureSize);
@@ -140,23 +142,38 @@ public sealed class GunCrosshairOverlay : Overlay
         screen.DrawLine(bitHitDirection, hitPos, Color.Red);
 
         screen.DrawTextureRect(cross,
+            GetBoxForTexture(cross, hitPos, 15), Color.Black);
+        screen.DrawTextureRect(cross,
             GetBoxForTexture(cross, hitPos), Color.Red);
     }
 
     private void DrawCrosshair(DrawingHandleScreen screen,
         Texture? circle, Vector2 circlePos, CrosshairType type)
     {
-        if (circle == null) {
+        if (circle == null)
+        {
             return;
         }
 
-        Color color = type switch {
-            CrosshairType.Unavailable => Color.Red,
+        Color color = type switch
+        {
+            CrosshairType.Unavailable => Color.Red.WithAlpha(0.3f),
             CrosshairType.InTarget => Color.LightGreen,
-            _ => Color.DarkGreen,
+            _ => Color.Blue,
         };
-        screen.DrawTextureRect(circle,
-            GetBoxForTexture(circle, circlePos), color);
+
+        if (type == CrosshairType.Unavailable)
+        {
+            screen.DrawCircle(circlePos, 22, color);
+        }
+        else
+        {
+            screen.DrawTextureRect(circle,
+                GetBoxForTexture(circle, circlePos, 4), Color.Black);
+            screen.DrawTextureRect(circle,
+                GetBoxForTexture(circle, circlePos), color);
+        }
+
     }
 }
 
@@ -165,5 +182,4 @@ public enum CrosshairType : byte
     Available,
     Unavailable,
     InTarget,
-
 }
