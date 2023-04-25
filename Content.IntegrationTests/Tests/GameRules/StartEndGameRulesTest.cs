@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Shared.CCVar;
 using NUnit.Framework;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -28,6 +30,8 @@ public sealed class StartEndGameRulesTest
         await server.WaitIdleAsync();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
+        var cfg = server.ResolveDependency<IConfigurationManager>();
+        Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
 
         await server.WaitAssertion(() =>
         {
