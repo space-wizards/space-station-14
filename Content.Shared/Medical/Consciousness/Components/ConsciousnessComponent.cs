@@ -27,12 +27,10 @@ public sealed class ConsciousnessComponent : Component
     public FixedPoint2 Cap = 100;
 
     //List of modifiers that are applied to this consciousness
-    [DataField("modifiers"), AutoNetworkedField()]
-    public Dictionary<EntityUid,ConsciousnessModifier> Modifiers = new();
+    [AutoNetworkedField()] public readonly Dictionary<(EntityUid, ConsciousnessModType),ConsciousnessModifier> Modifiers = new();
 
     //List of multipliers that are applied to this consciousness
-    [DataField("multipliers"), AutoNetworkedField()]
-    public Dictionary<EntityUid,ConsciousnessMultiplier> Multipliers = new();
+    [AutoNetworkedField()] public readonly Dictionary<(EntityUid, ConsciousnessModType),ConsciousnessMultiplier> Multipliers = new();
 
     [DataField("isConscious"), AutoNetworkedField()]
     public bool IsConscious = true;
@@ -43,4 +41,11 @@ public record struct ConsciousnessModifier(FixedPoint2 Change, string Identifier
 
 [Serializable, DataRecord]
 public record struct ConsciousnessMultiplier(FixedPoint2 Change,
-    string Identifier = "Unspecified");
+    string Identifier = "Unspecified", ConsciousnessModType Type = ConsciousnessModType.Generic);
+
+[Serializable]
+public enum ConsciousnessModType
+{
+    Generic,
+    Pain
+}

@@ -31,21 +31,22 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     /// <summary>
     /// Add a unique consciousness modifier. This value gets added to the raw consciousness value.
-    /// The owner must be unique, if you are adding multiple values from a single owner, combine them into one modifier
+    /// The owner and type combo must be unique, if you are adding multiple values from a single owner and type, combine them into one modifier
     /// </summary>
     /// <param name="target">Target entity</param>
-    /// <param name="modifierOwner">UNIQUE owner of a modifier</param>
+    /// <param name="modifierOwner">Owner of a modifier</param>
     /// <param name="modifier">Value of the modifier</param>
     /// <param name="consciousness">ConsciousnessComponent</param>
     /// <param name="identifier">Localized text name for the modifier (for debug/admins)</param>
+    /// <param name="type">Modifier type, defaults to generic</param>
     /// <returns>Successful</returns>
     public bool AddConsciousnessModifier(EntityUid target, EntityUid modifierOwner, FixedPoint2 modifier,
-        ConsciousnessComponent? consciousness = null, string identifier = UnspecifiedIdentifier)
+        ConsciousnessComponent? consciousness = null, string identifier = UnspecifiedIdentifier, ConsciousnessModType type = ConsciousnessModType.Generic)
     {
         if (!Resolve(target, ref consciousness) || modifier == 0)
             return false;
 
-        if (!consciousness.Modifiers.TryAdd(modifierOwner, new ConsciousnessModifier(modifier, identifier)))
+        if (!consciousness.Modifiers.TryAdd((modifierOwner, type), new ConsciousnessModifier(modifier, identifier)))
             return false;
 
         consciousness.RawConsciousness += modifier;
@@ -61,17 +62,18 @@ public sealed class ConsciousnessSystem : EntitySystem
     /// Get a copy of a consciousness modifier. This value gets added to the raw consciousness value.
     /// </summary>
     /// <param name="target">Target entity</param>
-    /// <param name="modifierOwner">UNIQUE owner of a modifier</param>
+    /// <param name="modifierOwner">Owner of a modifier</param>
     /// <param name="modifier">copy of the found modifier, changes are NOT saved</param>
     /// <param name="consciousness">Consciousness component</param>
+    /// <param name="type">Modifier type, defaults to generic</param>
     /// <returns>Successful</returns>
     public bool TryGetConsciousnessModifier(EntityUid target, EntityUid modifierOwner,
         out ConsciousnessModifier? modifier,
-        ConsciousnessComponent? consciousness = null)
+        ConsciousnessComponent? consciousness = null, ConsciousnessModType type = ConsciousnessModType.Generic)
     {
         modifier = null;
         if (!Resolve(target, ref consciousness) ||
-            !consciousness.Modifiers.TryGetValue(modifierOwner, out var rawModifier))
+            !consciousness.Modifiers.TryGetValue((modifierOwner,type), out var rawModifier))
             return false;
         modifier = rawModifier;
         return true;
@@ -81,15 +83,16 @@ public sealed class ConsciousnessSystem : EntitySystem
     /// Remove a consciousness modifier. This value gets added to the raw consciousness value.
     /// </summary>
     /// <param name="target">Target entity</param>
-    /// <param name="modifierOwner">UNIQUE owner of a modifier</param>
+    /// <param name="modifierOwner">Owner of a modifier</param>
     /// <param name="consciousness">Consciousness component</param>
+    /// <param name="type">Modifier type, defaults to generic</param>
     /// <returns>Successful</returns>
     public bool RemoveConsciousnessModifer(EntityUid target, EntityUid modifierOwner,
-        ConsciousnessComponent? consciousness = null)
+        ConsciousnessComponent? consciousness = null, ConsciousnessModType type = ConsciousnessModType.Generic)
     {
         if (!Resolve(target, ref consciousness))
             return false;
-        if (!consciousness.Modifiers.Remove(modifierOwner, out var foundModifier))
+        if (!consciousness.Modifiers.Remove((modifierOwner,type), out var foundModifier))
             return false;
         consciousness.RawConsciousness = -foundModifier.Change;
         var ev = new ConsciousnessUpdatedEvent(IsConscious(target, consciousness),
@@ -104,18 +107,19 @@ public sealed class ConsciousnessSystem : EntitySystem
     /// Edit a consciousness modifier. This value gets added to the raw consciousness value.
     /// </summary>
     /// <param name="target">Target entity</param>
-    /// <param name="modifierOwner">UNIQUE owner of a modifier</param>
+    /// <param name="modifierOwner">Owner of a modifier</param>
     /// <param name="modifierChange">Value that is being added onto the modifier</param>
     /// <param name="consciousness">Consciousness component</param>
+    /// <param name="type">Modifier type, defaults to generic</param>
     /// <returns>Successful</returns>
     public bool EditConsciousnessModifier(EntityUid target, EntityUid modifierOwner, FixedPoint2 modifierChange,
-        ConsciousnessComponent? consciousness = null)
+        ConsciousnessComponent? consciousness = null, ConsciousnessModType type = ConsciousnessModType.Generic)
     {
         if (!Resolve(target, ref consciousness) ||
-            !consciousness.Modifiers.TryGetValue(modifierOwner, out var oldModifier))
+            !consciousness.Modifiers.TryGetValue((modifierOwner,type), out var oldModifier))
             return false;
         var newModifier = oldModifier with {Change = oldModifier.Change + modifierChange};
-        consciousness.Modifiers[modifierOwner] = newModifier;
+        consciousness.Modifiers[(modifierOwner,type)] = newModifier;
         var ev = new ConsciousnessUpdatedEvent(IsConscious(target, consciousness),
             modifierChange * consciousness.Multiplier);
         RaiseLocalEvent(target, ref ev, true);
@@ -125,22 +129,47 @@ public sealed class ConsciousnessSystem : EntitySystem
     }
 
     /// <summary>
-    /// Add a unique consciousness multiplier. This value gets added onto the multiplier used to calculate consciousness.
-    /// The owner must be unique, if you are adding multiple values from a single owner, combine them into one multiplier
+    /// Update the identifier string for a consciousness modifier
     /// </summary>
     /// <param name="target">Target entity</param>
-    /// <param name="multiplierOwner">UNIQUE owner of a multiplier</param>
+    /// <param name="modifierOwner">Owner of a modifier</param>
+    /// <param name="newIdentifier">New localized string to identify this modifier</param>
+    /// <param name="consciousness">Consciousness component</param>
+    /// <param name="type">Modifier type, defaults to generic</param>
+    /// <returns>Successful</returns>
+    public bool UpdateConsciousnessModifierMetaData(EntityUid target, EntityUid modifierOwner, string newIdentifier,
+        ConsciousnessComponent? consciousness = null, ConsciousnessModType type = ConsciousnessModType.Generic)
+    {
+        if (!Resolve(target, ref consciousness) ||
+            !consciousness.Modifiers.TryGetValue((modifierOwner,type), out var oldMultiplier))
+            return false;
+        var newMultiplier = oldMultiplier with {Identifier = newIdentifier};
+        consciousness.Modifiers[(modifierOwner, type)] = newMultiplier;
+        //TODO: create/raise an identifier changed event if needed
+        Dirty(consciousness);
+        //we don't need to check consciousness here since no simulation values get changed
+        return true;
+    }
+
+
+    /// <summary>
+    /// Add a unique consciousness multiplier. This value gets added onto the multiplier used to calculate consciousness.
+    /// The owner and type combo must be unique, if you are adding multiple values from a single owner and type, combine them into one multiplier
+    /// </summary>
+    /// <param name="target">Target entity</param>
+    /// <param name="multiplierOwner">Owner of a multiplier</param>
     /// <param name="multiplier">Value of the multiplier</param>
     /// <param name="consciousness">ConsciousnessComponent</param>
     /// <param name="identifier">Localized text name for the multiplier (for debug/admins)</param>
+    /// <param name="type">Multiplier type, defaults to generic</param>
     /// <returns>Successful</returns>
     public bool AddConsciousnessMultiplier(EntityUid target, EntityUid multiplierOwner, FixedPoint2 multiplier,
-        ConsciousnessComponent? consciousness = null, string identifier = UnspecifiedIdentifier)
+        ConsciousnessComponent? consciousness = null, string identifier = UnspecifiedIdentifier, ConsciousnessModType type = ConsciousnessModType.Generic)
     {
         if (!Resolve(target, ref consciousness) || multiplier == 0)
             return false;
 
-        if (!consciousness.Multipliers.TryAdd(multiplierOwner, new ConsciousnessMultiplier(multiplier, identifier)))
+        if (!consciousness.Multipliers.TryAdd((multiplierOwner,type), new ConsciousnessMultiplier(multiplier, identifier)))
             return false;
         var oldMultiplier = consciousness.Multiplier;
         consciousness.Multiplier += multiplier;
@@ -153,42 +182,21 @@ public sealed class ConsciousnessSystem : EntitySystem
     }
 
     /// <summary>
-    /// Update the identifier string for a consciousness modifier
-    /// </summary>
-    /// <param name="target">Target entity</param>
-    /// <param name="modifierOwner">UNIQUE owner of a modifier</param>
-    /// <param name="newIdentifier">New localized string to identify this modifier</param>
-    /// <param name="consciousness">Consciousness component</param>
-    /// <returns>Sucessful</returns>
-    public bool UpdateConsciousnessModifierMetaData(EntityUid target, EntityUid modifierOwner, string newIdentifier,
-        ConsciousnessComponent? consciousness = null)
-    {
-        if (!Resolve(target, ref consciousness) ||
-            !consciousness.Modifiers.TryGetValue(modifierOwner, out var oldMultiplier))
-            return false;
-        var newMultiplier = oldMultiplier with {Identifier = newIdentifier};
-        consciousness.Modifiers[modifierOwner] = newMultiplier;
-        //TODO: create/raise an identifier changed event if needed
-        Dirty(consciousness);
-        //we don't need to check consciousness here since no simulation values get changed
-        return true;
-    }
-
-    /// <summary>
     /// Get a copy of a consciousness multiplier. This value gets added onto the multiplier used to calculate consciousness.
     /// </summary>
     /// <param name="target">Target entity</param>
-    /// <param name="multiplierOwner">UNIQUE owner of a multiplier</param>
-    /// <param name="multiplier">copy of the found multiplier, changes are NOT saved</param>
+    /// <param name="multiplierOwner">Owner of a multiplier</param>
+    /// <param name="multiplier">Copy of the found multiplier, changes are NOT saved</param>
     /// <param name="consciousness">Consciousness component</param>
+    /// <param name="type">Multiplier type, defaults to generic</param>
     /// <returns>Successful</returns>
     public bool TryGetConsciousnessMultiplier(EntityUid target, EntityUid multiplierOwner,
-        out ConsciousnessMultiplier? multiplier,
-        ConsciousnessComponent? consciousness = null)
+        out ConsciousnessMultiplier? multiplier, ConsciousnessComponent? consciousness = null,
+        ConsciousnessModType type = ConsciousnessModType.Generic)
     {
         multiplier = null;
         if (!Resolve(target, ref consciousness) ||
-            !consciousness.Multipliers.TryGetValue(multiplierOwner, out var rawMultiplier))
+            !consciousness.Multipliers.TryGetValue((multiplierOwner, type), out var rawMultiplier))
             return false;
         multiplier = rawMultiplier;
         return true;
@@ -198,15 +206,17 @@ public sealed class ConsciousnessSystem : EntitySystem
     /// Remove a consciousness multiplier. This value gets added onto the multiplier used to calculate consciousness.
     /// </summary>
     /// <param name="target">Target entity</param>
-    /// <param name="multiplierOwner">UNIQUE owner of a multiplier</param>
+    /// <param name="multiplierOwner">Owner of a multiplier</param>
+    /// <param name="type">Multiplier type, defaults to generic</param>
     /// <param name="consciousness">Consciousness component</param>
     /// <returns>Successful</returns>
     public bool RemoveConsciousnessMultiplier(EntityUid target, EntityUid multiplierOwner,
+        ConsciousnessModType type = ConsciousnessModType.Generic,
         ConsciousnessComponent? consciousness = null)
     {
         if (!Resolve(target, ref consciousness))
             return false;
-        if (!consciousness.Multipliers.Remove(multiplierOwner, out var foundMultiplier))
+        if (!consciousness.Multipliers.Remove((multiplierOwner, type), out var foundMultiplier))
             return false;
         consciousness.Multiplier = -foundMultiplier.Change;
         var ev = new ConsciousnessUpdatedEvent(IsConscious(target, consciousness),
@@ -221,18 +231,19 @@ public sealed class ConsciousnessSystem : EntitySystem
     /// Edit a consciousness multiplier. This value gets added onto the multiplier used to calculate consciousness.
     /// </summary>
     /// <param name="target">Target entity</param>
-    /// <param name="multiplierOwner">UNIQUE owner of a multiplier</param>
+    /// <param name="multiplierOwner">Owner of a multiplier</param>
     /// <param name="multiplierChange">Value that is being added onto the multiplier</param>
+    /// <param name="type">Multiplier type, defaults to generic</param>
     /// <param name="consciousness">Consciousness component</param>
     /// <returns>Successful</returns>
     public bool EditConsciousnessMultiplier(EntityUid target, EntityUid multiplierOwner, FixedPoint2 multiplierChange,
-        ConsciousnessComponent? consciousness = null)
+        ConsciousnessComponent? consciousness = null, ConsciousnessModType type = ConsciousnessModType.Generic)
     {
         if (!Resolve(target, ref consciousness) ||
-            !consciousness.Multipliers.TryGetValue(multiplierOwner, out var oldMultiplier))
+            !consciousness.Multipliers.TryGetValue((multiplierOwner, type), out var oldMultiplier))
             return false;
         var newMultiplier = oldMultiplier with {Change = oldMultiplier.Change + multiplierChange};
-        consciousness.Multipliers[multiplierOwner] = newMultiplier;
+        consciousness.Multipliers[(multiplierOwner, type)] = newMultiplier;
         var ev = new ConsciousnessUpdatedEvent(IsConscious(target, consciousness),
             multiplierChange * consciousness.RawConsciousness);
         RaiseLocalEvent(target, ref ev, true);
@@ -245,18 +256,19 @@ public sealed class ConsciousnessSystem : EntitySystem
     /// Update the identifier string for a consciousness multiplier
     /// </summary>
     /// <param name="target">Target entity</param>
-    /// <param name="multiplierOwner">UNIQUE owner of a multiplier</param>
+    /// <param name="multiplierOwner">Owner of a multiplier</param>
     /// <param name="newIdentifier">New localized string to identify this multiplier</param>
+    /// <param name="type">Multiplier type, defaults to generic</param>
     /// <param name="consciousness">Consciousness component</param>
     /// <returns>Sucessful</returns>
     public bool UpdateConsciousnessMultiplierMetaData(EntityUid target, EntityUid multiplierOwner, string newIdentifier,
-        ConsciousnessComponent? consciousness = null)
+        ConsciousnessComponent? consciousness = null, ConsciousnessModType type = ConsciousnessModType.Generic)
     {
         if (!Resolve(target, ref consciousness) ||
-            !consciousness.Multipliers.TryGetValue(multiplierOwner, out var oldMultiplier))
+            !consciousness.Multipliers.TryGetValue((multiplierOwner, type), out var oldMultiplier))
             return false;
         var newMultiplier = oldMultiplier with {Identifier = newIdentifier};
-        consciousness.Multipliers[multiplierOwner] = newMultiplier;
+        consciousness.Multipliers[(multiplierOwner, type)] = newMultiplier;
         //TODO: create/raise an identifier changed event if needed
         Dirty(consciousness);
         //we don't need to check consciousness here since no simulation values get changed
@@ -306,7 +318,7 @@ public sealed class ConsciousnessSystem : EntitySystem
     /// <param name="target">target entity</param>
     /// <param name="consciousness">consciousness component</param>
     /// <returns>Enumerable of Modifiers</returns>
-    public IEnumerable<(EntityUid, ConsciousnessModifier)> GetAllModifiers(EntityUid target,
+    public IEnumerable<((EntityUid,ConsciousnessModType), ConsciousnessModifier)> GetAllModifiers(EntityUid target,
         ConsciousnessComponent? consciousness = null)
     {
         if (!Resolve(target, ref consciousness))
@@ -323,7 +335,7 @@ public sealed class ConsciousnessSystem : EntitySystem
     /// <param name="target">target entity</param>
     /// <param name="consciousness">consciousness component</param>
     /// <returns>Enumerable of Multipliers</returns>
-    public IEnumerable<(EntityUid, ConsciousnessMultiplier)> GetAllMultipliers(EntityUid target,
+    public IEnumerable<((EntityUid,ConsciousnessModType), ConsciousnessMultiplier)> GetAllMultipliers(EntityUid target,
         ConsciousnessComponent? consciousness = null)
     {
         if (!Resolve(target, ref consciousness))
