@@ -323,7 +323,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var filter = predicted ? Filter.PvsExcept(performer) : Filter.Pvs(performer);
 
-        _audio.Play(action.Sound, filter, performer, true, action.AudioParams);
+        _audio.Play(action.Sound, filter, performer, true);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;
@@ -356,12 +356,10 @@ public abstract class SharedActionsSystem : EntitySystem
 
         comp ??= EnsureComp<ActionsComponent>(uid);
         action.Provider = provider;
-        action.AttachedEntity = comp.Owner;
+        action.AttachedEntity = uid;
         AddActionInternal(comp, action);
 
-        // for client-exclusive actions, the client shouldn't mark the comp as dirty. Otherwise that just leads to
-        // unnecessary prediction resetting and state handling.
-        if (dirty && !action.ClientExclusive)
+        if (dirty)
             Dirty(comp);
     }
 
@@ -400,29 +398,26 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!Resolve(uid, ref comp, false))
             return;
 
-        var provided = comp.Actions.Where(act => act.Provider == provider).ToList();
-
-        if (provided.Count > 0)
-            RemoveActions(uid, provided, comp);
+        foreach (var act in comp.Actions.ToArray())
+        {
+            if (act.Provider == provider)
+                RemoveAction(uid, act, comp, dirty: false);
+        }
+        Dirty(comp);
     }
 
-    public virtual void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)
+    public virtual void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null, bool dirty = true)
     {
         if (!Resolve(uid, ref comp, false))
             return;
 
-        foreach (var action in actions)
-        {
-            comp.Actions.Remove(action);
-            action.AttachedEntity = null;
-        }
+        comp.Actions.Remove(action);
+        action.AttachedEntity = null;
 
         if (dirty)
             Dirty(comp);
     }
 
-    public void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null)
-        => RemoveActions(uid, new[] { action }, comp);
     #endregion
 
     #region EquipHandlers

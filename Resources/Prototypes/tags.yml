@@ -608,6 +608,9 @@
   id: SpeedLoaderRifle
 
 - type: Tag
+  id: SpreaderIgnore
+
+- type: Tag
   id: StringInstrument
 
 - type: Tag

@@ -28,6 +28,7 @@ namespace Content.Client.Actions
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -48,6 +49,15 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<ActionsComponent, PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<ActionsComponent, PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleComponentState);
+        }
+
+        public override void Dirty(ActionType action)
+        {
+            if (_playerManager.LocalPlayer?.ControlledEntity != action.AttachedEntity)
+                return;
+
+            base.Dirty(action);
+            ActionsUpdated?.Invoke();
         }
 
         private void HandleComponentState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
@@ -119,31 +129,36 @@ namespace Content.Client.Actions
 
         public override void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
         {
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
+            if (GameTiming.ApplyingState && !action.ClientExclusive)
+                return;
+
             if (!Resolve(uid, ref comp, false))
                 return;
 
+            dirty &= !action.ClientExclusive;
             base.AddAction(uid, action, provider, comp, dirty);
-
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                ActionAdded?.Invoke(action);
+            ActionAdded?.Invoke(action);
         }
 
-        public override void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)
+        public override void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null, bool dirty = true)
         {
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
+            if (GameTiming.ApplyingState && !action.ClientExclusive)
+                return;
+
             if (!Resolve(uid, ref comp, false))
                 return;
 
-            var actionList = actions.ToList();
-            base.RemoveActions(uid, actionList, comp, dirty);
+            dirty &= !action.ClientExclusive;
+            base.RemoveAction(uid, action, comp, dirty);
 
-            foreach (var act in actionList)
-            {
-                if (act.AutoRemove)
-                    ActionRemoved?.Invoke(act);
-            }
+            if (action.AutoRemove)
+                ActionRemoved?.Invoke(action);
         }
 
         /// <summary>
@@ -175,9 +190,7 @@ namespace Content.Client.Actions
                 _popupSystem.PopupEntity(msg, user);
             }
 
-            if (action.Sound != null)
-                SoundSystem.Play(action.Sound.GetSound(), Filter.Local(), user, action.AudioParams);
-
+            _audio.Play(action.Sound, Filter.Local(), user, false);
             return performedAction;
         }
 
