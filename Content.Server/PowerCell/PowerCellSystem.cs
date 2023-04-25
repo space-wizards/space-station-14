@@ -224,7 +224,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     /// </summary>
     public bool TryUseCharge(EntityUid uid, float charge, PowerCellSlotComponent? component = null, EntityUid? user = null)
     {
-        if (!TryGetBatteryFromSlot(uid, out var battery, component))
+        if (!TryGetBatteryFromSlot(uid, out var batteryEnt, out var battery, component))
         {
             if (user != null)
                 _popup.PopupEntity(Loc.GetString("power-cell-no-battery"), uid, user.Value);
@@ -232,7 +232,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             return false;
         }
 
-        if (!_battery.TryUseCharge(uid, charge, battery))
+        if (!_battery.TryUseCharge(batteryEnt.Value, charge, battery))
         {
             if (user != null)
                 _popup.PopupEntity(Loc.GetString("power-cell-insufficient"), uid, user.Value);
