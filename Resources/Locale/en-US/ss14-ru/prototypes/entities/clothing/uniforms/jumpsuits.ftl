@@ -274,3 +274,6 @@ ent-ClothingUniformJumpsuitDameDane = yakuza outfit
 ent-ClothingUniformJumpsuitPirate = pirate slops
     .desc = A pirate variation of a space sailor's jumpsuit.
     .suffix = { "" }
+ent-ClothingUniformJumpsuitCossack = Cossack suit
+    .desc = the good old pants and brigantine.
+    .suffix = { "" }

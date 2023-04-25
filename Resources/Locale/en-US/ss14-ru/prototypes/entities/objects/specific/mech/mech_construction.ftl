@@ -1,11 +1,11 @@
 ent-BaseMechPart = { "" }
     .desc = { "" }
     .suffix = { "" }
-ent-BaseMechPartItem = { ent-BaseMechPart }
+ent-BaseRipleyPart = { ent-BaseMechPart }
     .desc = { ent-BaseMechPart.desc }
     .suffix = { "" }
-ent-BaseMechConstruct = { ent-BaseMechPart }
-    .desc = { ent-BaseMechPart.desc }
+ent-BaseRipleyPartItem = { ent-BaseRipleyPart }
+    .desc = { ent-BaseRipleyPart.desc }
     .suffix = { "" }
 ent-RipleyHarness = ripley harness
     .desc = The core of the Ripley APLU.

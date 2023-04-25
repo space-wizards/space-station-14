@@ -1,0 +1,15 @@
+ent-MobSpaceBasic = basic
+    .desc = It looks friendly. Why don't you give it a hug?
+    .suffix = { "" }
+ent-MobBearSpace = space bear
+    .desc = It looks friendly. Why don't you give it a hug?
+    .suffix = { "" }
+ent-MobBearSpaceSalvage = { ent-MobBearSpace }
+    .suffix = Salvage Ruleset
+    .desc = { ent-MobBearSpace.desc }
+ent-MobKangarooSpace = space kangaroo
+    .desc = It looks friendly. Why don't you give it a hug?
+    .suffix = { "" }
+ent-MobKangarooSpaceSalvage = { ent-MobKangarooSpace }
+    .suffix = Salvage Ruleset
+    .desc = { ent-MobKangarooSpace.desc }
