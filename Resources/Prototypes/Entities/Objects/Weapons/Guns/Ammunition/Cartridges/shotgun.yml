@@ -48,8 +48,7 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunSlug
-    count: 4
-    spread: 5
+    count: 1
   - type: SpentAmmoVisuals
     state: "slug"
 

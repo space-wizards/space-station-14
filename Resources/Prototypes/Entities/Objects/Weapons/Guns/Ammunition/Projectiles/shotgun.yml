@@ -10,7 +10,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 8  # Should have the same or less damage than a regular pellet
+        Piercing: 35
 
 - type: entity
   id: PelletShotgunBeanbag
