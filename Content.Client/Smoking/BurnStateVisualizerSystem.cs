@@ -7,16 +7,16 @@ public sealed class BurnStateVisualizerSystem : VisualizerSystem<BurnStateVisual
 {
     protected override void OnAppearanceChange(EntityUid uid, BurnStateVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if(args.Sprite == null)
+        if (args.Sprite == null)
             return;
-        if(!args.AppearanceData.TryGetValue(SmokingVisuals.Smoking, out var burnState))
+        if (!args.AppearanceData.TryGetValue(SmokingVisuals.Smoking, out var burnState))
             return;
 
         var state = burnState switch
         {
-            SmokableState.Lit => component.litIcon,
-            SmokableState.Burnt => component.burntIcon,
-            _ => component.unlitIcon
+            SmokableState.Lit => component.LitIcon,
+            SmokableState.Burnt => component.BurntIcon,
+            _ => component.UnlitIcon
         };
 
         args.Sprite.LayerSetState(0, state);
