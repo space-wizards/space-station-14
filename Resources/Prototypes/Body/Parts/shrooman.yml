@@ -1,0 +1,178 @@
+- type: entity
+  id: PartShrooman
+  parent: FoodBase
+  name: "shrooman body part"
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Shrooman/parts.rsi
+  - type: Icon
+    sprite: Mobs/Species/Shrooman/parts.rsi
+  - type: StaticPrice
+    price: 100
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment # Nutritious!
+          Quantity: 10
+  - type: FlavorProfile
+    flavors:
+      - food
+  - type: Tag
+    tags:
+      - Trash
+
+- type: entity
+  id: TorsoShrooman
+  name: "shrooman torso"
+  parent: PartShrooman
+  components:
+  - type: Sprite
+    state: "torso_m"
+  - type: Icon
+    state: "torso_m"
+  - type: BodyPart
+    partType: Torso
+
+- type: entity
+  id: HeadShrooman
+  name: "shrooman head"
+  parent: PartShrooman
+  components:
+  - type: Sprite
+    state: "head_m"
+  - type: Icon
+    state: "head_m"
+  - type: BodyPart
+    partType: Head
+    vital: true
+  - type: Input
+    context: "ghost"
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0
+    baseSprintSpeed: 0
+  - type: InputMover
+  - type: GhostOnMove
+  - type: Tag
+    tags:
+      - Head
+
+- type: entity
+  id: LeftArmShrooman
+  name: "left shrooman arm"
+  parent: PartShrooman
+  components:
+  - type: Sprite
+    state: "l_arm"
+  - type: Icon
+    state: "l_arm"
+  - type: BodyPart
+    partType: Arm
+    symmetry: Left
+
+- type: entity
+  id: RightArmShrooman
+  name: "right shrooman arm"
+  parent: PartShrooman
+  components:
+  - type: Sprite
+    state: "r_arm"
+  - type: Icon
+    state: "r_arm"
+  - type: BodyPart
+    partType: Arm
+    symmetry: Right
+
+- type: entity
+  id: LeftHandShrooman
+  name: "left shrooman hand"
+  parent: PartShrooman
+  components:
+  - type: Sprite
+    state: "l_hand"
+  - type: Icon
+    state: "l_hand"
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
+
+- type: entity
+  id: RightHandShrooman
+  name: "right shrooman hand"
+  parent: PartShrooman
+  components:
+  - type: Sprite
+    state: "r_hand"
+  - type: Icon
+    state: "r_hand"
+  - type: BodyPart
+    partType: Hand
+    symmetry: Right
+
+- type: entity
+  id: LeftLegShrooman
+  name: "left shrooman leg"
+  parent: PartShrooman
+  components:
+  - type: Sprite
+    state: "l_leg"
+  - type: Icon
+    state: "l_leg"
+  - type: BodyPart
+    partType: Leg
+    symmetry: Left
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 3.5
+
+- type: entity
+  id: RightLegShrooman
+  name: "right shrooman leg"
+  parent: PartShrooman
+  components:
+  - type: Sprite
+    state: "r_leg"
+  - type: Icon
+    state: "r_leg"
+  - type: BodyPart
+    partType: Leg
+    symmetry: Right
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 3.5
+
+- type: entity
+  id: LeftFootShrooman
+  name: "left shrooman foot"
+  parent: PartShrooman
+  components:
+  - type: Sprite
+    state: "l_foot"
+  - type: Icon
+    state: "l_foot"
+  - type: BodyPart
+    partType: Foot
+    symmetry: Left
+
+- type: entity
+  id: RightFootShrooman
+  name: "right shrooman foot"
+  parent: PartShrooman
+  components:
+  - type: Sprite
+    state: "r_foot"
+  - type: Icon
+    state: "r_foot"
+  - type: BodyPart
+    partType: Foot
+    symmetry: Right

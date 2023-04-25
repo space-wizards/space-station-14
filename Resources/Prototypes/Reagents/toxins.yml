@@ -172,9 +172,10 @@
           messages: [ "reagent-cant-stop-laughing", "generic-reagent-effect-cant-breath" ]
           probability: 0.1
         - !type:HealthChange
+          scaleByQuantity: true
           damage:
             types:
-              Asphyxiation: 2.0
+              Asphyxiation: 1.0
   metabolisms:
     Poison:
       effects:
@@ -188,9 +189,10 @@
           messages: [ "reagent-cant-stop-laughing", "generic-reagent-effect-cant-breath" ]
           probability: 0.1
         - !type:HealthChange
+          scaleByQuantity: true
           damage:
             types:
-              Asphyxiation: 5.0 # You're laughing so hard you can't breath
+              Asphyxiation: 3.0 # You're laughing so hard you can't breath
 
 
 - type: reagent

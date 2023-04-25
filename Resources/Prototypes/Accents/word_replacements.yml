@@ -73,3 +73,53 @@
     accent-pirate-replaced-6: accent-pirate-replacement-3
     accent-pirate-replaced-7: accent-pirate-replacement-5
     accent-pirate-replaced-8: accent-pirate-replacement-6
+
+- type: accent
+  id: elegant
+  wordReplacements:
+    accent-elegant-words-1: accent-elegant-words-replace-1
+    accent-elegant-words-2: accent-elegant-words-replace-2
+    accent-elegant-words-3: accent-elegant-words-replace-3
+    accent-elegant-words-4: accent-elegant-words-replace-4
+    accent-elegant-words-5: accent-elegant-words-replace-5
+    accent-elegant-words-6: accent-elegant-words-replace-6
+    accent-elegant-words-7: accent-elegant-words-replace-7
+    accent-elegant-words-8: accent-elegant-words-replace-8
+    accent-elegant-words-9: accent-elegant-words-replace-9
+    accent-elegant-words-10: accent-elegant-words-replace-10
+    accent-elegant-words-11: accent-elegant-words-replace-11
+    accent-elegant-words-12: accent-elegant-words-replace-12
+    accent-elegant-words-13: accent-elegant-words-replace-13
+    accent-elegant-words-14: accent-elegant-words-replace-14
+    accent-elegant-words-15: accent-elegant-words-replace-15
+    accent-elegant-words-16: accent-elegant-words-replace-16
+    accent-elegant-words-17: accent-elegant-words-replace-17
+    accent-elegant-words-18: accent-elegant-words-replace-18
+    accent-elegant-words-19: accent-elegant-words-replace-19
+    accent-elegant-words-20: accent-elegant-words-replace-20
+    accent-elegant-words-21: accent-elegant-words-replace-21
+    accent-elegant-words-22: accent-elegant-words-replace-22
+    accent-elegant-words-23: accent-elegant-words-replace-23
+    accent-elegant-words-24: accent-elegant-words-replace-24
+    accent-elegant-words-25: accent-elegant-words-replace-25
+    accent-elegant-words-26: accent-elegant-words-replace-26
+    accent-elegant-words-27: accent-elegant-words-replace-27
+    accent-elegant-words-28: accent-elegant-words-replace-28
+    accent-elegant-words-29: accent-elegant-words-replace-29
+    accent-elegant-words-30: accent-elegant-words-replace-30
+    accent-elegant-words-31: accent-elegant-words-replace-31
+    accent-elegant-words-32: accent-elegant-words-replace-32
+    accent-elegant-words-33: accent-elegant-words-replace-33
+    accent-elegant-words-34: accent-elegant-words-replace-34
+    accent-elegant-words-35: accent-elegant-words-replace-35
+    accent-elegant-words-36: accent-elegant-words-replace-36
+    accent-elegant-words-37: accent-elegant-words-replace-37
+    accent-elegant-words-38: accent-elegant-words-replace-38
+    accent-elegant-words-39: accent-elegant-words-replace-39
+    accent-elegant-words-40: accent-elegant-words-replace-40
+    accent-elegant-words-41: accent-elegant-words-replace-41
+    accent-elegant-words-42: accent-elegant-words-replace-42
+    accent-elegant-words-43: accent-elegant-words-replace-43
+    accent-elegant-words-44: accent-elegant-words-replace-44
+    accent-elegant-words-45: accent-elegant-words-replace-45
+

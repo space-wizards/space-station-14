@@ -1,0 +1,49 @@
+- type: body
+  id: Shrooman
+  name: shrooman
+  root: torso
+  slots:
+    head:
+      part: HeadShrooman
+      connections:
+      - torso
+      organs:
+        brain: OrganShroomanBrain
+        eyes: OrganShroomanEyes
+    torso:
+      part: TorsoShrooman
+      connections:
+      - left arm
+      - right arm
+      - left leg
+      - right leg
+      organs:
+        heart: OrganShroomanHeart
+        stomach: OrganShroomanStomach
+        lungs: OrganShroomanLungs
+        liver: OrganShroomanLiver
+        kidneys: OrganShroomanKidneys
+    right arm:
+      part: RightArmShrooman
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmShrooman
+      connections:
+      - left hand
+    right hand:
+      part: RightHandShrooman
+    left hand:
+      part: LeftHandShrooman
+    right leg:
+      part: RightLegShrooman
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegShrooman
+      connections:
+      - left foot
+    right foot:
+      part: RightFootShrooman
+    left foot:
+      part: LeftFootShrooman

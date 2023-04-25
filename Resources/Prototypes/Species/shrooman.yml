@@ -1,7 +1,7 @@
 - type: species
   id: Shrooman
   name: species-name-shrooman
-  roundStart: false
+  roundStart: false # Should never be, for their purpose is elsewhere.
   prototype: MobShrooman
   sprites: MobShroomanSprites
   markingLimits: MobShroomanMarkingLimits
@@ -32,10 +32,7 @@
   id: MobShroomanMarkingLimits
   onlyWhitelisted: true
   points:
-    Head:
-      points: 0
-      required: false
-    HeadTop:
+    Hair:
       points: 0
       required: false
     HeadSide:

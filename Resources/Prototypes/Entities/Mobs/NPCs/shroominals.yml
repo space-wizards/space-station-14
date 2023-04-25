@@ -31,7 +31,7 @@
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodLingzhi
+    - id: FoodFlyAmanita
       amount: 3
   - type: InteractionPopup
     successChance: 0.8

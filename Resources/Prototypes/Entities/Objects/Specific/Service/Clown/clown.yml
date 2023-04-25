@@ -1,0 +1,25 @@
+- type: entity
+  id: ClownFlower
+  name: clown flower
+  description: Does this count as a medicinal flower?
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/clown_flower.rsi
+    state: produce
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/clown_flower.rsi
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 10
+  - type: RefillableSolution
+    solution: spray
+  - type: ExaminableSolution
+    solution: spray
+  - type: ItemCooldown
+  - type: Spray
+    transferAmount: 10
+    sprayVelocity: 5
+    spraySound:
+      path: /Audio/Effects/spray2.ogg

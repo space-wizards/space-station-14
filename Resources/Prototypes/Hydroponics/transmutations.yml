@@ -32,3 +32,10 @@
   r: 6
   a: 6
   plantPrototype: hell_lemon
+
+- type: transmutation
+  id: ClownFlower
+  t: 1
+  r: 5
+  a: 6
+  plantPrototype: clown_flower

@@ -13,16 +13,16 @@
   - type: Icon
     sprite: Mobs/Species/Shrooman/parts.rsi
     state: full
-  #- type: Body TODO: Add body parts
-  #  prototype: Diona
-  #  requiredLegs: 2
+  - type: Body
+    prototype: Shrooman
+    requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Fungus
   - type: Butcherable
     butcheringType: Spike
     spawned:
-      - id: FoodMeatPlant
+      - id: FoodFlyAmanita
         amount: 5
   - type: Bloodstream
     bloodReagent: SpaceDrugs # Because shrooms.
@@ -37,7 +37,19 @@
           - MobMask
         layer:
           - MobLayer
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Poison: 6
+        Blunt: 2
   - type: InventorySlots
+  - type: Inventory
+    templateId: shrooman
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
@@ -46,5 +58,7 @@
       Male: UnisexDiona
       Female: UnisexDiona
       Unsexed: UnisexDiona
+  - type: ReplacementAccent
+    accent: elegant
   - type: BodyEmotes
     soundsId: DionaBodyEmotes

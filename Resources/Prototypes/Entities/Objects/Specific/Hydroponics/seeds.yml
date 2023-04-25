@@ -324,6 +324,17 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of clown flower seeds
+  description: "Who has not seen one of these before?"
+  id: ClownFlowerSeeds
+  components:
+    - type: Seed
+      seedId: clown_flower
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/clown_flower.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of lingzhi spores
   description: "Also known as reishi."
   id: LingzhiSeeds

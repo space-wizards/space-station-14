@@ -35,9 +35,6 @@
     description: You are a fungus based humanoid, obey and protect your creators at all costs
     rules: You may not harm your creators or cause them any grief, but you must protect them and do whatever they say.
   - type: GhostTakeoverAvailable
-  - type: RandomHumanoidAppearance
-  - type: ReplacementAccent
-    accent: mumble
   - type: RandomMetadata
     nameSegments:
       - names_mushman_first
