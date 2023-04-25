@@ -70,3 +70,6 @@ ent-BarSignZocalo = Сокало
 ent-BarSignEmprah = За Империю
     .desc = Нравится и фанатикам, и еретикам, и завсегдатаям с дефектами мозга.
     .suffix = { "" }
+ent-BarSignSpacebucks = Spacebucks
+    .desc = You can't get away from them, even in space.
+    .suffix = { "" }

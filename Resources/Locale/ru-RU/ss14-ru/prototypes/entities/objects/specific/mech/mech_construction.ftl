@@ -1,6 +1,12 @@
 ent-BaseMechPart = { "" }
     .desc = { "" }
     .suffix = { "" }
+ent-BaseRipleyPart = { ent-BaseMechPart }
+    .desc = { ent-BaseMechPart.desc }
+    .suffix = { "" }
+ent-BaseRipleyPartItem = { ent-BaseRipleyPart }
+    .desc = { ent-BaseRipleyPart.desc }
+    .suffix = { "" }
 ent-BaseMechPartItem = { ent-BaseMechPart }
     .desc = { ent-BaseMechPart.desc }
     .suffix = { "" }

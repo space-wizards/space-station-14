@@ -16,3 +16,6 @@ ent-WeaponRevolverPython = Питон
 ent-WeaponRevolverPirate = пиратский револьвер
     .desc = Странный, старый на вид револьвер, который использовали пираты. Использует патроны калибра .45 магнум.
     .suffix = Револьвер
+ent-WeaponPistolCHIMP = C.H.I.M.P. handcannon
+    .desc = Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
+    .suffix = { "" }

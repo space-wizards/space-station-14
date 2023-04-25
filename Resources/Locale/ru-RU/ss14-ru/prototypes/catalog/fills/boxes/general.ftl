@@ -70,3 +70,6 @@ ent-BoxEncryptionKeySecurity = ящик для ключей шифрования
 ent-BoxEncryptionKeyService = ящик для ключей шифрования сервисного отдела
     .desc = { ent-BoxEncryptionKeyPassenger.desc }
     .suffix = { "" }
+ent-BoxEncryptionKeySyndie = ящик для ключей шифрования синдиката
+    .desc = Два ключа шифрования синдиката по цене одного. Миниатюрный для простоты использования.
+    .suffix = { "" }

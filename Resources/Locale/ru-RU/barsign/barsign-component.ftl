@@ -113,6 +113,11 @@ barsign-prototype-description-enginechange = Все ещё ожидаем.
 barsign-prototype-name-emprah = За Империю
 barsign-prototype-description-emprah = Нравится и фанатикам, и еретикам, и завсегдатаям с дефектами мозга.
 
+## Spacebucks
+
+barsign-prototype-name-spacebucks = Космобаксы
+barisgn-prototype-description-spacebucks = От них невозможно скрыться, даже в космосе.
+
 ## EmpBarSign
 
 barsign-prototype-description-empbarsign = Что-то явно пошло не так.
