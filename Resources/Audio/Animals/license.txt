@@ -49,3 +49,5 @@ The following sounds were used from youtube:
     lizard_happy.ogg: audio created by youtube user "Nagaty Studio" (https://youtu.be/I7CX0AS8RNI) licensed under CC by 3.0.
 
     bear.ogg: audio is recorded by "Nagaty Studio" (https://www.youtube.com/watch?v=pz6eZbESlU8) licensed under CC by 3.0. The original audio was reverbed.
+
+    kangaroo_grunt.ogg: audio is recorded/created by Pfranzen "FreeSound.org" (https://freesound.org/people/pfranzen/sounds/322744/) licensed under CC BY 4.0. The original audio was trimmed and renamed.
