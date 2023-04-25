@@ -25,7 +25,7 @@ namespace Content.Server.Disease.Cures
         public override bool Cure(DiseaseEffectArgs args)
         {
             if (!args.EntityManager.TryGetComponent<BuckleComponent>(args.DiseasedEntity, out var buckle) ||
-                !args.EntityManager.HasComponent<HealOnBuckleComponent>(buckle.BuckledTo?.Owner))
+                !args.EntityManager.HasComponent<HealOnBuckleComponent>(buckle.BuckledTo))
                 return false;
 
             var ticks = 1;

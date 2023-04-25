@@ -11,7 +11,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Containers;
 using Content.Shared.Tag;
 using Content.Shared.Audio;
-using Serilog;
+using Content.Shared.Popups;
 
 namespace Content.Shared.Vehicle;
 
@@ -28,6 +28,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly AccessReaderSystem _access = default!;
+    [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
 
     private const string KeySlot = "key_slot";
 
@@ -59,6 +60,10 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         inVehicle.Vehicle = component;
 
         component.HasKey = true;
+
+        var msg = Loc.GetString("vehicle-use-key",
+            ("keys", args.Entity), ("vehicle", uid));
+        PopupSystem.PopupEntity(msg, uid, args.OldParent, PopupType.Medium);
 
         // Audiovisual feedback
         _ambientSound.SetAmbience(uid, true);
@@ -102,7 +107,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             return;
 
         // This first check is just for safety
-        if (!HasComp<InputMoverComponent>(uid))
+        if (component.AutoAnimate && !HasComp<InputMoverComponent>(uid))
         {
             UpdateAutoAnimate(uid, false);
             return;
@@ -235,10 +240,13 @@ public enum VehicleVisuals : byte
     /// <summary>
     /// Whether the wheels should be turning
     /// </summary>
-    AutoAnimate
+    AutoAnimate,
+    HideRider
 }
+
 /// <summary>
 /// Raised when someone honks a vehicle horn
 /// </summary>
-public sealed class HonkActionEvent : InstantActionEvent { }
-
+public sealed class HonkActionEvent : InstantActionEvent
+{
+}

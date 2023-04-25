@@ -1,5 +1,4 @@
 using Content.Server.Actions;
-using Content.Server.Buckle.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
@@ -7,6 +6,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -30,7 +30,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
-        [Dependency] private readonly BuckleSystem _buckle = default!;
+        [Dependency] private readonly SharedBuckleSystem _buckle = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;

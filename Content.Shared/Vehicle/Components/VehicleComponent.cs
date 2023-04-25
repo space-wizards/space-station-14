@@ -1,5 +1,7 @@
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Vehicle.Components
@@ -10,8 +12,9 @@ namespace Content.Shared.Vehicle.Components
     /// component at some point.
     /// All vehicles should have Physics, Strap, and SharedPlayerInputMover components.
     /// </summary>
-    [RegisterComponent]
-    public sealed class VehicleComponent : Component
+    [AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent]
+    public sealed partial class VehicleComponent : Component
     {
         /// <summary>
         /// Whether someone is currently riding the vehicle
@@ -22,7 +25,16 @@ namespace Content.Shared.Vehicle.Components
         /// The entity currently riding the vehicle.
         /// </summary>
         [ViewVariables]
+        [AutoNetworkedField]
         public EntityUid? Rider;
+
+        [ViewVariables]
+        [AutoNetworkedField]
+        public EntityUid? LastRider;
+
+        [DataField("whitelist")]
+        [ViewVariables]
+        public EntityWhitelist? Whitelist;
 
         /// <summary>
         /// The base offset for the vehicle (when facing east)
@@ -88,5 +100,16 @@ namespace Content.Shared.Vehicle.Components
         /// </summary>
         [DataField("southOverride")]
         public float SouthOverride = 0f;
+
+        [ViewVariables]
+        public int DrawDepth = 0;
+
+        [DataField("autoAnimate")]
+        [ViewVariables]
+        public bool AutoAnimate;
+
+        [ViewVariables]
+        [DataField("hideRider")]
+        public bool HideRider = false;
     }
 }

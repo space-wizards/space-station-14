@@ -1,13 +1,13 @@
-using Content.Server.Buckle.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Light.Components;
 using Content.Shared.Actions;
+using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -16,7 +16,7 @@ namespace Content.Server.Vehicle
 {
     public sealed partial class VehicleSystem : SharedVehicleSystem
     {
-        [Dependency] private readonly BuckleSystem _buckle = default!;
+        [Dependency] private readonly SharedBuckleSystem _buckle = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedJointSystem _joints = default!;
@@ -54,6 +54,9 @@ namespace Content.Server.Vehicle
         {
             foreach (var (vehicle, mover) in EntityQuery<VehicleComponent, InputMoverComponent>())
             {
+                if (!vehicle.AutoAnimate)
+                    continue;
+
                 if (_mover.GetVelocityInput(mover).Sprinting == Vector2.Zero)
                 {
                     UpdateAutoAnimate(vehicle.Owner, false);
@@ -67,11 +70,18 @@ namespace Content.Server.Vehicle
         /// Give the user the rider component if they're buckling to the vehicle,
         /// otherwise remove it.
         /// </summary>
-        private void OnBuckleChange(EntityUid uid, VehicleComponent component, BuckleChangeEvent args)
+        private void OnBuckleChange(EntityUid uid, VehicleComponent component, ref BuckleChangeEvent args)
         {
             // Add Rider
             if (args.Buckling)
             {
+                if (component.Whitelist != null &&
+                    !component.Whitelist.IsValid(args.BuckledEntity, EntityManager))
+                {
+                    PopupSystem.PopupEntity(Loc.GetString("vehicle-cant-control"), uid, args.BuckledEntity, PopupType.Medium);
+                    return;
+                }
+
                 // Add a virtual item to rider's hand, unbuckle if we can't.
                 if (!_virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity))
                 {
@@ -83,6 +93,9 @@ namespace Content.Server.Vehicle
                 EnsureComp<InputMoverComponent>(uid);
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
                 component.Rider = args.BuckledEntity;
+                component.LastRider = component.Rider;
+                Dirty(component);
+                Appearance.SetData(uid, VehicleVisuals.HideRider, true);
 
                 var relay = EnsureComp<RelayInputMoverComponent>(args.BuckledEntity);
                 _mover.SetRelay(args.BuckledEntity, uid, relay);
@@ -114,12 +127,15 @@ namespace Content.Server.Vehicle
             _actionsSystem.RemoveProvidedActions(args.BuckledEntity, uid);
             _virtualItemSystem.DeleteInHandsMatching(args.BuckledEntity, uid);
 
+
             // Entity is no longer riding
             RemComp<RiderComponent>(args.BuckledEntity);
             RemComp<RelayInputMoverComponent>(args.BuckledEntity);
 
+            Appearance.SetData(uid, VehicleVisuals.HideRider, false);
             // Reset component
             component.Rider = null;
+            Dirty(component);
         }
     }
 }
