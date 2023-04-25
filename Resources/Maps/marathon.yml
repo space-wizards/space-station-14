@@ -169437,7 +169437,6 @@ entities:
     - 8467
     - 8468
     - 21778
-    - invalid
     type: DeviceList
 - uid: 21777
   type: AirAlarm
@@ -169459,7 +169458,6 @@ entities:
     - 11220
     - 11219
     - 20335
-    - invalid
     type: DeviceList
 - uid: 21778
   type: AirSensor
@@ -170201,7 +170199,6 @@ entities:
     type: Transform
   - devices:
     - 21837
-    - invalid
     - 7260
     - 7871
     - 7875
@@ -170419,7 +170416,6 @@ entities:
   - devices:
     - 20359
     - 20360
-    - invalid
     type: DeviceList
 - uid: 21863
   type: AirAlarm
@@ -170433,7 +170429,6 @@ entities:
     - 1101
     - 1100
     - 1099
-    - invalid
     - 21865
     - 3148
     - 3147
@@ -172148,7 +172143,6 @@ entities:
     type: Transform
   - devices:
     - 22041
-    - invalid
     - 6536
     - 6537
     - 6538
@@ -172306,7 +172300,6 @@ entities:
     type: Transform
   - devices:
     - 22041
-    - invalid
     - 6536
     - 6537
     - 6538
