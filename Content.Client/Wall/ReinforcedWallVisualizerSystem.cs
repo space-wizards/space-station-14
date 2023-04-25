@@ -17,7 +17,7 @@ namespace Content.Client.Wall
 
         private void SetDeconstructionStage(int stage, SpriteComponent sprite)
         {
-            object index = sprite.LayerMapReserveBlank(ReinforcedWallVisualLayers.Deconstruction);
+            object index = sprite.LayerMapReserveBlank(ReinforcedWallVisualsComponent.ReinforcedWallVisualLayers.Deconstruction);
 
             if (stage < 0)
             {
