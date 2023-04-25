@@ -47,7 +47,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
             }
 
             if (TryComp<SharedPointLightComponent>(uid, out var light))
-                light.Color = comp.ScreenColors[(byte)chargeState];
+                light.Color = comp.ScreenColors[(sbyte)chargeState];
         }
         else
         {

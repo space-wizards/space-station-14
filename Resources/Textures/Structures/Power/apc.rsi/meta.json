@@ -11,25 +11,25 @@
       "name": "base"
     },
     {
-      "name": "base-frame"
+      "name": "broken"
     },
     {
-      "name": "base-broken"
+      "name": "frame"
     },
     {
       "name": "panel"
     },
     {
-      "name": "lock0-0"
+      "name": "lock0-unlocked"
     },
     {
-      "name": "lock0-1"
+      "name": "lock0-locked"
     },
     {
-      "name": "lock1-0"
+      "name": "lock1-unlocked"
     },
     {
-      "name": "lock1-1"
+      "name": "lock1-locked"
     },
     {
       "name": "channel0-auto_off"

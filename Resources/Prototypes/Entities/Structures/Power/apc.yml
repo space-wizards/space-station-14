@@ -30,6 +30,9 @@
     sprite: Structures/Power/apc.rsi
     layers:
     - state: base
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
     - state: display-charging
       shader: unshaded
       map: ["enum.ApcVisualLayers.ChargeState"]
@@ -48,9 +51,6 @@
     - state: channel2-auto_on
       shader: unshaded
       map: ["enum.ApcVisualLayers.Environment"]
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      visible: false
   - type: Appearance
   - type: ApcVisuals
   - type: Battery
