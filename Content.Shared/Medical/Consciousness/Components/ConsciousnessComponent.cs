@@ -33,11 +33,14 @@ public sealed class ConsciousnessComponent : Component
     //List of multipliers that are applied to this consciousness
     [DataField("multipliers"), AutoNetworkedField()]
     public Dictionary<EntityUid,ConsciousnessMultiplier> Multipliers = new();
+
+    [DataField("isConscious"), AutoNetworkedField()]
+    public bool IsConscious = true;
 }
 
 [Serializable, DataRecord]
 public record struct ConsciousnessModifier(FixedPoint2 Change, string Identifier = "Unspecified");
 
 [Serializable, DataRecord]
-public record struct ConsciousnessMultiplier(FixedPoint2 Multiplier,
+public record struct ConsciousnessMultiplier(FixedPoint2 Change,
     string Identifier = "Unspecified");
