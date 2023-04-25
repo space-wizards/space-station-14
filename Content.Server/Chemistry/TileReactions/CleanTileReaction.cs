@@ -1,50 +1,64 @@
 using System.Linq;
-using Content.Server.Cleanable;
-using Content.Server.Decals;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Chemistry.TileReactions
+namespace Content.Server.Chemistry.TileReactions;
+
+/// <summary>
+/// Turns all of the reagents on a puddle into water.
+/// </summary>
+[DataDefinition]
+public sealed class CleanTileReaction : ITileReaction
 {
-    [DataDefinition]
-    public sealed class CleanTileReaction : ITileReaction
+    /// <summary>
+    /// How much it costs to clean 1 unit of reagent.
+    /// </summary>
+    /// <remarks>
+    /// In terms of space cleaner can clean 1 average puddle per 5 units.
+    /// </remarks>
+    [DataField("cleanCost")]
+    public float CleanAmountMultiplier { get; private set; } = 0.25f;
+
+    /// <summary>
+    /// What reagent to replace the tile conents with.
+    /// </summary>
+    [DataField("reagent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    public string ReplacementReagent = "Water";
+
+    FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
-        /// <summary>
-        ///     Multiplier used in CleanTileReaction.
-        ///     1 (default) means normal consumption rate of the cleaning reagent.
-        ///     0 means no consumption of the cleaning reagent, i.e. the reagent is inexhaustible.
-        /// </summary>
-        [DataField("cleanAmountMultiplier")]
-        public float CleanAmountMultiplier { get; private set; } = 1.0f;
+        var entMan = IoCManager.Resolve<IEntityManager>();
+        var entities = entMan.System<EntityLookupSystem>().GetEntitiesIntersecting(tile).ToArray();
+        var puddleQuery = entMan.GetEntityQuery<PuddleComponent>();
+        var solutionContainerSystem = entMan.System<SolutionContainerSystem>();
+        // Multiply as the amount we can actually purge is higher than the react amount.
+        var purgeAmount = reactVolume / CleanAmountMultiplier;
 
-        FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
+        foreach (var entity in entities)
         {
-            var entities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(tile).ToArray();
-            var amount = FixedPoint2.Zero;
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            foreach (var entity in entities)
+            if (!puddleQuery.TryGetComponent(entity, out var puddle) ||
+                !solutionContainerSystem.TryGetSolution(entity, puddle.SolutionName, out var puddleSolution))
             {
-                if (entMan.TryGetComponent(entity, out CleanableComponent? cleanable))
-                {
-                    var next = amount + (cleanable.CleanAmount * CleanAmountMultiplier);
-                    // Nothing left?
-                    if (reactVolume < next)
-                        break;
-
-                    amount = next;
-                    entMan.QueueDeleteEntity(entity);
-                }
+                continue;
             }
 
-            var decalSystem = EntitySystem.Get<DecalSystem>();
-            foreach (var (uid, _) in decalSystem.GetDecalsInRange(tile.GridUid, tile.GridIndices+new Vector2(0.5f, 0.5f), validDelegate: x => x.Cleanable))
-            {
-                decalSystem.RemoveDecal(tile.GridUid, uid);
-            }
+            var purgeable =
+                solutionContainerSystem.SplitSolutionWithout(entity, puddleSolution, purgeAmount, ReplacementReagent, reagent.ID);
 
-            return amount;
+            purgeAmount -= purgeable.Volume;
+
+            solutionContainerSystem.TryAddSolution(entity, puddleSolution, new Solution(ReplacementReagent, purgeable.Volume));
+
+            if (purgeable.Volume <= FixedPoint2.Zero)
+                break;
         }
+
+        return (reactVolume / CleanAmountMultiplier - purgeAmount) * CleanAmountMultiplier;
     }
 }

@@ -27,7 +27,6 @@
     canChangeTransferAmount: true
   - type: ItemCooldown
   - type: Spray
-    transferAmount: 10
     sprayVelocity: 2
     spraySound:
       path: /Audio/Effects/spray2.ogg
@@ -51,9 +50,8 @@
         maxVol: 250
   - type: Spray
     sprayedPrototype: BigVapor
-    transferAmount: 10
     sprayVelocity: 5
-    sprayAliveTime: 1.5
+    sprayAliveTime: 5
     spraySound:
       path: /Audio/Effects/spray2.ogg
 
