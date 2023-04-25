@@ -35,8 +35,10 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
         var preset = _prototypeManager.Index<WeightedRandomPrototype>("Secret").Pick(_random);
         Logger.InfoS("gamepreset", $"Selected {preset} for secret.");
 
-        foreach (var rule in _prototypeManager.Index<GamePresetPrototype>(preset).Rules)
+        var rules = _prototypeManager.Index<GamePresetPrototype>(preset).Rules;
+        foreach (var rule in rules)
         {
+            Logger.Debug($"what the fuck, {rule}");
             GameTicker.StartGameRule(rule, out var ruleEnt);
             component.AdditionalGameRules.Add(ruleEnt);
         }
