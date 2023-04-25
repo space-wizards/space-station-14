@@ -92,6 +92,9 @@ ui-options-function-walk = Walk
 ui-options-function-camera-rotate-left = Rotate left
 ui-options-function-camera-rotate-right = Rotate right
 ui-options-function-camera-reset = Reset
+ui-options-function-zoom-in = Zoom in
+ui-options-function-zoom-out = Zoom out
+ui-options-function-reset-zoom = Reset zoom
 
 ui-options-function-use = Use
 ui-options-function-use-secondary = Use secondary

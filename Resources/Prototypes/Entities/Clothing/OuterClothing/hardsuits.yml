@@ -659,6 +659,8 @@
     damageCoefficient: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
+  - type: DiseaseProtection
+    protection: 0.2
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -693,6 +695,8 @@
     damageCoefficient: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
+  - type: DiseaseProtection
+    protection: 0.4
 
 #ERT
 - type: entity
@@ -731,6 +735,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
+  - type: DiseaseProtection
+    protection: 0.25
+
 
 - type: entity
   parent: ClothingOuterHardsuitERTLeader

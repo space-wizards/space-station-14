@@ -5,6 +5,7 @@ using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Server.Body.Systems;
 using Content.Server.Mind.Components;
+using Content.Server.Players;
 using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Shared.Body.Part;
@@ -107,7 +108,6 @@ public abstract partial class InteractionTest
     protected ConstructionSystem CConSys = default!;
     protected ExamineSystem ExamineSys = default!;
     protected InteractionTestSystem CTestSystem = default!;
-    protected UserInterfaceSystem CUISystem = default!;
 
     // player components
     protected HandsComponent Hands = default!;
@@ -164,6 +164,10 @@ public abstract partial class InteractionTest
         EntityUid? old = default;
         await Server.WaitPost(() =>
         {
+            // Fuck you mind system I want an hour of my life back
+            // Mind system is a time vampire
+            ServerSession.ContentData()?.WipeMind();
+
             old = cPlayerMan.LocalPlayer.ControlledEntity;
             Player = SEntMan.SpawnEntity(PlayerPrototype, PlayerCoords);
             ServerSession.AttachToEntity(Player);
@@ -178,17 +182,11 @@ public abstract partial class InteractionTest
         // Delete old player entity.
         await Server.WaitPost(() =>
         {
-            if (old == null)
-                return;
-
-            // Fuck you mind system I want an hour of my life back
-            if (SEntMan.TryGetComponent(old, out MindComponent? mind))
-                mind.GhostOnShutdown = false;
-
-            SEntMan.DeleteEntity(old.Value);
+            if (old != null)
+                SEntMan.DeleteEntity(old.Value);
         });
 
-        // Ensure that the player only has one hand, so that they do not accidentally pick up deconstruction protucts
+        // Ensure that the player only has one hand, so that they do not accidentally pick up deconstruction products
         await Server.WaitPost(() =>
         {
             var bodySystem = SEntMan.System<BodySystem>();

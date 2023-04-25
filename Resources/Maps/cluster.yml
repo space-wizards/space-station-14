@@ -141,7 +141,7 @@ entities:
         tiles: XgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXQAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAXgAAAF4AAABeAAAAXgAAAAAAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF4AAABeAAAAXgAAAF4AAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXQAAAAAAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF0AAABdAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF0AAABdAAAAXQAAAF0AAABdAAAAXQAAAAAAAAAAAAAAXQAAAAAAAABdAAAAAAAAAAAAAABdAAAAXQAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAAAAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF0AAABdAAAAXQAAAF0AAABdAAAAXQAAAF0AAABeAAAAXgAAAF4AAABeAAAASgAAAkoAAAJKAAAASgAAAl4AAAAAAAAAAAAAAF0AAAAAAAAAXQAAAAAAAAAAAAAAXgAAABsAAAAWAAABXgAAAEQAAAJEAAACRAAAA0QAAABeAAAAAAAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAAAbAAADFgAAAhYAAAFEAAADRAAAA0QAAAJEAAACRAAAAg==
       3,-1:
         ind: 3,-1
-        tiles: AAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        tiles: AAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       3,-2:
         ind: 3,-2
         tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
@@ -3243,7 +3243,8 @@ entities:
         2,-2:
           0: 65535
         2,-1:
-          0: 65535
+          0: 32639
+          1: 32896
         -4,4:
           0: 65535
         -4,5:
@@ -4331,7 +4332,6 @@ entities:
   - pos: -1.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5
   type: WallSolid
   components:
@@ -4350,14 +4350,12 @@ entities:
   - pos: -3.5,3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8
   type: WallSolid
   components:
   - pos: -3.5,1.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9
   type: WallSolid
   components:
@@ -4406,7 +4404,6 @@ entities:
   - pos: 6.5,-6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 17
   type: WallSolid
   components:
@@ -4425,7 +4422,6 @@ entities:
   - pos: 2.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 20
   type: WallSolid
   components:
@@ -4471,6 +4467,8 @@ entities:
     pos: -15.5,-27.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 27
@@ -4515,7 +4513,6 @@ entities:
     pos: 6.5,3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 33
   type: ReinforcedWindow
   components:
@@ -4548,7 +4545,6 @@ entities:
     pos: 1.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 38
   type: WallSolid
   components:
@@ -4561,7 +4557,6 @@ entities:
   - pos: 6.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 40
   type: Window
   components:
@@ -4624,6 +4619,8 @@ entities:
     pos: 44.5,20.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 50
@@ -4763,7 +4760,6 @@ entities:
   - pos: 6.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 72
   type: WallSolid
   components:
@@ -4806,21 +4802,18 @@ entities:
   - pos: 4.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 79
   type: Window
   components:
   - pos: -1.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 80
   type: Window
   components:
   - pos: 5.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 81
   type: Window
   components:
@@ -4857,7 +4850,6 @@ entities:
   - pos: -2.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 87
   type: Grille
   components:
@@ -4906,35 +4898,30 @@ entities:
   - pos: -3.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 95
   type: Window
   components:
   - pos: -3.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 96
   type: Window
   components:
   - pos: -3.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 97
   type: Window
   components:
   - pos: 6.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 98
   type: Window
   components:
   - pos: 6.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 99
   type: Grille
   components:
@@ -5002,7 +4989,6 @@ entities:
   - pos: 3.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 110
   type: ReinforcedWindow
   components:
@@ -5021,7 +5007,6 @@ entities:
   - pos: 6.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 113
   type: Grille
   components:
@@ -5058,28 +5043,24 @@ entities:
   - pos: 6.5,18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 119
   type: WallReinforced
   components:
   - pos: 6.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 120
   type: WallReinforced
   components:
   - pos: 6.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 121
   type: ReinforcedWindow
   components:
   - pos: 5.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 122
   type: WallReinforced
   components:
@@ -5092,7 +5073,6 @@ entities:
   - pos: 2.5,22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 124
   type: WallReinforced
   components:
@@ -5213,7 +5193,6 @@ entities:
   - pos: -6.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 144
   type: WallReinforced
   components:
@@ -5256,7 +5235,6 @@ entities:
   - pos: -6.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 151
   type: WallSolid
   components:
@@ -5269,7 +5247,6 @@ entities:
   - pos: -7.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 153
   type: WallReinforced
   components:
@@ -5282,14 +5259,12 @@ entities:
   - pos: -9.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 155
   type: WallReinforced
   components:
   - pos: -9.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 156
   type: WallReinforced
   components:
@@ -5308,7 +5283,6 @@ entities:
   - pos: -9.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 159
   type: ReinforcedWindow
   components:
@@ -5346,7 +5320,6 @@ entities:
   - pos: -13.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 165
   type: TableWood
   components:
@@ -5354,7 +5327,6 @@ entities:
     pos: -1.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 166
   type: Grille
   components:
@@ -5385,7 +5357,6 @@ entities:
   - pos: -11.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 171
   type: ReinforcedWindow
   components:
@@ -5412,14 +5383,12 @@ entities:
     pos: -7.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 175
   type: WallSolid
   components:
   - pos: -7.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 176
   type: Grille
   components:
@@ -5439,7 +5408,6 @@ entities:
     pos: -7.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 179
   type: Grille
   components:
@@ -5482,7 +5450,6 @@ entities:
   - pos: -14.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 186
   type: ReinforcedWindow
   components:
@@ -5531,7 +5498,6 @@ entities:
   - pos: -17.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 194
   type: WallReinforced
   components:
@@ -5562,7 +5528,6 @@ entities:
   - pos: -21.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 199
   type: WallReinforced
   components:
@@ -5611,7 +5576,6 @@ entities:
   - pos: -18.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 207
   type: WallReinforced
   components:
@@ -5688,7 +5652,6 @@ entities:
   - pos: -16.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 219
   type: ReinforcedWindow
   components:
@@ -5766,7 +5729,6 @@ entities:
     pos: -22.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 231
   type: ReinforcedWindow
   components:
@@ -5780,7 +5742,6 @@ entities:
   - pos: -13.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 233
   type: Table
   components:
@@ -5806,14 +5767,12 @@ entities:
   - pos: -16.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 237
   type: TintedWindow
   components:
   - pos: -16.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 238
   type: TintedWindow
   components:
@@ -5826,7 +5785,6 @@ entities:
   - pos: -19.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 240
   type: Grille
   components:
@@ -5960,14 +5918,12 @@ entities:
   - pos: -27.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 262
   type: WallReinforced
   components:
   - pos: -27.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 263
   type: ReinforcedWindow
   components:
@@ -6016,28 +5972,24 @@ entities:
   - pos: -27.5,8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 271
   type: WallSolid
   components:
   - pos: -30.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 272
   type: WallSolid
   components:
   - pos: -30.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 273
   type: WallReinforced
   components:
   - pos: -23.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 274
   type: WallReinforced
   components:
@@ -6050,7 +6002,6 @@ entities:
   - pos: -25.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 276
   type: WallReinforced
   components:
@@ -6063,14 +6014,12 @@ entities:
   - pos: -30.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 278
   type: WallSolid
   components:
   - pos: -30.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 279
   type: WallSolid
   components:
@@ -6089,42 +6038,36 @@ entities:
   - pos: -30.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 282
   type: WallSolid
   components:
   - pos: -30.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 283
   type: WallSolid
   components:
   - pos: -30.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 284
   type: WallSolid
   components:
   - pos: -30.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 285
   type: WallSolid
   components:
   - pos: -30.5,14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 286
   type: WallSolid
   components:
   - pos: -24.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 287
   type: WallSolid
   components:
@@ -6143,21 +6086,18 @@ entities:
   - pos: -27.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 290
   type: WallSolid
   components:
   - pos: -27.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 291
   type: WallSolid
   components:
   - pos: -27.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 292
   type: WallSolid
   components:
@@ -6176,7 +6116,6 @@ entities:
   - pos: -27.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 295
   type: WallSolid
   components:
@@ -6201,7 +6140,6 @@ entities:
   - pos: -9.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 299
   type: WallSolid
   components:
@@ -6220,7 +6158,6 @@ entities:
   - pos: -11.5,22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 302
   type: WallSolid
   components:
@@ -6275,7 +6212,6 @@ entities:
   - pos: -18.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 311
   type: WallSolid
   components:
@@ -6301,7 +6237,6 @@ entities:
     pos: -6.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 315
   type: WindowDirectional
   components:
@@ -6330,7 +6265,6 @@ entities:
     pos: -6.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 319
   type: WallReinforced
   components:
@@ -6338,7 +6272,6 @@ entities:
     pos: -6.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 320
   type: WallReinforced
   components:
@@ -6346,7 +6279,6 @@ entities:
     pos: -5.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 321
   type: WallReinforced
   components:
@@ -6354,7 +6286,6 @@ entities:
     pos: -5.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 322
   type: WallReinforced
   components:
@@ -6362,7 +6293,6 @@ entities:
     pos: -5.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 323
   type: WallReinforced
   components:
@@ -6370,7 +6300,6 @@ entities:
     pos: -5.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 324
   type: WallReinforced
   components:
@@ -6399,7 +6328,6 @@ entities:
     pos: -0.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 328
   type: WallReinforced
   components:
@@ -6414,7 +6342,6 @@ entities:
     pos: -0.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 330
   type: WallReinforced
   components:
@@ -6422,7 +6349,6 @@ entities:
     pos: -0.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 331
   type: WallReinforced
   components:
@@ -6458,7 +6384,6 @@ entities:
     pos: 6.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 336
   type: WallReinforced
   components:
@@ -6515,7 +6440,6 @@ entities:
     pos: 7.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 344
   type: WallReinforced
   components:
@@ -6551,7 +6475,6 @@ entities:
     pos: 7.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 349
   type: WallReinforced
   components:
@@ -6559,7 +6482,6 @@ entities:
     pos: 5.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 350
   type: WallReinforced
   components:
@@ -6567,7 +6489,6 @@ entities:
     pos: 4.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 351
   type: WallReinforced
   components:
@@ -6582,7 +6503,6 @@ entities:
     pos: 2.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 353
   type: WallReinforced
   components:
@@ -6597,7 +6517,6 @@ entities:
     pos: 2.5,29.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 355
   type: WallReinforced
   components:
@@ -6605,7 +6524,6 @@ entities:
     pos: 2.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 356
   type: WallReinforced
   components:
@@ -6634,7 +6552,6 @@ entities:
     pos: 6.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 360
   type: WallReinforced
   components:
@@ -6680,14 +6597,12 @@ entities:
   - pos: 0.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 367
   type: ReinforcedWindow
   components:
   - pos: 0.5,33.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 368
   type: ReinforcedWindow
   components:
@@ -6701,7 +6616,6 @@ entities:
     pos: -5.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 370
   type: Grille
   components:
@@ -6745,7 +6659,6 @@ entities:
   - pos: -4.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 377
   type: Grille
   components:
@@ -6774,7 +6687,6 @@ entities:
     pos: -6.5,28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 381
   type: ReinforcedWindow
   components:
@@ -6782,7 +6694,6 @@ entities:
     pos: -6.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 382
   type: ReinforcedWindow
   components:
@@ -6859,7 +6770,6 @@ entities:
     pos: -12.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 393
   type: WallReinforced
   components:
@@ -6915,7 +6825,6 @@ entities:
     pos: -11.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 401
   type: ReinforcedWindow
   components:
@@ -6923,7 +6832,6 @@ entities:
     pos: -10.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 402
   type: WallReinforced
   components:
@@ -6945,7 +6853,6 @@ entities:
     pos: -7.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 405
   type: Grille
   components:
@@ -6967,7 +6874,6 @@ entities:
     pos: 9.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 408
   type: Grille
   components:
@@ -7003,7 +6909,6 @@ entities:
     pos: -15.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 413
   type: WallReinforced
   components:
@@ -7051,7 +6956,6 @@ entities:
     pos: -14.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 420
   type: Window
   components:
@@ -7066,7 +6970,6 @@ entities:
     pos: -13.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 422
   type: Grille
   components:
@@ -7112,7 +7015,6 @@ entities:
     pos: 11.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 429
   type: WallReinforced
   components:
@@ -7150,14 +7052,12 @@ entities:
   - pos: -16.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 435
   type: WallSolid
   components:
   - pos: -14.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 436
   type: WallSolid
   components:
@@ -7183,7 +7083,6 @@ entities:
   - pos: 39.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 440
   type: WallReinforced
   components:
@@ -7210,7 +7109,6 @@ entities:
     pos: -7.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 444
   type: WallSolid
   components:
@@ -7218,7 +7116,6 @@ entities:
     pos: -7.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 445
   type: ReinforcedWindow
   components:
@@ -7226,7 +7123,6 @@ entities:
     pos: -7.5,-2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 446
   type: ReinforcedWindow
   components:
@@ -7234,7 +7130,6 @@ entities:
     pos: -7.5,-1.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 447
   type: ReinforcedWindow
   components:
@@ -7242,7 +7137,6 @@ entities:
     pos: -9.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 448
   type: ReinforcedWindow
   components:
@@ -7250,7 +7144,6 @@ entities:
     pos: -7.5,-3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 449
   type: Grille
   components:
@@ -7265,7 +7158,6 @@ entities:
     pos: -10.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 451
   type: ReinforcedWindow
   components:
@@ -7273,7 +7165,6 @@ entities:
     pos: -7.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 452
   type: ReinforcedWindow
   components:
@@ -7281,7 +7172,6 @@ entities:
     pos: -8.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 453
   type: TintedWindow
   components:
@@ -7289,7 +7179,6 @@ entities:
     pos: -13.5,-1.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 454
   type: TintedWindow
   components:
@@ -7297,7 +7186,6 @@ entities:
     pos: -13.5,-2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 455
   type: ReinforcedWindow
   components:
@@ -7319,7 +7207,6 @@ entities:
     pos: -11.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 458
   type: TintedWindow
   components:
@@ -7327,7 +7214,6 @@ entities:
     pos: -13.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 459
   type: WallSolid
   components:
@@ -7342,7 +7228,6 @@ entities:
     pos: -32.5,-6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 461
   type: WallSolid
   components:
@@ -7350,7 +7235,6 @@ entities:
     pos: -16.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 462
   type: WallSolid
   components:
@@ -7365,7 +7249,6 @@ entities:
     pos: -13.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 464
   type: WallSolid
   components:
@@ -7373,7 +7256,6 @@ entities:
     pos: -10.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 465
   type: WallSolid
   components:
@@ -7381,7 +7263,6 @@ entities:
     pos: -10.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 466
   type: WallSolid
   components:
@@ -7389,7 +7270,6 @@ entities:
     pos: -13.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 467
   type: ReinforcedWindow
   components:
@@ -7397,7 +7277,6 @@ entities:
     pos: -10.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 468
   type: WallSolid
   components:
@@ -7405,7 +7284,6 @@ entities:
     pos: -3.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 469
   type: WallSolid
   components:
@@ -7413,7 +7291,6 @@ entities:
     pos: -3.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 470
   type: WallSolid
   components:
@@ -7421,7 +7298,6 @@ entities:
     pos: -9.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 471
   type: Grille
   components:
@@ -7436,7 +7312,6 @@ entities:
     pos: -10.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 473
   type: ReinforcedWindow
   components:
@@ -7444,7 +7319,6 @@ entities:
     pos: -10.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 474
   type: Grille
   components:
@@ -7466,7 +7340,6 @@ entities:
     pos: -4.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 477
   type: Table
   components:
@@ -7481,7 +7354,6 @@ entities:
     pos: -8.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 479
   type: Table
   components:
@@ -7524,7 +7396,6 @@ entities:
     pos: -14.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 485
   type: Table
   components:
@@ -7539,7 +7410,6 @@ entities:
     pos: -13.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 487
   type: Grille
   components:
@@ -7554,7 +7424,6 @@ entities:
     pos: -11.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 489
   type: Grille
   components:
@@ -7604,7 +7473,6 @@ entities:
     pos: -13.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 496
   type: WallSolid
   components:
@@ -7612,7 +7480,6 @@ entities:
     pos: -13.5,-14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 497
   type: WallSolid
   components:
@@ -7620,7 +7487,6 @@ entities:
     pos: -13.5,-15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 498
   type: WallSolid
   components:
@@ -7628,7 +7494,6 @@ entities:
     pos: -3.5,-13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 499
   type: WallSolid
   components:
@@ -7643,7 +7508,6 @@ entities:
     pos: -13.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 501
   type: WallSolid
   components:
@@ -7651,7 +7515,6 @@ entities:
     pos: -13.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 502
   type: WallSolid
   components:
@@ -7680,7 +7543,6 @@ entities:
     pos: -13.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 506
   type: WallSolid
   components:
@@ -7688,7 +7550,6 @@ entities:
     pos: -13.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 507
   type: WallSolid
   components:
@@ -7703,7 +7564,6 @@ entities:
     pos: -3.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 509
   type: WallSolid
   components:
@@ -7711,7 +7571,6 @@ entities:
     pos: -13.5,-16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 510
   type: WallSolid
   components:
@@ -7726,7 +7585,6 @@ entities:
     pos: -13.5,-13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 512
   type: WallSolid
   components:
@@ -7748,7 +7606,6 @@ entities:
     pos: -8.5,-16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 515
   type: WallSolid
   components:
@@ -7784,7 +7641,6 @@ entities:
     pos: -3.5,-16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 520
   type: WallReinforced
   components:
@@ -7792,7 +7648,6 @@ entities:
     pos: -30.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 521
   type: ReinforcedPlasmaWindow
   components:
@@ -7821,7 +7676,6 @@ entities:
     pos: -13.5,-3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 525
   type: WallReinforced
   components:
@@ -7843,7 +7697,6 @@ entities:
     pos: -24.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 528
   type: WallReinforced
   components:
@@ -7851,7 +7704,6 @@ entities:
     pos: -27.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 529
   type: WallReinforced
   components:
@@ -7859,7 +7711,6 @@ entities:
     pos: -29.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 530
   type: WallReinforced
   components:
@@ -7867,7 +7718,6 @@ entities:
     pos: -29.5,-2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 531
   type: WallReinforced
   components:
@@ -7875,7 +7725,6 @@ entities:
     pos: -32.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 532
   type: Grille
   components:
@@ -7911,7 +7760,6 @@ entities:
     pos: -27.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 537
   type: WallReinforced
   components:
@@ -7933,7 +7781,6 @@ entities:
     pos: -24.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 540
   type: WallReinforced
   components:
@@ -7969,7 +7816,6 @@ entities:
     pos: -19.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 545
   type: ReinforcedWindow
   components:
@@ -8012,7 +7858,6 @@ entities:
     pos: -29.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 551
   type: WallReinforced
   components:
@@ -8020,7 +7865,6 @@ entities:
     pos: -29.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 552
   type: WallReinforced
   components:
@@ -8028,7 +7872,6 @@ entities:
     pos: -26.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 553
   type: TablePlasmaGlass
   components:
@@ -8049,7 +7892,6 @@ entities:
     pos: -32.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 556
   type: WallReinforced
   components:
@@ -8117,7 +7959,6 @@ entities:
     pos: -23.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 566
   type: WallSolid
   components:
@@ -8132,7 +7973,6 @@ entities:
     pos: -19.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 568
   type: WallReinforced
   components:
@@ -8154,7 +7994,6 @@ entities:
     pos: -21.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 571
   type: WallReinforced
   components:
@@ -8183,7 +8022,6 @@ entities:
     pos: -20.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 575
   type: WallReinforced
   components:
@@ -8205,7 +8043,6 @@ entities:
     pos: -18.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 578
   type: ReinforcedWindow
   components:
@@ -8213,7 +8050,6 @@ entities:
     pos: -17.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 579
   type: ReinforcedWindow
   components:
@@ -8221,7 +8057,6 @@ entities:
     pos: -15.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 580
   type: Grille
   components:
@@ -8243,7 +8078,6 @@ entities:
     pos: -18.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 583
   type: Grille
   components:
@@ -8258,7 +8092,6 @@ entities:
     pos: -18.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 585
   type: Grille
   components:
@@ -8287,7 +8120,6 @@ entities:
     pos: -21.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 589
   type: ReinforcedWindow
   components:
@@ -8295,7 +8127,6 @@ entities:
     pos: -20.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 590
   type: WallReinforced
   components:
@@ -8303,7 +8134,6 @@ entities:
     pos: -21.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 591
   type: WallReinforced
   components:
@@ -8365,7 +8195,6 @@ entities:
     pos: -18.5,-15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 600
   type: ReinforcedWindow
   components:
@@ -8394,7 +8223,6 @@ entities:
     pos: -21.5,-15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 604
   type: WallSolid
   components:
@@ -8426,7 +8254,6 @@ entities:
     pos: -23.5,-14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 609
   type: ReinforcedWindow
   components:
@@ -8441,7 +8268,6 @@ entities:
     pos: -23.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 611
   type: ReinforcedWindow
   components:
@@ -8456,7 +8282,6 @@ entities:
     pos: -23.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 613
   type: WallReinforced
   components:
@@ -8555,7 +8380,6 @@ entities:
     pos: -23.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 627
   type: WallReinforced
   components:
@@ -8647,7 +8471,6 @@ entities:
     pos: -16.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 640
   type: WallSolid
   components:
@@ -8655,7 +8478,6 @@ entities:
     pos: -15.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 641
   type: WallSolid
   components:
@@ -8670,7 +8492,6 @@ entities:
     pos: -13.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 643
   type: WallSolid
   components:
@@ -8777,7 +8598,6 @@ entities:
   - pos: -4.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 659
   type: ClosetFireFilled
   components:
@@ -8866,7 +8686,6 @@ entities:
     pos: 13.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 672
   type: WallReinforced
   components:
@@ -8888,7 +8707,6 @@ entities:
     pos: 13.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 675
   type: Grille
   components:
@@ -8980,7 +8798,6 @@ entities:
     pos: 10.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 688
   type: WallReinforced
   components:
@@ -9009,7 +8826,6 @@ entities:
     pos: 13.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 692
   type: WallReinforced
   components:
@@ -9017,7 +8833,6 @@ entities:
     pos: 13.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 693
   type: WallReinforced
   components:
@@ -9123,7 +8938,6 @@ entities:
     pos: 12.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 708
   type: ReinforcedWindow
   components:
@@ -9131,7 +8945,6 @@ entities:
     pos: 11.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 709
   type: ReinforcedWindow
   components:
@@ -9279,7 +9092,6 @@ entities:
     pos: 24.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 730
   type: WallReinforced
   components:
@@ -9308,7 +9120,6 @@ entities:
     pos: 23.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 734
   type: AirlockMedicalLocked
   components:
@@ -9329,7 +9140,6 @@ entities:
     pos: 20.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 737
   type: ReinforcedWindow
   components:
@@ -9543,7 +9353,6 @@ entities:
       - 0
       - 0
     type: EntityStorage
-  - type: Followed
 - uid: 765
   type: LockerSecurityFilled
   components:
@@ -9584,7 +9393,6 @@ entities:
     pos: 21.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 771
   type: Table
   components:
@@ -9630,7 +9438,6 @@ entities:
     pos: 14.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 778
   type: ChairOfficeDark
   components:
@@ -9716,7 +9523,6 @@ entities:
   - pos: 30.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 792
   type: ReinforcedWindow
   components:
@@ -9759,21 +9565,18 @@ entities:
   - pos: 27.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 799
   type: WallReinforced
   components:
   - pos: 25.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 800
   type: WallReinforced
   components:
   - pos: 25.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 801
   type: WallReinforced
   components:
@@ -9816,7 +9619,6 @@ entities:
   - pos: 28.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 808
   type: WallReinforced
   components:
@@ -9841,7 +9643,6 @@ entities:
   - pos: 30.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 812
   type: WallReinforced
   components:
@@ -9860,7 +9661,6 @@ entities:
   - pos: 33.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 815
   type: WallSolid
   components:
@@ -9891,14 +9691,12 @@ entities:
   - pos: 34.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 820
   type: WallReinforced
   components:
   - pos: 34.5,8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 821
   type: WallReinforced
   components:
@@ -9917,14 +9715,12 @@ entities:
   - pos: 35.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 824
   type: WallReinforced
   components:
   - pos: 34.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 825
   type: WallReinforced
   components:
@@ -9943,21 +9739,18 @@ entities:
   - pos: 34.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 828
   type: WallReinforced
   components:
   - pos: 35.5,8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 829
   type: WallReinforced
   components:
   - pos: 36.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 830
   type: WallReinforced
   components:
@@ -10024,7 +9817,6 @@ entities:
   - pos: 38.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 841
   type: WallReinforced
   components:
@@ -10055,7 +9847,6 @@ entities:
   - pos: 39.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 846
   type: WallReinforced
   components:
@@ -10068,7 +9859,6 @@ entities:
   - pos: 39.5,14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 848
   type: WallReinforced
   components:
@@ -10099,21 +9889,18 @@ entities:
   - pos: 36.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 853
   type: WallReinforced
   components:
   - pos: 35.5,14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 854
   type: WallReinforced
   components:
   - pos: 35.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 855
   type: WallReinforced
   components:
@@ -10138,7 +9925,6 @@ entities:
   - pos: 29.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 859
   type: WallReinforced
   components:
@@ -10151,7 +9937,6 @@ entities:
   - pos: 27.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 861
   type: WallReinforced
   components:
@@ -10182,7 +9967,6 @@ entities:
   - pos: 34.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 866
   type: WallReinforced
   components:
@@ -10219,7 +10003,6 @@ entities:
   - pos: 25.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 872
   type: WallReinforced
   components:
@@ -10250,7 +10033,6 @@ entities:
   - pos: 35.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 877
   type: WallReinforced
   components:
@@ -10263,7 +10045,6 @@ entities:
   - pos: 35.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 879
   type: WallSolid
   components:
@@ -10282,7 +10063,6 @@ entities:
   - pos: 37.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 882
   type: WallSolid
   components:
@@ -10331,7 +10111,6 @@ entities:
   - pos: 35.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 890
   type: WallReinforced
   components:
@@ -10356,7 +10135,6 @@ entities:
   - pos: 29.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 894
   type: WallReinforced
   components:
@@ -10381,7 +10159,6 @@ entities:
   - pos: 27.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 898
   type: WallReinforced
   components:
@@ -10418,7 +10195,6 @@ entities:
   - pos: 24.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 904
   type: WallReinforced
   components:
@@ -10467,14 +10243,12 @@ entities:
   - pos: 23.5,29.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 912
   type: WallReinforced
   components:
   - pos: 22.5,22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 913
   type: WallReinforced
   components:
@@ -10487,7 +10261,6 @@ entities:
   - pos: 22.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 915
   type: WallReinforced
   components:
@@ -10512,7 +10285,6 @@ entities:
   - pos: 22.5,28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 919
   type: WallReinforced
   components:
@@ -10577,7 +10349,6 @@ entities:
   - pos: 34.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 929
   type: WallReinforced
   components:
@@ -10638,7 +10409,6 @@ entities:
   - pos: 35.5,29.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 939
   type: WallReinforced
   components:
@@ -10676,7 +10446,6 @@ entities:
   - pos: 24.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 945
   type: WallReinforced
   components:
@@ -10753,7 +10522,6 @@ entities:
   - pos: 33.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 957
   type: WallReinforced
   components:
@@ -10772,7 +10540,6 @@ entities:
   - pos: 30.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 960
   type: ReinforcedWindow
   components:
@@ -10785,7 +10552,6 @@ entities:
   - pos: 29.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 962
   type: WallReinforced
   components:
@@ -10798,7 +10564,6 @@ entities:
   - pos: 22.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 964
   type: WallReinforced
   components:
@@ -10829,7 +10594,6 @@ entities:
   - pos: 24.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 969
   type: Grille
   components:
@@ -10926,7 +10690,6 @@ entities:
   - pos: 31.5,22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 985
   type: WallSolid
   components:
@@ -10996,7 +10759,6 @@ entities:
   - pos: 17.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 995
   type: WallSolid
   components:
@@ -11004,7 +10766,6 @@ entities:
     pos: 18.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 996
   type: FirelockEdge
   components:
@@ -11017,21 +10778,18 @@ entities:
   - pos: 20.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 998
   type: WallSolid
   components:
   - pos: 21.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 999
   type: WallSolid
   components:
   - pos: 22.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1000
   type: WallSolid
   components:
@@ -11068,7 +10826,6 @@ entities:
   - pos: 28.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1006
   type: WallSolid
   components:
@@ -11099,7 +10856,6 @@ entities:
   - pos: 33.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1011
   type: WallSolid
   components:
@@ -11124,14 +10880,12 @@ entities:
   - pos: 37.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1015
   type: WallSolid
   components:
   - pos: 38.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1016
   type: WallSolid
   components:
@@ -11177,14 +10931,12 @@ entities:
   - pos: 14.5,-2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1023
   type: WallSolid
   components:
   - pos: 15.5,-2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1024
   type: Autolathe
   components:
@@ -11233,7 +10985,6 @@ entities:
   - pos: 11.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1032
   type: WallSolid
   components:
@@ -11265,7 +11016,6 @@ entities:
   - pos: 14.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1037
   type: ReinforcedWindow
   components:
@@ -11285,7 +11035,6 @@ entities:
   - pos: 3.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1040
   type: WallSolid
   components:
@@ -11328,7 +11077,6 @@ entities:
   - pos: 10.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1047
   type: Grille
   components:
@@ -11347,7 +11095,6 @@ entities:
   - pos: 17.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1050
   type: WallSolid
   components:
@@ -11384,7 +11131,6 @@ entities:
   - pos: 10.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1056
   type: WallSolid
   components:
@@ -11439,7 +11185,6 @@ entities:
   - pos: 15.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1065
   type: WallSolid
   components:
@@ -11458,7 +11203,6 @@ entities:
   - pos: 17.5,-16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1068
   type: WallReinforced
   components:
@@ -11507,7 +11251,6 @@ entities:
   - pos: 21.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1076
   type: WallReinforced
   components:
@@ -11574,7 +11317,6 @@ entities:
   - pos: 20.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1087
   type: Grille
   components:
@@ -11701,14 +11443,12 @@ entities:
   - pos: 22.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1108
   type: WallReinforced
   components:
   - pos: 27.5,-15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1109
   type: WallReinforced
   components:
@@ -11745,7 +11485,6 @@ entities:
   - pos: 26.5,-16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1115
   type: Catwalk
   components:
@@ -11830,7 +11569,6 @@ entities:
   - pos: 23.5,-13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1129
   type: Grille
   components:
@@ -11873,7 +11611,6 @@ entities:
   - pos: 19.570726,-8.444527
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1136
   type: CrateEngineeringCableBulk
   components:
@@ -12152,7 +11889,6 @@ entities:
   - pos: 24.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1178
   type: ReinforcedWindow
   components:
@@ -12183,7 +11919,6 @@ entities:
   - pos: 24.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1183
   type: ReinforcedWindow
   components:
@@ -12196,7 +11931,6 @@ entities:
   - pos: 28.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1185
   type: ReinforcedWindow
   components:
@@ -12285,7 +12019,6 @@ entities:
   - pos: 30.5,-3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1199
   type: WallReinforced
   components:
@@ -12298,7 +12031,6 @@ entities:
   - pos: 30.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1201
   type: WallReinforced
   components:
@@ -12329,7 +12061,6 @@ entities:
   - pos: 28.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1206
   type: WallReinforced
   components:
@@ -12354,7 +12085,6 @@ entities:
   - pos: 33.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1210
   type: WallReinforced
   components:
@@ -12385,7 +12115,6 @@ entities:
   - pos: 33.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1215
   type: WallReinforced
   components:
@@ -12548,7 +12277,6 @@ entities:
   - pos: 43.5,14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1241
   type: WallReinforced
   components:
@@ -12662,7 +12390,6 @@ entities:
   - pos: 47.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1259
   type: ReinforcedWindow
   components:
@@ -12717,7 +12444,6 @@ entities:
     pos: 47.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1267
   type: ReinforcedWindow
   components:
@@ -12725,7 +12451,6 @@ entities:
     pos: 47.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1268
   type: AirlockExternalGlassShuttleArrivals
   components:
@@ -12877,7 +12602,6 @@ entities:
     pos: 48.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1280
   type: Grille
   components:
@@ -12905,7 +12629,6 @@ entities:
   - pos: 47.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1284
   type: ReinforcedWindow
   components:
@@ -12920,7 +12643,6 @@ entities:
     pos: 47.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1286
   type: WallReinforced
   components:
@@ -12971,7 +12693,6 @@ entities:
   - pos: 47.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1294
   type: WallReinforced
   components:
@@ -12996,7 +12717,6 @@ entities:
   - pos: 47.5,18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1298
   type: PosterBroken
   components:
@@ -13047,7 +12767,6 @@ entities:
     pos: 30.5,-17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1306
   type: WallReinforced
   components:
@@ -13576,7 +13295,6 @@ entities:
   - pos: 46.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1394
   type: WallReinforced
   components:
@@ -13886,7 +13604,6 @@ entities:
   - pos: 3.5,-13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1445
   type: WallReinforced
   components:
@@ -13917,21 +13634,18 @@ entities:
   - pos: 7.5,-13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1450
   type: WallReinforced
   components:
   - pos: 7.5,-14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1451
   type: WallReinforced
   components:
   - pos: 7.5,-15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1452
   type: WallReinforced
   components:
@@ -13962,14 +13676,12 @@ entities:
   - pos: 3.5,-18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1457
   type: WallReinforced
   components:
   - pos: 4.5,-18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1458
   type: ReinforcedWindow
   components:
@@ -14042,7 +13754,6 @@ entities:
   - pos: 22.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1470
   type: WallSolid
   components:
@@ -14085,7 +13796,6 @@ entities:
   - pos: 22.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1477
   type: WallReinforced
   components:
@@ -14098,7 +13808,6 @@ entities:
   - pos: 26.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1479
   type: WallReinforced
   components:
@@ -14208,7 +13917,6 @@ entities:
   - pos: -2.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1497
   type: Grille
   components:
@@ -14227,7 +13935,6 @@ entities:
   - pos: 6.5,-24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1500
   type: ReinforcedWindow
   components:
@@ -14271,7 +13978,6 @@ entities:
   - pos: 5.5,-28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1507
   type: WallReinforced
   components:
@@ -14332,7 +14038,6 @@ entities:
   - pos: 7.5,-28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1517
   type: ReinforcedWindow
   components:
@@ -14507,7 +14212,6 @@ entities:
   - pos: 9.5,-28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1546
   type: WallReinforced
   components:
@@ -14594,7 +14298,6 @@ entities:
   - pos: 27.5,-24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1560
   type: WallReinforced
   components:
@@ -14607,7 +14310,6 @@ entities:
   - pos: 24.5,-25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1562
   type: ReinforcedWindow
   components:
@@ -14650,14 +14352,12 @@ entities:
   - pos: 8.5,-24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1569
   type: ReinforcedWindow
   components:
   - pos: 11.5,-24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1570
   type: ReinforcedWindow
   components:
@@ -14700,7 +14400,6 @@ entities:
   - pos: -0.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1577
   type: WallSolid
   components:
@@ -14713,28 +14412,24 @@ entities:
   - pos: -0.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1579
   type: WallSolid
   components:
   - pos: -0.5,-13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1580
   type: WallSolid
   components:
   - pos: -0.5,-14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1581
   type: WallSolid
   components:
   - pos: -0.5,-15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1582
   type: WallSolid
   components:
@@ -14747,105 +14442,90 @@ entities:
   - pos: -0.5,-17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1584
   type: WallSolid
   components:
   - pos: -0.5,-18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1585
   type: WallSolid
   components:
   - pos: -0.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1586
   type: WallSolid
   components:
   - pos: -1.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1587
   type: WallSolid
   components:
   - pos: -2.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1588
   type: WallSolid
   components:
   - pos: -3.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1589
   type: WallSolid
   components:
   - pos: -4.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1590
   type: WallSolid
   components:
   - pos: -5.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1591
   type: WallReinforced
   components:
   - pos: -6.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1592
   type: WallReinforced
   components:
   - pos: -6.5,-20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1593
   type: WallReinforced
   components:
   - pos: -6.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1594
   type: WallReinforced
   components:
   - pos: -6.5,-21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1595
   type: WallReinforced
   components:
   - pos: -6.5,-22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1596
   type: WallSolid
   components:
   - pos: -9.5,-17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1597
   type: WallReinforced
   components:
   - pos: 9.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1598
   type: Girder
   components:
@@ -14865,21 +14545,18 @@ entities:
     pos: -14.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1601
   type: WallReinforced
   components:
   - pos: -8.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1602
   type: WallReinforced
   components:
   - pos: -7.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1603
   type: WallReinforced
   components:
@@ -14892,7 +14569,6 @@ entities:
   - pos: -0.5,-20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1605
   type: WallReinforced
   components:
@@ -14935,7 +14611,6 @@ entities:
   - pos: -0.5,-21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1612
   type: WallSolid
   components:
@@ -14984,7 +14659,6 @@ entities:
   - pos: -0.5,-22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1620
   type: WallReinforced
   components:
@@ -15022,7 +14696,6 @@ entities:
   - pos: -5.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1626
   type: Window
   components:
@@ -15035,14 +14708,12 @@ entities:
   - pos: -2.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1628
   type: Window
   components:
   - pos: -1.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1629
   type: Grille
   components:
@@ -15109,7 +14780,6 @@ entities:
   - pos: -4.5,-27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1640
   type: WallReinforced
   components:
@@ -15136,7 +14806,6 @@ entities:
     pos: -14.5,-32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1644
   type: WallSolid
   components:
@@ -15179,7 +14848,6 @@ entities:
   - pos: -8.5,-28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1651
   type: WallSolid
   components:
@@ -15245,7 +14913,6 @@ entities:
     pos: -10.5,-27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1661
   type: WallReinforced
   components:
@@ -15287,7 +14954,6 @@ entities:
   - pos: -10.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1667
   type: WallSolid
   components:
@@ -15302,7 +14968,6 @@ entities:
     pos: -12.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1669
   type: WallSolid
   components:
@@ -15323,7 +14988,6 @@ entities:
   - pos: -12.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1672
   type: WallSolid
   components:
@@ -15351,14 +15015,12 @@ entities:
   - pos: -12.5,-20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1676
   type: WallSolid
   components:
   - pos: -16.5,-20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1677
   type: WallSolid
   components:
@@ -15415,7 +15077,6 @@ entities:
     pos: 38.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1686
   type: Grille
   components:
@@ -15428,7 +15089,6 @@ entities:
   - pos: 38.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1688
   type: WindowReinforcedDirectional
   components:
@@ -15449,7 +15109,6 @@ entities:
     pos: 38.5,27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1691
   type: WallSolid
   components:
@@ -15511,7 +15170,6 @@ entities:
     pos: 5.5,-20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1700
   type: WindowReinforcedDirectional
   components:
@@ -15589,7 +15247,6 @@ entities:
     pos: 5.5,-16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1711
   type: ComfyChair
   components:
@@ -15629,7 +15286,6 @@ entities:
   - pos: 14.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1717
   type: AirlockExternalGlassCargoLocked
   components:
@@ -15637,7 +15293,6 @@ entities:
     pos: 11.5,-28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1718
   type: SubstationBasic
   components:
@@ -16066,7 +15721,6 @@ entities:
   - pos: 10.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1750
   type: WallReinforced
   components:
@@ -16200,7 +15854,6 @@ entities:
     pos: -20.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1771
   type: WallReinforced
   components:
@@ -16242,14 +15895,12 @@ entities:
     pos: 22.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1777
   type: WallSolid
   components:
   - pos: -21.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1778
   type: WallSolid
   components:
@@ -16263,7 +15914,6 @@ entities:
     pos: -18.5,27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1780
   type: TableWood
   components:
@@ -16282,7 +15932,6 @@ entities:
   - pos: 26.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1783
   type: WallSolid
   components:
@@ -16295,7 +15944,6 @@ entities:
   - pos: -27.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1785
   type: Grille
   components:
@@ -16353,7 +16001,6 @@ entities:
   - pos: -6.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1794
   type: SpawnMobDrone
   components:
@@ -16571,7 +16218,6 @@ entities:
   - pos: -19.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1824
   type: ShuttersNormalOpen
   components:
@@ -16610,14 +16256,12 @@ entities:
   - pos: 11.5,22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1829
   type: WallReinforced
   components:
   - pos: 10.5,22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1830
   type: WallReinforced
   components:
@@ -16632,7 +16276,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 1832
-  type: WindowReinforcedDirectional
+  type: FirelockEdge
   components:
   - rot: -1.5707963267948966 rad
     pos: 10.5,-8.5
@@ -16652,7 +16296,6 @@ entities:
     pos: 10.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1835
   type: WallSolid
   components:
@@ -16904,7 +16547,6 @@ entities:
       - port: Pressed
         uid: 5449
     type: SignalReceiver
-  - type: Followed
 - uid: 1867
   type: LockerChiefMedicalOfficerFilled
   components:
@@ -17086,7 +16728,6 @@ entities:
     pos: -12.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1891
   type: VendingMachineMediDrobe
   components:
@@ -17287,7 +16928,6 @@ entities:
   - pos: -26.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1917
   type: Morgue
   components:
@@ -17324,7 +16964,6 @@ entities:
   - pos: -22.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1923
   type: SignMorgue
   components:
@@ -17344,7 +16983,6 @@ entities:
     pos: -26.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1926
   type: MedicalScanner
   components:
@@ -17391,7 +17029,6 @@ entities:
     pos: -16.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1933
   type: APCBasic
   components:
@@ -17425,7 +17062,6 @@ entities:
       - port: Pressed
         uid: 1896
     type: SignalReceiver
-  - type: Followed
 - uid: 1937
   type: ShuttersNormalOpen
   components:
@@ -17491,7 +17127,6 @@ entities:
       - port: Pressed
         uid: 1898
     type: SignalReceiver
-  - type: Followed
 - uid: 1942
   type: APCBasic
   components:
@@ -17524,7 +17159,6 @@ entities:
   - pos: 26.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1947
   type: APCBasic
   components:
@@ -17627,7 +17261,6 @@ entities:
   - pos: -41.5,-2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1963
   type: WallReinforced
   components:
@@ -17677,7 +17310,6 @@ entities:
     pos: -23.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1970
   type: WallReinforced
   components:
@@ -17787,7 +17419,6 @@ entities:
     pos: -30.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1985
   type: WallSolid
   components:
@@ -17795,7 +17426,6 @@ entities:
     pos: -30.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1986
   type: WallReinforced
   components:
@@ -17824,7 +17454,6 @@ entities:
     pos: -32.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1990
   type: Window
   components:
@@ -17873,7 +17502,6 @@ entities:
     pos: -32.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1997
   type: WallSolid
   components:
@@ -17895,7 +17523,6 @@ entities:
     pos: -34.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2000
   type: WallSolid
   components:
@@ -17903,7 +17530,6 @@ entities:
     pos: -35.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2001
   type: Grille
   components:
@@ -17918,7 +17544,6 @@ entities:
     pos: -38.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2003
   type: WallSolid
   components:
@@ -17940,7 +17565,6 @@ entities:
     pos: -38.5,8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2006
   type: WallSolid
   components:
@@ -17962,7 +17586,6 @@ entities:
     pos: -38.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2009
   type: WallSolid
   components:
@@ -18005,7 +17628,6 @@ entities:
     pos: -34.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2015
   type: CarpetBlack
   components:
@@ -18020,7 +17642,6 @@ entities:
     pos: -36.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2017
   type: CarpetBlack
   components:
@@ -18035,7 +17656,6 @@ entities:
     pos: -32.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2019
   type: WallSolid
   components:
@@ -18043,7 +17663,6 @@ entities:
     pos: -31.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2020
   type: WallSolid
   components:
@@ -18065,7 +17684,6 @@ entities:
     pos: -34.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2023
   type: WallSolid
   components:
@@ -18073,7 +17691,6 @@ entities:
     pos: -35.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2024
   type: WallSolid
   components:
@@ -18095,7 +17712,6 @@ entities:
     pos: -38.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2027
   type: WallSolid
   components:
@@ -18110,7 +17726,6 @@ entities:
     pos: -38.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2029
   type: WallSolid
   components:
@@ -18125,7 +17740,6 @@ entities:
     pos: -34.5,14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2031
   type: ChairWood
   components:
@@ -18140,7 +17754,6 @@ entities:
     pos: -31.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2033
   type: WallSolid
   components:
@@ -18197,7 +17810,6 @@ entities:
     pos: -42.5,18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2041
   type: WallReinforced
   components:
@@ -18458,7 +18070,6 @@ entities:
     pos: -42.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2078
   type: Grille
   components:
@@ -18501,7 +18112,6 @@ entities:
     pos: -42.5,1.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2084
   type: ReinforcedWindow
   components:
@@ -18509,7 +18119,6 @@ entities:
     pos: -42.5,2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2085
   type: ReinforcedWindow
   components:
@@ -18524,7 +18133,6 @@ entities:
     pos: -42.5,14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2087
   type: ReinforcedWindow
   components:
@@ -18546,7 +18154,6 @@ entities:
     pos: -43.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2090
   type: WallReinforced
   components:
@@ -18561,7 +18168,6 @@ entities:
     pos: -42.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2092
   type: Window
   components:
@@ -18632,7 +18238,6 @@ entities:
     pos: -35.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2102
   type: Grille
   components:
@@ -18647,7 +18252,6 @@ entities:
     pos: -42.5,-1.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2104
   type: ReinforcedWindow
   components:
@@ -18655,7 +18259,6 @@ entities:
     pos: -42.5,-2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2105
   type: ReinforcedWindow
   components:
@@ -18663,7 +18266,6 @@ entities:
     pos: -42.5,-3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2106
   type: ReinforcedWindow
   components:
@@ -18678,7 +18280,6 @@ entities:
     pos: -42.5,-6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2108
   type: ReinforcedWindow
   components:
@@ -18686,7 +18287,6 @@ entities:
     pos: -42.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2109
   type: Grille
   components:
@@ -18869,7 +18469,6 @@ entities:
     pos: -42.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2135
   type: ReinforcedWindow
   components:
@@ -18877,7 +18476,6 @@ entities:
     pos: -42.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2136
   type: WallReinforced
   components:
@@ -18892,7 +18490,6 @@ entities:
     pos: -38.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2138
   type: WallReinforced
   components:
@@ -18928,7 +18525,6 @@ entities:
     pos: -38.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2143
   type: WallSolid
   components:
@@ -18992,7 +18588,6 @@ entities:
     pos: -35.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2152
   type: Grille
   components:
@@ -19076,7 +18671,6 @@ entities:
     pos: -16.5,-26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2164
   type: WallReinforced
   components:
@@ -19091,7 +18685,6 @@ entities:
     pos: -15.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2166
   type: WallSolid
   components:
@@ -19134,7 +18727,6 @@ entities:
     pos: -20.5,-24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2172
   type: WallSolid
   components:
@@ -19142,7 +18734,6 @@ entities:
     pos: -18.5,-26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2173
   type: WallReinforced
   components:
@@ -19157,7 +18748,6 @@ entities:
     pos: -26.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2175
   type: WallSolid
   components:
@@ -19172,7 +18762,6 @@ entities:
     pos: -9.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2177
   type: WallSolid
   components:
@@ -19341,7 +18930,6 @@ entities:
     pos: -23.5,-20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2201
   type: PlushieRGBee
   components:
@@ -19369,7 +18957,6 @@ entities:
     pos: -32.5,-13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2205
   type: WallSolid
   components:
@@ -19582,7 +19169,6 @@ entities:
   - pos: -42.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2236
   type: WallReinforced
   components:
@@ -19610,7 +19196,6 @@ entities:
     pos: -39.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2240
   type: WallReinforced
   components:
@@ -19681,7 +19266,6 @@ entities:
     pos: -24.5,-26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2250
   type: WallReinforced
   components:
@@ -19752,7 +19336,6 @@ entities:
     pos: -25.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2260
   type: SubstationBasic
   components:
@@ -19773,7 +19356,6 @@ entities:
     pos: -29.5,-24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2263
   type: ReinforcedWindow
   components:
@@ -19788,7 +19370,6 @@ entities:
     pos: -33.5,-24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2265
   type: Grille
   components:
@@ -19866,7 +19447,6 @@ entities:
     pos: -36.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2276
   type: WallReinforced
   components:
@@ -20234,7 +19814,6 @@ entities:
     pos: 18.5,36.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2330
   type: WallReinforced
   components:
@@ -20298,7 +19877,6 @@ entities:
     pos: 28.5,36.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2339
   type: Grille
   components:
@@ -20369,7 +19947,6 @@ entities:
     pos: 17.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2349
   type: WallSolid
   components:
@@ -20390,7 +19967,6 @@ entities:
   - pos: 18.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2352
   type: WallSolid
   components:
@@ -20405,7 +19981,6 @@ entities:
     pos: 18.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2354
   type: WallSolid
   components:
@@ -20413,7 +19988,6 @@ entities:
     pos: 18.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2355
   type: WallSolid
   components:
@@ -20428,7 +20002,6 @@ entities:
     pos: 19.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2357
   type: WallSolid
   components:
@@ -20464,7 +20037,6 @@ entities:
     pos: 9.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2362
   type: WallReinforced
   components:
@@ -20486,7 +20058,6 @@ entities:
     pos: 18.5,28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2365
   type: WallSolid
   components:
@@ -20501,7 +20072,6 @@ entities:
     pos: 16.5,28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2367
   type: WallSolid
   components:
@@ -20509,7 +20079,6 @@ entities:
     pos: 15.5,28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2368
   type: WallReinforced
   components:
@@ -20600,7 +20169,6 @@ entities:
     pos: 12.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2381
   type: WallReinforced
   components:
@@ -20608,7 +20176,6 @@ entities:
     pos: 14.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2382
   type: Grille
   components:
@@ -20840,7 +20407,6 @@ entities:
     pos: -42.5,8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2415
   type: Grille
   components:
@@ -20869,7 +20435,6 @@ entities:
     pos: 19.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2419
   type: WallSolid
   components:
@@ -20903,7 +20468,6 @@ entities:
     pos: 14.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2424
   type: WallSolid
   components:
@@ -20918,14 +20482,12 @@ entities:
     pos: 17.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2426
   type: SubstationBasic
   components:
   - pos: 40.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2427
   type: WallReinforced
   components:
@@ -20961,7 +20523,6 @@ entities:
     pos: 15.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2432
   type: WallSolid
   components:
@@ -20969,7 +20530,6 @@ entities:
     pos: 16.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2433
   type: WallSolid
   components:
@@ -21961,7 +21521,6 @@ entities:
     pos: -25.5,34.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2576
   type: SolarPanel
   components:
@@ -21969,7 +21528,6 @@ entities:
     pos: -24.5,34.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2577
   type: SolarPanel
   components:
@@ -22385,7 +21943,6 @@ entities:
     type: Transform
   - enabled: True
     type: AmbientSound
-  - type: Followed
 - uid: 2634
   type: CableHV
   components:
@@ -23927,7 +23484,6 @@ entities:
   - pos: -14.5,-47.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2859
   type: WallWood
   components:
@@ -24455,7 +24011,6 @@ entities:
     pos: -12.5,-41.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2936
   type: GrilleBroken
   components:
@@ -24503,7 +24058,6 @@ entities:
     pos: -20.5,-42.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2943
   type: Grille
   components:
@@ -24524,7 +24078,6 @@ entities:
     pos: -20.5,-39.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2946
   type: Grille
   components:
@@ -24636,7 +24189,6 @@ entities:
     pos: -16.5,-40.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2962
   type: DisposalPipe
   components:
@@ -24686,7 +24238,6 @@ entities:
     pos: -16.5,-33.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2969
   type: DisposalBend
   components:
@@ -24739,7 +24290,6 @@ entities:
   - pos: -26.5,-26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2977
   type: DisposalPipe
   components:
@@ -25031,7 +24581,6 @@ entities:
     pos: -29.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3016
   type: Grille
   components:
@@ -25446,29 +24995,34 @@ entities:
 - uid: 3055
   type: FirelockEdge
   components:
-  - rot: 3.141592653589793 rad
-    pos: 23.5,35.5
+  - rot: -1.5707963267948966 rad
+    pos: 10.5,-4.5
     parent: 1
     type: Transform
 - uid: 3056
-  type: FirelockEdge
+  type: ClothingHandsGlovesColorPurple
   components:
-  - rot: 3.141592653589793 rad
-    pos: 25.5,35.5
-    parent: 1
+  - flags: InContainer
+    type: MetaData
+  - parent: 7662
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 3057
-  type: FirelockEdge
+  type: ClothingHandsGlovesColorPurple
   components:
-  - rot: 3.141592653589793 rad
-    pos: 31.5,35.5
-    parent: 1
+  - flags: InContainer
+    type: MetaData
+  - parent: 7662
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 3058
-  type: FirelockEdge
+  type: SpawnVendingMachineRestockDrink
   components:
-  - rot: 3.141592653589793 rad
-    pos: 33.5,35.5
+  - pos: 12.5,-0.5
     parent: 1
     type: Transform
 - uid: 3059
@@ -25699,7 +25253,6 @@ entities:
     pos: -42.5,3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3071
   type: ReinforcedWindow
   components:
@@ -25937,7 +25490,6 @@ entities:
   - pos: -16.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3108
   type: FirelockGlass
   components:
@@ -25968,7 +25520,6 @@ entities:
   - pos: -16.5,-15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3113
   type: FirelockGlass
   components:
@@ -25989,7 +25540,6 @@ entities:
     pos: -3.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3116
   type: FirelockGlass
   components:
@@ -26060,7 +25610,6 @@ entities:
     pos: 7.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3126
   type: FirelockGlass
   components:
@@ -26096,7 +25645,6 @@ entities:
     pos: 3.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3131
   type: TableWood
   components:
@@ -26248,7 +25796,6 @@ entities:
     pos: -7.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3153
   type: TableWood
   components:
@@ -26270,7 +25817,6 @@ entities:
     pos: -19.5,1.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3156
   type: FirelockGlass
   components:
@@ -26474,7 +26020,6 @@ entities:
     pos: -15.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3185
   type: FirelockGlass
   components:
@@ -26530,7 +26075,6 @@ entities:
     pos: 0.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3193
   type: FirelockGlass
   components:
@@ -26704,7 +26248,6 @@ entities:
       - port: Pressed
         uid: 5389
     type: SignalReceiver
-  - type: Followed
 - uid: 3219
   type: FirelockGlass
   components:
@@ -26845,6 +26388,8 @@ entities:
 - uid: 3239
   type: GasPressurePump
   components:
+  - name: waste pump
+    type: MetaData
   - pos: 38.5,-2.5
     parent: 1
     type: Transform
@@ -26990,7 +26535,6 @@ entities:
     pos: 0.5,-18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3262
   type: FirelockGlass
   components:
@@ -27089,7 +26633,6 @@ entities:
     pos: 4.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3276
   type: AirlockCommandGlassLocked
   components:
@@ -27097,7 +26640,6 @@ entities:
     pos: 4.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3277
   type: AirlockCommandGlassLocked
   components:
@@ -27126,7 +26668,6 @@ entities:
     pos: -9.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3281
   type: AirlockMaintCommandLocked
   components:
@@ -27134,7 +26675,6 @@ entities:
     pos: 6.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3282
   type: AirlockCaptainLocked
   components:
@@ -27178,7 +26718,6 @@ entities:
   - pos: -3.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3289
   type: WindoorHeadOfPersonnelLocked
   components:
@@ -27228,21 +26767,18 @@ entities:
   - pos: 43.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3297
   type: AirlockMaintLocked
   components:
   - pos: 31.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3298
   type: AirlockMaintLocked
   components:
   - pos: 19.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3299
   type: AirlockMaintLocked
   components:
@@ -27261,7 +26797,6 @@ entities:
   - pos: 31.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3302
   type: AirlockMaintLocked
   components:
@@ -27298,7 +26833,6 @@ entities:
   - pos: -28.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3308
   type: AirlockMaintLocked
   components:
@@ -27311,7 +26845,6 @@ entities:
   - pos: -6.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3310
   type: AirlockSecurityGlassLocked
   components:
@@ -27330,7 +26863,6 @@ entities:
   - pos: 20.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3313
   type: AirlockHeadOfSecurityLocked
   components:
@@ -27349,14 +26881,12 @@ entities:
   - pos: 32.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3316
   type: AirlockSecurityGlassLocked
   components:
   - pos: 33.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3317
   type: AirlockSecurityGlassLocked
   components:
@@ -27381,14 +26911,12 @@ entities:
   - pos: 33.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3321
   type: AirlockBrigGlassLocked
   components:
   - pos: 10.5,14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3322
   type: AirlockBrigGlassLocked
   components:
@@ -27431,14 +26959,12 @@ entities:
   - pos: 22.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3329
   type: AirlockMaintSecLocked
   components:
   - pos: 32.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3330
   type: AirlockMaintEngiLocked
   components:
@@ -27457,14 +26983,12 @@ entities:
   - pos: 13.5,-13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3333
   type: AirlockEngineeringGlassLocked
   components:
   - pos: 14.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3334
   type: AirlockEngineeringGlassLocked
   components:
@@ -27501,7 +27025,6 @@ entities:
   - pos: 23.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3340
   type: AirlockEngineeringGlassLocked
   components:
@@ -27514,7 +27037,6 @@ entities:
   - pos: 17.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3342
   type: AirlockEngineeringGlassLocked
   components:
@@ -27623,7 +27145,6 @@ entities:
     pos: 25.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3358
   type: CableMV
   components:
@@ -27651,7 +27172,6 @@ entities:
     pos: -25.5,28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3362
   type: AirlockEngineeringLocked
   components:
@@ -27659,7 +27179,6 @@ entities:
     pos: -30.5,-21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3363
   type: AirlockEngineeringLocked
   components:
@@ -27667,7 +27186,6 @@ entities:
     pos: -8.5,-22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3364
   type: AirlockEngineeringLocked
   components:
@@ -27709,7 +27227,6 @@ entities:
   - pos: 3.5,-6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3370
   type: AirlockServiceGlassLocked
   components:
@@ -27788,14 +27305,12 @@ entities:
     pos: -3.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3382
   type: AirlockGlass
   components:
   - pos: -3.5,8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3383
   type: AirlockGlass
   components:
@@ -27817,7 +27332,6 @@ entities:
     pos: 2.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3386
   type: CableApcExtension
   components:
@@ -27844,7 +27358,6 @@ entities:
     pos: -10.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3390
   type: AirlockMedicalGlassLocked
   components:
@@ -27880,7 +27393,6 @@ entities:
     pos: -27.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3395
   type: AirlockMaintMedLocked
   components:
@@ -27916,7 +27428,6 @@ entities:
     pos: -17.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3400
   type: AirlockChemistryLocked
   components:
@@ -27924,7 +27435,6 @@ entities:
     pos: -14.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3401
   type: WindoorChemistryLocked
   components:
@@ -27946,7 +27456,6 @@ entities:
     pos: -8.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3404
   type: WindoorMedicalLocked
   components:
@@ -28033,14 +27542,12 @@ entities:
   - pos: -16.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3418
   type: AirlockScienceGlassLocked
   components:
   - pos: -13.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3419
   type: AirlockScienceGlassLocked
   components:
@@ -28059,7 +27566,6 @@ entities:
   - pos: -11.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3422
   type: AirlockScienceGlassLocked
   components:
@@ -28078,14 +27584,12 @@ entities:
   - pos: -10.5,-6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3425
   type: AirlockScienceGlassLocked
   components:
   - pos: -10.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3426
   type: AirlockScienceGlassLocked
   components:
@@ -28110,7 +27614,6 @@ entities:
   - pos: -13.5,-17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3430
   type: ShuttersNormal
   components:
@@ -28124,7 +27627,6 @@ entities:
       - port: Pressed
         uid: 1799
     type: SignalReceiver
-  - type: Followed
 - uid: 3431
   type: AirlockMaintRnDLocked
   components:
@@ -28144,7 +27646,6 @@ entities:
       - port: Pressed
         uid: 1799
     type: SignalReceiver
-  - type: Followed
 - uid: 3433
   type: ShuttersNormal
   components:
@@ -28209,7 +27710,6 @@ entities:
   - pos: -34.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3439
   type: AirlockGlass
   components:
@@ -28369,7 +27869,6 @@ entities:
     pos: -31.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3463
   type: ChairFolding
   components:
@@ -28549,7 +28048,6 @@ entities:
     pos: -7.5,3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3489
   type: AirlockGlass
   components:
@@ -28592,7 +28090,6 @@ entities:
     pos: 10.5,3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3495
   type: AirlockGlass
   components:
@@ -28768,7 +28265,6 @@ entities:
     pos: -11.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3520
   type: Firelock
   components:
@@ -28776,7 +28272,6 @@ entities:
     pos: -11.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3521
   type: Firelock
   components:
@@ -28833,7 +28328,6 @@ entities:
     pos: -28.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3529
   type: Firelock
   components:
@@ -28883,7 +28377,6 @@ entities:
     pos: -12.5,-21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3536
   type: Firelock
   components:
@@ -28891,7 +28384,6 @@ entities:
     pos: -12.5,-22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3537
   type: Firelock
   components:
@@ -28934,7 +28426,6 @@ entities:
     pos: -38.5,1.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3543
   type: AirlockGlass
   components:
@@ -28984,7 +28475,6 @@ entities:
     pos: -30.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3550
   type: AirlockExternal
   components:
@@ -28998,7 +28488,6 @@ entities:
     pos: -30.5,22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3552
   type: AirlockMaint
   components:
@@ -29061,7 +28550,6 @@ entities:
     pos: -21.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3561
   type: BlastDoor
   components:
@@ -29155,7 +28643,6 @@ entities:
       - port: Middle
         uid: 9199
     type: SignalReceiver
-  - type: Followed
 - uid: 3567
   type: ConveyorBelt
   components:
@@ -29217,6 +28704,62 @@ entities:
     pos: -33.5,24.5
     parent: 1
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      mask: []
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: conveyor
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.15,-0.15
+        - 0.15,0.15
+        - -0.15,0.15
+        - -0.15,-0.15
+      mask: []
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: brrt
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      layer:
+      - BulletImpassable
+      - Opaque
+      density: 1
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: collision
+    type: Fixtures
   - inputs:
       Reverse:
       - port: Right
@@ -29256,7 +28799,6 @@ entities:
     pos: -28.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3575
   type: Airlock
   components:
@@ -29271,7 +28813,6 @@ entities:
     pos: -6.5,-27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3577
   type: Airlock
   components:
@@ -29309,7 +28850,6 @@ entities:
     pos: -0.5,-25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3582
   type: AirlockGlass
   components:
@@ -29387,7 +28927,6 @@ entities:
     pos: 12.5,-21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3593
   type: AirlockCargoGlassLocked
   components:
@@ -29401,7 +28940,6 @@ entities:
   - pos: 19.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3595
   type: FirelockGlass
   components:
@@ -29463,7 +29001,6 @@ entities:
   - pos: -9.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3604
   type: WindoorSecure
   components:
@@ -29477,7 +29014,6 @@ entities:
     pos: -9.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3606
   type: WindoorScienceLocked
   components:
@@ -29485,7 +29021,6 @@ entities:
     pos: -8.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3607
   type: AirlockExternalGlassLocked
   components:
@@ -29507,7 +29042,6 @@ entities:
     pos: -9.5,44.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3610
   type: ClosetEmergencyFilledRandom
   components:
@@ -29889,7 +29423,6 @@ entities:
   - pos: -0.5,44.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3673
   type: GeneratorUranium
   components:
@@ -30806,7 +30339,6 @@ entities:
   - pos: -15.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3798
   type: WindowReinforcedDirectional
   components:
@@ -30850,7 +30382,6 @@ entities:
     pos: -11.5,34.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3805
   type: ComputerResearchAndDevelopment
   components:
@@ -30876,7 +30407,6 @@ entities:
   - pos: -8.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3809
   type: Table
   components:
@@ -30944,7 +30474,6 @@ entities:
   - pos: -16.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3819
   type: DisposalUnit
   components:
@@ -30987,7 +30516,6 @@ entities:
   - pos: -13.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3826
   type: DisposalUnit
   components:
@@ -31057,10 +30585,9 @@ entities:
   - bodyType: Static
     type: Physics
 - uid: 3836
-  type: WindowReinforcedDirectional
+  type: SpawnVendingMachineRestockFood
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 10.5,-4.5
+  - pos: 12.5,-0.5
     parent: 1
     type: Transform
 - uid: 3837
@@ -31075,7 +30602,6 @@ entities:
   - pos: 3.5,-12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3839
   type: DisposalUnit
   components:
@@ -31089,14 +30615,12 @@ entities:
     pos: 30.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3841
   type: DisposalUnit
   components:
   - pos: -13.5,-26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3842
   type: DisposalUnit
   components:
@@ -31188,7 +30712,6 @@ entities:
     pos: -10.5,39.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3856
   type: Catwalk
   components:
@@ -31196,7 +30719,6 @@ entities:
     pos: -10.5,38.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3857
   type: Catwalk
   components:
@@ -31246,7 +30768,6 @@ entities:
     pos: -10.5,33.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3864
   type: Catwalk
   components:
@@ -31275,7 +30796,6 @@ entities:
     pos: -2.5,40.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3868
   type: Catwalk
   components:
@@ -31290,7 +30810,6 @@ entities:
     pos: -1.5,39.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3870
   type: Catwalk
   components:
@@ -31375,7 +30894,6 @@ entities:
     pos: -5.5,35.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3882
   type: Catwalk
   components:
@@ -31383,7 +30901,6 @@ entities:
     pos: -4.5,35.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3883
   type: Catwalk
   components:
@@ -31398,7 +30915,6 @@ entities:
     pos: -2.5,35.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3885
   type: Catwalk
   components:
@@ -31545,7 +31061,6 @@ entities:
     pos: -22.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3906
   type: Catwalk
   components:
@@ -31636,6 +31151,8 @@ entities:
     pos: -5.5,44.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 3919
@@ -31645,6 +31162,8 @@ entities:
     pos: -2.5,44.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 3920
@@ -31654,6 +31173,8 @@ entities:
     pos: -10.5,52.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 3921
@@ -31662,6 +31183,8 @@ entities:
   - pos: -6.5,56.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 3922
@@ -31678,6 +31201,8 @@ entities:
     pos: -2.5,53.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 3924
@@ -31687,6 +31212,8 @@ entities:
     pos: -5.5,48.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 3925
@@ -31702,6 +31229,8 @@ entities:
   - pos: 1.5,55.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 3927
@@ -31711,6 +31240,8 @@ entities:
     pos: 1.5,49.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 3928
@@ -31910,7 +31441,6 @@ entities:
     pos: -5.5,46.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3957
   type: PottedPlantRandom
   components:
@@ -32648,7 +32178,6 @@ entities:
       - port: Pressed
         uid: 4100
     type: SignalReceiver
-  - type: Followed
 - uid: 4067
   type: SignBridge
   components:
@@ -32673,7 +32202,6 @@ entities:
   - pos: -2.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4071
   type: ComputerSurveillanceCameraMonitor
   components:
@@ -32716,7 +32244,6 @@ entities:
   - pos: -0.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4078
   type: ChairOfficeDark
   components:
@@ -32771,14 +32298,12 @@ entities:
   - pos: -4.5,27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4086
   type: ClosetFireFilled
   components:
   - pos: -5.5,27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4087
   type: Table
   components:
@@ -32845,7 +32370,6 @@ entities:
     pos: 5.5,31.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4093
   type: TableWood
   components:
@@ -32880,7 +32404,6 @@ entities:
     pos: 5.5,28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4098
   type: Bed
   components:
@@ -33096,7 +32619,6 @@ entities:
     pos: -4.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4127
   type: WindoorCommandLocked
   components:
@@ -33129,7 +32651,6 @@ entities:
   - pos: -1.465405,25.0651
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4132
   type: SpaceCash1000
   components:
@@ -33248,7 +32769,6 @@ entities:
   - pos: -5.5,29.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4151
   type: CableMV
   components:
@@ -33593,14 +33113,12 @@ entities:
   - pos: 1.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4206
   type: CableApcExtension
   components:
   - pos: 1.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4207
   type: CableApcExtension
   components:
@@ -33613,7 +33131,6 @@ entities:
   - pos: 3.5,28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4209
   type: CableApcExtension
   components:
@@ -33664,7 +33181,6 @@ entities:
   - pos: -0.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4217
   type: CableApcExtension
   components:
@@ -34003,7 +33519,6 @@ entities:
     type: Transform
   - enabled: True
     type: AmbientSound
-  - type: Followed
 - uid: 4272
   type: CableHV
   components:
@@ -34038,7 +33553,6 @@ entities:
   - pos: 5.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4277
   type: CableHV
   components:
@@ -34051,7 +33565,6 @@ entities:
   - pos: 4.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4279
   type: CableHV
   components:
@@ -34290,7 +33803,6 @@ entities:
   - pos: 8.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4318
   type: CableHV
   components:
@@ -34559,7 +34071,6 @@ entities:
   - pos: -28.5,18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4355
   type: CableHV
   components:
@@ -34660,7 +34171,6 @@ entities:
   - pos: -28.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4369
   type: CableHV
   components:
@@ -35135,7 +34645,6 @@ entities:
   - pos: -5.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4445
   type: CableHV
   components:
@@ -35184,7 +34693,6 @@ entities:
   - pos: -3.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4453
   type: CableHV
   components:
@@ -35393,7 +34901,6 @@ entities:
     type: Transform
   - enabled: True
     type: AmbientSound
-  - type: Followed
 - uid: 4483
   type: CableHV
   components:
@@ -35506,7 +35013,6 @@ entities:
     type: Transform
   - enabled: True
     type: AmbientSound
-  - type: Followed
 - uid: 4499
   type: CableHV
   components:
@@ -36392,7 +35898,6 @@ entities:
     type: Transform
   - enabled: True
     type: AmbientSound
-  - type: Followed
 - uid: 4625
   type: CableHV
   components:
@@ -36415,7 +35920,6 @@ entities:
     type: Transform
   - enabled: True
     type: AmbientSound
-  - type: Followed
 - uid: 4628
   type: CableHV
   components:
@@ -36910,7 +36414,6 @@ entities:
     type: Transform
   - enabled: True
     type: AmbientSound
-  - type: Followed
 - uid: 4696
   type: CableHV
   components:
@@ -36925,7 +36428,6 @@ entities:
     type: Transform
   - enabled: True
     type: AmbientSound
-  - type: Followed
 - uid: 4698
   type: CableHV
   components:
@@ -37281,7 +36783,6 @@ entities:
   - pos: 8.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4749
   type: CableHV
   components:
@@ -37813,7 +37314,6 @@ entities:
   - pos: 46.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4822
   type: Grille
   components:
@@ -37872,7 +37372,6 @@ entities:
   - pos: 45.5,29.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4831
   type: ReinforcedWindow
   components:
@@ -38087,7 +37586,6 @@ entities:
   - pos: -38.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4863
   type: WallReinforced
   components:
@@ -38345,7 +37843,6 @@ entities:
     pos: 43.5,29.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4900
   type: WindoorSecurityLocked
   components:
@@ -38679,7 +38176,6 @@ entities:
   - pos: 24.5,27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4953
   type: VendingMachineCart
   components:
@@ -38688,14 +38184,12 @@ entities:
   - pos: -2.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4954
   type: UniformPrinter
   components:
   - pos: -1.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4955
   type: ComputerId
   components:
@@ -38703,7 +38197,6 @@ entities:
     pos: 1.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4956
   type: TableWood
   components:
@@ -38838,14 +38331,12 @@ entities:
   - pos: 4.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4973
   type: PottedPlantRandom
   components:
   - pos: 3.5,29.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4974
   type: PaperBin5
   components:
@@ -38901,6 +38392,8 @@ entities:
     pos: 3.5,29.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4983
@@ -38910,6 +38403,8 @@ entities:
     pos: -11.5,29.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4984
@@ -38919,6 +38414,8 @@ entities:
     pos: -2.5,27.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4985
@@ -38928,15 +38425,18 @@ entities:
     pos: 1.5,30.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
-  - type: Followed
 - uid: 4986
   type: Poweredlight
   components:
   - pos: 4.5,25.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4987
@@ -38946,6 +38446,8 @@ entities:
     pos: 5.5,19.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4988
@@ -38954,6 +38456,8 @@ entities:
   - pos: -0.5,21.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4989
@@ -38963,6 +38467,8 @@ entities:
     pos: -4.5,24.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4990
@@ -38972,15 +38478,18 @@ entities:
     pos: -5.5,20.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
-  - type: Followed
 - uid: 4991
   type: Poweredlight
   components:
   - pos: -14.5,31.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4992
@@ -38999,6 +38508,8 @@ entities:
     pos: -6.5,33.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4994
@@ -39008,6 +38519,8 @@ entities:
     pos: -14.5,33.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4995
@@ -39017,6 +38530,8 @@ entities:
     pos: 2.5,33.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4996
@@ -39031,7 +38546,6 @@ entities:
   - pos: 5.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4998
   type: PottedPlantRandom
   components:
@@ -39070,7 +38584,6 @@ entities:
     pos: -5.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5004
   type: FirelockEdge
   components:
@@ -39262,7 +38775,6 @@ entities:
   - pos: -1.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5033
   type: ChairWood
   components:
@@ -39283,7 +38795,6 @@ entities:
     pos: 0.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5036
   type: TableWood
   components:
@@ -39310,7 +38821,6 @@ entities:
     pos: 4.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5040
   type: Fireplace
   components:
@@ -39330,7 +38840,6 @@ entities:
     pos: 4.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5043
   type: Carpet
   components:
@@ -39378,7 +38887,6 @@ entities:
   - pos: 0.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5050
   type: RandomVendingDrinks
   components:
@@ -39405,7 +38913,6 @@ entities:
     pos: 2.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5054
   type: ComfyChair
   components:
@@ -39439,7 +38946,6 @@ entities:
     pos: 3.502126,25.59834
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5059
   type: MedkitFilled
   components:
@@ -39470,7 +38976,6 @@ entities:
   - pos: -0.47162104,32.53128
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5064
   type: Flash
   components:
@@ -40711,7 +40216,6 @@ entities:
   - pos: 32.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5251
   type: CableApcExtension
   components:
@@ -41089,7 +40593,6 @@ entities:
   - pos: 18.660734,15.690639
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5311
   type: MagazineMagnumSubMachineGunRubber
   components:
@@ -41109,7 +40612,6 @@ entities:
     pos: 29.5,8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5314
   type: Table
   components:
@@ -41226,7 +40728,6 @@ entities:
   - pos: 29.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5333
   type: Rack
   components:
@@ -41249,7 +40750,6 @@ entities:
   - pos: 33.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5336
   type: BriefcaseBrownFilled
   components:
@@ -41556,7 +41056,6 @@ entities:
         ents:
         - 12478
     type: ContainerContainer
-  - type: Followed
 - uid: 5375
   type: ChairOfficeDark
   components:
@@ -41590,7 +41089,6 @@ entities:
   - pos: 27.5,8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5380
   type: PottedPlantRandom
   components:
@@ -41621,7 +41119,6 @@ entities:
   - pos: 20.5,8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5385
   type: WeaponSubMachineGunWt550
   components:
@@ -42262,6 +41759,8 @@ entities:
   - pos: 25.5,28.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5469
@@ -42271,6 +41770,8 @@ entities:
     pos: 25.5,24.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5470
@@ -42280,6 +41781,8 @@ entities:
     pos: 28.5,24.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5471
@@ -42289,6 +41792,8 @@ entities:
     pos: 33.5,26.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5472
@@ -42298,6 +41803,8 @@ entities:
     pos: 34.5,20.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5473
@@ -42307,6 +41814,8 @@ entities:
     pos: 33.5,16.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5474
@@ -42316,6 +41825,8 @@ entities:
     pos: 28.5,16.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5475
@@ -42325,6 +41836,8 @@ entities:
     pos: 27.5,12.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5476
@@ -42333,6 +41846,8 @@ entities:
   - pos: 30.5,10.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5477
@@ -42342,6 +41857,8 @@ entities:
     pos: 38.5,11.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5478
@@ -42351,6 +41868,8 @@ entities:
     pos: 19.5,8.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5479
@@ -42360,6 +41879,8 @@ entities:
     pos: 26.5,5.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5480
@@ -42369,6 +41890,8 @@ entities:
     pos: 23.5,13.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5481
@@ -42378,6 +41901,8 @@ entities:
     pos: 18.5,14.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5482
@@ -42387,6 +41912,8 @@ entities:
     pos: 16.5,13.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5483
@@ -42395,6 +41922,8 @@ entities:
   - pos: 9.5,15.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5484
@@ -42404,6 +41933,8 @@ entities:
     pos: 11.5,6.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5485
@@ -42413,6 +41944,8 @@ entities:
     pos: 14.5,6.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5486
@@ -42422,6 +41955,8 @@ entities:
     pos: 17.5,6.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5487
@@ -42498,7 +42033,6 @@ entities:
     pos: 21.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5498
   type: FirelockGlass
   components:
@@ -42541,7 +42075,6 @@ entities:
     pos: -4.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5504
   type: IntercomCommand
   components:
@@ -42556,7 +42089,6 @@ entities:
     pos: 6.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5506
   type: ExtinguisherCabinetFilled
   components:
@@ -42675,6 +42207,8 @@ entities:
     pos: 20.5,6.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5523
@@ -42684,6 +42218,8 @@ entities:
     pos: 25.5,8.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5524
@@ -42823,19 +42359,54 @@ entities:
   - pos: 12.5,7.5
     parent: 1
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 12485
+      Close:
+      - port: Start
+        uid: 12485
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 12485
+    type: SignalReceiver
 - uid: 5536
   type: WindoorSecurityLocked
   components:
   - pos: 15.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 12486
+      Close:
+      - port: Start
+        uid: 12486
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 12486
+    type: SignalReceiver
 - uid: 5537
   type: WindoorSecurityLocked
   components:
   - pos: 18.5,7.5
     parent: 1
     type: Transform
+  - inputs:
+      Open:
+      - port: Timer
+        uid: 12487
+      Close:
+      - port: Start
+        uid: 12487
+      Toggle: []
+      AutoClose:
+      - port: Timer
+        uid: 12487
+    type: SignalReceiver
 - uid: 5538
   type: Chair
   components:
@@ -42996,7 +42567,6 @@ entities:
     pos: 46.5,2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5556
   type: Rack
   components:
@@ -43117,7 +42687,6 @@ entities:
     pos: -39.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5575
   type: ChairOfficeDark
   components:
@@ -43262,7 +42831,6 @@ entities:
   - pos: -23.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5598
   type: Rack
   components:
@@ -43385,7 +42953,6 @@ entities:
     pos: -11.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5617
   type: TableGlass
   components:
@@ -43399,7 +42966,6 @@ entities:
   - pos: -10.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5619
   type: BedsheetGreen
   components:
@@ -43679,7 +43245,6 @@ entities:
     pos: 16.5,-14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5659
   type: CarpetOrange
   components:
@@ -44643,7 +44208,6 @@ entities:
   - pos: -11.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5799
   type: CableApcExtension
   components:
@@ -44834,7 +44398,6 @@ entities:
   - pos: -13.5,21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5830
   type: CableApcExtension
   components:
@@ -44865,7 +44428,6 @@ entities:
   - pos: -11.5,18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5835
   type: CableApcExtension
   components:
@@ -44926,42 +44488,36 @@ entities:
   - pos: -16.5,-44.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5845
   type: Catwalk
   components:
   - pos: -16.5,-43.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5846
   type: Catwalk
   components:
   - pos: -16.5,-42.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5847
   type: Catwalk
   components:
   - pos: -16.5,-41.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5848
   type: Catwalk
   components:
   - pos: -16.5,-40.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5849
   type: Catwalk
   components:
   - pos: -16.5,-39.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5850
   type: Catwalk
   components:
@@ -44980,7 +44536,6 @@ entities:
   - pos: -16.5,-36.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5853
   type: Catwalk
   components:
@@ -44993,14 +44548,12 @@ entities:
   - pos: -16.5,-34.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5855
   type: Catwalk
   components:
   - pos: -16.5,-33.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5856
   type: Catwalk
   components:
@@ -45037,7 +44590,6 @@ entities:
   - pos: -19.5,-30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5862
   type: EmergencyRollerBed
   components:
@@ -45050,7 +44602,6 @@ entities:
   - pos: -13.494733,11.588304
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5864
   type: Table
   components:
@@ -45063,7 +44614,6 @@ entities:
   - pos: -16.5,-3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5866
   type: Table
   components:
@@ -45082,7 +44632,6 @@ entities:
   - pos: -17.5,-3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5869
   type: Table
   components:
@@ -45109,7 +44658,6 @@ entities:
     type: Transform
   - fixtures: []
     type: Fixtures
-  - type: Followed
 - uid: 5873
   type: FloorDrain
   components:
@@ -45167,7 +44715,6 @@ entities:
   - pos: -17.378174,5.612771
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5882
   type: FaxMachineBase
   components:
@@ -45176,7 +44723,6 @@ entities:
     type: Transform
   - name: Medical
     type: FaxMachine
-  - type: Followed
 - uid: 5883
   type: ClothingNeckScarfStripedBlue
   components:
@@ -45321,7 +44867,6 @@ entities:
   - pos: -12.390701,20.206486
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5907
   type: BoxLatexGloves
   components:
@@ -45478,6 +45023,8 @@ entities:
     pos: -24.5,5.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5930
@@ -45486,6 +45033,8 @@ entities:
   - pos: -22.5,11.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5931
@@ -45495,6 +45044,8 @@ entities:
     pos: -16.5,8.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5932
@@ -45504,6 +45055,8 @@ entities:
     pos: -11.5,7.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5933
@@ -45513,6 +45066,8 @@ entities:
     pos: -13.5,13.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5934
@@ -45521,6 +45076,8 @@ entities:
   - pos: -8.5,14.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5935
@@ -45530,6 +45087,8 @@ entities:
     pos: -16.5,16.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5936
@@ -45539,6 +45098,8 @@ entities:
     pos: -26.5,15.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5937
@@ -45548,6 +45109,8 @@ entities:
     pos: -18.5,6.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5938
@@ -45557,6 +45120,8 @@ entities:
     pos: -15.5,6.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5939
@@ -45566,6 +45131,8 @@ entities:
     pos: -21.5,6.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5940
@@ -45575,6 +45142,8 @@ entities:
     pos: -20.5,15.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5941
@@ -45584,6 +45153,8 @@ entities:
     pos: -17.5,20.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5942
@@ -45593,6 +45164,8 @@ entities:
     pos: -10.5,20.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5943
@@ -45602,6 +45175,8 @@ entities:
     pos: -10.5,19.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5944
@@ -45611,6 +45186,8 @@ entities:
     pos: -7.5,8.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5945
@@ -45649,7 +45226,6 @@ entities:
   - pos: 0.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5950
   type: BoozeDispenser
   components:
@@ -45657,7 +45233,6 @@ entities:
     pos: -1.5,5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5951
   type: LockerBoozeFilled
   components:
@@ -45874,7 +45449,6 @@ entities:
   - pos: -0.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5981
   type: RandomFoodSingle
   components:
@@ -45893,14 +45467,12 @@ entities:
   - pos: 0.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5984
   type: RandomFoodBakedWhole
   components:
   - pos: -1.5,10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5985
   type: Fork
   components:
@@ -45931,7 +45503,6 @@ entities:
   - pos: -1.8431392,2.2686307
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5990
   type: MonkeyCube
   components:
@@ -45971,6 +45542,8 @@ entities:
     pos: -2.5,-0.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 5996
@@ -46047,7 +45620,6 @@ entities:
   - pos: -0.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6008
   type: CrateHydroponicsSeedsExotic
   components:
@@ -46068,7 +45640,6 @@ entities:
   - pos: 1.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6011
   type: VendingMachineHydrobe
   components:
@@ -46077,7 +45648,6 @@ entities:
   - pos: 5.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6012
   type: SeedExtractor
   components:
@@ -46168,7 +45738,6 @@ entities:
   - pos: -12.614596,-0.4335618
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6027
   type: FaxMachineBase
   components:
@@ -46213,7 +45782,6 @@ entities:
   - pos: -16.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6034
   type: SpawnPointResearchDirector
   components:
@@ -46226,14 +45794,12 @@ entities:
   - pos: -15.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6036
   type: SpawnPointChef
   components:
   - pos: 3.5,1.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6037
   type: SpawnPointBartender
   components:
@@ -46259,9 +45825,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 6041
-  type: SpawnPointSecurityOfficer
+  type: CrayonBox
   components:
-  - pos: 15.5,9.5
+  - pos: -9.510162,-31.109522
     parent: 1
     type: Transform
 - uid: 6042
@@ -46460,7 +46026,6 @@ entities:
   - pos: -6.449393,-15.322836
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6074
   type: ClothingHandsGlovesRobohands
   components:
@@ -46491,14 +46056,12 @@ entities:
   - pos: -13.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6079
   type: SignRobo
   components:
   - pos: -5.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6080
   type: SignScience
   components:
@@ -46571,7 +46134,6 @@ entities:
   - pos: -28.475227,-0.46534538
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6092
   type: PartRodMetal
   components:
@@ -46612,7 +46174,6 @@ entities:
   - pos: -31.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6098
   type: DisposalTrunk
   components:
@@ -46695,7 +46256,6 @@ entities:
     type: Transform
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 6108
   type: GasPressurePump
   components:
@@ -46821,7 +46381,6 @@ entities:
     type: Transform
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 6121
   type: GasPassiveVent
   components:
@@ -46840,7 +46399,6 @@ entities:
     type: Transform
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 6123
   type: ComputerAnalysisConsole
   components:
@@ -46895,7 +46453,6 @@ entities:
   - pos: -16.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6131
   type: DisposalJunction
   components:
@@ -46921,7 +46478,6 @@ entities:
   - pos: -16.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6135
   type: DisposalPipe
   components:
@@ -46934,7 +46490,6 @@ entities:
   - pos: -16.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6137
   type: DisposalPipe
   components:
@@ -46961,7 +46516,6 @@ entities:
     pos: -14.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6141
   type: DisposalPipe
   components:
@@ -47018,7 +46572,6 @@ entities:
     pos: -6.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6149
   type: DisposalTrunk
   components:
@@ -47127,7 +46680,6 @@ entities:
   - pos: -0.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6165
   type: DisposalPipe
   components:
@@ -47161,7 +46713,6 @@ entities:
     pos: -2.5,8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6170
   type: DisposalPipe
   components:
@@ -47427,7 +46978,6 @@ entities:
   - pos: 4.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6211
   type: CableMV
   components:
@@ -47574,7 +47124,6 @@ entities:
   - pos: -0.5,-3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6234
   type: CableApcExtension
   components:
@@ -47836,7 +47385,6 @@ entities:
   - pos: 4.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6277
   type: CableApcExtension
   components:
@@ -47940,7 +47488,6 @@ entities:
   - pos: -5.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6294
   type: CableApcExtension
   components:
@@ -47954,7 +47501,6 @@ entities:
     pos: 6.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6296
   type: CableApcExtension
   components:
@@ -48209,14 +47755,12 @@ entities:
   - pos: -14.675418,-8.401124
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6335
   type: Multitool
   components:
   - pos: -14.316043,-8.369874
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6336
   type: CrowbarRed
   components:
@@ -48467,7 +48011,6 @@ entities:
   - pos: -14.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6373
   type: CableMV
   components:
@@ -48682,6 +48225,8 @@ entities:
     pos: -0.5,14.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6407
@@ -48691,6 +48236,8 @@ entities:
     pos: -4.5,7.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6408
@@ -48700,6 +48247,8 @@ entities:
     pos: 7.5,7.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6409
@@ -48709,6 +48258,8 @@ entities:
     pos: -0.5,5.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6410
@@ -48718,6 +48269,8 @@ entities:
     pos: 0.5,1.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6411
@@ -48727,6 +48280,8 @@ entities:
     pos: -2.5,3.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6412
@@ -48736,6 +48291,8 @@ entities:
     pos: -0.5,-5.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6413
@@ -48744,6 +48301,8 @@ entities:
   - pos: 5.5,-1.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6414
@@ -48753,6 +48312,8 @@ entities:
     pos: -4.5,-0.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6415
@@ -48933,7 +48494,6 @@ entities:
   - pos: -11.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6444
   type: CableApcExtension
   components:
@@ -49140,7 +48700,6 @@ entities:
   - pos: -16.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6478
   type: CableApcExtension
   components:
@@ -49299,7 +48858,6 @@ entities:
   - pos: -7.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6504
   type: CableApcExtension
   components:
@@ -49360,7 +48918,6 @@ entities:
   - pos: -11.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6514
   type: CableApcExtension
   components:
@@ -49410,7 +48967,6 @@ entities:
     pos: -0.5,-15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6522
   type: APCBasic
   components:
@@ -50991,6 +50547,8 @@ entities:
   - pos: -26.5,-0.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6744
@@ -51000,6 +50558,8 @@ entities:
     pos: -26.5,-7.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6745
@@ -51009,6 +50569,8 @@ entities:
     pos: -20.5,-6.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6746
@@ -51018,6 +50580,8 @@ entities:
     pos: -22.5,-1.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6747
@@ -51026,6 +50590,8 @@ entities:
   - pos: -14.5,-0.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6748
@@ -51035,6 +50601,8 @@ entities:
     pos: -14.5,-9.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6749
@@ -51044,6 +50612,8 @@ entities:
     pos: -14.5,-13.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6750
@@ -51053,6 +50623,8 @@ entities:
     pos: -17.5,-18.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6751
@@ -51062,6 +50634,8 @@ entities:
     pos: -20.5,-12.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6752
@@ -51071,6 +50645,8 @@ entities:
     pos: -12.5,-10.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6753
@@ -51080,6 +50656,8 @@ entities:
     pos: -9.5,-15.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6754
@@ -51089,6 +50667,8 @@ entities:
     pos: -4.5,-12.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6755
@@ -51098,6 +50678,8 @@ entities:
     pos: 2.5,-13.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6756
@@ -51107,6 +50689,8 @@ entities:
     pos: -9.5,-7.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6757
@@ -51116,6 +50700,8 @@ entities:
     pos: -2.5,-9.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 6758
@@ -51178,7 +50764,6 @@ entities:
   - pos: 20.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6767
   type: VendingMachineTankDispenserEVA
   components:
@@ -51201,7 +50786,6 @@ entities:
     pos: 15.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6770
   type: LockerEngineerFilled
   components:
@@ -51794,6 +51378,8 @@ entities:
 - uid: 6841
   type: GasFilterFlipped
   components:
+  - name: plasma filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-15.5
     parent: 1
@@ -51803,6 +51389,8 @@ entities:
 - uid: 6842
   type: GasFilterFlipped
   components:
+  - name: water vapor filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-13.5
     parent: 1
@@ -51812,6 +51400,8 @@ entities:
 - uid: 6843
   type: GasFilterFlipped
   components:
+  - name: n2o filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-11.5
     parent: 1
@@ -51821,6 +51411,8 @@ entities:
 - uid: 6844
   type: GasFilterFlipped
   components:
+  - name: co2 filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-9.5
     parent: 1
@@ -51830,6 +51422,8 @@ entities:
 - uid: 6845
   type: GasFilterFlipped
   components:
+  - name: o2 filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-7.5
     parent: 1
@@ -51839,6 +51433,8 @@ entities:
 - uid: 6846
   type: GasFilterFlipped
   components:
+  - name: n2 filter
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 38.5,-5.5
     parent: 1
@@ -52079,6 +51675,8 @@ entities:
 - uid: 6868
   type: GasPressurePump
   components:
+  - name: n2 pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-4.5
     parent: 1
@@ -52088,6 +51686,8 @@ entities:
 - uid: 6869
   type: GasPressurePump
   components:
+  - name: o2 pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-6.5
     parent: 1
@@ -52097,6 +51697,8 @@ entities:
 - uid: 6870
   type: GasPressurePump
   components:
+  - name: co2 pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-8.5
     parent: 1
@@ -52106,6 +51708,8 @@ entities:
 - uid: 6871
   type: GasPressurePump
   components:
+  - name: n2o pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-10.5
     parent: 1
@@ -52115,6 +51719,8 @@ entities:
 - uid: 6872
   type: GasPressurePump
   components:
+  - name: water vapor pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-12.5
     parent: 1
@@ -52124,6 +51730,8 @@ entities:
 - uid: 6873
   type: GasPressurePump
   components:
+  - name: plasma pump
+    type: MetaData
   - rot: -1.5707963267948966 rad
     pos: 39.5,-14.5
     parent: 1
@@ -52750,6 +52358,8 @@ entities:
 - uid: 6932
   type: GasMixerFlipped
   components:
+  - name: distro mixer
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 35.5,-6.5
     parent: 1
@@ -52858,6 +52468,8 @@ entities:
 - uid: 6942
   type: GasMixer
   components:
+  - name: n2 + o2 to mix
+    type: MetaData
   - pos: 37.5,-7.5
     parent: 1
     type: Transform
@@ -52866,6 +52478,8 @@ entities:
 - uid: 6943
   type: GasMixerFlipped
   components:
+  - name: co2 to mix
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 37.5,-8.5
     parent: 1
@@ -52875,6 +52489,8 @@ entities:
 - uid: 6944
   type: GasMixerFlipped
   components:
+  - name: n2o to mix
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 37.5,-10.5
     parent: 1
@@ -52884,6 +52500,8 @@ entities:
 - uid: 6945
   type: GasMixerFlipped
   components:
+  - name: water vapor to mix
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 37.5,-12.5
     parent: 1
@@ -52893,6 +52511,8 @@ entities:
 - uid: 6946
   type: GasMixerFlipped
   components:
+  - name: plasma to mix
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 37.5,-14.5
     parent: 1
@@ -53080,6 +52700,8 @@ entities:
 - uid: 6964
   type: GasPressurePump
   components:
+  - name: distro pump
+    type: MetaData
   - pos: 35.5,-9.5
     parent: 1
     type: Transform
@@ -53141,7 +52763,6 @@ entities:
     pos: 42.5,-14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6971
   type: WarningN2O
   components:
@@ -53188,6 +52809,8 @@ entities:
 - uid: 6976
   type: GasPressurePump
   components:
+  - name: mix to space pump
+    type: MetaData
   - pos: 35.5,-17.5
     parent: 1
     type: Transform
@@ -53196,6 +52819,8 @@ entities:
 - uid: 6977
   type: GasPressurePump
   components:
+  - name: mix pump
+    type: MetaData
   - pos: 36.5,-18.5
     parent: 1
     type: Transform
@@ -53225,6 +52850,8 @@ entities:
 - uid: 6980
   type: GasPressurePump
   components:
+  - name: mix output pump
+    type: MetaData
   - rot: 3.141592653589793 rad
     pos: 34.5,-17.5
     parent: 1
@@ -53375,7 +53002,6 @@ entities:
   - pos: 35.5,-3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6998
   type: NitrogenCanister
   components:
@@ -53529,7 +53155,6 @@ entities:
   - pos: 34.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7021
   type: GasThermoMachineFreezer
   components:
@@ -53711,7 +53336,6 @@ entities:
   - pos: 41.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7050
   type: Poweredlight
   components:
@@ -53719,6 +53343,8 @@ entities:
     pos: 45.5,-15.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7051
@@ -53728,6 +53354,8 @@ entities:
     pos: 45.5,-13.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7052
@@ -53737,6 +53365,8 @@ entities:
     pos: 45.5,-11.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7053
@@ -53746,6 +53376,8 @@ entities:
     pos: 45.5,-9.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7054
@@ -53755,6 +53387,8 @@ entities:
     pos: 45.5,-7.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7055
@@ -53764,6 +53398,8 @@ entities:
     pos: 45.5,-5.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7056
@@ -54256,7 +53892,6 @@ entities:
   - pos: 32.5,-16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7130
   type: SpawnPointAtmos
   components:
@@ -54777,6 +54412,8 @@ entities:
     pos: 11.5,-11.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7207
@@ -54786,6 +54423,8 @@ entities:
     pos: 15.5,-8.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7208
@@ -54794,6 +54433,8 @@ entities:
   - pos: 21.5,-3.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7209
@@ -54803,6 +54444,8 @@ entities:
     pos: 21.5,-11.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7210
@@ -54811,6 +54454,8 @@ entities:
   - pos: 27.5,-3.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7211
@@ -54820,6 +54465,8 @@ entities:
     pos: 29.5,-8.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7212
@@ -54829,6 +54476,8 @@ entities:
     pos: 18.5,-15.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7213
@@ -54838,6 +54487,8 @@ entities:
     pos: 24.5,-15.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7214
@@ -54847,6 +54498,8 @@ entities:
     pos: 32.5,-11.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7215
@@ -54856,6 +54509,8 @@ entities:
     pos: 34.5,-5.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7216
@@ -54865,6 +54520,8 @@ entities:
     pos: 34.5,-12.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7217
@@ -54873,6 +54530,8 @@ entities:
   - pos: 33.5,-16.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7218
@@ -54882,6 +54541,8 @@ entities:
     pos: 33.5,-20.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7219
@@ -54891,6 +54552,8 @@ entities:
     pos: 36.5,-23.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7220
@@ -54900,6 +54563,8 @@ entities:
     pos: 41.5,-18.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7221
@@ -54909,6 +54574,8 @@ entities:
     pos: 41.5,-14.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7222
@@ -54918,6 +54585,8 @@ entities:
     pos: 45.5,-17.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7223
@@ -54927,6 +54596,8 @@ entities:
     pos: 41.5,-4.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7224
@@ -54936,6 +54607,8 @@ entities:
     pos: 41.5,-8.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7225
@@ -55095,7 +54768,6 @@ entities:
     pos: 7.5,-21.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7246
   type: WindoorSecure
   components:
@@ -55352,7 +55024,6 @@ entities:
   - pos: 15.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7288
   type: WindoorSecureCargoLocked
   components:
@@ -55387,7 +55058,6 @@ entities:
   - pos: 19.5,-20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7293
   type: Rack
   components:
@@ -55537,7 +55207,6 @@ entities:
   - pos: 13.5,-26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7317
   type: CableApcExtension
   components:
@@ -56114,7 +55783,6 @@ entities:
   - pos: 11.688369,-18.30281
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7404
   type: BoxFolderYellow
   components:
@@ -56248,7 +55916,6 @@ entities:
   - pos: 4.483827,-26.343641
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7426
   type: ToolboxEmergencyFilled
   components:
@@ -56378,7 +56045,6 @@ entities:
       - port: Off
         uid: 1740
     type: SignalTransmitter
-  - type: Followed
 - uid: 7432
   type: BlastDoor
   components:
@@ -56484,7 +56150,6 @@ entities:
       - port: Toggle
         uid: 7438
     type: SignalTransmitter
-  - type: Followed
 - uid: 7440
   type: HospitalCurtainsOpen
   components:
@@ -56499,7 +56164,6 @@ entities:
     pos: 4.5,-17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7442
   type: Bed
   components:
@@ -56653,6 +56317,8 @@ entities:
     pos: 24.5,-27.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7462
@@ -56661,6 +56327,8 @@ entities:
   - pos: 20.5,-20.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7463
@@ -56670,6 +56338,8 @@ entities:
     pos: 18.5,-27.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7464
@@ -56679,6 +56349,8 @@ entities:
     pos: 9.5,-27.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7465
@@ -56687,6 +56359,8 @@ entities:
   - pos: 13.5,-20.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7466
@@ -56696,6 +56370,8 @@ entities:
     pos: 10.5,-30.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7467
@@ -56705,6 +56381,8 @@ entities:
     pos: 14.5,-30.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7468
@@ -56714,6 +56392,8 @@ entities:
     pos: 4.5,-26.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7469
@@ -56722,6 +56402,8 @@ entities:
   - pos: 4.5,-19.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7470
@@ -56731,6 +56413,8 @@ entities:
     pos: 4.5,-15.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7471
@@ -56740,6 +56424,8 @@ entities:
     pos: 11.5,-19.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7472
@@ -56749,6 +56435,8 @@ entities:
     pos: 5.5,7.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7473
@@ -56757,6 +56445,8 @@ entities:
   - pos: -0.5,12.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7474
@@ -56766,6 +56456,8 @@ entities:
     pos: 21.5,-8.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7475
@@ -56786,7 +56478,6 @@ entities:
   - pos: 5.5,-14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7478
   type: SpawnPointSalvageSpecialist
   components:
@@ -56876,7 +56567,6 @@ entities:
   - pos: -32.5,14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7488
   type: SpawnPointClown
   components:
@@ -56889,7 +56579,6 @@ entities:
   - pos: -12.5,-29.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7490
   type: SpawnPointMusician
   components:
@@ -57005,7 +56694,6 @@ entities:
     pos: -2.5,-7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7508
   type: Table
   components:
@@ -57211,7 +56899,6 @@ entities:
   - pos: -2.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7539
   type: VendingMachineCigs
   components:
@@ -57220,7 +56907,6 @@ entities:
   - pos: 5.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7540
   type: RandomVendingSnacks
   components:
@@ -57940,7 +57626,6 @@ entities:
   - pos: 26.5,1.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7655
   type: RandomFoodMeal
   components:
@@ -57976,10 +57661,10 @@ entities:
   - air:
       volume: 200
       immutable: False
-      temperature: 93.465614
+      temperature: 293.14972
       moles:
-      - 0
-      - 0
+      - 1.7459903
+      - 6.568249
       - 0
       - 0
       - 0
@@ -58020,6 +57705,32 @@ entities:
   - pos: 11.5,-0.5
     parent: 1
     type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.1496
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
+  - containers:
+      entity_storage: !type:Container
+        showEnts: False
+        occludes: True
+        ents:
+        - 3057
+        - 3056
+    type: ContainerContainer
 - uid: 7663
   type: SpawnVehicleJanicart
   components:
@@ -58085,15 +57796,15 @@ entities:
     parent: 1
     type: Transform
 - uid: 7672
-  type: SpawnVendingMachineRestockFoodDrink
+  type: SpawnVendingMachineRestockFood
   components:
-  - pos: 12.5,-0.5
+  - pos: -21.5,-26.5
     parent: 1
     type: Transform
 - uid: 7673
-  type: SpawnVendingMachineRestockFoodDrink
+  type: SpawnVendingMachineRestockDrink
   components:
-  - pos: 12.5,-0.5
+  - pos: -38.5,-16.5
     parent: 1
     type: Transform
 - uid: 7674
@@ -58102,7 +57813,6 @@ entities:
   - pos: 7.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7675
   type: PottedPlantRandom
   components:
@@ -58133,7 +57843,6 @@ entities:
   - pos: 0.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7680
   type: PottedPlantRandom
   components:
@@ -58248,7 +57957,6 @@ entities:
   - pos: -7.5,-24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7698
   type: PottedPlantRandom
   components:
@@ -58918,7 +58626,6 @@ entities:
   - pos: -13.014593,-31.488472
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7805
   type: FluteInstrument
   components:
@@ -58981,7 +58688,6 @@ entities:
   - pos: -6.5,-25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7815
   type: CableApcExtension
   components:
@@ -59432,7 +59138,6 @@ entities:
   - pos: -18.5,-23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7889
   type: Mirror
   components:
@@ -59451,6 +59156,8 @@ entities:
   - pos: -10.5,3.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7892
@@ -59460,6 +59167,8 @@ entities:
     pos: -17.5,1.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7893
@@ -59468,6 +59177,8 @@ entities:
   - pos: -23.5,3.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7894
@@ -59489,6 +59200,8 @@ entities:
     pos: -29.5,1.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7897
@@ -59498,6 +59211,8 @@ entities:
     pos: -37.5,5.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7898
@@ -59507,15 +59222,18 @@ entities:
     pos: -31.5,10.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
-  - type: Followed
 - uid: 7899
   type: Poweredlight
   components:
   - pos: -32.5,16.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7900
@@ -59524,6 +59242,8 @@ entities:
   - pos: -35.5,13.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7901
@@ -59532,6 +59252,8 @@ entities:
   - pos: -37.5,13.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7902
@@ -59541,6 +59263,8 @@ entities:
     pos: -36.5,-1.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7903
@@ -59550,6 +59274,8 @@ entities:
     pos: -40.5,-7.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7904
@@ -59559,6 +59285,8 @@ entities:
     pos: -37.5,-10.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 7905
@@ -60166,6 +59894,8 @@ entities:
     pos: -39.5,5.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8002
@@ -60175,6 +59905,8 @@ entities:
     pos: -39.5,13.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8003
@@ -60184,6 +59916,8 @@ entities:
     pos: -43.5,11.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8004
@@ -60192,6 +59926,8 @@ entities:
   - pos: -43.5,5.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8005
@@ -60201,6 +59937,8 @@ entities:
     pos: -10.5,-3.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8006
@@ -60209,6 +59947,8 @@ entities:
   - pos: -3.5,-20.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8007
@@ -60218,6 +59958,8 @@ entities:
     pos: -3.5,-26.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8008
@@ -60226,6 +59968,8 @@ entities:
   - pos: -9.5,-24.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8009
@@ -60235,6 +59979,8 @@ entities:
     pos: -18.5,-25.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8010
@@ -60244,6 +59990,8 @@ entities:
     pos: -13.5,-30.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8011
@@ -60253,6 +60001,8 @@ entities:
     pos: -19.5,-27.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8012
@@ -60262,6 +60012,8 @@ entities:
     pos: -17.5,-27.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8013
@@ -60278,6 +60030,8 @@ entities:
     pos: -6.5,-29.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8015
@@ -60287,6 +60041,8 @@ entities:
     pos: -2.5,-29.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8016
@@ -60296,6 +60052,8 @@ entities:
     pos: -7.5,-32.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8017
@@ -60304,6 +60062,8 @@ entities:
   - pos: -3.5,-31.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8018
@@ -60313,6 +60073,8 @@ entities:
     pos: 0.5,-31.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8019
@@ -60322,6 +60084,8 @@ entities:
     pos: 2.5,-25.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 8020
@@ -60974,7 +60738,6 @@ entities:
   - pos: 34.5,2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8120
   type: CableApcExtension
   components:
@@ -61761,7 +61524,6 @@ entities:
       - 0
       - 0
     type: EntityStorage
-  - type: Followed
 - uid: 8243
   type: Hemostat
   components:
@@ -61842,7 +61604,6 @@ entities:
   - pos: 5.3845835,10.568368
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8255
   type: PersonalAI
   components:
@@ -62185,7 +61946,6 @@ entities:
     pos: -30.5,-15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8307
   type: StoolBar
   components:
@@ -63953,7 +63713,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 8559
-  type: Grille
+  type: GrilleBroken
   components:
   - pos: 49.5,-1.5
     parent: 1
@@ -64305,7 +64065,6 @@ entities:
   - pos: 0.5,59.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8616
   type: GrilleBroken
   components:
@@ -64544,14 +64303,12 @@ entities:
   - pos: -18.5,36.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8654
   type: Grille
   components:
   - pos: -19.5,36.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8655
   type: Grille
   components:
@@ -65822,9 +65579,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 8833
-  type: MaintenanceToolSpawner
+  type: SpawnVendingMachineRestockFoodDrink
   components:
-  - pos: -21.5,-26.5
+  - pos: 28.5,-15.5
     parent: 1
     type: Transform
 - uid: 8834
@@ -65936,7 +65693,6 @@ entities:
   - pos: -24.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8852
   type: ClosetToolFilled
   components:
@@ -65991,7 +65747,6 @@ entities:
   - pos: -31.5,-10.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8861
   type: ClosetMaintenanceFilledRandom
   components:
@@ -66232,7 +65987,6 @@ entities:
     pos: -31.5,-2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8897
   type: ChairFolding
   components:
@@ -66247,7 +66001,6 @@ entities:
     pos: -24.5,-15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8899
   type: Chair
   components:
@@ -66305,7 +66058,6 @@ entities:
   - pos: -33.5,-5.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8908
   type: ClothingHeadHatWelding
   components:
@@ -66313,9 +66065,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 8909
-  type: MaintenanceFluffSpawner
+  type: SpawnVendingMachineRestockFoodDrink
   components:
-  - pos: -38.5,-16.5
+  - pos: 32.5,-4.5
     parent: 1
     type: Transform
 - uid: 8910
@@ -66515,7 +66267,6 @@ entities:
     pos: -38.5,-13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8940
   type: Catwalk
   components:
@@ -66754,7 +66505,6 @@ entities:
     pos: -33.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8974
   type: Catwalk
   components:
@@ -66839,7 +66589,6 @@ entities:
     pos: -30.5,-9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8986
   type: Catwalk
   components:
@@ -66861,7 +66610,6 @@ entities:
     pos: -17.5,-22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8989
   type: Catwalk
   components:
@@ -66890,7 +66638,6 @@ entities:
     pos: -13.5,-22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8993
   type: Catwalk
   components:
@@ -66940,7 +66687,6 @@ entities:
     pos: -10.5,-17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9000
   type: Catwalk
   components:
@@ -67153,7 +66899,6 @@ entities:
   - pos: -37.5,-4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9033
   type: CarpetGreen
   components:
@@ -67221,6 +66966,8 @@ entities:
     pos: 7.5,-9.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9044
@@ -67230,6 +66977,8 @@ entities:
     pos: 9.5,-0.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9045
@@ -67297,6 +67046,8 @@ entities:
   - pos: 13.5,-0.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9053
@@ -67306,6 +67057,8 @@ entities:
     pos: 17.5,1.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9054
@@ -67314,6 +67067,8 @@ entities:
   - pos: 26.5,3.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9055
@@ -67323,6 +67078,8 @@ entities:
     pos: 36.5,1.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9056
@@ -67332,6 +67089,8 @@ entities:
     pos: 44.5,4.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9057
@@ -67341,6 +67100,8 @@ entities:
     pos: 44.5,11.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9058
@@ -67357,6 +67118,8 @@ entities:
     pos: 41.5,21.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9060
@@ -67375,6 +67138,8 @@ entities:
     pos: 39.5,28.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9062
@@ -67383,6 +67148,8 @@ entities:
   - pos: 39.5,34.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9063
@@ -67392,6 +67159,8 @@ entities:
     pos: 43.5,25.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9064
@@ -67401,6 +67170,8 @@ entities:
     pos: 46.5,30.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 9065
@@ -67456,7 +67227,6 @@ entities:
     pos: 6.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9072
   type: Catwalk
   components:
@@ -67674,7 +67444,6 @@ entities:
     pos: 33.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9103
   type: Catwalk
   components:
@@ -67981,12 +67750,11 @@ entities:
     parent: 1
     type: Transform
 - uid: 9149
-  type: MaintenanceFluffSpawner
+  type: SpawnVendingMachineRestockFoodDrink
   components:
-  - pos: 28.5,-15.5
+  - pos: 13.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9150
   type: MaintenanceFluffSpawner
   components:
@@ -68087,9 +67855,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 9164
-  type: MaintenanceFluffSpawner
+  type: SpawnVendingMachineRestockFoodDrink
   components:
-  - pos: 32.5,-4.5
+  - pos: -28.5,21.5
     parent: 1
     type: Transform
 - uid: 9165
@@ -68204,7 +67972,6 @@ entities:
   - pos: 28.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9183
   type: APCBasic
   components:
@@ -68810,7 +68577,6 @@ entities:
   - pos: -22.5,17.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9262
   type: IntercomMedical
   components:
@@ -68965,7 +68731,6 @@ entities:
     pos: -23.5,0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9284
   type: ExtinguisherCabinetFilled
   components:
@@ -68973,7 +68738,6 @@ entities:
     pos: -13.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9285
   type: ExtinguisherCabinetFilled
   components:
@@ -69106,7 +68870,6 @@ entities:
     pos: 3.5,-26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9304
   type: ExtinguisherCabinetFilled
   components:
@@ -69245,7 +69008,6 @@ entities:
   - pos: -14.5,27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9325
   type: Table
   components:
@@ -69376,7 +69138,6 @@ entities:
   - pos: 7.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9346
   type: ClosetEmergencyFilledRandom
   components:
@@ -69449,7 +69210,6 @@ entities:
   - pos: 8.5,32.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9358
   type: Rack
   components:
@@ -69612,7 +69372,6 @@ entities:
     pos: 23.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9384
   type: Catwalk
   components:
@@ -69676,7 +69435,6 @@ entities:
     pos: 9.5,26.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9393
   type: Catwalk
   components:
@@ -69698,7 +69456,6 @@ entities:
     pos: 9.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9396
   type: Catwalk
   components:
@@ -69825,7 +69582,6 @@ entities:
     pos: 20.5,25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9414
   type: Catwalk
   components:
@@ -69847,7 +69603,6 @@ entities:
     pos: 20.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9417
   type: Catwalk
   components:
@@ -70086,7 +69841,6 @@ entities:
     pos: 36.5,19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9451
   type: Catwalk
   components:
@@ -70206,7 +69960,6 @@ entities:
     pos: 34.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9468
   type: Catwalk
   components:
@@ -70233,7 +69986,6 @@ entities:
   - pos: 14.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9472
   type: MaintenanceFluffSpawner
   components:
@@ -70253,9 +70005,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 9475
-  type: MaintenanceToolSpawner
+  type: SpawnVendingMachineRestockFoodDrink
   components:
-  - pos: 13.5,30.5
+  - pos: 12.5,-0.5
     parent: 1
     type: Transform
 - uid: 9476
@@ -70608,7 +70360,6 @@ entities:
   - pos: 30.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9534
   type: ClosetEmergencyFilledRandom
   components:
@@ -70621,14 +70372,12 @@ entities:
   - pos: 36.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9536
   type: WaterTankFull
   components:
   - pos: 35.5,7.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9537
   type: Table
   components:
@@ -70829,7 +70578,6 @@ entities:
   - pos: 39.5,4.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9569
   type: RandomVendingDrinks
   components:
@@ -71281,7 +71029,6 @@ entities:
   - pos: -26.392878,20.608793
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9640
   type: Scalpel
   components:
@@ -71413,7 +71160,6 @@ entities:
   - pos: 10.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9661
   type: SpawnMobDrone
   components:
@@ -71468,7 +71214,6 @@ entities:
   - pos: -29.5,6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9670
   type: ClosetFireFilled
   components:
@@ -71813,12 +71558,11 @@ entities:
     parent: 1
     type: Transform
 - uid: 9726
-  type: MaintenanceFluffSpawner
+  type: SpawnVendingMachineRestockFoodDrink
   components:
-  - pos: -28.5,21.5
+  - pos: 41.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9727
   type: MaintenanceFluffSpawner
   components:
@@ -72015,7 +71759,6 @@ entities:
     pos: -32.5,22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9756
   type: Catwalk
   components:
@@ -72310,7 +72053,6 @@ entities:
     pos: -29.5,14.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9798
   type: Catwalk
   components:
@@ -72542,7 +72284,6 @@ entities:
     pos: -31.5,2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9831
   type: DisposalPipe
   components:
@@ -72954,7 +72695,6 @@ entities:
     pos: -5.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9893
   type: DisposalPipe
   components:
@@ -73045,7 +72785,6 @@ entities:
     pos: -0.5,-8.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9906
   type: DisposalPipe
   components:
@@ -73989,7 +73728,6 @@ entities:
     pos: -6.5,-25.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 10042
   type: DisposalPipe
   components:
@@ -75690,7 +75428,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 10218
   type: GasPipeTJunction
   components:
@@ -76082,7 +75819,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 10254
   type: GasPipeTJunction
   components:
@@ -76542,7 +76278,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 10296
   type: GasPipeStraight
   components:
@@ -80528,7 +80263,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 10667
   type: GasPipeStraight
   components:
@@ -80858,7 +80592,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 10698
   type: GasPipeTJunction
   components:
@@ -81192,7 +80925,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 10729
   type: GasPipeTJunction
   components:
@@ -83109,7 +82841,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 10906
   type: GasPipeBend
   components:
@@ -84665,7 +84396,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 11050
   type: GasPipeTJunction
   components:
@@ -88549,7 +88279,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 11409
   type: GasVentScrubber
   components:
@@ -90561,7 +90290,6 @@ entities:
     - 10725
     - 10726
     type: DeviceList
-  - type: Followed
 - uid: 11594
   type: AirAlarm
   components:
@@ -90984,7 +90712,6 @@ entities:
     parent: 1
     type: Transform
   - devices:
-    - invalid
     - 3145
     - 3146
     - 3143
@@ -90999,7 +90726,6 @@ entities:
     parent: 1
     type: Transform
   - devices:
-    - invalid
     - 3145
     - 3146
     - 3143
@@ -91325,7 +91051,6 @@ entities:
     - 11059
     - 11042
     type: DeviceList
-  - type: Followed
 - uid: 11650
   type: FireAlarm
   components:
@@ -91419,7 +91144,6 @@ entities:
     - 11151
     - 11150
     type: DeviceList
-  - type: Followed
 - uid: 11656
   type: FireAlarm
   components:
@@ -91466,7 +91190,6 @@ entities:
     - 3097
     - 3100
     - 3101
-    - invalid
     - 3118
     - 3119
     - 3120
@@ -91489,7 +91212,6 @@ entities:
     - 3097
     - 3100
     - 3101
-    - invalid
     - 3118
     - 3119
     - 3120
@@ -91728,13 +91450,14 @@ entities:
     - 3124
     - 3126
     - 3243
-    - invalid
     - 10197
     - 10204
     - 3828
     - 7182
     - 10219
     - 10220
+    - 1832
+    - 3055
     type: DeviceList
 - uid: 11677
   type: FireAlarm
@@ -91754,6 +91477,8 @@ entities:
     - 3124
     - 3126
     - 3243
+    - 1832
+    - 3055
     type: DeviceList
 - uid: 11678
   type: AirAlarm
@@ -91952,7 +91677,6 @@ entities:
     - 10362
     - 10359
     type: DeviceList
-  - type: Followed
 - uid: 11693
   type: FireAlarm
   components:
@@ -92056,7 +91780,6 @@ entities:
     - 10432
     - 10433
     type: DeviceList
-  - type: Followed
 - uid: 11700
   type: AirAlarm
   components:
@@ -92127,7 +91850,6 @@ entities:
     - 11410
     - 11408
     type: DeviceList
-  - type: Followed
 - uid: 11706
   type: FireAlarm
   components:
@@ -92235,7 +91957,6 @@ entities:
     - 7084
     - 7085
     type: DeviceList
-  - type: Followed
 - uid: 11711
   type: AirAlarm
   components:
@@ -92317,7 +92038,6 @@ entities:
     - 11719
     - 11720
     type: DeviceList
-  - type: Followed
 - uid: 11715
   type: FireAlarm
   components:
@@ -92601,7 +92321,6 @@ entities:
   - pos: 8.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11740
   type: RandomSpawner
   components:
@@ -92614,7 +92333,6 @@ entities:
   - pos: -2.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11742
   type: RandomSpawner
   components:
@@ -92730,7 +92448,6 @@ entities:
   - pos: 29.5,2.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11761
   type: RandomSpawner
   components:
@@ -92923,7 +92640,6 @@ entities:
   - pos: 13.5,18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11793
   type: RandomSpawner
   components:
@@ -93308,7 +93024,6 @@ entities:
   - pos: -22.5,-6.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11857
   type: RandomSpawner
   components:
@@ -93591,7 +93306,6 @@ entities:
   - pos: 10.5,-22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11904
   type: RandomSpawner
   components:
@@ -93688,7 +93402,6 @@ entities:
   - pos: -9.5,23.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11920
   type: SpawnMobMouse
   components:
@@ -93743,7 +93456,6 @@ entities:
   - pos: -38.5,-3.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11929
   type: Poweredlight
   components:
@@ -93751,6 +93463,8 @@ entities:
     pos: -41.5,20.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 11930
@@ -93760,6 +93474,8 @@ entities:
     pos: -36.5,22.5
     parent: 1
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 11931
@@ -93907,7 +93623,6 @@ entities:
   - pos: -38.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11955
   type: RandomPosterLegit
   components:
@@ -93956,7 +93671,6 @@ entities:
   - pos: 17.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11963
   type: WindowReinforcedDirectional
   components:
@@ -93994,7 +93708,6 @@ entities:
   - pos: 17.5,-28.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11969
   type: PosterContrabandTools
   components:
@@ -94043,7 +93756,6 @@ entities:
   - pos: -0.5,-27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11977
   type: RandomPosterLegit
   components:
@@ -94074,7 +93786,6 @@ entities:
   - pos: -32.5,-11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 11982
   type: SignDirectionalSolar
   components:
@@ -94202,7 +93913,6 @@ entities:
     pos: 38.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 12003
   type: WindoorSecurityLocked
   components:
@@ -94235,7 +93945,6 @@ entities:
   - pos: 10.501394,0.78912616
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 12008
   type: SignDirectionalSupply
   components:
@@ -95063,7 +94772,6 @@ entities:
     pos: -38.46161,16.234806
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 12116
   type: SignDirectionalSolar
   components:
@@ -96901,12 +96609,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-- uid: 12281
-  type: GrilleBroken
-  components:
-  - pos: 49.5,-0.5
-    parent: 1
-    type: Transform
 - uid: 12282
   type: AirlockExternalGlass
   components:
@@ -98527,6 +98229,126 @@ entities:
   type: BrbSign
   components:
   - pos: 0.4449376,21.546635
+    parent: 1
+    type: Transform
+- uid: 12485
+  type: BrigTimer
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 11.5,7.5
+    parent: 1
+    type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 5535
+      Timer:
+      - port: AutoClose
+        uid: 5535
+      - port: Open
+        uid: 5535
+    type: SignalTransmitter
+- uid: 12486
+  type: BrigTimer
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 14.5,7.5
+    parent: 1
+    type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 5536
+      Timer:
+      - port: AutoClose
+        uid: 5536
+      - port: Open
+        uid: 5536
+    type: SignalTransmitter
+- uid: 12487
+  type: BrigTimer
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 17.5,7.5
+    parent: 1
+    type: Transform
+  - outputs:
+      Start:
+      - port: Close
+        uid: 5537
+      Timer:
+      - port: AutoClose
+        uid: 5537
+      - port: Open
+        uid: 5537
+    type: SignalTransmitter
+- uid: 12488
+  type: SpawnVendingMachineRestockFoodDrink
+  components:
+  - pos: 24.5,32.5
+    parent: 1
+    type: Transform
+- uid: 12489
+  type: RailingCornerSmall
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 9.5,-9.5
+    parent: 1
+    type: Transform
+- uid: 12490
+  type: RailingCornerSmall
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 9.5,-3.5
+    parent: 1
+    type: Transform
+- uid: 12491
+  type: Railing
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 9.5,-4.5
+    parent: 1
+    type: Transform
+- uid: 12492
+  type: Railing
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 9.5,-8.5
+    parent: 1
+    type: Transform
+- uid: 12493
+  type: SinkWide
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 14.5,-1.5
+    parent: 1
+    type: Transform
+- uid: 12494
+  type: AtmosDeviceFanTiny
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 23.5,38.5
+    parent: 1
+    type: Transform
+- uid: 12495
+  type: AtmosDeviceFanTiny
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 25.5,38.5
+    parent: 1
+    type: Transform
+- uid: 12496
+  type: AtmosDeviceFanTiny
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 31.5,38.5
+    parent: 1
+    type: Transform
+- uid: 12497
+  type: AtmosDeviceFanTiny
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 33.5,38.5
     parent: 1
     type: Transform
 ...

@@ -160,7 +160,7 @@
         maxVol: 20
         reagents:
         - ReagentId: Dexalin
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: dylovene pill
@@ -173,7 +173,7 @@
         maxVol: 20
         reagents:
         - ReagentId: Dylovene
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: hyronalin pill
@@ -186,7 +186,7 @@
         maxVol: 20
         reagents:
         - ReagentId: Hyronalin
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: iron pill
@@ -199,7 +199,7 @@
         maxVol: 20
         reagents:
         - ReagentId: Iron
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: kelotane pill
@@ -212,7 +212,7 @@
         maxVol: 20
         reagents:
         - ReagentId: Kelotane
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: space drugs
@@ -238,7 +238,7 @@
         maxVol: 20
         reagents:
         - ReagentId: Tricordrazine
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: romerol pill
