@@ -54,10 +54,6 @@ public sealed class ClothingComponent : Component
     public string? RsiPath;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("mask")]
-    public ClothingMask Mask = ClothingMask.UniformFull;
-
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maleMask")]
     public ClothingMask MaleMask = ClothingMask.UniformFull;
 
