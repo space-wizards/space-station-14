@@ -4,7 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Teleportation.Systems;
 using Robust.Shared.Map;
 
-namespace Content.Server.Teleportation;
+namespace Content.Server.Teleportation.Systems;
 
 public sealed class PortalSystem : SharedPortalSystem
 {
