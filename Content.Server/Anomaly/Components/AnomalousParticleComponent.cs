@@ -64,7 +64,7 @@ public sealed class AnomalousParticleComponent : Component
 
     /// <summary>
     /// If this is true then the particle will always effect the severity of the anomaly.
-    /// </summary
+    /// </summary>
     [DataField("severityOverride")]
     public bool SeverityOverride = false;
 }
