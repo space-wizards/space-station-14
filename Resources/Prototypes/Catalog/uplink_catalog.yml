@@ -289,7 +289,7 @@
     Telecrystal: 5
   categories:
     - UplinkUtility
-    
+
 - type: listing
   id: UplinkDimensionPot
   name: uplink-dimension-pot-name
@@ -298,7 +298,7 @@
   cost:
     Telecrystal: 12
   categories:
-    - UplinkUtility
+  - UplinkUtility
 
 #TODO: Remove this from the uplink
 - type: listing

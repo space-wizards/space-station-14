@@ -81,6 +81,9 @@ uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely q
 uplink-stealth-box-name = Stealth Box
 uplink-stealth-box-desc = A box outfitted with stealth technology, sneak around with this and don't move too fast now!
 
+uplink-dimension-pot-name = Dimension in a Pot
+uplink-dimension-pot-desc = A portal to your own pocket dimension disguised in the form of a potted plant, if stashing just one item wasn't enough.
+
 uplink-headset-name = Syndicate Over-ear Headset
 uplink-headset-desc = A headset that allows you to communicate with other syndicate operatives. Has 4 slots for encryption keys.
 
