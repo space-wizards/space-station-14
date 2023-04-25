@@ -27,6 +27,7 @@
 
 - type: entity
   name: Shrooman
+  suffix: AI
   parent: MobShrooman
   id: RandomShrooman
   components:
@@ -35,6 +36,9 @@
     description: You are a fungus based humanoid, obey and protect your creators at all costs
     rules: You may not harm your creators or cause them any grief, but you must protect them and do whatever they say.
   - type: GhostTakeoverAvailable
+  - type: ActiveNPC
+  - type: HTN
+    rootTask: IdleCompound
   - type: RandomMetadata
     nameSegments:
       - names_mushman_first

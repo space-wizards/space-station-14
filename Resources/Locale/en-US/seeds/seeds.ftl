@@ -86,4 +86,4 @@ seeds-shroominal-pod-display-name = shroominal pod
 seeds-shroomanoid-pod-name = shroomanoid
 seeds-shroomanoid-pod-display-name = shroomanoid pod
 seeds-clown-flower-name = clown flower
-seeds-clown-flower-display-name clown flower
+seeds-clown-flower-display-name = clown flower
