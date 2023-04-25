@@ -553,7 +553,25 @@ namespace Content.Shared.Cuffs
             if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
                 return;
 
-            _popup.PopupEntity(Loc.GetString("cuffable-component-start-removing-cuffs-message"), user, Filter.Local(), false);
+            if (_net.IsServer)
+            {
+                _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-observer",
+                 ("user", Identity.Name(user, EntityManager)), ("target", Identity.Name(target, EntityManager))),
+                 target, Filter.Pvs(target, entityManager: EntityManager)
+                .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user), true);
+
+                if (target == user)
+                {
+                    _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
+                }
+                else
+                {
+                    _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-target-message",
+                        ("targetName", Identity.Name(target, EntityManager, user))), user, user);
+                    _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-by-other-message",
+                        ("otherName", Identity.Name(user, EntityManager, target))), target, target);
+                }
+            }
             _audio.PlayPredicted(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, target, user);
         }
 
@@ -571,20 +589,22 @@ namespace Content.Shared.Cuffs
 
             cuffable.Container.Remove(cuffsToRemove);
 
-            if (cuff.BreakOnRemove)
-            {
-                QueueDel(cuffsToRemove);
-                var trash = Spawn(cuff.BrokenPrototype, Transform(cuffsToRemove).Coordinates);
-                _hands.PickupOrDrop(user, trash);
-            }
-            else
-            {
-                _hands.PickupOrDrop(user, cuffsToRemove);
-            }
 
-            // Only play popups on server because popups suck
             if (_net.IsServer)
             {
+                // Handles spawning broken cuffs on server to avoid client misprediction
+                if (cuff.BreakOnRemove)
+                {
+                    QueueDel(cuffsToRemove);
+                    var trash = Spawn(cuff.BrokenPrototype, Transform(cuffsToRemove).Coordinates);
+                    _hands.PickupOrDrop(user, trash);
+                }
+                else
+                {
+                    _hands.PickupOrDrop(user, cuffsToRemove);
+                }
+
+                // Only play popups on server because popups suck
                 if (cuffable.CuffedHandCount == 0)
                 {
                     _popup.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user, user);
