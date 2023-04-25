@@ -1,20 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Ore veins are now destroyed in 1 hit rather than 3., type: Tweak}
-  id: 3034
-  time: '2023-02-13T15:32:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: APEs can no longer be destroyed by mousetraps., type: Fix}
-  id: 3035
-  time: '2023-02-13T21:26:30.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Glass shards are destroyed when stepped on, no more infinite death
-      traps. Piep!', type: Tweak}
-  id: 3036
-  time: '2023-02-13T21:28:26.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The Syndicate has done a better job of hiding switches on Voice Masks.,
@@ -2902,3 +2886,19 @@ Entries:
       up.', type: Fix}
   id: 3533
   time: '2023-04-24T19:29:48.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: 'Syndicate has provided cheap top-tech disguise glasses, the outlaw
+      glasses, to it''s agents.', type: Add}
+  id: 3534
+  time: '2023-04-24T19:55:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Spreaders (kudzu, puddles, smoke) can now travel across docks.', type: Add}
+  id: 3535
+  time: '2023-04-24T20:04:50.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: NT added appraisal tool to cargodrobe and cargo lockers, type: Tweak}
+  id: 3536
+  time: '2023-04-24T20:44:10.0000000+00:00'
