@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -7,11 +8,13 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
@@ -24,9 +27,11 @@ using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -46,6 +51,7 @@ namespace Content.Shared.Interaction
     public abstract partial class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ISharedAdminManager _adminManager = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -76,6 +82,9 @@ namespace Content.Shared.Interaction
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
             SubscribeLocalEvent<UnremoveableComponent, ContainerGettingRemovedAttemptEvent>(OnRemoveAttempt);
+            SubscribeLocalEvent<UnremoveableComponent, GotUnequippedEvent>(OnUnequip);
+            SubscribeLocalEvent<UnremoveableComponent, GotUnequippedHandEvent>(OnUnequipHand);
+            SubscribeLocalEvent<UnremoveableComponent, DroppedEvent>(OnDropped);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.AltActivateItemInWorld,
@@ -132,6 +141,35 @@ namespace Content.Shared.Interaction
         {
             args.Cancel();
         }
+
+        /// <summary>
+        ///     If item has DeleteOnDrop true then item will be deleted if removed from inventory, if it is false then item
+        ///     loses Unremoveable when removed from inventory (gibbing).
+        /// </summary>
+        private void OnUnequip(EntityUid uid, UnremoveableComponent item, GotUnequippedEvent args)
+        {
+            if (!item.DeleteOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
+            else if (_net.IsServer)
+                QueueDel(uid);
+        }
+
+        private void OnUnequipHand(EntityUid uid, UnremoveableComponent item, GotUnequippedHandEvent args)
+        {
+            if (!item.DeleteOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
+            else if (_net.IsServer)
+                QueueDel(uid);
+        }
+
+        private void OnDropped(EntityUid uid, UnremoveableComponent item, DroppedEvent args)
+        {
+            if (!item.DeleteOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
+            else if (_net.IsServer)
+                QueueDel(uid);
+        }
+
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {

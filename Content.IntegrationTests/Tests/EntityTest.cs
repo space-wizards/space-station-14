@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -26,6 +27,8 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
 
             IEntityManager entityMan = null;
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
 
             await server.WaitPost(() =>
             {
@@ -59,6 +62,8 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
+
+            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -69,6 +74,9 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
             var map = await PoolManager.CreateTestMap(pairTracker);
             IEntityManager entityMan = null;
+
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
 
             await server.WaitPost(() =>
             {
@@ -98,6 +106,8 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
+
+            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -112,6 +122,9 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
             var map = await PoolManager.CreateTestMap(pairTracker);
             IEntityManager entityMan = null;
+
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
 
             await server.WaitPost(() =>
             {
@@ -144,6 +157,8 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
+
+            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -157,6 +172,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionExposeData",
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
+                "GridFillComponent",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
                 "StationData", // errors when removed mid-round
@@ -252,6 +268,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionExposeData",
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
+                "GridFillComponent",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
                 "StationData", // errors when deleted mid-round

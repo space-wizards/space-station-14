@@ -42,7 +42,6 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
 
-
 - type: entity
   parent: BaseLightStructure
   id: LightPostSmall
@@ -65,7 +64,6 @@
     energy: 0.8
     softness: 1
     offset: "0, -0.5"
-
 
 - type: entity
   id: PoweredLightPostSmallEmpty
@@ -124,3 +122,9 @@
         Heat: 20
   - type: StaticPrice
     price: 25
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -15
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/light_hum.ogg
