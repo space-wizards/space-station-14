@@ -13,28 +13,19 @@ public enum RcdMode : byte
     Deconstruct
 }
 
-[RegisterComponent]
-[Access(typeof(RCDSystem), typeof(RCDAmmoSystem))]
-public sealed class RCDComponent : Component
+/// <summary>
+/// Main component for the RCD
+/// Optionally uses LimitedChargesComponent.
+/// Charges can be refilled with RCD ammo
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(RCDSystem))]
+public sealed partial class RCDComponent : Component
 {
-    private const int DefaultCharges = 5;
-
-    /// <summary>
-    /// Maximum number of charges this RCD can hold
-    /// </summary>
-    [DataField("maxCharges"), ViewVariables(VVAccess.ReadWrite)]
-    public int MaxCharges = DefaultCharges;
-
-    /// <summary>
-    /// How many charges we have left. You can refill this with RCD ammo.
-    /// </summary>
-    [DataField("charges"), ViewVariables(VVAccess.ReadWrite)]
-    public int Charges = DefaultCharges;
-
     /// <summary>
     /// Time taken to do an action like placing a wall
     /// </summary>
-    [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("delay"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float Delay = 2f;
 
     [DataField("swapModeSound")]
@@ -46,31 +37,12 @@ public sealed class RCDComponent : Component
     /// <summary>
     /// What mode are we on? Can be floors, walls, airlock, deconstruct.
     /// </summary>
-    [DataField("mode")]
+    [DataField("mode"), AutoNetworkedField]
     public RcdMode Mode = RcdMode.Floors;
 
     /// <summary>
     /// ID of the floor to create when using the floor mode.
     /// </summary>
-    [DataField("floor"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("floor"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public string Floor = "FloorSteel";
-}
-
-[Serializable, NetSerializable]
-public sealed class RCDComponentState : ComponentState
-{
-    public int MaxCharges;
-    public int Charges;
-    public float Delay;
-    public RcdMode Mode;
-    public string Floor;
-
-    public RCDComponentState(int maxCharges, int charges, float delay, RcdMode mode, string floor)
-    {
-        MaxCharges = maxCharges;
-        Charges = charges;
-        Delay = delay;
-        Mode = mode;
-        Floor = floor;
-    }
 }

@@ -272,6 +272,9 @@
   description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
+  - type: LimitedCharges
+    maxCharges: 5
+    charges: 5
   - type: UseDelay
     delay: 1.0
   - type: Sprite
@@ -296,7 +299,8 @@
   parent: RCD
   suffix: Empty
   components:
-  - type: RCD
+  - type: LimitedCharges
+    maxCharges: 5
     charges: 0
 
 - type: entity

@@ -1,4 +1,6 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -9,7 +11,6 @@ using Content.Shared.Popups;
 using Content.Shared.RCD.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -22,6 +23,7 @@ public sealed class RCDSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
@@ -37,29 +39,10 @@ public sealed class RCDSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RCDComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<RCDComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<RCDComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RCDComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<RCDComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<RCDComponent, RCDDoAfterEvent>(OnDoAfter);
-    }
-
-    private void OnGetState(EntityUid uid, RCDComponent comp, ref ComponentGetState args)
-    {
-        args.State = new RCDComponentState(comp.MaxCharges, comp.Charges, comp.Delay, comp.Mode, comp.Floor);
-    }
-
-    private void OnHandleState(EntityUid uid, RCDComponent comp, ref ComponentHandleState args)
-    {
-        if (args.Current is not RCDComponentState state)
-            return;
-
-        comp.MaxCharges = state.MaxCharges;
-        comp.Charges = state.Charges;
-        comp.Delay = state.Delay;
-        comp.Mode = state.Mode;
-        comp.Floor = state.Floor;
     }
 
     private void OnExamine(EntityUid uid, RCDComponent comp, ExaminedEvent args)
@@ -67,8 +50,7 @@ public sealed class RCDSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        var msg = Loc.GetString("rcd-component-examine-detail-count",
-            ("mode", comp.Mode), ("charges", comp.Charges));
+        var msg = Loc.GetString("rcd-component-examine-detail", ("mode", comp.Mode));
         args.PushMarkup(msg);
     }
 
@@ -194,14 +176,15 @@ public sealed class RCDSystem : EntitySystem
         }
 
         _audio.PlayPredicted(comp.SuccessSound, uid, user);
-        comp.Charges--;
+        _charges.UseCharge(uid);
         args.Handled = true;
     }
 
     private bool IsRCDStillValid(EntityUid uid, RCDComponent comp, EntityUid user, EntityUid? target, MapGridComponent mapGrid, TileRef tile, RcdMode startingMode)
     {
         //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
-        if (comp.Charges <= 0)
+        TryComp<LimitedChargesComponent>(uid, out var charges);
+        if (_charges.IsEmpty(uid, charges))
         {
             ClientPopup(Loc.GetString("rcd-component-no-ammo-message"), uid, user);
             return false;
@@ -287,6 +270,7 @@ public sealed class RCDSystem : EntitySystem
         var mode = (int) comp.Mode;
         mode = ++mode % RCDModeCount;
         comp.Mode = (RcdMode) mode;
+        Dirty(comp);
 
         var msg = Loc.GetString("rcd-component-change-mode", ("mode", comp.Mode.ToString()));
         ClientPopup(msg, uid, user);

@@ -2,11 +2,7 @@
 ### UI
 
 # Shown when an RCD is examined in details range
-rcd-component-examine-detail-count = It's currently on {$mode} mode, and holds {$charges ->
-    *[zero] no charges.
-    [one] one charge.
-    [other] {$charges} charges.
-}
+rcd-component-examine-detail = It's currently on {$mode} mode.
 
 ### Interaction Messages
 
