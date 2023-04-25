@@ -1,3 +1,3 @@
-ent-FatExtractor = lipid extractor
-    .desc = Safely and efficiently extracts excess fat from a subject.
+ent-FatExtractor = липидный экстрактор
+    .desc = Безопасно и эффективно удаляет излишки жира из организма.
     .suffix = { "" }

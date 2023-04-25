@@ -1,8 +1,8 @@
-ent-StationMapBroken = station map
-    .desc = A virtual map of the surrounding station.
-    .suffix = Wall broken
-ent-StationMap = station map
-    .suffix = Wall
+ent-StationMapBroken = карта станции
+    .desc = Виртуальная карта окружающей станции.
+    .suffix = Настенный, сломанный
+ent-StationMap = карта станции
+    .suffix = Настенный, сломанный
     .desc = { ent-StationMapBroken.desc }
 ent-WallStationMapBroken = карта станции
     .desc = Виртуальная карта окружающей станции.
