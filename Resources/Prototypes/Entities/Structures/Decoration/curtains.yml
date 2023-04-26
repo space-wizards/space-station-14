@@ -40,6 +40,9 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: Construction
+    graph: Curtains
+    node: Curtains
   - type: Destructible
     thresholds:
     - trigger:
@@ -52,7 +55,7 @@
         spawn:
           MaterialCloth1:
             min: 1
-            max: 3
+            max: 2
   placement:
     mode: SnapgridCenter
 
@@ -67,3 +70,6 @@
     enabled: false
   - type: Physics
     canCollide: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsOpen

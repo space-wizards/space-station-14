@@ -8,6 +8,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/wall_bonk.ogg
+      params:
+        volume: 2
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Effects/drop.ogg
@@ -59,7 +64,6 @@
 
 # PowerCellSlot parents
 - type: entity
-  name: a
   id: PowerCellSlotSmallItem
   abstract: true
   components:
@@ -75,7 +79,6 @@
           startingItem: PowerCellSmall
 
 - type: entity
-  name: a
   id: PowerCellSlotMediumItem
   abstract: true
   components:
