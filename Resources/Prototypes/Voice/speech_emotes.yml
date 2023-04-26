@@ -85,15 +85,3 @@
     - snapping fingers
     - snapped fingers
 
-- type: emote
-  id: Salute
-  category: Hands
-  chatMessages: [salutes]
-  chatTriggers:
-    - salute
-    - salute.
-    - salute!
-    - salutes
-    - salutes.
-    - salutes!
-

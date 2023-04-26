@@ -99,8 +99,6 @@
       collection: Snaps
       params:
         volume: -6
-    Salute:
-      collection: Salute
 
 - type: emoteSounds
   id: DionaBodyEmotes
