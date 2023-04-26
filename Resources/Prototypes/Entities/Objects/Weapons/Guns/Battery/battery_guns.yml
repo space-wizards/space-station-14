@@ -30,7 +30,7 @@
     zeroVisible: false
   - type: Appearance
   - type: StaticPrice
-    price: 500
+    price: 550
 
 - type: entity
   id: BaseWeaponBatterySmall
@@ -90,6 +90,8 @@
   - type: Battery
     maxCharge: 500
     startingCharge: 500
+  - type: StaticPrice
+    price: 600
 
 - type: entity
   name: laser gun
@@ -114,6 +116,8 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
     fireCost: 62.5
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   name: practice laser gun
@@ -153,6 +157,8 @@
   - type: Battery
     maxCharge: 2000
     startingCharge: 2000
+  - type: StaticPrice
+    price: 800
 
 - type: entity
   name: pulse carbine
@@ -184,6 +190,8 @@
   - type: Battery
     maxCharge: 5000
     startingCharge: 5000
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   name: pulse rifle
@@ -211,6 +219,8 @@
   - type: Battery
     maxCharge: 40000
     startingCharge: 40000
+  - type: StaticPrice
+    price: 1700
 
 - type: entity
   name: laser cannon
@@ -235,6 +245,8 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
     fireCost: 100
+  - type: StaticPrice
+    price: 800
 
 - type: entity
   name: x-ray cannon
@@ -263,6 +275,8 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   name: disabler
@@ -298,6 +312,8 @@
       steps: 5
       zeroVisible: true
     - type: Appearance
+    - type: StaticPrice
+      price: 500
 
 - type: entity
   name: practice disabler
@@ -394,7 +410,7 @@
     tags:
     - HighRiskItem
   - type: StaticPrice
-    price: 750
+    price: 1500
 
 - type: entity
   name: advanced laser gun
@@ -427,4 +443,4 @@
     zeroVisible: true
   - type: Appearance
   - type: StaticPrice
-    price: 63
+    price: 400

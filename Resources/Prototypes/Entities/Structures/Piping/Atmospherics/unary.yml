@@ -17,7 +17,7 @@
           pipeDirection: South
     - type: CollideOnAnchor
     - type: StaticPrice
-      price: 200
+      price: 150
 
 - type: entity
   parent: GasUnaryBase

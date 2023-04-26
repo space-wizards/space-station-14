@@ -3,7 +3,7 @@
   stackEntity: SheetSteel1
   name: materials-steel
   icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: steel }
-  price: 0.05
+  price: 0.06
 
 - type: material
   id: Gold

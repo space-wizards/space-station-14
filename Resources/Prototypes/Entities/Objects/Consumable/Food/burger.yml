@@ -46,6 +46,8 @@
           Quantity: 3
   - type: Item
     sprite: Objects/Consumable/Food/burger.rsi
+  - type: StaticPrice
+    price: 15
 
 # Custom Burger Example
 

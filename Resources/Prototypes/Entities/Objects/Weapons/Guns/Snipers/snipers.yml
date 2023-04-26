@@ -37,7 +37,7 @@
       ballistic-ammo: !type:Container
         ents: []
   - type: StaticPrice
-    price: 500
+    price: 720
 
 - type: entity
   name: Kardashev-Mosin

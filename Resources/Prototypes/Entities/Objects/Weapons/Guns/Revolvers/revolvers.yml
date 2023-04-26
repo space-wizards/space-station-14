@@ -40,7 +40,7 @@
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: StaticPrice
-    price: 500
+    price: 580
 
 - type: entity
   name: Deckard

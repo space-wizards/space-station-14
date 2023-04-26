@@ -26,3 +26,5 @@
         - Bottle
         - Syringe
   - type: Dumpable
+  - type: StaticPrice
+    price: 85

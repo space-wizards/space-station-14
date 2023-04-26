@@ -46,6 +46,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 20
+  pricePerUnit: 8
 
 - type: reagent
   id: Ephedrine
@@ -91,6 +92,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 30
+  pricePerUnit: 6
 
 - type: reagent
   id: Stimulants
@@ -275,6 +277,7 @@
         type: Add
         time: 5
         refresh: false
+  pricePerUnit: 2
 
 - type: reagent
   id: THCOil
@@ -293,6 +296,7 @@
         type: Add
         time: 5
         refresh: false
+  pricePerUnit: 2.5
 
 - type: reagent
   id: Nicotine
@@ -314,6 +318,7 @@
   physicalDesc: reagent-physical-desc-acrid
   flavor: bitter
   color: "#215263"
+  pricePerUnit: 0.8
 
 - type: reagent
   id: SpaceDrugs
@@ -332,6 +337,7 @@
         type: Add
         time: 5
         refresh: false
+  pricePerUnit: 1
 
 # Probably replace this one with sleeping chem when putting someone in a comatose state is easier
 - type: reagent
@@ -422,3 +428,4 @@
         conditions:
         - !type:ReagentThreshold
           min: 20
+  pricePerUnit: 6.5

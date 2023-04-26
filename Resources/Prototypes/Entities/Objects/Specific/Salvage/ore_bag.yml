@@ -23,3 +23,5 @@
       tags:
         - Ore
   - type: Dumpable
+  - type: StaticPrice
+    price: 90

@@ -22,3 +22,5 @@
       whitelist:
         tags:
           - Book
+    - type: StaticPrice
+      price: 75

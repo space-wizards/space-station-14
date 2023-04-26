@@ -19,3 +19,5 @@
   - type: Tag
     tags:
     - Radio
+  - type: StaticPrice
+    price: 45

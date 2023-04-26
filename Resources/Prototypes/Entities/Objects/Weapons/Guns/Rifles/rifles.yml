@@ -47,7 +47,7 @@
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
   - type: StaticPrice
-    price: 500
+    price: 700
 
 - type: entity
   name: AKMS

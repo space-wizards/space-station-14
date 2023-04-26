@@ -15,7 +15,7 @@
   - type: Item
     size: 60
   - type: StaticPrice
-    price: 500
+    price: 800
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container

@@ -43,7 +43,7 @@
       ballistic-ammo: !type:Container
         ents: []
   - type: StaticPrice
-    price: 500
+    price: 620
 
 - type: entity
   name: Bulldog

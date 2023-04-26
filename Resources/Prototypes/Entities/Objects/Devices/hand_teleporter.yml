@@ -12,3 +12,5 @@
   - type: Tag
     tags:
     - HighRiskItem
+  - type: StaticPrice
+    price: 1200
