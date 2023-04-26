@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPCs not pathfinding around railings., type: Fix}
-  - {message: Fix NPCs dancing in some instances., type: Fix}
-  - {message: Fix NPC steering crashing in some instances., type: Fix}
-  id: 3043
-  time: '2023-02-15T05:54:06.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added a new artifact effect which creates a puddle of random chemicals.
@@ -2898,3 +2891,9 @@ Entries:
       appear., type: Fix}
   id: 3542
   time: '2023-04-26T04:05:05.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: 'Added a new job tab for Station specific jobs, as well as saying what
+      stations have the role.', type: Add}
+  id: 3543
+  time: '2023-04-26T06:18:25.0000000+00:00'
