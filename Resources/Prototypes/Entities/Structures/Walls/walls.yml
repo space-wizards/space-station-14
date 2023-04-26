@@ -933,3 +933,31 @@
     - type: Icon
       sprite: Structures/Magic/forcewall.rsi
       state: forcewall
+
+- type: entity
+  parent: BaseStructure
+  id: WallDimensionPot
+  name: dimension wall
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Tag
+    tags:
+    - Wall
+  - type: PlacementReplacement
+    key: walls
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      mask:
+      - FullTileMask
+      layer:
+      - WallLayer
+      density: 1000
+  - type: Occluder
