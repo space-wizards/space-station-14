@@ -9,7 +9,16 @@
   - type: Sprite
     sprite: Objects/Specific/Security/barrier.rsi
     netsync: false
-    state: idle
+    layers:
+    - state: "idle"
+      map: ["deployableBarrierBase"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.DeployableBarrierVisuals.State:
+        deployableBarrierBase:
+          enum.DeployableBarrierState.Idle: {state: "idle"}
+          enum.DeployableBarrierState.Deployed: {state: "deployed"}
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
@@ -59,8 +68,5 @@
     enabled: false
     radius: 3
     color: red
-  - type: Appearance
-    visuals:
-    - type: DeployableBarrierVisualizer
   - type: StaticPrice
     price: 200

@@ -22,7 +22,7 @@
       friction: 0.2
   - type: Pullable
 
-# Ripley
+# Ripley APLU
 
 - type: entity
   id: BaseRipleyPart
@@ -53,19 +53,19 @@
   - type: ItemMapper
     mapLayers:
       ripley_l_arm+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyLArm
       ripley_r_arm+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyRArm
       ripley_l_leg+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyLLeg
       ripley_r_leg+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyRLeg
     sprite: Objects/Specific/Mech/ripley_construction.rsi

@@ -5,7 +5,7 @@ technologies-cleaning-technology = Cleaning technology
 technologies-cleaning-technology-description = Start to a shiny clean station.
 
 technologies-advanced-cleaning-technology = Advanced cleaning technology
-technologies-advanced-cleaning-technology-description = Advanced mop won't stop people from trashing the station, sadly.
+technologies-advanced-cleaning-technology-description = Advanced tools won't stop people from trashing the station, sadly.
 
 technologies-foodbev-technology = Food and beverage technology
 technologies-food-and-beverage-technology-description = Robust service from better technology.

@@ -1,9 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameTicking.Events;
 using Content.Server.GameTicking.Presets;
-using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -11,6 +9,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using JetBrains.Annotations;
 using Robust.Server.Player;
 
 namespace Content.Server.GameTicking
@@ -43,7 +42,6 @@ namespace Content.Server.GameTicking
 
             if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
             {
-                var oldPreset = Preset;
                 ClearGameRules();
                 SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                 AddGamePresetRules();
@@ -125,6 +123,7 @@ namespace Content.Server.GameTicking
             return prototype != null;
         }
 
+        [PublicAPI]
         private bool AddGamePresetRules()
         {
             if (DummyTicker || Preset == null)
@@ -132,10 +131,7 @@ namespace Content.Server.GameTicking
 
             foreach (var rule in Preset.Rules)
             {
-                if (!_prototypeManager.TryIndex(rule, out GameRulePrototype? ruleProto))
-                    continue;
-
-                AddGameRule(ruleProto);
+                AddGameRule(rule);
             }
 
             return true;
@@ -144,7 +140,8 @@ namespace Content.Server.GameTicking
         private void StartGamePresetRules()
         {
             // May be touched by the preset during init.
-            foreach (var rule in _addedGameRules.ToArray())
+            var rules = new List<EntityUid>(GetAddedGameRules());
+            foreach (var rule in rules)
             {
                 StartGameRule(rule);
             }
@@ -166,10 +163,12 @@ namespace Content.Server.GameTicking
 
             if (mind.PreventGhosting)
             {
-                if (mind.Session != null)
-                    // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
+                if (mind.Session != null) // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
+                {
                     _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("comp-mind-ghosting-prevented"),
                         true);
+                }
+
                 return false;
             }
 

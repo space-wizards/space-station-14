@@ -146,10 +146,6 @@ public abstract partial class InventorySystem
         if (!_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
             return;
 
-        var gotUnequipped = new GotUnequippedHandEvent(actor, held.Value, hands.ActiveHand!);
-        var didUnequip = new DidUnequipHandEvent(actor, held.Value, hands.ActiveHand!);
-        RaiseLocalEvent(held.Value, gotUnequipped, false);
-        RaiseLocalEvent(actor, didUnequip, true);
         RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
 
         TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true);
