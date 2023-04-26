@@ -45,7 +45,7 @@ public sealed class MeleeHitEvent : HandledEntityEventArgs
     public readonly EntityUid User;
 
     /// <summary>
-    /// The the melee weapon used.
+    /// The melee weapon used.
     /// </summary>
     public readonly EntityUid Weapon;
 
