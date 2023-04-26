@@ -62,7 +62,7 @@ public abstract class SharedPortalSystem : EntitySystem
         var subject = args.OtherFixture.Body.Owner;
 
         // best not.
-        if (Transform(subject).Anchored)
+        if (Transform(subject).Anchored || HasComp<PortalBlacklistComponent>(subject))
             return;
 
         // break pulls before portal enter so we dont break shit
@@ -79,9 +79,7 @@ public abstract class SharedPortalSystem : EntitySystem
 
         // if they came from another portal, just return and wait for them to exit the portal
         if (HasComp<PortalTimeoutComponent>(subject))
-        {
             return;
-        }
 
         if (TryComp<LinkedEntityComponent>(uid, out var link))
         {

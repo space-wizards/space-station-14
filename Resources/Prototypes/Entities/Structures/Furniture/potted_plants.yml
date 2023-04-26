@@ -272,3 +272,5 @@
   suffix: Dimension
   components:
   - type: DimensionPot
+  # don't want the pot going into its own portal do we
+  - type: PortalBlacklist

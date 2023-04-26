@@ -37,7 +37,7 @@ public sealed class DimensionPotComponent : Component
     /// Path to the pocket dimension's map file
     /// </summary>
     [DataField("pocketDimensionPath")]
-    public string PocketDimensionPath = "Maps/Misc/pocket_dimension.yml";
+    public string PocketDimensionPath = "/Maps/Misc/pocket_dimension.yml";
 
     /// <summary>
     /// The prototype to spawn for the portal spawned on the pot.
