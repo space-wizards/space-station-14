@@ -98,19 +98,25 @@ public sealed class DimensionPotSystem : EntitySystem
     /// </summary>
     private void HandleActivation(EntityUid uid, DimensionPotComponent comp, EntityUid user)
     {
+        var internal = comp.DimensionPortal!.Value;
         if (comp.PotPortal != null)
         {
             // portal already exists so unlink and delete it
-            _link.TryUnlink(comp.DimensionPortal!.Value, comp.PotPortal.Value);
+            _link.TryUnlink(internal, comp.PotPortal.Value);
             QueueDel(comp.PotPortal.Value);
             comp.PotPortal = null;
+
+            // if you are stuck inside the pocket dimension you can use the internal portal to escape
+            _link.TryLink(uid, internal);
         }
         else
         {
             // create a portal and link it to the pocket dimension
             comp.PotPortal = Spawn(comp.PotPortalPrototype, Transform(uid).Coordinates);
-            _link.TryLink(comp.DimensionPortal!.Value, comp.PotPortal.Value);
+            _link.TryLink(internal, comp.PotPortal.Value);
             _transform.SetParent(comp.PotPortal.Value, uid);
+
+            _link.TryUnlink(uid, internal);
         }
     }
 }
