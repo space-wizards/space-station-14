@@ -1,69 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Artifact gas triggers can no longer be activated from Frezon., type: Tweak}
-  id: 3033
-  time: '2023-02-13T13:30:26.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Ore veins are now destroyed in 1 hit rather than 3., type: Tweak}
-  id: 3034
-  time: '2023-02-13T15:32:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: APEs can no longer be destroyed by mousetraps., type: Fix}
-  id: 3035
-  time: '2023-02-13T21:26:30.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Glass shards are destroyed when stepped on, no more infinite death
-      traps. Piep!', type: Tweak}
-  id: 3036
-  time: '2023-02-13T21:28:26.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has done a better job of hiding switches on Voice Masks.,
-    type: Tweak}
-  id: 3037
-  time: '2023-02-13T21:45:13.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: CBURN exosuit helmet now has the right name., type: Fix}
-  id: 3038
-  time: '2023-02-14T18:29:49.0000000+00:00'
-- author: ZoldorfTheWizard
-  changes:
-  - {message: Nanotrasen finally installed more ram for adminbus mainframes after
-      several years of requests. Nanotrasen will dock the pay of all heads of staff
-      to cover installation costs., type: Tweak}
-  id: 3039
-  time: '2023-02-14T18:30:23.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can now climb on counters., type: Fix}
-  id: 3040
-  time: '2023-02-14T23:08:02.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed chat/radio and various commands not working after reconnecting
-      to a server, type: Fix}
-  id: 3041
-  time: '2023-02-15T04:55:23.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The popup for a radio being disabled now only shows to the person with
-      the radio., type: Fix}
-  id: 3042
-  time: '2023-02-15T05:53:13.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPCs not pathfinding around railings., type: Fix}
-  - {message: Fix NPCs dancing in some instances., type: Fix}
-  - {message: Fix NPC steering crashing in some instances., type: Fix}
-  id: 3043
-  time: '2023-02-15T05:54:06.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Added a new artifact effect which creates a puddle of random chemicals.
       Let's hope they don't react., type: Add}
   id: 3044
@@ -2901,3 +2838,62 @@ Entries:
   - {message: Added a popup when bleeding stops because of a healing item, type: Add}
   id: 3532
   time: '2023-04-24T04:34:18.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fix some equipment actions (toggle light, magboots, etc) not showing
+      up.', type: Fix}
+  id: 3533
+  time: '2023-04-24T19:29:48.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: 'Syndicate has provided cheap top-tech disguise glasses, the outlaw
+      glasses, to it''s agents.', type: Add}
+  id: 3534
+  time: '2023-04-24T19:55:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Spreaders (kudzu, puddles, smoke) can now travel across docks.', type: Add}
+  id: 3535
+  time: '2023-04-24T20:04:50.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: NT added appraisal tool to cargodrobe and cargo lockers, type: Tweak}
+  id: 3536
+  time: '2023-04-24T20:44:10.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: The security holoprojector sprite has been changed., type: Tweak}
+  id: 3537
+  time: '2023-04-25T11:58:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed artifacts getting negative point values, type: Fix}
+  id: 3538
+  time: '2023-04-25T13:18:30.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed hypospray "you feel prick" popup appearing to everyone., type: Fix}
+  id: 3539
+  time: '2023-04-25T13:18:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Space Dragon event works again., type: Fix}
+  id: 3540
+  time: '2023-04-26T00:23:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Flashbangs now have a light when they flash., type: Add}
+  id: 3541
+  time: '2023-04-26T03:51:48.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that caused the toggle-light & FOV ghost actions to not
+      appear., type: Fix}
+  id: 3542
+  time: '2023-04-26T04:05:05.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: 'Added a new job tab for Station specific jobs, as well as saying what
+      stations have the role.', type: Add}
+  id: 3543
+  time: '2023-04-26T06:18:25.0000000+00:00'

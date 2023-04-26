@@ -3,9 +3,9 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Doors.Systems;
+using Content.Server.StationEvents.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Mind.Components;
 using Content.Server.Ninja;
@@ -84,9 +84,11 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         // prevent double ninja'ing
         var user = mind.OwnedEntity.Value;
-        if (HasComp<NinjaComponent>(user))
+        if (HasComp<NinjaComponent>(user) || HasComp<NinjaSpawnerDataComponent>(user))
             return;
 
+        // add a game rule for this ninja, but will not start it so no spawner is created
+        AddComp<NinjaSpawnerDataComponent>(user).Rule = _gameTicker.AddGameRule("NinjaSpawnRule");
         AddComp<NinjaComponent>(user);
         SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
         GreetNinja(mind);
@@ -136,11 +138,12 @@ public sealed class NinjaSystem : SharedNinjaSystem
     }
 
     /// <summary>
-    /// Returns the space ninja spawn gamerule's config
+    /// Returns the space ninja's gamerule config
     /// </summary>
-    public NinjaRuleConfiguration RuleConfig()
+    public NinjaSpawnRuleComponent RuleConfig(EntityUid uid)
     {
-        return (NinjaRuleConfiguration) _proto.Index<GameRulePrototype>("SpaceNinjaSpawn").Configuration;
+        var data = Comp<NinjaSpawnerDataComponent>(uid);
+        return Comp<NinjaSpawnRuleComponent>(data.Rule);
     }
 
     /// <summary>
@@ -169,10 +172,11 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// Set the station grid on an entity, either ninja spawner or the ninja itself.
     /// Used to tell a ghost that takes ninja role where the station is.
     /// </summary>
-    public void SetNinjaStationGrid(EntityUid uid, EntityUid grid)
+    public void SetNinjaSpawnerData(EntityUid uid, EntityUid grid, EntityUid rule)
     {
-        var station = EnsureComp<NinjaStationGridComponent>(uid);
-        station.Grid = grid;
+        var comp = EnsureComp<NinjaSpawnerDataComponent>(uid);
+        comp.Grid = grid;
+        comp.Rule = rule;
     }
 
     /// <summary>
@@ -202,22 +206,15 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// </summary>
     public void CallInThreat(EntityUid uid)
     {
-        var config = RuleConfig();
+        var config = RuleConfig(uid);
         if (config.Threats.Count == 0 || !GetNinjaRole(uid, out var role) || role.CalledInThreat)
             return;
 
         role.CalledInThreat = true;
 
         var threat = _random.Pick(config.Threats);
-        if (_proto.TryIndex<GameRulePrototype>(threat.Rule, out var rule))
-        {
-            _gameTicker.AddGameRule(rule);
-            _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
-        }
-        else
-        {
-            Logger.Error($"Threat gamerule does not exist: {threat.Rule}");
-        }
+        _gameTicker.StartGameRule(threat.Rule, out _);
+        _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
     }
 
     public override void TryDrainPower(EntityUid user, NinjaDrainComponent drain, EntityUid target)
@@ -258,12 +255,29 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
     private void OnNinjaStartup(EntityUid uid, NinjaComponent comp, ComponentStartup args)
     {
-        var config = RuleConfig();
-
         // start with internals on, only when spawned by event. antag control ninja won't do this due to component add order.
         _internals.ToggleInternals(uid, uid, true);
 
-        // inject starting implants
+        // inject starting implants if made ninja in antag ctrl
+        AddImplants(uid);
+    }
+
+    private void OnNinjaSpawned(EntityUid uid, NinjaComponent comp, GhostRoleSpawnerUsedEvent args)
+    {
+        // inherit spawner's data
+        if (TryComp<NinjaSpawnerDataComponent>(args.Spawner, out var data))
+        {
+            SetNinjaSpawnerData(uid, data.Grid, data.Rule);
+            AddImplants(uid);
+        }
+    }
+
+    private void AddImplants(EntityUid uid)
+    {
+        if (!HasComp<NinjaSpawnerDataComponent>(uid))
+            return;
+
+        var config = RuleConfig(uid);
         var coords = Transform(uid).Coordinates;
         foreach (var id in config.Implants)
         {
@@ -274,13 +288,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
             _implants.ForceImplant(uid, implant, implantComp);
         }
-    }
-
-    private void OnNinjaSpawned(EntityUid uid, NinjaComponent comp, GhostRoleSpawnerUsedEvent args)
-    {
-        // inherit spawner's station grid
-        if (TryComp<NinjaStationGridComponent>(args.Spawner, out var station))
-            SetNinjaStationGrid(uid, station.Grid);
     }
 
     private void OnNinjaMindAdded(EntityUid uid, NinjaComponent comp, MindAddedMessage args)
@@ -294,7 +301,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         if (!mind.TryGetSession(out var session))
             return;
 
-        var config = RuleConfig();
+        var config = RuleConfig(mind.OwnedEntity.Value);
         var role = new NinjaRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
         mind.AddRole(role);
         _traitorRule.Traitors.Add(role);
@@ -320,7 +327,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
 
-        if (TryComp<NinjaStationGridComponent>(mind.OwnedEntity, out var station))
+        if (TryComp<NinjaSpawnerDataComponent>(mind.OwnedEntity, out var station))
         {
             var gridPos = _transform.GetWorldPosition(station.Grid);
             var ninjaPos = _transform.GetWorldPosition(mind.OwnedEntity.Value);
