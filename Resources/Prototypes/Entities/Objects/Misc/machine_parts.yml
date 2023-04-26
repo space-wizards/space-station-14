@@ -29,15 +29,6 @@
       rating: 1
 
 - type: entity
-  id: ScanningModuleStockPart
-  name: scanning module
-  parent: BaseStockPart
-  description: A compact, high resolution scanning module used in the construction of certain devices.
-  components:
-    - type: Sprite
-      state: scan_module
-
-- type: entity
   id: MicroManipulatorStockPart
   name: manipulator
   parent: BaseStockPart
@@ -48,15 +39,6 @@
     - type: MachinePart
       part: Manipulator
       rating: 1
-
-- type: entity
-  id: MicroLaserStockPart
-  name: micro-laser
-  parent: BaseStockPart
-  description: A tiny laser used in certain devices.
-  components:
-    - type: Sprite
-      state: micro_laser
 
 - type: entity
   id: MatterBinStockPart
@@ -84,15 +66,6 @@
       rating: 2
 
 - type: entity
-  id: AdvancedScanningModuleStockPart
-  name: advanced scanning module
-  parent: ScanningModuleStockPart
-  description: A compact, high resolution scanning module used in the construction of certain devices.
-  components:
-    - type: Sprite
-      state: adv_scan_module
-
-- type: entity
   id: NanoManipulatorStockPart
   name: advanced manipulator
   parent: MicroManipulatorStockPart
@@ -102,15 +75,6 @@
       state: nano_mani
     - type: MachinePart
       rating: 2
-
-- type: entity
-  id: HighPowerMicroLaserStockPart
-  name: high-power micro-laser
-  parent: MicroLaserStockPart
-  description: A tiny laser used in certain devices.
-  components:
-    - type: Sprite
-      state: high_micro_laser
 
 - type: entity
   id: AdvancedMatterBinStockPart
@@ -137,15 +101,6 @@
       rating: 3
 
 - type: entity
-  id: PhasicScanningModuleStockPart
-  name: phasic scanning module
-  parent: ScanningModuleStockPart
-  description: A compact, high resolution phasic scanning module used in the construction of certain devices.
-  components:
-    - type: Sprite
-      state: super_scan_module
-
-- type: entity
   id: PicoManipulatorStockPart
   name: super manipulator
   parent: MicroManipulatorStockPart
@@ -155,15 +110,6 @@
       state: pico_mani
     - type: MachinePart
       rating: 3
-
-- type: entity
-  id: UltraHighPowerMicroLaserStockPart
-  name: ultra-high-power micro-laser
-  parent: MicroLaserStockPart
-  description: A tiny laser used in certain devices.
-  components:
-    - type: Sprite
-      state: ultra_high_micro_laser
 
 - type: entity
   id: SuperMatterBinStockPart
@@ -190,15 +136,6 @@
       rating: 4
 
 - type: entity
-  id: TriphasicScanningModuleStockPart
-  name: triphasic scanning module
-  parent: ScanningModuleStockPart
-  description: A compact, ultra resolution triphasic scanning module used in the construction of certain devices.
-  components:
-    - type: Sprite
-      state: triphasic_scan_module
-
-- type: entity
   id: FemtoManipulatorStockPart
   name: bluespace manipulator
   parent: MicroManipulatorStockPart
@@ -208,15 +145,6 @@
       state: femto_mani
     - type: MachinePart
       rating: 4
-
-- type: entity
-  id: QuadUltraMicroLaserStockPart
-  name: quad-ultra micro-laser
-  parent: MicroLaserStockPart
-  description: A tiny laser used in certain devices.
-  components:
-    - type: Sprite
-      state: quadultra_micro_laser
 
 - type: entity
   id: BluespaceMatterBinStockPart
