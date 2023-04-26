@@ -161,39 +161,6 @@ namespace Content.Client.Actions
                 ActionRemoved?.Invoke(action);
         }
 
-        /// <summary>
-        ///     Execute convenience functionality for actions (pop-ups, sound, speech)
-        /// </summary>
-        protected override bool PerformBasicActions(EntityUid user, ActionType action, bool predicted)
-        {
-            var performedAction = action.Sound != null
-                                  || !string.IsNullOrWhiteSpace(action.UserPopup)
-                                  || !string.IsNullOrWhiteSpace(action.Popup);
-
-            if (!GameTiming.IsFirstTimePredicted)
-                return performedAction;
-
-            if (!string.IsNullOrWhiteSpace(action.UserPopup))
-            {
-                var msg = (!action.Toggled || string.IsNullOrWhiteSpace(action.PopupToggleSuffix))
-                    ? Loc.GetString(action.UserPopup)
-                    : Loc.GetString(action.UserPopup + action.PopupToggleSuffix);
-
-                _popupSystem.PopupEntity(msg, user);
-            }
-            else if (!string.IsNullOrWhiteSpace(action.Popup))
-            {
-                var msg = (!action.Toggled || string.IsNullOrWhiteSpace(action.PopupToggleSuffix))
-                    ? Loc.GetString(action.Popup)
-                    : Loc.GetString(action.Popup + action.PopupToggleSuffix);
-
-                _popupSystem.PopupEntity(msg, user);
-            }
-
-            _audio.Play(action.Sound, Filter.Local(), user, false);
-            return performedAction;
-        }
-
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
         {
             LinkAllActions(component);
