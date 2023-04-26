@@ -248,7 +248,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         RaiseNetworkEvent(new MeleeLungeEvent(user, angle, localPos, animation), filter);
     }
 
-    //Let's see if I can get this working...   IT WORKS!!
     private void OnSpeechHit(EntityUid owner, MeleeSpeechComponent comp, MeleeHitEvent args)
     {
         if(!args.IsHit ||
@@ -257,7 +256,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        _chat.TrySendInGameICMessage(args.User, comp.Phrase, InGameICChatType.Speak, true);
+        if (comp.Battlecry != null)
+        {
+            _chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true);
+        }
 
     }
 
