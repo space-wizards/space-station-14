@@ -306,6 +306,21 @@
   - type: AccessReader
     access: [["Armory"]]
 
+# Brigmedic
+- type: entity
+  id: LockerBrigmedic
+  parent: LockerBaseSecure
+  name: brigmedic locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: brigmedic
+      state_open: armory_open
+      state_closed: brigmedic_door
+  - type: AccessReader
+    access: [["Medical"]]
+
 # Security Officer
 - type: entity
   id: LockerSecurity
@@ -318,6 +333,20 @@
       state: sec
       state_open: sec_open
       state_closed: sec_door
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  id: GunSafe
+  parent: LockerBaseSecure
+  name: gun safe
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: shotguncase
+      state_open: shotguncase_open
+      state_closed: shotguncase_door
   - type: AccessReader
     access: [["Security"]]
 

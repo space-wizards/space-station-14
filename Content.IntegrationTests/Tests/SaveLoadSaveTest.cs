@@ -1,9 +1,11 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.CCVar;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -25,6 +27,8 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
 
             await server.WaitPost(() =>
             {
@@ -43,14 +47,14 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            var rp1 = new ResourcePath("/save load save 1.yml");
+            var rp1 = new ResPath("/save load save 1.yml");
             await using (var stream = userData.Open(rp1, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = await reader.ReadToEndAsync();
             }
 
-            var rp2 = new ResourcePath("/save load save 2.yml");
+            var rp2 = new ResPath("/save load save 2.yml");
             await using (var stream = userData.Open(rp2, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
@@ -92,6 +96,8 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
 
             MapId mapId = default;
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
 
             // Load bagel.yml as uninitialized map, and save it to ensure it's up to date.
             server.Post(() =>
@@ -117,13 +123,13 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            await using (var stream = userData.Open(new ResourcePath("/load save ticks save 1.yml"), FileMode.Open))
+            await using (var stream = userData.Open(new ResPath("/load save ticks save 1.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = await reader.ReadToEndAsync();
             }
 
-            await using (var stream = userData.Open(new ResourcePath("/load save ticks save 2.yml"), FileMode.Open))
+            await using (var stream = userData.Open(new ResPath("/load save ticks save 2.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 two = await reader.ReadToEndAsync();
@@ -171,6 +177,8 @@ namespace Content.IntegrationTests.Tests
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var userData = server.ResolveDependency<IResourceManager>().UserData;
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
 
             MapId mapId = default;
             const string fileA = "/load tick load a.yml";
@@ -189,7 +197,7 @@ namespace Content.IntegrationTests.Tests
             });
 
             await server.WaitIdleAsync();
-            await using (var stream = userData.Open(new ResourcePath(fileA), FileMode.Open))
+            await using (var stream = userData.Open(new ResPath(fileA), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 yamlA = await reader.ReadToEndAsync();
@@ -210,7 +218,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitIdleAsync();
 
-            await using (var stream = userData.Open(new ResourcePath(fileB), FileMode.Open))
+            await using (var stream = userData.Open(new ResPath(fileB), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 yamlB = await reader.ReadToEndAsync();

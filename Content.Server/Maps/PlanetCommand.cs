@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
+using Content.Server.Parallax;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
@@ -52,7 +53,7 @@ public sealed class PlanetCommand : IConsoleCommand
             return;
         }
 
-        if (!_protoManager.HasIndex<BiomePrototype>(args[1]))
+        if (!_protoManager.TryIndex<BiomeTemplatePrototype>(args[1], out var biomeTemplate))
         {
             shell.WriteError(Loc.GetString("cmd-planet-map-prototype", ("prototype", args[1])));
             return;
@@ -62,8 +63,9 @@ public sealed class PlanetCommand : IConsoleCommand
         MetaDataComponent? metadata = null;
 
         var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
-        biome.BiomePrototype = args[1];
-        biome.Seed = _random.Next();
+        var biomeSystem = _entManager.System<BiomeSystem>();
+        biomeSystem.SetSeed(biome, _random.Next());
+        biomeSystem.SetTemplate(biome, biomeTemplate);
         _entManager.Dirty(biome);
 
         var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
@@ -105,7 +107,7 @@ public sealed class PlanetCommand : IConsoleCommand
 
         if (args.Length == 2)
         {
-            var options = _protoManager.EnumeratePrototypes<BiomePrototype>()
+            var options = _protoManager.EnumeratePrototypes<BiomeTemplatePrototype>()
                 .Select(o => new CompletionOption(o.ID, "Biome"));
             return CompletionResult.FromOptions(options);
         }

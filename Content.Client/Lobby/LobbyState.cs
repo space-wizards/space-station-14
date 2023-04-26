@@ -93,7 +93,7 @@ namespace Content.Client.Lobby
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
 
-            _lobby!.VoteContainer.Orphan();
+            _voteManager.ClearPopupContainer();
 
             _lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
             _lobby!.ReadyButton.OnPressed -= OnReadyPressed;
@@ -136,15 +136,17 @@ namespace Content.Client.Lobby
                 return;
             }
 
+            _lobby!.StationTime.Text =  Loc.GetString("lobby-state-player-status-round-not-started");
             string text;
 
             if (_gameTicker.Paused)
             {
                 text = Loc.GetString("lobby-state-paused");
             }
-            else if ((_gameTicker.StartTime - _gameTicker.PreloadTime) < _gameTiming.CurTime)
+            else if (_gameTicker.StartTime < _gameTiming.CurTime)
             {
-                text = Loc.GetString("lobby-state-preloading");
+                _lobby!.StartTime.Text = Loc.GetString("lobby-state-soon");
+                return;
             }
             else
             {
@@ -160,7 +162,6 @@ namespace Content.Client.Lobby
                 }
             }
 
-            _lobby!.StationTime.Text =  Loc.GetString("lobby-state-player-status-round-not-started");
             _lobby!.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
         }
 

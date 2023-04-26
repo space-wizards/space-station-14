@@ -59,10 +59,14 @@
     attributes:
       proper: true
       gender: male
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
+    - id: SheetSteel1
   - type: Tag
     tags:
     - CannotSuicide
-
 
 - type: entity
   name: Lisa
@@ -89,6 +93,10 @@
     attributes:
       proper: true
       gender: female
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
   - type: Tag
     tags:
     - CannotSuicide
@@ -445,12 +453,13 @@
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     allowSpeech: true
     allowMovement: true
     name: ghost-role-information-hamlet-name
     description: ghost-role-information-hamlet-description
+  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     successChance: 1
   - type: Butcherable
@@ -531,3 +540,32 @@
     attributes:
       proper: true
       gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+
+- type: entity
+  name: Willow
+  parent: MobKangaroo
+  id: MobKangarooWillow
+  description: Willow the boxing kangaroo.
+  components:
+  - type: InteractionPopup
+    successChance: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - FootstepSound
+  - type: GhostRole
+    prob: 0.25
+    name: Willow the kangaroo
+    description: |
+      You're a kangaroo named willow! willow likes to box.
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ BoxingKangarooGear ]

@@ -7,6 +7,25 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
+    private void InitializeDrop()
+    {
+        SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
+    }
+
+    protected virtual void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)
+    {
+        if (!TryGetHand(uid, args.Container.ID, out var hand))
+        {
+            return;
+        }
+
+        var gotUnequipped = new GotUnequippedHandEvent(uid, args.Entity, hand);
+        RaiseLocalEvent(args.Entity, gotUnequipped, false);
+
+        var didUnequip = new DidUnequipHandEvent(uid, args.Entity, hand);
+        RaiseLocalEvent(uid, didUnequip, false);
+    }
+
     /// <summary>
     ///     Checks if the contents of a hand is able to be removed from its container.
     /// </summary>
@@ -153,12 +172,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         if (doDropInteraction)
             _interactionSystem.DroppedInteraction(uid, entity);
-
-        var gotUnequipped = new GotUnequippedHandEvent(uid, entity, hand);
-        RaiseLocalEvent(entity, gotUnequipped, false);
-
-        var didUnequip = new DidUnequipHandEvent(uid, entity, hand);
-        RaiseLocalEvent(uid, didUnequip, true);
 
         if (hand == handsComp.ActiveHand)
             RaiseLocalEvent(entity, new HandDeselectedEvent(uid), false);
