@@ -1,27 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Vendomat now comes stocked with various machine parts and mechanical
-      goodies., type: Add}
-  id: 3045
-  time: '2023-02-15T19:24:00.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed an issue where anomaly vessels wouldn't produce points until being
-      disconnected and reconnected., type: Fix}
-  id: 3046
-  time: '2023-02-16T04:16:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: NPCs will take straightline paths in more instances. This makes them
-      less likely to get outrun in open areas., type: Fix}
-  id: 3047
-  time: '2023-02-16T14:24:58.0000000+00:00'
-- author: Skarlet
-  changes:
-  - {message: Added the robes of the honkmother in the autodrobe, type: Add}
-  id: 3048
-  time: '2023-02-17T01:04:40.0000000+00:00'
 - author: mhamster
   changes:
   - {message: 'Added atmosian plushie, that will mentally help you solve those miasmas
@@ -2899,3 +2876,24 @@ Entries:
       and most importantly, a bedsheet, and all this for the brigmedic.', type: Add}
   id: 3544
   time: '2023-04-26T06:48:44.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: Adds the Space Spider., type: Add}
+  id: 3545
+  time: '2023-04-26T06:51:40.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: 'Holos share less damage to their owner, updated description.', type: Tweak}
+  id: 3546
+  time: '2023-04-26T06:52:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bump collision sound velocity required from 0.25 to 1., type: Tweak}
+  id: 3547
+  time: '2023-04-26T06:52:57.0000000+00:00'
+- author: kzhanik
+  changes:
+  - {message: 'HoS and CMO get survival boxes according to their departments (HoS
+      gets sec box, CMO gets medical box)', type: Tweak}
+  id: 3548
+  time: '2023-04-26T06:53:45.0000000+00:00'
