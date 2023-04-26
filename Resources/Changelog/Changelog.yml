@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: You can now climb on counters., type: Fix}
-  id: 3040
-  time: '2023-02-14T23:08:02.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed chat/radio and various commands not working after reconnecting
@@ -2899,3 +2894,8 @@ Entries:
   - {message: fixed hypospray "you feel prick" popup appearing to everyone., type: Fix}
   id: 3539
   time: '2023-04-25T13:18:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Space Dragon event works again., type: Fix}
+  id: 3540
+  time: '2023-04-26T00:23:14.0000000+00:00'
