@@ -61,7 +61,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         foreach (var zombie in EntityQuery<ZombieRuleComponent>())
         {
-            //this is just the general condition thing used for determining the win/lose text
+            // This is just the general condition thing used for determining the win/lose text
             var fraction = GetInfectedFraction();
 
             if (fraction <= 0)
@@ -84,8 +84,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             }
 
             var healthy = GetHealthyHumans();
-        //Gets a bunch of the living players and displays them if they're under a threshold.
-            //InitialInfected is used for the threshold because it scales with the player count well.
+            // Gets a bunch of the living players and displays them if they're under a threshold.
+            // InitialInfected is used for the threshold because it scales with the player count well.
             if (healthy.Count > 0 && healthy.Count <= 2 * zombie.InitialInfectedNames.Count)
             {
                 ev.AddLine("");
@@ -143,15 +143,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             if (GameTicker.IsGameRuleActive(uid, gameRule))
                 continue;
 
-            //we only care about players, not monkeys and such.
+            // We only care about players, not monkeys and such.
             if (!HasComp<HumanoidAppearanceComponent>(target))
                 continue;
 
             var fraction = GetInfectedFraction();
-        var healthy = GetHealthyHumans();
-            if (healthy.Count == 1) //only one human left. spooky
+            var healthy = GetHealthyHumans();
+            if (healthy.Count == 1) // Only one human left. spooky
                 _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
-            if (fraction >= 1) //oops, all zombies
+            if (fraction >= 1) // Oops, all zombies
                 _roundEndSystem.EndRound();
         }
     }
