@@ -9,7 +9,6 @@ using Robust.Client.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Utility;
-using Robust.Shared.Map;
 
 namespace Content.Client.CombatMode
 {
@@ -17,10 +16,8 @@ namespace Content.Client.CombatMode
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IClyde _clyde = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IEyeManager _eye = default!;
-        private readonly IRenderTexture _renderBackbuffer;
         private Texture? _gunSight;
         private Texture? _meleeSight;
         private CombatModeSystem _combatSystem;
@@ -35,14 +32,6 @@ namespace Content.Client.CombatMode
 
             _gunSight = GetTextureFromRsi("gunsight");
             _meleeSight = GetTextureFromRsi("meleesight");
-
-            _renderBackbuffer = _clyde.CreateRenderTarget(
-                (100, 100),
-                new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb, true),
-                new TextureSampleParameters
-                {
-                    Filter = true
-                }, nameof(ShowCombatModeIndicatorsOverlay));
         }
 
         private Texture GetTextureFromRsi(string _spriteName)
@@ -55,8 +44,6 @@ namespace Content.Client.CombatMode
         protected override void DisposeBehavior()
         {
             base.DisposeBehavior();
-
-            _renderBackbuffer.Dispose();
         }
 
         protected override void Draw(in OverlayDrawArgs args)
@@ -90,31 +77,37 @@ namespace Content.Client.CombatMode
             var mousePos = mouseScreen.Position;
             var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
             float limetedScale = uiScale > 1.25f ? 1.25f : uiScale;
-            var halfBufferSize = _renderBackbuffer.Size / 2;
 
-            screen.RenderInRenderTarget(_renderBackbuffer, () =>
-            {
-                if (isHandGunItem)
-                    DrawSight(_gunSight, screen, halfBufferSize, limetedScale);
-                else
-                    DrawSight(_meleeSight, screen, halfBufferSize, limetedScale);
-            }, Color.Transparent);
-
-            screen.DrawTexture(_renderBackbuffer.Texture,
-                mousePos - halfBufferSize, Color.White.WithAlpha(0.9f));
+            if (isHandGunItem)
+                DrawSight(_gunSight, screen, mousePos, limetedScale);
+            else
+                DrawSight(_meleeSight, screen, mousePos, limetedScale);
         }
         private void DrawSight(Texture? sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
         {
             if (sight == null)
                 return;
 
-            Vector2 sightSize = sight.Size * scale;
+            float transparency = 0.55f;
+
+            screen.DrawTextureRect(sight,
+                GetRectForTexture(sight, centerPos, scale), Color.Black.WithAlpha(transparency));
+            screen.DrawTextureRect(sight,
+                GetRectForTexture(sight, centerPos, scale, true), Color.White.WithAlpha(transparency));
+        }
+
+        static private UIBox2 GetRectForTexture(Texture texture, Vector2 pos, float scale,
+            bool expanded = false)
+        {
+            Vector2 sightSize = texture.Size * scale;
+
+            if (expanded)
+                sightSize += 7;
+
             Vector2 halfSightSize = sightSize / 2;
 
-            Vector2 beginPosSight = centerPos - halfSightSize;
-            UIBox2 coordsRect = UIBox2.FromDimensions(beginPosSight, sightSize);
-
-            screen.DrawTextureRect(sight, coordsRect, Color.Black);
+            Vector2 beginPosSight = pos - halfSightSize;
+            return UIBox2.FromDimensions(beginPosSight, sightSize);
         }
     }
 }
