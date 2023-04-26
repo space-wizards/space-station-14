@@ -18881,7 +18881,6 @@ entities:
   - pos: 1.5,11.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1233
   type: WallSolidRust
   components:
@@ -19956,7 +19955,6 @@ entities:
   - pos: 17.5,33.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1397
   type: TintedWindow
   components:
@@ -23477,7 +23475,6 @@ entities:
   - pos: 17.5,27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 1883
   type: WallSolid
   components:
@@ -24743,7 +24740,6 @@ entities:
     pos: -2.5,16.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2051
   type: FirelockEdge
   components:
@@ -28031,7 +28027,6 @@ entities:
   - pos: 17.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2504
   type: ChairFolding
   components:
@@ -28867,7 +28862,6 @@ entities:
   - pos: -8.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 2626
   type: CableApcExtension
   components:
@@ -32867,7 +32861,6 @@ entities:
   - pos: -33.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3145
   type: WallSolidRust
   components:
@@ -34176,7 +34169,6 @@ entities:
   - pos: -12.5,24.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3346
   type: CableHV
   components:
@@ -35365,7 +35357,6 @@ entities:
   - pos: -29.5,29.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3532
   type: Table
   components:
@@ -36017,7 +36008,6 @@ entities:
   - pos: -40.5,-0.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 3622
   type: AirlockCargoGlassLocked
   components:
@@ -40001,7 +39991,6 @@ entities:
   - pos: -39.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4183
   type: WallSolidRust
   components:
@@ -40314,7 +40303,6 @@ entities:
   - pos: -43.5,27.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 4235
   type: PosterContrabandClown
   components:
@@ -48577,7 +48565,6 @@ entities:
     pos: -42.5,20.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5493
   type: SignSpace
   components:
@@ -49179,7 +49166,6 @@ entities:
     pos: -20.5,12.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5582
   type: Catwalk
   components:
@@ -49554,7 +49540,6 @@ entities:
   - pos: -41.5,13.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5625
   type: Rack
   components:
@@ -50913,7 +50898,6 @@ entities:
   - pos: -7.5,22.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 5792
   type: MaintenanceFluffSpawner
   components:
@@ -56897,7 +56881,6 @@ entities:
   - pos: -26.5,52.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6670
   type: WallSolidRust
   components:
@@ -57426,7 +57409,6 @@ entities:
     pos: -45.5,39.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6748
   type: WallSolidRust
   components:
@@ -57469,7 +57451,6 @@ entities:
     pos: -44.5,34.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6754
   type: Window
   components:
@@ -57589,7 +57570,6 @@ entities:
     pos: -30.5,47.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6771
   type: WallSolid
   components:
@@ -58615,7 +58595,6 @@ entities:
       - 0
       - 0
     type: EntityStorage
-  - type: Followed
 - uid: 6920
   type: Table
   components:
@@ -59042,7 +59021,6 @@ entities:
   - pos: -49.5,59.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 6982
   type: ReinforcedWindow
   components:
@@ -59515,7 +59493,6 @@ entities:
   - pos: -53.5,40.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7059
   type: WallSolid
   components:
@@ -60804,7 +60781,6 @@ entities:
       - port: Pressed
         uid: 7192
     type: SignalReceiver
-  - type: Followed
 - uid: 7217
   type: BlastDoor
   components:
@@ -60820,7 +60796,6 @@ entities:
       - port: Pressed
         uid: 7192
     type: SignalReceiver
-  - type: Followed
 - uid: 7218
   type: SignalButton
   components:
@@ -60941,7 +60916,6 @@ entities:
   - pos: -49.5,81.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7231
   type: WallReinforced
   components:
@@ -61064,7 +61038,6 @@ entities:
   - pos: -49.5,87.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7251
   type: ReinforcedWindow
   components:
@@ -61569,7 +61542,6 @@ entities:
   - pos: -49.5,69.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7331
   type: SignPrison
   components:
@@ -65385,7 +65357,6 @@ entities:
   - pos: -49.5,53.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 7881
   type: AirlockBrigGlassLocked
   components:
@@ -69898,7 +69869,6 @@ entities:
     pos: -49.5,64.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 8581
   type: FirelockGlass
   components:
@@ -75946,7 +75916,6 @@ entities:
   - pos: -59.5,36.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9302
   type: ReinforcedWindow
   components:
@@ -79935,7 +79904,6 @@ entities:
   - pos: -59.5,15.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9910
   type: WallSolid
   components:
@@ -79984,7 +79952,6 @@ entities:
   - pos: -59.5,9.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 9918
   type: WallSolid
   components:
@@ -82829,7 +82796,6 @@ entities:
   - pos: -16.5,18.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 10316
   type: WallSolid
   components:
@@ -86653,7 +86619,6 @@ entities:
   - pos: -22.5,30.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 10800
   type: ClosetFireFilled
   components:
@@ -96496,7 +96461,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 11928
   type: GasPipeStraight
   components:
@@ -96917,7 +96881,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 11967
   type: GasPipeStraight
   components:
@@ -98121,7 +98084,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - type: Followed
 - uid: 12095
   type: GasPipeStraight
   components:
@@ -107701,7 +107663,6 @@ entities:
     - 8003
     - 8002
     - 8001
-    - invalid
     - 11119
     - 11122
     - 11270
@@ -107730,7 +107691,6 @@ entities:
     - 8003
     - 8002
     - 8001
-    - invalid
     - 8573
     - 8574
     type: DeviceList
@@ -107776,7 +107736,6 @@ entities:
     - 5232
     - 5231
     type: DeviceList
-  - type: Followed
 - uid: 13047
   type: AirAlarm
   components:
@@ -107849,7 +107808,6 @@ entities:
     parent: 1
     type: Transform
   - devices:
-    - invalid
     - 5216
     - 5217
     - 5218
@@ -107862,7 +107820,6 @@ entities:
     parent: 1
     type: Transform
   - devices:
-    - invalid
     - 5216
     - 5217
     - 5218
@@ -107948,7 +107905,6 @@ entities:
     - 3724
     - 3717
     - 3716
-    - invalid
     - 3726
     - 12016
     - 12018
@@ -108005,7 +107961,6 @@ entities:
     - 3724
     - 3717
     - 3716
-    - invalid
     - 3726
     type: DeviceList
 - uid: 13060
@@ -108270,7 +108225,6 @@ entities:
     - 5238
     - 5239
     - 9818
-    - invalid
     type: DeviceList
 - uid: 13073
   type: AirAlarm
@@ -108284,7 +108238,6 @@ entities:
     - 5238
     - 5239
     - 9818
-    - invalid
     - 12259
     - 12255
     - 12256
@@ -108338,7 +108291,6 @@ entities:
     - 5238
     - 5239
     - 9818
-    - invalid
     - 12259
     - 12255
     - 12256
@@ -108370,7 +108322,6 @@ entities:
     - 5238
     - 5239
     - 9818
-    - invalid
     - 12259
     - 12255
     - 12256
@@ -108396,7 +108347,6 @@ entities:
   - devices:
     - 6496
     - 6497
-    - invalid
     - 9808
     - 6498
     - 6499
@@ -108427,7 +108377,6 @@ entities:
   - devices:
     - 6496
     - 6497
-    - invalid
     - 9808
     - 6498
     - 6499
@@ -108560,7 +108509,6 @@ entities:
     - 3177
     - 3176
     - 3175
-    - invalid
     - 12506
     - 12507
     - 12508
@@ -108690,7 +108638,6 @@ entities:
   - devices:
     - 1755
     - 1754
-    - invalid
     type: DeviceList
 - uid: 13105
   type: AirAlarm
@@ -108710,7 +108657,6 @@ entities:
     - 12717
     - 1755
     - 1754
-    - invalid
     type: DeviceList
 - uid: 13106
   type: DisposalTrunk
@@ -123883,7 +123829,6 @@ entities:
   - pos: -59.5,29.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 14973
   type: WallSolidRust
   components:
@@ -126414,7 +126359,6 @@ entities:
   - pos: -49.5,82.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 15309
   type: EmergencyLight
   components:

@@ -44,7 +44,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: PowerCellDraw
-    drawRate: 10
+    drawRate: 5
     useRate: 0
   - type: ProximityBeeper
     component: Anomaly
@@ -55,9 +55,9 @@
         volume: -8
 
 - type: entity
-  id: AnomalyLocatorNoBattery
+  id: AnomalyLocatorEmpty
   parent: AnomalyLocator
-  suffix: No Battery
+  suffix: Empty
   components:
   - type: ItemSlots
     slots:
