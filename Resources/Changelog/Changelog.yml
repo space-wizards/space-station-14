@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Added a new artifact effect which creates a puddle of random chemicals.
-      Let's hope they don't react., type: Add}
-  id: 3044
-  time: '2023-02-15T19:06:46.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: The Vendomat now comes stocked with various machine parts and mechanical
       goodies., type: Add}
   id: 3045
@@ -2897,3 +2891,11 @@ Entries:
       stations have the role.', type: Add}
   id: 3543
   time: '2023-04-26T06:18:25.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Added more things for the brigmedic, updated PDA animation, a new sprite
+      for brigmedic locker, a custom brigmedic headset , new sprites skirts and overalls,
+      a new beret, armored medical gown, new bags, a new military-style medical mask,
+      and most importantly, a bedsheet, and all this for the brigmedic.', type: Add}
+  id: 3544
+  time: '2023-04-26T06:48:44.0000000+00:00'
