@@ -63,12 +63,19 @@ public sealed class FleshAnomalySystem : EntitySystem
 
     private void SpawnMonstersOnOpenTiles(FleshAnomalyComponent component, TransformComponent xform, int amount, float radius)
     {
+        if (!component.Spawns.Any())
+            return;
+
         if (!_map.TryGetGrid(xform.GridUid, out var grid))
             return;
 
         var localpos = xform.Coordinates.Position;
         var tilerefs = grid.GetLocalTilesIntersecting(
             new Box2(localpos + (-radius, -radius), localpos + (radius, radius))).ToArray();
+
+        if (tilerefs.Length == 0)
+            return;
+
         _random.Shuffle(tilerefs);
         var physQuery = GetEntityQuery<PhysicsComponent>();
         var amountCounter = 0;

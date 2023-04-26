@@ -6,7 +6,6 @@ namespace Content.Server.GameTicking.Rules.Components;
 /// TODO: Remove once systems can request spawns from the ghost role system directly.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(NukeopsRuleSystem))]
 public sealed class NukeOperativeSpawnerComponent : Component
 {
     [DataField("name")]
