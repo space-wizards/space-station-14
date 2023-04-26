@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Chat.Systems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Chat.Systems;
 using Content.Server.Doors.Systems;
@@ -31,6 +32,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 using System.Linq;
+using Robust.Shared.Serialization.Manager.Exceptions;
 
 namespace Content.Server.Magic;
 
@@ -157,6 +159,7 @@ public sealed class MagicSystem : EntitySystem
             }
         }
 
+        Speak(args);
         args.Handled = true;
     }
 
@@ -164,6 +167,9 @@ public sealed class MagicSystem : EntitySystem
     {
         if (ev.Handled)
             return;
+
+        ev.Handled = true;
+        Speak(ev);
 
         var xform = Transform(ev.Performer);
         var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
@@ -183,6 +189,11 @@ public sealed class MagicSystem : EntitySystem
 
     private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
     {
+        if (ev.Handled)
+            return;
+        ev.Handled = true;
+        Speak(ev);
+
         foreach (var toRemove in ev.ToRemove)
         {
             if (_compFact.TryGetRegistration(toRemove, out var registration))
@@ -276,6 +287,7 @@ public sealed class MagicSystem : EntitySystem
         _transformSystem.SetCoordinates(args.Performer, args.Target);
         transform.AttachToGridOrMap();
         _audio.PlayPvs(args.BlinkSound, args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
+        Speak(args);
         args.Handled = true;
     }
 
@@ -287,6 +299,9 @@ public sealed class MagicSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
+        args.Handled = true;
+        Speak(args);
 
         //Get the position of the player
         var transform = Transform(args.Performer);
@@ -303,14 +318,15 @@ public sealed class MagicSystem : EntitySystem
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(doorComp.Owner);
         }
-
-        args.Handled = true;
     }
 
     private void OnSmiteSpell(SmiteSpellEvent ev)
     {
         if (ev.Handled)
             return;
+
+        ev.Handled = true;
+        Speak(ev);
 
         var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
         var impulseVector = direction * 10000;
@@ -350,7 +366,7 @@ public sealed class MagicSystem : EntitySystem
         var targetMapCoords = args.Target;
 
         SpawnSpellHelper(args.Contents, targetMapCoords, args.Lifetime, args.Offset);
-
+        Speak(args);
         args.Handled = true;
     }
 
@@ -427,5 +443,14 @@ public sealed class MagicSystem : EntitySystem
 
         }
     }
-  #endregion
+    #endregion
+
+    private void Speak(BaseActionEvent args)
+    {
+        if (args is not ISpeakSpell speak || string.IsNullOrWhiteSpace(speak.Speech))
+            return;
+
+        _chat.TrySendInGameICMessage(args.Performer, Loc.GetString(speak.Speech),
+            InGameICChatType.Speak, false);
+    }
 }
