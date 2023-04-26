@@ -116,20 +116,9 @@ public sealed partial class GunSystem : SharedGunSystem
         foreach (var (ent, shootable) in ammo)
         {
             // pneumatic cannon doesn't shoot bullets it just throws them, ignore ammo handling
-            // TODO: What is this sussy null suppression.
-            if (throwItems)
+            if (throwItems && ent != null)
             {
                 ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, user);
-
-                if (!HasComp<ProjectileComponent>(ent!.Value))
-                {
-                    RemComp<AmmoComponent>(ent.Value);
-                    // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
-                    ThrowingSystem.TryThrow(ent.Value, mapDirection, gun.ProjectileSpeed, user);
-                    continue;
-                }
-
-                ShootProjectile(ent.Value, mapDirection, gunVelocity, user, gun.ProjectileSpeed);
                 continue;
             }
 
