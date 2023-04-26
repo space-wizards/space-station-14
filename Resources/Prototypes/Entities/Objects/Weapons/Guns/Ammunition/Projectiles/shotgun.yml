@@ -108,19 +108,15 @@
   id: PelletShotgunFlare
   name: pellet (.50 flare)
   noSpawn: true
-  parent: BaseBullet
+  parent: BaseItem
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare
-  - type: Projectile
-    damage:
-      groups:
-        Burn: 14
+  - type: IgnitionSource
+    temperature: 1000
   - type: PointLight
     enabled: true
     color: "#FF8080"
     radius: 15.0
     energy: 9.0
-  - type: IgniteOnCollide
-    fireStacks: 4
