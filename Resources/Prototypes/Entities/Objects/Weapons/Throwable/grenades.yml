@@ -60,11 +60,27 @@
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
       countdown_sound:
         path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  id: GrenadeFlashEffect
+  noSpawn: true
+  components:
+    - type: PointLight
+      enabled: true
+      netsync: false
+      radius: 5
+      energy: 8
+    - type: LightFade
+      duration: 0.5
+    - type: TimedDespawn
+      lifetime: 0.5
 
 - type: entity
   name: Syndicate minibomb
