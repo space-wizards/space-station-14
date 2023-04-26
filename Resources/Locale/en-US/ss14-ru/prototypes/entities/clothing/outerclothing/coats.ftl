@@ -34,3 +34,5 @@ ent-ClothingOuterDogi = samurai dogi
     .desc = Dogi is a type of traditional Japanese clothing. The dogi is made of heavy, durable fabric, it is practical in combat and stylish in appearance. It is decorated with intricate patterns and embroidery on the back.
 ent-ClothingOuterCoatParamedicWB = paramedic windbreaker
     .desc = A paramedic's trusty windbreaker, for all the space wind.
+ent-ClothingOuterCoatAMG = armored medical gown
+    .desc = The version of the medical gown, with elements of a bulletproof vest, looks strange, but your heart is protected.

@@ -47,3 +47,5 @@ ent-BarSignZocalo = Zocalo
     .desc = Anteriormente ubicado en Spessmerica.
 ent-BarSignEmprah = 4 The Emprah
     .desc = Enjoyed by fanatics, heretics, and brain-damaged patrons alike.
+ent-BarSignSpacebucks = Spacebucks
+    .desc = You can't get away from them, even in space.

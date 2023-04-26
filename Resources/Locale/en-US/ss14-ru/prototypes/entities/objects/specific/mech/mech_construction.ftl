@@ -1,9 +1,9 @@
 ent-BaseMechPart = { "" }
     .desc = { "" }
-ent-BaseMechPartItem = { ent-BaseMechPart }
+ent-BaseRipleyPart = { ent-BaseMechPart }
     .desc = { ent-BaseMechPart.desc }
-ent-BaseMechConstruct = { ent-BaseMechPart }
-    .desc = { ent-BaseMechPart.desc }
+ent-BaseRipleyPartItem = { ent-BaseRipleyPart }
+    .desc = { ent-BaseRipleyPart.desc }
 ent-RipleyHarness = ripley harness
     .desc = The core of the Ripley APLU.
 ent-RipleyLArm = ripley left arm

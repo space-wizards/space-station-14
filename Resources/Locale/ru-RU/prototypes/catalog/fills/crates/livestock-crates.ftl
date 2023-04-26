@@ -32,3 +32,5 @@ ent-CrateNPCSnake = ящик змей
     .desc = Ящик, содержащий трёх змей.
 ent-CrateNPCLizard = ящик с ящерицей
     .desc = Ящик, содержащий одну ящерицу.
+ent-CrateNPCKangaroo = Kangaroo crate
+    .desc = A crate containing a kangaroo.

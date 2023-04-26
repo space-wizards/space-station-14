@@ -18,3 +18,5 @@ ent-CrateServiceBox = Boxes crate
     .desc = Contains 6 empty multipurpose boxes.
 ent-CrateJanitorBiosuit = ящик биозащитных костюмов уборщика
     .desc = Содержит 2 костюма биологической защиты, чтобы никакая зараза не отвлекала вас от уборки станции.
+ent-CrateServiceTheatre = Theatrical performances crate
+    .desc = Contains a moth cloak, maid uniform, clown and mime attributes, and other performance charms.

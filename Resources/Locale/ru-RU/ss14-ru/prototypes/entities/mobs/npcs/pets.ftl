@@ -32,3 +32,5 @@ ent-MobHamsterHamlet = Гамлет
     .desc = Ворчливый, милый и пушистый хомяк.
 ent-MobSpiderShiva = Шива
     .desc = Первый защитник станции.
+ent-MobKangarooWillow = Willow
+    .desc = Willow the boxing kangaroo.

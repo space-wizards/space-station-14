@@ -114,3 +114,5 @@ ent-ClothingUniformJumpskirtLawyerPurple = фиолетовая адвокатс
     .desc = Стильный фиолетовый костюм c юбкой, который носят адвокаты и шоумены.
 ent-ClothingUniformJumpskirtLawyerGood = хорошая адвокатская юбка-костюм
     .desc = Кричащий костюм c юбкой, идеально подходящий УГОЛОВНОМУ адвокату!
+ent-ClothingUniformJumpskirtOfLife = skirt of life
+    .desc = A skirt that symbolizes the joy and positivity of our life.
