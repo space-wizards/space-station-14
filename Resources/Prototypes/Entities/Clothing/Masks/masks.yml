@@ -122,6 +122,22 @@
     - WhitelistChameleon
 
 - type: entity
+  parent: ClothingMaskBreathMedical
+  id: ClothingMaskBreathMedicalSecurity
+  name: military-style medical mask
+  description: A medical mask with a small layer of protection against damage and viruses, similar to the one used in the medical units of the first corporate war.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/medicalsecurity.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/medicalsecurity.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+
+- type: entity
   parent: ClothingMaskPullableBase
   id: ClothingMaskBreath
   name: breath mask
