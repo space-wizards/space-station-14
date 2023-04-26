@@ -12501,7 +12501,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -12602,7 +12601,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -15424,7 +15422,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -15466,7 +15463,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -24521,7 +24517,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -24885,7 +24880,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -24928,7 +24922,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -24971,7 +24964,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -25014,7 +25006,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -25126,7 +25117,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -25169,7 +25159,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -25212,7 +25201,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -25255,7 +25243,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -37365,7 +37352,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -42711,7 +42697,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
@@ -51054,7 +51039,6 @@ entities:
       paper_label: !type:ContainerSlot
         showEnts: False
         occludes: True
-        ent: null
     type: ContainerContainer
 - uid: 6775
   type: AMEPart
@@ -62362,7 +62346,6 @@ entities:
       hard: True
       restitution: 0
       friction: 0.4
-      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
