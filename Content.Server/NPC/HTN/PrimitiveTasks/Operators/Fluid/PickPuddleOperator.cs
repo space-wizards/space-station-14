@@ -1,16 +1,22 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Fluids.Components;
 using Robust.Shared.Map;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Fluid;
 
 /// <summary>
-/// Picks a nearby component that is accessible.
+/// Picks a nearby evaporatable puddle.
 /// </summary>
-public sealed class PickAccessibleComponentOperator : HTNOperator
+public sealed class PickPuddleOperator : HTNOperator
 {
+    // This is similar to PickAccessibleComponent however I have an idea on generic utility queries
+    // that can also be re-used for melee that needs further fleshing out.
+
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     private PathfindingSystem _pathfinding = default!;
@@ -19,14 +25,10 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;
 
+    [DataField("target")] public string Target = "Target";
+
     [DataField("targetKey", required: true)]
     public string TargetKey = string.Empty;
-
-    [DataField("target")]
-    public string TargetEntity = "Target";
-
-    [DataField("component", required: true)]
-    public string Component = string.Empty;
 
     /// <summary>
     /// Where the pathfinding result will be stored (if applicable). This gets removed after execution.
@@ -42,15 +44,10 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
     }
 
     /// <inheritdoc/>
+    [Obsolete("Obsolete")]
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)
     {
-        // Check if the component exists
-        if (!_factory.TryGetRegistration(Component, out var registration))
-        {
-            return (false, null);
-        }
-
         var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
@@ -59,19 +56,20 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
             return (false, null);
         }
 
-        var compType = registration.Type;
-        var query = _entManager.GetEntityQuery(compType);
         var targets = new List<EntityUid>();
+        var puddleSystem = _entManager.System<PuddleSystem>();
+        var solSystem = _entManager.System<SolutionContainerSystem>();
 
-        // TODO: Need to get ones that are accessible.
-        // TODO: Look at unreal HTN to see repeatable ones maybe?
-        // TODO: Need type
-        foreach (var entity in _lookup.GetEntitiesInRange(coordinates, range))
+        foreach (var comp in _lookup.GetComponentsInRange<PuddleComponent>(coordinates, range))
         {
-            if (entity == owner || !query.TryGetComponent(entity, out var comp))
+            if (comp.Owner == owner ||
+                !solSystem.TryGetSolution(comp.Owner, comp.SolutionName, out var puddleSolution) ||
+                puddleSystem.CanFullyEvaporate(puddleSolution))
+            {
                 continue;
+            }
 
-            targets.Add(entity);
+            targets.Add((comp.Owner));
         }
 
         if (targets.Count == 0)
@@ -97,9 +95,9 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
 
             return (true, new Dictionary<string, object>()
             {
-                { TargetEntity, target },
+                { Target, target },
                 { TargetKey, xform.Coordinates },
-                { PathfindKey, path }
+                { PathfindKey, path}
             });
         }
 
