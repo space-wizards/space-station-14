@@ -1,10 +1,4 @@
 Entries:
-- author: mhamster
-  changes:
-  - {message: 'Added atmosian plushie, that will mentally help you solve those miasmas
-      in medbay and plasma in bridge', type: Add}
-  id: 3049
-  time: '2023-02-17T21:57:15.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Changed service worker's extended access to include hydro., type: Tweak}
@@ -2897,3 +2891,8 @@ Entries:
       gets sec box, CMO gets medical box)', type: Tweak}
   id: 3548
   time: '2023-04-26T06:53:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Puddles will disperse faster., type: Fix}
+  id: 3549
+  time: '2023-04-26T11:29:31.0000000+00:00'
