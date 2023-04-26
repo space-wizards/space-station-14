@@ -1,9 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Changed service worker's extended access to include hydro., type: Tweak}
-  id: 3050
-  time: '2023-02-17T21:58:45.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: The chat channel selector now indicates the radio channel that a message
@@ -2896,3 +2891,8 @@ Entries:
   - {message: Puddles will disperse faster., type: Fix}
   id: 3549
   time: '2023-04-26T11:29:31.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed combat (harm) mode popup appearing to everyone, type: Fix}
+  id: 3550
+  time: '2023-04-26T16:21:44.0000000+00:00'
