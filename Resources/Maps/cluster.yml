@@ -4496,7 +4496,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 34
   type: SignEscapePods
@@ -4817,7 +4816,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 85
   type: Grille
@@ -5121,7 +5119,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 135
   type: ReinforcedWindow
@@ -5349,7 +5346,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 172
   type: WallSolid
@@ -5595,7 +5591,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 212
   type: ReinforcedWindow
@@ -6041,7 +6036,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 284
   type: WallSolid
@@ -6050,7 +6044,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 285
   type: WallSolid
@@ -6953,7 +6946,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 420
   type: Window
@@ -7144,7 +7136,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 449
   type: Grille
@@ -7350,7 +7341,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 478
   type: Table
@@ -7500,7 +7490,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 499
   type: WallSolid
@@ -7706,7 +7695,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 528
   type: WallReinforced
@@ -7772,7 +7760,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 537
   type: WallReinforced
@@ -8093,7 +8080,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 583
   type: Grille
@@ -8241,7 +8227,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 604
   type: WallSolid
@@ -8471,7 +8456,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 637
   type: WallSolid
@@ -10494,7 +10478,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 948
   type: WallReinforced
@@ -10847,7 +10830,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 1004
   type: WallSolid
@@ -12382,7 +12364,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 1252
   type: WallReinforced
@@ -12756,7 +12737,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 1298
   type: PosterBroken
@@ -13061,7 +13041,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 1348
   type: AirlockGlass
@@ -13340,7 +13319,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 1394
   type: WallReinforced
@@ -13367,7 +13345,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 1398
   type: WallReinforced
@@ -13926,7 +13903,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 1490
   type: WallReinforced
@@ -14574,7 +14550,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 1597
   type: WallReinforced
@@ -16253,7 +16228,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 1820
   type: WallSolid
@@ -17506,7 +17480,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 1986
   type: WallReinforced
@@ -18027,7 +18000,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 2060
   type: WallReinforced
@@ -18387,7 +18359,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 2111
   type: Window
@@ -18780,7 +18751,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 2167
   type: WallSolid
@@ -19896,7 +19866,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 2329
   type: WallReinforced
@@ -20740,7 +20709,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 2451
   type: Catwalk
@@ -22273,7 +22241,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 2665
   type: WallReinforced
@@ -24194,7 +24161,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 2948
   type: Grille
@@ -25068,7 +25034,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3052
   type: AirlockExternalGlass
@@ -25078,7 +25043,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3053
   type: AirlockExternalGlass
@@ -25088,7 +25052,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3054
   type: AirlockExternalGlass
@@ -25098,7 +25061,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3055
   type: FirelockEdge
@@ -25599,7 +25561,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3108
   type: FirelockGlass
@@ -26885,7 +26846,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3297
   type: AirlockMaintLocked
@@ -27330,7 +27290,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3367
   type: AirlockFreezerKitchenHydroLocked
@@ -27456,7 +27415,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3386
   type: CableApcExtension
@@ -27513,7 +27471,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3394
   type: AirlockMaintMedLocked
@@ -27654,7 +27611,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3415
   type: AirlockScienceGlassLocked
@@ -28776,7 +28732,6 @@ entities:
         uid: 9199
     type: SignalReceiver
   - following:
-    - invalid
     type: Followed
 - uid: 3567
   type: ConveyorBelt
@@ -30840,7 +30795,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 3854
   type: Catwalk
@@ -37557,7 +37511,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 4837
   type: ReinforcedWindow
@@ -38852,7 +38805,6 @@ entities:
   - bodyType: Static
     type: Physics
   - following:
-    - invalid
     type: Followed
 - uid: 5016
   type: StoolBar
@@ -38950,7 +38902,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 5031
   type: TableWood
@@ -43013,7 +42964,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 5591
   type: d20Dice
@@ -43794,7 +43744,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 5697
   type: PottedPlantRandomPlastic
@@ -44986,7 +44935,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 5888
   type: PaperOffice
@@ -45433,7 +45381,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 5946
   type: SinkWide
@@ -45732,7 +45679,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 5988
   type: FoodMeat
@@ -46208,7 +46154,6 @@ entities:
   - enabled: False
     type: AmbientSound
   - following:
-    - invalid
     type: Followed
 - uid: 6064
   type: TableReinforced
@@ -46394,7 +46339,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 6094
   type: MachineAPE
@@ -47216,7 +47160,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 6209
   type: CableMV
@@ -47772,7 +47715,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 6299
   type: CableApcExtension
@@ -48023,7 +47965,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 6337
   type: SignalButton
@@ -50903,7 +50844,6 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
   - following:
-    - invalid
     type: Followed
 - uid: 6752
   type: Poweredlight
@@ -50917,7 +50857,6 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
   - following:
-    - invalid
     type: Followed
 - uid: 6753
   type: Poweredlight
@@ -56773,7 +56712,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 7482
   type: SpawnPointLatejoin
@@ -57219,7 +57157,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 7540
   type: RandomVendingSnacks
@@ -57240,7 +57177,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 7543
   type: DrinkBottleWine
@@ -57283,7 +57219,6 @@ entities:
   - radius: 175.75
     type: PointLight
   - following:
-    - invalid
     type: Followed
 - uid: 7549
   type: CableHV
@@ -69759,7 +69694,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 9387
   type: Catwalk
@@ -71250,7 +71184,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 9616
   type: TableGlass
@@ -78509,7 +78442,6 @@ entities:
   - bodyType: Static
     type: Physics
   - following:
-    - invalid
     type: Followed
 - uid: 10468
   type: GasPipeTJunction
@@ -79018,7 +78950,6 @@ entities:
   - bodyType: Static
     type: Physics
   - following:
-    - invalid
     type: Followed
 - uid: 10515
   type: GasPipeStraight
@@ -84874,7 +84805,6 @@ entities:
   - bodyType: Static
     type: Physics
   - following:
-    - invalid
     type: Followed
 - uid: 11058
   type: GasVentPump
@@ -92563,7 +92493,6 @@ entities:
         uid: 11713
     type: SignalReceiver
   - following:
-    - invalid
     type: Followed
 - uid: 11725
   type: ShuttersNormalOpen
@@ -92743,7 +92672,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 11744
   type: RandomSpawner
@@ -92783,7 +92711,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 11750
   type: RandomSpawner
@@ -92828,7 +92755,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 11757
   type: RandomSpawner
@@ -93437,7 +93363,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 11858
   type: RandomSpawner
@@ -93912,7 +93837,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 11935
   type: PartRodMetal
@@ -98236,7 +98160,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 12430
   type: PersonalAI
@@ -99012,7 +98935,6 @@ entities:
     parent: 1
     type: Transform
   - following:
-    - invalid
     type: Followed
 - uid: 12531
   type: FlashlightSeclite
