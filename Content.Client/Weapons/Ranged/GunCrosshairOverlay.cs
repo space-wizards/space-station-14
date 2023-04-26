@@ -91,34 +91,42 @@ public sealed class GunCrosshairOverlay : Overlay
             collisionMask = (int) CollisionGroup.BulletImpassable;
         }
 
-
-        // get raycast positions
-        var direction = (mousePos.Position - mapPos.Position);
-        var ray = new CollisionRay(mapPos.Position, direction.Normalized, collisionMask);
-        var rayCastResults =
-            _physics.IntersectRay(mapPos.MapId, ray, 20f, player, false).ToList();
-
         CrosshairType crosshairType = CrosshairType.Available;
 
-        if (rayCastResults.Any())
+        var direction = (mousePos.Position - mapPos.Position);
+
+        if (GetRayCastResult(direction, mapPos, player, collisionMask)
+                is RayCastResults castRes)
         {
-            RayCastResults result = rayCastResults[0];
             var mouseDistance = direction.Length;
 
-            if (0.5 > (result.HitPos - mousePos.Position).Length)
+            if (0.5 > (castRes.HitPos - mousePos.Position).Length)
             {
                 crosshairType = CrosshairType.InTarget;
             }
-            else if (mouseDistance > result.Distance)
+            else if (mouseDistance > castRes.Distance)
             {
                 crosshairType = CrosshairType.Unavailable;
-                var screenHitPosition = _eye.WorldToScreen(result.HitPos);
+                var screenHitPosition = _eye.WorldToScreen(castRes.HitPos);
                 var screenPlayerPos = _eye.CoordinatesToScreen(xform.Coordinates).Position;
                 DrawОbstacleSign(screen, _crosssign, screenHitPosition, screenPlayerPos);
             }
         }
 
         DrawCrosshair(screen, _crosshair, mouseScreen.Position, crosshairType);
+    }
+
+    private RayCastResults? GetRayCastResult(Vector2 dir, MapCoordinates mapPos, EntityUid? player,
+        int collision, float range = 20f)
+    {
+        var ray = new CollisionRay(mapPos.Position, dir.Normalized, collision);
+        var rayCastResults =
+            _physics.IntersectRay(mapPos.MapId, ray, 20f, player, false).ToList();
+
+        if (rayCastResults.Any())
+            return rayCastResults[0];
+        else
+            return null;
     }
 
     private UIBox2 GetBoxForTexture(Texture texture, Vector2 pos, float? expandedSize = null)
@@ -157,9 +165,9 @@ public sealed class GunCrosshairOverlay : Overlay
 
         Color color = type switch
         {
-            CrosshairType.Unavailable => Color.Red.WithAlpha(0.3f),
-            CrosshairType.InTarget => Color.LightGreen,
-            _ => Color.Blue,
+            CrosshairType.Unavailable => Color.Red.WithAlpha(0.2f),
+            CrosshairType.InTarget => Color.GreenYellow,
+            _ => Color.LightGreen,
         };
 
         if (type == CrosshairType.Unavailable)
