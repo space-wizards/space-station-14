@@ -1,3 +1,4 @@
+using Content.Client.Movement.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
@@ -16,7 +17,7 @@ namespace Content.Client.Ghost
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly ILightManager _lightManager = default!;
-        [Dependency] private readonly IEyeManager _eye = default!;
+        [Dependency] private readonly ContentEyeSystem _contentEye = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
 
@@ -98,7 +99,7 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
-            _eye.CurrentEye.DrawFov = !_eye.CurrentEye.DrawFov;
+            _contentEye.RequestToggleFov(uid);
             args.Handled = true;
         }
 
