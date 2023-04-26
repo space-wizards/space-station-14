@@ -1,12 +1,7 @@
-using System.Linq;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Configurations;
-using Content.Shared.CCVar;
-using Content.Shared.GameTicking;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Server.StationEvents.Components;
 using JetBrains.Annotations;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents
@@ -16,53 +11,49 @@ namespace Content.Server.StationEvents
     ///     game presets use.
     /// </summary>
     [UsedImplicitly]
-    public sealed class BasicStationEventSchedulerSystem : GameRuleSystem
+    public sealed class BasicStationEventSchedulerSystem : GameRuleSystem<BasicStationEventSchedulerComponent>
     {
-        public override string Prototype => "BasicStationEventScheduler";
-
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly EventManagerSystem _event = default!;
 
-        private const float MinimumTimeUntilFirstEvent = 300;
-
-        /// <summary>
-        /// How long until the next check for an event runs
-        /// </summary>
-        /// Default value is how long until first event is allowed
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _timeUntilNextEvent = MinimumTimeUntilFirstEvent;
-
-        public override void Started() { }
-
-        public override void Ended()
+        protected override void Ended(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
+            GameRuleEndedEvent args)
         {
-            _timeUntilNextEvent = MinimumTimeUntilFirstEvent;
+            component.TimeUntilNextEvent = BasicStationEventSchedulerComponent.MinimumTimeUntilFirstEvent;
         }
+
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            if (!RuleStarted || !_event.EventsEnabled)
+            if (!_event.EventsEnabled)
                 return;
 
-            if (_timeUntilNextEvent > 0)
+            var query = EntityQueryEnumerator<BasicStationEventSchedulerComponent, GameRuleComponent>();
+            while (query.MoveNext(out var uid, out var eventScheduler, out var gameRule))
             {
-                _timeUntilNextEvent -= frameTime;
-                return;
-            }
+                if (!GameTicker.IsGameRuleActive(uid, gameRule))
+                    continue;
 
-            _event.RunRandomEvent();
-            ResetTimer();
+                if (eventScheduler.TimeUntilNextEvent > 0)
+                {
+                    eventScheduler.TimeUntilNextEvent -= frameTime;
+                    return;
+                }
+
+                _event.RunRandomEvent();
+                ResetTimer(eventScheduler);
+            }
         }
 
         /// <summary>
         /// Reset the event timer once the event is done.
         /// </summary>
-        private void ResetTimer()
+        private void ResetTimer(BasicStationEventSchedulerComponent component)
         {
             // 5 - 25 minutes. TG does 3-10 but that's pretty frequent
-            _timeUntilNextEvent = _random.Next(300, 1500);
+            component.TimeUntilNextEvent = _random.Next(300, 1500);
         }
     }
 }

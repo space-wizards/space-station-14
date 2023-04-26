@@ -344,6 +344,19 @@
   - type: ConditionalSpawner
     prototypes:
     - MobBoxingKangaroo
+  
+- type: entity
+  name: Space Spider Spawner
+  id: SpawnMobSpaceSpider
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSpiderSpace
 
 - type: entity
   name: Slimes Spawner Blue Good
