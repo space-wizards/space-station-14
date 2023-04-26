@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The popup for a radio being disabled now only shows to the person with
-      the radio., type: Fix}
-  id: 3042
-  time: '2023-02-15T05:53:13.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix NPCs not pathfinding around railings., type: Fix}
@@ -2898,3 +2892,9 @@ Entries:
   - {message: Flashbangs now have a light when they flash., type: Add}
   id: 3541
   time: '2023-04-26T03:51:48.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that caused the toggle-light & FOV ghost actions to not
+      appear., type: Fix}
+  id: 3542
+  time: '2023-04-26T04:05:05.0000000+00:00'
