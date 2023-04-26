@@ -272,3 +272,8 @@
   suffix: Dimension
   components:
   - type: DimensionPot
+  # don't want the pot going into its own portal do we
+  - type: PortalBlacklist
+  # don't want someone destroying your pocket dimension do we
+  - type: Destructible
+    thresholds: []

@@ -1,6 +1,5 @@
-﻿using System.Linq;
 using Content.Shared.Teleportation.Components;
-using Robust.Shared.GameStates;
+﻿using System.Linq;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -19,20 +18,6 @@ public sealed class LinkedEntitySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LinkedEntityComponent, ComponentShutdown>(OnLinkShutdown);
-
-        SubscribeLocalEvent<LinkedEntityComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<LinkedEntityComponent, ComponentHandleState>(OnHandleState);
-    }
-
-    private void OnGetState(EntityUid uid, LinkedEntityComponent component, ref ComponentGetState args)
-    {
-        args.State = new LinkedEntityComponentState(component.LinkedEntities);
-    }
-
-    private void OnHandleState(EntityUid uid, LinkedEntityComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is LinkedEntityComponentState state)
-            component.LinkedEntities = state.LinkedEntities;
     }
 
     private void OnLinkShutdown(EntityUid uid, LinkedEntityComponent component, ComponentShutdown args)
