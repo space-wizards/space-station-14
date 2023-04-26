@@ -244,15 +244,17 @@
     duration: 60
   - type: VentCrittersRule
 
-- type: gameRule
+- type: entity
   id: SlimesSpawn
-  config:
-    !type:StationEventRuleConfiguration
-    id: SlimesSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    endAfter: 60
+    duration: 60
+  - type: SlimesSpawnRule
 
 - type: gameRule
 - type: entity

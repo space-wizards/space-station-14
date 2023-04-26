@@ -2,19 +2,16 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.Actions;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Server.GameTicking.Rules.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class SlimesSpawn : StationEventSystem
+public sealed class SlimesSpawnRule : StationEventSystem<SlimesSpawnRuleComponent>
 {
-    public static List<string> SpawnedPrototypeChoices = new()
-        {"MobAdultSlimesBlueAngry", "MobAdultSlimesGreenAngry", "MobAdultSlimesYellowAngry"};
-
-    public override string Prototype => "SlimesSpawn";
-
-    public override void Started()
+    protected override void Started(EntityUid uid, SlimesSpawnRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
-        base.Started();
+        base.Started(uid, component, gameRule, args);
+		
         var spawnLocations = EntityManager.EntityQuery<VentScrubberSpawnLocationComponent, TransformComponent>().ToList();
         RobustRandom.Shuffle(spawnLocations);
 
@@ -25,7 +22,7 @@ public sealed class SlimesSpawn : StationEventSystem
         {
             if (spawnAmount-- == 0)
                 break;
-            var spawnChoice = RobustRandom.Pick(SpawnedPrototypeChoices.ToList());
+            var spawnChoice = RobustRandom.Pick(component.SpawnedPrototypeChoices.ToList());
             Sawmill.Info($"Spawning {spawnAmount} of {spawnChoice}");
             var coords = spawnLocations[i].Item2.Coordinates;
 
