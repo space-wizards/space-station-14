@@ -6931,7 +6931,6 @@ entities:
     pos: -14.5,26.5
     parent: 1
     type: Transform
-
 - uid: 420
   type: Window
   components:
