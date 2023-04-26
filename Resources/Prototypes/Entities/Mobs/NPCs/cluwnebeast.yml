@@ -61,6 +61,7 @@
     prototype: Cluwne
     requiredLegs: 2
   - type: Strippable
+  - type: InventorySlots
   - type: Inventory
     templateId: cluwnebeast
     speciesId: cluwnebeast
@@ -98,10 +99,17 @@
       Female: CluwneBeast
       Unsexed: CluwneBeast
   - type: StutteringAccent
-  - type: CluwneBeast
+  - type: Cluwne
+    isCluwne: false
+    cluwneOnMelee: true
+    autoEmoteSound: CluwneBeastGiggle
+    emoteId: CluwneBeast
+    isBeast: true
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
+  - type: Loadout
+    prototypes: [ CluwneBeastGear ]
   - type: MobPrice
     price: 2500
   - type: RandomMetadata
