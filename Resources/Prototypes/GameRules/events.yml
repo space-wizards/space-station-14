@@ -256,7 +256,6 @@
     duration: 60
   - type: SlimesSpawnRule
 
-- type: gameRule
 - type: entity
   id: SpiderSpawn
   parent: BaseGameRule
