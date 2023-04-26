@@ -904,6 +904,16 @@
   - UplinkPointless
 
 - type: listing
+  id: UplinkOutlawGlasses
+  name: uplink-outlaw-glasses-name
+  description: uplink-outlaw-glasses-desc
+  productEntity: ClothingEyesGlassesOutlawGlasses
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+
+- type: listing
   id: UplinkCostumePyjama
   name: uplink-costume-pyjama-name
   description: uplink-costume-pyjama-desc

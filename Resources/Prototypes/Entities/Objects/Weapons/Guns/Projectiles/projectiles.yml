@@ -338,9 +338,22 @@
   - type: Projectile
     damage:
       types:
-        Heat: 3
+        Heat: 5
   - type: TimedDespawn
     lifetime: 3
+
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleDeltaStrong
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Delta
+    severityPerSeverityHit: 0.05
+    stabilityPerDestabilizingHit: 0.08
+    healthPerWeakeningeHit: -0.1
+    stabilityPerWeakeningeHit: -0.2
 
 - type: entity
   parent: AnomalousParticleDelta
@@ -352,6 +365,18 @@
     particleType: Epsilon
 
 - type: entity
+  parent: AnomalousParticleEpsilon
+  id: AnomalousParticleEpsilonStrong
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Epsilon
+    severityPerSeverityHit: 0.05
+    stabilityPerDestabilizingHit: 0.08
+    healthPerWeakeningeHit: -0.1
+    stabilityPerWeakeningeHit: -0.2
+
+- type: entity
   parent: AnomalousParticleDelta
   id: AnomalousParticleZeta
   name: zeta particles
@@ -359,6 +384,18 @@
   components:
   - type: AnomalousParticle
     particleType: Zeta
+
+- type: entity
+  parent: AnomalousParticleZeta
+  id: AnomalousParticleZetaStrong
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Zeta
+    severityPerSeverityHit: 0.05
+    stabilityPerDestabilizingHit: 0.08
+    healthPerWeakeningeHit: -0.1
+    stabilityPerWeakeningeHit: -0.2
 
 # Launcher projectiles (grenade / rocket)
 - type: entity

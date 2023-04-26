@@ -1065,3 +1065,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
   - type: AddAccentClothing
     accent: PirateAccent
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCossack
+  name: Cossack suit
+  description: the good old pants and brigantine.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi

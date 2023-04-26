@@ -543,3 +543,29 @@
   - type: Tag
     tags:
     - CannotSuicide
+
+- type: entity
+  name: Willow
+  parent: MobKangaroo
+  id: MobKangarooWillow
+  description: Willow the boxing kangaroo.
+  components:
+  - type: InteractionPopup
+    successChance: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - FootstepSound
+  - type: GhostRole
+    prob: 0.25
+    name: Willow the kangaroo
+    description: |
+      You're a kangaroo named willow! willow likes to box.
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ BoxingKangarooGear ]

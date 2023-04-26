@@ -43,9 +43,6 @@ namespace Content.Client.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleItemRemoved);
-            SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleItemAdded);
-
             SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
             SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
             SubscribeLocalEvent<HandsComponent, ComponentAdd>(HandleCompAdd);
@@ -253,9 +250,11 @@ namespace Content.Client.Hands.Systems
 
         #region visuals
 
-        private void HandleItemAdded(EntityUid uid, HandsComponent handComp, ContainerModifiedMessage args)
+        protected override void HandleEntityInserted(EntityUid uid, HandsComponent hands, EntInsertedIntoContainerMessage args)
         {
-            if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
+            base.HandleEntityInserted(uid, hands, args);
+
+            if (!hands.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
             UpdateHandVisuals(uid, args.Entity, hand);
             _stripSys.UpdateUi(uid);
@@ -269,9 +268,11 @@ namespace Content.Client.Hands.Systems
                 OnPlayerHandBlocked?.Invoke(hand.Name);
         }
 
-        private void HandleItemRemoved(EntityUid uid, HandsComponent handComp, ContainerModifiedMessage args)
+        protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)
         {
-            if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
+            base.HandleEntityRemoved(uid, hands, args);
+
+            if (!hands.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
             UpdateHandVisuals(uid, args.Entity, hand);
             _stripSys.UpdateUi(uid);

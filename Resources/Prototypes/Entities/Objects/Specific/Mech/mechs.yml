@@ -3,19 +3,8 @@
   save: false
   abstract: true
   components:
-  - type: Sprite
-    netsync: false
-    drawdepth: Mobs
-    noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
-    layers:
-    - map: [ "enum.MechVisualLayers.Base" ]
-      state: ripley
   - type: MobMover
   - type: Mech
-    baseState: ripley
-    openState: ripley-open
-    brokenState: ripley-broken
   - type: MechAir
   - type: DoAfter
   - type: Repairable
@@ -77,8 +66,16 @@
   id: MechRipley
   parent: BaseMech
   name: Ripley APLU
-  description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Atonomous Power Loading Unit.
+  description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Autonomous Power Loading Unit.
   components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: ripley
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
@@ -102,18 +99,7 @@
   parent: MechRipley
   suffix: Battery
   components:
-  - type: Mech
-    baseState: ripley
-    openState: ripley-open
-    brokenState: ripley-broken
-    startingBattery: PowerCellHigh
-    mechToPilotDamageMultiplier: 0.75
-  - type: MeleeWeapon
-    hidden: true
-    attackRate: 1
-    damage:
-      types:
-        Blunt: 14
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2.25
-    baseSprintSpeed: 3.6
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
