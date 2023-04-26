@@ -4495,8 +4495,6 @@ entities:
     pos: 4.5,-6.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 34
   type: SignEscapePods
   components:
@@ -4815,8 +4813,6 @@ entities:
   - pos: 5.5,11.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 85
   type: Grille
   components:
@@ -5118,8 +5114,6 @@ entities:
   - pos: -2.5,18.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 135
   type: ReinforcedWindow
   components:
@@ -5345,8 +5339,6 @@ entities:
     pos: -10.5,11.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 172
   type: WallSolid
   components:
@@ -5590,8 +5582,6 @@ entities:
     pos: -8.5,4.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 212
   type: ReinforcedWindow
   components:
@@ -6035,16 +6025,12 @@ entities:
   - pos: -30.5,12.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 284
   type: WallSolid
   components:
   - pos: -30.5,13.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 285
   type: WallSolid
   components:
@@ -6945,8 +6931,7 @@ entities:
     pos: -14.5,26.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
+
 - uid: 420
   type: Window
   components:
@@ -7135,8 +7120,6 @@ entities:
     pos: -7.5,-3.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 449
   type: Grille
   components:
@@ -7340,8 +7323,6 @@ entities:
     pos: -9.5,-4.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 478
   type: Table
   components:
@@ -7489,8 +7470,6 @@ entities:
     pos: -3.5,-13.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 499
   type: WallSolid
   components:
@@ -7694,8 +7673,6 @@ entities:
     pos: -24.5,0.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 528
   type: WallReinforced
   components:
@@ -7759,8 +7736,6 @@ entities:
     pos: -27.5,0.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 537
   type: WallReinforced
   components:
@@ -8079,8 +8054,6 @@ entities:
     pos: -18.5,-10.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 583
   type: Grille
   components:
@@ -8226,8 +8199,6 @@ entities:
     pos: -21.5,-15.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 604
   type: WallSolid
   components:
@@ -8455,8 +8426,6 @@ entities:
     pos: -19.5,-19.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 637
   type: WallSolid
   components:
@@ -10477,8 +10446,6 @@ entities:
   - pos: 26.5,26.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 948
   type: WallReinforced
   components:
@@ -10829,8 +10796,6 @@ entities:
   - pos: 26.5,0.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 1004
   type: WallSolid
   components:
@@ -12363,8 +12328,6 @@ entities:
   - pos: 45.5,-0.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 1252
   type: WallReinforced
   components:
@@ -12734,8 +12697,6 @@ entities:
   - pos: 47.5,18.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 1298
   type: PosterBroken
   components:
@@ -13038,8 +12999,6 @@ entities:
   - pos: 34.5,-19.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 1348
   type: AirlockGlass
   components:
@@ -13316,8 +13275,6 @@ entities:
   - pos: 46.5,-9.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 1394
   type: WallReinforced
   components:
@@ -13342,8 +13299,6 @@ entities:
   - pos: 46.5,-5.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 1398
   type: WallReinforced
   components:
@@ -13900,8 +13855,6 @@ entities:
   - pos: 27.5,-22.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 1490
   type: WallReinforced
   components:
@@ -14547,8 +14500,6 @@ entities:
   - pos: -9.5,-17.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 1597
   type: WallReinforced
   components:
@@ -16223,8 +16174,6 @@ entities:
   - pos: -27.5,24.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 1820
   type: WallSolid
   components:
@@ -17475,8 +17424,6 @@ entities:
     pos: -30.5,16.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 1986
   type: WallReinforced
   components:
@@ -17995,8 +17942,6 @@ entities:
     pos: -38.5,24.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 2060
   type: WallReinforced
   components:
@@ -18354,8 +18299,6 @@ entities:
     pos: -40.5,0.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 2111
   type: Window
   components:
@@ -18746,8 +18689,6 @@ entities:
     pos: -16.5,-23.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 2167
   type: WallSolid
   components:
@@ -19861,8 +19802,6 @@ entities:
     pos: 37.5,36.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 2329
   type: WallReinforced
   components:
@@ -20704,8 +20643,6 @@ entities:
   - pos: -31.5,-25.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 2451
   type: Catwalk
   components:
@@ -22236,8 +22173,6 @@ entities:
     pos: -10.5,46.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 2665
   type: WallReinforced
   components:
@@ -24156,8 +24091,6 @@ entities:
     pos: -20.5,-37.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 2948
   type: Grille
   components:
@@ -25024,8 +24957,6 @@ entities:
     pos: 23.5,36.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3052
   type: AirlockExternalGlass
   components:
@@ -25033,8 +24964,6 @@ entities:
     pos: 25.5,36.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3053
   type: AirlockExternalGlass
   components:
@@ -25042,8 +24971,6 @@ entities:
     pos: 31.5,36.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3054
   type: AirlockExternalGlass
   components:
@@ -25051,8 +24978,6 @@ entities:
     pos: 33.5,36.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3055
   type: FirelockEdge
   components:
@@ -25547,8 +25472,6 @@ entities:
   - pos: -16.5,-11.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3108
   type: FirelockGlass
   components:
@@ -26832,8 +26755,6 @@ entities:
   - pos: 43.5,15.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3297
   type: AirlockMaintLocked
   components:
@@ -27276,8 +27197,6 @@ entities:
     pos: 10.5,-1.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3367
   type: AirlockFreezerKitchenHydroLocked
   components:
@@ -27401,8 +27320,6 @@ entities:
     pos: 2.5,13.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3386
   type: CableApcExtension
   components:
@@ -27457,8 +27374,6 @@ entities:
     pos: -23.5,12.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3394
   type: AirlockMaintMedLocked
   components:
@@ -27597,8 +27512,6 @@ entities:
   - pos: -23.5,-6.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3415
   type: AirlockScienceGlassLocked
   components:
@@ -28718,8 +28631,6 @@ entities:
       - port: Middle
         uid: 9199
     type: SignalReceiver
-  - following:
-    type: Followed
 - uid: 3567
   type: ConveyorBelt
   components:
@@ -30781,8 +30692,6 @@ entities:
     pos: -9.5,40.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 3854
   type: Catwalk
   components:
@@ -37496,8 +37405,6 @@ entities:
     pos: 47.5,28.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 4837
   type: ReinforcedWindow
   components:
@@ -38790,8 +38697,6 @@ entities:
     type: Transform
   - bodyType: Static
     type: Physics
-  - following:
-    type: Followed
 - uid: 5016
   type: StoolBar
   components:
@@ -38887,8 +38792,6 @@ entities:
     pos: 0.5,9.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 5031
   type: TableWood
   components:
@@ -42948,8 +42851,6 @@ entities:
   - pos: -40.011135,-5.1565914
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 5591
   type: d20Dice
   components:
@@ -43728,8 +43629,6 @@ entities:
   - pos: -10.5,19.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 5697
   type: PottedPlantRandomPlastic
   components:
@@ -44919,8 +44818,6 @@ entities:
   - pos: -17.56469,5.4986477
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 5888
   type: PaperOffice
   components:
@@ -45365,8 +45262,6 @@ entities:
     pos: -2.5,5.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 5946
   type: SinkWide
   components:
@@ -45663,8 +45558,6 @@ entities:
   - pos: -2.3587642,3.1123807
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 5988
   type: FoodMeat
   components:
@@ -46138,8 +46031,6 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
-  - following:
-    type: Followed
 - uid: 6064
   type: TableReinforced
   components:
@@ -46323,8 +46214,6 @@ entities:
     pos: -31.5,-4.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 6094
   type: MachineAPE
   components:
@@ -47144,8 +47033,6 @@ entities:
   - pos: 4.5,6.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 6209
   type: CableMV
   components:
@@ -47699,8 +47586,6 @@ entities:
   - pos: 8.5,10.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 6299
   type: CableApcExtension
   components:
@@ -47949,8 +47834,6 @@ entities:
   - pos: -14.519168,-9.104249
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 6337
   type: SignalButton
   components:
@@ -50828,8 +50711,6 @@ entities:
     type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
-  - following:
-    type: Followed
 - uid: 6752
   type: Poweredlight
   components:
@@ -50841,8 +50722,6 @@ entities:
     type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
-  - following:
-    type: Followed
 - uid: 6753
   type: Poweredlight
   components:
@@ -56695,8 +56574,6 @@ entities:
   - pos: 45.5,5.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 7482
   type: SpawnPointLatejoin
   components:
@@ -57140,8 +57017,6 @@ entities:
   - pos: 5.5,13.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 7540
   type: RandomVendingSnacks
   components:
@@ -57160,8 +57035,6 @@ entities:
   - pos: -36.085228,11.652148
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 7543
   type: DrinkBottleWine
   components:
@@ -57202,8 +57075,6 @@ entities:
     type: GravityGenerator
   - radius: 175.75
     type: PointLight
-  - following:
-    type: Followed
 - uid: 7549
   type: CableHV
   components:
@@ -69676,8 +69547,6 @@ entities:
     pos: 8.5,19.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 9387
   type: Catwalk
   components:
@@ -71166,8 +71035,6 @@ entities:
     pos: 16.5,27.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 9616
   type: TableGlass
   components:
@@ -78424,8 +78291,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - following:
-    type: Followed
 - uid: 10468
   type: GasPipeTJunction
   components:
@@ -78932,8 +78797,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - following:
-    type: Followed
 - uid: 10515
   type: GasPipeStraight
   components:
@@ -84787,8 +84650,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-  - following:
-    type: Followed
 - uid: 11058
   type: GasVentPump
   components:
@@ -92475,8 +92336,6 @@ entities:
       - port: Pressed
         uid: 11713
     type: SignalReceiver
-  - following:
-    type: Followed
 - uid: 11725
   type: ShuttersNormalOpen
   components:
@@ -92654,8 +92513,6 @@ entities:
   - pos: -4.5,7.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 11744
   type: RandomSpawner
   components:
@@ -92693,8 +92550,6 @@ entities:
     pos: -10.5,-11.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 11750
   type: RandomSpawner
   components:
@@ -92737,8 +92592,6 @@ entities:
   - pos: 0.5,2.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 11757
   type: RandomSpawner
   components:
@@ -93345,8 +93198,6 @@ entities:
   - pos: -26.5,-5.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 11858
   type: RandomSpawner
   components:
@@ -93819,8 +93670,6 @@ entities:
   - pos: 12.1296625,23.642334
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 11935
   type: PartRodMetal
   components:
@@ -98142,8 +97991,6 @@ entities:
   - pos: -12.687402,-12.500296
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 12430
   type: PersonalAI
   components:
@@ -98917,8 +98764,6 @@ entities:
     pos: -26.5,-30.5
     parent: 1
     type: Transform
-  - following:
-    type: Followed
 - uid: 12531
   type: FlashlightSeclite
   components:
