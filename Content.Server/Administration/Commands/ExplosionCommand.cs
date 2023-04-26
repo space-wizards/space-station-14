@@ -56,7 +56,7 @@ public sealed class ExplosionCommand : IConsoleCommand
             shell.WriteError($"Failed to parse intensity: {args[0]}");
             return;
         }
- 
+
         float slope = 5;
         if (args.Length > 1 && !float.TryParse(args[1], out slope))
         {
@@ -118,7 +118,7 @@ public sealed class ExplosionCommand : IConsoleCommand
                 return;
             }
         }
-        else
+        else if (!protoMan.TryIndex(ExplosionSystem.DefaultExplosionPrototypeId, out type))
         {
             // no prototype was specified, so lets default to whichever one was defined first
             type = protoMan.EnumeratePrototypes<ExplosionPrototype>().FirstOrDefault();

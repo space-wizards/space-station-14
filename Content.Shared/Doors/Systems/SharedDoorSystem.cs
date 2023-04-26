@@ -27,7 +27,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
 
     /// <summary>
@@ -49,7 +49,7 @@ public abstract class SharedDoorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DoorComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<DoorComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DoorComponent, ComponentRemove>(OnRemove);
 
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
@@ -61,7 +61,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
     }
 
-    private void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
+    protected virtual void OnComponentInit(EntityUid uid, DoorComponent door, ComponentInit args)
     {
         if (door.NextStateChange != null)
             _activeDoors.Add(door);
@@ -88,7 +88,7 @@ public abstract class SharedDoorSystem : EntitySystem
             || door.State == DoorState.Opening && !door.Partial;
 
         SetCollidable(uid, collidable, door);
-        UpdateAppearance(uid, door);
+        AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
     }
 
     private void OnRemove(EntityUid uid, DoorComponent door, ComponentRemove args)
@@ -123,7 +123,7 @@ public abstract class SharedDoorSystem : EntitySystem
             _activeDoors.Add(door);
 
         RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State), false);
-        UpdateAppearance(uid, door);
+        AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
     }
 
     protected void SetState(EntityUid uid, DoorState state, DoorComponent? door = null)
@@ -167,19 +167,9 @@ public abstract class SharedDoorSystem : EntitySystem
         door.State = state;
         Dirty(door);
         RaiseLocalEvent(uid, new DoorStateChangedEvent(state), false);
-        UpdateAppearance(uid, door);
+        AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
     }
 
-    protected virtual void UpdateAppearance(EntityUid uid, DoorComponent? door = null)
-    {
-        if (!Resolve(uid, ref door))
-            return;
-
-        if (!TryComp(uid, out AppearanceComponent? appearance))
-            return;
-
-        _appearance.SetData(uid, DoorVisuals.State, door.State);
-    }
     #endregion
 
     #region Interactions
@@ -365,7 +355,7 @@ public abstract class SharedDoorSystem : EntitySystem
         {
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
             door.State = DoorState.Opening;
-            UpdateAppearance(uid, door);
+            AppearanceSystem.SetData(uid, DoorVisuals.State, DoorState.Opening);
             return false;
         }
 

@@ -101313,7 +101313,6 @@ entities:
     - 6563
     - 6558
     - 6557
-    - invalid
     - 6560
     - 6568
     - 6567
@@ -101340,7 +101339,6 @@ entities:
     - 6563
     - 6558
     - 6557
-    - invalid
     - 6560
     - 6568
     - 6567
@@ -101371,7 +101369,6 @@ entities:
   - devices:
     - 13064
     - 6560
-    - invalid
     - 6632
     - 6631
     - 11573
@@ -101503,7 +101500,6 @@ entities:
     - 6604
     - 6605
     - 5156
-    - invalid
     - 13077
     - 12357
     - 12358
@@ -101526,7 +101522,6 @@ entities:
     - 6604
     - 6605
     - 5156
-    - invalid
     - 13077
     - 830
     type: DeviceList
@@ -101678,7 +101673,6 @@ entities:
     - 12031
     - 12026
     - 12044
-    - invalid
     - 12560
     - 12561
     - 12544
@@ -101747,7 +101741,6 @@ entities:
     parent: 6
     type: Transform
   - devices:
-    - invalid
     - 6652
     - 7413
     - 3344
@@ -101773,7 +101766,6 @@ entities:
     parent: 6
     type: Transform
   - devices:
-    - invalid
     - 6652
     - 7413
     - 3344
@@ -101945,7 +101937,6 @@ entities:
     - 628
     - 629
     - 5156
-    - invalid
     - 6602
     - 6603
     - 6604
@@ -101978,7 +101969,6 @@ entities:
     - 628
     - 629
     - 5156
-    - invalid
     - 6602
     - 6603
     - 6604
@@ -102088,7 +102078,6 @@ entities:
     - 6593
     - 6556
     - 6555
-    - invalid
     - 3333
     - 11228
     - 11227
@@ -102111,7 +102100,6 @@ entities:
     - 6593
     - 6556
     - 6555
-    - invalid
     - 3333
     type: DeviceList
 - uid: 13115
@@ -102386,10 +102374,6 @@ entities:
     - 12209
     - 12199
     - 12200
-    - invalid
-    - invalid
-    - invalid
-    - invalid
     type: DeviceList
 - uid: 13130
   type: FireAlarm
@@ -102403,7 +102387,6 @@ entities:
     - 7654
     - 7655
     - 7656
-    - invalid
     - 7657
     type: DeviceList
 - uid: 13132
@@ -102418,7 +102401,6 @@ entities:
     - 7654
     - 7655
     - 7656
-    - invalid
     - 7657
     - 12071
     - 12070
@@ -102431,7 +102413,6 @@ entities:
     parent: 6
     type: Transform
   - devices:
-    - invalid
     - 7657
     type: DeviceList
 - uid: 13134
@@ -102442,18 +102423,9 @@ entities:
     parent: 6
     type: Transform
   - devices:
-    - invalid
     - 7657
-    - invalid
     - 12170
-    - invalid
     - 12168
-    - invalid
-    - invalid
-    - invalid
-    - invalid
-    - invalid
-    - invalid
     type: DeviceList
 - uid: 13135
   type: PosterContrabandAtmosiaDeclarationIndependence

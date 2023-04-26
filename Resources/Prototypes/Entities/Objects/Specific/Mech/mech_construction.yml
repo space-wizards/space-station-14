@@ -21,6 +21,14 @@
       restitution: 0.3  # fite me
       friction: 0.2
   - type: Pullable
+
+# Ripley APLU
+
+- type: entity
+  id: BaseRipleyPart
+  parent: BaseMechPart
+  abstract: true
+  components:
   - type: Sprite
     drawdepth: Items
     noRot: false
@@ -28,27 +36,15 @@
     sprite: Objects/Specific/Mech/ripley_construction.rsi
 
 - type: entity
-  id: BaseMechPartItem
-  parent: BaseMechPart
+  id: BaseRipleyPartItem
+  parent: BaseRipleyPart
   abstract: true
   components:
   - type: Item
     size: 50
 
 - type: entity
-  id: BaseMechConstruct
-  parent: BaseMechPart
-  abstract: true
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      battery-container: !type:Container
-  - type: MechAssemblyVisuals
-    statePrefix: ripley
-
-- type: entity
-  parent: BaseMechPart
+  parent: BaseRipleyPart
   id: RipleyHarness
   name: ripley harness
   description: The core of the Ripley APLU.
@@ -57,19 +53,19 @@
   - type: ItemMapper
     mapLayers:
       ripley_l_arm+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyLArm
       ripley_r_arm+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyRArm
       ripley_l_leg+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyLLeg
       ripley_r_leg+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyRLeg
     sprite: Objects/Specific/Mech/ripley_construction.rsi
@@ -88,7 +84,7 @@
     noRot: true
 
 - type: entity
-  parent: BaseMechPartItem
+  parent: BaseRipleyPartItem
   id: RipleyLArm
   name: ripley left arm
   description: The left arm of the Ripley APLU. It belongs on the chassis of the mech.
@@ -100,7 +96,7 @@
     - RipleyLArm
 
 - type: entity
-  parent: BaseMechPartItem
+  parent: BaseRipleyPartItem
   id: RipleyLLeg
   name: ripley left leg
   description: The left leg of the Ripley APLU. It belongs on the chassis of the mech.
@@ -112,7 +108,7 @@
     - RipleyLLeg
 
 - type: entity
-  parent: BaseMechPartItem
+  parent: BaseRipleyPartItem
   id: RipleyRLeg
   name: ripley right leg
   description: The right leg of the Ripley APLU. It belongs on the chassis of the mech.
@@ -124,7 +120,7 @@
     - RipleyRLeg
 
 - type: entity
-  parent: BaseMechPartItem
+  parent: BaseRipleyPartItem
   id: RipleyRArm
   name: ripley right arm
   description: The right arm of the Ripley APLU. It belongs on the chassis of the mech.
@@ -137,10 +133,16 @@
 
 - type: entity
   id: RipleyChassis
-  parent: BaseMechConstruct
+  parent: BaseRipleyPart
   name: ripley chassis
   description: An in-progress construction of the Ripley APLU mech.
   components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: ripley
   - type: Sprite
     noRot: true
     state: ripley0

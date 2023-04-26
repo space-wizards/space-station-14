@@ -32,7 +32,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnBatteryRejuvenate(EntityUid uid, BatteryComponent component, RejuvenateEvent args)
         {
-            component.CurrentCharge = component.MaxCharge;
+            SetCharge(uid, component.MaxCharge, component);
         }
 
         private void OnExamine(EntityUid uid, ExaminableBatteryComponent component, ExaminedEvent args)
@@ -74,28 +74,18 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
             while (enumerator.MoveNext(out var uid, out var netBat, out var bat))
             {
-                var netCharge = netBat.NetworkBattery.CurrentStorage;
-
-                bat.Charge = netCharge;
-                DebugTools.Assert(bat.Charge <= bat.MaxCharge && bat.Charge >= 0);
-
-                // TODO maybe decrease tolerance & track the charge at the time the event was most recently raised.
-                // Ensures that events aren't skipped when there are many tiny power changes.
-                if (MathHelper.CloseTo(bat.CurrentCharge, netCharge))
-                    continue;
-
-                var changeEv = new ChargeChangedEvent(netCharge, bat.MaxCharge);
-                RaiseLocalEvent(uid, ref changeEv);
+                SetCharge(uid, netBat.NetworkBattery.CurrentStorage, bat);
             }
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var (comp, batt) in EntityManager.EntityQuery<BatterySelfRechargerComponent, BatteryComponent>())
+            var query = EntityQueryEnumerator<BatterySelfRechargerComponent, BatteryComponent>();
+            while (query.MoveNext(out var uid, out var comp, out var batt))
             {
                 if (!comp.AutoRecharge) continue;
                 if (batt.IsFullyCharged) continue;
-                batt.CurrentCharge += comp.AutoRechargeRate * frameTime;
+                SetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt);
             }
         }
 

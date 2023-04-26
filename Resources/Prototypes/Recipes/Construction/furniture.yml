@@ -427,3 +427,20 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  id: Curtains
+  name: curtains
+  description: Contains less than 1% mercury.
+  graph: Curtains
+  startNode: start
+  targetNode: Curtains
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/curtains.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
