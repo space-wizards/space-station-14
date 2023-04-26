@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed chat/radio and various commands not working after reconnecting
-      to a server, type: Fix}
-  id: 3041
-  time: '2023-02-15T04:55:23.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The popup for a radio being disabled now only shows to the person with
@@ -2899,3 +2893,8 @@ Entries:
   - {message: Space Dragon event works again., type: Fix}
   id: 3540
   time: '2023-04-26T00:23:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Flashbangs now have a light when they flash., type: Add}
+  id: 3541
+  time: '2023-04-26T03:51:48.0000000+00:00'
