@@ -196,73 +196,73 @@ csharp_preserve_single_line_blocks = true
 #dotnet_naming_style.begins_with_i.word_separator =
 #dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
+dotnet_diagnostic.IDE0055.severity = warning
 
-
-dotnet_naming_rule.constants_rule.severity = warning
+dotnet_naming_rule.constants_rule.severity = error
 dotnet_naming_rule.constants_rule.style = upper_camel_case_style
 dotnet_naming_rule.constants_rule.symbols = constants_symbols
 
-dotnet_naming_rule.event_rule.severity = warning
+dotnet_naming_rule.event_rule.severity = error
 dotnet_naming_rule.event_rule.style = upper_camel_case_style
 dotnet_naming_rule.event_rule.symbols = event_symbols
 
-dotnet_naming_rule.interfaces_rule.severity = warning
+dotnet_naming_rule.interfaces_rule.severity = error
 dotnet_naming_rule.interfaces_rule.style = i_upper_camel_case_style
 dotnet_naming_rule.interfaces_rule.symbols = interfaces_symbols
 
-dotnet_naming_rule.locals_rule.severity = warning
+dotnet_naming_rule.locals_rule.severity = error
 dotnet_naming_rule.locals_rule.style = lower_camel_case_style_1
 dotnet_naming_rule.locals_rule.symbols = locals_symbols
 
-dotnet_naming_rule.local_constants_rule.severity = warning
+dotnet_naming_rule.local_constants_rule.severity = error
 dotnet_naming_rule.local_constants_rule.style = lower_camel_case_style_1
 dotnet_naming_rule.local_constants_rule.symbols = local_constants_symbols
 
-dotnet_naming_rule.local_functions_rule.severity = warning
+dotnet_naming_rule.local_functions_rule.severity = error
 dotnet_naming_rule.local_functions_rule.style = upper_camel_case_style
 dotnet_naming_rule.local_functions_rule.symbols = local_functions_symbols
 
-dotnet_naming_rule.method_rule.severity = warning
+dotnet_naming_rule.method_rule.severity = error
 dotnet_naming_rule.method_rule.style = upper_camel_case_style
 dotnet_naming_rule.method_rule.symbols = method_symbols
 
-dotnet_naming_rule.parameters_rule.severity = warning
+dotnet_naming_rule.parameters_rule.severity = error
 dotnet_naming_rule.parameters_rule.style = lower_camel_case_style_1
 dotnet_naming_rule.parameters_rule.symbols = parameters_symbols
 
-dotnet_naming_rule.private_constants_rule.severity = warning
+dotnet_naming_rule.private_constants_rule.severity = error
 dotnet_naming_rule.private_constants_rule.style = upper_camel_case_style
 dotnet_naming_rule.private_constants_rule.symbols = private_constants_symbols
 
-dotnet_naming_rule.private_instance_fields_rule.severity = warning
+dotnet_naming_rule.private_instance_fields_rule.severity = error
 dotnet_naming_rule.private_instance_fields_rule.style = lower_camel_case_style
 dotnet_naming_rule.private_instance_fields_rule.symbols = private_instance_fields_symbols
 
-dotnet_naming_rule.private_static_fields_rule.severity = warning
+dotnet_naming_rule.private_static_fields_rule.severity = error
 dotnet_naming_rule.private_static_fields_rule.style = lower_camel_case_style
 dotnet_naming_rule.private_static_fields_rule.symbols = private_static_fields_symbols
 
-dotnet_naming_rule.private_static_readonly_rule.severity = warning
+dotnet_naming_rule.private_static_readonly_rule.severity = error
 dotnet_naming_rule.private_static_readonly_rule.style = upper_camel_case_style
 dotnet_naming_rule.private_static_readonly_rule.symbols = private_static_readonly_symbols
 
-dotnet_naming_rule.property_rule.severity = warning
+dotnet_naming_rule.property_rule.severity = error
 dotnet_naming_rule.property_rule.style = upper_camel_case_style
 dotnet_naming_rule.property_rule.symbols = property_symbols
 
-dotnet_naming_rule.public_fields_rule.severity = warning
+dotnet_naming_rule.public_fields_rule.severity = error
 dotnet_naming_rule.public_fields_rule.style = upper_camel_case_style
 dotnet_naming_rule.public_fields_rule.symbols = public_fields_symbols
 
-dotnet_naming_rule.static_readonly_rule.severity = warning
+dotnet_naming_rule.static_readonly_rule.severity = error
 dotnet_naming_rule.static_readonly_rule.style = upper_camel_case_style
 dotnet_naming_rule.static_readonly_rule.symbols = static_readonly_symbols
 
-dotnet_naming_rule.types_and_namespaces_rule.severity = warning
+dotnet_naming_rule.types_and_namespaces_rule.severity = error
 dotnet_naming_rule.types_and_namespaces_rule.style = upper_camel_case_style
 dotnet_naming_rule.types_and_namespaces_rule.symbols = types_and_namespaces_symbols
 
-dotnet_naming_rule.type_parameters_rule.severity = warning
+dotnet_naming_rule.type_parameters_rule.severity = error
 dotnet_naming_rule.type_parameters_rule.style = t_upper_camel_case_style
 dotnet_naming_rule.type_parameters_rule.symbols = type_parameters_symbols
 
