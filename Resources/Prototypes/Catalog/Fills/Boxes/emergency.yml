@@ -59,6 +59,26 @@
 - type: entity
   name: survival box
   parent: BoxCardboard
+  id: BoxSurvivalBrigmedic
+  description: It's a box with basic internals inside.
+  suffix: Medical
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskBreathMedicalSecurity
+      - id: EmergencyOxygenTankFilled
+      - id: SpaceMedipen
+      - id: EmergencyMedipen
+      - id: EmergencyMedipen
+      - id: FoodTinMRE
+  - type: Sprite
+    layers:
+      - state: internals
+      - state: emergencytank
+
+- type: entity
+  name: survival box
+  parent: BoxCardboard
   id: BoxSurvivalMedical
   description: It's a box with basic internals inside.
   suffix: Medical

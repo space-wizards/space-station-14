@@ -24,7 +24,7 @@ using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Dragon
 {
-    public sealed partial class DragonSystem : GameRuleSystem
+    public sealed partial class DragonSystem : GameRuleSystem<DragonRuleComponent>
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

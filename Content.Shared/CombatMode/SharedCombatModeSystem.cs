@@ -1,8 +1,10 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Popups;
 using Content.Shared.Targeting;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.CombatMode
 {
@@ -10,6 +12,8 @@ namespace Content.Shared.CombatMode
     {
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -43,8 +47,14 @@ namespace Content.Shared.CombatMode
             if (args.Handled)
                 return;
 
-            SetInCombatMode(uid, !component.IsInCombatMode, component);
             args.Handled = true;
+            SetInCombatMode(uid, !component.IsInCombatMode, component);
+
+            if (!_timing.IsFirstTimePredicted)
+                return;
+
+            var msg = component.IsInCombatMode ? "action-popup-combat" : "action-popup-combat-enabled";
+            _popup.PopupEntity(Loc.GetString(msg), args.Performer);
         }
 
         public void SetCanDisarm(EntityUid entity, bool canDisarm, CombatModeComponent? component = null)
