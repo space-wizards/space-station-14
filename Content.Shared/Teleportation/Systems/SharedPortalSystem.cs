@@ -1,15 +1,15 @@
-﻿using System.Linq;
 using Content.Shared.Projectiles;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Teleportation.Components;
-using Robust.Shared.GameStates;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+﻿using System.Linq;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -18,10 +18,11 @@ namespace Content.Shared.Teleportation.Systems;
 /// </summary>
 public abstract class SharedPortalSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedPullingSystem _pulling = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private const string PortalFixture = "portalFixture";
     private const string ProjectileFixture = "projectile";
@@ -31,20 +32,6 @@ public abstract class SharedPortalSystem : EntitySystem
     {
         SubscribeLocalEvent<PortalComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<PortalComponent, EndCollideEvent>(OnEndCollide);
-
-        SubscribeLocalEvent<PortalTimeoutComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<PortalTimeoutComponent, ComponentHandleState>(OnHandleState);
-    }
-
-    private void OnGetState(EntityUid uid, PortalTimeoutComponent component, ref ComponentGetState args)
-    {
-        args.State = new PortalTimeoutComponentState(component.EnteredPortal);
-    }
-
-    private void OnHandleState(EntityUid uid, PortalTimeoutComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is PortalTimeoutComponentState state)
-            component.EnteredPortal = state.EnteredPortal;
     }
 
     private bool ShouldCollide(Fixture our, Fixture other)
@@ -154,6 +141,11 @@ public abstract class SharedPortalSystem : EntitySystem
         LogTeleport(portal, subject, Transform(subject).Coordinates, target);
 
         Transform(subject).Coordinates = target;
+
+        // if this portal isn't parented to the grid, do so to prevent funny stuff
+        var grid = target.GetGridUid(EntityManager);
+        if (grid != null)
+            _transform.SetParent(subject, grid.Value);
 
         _audio.PlayPredicted(departureSound, portal, subject);
         _audio.PlayPredicted(arrivalSound, subject, subject);

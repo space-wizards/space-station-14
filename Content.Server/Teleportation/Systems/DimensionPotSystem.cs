@@ -56,6 +56,9 @@ public sealed class DimensionPotSystem : EntitySystem
             var pos = Transform(root).Coordinates;
             comp.DimensionPortal = Spawn(comp.DimensionPortalPrototype, pos);
             _sawmill.Info($"Created pocket dimension on grid {root} of map {comp.PocketDimensionMap}");
+
+            // if someone closes your portal you can use the one inside to escape
+            _link.TryLink(uid, comp.DimensionPortal.Value);
             return;
         }
 
@@ -65,31 +68,16 @@ public sealed class DimensionPotSystem : EntitySystem
 
     private void OnRemoved(EntityUid uid, DimensionPotComponent comp, ComponentRemove args)
     {
-        _sawmill.Info($"Destroying pocket dimension {comp.PocketDimensionMap}");
+        _sawmill.Warning($"Somehow destroyed pocket dimension {comp.PocketDimensionMap} from {ToPrettyString(uid):pot}");
 
         if (comp.PocketDimensionMap != MapId.Nullspace)
         {
-            // before deleting anything, eject everything in the pocket dimension (that isnt the dimension grid itself)
-            var coords = Transform(uid).Coordinates;
-            foreach (var gridUid in _mapMan.GetAllMapGrids(comp.PocketDimensionMap))
-            {
-                // TODO: remove Owner somehow
-                foreach (var child in Transform(gridUid.Owner).ChildEntities)
-                {
-                    // move from the pocket dimension to the pot
-                    _transform.SetCoordinates(child, coords);
-                }
-            }
-
-            // everything inside is probably safe, ready to delete!
+            // everything inside will be destroyed so this better be indestructible
             QueueDel(_mapMan.GetMapEntityId(comp.PocketDimensionMap));
-            //_mapMan.DeleteMap(comp.PocketDimensionMap);
-            // prevent endless deletion
-            comp.PocketDimensionMap = MapId.Nullspace;
         }
 
-        if (comp.DimensionPortal != null)
-            QueueDel(comp.DimensionPortal.Value);
+        if (comp.PotPortal != null)
+            QueueDel(comp.PotPortal.Value);
     }
 
     private void AddTogglePortalVerb(EntityUid uid, DimensionPotComponent comp, GetVerbsEvent<AlternativeVerb> args)
@@ -121,7 +109,7 @@ public sealed class DimensionPotSystem : EntitySystem
         {
             // create a portal and link it to the pocket dimension
             comp.PotPortal = Spawn(comp.PotPortalPrototype, Transform(uid).Coordinates);
-            _link.TryLink(comp.DimensionPortal!.Value, comp.PotPortal.Value, true);
+            _link.TryLink(comp.DimensionPortal!.Value, comp.PotPortal.Value);
             _transform.SetParent(comp.PotPortal.Value, uid);
         }
     }
