@@ -54,7 +54,7 @@ namespace Content.Shared.CombatMode
                 return;
 
             var msg = component.IsInCombatMode ? "action-popup-combat" : "action-popup-combat-enabled";
-            _popup.PopupEntity(Loc.GetString(msg), args.Performer);
+            _popup.PopupEntity(Loc.GetString(msg), args.Performer, args.Performer);
         }
 
         public void SetCanDisarm(EntityUid entity, bool canDisarm, CombatModeComponent? component = null)
