@@ -76,7 +76,7 @@
       enabled: true
       netsync: false
       radius: 5
-      energy: 2
+      energy: 8
     - type: LightFade
       duration: 0.5
     - type: TimedDespawn
