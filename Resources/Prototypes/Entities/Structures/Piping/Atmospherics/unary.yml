@@ -247,6 +247,7 @@
     - type: Wires
       BoardName: "Thermomachine"
       LayoutId: Thermomachine
+    - type: WiresVisuals
     - type: NodeContainer
       nodes:
         pipe:
@@ -268,20 +269,34 @@
   components:
     - type: Sprite
       layers:
-        - state: freezer_off
-          map: [ "enabled" ]
+        - state: freezerOff
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: freezerPanelOpen
+          map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
     - type: GenericVisualizer
       visuals:
-        enum.ThermoMachineVisuals.Enabled:
-          enabled:
-            True: { state: freezer_on }
-            False: { state: freezer_off }
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { state: freezerOn }
+            False: { state: freezerOff }
     - type: GasThermoMachine
       mode: Freezer
+    - type: ApcPowerReceiver
+      powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
+
+- type: entity
+  parent: GasThermoMachineFreezer
+  id: GasThermoMachineFreezerEnabled
+  suffix: Enabled
+  components:
+  - type: GasThermoMachine
+    enabled: true
+  - type: ApcPowerReceiver
+    powerDisabled: false
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -293,17 +308,31 @@
   components:
     - type: Sprite
       layers:
-        - state: heater_off
-          map: [ "enabled" ]
+        - state: heaterOff
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: heaterPanelOpen
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
     - type: GenericVisualizer
       visuals:
-        enum.ThermoMachineVisuals.Enabled:
-          enabled:
-            True: { state: heater_on }
-            False: { state: heater_off }
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { state: heaterOn }
+            False: { state: heaterOff }
     - type: GasThermoMachine
       mode: Heater
+    - type: ApcPowerReceiver
+      powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
+
+- type: entity
+  parent: GasThermoMachineHeater
+  id: GasThermoMachineHeaterEnabled
+  suffix: Enabled
+  components:
+  - type: GasThermoMachine
+    enabled: true
+  - type: ApcPowerReceiver
+    powerDisabled: false
