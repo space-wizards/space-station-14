@@ -129,6 +129,9 @@ namespace Content.Client.Actions
 
         public override void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
         {
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
             if (GameTiming.ApplyingState && !action.ClientExclusive)
                 return;
 
@@ -137,13 +140,14 @@ namespace Content.Client.Actions
 
             dirty &= !action.ClientExclusive;
             base.AddAction(uid, action, provider, comp, dirty);
-
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                ActionAdded?.Invoke(action);
+            ActionAdded?.Invoke(action);
         }
 
         public override void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null, bool dirty = true)
         {
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
+
             if (GameTiming.ApplyingState && !action.ClientExclusive)
                 return;
 
@@ -153,7 +157,7 @@ namespace Content.Client.Actions
             dirty &= !action.ClientExclusive;
             base.RemoveAction(uid, action, comp, dirty);
 
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+            if (action.AutoRemove)
                 ActionRemoved?.Invoke(action);
         }
 
