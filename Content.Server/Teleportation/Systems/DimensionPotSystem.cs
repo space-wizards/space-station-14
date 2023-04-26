@@ -1,9 +1,11 @@
 using Content.Server.Teleportation.Components;
+using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Teleportation.Systems;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -17,6 +19,7 @@ public sealed class DimensionPotSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly LinkedEntitySystem _link = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
+	[Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
 
     private ISawmill _sawmill = default!;
@@ -41,6 +44,9 @@ public sealed class DimensionPotSystem : EntitySystem
             return;
         }
 
+		if (TryComp<GravityComponent>(_mapMan.GetMapEntityId(comp.PocketDimensionMap), out var gravity))
+            gravity.Enabled = true;
+
         // find the pocket dimension's first grid
         foreach (var root in roots)
         {
@@ -62,6 +68,8 @@ public sealed class DimensionPotSystem : EntitySystem
     {
         if (comp.PocketDimensionMap != null)
             _mapMan.DeleteMap(comp.PocketDimensionMap);
+		if (comp.DimensionPortal != null)
+			QueueDel(comp.DimensionPortal.Value);
     }
 
     private void AddTogglePortalVerb(EntityUid uid, DimensionPotComponent comp, GetVerbsEvent<AlternativeVerb> args)
@@ -94,6 +102,7 @@ public sealed class DimensionPotSystem : EntitySystem
             // create a portal and link it to the pocket dimension
             comp.PotPortal = Spawn(comp.PotPortalPrototype, Transform(uid).Coordinates);
             _link.TryLink(comp.DimensionPortal!.Value, comp.PotPortal.Value, true);
+			_transform.SetParent(comp.PotPortal.Value, uid);
         }
     }
 }
