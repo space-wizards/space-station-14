@@ -42234,7 +42234,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 5390
-  type: AdvancedCapacitorStockPartAdvancedCapacitorStockPart
+  type: AdvancedCapacitorStockPart
   components:
   - pos: -9.340726,-53.888344
     parent: 6
