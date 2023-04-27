@@ -195,8 +195,8 @@
         prob: 0.1
       - id: ClothingOuterHardsuitSecurityRed
       - id: ClothingMaskGasSwat
-      - id: ClothingShoeSlippersDuck
-        prob: 0.2
+#      - id: ClothingShoeSlippersDuck # Corvax-Resprite: Need more space for style
+#        prob: 0.2
       - id: DrinkVacuumFlask
         prob: 0.8
       - id: ClothingBeltSecurityFilled
