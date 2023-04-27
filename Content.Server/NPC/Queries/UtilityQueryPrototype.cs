@@ -1,3 +1,5 @@
+using Content.Server.NPC.Queries.Considerations;
+using Content.Server.NPC.Queries.Queries;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.Queries;
@@ -18,32 +20,10 @@ public sealed class UtilityQueryPrototype : IPrototype
 
     [ViewVariables(VVAccess.ReadWrite), DataField("considerations")]
     public List<UtilityConsideration> Considerations = new();
-}
 
-public sealed class NearbyHostilesQuery : UtilityQuery
-{
-
-}
-
-public abstract class UtilityConsideration
-{
-
-}
-
-
-/// <summary>
-/// Removes entities from a query.
-/// </summary>
-public abstract class UtilityQueryFilter : UtilityQuery
-{
-
-}
-
-/// <summary>
-/// Adds entities to a query.
-/// </summary>
-[ImplicitDataDefinitionForInheritors]
-public abstract class UtilityQuery
-{
-
+    /// <summary>
+    /// How many entities we are allowed to consider. This is applied after all queries have run.
+    /// </summary>
+    [DataField("limit")]
+    public int Limit = 8;
 }

@@ -77,22 +77,31 @@
 - type: utilityQuery
   id: NearbyMeleeTargets
   queries:
-    - !type:NearbyHostiles
+    - !type:NearbyHostilesQuery
   considerations:
-    - !type:TargetIsDead
+    - !type:TargetIsDeadCon
       curve: !type:InverseBoolCurve
-    - !type:TargetIsCrit
+    - !type:TargetIsCritCon
       curve: !type:QuadraticCurve
       slope: -0.8
       exponent: 1.0
       yOffset: 1.0
       xOffset: 0.0
       # Stuff
-    - !type:TargetDistance
-      curve: !type:PresetCurve
-        preset: Distance
-    - !type:TargetHealth
-      curve: !type:PresetCurve
-        preset: TargetHealth
-    - !type:TargetAccessible
+    - !type:TargetDistanceCon
+      curve: !type:QuadraticCurve
+        slope: -1
+        exponent: 1
+        yOffset: 1
+        xOffset: 0.02
+      #curve: !type:PresetCurve
+      #  preset: Distance
+    - !type:TargetHealthCon
+      curve: !type:QuadraticCurve
+        slope: 1
+        exponent: 0.4
+        xOffset: -0.02
+      #curve: !type:PresetCurve
+      #  preset: TargetHealth
+    - !type:TargetAccessibleCon
       curve: !type:BoolCurve
