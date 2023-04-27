@@ -1,13 +1,15 @@
+using Content.Server.StationEvents.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.GameTicking.Rules.Configurations;
+namespace Content.Server.StationEvents.Components;
 
 /// <summary>
 /// Configuration for the Cluwne Beast antag.
 /// </summary>
-public sealed class CluwneBeastRuleConfiguration : StationEventRuleConfiguration
+[RegisterComponent, Access(typeof(CluwneBeastSpawnRule))]
+public sealed class CluwneBeastSpawnRuleComponent : Component
 {
     [DataField("spawncluwnebeast")]
     public int SpawnCluwneBeast = 1;

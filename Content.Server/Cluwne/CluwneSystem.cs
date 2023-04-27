@@ -21,11 +21,13 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Content.Server.Mind.Components;
-using Content.Server.GameTicking.Rules.Configurations;
-using Content.Server.GameTicking.Rules;
+using Content.Server.StationEvents.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.Cluwne;
 
@@ -137,9 +139,9 @@ public sealed class CluwneSystem : EntitySystem
         }
     }
 
-    public CluwneBeastRuleConfiguration RuleConfig()
+    public CluwneBeastSpawnRuleComponent RuleConfig(EntityUid uid)
     {
-            return (CluwneBeastRuleConfiguration) _prototypeManager.Index<GameRulePrototype>("CluwneBeastSpawn").Configuration;
+        return Comp<CluwneBeastSpawnRuleComponent>(uid);
     }
 
     private void OnCluwneBeastMindAdded(EntityUid uid, CluwneComponent comp, MindAddedMessage args)
@@ -153,10 +155,10 @@ public sealed class CluwneSystem : EntitySystem
 
     private void HelloBeast(Mind.Mind mind)
     {
-        if (!mind.TryGetSession(out var session))
+        if (!mind.TryGetSession(out var session) || mind.OwnedEntity == null)
             return;
 
-        var config = RuleConfig();
+        var config = RuleConfig(mind.OwnedEntity.Value);
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("cluwne-beast-greeting"));
     }
