@@ -15,6 +15,7 @@
     sprite: Objects/Tools/wirecutters.rsi
     netsync: false
     layers:
+    - state: cutters-map
     - state: cutters
       map: [ "enum.DamageStateVisualLayers.Base" ]
     - state: cutters-cutty-thingy
@@ -57,6 +58,7 @@
     sprite: Objects/Tools/screwdriver.rsi
     netsync: false
     layers:
+      - state: screwdriver-map
       - state: screwdriver
         map: [ "enum.DamageStateVisualLayers.Base" ]
       - state: screwdriver-screwybits
