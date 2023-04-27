@@ -45,7 +45,6 @@ public sealed class MeleeOperator : HTNOperator
         }
 
         if (_entManager.TryGetComponent<MobStateComponent>(target, out var mobState) &&
-            mobState.CurrentState != null &&
             mobState.CurrentState > TargetState)
         {
             return (false, null);
@@ -71,7 +70,6 @@ public sealed class MeleeOperator : HTNOperator
         {
             // Success
             if (_entManager.TryGetComponent<MobStateComponent>(combat.Target, out var mobState) &&
-                mobState.CurrentState != null &&
                 mobState.CurrentState > TargetState)
             {
                 status = HTNOperatorStatus.Finished;

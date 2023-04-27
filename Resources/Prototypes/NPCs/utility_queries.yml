@@ -1,0 +1,98 @@
+#- type: utilityQuery
+#  id: NearbyGloves
+#  query:
+#    - !type:NearbyComponent
+#      component: Clothing
+#    - !type:ClothingSlotFilter
+#        slot: GLOVES
+  # considerations:
+    # Weh
+
+
+# So if I BT
+#- Root nodes
+#- Selector nodes
+#- Parallel nodes
+#- Sequence nodes
+#- node decorators (e.g. abort / condition, always succeed)
+
+# Need to be able to register blackboard keys and their types, I guess use a yaml file to do it.
+# Unreal has service nodes associated with composite nodes that can callback every n seconds to update
+# Implement this as like a service thing on nodes
+# Parallel needs to be compound branch
+# e.g. best target
+
+
+# Migration strategy:
+# Add utility queries
+# Add the yml stuff for blackboard keys for better debugging and runtime support
+# Add parallel in place of compound
+# Add services support
+# Remove primitive task prototypes.
+# Remove htnCompoundTask to npcSelectorTask
+# npcParallelTask
+# npcSequenceTask
+
+#- !type:htnPrimitive
+#- !type:htnCompoundNode
+#  id: weh
+
+#- type: npcBehaviorTree
+#  id: SimpleHostile
+#  rootNode: !type:NPCSelectorNode
+#    branches:
+#      - !type:NPCSubTreeNode
+#        id: MeleeCombatTree
+#      - !type:NPCSubTreeNode
+#        id: IdleTree
+#
+#- type: npcBehaviorTree
+#  id: IdleTree
+#  rootNode: !type:NPCSelectorNode
+#    preconditions:
+#      - !type:BuckledPrecondition
+#        isBuckled: false
+#      - !type:PulledPrecondition
+#        isPulled: false
+#    branches:
+#      - !type:WaitNode
+#        preconditions:
+#          - !type:KeyIsSetPrecon
+#            key: weh
+#        time: 3.0
+#      # Pick a new spot and wait there.
+#      - !type:SequenceNode:
+#          - id: PickAccessiblePrimitive
+#          - id: MoveToAccessiblePrimitive
+#          - id: RandomIdleTimePrimitive
+
+#- type: npcBlackboard
+#  id: LastTry
+#  keyType: !type:npcTimeOffset
+
+#- type: npcBlackboard
+#  id: Owner
+#  keyType: !type:EntityUid
+
+- type: utilityQuery
+  id: NearbyMeleeTargets
+  queries:
+    - !type:NearbyHostiles
+  considerations:
+    - !type:TargetIsDead
+      curve: !type:InverseBoolCurve
+    - !type:TargetIsCrit
+      curve: !type:QuadraticCurve
+      slope: -0.8
+      exponent: 1.0
+      yOffset: 1.0
+      xOffset: 0.0
+      # Stuff
+    - !type:TargetDistance
+      curve: !type:PresetCurve
+        preset: Distance
+    - !type:TargetHealth
+      curve: !type:PresetCurve
+        preset: TargetHealth
+    - !type:TargetAccessible
+      curve: !type:BoolCurve
