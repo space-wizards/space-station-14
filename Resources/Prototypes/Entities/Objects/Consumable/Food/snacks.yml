@@ -371,19 +371,19 @@
           Quantity: 3
 
 - type: entity
-  id: FoodSnackShalenaBjilka
+  id: FoodSnackJeleinaBjilka
   parent: FoodSnackBase
-  name: shalena bjilka
+  name: jeleina bjilka
   description: May contain real bees.
   components:
   - type: FlavorProfile
     flavors:
     - bee
   - type: Sprite
-    state: shalena-bjilka
+    state: jeleina-bjilka
   - type: Item
   - type: Food
-    trash: FoodPacketShalenaBjilkaTrash
+    trash: FoodPacketJeleinaBjilkaTrash
 
 # Trash
 
@@ -565,9 +565,9 @@
 - type: entity
   noSpawn: true
   parent: FoodPacketTrash
-  id: FoodPacketShalenaBjilkaTrash
-  name: empty shalena bjilka
+  id: FoodPacketJeleinaBjilkaTrash
+  name: empty jeleina bjilka
   components:
   - type: Sprite
-    state: shalena-bjilka-trash
+    state: jeleina-bjilka-trash
   - type: Item
