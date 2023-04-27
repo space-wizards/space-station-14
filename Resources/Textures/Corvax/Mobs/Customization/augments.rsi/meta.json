@@ -14,6 +14,14 @@
     {
       "name": "robotic_r_hand",
       "directions": 4
+    },
+    {
+	"name": "robotic_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "robotic_l_hand",
+      "directions": 4
     }
   ]
 }
