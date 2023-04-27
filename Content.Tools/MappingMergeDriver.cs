@@ -11,7 +11,7 @@ namespace Content.Tools
         public static void Main(string[] args)
         {
             var ours = new Map(args[0]);
-            var based = new Map(args[1]); // On what? // I will annihilate you.
+            var based = new Map(args[1]); // On what?
             var other = new Map(args[2]);
 
             if ((ours.GridsNode.Children.Count != 1) || (based.GridsNode.Children.Count != 1) || (other.GridsNode.Children.Count != 1))
