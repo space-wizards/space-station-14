@@ -50,6 +50,17 @@ public sealed partial class StoreSystem
     }
 
     /// <summary>
+    /// Closes the store UI for everyone, if it's open
+    /// </summary>
+    public void CloseUi(EntityUid uid, StoreComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        _ui.TryCloseAll(uid, StoreUiKey.Key);
+    }
+
+    /// <summary>
     /// Updates the user interface for a store and refreshes the listings
     /// </summary>
     /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
