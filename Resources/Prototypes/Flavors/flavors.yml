@@ -675,6 +675,6 @@
   description: flavor-complex-bottledlightning
 
 - type: flavor
-  id: davidmartinez
+  id: themartinez
   flavorType: Complex
-  description: flavor-complex-davidmartinez
+  description: flavor-complex-themartinez
