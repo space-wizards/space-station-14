@@ -21979,7 +21979,6 @@ entities:
     - 2004
     - 2005
     - 2007
-    - invalid
     - 1966
     - 1940
     type: DeviceList
@@ -27598,9 +27597,6 @@ entities:
     pos: 39.5,-10.5
     parent: 0
     type: Transform
-  - devices:
-    - invalid
-    type: DeviceList
 - uid: 2775
   type: hydroponicsTray
   components:
@@ -28484,7 +28480,6 @@ entities:
     - 2932
     - 2907
     - 2007
-    - invalid
     - 53
     - 3020
     - 2933
@@ -28645,7 +28640,6 @@ entities:
     - 2932
     - 2907
     - 2007
-    - invalid
     - 2933
     type: DeviceList
 - uid: 2931
@@ -66970,7 +66964,6 @@ entities:
     - 2002
     - 3384
     - 3386
-    - invalid
     - 3622
     - 3615
     - 3535
@@ -80039,7 +80032,6 @@ entities:
     - 5333
     - 5339
     - 5354
-    - invalid
     - 5348
     - 5336
     - 5326
@@ -80712,9 +80704,6 @@ entities:
     pos: 39.5,-9.5
     parent: 0
     type: Transform
-  - devices:
-    - invalid
-    type: DeviceList
 - uid: 9325
   type: AirlockMaintCommonLocked
   components:
@@ -81797,7 +81786,6 @@ entities:
     parent: 0
     type: Transform
   - devices:
-    - invalid
     - 4278
     - 4105
     - 4273
@@ -81920,7 +81908,6 @@ entities:
     - 9436
     - 9435
     - 9443
-    - invalid
     - 9438
     - 9440
     - 9439
@@ -81936,7 +81923,6 @@ entities:
     - 9436
     - 9435
     - 9443
-    - invalid
     - 9434
     - 9433
     - 9438
@@ -82279,7 +82265,6 @@ entities:
     - 9477
     - 9476
     - 9475
-    - invalid
     - 9474
     - 9473
     - 9472
@@ -82297,7 +82282,6 @@ entities:
     - 9477
     - 9476
     - 9475
-    - invalid
     - 9474
     - 9473
     - 9472
@@ -118406,7 +118390,6 @@ entities:
     parent: 0
     type: Transform
   - devices:
-    - invalid
     - 20126
     - 12702
     - 12704
@@ -118655,7 +118638,6 @@ entities:
     parent: 0
     type: Transform
   - devices:
-    - invalid
     - 16534
     - 14931
     - 20135
@@ -124794,7 +124776,6 @@ entities:
     type: Transform
   - devices:
     - 15182
-    - invalid
     - 15186
     - 15198
     type: DeviceList
@@ -128308,7 +128289,6 @@ entities:
   - devices:
     - 15568
     - 15558
-    - invalid
     - 15555
     - 15566
     - 15565

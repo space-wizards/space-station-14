@@ -26,5 +26,7 @@ ent-CrateFunParty = { ent-CrateGenericSteel }
     .desc = { ent-CrateGenericSteel.desc }
 ent-CrateFunSyndicateSegway = { ent-CrateLivestock }
     .desc = { ent-CrateLivestock.desc }
+ent-CrateFunBoxing = { ent-CrateGenericSteel }
+    .desc = { ent-CrateGenericSteel.desc }
 ent-CrateFunPirate = { ent-CratePirate }
     .desc = { ent-CratePirate.desc }

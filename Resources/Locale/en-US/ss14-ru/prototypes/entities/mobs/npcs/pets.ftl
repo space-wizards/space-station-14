@@ -32,3 +32,5 @@ ent-MobHamsterHamlet = Hamlet
     .desc = A grumpy, cute and fluffy hamster.
 ent-MobSpiderShiva = Shiva
     .desc = The first defender of the station.
+ent-MobKangarooWillow = Willow
+    .desc = Willow the boxing kangaroo.

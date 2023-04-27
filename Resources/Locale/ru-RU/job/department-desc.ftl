@@ -5,3 +5,4 @@ department-Engineering-description = Поддерживайте станцию �
 department-Medical-description = Поддерживайте здоровье экипажа.
 department-Security-description = Поддерживайте порядок на станции.
 department-Science-description = Изучайте новые технологии и опасные артефакты.
+department-Specific-description = Jobs that not all stations have.

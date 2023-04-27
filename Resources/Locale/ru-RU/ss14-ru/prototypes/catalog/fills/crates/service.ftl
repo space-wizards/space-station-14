@@ -16,5 +16,7 @@ ent-CrateServicePersonnel = ящик для найма персонала
     .desc = Содержит коробку с КПК и чистыми ID картами.
 ent-CrateServiceBooks = ящик книг
     .desc = Содержит 10 пустых книг случайного вида.
+ent-CrateServiceBox = { ent-CratePlastic }
+    .desc = { ent-CratePlastic.desc }
 ent-CrateJanitorBiosuit = ящик биозащитных костюмов уборщика
     .desc = Содержит 2 костюма биологической защиты, чтобы никакая зараза не отвлекала вас от уборки станции.

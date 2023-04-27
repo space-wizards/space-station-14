@@ -1,7 +1,7 @@
 ent-MopItem = mop
     .desc = A mop that can't be stopped, viscera cleanup detail awaits.
 ent-AdvMopItem = advanced mop
-    .desc = Motorized mop that have a bigger reservoir and can mop multiple puddles at once. Automatic Clown Countermeasure no included.
+    .desc = Motorized mop that has a bigger reservoir and quickly replaces reagents inside with water. Automatic Clown Countermeasure not included.
 ent-MopBucket = mop bucket
     .desc = Holds water and the tears of the janitor.
 ent-MopBucketFull = mop bucket

@@ -38,3 +38,5 @@ ent-CrateNPCHamlet = { ent-CrateRodentCage }
     .desc = { ent-CrateRodentCage.desc }
 ent-CrateNPCLizard = { ent-CrateLivestock }
     .desc = { ent-CrateLivestock.desc }
+ent-CrateNPCKangaroo = { ent-CrateLivestock }
+    .desc = { ent-CrateLivestock.desc }

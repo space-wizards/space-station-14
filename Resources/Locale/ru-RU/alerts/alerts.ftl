@@ -54,5 +54,3 @@ alerts-pulled-name = Вас тянут
 alerts-pulled-desc = Вас тянут за собой. Двигайтесь, чтобы освободиться.
 alerts-pulling-name = Вы тянете
 alerts-pulling-desc = Вы что-то тянете. Щелкните по иконке, чтобы перестать.
-alerts-suit-power-name = Заряд костюма
-alerts-suit-power-desc = Запас энергии вашего костюма космического ниндзя.

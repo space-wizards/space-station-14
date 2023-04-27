@@ -78,7 +78,7 @@
        - id: ClothingUniformJumpsuitScientist
        - id: ClothingBackpackScience
        - id: ClothingShoesColorWhite
-       - id: ClothingOuterCoatLab
+       - id: ClothingOuterCoatRnd
        - id: ClothingUniformJumpskirtScientist
        - id: ClothingEyesGlasses
          prob: 0.5
@@ -165,6 +165,7 @@
        - id: ClothingShoesColorBlack
        - id: ClothingUniformJumpskirtCargo
        - id: ClothingHandsGlovesFingerless
+       - id: AppraisalTool
 
  - type: entity
    id: WardrobeSalvageFilled

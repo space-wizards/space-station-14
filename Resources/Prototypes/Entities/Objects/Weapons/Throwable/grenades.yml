@@ -60,6 +60,8 @@
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -67,7 +69,21 @@
         path: /Audio/Effects/countdown.ogg
 
 - type: entity
-  name: Syndicate minibomb
+  id: GrenadeFlashEffect
+  noSpawn: true
+  components:
+    - type: PointLight
+      enabled: true
+      netsync: false
+      radius: 5
+      energy: 8
+    - type: LightFade
+      duration: 0.5
+    - type: TimedDespawn
+      lifetime: 0.5
+
+- type: entity
+  name: syndicate minibomb
   description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
   parent: GrenadeBase
   id: SyndieMiniBomb
@@ -78,7 +94,7 @@
     delay: 10
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
+    explosionType: Minibomb
     totalIntensity: 200
     intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
     maxIntensity: 60

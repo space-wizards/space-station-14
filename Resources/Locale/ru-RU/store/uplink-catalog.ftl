@@ -102,12 +102,16 @@ uplink-carp-dehydrated-desc = { ent-DehydratedSpaceCarp.desc }
 # Job Specific
 uplink-gatfruit-seeds-name = { ent-GatfruitSeeds }
 uplink-gatfruit-seeds-desc = И кто сказал, что пушки не растут на деревьях?
+uplink-rigged-boxing-gloves-name = Rigged Boxing Gloves
+uplink-rigged-boxing-gloves-desc = Float like a butterfly, sting like a bee.
 uplink-necronomicon-name = некрономикон
 uplink-necronomicon-desc = Нечестивая книга, позволяющая призвать демонического фамильяра.
 uplink-revolver-cap-gun-fake-name = Фальшивый игрушечный пистолет
 uplink-revolver-cap-gun-fake-desc = Одурачьте своих врагов! Использует как пистоны, так и патроны калибра .45 магнум. Последними и будет заряжен при покупке.
 uplink-banana-peel-explosive-name = Взрывная банановая кожура
 uplink-banana-peel-explosive-desc = Они взорвутся от смеха, когда поскользнутся на ней!
+uplink-hot-potato-name = Hot Potato
+uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only passed to someone else!
 # Armor
 uplink-chameleon-name = набор "Хамелеон"
 uplink-chameleon-desc = Рюкзак, полный вещей, оснащенных технологией хамелеона, позволяющих вам маскироваться под кого угодно на станции, и даже больше!
@@ -154,6 +158,8 @@ uplink-cat-ears-name = { ent-ClothingHeadHatCatEars }
 uplink-cat-ears-desc = UwU
 uplink-outlaw-hat-name = { ent-ClothingHeadHatOutlawHat }
 uplink-outlaw-hat-desc = { ent-ClothingHeadHatOutlawHat.desc }
+uplink-outlaw-glasses-name = Outlaw Glasses
+uplink-outlaw-glasses-desc = A must for every self-respecting undercover agent.
 uplink-costume-pyjama-name = { ent-ClothingBackpackDuffelSyndicatePyjamaBundle }
 uplink-costume-pyjama-desc = { ent-ClothingBackpackDuffelSyndicatePyjamaBundle.desc }
 uplink-costume-clown-name = вещмешок с костюмом клоуна

@@ -51,25 +51,26 @@
 - type: entity
   id: LockerBrigmedicFilled
   suffix: Brigmedic, Filled
-  parent: LockerSecurity
+  parent: LockerBrigmedic
   components:
   - type: StorageFill
     contents:
-      - id: Flash
       - id: WeaponDisabler
-      - id: ClothingOuterHardsuitBrigmed
-      - id: ClothingHeadHelmetSecurityMedic # Corvax-Resprite
-      - id: ClothingOuterVestSecurityMedic # Corvax-Resprite
-        prob: 0.5
-      - id: ClothingOuterCoatLabSecurityMedic # Corvax-Resprite
-        prob: 0.5
-      - id: EncryptionKeyMedical
+      - id: TrackingImplanter
+        amount: 2
+      - id: ClothingOuterHardsuitBrigmedic
       - id: BoxSterileMask
+      - id: ClothingHeadHatBeretBrigmedic
+      - id: ClothingOuterCoatAMG
+      - id: ClothingUniformJumpsuitBrigmedic
+      - id: ClothingUniformJumpskirtBrigmedic
+      - id: ClothingUniformJumpskirtOfLife
+        prob: 0.1
       - id: MedkitFilled
       - id: MedkitCombatFilled
         prob: 0.6
       - id: MedkitAdvancedFilled
-        prob: 0.3
+        prob: 0.4
       - id: MedkitOxygenFilled
         prob: 0.3
       - id: MedkitBruteFilled
@@ -78,6 +79,13 @@
         prob: 0.3
       - id: MedkitBurnFilled
         prob: 0.7
+      - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
+        prob: 0.15
+      - id: ClothingHeadHelmetSecurityMedic # Corvax-Resprite
+      - id: ClothingOuterVestSecurityMedic # Corvax-Resprite
+        prob: 0.5
+      - id: ClothingOuterCoatLabSecurityMedic # Corvax-Resprite
+        prob: 0.5
 
 - type: entity
   id: LockerDetectiveFilled
@@ -96,6 +104,7 @@
       - id: WeaponRevolverInspector
       - id: DrinkDetFlask
       - id: SpeedLoaderMagnum
+      - id: ForensicGloves
 
 - type: entity
   id: ClosetBombFilled

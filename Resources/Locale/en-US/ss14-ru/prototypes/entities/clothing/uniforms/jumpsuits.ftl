@@ -183,3 +183,5 @@ ent-ClothingUniformJumpsuitDameDane = yakuza outfit
     .desc = Baka mitai...
 ent-ClothingUniformJumpsuitPirate = pirate slops
     .desc = A pirate variation of a space sailor's jumpsuit.
+ent-ClothingUniformJumpsuitCossack = Cossack suit
+    .desc = the good old pants and brigantine.

@@ -26,5 +26,7 @@ ent-CrateFunParty = набор для вечеринок
     .desc = Вся вечеринка только и ждет, пока вы его откроете. В комплект входят светящиеся палочки, напитки и даже торт.
 ent-CrateFunSyndicateSegway = ящик с сегвеем синдиката
     .desc = { ent-CrateLivestock.desc }
+ent-CrateFunBoxing = { ent-CrateGenericSteel }
+    .desc = { ent-CrateGenericSteel.desc }
 ent-CrateFunPirate = { ent-CratePirate }
     .desc = { ent-CratePirate.desc }

@@ -4,6 +4,7 @@ markings-add = Добавить черту
 markings-remove = Убрать черту
 markings-rank-up = Вверх
 markings-rank-down = Вниз
+markings-search = Search
 marking-points-remaining = Черт осталось: { $points }
 marking-used = { $marking-name }
 marking-used-forced = { $marking-name } (Принудительно)

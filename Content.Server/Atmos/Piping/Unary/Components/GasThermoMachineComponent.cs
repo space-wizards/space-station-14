@@ -13,7 +13,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
-        public bool Enabled = true;
+        public bool Enabled = false;
 
         /// <summary>
         ///     Current maximum temperature, calculated from <see cref="BaseHeatCapacity"/> and the quality of matter
@@ -92,5 +92,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [DataField("machinePartTemperature", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
         public string MachinePartTemperature = "Laser";
+
     }
 }

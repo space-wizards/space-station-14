@@ -15,7 +15,6 @@ traitor-user-was-a-traitor-with-objectives = [color=gray]{ $user }[/color] бы�
 traitor-user-was-a-traitor-with-objectives-named = [color=White]{ $name }[/color] ([color=gray]{ $user }[/color]) был(а) предателем со следующими целями:
 traitor-was-a-traitor-with-objectives-named = [color=White]{ $name }[/color] был(а) предателем со следующими целями:
 preset-traitor-objective-issuer-syndicate = [color=#87cefa]Синдикат[/color]
-preset-traitor-objective-issuer-spiderclan = [color=#33cc00]Клан Паука[/color]
 # Shown at the end of a round of Traitor
 traitor-objective-condition-success = { $condition } | [color={ $markupColor }]Успех![/color]
 # Shown at the end of a round of Traitor
@@ -46,3 +45,11 @@ traitor-role-codewords =
     { $codewords }
     Кодовые слова можно использовать в обычном разговоре, чтобы незаметно идентифицировать себя для других агентов Синдиката.
     Прислушивайтесь к ним и храните их в тайне.
+traitor-role-uplink-code =
+    Set your ringtone to the notes { $code } to lock or unlock your uplink.
+    Remember to lock it and change it, or the stations crew will easily open it too!
+# don't need all the flavour text for character menu
+traitor-role-codewords-short =
+    The codewords are:
+    { $codewords }.
+traitor-role-uplink-code-short = Your uplink code is { $code }.

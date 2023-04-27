@@ -39,3 +39,6 @@ ent-CrateFunParty = Party Crate
 
 ent-CrateFunSyndicateSegway = Syndicate segway crate
     .desc = A crate containing a two-wheeler that will help you escape from the security officers. Or not.
+
+ent-CrateFunBoxing = Boxing Crate
+    .desc = Want to set up an underground fight club or host a tournament amongst station crew? This crate is for you!

@@ -114,3 +114,5 @@ ent-ClothingUniformJumpskirtLawyerPurple = purple lawyer suitskirt
     .desc = A stylish purple piece worn by lawyers and show people.
 ent-ClothingUniformJumpskirtLawyerGood = good lawyer's suitskirt
     .desc = A tacky suitskirt perfect for a CRIMINAL lawyer!
+ent-ClothingUniformJumpskirtOfLife = skirt of life
+    .desc = A skirt that symbolizes the joy and positivity of our life.

@@ -152,7 +152,7 @@ namespace Content.Server.Zombies
                 zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
                 zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
 
-                _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, humanoid: huApComp);
+                _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, verify: false, humanoid: huApComp);
                 _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
 
                 // this might not resync on clone?

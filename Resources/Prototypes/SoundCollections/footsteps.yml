@@ -142,3 +142,8 @@
   - /Audio/Effects/Footsteps/woodbarefoot3.ogg
   - /Audio/Effects/Footsteps/woodbarefoot4.ogg
   - /Audio/Effects/Footsteps/woodbarefoot5.ogg
+
+- type: soundCollection
+  id: FootstepBounce
+  files:
+  - /Audio/Effects/Footsteps/bounce.ogg

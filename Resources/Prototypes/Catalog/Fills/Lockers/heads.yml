@@ -55,11 +55,10 @@
       - id: ClothingNeckCloakCapFormal
       - id: ClothingUniformJumpsuitCapFormal
       - id: ClothingUniformJumpskirtCapFormalDress
-      - id: ClothingNeckBronzeheart
-      - id: ClothingNeckGoldmedal
       - id: RubberStampCaptain
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
+      - id: MedalCase
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -89,6 +88,8 @@
       - id: RubberStampHop
       - id: BoxEncryptionKeyPassenger
       - id: BoxEncryptionKeyService
+      - id: ClothingBackpackIan
+        prob: 0.5
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -193,9 +194,9 @@
       - id: ClothingUniformJumpskirtHoSParadeMale
         prob: 0.1
       - id: ClothingOuterHardsuitSecurityRed
-      - id: ClothingMaskGasSecurity
-      - id: ClothingShoeSlippersDuck
-        prob: 0.2
+      - id: ClothingMaskGasSwat
+#      - id: ClothingShoeSlippersDuck # Corvax-Resprite: Need more space for style
+#        prob: 0.2
       - id: DrinkVacuumFlask
         prob: 0.8
       - id: ClothingBeltSecurityFilled
