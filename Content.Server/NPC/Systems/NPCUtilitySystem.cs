@@ -1,8 +1,11 @@
 using System.Linq;
 using Content.Server.NPC.Queries;
+using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
-using Robust.Shared.Collections;
+using Content.Server.Storage.Components;
+using Content.Shared.Mobs.Systems;
+using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.Systems;
@@ -13,7 +16,10 @@ namespace Content.Server.NPC.Systems;
 public sealed class NPCUtilitySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly FactionSystem _faction = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// <summary>
     /// Runs the UtilityQueryPrototype and returns the best-matching entities.
@@ -60,22 +66,23 @@ public sealed class NPCUtilitySystem : EntitySystem
 
             foreach (var con in weh.Considerations)
             {
+                var conScore = GetScore(blackboard, ent, con);
                 var curve = con.Curve;
                 float curveScore;
 
                 switch (curve)
                 {
                     case BoolCurve boolCurve:
-                        curveScore = score > 0f ? 1f : 0f;
+                        curveScore = conScore > 0f ? 1f : 0f;
                         break;
                     case InverseBoolCurve inverseBoolCurve:
-                        curveScore = score.Equals(0f) ? 1f : 0f;
+                        curveScore = conScore.Equals(0f) ? 1f : 0f;
                         break;
                     case PresetCurve presetCurve:
                         throw new NotImplementedException();
                         break;
                     case QuadraticCurve quadraticCurve:
-                        curveScore = Math.Clamp(quadraticCurve.Slope * (float) Math.Pow(score - quadraticCurve.XOffset, quadraticCurve.Exponent) + quadraticCurve.YOffset, 0f, 1f);
+                        curveScore = Math.Clamp(quadraticCurve.Slope * (float) Math.Pow(conScore - quadraticCurve.XOffset, quadraticCurve.Exponent) + quadraticCurve.YOffset, 0f, 1f);
                         break;
                     default:
                         throw new NotImplementedException();
@@ -84,7 +91,8 @@ public sealed class NPCUtilitySystem : EntitySystem
                 var adjusted = GetAdjustedScore(curveScore, weh.Considerations.Count);
                 score *= adjusted;
 
-                // If the score can no longer go up OR we only care about best entity then early out.
+                // If the score is too low OR we only care about best entity then early out.
+                // Due to the adjusted score only being able to decrease it can never exceed the highest from here.
                 if (score <= 0f || bestOnly && score <= highestScore)
                 {
                     break;
@@ -99,7 +107,69 @@ public sealed class NPCUtilitySystem : EntitySystem
         }
 
         var result = new UtilityResult(results);
+        blackboard.Remove<EntityUid>(NPCBlackboard.UtilityTarget);
         return result;
+    }
+
+    private float GetScore(NPCBlackboard blackboard, EntityUid targetUid, UtilityConsideration consideration)
+    {
+        switch (consideration)
+        {
+            case TargetAccessibleCon:
+            {
+                if (_container.TryGetContainingContainer(targetUid, out var container))
+                {
+                    if (TryComp<EntityStorageComponent>(container.Owner, out var storageComponent))
+                    {
+                        if (storageComponent is { IsWeldedShut: true, Open: false })
+                        {
+                            return 0.0f;
+                        }
+                    }
+                    else
+                    {
+                        // If we're in a container (e.g. held or whatever) then we probably can't get it. Only exception
+                        // Is a locker / crate
+                        // TODO: Some mobs can break it so consider that.
+                        return 0.0f;
+                    }
+                }
+
+                // TODO: Pathfind there, though probably do it in a separate con.
+                return 1f;
+            }
+            case TargetDistanceCon:
+            {
+                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+
+                if (!TryComp<TransformComponent>(targetUid, out var targetXform) ||
+                    !TryComp<TransformComponent>(owner, out var xform))
+                {
+                    return 0f;
+                }
+
+                if (!targetXform.Coordinates.TryDistance(EntityManager, _transform, xform.Coordinates,
+                        out var distance))
+                    return 0f;
+
+                // Score can get clamped later - Set a reasonable max for distance considerations.
+                return distance / 100f;
+            }
+            case TargetHealthCon:
+            {
+                return 0f;
+            }
+            case TargetIsCritCon:
+            {
+                return _mobState.IsCritical(targetUid) ? 1f : 0f;
+            }
+            case TargetIsDeadCon:
+            {
+                return _mobState.IsDead(targetUid) ? 1f : 0f;
+            }
+            default:
+                throw new NotImplementedException();
+        }
     }
 
     private float GetAdjustedScore(float score, int considerations)
@@ -121,7 +191,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     private void Add(NPCBlackboard blackboard, HashSet<EntityUid> entities, UtilityQuery query)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        var vision = blackboard.GetValue<float>(NPCBlackboard.VisionRadius);
+        var vision = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
 
         switch (query)
         {
@@ -150,7 +220,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
 public readonly record struct UtilityResult(Dictionary<EntityUid, float> Entities)
 {
-    public static readonly UtilityResult Empty = new();
+    public static readonly UtilityResult Empty = new(new Dictionary<EntityUid, float>());
 
     public readonly Dictionary<EntityUid, float> Entities = Entities;
 
@@ -159,6 +229,9 @@ public readonly record struct UtilityResult(Dictionary<EntityUid, float> Entitie
     /// </summary>
     public EntityUid? GetHighest()
     {
+        if (Entities.Count == 0)
+            return null;
+
         return Entities.MaxBy(x => x.Value).Key;
     }
 
@@ -167,6 +240,9 @@ public readonly record struct UtilityResult(Dictionary<EntityUid, float> Entitie
     /// </summary>
     public EntityUid? GetLowest()
     {
+        if (Entities.Count == 0)
+            return null;
+
         return Entities.MinBy(x => x.Value).Key;
     }
 }

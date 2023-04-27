@@ -225,6 +225,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
 
     public const string RotateSpeed = "RotateSpeed";
     public const string VisionRadius = "VisionRadius";
+    public const string UtilityTarget = "Target";
 
     public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
     {

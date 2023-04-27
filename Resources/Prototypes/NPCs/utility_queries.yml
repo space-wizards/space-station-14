@@ -76,17 +76,17 @@
 
 - type: utilityQuery
   id: NearbyMeleeTargets
-  queries:
+  query:
     - !type:NearbyHostilesQuery
   considerations:
     - !type:TargetIsDeadCon
       curve: !type:InverseBoolCurve
     - !type:TargetIsCritCon
       curve: !type:QuadraticCurve
-      slope: -0.8
-      exponent: 1.0
-      yOffset: 1.0
-      xOffset: 0.0
+        slope: -0.8
+        exponent: 1.0
+        yOffset: 1.0
+        xOffset: 0.0
       # Stuff
     - !type:TargetDistanceCon
       curve: !type:QuadraticCurve
