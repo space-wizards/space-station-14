@@ -105,7 +105,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     continue;
                 }
 
-                var remaining = neighborSolution.Volume - puddle.OverflowVolume;
+                var remaining = puddle.OverflowVolume - neighborSolution.Volume;
 
                 if (remaining <= FixedPoint2.Zero)
                     continue;
@@ -129,20 +129,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             }
         }
 
-        // Then we go to free tiles -> only overflow if we can go up to capacity at least.
+        // Then we go to free tiles.
+        // Need to go even if we have a little remainder to avoid solution sploshing around internally
+        // for ages.
         if (args.NeighborFreeTiles.Count > 0 && args.Updates > 0)
         {
-            // We'll only spill if we have the minimum threshold per tile.
-            var spillCount = (int) Math.Floor(overflow.Volume.Float() / component.OverflowVolume.Float());
-
-            if (spillCount == 0)
-            {
-                return;
-            }
-
             _random.Shuffle(args.NeighborFreeTiles);
-            spillCount = Math.Min(args.NeighborFreeTiles.Count, spillCount);
-            var spillAmount = overflow.Volume / spillCount;
+            var spillAmount = overflow.Volume / args.NeighborFreeTiles.Count;
 
             foreach (var neighbor in args.NeighborFreeTiles)
             {
@@ -165,12 +158,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             foreach (var neighbor in args.Neighbors)
             {
-                // Overflow to neighbours but not if they're already at the cap
-                // This is to avoid diluting solutions too much.
+                // Overflow to neighbours (unless it's pure water)
                 if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
                     !_solutionContainerSystem.TryGetSolution(neighbor, puddle.SolutionName, out var neighborSolution) ||
-                    CanFullyEvaporate(neighborSolution) ||
-                    neighborSolution.Volume >= puddle.OverflowVolume)
+                    CanFullyEvaporate(neighborSolution))
                 {
                     continue;
                 }
