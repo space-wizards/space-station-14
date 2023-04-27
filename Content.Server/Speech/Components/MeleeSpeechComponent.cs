@@ -4,7 +4,7 @@ using Content.Shared.Clothing;
 
 namespace Content.Server.Speech.Components
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent]//, NetworkedComponent
     [AutoGenerateComponentState]
     [Access(typeof(SharedMeleeSpeechSystem), Other = AccessPermissions.ReadWrite)]
     public sealed class MeleeSpeechComponent : Component

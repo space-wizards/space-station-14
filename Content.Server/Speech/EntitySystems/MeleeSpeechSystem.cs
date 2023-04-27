@@ -48,26 +48,26 @@ namespace Content.Server.Speech.EntitySystems
         /// <remarks>
         /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
         /// </remarks>
-        public bool TryChangeBattlecry(EntityUid uid, string? Battlecry, MeleeSpeechComponent? id = null, EntityUid? player = null)
+        public bool TryChangeBattlecry(EntityUid uid, string? battlecry, MeleeSpeechComponent? id = null, EntityUid? player = null)
         {
             if (!Resolve(uid, ref id))
                 return false;
 
-            if (!string.IsNullOrWhiteSpace(Battlecry))
+            if (!string.IsNullOrWhiteSpace(battlecry))
             {
-                Battlecry = Battlecry.Trim();
+                battlecry = battlecry.Trim();
 
                 /*if (jobTitle.Length > IdCardConsoleComponent.MaxJobTitleLength)
                     jobTitle = jobTitle[..IdCardConsoleComponent.MaxJobTitleLength];*/
             }
             else
             {
-                Battlecry = null;
+                battlecry = null;
             }
 
-            if (id.Battlecry == Battlecry)
+            if (id.Battlecry == battlecry)
                 return true;
-            id.Battlecry = Battlecry;
+            id.Battlecry = battlecry;
             Dirty(id);
             //UpdateEntityName(uid, id);
 

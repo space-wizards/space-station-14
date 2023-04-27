@@ -268,7 +268,7 @@
   
   #---------------------------------------------------------------------------------
 
-
+  
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesNorthStar
