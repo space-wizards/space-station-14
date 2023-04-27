@@ -437,7 +437,7 @@ namespace Content.Server.Power.Pow3r
             public bool LoadingMarked;
 
             /// <summary>
-            ///     Amount of supply that the battery can provider this tick.
+            ///     Amount of supply that the battery can provide this tick.
             /// </summary>
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
             public float AvailableSupply;

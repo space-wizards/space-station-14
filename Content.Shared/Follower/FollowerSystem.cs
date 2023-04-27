@@ -2,6 +2,7 @@ using Content.Shared.Database;
 using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -71,12 +72,12 @@ public sealed class FollowerSystem : EntitySystem
         followerComp.Following = entity;
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
-        followedComp.Following.Add(follower);
+
+        if (!followedComp.Following.Add(follower))
+            return;
 
         var xform = Transform(follower);
-        _transform.SetParent(follower, xform, entity);
-        xform.LocalPosition = Vector2.Zero;
-        xform.LocalRotation = Angle.Zero;
+        _transform.SetCoordinates(follower, xform, new EntityCoordinates(entity, Vector2.Zero), Angle.Zero);
 
         EnsureComp<OrbitVisualsComponent>(follower);
 
@@ -85,6 +86,7 @@ public sealed class FollowerSystem : EntitySystem
 
         RaiseLocalEvent(follower, followerEv, true);
         RaiseLocalEvent(entity, entityEv, false);
+        Dirty(followedComp);
     }
 
     /// <summary>
@@ -105,10 +107,10 @@ public sealed class FollowerSystem : EntitySystem
         RemComp<FollowerComponent>(uid);
 
         var xform = Transform(uid);
-        xform.AttachToGridOrMap();
+        _transform.AttachToGridOrMap(uid, xform);
         if (xform.MapID == MapId.Nullspace)
         {
-            Del(uid);
+            QueueDel(uid);
             return;
         }
 
@@ -119,6 +121,7 @@ public sealed class FollowerSystem : EntitySystem
 
         RaiseLocalEvent(uid, uidEv, true);
         RaiseLocalEvent(target, targetEv, false);
+        Dirty(followed);
     }
 
     /// <summary>

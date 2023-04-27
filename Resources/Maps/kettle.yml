@@ -28444,7 +28444,6 @@ entities:
     - 22615
     - 5607
     - 5606
-    - invalid
     - 5603
     - 5604
     - 5605
@@ -34683,7 +34682,6 @@ entities:
     parent: 82
     type: Transform
   - devices:
-    - invalid
     - 13504
     - 13546
     - 13513
@@ -42078,7 +42076,6 @@ entities:
     - 13359
     - 4495
     - 3852
-    - invalid
     - 5606
     - 5607
     - 22615
@@ -88702,7 +88699,6 @@ entities:
     - 6919
     - 18971
     - 18914
-    - invalid
     - 22462
     - 24542
     - 24543
@@ -90974,7 +90970,6 @@ entities:
     - 22470
     - 10444
     - 10981
-    - invalid
     - 1185
     - 1404
     - 1549
@@ -98043,7 +98038,6 @@ entities:
     - 22611
     - 10984
     - 1185
-    - invalid
     type: DeviceList
 - uid: 12555
   type: AirAlarm
@@ -98100,7 +98094,6 @@ entities:
     parent: 82
     type: Transform
   - devices:
-    - invalid
     - 10976
     - 10979
     - 25724
@@ -145970,7 +145963,6 @@ entities:
     parent: 82
     type: Transform
   - devices:
-    - invalid
     - 12754
     - 22877
     - 22474
@@ -176267,7 +176259,6 @@ entities:
     parent: 82
     type: Transform
   - devices:
-    - invalid
     - 7337
     - 22576
     - 10980
@@ -176500,7 +176491,6 @@ entities:
     - 12853
     - 21421
     - 6939
-    - invalid
     - 21409
     - 20465
     - 20442
@@ -179136,7 +179126,6 @@ entities:
     - 23047
     - 12903
     - 12902
-    - invalid
     - 12879
     - 12754
     - 24548
@@ -179255,7 +179244,6 @@ entities:
     - 11984
     - 3060
     - 11975
-    - invalid
     - 22607
     - 22496
     - 22398
@@ -188990,7 +188978,6 @@ entities:
     - 5603
     - 5604
     - 5605
-    - invalid
     - 22615
     - 5607
     - 5606
@@ -189012,7 +188999,6 @@ entities:
     - 5606
     - 5607
     - 22615
-    - invalid
     - 22392
     - 22393
     - 22516
@@ -189126,7 +189112,6 @@ entities:
     - 22398
     - 22496
     - 22607
-    - invalid
     - 10513
     type: DeviceList
 - uid: 24465
@@ -189139,7 +189124,6 @@ entities:
   - devices:
     - 22393
     - 22392
-    - invalid
     - 11338
     - 11339
     - 11345
@@ -189219,7 +189203,6 @@ entities:
     - 11984
     - 3060
     - 11975
-    - invalid
     - 22607
     - 22496
     - 22398
@@ -189611,7 +189594,6 @@ entities:
     - 19843
     - 19844
     - 24522
-    - invalid
     - 5623
     - 5622
     - 5619
@@ -189691,7 +189673,6 @@ entities:
   - devices:
     - 13884
     - 13885
-    - invalid
     - 24516
     - 22597
     - 22598
@@ -189778,7 +189759,6 @@ entities:
     parent: 82
     type: Transform
   - devices:
-    - invalid
     - 13943
     - 13942
     type: DeviceList
@@ -189927,7 +189907,6 @@ entities:
   - devices:
     - 13934
     - 5525
-    - invalid
     - 24486
     type: DeviceList
 - uid: 24527
@@ -189999,7 +189978,6 @@ entities:
     - 15411
     - 15410
     - 24581
-    - invalid
     - 15503
     - 3592
     - 3597
@@ -190250,7 +190228,6 @@ entities:
   - devices:
     - 21421
     - 6939
-    - invalid
     - 21409
     - 20465
     - 20442
@@ -190423,7 +190400,6 @@ entities:
     - 22398
     - 22496
     - 22607
-    - invalid
     - 10513
     type: DeviceList
 - uid: 24578
@@ -190535,7 +190511,6 @@ entities:
     - 6919
     - 18971
     - 18914
-    - invalid
     - 22462
     - 24542
     - 24543
@@ -190582,7 +190557,6 @@ entities:
     - 22470
     - 10444
     - 10981
-    - invalid
     - 1185
     - 1404
     - 1549
@@ -190607,7 +190581,6 @@ entities:
     - 22611
     - 10984
     - 1185
-    - invalid
     type: DeviceList
 - uid: 24590
   type: FireAlarm
@@ -190725,7 +190698,6 @@ entities:
     - 24548
     - 12879
     - 12754
-    - invalid
     - 22877
     - 22485
     - 22484
@@ -190813,7 +190785,6 @@ entities:
     - 22474
     - 22475
     - 22476
-    - invalid
     - 10496
     - 10497
     - 22490
@@ -193462,7 +193433,6 @@ entities:
     - 13324
     - 13376
     - 13375
-    - invalid
     - 13302
     - 22404
     - 24419
@@ -197297,7 +197267,6 @@ entities:
     - 5623
     - 5622
     - 5619
-    - invalid
     - 5618
     - 5611
     - 5610

@@ -28,6 +28,7 @@
   - Bucket
   - MopItem
   - SprayBottle
+
 - type: technology
   name: technologies-advanced-cleaning-technology
   id: AdvancedCleaningTechnology
@@ -37,10 +38,10 @@
     state: advmop
   requiredPoints: 5000
   requiredTechnologies:
-    - BasicResearch
     - CleaningTechnology
   unlockedRecipes:
     - AdvMopItem
+    - MegaSprayBottle
 
 # Food/Bev Service Technology Tree
 
@@ -60,6 +61,7 @@
   - MicrowaveMachineCircuitboard
   - BoozeDispenserMachineCircuitboard
   - SodaDispenserMachineCircuitboard
+  - FatExtractorMachineCircuitboard
 
 # Biological Technology Tree
 
@@ -359,7 +361,7 @@
   description: technologies-electromagnetic-theory-description
   icon:
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    state: base
   requiredPoints: 10000
   requiredTechnologies:
   - BasicResearch
@@ -403,7 +405,7 @@
   description: technologies-advanced-atmospherics-technology-description
   icon:
     sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-    state: freezer_off
+    state: freezerOff
   requiredPoints: 7500
   requiredTechnologies:
   - ElectricalEngineering
@@ -519,6 +521,7 @@
   - ScanningModuleStockPart
   - NodeScanner
   - AnomalyScanner
+  - AnomalyLocator
 
 - type: technology
   name: technologies-anomaly-technology
@@ -533,6 +536,10 @@
   unlockedRecipes:
   - AnomalyVesselCircuitboard
   - APECircuitboard
+  - WeaponPistolCHIMP
+  - CartridgeAnomalousParticleDelta
+  - CartridgeAnomalousParticleEpsilon
+  - CartridgeAnomalousParticleZeta
 
 - type: technology
   name: technologies-robotics-technology

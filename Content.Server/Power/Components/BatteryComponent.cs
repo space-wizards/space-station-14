@@ -62,5 +62,5 @@ namespace Content.Server.Power.Components
     ///     Raised when a battery's charge or capacity changes (capacity affects relative charge percentage).
     /// </summary>
     [ByRefEvent]
-    public record struct ChargeChangedEvent(float Charge, float MaxCharge);
+    public readonly record struct ChargeChangedEvent(float Charge, float MaxCharge);
 }
