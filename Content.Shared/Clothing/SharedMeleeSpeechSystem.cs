@@ -4,7 +4,6 @@ namespace Content.Shared.Clothing
 {
     public abstract class SharedMeleeSpeechSystem : EntitySystem
     {
-        // Just for friending for now
     }
 
     /// <summary>

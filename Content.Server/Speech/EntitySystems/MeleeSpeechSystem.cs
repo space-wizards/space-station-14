@@ -1,33 +1,23 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Speech.Components;
-using Content.Server.Popups;
-using Content.Server.UserInterface;
 using Content.Shared.Clothing;
-//using Content.Shared.Access.Systems;
-using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
+using Content.Shared.Database;
+
 
 namespace Content.Server.Speech.EntitySystems
 {
     public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
     {
 
-        //[]
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
 
         public override void Initialize()
         {
             base.Initialize();
-            //SubscribeLocalEvent<AgentIDCardComponent, AfterInteractEvent>(OnAfterInteract);
-            //SubscribeLocalEvent<AgentIDCardComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
             SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechBattlecryChangedMessage>(OnBattlecryChanged);
         }
 
-        /* private void OnMapInit(EntityUid uid, MeleeSpeechComponent meleeSpeech, MapInitEvent args)
-         {
-             UpdateEntityName(uid, meleeSpeech);
-         }*/
 
         private void OnBattlecryChanged(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechBattlecryChangedMessage args)
         {
@@ -42,7 +32,7 @@ namespace Content.Server.Speech.EntitySystems
 
 
         /// <summary>
-        /// Attempts to change the job title of a card.
+        /// Attempts to change the battlecry of an entity.
         /// Returns true/false.
         /// </summary>
         /// <remarks>
@@ -56,9 +46,6 @@ namespace Content.Server.Speech.EntitySystems
             if (!string.IsNullOrWhiteSpace(battlecry))
             {
                 battlecry = battlecry.Trim();
-
-                /*if (jobTitle.Length > IdCardConsoleComponent.MaxJobTitleLength)
-                    jobTitle = jobTitle[..IdCardConsoleComponent.MaxJobTitleLength];*/
             }
             else
             {
@@ -69,12 +56,11 @@ namespace Content.Server.Speech.EntitySystems
                 return true;
             id.Battlecry = battlecry;
             Dirty(id);
-            //UpdateEntityName(uid, id);
 
             if (player != null)
             {
-              //  _adminLogger.Add(LogType.Identity, LogImpact.Low,
-                //    $"{ToPrettyString(player.Value):player} has changed the battlecry of {ToPrettyString(id.Owner):entity} to {Battlecry} ");
+                _adminLogger.Add(LogType.Identity, LogImpact.Low,  //I'm not exactly certain how admin logs should be categorized, let me know if this is wrong
+                    $"{ToPrettyString(player.Value):player} has changed the battlecry of {ToPrettyString(id.Owner):entity} to {battlecry} ");
             }
             return true;
         }

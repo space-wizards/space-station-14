@@ -10,7 +10,6 @@ using Content.Server.Contests;
 using Content.Server.Examine;
 using Content.Server.Movement.Systems;
 using Content.Shared.Administration.Components;
-using Content.Shared.Chat;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -256,7 +255,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        if (comp.Battlecry != null)
+        if (comp.Battlecry != null)//If the battlecry is set to empty, doesn't speak
         {
             _chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true);
         }

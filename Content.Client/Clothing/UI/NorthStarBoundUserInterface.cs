@@ -1,6 +1,4 @@
 using Robust.Client.GameObjects;
-using Content.Shared.Clothing.EntitySystems;
-using Content.Client.Clothing.UI;
 using Content.Shared.Clothing;
 
 namespace Content.Client.Clothing.UI
