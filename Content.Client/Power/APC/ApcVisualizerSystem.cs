@@ -10,11 +10,6 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
     {
         if (args.Sprite == null)
             return;
-        
-        // Handle APC frame state:
-        if (!AppearanceSystem.TryGetData<ApcPanelState>(uid, ApcVisuals.PanelState, out var panelState, args.Component))
-            panelState = ApcPanelState.Closed;
-        args.Sprite.LayerSetVisible(ApcVisualLayers.Panel, panelState == ApcPanelState.Open);
 
         // Handle APC screen overlay:
         if(!AppearanceSystem.TryGetData<ApcChargeState>(uid, ApcVisuals.ChargeState, out var chargeState, args.Component))
@@ -73,18 +68,13 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
 enum ApcVisualLayers : byte
 {
     /// <summary>
-    /// The sprite layer used for the APC frame.
-    /// </summary>
-    Panel = 0,
-
-    /// <summary>
     /// The sprite layer used for the interface lock indicator light overlay.
     /// </summary>
-    InterfaceLock = 1,
+    InterfaceLock = 0,
     /// <summary>
     /// The sprite layer used for the panel lock indicator light overlay.
     /// </summary>
-    PanelLock = 2,
+    PanelLock = 1,
     /// <summary>
     /// The first of the lock indicator light layers.
     /// </summary>
@@ -93,15 +83,15 @@ enum ApcVisualLayers : byte
     /// <summary>
     /// The sprite layer used for the equipment channel indicator light overlay.
     /// </summary>
-    Equipment = 3,
+    Equipment = 2,
     /// <summary>
     /// The sprite layer used for the lighting channel indicator light overlay.
     /// </summary>
-    Lighting = 4,
+    Lighting = 3,
     /// <summary>
     /// The sprite layer used for the environment channel indicator light overlay.
     /// </summary>
-    Environment = 5,
+    Environment = 4,
     /// <summary>
     /// The first of the channel status indicator light layers.
     /// </summary>
@@ -110,5 +100,5 @@ enum ApcVisualLayers : byte
     /// <summary>
     /// The sprite layer used for the APC screen overlay.
     /// </summary>
-    ChargeState = 6,
+    ChargeState = 5,
 }

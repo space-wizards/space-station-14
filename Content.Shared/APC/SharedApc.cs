@@ -3,12 +3,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.APC
 {
     [Serializable, NetSerializable]
-    public enum ApcVisuals
+    public enum ApcVisuals : byte
     {
-        /// <summary>
-        /// APC frame.
-        /// </summary>
-        PanelState,
         /// <summary>
         /// APC locks.
         /// </summary>
