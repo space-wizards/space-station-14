@@ -370,6 +370,21 @@
         - ReagentId: Theobromine
           Quantity: 3
 
+- type: entity
+  id: FoodSnackShalenaBjilka
+  parent: FoodSnackBase
+  name: Shalena Bjilka
+  description: May contain real bees.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bee
+  - type: Sprite
+    state: shalena-bjilka
+  - type: Item
+  - type: Food
+    trash: FoodPacketShalenaBjilkaTrash
+
 # Trash
 
 - type: entity
@@ -546,3 +561,13 @@
   components:
   - type: Sprite
     state: mre-wrapper
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketShalenaBjilkaTrash
+  name: empty Shalena Bjilka
+  components:
+  - type: Sprite
+    state: shalena-bjilka-trash
+  - type: Item
