@@ -3,6 +3,7 @@ using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
+using Content.Server.Nutrition.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
@@ -115,6 +116,13 @@ public sealed class NPCUtilitySystem : EntitySystem
     {
         switch (consideration)
         {
+            case FoodValueCon:
+            {
+                if (!TryComp<FoodComponent>(targetUid, out var food))
+                    return 0f;
+
+                return 1f;
+            }
             case TargetAccessibleCon:
             {
                 if (_container.TryGetContainingContainer(targetUid, out var container))
