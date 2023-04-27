@@ -44,7 +44,7 @@ namespace Content.Server.Arcade.Components
         private List<string> _possibleFirstEnemyNames = new List<string>(){
         /// Corvax-Localization-Start
             "Автоматический", "Фермер", "Лорд", "Профессор", "Кубинец", "Злой", "Грозный Король",
-            "Космический", "Лорд", "Могучий", "Герцог", "Обычный"
+            "Космический", "Лорд", "Могучий", "Герцог", "Генерал"
         /// Corvax-Localization-End
         };
         [ViewVariables(VVAccess.ReadWrite)]
