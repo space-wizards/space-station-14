@@ -89,7 +89,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
             return;
 
         // add a game rule for this ninja, but will not start it so no spawner is created
-        AddComp<NinjaSpawnerDataComponent>(user).Rule = _gameTicker.AddGameRule("NinjaSpawnRule");
+        AddComp<NinjaSpawnerDataComponent>(user).Rule = _gameTicker.AddGameRule("NinjaSpawn");
         AddComp<NinjaComponent>(user);
         SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
         GreetNinja(mind);
@@ -336,9 +336,9 @@ public sealed class NinjaSystem : SharedNinjaSystem
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
 
-        if (TryComp<NinjaSpawnerDataComponent>(mind.OwnedEntity, out var station))
+        if (TryComp<NinjaSpawnerDataComponent>(mind.OwnedEntity, out var data) && data.Grid != EntityUid.Invalid)
         {
-            var gridPos = _transform.GetWorldPosition(station.Grid);
+            var gridPos = _transform.GetWorldPosition(data.Grid);
             var ninjaPos = _transform.GetWorldPosition(mind.OwnedEntity.Value);
             var vector = gridPos - ninjaPos;
             var direction = vector.GetDir();

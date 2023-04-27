@@ -77,6 +77,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         if (comp.Cloaked)
         {
             comp.Cloaked = false;
+            Dirty(comp);
             SetCloaked(user, false);
 
             if (disableAbilities)
@@ -125,11 +126,12 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
             _ninja.AssignSuit(ninja, null);
             // disable glove abilities
             if (ninja.Gloves != null && TryComp<NinjaGlovesComponent>(ninja.Gloves.Value, out var gloves))
-                _gloves.DisableGloves(gloves, user);
+                _gloves.DisableGloves(ninja.Gloves.Value, gloves, user);
         }
 
         // force uncloak the user
         comp.Cloaked = false;
+        Dirty(comp);
         SetCloaked(user, false);
         RemComp<StealthComponent>(user);
     }

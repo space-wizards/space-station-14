@@ -15,16 +15,16 @@ namespace Content.Shared.Ninja.Components;
 
 /// <summary>
 /// Component for toggling glove powers.
-/// Powers being enabled is controlled by GlovesEnabledComponent
+/// Powers being enabled is controlled by User not being null.
 /// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedNinjaGlovesSystem))]
-[RegisterComponent, NetworkedComponent]
-public sealed class NinjaGlovesComponent : Component
+public sealed partial class NinjaGlovesComponent : Component
 {
     /// <summary>
     /// Entity of the ninja using these gloves, usually means enabled
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? User;
 
     /// <summary>

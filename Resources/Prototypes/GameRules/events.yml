@@ -83,7 +83,7 @@
     minimumPlayers: 15
   - type: DragonRule
 
-- type: gameRule
+- type: entity
   id: NinjaSpawn
   components:
   - type: StationEvent

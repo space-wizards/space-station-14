@@ -29,6 +29,7 @@ namespace Content.Shared.Ninja.Systems;
 public abstract class SharedNinjaGlovesSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
@@ -67,11 +68,13 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     /// <summary>
     /// Disable glove abilities and show the popup if they were enabled previously.
     /// </summary>
-    public void DisableGloves(NinjaGlovesComponent comp, EntityUid user)
+    public void DisableGloves(EntityUid uid, NinjaGlovesComponent comp, EntityUid user)
     {
         if (comp.User != null)
         {
             comp.User = null;
+            Dirty(comp);
+            _appearance.SetData(uid, ToggleVisuals.Toggled, false);
             Popups.PopupEntity(Loc.GetString("ninja-gloves-off"), user, user);
         }
     }
@@ -100,6 +103,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         }
 
         var enabling = comp.User == null;
+        _appearance.SetData(uid, ToggleVisuals.Toggled, enabling);
         var message = Loc.GetString(enabling ? "ninja-gloves-on" : "ninja-gloves-off");
         ClientPopup(message, user);
 
@@ -108,6 +112,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             comp.User = user;
             _ninja.AssignGloves(ninja, uid);
             // set up interaction relay for handling glove abilities, comp.User is used to see the actual user of the events
+            // FIXME: probably breaks if ninja goes in ripley and exits, pretty minor but its reason to move away from relay if possible
             _interaction.SetRelay(user, uid, EnsureComp<InteractionRelayComponent>(user));
         }
         else
@@ -116,6 +121,8 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             _ninja.AssignGloves(ninja, null);
             RemComp<InteractionRelayComponent>(user);
         }
+
+        Dirty(comp);
     }
 
     private void OnExamined(EntityUid uid, NinjaGlovesComponent comp, ExaminedEvent args)
@@ -129,6 +136,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     private void OnUnequipped(EntityUid uid, NinjaGlovesComponent comp, GotUnequippedEvent args)
     {
         comp.User = null;
+        Dirty(comp);
         if (TryComp<NinjaComponent>(args.Equipee, out var ninja))
             _ninja.AssignGloves(ninja, null);
     }
