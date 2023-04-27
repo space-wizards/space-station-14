@@ -16,16 +16,18 @@ namespace Content.Server.Teleportation.Systems;
 /// </summary>
 public sealed class DimensionPotSystem : EntitySystem
 {
+	[Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly LinkedEntitySystem _link = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private ISawmill _sawmill = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+		base.Initialize();
         SubscribeLocalEvent<DimensionPotComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<DimensionPotComponent, ComponentRemove>(OnRemoved);
         SubscribeLocalEvent<DimensionPotComponent, GetVerbsEvent<AlternativeVerb>>(AddTogglePortalVerb);
@@ -105,6 +107,7 @@ public sealed class DimensionPotSystem : EntitySystem
             _link.TryUnlink(dimension, comp.PotPortal.Value);
             QueueDel(comp.PotPortal.Value);
             comp.PotPortal = null;
+			_audio.PlayPvs(comp.ClosePortalSound, uid);
 
             // if you are stuck inside the pocket dimension you can use the internal portal to escape
             _link.TryLink(uid, dimension);
@@ -115,6 +118,7 @@ public sealed class DimensionPotSystem : EntitySystem
             comp.PotPortal = Spawn(comp.PotPortalPrototype, Transform(uid).Coordinates);
             _link.TryLink(dimension, comp.PotPortal.Value);
             _transform.SetParent(comp.PotPortal.Value, uid);
+			_audio.PlayPvs(comp.OpenPortalSound, uid);
 
             _link.TryUnlink(uid, dimension);
         }

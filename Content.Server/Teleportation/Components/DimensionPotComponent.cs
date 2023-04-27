@@ -18,13 +18,13 @@ public sealed class DimensionPotComponent : Component
     /// <summary>
     /// The portal on the pot, if it is open right now.
     /// </summary>
-    [DataField("potPortal")]
+    [ViewVariables]
     public EntityUid? PotPortal = null;
 
     /// <summary>
     /// The portal in the pocket dimension, usually exists.
     /// </summary>
-    [DataField("dimensionPortal")]
+    [ViewVariables]
     public EntityUid? DimensionPortal = null;
 
     /// <summary>
@@ -52,11 +52,11 @@ public sealed class DimensionPotComponent : Component
     public string DimensionPortalPrototype = "PortalBlue";
 
     [DataField("openPortalSound")]
-    public SoundSpecifier OpenPortalsSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
+    public SoundSpecifier OpenPortalSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
     {
         Params = AudioParams.Default.WithVolume(-2f)
     };
 
     [DataField("closePortalSound")]
-    public SoundSpecifier ClearPortalsSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+    public SoundSpecifier ClosePortalSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 }
