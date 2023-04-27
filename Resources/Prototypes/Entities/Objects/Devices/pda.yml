@@ -296,6 +296,12 @@
     state: pda-qm
   - type: Icon
     state: pda-qm
+  - type: CartridgeLoader
+    cartridgeSlot: 
+      startingItem: SpaceVendorsCartridge
+      priority: -1
+      
+
 
 - type: entity
   parent: BasePDA
@@ -308,6 +314,10 @@
     state: pda-cargo
   - type: Icon
     state: pda-cargo
+  - type: CartridgeLoader
+    cartridgeSlot: 
+      startingItem: SpaceVendorsCartridge
+      priority: -1
 
 - type: entity
   parent: BasePDA
@@ -320,6 +330,10 @@
     state: pda-miner
   - type: Icon
     state: pda-miner
+  - type: CartridgeLoader
+    cartridgeSlot: 
+      startingItem: SpaceVendorsCartridge
+      priority: -1
 
 - type: entity
   parent: BasePDA
