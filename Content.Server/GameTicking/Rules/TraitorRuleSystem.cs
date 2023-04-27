@@ -436,4 +436,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             .Where(t => _mobStateSystem.IsAlive((EntityUid) t.Mind.OwnedEntity!)) // dead
             .Where(t => t.Mind.CurrentEntity == t.Mind.OwnedEntity).ToList(); // not in original body
     }
+
+    /// <summary>
+    /// Manually adds a role to the list of traitors.
+    /// Use if you have custom logic for being a traitor, like ninja.
+    /// </summary>
+    public void AddToTraitors(TraitorRuleComponent rule, TraitorRole role)
+    {
+        rule.Traitors.Add(role);
+    }
 }

@@ -23,7 +23,7 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    protected override void Started(EntityUid uid, NinjaSpawnRuleComponent comp, GameRuleComponent rule, GameRuleStartedEvent args)
+    protected override void Started(EntityUid uid, NinjaSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, comp, gameRule, args);
 
@@ -49,9 +49,8 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
         }
 
         // figure out its AABB size and use that as a guide to how far ninja should be
-        var config = (NinjaRuleConfiguration) Configuration;
         var size = grid.LocalAABB.Size.Length / 2;
-        var distance = size + config.SpawnDistance;
+        var distance = size + comp.SpawnDistance;
         var angle = _random.NextAngle();
         // position relative to station center
         var location = angle.ToVec() * distance;
@@ -63,12 +62,7 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
         Sawmill.Info($"Creating ninja spawnpoint at {coords}");
         var spawner = Spawn("SpawnPointGhostSpaceNinja", coords);
 
-        // tell the player where the station is when they pick the role
-        _ninja.SetNinjaRule(spawner, uid);
-        _ninja.SetNinjaStationGrid(spawner, gridUid.Value);
-
-        // start traitor rule incase it isn't, for the sweet greentext
-        var rule = _proto.Index<GameRulePrototype>("Traitor");
-        _ticker.StartGameRule(rule);
+        // tell the player where the station is when they pick the role, and what the ninja rule is
+        _ninja.SetNinjaSpawnerData(spawner, gridUid.Value, uid);
     }
 }

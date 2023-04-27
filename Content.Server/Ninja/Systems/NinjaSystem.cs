@@ -6,6 +6,7 @@ using Content.Server.Doors.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Mind.Components;
 using Content.Server.Ninja;
@@ -298,13 +299,21 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
     private void GreetNinja(Mind.Mind mind)
     {
-        if (!mind.TryGetSession(out var session))
+        if (!mind.TryGetSession(out var session) || mind.OwnedEntity == null)
             return;
+
+        var traitorRule = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
+        if (traitorRule == null)
+        {
+            // TODO: fuck me this shit is awful, see TraitorRuleSystem
+            _gameTicker.StartGameRule("Traitor", out var ruleEntity);
+            traitorRule = Comp<TraitorRuleComponent>(ruleEntity);
+        }
 
         var config = RuleConfig(mind.OwnedEntity.Value);
         var role = new NinjaRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
         mind.AddRole(role);
-        _traitorRule.Traitors.Add(role);
+        _traitorRule.AddToTraitors(traitorRule, role);
         foreach (var objective in config.Objectives)
         {
             AddObjective(mind, objective);
