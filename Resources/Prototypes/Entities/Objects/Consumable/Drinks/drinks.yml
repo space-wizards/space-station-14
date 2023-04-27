@@ -2203,7 +2203,7 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkDavidMartinez
+  id: DrinkTheMartinez
   name: "The Martinez" glass
   description: The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
   components:
@@ -2212,7 +2212,7 @@
         drink:
           maxVol: 30
           reagents:
-            - ReagentId: DavidMartinez
+            - ReagentId: TheMartinez
               Quantity: 30
     - type: Sprite
-      sprite: Objects/Consumable/Drinks/david_martinez.rsi
+      sprite: Objects/Consumable/Drinks/the_martinez.rsi
