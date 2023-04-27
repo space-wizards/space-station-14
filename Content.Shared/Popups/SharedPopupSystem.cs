@@ -68,12 +68,12 @@ namespace Content.Shared.Popups
         public abstract void PopupEntity(string message, EntityUid uid, PopupType type=PopupType.Small);
 
         /// <summary>
-        ///     Variant of <see cref="PopupEntity(string, EntityUid, PopupType)"/> that shoes the popup only to some specific client.
+        ///     Variant of <see cref="PopupEntity(string, EntityUid, PopupType)"/> that shows the popup only to some specific client.
         /// </summary>
         public abstract void PopupEntity(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small);
 
         /// <summary>
-        ///     Variant of <see cref="PopupEntity(string, EntityUid, PopupType)"/> that shoes the popup only to some specific client.
+        ///     Variant of <see cref="PopupEntity(string, EntityUid, PopupType)"/> that shows the popup only to some specific client.
         /// </summary>
         public abstract void PopupEntity(string message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small);
 

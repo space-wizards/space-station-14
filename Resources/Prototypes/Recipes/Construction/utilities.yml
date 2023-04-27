@@ -39,7 +39,7 @@
   description: "Area Power Controller (APC). Controls power. In an area."
   icon:
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -546,6 +546,27 @@
     state: pumpManualValve
   conditions:
     - !type:TileNotBlocked {}
+
+- type: construction
+  id: SignalControlledValve
+  name: signal valve
+  description: Valve controlled by signal inputs.
+  graph: GasBinary
+  startNode: start
+  targetNode: signalvalve
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpSignalValve
+  layers:
+  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+  - sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpSignalValve
+  conditions:
+  - !type:TileNotBlocked {}
 
 - type: construction
   id: GasPort

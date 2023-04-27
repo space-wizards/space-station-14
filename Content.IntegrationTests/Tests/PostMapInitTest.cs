@@ -10,10 +10,12 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Roles;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
@@ -55,6 +57,8 @@ namespace Content.IntegrationTests.Tests
 
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
 
             await server.WaitPost(() =>
             {
@@ -89,7 +93,7 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
 
             var resourceManager = server.ResolveDependency<IResourceManager>();
-            var mapFolder = new ResourcePath("/Maps");
+            var mapFolder = new ResPath("/Maps");
             var maps = resourceManager
                 .ContentFindFiles(mapFolder)
                 .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
@@ -183,6 +187,8 @@ namespace Content.IntegrationTests.Tests
             var ticker = entManager.EntitySysManager.GetEntitySystem<GameTicker>();
             var shuttleSystem = entManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
             var xformQuery = entManager.GetEntityQuery<TransformComponent>();
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
 
             await server.WaitPost(() =>
             {
@@ -225,7 +231,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.IsNotNull(stationConfig, $"{entManager.ToPrettyString(station)} had null StationConfig.");
                 var shuttlePath = stationConfig.EmergencyShuttlePath.ToString();
                 var shuttle = mapLoader.LoadGrid(shuttleMap, shuttlePath);
-                Assert.That(shuttle != null && shuttleSystem.TryFTLDock(entManager.GetComponent<ShuttleComponent>(shuttle.Value), targetGrid.Value), $"Unable to dock {shuttlePath} to {mapProto}");
+                Assert.That(shuttle != null && shuttleSystem.TryFTLDock(shuttle.Value, entManager.GetComponent<ShuttleComponent>(shuttle.Value), targetGrid.Value), $"Unable to dock {shuttlePath} to {mapProto}");
 
                 mapManager.DeleteMap(shuttleMap);
 
@@ -299,7 +305,7 @@ namespace Content.IntegrationTests.Tests
 
                     var gameMaps = protoManager.EnumeratePrototypes<GameMapPrototype>().Select(o => o.MapPath).ToHashSet();
 
-                    var mapFolder = new ResourcePath("/Maps");
+                    var mapFolder = new ResPath("/Maps");
                     var maps = resourceManager
                         .ContentFindFiles(mapFolder)
                         .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
@@ -335,6 +341,8 @@ namespace Content.IntegrationTests.Tests
 
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
 
             await server.WaitPost(() =>
             {

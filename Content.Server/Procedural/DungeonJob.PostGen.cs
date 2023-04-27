@@ -110,13 +110,11 @@ public sealed partial class DungeonJob
         var rooms = new List<DungeonRoom>(dungeon.Rooms);
         var roomTiles = new List<Vector2i>();
         var tileData = new Tile(_tileDefManager[gen.Tile].TileId);
-        var count = gen.Count;
 
-        while (count > 0 && rooms.Count > 0)
+        for (var i = 0; i < gen.Count; i++)
         {
             var roomIndex = random.Next(rooms.Count);
             var room = rooms[roomIndex];
-            rooms.RemoveAt(roomIndex);
 
             // Move out 3 tiles in a direction away from center of the room
             // If none of those intersect another tile it's probably external
@@ -126,12 +124,6 @@ public sealed partial class DungeonJob
 
             foreach (var tile in roomTiles)
             {
-                // Check the interior node is at least accessible?
-                // Can't do anchored because it might be a locker or something.
-                // TODO: Better collision mask check
-                if (_lookup.GetEntitiesIntersecting(gridUid, tile, LookupFlags.Dynamic | LookupFlags.Static).Any())
-                    continue;
-
                 var direction = (tile - room.Center).ToAngle().GetCardinalDir().ToAngle().ToVec();
                 var isValid = true;
 
@@ -162,8 +154,6 @@ public sealed partial class DungeonJob
                 {
                     _entManager.SpawnEntity(ent, gridCoords);
                 }
-
-                count--;
 
                 // Clear out any biome tiles nearby to avoid blocking it
                 foreach (var nearTile in grid.GetTilesIntersecting(new Circle(gridCoords.Position, 1.5f), false))
@@ -501,9 +491,11 @@ public sealed partial class DungeonJob
                 if (!dungeon.RoomTiles.Contains(neighbor))
                     continue;
 
-                foreach (var ent in _lookup.GetEntitiesIntersecting(_gridUid, neighbor, flags))
+                // Shrink by 0.01 to avoid polygon overlap from neighboring tiles.
+                foreach (var ent in _lookup.GetEntitiesIntersecting(_gridUid, new Box2(neighbor * grid.TileSize, (neighbor + 1) * grid.TileSize).Enlarged(-0.1f), flags))
                 {
                     if (!physicsQuery.TryGetComponent(ent, out var physics) ||
+                        !physics.Hard ||
                         (CollisionMask & physics.CollisionLayer) == 0x0 &&
                         (CollisionLayer & physics.CollisionMask) == 0x0)
                     {

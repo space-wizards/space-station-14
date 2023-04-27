@@ -29,6 +29,16 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceTheatre
+  icon:
+    sprite: Clothing/Mask/mime.rsi
+    state: icon
+  product: CrateServiceTheatre
+  cost: 1800
+  category: Service
+  group: market
+
+- type: cargoProduct
   id: ServiceSmokeables
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
@@ -75,5 +85,25 @@
     state: book0
   product: CrateServiceBooks
   cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceBoxes
+  icon:
+    sprite: Objects/Storage/boxes.rsi
+    state: box
+  product: CrateServiceBox
+  cost: 400
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceJanitorBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/janitor.rsi
+    state: icon
+  product: CrateJanitorBiosuit
+  cost: 800
   category: Service
   group: market
