@@ -314,13 +314,19 @@
     sprite: Objects/Fun/toys.rsi
     state: nuketoy
   - type: UseDelay
-    delay: 300.0
+    delay: 180.0
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxdistance: 10
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxdistance: 10
 
 - type: entity
   parent: BaseItem
