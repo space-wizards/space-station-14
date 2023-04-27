@@ -2204,7 +2204,7 @@
 - type: entity
   parent: DrinkGlassBase
   id: DrinkDavidMartinez
-  name: David Martinez glass
+  name: "The Martinez" glass
   description: The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
   components:
     - type: SolutionContainerManager
