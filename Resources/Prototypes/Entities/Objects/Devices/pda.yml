@@ -105,6 +105,7 @@
     - DoorBumpOpener
   - type: Input
     context: "human"
+  - type: PayloadCase
 
 - type: entity
   parent: BasePDA
