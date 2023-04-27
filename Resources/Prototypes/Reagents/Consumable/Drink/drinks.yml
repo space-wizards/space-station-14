@@ -395,13 +395,13 @@
     state: icon
 
 - type: reagent
-  id: DavidMartinez
-  name: reagent-name-david-martinez
+  id: TheMartinez
+  name: reagent-name-the-martinez
   parent: BaseDrink
-  desc: reagent-desc-david-martinez
+  desc: reagent-desc-the-martinez
   physicalDesc: reagent-physical-desc-vibrant
   flavor: davidmartinez
   color: "#75b1f0"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/david_martinez.rsi
+    sprite: Objects/Consumable/Drinks/the_martinez.rsi
     state: icon
