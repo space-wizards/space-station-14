@@ -3,7 +3,7 @@ alerts-low-oxygen-desc = В воздухе, которым Вы дышите, [c
 alerts-high-toxin-name = [color=red]Высокий уровень токсинов[/color]
 alerts-high-toxin-desc = В воздухе, которым Вы дышите, [color=red]слишком много токсинов[/color]. Наденьте [color=green]баллон для дыхания[/color] или уходите.
 alerts-low-pressure-name = [color=red]Низкое давление[/color]
-alerts-low-pressure-desc = Воздух вокруг Вас [color=red]опасно разрежен[/color]. [color=green]Скафандр[/color] защитит вас.
+alerts-low-pressure-desc = Воздух вокруг Вас [color=red]опасно разрежен[/color]. [color=green]Скафандр[/color] защитит Вас.
 alerts-high-pressure-name = [color=red]Высокое давление[/color]
 alerts-high-pressure-desc = Воздух вокруг Вас [color=red]опасно густой[/color]. [color=green]Герметичный костюм[/color] будет достаточной защитой.
 alerts-on-fire-name = [color=red]В огне[/color]
@@ -27,7 +27,7 @@ alerts-buckled-desc = Вы [color=yellow]пристегнуты[/color] к че�
 alerts-crit-name = [color=red]Критическое состояние[/color]
 alerts-crit-desc = Вы серьезно ранены и без сознания.
 alerts-dead-name = Мертвый
-alerts-dead-desc = Вы мертвы, учтите, что вас еще можно оживить!
+alerts-dead-desc = Вы мертвы, учтите, что Вас еще можно оживить!
 alerts-health-name = Здоровье
 alerts-health-desc = [color=green]Зеленый[/color] хорошо. [color=red]Красный[/color] плохо.
 alerts-internals-name = Переключить баллон

@@ -6,6 +6,6 @@ id-card-console-window-job-title-label = Должность:
 id-card-console-window-eject-button = Извлечь
 id-card-console-window-insert-button = Вставить
 id-card-console-window-job-selection-label = Предустановки должностей (задает иконку отдела и должности):
-access-id-card-console-component-no-hands-error = У вас нет рук.
+access-id-card-console-component-no-hands-error = У Вас нет рук.
 id-card-console-privileged-id = Основной ID
 id-card-console-target-id = Целевой ID
