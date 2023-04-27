@@ -4,6 +4,7 @@
   levels:
     green:
       announcement: alert-level-green-announcement
+      sound:  /Audio/Misc/downtoGREEN.ogg
       color: Green
       shuttleTime: 600
     blue:
