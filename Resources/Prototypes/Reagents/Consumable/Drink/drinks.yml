@@ -400,7 +400,7 @@
   parent: BaseDrink
   desc: reagent-desc-the-martinez
   physicalDesc: reagent-physical-desc-vibrant
-  flavor: davidmartinez
+  flavor: themartinez
   color: "#75b1f0"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/the_martinez.rsi
