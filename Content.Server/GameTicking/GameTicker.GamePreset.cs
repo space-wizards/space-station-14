@@ -140,7 +140,8 @@ namespace Content.Server.GameTicking
         private void StartGamePresetRules()
         {
             // May be touched by the preset during init.
-            foreach (var rule in GetAddedGameRules())
+            var rules = new List<EntityUid>(GetAddedGameRules());
+            foreach (var rule in rules)
             {
                 StartGameRule(rule);
             }

@@ -28,7 +28,7 @@ public sealed class KudzuSystem : EntitySystem
             return;
         }
 
-        if (args.NeighborFreeTiles.Count == 0 || args.Grid == null)
+        if (args.NeighborFreeTiles.Count == 0)
         {
             RemCompDeferred<EdgeSpreaderComponent>(uid);
             return;
@@ -47,7 +47,7 @@ public sealed class KudzuSystem : EntitySystem
 
         foreach (var neighbor in args.NeighborFreeTiles)
         {
-            var neighborUid = Spawn(prototype, args.Grid.GridTileToLocal(neighbor));
+            var neighborUid = Spawn(prototype, neighbor.Grid.GridTileToLocal(neighbor.Tile));
             EnsureComp<EdgeSpreaderComponent>(neighborUid);
             args.Updates--;
 
