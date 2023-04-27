@@ -1,6 +1,6 @@
 advertisement-boozeomat-1 = Надеюсь, никто не попросит у меня чертову чашку чая...
 advertisement-boozeomat-2 = Алкоголь - друг человечества. Вы бы отказались от друга?
-advertisement-boozeomat-3 = Очень рад вас обслужить!
+advertisement-boozeomat-3 = Очень рад Вас обслужить!
 advertisement-boozeomat-4 = Никто на этой станции не хочет выпить?
 advertisement-boozeomat-5 = Выпьем!
 advertisement-boozeomat-6 = Бухло пойдёт вам на пользу!
@@ -10,7 +10,7 @@ advertisement-boozeomat-9 = Ничто так не лечит, как бухло
 advertisement-boozeomat-10 = Пригубите!
 advertisement-boozeomat-11 = Выпейте!
 advertisement-boozeomat-12 = Возьмите пивка!
-advertisement-boozeomat-13 = Пиво пойдёт вам на пользу!
+advertisement-boozeomat-13 = Пиво пойдёт Вам на пользу!
 advertisement-boozeomat-14 = Только лучший алкоголь!
 advertisement-boozeomat-15 = Бухло лучшего качества с 2053 года!
 advertisement-boozeomat-16 = Вино со множеством наград!

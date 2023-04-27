@@ -12,4 +12,4 @@ comms-console-announcement-unknown-sender = Неизвестный
 # Comms console variant titles
 comms-console-announcement-title-station = Консоль связи
 comms-console-announcement-title-centcom = Центральное командование
-comms-console-announcement-title-nukie = Ядерные оперативники Синдиката
+comms-console-announcement-title-nukie = Ядерные Оперативники Синдиката
