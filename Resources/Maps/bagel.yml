@@ -95546,7 +95546,6 @@ entities:
     type: Transform
   - devices:
     - 21628
-    - invalid
     - 9631
     - 9651
     type: DeviceList
@@ -169477,7 +169476,6 @@ entities:
     - 21492
     - 21491
     - 18608
-    - invalid
     - 18272
     - 18270
     - 18434
@@ -169543,7 +169541,6 @@ entities:
     - 3996
     - 4001
     - 585
-    - invalid
     - 928
     - 904
     - 19834
@@ -169564,7 +169561,6 @@ entities:
     - 3996
     - 4001
     - 585
-    - invalid
     - 19834
     - 19835
     - 19836
@@ -169694,7 +169690,6 @@ entities:
     type: Transform
   - devices:
     - 21508
-    - invalid
     - 5940
     - 6097
     - 6098
@@ -169710,7 +169705,6 @@ entities:
     type: Transform
   - devices:
     - 21508
-    - invalid
     - 5940
     - 6097
     - 6098
@@ -170365,7 +170359,6 @@ entities:
     - 6127
     - 6126
     - 6125
-    - invalid
     - 21559
     - 12591
     - 12592
@@ -170389,7 +170382,6 @@ entities:
     - 6127
     - 6126
     - 6125
-    - invalid
     - 21559
     - 4369
     - 1198
@@ -170538,7 +170530,6 @@ entities:
     - 21568
     - 2370
     - 2360
-    - invalid
     type: DeviceList
 - uid: 21568
   type: AirSensor
@@ -170843,7 +170834,6 @@ entities:
     type: Transform
   - devices:
     - 1385
-    - invalid
     - 1397
     type: DeviceList
 - uid: 21594
@@ -171085,7 +171075,6 @@ entities:
     - 9409
     - 9410
     - 9411
-    - invalid
     - 12594
     - 5938
     - 12571
@@ -171188,7 +171177,6 @@ entities:
   - devices:
     - 21631
     - 7146
-    - invalid
     - 6015
     - 5990
     - 21632
@@ -171316,7 +171304,6 @@ entities:
     - 13979
     - 13962
     - 13961
-    - invalid
     - 17627
     - 17632
     - 17628
@@ -171342,7 +171329,6 @@ entities:
     - 13979
     - 13962
     - 13961
-    - invalid
     - 17627
     - 17632
     - 17628
@@ -171414,7 +171400,6 @@ entities:
     - 21648
     - 16559
     - 16560
-    - invalid
     type: DeviceList
 - uid: 21648
   type: AirSensor
@@ -171445,7 +171430,6 @@ entities:
     - 21648
     - 16559
     - 16560
-    - invalid
     - 21655
     - 21656
     type: DeviceList
@@ -172341,7 +172325,6 @@ entities:
   - devices:
     - 5565
     - 5562
-    - invalid
     - 5563
     - 8466
     - 21733
@@ -172647,7 +172630,6 @@ entities:
     - 6133
     - 5901
     - 5900
-    - invalid
     - 12001
     - 12589
     - 4369
@@ -184182,7 +184164,6 @@ entities:
     - 6133
     - 5901
     - 5900
-    - invalid
     - 4369
     - 1198
     - 4546

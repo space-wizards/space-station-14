@@ -183,3 +183,15 @@
   - type: ConditionalSpawner
     prototypes:
     - MobKangarooSpaceSalvage
+
+- type: entity
+  name: Salvage Space Spider Spawner
+  id: SpawnMobSpiderSalvage
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSpiderSpaceSalvage
