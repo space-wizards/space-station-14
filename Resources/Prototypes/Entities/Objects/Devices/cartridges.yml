@@ -42,4 +42,22 @@
         state: server
     - type: NetProbeCartridge
 
-
+- type: entity
+  parent: BaseItem
+  id: SpaceVendorsCartridge
+  name: Space Vendors cartridge
+  description: a program with a quantum connection to the galactic market and the ability to appraise even the toughest items.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-q
+      netsync: false
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-q
+    - type: Cartridge
+      programName: space-vendors-program-name
+      icon:
+        sprite: Objects/Tools/appraisal-tool.rsi
+        state: icon
+    - type: SpaceVendorsCartridge
