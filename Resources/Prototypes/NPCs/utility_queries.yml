@@ -17,90 +17,6 @@
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
 
-# TODO: NearbyDrink as well
-# TODO: FoodInInventory
-# Port all the others too
-# TODO: Need to add services to htnprimitives
-# Needs like
-
-# Also need parallel operators for it!
-
-#- type: utilityQuery
-#  id: NearbyGloves
-#  query:
-#    - !type:NearbyComponent
-#      component: Clothing
-#    - !type:ClothingSlotFilter
-#        slot: GLOVES
-  # considerations:
-    # Weh
-
-
-# So if I BT
-#- Root nodes
-#- Selector nodes
-#- Parallel nodes
-#- Sequence nodes
-#- node decorators (e.g. abort / condition, always succeed)
-
-# Need to be able to register blackboard keys and their types, I guess use a yaml file to do it.
-# Unreal has service nodes associated with composite nodes that can callback every n seconds to update
-# Implement this as like a service thing on nodes
-# Parallel needs to be compound branch
-# e.g. best target
-
-
-# Migration strategy:
-# Add utility queries
-# Add the yml stuff for blackboard keys for better debugging and runtime support
-# Add parallel in place of compound
-# Add services support
-# Remove primitive task prototypes.
-# Remove htnCompoundTask to npcSelectorTask
-# npcParallelTask
-# npcSequenceTask
-
-#- !type:htnPrimitive
-#- !type:htnCompoundNode
-#  id: weh
-
-#- type: npcBehaviorTree
-#  id: SimpleHostile
-#  rootNode: !type:NPCSelectorNode
-#    branches:
-#      - !type:NPCSubTreeNode
-#        id: MeleeCombatTree
-#      - !type:NPCSubTreeNode
-#        id: IdleTree
-#
-#- type: npcBehaviorTree
-#  id: IdleTree
-#  rootNode: !type:NPCSelectorNode
-#    preconditions:
-#      - !type:BuckledPrecondition
-#        isBuckled: false
-#      - !type:PulledPrecondition
-#        isPulled: false
-#    branches:
-#      - !type:WaitNode
-#        preconditions:
-#          - !type:KeyIsSetPrecon
-#            key: weh
-#        time: 3.0
-#      # Pick a new spot and wait there.
-#      - !type:SequenceNode:
-#          - id: PickAccessiblePrimitive
-#          - id: MoveToAccessiblePrimitive
-#          - id: RandomIdleTimePrimitive
-
-#- type: npcBlackboard
-#  id: LastTry
-#  keyType: !type:npcTimeOffset
-
-#- type: npcBlackboard
-#  id: Owner
-#  keyType: !type:EntityUid
-
 - type: utilityQuery
   id: NearbyMeleeTargets
   query:
@@ -108,7 +24,6 @@
   considerations:
     - !type:TargetIsAliveCon
       curve: !type:BoolCurve
-      # Stuff
     - !type:TargetDistanceCon
       curve: !type:PresetCurve
         preset: TargetDistance
@@ -123,15 +38,8 @@
   query:
     - !type:NearbyHostilesQuery
   considerations:
-    - !type:TargetIsDeadCon
-      curve: !type:InverseBoolCurve
-    - !type:TargetIsCritCon
-      curve: !type:QuadraticCurve
-        slope: -0.8
-        exponent: 1.0
-        yOffset: 1.0
-        xOffset: 0.0
-      # Stuff
+    - !type:TargetIsAliveCon
+      curve: !type:BoolCurve
     - !type:TargetDistanceCon
       curve: !type:PresetCurve
         preset: TargetDistance
