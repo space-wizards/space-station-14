@@ -1,17 +1,21 @@
-#- type: utilityQuery
-#  id: NearbyFood
-#  query:
-#    - !type:ComponentQuery
-#  considerations:
-#    - !type:TargetDistanceCon
-#      curve: !type:PresetCurve
-#        preset: Distance
-#    - !type:FoodValueCon
-#      curve: !type:QuadraticCurve
-#        slope: 1.0
-#        exponent: 0.4
-#    - !type:TargetAccessibleCon
-#      curve: !type:BoolCurve
+- type: utilityQuery
+  id: NearbyFood
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: Food
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:InverseBoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:FoodValueCon
+      curve: !type:QuadraticCurve
+        slope: 1.0
+        exponent: 0.4
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
 
 # TODO: NearbyDrink as well
 # TODO: FoodInInventory
@@ -99,6 +103,29 @@
 
 - type: utilityQuery
   id: NearbyMeleeTargets
+  query:
+    - !type:NearbyHostilesQuery
+  considerations:
+    - !type:TargetIsDeadCon
+      curve: !type:InverseBoolCurve
+    - !type:TargetIsCritCon
+      curve: !type:QuadraticCurve
+        slope: -0.8
+        exponent: 1.0
+        yOffset: 1.0
+        xOffset: 0.0
+      # Stuff
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetHealthCon
+      curve: !type:PresetCurve
+        preset: TargetHealth
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
+  id: NearbyRangedTargets
   query:
     - !type:NearbyHostilesQuery
   considerations:

@@ -13,6 +13,9 @@
   - Xeno
 
 - type: faction
+  id: Mouse
+
+- type: faction
   id: PetsNT
   hostile:
   - SimpleHostile

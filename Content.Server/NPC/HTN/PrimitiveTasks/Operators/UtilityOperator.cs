@@ -1,11 +1,16 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.NPC.Queries;
 using Content.Server.NPC.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
-public abstract class NPCCombatOperator : HTNOperator
+/// <summary>
+/// Utilises a <see cref="UtilityQueryPrototype"/> to determine the best target and sets it to the Key.
+/// </summary>
+public sealed class UtilityOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
@@ -17,10 +22,13 @@ public abstract class NPCCombatOperator : HTNOperator
     [DataField("keyCoordinates")]
     public string KeyCoordinates = "CombatTargetCoordinates";
 
+    [DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<UtilityQueryPrototype>))]
+    public string Prototype = string.Empty;
+
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)
     {
-        var result = _entManager.System<NPCUtilitySystem>().GetEntities(blackboard, "NearbyMeleeTargets");
+        var result = _entManager.System<NPCUtilitySystem>().GetEntities(blackboard, Prototype);
         var target = result.GetHighest();
 
         if (!target.IsValid())

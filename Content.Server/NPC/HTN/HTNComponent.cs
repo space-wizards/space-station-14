@@ -20,6 +20,13 @@ public sealed class HTNComponent : NPCComponent
     [ViewVariables]
     public HTNPlan? Plan;
 
+    // TODO: Need dictionary timeoffsetserializer.
+    /// <summary>
+    /// Last time we tried a particular <see cref="UtilityService"/>.
+    /// </summary>
+    [DataField("serviceCooldowns")]
+    public Dictionary<string, TimeSpan> ServiceCooldowns = new();
+
     /// <summary>
     /// How long to wait after having planned to try planning again.
     /// </summary>
@@ -42,6 +49,4 @@ public sealed class HTNComponent : NPCComponent
     /// Is this NPC currently planning?
     /// </summary>
     [ViewVariables] public bool Planning => PlanningJob != null;
-
-
 }

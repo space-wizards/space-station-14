@@ -8,6 +8,14 @@
         - id: IdleCompound
 
 - type: htnCompound
+  id: MouseCompound
+  branches:
+    - tasks:
+        - id: FoodCompound
+    - tasks:
+        - id: IdleCompound
+
+- type: htnCompound
   id: DragonCarpCompound
   branches:
     - tasks:

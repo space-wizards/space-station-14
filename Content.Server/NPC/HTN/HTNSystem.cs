@@ -13,13 +13,17 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.HTN;
 
 public sealed class HTNSystem : EntitySystem
 {
     [Dependency] private readonly IAdminManager _admin = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly NPCUtilitySystem _utility = default!;
 
@@ -38,10 +42,20 @@ public sealed class HTNSystem : EntitySystem
         base.Initialize();
         _sawmill = Logger.GetSawmill("npc.htn");
         SubscribeLocalEvent<HTNComponent, ComponentShutdown>(OnHTNShutdown);
+        SubscribeLocalEvent<HTNComponent, EntityUnpausedEvent>(OnHTNUnpaused);
         SubscribeNetworkEvent<RequestHTNMessage>(OnHTNMessage);
 
         _prototypeManager.PrototypesReloaded += OnPrototypeLoad;
         OnLoad();
+    }
+
+    private void OnHTNUnpaused(EntityUid uid, HTNComponent component, ref EntityUnpausedEvent args)
+    {
+        foreach (var (service, cooldown) in component.ServiceCooldowns)
+        {
+            var newCooldown = cooldown + args.PausedTime;
+            component.ServiceCooldowns[service] = newCooldown;
+        }
     }
 
     private void OnHTNMessage(RequestHTNMessage msg, EntitySessionEventArgs args)
@@ -320,10 +334,18 @@ public sealed class HTNSystem : EntitySystem
 
             foreach (var service in currentTask.Services)
             {
-                // TODO: Need to think of how to handle cooldowns.
+                // Service still on cooldown.
+                if (component.ServiceCooldowns.TryGetValue(service.ID, out var lastService) &&
+                    _timing.CurTime < lastService)
+                {
+                    continue;
+                }
 
                 var serviceResult = _utility.GetEntities(blackboard, service.Prototype);
                 blackboard.SetValue(service.Key, serviceResult.GetHighest());
+
+                var cooldown = TimeSpan.FromSeconds(_random.NextFloat(service.MinCooldown, service.MaxCooldown));
+                component.ServiceCooldowns[service.ID] = _timing.CurTime + cooldown;
             }
 
             status = currentOperator.Update(blackboard, frameTime);
@@ -334,6 +356,7 @@ public sealed class HTNSystem : EntitySystem
                     break;
                 case HTNOperatorStatus.Failed:
                     currentOperator.Shutdown(blackboard, status);
+                    component.ServiceCooldowns.Clear();
                     component.Plan = null;
                     break;
                 // Operator completed so go to the next one.
@@ -344,6 +367,7 @@ public sealed class HTNSystem : EntitySystem
                     // Plan finished!
                     if (component.Plan.Tasks.Count <= component.Plan.Index)
                     {
+                        component.ServiceCooldowns.Clear();
                         component.Plan = null;
                         break;
                     }

@@ -18,6 +18,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FactionSystem _faction = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -166,6 +167,10 @@ public sealed class NPCUtilitySystem : EntitySystem
             {
                 return 0f;
             }
+            case TargetIsAliveCon:
+            {
+                return _mobState.IsAlive(targetUid) ? 1f : 0f;
+            }
             case TargetIsCritCon:
             {
                 return _mobState.IsCritical(targetUid) ? 1f : 0f;
@@ -202,6 +207,19 @@ public sealed class NPCUtilitySystem : EntitySystem
 
         switch (query)
         {
+            case ComponentQuery compQuery:
+                foreach (var ent in _lookup.GetEntitiesInRange(owner, vision))
+                {
+                    foreach (var comp in compQuery.Components.Values)
+                    {
+                        if (!HasComp(ent, comp.Component.GetType()))
+                            continue;
+
+                        entities.Add(ent);
+                    }
+                }
+
+                break;
             case NearbyHostilesQuery:
                 foreach (var ent in _faction.GetNearbyHostiles(owner, vision))
                 {
