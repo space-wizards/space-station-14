@@ -49,6 +49,15 @@ public sealed class FaxMachineComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("receiveNukeCodes")]
     public bool ReceiveNukeCodes { get; set; } = false;
+	
+	// Corvax-StationGoal-Start
+    /// <summary>
+    /// Should that fax receive station goal info
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("receiveStationGoal")]
+    public bool ReceiveStationGoal { get; set; } = false;
+    // Corvax-StationGoal-End
 
     /// <summary>
     /// Sound to play when fax has been emagged

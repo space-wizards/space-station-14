@@ -19,7 +19,7 @@
     sprite: Structures/Machines/mixer.rsi
     state: mixer_loaded
   - type: ChemMaster
-    pillDosageLimit: 20
+    pillDosageLimit: 50
   - type: Physics
     bodyType: Static
   - type: Fixtures
