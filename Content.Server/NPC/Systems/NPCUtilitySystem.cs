@@ -1,10 +1,12 @@
 using System.Linq;
+using Content.Server.Examine;
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
 using Content.Server.Storage.Components;
+using Content.Shared.Examine;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
@@ -165,6 +167,31 @@ public sealed class NPCUtilitySystem : EntitySystem
             case TargetHealthCon:
             {
                 return 0f;
+            }
+            case TargetInLOSCon:
+            {
+                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+                var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
+
+                return ExamineSystemShared.InRangeUnOccluded(owner, targetUid, radius + 0.5f, null) ? 1f : 0f;
+            }
+            case TargetInLOSOrCurrentCon:
+            {
+                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+                var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
+                const float bufferRange = 0.5f;
+
+                if (blackboard.TryGetValue<EntityUid>("CombatTarget", out var currentTarget, EntityManager) &&
+                    currentTarget == targetUid &&
+                    TryComp<TransformComponent>(owner, out var xform) &&
+                    TryComp<TransformComponent>(targetUid, out var targetXform) &&
+                    xform.Coordinates.TryDistance(EntityManager, _transform, targetXform.Coordinates, out var distance) &&
+                    distance <= radius + bufferRange)
+                {
+                    return 1f;
+                }
+
+                return ExamineSystemShared.InRangeUnOccluded(owner, targetUid, radius + bufferRange, null) ? 1f : 0f;
             }
             case TargetIsAliveCon:
             {

@@ -32,6 +32,8 @@
         preset: TargetHealth
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
+    - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
 
 - type: utilityQuery
   id: NearbyRangedTargets
@@ -47,6 +49,8 @@
       curve: !type:PresetCurve
         preset: TargetHealth
     - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+    - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
 
 
