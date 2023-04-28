@@ -64,12 +64,15 @@ public sealed class MeleeOperator : HTNOperator
     {
         base.Update(blackboard, frameTime);
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        var status = HTNOperatorStatus.Continuing;
+        HTNOperatorStatus status;
 
-        if (_entManager.TryGetComponent<NPCMeleeCombatComponent>(owner, out var combat))
+        if (_entManager.TryGetComponent<NPCMeleeCombatComponent>(owner, out var combat) &&
+            blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager))
         {
+            combat.Target = target;
+
             // Success
-            if (_entManager.TryGetComponent<MobStateComponent>(combat.Target, out var mobState) &&
+            if (_entManager.TryGetComponent<MobStateComponent>(target, out var mobState) &&
                 mobState.CurrentState > TargetState)
             {
                 status = HTNOperatorStatus.Finished;
@@ -87,6 +90,10 @@ public sealed class MeleeOperator : HTNOperator
                         break;
                 }
             }
+        }
+        else
+        {
+            status = HTNOperatorStatus.Failed;
         }
 
         if (status != HTNOperatorStatus.Continuing)

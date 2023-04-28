@@ -69,25 +69,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             {
                 var conScore = GetScore(blackboard, ent, con);
                 var curve = con.Curve;
-                float curveScore;
-
-                switch (curve)
-                {
-                    case BoolCurve boolCurve:
-                        curveScore = conScore > 0f ? 1f : 0f;
-                        break;
-                    case InverseBoolCurve inverseBoolCurve:
-                        curveScore = conScore.Equals(0f) ? 1f : 0f;
-                        break;
-                    case PresetCurve presetCurve:
-                        throw new NotImplementedException();
-                        break;
-                    case QuadraticCurve quadraticCurve:
-                        curveScore = Math.Clamp(quadraticCurve.Slope * (float) Math.Pow(conScore - quadraticCurve.XOffset, quadraticCurve.Exponent) + quadraticCurve.YOffset, 0f, 1f);
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
+                var curveScore = GetScore(curve, conScore);
 
                 var adjusted = GetAdjustedScore(curveScore, weh.Considerations.Count);
                 score *= adjusted;
@@ -110,6 +92,23 @@ public sealed class NPCUtilitySystem : EntitySystem
         var result = new UtilityResult(results);
         blackboard.Remove<EntityUid>(NPCBlackboard.UtilityTarget);
         return result;
+    }
+
+    private float GetScore(IUtilityCurve curve, float conScore)
+    {
+        switch (curve)
+        {
+            case BoolCurve:
+                return conScore > 0f ? 1f : 0f;
+            case InverseBoolCurve:
+                return conScore.Equals(0f) ? 1f : 0f;
+            case PresetCurve presetCurve:
+                return GetScore(_proto.Index<UtilityCurvePresetPrototype>(presetCurve.Preset).Curve, conScore);
+            case QuadraticCurve quadraticCurve:
+                return Math.Clamp(quadraticCurve.Slope * (float) Math.Pow(conScore - quadraticCurve.XOffset, quadraticCurve.Exponent) + quadraticCurve.YOffset, 0f, 1f);
+            default:
+                throw new NotImplementedException();
+        }
     }
 
     private float GetScore(NPCBlackboard blackboard, EntityUid targetUid, UtilityConsideration consideration)
@@ -235,10 +234,10 @@ public readonly record struct UtilityResult(Dictionary<EntityUid, float> Entitie
     /// <summary>
     /// Returns the entity with the highest score.
     /// </summary>
-    public EntityUid? GetHighest()
+    public EntityUid GetHighest()
     {
         if (Entities.Count == 0)
-            return null;
+            return EntityUid.Invalid;
 
         return Entities.MaxBy(x => x.Value).Key;
     }
@@ -246,10 +245,10 @@ public readonly record struct UtilityResult(Dictionary<EntityUid, float> Entitie
     /// <summary>
     /// Returns the entity with the lowest score. This does not consider entities with a 0 (invalid) score.
     /// </summary>
-    public EntityUid? GetLowest()
+    public EntityUid GetLowest()
     {
         if (Entities.Count == 0)
-            return null;
+            return EntityUid.Invalid;
 
         return Entities.MinBy(x => x.Value).Key;
     }

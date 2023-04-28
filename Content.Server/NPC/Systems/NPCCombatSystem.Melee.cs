@@ -143,6 +143,8 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
+        _steering.Register(uid, new EntityCoordinates(component.Target, Vector2.Zero), steering);
+
         if (distance > weapon.Range)
         {
             component.Status = CombatStatus.TargetOutOfRange;

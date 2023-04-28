@@ -1,31 +1,25 @@
-- type: utilityQuery
-  id: NearbyFood
-  query:
-    - !type:ComponentQuery
-  considerations:
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: Distance
-    - !type:FoodValueCon
-      curve: !type:QuadraticCurve
-        slope: 1.0
-        exponent: 0.4
-    - !type:TargetAccessibleCon
-      curve: !type:BoolCurve
+#- type: utilityQuery
+#  id: NearbyFood
+#  query:
+#    - !type:ComponentQuery
+#  considerations:
+#    - !type:TargetDistanceCon
+#      curve: !type:PresetCurve
+#        preset: Distance
+#    - !type:FoodValueCon
+#      curve: !type:QuadraticCurve
+#        slope: 1.0
+#        exponent: 0.4
+#    - !type:TargetAccessibleCon
+#      curve: !type:BoolCurve
 
 # TODO: NearbyDrink as well
 # TODO: FoodInInventory
 # Port all the others too
 # TODO: Need to add services to htnprimitives
 # Needs like
-services:
-- !type: UtilityService
-  id: NearbyTarget
-  minCooldown: 0.15
-  maxCooldown: 0.25
-  targetKey: CombatTarget
 
-Also need parallel operators for it!
+# Also need parallel operators for it!
 
 #- type: utilityQuery
 #  id: NearbyGloves
@@ -119,17 +113,17 @@ Also need parallel operators for it!
       # Stuff
     - !type:TargetDistanceCon
       curve: !type:PresetCurve
-        curve: Distance
+        preset: TargetDistance
     - !type:TargetHealthCon
       curve: !type:PresetCurve
-        curve: TargetHealth
+        preset: TargetHealth
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
 
 
 # Presets
 - type: utilityCurvePreset
-  id: Distance
+  id: TargetDistance
   curve: !type:QuadraticCurve
     slope: -1
     exponent: 1

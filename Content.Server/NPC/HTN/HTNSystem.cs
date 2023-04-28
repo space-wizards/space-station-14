@@ -21,6 +21,7 @@ public sealed class HTNSystem : EntitySystem
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
+    [Dependency] private readonly NPCUtilitySystem _utility = default!;
 
     private ISawmill _sawmill = default!;
     private readonly JobQueue _planQueue = new();
@@ -314,7 +315,17 @@ public sealed class HTNSystem : EntitySystem
         {
             // Run the existing operator
             var currentOperator = component.Plan.CurrentOperator;
+            var currentTask = component.Plan.CurrentTask;
             var blackboard = component.Blackboard;
+
+            foreach (var service in currentTask.Services)
+            {
+                // TODO: Need to think of how to handle cooldowns.
+
+                var serviceResult = _utility.GetEntities(blackboard, service.Prototype);
+                blackboard.SetValue(service.Key, serviceResult.GetHighest());
+            }
+
             status = currentOperator.Update(blackboard, frameTime);
 
             switch (status)

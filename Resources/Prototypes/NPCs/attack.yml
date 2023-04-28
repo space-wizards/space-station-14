@@ -97,6 +97,12 @@
     - !type:TargetInRangePrecondition
       targetKey: CombatTarget
       rangeKey: MeleeRange
+  services:
+    - !type:UtilityService
+      proto: NearbyMeleeTargets
+      minCooldown: 0.15
+      maxCooldown: 0.25
+      key: CombatTarget
 
 # Moves the owner into range of the combat target.
 - type: htnPrimitive
