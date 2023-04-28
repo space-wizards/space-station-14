@@ -15,7 +15,7 @@ implanter-label = [color=white]Имплантат: { $currentEntities }{ $lineBr
 ## Implanter Actions
 
 open-storage-implant-action-name = Открыть Хранилище имплантата
-open-storage-implant-action-description = Открывает хранилище имплантата, встроенный под Вашу кожу
+open-storage-implant-action-description = Открывает хранилище имплантата, встроенного под Вашу кожу
 activate-micro-bomb-action-name = Активировать Микробомбу
 activate-micro-bomb-action-description = Активирует Вашу внутреннюю микробомбу, полностью уничтожая Вас и ваше снаряжение
 use-freedom-implant-action-name = Вырваться на свободу
