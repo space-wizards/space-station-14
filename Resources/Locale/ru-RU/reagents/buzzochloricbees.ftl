@@ -1,4 +1,4 @@
-buzzochloricbees-effect-oh-god-bees = Над вами роится много-много пчел.
+buzzochloricbees-effect-oh-god-bees = Над Вами роится много-много пчел.
 buzzochloricbees-effect-its-the-bees = Это пчёлы, о господи, пчёлы.
 buzzochloricbees-effect-why-am-i-covered-in-bees = Вы покрыты разъярёнными пчёлами.
 buzzochloricbees-effect-one-with-the-bees = Вы одно целое с пчелами.

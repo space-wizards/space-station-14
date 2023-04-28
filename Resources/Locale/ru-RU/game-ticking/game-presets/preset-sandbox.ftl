@@ -1,2 +1,2 @@
 sandbox-title = Песочница
-sandbox-description = Никакого стресса, только ваш креатив!
+sandbox-description = Никакого стресса, только Ваш креатив!
