@@ -23,3 +23,14 @@
         behaviors:
           - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  id: LegionnaireBonfire
+  parent: Bonfire
+  name: legionnaire bonfire
+  descriptions: There, in the land of lava and ash, place to to cook marshmallow and potato.
+  components:
+  - type: Sprite
+    state: legionnaire_bonfire
+  - type: PointLight
+    color: "#FF5601"
