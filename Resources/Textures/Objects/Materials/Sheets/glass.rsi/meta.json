@@ -108,6 +108,40 @@
     {
       "name": "titaniumglass-inhand-right",
       "directions": 4
-    }
+    },
+    {
+        "name": "uglass"
+      },
+      {
+        "name": "uglass_2"
+      },
+      {
+        "name": "uglass_3"
+      },
+      {
+        "name": "uglass-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "uglass-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "ruglass"
+      },
+      {
+        "name": "ruglass_2"
+      },
+      {
+        "name": "ruglass_3"
+      },
+      {
+        "name": "ruglass-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "ruglass-inhand-right",
+        "directions": 4
+      }
   ]
 }

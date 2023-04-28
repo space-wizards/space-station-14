@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "made by AsikKEsel",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "full"
+      },
+      {
+        "name": "uwindow0",
+        "directions": 4
+      },
+      {
+        "name": "uwindow1",
+        "directions": 4
+      },
+      {
+        "name": "uwindow2",
+        "directions": 4
+      },
+      {
+        "name": "uwindow3",
+        "directions": 4
+      },
+      {
+        "name": "uwindow4",
+        "directions": 4
+      },
+      {
+        "name": "uwindow5",
+        "directions": 4
+      },
+      {
+        "name": "uwindow6",
+        "directions": 4
+      },
+      {
+        "name": "uwindow7",
+        "directions": 4
+      }
+    ]
+  }

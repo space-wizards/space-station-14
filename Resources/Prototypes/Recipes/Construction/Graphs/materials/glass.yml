@@ -33,6 +33,26 @@
               amount: 1
             - material: MetalRod
               amount: 1
+        - to: SheetUGlass
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: Glass
+              amount: 1
+            - material: Uranium
+              amount: 1
+        - to: SheetRUGlass
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: Glass
+              amount: 1
+            - material: Uranium
+              amount: 1
+            - material: MetalRod
+              amount: 1
 
     - node: SheetGlass
       entity: SheetGlass
@@ -45,4 +65,10 @@
 
     - node: SheetRPGlass
       entity: SheetRPGlass
+
+    - node: SheetUGlass
+      entity: SheetUGlass
+
+    - node: SheetRUGlass
+      entity: SheetRUGlass
 

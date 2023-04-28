@@ -26,3 +26,16 @@
   spawn: SheetRPGlass1
   maxCount: 30
 
+- type: stack
+  id: UraniumGlass
+  name: uranium glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: uglass }
+  spawn: SheetUGlass1
+  maxCount: 30
+
+- type: stack
+  id: ReinforcedUraniumGlass
+  name: reinforced uranium glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: ruglass }
+  spawn: SheetRUGlass1
+  maxCount: 30

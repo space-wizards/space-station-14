@@ -29,3 +29,19 @@
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rpglass }
   color: "#8c4069"
   price: 0.66 # 2-2-1 mix of plasma, glass, and metal.
+
+- type: material
+  id: UraniumGlass
+  stackEntity: SheetUGlass1
+  name: materials-uranium-glass
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: uglass }
+  color: "#3cab38"
+  price: 0.32 # 1-1 mix of uranium and glass.
+
+- type: material
+  id: ReinforcedUraniumGlass
+  stackEntity: SheetRUGlass1
+  name: materials-reinforced-uranium-glass
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: ruglass }
+  color: "#2d872a"
+  price: 0.7 # 2-2-1 mix of uranium, glass, and metal.
