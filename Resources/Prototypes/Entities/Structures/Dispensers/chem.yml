@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: chem_dispenser
+  id: ChemDispenser
   name: chemical dispenser
   parent: ReagentDispenserBase
   description: An industrial grade chemical dispenser with a sizeable chemical supply.
@@ -27,8 +27,8 @@
   - type: Machine
     board: ChemDispenserMachineCircuitboard
   - type: Wires
-    BoardName: "chem_dispenser"
-    LayoutId: chem_dispenser
+    BoardName: "ChemDispenser"
+    LayoutId: ChemDispenser
   - type: UpgradePowerDraw
     powerDrawMultiplier: 0.75
     scaling: Exponential
