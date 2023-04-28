@@ -28,7 +28,7 @@
   id: LegionnaireBonfire
   parent: Bonfire
   name: legionnaire bonfire
-  descriptions: There, in the land of lava and ash, place to to cook marshmallow and potato.
+  description: There, in the land of lava and ash, place to to cook marshmallow and potato.
   components:
   - type: Sprite
     state: legionnaire_bonfire
