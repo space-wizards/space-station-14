@@ -15,7 +15,7 @@ public sealed class DispenserTest : InteractionTest
     [Test]
     public async Task InsertEjectBuiTest()
     {
-        await SpawnTarget("chem_dispenser");
+        await SpawnTarget("ChemDispenser");
         ToggleNeedPower();
 
         // Insert beaker
