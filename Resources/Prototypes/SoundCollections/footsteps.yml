@@ -86,12 +86,6 @@
   - /Audio/Effects/Footsteps/heavystep4.ogg
 
 - type: soundCollection
-  id: FootstepCombat
-  files:
-  - /Audio/Effects/Footsteps/suitstep1.ogg
-  - /Audio/Effects/Footsteps/suitstep2.ogg
-
-- type: soundCollection
   id: FootstepAsteroid
   files:
   - /Audio/Effects/Footsteps/asteroid1.ogg
