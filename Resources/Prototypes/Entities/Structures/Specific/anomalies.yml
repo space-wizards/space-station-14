@@ -45,7 +45,7 @@
     guides:
     - AnomalousResearch
   - type: EmitSoundOnSpawn
-    sound: 
+    sound:
       path: /Audio/Effects/teleport_arrival.ogg
 
 - type: entity
@@ -179,3 +179,29 @@
     anomalyContactDamage:
       types:
         Radiation: 10
+
+
+- type: entity
+  id: AnomalyIce
+  parent: BaseAnomaly
+  suffix: Ice
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 2.5
+    color: "#befaff"
+    castShadows: false
+  - type: IceAnomaly
+    projectilePrototype: ProjectileIcicle
+    projectileDamage: # Values are scaled by severity
+      types:
+        Pierce: 50
+        Cold: 50

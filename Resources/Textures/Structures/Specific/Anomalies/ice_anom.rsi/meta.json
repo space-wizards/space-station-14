@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by ThunderBear#9834 for ss14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "anom"
+    },
+    {
+      "name": "pulse",
+      "delays": [
+        [
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625
+        ]
+      ]
+    },
+    {
+      "name": "bullet"
+    }
+  ]
+}
