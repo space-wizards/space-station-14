@@ -1,0 +1,14 @@
+ent-BaseVehicle = Vehicle
+    .desc = { "" }
+ent-VehicleJanicart = janicart
+    .desc = The janitor's trusty steed.
+ent-VehicleJanicartDestroyed = destroyed janicart
+    .desc = { ent-MachineFrameDestroyed.desc }
+ent-VehicleSecway = secway
+    .desc = The future of transportation. Popularized by St. James, the patron saint of security officers and internet forum moderators.
+ent-VehicleATV = ATV
+    .desc = All-Tile Vehicle.
+ent-VehicleSyndicateSegway = syndicate segway
+    .desc = Be an enemy of the corporation, in style.
+ent-VehicleSkeletonMotorcycle = skeleton motorcycle
+    .desc = Bad to the Bone.

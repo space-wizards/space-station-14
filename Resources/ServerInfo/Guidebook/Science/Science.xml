@@ -1,16 +1,16 @@
 <Document>
-# Science
+# Научный отдел
 
-Science, often called Research and Development, is a job made up of both generating research points to unlock new technologies as well as using said technologies to produce new items at lathes to help out the station.
+Научный отдел, часто именуемый "РнД", занимается заработком очков исследований, используемых для изучения новых технологий, которые в свою очередь позволяют создавать полезные для станции предметы на различных станках, принтерах, и фабрикаторах.
 
-## Technologies
+## Технологии
 <Box>
 <GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
 <GuideEntityEmbed Entity="ResearchAndDevelopmentServer"/>
 </Box>
-The most important thing inside your department is the R&D server, which stores unlocked technologies, and the R&D computer, which allows you to unlock technologies.
+Самыми важными устройствами вашего отдела являются сервер РнД, на котором хранятся все изученные технологии, и исследовательская консоль, который позволяет вам эти технологии открывать.
 
-Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes. Some technologies will also have prerequesites you have to unlock before you can research them.
+Каждая технология стоит определённое число [color=#a4885c]Очков исследований[/color], и их изучение открывает новые рецепты для печати на производственных станках. Некоторые технологии нельзя разблокировать, не изучив технологии им предшествующие.
 
 ## Lathes
 <Box>
@@ -21,6 +21,6 @@ Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes
 <GuideEntityEmbed Entity="ExosuitFabricator"/>
 <GuideEntityEmbed Entity="MedicalTechFab"/>
 </Box>
-At a lathe, you can sync to a server to allow it print whatever recipes you have unlocked. Recipes require various materials (steel, glass, plastic, gold, plasma) which can be acquired at Cargo or Salvage.
+Воспользовавшись производственным станком (например, протолатом или принтером схем), вы можете синхронизировать его с сервером РнД, чтобы разблокировать новые рецепты для печати. Печать требует различные материалы (сталь, стекло, пластик, золото, или плазму), которые можно заказать в отделе снабжения или попросить у утилизаторов.
 
 </Document>

@@ -1,0 +1,16 @@
+ent-FloorCarpetItemRed = красный ковёр
+    .desc = { ent-FloorTileItemBase.desc }
+ent-FloorCarpetItemBlack = чёрный ковёр
+    .desc = { ent-FloorTileItemBase.desc }
+ent-FloorCarpetItemBlue = синий ковёр
+    .desc = { ent-FloorTileItemBase.desc }
+ent-FloorCarpetItemGreen = зелёный ковёр
+    .desc = { ent-FloorTileItemBase.desc }
+ent-FloorCarpetItemOrange = оранжевый ковёр
+    .desc = { ent-FloorTileItemBase.desc }
+ent-FloorCarpetItemSkyBlue = небесно-голубой ковёр
+    .desc = { ent-FloorTileItemBase.desc }
+ent-FloorCarpetItemPurple = фиолетовый ковёр
+    .desc = { ent-FloorTileItemBase.desc }
+ent-FloorCarpetItemPink = розовый ковёр
+    .desc = { ent-FloorTileItemBase.desc }

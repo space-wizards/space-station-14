@@ -40,6 +40,7 @@ CLIENT_IGNORED_RESOURCES = {
     "ConfigPresets",
     "emotes.xml",
     "Groups",
+    "CorvaxSecretsServer", # Corvax-Secrets
     "engineCommandPerms.yml"
 }
 

@@ -1,0 +1,3 @@
+ent-ClothingUniformJumpsuitHoSOld = old head of security's jumpsuit
+    .desc = Pretty old stuff for these times, bringing back old memories...
+    .suffix = { "" }

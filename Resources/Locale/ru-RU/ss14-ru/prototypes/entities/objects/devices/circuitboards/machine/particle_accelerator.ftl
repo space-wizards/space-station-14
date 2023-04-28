@@ -1,0 +1,12 @@
+ent-MachineParticleAcceleratorEndCapCircuitboard = торцевая заглушка УЧ
+    .desc = { ent-BaseMachineCircuitboard.desc }
+ent-MachineParticleAcceleratorFuelChamberCircuitboard = топливная камера УЧ
+    .desc = { ent-BaseMachineCircuitboard.desc }
+ent-MachineParticleAcceleratorPowerBoxCircuitboard = блок питания УЧ
+    .desc = { ent-BaseMachineCircuitboard.desc }
+ent-MachineParticleAcceleratorEmitterLeftCircuitboard = левый излучатель УЧ
+    .desc = { ent-BaseMachineCircuitboard.desc }
+ent-MachineParticleAcceleratorEmitterCenterCircuitboard = центральный излучатель УЧ
+    .desc = { ent-BaseMachineCircuitboard.desc }
+ent-MachineParticleAcceleratorEmitterRightCircuitboard = правый излучатель УЧ
+    .desc = { ent-BaseMachineCircuitboard.desc }

@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesSalesman
+  name: colored glasses
+  description: A pair of glasses with uniquely colored lenses. The frame is inscribed with 'Best Salesman 1997'.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Eyes/Glasses/salesman.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Eyes/Glasses/salesman.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesBinoclardLenses
+  name: binoclard lenses
+  description: Shows you know how to sew a lapel and center a back vent.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Eyes/Glasses/kim.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Eyes/Glasses/kim.rsi

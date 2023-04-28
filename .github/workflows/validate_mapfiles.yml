@@ -9,12 +9,25 @@ on:
 jobs:
   yaml-schema-validation:
     name: YAML map schema validator
-    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    if: github.actor != 'IanComradeBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Setup Submodule
       run: git submodule update --init
+    # Corvax-Secrets-Start
+    - name: Setup secrets
+      env:
+        SSH_KEY: ${{ secrets.SECRETS_PRIVATE_KEY }}
+      if: ${{ env.SSH_KEY != '' }}
+      run: |
+        mkdir ~/.ssh
+        echo "${{ secrets.SECRETS_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        echo "HOST *" > ~/.ssh/config
+        echo "StrictHostKeyChecking no" >> ~/.ssh/config
+        git -c submodule.Secrets.update=checkout submodule update --init
+    # Corvax-Secrets-End
     - name: Pull engine updates
       uses: space-wizards/submodule-dependency@v0.1.5
     - uses: PaulRitter/yaml-schema-validator@v1

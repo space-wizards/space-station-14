@@ -1,0 +1,5 @@
+- type: barSign
+  id: AlcoholicSign
+  name: barsign-prototype-name-alcoholic
+  icon: "corvax_alcoholic"
+  description: barsign-prototype-description-alcoholic

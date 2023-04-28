@@ -7,6 +7,10 @@
     weight: 10
     startAfter: 30
     duration: 35
+    startAudio: # Corvax-Announcements
+      path: /Audio/Corvax/Announcements/flux.ogg
+      params:
+        volume: -4
   - type: AnomalySpawnRule
 
 - type: entity
@@ -18,6 +22,10 @@
     weight: 5
     startAfter: 30
     duration: 35
+    startAudio: # Corvax-Announcements
+      path: /Audio/Corvax/Announcements/blusp_anomalies.ogg
+      params:
+        volume: -4
   - type: BluespaceArtifactRule
 
 - type: entity
@@ -113,8 +121,14 @@
   - type: StationEvent
     startAnnouncement: station-event-gas-leak-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/gasleak_start.ogg # Corvax-Announcements
+      params:
+        volume: -4
     endAnnouncement: station-event-gas-leak-end-announcement
+    endAudio:
+      path: /Audio/Announcements/gasleak_end.ogg # Corvax-Announcements
+      params:
+        volume: -4
     earliestStart: 10
     minimumPlayers: 5
     weight: 5
@@ -146,7 +160,11 @@
     startAnnouncement: station-event-meteor-swarm-start-announcement
     endAnnouncement: station-event-meteor-swarm-end-announcement
     startAudio:
-      path: /Audio/Announcements/meteors.ogg
+      path: /Audio/Announcements/meteors_start.ogg
+      params:
+        volume: -4
+    endAudio:
+      path: /Audio/Announcements/meteors_end.ogg # Corvax-Announcements
       params:
         volume: -4
     startAfter: 30
@@ -191,7 +209,9 @@
     weight: 10
     duration: 1
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/sentience.ogg # Corvax-Announcements
+      params:
+        volume: -4
   - type: RandomSentienceRule
 
 - type: entity
@@ -203,8 +223,10 @@
     weight: 10
     startAnnouncement: station-event-solar-flare-start-announcement
     endAnnouncement: station-event-solar-flare-end-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
+    startAudio: # Corvax-Announcements
+      path: /Audio/Corvax/Announcements/comms_blackout.ogg
+      params:
+        volume: -4
     duration: 120
     maxDuration: 240
   - type: SolarFlareRule
@@ -223,7 +245,9 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-clog-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/ventclog.ogg # Corvax-Announcements
+      params:
+        volume: -4
     earliestStart: 15
     minimumPlayers: 15
     weight: 5

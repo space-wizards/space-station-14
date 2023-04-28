@@ -41,6 +41,8 @@
   - type: Actions
   - type: TypingIndicator
     proto: robot
+  - type: TTS
+    voice: TrainingRobot
   - type: Speech
     speechSounds: Pai
     # This has to be installed because otherwise they're not "alive",

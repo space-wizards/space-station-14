@@ -10,6 +10,10 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# Secret
+Resources/Prototypes/CorvaxSecrets
+Resources/Prototypes/CorvaxSecretsServer
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

@@ -223,7 +223,7 @@
   name: lawyer
   components:
   - type: SpawnPoint
-    job_id: Lawyer
+    job_id: IAA # Corvax-IAA: Lawyer replaced with IAA
   - type: Sprite
     layers:
       - state: green

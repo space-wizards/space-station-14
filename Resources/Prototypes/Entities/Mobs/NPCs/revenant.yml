@@ -42,6 +42,8 @@
   - type: Examiner
   - type: NoSlip
   - type: Actions
+  - type: TTS
+    voice: Kelthuzad
   - type: Eye
     drawFov: false
   - type: DoAfter
@@ -72,8 +74,8 @@
     - StolenEssence
   - type: RandomMetadata
     nameSegments:
-    - The
+#    - The
     - RevenantType
-    - of
+#    - of
     - RevenantAdjective
     - RevenantTheme

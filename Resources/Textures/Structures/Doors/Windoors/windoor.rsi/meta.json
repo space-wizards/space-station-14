@@ -1,7 +1,7 @@
 {
     "version":1,
     "license":"CC-BY-SA-3.0",
-    "copyright":"Taken from tgstation at https://github.com/tgstation/tgstation/blob/3681006d7102045e334e8eddb23a8685fcdb258a/icons/obj/doors/windoor.dmi",
+    "copyright":"assembly.png, closed.png, closing.png, open.png, opening.png taken from skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/639e77f6e957bce88d9734b4b97b249738af42b1, other from tgstation at https://github.com/tgstation/tgstation/blob/3681006d7102045e334e8eddb23a8685fcdb258a/icons/obj/doors/windoor.dmi",
     "size": {
         "x":32,
         "y":32
@@ -157,6 +157,10 @@
             "directions":4
         },
         {
+            "name":"bolted_open_unlit",
+            "directions":4
+        },
+        {
             "name":"welded",
             "directions":4
         },
@@ -166,6 +170,10 @@
         },
         {
             "name": "emergency_unlit",
+            "directions": 4
+        },
+        {
+            "name": "emergency_open_unlit",
             "directions": 4
         }
     ]

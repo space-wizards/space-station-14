@@ -1,0 +1,71 @@
+- type: entity
+  id: PottedPlantAlt0
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: Corvax/Structures/Furniture/potted_plants.rsi
+    state: plant-0
+
+- type: entity
+  id: PottedPlantAlt1
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: Corvax/Structures/Furniture/potted_plants.rsi
+    state: plant-1
+
+- type: entity
+  id: PottedPlantAlt2
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: Corvax/Structures/Furniture/potted_plants.rsi
+    state: plant-2
+
+- type: entity
+  id: PottedPlantAlt3
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: Corvax/Structures/Furniture/potted_plants.rsi
+    state: plant-3
+
+- type: entity
+  id: PottedPlantAlt4
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: Corvax/Structures/Furniture/potted_plants.rsi
+    state: plant-4
+
+- type: entity
+  id: PottedPlantAlt5
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: Corvax/Structures/Furniture/potted_plants.rsi
+    state: plant-5
+
+- type: entity
+  id: PottedPlantAlt6
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: Corvax/Structures/Furniture/potted_plants.rsi
+    state: plant-6
+
+- type: entity
+  id: PottedPlantAlt7
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: Corvax/Structures/Furniture/potted_plants.rsi
+    state: plant-7
+
+- type: entity
+  id: PottedPlantAlt8
+  parent: PottedPlantBase
+  components:
+  - type: Sprite
+    sprite: Corvax/Structures/Furniture/potted_plants.rsi
+    state: plant-8

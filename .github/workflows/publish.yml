@@ -6,7 +6,7 @@ concurrency:
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '0 1 * * *'
 
 jobs:
   build:
@@ -16,6 +16,23 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'recursive'
+
+    # Corvax-Secrets-Start
+    - name: Setup secrets
+      env:
+        SSH_KEY: ${{ secrets.SECRETS_PRIVATE_KEY }}
+      if: ${{ env.SSH_KEY != '' }}
+      run: |
+        mkdir ~/.ssh
+        echo "${{ secrets.SECRETS_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        echo "HOST *" > ~/.ssh/config
+        echo "StrictHostKeyChecking no" >> ~/.ssh/config
+        git -c submodule.Secrets.update=checkout submodule update --init
+        cp -R Secrets/Prototypes Resources/Prototypes/CorvaxSecrets
+        cp -R Secrets/ServerPrototypes Resources/Prototypes/CorvaxSecretsServer
+    # Corvax-Secrets-End
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
@@ -26,7 +43,7 @@ jobs:
         cd RobustToolbox
         git fetch --depth=1
 
-    - name: Package client
+    - name: Package all
       run: |
         Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
         Tools/package_client_build.py
@@ -39,26 +56,27 @@ jobs:
         mkdir "release/${{ github.sha }}"
         mv release/*.zip "release/${{ github.sha }}"
 
-    - name: Upload files to centcomm
-      uses: appleboy/scp-action@master
+    - name: Upload files to mothership
+      uses: burnett01/rsync-deployments@5.2
       with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
-        source: "release/${{ github.sha }}"
-        target: "/home/wizards-build-push/builds_dir/builds/"
-        strip_components: 1
+        switches: -avzr --ignore-existing
+        path: "release/${{ github.sha }}"
+        remote_path: ${{ secrets.BUILDS_PATH }}
+        remote_host: ${{ secrets.BUILDS_HOST }}
+        remote_user: ${{ secrets.BUILDS_USERNAME }}
+        remote_key: ${{ secrets.BUILDS_SSH_KEY }}
 
     - name: Update manifest JSON
       uses: appleboy/ssh-action@master
       with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
-        script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
+        host: ${{ secrets.BUILDS_HOST }}
+        username: ${{ secrets.BUILDS_USERNAME }}
+        key: ${{ secrets.BUILDS_SSH_KEY }}
+        script: node ~/scripts/push_to_manifest.js -fork syndicate -id ${{ github.sha }}
 
     - name: Publish changelog
       run: Tools/actions_changelogs_since_last_run.py
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
+        TRANSLATION_API_URL: ${{ secrets.CHANGELOG_TRANSLATION_API_URL }}

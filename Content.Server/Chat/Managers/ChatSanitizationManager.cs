@@ -11,6 +11,18 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
 
     private static readonly Dictionary<string, string> SmileyToEmote = new()
     {
+        // Corvax-Localization-Start
+        { "хд", "chatsan-laughs" },
+        { "о-о", "chatsan-wide-eyed" }, // cyrillic о
+        { "о.о", "chatsan-wide-eyed" }, // cyrillic о
+        { "0_о", "chatsan-wide-eyed" }, // cyrillic о
+        { "о/", "chatsan-waves" }, // cyrillic о
+        { "о7", "chatsan-salutes" }, // cyrillic о
+        { "0_o", "chatsan-wide-eyed" },
+        { "лмао", "chatsan-laughs" },
+        { "рофл", "chatsan-laughs" },
+        { "яхз", "chatsan-shrugs" },
+        // Corvax-Localization-End
         // I could've done this with regex, but felt it wasn't the right idea.
         { ":)", "chatsan-smiles" },
         { ":]", "chatsan-smiles" },

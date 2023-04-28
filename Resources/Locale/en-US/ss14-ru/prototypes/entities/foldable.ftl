@@ -1,0 +1,2 @@
+ent-BaseFoldable = foldable
+    .desc = { "" }

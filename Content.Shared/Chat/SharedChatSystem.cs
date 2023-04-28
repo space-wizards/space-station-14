@@ -14,11 +14,11 @@ public abstract class SharedChatSystem : EntitySystem
     public const char DeadPrefix = '\\';
     public const char LOOCPrefix = '(';
     public const char OOCPrefix = '[';
-    public const char EmotesPrefix = '@';
+    public const char EmotesPrefix = '%'; // Corvax-Localization
     public const char AdminPrefix = ']';
     public const char WhisperPrefix = ',';
 
-    public const char DefaultChannelKey = 'h';
+    public const char DefaultChannelKey = 'р';
     public const string CommonChannel = "Common";
     public static string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
 

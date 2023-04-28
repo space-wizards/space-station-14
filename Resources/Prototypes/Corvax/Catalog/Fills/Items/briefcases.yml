@@ -1,0 +1,11 @@
+- type: entity
+  id: BriefcaseIAAFilled
+  parent: BriefcaseBrown
+  suffix: IAA
+  components:
+    - type: StorageFill
+      contents:
+        - id: Paper
+          amount: 3
+        - id: PenCentcom
+        - id: RubberStampIAA

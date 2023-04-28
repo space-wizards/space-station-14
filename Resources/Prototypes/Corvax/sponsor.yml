@@ -1,0 +1,267 @@
+﻿# OopsieDoopsie
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterAtmosianBomberJacket
+  name: atmosian bomber jacket
+  description: A thick, well-worn atmosian leather bomber jacket.
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/OuterClothing/Coats/atmosian.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/Clothing/OuterClothing/Coats/atmosian.rsi
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskGasAtmosian
+  name: atmosian gas mask
+  description: Improved gas mask utilized by atmospheric technicians. It's flameproof!
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Mask/atmosian.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/Clothing/Mask/atmosian.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Heat: 0.80
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingCloakAtmosian
+  name: atmosian's cloak
+  description: The cloak of a legendary Atmosian.
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Neck/Cloaks/atmosian.rsi
+
+# Fezory
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskSkull
+  name: skull mask
+  description: Spooky skull mask.
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Mask/death.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/Clothing/Mask/death.rsi
+    - type: BreathMask
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingCloakGamer
+  name: legendary gamer's cloak
+  description: Worn by the most skilled professional gamers.
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Neck/Cloaks/gamer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSkeleton
+  name: skeleton jumpsuit
+  description: A black jumpsuit with a white bone pattern printed on it. Spooky!
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Uniforms/Jumpsuit/skeleton.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/Clothing/Uniforms/Jumpsuit/skeleton.rsi
+
+# NEKISH
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelHoS
+  name: head of security's satchel
+  description: Stylish, leather black satchel
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/NEKISH/Clothing/Back/Satchels/hos.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltHoS
+  name: leather security belt
+  description: Stylish, leather black belt
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/NEKISH/Clothing/Belt/hos.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/NEKISH/Clothing/Belt/hos.rsi
+    - type: Storage
+      whitelist:
+        tags:
+          - CigPack
+          - Taser
+          - SecBeltEquip
+          - Radio
+        components:
+          - Stunbaton
+          - FlashOnTrigger
+          - Flash
+          - Handcuff
+    - type: ItemMapper
+      mapLayers:
+        flashbang:
+          whitelist:
+            components:
+              - FlashOnTrigger
+        stunbaton:
+          whitelist:
+            components:
+              - Stunbaton
+      sprite: Clothing/Belt/belt_overlay.rsi
+    - type: Appearance
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesLeatherHoS
+  name: leather gloves
+  description: Stylish, black leather gloves
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/NEKISH/Clothing/Hands/Gloves/hos.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/NEKISH/Clothing/Hands/Gloves/hos.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapLeatherHoS
+  name: leather head of security's cap
+  description: Pretty old stuff for these times, bringing back old memories...
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/NEKISH/Clothing/Head/Hats/hoscap.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/NEKISH/Clothing/Head/Hats/hoscap.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatHoSOvercoat
+  name: armored overcoat
+  description: Pretty old stuff for these times, bringing back old memories...
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/NEKISH/Clothing/OuterClothing/Coats/hos_overcoat.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/NEKISH/Clothing/OuterClothing/Coats/hos_overcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+          Piercing: 0.4
+          Heat: 0.7
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHoSOld
+  name: old head of security's jumpsuit
+  description: Pretty old stuff for these times, bringing back old memories...
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/NEKISH/Clothing/Uniforms/Jumpsuit/hos.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/NEKISH/Clothing/Uniforms/Jumpsuit/hos.rsi
+
+# ken41k
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsWatchDivine
+  name: divine watches
+  description: This watch can only be worn by a divine person
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Hands/Accessories/watch.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Hands/Accessories/watch.rsi
+
+- type: marking
+  id: AugmentsRoboticRightArm
+  bodyPart: RArm
+  markingCategory: Arms
+  sponsorOnly: true
+  sprites:
+    - sprite: Corvax/Mobs/Customization/augments.rsi
+      state: robotic_r_arm
+
+- type: marking
+  id: AugmentsRoboticRightHand
+  bodyPart: RHand
+  markingCategory: Arms
+  sponsorOnly: true
+  sprites:
+    - sprite: Corvax/Mobs/Customization/augments.rsi
+      state: robotic_r_hand
+
+# jesuisunfou
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesLeatherUSSPBlack
+  name: old ussp leather gloves
+  description: Black leather gloves from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Hands/Gloves/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Hands/Gloves/ussp.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapUSSPBlack
+  name: old ussp leather cap
+  description: Pretty old stuff from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Head/Hats/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Head/Hats/ussp.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatUSSPOvercoatBlack
+  name: old ussp armored overcoat
+  description: Pretty old stuff from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/OuterClothing/Coats/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/OuterClothing/Coats/ussp.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitUSSPBlack
+  name: old ussp jumpsuit
+  description: Pretty old stuff from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Uniforms/Jumpsuit/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Uniforms/Jumpsuit/ussp.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesUSSPBlack
+  name: old ussp boots
+  description: Pretty old stuff from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Shoes/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Shoes/ussp.rsi

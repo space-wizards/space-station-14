@@ -32,6 +32,7 @@
   weights:
     EscapeShuttleObjective: 1
     DieObjective: 0.05
+    HijackShuttleObjective: 0.02 # Corvax-Hijack
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSocial

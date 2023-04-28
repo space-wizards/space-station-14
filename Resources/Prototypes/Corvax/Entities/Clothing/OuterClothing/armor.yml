@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorCentcomCarapace
+  name: naval carapace
+  description: A carapace worn by Naval Command members.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/OuterClothing/Armor/centcom_naval_carapace.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/OuterClothing/Armor/centcom_naval_carapace.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.6
+          Heat: 0.5
+    - type: ExplosionResistance
+      damageCoefficient: 0.65

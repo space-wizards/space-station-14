@@ -12,8 +12,8 @@
       state: ertleader
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitaryLeader
-      - names_last
+      - NamesFirstMilitaryLeaderCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: ERTLeader
 
@@ -29,8 +29,8 @@
       prototypes: [ ERTLeaderGear ]
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitaryLeader
-      - names_last
+      - NamesFirstMilitaryLeaderCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
@@ -69,8 +69,8 @@
       state: ertjanitor
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: ERTJanitor
 
@@ -84,8 +84,8 @@
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: Loadout
       prototypes: [ ERTJanitorGear ]
 
@@ -126,8 +126,8 @@
       state: ertengineer
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: ERTEngineer
 
@@ -141,8 +141,8 @@
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: Loadout
       prototypes: [ ERTEngineerGear ]
 
@@ -183,8 +183,8 @@
       state: ertsecurity
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: ERTSecurity
 
@@ -198,8 +198,8 @@
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: Loadout
       prototypes: [ ERTSecurityGear ]
 
@@ -240,8 +240,8 @@
       state: ertmedical
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: ERTMedical
 
@@ -255,8 +255,8 @@
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: Loadout
       prototypes: [ ERTMedicalGear ]
 
@@ -308,8 +308,8 @@
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
 ## Central Command
 
 - type: entity
@@ -344,7 +344,7 @@
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomMetadata
-      nameSegments: [ names_death_commando ]
+      nameSegments: [ corvax_names_death_commando ] # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: SyndicateAgent
 

@@ -14,3 +14,13 @@
     ClothingShoesBootsLaceup: 2
     ClothingHeadsetService: 2
     ClothingNeckLawyerbadge: 2
+    # Corvax-LawyerDrip-Start
+    ClothingHandsGlovesColorWhite: 1
+    ClothingHandsGlovesColorGray: 1
+    ClothingHandsGlovesColorBlack: 1
+    ClothingHandsGlovesColorRed: 1
+    ClothingHandsGlovesColorBlue: 1
+    ClothingHeadHatBowlerHat: 1
+    ClothingHeadHatOutlawHat: 1
+    ClothingHeadHatTophat: 1
+    # Corvax-LawyerDrip-End

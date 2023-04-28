@@ -1,0 +1,27 @@
+- type: entity
+  name: carp chair
+  id: ChairCarp
+  parent: SeatBase
+  description: A luxurious chair, the many purple scales reflect the light in a most pleasing manner.
+  components:
+    - type: Transform
+      anchored: true
+    - type: Anchorable
+    - type: Rotatable
+    - type: Sprite
+      sprite: Corvax/Structures/Furniture/chairs.rsi
+      state: carp
+
+- type: entity
+  name: brass chair
+  id: ChairBrass
+  parent: SeatBase
+  description: A spinny chair made of bronze. It has little cogs for wheels!
+  components:
+    - type: Transform
+      anchored: true
+    - type: Anchorable
+    - type: Rotatable
+    - type: Sprite
+      sprite: Corvax/Structures/Furniture/chairs.rsi
+      state: brass

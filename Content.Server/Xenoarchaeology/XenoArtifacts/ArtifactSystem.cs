@@ -299,6 +299,7 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </summary>
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
     {
+        return; // Corvax: No fun allowed
         var query = EntityQueryEnumerator<ArtifactComponent>();
         while (query.MoveNext(out var ent, out var artifactComp))
         {

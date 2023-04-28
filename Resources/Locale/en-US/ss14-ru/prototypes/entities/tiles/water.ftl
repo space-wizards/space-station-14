@@ -1,0 +1,2 @@
+ent-FloorWaterEntity = water
+    .desc = { "" }

@@ -8,7 +8,7 @@ on:
 
 jobs:
   Label:
-    if: github.actor != 'PJBot'
+    if: github.actor != 'IanComradeBot'
     runs-on: ubuntu-latest
     steps:
       - name: Check for Merge Conflicts

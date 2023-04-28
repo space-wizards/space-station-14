@@ -1,3 +1,4 @@
+using Content.Shared.Corvax.TTS;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Enums;
@@ -46,6 +47,14 @@ public sealed class HumanoidAppearanceComponent : Component
     [DataField("species", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>), required: true)]
     public string Species { get; set; } = default!;
 
+    // Corvax-TTS-Start
+    /// <summary>
+    ///     Current voice. Used for correct cloning.
+    /// </summary>
+    [DataField("voice", customTypeSerializer: typeof(PrototypeIdSerializer<TTSVoicePrototype>))]
+    public string Voice { get; set; } = SharedHumanoidAppearanceSystem.DefaultVoice;
+    // Corvax-TTS-End
+
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.
     /// </summary>
@@ -70,6 +79,11 @@ public sealed class HumanoidAppearanceComponent : Component
 
     [DataField("eyeColor")]
     public Color EyeColor = Color.Brown;
+
+    // Corvax-ChatColor-Start
+    [DataField("speakerColor")]
+    public Color SpeakerColor = Color.White;
+    // Corvax-ChatColor-End
 
     /// <summary>
     ///     Hair color of this humanoid. Used to avoid looping through all markings
@@ -97,6 +111,7 @@ public sealed class HumanoidAppearanceState : ComponentState
     public readonly string Species;
     public readonly Color SkinColor;
     public readonly Color EyeColor;
+    public readonly Color SpeakerColor; // Corvax-SpeakerColor
 
     public HumanoidAppearanceState(
         MarkingSet currentMarkings,
@@ -108,7 +123,8 @@ public sealed class HumanoidAppearanceState : ComponentState
         int age,
         string species,
         Color skinColor,
-        Color eyeColor)
+        Color eyeColor,
+        Color speakerColor) // Corvax-SpeakerColor
     {
         Markings = currentMarkings;
         PermanentlyHidden = permanentlyHidden;
@@ -120,6 +136,7 @@ public sealed class HumanoidAppearanceState : ComponentState
         Species = species;
         SkinColor = skinColor;
         EyeColor = eyeColor;
+        SpeakerColor = speakerColor; // Corvax-SpeakerColor
     }
 
     [DataDefinition]

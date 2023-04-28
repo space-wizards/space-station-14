@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. stamp-syndicate is a modified version of stamp-warden. paper_stamp-syndicate by Veritius. paper_receipt by eoineoineoin. pen_centcom is a resprited version of pen_cap by PuroSlavKing (Github)",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e05699709338e30ecde1bcd8f61d559ed2d7798e. stamp-warden is modified version of stamp-hos. stamp-iaa is modified version of stamp-approve. paper_receipt by eoineoineoin. paper_stamp-chaplain taken from https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. pen_centcom is a resprited version of pen_cap by PuroSlavKing (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -121,6 +121,9 @@
       "name": "paper_stamp-deny"
     },
     {
+      "name": "paper_stamp-approve"
+    },
+    {
       "name": "paper_stamp-hop"
     },
     {
@@ -149,6 +152,9 @@
     },
     {
       "name": "paper_stamp-generic"
+    },
+	{
+      "name": "paper_stamp-psychologist"
     },
     {
       "name": "paper_talisman"
@@ -264,6 +270,9 @@
       "name": "stamp-deny"
     },
     {
+      "name": "stamp-approve"
+    },
+    {
       "name": "stamp-hop"
     },
     {
@@ -289,6 +298,9 @@
     },
     {
       "name": "stamp-warden"
+    },
+	{
+      "name": "stamp-psychologist"
     },
     {
       "name": "clipboard-equipped-BELT",

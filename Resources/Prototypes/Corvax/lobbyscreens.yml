@@ -1,0 +1,83 @@
+﻿- type: lobbyBackground
+  id: BarLife
+  background: /Textures/Corvax/LobbyScreens/bar-life.png
+
+- type: lobbyBackground
+  id: DeadInSpace
+  background: /Textures/Corvax/LobbyScreens/dead-in-space.png
+
+- type: lobbyBackground
+  id: Deadsquad
+  background: /Textures/Corvax/LobbyScreens/deadsquad.png
+
+- type: lobbyBackground
+  id: Detective
+  background: /Textures/Corvax/LobbyScreens/detective.png
+
+- type: lobbyBackground
+  id: EngineersChill
+  background: /Textures/Corvax/LobbyScreens/engineers-chill.png
+
+- type: lobbyBackground
+  id: Greytide
+  background: /Textures/Corvax/LobbyScreens/greytide.png
+
+- type: lobbyBackground
+  id: Hydroponics
+  background: /Textures/Corvax/LobbyScreens/hydroponics.png
+
+- type: lobbyBackground
+  id: IntoSpace
+  background: /Textures/Corvax/LobbyScreens/into-space.png
+
+- type: lobbyBackground
+  id: Jailbreak
+  background: /Textures/Corvax/LobbyScreens/jailbreak.png
+
+- type: lobbyBackground
+  id: Kosmologistika
+  background: /Textures/Corvax/LobbyScreens/kosmologistika.png
+
+- type: lobbyBackground
+  id: LizardBar
+  background: /Textures/Corvax/LobbyScreens/lizard-bar.png
+
+- type: lobbyBackground
+  id: Lofi
+  background: /Textures/Corvax/LobbyScreens/lofi.png
+
+- type: lobbyBackground
+  id: MaintenanceClown
+  background: /Textures/Corvax/LobbyScreens/maintenance-clown.png
+
+- type: lobbyBackground
+  id: MedDepart
+  background: /Textures/Corvax/LobbyScreens/med-depart.png
+
+- type: lobbyBackground
+  id: NukiesHere
+  background: /Textures/Corvax/LobbyScreens/nukies-here.png
+
+- type: lobbyBackground
+  id: RegularShift
+  background: /Textures/Corvax/LobbyScreens/regular-shift.png
+
+- type: lobbyBackground
+  id: Russellmart
+  background: /Textures/Corvax/LobbyScreens/russellmart.png
+
+- type: lobbyBackground
+  id: Sidor
+  background: /Textures/Corvax/LobbyScreens/sidor.png
+
+- type: lobbyBackground
+  id: Singulord
+  background: /Textures/Corvax/LobbyScreens/singulord.png
+
+- type: lobbyBackground
+  id: SpaceMudaki
+  background: /Textures/Corvax/LobbyScreens/space-mudaki.png
+
+- type: lobbyBackground
+  id: Traitor
+  background: /Textures/Corvax/LobbyScreens/traitor.png

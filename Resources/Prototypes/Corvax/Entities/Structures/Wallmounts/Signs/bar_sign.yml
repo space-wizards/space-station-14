@@ -1,0 +1,11 @@
+- type: entity
+  parent: BaseBarSign
+  id: BarSignAlcoholic
+  name: Pour and that's it
+  description: Pour it on, that's all. Hard times have come...
+  components:
+  - type: Sprite
+    drawdepth: Objects
+    sprite: Structures/Wallmounts/barsign.rsi
+  - type: BarSign
+    current: AlcoholicSign
