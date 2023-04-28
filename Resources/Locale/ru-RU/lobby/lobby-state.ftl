@@ -1,5 +1,5 @@
 lobby-state-paused = Пауза
-lobby-state-soon = Round starting soon
+lobby-state-soon = Раунд скоро начнётся
 lobby-state-right-now-question = Прямо сейчас?
 lobby-state-right-now-confirmation = Прямо сейчас
 lobby-state-round-start-countdown-text = Раунд начнётся через: { $timeLeft }

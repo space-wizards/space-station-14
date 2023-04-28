@@ -1,5 +1,5 @@
-ent-Jug = jug
-    .desc = Used to contain a very large amount of chemicals or solutions. Chugging is extremely ill-advised.
+ent-Jug = кувшин
+    .desc = Используется для хранения очень большого количества химических веществ или растворов. Пить из него крайне не рекомендуется.
 ent-JugCarbon = { ent-Jug }
     .desc = { ent-Jug.desc }
 ent-JugIodine = { ent-Jug }

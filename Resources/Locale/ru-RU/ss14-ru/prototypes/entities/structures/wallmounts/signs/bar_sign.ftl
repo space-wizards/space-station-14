@@ -47,5 +47,5 @@ ent-BarSignZocalo = Сокало
     .desc = Ранее находилось в Космоамерике.
 ent-BarSignEmprah = За Империю
     .desc = Нравится и фанатикам, и еретикам, и завсегдатаям с дефектами мозга.
-ent-BarSignSpacebucks = Spacebucks
-    .desc = You can't get away from them, even in space.
+ent-BarSignSpacebucks = Кредиты
+    .desc = От них нельзя скрыться, даже в космосе.

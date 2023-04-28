@@ -1,6 +1,6 @@
-ent-SignalTimer = signal timer
-    .desc = It's a timer for sending timed signals to things.
-ent-ScreenTimer = screen timer
-    .desc = It's a timer for sending timed signals to things, with a built-in screen.
-ent-BrigTimer = brig timer
-    .desc = It's a timer for brig cells.
+ent-SignalTimer = таймер сигнала
+    .desc = Это таймер для подачи на устройства сигналов через определенное время.
+ent-ScreenTimer = таймер сигнала с экраном
+    .desc = Это таймер для подачи на устройства сигналов через определенное время, со встроенным экраном.
+ent-BrigTimer = бриг-таймер
+    .desc = Это таймер для камер брига.

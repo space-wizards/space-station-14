@@ -1,3 +1,3 @@
-ent-HandheldStationMap = station map
-    .desc = Displays a readout of the current station.
-    .suffix = Handheld
+ent-HandheldStationMap = ручная карта станции
+    .desc = Отображает схему текущей станции.
+    .suffix = Ручной

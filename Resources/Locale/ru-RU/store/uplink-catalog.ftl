@@ -43,7 +43,7 @@ uplink-mosin-ammo-desc = Коробка патронов для резервно
 uplink-holopara-kit-name = набор "Голопаразит"
 uplink-holopara-kit-desc =
     Предмет гордости и радости компании Cybersun. Содержит инжектор, в котором находится разумный метафизический страж из твердого света, который в неактивном состоянии скрывается в теле пользователя.
-    Страж может наносить быстрые удары, невосприимчив к опасностям атмосферы и пулям, но разделяет получаемые повреждения с пользователем.
+    Страж может наносить быстрые удары, невосприимчив к опасностям атмосферы и устойчив к механическу урону, но разделяет получаемые повреждения с хозяином.
 uplink-holster-name = плечевая кобура
 uplink-holster-desc = { ent-ClothingBeltSyndieHolster.desc }
 uplink-emag-name = криптографический секвенсор
@@ -58,8 +58,8 @@ uplink-stealth-box-name = стелс-коробка
 uplink-stealth-box-desc = Ящик, оснащенный технологией невидимости, проникните везде и не двигайтесь слишком быстро!
 uplink-headset-name = полноразмерная гарнитура синдиката
 uplink-headset-desc = Гарнитура, позволяющая связываться с другими предателями. Имеет 4 ячейки для ключей шифрования.
-uplink-encryption-key-name = ключ шифрования Синдиката
-uplink-encryption-key-desc = Ключ шифрования для доступа к секретной частоте наших специальных агентов. Никто не узнает о вашем специальном канале связи с друзьями... или соперниками.
+uplink-encryption-key-name = ключи шифрования Синдиката
+uplink-encryption-key-desc = Два ключа шифрования для доступа к секретной частоте наших специальных агентов. Отдайте второй товарищу, но следите, чтобы он не попал в руки противника.
 uplink-hypopen-name = гипоручка
 uplink-hypopen-desc = Химический гипоспрей, замаскированный под ручку, способный мгновенно впрыснуть до 10 ед. реагентов. Изначально пуст.
 uplink-voice-mask-name = голосовая маска
@@ -102,16 +102,16 @@ uplink-carp-dehydrated-desc = { ent-DehydratedSpaceCarp.desc }
 # Job Specific
 uplink-gatfruit-seeds-name = { ent-GatfruitSeeds }
 uplink-gatfruit-seeds-desc = И кто сказал, что пушки не растут на деревьях?
-uplink-rigged-boxing-gloves-name = Rigged Boxing Gloves
-uplink-rigged-boxing-gloves-desc = Float like a butterfly, sting like a bee.
+uplink-rigged-boxing-gloves-name = Нечестные боксёрские перчатки
+uplink-rigged-boxing-gloves-desc = Порхай как бабочка, жаль как пчела.
 uplink-necronomicon-name = некрономикон
 uplink-necronomicon-desc = Нечестивая книга, позволяющая призвать демонического фамильяра.
 uplink-revolver-cap-gun-fake-name = Фальшивый игрушечный пистолет
 uplink-revolver-cap-gun-fake-desc = Одурачьте своих врагов! Использует как пистоны, так и патроны калибра .45 магнум. Последними и будет заряжен при покупке.
 uplink-banana-peel-explosive-name = Взрывная банановая кожура
 uplink-banana-peel-explosive-desc = Они взорвутся от смеха, когда поскользнутся на ней!
-uplink-hot-potato-name = Hot Potato
-uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only passed to someone else!
+uplink-hot-potato-name = Горячая картошка
+uplink-hot-potato-desc = После активации эту бомбу замедленного действия нельзя бросить - только передать кому-то другому!
 # Armor
 uplink-chameleon-name = набор "Хамелеон"
 uplink-chameleon-desc = Рюкзак, полный вещей, оснащенных технологией хамелеона, позволяющих вам маскироваться под кого угодно на станции, и даже больше!
@@ -158,8 +158,8 @@ uplink-cat-ears-name = { ent-ClothingHeadHatCatEars }
 uplink-cat-ears-desc = UwU
 uplink-outlaw-hat-name = { ent-ClothingHeadHatOutlawHat }
 uplink-outlaw-hat-desc = { ent-ClothingHeadHatOutlawHat.desc }
-uplink-outlaw-glasses-name = Outlaw Glasses
-uplink-outlaw-glasses-desc = A must for every self-respecting undercover agent.
+uplink-outlaw-glasses-name = Очки негодяя
+uplink-outlaw-glasses-desc = Обязательны для каждого уважающего себя агента под прикрытием.
 uplink-costume-pyjama-name = { ent-ClothingBackpackDuffelSyndicatePyjamaBundle }
 uplink-costume-pyjama-desc = { ent-ClothingBackpackDuffelSyndicatePyjamaBundle.desc }
 uplink-costume-clown-name = вещмешок с костюмом клоуна

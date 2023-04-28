@@ -46,10 +46,10 @@ traitor-role-codewords =
     Кодовые слова можно использовать в обычном разговоре, чтобы незаметно идентифицировать себя для других агентов Синдиката.
     Прислушивайтесь к ним и храните их в тайне.
 traitor-role-uplink-code =
-    Set your ringtone to the notes { $code } to lock or unlock your uplink.
-    Remember to lock it and change it, or the stations crew will easily open it too!
+    Установите рингтон Вашего КПК на { $code } чтобы заблокировать или разблокировать аплинк.
+    Не забудьте заблокировать его и сменить код, иначе любой член экипажа станции сможет открыть аплинк!
 # don't need all the flavour text for character menu
 traitor-role-codewords-short =
-    The codewords are:
+    Кодовые слова:
     { $codewords }.
-traitor-role-uplink-code-short = Your uplink code is { $code }.
+traitor-role-uplink-code-short = Ваш код аплинка: { $code }.

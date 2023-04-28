@@ -1,11 +1,11 @@
 ent-SprayBottle = распылитель
     .desc = Распылитель с отвинчивающимся верхом.
-    .suffix = Пустая
-ent-MegaSprayBottle = mega spray bottle
-    .desc = A huge spray bottle, capable of unrivaled janitorial power.
-    .suffix = Empty
+    .suffix = Пустой
+ent-MegaSprayBottle = мега-распылитель
+    .desc = Большая бутылка-распылитель, обладающая непревзойденной чистящей силой.
+    .suffix = Пустой
 ent-SprayBottleWater = распылитель
-    .suffix = Полная
+    .suffix = Полный
     .desc = { ent-SprayBottle.desc }
 ent-SprayBottleSpaceCleaner = космический очиститель
     .desc = Непенящийся очиститель бренда BLAM!

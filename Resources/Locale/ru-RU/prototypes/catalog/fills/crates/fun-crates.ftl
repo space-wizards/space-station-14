@@ -26,5 +26,5 @@ ent-CrateFunParty = ящик для вечеринок
     .desc = Все участники вечеринки ждут, когда вы его откроете. Включает в себя подарки, напитки и даже торт.
 ent-CrateFunSyndicateSegway = ящик с сегвеем синдиката
     .desc = { ent-CrateLivestock.desc }
-ent-CrateFunBoxing = Boxing Crate
-    .desc = Want to set up an underground fight club or host a tournament amongst station crew? This crate is for you!
+ent-CrateFunBoxing = ящик боксерского снаряжения
+    .desc = Хотите организовать подпольный бойцовский клуб или провести турнир среди сотрудников станции? Этот ящик для вас!
