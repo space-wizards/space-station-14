@@ -54,14 +54,11 @@ public sealed class NPCUtilitySystem : EntitySystem
             return UtilityResult.Empty;
 
         var results = new Dictionary<EntityUid, float>();
-        var count = 0;
         var highestScore = 0f;
 
         foreach (var ent in ents)
         {
-            count++;
-
-            if (count > weh.Limit)
+            if (results.Count > weh.Limit)
                 break;
 
             var score = 1f;
@@ -149,6 +146,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             case TargetDistanceCon:
             {
                 var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+                var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
 
                 if (!TryComp<TransformComponent>(targetUid, out var targetXform) ||
                     !TryComp<TransformComponent>(owner, out var xform))
@@ -158,10 +156,11 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 if (!targetXform.Coordinates.TryDistance(EntityManager, _transform, xform.Coordinates,
                         out var distance))
+                {
                     return 0f;
+                }
 
-                // Score can get clamped later - Set a reasonable max for distance considerations.
-                return distance / 100f;
+                return Math.Clamp(distance / radius, 0f, 1f);
             }
             case TargetHealthCon:
             {

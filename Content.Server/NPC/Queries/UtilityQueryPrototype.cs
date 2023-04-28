@@ -25,5 +25,5 @@ public sealed class UtilityQueryPrototype : IPrototype
     /// How many entities we are allowed to consider. This is applied after all queries have run.
     /// </summary>
     [DataField("limit")]
-    public int Limit = 8;
+    public int Limit = 128;
 }

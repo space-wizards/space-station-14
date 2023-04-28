@@ -28,7 +28,7 @@ public sealed class HTNSystem : EntitySystem
     [Dependency] private readonly NPCUtilitySystem _utility = default!;
 
     private ISawmill _sawmill = default!;
-    private readonly JobQueue _planQueue = new();
+    private readonly JobQueue _planQueue = new(0.004);
 
     private readonly HashSet<ICommonSession> _subscribers = new();
 
