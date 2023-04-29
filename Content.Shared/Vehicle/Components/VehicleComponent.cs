@@ -67,7 +67,7 @@ public sealed partial class VehicleComponent : Component
     /// </summary>
     [DataField("hasKey")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool HasKey = false;
+    public bool HasKey;
 
     /// <summary>
     /// Determines from which side the vehicle will be displayed on top of the player.
@@ -75,33 +75,33 @@ public sealed partial class VehicleComponent : Component
 
     [DataField("southOver")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool SouthOver = false;
+    public bool SouthOver;
 
     [DataField("northOver")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool NorthOver = false;
+    public bool NorthOver;
 
     [DataField("westOver")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool WestOver = false;
+    public bool WestOver;
 
     [DataField("eastOver")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool EastOver = false;
+    public bool EastOver;
 
     /// <summary>
     /// What the y buckle offset should be in north / south
     /// </summary>
     [DataField("northOverride")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float NorthOverride = 0f;
+    public float NorthOverride;
 
     /// <summary>
     /// What the y buckle offset should be in north / south
     /// </summary>
     [DataField("southOverride")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float SouthOverride = 0f;
+    public float SouthOverride;
 
     [DataField("autoAnimate")]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -109,5 +109,5 @@ public sealed partial class VehicleComponent : Component
 
     [DataField("hideRider")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool HideRider = false;
+    public bool HideRider;
 }

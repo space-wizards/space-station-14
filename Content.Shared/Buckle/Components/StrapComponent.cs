@@ -36,9 +36,15 @@ public sealed class StrapComponent : Component
     /// The distance above which a buckled entity will be automatically unbuckled.
     /// Don't change it unless you really have to
     /// </summary>
+    /// <remarks>
+    /// Dont set this below 0.2 because that causes audio issues with <see cref="SharedBuckleSystem.OnBuckleMove"/>
+    /// My guess after testing is that the client sets BuckledTo to the strap in *some* ticks for some reason
+    /// whereas the server doesnt, thus the client tries to unbuckle like 15 times because it passes the strap null check
+    /// This is why this needs to be above 0.1 to make the InRange check fail in both client and server.
+    /// </remarks>
     [DataField("maxBuckleDistance", required: false)]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float MaxBuckleDistance = 0.1f;
+    public float MaxBuckleDistance = 0.2f;
 
     /// <summary>
     /// Gets and clamps the buckle offset to MaxBuckleDistance

@@ -114,7 +114,7 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBucklePreventCollide(EntityUid uid, BuckleComponent component, ref PreventCollideEvent args)
     {
-        if (args.BodyB.Owner != component.LastEntityBuckledTo)
+        if (args.BodyB.Owner != component.BuckledTo)
             return;
 
         if (component.Buckled || component.DontCollide)
@@ -190,7 +190,6 @@ public abstract partial class SharedBuckleSystem
     private void SetBuckledTo(EntityUid buckleUid, EntityUid? strapUid, StrapComponent? strapComp, BuckleComponent buckleComp)
     {
         buckleComp.BuckledTo = strapUid;
-        buckleComp.LastEntityBuckledTo = strapUid;
 
         if (strapUid == null)
         {
@@ -198,6 +197,7 @@ public abstract partial class SharedBuckleSystem
         }
         else
         {
+            buckleComp.LastEntityBuckledTo = strapUid;
             buckleComp.DontCollide = true;
             buckleComp.Buckled = true;
             buckleComp.BuckleTime = _gameTiming.CurTime;
@@ -411,6 +411,7 @@ public abstract partial class SharedBuckleSystem
         if (attemptEvent.Cancelled)
             return false;
 
+        Logger.Debug($"{force}");
         if (!force)
         {
             if (_gameTiming.CurTime < buckleComp.BuckleTime + buckleComp.UnbuckleDelay)

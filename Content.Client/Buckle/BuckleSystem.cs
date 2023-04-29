@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Buckle;
+
 internal sealed class BuckleSystem : SharedBuckleSystem
 {
     [Dependency] private readonly RotationVisualizerSystem _rotationVisualizerSystem = default!;
