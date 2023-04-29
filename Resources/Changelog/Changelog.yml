@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Experimental research hardsuit can now be hidden in a backpack., type: Add}
-  id: 3079
-  time: '2023-02-28T16:04:30.0000000+00:00'
 - author: Visne
   changes:
   - {message: Removed annoying margin between viewport and chat in separated HUD.,
@@ -2884,3 +2879,9 @@ Entries:
       flashes.', type: Tweak}
   id: 3578
   time: '2023-04-29T13:38:40.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Nanotrasen has experimented with hiring some arachnid-like humanoids.,
+    type: Add}
+  id: 3579
+  time: '2023-04-29T16:19:07.0000000+00:00'
