@@ -75,15 +75,14 @@ public sealed class RCDSystem : EntitySystem
         if (!location.IsValid(EntityManager))
             return;
 
-        var gridIdOpt = location.GetGridUid(EntityManager);
-        if (!(gridIdOpt is EntityUid gridId) || !gridId.IsValid())
+        var gridId = location.GetGridUid(EntityManager);
+        if (!HasComp<MapGridComponent>(gridId))
         {
             location = location.AlignWithClosestGridTile();
-            gridIdOpt = location.GetGridUid(EntityManager);
+            gridId = location.GetGridUid(EntityManager);
             // Check if fixing it failed / get final grid ID
-            if (!(gridIdOpt is EntityUid gridId2) || !gridId2.IsValid())
+            if (!HasComp<MapGridComponent>(gridId))
                 return;
-            gridId = gridId2;
         }
 
         var mapGrid = _mapMan.GetGrid(gridId);
@@ -113,15 +112,14 @@ public sealed class RCDSystem : EntitySystem
         var user = args.User;
         var location = args.Location;
 
-        var gridIdOpt = location.GetGridUid(EntityManager);
-        if (!(gridIdOpt is EntityUid gridId) || !gridId.IsValid())
+        var gridId = location.GetGridUid(EntityManager);
+        if (HasComp<MapGridComponent>(gridId))
         {
             location = location.AlignWithClosestGridTile();
-            gridIdOpt = location.GetGridUid(EntityManager);
+            gridId = location.GetGridUid(EntityManager);
             // Check if fixing it failed / get final grid ID
-            if (!(gridIdOpt is EntityUid gridId2) || !gridId2.IsValid())
+            if (!HasComp<MapGridComponent>(gridId))
                 return;
-            gridId = gridId2;
         }
 
         var mapGrid = _mapMan.GetGrid(gridId);
