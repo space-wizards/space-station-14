@@ -11,7 +11,7 @@ public sealed partial class BlindableComponent : Component
     /// <summary>
     /// How many seconds will be subtracted from each attempt to add blindness to us?
     /// </summary>
-    [DataField("isBlind"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("isBlind"), AutoNetworkedField]
     public bool IsBlind;
 
     /// <summary>
@@ -21,7 +21,7 @@ public sealed partial class BlindableComponent : Component
     /// <remarks>
     /// Should eventually be replaced with a proper eye health system when we have bobby.
     /// </remarks>
-    [DataField("EyeDamage"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("EyeDamage"), AutoNetworkedField]
     public int EyeDamage = 0;
 
     public const int MaxDamage = 8;

@@ -9,6 +9,6 @@ namespace Content.Shared.Eye.Blinding.Components;
 [NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class VisionCorrectionComponent : Component
 {
-    [DataField("visionBonus"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("visionBonus"), AutoNetworkedField]
     public float VisionBonus = 3f;
 }
