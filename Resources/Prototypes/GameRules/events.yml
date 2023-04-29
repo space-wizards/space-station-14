@@ -255,6 +255,10 @@
     weight: 5
     duration: 60
   - type: SlimesSpawnRule
+    spawnedPrototypeChoices:
+      - MobAdultSlimesBlueAngry
+      - MobAdultSlimesGreenAngry
+      - MobAdultSlimesYellowAngry
 
 - type: entity
   id: SpiderSpawn

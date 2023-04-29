@@ -1,10 +1,14 @@
 ﻿- type: entity
-  name: blue slime
+  name: basic slime
   id: MobAdultSlimes
   parent: SimpleMobBase
+  abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   suffix: Good
   components:
+  - type: Faction
+    factions:
+    - SimpleNeutral
   - type: HTN
     rootTask: SimpleHostileCompound
   - type: Sprite
@@ -24,11 +28,10 @@
       - MobMask
       layer:
       - MobLayer
-  - type: MovementAlwaysTouching
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      120: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 4
@@ -38,12 +41,6 @@
   - type: Tag
     tags:
     - FootstepSound
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: blue_adult_slime
-      Dead:
-        Base: blue_adult_slime_dead
   - type: Butcherable
     butcheringType: Knife
     spawned:
@@ -93,7 +90,6 @@
             Heat: 3
       - !type:PopupMessage
         type: Local
-        visualType: Large
         messages: [ "slime-hurt-by-water-popup" ]
         probability: 0.25
   - type: CombatMode
@@ -105,7 +101,7 @@
     animation: WeaponArcPunch
     damage:
       types:
-        Blunt: 8
+        Blunt: 6
         Structural: 4
         Caustic: 4
   - type: InteractionPopup
@@ -121,6 +117,19 @@
 
 - type: entity
   name: blue slime
+  id: MobAdultSlimesBlueGood
+  parent: MobAdultSlimes
+  suffix: Good
+  components:
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: blue_adult_slime
+      Dead:
+        Base: blue_adult_slime_dead
+
+- type: entity
+  name: blue slime
   parent: MobAdultSlimes
   id: MobAdultSlimesBlueAngry
   suffix: Angry
@@ -128,6 +137,12 @@
     - type: Faction
       factions:
         - SimpleHostile
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: blue_adult_slime
+        Dead:
+          Base: blue_adult_slime_dead
 
 - type: entity
   name: green slime
@@ -148,7 +163,7 @@
     - type: MeleeWeapon
       damage:
         types:
-          Blunt: 8
+          Blunt: 6
           Structural: 4
           Caustic: 1
           Poison: 4
@@ -175,7 +190,7 @@
     - type: MeleeWeapon
       damage:
         types:
-          Blunt: 8
+          Blunt: 6
           Structural: 4
           Caustic: 1
           Poison: 4
@@ -199,7 +214,7 @@
     - type: MeleeWeapon
       damage:
         types:
-          Blunt: 8
+          Blunt: 6
           Structural: 4
           Caustic: 1
           Cellular: 3
@@ -226,7 +241,7 @@
     - type: MeleeWeapon
       damage:
         types:
-          Blunt: 8
+          Blunt: 6
           Structural: 4
           Caustic: 1
           Cellular: 3

@@ -12,7 +12,7 @@ public sealed class SlimesSpawnRule : StationEventSystem<SlimesSpawnRuleComponen
     {
         base.Started(uid, component, gameRule, args);
 		
-        var spawnLocations = EntityManager.EntityQuery<VentScrubberSpawnLocationComponent, TransformComponent>().ToList();
+        var spawnLocations = EntityManager.EntityQuery<MobScrubberSpawnLocationComponent, TransformComponent>().ToList();
         RobustRandom.Shuffle(spawnLocations);
 
         var mod = Math.Sqrt(GetSeverityModifier());

@@ -360,7 +360,7 @@
 
 - type: entity
   name: Slimes Spawner Blue Good
-  id: SpawnMobAdultSlimes
+  id: SpawnMobAdultSlimesBlue
   parent: MarkerBase
   components:
   - type: Sprite
@@ -369,7 +369,7 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobAdultSlimes
+      - MobAdultSlimesBlueGood
 
 - type: entity
   name: Slimes Spawner Blue Angry
