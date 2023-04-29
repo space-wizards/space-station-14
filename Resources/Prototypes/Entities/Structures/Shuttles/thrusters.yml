@@ -92,7 +92,8 @@
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    baseThrust: 5000
+    baseThrust: 2000
+    thrust: 2000
     machinePartThrust: Manipulator
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
@@ -133,7 +134,8 @@
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    baseThrust: 5000
+    baseThrust: 100
+    thrust: 100
   - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0
