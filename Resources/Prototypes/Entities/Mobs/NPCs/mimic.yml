@@ -32,7 +32,6 @@
       - MobMask
       layer:
       - MachineLayer
-  - type: HumanoidAppearance
   - type: AnimationPlayer
   - type: MeleeWeapon
     hidden: true

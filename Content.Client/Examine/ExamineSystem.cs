@@ -15,6 +15,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Threading;
+using Content.Shared.Eye.Blinding.Components;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
