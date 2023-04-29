@@ -467,10 +467,10 @@
     - CannotSuicide
 
 - type: entity
-  name: Shiva
+  name: Шива
   parent: MobGiantSpider
   id: MobSpiderShiva
-  description: The first defender of the station.
+  description: Первый защитник станции.
   components:
   - type: Faction
     factions:

@@ -410,7 +410,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockRobotics
-  name: Robotech Deluxe restock box
+  name: набор пополнения Роботех Дэлюкс
   description: A box full of tools for creating borgs. Load it into a Robotech Deluxe to begin.
   components:
   - type: VendingMachineRestock

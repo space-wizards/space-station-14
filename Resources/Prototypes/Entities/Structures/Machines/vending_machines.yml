@@ -320,8 +320,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCola
-  name: Robust Softdrinks
-  description: A softdrink vendor provided by Robust Industries, LLC.
+  name: Безалкоголь Робуста
+  description: Безалкогольные напитки производства Robust Industries, LLC.
   components:
   - type: VendingMachine
     pack: RobustSoftdrinksInventory
@@ -374,8 +374,8 @@
 - type: entity
   parent: VendingMachineCola
   id: VendingMachineColaRed
-  name: Space Cola Vendor
-  description: It vends cola, in space.
+  name: Космическая кола
+  description: Это аппарат колы, в космосе.
   components:
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cola-red.rsi
@@ -395,8 +395,8 @@
 - type: entity
   parent: VendingMachineCola
   id: VendingMachineSpaceUp
-  name: Space-Up! Vendor
-  description: Indulge in an explosion of flavor.
+  name: Напитки Space-Up!
+  description: Насладитесь взрывом вкуса.
   components:
   - type: VendingMachine
     pack: SpaceUpInventory
@@ -440,8 +440,8 @@
 - type: entity
   parent: VendingMachineCola
   id: VendingMachineStarkist
-  name: Star-kist Vendor
-  description: The taste of a star in liquid form.
+  name: Напитки Star-kist
+  description: Вкус звезды в жидком виде.
   components:
   - type: VendingMachine
     pack: StarkistInventory
@@ -463,8 +463,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineShamblersJuice
-  name: Shambler's Juice Vendor
-  description: ~Shake me up some of that Shambler's Juice!~
+  name: Соки от Чамблера
+  description: ~Взбей мне немного сока этого бродяги!~
   components:
   - type: VendingMachine
     pack: ShamblersJuiceInventory
@@ -497,8 +497,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachinePwrGame
-  name: Pwr Game Vendor
-  description: You want it, we got it. Brought to you in partnership with Vlad's Salads.
+  name: Напитки Pwr Game
+  description: У нас есть то чего ты хочешь! Представлено вам в партнерстве с Vlad's Salads.
   components:
   - type: VendingMachine
     pack: PwrGameInventory
@@ -822,8 +822,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSnack
-  name: Getmore Chocolate Corp
-  description: A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars.
+  name: Гетмор шоколад корп.
+  description: Автомат для закусок, любезно предоставленный шоколадной корпорацией Getmore, базирующейся на Марсе.
   components:
   - type: VendingMachine
     pack: GetmoreChocolateCorpInventory
@@ -855,8 +855,8 @@
 - type: entity
   parent: VendingMachineSnack
   id: VendingMachineSustenance
-  name: Sustenance Vendor
-  description: A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement.
+  name: Автомат с питанием
+  description: Торговый автомат, который выдает продукты питания в соответствии с требованиями раздела 47-C Соглашения NT об этическом обращении с заключенными.
   components:
   - type: VendingMachine
     pack: SustenanceInventory
@@ -1067,8 +1067,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineRobotics
-  name: Robotech Deluxe
-  description: All the tools you need to create your own robot army.
+  name: Роботех Дэлюкс
+  description: Любые инструмены которые могут пригодится для создания своей армии роботов.
   components:
   - type: VendingMachine
     pack: RoboticsInventory
@@ -1740,8 +1740,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCentDrobe
-  name: CentDrobe
-  description: A one-of-a-kind vending machine for all your centcom aesthetic needs!
+  name: ЦентШкаф
+  description: Единственный в своем роде торговый автомат для удовлетворения всех ваших эстетических потребностей Центком!
   components:
   - type: VendingMachine
     pack: CentDrobeInventory

@@ -449,7 +449,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitScientistFormal
-  name: scientist's formal jumpsuit
+  name: официальный костюм учёного
   description: A uniform for sophisticated scientists, best worn with its matching tie.
   components:
   - type: Sprite
