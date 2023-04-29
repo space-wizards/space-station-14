@@ -53,7 +53,7 @@
   - type: TrashOnEmpty
     solution: drink
   - type: StaticPrice
-    price: 3
+    price: 0
   - type: DamageOnLand
     damage:
       types:
