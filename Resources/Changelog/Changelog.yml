@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed first round after a server restart being displayed as number 0.,
-    type: Fix}
-  id: 3058
-  time: '2023-02-21T00:16:26.0000000+00:00'
 - author: notafet
   changes:
   - {message: APCs now show the power being drawn from them., type: Add}
@@ -2890,3 +2884,8 @@ Entries:
   - {message: Only traitors can insert TC into PDAs now., type: Tweak}
   id: 3557
   time: '2023-04-29T04:41:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Dragons no longer spawn off-station., type: Fix}
+  id: 3558
+  time: '2023-04-29T04:51:31.0000000+00:00'
