@@ -23,11 +23,6 @@ public sealed class AdminLogsEuiState : EuiStateBase
 public static class AdminLogsEuiMsg
 {
     [Serializable, NetSerializable]
-    public sealed class Close : EuiMessageBase
-    {
-    }
-
-    [Serializable, NetSerializable]
     public sealed class SetLogFilter : EuiMessageBase
     {
         public SetLogFilter(string? search = null, bool invertTypes = false, HashSet<LogType>? types = null)

@@ -46,7 +46,8 @@
   - type: Sprite
     state: gold
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Gold: 500
 
 - type: entity
@@ -68,7 +69,8 @@
   - type: Sprite
     state: iron
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Steel: 500
 
 - type: entity
@@ -90,7 +92,8 @@
   - type: Sprite
     state: plasma
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Plasma: 500
 
 - type: entity
@@ -112,7 +115,8 @@
   - type: Sprite
     state: silver
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Silver: 500
 
 - type: entity
@@ -134,7 +138,8 @@
   - type: Sprite
     state: spacequartz
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Glass: 500
 
 - type: entity
@@ -156,7 +161,8 @@
   - type: Sprite
     state: uranium
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Uranium: 500
 
 - type: entity

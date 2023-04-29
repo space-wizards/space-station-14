@@ -12,7 +12,7 @@ public sealed class SolutionHeaterComponent : Component
     public float HeatMultiplier = 1;
 
     [DataField("machinePartHeatPerSecond")]
-    public string MachinePartHeatPerSecond = "Laser";
+    public string MachinePartHeatPerSecond = "Capacitor";
 
     [DataField("partRatingHeatMultiplier")]
     public float PartRatingHeatMultiplier = 1.5f;

@@ -4,6 +4,7 @@ using Content.Server.Light.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Shared.Examine;
 using Content.Shared.Eye.Blinding;
+using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Flash;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
