@@ -1,4 +1,48 @@
 - type: reaction
+  id: AcidSpit
+  reactants:
+    Wine:
+      amount: 2
+    SulfuricAcid:
+      amount: 1
+  products:
+    AcidSpit: 3
+
+- type: reaction
+  id: AlliesCocktail
+  reactants:
+    Martini:
+      amount: 2
+    Vodka:
+      amount: 1
+  products:
+    AlliesCocktail: 3
+
+- type: reaction
+  id: Amasec
+  reactants:
+    Wine:
+      amount: 2
+    Vodka:
+      amount: 2
+    Iron:
+      amount: 1
+  products:
+    Amasec: 5
+
+- type: reaction
+  id: Andalusia
+  reactants:
+    Rum:
+      amount: 1
+    Whiskey:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+  products:
+    Andalusia: 3
+
+- type: reaction
   id: Antifreeze
   reactants:
     Cream:
@@ -31,6 +75,18 @@
       amount: 1
   products:
     B52: 3
+
+- type: reaction
+  id: Barefoot
+  reactants:
+    Cream:
+      amount: 1
+    Vermouth:
+      amount: 1
+    JuiceBerry:
+      amount: 1
+  products:
+    Barefoot: 3
 
 - type: reaction
   id: BananaHonk
@@ -131,6 +187,32 @@
       amount: 2
   products:
     CubaLibre: 3
+
+- type: reaction
+  id: DemonsBlood
+  reactants:
+    Rum:
+      amount: 1
+    Blood:
+      amount: 1
+    DrGibb:
+      amount: 1
+    SpaceMountainWind:
+      amount: 1
+  products:
+    DemonsBlood: 4
+
+- type: reaction
+  id: DevilsKiss
+  reactants:
+    Rum:
+      amount: 1
+    Blood:
+      amount: 1
+    CoffeeLiqueur:
+      amount: 1
+  products:
+    DevilsKiss: 3
 
 - type: reaction
   id: DoctorsDelight
@@ -245,6 +327,29 @@
     Grog: 2
 
 - type: reaction
+  id: HippiesDelight
+  reactants:
+    GargleBlaster:
+      amount: 1
+    THCOil:
+      amount: 1
+      # TODO replace THCOil with Mushroom Hallucinogen once added
+  products:
+    HippiesDelight: 2
+
+- type: reaction
+  id: Hooch
+  reactants:
+    Ethanol:
+      amount: 2
+    WeldingFuel:
+      amount: 1
+    Enzyme:
+      amount: 1
+  products:
+    Hooch: 3
+
+- type: reaction
   id: IceCream
   reactants:
     Cream:
@@ -255,6 +360,26 @@
       amount: 1
   products:
     IceCream: 3
+
+- type: reaction
+  id: IcedBeer
+  reactants:
+    Beer:
+      amount: 5
+    Ice:
+      amount: 1
+  products:
+    IcedBeer: 5
+
+- type: reaction
+  id: IcedBeerAlt
+  reactants:
+    Beer:
+      amount: 10
+    Frostoil:
+      amount: 1
+  products:
+    IcedBeer: 10
 
 - type: reaction
   id: IcedCoffee
@@ -317,6 +442,18 @@
     IrishCream: 3
 
 - type: reaction
+  id: KiraSpecial
+  reactants:
+    JuiceLime:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+    SodaWater:
+      amount: 1
+  products:
+    KiraSpecial: 3
+
+- type: reaction
   id: Lemonade
   reactants:
     JuiceLemon:
@@ -355,16 +492,24 @@
     LongIslandIcedTea: 6
 
 - type: reaction
-  id: KiraSpecial
+  id: Manhattan
   reactants:
-    JuiceLime:
-      amount: 1
-    JuiceOrange:
-      amount: 1
-    SodaWater:
+    Whiskey:
+      amount: 2
+    Vermouth:
       amount: 1
   products:
-    KiraSpecial: 3
+    Manhattan: 3
+
+- type: reaction
+  id: ManhattanProject
+  reactants:
+    Whiskey:
+      amount: 10
+    Uranium:
+      amount: 1
+  products:
+    ManhattanProject: 10
 
 - type: reaction
   id: ManlyDorf
@@ -375,6 +520,16 @@
       amount: 1
   products:
     ManlyDorf: 3
+- type: reaction
+
+  id: Margarita
+  reactants:
+    Tequila:
+      amount: 2
+    JuiceLime:
+      amount: 1
+  products:
+    Margarita: 3
 
 - type: reaction
   id: Martini
@@ -385,6 +540,17 @@
       amount: 1
   products:
     Martini: 3
+
+- type: reaction
+  id: Mead
+  reactants:
+    Sugar:
+      amount: 1
+      # TODO replace Sugar with Honey once added
+    Enzyme:
+      amount: 1
+  products:
+    Mead: 2
 
 - type: reaction
   id: Mojito
@@ -411,6 +577,17 @@
       amount: 1
   products:
     Moonshine: 3
+
+# - type: reaction
+#   id: Neurotoxin
+#   reactants:
+#     GargleBlaster:
+#       amount: 1
+#     Morphine:
+#       amount: 1
+#   products:
+#     Neurotoxin: 2
+# Waiting until Morphine added
 
 - type: reaction
   id: NuclearCola
@@ -445,6 +622,16 @@
     Posca: 3
 
 - type: reaction
+  id: RedMead
+  reactants:
+    Mead:
+      amount: 1
+    Blood:
+      amount: 1
+  products:
+    RedMead: 2
+
+- type: reaction
   id: Rewriter
   reactants:
     Coffee:
@@ -465,6 +652,16 @@
     RootBeerFloat: 3
 
 - type: reaction
+  id: Sbiten
+  reactants:
+    Vodka:
+      amount: 1
+    CapsaicinOil:
+      amount: 1
+  products:
+    Sbiten: 2
+
+- type: reaction
   id: ScrewdriverCocktail
   reactants:
     JuiceOrange:
@@ -473,6 +670,41 @@
       amount: 2
   products:
     ScrewdriverCocktail: 3
+
+- type: reaction
+  id: Silencer
+  reactants:
+    Nothing:
+      amount: 1
+    Cream:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Silencer: 3
+
+# - type: reaction
+#   id: Singulo
+#   reactants:
+#     Vodka:
+#       amount: 5
+#     Wine:
+#       amount: 5
+#     LiquidDarkMatter:
+#       amount: 1
+#   products:
+#     Singulo: 10
+# Waiting until LiquidDarkMatter added
+
+- type: reaction
+  id: SnowWhite
+  reactants:
+    Beer:
+      amount: 1
+    LemonLime:
+      amount: 1
+  products:
+    SnowWhite: 3
 
 - type: reaction
   id: SoyLatte
@@ -493,6 +725,18 @@
       amount: 2
   products:
     Starkist: 3
+
+- type: reaction
+  id: SuiDream
+  reactants:
+    SpaceUp:
+      amount: 1
+    BlueCuracao:
+      amount: 1
+    MelonLiquor:
+      amount: 1
+  products:
+    SuiDream: 3
 
 - type: reaction
   id: SyndicateBomb
@@ -525,6 +769,18 @@
     ThreeMileIsland: 10
 
 - type: reaction
+  id: ToxinsSpecial
+  reactants:
+    Rum:
+      amount: 2
+    Vermouth:
+      amount: 1
+    Plasma:
+      amount: 2
+  products:
+    ToxinsSpecial: 5
+
+- type: reaction
   id: VodkaMartini
   reactants:
     Vermouth:
@@ -533,6 +789,16 @@
       amount: 2
   products:
     VodkaMartini: 3
+
+- type: reaction
+  id: VodkaTonic
+  reactants:
+    Vodka:
+      amount: 2
+    TonicWater:
+      amount: 1
+  products:
+    VodkaTonic: 3
 
 - type: reaction
   id: WhiskeyCola
@@ -553,6 +819,16 @@
       amount: 1
   products:
     WhiteRussian: 3
+
+- type: reaction
+  id: WhiskeySoda
+  reactants:
+    SodaWater:
+      amount: 1
+    Whiskey:
+      amount: 2
+  products:
+    WhiskeySoda: 3
 
 - type: reaction
   id: HotRamen
