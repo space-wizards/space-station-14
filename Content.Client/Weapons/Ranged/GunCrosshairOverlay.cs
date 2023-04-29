@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -95,6 +96,9 @@ public sealed class GunCrosshairOverlay : Overlay
 
         var direction = (mousePos.Position - mapPos.Position);
 
+        var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
+        float limetedScale = uiScale > 1.25f ? 1.25f : uiScale;
+
         if (GetRayCastResult(direction, mapPos, player, collisionMask)
                 is RayCastResults castRes)
         {
@@ -109,11 +113,11 @@ public sealed class GunCrosshairOverlay : Overlay
                 crosshairType = CrosshairType.Unavailable;
                 var screenHitPosition = _eye.WorldToScreen(castRes.HitPos);
                 var screenPlayerPos = _eye.CoordinatesToScreen(xform.Coordinates).Position;
-                DrawОbstacleSign(screen, _crosssign, screenHitPosition, screenPlayerPos);
+                DrawОbstacleSign(screen, _crosssign, screenHitPosition, screenPlayerPos, limetedScale);
             }
         }
 
-        DrawCrosshair(screen, _crosshair, mouseScreen.Position, crosshairType);
+        DrawCrosshair(screen, _crosshair, mouseScreen.Position, limetedScale, crosshairType);
     }
 
     private RayCastResults? GetRayCastResult(Vector2 dir, MapCoordinates mapPos, EntityUid? player,
@@ -129,10 +133,9 @@ public sealed class GunCrosshairOverlay : Overlay
             return null;
     }
 
-    private UIBox2 GetBoxForTexture(Texture texture, Vector2 pos, float? expandedSize = null)
+    private UIBox2 GetBoxForTexture(Texture texture, Vector2 pos, float scale, float? expandedSize = null)
     {
-        // Vector2 textureSize = textureSize.Size * scale;
-        Vector2 textureSize = texture.Size;
+        Vector2 textureSize = texture.Size * scale;
         if (expandedSize != null)
             textureSize += (float) expandedSize;
         Vector2 halfTextureSize = textureSize / 2;
@@ -141,7 +144,7 @@ public sealed class GunCrosshairOverlay : Overlay
     }
 
     private void DrawОbstacleSign(DrawingHandleScreen screen,
-        Texture? cross, Vector2 hitPos, Vector2 playerPos)
+        Texture? cross, Vector2 hitPos, Vector2 playerPos, float scale)
     {
         if (cross == null)
             return;
@@ -150,13 +153,13 @@ public sealed class GunCrosshairOverlay : Overlay
         screen.DrawLine(bitHitDirection, hitPos, Color.Red);
 
         screen.DrawTextureRect(cross,
-            GetBoxForTexture(cross, hitPos, 15), Color.Black);
+            GetBoxForTexture(cross, hitPos, scale, 15), Color.Black);
         screen.DrawTextureRect(cross,
-            GetBoxForTexture(cross, hitPos), Color.Red);
+            GetBoxForTexture(cross, hitPos, scale), Color.Red);
     }
 
     private void DrawCrosshair(DrawingHandleScreen screen,
-        Texture? circle, Vector2 circlePos, CrosshairType type)
+        Texture? circle, Vector2 circlePos, float scale, CrosshairType type)
     {
         if (circle == null)
         {
@@ -172,14 +175,14 @@ public sealed class GunCrosshairOverlay : Overlay
 
         if (type == CrosshairType.Unavailable)
         {
-            screen.DrawCircle(circlePos, 22, color);
+            screen.DrawCircle(circlePos, 22 * scale, color);
         }
         else
         {
             screen.DrawTextureRect(circle,
-                GetBoxForTexture(circle, circlePos, 4), Color.Black);
+                GetBoxForTexture(circle, circlePos, scale, 4), Color.Black);
             screen.DrawTextureRect(circle,
-                GetBoxForTexture(circle, circlePos), color);
+                GetBoxForTexture(circle, circlePos, scale), color);
         }
 
     }
