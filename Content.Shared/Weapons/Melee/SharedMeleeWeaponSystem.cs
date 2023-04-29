@@ -524,7 +524,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         var damage = component.Damage * GetModifier(component, false);
         var entities = ev.Entities;
-        Sawmill.Debug($"Heavy attacking {entities.Count} entities");
 
         if (entities.Count == 0)
         {
