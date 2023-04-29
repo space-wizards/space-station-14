@@ -84,7 +84,7 @@
     damageContainer: Biological
     damage:
       types:
-        bloodloss: -0.5 #minor bleed rate reduction.
+        Bloodloss: -0.5 #lowers bloodloss damage
     ModifyBloodLevel: 15 #restores about 5% blood per use on standard humanoids.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
