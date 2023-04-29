@@ -283,6 +283,8 @@
   - type: Item
     size: 1
     sprite: Objects/Specific/Chemistry/pills.rsi
+  - type: Pill
+  # TODO remove pill tag?
   - type: Tag
     tags:
       - Pill
@@ -304,6 +306,19 @@
     grindableSolutionName: food
   - type: StaticPrice
     price: 0
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   name: pill canister

@@ -70308,7 +70308,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 9500
-  type: AdvancedScanningModuleStockPart
+  type: AdvancedCapacitorStockPart
   components:
   - pos: -3.7302828,-31.280602
     parent: 1
@@ -70320,7 +70320,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 9502
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: -3.960114,-31.306107
     parent: 1

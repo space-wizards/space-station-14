@@ -8,11 +8,7 @@ Machines help the station run smoothly, and as a scientist, you can help them ru
 <Box>
 <GuideEntityEmbed Entity="CapacitorStockPart"/>
 <GuideEntityEmbed Entity="MatterBinStockPart"/>
-<GuideEntityEmbed Entity="MicroLaserStockPart"/>
-</Box>
-<Box>
 <GuideEntityEmbed Entity="MicroManipulatorStockPart"/>
-<GuideEntityEmbed Entity="ScanningModuleStockPart"/>
 </Box>
 You can examine each machine part to see both the type and the rating, which range from 1 to 4.
 
