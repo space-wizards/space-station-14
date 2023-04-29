@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net.Mime;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
@@ -69,21 +70,21 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 
         RecordContainerStatus.Visible = state.CriminalRecord == null;
 
-        StatusOptionButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.Detained;
-
         ReasonLineEdit.Visible = state.SelectedKey != null;
         ArrestButton.Visible = state.SelectedKey != null;
         CriminalDivider.Visible = state.SelectedKey != null;
         StatusOptionButton.Visible = state.SelectedKey != null;
 
+        StatusOptionButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.Detained;
+
         if (state.CriminalRecord != null & state.StationRecord != null)
         {
-            StatusOptionButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.Detained;
-
             ReasonLineEdit.Visible = state.SelectedKey != null;
             ArrestButton.Visible = state.SelectedKey != null;
             CriminalDivider.Visible = state.SelectedKey != null;
             StatusOptionButton.Visible = state.SelectedKey != null;
+
+            StatusOptionButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.Detained;
 
             if (!StatusOptionButton.Disabled)
             {
@@ -140,6 +141,7 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
         RecordContainer.DisposeAllChildren();
         RecordContainer.RemoveAllChildren();
         // sure
+
         var recordControls = new Control[]
         {
             new Label()
@@ -170,13 +172,22 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
             },
             new Label()
             {
-                Text = $"Status: {criminalRecord.Status.ToString()}"
+                Text = $"Status: {criminalRecord.Status.ToString()}" // TODO: make it colorful
             }
         };
 
         foreach (var control in recordControls)
         {
             RecordContainer.AddChild(control);
+        }
+
+        if (criminalRecord.Reason != string.Empty)
+        {
+            var label = new Label()
+            {
+                Text = criminalRecord.Reason
+            };
+            RecordContainer.AddChild(label);
         }
     }
 

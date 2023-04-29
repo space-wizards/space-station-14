@@ -11,4 +11,7 @@ public sealed class SecurityInfoComponent : Component
 {
     [DataField("status")]
     public SecurityStatus Status = SecurityStatus.None;
+
+    [DataField("reason")]
+    public string Reason = string.Empty;
 }

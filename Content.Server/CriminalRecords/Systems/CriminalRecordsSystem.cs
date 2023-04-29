@@ -22,7 +22,8 @@ public sealed class CriminalRecordsSystem : EntitySystem
 
         var record = new GeneralCriminalRecord()
         {
-            Status = SecurityStatus.None
+            Status = SecurityStatus.None,
+            Reason = string.Empty
         };
 
         _stationRecordsSystem.AddRecordEntry(ev.Key, record);

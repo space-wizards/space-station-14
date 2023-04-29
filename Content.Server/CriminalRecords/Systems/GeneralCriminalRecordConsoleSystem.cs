@@ -57,6 +57,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         if (msg.Reason != string.Empty && msg.Name != null && msg.Session.AttachedEntity != null && secInfo != null)
         {
             secInfo.Status = secInfo.Status == SecurityStatus.Detained ? SecurityStatus.None : SecurityStatus.Detained;
+            secInfo.Reason = msg.Reason!;
 
             var messages = new Dictionary<SecurityStatus, string>()
             {
@@ -70,6 +71,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         else if (msg.Reason == string.Empty && msg.Name != null && msg.Session.AttachedEntity != null && secInfo != null)
         {
             secInfo.Status = secInfo.Status == SecurityStatus.Detained ? SecurityStatus.None : SecurityStatus.Detained;
+            secInfo.Reason = msg.Reason;
 
             var messages = new Dictionary<SecurityStatus, string>()
             {
@@ -81,6 +83,15 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         }
 
         var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
+
+        TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
+
+        GeneralCriminalRecord? record;
+        _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out record, stationRecordsComponent);
+
+        record!.Reason = secInfo!.Reason;
+        record.Status = secInfo.Status;
+
         _stationRecordsSystem.Synchronize(station!.Value);
         UpdateUserInterface(uid, component);
     }
@@ -93,6 +104,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         if (msg.Reason != string.Empty && secInfo != null && msg.Session.AttachedEntity != null)
         {
             secInfo.Status = secInfo.Status == SecurityStatus.None ? SecurityStatus.Wanted : SecurityStatus.None;
+            secInfo.Reason = msg.Reason!;
 
             var messages = new Dictionary<SecurityStatus, string>()
             {
@@ -104,6 +116,18 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
                 _prototypeManager.Index<RadioChannelPrototype>("Security"));
 
             var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
+
+            TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
+
+            GeneralCriminalRecord? record;
+            _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out record, stationRecordsComponent);
+
+            if (secInfo.Status == SecurityStatus.None)
+                record!.Reason = string.Empty;
+            else
+                record!.Reason = secInfo.Reason;
+            record.Status = secInfo.Status;
+
             _stationRecordsSystem.Synchronize(station!.Value);
             UpdateUserInterface(uid, component);
         }
@@ -111,6 +135,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         else if (msg.Reason == string.Empty && secInfo != null && msg.Session.AttachedEntity != null)
         {
             secInfo.Status = secInfo.Status == SecurityStatus.None ? SecurityStatus.Wanted : SecurityStatus.None;
+            secInfo.Reason = msg.Reason;
 
             var messages = new Dictionary<SecurityStatus, string>()
             {
@@ -121,6 +146,15 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
             _radioSystem.SendRadioMessage(uid, messages[secInfo.Status],
                 _prototypeManager.Index<RadioChannelPrototype>("Security"));
             var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
+
+            TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
+
+            GeneralCriminalRecord? record;
+            _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out record, stationRecordsComponent);
+
+            record!.Reason = secInfo!.Reason;
+            record.Status = secInfo.Status;
+
             _stationRecordsSystem.Synchronize(station!.Value);
             UpdateUserInterface(uid, component);
         }

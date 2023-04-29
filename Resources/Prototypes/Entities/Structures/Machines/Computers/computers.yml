@@ -247,7 +247,7 @@
   name: criminal records computer
   description: This can be used to check criminal records.
   components:
-  - type: GeneralStationRecordConsole
+  - type: GeneralCriminalRecordConsole
   - type: UserInterface
     interfaces:
       - key: enum.GeneralCriminalRecordConsoleKey.Key

@@ -1,20 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
-using Content.Shared.Access.Components;
 using Content.Server.Forensics;
-using Content.Server.Security.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Nuke;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
-using Content.Shared.Security;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using Content.Shared.Security;
 
 namespace Content.Server.StationRecords.Systems;
 
@@ -77,9 +71,8 @@ public sealed class StationRecordsSystem : EntitySystem
         }
 
         TryComp<FingerprintComponent>(player, out var fingerprintComponent);
-        TryComp<SecurityInfoComponent>(player, out var secInfo);
 
-        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, secInfo?.Status, fingerprintComponent?.Fingerprint, profile, records);
+        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, fingerprintComponent?.Fingerprint, profile, records);
     }
 
 
@@ -108,7 +101,7 @@ public sealed class StationRecordsSystem : EntitySystem
     /// </param>
     /// <param name="status">Status of the person (None/Wanted/Detained).</param>
     /// <param name="records">Station records component.</param>
-    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, SecurityStatus? status, string? mobFingerprint, HumanoidCharacterProfile? profile = null,
+    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, string? mobFingerprint, HumanoidCharacterProfile? profile = null,
         StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
@@ -131,8 +124,7 @@ public sealed class StationRecordsSystem : EntitySystem
             Species = species,
             Gender = gender,
             DisplayPriority = jobPrototype.Weight,
-            Fingerprint = mobFingerprint,
-            Status = status
+            Fingerprint = mobFingerprint
         };
 
         var key = AddRecord(station, records);
