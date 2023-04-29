@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix the emergency shuttle not loading., type: Fix}
-  id: 3061
-  time: '2023-02-22T01:47:06.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed the AHelp window being recentered when opened through the verb
@@ -2889,3 +2884,9 @@ Entries:
   - {message: 'Added Bananium, you can build things with it. Dont eat it!', type: Add}
   id: 3560
   time: '2023-04-29T05:38:10.0000000+00:00'
+- author: jamessimo
+  changes:
+  - {message: Minor UI enhancements to the Anomaly Generator UI, type: Tweak}
+  - {message: Fixed broken sprite view in Anomaly Generator UI, type: Fix}
+  id: 3561
+  time: '2023-04-29T05:53:57.0000000+00:00'
