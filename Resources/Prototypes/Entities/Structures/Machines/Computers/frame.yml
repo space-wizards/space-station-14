@@ -25,7 +25,19 @@
   - type: Sprite
     sprite: Structures/Machines/parts.rsi
     drawdepth: Objects
-    state: 0
+    layers:
+    - state: 0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          frameUnsecured: { state: 0 }
+          boardUnsecured: { state: 1 }
+          missingWires: { state: 2 }
+          monitorMissing: { state: 3 }
+          monitorUnsecured: { state: 4 }
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
