@@ -11,8 +11,9 @@
         amount: 2
       - id: Ointment
         amount: 2
+      - id: Gauze
       - id: PillTricordrazine
-        amount: 3
+        amount: 5
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
@@ -22,10 +23,11 @@
   components:
   - type: StorageFill
     contents:
+      - id: SyringeInaprovaline
       - id: Ointment
         amount: 4
       - id: PillKelotane
-        amount: 3
+        amount: 5
 
 - type: entity
   id: MedkitBruteFilled
@@ -36,11 +38,11 @@
     contents:
       - id: Brutepack
         amount: 2 # TO DO: Advanced brute pack
-      - id: PillIron
-        amount: 2
       - id: Gauze
       - id: Bloodpack
       - id: SyringeTranexamicAcid
+      - id: PillIron
+        amount: 5
 
 - type: entity
   id: MedkitToxinFilled
@@ -50,10 +52,12 @@
   - type: StorageFill
     contents:
       - id: SyringeSpaceacillin
+        amount: 2
       - id: SyringeIpecac
-      - id: PillDylovene
-        amount: 3
+        amount: 2
       - id: AntiPoisonMedipen
+      - id: PillDylovene
+        amount: 7
 
 - type: entity
   id: MedkitOxygenFilled
@@ -62,11 +66,12 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingMaskBreathMedical
+      - id: EmergencyOxygenTank
       - id: EmergencyMedipen
-      - id: PillDexalin
-        amount: 3
       - id: SyringeInaprovaline
-        amount: 2
+      - id: PillDexalin
+        amount: 7
 
 - type: entity
   id: MedkitRadiationFilled
@@ -76,10 +81,11 @@
   - type: StorageFill
     contents:
       - id: Ointment
-        amount: 2
-      - id: PillHyronalin
         amount: 3
       - id: EmergencyMedipen
+        amount: 2
+      - id: PillHyronalin
+        amount: 9
 
 - type: entity
   id: MedkitAdvancedFilled
@@ -90,8 +96,8 @@
     contents:
       - id: Brutepack
         amount: 2 # TO DO: Advanced fills
-      - id: Gauze
       - id: Ointment
+      - id: Gauze
       - id: Bloodpack
         amount: 2
 
@@ -107,6 +113,8 @@
       - id: SyringeTranexamicAcid
       - id: AntiPoisonMedipen
       - id: Bloodpack
+        amount: 2
+      - id: PillTricordrazine
         amount: 2
 
 - type: entity

@@ -14,7 +14,7 @@ public sealed class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
 
     /// <inheritdoc />
     [DataField("radius")]
-    public float Radius { get; } = 12f;
+    public float Radius { get; } = 32f;
 
     /// <summary>
     /// How many mobs to spawn in one group.
@@ -24,5 +24,5 @@ public sealed class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
 
     /// <inheritdoc />
     [DataField("size")]
-    public int Size { get; } = 64;
+    public int Size { get; } = 128;
 }

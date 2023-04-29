@@ -23,6 +23,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
         base.Initialize();
 
         InitializeInteractions();
+        InitializeDrop();
+        InitializePickup();
     }
 
     public override void Shutdown()

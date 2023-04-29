@@ -255,7 +255,6 @@
     baseDecayRate: 0.1
   - type: Appearance
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: mouse-3
