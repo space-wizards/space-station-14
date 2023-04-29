@@ -3,7 +3,6 @@
   name: action-name-spell-smite
   description: action-description-spell-smite
   useDelay: 60
-  speech: action-speech-spell-smite
   itemIconStyle: BigAction
   whitelist:
     components:
@@ -16,3 +15,4 @@
     sprite: Objects/Magic/magicactions.rsi
     state: gib
   serverEvent: !type:SmiteSpellEvent
+    speech: action-speech-spell-smite

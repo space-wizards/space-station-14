@@ -86,14 +86,10 @@ namespace Content.Server.Administration.UI
 
         public override async void HandleMessage(EuiMessageBase msg)
         {
+            base.HandleMessage(msg);
+
             switch (msg)
             {
-                case Close _:
-                {
-                    Close();
-                    break;
-                }
-
                 case AddAdmin ca:
                 {
                     await HandleCreateAdmin(ca);

@@ -2931,7 +2931,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 241
-  type: ScanningModuleStockPart
+  type: CapacitorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -2940,7 +2940,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 242
-  type: ScanningModuleStockPart
+  type: CapacitorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3014,7 +3014,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 250
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3023,7 +3023,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 251
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3032,7 +3032,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 252
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3041,7 +3041,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 253
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3079,7 +3079,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 257
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3088,7 +3088,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 258
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3097,7 +3097,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 259
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3106,7 +3106,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 260
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3144,7 +3144,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 264
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3153,7 +3153,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 265
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3162,7 +3162,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 266
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3171,7 +3171,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 267
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3209,7 +3209,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 271
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3218,7 +3218,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 272
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3227,7 +3227,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 273
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3236,7 +3236,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 274
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3274,7 +3274,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 278
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3283,7 +3283,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 279
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3292,7 +3292,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 280
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3301,7 +3301,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 281
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3339,7 +3339,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 285
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3348,7 +3348,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 286
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3357,7 +3357,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 287
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3366,7 +3366,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 288
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3404,7 +3404,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 292
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3413,7 +3413,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 293
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3422,7 +3422,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 294
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3431,7 +3431,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 295
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3469,7 +3469,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 299
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3478,7 +3478,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 300
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3487,7 +3487,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 301
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -3496,7 +3496,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 302
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData

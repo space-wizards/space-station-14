@@ -164,3 +164,11 @@
     - type: StorageFill
       contents:
         - id: MobLizard
+
+- type: entity
+  id: CrateNPCKangaroo
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobKangaroo
