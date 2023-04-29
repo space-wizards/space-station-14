@@ -29,8 +29,7 @@
     - node: frame_cable
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_cables"
+      - !type:AppearanceChange
       edges:
         - to: frame
           completed:
@@ -48,8 +47,7 @@
     - node: frame_electronics
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_electronics"
+      - !type:AppearanceChange
       edges:
         - to: frame_cable
           completed:
@@ -75,8 +73,7 @@
     - node: frame_unit
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_unit"
+      - !type:AppearanceChange
       edges:
         - to: frame_inlet
           steps:
@@ -106,8 +103,7 @@
     - node: frame_mailing
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_unit"
+      - !type:AppearanceChange
       edges:
         - to: frame_electronics
           steps:
@@ -137,8 +133,7 @@
     - node: frame_inlet
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_inlet"
+      - !type:AppearanceChange
       edges:
         - to: frame_outlet
           steps:
@@ -168,8 +163,7 @@
     - node: frame_outlet
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_outlet"
+      - !type:AppearanceChange
       edges:
         - to: frame_electronics
           steps:

@@ -11,9 +11,6 @@
              doAfter: 1
     - node: assembly
       entity: AirSensorAssembly
-      actions:
-        - !type:SpriteStateChange
-          state: gsensor0
       edges:
         - to: start
           conditions:
