@@ -13,21 +13,16 @@
     templateId: corpse
   - type: Loadout
     prototypes:
-    - ClownGear
-    - MimeGear
-    - JanitorGear
-    - JanitorGear
-    - ServiceWorkerGear
-    - ServiceWorkerGear
-    - MusicianGear
-    - BotanistGear
-    - BotanistGear
-    - ChefGear
-    - ChaplainGear
-    - PassengerGear
-    - PassengerGear
-    - PassengerGear
-    - HoPGear                     # Chance 1/15
+      - HoPGear
+      - ClownGear
+      - MimeGear
+      - JanitorGear
+      - ServiceWorkerGear
+      - MusicianGear
+      - BotanistGear
+      - ChefGear
+      - ChaplainGear
+      - PassengerGear
 
 - type: randomHumanoidSettings
   id: RandomCargoCorpse
@@ -45,11 +40,7 @@
   - type: Loadout
     prototypes:
     - CargoTechGear
-    - CargoTechGear
-    - CargoTechGear
     - SalvageSpecialistGear
-    - SalvageSpecialistGear
-    - QuartermasterGear           # Chance 1/6
 
 - type: randomHumanoidSettings
   id: RandomEngineerCorpse
@@ -67,14 +58,7 @@
   - type: Loadout
     prototypes:
     - TechnicalAssistantGear
-    - TechnicalAssistantGear
-    - TechnicalAssistantGear
     - AtmosphericTechnicianGear
-    - AtmosphericTechnicianGear
-    - ChiefEngineerGear           # Chance 1/10
-    - StationEngineerGear
-    - StationEngineerGear
-    - StationEngineerGear
     - StationEngineerGear
 
 - type: randomHumanoidSettings
@@ -93,14 +77,8 @@
   - type: Loadout
     prototypes:
     - MedicalInternGear
-    - MedicalInternGear
-    - MedicalInternGear
     - PsychologistGear
     - ChemistGear
-    - ChemistGear
-    - CMOGear                     # Chance 1/10
-    - DoctorGear
-    - DoctorGear
     - DoctorGear
 
 - type: randomHumanoidSettings
@@ -119,12 +97,7 @@
   - type: Loadout
     prototypes:
     - ResearchAssistantGear
-    - ResearchAssistantGear
-    - ResearchAssistantGear
     - ScientistGear
-    - ScientistGear
-    - ScientistGear
-    - ResearchDirectorGear        # Chance 1/7
 
 - type: randomHumanoidSettings
   id: RandomSecurityCorpse
@@ -142,15 +115,9 @@
   - type: Loadout
     prototypes:
     - SecurityCadetGear
-    - SecurityCadetGear
-    - SecurityCadetGear
-    - SecurityOfficerGear
-    - SecurityOfficerGear
-    - SecurityOfficerGear
     - SecurityOfficerGear
     - DetectiveGear
-    - WardenGear
-    - HoSGear                 # Chance 1/10
+    - CorpseWardenGear
 
 - type: randomHumanoidSettings
   id: RandomCommandCorpse
