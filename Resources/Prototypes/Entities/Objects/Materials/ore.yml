@@ -185,6 +185,7 @@
   - type: Sprite
     state: bananium
   - type: Material
+  - type: PhysicalComposition
     materialComposition:
       Bananium: 500
 
