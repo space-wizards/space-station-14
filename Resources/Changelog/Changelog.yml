@@ -1,30 +1,4 @@
 Entries:
-- author: MagnusCrowe
-  changes:
-  - {message: Changed chemistry bottle size from 5 to 3.  Capacity remains 30u., type: Tweak}
-  id: 3052
-  time: '2023-02-18T22:50:21.0000000+00:00'
-- author: FluffiestFloof
-  changes:
-  - {message: 'Added Cabbage, Red Onion and 3 new salads.', type: Add}
-  id: 3053
-  time: '2023-02-18T23:52:59.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: Jetpacks can now be work in suit storage., type: Tweak}
-  id: 3054
-  time: '2023-02-19T00:59:47.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: The drinking glass sprite was redone and now supports nicer visuals.,
-    type: Tweak}
-  - {message: The shot glass sprite was modified to support fill visuals., type: Tweak}
-  - {message: The soda and booze dispensers have been visually offset to sit on tables
-      correctly., type: Tweak}
-  - {message: The booze-o-mat now has flasks and vacuum flasks., type: Add}
-  - {message: Wine glasses were added to the booze-o-mat., type: Add}
-  id: 3055
-  time: '2023-02-19T01:00:31.0000000+00:00'
 - author: reapsnI and joelhed
   changes:
   - {message: Added the chemistry bag as the default belt for the chemist!, type: Add}
@@ -2895,3 +2869,24 @@ Entries:
   - {message: Blood packs work now., type: Fix}
   id: 3551
   time: '2023-04-28T14:01:24.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: updated the localization files (there was a typo), type: Fix}
+  id: 3552
+  time: '2023-04-29T03:12:21.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: Pills are now destructible., type: Tweak}
+  id: 3553
+  time: '2023-04-29T03:13:20.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Nuke ops will no longer start in the middle of rounds instead of lone
+      ops., type: Fix}
+  id: 3554
+  time: '2023-04-29T03:14:15.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a bunch of station events never starting., type: Fix}
+  id: 3555
+  time: '2023-04-29T03:15:06.0000000+00:00'
