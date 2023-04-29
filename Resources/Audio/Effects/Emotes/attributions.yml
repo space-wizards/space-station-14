@@ -18,3 +18,9 @@
   license: "CC-BY-4.0"
   copyright: "Made by TV_LING. Converted from WAV to OGG and downmixed to 1 channel."
   source: "https://freesound.org/people/TV_LING/sounds/523467/"
+
+- files:
+    - salute.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/ss220-space/Paradise"
+  source: "https://github.com/ss220-space/Paradise/tree/master220/sound/effects"
