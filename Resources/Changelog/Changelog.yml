@@ -1,10 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: Alt-clicking a drink now makes you drink it instead of changing the
-      solution transfer amount., type: Tweak}
-  id: 3057
-  time: '2023-02-20T12:29:15.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed first round after a server restart being displayed as number 0.,
@@ -2891,3 +2885,8 @@ Entries:
   - {message: Adjusted recipes for many machine boards., type: Tweak}
   id: 3556
   time: '2023-04-29T03:23:49.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Only traitors can insert TC into PDAs now., type: Tweak}
+  id: 3557
+  time: '2023-04-29T04:41:24.0000000+00:00'
