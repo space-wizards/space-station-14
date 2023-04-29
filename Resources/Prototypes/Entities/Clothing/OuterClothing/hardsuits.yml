@@ -368,14 +368,14 @@
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitBrigmed
-  name: brigmed hardsuit
+  id: ClothingOuterHardsuitBrigmedic
+  name: brigmedic hardsuit
   description: Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/brigmed.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/brigmed.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 5500
@@ -394,7 +394,7 @@
         Radiation: 0.30
         Caustic: 0.2
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitBrigmed
+    clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
 
 - type: entity
   parent: ClothingOuterHardsuitBase
