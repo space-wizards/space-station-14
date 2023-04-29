@@ -1,9 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: APCs now show the power being drawn from them., type: Add}
-  id: 3059
-  time: '2023-02-21T15:23:39.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Ahelp window now remembers its last position for admins., type: Tweak}
@@ -2889,3 +2884,8 @@ Entries:
   - {message: Dragons no longer spawn off-station., type: Fix}
   id: 3558
   time: '2023-04-29T04:51:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerf or remove some standard sell prices., type: Tweak}
+  id: 3559
+  time: '2023-04-29T04:59:25.0000000+00:00'
