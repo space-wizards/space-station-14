@@ -210,8 +210,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (traitorRule == null)
         {
             //todo fuck me this shit is awful
+            //no i wont fuck you, erp is against rules
             GameTicker.StartGameRule("Traitor", out var ruleEntity);
-            traitorRule = EntityManager.GetComponent<TraitorRuleComponent>(ruleEntity);
+            traitorRule = Comp<TraitorRuleComponent>(ruleEntity);
         }
 
         var mind = traitor.Data.ContentData()?.Mind;
