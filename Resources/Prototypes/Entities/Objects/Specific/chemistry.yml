@@ -283,6 +283,8 @@
   - type: Item
     size: 1
     sprite: Objects/Specific/Chemistry/pills.rsi
+  - type: Pill
+  # TODO remove pill tag?
   - type: Tag
     tags:
       - Pill
