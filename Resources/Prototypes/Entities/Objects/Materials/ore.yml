@@ -172,3 +172,26 @@
   components:
   - type: Stack
     count: 1
+
+
+- type: entity
+  parent: OreBase
+  id: BananiumOre
+  name: bananium ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: BananiumOre
+  - type: Sprite
+    state: bananium
+  - type: Material
+    materials:
+      Bananium: 500
+
+- type: entity
+  parent: BananiumOre
+  id: BananiumOre1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

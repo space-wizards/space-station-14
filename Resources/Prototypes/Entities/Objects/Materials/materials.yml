@@ -276,3 +276,59 @@
     state: cotton
   - type: Stack
     count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBananium
+  name: bananium
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Bananium: 150
+  - type: Sprite
+    state: bananium_1
+  - type: Stack
+    stackType: Bananium
+    count: 10
+  - type: RadiationSource
+    intensity: 0.3
+  - type: FlavorProfile
+    flavors:
+      - banana
+  - type: Food
+    trash: TrashBananiumPeel
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Honk
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBanana
+        Quantity: 5
+      - ReagentId: Honk
+        Quantity: 5
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - bananium
+          - bananium_1
+
+- type: entity
+  parent: MaterialBananium
+  id: MaterialBananium1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: bananium
+  - type: Stack
+    count: 1
