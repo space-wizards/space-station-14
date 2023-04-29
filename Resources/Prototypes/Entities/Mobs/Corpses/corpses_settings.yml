@@ -118,6 +118,7 @@
     - SecurityOfficerGear
     - DetectiveGear
     - WardenGear
+    - BrigmedicGear
 
 - type: randomHumanoidSettings
   id: RandomCommandCorpse
