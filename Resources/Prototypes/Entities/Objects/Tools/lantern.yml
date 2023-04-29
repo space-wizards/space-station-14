@@ -83,7 +83,13 @@
       energy: 10
       color: "#FFC458"
     - type: Flash
-      uses: 15
+    - type: LimitedCharges
+      maxCharges: 15
+      charges: 15
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 0 # melee weapon to allow flashing individual targets
     - type: Appearance
     - type: GenericVisualizer
       visuals:
