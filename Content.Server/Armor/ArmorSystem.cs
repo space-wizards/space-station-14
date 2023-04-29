@@ -6,7 +6,6 @@ using Content.Server.Cargo.Systems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Inventory;
-using Content.Server.Explosion.Components;
 
 namespace Content.Server.Armor
 {
@@ -80,13 +79,8 @@ namespace Content.Server.Armor
 
             var examineMarkup = GetArmorExamine(armorModifiers);
 
-            if (TryComp<ExplosionResistanceComponent>(uid, out var explosion))
-            {
-                examineMarkup.PushNewline();
-                examineMarkup.AddMarkup(Loc.GetString("explosion-resistance-coefficient-value",
-                    ("value", MathF.Round((1f - explosion.DamageCoefficient) * 100, 1))
-                    ));
-            }
+            var ev = new ArmorExamineEvent(examineMarkup);
+            RaiseLocalEvent(uid, ref ev);
 
             _examine.AddDetailedExamineVerb(args, component, examineMarkup, Loc.GetString("armor-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png", Loc.GetString("armor-examinable-verb-message"));
         }
@@ -119,3 +113,6 @@ namespace Content.Server.Armor
         }
     }
 }
+
+[ByRefEvent]
+public record struct ArmorExamineEvent(FormattedMessage Msg);
