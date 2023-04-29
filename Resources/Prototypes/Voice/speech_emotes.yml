@@ -58,16 +58,15 @@
   category: Vocal
   chatMessages: [whistle]
   chatTriggers:
-    - hiss
-    - hiss.
-    - hiss!
     - whistle
     - whistle.
     - whistle!
     - whistles
     - whistles.
     - whistles!
-
+    - whistleblowing
+    - whistleblowing.
+    - whistleblowing!
 - type: emote
   id: Cry
   category: Vocal
