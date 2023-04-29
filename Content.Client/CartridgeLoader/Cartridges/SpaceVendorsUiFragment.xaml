@@ -1,0 +1,18 @@
+<cartridges:SpaceVendorsUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                                 xmlns="https://spacestation14.io" Margin="1 0 2 0">
+    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" MinHeight="32" MaxHeight="32" VerticalAlignment="Top" Margin="3 0">
+            <PanelContainer Name="HeaderPanel">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="4">
+                    <Label HorizontalExpand="True" Text="{Loc 'space-vendors-label-name'}"/>
+                    <Label HorizontalExpand="True" Text="{Loc 'space-vendors-label-price'}"/>
+                    <Label HorizontalExpand="True" Text="{Loc 'space-vendors-label-minutes'}"/>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <ScrollContainer Name="ScrollContainer" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" Name="SpaceVendorsContainer" HorizontalExpand="True" VerticalExpand="True" VerticalAlignment="Top" Margin="3 0"/>
+        </ScrollContainer>
+    </BoxContainer>
+</cartridges:SpaceVendorsUiFragment>

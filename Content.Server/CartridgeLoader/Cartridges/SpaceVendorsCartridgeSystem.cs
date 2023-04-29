@@ -1,19 +1,22 @@
 using Content.Server.Cargo.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Popups;
+using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.CartridgeLoader;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Timing;
 
 namespace Content.Server.CartridgeLoader.Cartridges
 {
     public sealed class SpaceVendorsCartridgeSystem : EntitySystem
     {
-        [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
         [Dependency] private readonly PricingSystem _pricingSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-
+        [Dependency] private readonly GameTicker _gameTicker = default!;
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<SpaceVendorsCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
             SubscribeLocalEvent<SpaceVendorsCartridgeComponent, CartridgeAfterInteractEvent>(OnAfterInteract);
         }
 
@@ -28,6 +31,28 @@ namespace Content.Server.CartridgeLoader.Cartridges
                 ("object", Identity.Entity(args.InteractEvent.Target.Value, EntityManager)),
                 ("price", $"{price:F2}")), args.InteractEvent.User, args.InteractEvent.User);
             args.InteractEvent.Handled = true;
+
+            var item = new AppraisedItem(
+                Name(args.InteractEvent.Target.Value),
+                $"{price:F2}",
+                _gameTicker.RoundDuration().Minutes.ToString());
+
+            component.AppraisedItems.Add(item);
+            UpdateUiState(uid,args.Loader,component);
+        }
+
+        private void OnUiReady(EntityUid uid, SpaceVendorsCartridgeComponent component, CartridgeUiReadyEvent args)
+        {
+            UpdateUiState(uid, args.Loader, component);
+        }
+
+        private void UpdateUiState(EntityUid uid, EntityUid loaderUid, SpaceVendorsCartridgeComponent? component)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            var state = new SpaceVendorsUiState(component.AppraisedItems);
+            _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
         }
     }
 }
