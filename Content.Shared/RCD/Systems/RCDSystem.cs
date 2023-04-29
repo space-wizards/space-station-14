@@ -76,7 +76,7 @@ public sealed class RCDSystem : EntitySystem
             return;
 
         var gridId = location.GetGridUid(EntityManager);
-        if (!HasComp<MapGridComponent>(gridId))
+        if (gridId == null || !HasComp<MapGridComponent>(gridId.Value))
         {
             location = location.AlignWithClosestGridTile();
             gridId = location.GetGridUid(EntityManager);
@@ -85,7 +85,7 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var mapGrid = _mapMan.GetGrid(gridId);
+        var mapGrid = _mapMan.GetGrid(gridId.Value);
         var tile = mapGrid.GetTileRef(location);
         var snapPos = mapGrid.TileIndicesFor(location);
 
@@ -113,7 +113,7 @@ public sealed class RCDSystem : EntitySystem
         var location = args.Location;
 
         var gridId = location.GetGridUid(EntityManager);
-        if (HasComp<MapGridComponent>(gridId))
+        if (gridId == null || HasComp<MapGridComponent>(gridId.Value))
         {
             location = location.AlignWithClosestGridTile();
             gridId = location.GetGridUid(EntityManager);
@@ -122,7 +122,7 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var mapGrid = _mapMan.GetGrid(gridId);
+        var mapGrid = _mapMan.GetGrid(gridId.Value);
         var tile = mapGrid.GetTileRef(location);
         var snapPos = mapGrid.TileIndicesFor(location);
 
