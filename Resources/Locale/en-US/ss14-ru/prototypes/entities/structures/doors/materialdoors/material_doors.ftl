@@ -12,3 +12,5 @@ ent-GoldDoor = gold door
     .desc = A door, where will it lead?
 ent-SilverDoor = silver door
     .desc = A door, where will it lead?
+ent-BananiumDoor = bananium door
+    .desc = A door, where will it lead?

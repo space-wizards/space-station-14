@@ -12,3 +12,6 @@ ent-HandheldHealthAnalyzerOwOnavirus = OwOnavirus analyzer
 ent-HandheldHealthAnalyzerZombie = Zombie Infector
     .suffix = Active
     .desc = { ent-HandheldHealthAnalyzer.desc }
+ent-HandheldHealthAnalyzerHonk = { ent-HandheldHealthAnalyzer }
+    .suffix = Honk Infector
+    .desc = { ent-HandheldHealthAnalyzer.desc }

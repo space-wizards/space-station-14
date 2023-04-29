@@ -151,7 +151,10 @@ public sealed class HealingSystem : EntitySystem
         if (!TryComp<StackComponent>(uid, out var stack) || stack.Count < 1)
             return false;
 
-        if (!HasDamage(targetDamage, component))
+        if (!TryComp<BloodstreamComponent>(target, out var bloodstream))
+            return false;
+
+        if (!HasDamage(targetDamage, component) && !(bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume && component.ModifyBloodLevel > 0))
         {
             _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid);
             return false;

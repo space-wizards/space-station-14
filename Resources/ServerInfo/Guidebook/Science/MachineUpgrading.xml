@@ -8,11 +8,7 @@
 <Box>
 <GuideEntityEmbed Entity="CapacitorStockPart"/>
 <GuideEntityEmbed Entity="MatterBinStockPart"/>
-<GuideEntityEmbed Entity="MicroLaserStockPart"/>
-</Box>
-<Box>
 <GuideEntityEmbed Entity="MicroManipulatorStockPart"/>
-<GuideEntityEmbed Entity="ScanningModuleStockPart"/>
 </Box>
 Вы можете осматривать компоненты, чтобы определить их тип и уровень качества, который может быть от 1 до 4.
 

@@ -7776,18 +7776,6 @@ entities:
   - pos: -16.522705,-15.493478
     parent: 0
     type: Transform
-- uid: 89
-  type: MicroLaserStockPart
-  components:
-  - pos: -16.053955,-15.305978
-    parent: 0
-    type: Transform
-- uid: 90
-  type: MicroLaserStockPart
-  components:
-  - pos: -15.944581,-15.524728
-    parent: 0
-    type: Transform
 - uid: 91
   type: SurveillanceCameraSupply
   components:
@@ -65542,24 +65530,6 @@ entities:
   type: FireAlarmElectronics
   components:
   - pos: -98.307144,-8.750351
-    parent: 0
-    type: Transform
-- uid: 7049
-  type: MicroLaserStockPart
-  components:
-  - pos: -98.64377,-8.066168
-    parent: 0
-    type: Transform
-- uid: 7050
-  type: MicroLaserStockPart
-  components:
-  - pos: -98.39377,-8.081793
-    parent: 0
-    type: Transform
-- uid: 7051
-  type: HighPowerMicroLaserStockPart
-  components:
-  - pos: -98.14377,-8.175543
     parent: 0
     type: Transform
 - uid: 7052

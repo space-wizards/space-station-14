@@ -8,3 +8,5 @@ ent-MobFleshClamp = { ent-BaseMobFlesh }
     .desc = { ent-BaseMobFlesh.desc }
 ent-MobFleshLover = { ent-BaseMobFlesh }
     .desc = { ent-BaseMobFlesh.desc }
+ent-MobAbomination = abomination
+    .desc = A rejected clone, in constant pain and seeking revenge.

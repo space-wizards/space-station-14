@@ -5,3 +5,5 @@ ent-CluwneHorn = сломанный велосипедный клаксон
 ent-GoldenBikeHorn = золотой хонкер
     .desc = Сюрприз из Хэппи Хонка, для награды помолитесь богам.
     .suffix = НЕ МАППИТЬ
+ent-BananiumHorn = bananium horn
+    .desc = An air horn made from bananium.

@@ -4,3 +4,7 @@ ent-LeftArmBorg = левая рука борга
     .desc = { ent-PartSilicon.desc }
 ent-RightArmBorg = правая рука борга
     .desc = { ent-PartSilicon.desc }
+ent-LeftLegBorg = left borg leg
+    .desc = { ent-PartSilicon.desc }
+ent-RightLegBorg = right borg leg
+    .desc = { ent-PartSilicon.desc }
