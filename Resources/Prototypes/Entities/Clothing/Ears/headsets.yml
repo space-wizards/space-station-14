@@ -147,6 +147,19 @@
     sprite: Clothing/Ears/Headsets/medical.rsi
 
 - type: entity
+  parent: ClothingHeadsetMedical
+  id: ClothingHeadsetCMO
+  name: cmo headset
+  description: A headset used by the CMO.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyMedical
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+
+- type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetScience
   name: science headset
@@ -222,6 +235,23 @@
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/security.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetBrigmedic
+  name: brigmedic headset
+  description: A headset that helps to hear the death cries.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyMedical
+      - EncryptionKeySecurity
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/brigmedic.rsi
 
 - type: entity
   parent: ClothingHeadset
