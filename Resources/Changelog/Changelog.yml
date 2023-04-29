@@ -1,15 +1,4 @@
 Entries:
-- author: Hypospray Nerfer
-  changes:
-  - {message: 'Hypospray, Hypopen, and Gorlax Hypospray now all have short cooldowns.',
-    type: Tweak}
-  id: 3071
-  time: '2023-02-27T21:19:53.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix tile definition reloads., type: Fix}
-  id: 3072
-  time: '2023-02-28T05:32:05.0000000+00:00'
 - author: pofitlo
   changes:
   - {message: added ability to drag something for animals, type: Add}
@@ -2885,3 +2874,15 @@ Entries:
       pod will trigger the emag effect.', type: Add}
   id: 3570
   time: '2023-04-29T09:50:11.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Syndicate Viper has been retrofitted with a fully automatic receiver.,
+    type: Tweak}
+  id: 3571
+  time: '2023-04-29T10:53:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Anomaly scanners now show the exact point output, not an approximate
+      value.', type: Tweak}
+  id: 3572
+  time: '2023-04-29T10:54:06.0000000+00:00'
