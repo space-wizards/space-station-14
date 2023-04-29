@@ -461,7 +461,6 @@
     key: walls
     base: reinf_over
   - type: Appearance
-    #- type: ReinforcedWallVisuals
   - type: GenericVisualizer
     visuals:
       enum.ReinforcedWallVisuals.DeconstructionStage:
