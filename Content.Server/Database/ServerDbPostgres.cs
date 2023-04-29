@@ -119,7 +119,7 @@ namespace Content.Server.Database
                 query = query == null ? newQ : query.Union(newQ);
             }
 
-            if (address != null && !exemptFlags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.IP))
+            if (address != null)
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
