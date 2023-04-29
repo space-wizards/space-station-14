@@ -297,7 +297,10 @@ namespace Content.Server.Construction
                 throw new Exception("Missing construction components");
             }
 
-            if (newEntity == metaData.EntityPrototype?.ID || !_prototypeManager.HasIndex<EntityPrototype>(newEntity))
+            if (newEntity == metaData.EntityPrototype?.ID)
+                return uid;
+
+            if (!_prototypeManager.HasIndex<EntityPrototype>(newEntity))
                 return null;
 
             // Optional resolves.
