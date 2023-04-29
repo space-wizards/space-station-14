@@ -58,11 +58,6 @@ public sealed class AdminNotesEui : BaseEui
 
         switch (msg)
         {
-            case Close _:
-            {
-                Close();
-                break;
-            }
             case CreateNoteRequest {Message: var message}:
             {
                 if (!_notesMan.CanCreate(Player))

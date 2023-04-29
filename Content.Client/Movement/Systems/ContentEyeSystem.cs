@@ -20,6 +20,26 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         });
     }
 
+    public void RequestToggleFov()
+    {
+        if (_player.LocalPlayer?.ControlledEntity is { } player)
+            RequestToggleFov(player);
+    }
+
+    public void RequestToggleFov(EntityUid uid, EyeComponent? eye = null)
+    {
+        if (Resolve(uid, ref eye, false))
+            RequestFov(!eye.DrawFov);
+    }
+
+    public void RequestFov(bool value)
+    {
+        RaisePredictiveEvent(new RequestFovEvent()
+        {
+            Fov = value,
+        });
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
