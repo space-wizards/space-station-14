@@ -52,7 +52,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public float MaxTemperature;
 
         /// <summary>
-        ///     Minimum temperature the device can reach with a 0 total laser quality. Usually the quality will be at
+        ///     Minimum temperature the device can reach with a 0 total capacitor quality. Usually the quality will be at
         ///     least 1.
         /// </summary>
         [DataField("baseMinTemperature")]
@@ -60,7 +60,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public float BaseMinTemperature = 96.625f; // Selected so that tier-1 parts can reach 73.15k
 
         /// <summary>
-        ///     Maximum temperature the device can reach with a 0 total laser quality. Usually the quality will be at
+        ///     Maximum temperature the device can reach with a 0 total capacitor quality. Usually the quality will be at
         ///     least 1.
         /// </summary>
         [DataField("baseMaxTemperature")]
@@ -91,7 +91,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     The machine part that affects the temperature range.
         /// </summary>
         [DataField("machinePartTemperature", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartTemperature = "Laser";
+        public string MachinePartTemperature = "Capacitor";
 
     }
 }
