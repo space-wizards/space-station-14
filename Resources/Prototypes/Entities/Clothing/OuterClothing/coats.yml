@@ -231,9 +231,9 @@
   description: Dogi is a type of traditional Japanese clothing. The dogi is made of heavy, durable fabric, it is practical in combat and stylish in appearance. It is decorated with intricate patterns and embroidery on the back.
   components:
   - type: Sprite
-    sprite: Clothing\OuterClothing\Coats\dogi.rsi
+    sprite: Clothing/OuterClothing/Coats/dogi.rsi
   - type: Clothing
-    sprite: Clothing\OuterClothing\Coats\dogi.rsi
+    sprite: Clothing/OuterClothing/Coats/dogi.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -251,3 +251,22 @@
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatAMG
+  name: armored medical gown
+  description: The version of the medical gown, with elements of a bulletproof vest, looks strange, but your heart is protected.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.85
+        Piercing: 0.65
+        Heat: 0.85
+        Caustic: 0.75

@@ -1,0 +1,55 @@
+- type: entity
+  name: hot potato
+  description: Once activated, this time bomb can't be dropped - only passed to someone else!
+  parent: BaseItem
+  id: HotPotato
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Bombs/hot_potato.rsi
+      state: icon
+      netsync: false
+    - type: Item
+      sprite: Objects/Weapons/Bombs/hot_potato.rsi
+      size: 5
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 5
+    - type: OnUseTimerTrigger
+      delay: 180
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 8
+      intensitySlope: 5
+      totalIntensity: 20
+      canCreateVacuum: false
+    - type: DeleteOnTrigger
+    - type: HotPotato
+    - type: Appearance
+      visuals:
+        - type: GenericEnumVisualizer
+          key: enum.Trigger.TriggerVisuals.VisualState
+          states:
+            enum.Trigger.TriggerVisualState.Primed: activated
+            enum.Trigger.TriggerVisualState.Unprimed: complete
+
+- type: entity
+  id: HotPotatoEffect
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.6
+  - type: Sprite
+    netsync: false
+    noRot: true
+    drawdepth: Effects
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+    scale: "0.15, 0.15"
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer

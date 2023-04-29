@@ -24,6 +24,9 @@
     fiberMaterial: fibers-leather
     fiberColor: fibers-red
   - type: FingerprintMask
+  - type: Tag
+    tags:
+    - Kangaroo
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed
@@ -72,6 +75,20 @@
     fiberMaterial: fibers-leather
     fiberColor: fibers-yellow
   - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesBoxingBlue
+  id: ClothingHandsGlovesBoxingRigged
+  name: blue boxing gloves
+  description: Blue gloves for competitive boxing. Feels like they're heavier than usual...
+  components:
+  - type: StaminaDamageOnHit
+    damage: 30
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 8
 
 - type: entity
   parent: ClothingHandsBase
@@ -265,3 +282,15 @@
   description:  A cursed pair of cluwne hands.
   components:
   - type: Unremoveable
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ForensicGloves
+  name: forensic gloves
+  description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/forensic.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/forensic.rsi
+  - type: FingerprintMask
