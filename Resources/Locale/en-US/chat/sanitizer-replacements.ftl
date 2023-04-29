@@ -23,6 +23,7 @@ chatsan-deathgasp = seizes up and falls limp, { POSS-ADJ($ent) } eyes dead and l
 chatsan-drools = drools.
 chatsan-eyebrow = raises an eyebrow.
 chatsan-faints = faints.
+chatsan-flips = does a flip!
 chatsan-frowns = frowns.
 chatsan-gags = gags.
 chatsan-gasps = gasps!
