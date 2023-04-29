@@ -275,7 +275,6 @@
         type: Add
         time: 5
         refresh: false
-  pricePerUnit: 2
 
 - type: reagent
   id: THCOil
@@ -294,7 +293,6 @@
         type: Add
         time: 5
         refresh: false
-  pricePerUnit: 2.5
 
 - type: reagent
   id: Nicotine
