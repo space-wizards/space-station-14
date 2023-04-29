@@ -20,7 +20,10 @@ public sealed class LoneOpsSpawnRule : StationEventSystem<LoneOpsSpawnRuleCompon
         base.Started(uid, component, gameRule, args);
 
         if (!_nukeopsRuleSystem.CheckLoneOpsSpawn())
+        {
+            ForceEndSelf(uid, gameRule);
             return;
+        }
 
         var shuttleMap = _mapManager.CreateMap();
         var options = new MapLoadOptions
