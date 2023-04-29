@@ -11,12 +11,6 @@ public sealed partial class BotanySystem
         if (!TryGetSeed(produce, out var seed))
             return;
 
-        if (TryComp(uid, out SpriteComponent? sprite))
-        {
-            sprite.LayerSetRSI(0, seed.PlantRsi);
-            sprite.LayerSetState(0, seed.PlantIconState);
-        }
-
         var solutionContainer = _solutionContainerSystem.EnsureSolution(uid, produce.SolutionName);
 
         solutionContainer.RemoveAllSolution();
