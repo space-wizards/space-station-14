@@ -117,7 +117,7 @@
     - SecurityCadetGear
     - SecurityOfficerGear
     - DetectiveGear
-    - CorpseWardenGear
+    - WardenGear
 
 - type: randomHumanoidSettings
   id: RandomCommandCorpse
