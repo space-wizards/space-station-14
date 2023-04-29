@@ -225,6 +225,23 @@
 
 - type: entity
   parent: ClothingHeadset
+  id: ClothingHeadsetBrigmedic
+  name: brigmedic headset
+  description: A headset that helps to hear the death cries.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyMedical
+      - EncryptionKeySecurity
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/brigmedic.rsi
+
+- type: entity
+  parent: ClothingHeadset
   id: ClothingHeadsetService
   name: service headset
   description: Headset used by the service staff, tasked with keeping the station full, happy and clean.

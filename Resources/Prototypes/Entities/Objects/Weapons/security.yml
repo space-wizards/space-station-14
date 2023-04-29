@@ -53,7 +53,13 @@
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/flash.rsi
-      state: flash
+      layers:
+      - state: flash
+        map: [ "enum.FlashVisuals.BaseLayer" ]
+      - state: flashing
+        map: [ "enum.FlashVisuals.LightLayer" ]
+        visible: false
+        shader: unshaded
     - type: Flash
     - type: MeleeWeapon
       damage:
@@ -66,6 +72,16 @@
     - type: ItemCooldown
     - type: StaticPrice
       price: 40
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.FlashVisuals.Burnt:
+          enum.FlashVisuals.BaseLayer:
+            True: {state: burnt}
+        enum.FlashVisuals.Flashing:
+          enum.FlashVisuals.LightLayer:
+            True: {visible: true}
+            False: {visible: false}
 
 - type: entity
   name: portable flasher

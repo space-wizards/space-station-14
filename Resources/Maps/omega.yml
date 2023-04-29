@@ -48994,19 +48994,19 @@ entities:
     parent: 0
     type: Transform
 - uid: 6202
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 7.436289,-15.783581
     parent: 0
     type: Transform
 - uid: 6203
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 7.623789,-15.783581
     parent: 0
     type: Transform
 - uid: 6204
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 7.811289,-15.783581
     parent: 0
@@ -49054,7 +49054,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 6212
-  type: PhasicScanningModuleStockPart
+  type: SuperCapacitorStockPart
   components:
   - pos: 7.5679626,-16.149172
     parent: 0
