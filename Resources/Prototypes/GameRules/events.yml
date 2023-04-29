@@ -167,6 +167,7 @@
       path: /Audio/Announcements/meteors_end.ogg # Corvax-Announcements
       params:
         volume: -4
+    duration: null #ending is handled by MeteorSwarmRule
     startAfter: 30
   - type: MeteorSwarmRule
 
@@ -303,4 +304,3 @@
     reoccurrenceDelay: 25
     duration: 1
   - type: LoneOpsSpawnRule
-  - type: NukeopsRule

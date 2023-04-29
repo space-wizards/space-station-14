@@ -40,10 +40,6 @@
       Lung:
         maxVol: 100
         canReact: False
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 0
-    baseSprintSpeed: 0
-  - type: GhostOnMove
   - type: Brain
   - type: Lung #lungs in they head. why they there tho?
   - type: Metabolizer
