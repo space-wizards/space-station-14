@@ -68,10 +68,16 @@ namespace Content.Server.Cloning.Components
         /// Emag sound effects.
         /// </summary>
         [DataField("sparkSound")]
-        public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
+        public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks")
+        {
+            Params = AudioParams.Default.WithVolume(8),
+        };
 
         [DataField("screamSound")]
-        public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("ZombieScreams");
+        public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("ZombieScreams")
+        {
+            Params = AudioParams.Default.WithVolume(4),
+        };
 
         /// <summary>
         /// The machine part that affects how much biomass is needed to clone a body.

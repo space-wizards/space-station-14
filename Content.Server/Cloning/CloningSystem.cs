@@ -289,16 +289,17 @@ namespace Content.Server.Cloning
             }
         }
 
-        // On emag, spawns a failed clone when cloning process fails which attacks nearby crew.
+        /// <summary>
+        /// On emag, spawns a failed clone when cloning process fails which attacks nearby crew.
+        /// </summary>
         private void OnEmagged(EntityUid uid, CloningPodComponent clonePod, ref GotEmaggedEvent args)
         {
-            if (_powerReceiverSystem.IsPowered(uid))
-            {
-                EnsureComp<EmaggedComponent>(uid);
-                _audio.PlayPvs(clonePod.SparkSound, uid, AudioParams.Default.WithVolume(8));
-                _popupSystem.PopupEntity(Loc.GetString("cloning-pod-component-upgrade-emag-requirement"), uid);
-                args.Handled = true;
-            }
+            if (!this.IsPowered(uid, EntityManager))
+                return;
+
+            _audio.PlayPvs(clonePod.SparkSound, uid);
+            _popupSystem.PopupEntity(Loc.GetString("cloning-pod-component-upgrade-emag-requirement"), uid);
+            args.Handled = true;
         }
 
         public void Eject(EntityUid uid, CloningPodComponent? clonePod)
@@ -329,8 +330,8 @@ namespace Content.Server.Cloning
 
             if (HasComp<EmaggedComponent>(uid))
             {
-                _audio.PlayPvs(clonePod.ScreamSound, uid, AudioParams.Default.WithVolume(4));
-                Spawn(clonePod.MobSpawnId, Transform(uid).Coordinates);
+                _audio.PlayPvs(clonePod.ScreamSound, uid);
+                Spawn(clonePod.MobSpawnId, transform.Coordinates);
             }
 
             Solution bloodSolution = new();

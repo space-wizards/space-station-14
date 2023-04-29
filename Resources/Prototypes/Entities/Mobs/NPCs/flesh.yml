@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: SimpleMobBase
   id: BaseMobFlesh
   name: aberrant flesh
@@ -171,20 +171,16 @@
     states:
       Alive:
         Base: abomination
-      Critical:
-        Base: crit
       Dead:
         Base: dead
   - type: MobState
     allowedStates:
     - Alive
     - Dead
-    - Critical
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
-      150: Dead
+      100: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.5
     baseSprintSpeed: 2.5
