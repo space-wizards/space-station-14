@@ -297,11 +297,10 @@
   - type: Icon
     state: pda-qm
   - type: CartridgeLoader
-    cartridgeSlot: 
-      startingItem: SpaceVendorsCartridge
-      priority: -1
-      
-
+    uiKey: enum.PDAUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+      - SpaceVendorsCartridge
 
 - type: entity
   parent: BasePDA
@@ -315,9 +314,10 @@
   - type: Icon
     state: pda-cargo
   - type: CartridgeLoader
-    cartridgeSlot: 
-      startingItem: SpaceVendorsCartridge
-      priority: -1
+    uiKey: enum.PDAUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+      - SpaceVendorsCartridge
 
 - type: entity
   parent: BasePDA
@@ -331,9 +331,10 @@
   - type: Icon
     state: pda-miner
   - type: CartridgeLoader
-    cartridgeSlot: 
-      startingItem: SpaceVendorsCartridge
-      priority: -1
+    uiKey: enum.PDAUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+      - SpaceVendorsCartridge
 
 - type: entity
   parent: BasePDA
