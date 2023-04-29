@@ -6,6 +6,9 @@
   abstract: true
   components:
   # The important nessessities
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.0
+    baseSprintSpeed: 5.0
   - type: Body
     prototype: Arachnid
     requiredLegs: 2
