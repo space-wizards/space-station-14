@@ -491,6 +491,106 @@
     sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-ketchup
 
+# Shakers
+
+- type: entity
+  parent: BaseItem
+  id: BaseFoodShaker
+  abstract: true
+  name: empty shaker
+  description: A shaker used to store and dispense spices.
+  components:
+  - type: Drink
+    solution: food
+    isOpen: true
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    minTransferAmount: 5
+    maxTransferAmount: 20
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: shaker-empty
+  - type: Appearance
+  - type: TrashOnEmpty
+    solution: food
+
+- type: entity
+  parent: BaseFoodShaker
+  id: FoodShakerEmpty
+  name: empty shaker
+  description: A shaker used to store and dispense spices.
+  components:
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  parent: BaseFoodShaker
+  id: FoodShakerSalt
+  name: salt shaker
+  description: Salt. From space oceans, presumably.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: TableSalt
+          Quantity: 20
+  
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: shaker-salt
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: shaker-salt
+
+- type: entity
+  parent: BaseFoodShaker
+  id: FoodShakerPepper
+  name: pepper shaker
+  description: Often used to flavor food or make people sneeze.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Blackpepper
+          Quantity: 20
+  
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: shaker-pepper
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: shaker-pepper
+
 # Small Bottles
 
 - type: entity

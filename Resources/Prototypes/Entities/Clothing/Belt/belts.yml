@@ -241,12 +241,12 @@
         - Gauze
         - Ointment
         - CigPack
-        - Pill
         - PillCanister
         - Radio
       components:
         - Hypospray
         - Injector
+        - Pill
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -259,8 +259,9 @@
           - Hypospray
       pill:
         whitelist:
-          tags:
+          components:
           - Pill
+          tags:
           - PillCanister
       bottle_spray:
         whitelist:
@@ -425,6 +426,9 @@
   - type: Clothing
     sprite: Clothing/Belt/champion.rsi
     quickEquip: true
+  - type: Tag
+    tags:
+    - Kangaroo
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -472,6 +476,17 @@
 
 - type: entity
   parent: ClothingBeltStorageBase
+  id: ClothingBeltSalvageWebbing
+  name: salvage rig
+  description: Universal unloading system for work in space.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/salvagewebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/salvagewebbing.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
   id: ClothingBeltMilitaryWebbing
   name: chest rig
   description: A set of tactical webbing worn by Syndicate boarding parties.
@@ -492,9 +507,9 @@
   - type: Clothing
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Item
-    size: 60
+    size: 70
   - type: Storage
-    capacity: 60
+    capacity: 70
 
 - type: entity
   parent: ClothingBeltBase

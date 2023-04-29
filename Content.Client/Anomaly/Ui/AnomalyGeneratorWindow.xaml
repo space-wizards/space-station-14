@@ -1,13 +1,13 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 Title="{Loc 'anomaly-generator-ui-title'}"
-                MinSize="270 180"
-                SetSize="360 180">
-    <BoxContainer Margin="10 0 10 0"
+
+                Resizable="False">
+    <BoxContainer Margin="0 0"
                   Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">
-        <BoxContainer Orientation="Horizontal">
+        <BoxContainer Margin="10 0 10 0" Orientation="Horizontal">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <BoxContainer Orientation="Horizontal"
                               HorizontalExpand="True"
@@ -30,6 +30,7 @@
                 <RichTextLabel Name="CooldownLabel" StyleClasses="StatusFieldTitle" />
                 <RichTextLabel Name="ReadyLabel" StyleClasses="StatusFieldTitle" />
             </BoxContainer>
+            <!--Sprite View-->
             <PanelContainer Margin="12 0 0 0"
                             StyleClasses="Inset"
                             VerticalAlignment="Center">
@@ -40,9 +41,22 @@
         </BoxContainer>
         <BoxContainer VerticalExpand="True"
                       HorizontalAlignment="Center"
-                      VerticalAlignment="Center">
+                      VerticalAlignment="Center"
+                      Margin="0 10">
             <Button Name="GenerateButton"
                     Text="{Loc 'anomaly-generator-generate'}"></Button>
+        </BoxContainer>
+
+         <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'anomaly-generator-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'anomaly-generator-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

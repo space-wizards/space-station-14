@@ -14,6 +14,7 @@
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -38,6 +39,8 @@
     closeTimeTwo: 1.2
     openTimeOne: 1.2
     openTimeTwo: 0.2
+    openingAnimationTime: 1.4
+    closingAnimationTime: 1.4
     crushDamage:
       types:
         Blunt: 5 # getting shutters closed on you probably doesn't hurt that much
@@ -49,10 +52,6 @@
     fuel: 3
     time: 3
   - type: Appearance
-    visuals:
-      - type: AirlockVisualizer
-        simpleVisuals: true
-        animationTime: 1.4
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key

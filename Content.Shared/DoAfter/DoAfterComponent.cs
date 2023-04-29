@@ -27,7 +27,20 @@ public sealed class DoAfterComponentState : ComponentState
     public DoAfterComponentState(DoAfterComponent component)
     {
         NextId = component.NextId;
+
+        // Cursed test bugs - See CraftingTests.CancelCraft
+        // The following is wrapped in an if DEBUG. This is tests don't (de)serialize net messages and just copy objects
+        // by reference. This means that the server will directly modify cached server states on the client's end.
+        // Crude fix at the moment is to used modified state handling while in debug mode Otherwise, this test cannot work.
+#if !DEBUG
         DoAfters = component.DoAfters;
+#else
+        DoAfters = new();
+        foreach (var (id, doafter) in component.DoAfters)
+        {
+            DoAfters.Add(id, new DoAfter(doafter));
+        }
+#endif
     }
 }
 

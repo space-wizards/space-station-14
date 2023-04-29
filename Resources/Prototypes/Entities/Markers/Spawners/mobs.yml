@@ -18,7 +18,7 @@
       - MobMouse2
 
 - type: entity
-  name: Ian Spawner
+  name: HoP Corgi Spawner
   id: SpawnMobCorgi
   parent: MarkerBase
   components:
@@ -29,6 +29,8 @@
   - type: ConditionalSpawner
     prototypes:
       - MobCorgiIan
+      - MobCorgiIanOld
+      - MobCorgiLisa
 
 - type: entity
   name: Possum Morty Spawner
@@ -300,3 +302,58 @@
   - type: ConditionalSpawner
     prototypes:
       - MobSpiderShiva
+
+- type: entity
+  name: Willow Spawner
+  id: SpawnMobKangarooWillow
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: kangaroo
+      sprite: Mobs/Animals/kangaroo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobKangarooWillow
+
+- type: entity
+  name: Space Kangaroo Spawner
+  id: SpawnMobKangaroo
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: kangaroo-space
+      sprite: Mobs/Animals/kangaroo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobKangarooSpace
+
+- type: entity
+  name: Boxing Kangaroo Spawner
+  id: SpawnMobBoxingKangaroo
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: kangaroo
+      sprite: Mobs/Animals/kangaroo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBoxingKangaroo
+
+- type: entity
+  name: Space Spider Spawner
+  id: SpawnMobSpaceSpider
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSpiderSpace

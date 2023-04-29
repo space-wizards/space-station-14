@@ -107,13 +107,13 @@ public abstract class SharedItemCabinetSystem : EntitySystem
         {
             toggleVerb.Text = Loc.GetString("verb-common-close");
             toggleVerb.Icon =
-                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
+                new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
         }
         else
         {
             toggleVerb.Text = Loc.GetString("verb-common-open");
             toggleVerb.Icon =
-                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
+                new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
         }
         args.Verbs.Add(toggleVerb);
     }

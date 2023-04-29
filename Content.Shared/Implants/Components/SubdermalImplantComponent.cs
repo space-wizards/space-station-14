@@ -51,3 +51,11 @@ public sealed class ActivateImplantEvent : InstantActionEvent
 {
 
 }
+
+/// <summary>
+/// Used for opening the uplink implant via action.
+/// </summary>
+public sealed class OpenUplinkImplantEvent : InstantActionEvent
+{
+
+}

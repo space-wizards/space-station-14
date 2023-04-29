@@ -26,9 +26,9 @@
   - type: SolutionContainerManager
     solutions:
       absorbed:
-        maxVol: 60
+        maxVol: 100
   - type: UseDelay
-    delay: 1.5
+    delay: 1
   - type: Tag
     tags:
       - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
@@ -38,7 +38,7 @@
   parent: BaseItem
   name: advanced mop
   id: AdvMopItem
-  description: Motorized mop that have a bigger reservoir and can mop multiple puddles at once. Automatic Clown Countermeasure no included.
+  description: Motorized mop that has a bigger reservoir and quickly replaces reagents inside with water. Automatic Clown Countermeasure not included.
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/advmop.rsi
@@ -56,6 +56,17 @@
       pickupAmount: 100
     - type: UseDelay
       delay: 1.0
+    - type: SolutionRegeneration
+      solution: absorbed
+      generated:
+        reagents:
+        - ReagentId: Water
+          Quantity: 5
+    - type: SolutionPurge
+      solution: absorbed
+      preserve:
+      - Water
+      quantity: 10
     - type: SolutionContainerManager
       solutions:
         absorbed:
@@ -85,7 +96,7 @@
   - type: SolutionContainerManager
     solutions:
       bucket:
-        maxVol: 500
+        maxVol: 600
   - type: Spillable
     spillDelay: 3.0
   - type: DrainableSolution
@@ -134,10 +145,10 @@
     - type: SolutionContainerManager
       solutions:
         bucket:
-          maxVol: 500
+          maxVol: 600
           reagents:
             - ReagentId: Water
-              Quantity: 500
+              Quantity: 600
 
 - type: entity
   name: wet floor sign
@@ -179,6 +190,7 @@
         tags:
           - Mop
           - TrashBag
+          - Bucket
     - type: ItemSlots
       slots:
         mop_slot:
@@ -187,6 +199,13 @@
             tags:
               - Mop
           insertOnInteract: false # or it conflicts with bucket logic
+          priority: 5 # Higher than bucket slot
+        bucket_slot:
+          name: Bucket
+          whitelist:
+            tags:
+              - Bucket
+          insertOnInteract: false # or it also conflicts with bucket logic
           priority: 4 # Higher than trash bag slot
         trashbag_slot:
           name: Bag
@@ -199,7 +218,7 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.3
-        density: 350
+        density: 250
         layer:
         - MobLayer
         mask:
@@ -209,10 +228,10 @@
     - type: SolutionContainerManager
       solutions:
         bucket:
-          maxVol: 500
+          maxVol: 800
           reagents:
             - ReagentId: Water
-              Quantity: 250 # half-full at roundstart to leave room for puddles
+              Quantity: 600 # 3 quarters full at roundstart to make it more appealing
     - type: DrainableSolution
       solution: bucket
     - type: RefillableSolution
@@ -243,22 +262,6 @@
                 path: /Audio/Effects/metalbreak.ogg
     - type: ItemMapper
       mapLayers:
-        cart_mop:
-          whitelist:
-            tags:
-              - Mop
-        cart_garbage:
-          whitelist:
-            tags:
-              - TrashBag
-        cart_replacer:
-          whitelist:
-            components:
-              - LightReplacer
-        cart_spray:
-          whitelist:
-            tags:
-              - Spray
         cart_sign1: # this is like stack of floor signs
           minCount: 1
           whitelist:
@@ -279,6 +282,26 @@
           whitelist:
             tags:
               - WetFloorSign
+        cart_spray:
+          whitelist:
+            tags:
+              - Spray
+        cart_garbage:
+          whitelist:
+            tags:
+              - TrashBag
+        cart_replacer:
+          whitelist:
+            components:
+              - LightReplacer
+        cart_bucket:
+          whitelist:
+            tags:
+              - Bucket
+        cart_mop:
+          whitelist:
+            tags:
+              - Mop
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
     - type: Appearance
     - type: SolutionContainerVisuals
@@ -297,6 +320,7 @@
           ents: []
         mop_slot: !type:ContainerSlot {}
         trashbag_slot: !type:ContainerSlot {}
+        bucket_slot: !type:ContainerSlot {}
 
 - type: entity
   id: FloorDrain

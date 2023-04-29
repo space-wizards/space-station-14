@@ -39,7 +39,7 @@
   description: "Area Power Controller (APC). Controls power. In an area."
   icon:
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true

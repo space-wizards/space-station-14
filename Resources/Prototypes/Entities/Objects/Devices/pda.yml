@@ -553,14 +553,23 @@
     state: pda-security
 
 - type: entity
-  parent: PassengerPDA
+  parent: BasePDA
   id: CentcomPDA
   name: CentCom PDA
-  description: Colored the numbing grey of bureaucracy.
+  description: Light green sign of walking bureaucracy.
   components:
   - type: PDA
     id: CentcomIDCardSyndie
-    state: pda
+    state: pda-centcom
+    penSlot:
+      startingItem: PenCentcom
+      whitelist:
+        tags:
+        - Write
+  - type: PDABorderColor
+    borderColor: "#32CD32"
+  - type: Icon
+    state: pda-centcom
 
 - type: entity
   parent: BasePDA
@@ -711,19 +720,19 @@
 
 - type: entity
   parent: BasePDA
-  id: BrigmedPDA
-  name: brigmed PDA
+  id: BrigmedicPDA
+  name: brigmedic PDA
   description: I wonder whose pulse is on the screen? I hope he doesnt stop... PDA has a built-in health analyzer.
   components:
   - type: PDA
-    id: BrigmedIDCard
-    state: pda-brigmed
+    id: BrigmedicIDCard
+    state: pda-brigmedic
   - type: PDABorderColor
     borderColor: "#A32D26"
-    accentHColor: "#447987"
-    accentVColor: "#447987"
+    accentHColor: "#d7d7d0"
+    accentVColor: "#d7d7d0"
   - type: Icon
-    state: pda-brigmed
+    state: pda-brigmedic
   - type: HealthAnalyzer
     scanDelay: 1
     scanningEndSound:
