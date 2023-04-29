@@ -1,7 +1,9 @@
+using Content.Shared.Maps;
 using Content.Shared.RCD.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.RCD.Components;
 
@@ -43,6 +45,7 @@ public sealed partial class RCDComponent : Component
     /// <summary>
     /// ID of the floor to create when using the floor mode.
     /// </summary>
-    [DataField("floor"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("floor", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>))]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public string Floor = "FloorSteel";
 }
