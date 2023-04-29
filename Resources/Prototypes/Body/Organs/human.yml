@@ -29,10 +29,6 @@
   - type: Input
     context: "ghost"
   - type: InputMover
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 0
-    baseSprintSpeed: 0
-  - type: GhostOnMove
   - type: Brain
 
 - type: entity

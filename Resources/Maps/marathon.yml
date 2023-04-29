@@ -164246,7 +164246,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 20970
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 2.559926,21.402208
     parent: 30
@@ -164272,7 +164272,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 20974
-  type: AdvancedScanningModuleStockPart
+  type: AdvancedCapacitorStockPart
   components:
   - pos: 2.2878256,21.230333
     parent: 30
@@ -174229,7 +174229,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 22099
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 2.731801,21.495958
     parent: 30
@@ -175931,7 +175931,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 22441
-  type: ScanningModuleStockPart
+  type: CapacitorStockPart
   components:
   - pos: 2.452661,20.541075
     parent: 30
