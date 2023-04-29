@@ -33,6 +33,18 @@
     B52: 3
 
 - type: reaction
+  id: CogChamp
+  reactants:
+    Cognac:
+      amount: 1
+    ScrewdriverCocktail:
+      amount: 1
+    WeldingFuel:
+      amount: 1
+  products:
+    CogChamp: 3
+
+- type: reaction
   id: BananaHonk
   reactants:
     Cream:

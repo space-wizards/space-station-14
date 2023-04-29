@@ -1,19 +1,17 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
-using Microsoft.Extensions.Primitives;
 
 namespace Content.Server.Speech.EntitySystems;
 
 public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
 {
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    private const string RatvarianKey = "RatvarianLanguage";
 
-    //TODO: Need to add the other ratvarian language rules
-
+    // This is the word of Ratvar and those who speak it shall abide by His rules:
     /*
      * Any time the word "of" occurs, it's linked to the previous word by a hyphen: "I am-of Ratvar"
      * Any time "th", followed by any two letters occurs, you add a grave (`) between those two letters: "Thi`s"
@@ -27,9 +25,6 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
         * This only applies if they're being used as a proper noun: armorer/Nezbere
      */
 
-    //TODO: Make a class of or put the Regex options into the component
-    private const string RatvarianKey = "RatvarianLanguage";
-
     private static Regex THPattern = new Regex(@"th\w\B", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private static Regex ETPattern = new Regex(@"\Bet", RegexOptions.Compiled);
     private static Regex TEPattern = new Regex(@"te\B",RegexOptions.Compiled);
@@ -39,31 +34,6 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
     private static Regex ANDPattern = new Regex(@"\b(\s)(and)(\s)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private static Regex TOMYPattern = new Regex(@"(to|my)\s", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private static Regex ProperNouns = new Regex(@"(ratvar)|(nezbere)|(sevtuq)|(nzcrentr)|(inath-neq)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-    // see if you can run the replacements in the regex
-    // regex [th] th\w\B IgnoreCase, ($&` Replace) OR (th\w)(\w) ($1`$2)
-    // regex [et] \Bet -$&
-    // regex [te] te\B  $&-
-    // regex [of] (\s)(of) -$2 Replace
-    // regex [ti] ti\B Ignore Case ($&` Replace)
-    // regex [gua] (gu)(a) ignore case $1-$2
-    // regex [and] \b(\s)(and)(\s) ignore case -$2-
-    // regex [to] [my] (to|my)\s ignore case $1-
-
-    // Message (input) > Translation (output)
-
-    //1 - Take in message:
-    //"This timid metal granted of Ratvar's armorer shall guard and guide me to see my victory"
-    //2 - Run the pre translation checks (ratvarian rules) (looping or regex)
-    //  regex: tbd
-    //  looping: split by space or take in the entire sentence (won't work by character)
-    //3 - Rules implemented:
-    //"Thi`s ti`mid m-etal grante-d-of Ratvar's armorer shall gu-ard-and-guide me to-see my-victory"
-    //4 - block out proper nouns: Ratvar's
-    //Run translation and output:
-    //"Guv`f gv`zvq z-rgny tenagr-q-bs Ratvar's nezbere funyy th-neq-naq-thvqr zr gb-frr zl-ivpgbel"
-
-    //Notes: you may need to take in stutters
 
     public override void Initialize()
     {

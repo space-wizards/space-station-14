@@ -10,7 +10,6 @@ public abstract class SharedDrunkSystem : EntitySystem
 
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly SharedSlurredSystem _slurredSystem = default!;
-    [Dependency] private readonly SharedRatvarianLanguageSystem _ratvarianLanguage = default!;
 
     public void TryApplyDrunkenness(EntityUid uid, float boozePower, bool applySlur = true,
         StatusEffectsComponent? status = null)
@@ -20,8 +19,7 @@ public abstract class SharedDrunkSystem : EntitySystem
 
         if (applySlur)
         {
-            //_slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
-            _ratvarianLanguage.DoRatvarian(uid, TimeSpan.FromSeconds(boozePower), applySlur, status);
+            _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
         }
 
         if (TryComp<LightweightDrunkComponent>(uid, out var trait))
