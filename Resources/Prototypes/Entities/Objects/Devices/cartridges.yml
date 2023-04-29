@@ -55,6 +55,8 @@
     - type: Icon
       sprite: Objects/Devices/cartridge.rsi
       state: cart-q
+    - type: UIFragment
+      ui: !type:SpaceVendorsUi
     - type: Cartridge
       programName: space-vendors-program-name
       icon:
