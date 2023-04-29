@@ -1,9 +1,4 @@
 Entries:
-- author: reapsnI and joelhed
-  changes:
-  - {message: Added the chemistry bag as the default belt for the chemist!, type: Add}
-  id: 3056
-  time: '2023-02-20T03:34:02.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Alt-clicking a drink now makes you drink it instead of changing the
@@ -2890,3 +2885,9 @@ Entries:
   - {message: Fixed a bunch of station events never starting., type: Fix}
   id: 3555
   time: '2023-04-29T03:15:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Removed the laser and scanning module machine parts., type: Remove}
+  - {message: Adjusted recipes for many machine boards., type: Tweak}
+  id: 3556
+  time: '2023-04-29T03:23:49.0000000+00:00'
