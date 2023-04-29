@@ -199,9 +199,14 @@
     energy: 2.5
     color: "#befaff"
     castShadows: false
+  - type: Anomaly
+    anomalyContactDamage:
+      types:
+        Cold: 10
   - type: IceAnomaly
     projectilePrototype: ProjectileIcicle
     projectileDamage: # Values are scaled by severity
       types:
         Pierce: 50
         Cold: 50
+        Structural: 30

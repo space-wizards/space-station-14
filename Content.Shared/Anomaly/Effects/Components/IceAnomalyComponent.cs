@@ -21,8 +21,14 @@ public sealed class IceAnomalyComponent : Component
     /// <summary>
     /// The MAXIMUM speed <see cref="ProjectilePrototype"/> can travel
     /// </summary>
-    [DataField("maxprojectileSpeed")]
-    public float MaxProjectileSpeed = 50f;
+    [DataField("maxProjectileSpeed")]
+    public float MaxProjectileSpeed = 30f;
+
+    /// <summary>
+    /// The MAXIMUM number of projectiles shot per pulse
+    /// </summary>
+    [DataField("maxProjectiles")]
+    public int MaxProjectiles = 5;
 
     /// <summary>
     /// The MAXIMUM range an entity has to be in to be shot at

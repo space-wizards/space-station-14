@@ -1,14 +1,13 @@
 using Content.Server.Weapons.Ranged.Systems;
-using Content.Server.Anomaly.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Interaction;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Projectiles;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Events;
-using Content.Shared.Projectiles;
+using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -20,11 +19,10 @@ public sealed class IceAnomalySystem : EntitySystem
     [Dependency] private readonly EntityManager _entman = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FlammableSystem _flammable = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -36,17 +34,26 @@ public sealed class IceAnomalySystem : EntitySystem
     private void OnPulse(EntityUid uid, IceAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         var xform = Transform(uid);
+        var projectilesShot = 0;
 
-        foreach(var entity in _lookup.GetEntitiesInRange(uid, component.ProjectileRange * args.Stability, LookupFlags.Dynamic))
+        foreach (var entity in _lookup.GetEntitiesInRange(uid, component.ProjectileRange * args.Stability, LookupFlags.Dynamic))
         {
-            if (!HasComp<MobStateComponent>(entity))
+            if (projectilesShot >= component.MaxProjectiles * args.Severity)
+                return;
+
+            // Living entities are more likely to be shot at then non living
+            if (!HasComp<MobStateComponent>(entity) && _random.Prob(0.5f))
                 continue;
+
+            var targetCoords = Transform(entity).Coordinates.Offset(_random.NextVector2(-1, 1));
+
             ShootProjectile(
                 uid, component,
-                Transform(uid).Coordinates,
-                Transform(entity).Coordinates,
+                xform.Coordinates,
+                targetCoords,
                 args.Severity
             );
+            projectilesShot++;
         }
     }
 
@@ -60,17 +67,17 @@ public sealed class IceAnomalySystem : EntitySystem
     {
         var mapPos = coords.ToMap(_entman, _xform);
 
-        EntityCoordinates spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
+        var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
                 ? coords.WithEntityId(grid.Owner, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
         var ent = Spawn(component.ProjectilePrototype, spawnCoords);
-        var direction = (targetCoords.ToMapPos(_entman, _xform) - mapPos.Position);
+        var direction = targetCoords.ToMapPos(_entman, _xform) - mapPos.Position;
 
-        if (!TryComp<ProjectileComponent>(ent, out ProjectileComponent? comp))
+        if (!TryComp<ProjectileComponent>(ent, out var comp))
             return;
 
-        foreach(var key in component.ProjectileDamage.DamageDict.Keys)
+        foreach (var key in component.ProjectileDamage.DamageDict.Keys)
         {
             comp.Damage.DamageDict[key] = component.ProjectileDamage.DamageDict[key] * severity;
         }
