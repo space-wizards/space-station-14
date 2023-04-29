@@ -125,7 +125,7 @@ public sealed class IceAnomalySystem : EntitySystem
             var mixture = _atmosphere.GetTileMixture(grid, map, indices, true);
             if (mixture is { })
             {
-                mixture.Temperature += ice.HeatPerSecond * anom.Severity * frameTime;
+                mixture.Temperature += ice.ChillPerSecond * anom.Severity * frameTime;
             }
 
             if (grid != null && anom.Severity > ice.AnomalyFreezeZoneThreshold)

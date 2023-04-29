@@ -5,6 +5,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Anomaly.Effects.Components;
 
+/// <summary>
+/// Totally didn't copy the pyroclastic code. See also <see cref="IceAnomalySystem"/>
+/// </summary>
 [RegisterComponent]
 public sealed class IceAnomalyComponent : Component
 {
@@ -41,7 +44,7 @@ public sealed class IceAnomalyComponent : Component
     /// This is scaled linearly with the Severity of the anomaly.
     /// </summary>
     [DataField("chillPerSecond")]
-    public float HeatPerSecond = 25;
+    public float ChillPerSecond = -25;
 
     /// <summary>
     /// The minimum amount of severity required
