@@ -77,6 +77,20 @@
     B52: 3
 
 - type: reaction
+  id: CogChamp
+  reactants:
+    Cognac:
+      amount: 1
+    ScrewdriverCocktail:
+      amount: 1
+    WeldingFuel:
+      amount: 1
+  products:
+    CogChamp: 3
+  sound:
+    path: /Audio/Magic/Cults/ClockCult/steam_whoosh.ogg
+    
+- type: reaction
   id: Barefoot
   reactants:
     Cream:
