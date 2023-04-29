@@ -32,7 +32,7 @@
 - type: emote
   id: Laugh
   category: Vocal
-  chatMessages: [laughs]
+  chatMessages: [laughs!]
   chatTriggers:
     - laugh
     - laughs
@@ -82,6 +82,9 @@
     - snaps their fingers
     - snaps their fingers.
     - snaps their fingers!
+    - snaps his fingers.
+    - snaps her fingers.
+    - snaps its fingers.
     - snapping fingers
     - snapped fingers
 

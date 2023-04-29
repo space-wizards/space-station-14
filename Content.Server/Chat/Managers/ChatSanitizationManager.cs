@@ -76,6 +76,10 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "*blushes", "chatsan-blushes" },
         { "*bow", "chatsan-bows" },
         { "*bows", "chatsan-bows" },
+        { "*chuckle", "chatsan-chuckles" },
+        { "*chuckles", "chatsan-chuckles" },
+        { "*clap", "chatsan-claps" },
+        { "*claps", "chatsan-claps" },
         { "*cry", "chatsan-cries" },
         { "*cries", "chatsan-cries" },
         { "*cross", "chatsan-crosses" },
@@ -137,8 +141,12 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "*smiles", "chatsan-smiles" },
         { "*smug", "chatsan-smug" },
         { "*smugs", "chatsan-smug" },
+        { "*snap", "chatsan-snaps" },
+        { "*snaps", "chatsan-snaps" },
         { "*sneeze", "chatsan-sneezes" },
         { "*sneezes", "chatsan-sneezes" },
+        { "*snore", "chatsan-snores" },
+        { "*snores", "chatsan-snores" },
         { "*stretch", "chatsan-stretches" },
         { "*stretches", "chatsan-stretches" },
         { "*sulk", "chatsan-sulks" },
@@ -162,7 +170,8 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "*waves", "chatsan-waves" },
         { "*wsmile", "chatsan-smiles-weakly" },
         { "*wsmiles", "chatsan-smiles-weakly" },
-        { "*yawn", "chatsan-yawns" }
+        { "*yawn", "chatsan-yawns" },
+        { "*yawns", "chatsan-yawns" }
     };
 
     private bool _doSanitize;
