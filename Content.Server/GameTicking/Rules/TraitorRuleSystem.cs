@@ -210,7 +210,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (traitorRule == null)
         {
             //todo fuck me this shit is awful
-            GameTicker.StartGameRule("traitor", out var ruleEntity);
+            GameTicker.StartGameRule("Traitor", out var ruleEntity);
             traitorRule = EntityManager.GetComponent<TraitorRuleComponent>(ruleEntity);
         }
 

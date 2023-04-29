@@ -83,7 +83,7 @@
       lifetime: 0.5
 
 - type: entity
-  name: Syndicate minibomb
+  name: syndicate minibomb
   description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
   parent: GrenadeBase
   id: SyndieMiniBomb

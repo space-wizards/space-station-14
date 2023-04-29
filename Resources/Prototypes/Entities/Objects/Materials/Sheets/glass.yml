@@ -49,7 +49,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Glass: 100
   - type: Stack
     stackType: Glass
@@ -91,7 +92,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       ReinforcedGlass: 100
   - type: Stack
     stackType: ReinforcedGlass
@@ -133,7 +135,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       PlasmaGlass: 100
   - type: Stack
     stackType: PlasmaGlass
@@ -172,7 +175,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       ReinforcedPlasmaGlass: 100
   - type: Stack
     stackType: ReinforcedPlasmaGlass

@@ -53,8 +53,8 @@ namespace Content.Shared.CombatMode
             if (!_timing.IsFirstTimePredicted)
                 return;
 
-            var msg = component.IsInCombatMode ? "action-popup-combat" : "action-popup-combat-enabled";
-            _popup.PopupEntity(Loc.GetString(msg), args.Performer);
+            var msg = component.IsInCombatMode ? "action-popup-combat-enabled" : "action-popup-combat-disabled";
+            _popup.PopupEntity(Loc.GetString(msg), args.Performer, args.Performer);
         }
 
         public void SetCanDisarm(EntityUid entity, bool canDisarm, CombatModeComponent? component = null)
