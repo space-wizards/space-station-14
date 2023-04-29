@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: SimpleMobBase
   id: BaseMobFlesh
   name: aberrant flesh
@@ -153,47 +153,4 @@
       30: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
-    baseSprintSpeed: 2.5
-
-- type: entity
-  parent: BaseMobFlesh
-  id: MobAbomination
-  name: abomination
-  description: A rejected clone, in constant pain and seeking revenge.
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Demons/abomination.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: abomination
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: abomination
-      Critical:
-        Base: crit
-      Dead:
-        Base: dead
-  - type: MobState
-    allowedStates:
-    - Alive
-    - Dead
-    - Critical
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      150: Dead
-  - type: MeleeWeapon
-    hidden: true
-    soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
-    angle: 0
-    animation: WeaponArcClaw
-    damage:
-      types:
-        Blunt: 10
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 1.5
     baseSprintSpeed: 2.5
