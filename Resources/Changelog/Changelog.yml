@@ -1,15 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: meat spike no longer vaporizes victim items, type: Fix}
-  id: 3075
-  time: '2023-02-28T13:14:14.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Fixed a bug where an unwrapped nutribrick was worth more than a wrapped
-      one, type: Fix}
-  id: 3076
-  time: '2023-02-28T15:55:25.0000000+00:00'
 - author: h3half
   changes:
   - {message: Freshly-printed powercells no longer look like they're fully charged.,
@@ -2885,3 +2874,13 @@ Entries:
   - {message: Added the toy nuke sound!, type: Add}
   id: 3574
   time: '2023-04-29T11:37:13.0000000+00:00'
+- author: Genkail
+  changes:
+  - {message: ERT and Syndicate hardsuits now have the same characteristics, type: Tweak}
+  id: 3575
+  time: '2023-04-29T11:45:24.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Added glass shuttle airlock construction., type: Add}
+  id: 3576
+  time: '2023-04-29T11:45:55.0000000+00:00'
