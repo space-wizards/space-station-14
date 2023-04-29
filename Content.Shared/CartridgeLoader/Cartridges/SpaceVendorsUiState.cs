@@ -18,12 +18,12 @@ public sealed class AppraisedItem
 {
     public readonly string Name;
     public readonly string Price;
-    public readonly string Minutes;
-
-    public AppraisedItem(string name, string price, string minutes)
+    public readonly int MinutesCreation;
+    public int Minutes = 0;
+    public AppraisedItem(string name, string price, int minutesCreation)
     {
         Name = name;
         Price = price;
-        Minutes = minutes;
+        MinutesCreation = minutesCreation;
     }
 }
