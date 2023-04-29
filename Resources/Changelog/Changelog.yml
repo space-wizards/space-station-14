@@ -1,10 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: 'Changed ID card examine icon, at least until someone makes a better
-      icon.', type: Tweak}
-  id: 3074
-  time: '2023-02-28T13:00:23.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: meat spike no longer vaporizes victim items, type: Fix}
@@ -2886,3 +2880,8 @@ Entries:
   - {message: Added CMO's headset, type: Add}
   id: 3573
   time: '2023-04-29T10:57:06.0000000+00:00'
+- author: vanx
+  changes:
+  - {message: Added the toy nuke sound!, type: Add}
+  id: 3574
+  time: '2023-04-29T11:37:13.0000000+00:00'
