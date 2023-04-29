@@ -149,13 +149,12 @@ public sealed class DefibrillatorSystem : EntitySystem
 
         if (!TryComp<MindComponent>(target, out var mindComp) ||
             mindComp.Mind?.UserId == null ||
-            !_playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var session))
+            !_playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out _))
         {
             _popup.PopupEntity(Loc.GetString("defibrillator-no-mind-fail"), uid, user);
             return false;
         }
 
-        _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
         return true;
     }
 
@@ -193,7 +192,18 @@ public sealed class DefibrillatorSystem : EntitySystem
         _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
         _mobThreshold.SetAllowRevives(target, false, thresholds);
 
-        var sound = _mobState.IsAlive(target, mob)
+        var success = _mobState.IsAlive(target, mob);
+
+        if (success &&
+            TryComp<MindComponent>(target, out var mindComp) &&
+            mindComp.Mind?.UserId != null &&
+            mindComp.Mind.CurrentEntity != target &&
+            _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var session))
+        {
+            _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
+        }
+
+        var sound = success
             ? component.SuccessSound
             : component.FailureSound;
         _audio.PlayPvs(sound, uid);
