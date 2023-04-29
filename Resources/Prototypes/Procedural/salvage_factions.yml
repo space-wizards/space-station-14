@@ -1,0 +1,16 @@
+- type: salvageFaction
+  id: Xenos
+  groups:
+    - entries:
+        - id: MobXeno
+          amount: 2
+          maxAmount: 3
+        - id: MobXenoDrone
+          amount: 1
+    - entries:
+        - id: MobXenoRavager
+          amount: 1
+      prob: 0.1
+  configs:
+    DefenseStructure: XenoWardingTower
+    Mining: Xenos

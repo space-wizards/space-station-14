@@ -41,12 +41,33 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingBackpackIan
+  name: Ian's backpack
+  description: Sometimes he wears it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ian.rsi
+  - type: Storage
+    storageOpenSound:
+      collection: IanBark
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingBackpackSecurity
   name: security backpack
   description: It's a very robust backpack.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/security.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackBrigmedic
+  name: brigmedic backpack
+  description: It's a very sterile backpack.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/brigmedic.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -224,3 +245,5 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/cluwne.rsi
   - type: Unremoveable
+    deleteOnDrop: false
+

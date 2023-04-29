@@ -78,26 +78,30 @@ public sealed class RadioSystem : EntitySystem
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
 
+        var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
+        RaiseLocalEvent(ref sendAttemptEv);
+        var canSend = !sendAttemptEv.Cancelled;
+
         var sourceMapId = Transform(radioSource).MapID;
         var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
         var hasMicro = HasComp<RadioMicrophoneComponent>(radioSource);
 
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
-        var radioQuery = AllEntityQuery<ActiveRadioComponent, TransformComponent>();
+        var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
         var sentAtLeastOnce = false;
-        while (radioQuery.MoveNext(out var receiver, out var radio, out var transform))
+        while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
             if (!radio.Channels.Contains(channel.ID))
                 continue;
 
-            if (!channel.LongRange && transform.MapID != sourceMapId)
+            if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
                 continue;
 
             // don't need telecom server for long range channels or handheld radios and intercoms
             var needServer = !channel.LongRange && (!hasMicro || !speakerQuery.HasComponent(receiver));
             if (needServer && !hasActiveServer)
                 continue;
-                
+
             // check if message can be sent to specific receiver
             var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
             RaiseLocalEvent(ref attemptEv);

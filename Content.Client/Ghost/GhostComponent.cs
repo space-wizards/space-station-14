@@ -13,10 +13,9 @@ namespace Content.Client.Ghost
 
         public InstantAction ToggleLightingAction = new()
         {
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/VerbIcons/light.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("Interface/VerbIcons/light.svg.192dpi.png")),
             DisplayName = "ghost-gui-toggle-lighting-manager-name",
             Description = "ghost-gui-toggle-lighting-manager-desc",
-            UserPopup = "ghost-gui-toggle-lighting-manager-popup",
             ClientExclusive = true,
             CheckCanInteract = false,
             Event = new ToggleLightingActionEvent(),
@@ -24,10 +23,9 @@ namespace Content.Client.Ghost
 
         public InstantAction ToggleFoVAction = new()
         {
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/VerbIcons/vv.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("Interface/VerbIcons/vv.svg.192dpi.png")),
             DisplayName = "ghost-gui-toggle-fov-name",
             Description = "ghost-gui-toggle-fov-desc",
-            UserPopup = "ghost-gui-toggle-fov-popup",
             ClientExclusive = true,
             CheckCanInteract = false,
             Event = new ToggleFoVActionEvent(),
@@ -35,10 +33,9 @@ namespace Content.Client.Ghost
 
         public InstantAction ToggleGhostsAction = new()
         {
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon"),
+            Icon = new SpriteSpecifier.Rsi(new ("Mobs/Ghosts/ghost_human.rsi"), "icon"),
             DisplayName = "ghost-gui-toggle-ghost-visibility-name",
             Description = "ghost-gui-toggle-ghost-visibility-desc",
-            UserPopup = "ghost-gui-toggle-ghost-visibility-popup",
             ClientExclusive = true,
             CheckCanInteract = false,
             Event = new ToggleGhostsActionEvent(),

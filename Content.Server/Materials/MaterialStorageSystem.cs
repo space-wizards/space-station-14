@@ -40,17 +40,22 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         }
     }
 
-    public override bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
+    public override bool TryInsertMaterialEntity(EntityUid user,
+        EntityUid toInsert,
+        EntityUid receiver,
+        MaterialStorageComponent? storage = null,
+        MaterialComponent? material = null,
+        PhysicalCompositionComponent? composition = null)
     {
-        if (!Resolve(receiver, ref component))
+        if (!Resolve(receiver, ref storage) || !Resolve(toInsert, ref material, ref composition, false))
             return false;
         if (TryComp<ApcPowerReceiverComponent>(receiver, out var power) && !power.Powered)
             return false;
-        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
+        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition))
             return false;
-        _audio.PlayPvs(component.InsertingSound, component.Owner);
-        _popup.PopupEntity(Loc.GetString("machine-insert-item", ("user", user), ("machine", component.Owner),
-            ("item", toInsert)), component.Owner);
+        _audio.PlayPvs(storage.InsertingSound, receiver);
+        _popup.PopupEntity(Loc.GetString("machine-insert-item", ("user", user), ("machine", receiver),
+            ("item", toInsert)), receiver);
         QueueDel(toInsert);
 
         // Logging
@@ -67,16 +72,9 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     ///     1 biomass = 1 biomass in its stack,
     ///     but 100 plasma = 1 sheet of plasma, etc.
     /// </summary>
-    [PublicAPI]
     public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
     {
-        if (!_prototypeManager.TryIndex<MaterialPrototype>(material, out var stackType))
-        {
-            Logger.Error("Failed to index material prototype " + material);
-            return new List<EntityUid>();
-        }
-
-        return SpawnMultipleFromMaterial(amount, stackType, coordinates);
+        return SpawnMultipleFromMaterial(amount, material, coordinates, out _);
     }
 
     /// <summary>
@@ -85,17 +83,50 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     ///     1 biomass = 1 biomass in its stack,
     ///     but 100 plasma = 1 sheet of plasma, etc.
     /// </summary>
+    public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates, out int overflowMaterial)
+    {
+        overflowMaterial = 0;
+        if (!_prototypeManager.TryIndex<MaterialPrototype>(material, out var stackType))
+        {
+            Logger.Error("Failed to index material prototype " + material);
+            return new List<EntityUid>();
+        }
+
+        return SpawnMultipleFromMaterial(amount, stackType, coordinates, out overflowMaterial);
+    }
+
+    /// <summary>
+    ///     Spawn an amount of a material in stack entities.
+    ///     Note the 'amount' is material dependent.
+    ///     1 biomass = 1 biomass in its stack,
+    ///     but 100 plasma = 1 sheet of plasma, etc.
+    /// </summary>
+    [PublicAPI]
     public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
     {
+        return SpawnMultipleFromMaterial(amount, materialProto, coordinates, out _);
+    }
+
+    /// <summary>
+    ///     Spawn an amount of a material in stack entities.
+    ///     Note the 'amount' is material dependent.
+    ///     1 biomass = 1 biomass in its stack,
+    ///     but 100 plasma = 1 sheet of plasma, etc.
+    /// </summary>
+    public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates, out int overflowMaterial)
+    {
+        overflowMaterial = 0;
+
         if (amount <= 0)
             return new List<EntityUid>();
 
         var entProto = _prototypeManager.Index<EntityPrototype>(materialProto.StackEntity);
-        if (!entProto.TryGetComponent<MaterialComponent>(out var material))
+        if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
             return new List<EntityUid>();
 
-        var materialPerStack = material.Materials[materialProto.ID];
+        var materialPerStack = composition.MaterialComposition[materialProto.ID];
         var amountToSpawn = amount / materialPerStack;
+        overflowMaterial = amount - amountToSpawn * materialPerStack;
         return _stackSystem.SpawnMultiple(materialProto.StackEntity, amountToSpawn, coordinates);
     }
 }

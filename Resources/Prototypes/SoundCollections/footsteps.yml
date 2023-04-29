@@ -65,6 +65,12 @@
   files:
   - /Audio/Effects/Footsteps/clownstep1.ogg
   - /Audio/Effects/Footsteps/clownstep2.ogg
+  
+- type: soundCollection
+  id: FootstepJester
+  files:
+  - /Audio/Effects/Footsteps/jesterstep1.ogg
+  - /Audio/Effects/Footsteps/jesterstep2.ogg
 
 - type: soundCollection
   id: FootstepDuck
@@ -136,3 +142,8 @@
   - /Audio/Effects/Footsteps/woodbarefoot3.ogg
   - /Audio/Effects/Footsteps/woodbarefoot4.ogg
   - /Audio/Effects/Footsteps/woodbarefoot5.ogg
+
+- type: soundCollection
+  id: FootstepBounce
+  files:
+  - /Audio/Effects/Footsteps/bounce.ogg

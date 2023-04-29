@@ -18,7 +18,7 @@
   result: Bucket
   completetime: 2
   materials:
-    Steel: 100
+    Plastic: 100
 
 - type: latheRecipe
   id: WetFloorSign
@@ -26,6 +26,13 @@
   completetime: 2
   materials:
     Plastic: 100
+
+- type: latheRecipe
+  id: MegaSprayBottle
+  result: MegaSprayBottle
+  completetime: 3
+  materials:
+    Plastic: 250
 
 - type: latheRecipe
   id: SprayBottle
@@ -54,6 +61,6 @@
   result: AdvMopItem
   completetime: 2
   materials:
-    Plastic: 100
+    Plastic: 400
     Steel: 100
     Glass: 100

@@ -14,6 +14,7 @@
   roles:
   - Bartender
   - Botanist
+  - Boxer
   - Chaplain
   - Chef
   - Clown
@@ -77,6 +78,7 @@
   - SecurityOfficer
   - Detective
   - Warden
+  - Brigmedic
 
 - type: department
   id: Science
@@ -86,3 +88,13 @@
   - ResearchDirector
   - Scientist
   - ResearchAssistant
+
+- type: department
+  id: Specific
+  description: department-Specific-description
+  color: "#9FED58"
+  roles:
+  - Boxer
+  - Reporter
+  - Zookeeper
+  - Psychologist
