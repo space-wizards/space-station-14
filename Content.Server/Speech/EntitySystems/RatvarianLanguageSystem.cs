@@ -37,7 +37,8 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<RatvarianLanguageComponent, AccentGetEvent>(OnAccent);
+        // Activate before other modifications so translation works properly
+        SubscribeLocalEvent<RatvarianLanguageComponent, AccentGetEvent>(OnAccent, before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
     }
 
     public override void DoRatvarian(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)

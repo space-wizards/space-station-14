@@ -1134,7 +1134,7 @@
   desc: reagent-desc-cogchamp
   physicalDesc: reagent-physical-desc-ground-brass
   flavor: cogchamp
-  color: "#A68310"
+  color: "#B5A642"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/cogchamp.rsi
     state: icon
