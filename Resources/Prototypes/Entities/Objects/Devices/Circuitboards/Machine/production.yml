@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -230,7 +230,7 @@
     prototype: GasThermoMachineFreezer
     requirements:
       MatterBin: 2
-      Manipulator: 2
+      Capacitor: 2
     materialRequirements:
       Cable: 5
   - type: Construction
@@ -250,7 +250,7 @@
     prototype: GasThermoMachineHeater
     requirements:
       MatterBin: 2
-      Manipulator: 2
+      Capacitor: 2
     materialRequirements:
       Cable: 5
   - type: Construction
