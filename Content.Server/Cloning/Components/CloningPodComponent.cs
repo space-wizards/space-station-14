@@ -49,7 +49,7 @@ namespace Content.Server.Cloning.Components
         /// The machine part that affects cloning speed
         /// </summary>
         [DataField("machinePartCloningSpeed", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartCloningSpeed = "ScanningModule";
+        public string MachinePartCloningSpeed = "Manipulator";
 
         /// <summary>
         /// The current amount of time it takes to clone a body
@@ -74,7 +74,7 @@ namespace Content.Server.Cloning.Components
         /// The machine part that decreases the amount of material needed for cloning
         /// </summary>
         [DataField("machinePartMaterialUse", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartMaterialUse = "Manipulator";
+        public string MachinePartMaterialUse = "MatterBin";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public CloningPodStatus Status;

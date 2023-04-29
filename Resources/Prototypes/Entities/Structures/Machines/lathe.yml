@@ -197,20 +197,14 @@
       - Drone
       - Flash
       - MicroManipulatorStockPart
-      - ScanningModuleStockPart
-      - MicroLaserStockPart
       - MatterBinStockPart
       - CapacitorStockPart
       - AdvancedCapacitorStockPart
       - AdvancedMatterBinStockPart
-      - HighPowerMicroLaserStockPart
       - NanoManipulatorStockPart
-      - AdvancedScanningModuleStockPart
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
-      - UltraHighPowerMicroLaserStockPart
       - PicoManipulatorStockPart
-      - PhasicScanningModuleStockPart
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
@@ -468,7 +462,6 @@
   - type: Lathe
     idleState: icon
     runningState: icon
-    machinePartPrintSpeed: Laser
     staticRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex

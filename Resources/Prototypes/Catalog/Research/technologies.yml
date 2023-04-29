@@ -516,9 +516,7 @@
   - TechDiskComputerCircuitboard
   - CapacitorStockPart
   - MatterBinStockPart
-  - MicroLaserStockPart
   - MicroManipulatorStockPart
-  - ScanningModuleStockPart
   - NodeScanner
   - AnomalyScanner
   - AnomalyLocator
@@ -586,9 +584,7 @@
   unlockedRecipes:
   - AdvancedCapacitorStockPart
   - AdvancedMatterBinStockPart
-  - HighPowerMicroLaserStockPart
   - NanoManipulatorStockPart
-  - AdvancedScanningModuleStockPart
 
 - type: technology
   name: technologies-magboots-technology
@@ -617,6 +613,4 @@
   unlockedRecipes:
   - SuperCapacitorStockPart
   - SuperMatterBinStockPart
-  - UltraHighPowerMicroLaserStockPart
   - PicoManipulatorStockPart
-  - PhasicScanningModuleStockPart
