@@ -1,9 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: Hugging/Petting no longer opens the strip menu., type: Fix}
-  id: 3066
-  time: '2023-02-25T17:17:40.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Ambient sounds no longer play for paused entities., type: Tweak}
@@ -2890,3 +2885,12 @@ Entries:
       velocity directly., type: Tweak}
   id: 3565
   time: '2023-04-29T08:17:32.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: The ability to temporarily speak Ratvarian has been added after drinking
+      CogChamp, type: Add}
+  - {message: 'Adds CogChamp - a new drink based off of clock cult. Lets the user
+      temporarily speak in Ratvarian. Created by mixing Cognac, Welding Fuel, and
+      a Screwdriver Cocktail.', type: Add}
+  id: 3566
+  time: '2023-04-29T08:34:19.0000000+00:00'
