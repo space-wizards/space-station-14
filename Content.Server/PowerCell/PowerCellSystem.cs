@@ -62,7 +62,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
             if (_timing.CurTime < comp.NextUpdateTime)
                 continue;
-            comp.NextUpdateTime += TimeSpan.FromSeconds(1);
+            comp.NextUpdateTime = _timing.CurTime + TimeSpan.FromSeconds(1);
 
             if (!TryGetBatteryFromSlot(uid, out var batteryEnt, out var battery, slot))
                 continue;
