@@ -1,17 +1,17 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "PixelTK",
+  "copyright": "https://github.com/PixelTheKermit",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-	{
+    {
       "name": "long",
       "directions": 4
     },
-	{
+    {
       "name": "sharp",
       "directions": 4
     },
@@ -19,7 +19,7 @@
       "name": "web",
       "directions": 4
     },
-	{
+    {
       "name": "stripes",
       "directions": 4
     },
