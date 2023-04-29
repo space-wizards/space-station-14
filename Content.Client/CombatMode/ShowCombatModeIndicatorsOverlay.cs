@@ -5,7 +5,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
-using Robust.Client.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Utility;
@@ -19,18 +18,18 @@ namespace Content.Client.CombatMode
         private IEntityManager _entMan;
         private IEyeManager _eye;
         private CombatModeSystem _combatSystem;
-        private IPlayerManager _player;
+
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+
         private Texture _gunSight;
         private Texture _meleeSight;
+        private bool _isShowIndicators;
 
-        public ShowCombatModeIndicatorsOverlay(IPlayerManager playerManager,
-            IConfigurationManager cfg, IInputManager input, IEntityManager entMan,
+        public ShowCombatModeIndicatorsOverlay(IConfigurationManager cfg, IInputManager input, IEntityManager entMan,
                 IEyeManager eye, CombatModeSystem combatSys)
         {
             IoCManager.InjectDependencies(this);
 
-            _player = playerManager;
             _cfg = cfg;
             _inputManager = input;
             _entMan = entMan;
@@ -39,6 +38,11 @@ namespace Content.Client.CombatMode
 
             _gunSight = GetTextureFromRsi("gunsight");
             _meleeSight = GetTextureFromRsi("meleesight");
+
+            _isShowIndicators = _cfg.GetCVar(CCVars.HudHeldItemShow);
+
+            _cfg.OnValueChanged(CCVars.HudHeldItemShow,
+                isShow => _isShowIndicators = isShow, true);
         }
 
         private Texture GetTextureFromRsi(string _spriteName)
@@ -50,29 +54,19 @@ namespace Content.Client.CombatMode
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            if (!_cfg.GetCVar(CCVars.HudHeldItemShow))
+            if (!_isShowIndicators)
                 return;
 
-            var player = _player.LocalPlayer?.ControlledEntity;
-
-            if (player == null ||
-                !_entMan.TryGetComponent<TransformComponent>(player, out var xform))
-            {
+            if (!_combatSystem.IsInCombatMode())
                 return;
-            }
-
-            if (!_combatSystem.IsInCombatMode(player.Value))
-                return;
-
-            var xMapPos = xform.MapPosition;
 
             var mouseScreen = _inputManager.MouseScreenPosition;
             var mousePosMap = _eye.ScreenToMap(mouseScreen);
 
-            if (xMapPos.MapId != mousePosMap.MapId)
+            if (mousePosMap.Position == (Vector2)(0, 0))
                 return;
 
-            EntityUid? handEntity = EntitySystem.Get<HandsSystem>().GetActiveHandEntity();
+            EntityUid? handEntity = _entMan.System<HandsSystem>().GetActiveHandEntity();
             bool isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
 
             var screen = args.ScreenHandle;
@@ -85,26 +79,23 @@ namespace Content.Client.CombatMode
         }
         private void DrawSight(Texture sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
         {
-            float transparency = 0.55f;
+            float transparency = 0.4f;
 
             screen.DrawTextureRect(sight,
-                GetRectForTexture(sight, centerPos, scale), Color.Black.WithAlpha(transparency));
+                GetRectForTexture(sight.Size, centerPos, scale), Color.Black.WithAlpha(transparency));
             screen.DrawTextureRect(sight,
-                GetRectForTexture(sight, centerPos, scale, true), Color.White.WithAlpha(transparency));
+                GetRectForTexture(sight.Size, centerPos, scale, true), Color.White.WithAlpha(transparency));
         }
 
-        static private UIBox2 GetRectForTexture(Texture texture, Vector2 pos, float scale,
+        static private UIBox2 GetRectForTexture(Vector2 textureSize, Vector2 pos, float scale,
             bool expanded = false)
         {
-            Vector2 sightSize = texture.Size * scale;
+            Vector2 sightSize = textureSize * scale;
 
             if (expanded)
                 sightSize += 7;
 
-            Vector2 halfSightSize = sightSize / 2;
-
-            Vector2 beginPosSight = pos - halfSightSize;
-            return UIBox2.FromDimensions(beginPosSight, sightSize);
+            return UIBox2.FromDimensions(pos - (sightSize / 2), sightSize);
         }
     }
 }

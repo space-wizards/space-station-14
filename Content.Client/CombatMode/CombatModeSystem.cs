@@ -7,7 +7,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Client.Input;
-using Robust.Client.ResourceManagement;
 
 namespace Content.Client.CombatMode
 {
@@ -27,7 +26,6 @@ namespace Content.Client.CombatMode
 
             SubscribeLocalEvent<CombatModeComponent, ComponentHandleState>(OnHandleState);
             _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay(
-                _playerManager,
                 _cfg,
                 _inputManager,
                 _entMan,
