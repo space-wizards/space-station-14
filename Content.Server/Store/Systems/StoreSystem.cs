@@ -2,6 +2,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Store.Components;
 using Content.Server.UserInterface;
 using Content.Shared.FixedPoint;
+using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -32,6 +33,7 @@ public sealed partial class StoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
 
         InitializeUi();
         InitializeCommand();
@@ -83,6 +85,11 @@ public sealed partial class StoreSystem : EntitySystem
             _popup.PopupEntity(msg, args.Target.Value);
             QueueDel(args.Used);
         }
+    }
+
+    private void OnImplantActivate(EntityUid uid, StoreComponent component, OpenUplinkImplantEvent args)
+    {
+        ToggleUi(args.Performer, uid, component);
     }
 
     /// <summary>
