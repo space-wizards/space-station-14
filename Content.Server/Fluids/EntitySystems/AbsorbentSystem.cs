@@ -188,8 +188,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return true;
         }
 
-        // Check if we have any evaporative reagents on our absorber to transfer
-        absorberSoln.TryGetReagent(PuddleSystem.EvaporationReagent, out var available);
+        // Amount of evaporative reagents on our absorber to transfer
+        var available = absorberSoln.GetReagentQuantity(PuddleSystem.EvaporationReagent);
 
         // No material
         if (available == FixedPoint2.Zero)
@@ -206,21 +206,32 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
                 PuddleSystem.EvaporationReagentRatio % 5 != 0){
             available += FixedPoint2.Epsilon;
         }
-        available *= PuddleSystem.EvaporationReagentRatio;
 
-        var transferMax = absorber.PickupAmount;
-        var transferAmount = available > transferMax ? transferMax : available;
+        var dirtVolumeAvailable = puddleSolution.Volume - puddleSolution.GetReagentQuantity(PuddleSystem.EvaporationReagent);
+
+        var transferAmount = FixedPoint2.Min(dirtVolumeAvailable,
+                                             available * PuddleSystem.EvaporationReagentRatio,
+                                             absorber.PickupAmount);
+
+        var prospectWaterTransfer = FixedPoint2.Min(transferAmount / PuddleSystem.EvaporationReagentRatio,
+                                                    absorberSoln.GetReagentQuantity(PuddleSystem.EvaporationReagent));
+
+        // This var exists for no other purpose than code readability
+        var prospectAvailableVolume = absorberSoln.AvailableVolume + prospectWaterTransfer;
+
+        // this one really depends on the first value of transferAmount, it's supposed to be separate
+        transferAmount = FixedPoint2.Min(prospectAvailableVolume, transferAmount);
 
         var split = puddleSolution.SplitSolutionWithout(transferAmount, PuddleSystem.EvaporationReagent);
 
-        absorberSoln.RemoveReagent(PuddleSystem.EvaporationReagent, split.Volume / PuddleSystem.EvaporationReagentRatio);
-        puddleSolution.AddReagent(PuddleSystem.EvaporationReagent, split.Volume / PuddleSystem.EvaporationReagentRatio);
-        absorberSoln.AddSolution(split.SplitSolution(absorberSoln.AvailableVolume), _prototype);
-        // puts back the excess if any, a hack to circumvent it being a differential equation and prevent the
-        // overflow of the absorber due to residual water not being checked for
-        if (split.Volume > 0){
-            puddleSolution.AddSolution(split, _prototype);
-        }
+        DebugTools.Assert(split.Volume == transferAmount);
+
+        var removed = absorberSoln.RemoveReagent(PuddleSystem.EvaporationReagent, split.Volume / PuddleSystem.EvaporationReagentRatio);
+        puddleSolution.AddReagent(PuddleSystem.EvaporationReagent, removed);
+
+        DebugTools.Assert(split.Volume <= absorberSoln.AvailableVolume);
+
+        absorberSoln.AddSolution(split, _prototype);
 
         _solutionSystem.UpdateChemicals(used, absorberSoln);
         _solutionSystem.UpdateChemicals(target, puddleSolution);
