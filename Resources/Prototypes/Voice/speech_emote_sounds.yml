@@ -24,6 +24,10 @@
       collection: MaleYawn
     Snore:
       collection: Snores
+    Cry:
+      collection: MaleCry
+    Whistle:
+      collection: Whistles
 
 - type: emoteSounds
   id: FemaleHuman
@@ -50,6 +54,10 @@
       collection: FemaleYawn
     Snore:
       collection: Snores
+    Cry:
+      collection: FemaleCry
+    Whistle:
+      collection: Whistles
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -85,9 +93,12 @@
       collection: MaleScreams
     Laugh:
       collection: MaleLaugh
+    Whistle:
+      collection: Whistles
   params:
     variation: 0.125
     pitchscale: 0.75
+
 
 # body emotes
 - type: emoteSounds
@@ -99,6 +110,8 @@
       collection: Snaps
       params:
         volume: -6
+    Salute:
+      collection: Salutes
 
 - type: emoteSounds
   id: DionaBodyEmotes

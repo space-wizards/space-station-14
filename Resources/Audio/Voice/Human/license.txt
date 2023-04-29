@@ -23,3 +23,17 @@ male_sneeze_1.ogg taken from https://freesound.org/people/InspectorJ/sounds/3521
 male_yawn_1.ogg taken from https://freesound.org/people/ckvoiceover/sounds/401338/ user ckvoiceover CC-3.0
 female_yawn_1.ogg taken from https://freesound.org/people/Reitanna/sounds/252239/ user reitanna CC-0
 snore1, snore2, snore3.ogg taken from https://freesound.org/people/mattyharm/sounds/432995/ user mattyharm CC-0
+
+whistle_1.ogg, whistle_2.ogg, whistle_3.ogg are taken from https://freesound.org/people/taure/sounds/411638/
+
+whistle_4.ogg taken from https://freesound.org/people/jackstrebor/sounds/34782/
+
+cry_male_1.ogg, cry_male_2.ogg are taken from https://freesound.org/people/jacobmathiassen/sounds/254869/
+
+cry_male_3.ogg taken from https://freesound.org/people/scottemoil/sounds/263776/
+
+cry_male_4.ogg taken from https://freesound.org/people/qubodup/sounds/200428/
+
+cry_female_1.ogg, cry_female_2.ogg are taken from https://freesound.org/people/Luzanne0/sounds/445299/
+
+cry_female_3.ogg, cry_female_4.ogg are taken from https://freesound.org/people/Idalize/sounds/408211/

@@ -53,6 +53,37 @@
     - giggling
     - giggled
 
+- type: emote
+  id: Whistle
+  category: Vocal
+  chatMessages: [whistle]
+  chatTriggers:
+    - hiss
+    - hiss.
+    - hiss!
+    - whistle
+    - whistle.
+    - whistle!
+    - whistles
+    - whistles.
+    - whistles!
+
+- type: emote
+  id: Cry
+  category: Vocal
+  chatMessages: [cry]
+  chatTriggers:
+    - cry
+    - cry.
+    - cry!
+    - crying
+    - crying.
+    - crying!
+    - cries
+    - cries.
+    - cries!
+
+
 # hand emotes
 - type: emote
   id: Clap
@@ -84,4 +115,16 @@
     - snaps their fingers!
     - snapping fingers
     - snapped fingers
+
+- type: emote
+  id: Salute
+  category: Hands
+  chatMessages: [Salute]
+  chatTriggers:
+    - salute
+    - salute.
+    - salute!
+    - salutes
+    - salutes.
+    - salutes!
 
