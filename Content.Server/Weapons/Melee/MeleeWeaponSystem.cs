@@ -25,6 +25,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
@@ -83,6 +84,29 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         };
 
         args.Verbs.Add(verb);
+    }
+
+    protected override bool ArcRaySuccessful(EntityUid targetUid, Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId,
+        EntityUid ignore, ICommonSession? session)
+    {
+        // Originally the client didn't predict damage effects so you'd intuit some level of how far
+        // in the future you'd need to predict, but then there was a lot of complaining like "why would you add artifical delay" as if ping is a choice.
+        // Now damage effects are predicted but for wide attacks it differs significantly from client and server so your game could be lying to you on hits.
+        // This isn't fair in the slightest because it makes ping a huge advantage and this would be a hidden system.
+        // Now the client tells us what they hit and we validate if it's plausible.
+
+        // Even if the client is sending entities they shouldn't be able to hit:
+        // A) Wide-damage is split anyway
+        // B) We run the same validation we do for click attacks.
+
+        // Could also check the arc though future effort + if they're aimbotting it's not really going to make a difference.
+
+        // (This runs lagcomp internally and is what clickattacks use)
+        if (!Interaction.InRangeUnobstructed(ignore, targetUid, range + 0.1f))
+            return false;
+
+        // TODO: Check arc though due to the aforementioned aimbot + damage split comments it's less important.
+        return true;
     }
 
     private DamageSpecifier? GetDamage(MeleeWeaponComponent component)
