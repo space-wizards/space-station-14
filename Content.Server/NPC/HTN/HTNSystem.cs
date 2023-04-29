@@ -238,11 +238,10 @@ public sealed class HTNSystem : EntitySystem
                         {
                             text.AppendLine($"BTR: {string.Join(", ", comp.Plan.BranchTraversalRecord)}");
                             text.AppendLine($"tasks:");
-
-                            foreach (var task in comp.Plan.Tasks)
-                            {
-                                text.AppendLine($"- {task.ID}");
-                            }
+                            var root = _prototypeManager.Index<HTNCompoundTask>(comp.RootTask);
+                            var btr = new List<int>();
+                            var level = -1;
+                            AppendDebugText(root, text, comp.Plan.BranchTraversalRecord, btr, ref level);
                         }
 
                         RaiseNetworkEvent(new HTNMessage()

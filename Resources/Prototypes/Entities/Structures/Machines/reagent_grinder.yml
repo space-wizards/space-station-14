@@ -41,9 +41,6 @@
       state: "juicer0"
   - type: ApcPowerReceiver
     powerLoad: 300
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
   - type: ItemSlots
     slots:
       beakerSlot:

@@ -20,15 +20,11 @@
     CrateMaterialGlass: 1.0
     # Uncommon
     SuperCapacitorStockPart: 0.25
-    PhasicScanningModuleStockPart: 0.25
     PicoManipulatorStockPart: 0.25
-    UltraHighPowerMicroLaserStockPart: 0.25
     SuperMatterBinStockPart: 0.25
     # Rare
     QuadraticCapacitorStockPart: 0.10
-    TriphasicScanningModuleStockPart: 0.10
     FemtoManipulatorStockPart: 0.10
-    QuadUltraMicroLaserStockPart: 0.10
     BluespaceMatterBinStockPart: 0.10
 
 # Crates
