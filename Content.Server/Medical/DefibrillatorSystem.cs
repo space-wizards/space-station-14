@@ -9,6 +9,7 @@ using Content.Server.PowerCell;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Medical;
 using Content.Shared.Mobs;
@@ -46,6 +47,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     {
         SubscribeLocalEvent<DefibrillatorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DefibrillatorComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<DefibrillatorComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<DefibrillatorComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<DefibrillatorComponent, DefibrillatorZapDoAfterEvent>(OnDoAfter);
     }
@@ -65,6 +67,11 @@ public sealed class DefibrillatorSystem : EntitySystem
             return;
         args.Handled = true;
         _useDelay.BeginDelay(uid);
+    }
+
+    private void OnPowerCellSlotEmpty(EntityUid uid, DefibrillatorComponent component, ref PowerCellSlotEmptyEvent args)
+    {
+        TryDisable(uid, component);
     }
 
     private void OnAfterInteract(EntityUid uid, DefibrillatorComponent component, AfterInteractEvent args)
@@ -107,9 +114,6 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (component.Enabled)
             return false;
 
-        if (!_powerCell.HasActivatableCharge(uid, user: user))
-            return false;
-
         component.Enabled = true;
         _appearance.SetData(uid, ToggleVisuals.Toggled, true);
         _audio.PlayPvs(component.PowerOnSound, uid);
@@ -147,14 +151,6 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (_mobState.IsAlive(target))
             return false;
 
-        if (!TryComp<MindComponent>(target, out var mindComp) ||
-            mindComp.Mind?.UserId == null ||
-            !_playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out _))
-        {
-            _popup.PopupEntity(Loc.GetString("defibrillator-no-mind-fail"), uid, user);
-            return false;
-        }
-
         return true;
     }
 
@@ -175,6 +171,13 @@ public sealed class DefibrillatorSystem : EntitySystem
     {
         if (!Resolve(uid, ref component) || !Resolve(target, ref mob, ref thresholds, false))
             return;
+
+        // clowns zap themselves
+        if (HasComp<ClumsyComponent>(user) && user != target)
+        {
+            Zap(uid, user, user, component, mob, thresholds);
+            return;
+        }
 
         if (!_powerCell.TryUseActivatableCharge(uid, user: user))
             return;
@@ -197,10 +200,16 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (success &&
             TryComp<MindComponent>(target, out var mindComp) &&
             mindComp.Mind?.UserId != null &&
-            mindComp.Mind.CurrentEntity != target &&
             _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var session))
         {
-            _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
+            // notify them they're being revived.
+            if (mindComp.Mind.CurrentEntity != target)
+                _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
+        }
+        else
+        {
+            _popup.PopupEntity(Loc.GetString("defibrillator-no-mind-fail"), uid, user);
+            return;
         }
 
         var sound = success

@@ -470,6 +470,7 @@
     runningState: icon
     machinePartPrintSpeed: Laser
     staticRecipes:
+      - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingMaskSterile
