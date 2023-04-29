@@ -73,6 +73,8 @@ uplink-freedom-implanter-name = имплантер Свобода
 uplink-freedom-implanter-desc = Сбегите от этих противных сотрудников СБ при помощи этого имплантата, который можно использовать аж три раза!
 uplink-macro-bomb-implanter-name = имплантер Макробомба
 uplink-macro-bomb-implanter-desc = Вколите его, и после смерти вы устроите большой взрыв. Большой риск для союзников, используйте на свой страх и риск. Заменяет Микробомбу.
+uplink-uplink-implanter-name = Uplink Implanter
+uplink-uplink-implanter-desc = Stealthily order equipment without the need for a PDA. Swallow telecrystals to top up the uplink.
 # Bundles
 uplink-c20r-bundle-name = { ent-ClothingBackpackDuffelSyndicateFilledSMG }
 uplink-c20r-bundle-desc = { ent-ClothingBackpackDuffelSyndicateFilledSMG.desc }

@@ -20,3 +20,5 @@ activate-micro-bomb-action-name = активировать имплант Мик
 activate-micro-bomb-action-description = Активирует вживлённую микробомбу, полностью уничтожая вас и ваше снаряжение.
 use-freedom-implant-action-name = активировать имплант Свобода
 use-freedom-implant-action-description = Освобождает вас от наручников и других ограничителей.
+open-uplink-implant-action-name = Open Uplink
+open-uplink-implant-action-description = Opens the syndicate uplink embedded under your skin

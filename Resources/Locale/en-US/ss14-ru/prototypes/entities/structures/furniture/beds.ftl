@@ -4,3 +4,5 @@ ent-MedicalBed = medical bed
     .desc = A hospital bed for patients to recover in. Resting here provides fairly slow healing.
 ent-DogBed = dog bed
     .desc = A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off.
+ent-Mattress = mattress
+    .desc = Better sleep in that then on the floor i guess.
