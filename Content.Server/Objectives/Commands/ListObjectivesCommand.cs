@@ -42,7 +42,7 @@ namespace Content.Server.Objectives.Commands
             }
             for (var i = 0; i < objectives.Count; i++)
             {
-                shell.WriteLine($"- [{i + 1}] {objectives[i].Conditions[0].Title}");
+                shell.WriteLine($"- [{i}] {objectives[i].Conditions[0].Title}");
             }
 
         }

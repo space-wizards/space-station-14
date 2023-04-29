@@ -284,8 +284,8 @@ public abstract class SharedActionsSystem : EntitySystem
             handled = actionEvent.Handled;
         }
 
-        // Execute convenience functionality (pop-ups, sound, speech)
-        handled |= PerformBasicActions(performer, action, predicted);
+        _audio.PlayPredicted(action.Sound, performer,predicted ? performer : null);
+        handled |= action.Sound != null;
 
         if (!handled)
             return; // no interaction occurred.
@@ -311,30 +311,6 @@ public abstract class SharedActionsSystem : EntitySystem
 
         if (dirty && component != null)
             Dirty(component);
-    }
-
-    /// <summary>
-    ///     Execute convenience functionality for actions (pop-ups, sound, speech)
-    /// </summary>
-    protected virtual bool PerformBasicActions(EntityUid performer, ActionType action, bool predicted)
-    {
-        if (action.Sound == null && string.IsNullOrWhiteSpace(action.Popup))
-            return false;
-
-        var filter = predicted ? Filter.PvsExcept(performer) : Filter.Pvs(performer);
-
-        _audio.Play(action.Sound, filter, performer, true);
-
-        if (string.IsNullOrWhiteSpace(action.Popup))
-            return true;
-
-        var msg = (!action.Toggled || string.IsNullOrWhiteSpace(action.PopupToggleSuffix))
-            ? Loc.GetString(action.Popup)
-            : Loc.GetString(action.Popup + action.PopupToggleSuffix);
-
-        _popupSystem.PopupEntity(msg, performer, filter, true);
-
-        return true;
     }
     #endregion
 
