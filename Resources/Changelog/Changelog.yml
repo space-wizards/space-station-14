@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Change L6 firerate from 8 to 5 in line with rifles., type: Tweak}
-  id: 3082
-  time: '2023-02-28T19:10:20.0000000+00:00'
 - author: GoodWheatley
   changes:
   - {message: 'After the Hypopen Incident of 2556, The recipe for Lexorin now requires
@@ -2886,3 +2881,9 @@ Entries:
     type: Tweak}
   id: 3581
   time: '2023-04-29T21:04:17.0000000+00:00'
+- author: DawBla
+  changes:
+  - {message: Nanotrasen now supplies the station with off-brand wirecutters. Cutting
+      cables and lattices takes slightly longer., type: Tweak}
+  id: 3582
+  time: '2023-04-29T21:50:32.0000000+00:00'
