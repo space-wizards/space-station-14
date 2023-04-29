@@ -35,7 +35,7 @@ namespace Content.Server.CartridgeLoader.Cartridges
             var item = new AppraisedItem(
                 Name(args.InteractEvent.Target.Value),
                 $"{price:F2}",
-                _gameTicker.RoundDuration().Minutes.ToString());
+                _gameTicker.RoundDuration().Minutes);
 
             component.AppraisedItems.Add(item);
             UpdateUiState(uid,args.Loader,component);
@@ -50,9 +50,17 @@ namespace Content.Server.CartridgeLoader.Cartridges
         {
             if (!Resolve(uid, ref component))
                 return;
-
+            UpdateElapsedTimeData(component);
             var state = new SpaceVendorsUiState(component.AppraisedItems);
             _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
+        }
+
+        private void UpdateElapsedTimeData(SpaceVendorsCartridgeComponent component)
+        {
+            foreach (var item in component.AppraisedItems)
+            {
+                item.Minutes = _gameTicker.RoundDuration().Minutes - item.MinutesCreation;
+            }
         }
     }
 }

@@ -61,7 +61,7 @@ public sealed partial class SpaceVendorsUiFragment : BoxContainer
         row.AddChild(priceLabel);
 
         var minutesLabel = new Label();
-        minutesLabel.Text = item.Minutes;
+        minutesLabel.Text = item.Minutes.ToString()+" min";
         minutesLabel.HorizontalExpand = true;
         minutesLabel.ClipText = true;
         row.AddChild(minutesLabel);
