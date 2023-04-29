@@ -61,10 +61,13 @@
         visible: false
         shader: unshaded
     - type: Flash
+    - type: LimitedCharges
+      maxCharges: 5
+      charges: 5
     - type: MeleeWeapon
       damage:
         types:
-          Blunt: 0 # why is this classed as a melee weapon? Is it needed for some interaction?
+          Blunt: 0 # melee weapon to allow flashing individual targets
       angle: 10
     - type: Item
       size: 5
@@ -127,4 +130,3 @@
       radius: 0
       softness: 0
       enabled: true
-
