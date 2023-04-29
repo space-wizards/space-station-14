@@ -21,6 +21,7 @@ namespace Content.Server.Speech.EntitySystems
 
         private void OnBattlecryChanged(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechBattlecryChangedMessage args)
         {
+
             if (!TryComp<MeleeSpeechComponent>(uid, out var meleeSpeechUser))
                 return;
 
@@ -38,9 +39,10 @@ namespace Content.Server.Speech.EntitySystems
         /// <remarks>
         /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
         /// </remarks>
-        public bool TryChangeBattlecry(EntityUid uid, string? battlecry, MeleeSpeechComponent? id = null, EntityUid? player = null)
+        public bool TryChangeBattlecry(EntityUid uid, string? battlecry, MeleeSpeechComponent? meleeSpeechComp = null)
         {
-            if (!Resolve(uid, ref id))
+
+            if (!Resolve(uid, ref meleeSpeechComp))
                 return false;
 
             if (!string.IsNullOrWhiteSpace(battlecry))
@@ -52,16 +54,14 @@ namespace Content.Server.Speech.EntitySystems
                 battlecry = null;
             }
 
-            if (id.Battlecry == battlecry)
+            if (meleeSpeechComp.Battlecry == battlecry)
+
                 return true;
-            id.Battlecry = battlecry;
+            meleeSpeechComp.Battlecry = battlecry;
             Dirty(id);
 
-            if (player != null)
-            {
-                _adminLogger.Add(LogType.Identity, LogImpact.Low,  //I'm not exactly certain how admin logs should be categorized, let me know if this is wrong
-                    $"{ToPrettyString(player.Value):player} has changed the battlecry of {ToPrettyString(id.Owner):entity} to {battlecry} ");
-            }
+            _adminLogger.Add(LogType.Verb, LogImpact.Medium, $" {ToPrettyString(uid):entity}'s battlecry has been changed to {battlecry}");
+            //I'm not exactly certain how admin logs should be categorized, let me know if this is wrong 
             return true;
         }
     }

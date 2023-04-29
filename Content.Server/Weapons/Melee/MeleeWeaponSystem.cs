@@ -9,6 +9,7 @@ using Content.Server.CombatMode.Disarm;
 using Content.Server.Contests;
 using Content.Server.Examine;
 using Content.Server.Movement.Systems;
+using Content.Server.Popups;
 using Content.Shared.Administration.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
@@ -45,13 +46,14 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
-        SubscribeLocalEvent<MeleeSpeechComponent, MeleeHitEvent>(OnSpeechHit); //not sure how to make this work.
+        SubscribeLocalEvent<MeleeSpeechComponent, MeleeHitEvent>(OnSpeechHit);
         SubscribeLocalEvent<MeleeWeaponComponent, GetVerbsEvent<ExamineVerb>>(OnMeleeExaminableVerb);
     }
 
@@ -257,7 +259,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (comp.Battlecry != null)//If the battlecry is set to empty, doesn't speak
         {
-            _chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true);
+            //_chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true);
+            _popupSystem.PopupEntity(comp.Battlecry, owner); //Popups to reduce adminlog spam. TODO: Make these into the sort of text that vending machines sometimes speak when not sentient.
         }
 
     }

@@ -280,10 +280,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Northstar.rsi    #might be worth making the worn sprite more noticeable, they're pretty powerful for a stealthy weapon  #Yet somehow less powerful than the rigged boxing gloves?!??!!?!
   - type: MeleeWeapon
-    attackRate: 6
+    attackRate: 4
     damage:
       types:
-       Blunt: 5    #time to kill on unarmored is a bit slower than cap's sabre(Also the small hits don't cause much bleed), might be worth upping damage to 6 or 7. It is a syndicate item after all. Or could just balance it by making the price low.
+       Blunt: 7.5
     soundHit:
       collection: BoxingHit
     animation: WeaponArcFist
