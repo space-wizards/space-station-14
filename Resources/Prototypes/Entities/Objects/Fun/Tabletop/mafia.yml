@@ -9,10 +9,10 @@
       path: /Audio/Items/matchbox_drop.ogg
   - type: Sprite
     netsync: false
-    sprite: Objects\Fun\Tabletop\mafia\mafiacardsbox.rsi
+    sprite: Objects/Fun/Tabletop/mafia/mafiacardsbox.rsi
     state: cardbox
   - type: Item
-    sprite: Objects\Fun\Tabletop\mafia\mafiacardsbox.rsi
+    sprite: Objects/Fun/Tabletop/mafia/mafiacardsbox.rsi
     size: 15
   - type: Storage
     capacity: 15
@@ -54,14 +54,14 @@
   id: BaseCard
   components:
   - type: Sprite
-    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
+    sprite: Objects/Fun/Tabletop/mafia/mafiacards.rsi
     drawdepth: SmallObjects
     layers:
     - state: cardunknown
       map: ["enum.StorageVisualLayers.Door"]
     netsync: false
   - type: Item
-    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
+    sprite: Objects/Fun/Tabletop/mafia/mafiacards.rsi
     size: 1
   - type: Storage
     capacity: -1

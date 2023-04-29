@@ -11,11 +11,11 @@
       "name": "cardbox"
     },
     {
-      "name": "cardbox-inhand-left",
+      "name": "inhand-left",
       "directions": 4
     },
     {
-      "name": "cardbox-inhand-right",
+      "name": "inhand-right",
       "directions": 4
     }
   ]
