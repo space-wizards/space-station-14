@@ -40,6 +40,15 @@ public sealed class ClothingComponent : Component
     [DataField("equippedPrefix")]
     public string? EquippedPrefix;
 
+    /// <summary>
+    /// Allows the equipped state to be directly overwritten.
+    /// useful when prototyping INNERCLOTHING items into OUTERCLOTHING items without duplicating/modifying RSIs etc.
+    /// </summary>
+    [Access(typeof(ClothingSystem))]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("equippedState")]
+    public string? EquippedState;
+
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprite")]
     public string? RsiPath;

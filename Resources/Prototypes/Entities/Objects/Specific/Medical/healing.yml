@@ -84,8 +84,8 @@
     damageContainer: Biological
     damage:
       types:
-        bloodloss: -0.5 #for whatever godforsaken reason I cannot touch blood level without healing one of these, so fuck it, bleed rate healing
-    ModifyBloodLevel: 10
+        Bloodloss: -0.5 #lowers bloodloss damage
+    ModifyBloodLevel: 15 #restores about 5% blood per use on standard humanoids.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
@@ -157,10 +157,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Dexalin
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: dylovene pill
@@ -170,10 +170,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Dylovene
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: hyronalin pill
@@ -183,10 +183,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Hyronalin
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: iron pill
@@ -196,10 +196,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Iron
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: kelotane pill
@@ -209,10 +209,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Kelotane
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: space drugs
@@ -222,7 +222,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: SpaceDrugs
           Quantity: 15
@@ -235,10 +235,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Tricordrazine
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: romerol pill
@@ -248,7 +248,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Romerol
           Quantity: 10

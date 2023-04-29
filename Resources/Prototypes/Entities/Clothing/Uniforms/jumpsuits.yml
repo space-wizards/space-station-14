@@ -387,6 +387,19 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBrigmedic
+  name: brigmedic jumpsuit
+  description: The uniform is issued to qualified persons who have been trained, but no one cares that the training took place half a day.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
+  - type: DiseaseProtection
+    protection: 0.1
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitPrisoner
   name: prisoner jumpsuit
   description: Busted.
@@ -1052,3 +1065,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
   - type: AddAccentClothing
     accent: PirateAccent
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCossack
+  name: Cossack suit
+  description: the good old pants and brigantine.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi

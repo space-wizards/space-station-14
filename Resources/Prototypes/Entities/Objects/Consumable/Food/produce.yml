@@ -133,6 +133,7 @@
   - type: MeleeChemicalInjector
     transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
     solution: food
+    pierceArmor: false
   - type: Extractable
     grindableSolutionName: food
 
@@ -214,6 +215,21 @@
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
+
+- type: entity
+  name: bananium peel
+  parent: TrashBananaPeel
+  id: TrashBananiumPeel
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: peel
+  - type: Item
+    sprite: Objects/Materials/materials.rsi
+    heldPrefix: peel
+  - type: Slippery
+    paralyzeTime: 4
+    launchForwardsMultiplier: 5
 
 - type: entity
   name: banana peel
@@ -1077,7 +1093,7 @@
   - type: Butcherable
     butcheringType: Knife
     spawned:
-    - id: ClothingHeadClothingHeadHatWatermelon
+    - id: ClothingHeadHatWatermelon
 
 - type: entity
   name: watermelon slice
