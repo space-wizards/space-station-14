@@ -32,6 +32,11 @@ namespace Content.Server.CartridgeLoader.Cartridges
                 ("price", $"{price:F2}")), args.InteractEvent.User, args.InteractEvent.User);
             args.InteractEvent.Handled = true;
 
+            //NetProbeCartridgeSystem: Limit the amount of saved probe results to 9
+            //This is hardcoded because the UI doesn't support a dynamic number of results
+            if (component.AppraisedItems.Count >= component.MaxSavedItems)
+                component.AppraisedItems.RemoveAt(0);
+
             var item = new AppraisedItem(
                 Name(args.InteractEvent.Target.Value),
                 $"{price:F2}",
