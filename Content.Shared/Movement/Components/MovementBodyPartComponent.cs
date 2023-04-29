@@ -1,6 +1,6 @@
 namespace Content.Shared.Movement.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class MovementBodyPartComponent : Component
 {
     [DataField("walkSpeed")]
