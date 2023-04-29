@@ -64,9 +64,6 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
                 continue;
             comp.NextUpdateTime += TimeSpan.FromSeconds(1);
 
-            if (comp.NextUpdateTime <= _timing.CurTime)
-                comp.NextUpdateTime = _timing.CurTime + TimeSpan.FromSeconds(1);
-
             if (!TryGetBatteryFromSlot(uid, out var batteryEnt, out var battery, slot))
                 continue;
 
@@ -196,6 +193,15 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     }
 
     #endregion
+
+    public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        component.Enabled = enabled;
+        component.NextUpdateTime = _timing.CurTime;
+    }
 
     /// <summary>
     /// Returns whether the entity has a slotted battery and charge for the requested action.
