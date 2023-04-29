@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix console warnings about rsi sprite access, type: Fix}
-  - {message: Fix issue with device configurators out of line-of-sight not closing
-      properly., type: Fix}
-  id: 3069
-  time: '2023-02-26T07:48:58.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Game changelogs are now sent to Discord. Assuming everything works you
@@ -2886,3 +2879,9 @@ Entries:
   - {message: Added new nuke music, type: Add}
   id: 3568
   time: '2023-04-29T08:58:00.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate is now offering uplink implants so you can buy a super
+      surplus when locked up for gibbing the mime., type: Add}
+  id: 3569
+  time: '2023-04-29T09:07:51.0000000+00:00'
