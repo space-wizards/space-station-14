@@ -149,6 +149,7 @@
       path: /Audio/Announcements/meteors.ogg
       params:
         volume: -4
+    duration: null #ending is handled by MeteorSwarmRule
     startAfter: 30
   - type: MeteorSwarmRule
 
