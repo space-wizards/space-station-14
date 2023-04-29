@@ -11,11 +11,6 @@
               doAfter: 1
     - node: frame
       entity: DisposalMachineFrame
-      actions:
-        - !type:SpriteChange
-          specifier:
-            sprite: /Textures/Structures/Piping/high_pressure_machine_frame.rsi
-            state: frame
       edges:
         - to: start
           completed:
