@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: The chat channel selector now indicates the radio channel that a message
-      is being sent to., type: Add}
-  id: 3051
-  time: '2023-02-18T17:27:57.0000000+00:00'
 - author: MagnusCrowe
   changes:
   - {message: Changed chemistry bottle size from 5 to 3.  Capacity remains 30u., type: Tweak}
@@ -2896,3 +2890,8 @@ Entries:
   - {message: fixed combat (harm) mode popup appearing to everyone, type: Fix}
   id: 3550
   time: '2023-04-26T16:21:44.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: Blood packs work now., type: Fix}
+  id: 3551
+  time: '2023-04-28T14:01:24.0000000+00:00'
