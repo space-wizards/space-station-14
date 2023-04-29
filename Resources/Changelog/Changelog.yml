@@ -1,15 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed the AHelp window being recentered when opened through the verb
-      for admins., type: Fix}
-  id: 3062
-  time: '2023-02-22T12:26:02.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Reduce bullet impulses in space from 85 to 5., type: Tweak}
-  id: 3063
-  time: '2023-02-23T01:37:57.0000000+00:00'
 - author: 08A
   changes:
   - {message: Fixed entity sub menu (right-click menu), type: Fix}
@@ -2890,3 +2879,13 @@ Entries:
   - {message: Fixed broken sprite view in Anomaly Generator UI, type: Fix}
   id: 3561
   time: '2023-04-29T05:53:57.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added ghost sheet craft recipe, type: Add}
+  id: 3562
+  time: '2023-04-29T06:14:46.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Added LOOC and Emote focus keybinds, type: Add}
+  id: 3563
+  time: '2023-04-29T06:15:42.0000000+00:00'
