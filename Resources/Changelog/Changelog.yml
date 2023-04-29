@@ -1,10 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Game changelogs are now sent to Discord. Assuming everything works you
-      might even be reading this there right now!, type: Add}
-  id: 3070
-  time: '2023-02-26T16:45:07.0000000+00:00'
 - author: Hypospray Nerfer
   changes:
   - {message: 'Hypospray, Hypopen, and Gorlax Hypospray now all have short cooldowns.',
@@ -2885,3 +2879,9 @@ Entries:
       surplus when locked up for gibbing the mime., type: Add}
   id: 3569
   time: '2023-04-29T09:07:51.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: 'Cloning Pod may now be Emagged, on failed cloning attempt the cloning
+      pod will trigger the emag effect.', type: Add}
+  id: 3570
+  time: '2023-04-29T09:50:11.0000000+00:00'
