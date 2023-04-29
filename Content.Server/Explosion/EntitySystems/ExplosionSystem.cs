@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
-using Content.Server.Examine;
 using Content.Server.Explosion.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
@@ -12,7 +11,6 @@ using Content.Shared.Explosion;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Throwing;
-using Content.Shared.Verbs;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -43,7 +41,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly PVSOverrideSystem _pvsSys = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly ExamineSystem _examine = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -88,8 +85,6 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeCvars();
         InitAirtightMap();
         InitVisuals();
-
-        SubscribeLocalEvent<ExplosionResistanceComponent, GetVerbsEvent<ExamineVerb>>(OnVerbExamine);
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
@@ -342,22 +337,5 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (effect > 0.01f)
                 _recoilSystem.KickCamera(uid, -delta.Normalized * effect);
         }
-    }
-
-    private void OnVerbExamine(EntityUid uid, ExplosionResistanceComponent component, GetVerbsEvent<ExamineVerb> args)
-    {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
-
-        var msg = new FormattedMessage();
-        msg.AddMarkup(Loc.GetString("explosion-resistance-examine"));
-        msg.PushNewline();
-        msg.AddMarkup(Loc.GetString("explosion-resistance-coefficient-value", ("value", MathF.Round((1f - component.DamageCoefficient) * 100, 1))));
-
-        _examine.AddDetailedExamineVerb(args, component, msg,
-            Loc.GetString("explosion-resistance-examinable-verb-text"),
-            "/Textures/Interface/VerbIcons/dot.svg.192dpi.png",
-            Loc.GetString("explosion-resistance-examinable-verb-message")
-        );
     }
 }
