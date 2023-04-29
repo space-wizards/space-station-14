@@ -23,7 +23,3 @@ buwoo_exclaim (Renamed to slime_exclaim.ogg)
 all taken from
 https://github.com/goonstation/goonstation/tree/eb3e7df6292d23f6af2f18b4372d3a8ba4b0fda7/sound/misc/talk
 licensed under CC BY-NC-SA 3.0
-arachnid.ogg
-arachnid_ask.ogg
-arachnid_exclaim.ogg
-arachnid voices by PixelTK licensed under CC-BY-4.0

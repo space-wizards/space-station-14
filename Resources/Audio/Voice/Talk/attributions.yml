@@ -1,5 +1,4 @@
-- files: ["arachnid_scream.ogg", "arachnid_laugh.ogg"]
+- files: ["arachnid.ogg", "arachnid_ask.ogg", "arachnid_exclaim.ogg"]
   license: "CC-BY-4.0"
   copyright: "Recorded by https://github.com/PixelTheKermit"
   source: "https://github.com/space-wizards/space-station-14/pull/13945"
-
