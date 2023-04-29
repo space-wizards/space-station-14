@@ -241,12 +241,12 @@
         - Gauze
         - Ointment
         - CigPack
-        - Pill
         - PillCanister
         - Radio
       components:
         - Hypospray
         - Injector
+        - Pill
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -259,8 +259,9 @@
           - Hypospray
       pill:
         whitelist:
-          tags:
+          components:
           - Pill
+          tags:
           - PillCanister
       bottle_spray:
         whitelist:

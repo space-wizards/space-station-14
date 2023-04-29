@@ -493,9 +493,6 @@
   id: Pickaxe
 
 - type: Tag
-  id: Pill
-
-- type: Tag
   id: PillCanister
 
 - type: Tag
