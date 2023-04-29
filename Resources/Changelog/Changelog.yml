@@ -1,10 +1,4 @@
 Entries:
-- author: TemporalOroboros
-  changes:
-  - {message: Admins may now configure a message to be sent to players when they join
-      the lobby., type: Add}
-  id: 3081
-  time: '2023-02-28T16:15:49.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Change L6 firerate from 8 to 5 in line with rifles., type: Tweak}
@@ -2884,3 +2878,11 @@ Entries:
   - {message: Powered electrified grilles now create sparks when touched., type: Add}
   id: 3580
   time: '2023-04-29T20:05:10.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: 'Nanotrasen has striken the defective recipe for Impedrezene from its
+      list. Impedrezene now causes sluggishness and massive brain damage, but the
+      recipe is changed to 1 water + 1 oxygen + 1 mercury + temp>370 = 1 impedrezene.',
+    type: Tweak}
+  id: 3581
+  time: '2023-04-29T21:04:17.0000000+00:00'
