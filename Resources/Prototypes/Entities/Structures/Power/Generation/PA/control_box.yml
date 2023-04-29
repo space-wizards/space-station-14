@@ -7,7 +7,7 @@
     - type: Sprite
       sprite: Structures/Power/Generation/PA/control_box.rsi
       layers:
-        - state: boxc
+        - state: completed
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
         - state: unlitp
           map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
