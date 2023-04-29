@@ -26,10 +26,10 @@
         amount: 6
       - id: BookMafiaManual
   - type: PickRandom
-  whitelist:
-    tags:
-    - MafiaCard
-  verbText: verb-card-pick
+    whitelist:
+      tags:
+        - MafiaCard
+    verbText: verb-card-pick
 
 - type: entity
   parent: BookBase
