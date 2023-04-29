@@ -1,6 +1,7 @@
 using Content.Shared.Cloning;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Materials;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -56,6 +57,15 @@ namespace Content.Server.Cloning.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float CloningTime = 30f;
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("mobSpawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string MobSpawnId = "MobAbomination";
+
+        [DataField("sparkSound")]
+        public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
+
+        [DataField("screamSound")]
+        public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("ZombieScreams");
 
         /// <summary>
         /// The machine part that affects how much biomass is needed to clone a body.
