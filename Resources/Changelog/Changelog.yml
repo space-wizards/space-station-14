@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: You can now fit more bread in your bag., type: Tweak}
-  id: 3078
-  time: '2023-02-28T16:00:15.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Experimental research hardsuit can now be hidden in a backpack., type: Add}
@@ -2883,3 +2878,9 @@ Entries:
   - {message: Changed the mailbox sprite., type: Tweak}
   id: 3577
   time: '2023-04-29T11:47:11.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Extra-bright lanterns can now be used by hitting people, like regular
+      flashes.', type: Tweak}
+  id: 3578
+  time: '2023-04-29T13:38:40.0000000+00:00'
