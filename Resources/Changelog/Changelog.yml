@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Ahelp window now remembers its last position for admins., type: Tweak}
-  id: 3060
-  time: '2023-02-21T19:31:27.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix the emergency shuttle not loading., type: Fix}
@@ -2889,3 +2884,8 @@ Entries:
   - {message: Nerf or remove some standard sell prices., type: Tweak}
   id: 3559
   time: '2023-04-29T04:59:25.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: 'Added Bananium, you can build things with it. Dont eat it!', type: Add}
+  id: 3560
+  time: '2023-04-29T05:38:10.0000000+00:00'
