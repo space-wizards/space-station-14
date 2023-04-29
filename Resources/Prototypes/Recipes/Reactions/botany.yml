@@ -35,7 +35,7 @@
 - type: reaction
   id: PlantBGone
   reactants:
-    Cyanide:
+    Toxin:
       amount: 1
     Water:
       amount: 4

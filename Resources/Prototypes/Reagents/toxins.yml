@@ -1,8 +1,8 @@
 ﻿- type: reagent
-  id: Cyanide
-  name: reagent-name-cyanide
+  id: Toxin
+  name: reagent-name-toxin
   group: Toxins
-  desc: reagent-desc-cyanide
+  desc: reagent-desc-toxin
   flavor: bitter
   color: "#cf3600"
   physicalDesc: reagent-physical-desc-opaque
