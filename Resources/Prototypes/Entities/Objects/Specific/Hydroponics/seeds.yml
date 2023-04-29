@@ -1,13 +1,12 @@
 - type: entity
   parent: BaseItem
   id: SeedBase
-  noSpawn: true
+  abstract: true
   components:
     - type: SolutionContainerManager
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       state: seed
-      netsync: true
     - type: Item
       size: 2
     - type: StaticPrice

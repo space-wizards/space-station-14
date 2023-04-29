@@ -129,9 +129,6 @@ namespace Content.Client.Actions
 
         public override void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
         {
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
-
             if (GameTiming.ApplyingState && !action.ClientExclusive)
                 return;
 
@@ -140,14 +137,13 @@ namespace Content.Client.Actions
 
             dirty &= !action.ClientExclusive;
             base.AddAction(uid, action, provider, comp, dirty);
-            ActionAdded?.Invoke(action);
+
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                ActionAdded?.Invoke(action);
         }
 
         public override void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null, bool dirty = true)
         {
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
-
             if (GameTiming.ApplyingState && !action.ClientExclusive)
                 return;
 
@@ -157,41 +153,8 @@ namespace Content.Client.Actions
             dirty &= !action.ClientExclusive;
             base.RemoveAction(uid, action, comp, dirty);
 
-            if (action.AutoRemove)
+            if (action.AutoRemove && uid == _playerManager.LocalPlayer?.ControlledEntity)
                 ActionRemoved?.Invoke(action);
-        }
-
-        /// <summary>
-        ///     Execute convenience functionality for actions (pop-ups, sound, speech)
-        /// </summary>
-        protected override bool PerformBasicActions(EntityUid user, ActionType action, bool predicted)
-        {
-            var performedAction = action.Sound != null
-                                  || !string.IsNullOrWhiteSpace(action.UserPopup)
-                                  || !string.IsNullOrWhiteSpace(action.Popup);
-
-            if (!GameTiming.IsFirstTimePredicted)
-                return performedAction;
-
-            if (!string.IsNullOrWhiteSpace(action.UserPopup))
-            {
-                var msg = (!action.Toggled || string.IsNullOrWhiteSpace(action.PopupToggleSuffix))
-                    ? Loc.GetString(action.UserPopup)
-                    : Loc.GetString(action.UserPopup + action.PopupToggleSuffix);
-
-                _popupSystem.PopupEntity(msg, user);
-            }
-            else if (!string.IsNullOrWhiteSpace(action.Popup))
-            {
-                var msg = (!action.Toggled || string.IsNullOrWhiteSpace(action.PopupToggleSuffix))
-                    ? Loc.GetString(action.Popup)
-                    : Loc.GetString(action.Popup + action.PopupToggleSuffix);
-
-                _popupSystem.PopupEntity(msg, user);
-            }
-
-            _audio.Play(action.Sound, Filter.Local(), user, false);
-            return performedAction;
         }
 
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)

@@ -25,15 +25,16 @@
   id: BrigmedicGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitBrigmedic
-    back: ClothingBackpackSecurityFilled
+    outerClothing: ClothingOuterCoatAMG
+    back: ClothingBackpackBrigmedicFilled
     shoes: ClothingShoesColorRed
     gloves: ClothingHandsGlovesNitrile
     eyes: ClothingEyesHudMedical
-    head: ClothingHeadHatSurgcapBlue
-    id: BrigmedPDA
-    ears: ClothingHeadsetSecurity
-    mask: ClothingMaskSterile
+    head: ClothingHeadHatBeretBrigmedic
+    id: BrigmedicPDA
+    ears: ClothingHeadsetBrigmedic
+    mask: ClothingMaskBreathMedicalSecurity
     belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtBrigmedic
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+  satchel: ClothingBackpackSatchelBrigmedicFilled
+  duffelbag: ClothingBackpackDuffelBrigmedicFilled
