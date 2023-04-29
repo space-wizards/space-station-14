@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Ambient sounds no longer play for paused entities., type: Tweak}
-  id: 3067
-  time: '2023-02-25T17:19:31.0000000+00:00'
 - author: keronshb
   changes:
   - {message: BotanySwab/Disease Swab - Does not double dip uses (was activating twice
@@ -2894,3 +2889,9 @@ Entries:
       a Screwdriver Cocktail.', type: Add}
   id: 3566
   time: '2023-04-29T08:34:19.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Nanotrasen has supplied kitchens across space with salt and pepper shakers.,
+    type: Add}
+  id: 3567
+  time: '2023-04-29T08:42:44.0000000+00:00'
