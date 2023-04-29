@@ -74,7 +74,7 @@ namespace Content.Server.Database
             // So just pull down the whole list into memory.
             var bans = await GetAllBans(db.SqliteDbContext, includeUnbanned: false, exempt);
 
-            return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId, exempt)) is { } foundBan
+            return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId)) is { } foundBan
                 ? ConvertBan(foundBan)
                 : null;
         }
@@ -92,7 +92,7 @@ namespace Content.Server.Database
             var queryBans = await GetAllBans(db.SqliteDbContext, includeUnbanned, exempt);
 
             return queryBans
-                .Where(b => BanMatches(b, address, userId, hwId, exempt))
+                .Where(b => BanMatches(b, address, userId, hwId))
                 .Select(ConvertBan)
                 .ToList()!;
         }
@@ -117,14 +117,13 @@ namespace Content.Server.Database
             return await query.ToListAsync();
         }
 
-        private static bool BanMatches(ServerBan ban,
+        private static bool BanMatches(
+            ServerBan ban,
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId,
-            ServerBanExemptFlags? exemptFlags)
+            ImmutableArray<byte>? hwId)
         {
-            if (!exemptFlags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.IP)
-                && address != null && ban.Address is not null && IPAddressExt.IsInSubnet(address, ban.Address.Value))
+            if (address != null && ban.Address is not null && IPAddressExt.IsInSubnet(address, ban.Address.Value))
             {
                 return true;
             }
