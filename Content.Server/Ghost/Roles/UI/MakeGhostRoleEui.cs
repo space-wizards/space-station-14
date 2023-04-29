@@ -18,18 +18,6 @@ namespace Content.Server.Ghost.Roles.UI
             return new MakeGhostRoleEuiState(EntityUid);
         }
 
-        public override void HandleMessage(EuiMessageBase msg)
-        {
-            base.HandleMessage(msg);
-
-            switch (msg)
-            {
-                case MakeGhostRoleWindowClosedMessage _:
-                    Closed();
-                    break;
-            }
-        }
-
         public override void Closed()
         {
             base.Closed();

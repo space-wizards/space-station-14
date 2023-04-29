@@ -194,7 +194,7 @@ public sealed class StaminaSystem : EntitySystem
         foreach (var (ent, comp) in toHit)
         {
             var oldDamage = comp.StaminaDamage;
-            TakeStaminaDamage(ent, damage / toHit.Count, comp, source:args.User, with:ent);
+            TakeStaminaDamage(ent, damage / toHit.Count, comp, source:args.User, with:args.Weapon);
             if (comp.StaminaDamage.Equals(oldDamage))
             {
                 _popup.PopupEntity(Loc.GetString("stamina-resist"), ent, args.User);

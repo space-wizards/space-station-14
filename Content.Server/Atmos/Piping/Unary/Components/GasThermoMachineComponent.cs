@@ -91,7 +91,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     The machine part that affects the temperature range.
         /// </summary>
         [DataField("machinePartTemperature", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartTemperature = "Laser";
+        public string MachinePartTemperature = "Capacitor";
 
     }
 }
