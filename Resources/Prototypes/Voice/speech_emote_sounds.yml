@@ -95,6 +95,8 @@
       collection: MaleLaugh
     Whistle:
       collection: Whistles
+    Crying:
+      collection: MaleCry
   params:
     variation: 0.125
     pitchscale: 0.75
