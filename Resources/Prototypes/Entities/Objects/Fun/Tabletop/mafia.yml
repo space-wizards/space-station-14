@@ -35,7 +35,7 @@
   parent: BookBase
   id: BookMafiaManual
   name: Mafia Game Instructions
-  description: "0+" is written on the book in small letters.
+  description: 12+ is written on the book in small letters.
   components:
     - type: Sprite
       sprite: Objects/Misc/books.rsi
