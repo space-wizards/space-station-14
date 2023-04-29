@@ -32,7 +32,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Cardboard: 100
   - type: Stack
     stackType: Cardboard
@@ -76,7 +77,8 @@
   - type: Stack
     stackType: Cloth
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Cloth: 100
   - type: Extractable
     juiceSolution:
@@ -112,7 +114,8 @@
   - type: Stack
     stackType: Durathread
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Durathread: 100
   - type: Sprite
     state: durathread_3
@@ -144,7 +147,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Wood: 100
   - type: Stack
     stackType: WoodPlank
@@ -175,7 +179,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Biomass: 1
   - type: Stack
     stackType: Biomass
