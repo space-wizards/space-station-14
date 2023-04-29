@@ -22002,7 +22002,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 1671
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 14.5277,-7.4270515
     parent: 1
@@ -112649,19 +112649,19 @@ entities:
     parent: 1
     type: Transform
 - uid: 13663
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - pos: -16.101051,-14.435623
     parent: 1
     type: Transform
 - uid: 13664
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - pos: -15.913552,-14.341873
     parent: 1
     type: Transform
 - uid: 13665
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - pos: -15.757302,-14.435623
     parent: 1
@@ -124476,7 +124476,7 @@ entities:
     type: Physics
   - type: InsideEntityStorage
 - uid: 15088
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -124486,7 +124486,7 @@ entities:
     type: Physics
   - type: InsideEntityStorage
 - uid: 15089
-  type: ScanningModuleStockPart
+  type: CapacitorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -124496,7 +124496,7 @@ entities:
     type: Physics
   - type: InsideEntityStorage
 - uid: 15090
-  type: ScanningModuleStockPart
+  type: CapacitorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -124506,7 +124506,7 @@ entities:
     type: Physics
   - type: InsideEntityStorage
 - uid: 15091
-  type: ScanningModuleStockPart
+  type: CapacitorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -124556,7 +124556,7 @@ entities:
     type: Physics
   - type: InsideEntityStorage
 - uid: 15096
-  type: ScanningModuleStockPart
+  type: CapacitorStockPart
   components:
   - flags: InContainer
     type: MetaData
@@ -124694,7 +124694,7 @@ entities:
   - enabled: True
     type: AmbientSound
 - uid: 15114
-  type: AdvancedScanningModuleStockPart
+  type: AdvancedCapacitorStockPart
   components:
   - pos: 14.793325,-7.4583015
     parent: 1
@@ -124706,7 +124706,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 15116
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 14.2777,-7.5208015
     parent: 1

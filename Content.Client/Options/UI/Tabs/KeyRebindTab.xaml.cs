@@ -129,8 +129,10 @@ namespace Content.Client.Options.UI.Tabs
             AddHeader("ui-options-header-ui");
             AddButton(ContentKeyFunctions.FocusChat);
             AddButton(ContentKeyFunctions.FocusLocalChat);
+            AddButton(ContentKeyFunctions.FocusEmote);
             AddButton(ContentKeyFunctions.FocusWhisperChat);
             AddButton(ContentKeyFunctions.FocusRadio);
+            AddButton(ContentKeyFunctions.FocusLOOC);
             AddButton(ContentKeyFunctions.FocusOOC);
             AddButton(ContentKeyFunctions.FocusAdminChat);
             AddButton(ContentKeyFunctions.FocusDeadChat);

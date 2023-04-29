@@ -34,6 +34,25 @@
         factor: 1.5
 
 - type: reagent
+  id: SpiderBlood
+  name: reagent-name-spider-blood
+  group: Biological
+  desc: reagent-desc-spider-blood
+  flavor: metallic
+  color: "#162581"
+  physicalDesc: reagent-physical-desc-ferrous
+  slippery: false
+  metabolisms:
+    Drink:
+      # Quenching!
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 0.5
+
+- type: reagent
   id: Ichor
   name: reagent-name-ichor
   group: Biological

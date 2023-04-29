@@ -107,11 +107,12 @@ public sealed class MaterialArbitrageTest
                     var stackProto = protoManager.Index<StackPrototype>(materialStep.MaterialPrototypeId);
                     var spawnProto = protoManager.Index<EntityPrototype>(stackProto.Spawn);
 
-                    if (!spawnProto.Components.TryGetValue(materialName, out var matreg))
+                    if (!spawnProto.Components.ContainsKey(materialName) ||
+                        !spawnProto.Components.TryGetValue(compositionName, out var compositionReg))
                         continue;
 
-                    var mat = (MaterialComponent) matreg.Component;
-                    foreach (var (matId, amount) in mat.Materials)
+                    var mat = (PhysicalCompositionComponent) compositionReg.Component;
+                    foreach (var (matId, amount) in mat.MaterialComposition)
                     {
                         materials[matId] = materialStep.Amount * amount + materials.GetValueOrDefault(matId);
                     }
@@ -156,11 +157,13 @@ public sealed class MaterialArbitrageTest
                         var spawnProto = protoManager.Index<EntityPrototype>(key);
 
                         // get the amount of each material included in the entity
-                        if (!spawnProto.Components.TryGetValue(materialName, out var matreg))
-                            continue;
-                        var mat = (MaterialComponent) matreg.Component;
 
-                        foreach (var (matId, amount) in mat.Materials)
+                        if (!spawnProto.Components.ContainsKey(materialName) ||
+                            !spawnProto.Components.TryGetValue(compositionName, out var compositionReg))
+                            continue;
+
+                        var mat = (PhysicalCompositionComponent) compositionReg.Component;
+                        foreach (var (matId, amount) in mat.MaterialComposition)
                         {
                             spawnedMats[matId] = value.Max * amount + spawnedMats.GetValueOrDefault(matId);
                         }
@@ -235,11 +238,12 @@ public sealed class MaterialArbitrageTest
 
                     var spawnProto = protoManager.Index<EntityPrototype>(spawnCompletion.Prototype);
 
-                    if (!spawnProto.Components.TryGetValue(materialName, out var matreg))
+                    if (!spawnProto.Components.ContainsKey(materialName) ||
+                        !spawnProto.Components.TryGetValue(compositionName, out var compositionReg))
                         continue;
 
-                    var mat = (MaterialComponent) matreg.Component;
-                    foreach (var (matId, amount) in mat.Materials)
+                    var mat = (PhysicalCompositionComponent) compositionReg.Component;
+                    foreach (var (matId, amount) in mat.MaterialComposition)
                     {
                         materials[matId] = spawnCompletion.Amount * amount + materials.GetValueOrDefault(matId);
                     }
