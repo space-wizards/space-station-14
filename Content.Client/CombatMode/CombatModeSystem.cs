@@ -5,6 +5,9 @@ using Robust.Client.Player;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
+using Robust.Client.Input;
+using Robust.Client.ResourceManagement;
 
 namespace Content.Client.CombatMode
 {
@@ -13,15 +16,23 @@ namespace Content.Client.CombatMode
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IEyeManager _eye = default!;
         public event Action? LocalPlayerCombatModeUpdated;
-
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<CombatModeComponent, ComponentHandleState>(OnHandleState);
-            _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay(_playerManager, this));
+            _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay(
+                _playerManager,
+                _cfg,
+                _inputManager,
+                _entMan,
+                _eye,
+                this));
         }
 
         private void OnHandleState(EntityUid uid, CombatModeComponent component, ref ComponentHandleState args)
