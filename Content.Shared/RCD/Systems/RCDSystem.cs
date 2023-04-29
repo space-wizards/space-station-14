@@ -186,7 +186,7 @@ public sealed class RCDSystem : EntitySystem
         TryComp<LimitedChargesComponent>(uid, out var charges);
         if (_charges.IsEmpty(uid, charges))
         {
-            ClientPopup(Loc.GetString("rcd-component-no-ammo-message"), uid, user);
+            _popup.PopupClient(Loc.GetString("rcd-component-no-ammo-message"), uid, user);
             return false;
         }
 
@@ -206,7 +206,7 @@ public sealed class RCDSystem : EntitySystem
             case RcdMode.Floors:
                 if (!tile.Tile.IsEmpty)
                 {
-                    ClientPopup(Loc.GetString("rcd-component-cannot-build-floor-tile-not-empty-message"), uid, user);
+                    _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-floor-tile-not-empty-message"), uid, user);
                     return false;
                 }
 
@@ -221,13 +221,13 @@ public sealed class RCDSystem : EntitySystem
                 //They tried to decon a turf but the turf is blocked
                 if (target == null && tile.IsBlockedTurf(true))
                 {
-                    ClientPopup(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
+                    _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
                     return false;
                 }
                 //They tried to decon a non-turf but it's not in the whitelist
                 if (target != null && !_tag.HasTag(target.Value, "RCDDeconstructWhitelist"))
                 {
-                    ClientPopup(Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"), uid, user);
+                    _popup.PopupClient(Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"), uid, user);
                     return false;
                 }
 
@@ -236,25 +236,25 @@ public sealed class RCDSystem : EntitySystem
             case RcdMode.Walls:
                 if (tile.Tile.IsEmpty)
                 {
-                    ClientPopup(Loc.GetString("rcd-component-cannot-build-wall-tile-not-empty-message"), uid, user);
+                    _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-wall-tile-not-empty-message"), uid, user);
                     return false;
                 }
 
                 if (tile.IsBlockedTurf(true))
                 {
-                    ClientPopup(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
+                    _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
                     return false;
                 }
                 return true;
             case RcdMode.Airlock:
                 if (tile.Tile.IsEmpty)
                 {
-                    ClientPopup(Loc.GetString("rcd-component-cannot-build-airlock-tile-not-empty-message"), uid, user);
+                    _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-airlock-tile-not-empty-message"), uid, user);
                     return false;
                 }
                 if (tile.IsBlockedTurf(true))
                 {
-                    ClientPopup(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
+                    _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
                     return false;
                 }
                 return true;
@@ -273,14 +273,7 @@ public sealed class RCDSystem : EntitySystem
         Dirty(comp);
 
         var msg = Loc.GetString("rcd-component-change-mode", ("mode", comp.Mode.ToString()));
-        ClientPopup(msg, uid, user);
-    }
-
-    // TODO: see if this isnt implemented in some utility it seems fairly common
-    private void ClientPopup(string msg, EntityUid uid, EntityUid user)
-    {
-        if (_net.IsClient && _timing.IsFirstTimePredicted)
-            _popup.PopupEntity(msg, uid, user);
+        _popup.PopupClient(msg, uid, user);
     }
 }
 

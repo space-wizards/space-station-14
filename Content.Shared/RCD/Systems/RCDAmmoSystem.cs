@@ -48,13 +48,11 @@ public sealed class RCDAmmoSystem : EntitySystem
         var count = Math.Min(charges.MaxCharges - charges.Charges, comp.Charges);
         if (count <= 0)
         {
-            if (_net.IsClient)
-                _popup.PopupEntity(Loc.GetString("rcd-ammo-component-after-interact-full"), target, user);
+            _popup.PopupClient(Loc.GetString("rcd-ammo-component-after-interact-full"), target, user);
             return;
         }
 
-        if (_net.IsClient)
-            _popup.PopupEntity(Loc.GetString("rcd-ammo-component-after-interact-refilled"), target, user);
+        _popup.PopupClient(Loc.GetString("rcd-ammo-component-after-interact-refilled"), target, user);
         _charges.AddCharges(target, count, charges);
         comp.Charges -= count;
         Dirty(comp);
