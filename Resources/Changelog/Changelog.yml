@@ -1,18 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: BotanySwab/Disease Swab - Does not double dip uses (was activating twice
-      because of the swab having a doafter for plants and one for humans). Grabs the
-      disease data now correctly too., type: Fix}
-  - {message: 'Healing - Prevents multi-use, actually heals the target now.', type: Fix}
-  - {message: Drinks - Prevents multi use on force feeding targets, type: Fix}
-  - {message: Food - Prevents multi use on force feeding targets, type: Fix}
-  - {message: Tile Prying - Prevents multi use on multiple tiles, type: Fix}
-  - {message: Door Prying - Fixes an issue where doors wouldn't be able to be pried
-      again if cancelled., type: Fix}
-  - {message: Syringes - Prevents multi use on injecting self/targets., type: Fix}
-  id: 3068
-  time: '2023-02-26T05:33:06.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix console warnings about rsi sprite access, type: Fix}
@@ -2895,3 +2881,8 @@ Entries:
     type: Add}
   id: 3567
   time: '2023-04-29T08:42:44.0000000+00:00'
+- author: pofitlo
+  changes:
+  - {message: Added new nuke music, type: Add}
+  id: 3568
+  time: '2023-04-29T08:58:00.0000000+00:00'
