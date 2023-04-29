@@ -1,10 +1,4 @@
 Entries:
-- author: Menshin
-  changes:
-  - {message: Recent progress in atmos machines materials made heaters and freezers
-      connection pipes rotatable again., type: Fix}
-  id: 3065
-  time: '2023-02-24T01:33:34.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: Hugging/Petting no longer opens the strip menu., type: Fix}
@@ -2890,3 +2884,9 @@ Entries:
     type: Fix}
   id: 3564
   time: '2023-04-29T06:35:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle movement has been overhauled to use forces instead of setting
+      velocity directly., type: Tweak}
+  id: 3565
+  time: '2023-04-29T08:17:32.0000000+00:00'
