@@ -283,9 +283,7 @@
   - type: Item
     size: 1
     sprite: Objects/Specific/Chemistry/pills.rsi
-  - type: Tag
-    tags:
-      - Pill
+  - type: Pill
   - type: Food
     forceFeedDelay: 1
     transferAmount: null
@@ -340,6 +338,6 @@
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
     whitelist:
-      tags:
-        - Pill
+      components:
+      - Pill
   - type: Dumpable
