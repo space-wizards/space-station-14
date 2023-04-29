@@ -1,18 +1,39 @@
+using Content.Shared.Hands;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Vehicle.Components;
-using Robust.Shared.Serialization;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Vehicle;
 
 public abstract partial class SharedVehicleSystem
 {
-    [Serializable, NetSerializable]
-    protected sealed class RiderComponentState : ComponentState
+    private void InitializeRider()
     {
-        public EntityUid? Entity;
+        SubscribeLocalEvent<RiderComponent, ComponentGetState>(OnRiderGetState);
+        SubscribeLocalEvent<RiderComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
+        SubscribeLocalEvent<RiderComponent, PullAttemptEvent>(OnPullAttempt);
     }
 
-    private void OnRiderPull(EntityUid uid, RiderComponent component, PullAttemptEvent args)
+    private void OnRiderGetState(EntityUid uid, RiderComponent component, ref ComponentGetState args)
+    {
+        args.State = new RiderComponentState()
+        {
+            Entity = component.Vehicle,
+        };
+    }
+
+    /// <summary>
+    /// Kick the rider off the vehicle if they press q / drop the virtual item
+    /// </summary>
+    private void OnVirtualItemDeleted(EntityUid uid, RiderComponent component, VirtualItemDeletedEvent args)
+    {
+        if (args.BlockingEntity == component.Vehicle)
+        {
+            _buckle.TryUnbuckle(uid, uid, true);
+        }
+    }
+
+    private void OnPullAttempt(EntityUid uid, RiderComponent component, PullAttemptEvent args)
     {
         if (component.Vehicle != null)
             args.Cancelled = true;

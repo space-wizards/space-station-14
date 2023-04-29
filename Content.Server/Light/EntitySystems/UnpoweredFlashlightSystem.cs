@@ -3,6 +3,7 @@ using Content.Server.Light.Events;
 using Content.Server.Mind.Components;
 using Content.Shared.Actions;
 using Content.Shared.Light;
+using Content.Shared.Light.Component;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;

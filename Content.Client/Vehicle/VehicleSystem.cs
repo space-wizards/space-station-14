@@ -47,9 +47,9 @@ public sealed class VehicleSystem : SharedVehicleSystem
         if (args.Sprite == null)
             return;
 
-        if (Appearance.TryGetData<bool>(uid, VehicleVisuals.HideRider, out var hide, args.Component)
-            && TryComp<SpriteComponent>(component.LastRider, out var riderSprite)
-            && component.HideRider)
+        if (component.HideRider
+            && Appearance.TryGetData<bool>(uid, VehicleVisuals.HideRider, out var hide, args.Component)
+            && TryComp<SpriteComponent>(component.LastRider, out var riderSprite))
             riderSprite.Visible = !hide;
 
         // First check is for the sprite itself
@@ -57,7 +57,8 @@ public sealed class VehicleSystem : SharedVehicleSystem
             args.Sprite.DrawDepth = drawDepth;
 
         // Set vehicle layer to animated or not (i.e. are the wheels turning or not)
-        if (Appearance.TryGetData<bool>(uid, VehicleVisuals.AutoAnimate, out var autoAnimate, args.Component) && component.AutoAnimate)
+        if (component.AutoAnimate
+            && Appearance.TryGetData<bool>(uid, VehicleVisuals.AutoAnimate, out var autoAnimate, args.Component))
             args.Sprite.LayerSetAutoAnimated(VehicleVisualLayers.AutoAnimate, autoAnimate);
     }
 }

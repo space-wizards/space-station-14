@@ -23,6 +23,7 @@ public abstract partial class SharedBuckleSystem : EntitySystem
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] protected readonly ActionBlockerSystem ActionBlockerSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -30,10 +31,10 @@ public abstract partial class SharedBuckleSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPullingSystem _pullingSystem = default!;
     [Dependency] private readonly StandingStateSystem _standingSystem = default!;
-    [Dependency] protected readonly ActionBlockerSystem ActionBlockerSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();

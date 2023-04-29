@@ -20,8 +20,8 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<StrapComponent, ComponentGetState>(OnStrapGetState);
         SubscribeLocalEvent<StrapComponent, ComponentHandleState>(OnStrapHandleState);
 
-        SubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>(OnStrapEntRemovedFromContainer);
-        SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(OnStrapEntRemovedFromContainer);
+        SubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>(OnStrapEntModifiedFromContainer);
+        SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(OnStrapEntModifiedFromContainer);
         SubscribeLocalEvent<StrapComponent, GetVerbsEvent<InteractionVerb>>(AddStrapVerbs);
         SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnStrapContainerGettingInsertedAttempt);
         SubscribeLocalEvent<StrapComponent, InteractHandEvent>(OnStrapInteractHand);
@@ -32,6 +32,14 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<StrapComponent, CanDropTargetEvent>(OnCanDropTarget);
 
         SubscribeLocalEvent<StrapComponent, MoveEvent>(OnStrapMoveEvent);
+    }
+
+    private void OnStrapShutdown(EntityUid uid, StrapComponent component, ComponentShutdown args)
+    {
+        if (LifeStage(uid) > EntityLifeStage.MapInitialized)
+            return;
+
+        StrapRemoveAll(component);
     }
 
     private void OnStrapGetState(EntityUid uid, StrapComponent component, ref ComponentGetState args)
@@ -52,7 +60,7 @@ public abstract partial class SharedBuckleSystem
         component.OccupiedSize = state.OccupiedSize;
     }
 
-    private void OnStrapEntRemovedFromContainer(EntityUid uid, StrapComponent component, ContainerModifiedMessage message)
+    private void OnStrapEntModifiedFromContainer(EntityUid uid, StrapComponent component, ContainerModifiedMessage message)
     {
         if (_gameTiming.ApplyingState)
             return;
@@ -87,14 +95,6 @@ public abstract partial class SharedBuckleSystem
         {
             ReAttach(buckleUid, strapUid, buckleComp, strapComp);
         }
-    }
-
-    private void OnStrapShutdown(EntityUid uid, StrapComponent component, ComponentShutdown args)
-    {
-        if (LifeStage(uid) > EntityLifeStage.MapInitialized)
-            return;
-
-        StrapRemoveAll(component);
     }
 
     private void OnStrapContainerGettingInsertedAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)

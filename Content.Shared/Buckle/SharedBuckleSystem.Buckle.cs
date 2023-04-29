@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
@@ -47,13 +48,40 @@ public abstract partial class SharedBuckleSystem
         UpdateBuckleStatus(uid, component);
     }
 
-    private void OnBucklePreventCollide(EntityUid uid, BuckleComponent component, ref PreventCollideEvent args)
+    private void OnBuckleComponentShutdown(EntityUid uid, BuckleComponent component, ComponentShutdown args)
     {
-        if (args.BodyB.Owner != component.LastEntityBuckledTo)
+        TryUnbuckle(uid, uid, true, component);
+
+        component.BuckleTime = default;
+    }
+
+    private void OnBuckleComponentGetState(EntityUid uid, BuckleComponent component, ref ComponentGetState args)
+    {
+        args.State = new BuckleComponentState(component.Buckled, component.BuckledTo, component.LastEntityBuckledTo, component.DontCollide);
+    }
+
+    private void OnBuckleMove(EntityUid uid, BuckleComponent component, ref MoveEvent ev)
+    {
+        if (component.BuckledTo is not {} strapUid)
             return;
 
-        if (component.Buckled || component.DontCollide)
-            args.Cancelled = true;
+        if (!TryComp<StrapComponent>(strapUid, out var strapComp))
+            return;
+
+        var strapPosition = Transform(strapUid).Coordinates;
+        if (ev.NewPosition.InRange(EntityManager, _transformSystem, strapPosition, strapComp.MaxBuckleDistance))
+            return;
+
+        TryUnbuckle(uid, uid, true, component);
+    }
+
+    private void OnBuckleInteractHand(EntityUid uid, BuckleComponent component, InteractHandEvent args)
+    {
+        if (!component.Buckled)
+            return;
+
+        if (TryUnbuckle(uid, args.User, buckleComp: component))
+            args.Handled = true;
     }
 
     private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -78,34 +106,18 @@ public abstract partial class SharedBuckleSystem
         args.Verbs.Add(verb);
     }
 
-    private void OnBuckleComponentShutdown(EntityUid uid, BuckleComponent component, ComponentShutdown args)
-    {
-        TryUnbuckle(uid, uid, true, component);
-
-        component.BuckleTime = default;
-    }
-
-    private void OnBuckleComponentGetState(EntityUid uid, BuckleComponent component, ref ComponentGetState args)
-    {
-        args.State = new BuckleComponentState(component.Buckled, component.BuckledTo, component.LastEntityBuckledTo, component.DontCollide);
-    }
-
-    private void OnBuckleInteractHand(EntityUid uid, BuckleComponent component, InteractHandEvent args)
-    {
-        if (!component.Buckled)
-            return;
-
-        if (TryUnbuckle(uid, args.User, buckleComp: component))
-            args.Handled = true;
-    }
-
-    private void OnBuckleMove(EntityUid uid, BuckleComponent component, ref MoveEvent ev)
-    {
-    }
-
     private void OnBuckleInsertIntoEntityStorageAttempt(EntityUid uid, BuckleComponent component, ref InsertIntoEntityStorageAttemptEvent args)
     {
         if (component.Buckled)
+            args.Cancelled = true;
+    }
+
+    private void OnBucklePreventCollide(EntityUid uid, BuckleComponent component, ref PreventCollideEvent args)
+    {
+        if (args.BodyB.Owner != component.LastEntityBuckledTo)
+            return;
+
+        if (component.Buckled || component.DontCollide)
             args.Cancelled = true;
     }
 
@@ -133,7 +145,7 @@ public abstract partial class SharedBuckleSystem
             return;
 
         if (component.Buckled &&
-            !HasComp<VehicleComponent>(Transform(uid).ParentUid)) // buckle+vehicle shitcode
+            !HasComp<VehicleComponent>(component.BuckledTo)) // buckle+vehicle shitcode
             args.Cancel();
     }
 
@@ -222,6 +234,16 @@ public abstract partial class SharedBuckleSystem
             return false;
         }
 
+        // Does it pass the Whitelist
+        if (strapComp.AllowedEntities != null &&
+            !strapComp.AllowedEntities.IsValid(userUid, EntityManager))
+        {
+            if (_netManager.IsServer)
+                _popupSystem.PopupEntity(Loc.GetString("buckle-component-cannot-fit-message"), userUid, buckleUid, PopupType.Medium);
+            return false;
+        }
+
+        // Is it within range
         bool Ignored(EntityUid entity) => entity == buckleUid || entity == userUid || entity == strapUid;
 
         if (!_interactionSystem.InRangeUnobstructed(buckleUid, strapUid, buckleComp.Range, predicate: Ignored,
@@ -321,7 +343,8 @@ public abstract partial class SharedBuckleSystem
            var message = Loc.GetString(buckleUid == userUid
                ? "buckle-component-cannot-buckle-message"
                : "buckle-component-other-cannot-buckle-message", ("owner", Identity.Entity(buckleUid, EntityManager)));
-           _popupSystem.PopupEntity(message, userUid, userUid);
+            if (_netManager.IsServer)
+               _popupSystem.PopupEntity(message, userUid, userUid);
            return false;
        }
 
@@ -332,7 +355,7 @@ public abstract partial class SharedBuckleSystem
        SetBuckledTo(buckleUid,strapUid, strapComp, buckleComp);
        _audioSystem.PlayPredicted(strapComp.BuckleSound, strapUid, buckleUid);
 
-        var ev = new BuckleChangeEvent(strapUid, buckleUid, true);
+       var ev = new BuckleChangeEvent(strapUid, buckleUid, true);
        RaiseLocalEvent(ev.BuckledEntity, ref ev);
        RaiseLocalEvent(ev.StrapEntity, ref ev);
 
@@ -400,7 +423,7 @@ public abstract partial class SharedBuckleSystem
                 return false;
 
             // If the strap is a vehicle and the rider is not the person unbuckling, return.
-            if (TryComp(strapUid, out VehicleComponent? vehicle) &&
+            if (TryComp<VehicleComponent>(strapUid, out var vehicle) &&
                 vehicle.Rider != userUid)
                 return false;
         }
@@ -459,7 +482,7 @@ public abstract partial class SharedBuckleSystem
 
         _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, buckleUid);
 
-        var ev = new BuckleChangeEvent(Buckling: false, StrapEntity: strapUid, BuckledEntity: buckleUid);
+        var ev = new BuckleChangeEvent(strapUid, buckleUid, false);
         RaiseLocalEvent(buckleUid, ref ev);
         RaiseLocalEvent(strapUid, ref ev);
 

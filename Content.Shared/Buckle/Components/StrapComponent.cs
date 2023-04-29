@@ -1,5 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.Vehicle;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -11,17 +12,25 @@ namespace Content.Shared.Buckle.Components;
 public sealed class StrapComponent : Component
 {
     /// <summary>
+    /// The entities that are currently buckled
+    /// </summary>
+    [ViewVariables]
+    public readonly HashSet<EntityUid> BuckledEntities = new();
+
+    /// <summary>
+    /// Entities that this strap accepts and can buckle
+    /// If null it accepts any entity
+    /// </summary>
+    [DataField("allowedEntities")]
+    [ViewVariables]
+    public EntityWhitelist? AllowedEntities;
+
+    /// <summary>
     /// The change in position to the strapped mob
     /// </summary>
     [DataField("position")]
     [ViewVariables(VVAccess.ReadWrite)]
     public StrapPosition Position = StrapPosition.None;
-
-    /// <summary>
-    /// The entity that is currently buckled here
-    /// </summary>
-    [ViewVariables]
-    public readonly HashSet<EntityUid> BuckledEntities = new();
 
     /// <summary>
     /// The distance above which a buckled entity will be automatically unbuckled.
@@ -106,11 +115,7 @@ public sealed class StrapComponent : Component
 [Serializable, NetSerializable]
 public sealed class StrapComponentState : ComponentState
 {
-    /// <summary>
-    /// The change in position that this strap makes to the strapped mob
-    /// </summary>
     public readonly StrapPosition Position;
-
     public readonly float MaxBuckleDistance;
     public readonly Vector2 BuckleOffsetClamped;
     public readonly HashSet<EntityUid> BuckledEntities;
