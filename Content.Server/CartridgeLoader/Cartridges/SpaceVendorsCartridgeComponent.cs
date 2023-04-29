@@ -8,5 +8,8 @@ namespace Content.Server.CartridgeLoader.Cartridges
     {
         [DataField("appraisedItems")]
         public List<AppraisedItem> AppraisedItems = new();
+
+        [DataField("maxSavedItems")]
+        public int MaxSavedItems { get; set; } = 9;
     }
 }
