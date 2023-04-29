@@ -553,6 +553,8 @@
   - ProximitySensor
   - LeftArmBorg
   - RightArmBorg
+  - LeftLegBorg
+  - RightLegBorg
   - Drone
   - ExosuitFabricatorMachineCircuitboard
 
