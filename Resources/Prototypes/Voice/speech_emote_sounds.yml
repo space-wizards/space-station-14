@@ -24,7 +24,7 @@
       collection: MaleYawn
     Snore:
       collection: Snores
-    Cry:
+    Crying:
       collection: MaleCry
     Whistle:
       collection: Whistles
@@ -54,7 +54,7 @@
       collection: FemaleYawn
     Snore:
       collection: Snores
-    Cry:
+    Crying:
       collection: FemaleCry
     Whistle:
       collection: Whistles

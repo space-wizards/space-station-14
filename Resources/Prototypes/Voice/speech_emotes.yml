@@ -68,9 +68,9 @@
     - whistleblowing.
     - whistleblowing!
 - type: emote
-  id: Cry
+  id: Crying
   category: Vocal
-  chatMessages: [cry]
+  chatMessages: [crying]
   chatTriggers:
     - cry
     - cry.
