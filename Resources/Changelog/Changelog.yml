@@ -1,9 +1,4 @@
 Entries:
-- author: 08A
-  changes:
-  - {message: Fixed entity sub menu (right-click menu), type: Fix}
-  id: 3064
-  time: '2023-02-24T00:27:15.0000000+00:00'
 - author: Menshin
   changes:
   - {message: Recent progress in atmos machines materials made heaters and freezers
@@ -2889,3 +2884,9 @@ Entries:
   - {message: Added LOOC and Emote focus keybinds, type: Add}
   id: 3563
   time: '2023-04-29T06:15:42.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that allowed slime corpses/brains to move around after death.,
+    type: Fix}
+  id: 3564
+  time: '2023-04-29T06:35:28.0000000+00:00'
