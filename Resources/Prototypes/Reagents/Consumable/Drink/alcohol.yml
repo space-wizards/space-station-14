@@ -1128,6 +1128,29 @@
         amount: 0.15
 
 - type: reagent
+  id: CogChamp
+  name: reagent-name-cogchamp
+  parent: BaseAlcohol
+  desc: reagent-desc-cogchamp
+  physicalDesc: reagent-physical-desc-ground-brass
+  flavor: cogchamp
+  color: "#B5A642"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cogchamp.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+        - !type:GenericStatusEffect
+          key: RatvarianLanguage
+          component: RatvarianLanguage
+        - !type:SatiateThirst
+          factor: 2
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
+
+- type: reagent
   id: Silencer
   name: reagent-name-silencer
   parent: BaseAlcohol

@@ -24,15 +24,19 @@ anomaly-scanner-particle-unstable = - [color=plum]Unstable type:[/color] {$type}
 anomaly-scanner-particle-containment = - [color=goldenrod]Containment type:[/color] {$type}
 anomaly-scanner-pulse-timer = Time until next pulse: [color=gray]{$time}[/color]
 
-anomaly-generator-ui-title = anomaly generator
+anomaly-generator-ui-title = Anomaly Generator
 anomaly-generator-fuel-display = Fuel:
 anomaly-generator-cooldown = Cooldown: [color=gray]{$time}[/color]
 anomaly-generator-no-cooldown = Cooldown: [color=gray]Complete[/color]
 anomaly-generator-yes-fire = Status: [color=forestgreen]Ready[/color]
 anomaly-generator-no-fire = Status: [color=crimson]Not ready[/color]
 anomaly-generator-generate = Generate Anomaly
-anomaly-generator-charges = {$charges -> 
+anomaly-generator-charges = {$charges ->
     [one] {$charges} charge
     *[other] {$charges} charges
 }
 anomaly-generator-announcement = An anomaly has been generated!
+
+# Flavor text on the footer
+anomaly-generator-flavor-left = Anomaly may spawn inside the operator.
+anomaly-generator-flavor-right = v1.1

@@ -485,6 +485,11 @@
   description: flavor-complex-cola
 
 - type: flavor
+  id: cogchamp
+  flavorType: Complex
+  description: flavor-complex-cogchamp
+
+- type: flavor
   id: vodka
   flavorType: Complex
   description: flavor-complex-vodka

@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Eye.Blinding;
+using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
@@ -122,14 +123,12 @@ namespace Content.Shared.Examine
             {
                 if (MobStateSystem.IsDead(examiner, mobState))
                     return DeadExamineRange;
-                else if (MobStateSystem.IsCritical(examiner, mobState) || (TryComp<BlindableComponent>(examiner, out var blind) && blind.Sources > 0))
+
+                if (MobStateSystem.IsCritical(examiner, mobState) || TryComp<BlindableComponent>(examiner, out var blind) && blind.IsBlind)
                     return CritExamineRange;
 
-                else if (TryComp<BlurryVisionComponent>(examiner, out var blurry) && blurry.Magnitude != 0)
-                {
-                    float range = ExamineRange - (2 * (8 - blurry.Magnitude));
-                    return Math.Clamp(range, 2, 16);
-                }
+                if (TryComp<BlurryVisionComponent>(examiner, out var blurry))
+                    return Math.Clamp(ExamineRange - blurry.Magnitude, 2, ExamineRange);
             }
             return ExamineRange;
         }

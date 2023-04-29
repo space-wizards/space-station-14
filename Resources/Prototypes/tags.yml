@@ -35,6 +35,15 @@
   id: BorgArm
 
 - type: Tag
+  id: BorgLeg
+
+- type: Tag
+  id: BorgLeftLeg
+
+- type: Tag
+  id: BorgRightLeg
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -482,9 +491,6 @@
 
 - type: Tag
   id: Pickaxe
-
-- type: Tag
-  id: Pill
 
 - type: Tag
   id: PillCanister

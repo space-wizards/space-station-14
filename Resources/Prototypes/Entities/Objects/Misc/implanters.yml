@@ -125,6 +125,15 @@
     - type: Implanter
       implant: FreedomImplant
 
+- type: entity
+  id: UplinkImplanter
+  name: uplink implanter
+  description: a single use implanter, the implant lets the user access a syndicate uplink at will
+  parent: BaseImplantOnlyImplanter
+  components:
+  - type: Implanter
+    implant: UplinkImplant
+
 #Nuclear Operative/Special implanters
 
 - type: entity

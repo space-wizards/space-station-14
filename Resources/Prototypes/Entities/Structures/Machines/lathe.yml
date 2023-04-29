@@ -197,20 +197,14 @@
       - Drone
       - Flash
       - MicroManipulatorStockPart
-      - ScanningModuleStockPart
-      - MicroLaserStockPart
       - MatterBinStockPart
       - CapacitorStockPart
       - AdvancedCapacitorStockPart
       - AdvancedMatterBinStockPart
-      - HighPowerMicroLaserStockPart
       - NanoManipulatorStockPart
-      - AdvancedScanningModuleStockPart
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
-      - UltraHighPowerMicroLaserStockPart
       - PicoManipulatorStockPart
-      - PhasicScanningModuleStockPart
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
@@ -371,6 +365,8 @@
     - ProximitySensor
     - LeftArmBorg
     - RightArmBorg
+    - LeftLegBorg
+    - RightLegBorg
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm
@@ -470,7 +466,6 @@
   - type: Lathe
     idleState: icon
     runningState: icon
-    machinePartPrintSpeed: Laser
     staticRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
@@ -663,3 +658,4 @@
         - SheetUranium1
         - IngotGold1
         - IngotSilver1
+        - MaterialBananium1
