@@ -58,9 +58,15 @@ namespace Content.Server.Cloning.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float CloningTime = 30f;
 
+        /// <summary>
+        /// The mob to spawn on emag
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("mobSpawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string MobSpawnId = "MobAbomination";
 
+        /// <summary>
+        /// Emag sound effects.
+        /// </summary>
         [DataField("sparkSound")]
         public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
 

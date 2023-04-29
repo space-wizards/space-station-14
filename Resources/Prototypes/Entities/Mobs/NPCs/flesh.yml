@@ -185,6 +185,9 @@
       0: Alive
       100: Critical
       150: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 2.5
   - type: MeleeWeapon
     hidden: true
     soundHit:
@@ -194,6 +197,3 @@
     damage:
       types:
         Blunt: 10
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 1.5
-    baseSprintSpeed: 2.5

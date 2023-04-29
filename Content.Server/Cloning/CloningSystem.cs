@@ -289,6 +289,7 @@ namespace Content.Server.Cloning
             }
         }
 
+        // On emag, spawns a failed clone when cloning process fails which attacks nearby crew.
         private void OnEmagged(EntityUid uid, CloningPodComponent clonePod, ref GotEmaggedEvent args)
         {
             if (_powerReceiverSystem.IsPowered(uid))
