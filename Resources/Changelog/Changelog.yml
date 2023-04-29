@@ -1,10 +1,4 @@
 Entries:
-- author: h3half
-  changes:
-  - {message: Freshly-printed powercells no longer look like they're fully charged.,
-    type: Fix}
-  id: 3077
-  time: '2023-02-28T15:57:17.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: You can now fit more bread in your bag., type: Tweak}
@@ -2884,3 +2878,8 @@ Entries:
   - {message: Added glass shuttle airlock construction., type: Add}
   id: 3576
   time: '2023-04-29T11:45:55.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: Changed the mailbox sprite., type: Tweak}
+  id: 3577
+  time: '2023-04-29T11:47:11.0000000+00:00'
