@@ -43,9 +43,15 @@ public sealed partial class ShuttleSystem
 
     // I'm too lazy to make CVars.
 
-    private readonly SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg");
+    private readonly SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
     // private SoundSpecifier _travelSound = new SoundPathSpecifier();
-    private readonly SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg");
+    private readonly SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
 
     private readonly TimeSpan _hyperspaceKnockdownTime = TimeSpan.FromSeconds(5);
 
@@ -144,6 +150,8 @@ public sealed partial class ShuttleSystem
         hyperspace.Dock = false;
         hyperspace.PriorityTag = priorityTag;
         _console.RefreshShuttleConsoles();
+        var ev = new FTLRequestEvent(_mapManager.GetMapEntityId(coordinates.ToMap(EntityManager, _transform).MapId));
+        RaiseLocalEvent(shuttleUid, ref ev, true);
     }
 
     /// <summary>
@@ -243,8 +251,10 @@ public sealed partial class ShuttleSystem
 
                     SetDockBolts(uid, true);
                     _console.RefreshShuttleConsoles(uid);
-                    var ev = new FTLStartedEvent(fromMapUid, fromMatrix, fromRotation);
-                    RaiseLocalEvent(uid, ref ev);
+                    var target = comp.TargetUid != null ? new EntityCoordinates(comp.TargetUid.Value, Vector2.Zero) : comp.TargetCoordinates;
+
+                    var ev = new FTLStartedEvent(uid, target, fromMapUid, fromMatrix, fromRotation);
+                    RaiseLocalEvent(uid, ref ev, true);
 
                     if (comp.TravelSound != null)
                     {
@@ -338,7 +348,7 @@ public sealed partial class ShuttleSystem
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(uid);
                     _mapManager.SetMapPaused(mapId, false);
-                    var ftlEvent = new FTLCompletedEvent();
+                    var ftlEvent = new FTLCompletedEvent(uid, _mapManager.GetMapEntityId(mapId));
                     RaiseLocalEvent(uid, ref ftlEvent, true);
                     break;
                 case FTLState.Cooldown:
@@ -355,12 +365,14 @@ public sealed partial class ShuttleSystem
 
     private void SetDocks(EntityUid uid, bool enabled)
     {
-        foreach (var (dock, xform) in EntityQuery<DockingComponent, TransformComponent>(true))
+        var query = AllEntityQuery<DockingComponent, TransformComponent>();
+
+        while (query.MoveNext(out var dockUid, out var dock, out var xform))
         {
             if (xform.ParentUid != uid || dock.Enabled == enabled)
                 continue;
 
-            _dockSystem.Undock(dock);
+            _dockSystem.Undock(dockUid, dock);
             dock.Enabled = enabled;
         }
     }
@@ -565,6 +577,23 @@ public sealed partial class ShuttleSystem
         {
             _physics.SetLinearVelocity(shuttleUid, Vector2.Zero, body: shuttleBody);
             _physics.SetAngularVelocity(shuttleUid, 0f, body: shuttleBody);
+        }
+
+        // TODO: This is pretty crude for multiple landings.
+        if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid))
+        {
+            var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
+            spawnPos = targetAABB.Center + _random.NextVector2(minRadius, minRadius + 64f);
+        }
+        else if (shuttleBody != null)
+        {
+            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+            var transform = new Transform(targetPos, targetRot);
+            spawnPos = Robust.Shared.Physics.Transform.Mul(transform, -shuttleBody.LocalCenter);
+        }
+        else
+        {
+            spawnPos = _transform.GetWorldPosition(targetXform, xformQuery);
         }
 
         // TODO: This is pretty crude for multiple landings.

@@ -7,6 +7,14 @@
   price: 0.1
 
 - type: material
+  id: Cardboard
+  stackEntity: MaterialCardboard1
+  name: materials-cardboard
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cardboard }
+  color: "#70736c"
+  price: 0.005
+
+- type: material
   id: Cloth
   stackEntity: MaterialCloth1
   name: materials-cloth
@@ -51,5 +59,13 @@
   stackEntity: SheetUranium1
   name: materials-uranium
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
+  color: "#32a852"
+  price: 0.2
+
+- type: material
+  id: Bananium
+  stackEntity: MaterialBananium1
+  name: materials-bananium
+  icon: { sprite: Objects/Materials/materials.rsi, state: bananium }
   color: "#32a852"
   price: 0.2

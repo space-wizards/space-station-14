@@ -32,14 +32,14 @@ public sealed class AnomalyVesselComponent : Component
     /// The machine part that affects the point multiplier of the vessel
     /// </summary>
     [DataField("machinePartPointModifier", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartPointModifier = "ScanningModule";
+    public string MachinePartPointModifier = "Capacitor";
 
     /// <summary>
     /// A value used to scale the point multiplier
     /// with the corresponding part rating.
     /// </summary>
     [DataField("partRatingPointModifier")]
-    public float PartRatingPointModifier = 1.5f;
+    public float PartRatingPointModifier = 1.25f;
 
     /// <summary>
     /// The maximum time between each beep

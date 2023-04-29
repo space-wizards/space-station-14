@@ -6,7 +6,7 @@
   suffix: Empty
   components:
   - type: StaticPrice
-    price: 1200
+    price: 750
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     state: fueltank
@@ -27,14 +27,33 @@
   parent: WeldingFuelTank
   suffix: Full
   components:
-  - type: StaticPrice
-    price: 1200
   - type: SolutionContainerManager
     solutions:
       tank:
         reagents:
         - ReagentId: WeldingFuel
           Quantity: 1500
+
+- type: entity
+  parent: WeldingFuelTank
+  id: WeldingFuelTankHighCapacity
+  suffix: Full
+  components:
+  - type: StaticPrice
+    price: 2500
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    state: highfueltank
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 5000
+        maxVol: 5000
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 140
 
 # Water
 
@@ -44,7 +63,7 @@
   suffix: Empty
   components:
   - type: StaticPrice
-    price: 1200
+    price: 500
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     state: watertank
@@ -54,8 +73,6 @@
   id: WaterTankFull
   suffix: Full
   components:
-  - type: StaticPrice
-    price: 1200
   - type: SolutionContainerManager
     solutions:
       tank:

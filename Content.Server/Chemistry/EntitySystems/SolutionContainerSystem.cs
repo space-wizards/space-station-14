@@ -8,6 +8,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -123,6 +124,17 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     public Solution SplitSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity)
     {
         var splitSol = solutionHolder.SplitSolution(quantity);
+        UpdateChemicals(targetUid, solutionHolder);
+        return splitSol;
+    }
+
+    /// <summary>
+    /// Splits a solution without the specified reagent(s).
+    /// </summary>
+    public Solution SplitSolutionWithout(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity,
+        params string[] reagents)
+    {
+        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagents);
         UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }
@@ -317,11 +329,11 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return true;
     }
 
-    public bool TryGetSolution(EntityUid uid, string name,
+    public bool TryGetSolution([NotNullWhen(true)] EntityUid? uid, string name,
         [NotNullWhen(true)] out Solution? solution,
         SolutionContainerManagerComponent? solutionsMgr = null)
     {
-        if (!Resolve(uid, ref solutionsMgr, false))
+        if (uid == null || !Resolve(uid.Value, ref solutionsMgr, false))
         {
             solution = null;
             return false;
@@ -491,6 +503,37 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Gets the most common reagent across all solutions by volume.
+    /// </summary>
+    /// <param name="component"></param>
+    public ReagentPrototype? GetMaxReagent(SolutionContainerManagerComponent component)
+    {
+        if (component.Solutions.Count == 0)
+            return null;
+
+        var reagentCounts = new Dictionary<string, FixedPoint2>();
+
+        foreach (var solution in component.Solutions.Values)
+        {
+            foreach (var reagent in solution.Contents)
+            {
+                reagentCounts.TryGetValue(reagent.ReagentId, out var existing);
+                existing += reagent.Quantity;
+                reagentCounts[reagent.ReagentId] = existing;
+            }
+        }
+
+        var max = reagentCounts.Max();
+
+        return _prototypeManager.Index<ReagentPrototype>(max.Key);
+    }
+
+    public SoundSpecifier? GetSound(SolutionContainerManagerComponent component)
+    {
+        var max = GetMaxReagent(component);
+        return max?.FootstepSound;
+    }
 
     // Thermal energy and temperature management.
 

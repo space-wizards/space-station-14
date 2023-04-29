@@ -97,6 +97,7 @@ flavor-complex-raisins = like dried grapes
 flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
 flavor-complex-garlic = like garlic
+flavor-complex-grape = like grapes
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
@@ -164,6 +165,7 @@ flavor-complex-atomic-cola = like hoarding bottle caps
 flavor-complex-cuba-libre = like spiked cola
 flavor-complex-gin-tonic = like spiked lemon-lime soda
 flavor-complex-screwdriver = like spiked orange juice
+flavor-complex-cogchamp = like brass
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk

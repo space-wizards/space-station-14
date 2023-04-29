@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: SmallboxItem
   parent: BaseStorageItem
   abstract: true
@@ -18,7 +18,6 @@
     tags:
     - Matchstick
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage
   - type: Sprite
     netsync: false
@@ -38,11 +37,10 @@
     radius: 1.1
     color: darkorange
   - type: Appearance
-    visuals:
-      - type: BurnStateVisualizer
-        unlitIcon: match_unlit
-        litIcon: match_lit
-        burntIcon: match_burnt
+  - type: BurnStateVisuals
+    unlitIcon: match_unlit
+    litIcon: match_lit
+    burntIcon: match_burnt
 
 - type: entity
   parent: Matchstick
@@ -94,5 +92,4 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage

@@ -125,7 +125,7 @@ namespace Content.Shared.Stacks
             EntityUid item,
             EntityUid user,
             StackComponent? itemStack = null,
-            SharedHandsComponent? hands = null)
+            HandsComponent? hands = null)
         {
             if (!Resolve(user, ref hands, false))
                 return;

@@ -68,11 +68,13 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
+            var exempt = await GetBanExemptionCore(db, userId);
+
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.
-            var bans = await GetAllBans(db.SqliteDbContext, includeUnbanned: false);
+            var bans = await GetAllBans(db.SqliteDbContext, includeUnbanned: false, exempt);
 
-            return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId)) is { } foundBan
+            return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId, exempt)) is { } foundBan
                 ? ConvertBan(foundBan)
                 : null;
         }
@@ -83,19 +85,22 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
+            var exempt = await GetBanExemptionCore(db, userId);
+
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.
-            var queryBans = await GetAllBans(db.SqliteDbContext, includeUnbanned);
+            var queryBans = await GetAllBans(db.SqliteDbContext, includeUnbanned, exempt);
 
             return queryBans
-                .Where(b => BanMatches(b, address, userId, hwId))
+                .Where(b => BanMatches(b, address, userId, hwId, exempt))
                 .Select(ConvertBan)
                 .ToList()!;
         }
 
         private static async Task<List<ServerBan>> GetAllBans(
             SqliteServerDbContext db,
-            bool includeUnbanned)
+            bool includeUnbanned,
+            ServerBanExemptFlags? exemptFlags)
         {
             IQueryable<ServerBan> query = db.Ban.Include(p => p.Unban);
             if (!includeUnbanned)
@@ -104,16 +109,22 @@ namespace Content.Server.Database
                     p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow));
             }
 
+            if (exemptFlags is { } exempt)
+            {
+                query = query.Where(b => (b.ExemptFlags & exempt) == 0);
+            }
+
             return await query.ToListAsync();
         }
 
-        private static bool BanMatches(
-            ServerBan ban,
+        private static bool BanMatches(ServerBan ban,
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId,
+            ServerBanExemptFlags? exemptFlags)
         {
-            if (address != null && ban.Address is not null && IPAddressExt.IsInSubnet(address, ban.Address.Value))
+            if (!exemptFlags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.IP)
+                && address != null && ban.Address is not null && IPAddressExt.IsInSubnet(address, ban.Address.Value))
             {
                 return true;
             }

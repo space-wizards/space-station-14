@@ -118,7 +118,8 @@ namespace Content.Server.Chat.Managers
 
         public void SendAdminAlert(EntityUid player, string message, MindComponent? mindComponent = null)
         {
-            if(mindComponent == null && !_entityManager.TryGetComponent(player, out mindComponent))
+            if((mindComponent == null && !_entityManager.TryGetComponent(player, out mindComponent))
+               || mindComponent.Mind == null)
             {
                 SendAdminAlert(message);
                 return;
