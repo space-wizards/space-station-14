@@ -77,10 +77,10 @@
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 10
-    duration: 2
-    earliestStart: 15
-    minimumPlayers: 15
+    weight: 1
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
   - type: DragonRule
 
 - type: entity

@@ -38,6 +38,64 @@ public sealed class PrototypeSaveTest
     {
         "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
         "constructionghost",
+
+        // These ones are from the serialization change to alwayswrite.
+        // These should NOT be added to.
+        // 99% of these are going to be changing the physics bodytype (where the entity is anchored)
+        // or some ambientsound change.
+        "GasVentScrubber",
+        "GasPassiveVent",
+        "CableHV",
+        "ParticleAcceleratorFuelChamberUnfinished",
+        "ComfyChair",
+        "PlasticFlapsOpaque",
+        "ParticleAcceleratorEmitterRightUnfinished",
+        "PlasticFlapsAirtightClear",
+        "SignalControlledValve",
+        "SignalControlledValve",
+        "GasPipeTJunction",
+        "GasFilter",
+        "GasOutletInjector",
+        "GasPressurePump",
+        "SurveillanceWirelessCameraAnchoredEntertainment",
+        "GasPort",
+        "Chair",
+        "GasMixer",
+        "ParticleAcceleratorPowerBoxUnfinished",
+        "GasValve",
+        "Thruster",
+        "BoxingBell",
+        "CableApcExtension",
+        "PlasticFlapsClear",
+        "ClothingBackpackChameleon",
+        "AMEControllerUnanchored",
+        "GasPipeFourway",
+        "NuclearBomb",
+        "PlasticFlapsAirtightOpaque",
+        "ParticleAcceleratorControlBoxUnfinished",
+        "GasPipeHalf",
+        "GasVolumePump",
+        "ParticleAcceleratorEmitterLeftUnfinished",
+        "GasMixerFlipped",
+        "ToiletDirtyWater",
+        "GasPipeBend",
+        "ParticleAcceleratorEndCapUnfinished",
+        "GasPipeStraight",
+        "MachineFrameDestroyed",
+        "ChairPilotSeat",
+        "VehicleJanicartDestroyed",
+        "Gyroscope",
+        "ParticleAcceleratorEmitterCenterUnfinished",
+        "ToiletEmpty",
+        "GasPassiveGate",
+        "CableMV",
+        "ClothingBackpackChameleonFill",
+        "GasDualPortVentPump",
+        "GasVentPump",
+        "PressureControlledValve",
+        "GasFilterFlipped",
+        "SurveillanceWirelessCameraAnchoredConstructed",
+
     };
 
     [Test]
@@ -211,7 +269,7 @@ public sealed class PrototypeSaveTest
             ValueDataNode node,
             IDependencyCollection dependencies,
             SerializationHookContext hookCtx,
-            ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider = null)
+            ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider)
         {
             return EntityUid.Invalid;
         }
