@@ -12,3 +12,6 @@ ent-FoodDinnerware = { ent-CrateFoodDinnerware }
 
 ent-FoodBarSupply = { ent-CrateFoodBarSupply }
     .desc = { ent-CrateFoodBarSupply.desc }
+
+ent-FoodCrateKvassTank = { ent-CrateFoodKvassTank }
+    .desc = { ent-CrateFoodKvassTank.desc }

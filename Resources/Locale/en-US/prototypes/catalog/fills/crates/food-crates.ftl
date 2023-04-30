@@ -12,3 +12,6 @@ ent-CrateFoodDinnerware = Kitchen dinnerware crate
 
 ent-CrateFoodBarSupply = Bartending supplies crate
     .desc = Extra Bar supplies, in case the clown was allowed in the bar unsupervised.
+
+ent-CrateFoodKvassTank = Kvass tank crate
+    .desc = A tank with refreshing kvass, which helps so much in the heat.

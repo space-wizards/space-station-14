@@ -18,3 +18,9 @@ ent-WaterCooler = water cooler
 
 ent-WaterTankHighCapacity = high-capacity water tank
     .desc = A highly pressurized water tank made to hold gargantuan amounts of water.
+
+ent-KvassTank = КВАС
+    .desc = A cool refreshing drink with a taste of socialism.
+
+ent-KvassTankFull = { ent-KvassTank }
+    .desc = { ent-KvassTank.desc }
