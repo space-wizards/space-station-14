@@ -72,6 +72,7 @@
     preset: StorePresetUplink
     balance:
       Telecrystal: 0
+    unlocked: true
 
 - type: entity
   parent: BaseUplinkRadio

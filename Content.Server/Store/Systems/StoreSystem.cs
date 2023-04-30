@@ -72,9 +72,8 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Target == null || !TryComp<StoreComponent>(args.Target, out var store))
             return;
 
-        // require the store to be open before inserting currency
-        var user = args.User;
-        if (!TryComp<ActorComponent>(user, out var actor) || !_ui.SessionHasOpenUi(uid, StoreUiKey.Key, actor.PlayerSession))
+        // require the store to be unlocked before inserting currency
+        if (!store.Unlocked)
             return;
 
         args.Handled = TryAddCurrency(GetCurrencyValue(uid, component), args.Target.Value, store);

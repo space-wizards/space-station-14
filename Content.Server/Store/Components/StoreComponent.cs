@@ -48,6 +48,13 @@ public sealed class StoreComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? AccountOwner = null;
 
+
+    /// <summary>
+    /// Locks and unlocks the store
+    /// </summary>
+    [DataField("unlocked")]
+    public bool Unlocked = false;
+
     /// <summary>
     /// All listings, including those that aren't available to the buyer
     /// </summary>

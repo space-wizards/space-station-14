@@ -55,12 +55,17 @@ namespace Content.Server.PDA.Ringer
 
         private void OnSetUplinkRingtone(EntityUid uid, RingerUplinkComponent uplink, RingerSetRingtoneMessage args)
         {
-            if (uplink.Code.SequenceEqual(args.Ringtone) &&
-                args.Session.AttachedEntity != null &&
+            if (args.Session.AttachedEntity != null &&
                 TryComp<StoreComponent>(uid, out var store))
             {
-                var user = args.Session.AttachedEntity.Value;
-                _store.ToggleUi(args.Session.AttachedEntity.Value, uid, store);
+                if (uplink.Code.SequenceEqual(args.Ringtone))
+                {
+                    var user = args.Session.AttachedEntity.Value;
+                    store.Unlocked = true;
+                    _store.ToggleUi(args.Session.AttachedEntity.Value, uid, store);
+                }
+                else
+                    store.Unlocked = false;
             }
         }
 
