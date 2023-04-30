@@ -41,6 +41,13 @@
       uiWindowPos: 1,1
       strippingWindowPos: 1,1
       displayName: Mask
+    - name: eyes
+      slotTexture: glasses
+      slotFlags: EYES
+      stripTime: 3
+      uiWindowPos: 0,0
+      strippingWindowPos: 0,0
+      displayName: Eyes
     - name: ears
       slotTexture: ears
       slotFlags: EARS
