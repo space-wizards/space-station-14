@@ -304,21 +304,6 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkVodkaBottleFull
-  name: vodka bottle
-  description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Vodka
-          Quantity: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/vodkabottle.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
   id: DrinkWhiskeyBottleFull
   name: uncle git's special reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.

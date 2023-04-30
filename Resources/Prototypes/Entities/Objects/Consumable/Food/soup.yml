@@ -859,7 +859,7 @@
   name: miso soup
   parent: FoodBowlBase
   id: FoodSoupMiso
-  description: Salty, fishy soup, best had with ramen.
+  description: Salty, fishy soup.
   components:
   - type: Food
     trash: FoodBowlFancy

@@ -64,17 +64,8 @@ reagent-desc-water = A colorless liquid that humans need in order to survive.
 reagent-name-ice = ice
 reagent-desc-ice = Frozen water.
 
-reagent-name-dry-ramen = dry ramen
-reagent-desc-dry-ramen = Dry noodles and salt.
-
-reagent-name-hot-ramen = hot ramen
-reagent-desc-hot-ramen = Hot noodles.
-
 reagent-name-pilk = pilk
 reagent-desc-pilk = A sickening mixture of milk and cola.
 
 reagent-name-posca = posca
 reagent-desc-posca = Poor warriors' drink from a forgotten era.
-
-reagent-name-kvass = kvass
-reagent-desc-kvass = A cool refreshing drink with a taste of socialism.

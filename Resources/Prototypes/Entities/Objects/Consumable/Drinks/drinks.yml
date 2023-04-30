@@ -281,7 +281,7 @@
   parent: DrinkGlassBase
   id: DrinkB52Glass
   name: b-52 glass
-  description: Coffee, Irish Cream, and cognac. You will get bombed.
+  description: Coffee and cognac. You will get bombed.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -411,23 +411,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_brown.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkBlackRussianGlass
-  name: black russian glass
-  description: For the lactose-intolerant. Still as classy as a White Russian.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: BlackRussian
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/blackrussianglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1007,72 +990,6 @@
           Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/iceglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkIceCreamGlass
-  name: ice cream glass
-  description: A glass full of good old ice cream. Might want a spoon.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: IceCream
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/icecreamglass.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkIrishCarBomb
-  name: irish car bomb
-  description: An irish car bomb.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: IrishCarBomb
-          Quantity: 30
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkIrishCoffeeGlass
-  name: irish coffee glass
-  description: Coffee and alcohol. More fun than a Mimosa to drink in the morning.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: IrishCoffee
-          Quantity: 30
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkIrishCreamGlass
-  name: irish cream glass
-  description: It's cream, mixed with whiskey. What else would you expect from the Irish?
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: IrishCream
-          Quantity: 30
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1983,23 +1900,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkVodkaTonicGlass
-  name: vodka tonic glass
-  description: For when a gin and tonic isn't russian enough.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: VodkaTonic
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkWaterJug
   name: water jug
   description: Stay hydrated
@@ -2083,23 +1983,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkWhiteRussianGlass
-  name: white russian glass
-  description: A very nice looking drink. But that's just, like, your opinion, man.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: WhiteRussian
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/whiterussianglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkWineGlass
   name: wine glass
   description: A very classy looking drink.
@@ -2165,55 +2048,3 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkRamen
-  name: cup ramen
-  description: Just add 10ml boiling water. A taste that reminds you of your school years.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: DryRamen
-          Quantity: 30
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ramen.rsi
-  - type: Tag
-    tags:
-    - Trash
-  - type: SpaceGarbage
-
-- type: entity
-  parent: DrinkRamen
-  id: DrinkHellRamen
-  name: hell ramen
-  description: Just add 10ml boiling water. Super spicy flavor.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: DryRamen
-          Quantity: 30
-        - ReagentId: CapsaicinOil
-          Quantity: 5
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkKvassGlass
-  name: kvass glass
-  description: A cool refreshing drink with a taste of socialism.
-  components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: Kvass
-              Quantity: 30
-    - type: Sprite
-      sprite: Objects/Consumable/Drinks/kvass.rsi

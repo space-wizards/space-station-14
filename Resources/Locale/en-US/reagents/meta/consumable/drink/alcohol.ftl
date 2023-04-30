@@ -46,9 +46,6 @@ reagent-desc-tequila = A strong and mildly flavoured, mexican produced spirit.
 reagent-name-vermouth = vermouth
 reagent-desc-vermouth = Aromatized, fortified white wine flavored with various botanicals.
 
-reagent-name-vodka = vodka
-reagent-desc-vodka = Clear distilled alcoholic beverage that originates from Poland and Russia.
-
 reagent-name-whiskey = whiskey
 reagent-desc-whiskey = A type of distilled alcoholic beverage made from fermented grain mash.
 
@@ -77,7 +74,7 @@ reagent-name-atomic-bomb = atomic bomb
 reagent-desc-atomic-bomb = Nuclear proliferation never tasted so good.
 
 reagent-name-b52 = b-52
-reagent-desc-b52 = Coffee, irish cream, and cognac. You will get bombed.
+reagent-desc-b52 = Coffee, cream, and cognac. You will get bombed.
 
 reagent-name-bahama-mama = bahama mama
 reagent-desc-bahama-mama = Tropical cocktail.
@@ -98,7 +95,7 @@ reagent-name-black-russian = black russian
 reagent-desc-black-russian = For the lactose-intolerant. Still as classy as a White Russian.
 
 reagent-name-bloody-mary = bloody mary
-reagent-desc-bloody-mary = A strange yet pleasurable mixture made of vodka, tomato, and lime juice.
+reagent-desc-bloody-mary = A strange yet pleasurable mixture made of whiskey, tomato, and lime juice.
 
 reagent-name-booger = booger
 reagent-desc-booger = Ewww...
@@ -148,15 +145,6 @@ reagent-desc-hooch = Either someone's failure at cocktail making or attempt in a
 reagent-name-iced-beer = iced beer
 reagent-desc-iced-beer = A beer which is so cold the air around it freezes.
 
-reagent-name-irish-car-bomb = irish car bomb
-reagent-desc-irish-car-bomb = A troubling mixture of irish cream and ale.
-
-reagent-name-irish-cream = irish cream
-reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from the Irish.
-
-reagent-name-irish-coffee = irish coffee
-reagent-desc-irish-coffee = Coffee served with irish cream. Regular cream just isn't the same!
-
 reagent-name-kira-special = kira special
 reagent-desc-kira-special = Long live the guy who everyone had mistaken for a girl. Baka!
 
@@ -200,10 +188,10 @@ reagent-name-rewriter = rewriter
 reagent-desc-rewriter = The secret of the sanctuary of the Librarian...
 
 reagent-name-sbiten = sbiten
-reagent-desc-sbiten = A spicy Vodka! Might be a little hot for the little guys!
+reagent-desc-sbiten = A spicy whiskey! Might be a little hot for the little guys!
 
 reagent-name-screwdriver-cocktail = screwdriver
-reagent-desc-screwdriver-cocktail = Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.
+reagent-desc-screwdriver-cocktail = Whiskey, mixed with plain ol' orange juice. The result is surprisingly delicious.
 
 reagent-name-cogchamp = cogchamp
 reagent-desc-cogchamp = Not even Ratvar's Four Generals could withstand this! Qevax Jryy!
@@ -232,17 +220,8 @@ reagent-desc-three-mile-island = "Made for a woman, strong enough for a man."
 reagent-name-toxins-special = toxins special
 reagent-desc-toxins-special = This thing is ON FIRE! CALL THE DAMN SHUTTLE!
 
-reagent-name-vodka-martini = vodka martini
-reagent-desc-vodka-martini = Vodka with Gin. Not quite how 007 enjoyed it, but still delicious.
-
-reagent-name-vodka-tonic = vodka tonic
-reagent-desc-vodka-tonic = For when a gin and tonic isn't russian enough.
-
 reagent-name-whiskey-cola = whiskey cola
 reagent-desc-whiskey-cola = Whiskey, mixed with cola. Surprisingly refreshing.
 
 reagent-name-whiskey-soda = whiskey soda
 reagent-desc-whiskey-soda = For the more refined griffon.
-
-reagent-name-white-russian = white russian
-reagent-desc-white-russian = That's just, like, your opinion, man...

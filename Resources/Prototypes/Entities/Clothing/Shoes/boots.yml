@@ -32,17 +32,6 @@
     sprite: Clothing/Shoes/Boots/explorer.rsi
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
-  id: ClothingShoesBootsPerformer
-  name: performer's boots
-  description: These boots provide great traction for when you're up on stage.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/Boots/performer.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/Boots/performer.rsi
-
-- type: entity
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsCombat
   name: combat boots

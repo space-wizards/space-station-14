@@ -13,7 +13,7 @@
   reactants:
     Martini:
       amount: 2
-    Vodka:
+    Whiskey:
       amount: 1
   products:
     AlliesCocktail: 3
@@ -22,11 +22,9 @@
   id: Amasec
   reactants:
     Wine:
-      amount: 2
-    Vodka:
-      amount: 2
+      amount: 3
     Iron:
-      amount: 1
+      amount: 2
   products:
     Amasec: 5
 
@@ -49,7 +47,7 @@
       amount: 1
     Ice:
       amount: 1
-    Vodka:
+    Whiskey:
       amount: 2
   products:
     Antifreeze: 4
@@ -69,7 +67,7 @@
   reactants:
     Cognac:
       amount: 1
-    IrishCarBomb:
+    Cream:
       amount: 1
     CoffeeLiqueur:
       amount: 1
@@ -137,23 +135,13 @@
     Bilk: 2
 
 - type: reaction
-  id: BlackRussian
-  reactants:
-    CoffeeLiqueur:
-      amount: 1
-    Vodka:
-      amount: 2
-  products:
-    BlackRussian: 3
-
-- type: reaction
   id: BloodyMary
   reactants:
     JuiceLime:
       amount: 1
     JuiceTomato:
       amount: 3
-    Vodka:
+    Whiskey:
       amount: 2
   products:
     BloodyMary: 6
@@ -277,7 +265,7 @@
       amount: 1
     JuiceLime:
       amount: 1
-    Vodka:
+    Whiskey:
       amount: 1
   products:
     FourteenLoko: 3
@@ -291,10 +279,8 @@
       amount: 1
     JuiceLime:
       amount: 1
-    Vodka:
-      amount: 1
     Whiskey:
-      amount: 1
+      amount: 2
   products:
     GargleBlaster: 5
 
@@ -325,7 +311,7 @@
   reactants:
     Gold:
       amount: 1
-    Vodka:
+    Whiskey:
       amount: 10
   products:
     Goldschlager: 10
@@ -426,36 +412,6 @@
     IcedTea: 3
 
 - type: reaction
-  id: IrishCarBomb
-  reactants:
-    Ale:
-      amount: 1
-    IrishCream:
-      amount: 1
-  products:
-    IrishCarBomb: 2
-
-- type: reaction
-  id: IrishCoffee
-  reactants:
-    Coffee:
-      amount: 2
-    IrishCream:
-      amount: 2
-  products:
-    IrishCoffee: 4
-
-- type: reaction
-  id: IrishCream
-  reactants:
-    Cream:
-      amount: 1
-    Whiskey:
-      amount: 2
-  products:
-    IrishCream: 3
-
-- type: reaction
   id: KiraSpecial
   reactants:
     JuiceLime:
@@ -500,7 +456,7 @@
       amount: 1
     Tequila:
       amount: 1
-    Vodka:
+    Whiskey:
       amount: 1
   products:
     LongIslandIcedTea: 6
@@ -585,10 +541,8 @@
   reactants:
     Tequila:
       amount: 1
-    Vodka:
-      amount: 1
     Whiskey:
-      amount: 1
+      amount: 2
   products:
     Moonshine: 3
 
@@ -668,7 +622,7 @@
 - type: reaction
   id: Sbiten
   reactants:
-    Vodka:
+    Whiskey:
       amount: 1
     CapsaicinOil:
       amount: 1
@@ -680,7 +634,7 @@
   reactants:
     JuiceOrange:
       amount: 1
-    Vodka:
+    Whiskey:
       amount: 2
   products:
     ScrewdriverCocktail: 3
@@ -700,7 +654,7 @@
 # - type: reaction
 #   id: Singulo
 #   reactants:
-#     Vodka:
+#     Whiskey:
 #       amount: 5
 #     Wine:
 #       amount: 5
@@ -795,26 +749,6 @@
     ToxinsSpecial: 5
 
 - type: reaction
-  id: VodkaMartini
-  reactants:
-    Vermouth:
-      amount: 1
-    Vodka:
-      amount: 2
-  products:
-    VodkaMartini: 3
-
-- type: reaction
-  id: VodkaTonic
-  reactants:
-    Vodka:
-      amount: 2
-    TonicWater:
-      amount: 1
-  products:
-    VodkaTonic: 3
-
-- type: reaction
   id: WhiskeyCola
   reactants:
     Cola:
@@ -825,16 +759,6 @@
     WhiskeyCola: 3
 
 - type: reaction
-  id: WhiteRussian
-  reactants:
-    BlackRussian:
-      amount: 2
-    Cream:
-      amount: 1
-  products:
-    WhiteRussian: 3
-
-- type: reaction
   id: WhiskeySoda
   reactants:
     SodaWater:
@@ -843,17 +767,6 @@
       amount: 2
   products:
     WhiskeySoda: 3
-
-- type: reaction
-  id: HotRamen
-  minTemp: 323.15
-  reactants:
-    DryRamen:
-      amount: 3
-    Water:
-      amount: 1
-  products:
-    HotRamen: 3
 
 - type: reaction
   id: Pilk

@@ -167,17 +167,6 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatFez
-  name: fez
-  description: A red fez.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/fez.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/fez.rsi
-
-- type: entity
-  parent: ClothingHeadBase
   id: ClothingHeadHatHopcap
   name: head of personnel's cap
   description: A grand, stylish captain cap.
@@ -329,19 +318,6 @@
     sprite: Clothing/Head/Hats/tophat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/tophat.rsi
-
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatUshanka
-  name: ushanka
-  description: "Perfect for winter in Siberia, da?"
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hats/ushanka.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hats/ushanka.rsi
-  - type: AddAccentClothing
-    accent: RussianAccent
 
 - type: entity
   parent: ClothingHeadBase

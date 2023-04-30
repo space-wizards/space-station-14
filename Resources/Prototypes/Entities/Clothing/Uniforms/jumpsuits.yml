@@ -1041,17 +1041,6 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
   - type: Unremoveable
-  
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitDameDane
-  name: yakuza outfit
-  description: Baka mitai...
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
 
 - type: entity
   parent: ClothingUniformBase

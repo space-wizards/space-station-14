@@ -172,7 +172,7 @@
   flavor: alcohol
   color: "#664300"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    sprite: Objects/Consumable/Drinks/vermouthglass.rsi
     state: icon
   metabolisms:
     Drink:
@@ -302,26 +302,6 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/vermouthglass.rsi
     state: icon
-
-- type: reagent
-  id: Vodka
-  name: reagent-name-vodka
-  parent: BaseAlcohol
-  desc: reagent-desc-vodka
-  physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: vodka
-  color: "#d1d1d155"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
-    state: icon
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.2
 
 - type: reagent
   id: Whiskey
@@ -849,66 +829,6 @@
     state: icon
 
 - type: reagent
-  id: IrishCarBomb
-  name: reagent-name-irish-car-bomb
-  parent: BaseAlcohol
-  desc: reagent-desc-irish-car-bomb
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: alcohol
-  color: "#2E6671"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
-    state: icon
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.15
-
-- type: reagent
-  id: IrishCream
-  name: reagent-name-irish-cream
-  parent: BaseAlcohol
-  desc: reagent-desc-irish-cream
-  physicalDesc: reagent-physical-desc-creamy
-  flavor: creamy
-  color: "#664300"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
-    state: icon
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.2
-
-- type: reagent
-  id: IrishCoffee
-  name: reagent-name-irish-coffee
-  parent: BaseAlcohol
-  desc: reagent-desc-irish-coffee
-  physicalDesc: reagent-physical-desc-cloudy
-  flavor: irishcoffee
-  color: "#664300"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
-    state: icon
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.15
-
-- type: reagent
   id: LongIslandIcedTea
   name: reagent-name-long-island-iced-tea
   parent: BaseAlcohol
@@ -1272,46 +1192,6 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
     state: icon
-
-- type: reagent
-  id: VodkaMartini
-  name: reagent-name-vodka-martini
-  parent: BaseAlcohol
-  desc: reagent-desc-vodka-martini
-  physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: alcohol
-  color: "#004666"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/martiniglass.rsi
-    state: icon
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.15
-
-- type: reagent
-  id: VodkaTonic
-  name: reagent-name-vodka-tonic
-  parent: BaseAlcohol
-  desc: reagent-desc-vodka-tonic
-  physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: alcohol
-  color: "#0064C8"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
-    state: icon
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.15
 
 - type: reagent
   id: WhiskeyCola

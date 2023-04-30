@@ -204,17 +204,6 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
-  id: ClothingOuterDameDane
-  name: yakuza coat
-  description: Friday...
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
-
-- type: entity
-  parent: ClothingOuterStorageBase
   id: ClothingOuterClownPriest
   name: robes of the honkmother
   description: Meant for a clown of the cloth.

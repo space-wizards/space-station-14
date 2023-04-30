@@ -298,16 +298,6 @@
     sprite: Clothing/Neck/Bedsheets/syndie.rsi
 
 - type: entity
-  id: BedsheetUSA
-  parent: BedsheetBase
-  name: USA bedsheet
-  components:
-  - type: Sprite
-    state: sheetUSA
-  - type: Clothing
-    sprite: Clothing/Neck/Bedsheets/USA.rsi
-
-- type: entity
   id: BedsheetWhite
   parent: BedsheetBase
   name: white bedsheet

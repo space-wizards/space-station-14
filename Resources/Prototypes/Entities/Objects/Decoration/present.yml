@@ -277,8 +277,6 @@
         orGroup: GiftPool
       - id: ClothingHeadHatSantahat
         orGroup: GiftPool
-      - id: ClothingHeadHatUshanka
-        orGroup: GiftPool
       - id: ClothingHeadHatXmasCrown
         orGroup: GiftPool
       - id: ClothingHeadHatBunny

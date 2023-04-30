@@ -490,11 +490,6 @@
   description: flavor-complex-cogchamp
 
 - type: flavor
-  id: vodka
-  flavorType: Complex
-  description: flavor-complex-vodka
-
-- type: flavor
   id: tequila
   flavorType: Complex
   description: flavor-complex-tequila
@@ -578,11 +573,6 @@
   id: tequilasunrise
   flavorType: Complex
   description: flavor-complex-tequila-sunrise
-
-- type: flavor
-  id: irishcoffee
-  flavorType: Complex
-  description: flavor-complex-irish-coffee
 
 - type: flavor
   id: icedbeer

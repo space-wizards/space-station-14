@@ -199,16 +199,6 @@
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/vermouthbottle_empty.rsi
 
-
-- type: entity
-  name: vodka bottle
-  parent: DrinkBottleBaseEmpty
-  id: DrinkBottleVodka
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/vodkabottle_empty.rsi
-
-
 - type: entity
   name: whiskey bottle
   parent: DrinkBottleBaseEmpty

@@ -82,18 +82,6 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatRichard
-  name: richard
-  description: 'Do you like hurting people?'
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/richard.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/richard.rsi
-  - type: IngestionBlocker
-
-- type: entity
-  parent: ClothingHeadBase
   id: ClothingHeadHatSkub
   name: skub hat
   description: 'Best paired with the Skub Suit.'

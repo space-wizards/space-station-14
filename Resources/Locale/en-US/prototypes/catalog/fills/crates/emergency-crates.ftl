@@ -8,7 +8,7 @@ ent-CrateEmergencyInternals = Internals crate
     .desc = Master your life energy and control your breathing with three breath masks, three emergency oxygen tanks and three large air tanks.
 
 ent-CrateEmergencyRadiation = Radiation protection crate
-    .desc = Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this.
+    .desc = Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of whiskey and some glasses too, considering the life-expectancy of people who order this.
 
 ent-CrateEmergencyInflatablewall = Inflatable wall crate
     .desc = Three stacks of inflatable walls for when the stations metal walls don't want to hold atmosphere anymore.

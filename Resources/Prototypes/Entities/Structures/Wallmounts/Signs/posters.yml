@@ -205,15 +205,6 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandCommunistState
-  name: "Communist State"
-  description: "All hail the Communist party!"
-  components:
-  - type: Sprite
-    state: poster18_contraband
-
-- type: entity
-  parent: PosterBase
   id: PosterContrabandLamarr
   name: "Lamarr"
   description: "This poster depicts Lamarr. Probably made by a traitorous Research Director."

@@ -26,7 +26,6 @@
       - DrinkBeerglass
       - DrinkBerryJuice
       - DrinkBilkGlass
-      - DrinkBlackRussianGlass
       - DrinkBlueCuracaoGlass
       - DrinkBloodyMaryGlass
       - DrinkBooger
@@ -55,8 +54,6 @@
       - DrinkIcedGreenTeaGlass
       - DrinkIcedBeerGlass
       - DrinkIceCreamGlass
-      - DrinkIrishCarBomb
-      - DrinkIrishCoffeeGlass
       - DrinkLemonadeGlass
       - DrinkKiraSpecial
       - DrinkLongIslandIcedTeaGlass
@@ -84,12 +81,9 @@
       - DrinkTequilaSunriseGlass
       - DrinkThreeMileIslandGlass
       - DrinkToxinsSpecialGlass
-      - DrinkVodkaMartiniGlass
-      - DrinkVodkaTonicGlass
       - DrinkWatermelonJuice
       - DrinkWhiskeyColaGlass
       - DrinkWhiskeySodaGlass
-      - DrinkWhiteRussianGlass
       - DrinkWineGlass
       - DrinkShakeBlue
       - DrinkShakeWhite
