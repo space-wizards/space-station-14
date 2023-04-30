@@ -1,5 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.Explosion;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -71,9 +72,21 @@ public sealed class IceAnomalyComponent : Component
     [DataField("supercriticalGas")]
     public Gas SupercriticalGas = Gas.Frezon;
 
+    [DataField("supercriticalExplosion", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ExplosionPrototype>))]
+    public string ExplosionPrototype = default!;
+
+    [DataField("explosionTotalIntensity")]
+    public float TotalIntensity = 300f;
+
+    [DataField("explosionDropoff")]
+    public float Dropoff = 10f;
+
+    [DataField("explosionMaxTileIntensity")]
+    public float MaxTileIntensity = 300f;
+
     /// <summary>
     /// The amount of gas released when the anomaly goes supercritical
     /// </summary>
     [DataField("supercriticalMoleAmount")]
-    public float SupercriticalMoleAmount = 75f;
+    public float SupercriticalMoleAmount = 150f;
 }

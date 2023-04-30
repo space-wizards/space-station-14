@@ -2,6 +2,7 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Interaction;
 using Content.Shared.Anomaly.Components;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Projectiles;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Mobs.Components;
@@ -23,6 +24,7 @@ public sealed class IceAnomalySystem : EntitySystem
     [Dependency] private readonly GunSystem _gunSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ExplosionSystem _boom = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,12 +35,17 @@ public sealed class IceAnomalySystem : EntitySystem
 
     private void OnPulse(EntityUid uid, IceAnomalyComponent component, ref AnomalyPulseEvent args)
     {
+        ShootProjectilesAtEntites(uid, component, args.Severity, args.Stability);
+    }
+
+    private void ShootProjectilesAtEntites(EntityUid uid, IceAnomalyComponent component, float severity, float stability)
+    {
         var xform = Transform(uid);
         var projectilesShot = 0;
 
-        foreach (var entity in _lookup.GetEntitiesInRange(uid, component.ProjectileRange * args.Stability, LookupFlags.Dynamic))
+        foreach (var entity in _lookup.GetEntitiesInRange(uid, component.ProjectileRange * stability, LookupFlags.Dynamic))
         {
-            if (projectilesShot >= component.MaxProjectiles * args.Severity)
+            if (projectilesShot >= component.MaxProjectiles * severity)
                 return;
 
             // Living entities are more likely to be shot at then non living
@@ -51,7 +58,7 @@ public sealed class IceAnomalySystem : EntitySystem
                 uid, component,
                 xform.Coordinates,
                 targetCoords,
-                args.Severity
+                severity
             );
             projectilesShot++;
         }
@@ -93,6 +100,16 @@ public sealed class IceAnomalySystem : EntitySystem
 
         var indices = _xform.GetGridOrMapTilePosition(uid, xform);
         var mixture = _atmosphere.GetTileMixture(grid, map, indices, true);
+
+        _boom.QueueExplosion(
+            uid,
+            component.ExplosionPrototype,
+            component.TotalIntensity,
+            component.Dropoff,
+            component.MaxTileIntensity
+        );
+
+        ShootProjectilesAtEntites(uid, component, 1.0f, 1.0f);
 
         if (mixture == null)
             return;

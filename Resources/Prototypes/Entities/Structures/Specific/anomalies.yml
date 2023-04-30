@@ -204,6 +204,10 @@
       types:
         Cold: 10
   - type: IceAnomaly
+    supercriticalExplosion: Cryo
+    explosionTotalIntentsity: 600
+    explosionDropoff: 5
+    explosionMaxTileIntensity: 100
     projectilePrototype: ProjectileIcicle
     projectileDamage: # Values are scaled by severity
       types:

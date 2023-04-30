@@ -64,6 +64,7 @@
     types:
       Cold: 5
       Blunt: 2
+      Structural: 20
   tileBreakChance: [0]
   tileBreakIntensity: [0]
   lightColor: Blue
