@@ -65,10 +65,38 @@
   id: lanternextrabright
   description: Blinding.
   components:
+    - type: Sprite
+      sprite: Objects/Tools/lantern.rsi
+      layers:
+      - state: lantern
+        map: [ "enum.FlashVisuals.BaseLayer" ]
+      - state: lantern-on
+        shader: unshaded
+        visible: false
+        map: [ "light" ]
+      - state: flashing
+        map: [ "enum.FlashVisuals.LightLayer" ]
+        visible: false
     - type: PointLight
       enabled: false
       radius: 5
       energy: 10
       color: "#FFC458"
     - type: Flash
-      uses: 15
+    - type: LimitedCharges
+      maxCharges: 15
+      charges: 15
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 0 # melee weapon to allow flashing individual targets
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.FlashVisuals.Burnt:
+          enum.FlashVisuals.BaseLayer:
+            True: {state: burnt}
+        enum.FlashVisuals.Flashing:
+          enum.FlashVisuals.LightLayer:
+            True: {visible: true}
+            False: {visible: false}
