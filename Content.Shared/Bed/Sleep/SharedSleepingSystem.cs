@@ -1,20 +1,21 @@
-using Content.Shared.Eye.Blinding;
 using Content.Shared.Speech;
 using Content.Shared.Actions;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Eye.Blinding.Systems;
 
 namespace Content.Server.Bed.Sleep
 {
     public abstract class SharedSleepingSystem : EntitySystem
     {
-        [Dependency] private readonly SharedBlindingSystem _blindingSystem = default!;
+        [Dependency] private readonly BlindableSystem _blindableSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SleepingComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<SleepingComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<SleepingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<SleepingComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+            SubscribeLocalEvent<SleepingComponent, CanSeeAttemptEvent>(OnSeeAttempt);
             SubscribeLocalEvent<SleepingComponent, EntityUnpausedEvent>(OnSleepUnpaused);
         }
 
@@ -24,23 +25,29 @@ namespace Content.Server.Bed.Sleep
             Dirty(component);
         }
 
-        private void OnInit(EntityUid uid, SleepingComponent component, ComponentInit args)
+        private void OnStartup(EntityUid uid, SleepingComponent component, ComponentStartup args)
         {
             var ev = new SleepStateChangedEvent(true);
             RaiseLocalEvent(uid, ev);
-            _blindingSystem.AdjustBlindSources(uid, 1);
+            _blindableSystem.UpdateIsBlind(uid);
         }
 
         private void OnShutdown(EntityUid uid, SleepingComponent component, ComponentShutdown args)
         {
             var ev = new SleepStateChangedEvent(false);
             RaiseLocalEvent(uid, ev);
-            _blindingSystem.AdjustBlindSources(uid, -1);
+            _blindableSystem.UpdateIsBlind(uid);
         }
 
         private void OnSpeakAttempt(EntityUid uid, SleepingComponent component, SpeakAttemptEvent args)
         {
             args.Cancel();
+        }
+
+        private void OnSeeAttempt(EntityUid uid, SleepingComponent component, CanSeeAttemptEvent args)
+        {
+            if (component.LifeStage <= ComponentLifeStage.Running)
+                args.Cancel();
         }
     }
 }
