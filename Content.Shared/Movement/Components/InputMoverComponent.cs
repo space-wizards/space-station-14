@@ -1,5 +1,6 @@
 using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Components
@@ -61,8 +62,8 @@ namespace Content.Shared.Movement.Components
         /// <summary>
         /// If we traverse on / off a grid then set a timer to update our relative inputs.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float LerpAccumulator;
+        [ViewVariables(VVAccess.ReadWrite), DataField("lerpTarget", customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan LerpTarget;
 
         public const float LerpTime = 1.0f;
 
