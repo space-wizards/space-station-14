@@ -1,3 +1,41 @@
+- type: weightedRandom
+  id: RandomFillStrangePill
+  weights:
+    # Elements
+    Aluminium: 1
+    Carbon: 1
+    Chlorine: 1
+    Copper: 1
+    Fluorine: 1
+    Hydrogen: 1
+    Iodine: 1
+    Lithium: 1
+    Mercury: 1
+    Potassium: 1
+    Phosphorus: 1
+    Radium: 1
+    Silicon: 1
+    Sulfur: 1
+    Sodium: 1
+    # Medicines
+    Ipecac: 3
+    Omnizine: 2
+    Tricordrazine: 3
+    # Narcotics
+    Desoxyephedrine: 3
+    Ephedrine: 3
+    SpaceDrugs: 5
+    Nocturine: 3
+    MuteToxin: 3
+    NorepinephricAcid: 3
+    # Toxins
+    ChloralHydrate: 3
+    Mold: 3
+    Pax: 3
+    Toxin: 5
+    
+
+
 - type: entity
   name: strange pill
   parent: Pill
@@ -7,159 +45,11 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
   - type: RandomFillSolution
     solution: food
-    randomlist:
-    # Elements
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Aluminium
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Carbon
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Chlorine
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Copper
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Fluorine
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Hydrogen
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Iodine
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Lithium
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Mercury
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Potassium
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Phosphorus
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Radium
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Silicon
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Sulfur
-          Quantity: 30
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Sodium
-          Quantity: 30
-    # Medicines
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: Ipecac
-          Quantity: 5
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: Omnizine
-          Quantity: 5
-    - weight: 5
-      randreagents:
-        reagents:
-        - ReagentId: Omnizine
-          Quantity: 10
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: Tricordrazine
-          Quantity: 30
-    # Narcotics
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: Desoxyephedrine
-          Quantity: 20
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: Ephedrine
-          Quantity: 18
-    - weight: 15
-      randreagents:
-        reagents:
-        - ReagentId: SpaceDrugs
-          Quantity: 30
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: Nocturine
-          Quantity: 20
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: MuteToxin
-          Quantity: 50
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: NorepinephricAcid
-          Quantity: 50
-    # Toxins
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: ChloralHydrate
-          Quantity: 30
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: Mold
-          Quantity: 5
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: Pax
-          Quantity: 25
-    - weight: 10
-      randreagents:
-        reagents:
-        - ReagentId: Toxin
-          Quantity: 15
+    weightedRandomId: RandomFillStrangePill
+    quantity: 20
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills.rsi
     netsync: false

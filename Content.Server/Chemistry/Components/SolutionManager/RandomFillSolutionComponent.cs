@@ -1,10 +1,10 @@
 using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.Chemistry.Components.SolutionManager;
 
 /// <summary>
-///     Fills a solution container randomly using a weighted list
+///     Fills a solution container randomly using a weighted random prototype
 /// </summary>
 [RegisterComponent, Access(typeof(SolutionRandomFillSystem))]
 public sealed class RandomFillSolutionComponent : Component
@@ -16,24 +16,14 @@ public sealed class RandomFillSolutionComponent : Component
     public string Solution { get; set; } = "default";
 
     /// <summary>
-    ///     List of weights and their respective solutions.
+    ///     Weighted random prototype Id. Used to pick reagent.
     /// </summary>
-    [DataField("randomlist")]
-    public List<RandomSolutionEntry> RandomList = new();
-}
-
-[DataDefinition]
-public struct RandomSolutionEntry
-{
-    /// <summary>
-    ///     Weight for this entry.
-    /// </summary>
-    [DataField("weight")]
-    public float Weight { get; set; }
+    [DataField("weightedRandomId")]
+    public string WeightedRandomId { get; set; } = "default";
 
     /// <summary>
-    ///     Solution to add.
+    ///     Amount of reagent to add.
     /// </summary>
-    [DataField("randreagents")]
-    public Solution RandReagents { get; set; }
+    [DataField("quantity")]
+    public FixedPoint2 Quantity { get; set; } = 0;
 }
