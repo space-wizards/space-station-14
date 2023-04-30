@@ -397,6 +397,20 @@
   components:
   - type: Sprite
     state: nuketoy
+  - type: UseDelay
+    delay: 180.0
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxdistance: 10
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxdistance: 10
 
 - type: entity
   parent: BaseFigurine

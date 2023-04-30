@@ -46889,12 +46889,6 @@ entities:
       - port: Pressed
         uid: 6442
     type: SignalReceiver
-- uid: 6526
-  type: KvassTankFull
-  components:
-  - pos: -7.5,17.5
-    parent: 0
-    type: Transform
 - uid: 6527
   type: CrateHydroponicsSeedsExotic
   components:

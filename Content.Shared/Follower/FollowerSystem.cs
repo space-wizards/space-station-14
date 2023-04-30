@@ -65,8 +65,14 @@ public sealed class FollowerSystem : EntitySystem
     public void StartFollowingEntity(EntityUid follower, EntityUid entity)
     {
         // No recursion for you
-        if (Transform(entity).ParentUid == follower)
-            return;
+        var targetXform = Transform(entity);
+        while (targetXform.ParentUid.IsValid())
+        {
+            if (targetXform.ParentUid == follower)
+                return;
+
+            targetXform = Transform(targetXform.ParentUid);
+        }
 
         var followerComp = EnsureComp<FollowerComponent>(follower);
         followerComp.Following = entity;

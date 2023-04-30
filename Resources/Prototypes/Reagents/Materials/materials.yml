@@ -61,3 +61,11 @@
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
   color: "#32a852"
   price: 0.2
+
+- type: material
+  id: Bananium
+  stackEntity: MaterialBananium1
+  name: materials-bananium
+  icon: { sprite: Objects/Materials/materials.rsi, state: bananium }
+  color: "#32a852"
+  price: 0.2

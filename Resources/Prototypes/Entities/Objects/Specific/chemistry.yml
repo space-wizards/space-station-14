@@ -283,9 +283,7 @@
   - type: Item
     size: 1
     sprite: Objects/Specific/Chemistry/pills.rsi
-  - type: Tag
-    tags:
-      - Pill
+  - type: Pill
   - type: Food
     forceFeedDelay: 1
     transferAmount: null
@@ -304,6 +302,19 @@
     grindableSolutionName: food
   - type: StaticPrice
     price: 0
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   name: pill canister
@@ -327,6 +338,6 @@
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
     whitelist:
-      tags:
-        - Pill
+      components:
+      - Pill
   - type: Dumpable

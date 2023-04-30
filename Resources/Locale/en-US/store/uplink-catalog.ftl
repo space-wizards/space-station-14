@@ -1,6 +1,6 @@
 # Weapons
 uplink-pistol-viper-name = Viper
-uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
+uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Use pistol magazines (.35 auto).
 
 uplink-revolver-python-name = Python
 uplink-revolver-python-desc = A loud and deadly revolver. Uses .45 Magnum.
@@ -105,6 +105,9 @@ uplink-freedom-implanter-desc = Get away from those nasty sec officers with this
 
 uplink-macro-bomb-implanter-name = Macro Bomb Implanter
 uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
+
+uplink-uplink-implanter-name = Uplink Implanter
+uplink-uplink-implanter-desc = Stealthily order equipment without the need for a PDA. Swallow telecrystals to top up the uplink.
 
 # Bundles
 uplink-c20r-bundle-name = C-20r Bundle
