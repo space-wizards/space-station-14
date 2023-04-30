@@ -38,7 +38,7 @@
           - !type:DoActsBehavior
             acts: ["Destruction"]
     - type: StaticPrice
-      price: 1000
+      price: 300
   placement:
     mode: SnapgridCenter
 
@@ -49,9 +49,6 @@
   - type: Thruster
   - type: Machine
     board: ThrusterMachineCircuitboard
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -95,8 +92,9 @@
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    baseThrust: 5000
-    machinePartThrust: ScanningModule
+    baseThrust: 2000
+    thrust: 2000
+    machinePartThrust: Manipulator
   - type: Sprite
     # Listen I'm not the biggest fan of the sprite but it was the most appropriate thing I could find.
     sprite: Structures/Shuttles/gyroscope.rsi
@@ -136,7 +134,8 @@
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    baseThrust: 5000
+    baseThrust: 100
+    thrust: 100
   - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0

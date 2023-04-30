@@ -30,7 +30,7 @@ public sealed class ArtifactAnalyzerComponent : Component
     /// The machine part that modifies analysis duration.
     /// </summary>
     [DataField("machinePartAnalysisDuration", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartAnalysisDuration = "ScanningModule";
+    public string MachinePartAnalysisDuration = "Manipulator";
 
     /// <summary>
     /// The modifier raised to the part rating to determine the duration multiplier.

@@ -1,5 +1,5 @@
 - type: entity
-  parent: ComputerFrame
+  parent: BaseStructureComputer
   id: BaseComputer
   name: computer
   placement:
@@ -56,5 +56,3 @@
     containers:
       board: !type:Container
         ents: []
-  - type: StaticPrice
-    price: 400

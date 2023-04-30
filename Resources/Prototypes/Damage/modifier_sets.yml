@@ -119,6 +119,15 @@
     Shock: 1.2
 
 - type: damageModifierSet
+  id: Arachnid # Don't do too well with high temperatures, venomous (well some kinds anyways) and have an exo-skeleton (so probably harder to stab but easier to... break?)
+  coefficients:
+    Blunt: 1.15
+    Piercing: 1.15
+    Slash: 0.85
+    Heat: 1.25
+    Poison: 0.8
+
+- type: damageModifierSet
   id: Zombie #Blunt resistent and immune to biological threats, but can be hacked apart and burned
   coefficients:
     Blunt: 0.5
