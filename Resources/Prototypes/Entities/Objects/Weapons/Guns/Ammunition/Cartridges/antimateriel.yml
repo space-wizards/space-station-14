@@ -1,14 +1,14 @@
 - type: entity
   parent: BaseCartridge
-  id: CartridgeAntiMaterial
-  name: cartridge (.60 anti-material)
+  id: CartridgeAntiMateriel
+  name: cartridge (.60 anti-materiel)
   components:
   - type: Tag
     tags:
     - Cartridge
-    - CartridgeAntiMaterial
+    - CartridgeAntiMateriel
   - type: CartridgeAmmo
-    proto: BulletAntiMaterial
+    proto: BulletAntiMateriel
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/large_casing.rsi
     layers:

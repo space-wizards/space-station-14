@@ -1,15 +1,15 @@
 - type: entity
   parent: BaseItem
-  id: MagazineBoxAntiMaterial
-  name: ammunition box (.60 anti-material)
+  id: MagazineBoxAntiMateriel
+  name: ammunition box (.60 anti-materiel)
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
     capacity: 30
-    proto: CartridgeAntiMaterial
+    proto: CartridgeAntiMateriel
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/anti_material.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/anti_materiel.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

@@ -1,8 +1,8 @@
 - type: entity
   noSpawn: true
   parent: BaseBulletHighVelocity
-  id: BulletAntiMaterial
-  name: bullet (.60 anti-material)
+  id: BulletAntiMateriel
+  name: bullet (.60 anti-materiel)
   components:
   - type: Projectile
     damage:
