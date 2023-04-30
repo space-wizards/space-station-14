@@ -28,44 +28,10 @@ public sealed class DimensionPotSystem : EntitySystem
     public override void Initialize()
     {
 		base.Initialize();
-        SubscribeLocalEvent<DimensionPotComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<DimensionPotComponent, ComponentRemove>(OnRemoved);
         SubscribeLocalEvent<DimensionPotComponent, GetVerbsEvent<AlternativeVerb>>(AddTogglePortalVerb);
 
         _sawmill = Logger.GetSawmill("dimension_pot");
-    }
-
-    private void OnStartup(EntityUid uid, DimensionPotComponent comp, ComponentStartup args)
-    {
-        comp.PocketDimensionMap = _mapMan.CreateMap();
-        if (!_mapLoader.TryLoad(comp.PocketDimensionMap, comp.PocketDimensionPath, out var roots))
-        {
-            _sawmill.Error($"Failed to load pocket dimension map {comp.PocketDimensionPath}");
-            QueueDel(uid);
-            return;
-        }
-
-        if (TryComp<GravityComponent>(_mapMan.GetMapEntityId(comp.PocketDimensionMap), out var gravity))
-            gravity.Enabled = true;
-
-        // find the pocket dimension's first grid and put the portal there
-        foreach (var root in roots)
-        {
-            if (!HasComp<MapGridComponent>(root))
-                continue;
-
-            // spawn the permanent portal into the pocket dimension, now ready to be used
-            var pos = Transform(root).Coordinates;
-            comp.DimensionPortal = Spawn(comp.DimensionPortalPrototype, pos);
-            _sawmill.Info($"Created pocket dimension on grid {root} of map {comp.PocketDimensionMap}");
-
-            // if someone closes your portal you can use the one inside to escape
-            _link.TryLink(uid, comp.DimensionPortal.Value);
-            return;
-        }
-
-        _sawmill.Error($"Pocket dimension {comp.PocketDimensionPath} had no grids!");
-        QueueDel(uid);
     }
 
     private void OnRemoved(EntityUid uid, DimensionPotComponent comp, ComponentRemove args)
@@ -100,6 +66,42 @@ public sealed class DimensionPotSystem : EntitySystem
     /// </summary>
     private void HandleActivation(EntityUid uid, DimensionPotComponent comp, EntityUid user)
     {
+		if (comp.PocketDimensionMap == MapId.Nullspace)
+		{
+			comp.PocketDimensionMap = _mapMan.CreateMap();
+			if (!_mapLoader.TryLoad(comp.PocketDimensionMap, comp.PocketDimensionPath, out var roots))
+			{
+				_sawmill.Error($"Failed to load pocket dimension map {comp.PocketDimensionPath}");
+				QueueDel(uid);
+				return;
+			}
+
+			if (TryComp<GravityComponent>(_mapMan.GetMapEntityId(comp.PocketDimensionMap), out var gravity))
+				gravity.Enabled = true;
+
+			// find the pocket dimension's first grid and put the portal there
+			bool foundGrid = false;
+			foreach (var root in roots)
+			{
+				if (!HasComp<MapGridComponent>(root))
+					continue;
+
+				// spawn the permanent portal into the pocket dimension, now ready to be used
+				var pos = Transform(root).Coordinates;
+				comp.DimensionPortal = Spawn(comp.DimensionPortalPrototype, pos);
+				_sawmill.Info($"Created pocket dimension on grid {root} of map {comp.PocketDimensionMap}");
+
+				// if someone closes your portal you can use the one inside to escape
+				_link.TryLink(uid, comp.DimensionPortal.Value);
+				foundGrid = true;
+			}
+			if (!foundGrid)
+			{
+				_sawmill.Error($"Pocket dimension {comp.PocketDimensionPath} had no grids!");
+				QueueDel(uid);
+				return;
+			}
+		}
         var dimension = comp.DimensionPortal!.Value;
         if (comp.PotPortal != null)
         {
