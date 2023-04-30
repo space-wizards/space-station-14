@@ -16,8 +16,6 @@
   - node: assembly
     entity: AirlockShuttleAssembly
     actions:
-#    - !type:SpriteStateChange
-#      state: assembly # TODO Need assembly sprite
     - !type:SnapToGrid {}
     - !type:SetAnchor {}
     edges:
@@ -132,6 +130,13 @@
       steps:
       - tool: Screwing
         doAfter: 2
+    - to: skeletonGlass
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: ReinforcedGlass
+        amount: 2
+        doAfter: 2
     - to: skeletonWelded
       completed:
       - !type:SpawnPrototype
@@ -154,3 +159,35 @@
       steps:
       - tool: Prying
         doAfter: 5
+
+  - node: skeletonGlass
+    entity: AirlockShuttleAssembly
+    edges:
+    - to: skeletonSilver
+      completed:
+        - !type:SpawnPrototype
+          prototype: SheetRGlass1
+          amount: 2
+      steps:
+      - tool: Prying
+        doAfter: 4
+    - to: airlockGlass
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: airlockGlass
+    entity: AirlockGlassShuttle
+    edges:
+      - to: skeletonGlass
+        conditions:
+          - !type:EntityAnchored {}
+          - !type:DoorWelded {}
+          - !type:AirlockBolted
+            value: false
+          - !type:WirePanel {}
+        steps:
+          - tool: Prying
+            doAfter: 5

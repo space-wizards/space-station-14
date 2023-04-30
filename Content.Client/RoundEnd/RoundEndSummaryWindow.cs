@@ -129,6 +129,7 @@ namespace Content.Client.RoundEnd
                         Sprite = sprite,
                         OverrideDirection = Direction.South,
                         VerticalAlignment = VAlignment.Center,
+                        SetSize = (32, 32),
                         VerticalExpand = true,
                     });
                 }

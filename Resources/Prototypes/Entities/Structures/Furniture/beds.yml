@@ -111,3 +111,14 @@
           MaterialWoodPlank:
             min: 1
             max: 5
+
+- type: entity
+  parent: Bed
+  id: Mattress
+  name: mattress
+  description: Better sleep in that then on the floor i guess.
+  components:
+  - type: Sprite
+    state: mattress
+  - type: Damageable
+    damageModifierSet: Inflatable

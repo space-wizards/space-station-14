@@ -132,12 +132,14 @@ namespace Content.Client.UserInterface.Controls
             AddChild(SpriteView = new SpriteView
             {
                 Scale = (2, 2),
+                SetSize = (DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
             AddChild(HoverSpriteView = new SpriteView
             {
                 Scale = (2, 2),
+                SetSize = (DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 

@@ -223,13 +223,15 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (gun.NextFire > curTime)
             return;
 
+        var fireRate = TimeSpan.FromSeconds(1f / gun.FireRate);
+
         // First shot
-        if (gun.ShotCounter == 0 && gun.NextFire < curTime)
+        // Previously we checked shotcounter but in some cases all the bullets got dumped at once
+        if (gun.NextFire < curTime - fireRate)
             gun.NextFire = curTime;
 
         var shots = 0;
         var lastFire = gun.NextFire;
-        var fireRate = TimeSpan.FromSeconds(1f / gun.FireRate);
 
         while (gun.NextFire <= curTime)
         {
