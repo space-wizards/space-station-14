@@ -1,9 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Janitors discovered the ability to put paper in trash bags!, type: Add}
-  id: 3088
-  time: '2023-02-28T21:00:39.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Walls and construction now properly cancel out of a doafter., type: Fix}
@@ -2883,3 +2878,8 @@ Entries:
   - {message: Remove kvass., type: Remove}
   id: 3587
   time: '2023-04-30T07:16:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Flares no longer flicker., type: Tweak}
+  id: 3588
+  time: '2023-04-30T17:56:17.0000000+00:00'
