@@ -36,5 +36,5 @@ reagent-name-allicin = аллицин
 reagent-desc-allicin = Сероорганическое соединение, содержащееся в растениях-аллиумах, таких, как чеснок, лук и других.
 reagent-name-pax = пакс
 reagent-desc-pax = Психиатрический препарат, который не позволяет употребившему причинять вред кому-либо напрямую.
-reagent-name-honk = honk
-reagent-desc-honk = A toxin found in bananium. Causes severe honking and internal bleeding, may also cause the patient to mutate.
+reagent-name-honk = хонк
+reagent-desc-honk = Токсин, содержащийся в бананиуме. Вызывает обильное хонканье и внутреннее кровотечение, также может вызвать мутацию употребившего.

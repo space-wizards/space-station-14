@@ -1,6 +1,6 @@
 ent-AltarBase = алтарь
     .desc = Алтарь богов.
-ent-AltarNanotrasen = алтарь нанотрейзен
+ent-AltarNanotrasen = алтарь Nanotrasen
     .desc = { ent-AltarBase.desc }
 ent-AltarChaos = алтарь хаоса
     .desc = { ent-AltarNanotrasen.desc }
@@ -36,5 +36,5 @@ ent-AltarHeaven = небесный алтарь
     .desc = { ent-AltarBase.desc }
 ent-AltarFangs = клыкастый алтарь
     .desc = { ent-AltarHeaven.desc }
-ent-AltarBananium = honkmother altar
-    .desc = A bananium altar dedicated to the honkmother.
+ent-AltarBananium = алтарь Хонкоматери
+    .desc = Бананиумовый алтарь, посвященный Хонкоматери.

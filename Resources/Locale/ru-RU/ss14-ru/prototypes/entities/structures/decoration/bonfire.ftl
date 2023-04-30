@@ -1,4 +1,4 @@
-ent-Bonfire = bonfire
-    .desc = What can be better then late evening under the sky with guitar and friends.
-ent-LegionnaireBonfire = legionnaire bonfire
-    .desc = There, in the land of lava and ash, place to to cook marshmallow and potato.
+ent-Bonfire = костёр
+    .desc = Что может быть лучше позднего вечера под открытым небом с гитарой и друзьями.
+ent-LegionnaireBonfire = легионерский костёр
+    .desc = Здесь, в мире лавы и пепла, есть место для готовки зефира и картофеля.

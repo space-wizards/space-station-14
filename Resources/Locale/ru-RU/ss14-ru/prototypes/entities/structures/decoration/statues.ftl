@@ -4,5 +4,5 @@ ent-StatueVenusRed = статуя непорочной девы
 ent-StatueVenusBlue = статуя непорочной девы
     .desc = Древняя мраморная статуя. Она изображена с косой до пола и с синим ящиком для инструментов.
     .suffix = Синий
-ent-StatueBananiumClown = bananium savior statue
-    .desc = A bananium statue. It portrays the return of the savior who will rise up and lead the clowns to the great honk.
+ent-StatueBananiumClown = бананиумовая статуя спасителя
+    .desc = Бананиумовая статуя. Она символизирует пришествие спасителя, который восстанет и поведёт клоунов к великому хонку.

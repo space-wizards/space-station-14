@@ -12,5 +12,5 @@ ent-GoldDoor = золотая дверь
     .desc = Дверь, куда она ведет?
 ent-SilverDoor = серебряная дверь
     .desc = Дверь, куда она ведет?
-ent-BananiumDoor = bananium door
-    .desc = A door, where will it lead?
+ent-BananiumDoor = бананиумовая дверь
+    .desc = Дверь, куда она ведет?
