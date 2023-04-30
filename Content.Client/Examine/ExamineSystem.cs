@@ -207,6 +207,7 @@ namespace Content.Client.Examine
                 hBox.AddChild(new SpriteView
                 {
                     Sprite = sprite, OverrideDirection = Direction.South,
+                    SetSize = (32, 32),
                     Margin = new Thickness(2, 0, 2, 0),
                 });
             }
