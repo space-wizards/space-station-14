@@ -52,7 +52,7 @@
         </BoxContainer>
 
         <!-- Footer -->
-        <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" Name="TraitorFooter">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'store-ui-traitor-flavor'}" StyleClasses="WindowFooterText" />

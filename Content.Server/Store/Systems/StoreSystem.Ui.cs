@@ -1,5 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
+using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Server.UserInterface;
@@ -94,7 +95,9 @@ public sealed partial class StoreSystem
         // TODO: if multiple users are supposed to be able to interact with a single BUI & see different
         // stores/listings, this needs to use session specific BUI states.
 
-        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency);
+        // only tell operatives to lock their uplink if it can be locked
+        var showFooter = HasComp<RingerUplinkComponent>(store);
+        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter);
         _ui.SetUiState(ui, state);
     }
 
