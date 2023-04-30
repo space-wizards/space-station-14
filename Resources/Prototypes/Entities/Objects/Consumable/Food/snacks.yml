@@ -378,7 +378,7 @@
   components:
   - type: FlavorProfile
     flavors:
-    - bee
+    - jellybeans
   - type: Sprite
     state: jelly-beans
   - type: Item
