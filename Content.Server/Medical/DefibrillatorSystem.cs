@@ -164,7 +164,13 @@ public sealed class DefibrillatorSystem : EntitySystem
 
         _audio.PlayPvs(component.ChargeSound, uid);
         return _doAfter.TryStartDoAfter(new DoAfterArgs(user, component.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
-            uid, target, uid));
+            uid, target, uid)
+            {
+                BlockDuplicate = true,
+                BreakOnUserMove = true,
+                BreakOnHandChange = true,
+                BreakOnTargetMove = true,
+            });
     }
 
     public void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent? component = null, MobStateComponent? mob = null, MobThresholdsComponent? thresholds = null)
