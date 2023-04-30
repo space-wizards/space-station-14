@@ -1,4 +1,5 @@
 ﻿using Content.Server.Atmos.Miasma;
+using Content.Server.Chat.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Electrocution;
 using Content.Server.EUI;
@@ -27,20 +28,21 @@ namespace Content.Server.Medical;
 /// </summary>
 public sealed class DefibrillatorSystem : EntitySystem
 {
-    [Robust.Shared.IoC.Dependency] private readonly IGameTiming _timing = default!;
-    [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Robust.Shared.IoC.Dependency] private readonly DamageableSystem _damageable = default!;
-    [Robust.Shared.IoC.Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Robust.Shared.IoC.Dependency] private readonly ElectrocutionSystem _electrocution = default!;
-    [Robust.Shared.IoC.Dependency] private readonly EuiManager _euiManager = default!;
-    [Robust.Shared.IoC.Dependency] private readonly MiasmaSystem _miasma = default!;
-    [Robust.Shared.IoC.Dependency] private readonly MobStateSystem _mobState = default!;
-    [Robust.Shared.IoC.Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-    [Robust.Shared.IoC.Dependency] private readonly PopupSystem _popup = default!;
-    [Robust.Shared.IoC.Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Robust.Shared.IoC.Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Robust.Shared.IoC.Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Robust.Shared.IoC.Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly ChatSystem _chatManager = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
+    [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly MiasmaSystem _miasma = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -211,23 +213,26 @@ public sealed class DefibrillatorSystem : EntitySystem
         _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
         _mobThreshold.SetAllowRevives(target, false, thresholds);
 
+        IPlayerSession? session = null;
         if (TryComp<MindComponent>(target, out var mindComp) &&
             mindComp.Mind?.UserId != null &&
-            _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var session))
+            _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out session))
         {
             // notify them they're being revived.
             if (mindComp.Mind.CurrentEntity != target)
             {
+                _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
+                    InGameICChatType.Speak, true, true);
                 _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
             }
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("defibrillator-no-mind-fail"), uid, user);
-            return;
+            _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-no-mind"),
+                InGameICChatType.Speak, true, true);
         }
 
-        var sound = _mobState.IsAlive(target, mob)
+        var sound = _mobState.IsAlive(target, mob) && session != null
             ? component.SuccessSound
             : component.FailureSound;
         _audio.PlayPvs(sound, uid);
