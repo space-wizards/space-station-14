@@ -868,7 +868,7 @@
 - type: reaction
   id: TheMartinez
   reactants:
-	Cola:
+    Cola:
       amount: 2
     Vodka:
       amount: 2
