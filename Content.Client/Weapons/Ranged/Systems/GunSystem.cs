@@ -78,7 +78,6 @@ public sealed partial class GunSystem : SharedGunSystem
         _overlayManager.AddOverlay(new GunCrosshairOverlay(
             EntityManager,
             _eyeManager,
-            Timing,
             _inputManager,
             _player,
             _protoManager,
