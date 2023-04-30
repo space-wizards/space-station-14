@@ -1,5 +1,4 @@
 using Content.Shared.Hands.Components;
-using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Toggleable;
 

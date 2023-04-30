@@ -3,7 +3,7 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
 using System.Linq;
-using static Robust.Shared.GameObjects.SharedSpriteComponent;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.AirlockPainter
 {
@@ -28,7 +28,7 @@ namespace Content.Client.AirlockPainter
                     continue;
                 }
 
-                RSIResource doorRsi = _resourceCache.GetResource<RSIResource>(TextureRoot / new ResPath(iconPath));
+                RSIResource doorRsi = _resourceCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / new ResPath(iconPath));
                 if (!doorRsi.RSI.TryGetState("closed", out var icon))
                 {
                     Entries.Add(new AirlockPainterEntry(style, null));
