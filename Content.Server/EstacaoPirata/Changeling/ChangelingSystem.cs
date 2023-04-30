@@ -10,10 +10,12 @@ using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Robust.Shared.Prototypes;
 using Content.Server.Actions;
+using Content.Server.Changeling.EntitySystems;
 
 public sealed class ChangelingSystem : EntitySystem
 {
     [Dependency] private readonly ChangelingShopSystem _changShopSystem = default!;
+    [Dependency] private readonly AbsorbSystem _absorbSystem = default!;
     //[Dependency] private readonly SharedActionsSystem _actionSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
@@ -21,8 +23,7 @@ public sealed class ChangelingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
 
-
-
+    
     
     public override void Initialize()
     {
@@ -33,7 +34,11 @@ public sealed class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, InstantActionEvent>(OnActionPeformed); // pra quando usar acao
 
         SubscribeLocalEvent<ChangelingComponent, ChangelingShopActionEvent>(OnShop); // pra abrir o shop
+
+        // Initialize abilities
     }
+
+    
     private void OnShop(EntityUid uid, ChangelingComponent component, ChangelingShopActionEvent args)
     {
         if (!TryComp<StoreComponent>(uid, out var store))
@@ -46,7 +51,7 @@ public sealed class ChangelingSystem : EntitySystem
         //update the icon
         //ChangeEssenceAmount(uid, 0, component);
 
-        var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("ChangelingShop"));
+        var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
         _action.AddAction(uid, shopaction, null);
     }
 

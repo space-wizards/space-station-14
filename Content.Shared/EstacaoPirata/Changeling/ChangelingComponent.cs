@@ -38,7 +38,31 @@ public sealed class ChangelingComponent : Component
     /// Chemical amount limit
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("chemicalRegenCap")]
-    public int ChemicalRegenCap = 75;
+    public float ChemicalRegenCap = 75;
+
+    /// <summary>
+    /// DNA strands amount limit
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("DNAStrandCap")]
+    public int DNAStrandCap = 7;
+
+    /// <summary>
+    /// DNA Strands balance
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("DNAStrandBalance")]
+    public int DNAStrandBalance = 0;
+
+    /// <summary>
+    /// Chemicals balance
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("chemicalBalance")]
+    public int ChemicalBalance = 0;
+
+    /// <summary>
+    /// Points balace
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("pointBalance")]
+    public int PointBalance = 0;
 
     #endregion
 
@@ -46,11 +70,27 @@ public sealed class ChangelingComponent : Component
         #region Evolution Menu
 
         #endregion
-        #region Absorb DNA
+        #region Absorb DNA Sting
+
+    /// <summary>
+    /// DNA Sting cost in chemicals
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("DNAStingCost")]
+    public int DNAStingCost = 25;
         
         #endregion
         #region Arm Blade
-        
+    /// <summary>
+    /// Arm blade cost in chemicals
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("armBladeCost")]
+    public int ArmBladeCost = 25;
+
+    /// <summary>
+    /// Arm blade cost in points
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("armBladeBuyCost")]
+    public int ArmBladeBuyCost = 2;
         #endregion
     #endregion
 
