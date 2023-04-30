@@ -156,14 +156,6 @@
   name: uranium ore
   suffix: Full
   components:
-  - type: Food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - reagentId: Uranium
-          quantity: 8
   - type: Stack
     stackType: UraniumOre
   - type: Sprite
