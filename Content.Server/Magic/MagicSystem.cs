@@ -3,6 +3,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Doors.Systems;
+using Content.Server.Magic.Components;
 using Content.Server.Magic.Events;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
@@ -72,7 +73,7 @@ public sealed class MagicSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        _actionsSystem.AddActions(args.Args.User, component.Spells, uid);
+        _actionsSystem.AddActions(args.Args.User, component.Spells, component.LearnPermanently ? null : uid);
         args.Handled = true;
     }
 
