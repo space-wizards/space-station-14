@@ -30,6 +30,7 @@
     size: 50
   - type: ItemCooldown
   - type: MultiHandedItem
+  - type: Speech
   - type: Defibrillator
     zapHeal:
       types:
