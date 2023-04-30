@@ -27,20 +27,20 @@ namespace Content.Server.Medical;
 /// </summary>
 public sealed class DefibrillatorSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
-    [Dependency] private readonly EuiManager _euiManager = default!;
-    [Dependency] private readonly MiasmaSystem _miasma = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Robust.Shared.IoC.Dependency] private readonly IGameTiming _timing = default!;
+    [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Robust.Shared.IoC.Dependency] private readonly DamageableSystem _damageable = default!;
+    [Robust.Shared.IoC.Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Robust.Shared.IoC.Dependency] private readonly ElectrocutionSystem _electrocution = default!;
+    [Robust.Shared.IoC.Dependency] private readonly EuiManager _euiManager = default!;
+    [Robust.Shared.IoC.Dependency] private readonly MiasmaSystem _miasma = default!;
+    [Robust.Shared.IoC.Dependency] private readonly MobStateSystem _mobState = default!;
+    [Robust.Shared.IoC.Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
+    [Robust.Shared.IoC.Dependency] private readonly PopupSystem _popup = default!;
+    [Robust.Shared.IoC.Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Robust.Shared.IoC.Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -114,6 +114,9 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (component.Enabled)
             return false;
 
+        if (_powerCell.HasActivatableCharge(uid))
+            return false;
+
         component.Enabled = true;
         _appearance.SetData(uid, ToggleVisuals.Toggled, true);
         _audio.PlayPvs(component.PowerOnSound, uid);
@@ -139,7 +142,13 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        if (!component.Enabled || !component.CooldownEnded)
+        if (!component.Enabled)
+        {
+            _popup.PopupEntity(Loc.GetString("defibrillator-not-on"), uid, user);
+            return false;
+        }
+
+        if (!component.CooldownEnded)
             return false;
 
         if (!HasComp<MobStateComponent>(target) || _miasma.IsRotting(target))
