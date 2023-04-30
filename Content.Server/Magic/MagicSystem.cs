@@ -166,12 +166,14 @@ public sealed class MagicSystem : EntitySystem
         {
             // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
             var mapPos = pos.ToMap(EntityManager);
-            EntityCoordinates spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
+            var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
                 ? pos.WithEntityId(grid.Owner, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
             var ent = Spawn(ev.Prototype, spawnCoords);
-            _gunSystem.ShootProjectile(ent, ev.Target.Position - mapPos.Position, userVelocity, ev.Performer);
+            var direction = ev.Target.ToMapPos(EntityManager, _transformSystem) -
+                            spawnCoords.ToMapPos(EntityManager, _transformSystem);
+            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer);
         }
     }
 
