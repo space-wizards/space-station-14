@@ -2202,6 +2202,7 @@
         - ReagentId: CapsaicinOil
           Quantity: 5
 
+
 - type: entity
   parent: DrinkGlassBase
   id: DrinkKvassGlass

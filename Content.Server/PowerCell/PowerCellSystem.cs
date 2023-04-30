@@ -194,6 +194,15 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     #endregion
 
+    public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        component.Enabled = enabled;
+        component.NextUpdateTime = _timing.CurTime;
+    }
+
     /// <summary>
     /// Returns whether the entity has a slotted battery and charge for the requested action.
     /// </summary>
