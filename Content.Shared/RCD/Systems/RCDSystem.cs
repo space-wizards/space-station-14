@@ -76,7 +76,7 @@ public sealed class RCDSystem : EntitySystem
             return;
 
         var gridId = location.GetGridUid(EntityManager);
-        if (!HasComp<MapGridComponent>(gridId.Value))
+        if (!HasComp<MapGridComponent>(gridId))
         {
             location = location.AlignWithClosestGridTile();
             gridId = location.GetGridUid(EntityManager);
@@ -113,7 +113,7 @@ public sealed class RCDSystem : EntitySystem
         var location = args.Location;
 
         var gridId = location.GetGridUid(EntityManager);
-        if (!HasComp<MapGridComponent>(gridId.Value))
+        if (!HasComp<MapGridComponent>(gridId))
         {
             location = location.AlignWithClosestGridTile();
             gridId = location.GetGridUid(EntityManager);
