@@ -46,9 +46,6 @@ technologies-security-basic-description = Basic equipment for security personnel
 technologies-forensics-equipment = Forensics Equipment
 technologies-forensics-equipment-description = Cause of death: blunt force trauma to the head. Murder weapon: Toolbox.
 
-technologies-speed-loader = Speed Loaders
-technologies-speed-loader-description = Always be the quickest on the draw in any fight.
-
 technologies-ballistic-magazines = Ballistic Magazines
 technologies-ballistic-magazines-description = Discover the wonders of not having to find a recharger for your gun.
 
@@ -72,12 +69,6 @@ technologies-experimental-energy-weaponry-description = What if lasers could go 
 
 technologies-basic-armor = Basic Armor
 technologies-basic-armor-description = Stay safe out there!
-
-technologies-riot-armor = Riot Armor
-technologies-riot-armor-description = For when the greytide needs containing.
-
-technologies-specialized-armor = Specialized Armor
-technologies-specialized-armor-description = Types of armor specifically designed for certain threats.
 
 technologies-spaceproof-armor = Spaceproof Armor
 technologies-spaceproof-description = Not even the empty void of space will stop you from your pursuit of justice.

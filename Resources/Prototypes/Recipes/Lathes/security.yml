@@ -21,6 +21,21 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: ForensicPad
+  result: ForensicPad
+  completetime: 4
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: ForensicScanner
+  result: ForensicScanner
+  completetime: 5
+  materials:
+    Plastic: 250
+    Glass: 250
+
+- type: latheRecipe
   id: ClothingEyesGlassesSecurity
   result: ClothingEyesGlassesSecurity
   completetime: 2
@@ -400,52 +415,12 @@
     Plastic: 300
 
 - type: latheRecipe
-  id: ClothingHeadHelmetOld
-  result: ClothingHeadHelmetOld
+  id: ClothingHeadHelmetHelmetOld
+  result: ClothingHeadHelmetHelmetOld
   completetime: 5
   materials:
     Steel: 300
     Plastic: 300
-
-- type: latheRecipe
-  id: ClothingHeadHelmetRiot
-  result: ClothingHeadHelmetRiot
-  completetime: 5
-  materials:
-    Steel: 300
-    Plastic: 300
-
-- type: latheRecipe
-  id: ClothingOuterArmorRiot
-  result: ClothingOuterArmorRiot
-  completetime: 5
-  materials:
-    Steel: 600
-    Plastic: 600
-
-- type: latheRecipe
-  id: ClothingOuterArmorReflective
-  result: ClothingOuterArmorReflective
-  completetime: 5
-  materials:
-    Steel: 600
-    Glass: 600
-
-- type: latheRecipe
-  id: ClothingOuterArmorBulletproof
-  result: ClothingOuterArmorBulletproof
-  completetime: 5
-  materials:
-    Steel: 600
-    Durathread: 600
-
-- type: latheRecipe
-  id: ClothingHandsGlovesCombat
-  result: ClothingHandsGlovesCombat
-  completetime: 5
-  materials:
-    Cloth: 300
-    Durathread: 300
 
 - type: latheRecipe
   id: ClothingOuterHardsuitSecurity
