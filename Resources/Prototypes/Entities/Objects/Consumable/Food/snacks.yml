@@ -370,6 +370,21 @@
         - ReagentId: Theobromine
           Quantity: 3
 
+- type: entity
+  id: FoodSnackJellyBeans
+  parent: FoodSnackBase
+  name: jelly beans
+  description: Packet full of rainbow colored jelly beans.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bee
+  - type: Sprite
+    state: jelly-beans
+  - type: Item
+  - type: Food
+    trash: FoodPacketJellyBeansTrash
+
 # Trash
 
 - type: entity
@@ -546,3 +561,13 @@
   components:
   - type: Sprite
     state: mre-wrapper
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketJellyBeansTrash
+  name: empty jelly beans
+  components:
+  - type: Sprite
+    state: jelly-beans-trash
+  - type: Item
