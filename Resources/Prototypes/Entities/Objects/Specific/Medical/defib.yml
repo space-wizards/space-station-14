@@ -2,7 +2,7 @@
   id: Defibrillator
   parent: [ BaseItem, PowerCellSlotMediumItem ]
   name: defibrillator
-  description: CLEAR! zzzzat!
+  description: CLEAR! Zzzzat!
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/defib.rsi
@@ -32,8 +32,8 @@
   - type: MultiHandedItem
   - type: Defibrillator
     zapHeal:
-      groups:
-        Airloss: -50
+      types:
+        Asphyxiation: -40
     zapSound:
       path: /Audio/Items/Defib/defib_zap.ogg
     powerOnSound:

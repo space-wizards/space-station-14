@@ -195,16 +195,15 @@ public sealed class DefibrillatorSystem : EntitySystem
         _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
         _mobThreshold.SetAllowRevives(target, false, thresholds);
 
-        var success = _mobState.IsAlive(target, mob);
-
-        if (success &&
-            TryComp<MindComponent>(target, out var mindComp) &&
+        if (TryComp<MindComponent>(target, out var mindComp) &&
             mindComp.Mind?.UserId != null &&
             _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var session))
         {
             // notify them they're being revived.
             if (mindComp.Mind.CurrentEntity != target)
+            {
                 _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
+            }
         }
         else
         {
@@ -212,7 +211,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             return;
         }
 
-        var sound = success
+        var sound = _mobState.IsAlive(target, mob)
             ? component.SuccessSound
             : component.FailureSound;
         _audio.PlayPvs(sound, uid);
