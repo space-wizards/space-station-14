@@ -1,9 +1,4 @@
 Entries:
-- author: vanx
-  changes:
-  - {message: Added a ghost warp to the singularity, type: Add}
-  id: 3084
-  time: '2023-02-28T20:03:58.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: 'added fake cap gun, can be purchased in clown and mime uplink', type: Add}
@@ -2882,3 +2877,9 @@ Entries:
   - {message: 'Eye damage now darkens the screen, rather than brightening it.', type: Fix}
   id: 3583
   time: '2023-04-30T01:44:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The space dragon event is now less common and starts later in rounds.,
+    type: Tweak}
+  id: 3584
+  time: '2023-04-30T01:51:37.0000000+00:00'
