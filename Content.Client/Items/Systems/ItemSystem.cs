@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Hands;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Containers;
-using static Robust.Shared.GameObjects.SharedSpriteComponent;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Items.Systems;
 
@@ -19,6 +19,20 @@ public sealed class ItemSystem : SharedItemSystem
         base.Initialize();
 
         SubscribeLocalEvent<ItemComponent, GetInhandVisualsEvent>(OnGetVisuals);
+
+        // TODO is this still needed? Shouldn't containers occlude them?
+        SubscribeLocalEvent<SpriteComponent, GotEquippedEvent>(OnEquipped);
+        SubscribeLocalEvent<SpriteComponent, GotUnequippedEvent>(OnUnequipped);
+    }
+
+    private void OnUnequipped(EntityUid uid, SpriteComponent component, GotUnequippedEvent args)
+    {
+        component.Visible = true;
+    }
+
+    private void OnEquipped(EntityUid uid, SpriteComponent component, GotEquippedEvent args)
+    {
+        component.Visible = false;
     }
 
     #region InhandVisuals
@@ -75,7 +89,7 @@ public sealed class ItemSystem : SharedItemSystem
         RSI? rsi = null;
 
         if (item.RsiPath != null)
-            rsi = _resCache.GetResource<RSIResource>(TextureRoot / item.RsiPath).RSI;
+            rsi = _resCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / item.RsiPath).RSI;
         else if (TryComp(uid, out SpriteComponent? sprite))
             rsi = sprite.BaseRSI;
 
