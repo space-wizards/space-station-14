@@ -19,6 +19,7 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -109,16 +110,19 @@ public sealed class PrototypeSaveTest
                 foreach (var prototype in prototypes)
                 {
                     uid = entityMan.SpawnEntity(prototype.ID, testLocation);
-                    server.RunTicks(1);
 
                     // get default prototype data
                     Dictionary<string, MappingDataNode> protoData = new();
                     try
                     {
+                        context.WritingReadingPrototypes = true;
+
                         foreach (var (compType, comp) in prototype.Components)
                         {
-                            protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, context: context));
+                            protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, alwaysWrite: true, context: context));
                         }
+
+                        context.WritingReadingPrototypes = false;
                     }
                     catch (Exception e)
                     {
@@ -140,7 +144,7 @@ public sealed class PrototypeSaveTest
                         MappingDataNode compMapping;
                         try
                         {
-                            compMapping = seriMan.WriteValueAs<MappingDataNode>(compType, component, context: context);
+                            compMapping = seriMan.WriteValueAs<MappingDataNode>(compType, component, alwaysWrite: true, context: context);
                         }
                         catch (Exception e)
                         {
@@ -182,6 +186,7 @@ public sealed class PrototypeSaveTest
         ITypeSerializer<EntityUid, ValueDataNode>
     {
         public SerializationManager.SerializerProvider SerializerProvider { get; }
+        public bool WritingReadingPrototypes { get; set; }
 
         public TestEntityUidContext()
         {
@@ -199,8 +204,7 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            // EntityUids should be nullable and have no initial value.
-            throw new InvalidOperationException("Serializing prototypes should not attempt to write entity Uids");
+            return new ValueDataNode(value.ToString());
         }
 
         EntityUid ITypeReader<EntityUid, ValueDataNode>.Read(ISerializationManager serializationManager,
