@@ -1,10 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Made sound emotes not abhorrent. You can now add some punctuation marks
-      after emotes., type: Tweak}
-  id: 3086
-  time: '2023-02-28T20:13:17.0000000+00:00'
 - author: moonheart08
   changes:
   - {message: Youtool no longer has free utility belts., type: Remove}
@@ -2884,3 +2878,8 @@ Entries:
       etc) draining instantly.', type: Fix}
   id: 3585
   time: '2023-04-30T06:06:45.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Resprited the plating and tech maint tiles., type: Tweak}
+  id: 3586
+  time: '2023-04-30T06:36:12.0000000+00:00'
