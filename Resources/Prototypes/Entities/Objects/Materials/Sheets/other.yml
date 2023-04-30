@@ -150,6 +150,7 @@
   components:
   - type: Material
   - type: Food
+    transferAmount: 10
   - type: PhysicalComposition
     materialComposition:
       Uranium: 100
@@ -178,6 +179,10 @@
         reagents:
         - ReagentId: Uranium
           Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 25
+        - ReagentId: Vitamin
+          Quantity: 15
 
 - type: entity
   parent: SheetUranium

@@ -3,6 +3,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Server.Stack;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
@@ -20,6 +21,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Verbs;
+using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -45,6 +47,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly ReactiveSystem _reaction = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
 
         public override void Initialize()
         {
@@ -227,7 +230,19 @@ namespace Content.Server.Nutrition.EntitySystems
                 _utensilSystem.TryBreak(utensil, args.User);
             }
 
-            if (component.UsesRemaining > 0)
+            if (TryComp<StackComponent>(uid, out var stack)) 
+            {
+              //Not deleting whole stack piece will make troubles with grinder
+              if (stack.Count > 1) 
+              {
+                if (!forceFeed)
+                  args.Repeat = true;
+                _stackSystem.SetCount(uid, stack.Count - 1);
+                _solutionContainerSystem.TryAddSolution(uid, solution, split);
+                return;
+              }
+            }
+            else if (component.UsesRemaining > 0)
             {
                 if (!forceFeed)
                     args.Repeat = true;
