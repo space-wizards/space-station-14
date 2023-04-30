@@ -1,8 +1,7 @@
 - type: entity
-  id: ComputerFrame
+  id: BaseStructureComputer
   parent: BaseStructure
-  name: computer frame
-  description: A computer under construction.
+  abstract: true
   components:
   - type: Physics
     bodyType: Static
@@ -23,9 +22,7 @@
     graph: Computer
     node: frameUnsecured
   - type: Sprite
-    sprite: Structures/Machines/parts.rsi
     drawdepth: Objects
-    state: 0
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -44,7 +41,29 @@
         acts: ["Destruction"]
 
 - type: entity
-  parent: ComputerFrame
+  id: ComputerFrame
+  parent: BaseStructureComputer
+  name: computer frame
+  description: A computer under construction.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/parts.rsi
+    layers:
+    - state: 0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          frameUnsecured: { state: 0 }
+          boardUnsecured: { state: 1 }
+          missingWires: { state: 2 }
+          monitorMissing: { state: 3 }
+          monitorUnsecured: { state: 4 }
+
+- type: entity
+  parent: BaseStructureComputer
   id: ComputerBroken
   name: broken computer
   description: This computer has seen better days.
