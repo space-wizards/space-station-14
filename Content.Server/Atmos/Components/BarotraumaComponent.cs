@@ -40,8 +40,11 @@ namespace Content.Server.Atmos.Components
         [ViewVariables]
         public float LowPressureModifier = 0f;
 
+        /// <summary>
+        /// Whether the entity is immuned to pressure (i.e possess the PressureImmunity component)
+        /// </summary>
         [ViewVariables]
-        public bool Immuned = false;
+        public bool HasImmunity = false;
 
     }
 }

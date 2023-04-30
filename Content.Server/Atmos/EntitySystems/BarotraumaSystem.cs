@@ -26,8 +26,8 @@ namespace Content.Server.Atmos.EntitySystems
         {
             SubscribeLocalEvent<PressureProtectionComponent, GotEquippedEvent>(OnPressureProtectionEquipped);
             SubscribeLocalEvent<PressureProtectionComponent, GotUnequippedEvent>(OnPressureProtectionUnequipped);
-            SubscribeLocalEvent<PressureProtectionComponent, ComponentInit>(OnPressureProtectionInit);
-            SubscribeLocalEvent<PressureProtectionComponent, ComponentRemove>(OnPressureProtectionRemove);
+            SubscribeLocalEvent<PressureProtectionComponent, ComponentInit>(OnUpdateResistance);
+            SubscribeLocalEvent<PressureProtectionComponent, ComponentRemove>(OnUpdateResistance);
 
             SubscribeLocalEvent<PressureImmunityComponent, ComponentInit>(OnPressureImmuneInit);
             SubscribeLocalEvent<PressureImmunityComponent, ComponentRemove>(OnPressureImmuneRemove);
@@ -37,7 +37,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (TryComp<BarotraumaComponent>(uid, out var barotrauma))
             {
-                barotrauma.Immuned = true;
+                barotrauma.HasImmunity = true;
             }
         }
 
@@ -45,19 +45,14 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (TryComp<BarotraumaComponent>(uid, out var barotrauma))
             {
-                barotrauma.Immuned = false;
+                barotrauma.HasImmunity = false;
             }
         }
 
-        private void OnPressureProtectionInit(EntityUid uid, PressureProtectionComponent pressureImmunity, ComponentInit args)
-        {
-            if (TryComp<BarotraumaComponent>(uid, out var barotrauma))
-            {
-                UpdateCachedResistances(uid, barotrauma);
-            }
-        }
-
-        private void OnPressureProtectionRemove(EntityUid uid, PressureProtectionComponent pressureImmunity, ComponentRemove args)
+        /// <summary>
+        /// Generic method for updating resistance on component Lifestage events
+        /// </summary>
+        private void OnUpdateResistance(EntityUid uid, PressureProtectionComponent pressureProtection, EntityEventArgs args)
         {
             if (TryComp<BarotraumaComponent>(uid, out var barotrauma))
             {
@@ -140,7 +135,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         public float GetFeltLowPressure(EntityUid uid, BarotraumaComponent barotrauma, float environmentPressure)
         {
-            if (barotrauma.Immuned)
+            if (barotrauma.HasImmunity)
             {
                 return Atmospherics.OneAtmosphere;
             }
@@ -153,7 +148,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         public float GetFeltHighPressure(EntityUid uid, BarotraumaComponent barotrauma, float environmentPressure)
         {
-            if (barotrauma.Immuned)
+            if (barotrauma.HasImmunity)
             {
                 return Atmospherics.OneAtmosphere;
             }
