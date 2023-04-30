@@ -85,7 +85,7 @@ public sealed class AnomalyComponent : Component
     /// The time at which the next artifact pulse will occur.
     /// </summary>
     [DataField("nextPulseTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan NextPulseTime = TimeSpan.MaxValue;
+    public TimeSpan NextPulseTime = TimeSpan.Zero;
 
     /// <summary>
     /// The minimum interval between pulses.

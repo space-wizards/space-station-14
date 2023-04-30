@@ -15,7 +15,6 @@ public sealed class SolutionPurgeSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SolutionPurgeComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<SolutionPurgeComponent, MapInitEvent>(OnMapInit);
     }
 
     public override void Update(float frameTime)
@@ -38,11 +37,5 @@ public sealed class SolutionPurgeSystem : EntitySystem
     private void OnUnpaused(EntityUid uid, SolutionPurgeComponent comp, ref EntityUnpausedEvent args)
     {
         comp.NextPurgeTime += args.PausedTime;
-    }
-
-    private void OnMapInit(EntityUid uid, SolutionPurgeComponent comp, MapInitEvent args)
-    {
-        if (comp.NextPurgeTime < _timing.CurTime)
-            comp.NextPurgeTime = _timing.CurTime;
     }
 }

@@ -36,17 +36,11 @@ public sealed class SpreaderSystem : EntitySystem
     {
         SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
-        SubscribeLocalEvent<SpreaderGridComponent, MapInitEvent>(OnSpreaderGridMapInit);
 
         SubscribeLocalEvent<SpreaderGridComponent, EntityUnpausedEvent>(OnGridUnpaused);
 
         SetupPrototypes();
         _prototype.PrototypesReloaded += OnPrototypeReload;
-    }
-
-    private void OnSpreaderGridMapInit(EntityUid uid, SpreaderGridComponent component, MapInitEvent args)
-    {
-        component.NextUpdate = _timing.CurTime;
     }
 
     public override void Shutdown()

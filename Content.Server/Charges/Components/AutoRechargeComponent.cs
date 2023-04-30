@@ -21,5 +21,5 @@ public sealed class AutoRechargeComponent : Component
     /// The time when the next charge will be added
     /// </summary>
     [DataField("nextChargeTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan NextChargeTime = TimeSpan.MaxValue;
+    public TimeSpan NextChargeTime;
 }

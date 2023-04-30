@@ -85,6 +85,7 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
         ISerializationManager serializationManager,
         NPCBlackboard source,
         ref NPCBlackboard target,
+        IDependencyCollection dependencies,
         SerializationHookContext hookCtx,
         ISerializationContext? context = null)
     {

@@ -41,6 +41,7 @@ public sealed class StaminaSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<StaminaComponent, EntityUnpausedEvent>(OnStamUnpaused);
         SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StaminaComponent, ComponentGetState>(OnStamGetState);
@@ -49,6 +50,11 @@ public sealed class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
+    }
+
+    private void OnStamUnpaused(EntityUid uid, StaminaComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextUpdate += args.PausedTime;
     }
 
     private void OnStamGetState(EntityUid uid, StaminaComponent component, ref ComponentGetState args)
@@ -206,7 +212,7 @@ public sealed class StaminaSystem : EntitySystem
     {
         if (!args.OurFixture.ID.Equals(CollideFixture)) return;
 
-        TakeStaminaDamage(args.OtherFixture.Body.Owner, component.Damage, source:args.OurFixture.Body.Owner);
+        TakeStaminaDamage(args.OtherEntity, component.Damage, source:args.OurEntity);
     }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)

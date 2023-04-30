@@ -175,7 +175,9 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
         public readonly Dictionary<int, uint> Data = new();
     }
 
-    public void CopyTo(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, ref Dictionary<Vector2i, TileAtmosphere> target, SerializationHookContext hookCtx,
+    public void CopyTo(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, ref Dictionary<Vector2i, TileAtmosphere> target,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx,
         ISerializationContext? context = null)
     {
         target.Clear();
