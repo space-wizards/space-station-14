@@ -179,10 +179,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnRefreshParts(EntityUid uid, EmitterComponent component, RefreshPartsEvent args)
         {
-            var powerUseRating = args.PartRatings[component.MachinePartPowerUse];
             var fireRateRating = args.PartRatings[component.MachinePartFireRate];
-
-            component.PowerUseActive = (int) (component.BasePowerUseActive * MathF.Pow(component.PowerUseMultiplier, powerUseRating - 1));
 
             component.FireInterval = component.BaseFireInterval * MathF.Pow(component.FireRateMultiplier, fireRateRating - 1);
             component.FireBurstDelayMin = component.BaseFireBurstDelayMin * MathF.Pow(component.FireRateMultiplier, fireRateRating - 1);
@@ -192,8 +189,6 @@ namespace Content.Server.Singularity.EntitySystems
         private void OnUpgradeExamine(EntityUid uid, EmitterComponent component, UpgradeExamineEvent args)
         {
             args.AddPercentageUpgrade("emitter-component-upgrade-fire-rate", (float) (component.BaseFireInterval.TotalSeconds / component.FireInterval.TotalSeconds));
-            // TODO: Remove this and use UpgradePowerDrawComponent instead.
-            args.AddPercentageUpgrade("upgrade-power-draw", component.PowerUseActive / (float) component.BasePowerUseActive);
         }
 
         public void SwitchOff(EmitterComponent component)
