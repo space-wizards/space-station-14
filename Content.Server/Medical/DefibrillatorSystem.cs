@@ -168,8 +168,9 @@ public sealed class DefibrillatorSystem : EntitySystem
             {
                 BlockDuplicate = true,
                 BreakOnUserMove = true,
-                BreakOnHandChange = true,
                 BreakOnTargetMove = true,
+                BreakOnHandChange = true,
+                NeedHand = true
             });
     }
 
