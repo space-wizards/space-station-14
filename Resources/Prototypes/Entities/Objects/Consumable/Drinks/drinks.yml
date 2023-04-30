@@ -2201,19 +2201,3 @@
           Quantity: 30
         - ReagentId: CapsaicinOil
           Quantity: 5
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkKvassGlass
-  name: kvass glass
-  description: A cool refreshing drink with a taste of socialism.
-  components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: Kvass
-              Quantity: 30
-    - type: Sprite
-      sprite: Objects/Consumable/Drinks/kvass.rsi
