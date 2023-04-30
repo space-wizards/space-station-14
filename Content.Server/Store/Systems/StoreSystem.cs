@@ -75,7 +75,7 @@ public sealed partial class StoreSystem : EntitySystem
 
         // if the store can be locked, it must be unlocked first before inserting currency
         var user = args.User;
-        if (TryComp<RingerUplinkComponent>(uid, out var uplink) && !uplink.Unlocked)
+        if (TryComp<RingerUplinkComponent>(args.Target, out var uplink) && !uplink.Unlocked)
             return;
 
         args.Handled = TryAddCurrency(GetCurrencyValue(uid, component), args.Target.Value, store);
