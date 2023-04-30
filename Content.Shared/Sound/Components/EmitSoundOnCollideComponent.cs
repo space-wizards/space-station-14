@@ -14,10 +14,9 @@ public sealed class EmitSoundOnCollideComponent : BaseEmitSoundComponent
     [ViewVariables(VVAccess.ReadWrite), DataField("minVelocity")]
     public float MinimumVelocity = 1f;
 
-    // The initial cooldown is mainly just to fix tests.
     /// <summary>
     /// To avoid sound spam add a cooldown to it.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("nextSound", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextSound", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextSound = TimeSpan.FromSeconds(0.2);
 }
