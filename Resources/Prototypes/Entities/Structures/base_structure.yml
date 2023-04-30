@@ -53,8 +53,6 @@
       - MidImpassable
       - LowImpassable
   - type: Anchorable
-  - type: StaticPrice
-    price: 50
 
 - type: Tag
   id: Structure

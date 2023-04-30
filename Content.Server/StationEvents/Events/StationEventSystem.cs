@@ -69,11 +69,15 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : Compon
             return;
 
         AdminLogManager.Add(LogType.EventStarted, LogImpact.High, $"Event started: {ToPrettyString(uid)}");
-        var duration = stationEvent.MaxDuration == null
-            ? stationEvent.Duration
-            : TimeSpan.FromSeconds(RobustRandom.NextDouble(stationEvent.Duration.TotalSeconds,
-                stationEvent.MaxDuration.Value.TotalSeconds));
-        stationEvent.EndTime = _timing.CurTime + duration;
+
+        if (stationEvent.Duration != null)
+        {
+            var duration = stationEvent.MaxDuration == null
+                ? stationEvent.Duration
+                : TimeSpan.FromSeconds(RobustRandom.NextDouble(stationEvent.Duration.Value.TotalSeconds,
+                    stationEvent.MaxDuration.Value.TotalSeconds));
+            stationEvent.EndTime = _timing.CurTime + duration;
+        }
     }
 
     /// <inheritdoc/>
@@ -101,6 +105,8 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : Compon
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {
+        base.Update(frameTime);
+
         var query = EntityQueryEnumerator<StationEventComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var stationEvent, out var ruleData))
         {
@@ -111,7 +117,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : Compon
             {
                 GameTicker.StartGameRule(uid, ruleData);
             }
-            else if (GameTicker.IsGameRuleActive(uid, ruleData) && _timing.CurTime >= stationEvent.EndTime)
+            else if (stationEvent.EndTime != null && _timing.CurTime >= stationEvent.EndTime && GameTicker.IsGameRuleActive(uid, ruleData))
             {
                 GameTicker.EndGameRule(uid, ruleData);
             }

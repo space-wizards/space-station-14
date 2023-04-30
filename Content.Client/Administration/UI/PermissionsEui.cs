@@ -45,6 +45,7 @@ namespace Content.Client.Administration.UI
         {
             base.Closed();
 
+            SendMessage(new CloseEuiMessage());
             CloseEverything();
         }
 
