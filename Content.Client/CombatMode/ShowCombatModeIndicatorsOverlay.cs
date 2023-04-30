@@ -8,6 +8,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Utility;
+using Robust.Shared.Map;
 
 namespace Content.Client.CombatMode
 {
@@ -63,7 +64,7 @@ namespace Content.Client.CombatMode
             var mouseScreen = _inputManager.MouseScreenPosition;
             var mousePosMap = _eye.ScreenToMap(mouseScreen);
 
-            if (mousePosMap.Position == (Vector2)(0, 0))
+            if (mousePosMap.MapId == MapId.Nullspace)
                 return;
 
             EntityUid? handEntity = _entMan.System<HandsSystem>().GetActiveHandEntity();
