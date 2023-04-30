@@ -71,6 +71,7 @@ namespace Content.Client.Physics.Controllers
             var mobMoverQuery = GetEntityQuery<MobMoverComponent>();
             var pullableQuery = GetEntityQuery<SharedPullableComponent>();
             var physicsQuery = GetEntityQuery<PhysicsComponent>();
+            var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
 
             if (!moverQuery.TryGetComponent(player, out var mover) ||
                 !xformQuery.TryGetComponent(player, out var xform))
@@ -134,7 +135,19 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(player, mover, physicsUid, body, xformMover, frameTime, xformQuery, moverQuery, mobMoverQuery, relayTargetQuery, pullableQuery);
+            HandleMobMovement(
+                player,
+                mover,
+                physicsUid,
+                body,
+                xformMover,
+                frameTime,
+                xformQuery,
+                moverQuery,
+                mobMoverQuery,
+                relayTargetQuery,
+                pullableQuery,
+                modifierQuery);
         }
 
         protected override bool CanSound()

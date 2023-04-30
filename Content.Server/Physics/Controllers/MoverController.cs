@@ -69,6 +69,7 @@ namespace Content.Server.Physics.Controllers
             var mobMoverQuery = GetEntityQuery<MobMoverComponent>();
             var pullableQuery = GetEntityQuery<SharedPullableComponent>();
             var inputQueryEnumerator = AllEntityQuery<InputMoverComponent>();
+            var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
 
             while (inputQueryEnumerator.MoveNext(out var uid, out var mover))
             {
@@ -100,7 +101,18 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                HandleMobMovement(uid, mover, physicsUid, body, xformMover, frameTime, xformQuery, moverQuery, mobMoverQuery, relayTargetQuery, pullableQuery);
+                HandleMobMovement(uid,
+                    mover,
+                    physicsUid,
+                    body,
+                    xformMover,
+                    frameTime,
+                    xformQuery,
+                    moverQuery,
+                    mobMoverQuery,
+                    relayTargetQuery,
+                    pullableQuery,
+                    modifierQuery);
             }
 
             HandleShuttleMovement(frameTime);

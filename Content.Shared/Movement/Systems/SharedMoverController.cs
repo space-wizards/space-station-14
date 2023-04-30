@@ -110,7 +110,8 @@ namespace Content.Shared.Movement.Systems
             EntityQuery<InputMoverComponent> moverQuery,
             EntityQuery<MobMoverComponent> mobMoverQuery,
             EntityQuery<MovementRelayTargetComponent> relayTargetQuery,
-            EntityQuery<SharedPullableComponent> pullableQuery)
+            EntityQuery<SharedPullableComponent> pullableQuery,
+            EntityQuery<MovementSpeedModifierComponent> modifierQuery)
         {
             bool canMove = mover.CanMove;
             if (relayTargetQuery.TryGetComponent(uid, out var relayTarget) && relayTarget.Entities.Count > 0)
@@ -208,7 +209,7 @@ namespace Content.Shared.Movement.Systems
             // Regular movement.
             // Target velocity.
             // This is relative to the map / grid we're on.
-            var moveSpeedComponent = CompOrNull<MovementSpeedModifierComponent>(uid);
+            var moveSpeedComponent = modifierQuery.CompOrNull(uid);
 
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
