@@ -1,14 +1,4 @@
 Entries:
-- author: GoodWheatley
-  changes:
-  - {message: 'After the Hypopen Incident of 2556, The recipe for Lexorin now requires
-      Heartbreaker Toxin instead of Ammonia.', type: Tweak}
-  - {message: You need to heat up the chemicals for Mindbreaker Toxin to get them
-      to react., type: Tweak}
-  - {message: 'Due to budget cuts, the Syndicate is now offering an inferior version
-      of the hypopen that only holds 10 units of chemicals.', type: Tweak}
-  id: 3083
-  time: '2023-02-28T20:02:18.0000000+00:00'
 - author: vanx
   changes:
   - {message: Added a ghost warp to the singularity, type: Add}
@@ -2887,3 +2877,8 @@ Entries:
       cables and lattices takes slightly longer., type: Tweak}
   id: 3582
   time: '2023-04-29T21:50:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Eye damage now darkens the screen, rather than brightening it.', type: Fix}
+  id: 3583
+  time: '2023-04-30T01:44:02.0000000+00:00'
