@@ -6386,12 +6386,6 @@ entities:
   - pos: 4.5,16.5
     parent: 0
     type: Transform
-- uid: 588
-  type: KvassTankFull
-  components:
-  - pos: 0.5,16.5
-    parent: 0
-    type: Transform
 - uid: 589
   type: Grille
   components:
