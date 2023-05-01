@@ -1,9 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: Salvage magnet shows remaining cooldown time when examined., type: Tweak}
-  id: 3092
-  time: '2023-03-03T16:25:43.0000000+00:00'
 - author: Nylux
   changes:
   - {message: Changed the name of planet-related tiles to be more readable., type: Tweak}
@@ -2884,3 +2879,8 @@ Entries:
     type: Tweak}
   id: 3591
   time: '2023-05-01T06:30:09.0000000+00:00'
+- author: MagnusCrowe
+  changes:
+  - {message: Added the paramedic role, type: Add}
+  id: 3592
+  time: '2023-05-01T07:13:57.0000000+00:00'
