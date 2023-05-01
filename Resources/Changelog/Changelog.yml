@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Wizard bedsheet sprite animation has been fixed., type: Fix}
-  id: 3090
-  time: '2023-03-01T13:31:04.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Lava is now clickable., type: Tweak}
@@ -2880,3 +2875,9 @@ Entries:
   - {message: Arachnids can now wear glasses.... somehow, type: Tweak}
   id: 3589
   time: '2023-05-01T01:05:25.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Changed the side sprites of tactical vests to fix weird looking sprites
+      when wearing a rig and bandolier, type: Tweak}
+  id: 3590
+  time: '2023-05-01T02:16:29.0000000+00:00'
