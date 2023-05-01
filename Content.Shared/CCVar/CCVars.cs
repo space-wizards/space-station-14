@@ -604,6 +604,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
+        /// </summary>
+        public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
+            CVarDef.Create("admin.alert.explosion_min_intensity", 60, CVar.SERVERONLY);
+
         /*
          * Explosions
          */

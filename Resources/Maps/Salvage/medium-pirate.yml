@@ -221,7 +221,7 @@ entities:
     parent: 52
     type: Transform
 - uid: 21
-  type: CartridgeAntiMaterial
+  type: CartridgeAntiMateriel
   components:
   - rot: 3.141592653589793 rad
     pos: 0.5569155,2.492195

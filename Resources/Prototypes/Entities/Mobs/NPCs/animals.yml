@@ -866,6 +866,7 @@
   - type: DiseaseCarrier #The other class lab animal and disease vector
     naturalImmunities:
       - AMIV
+      - ActiveHonkVirus
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
