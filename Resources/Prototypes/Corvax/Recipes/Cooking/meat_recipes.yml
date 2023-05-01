@@ -1,0 +1,11 @@
+﻿- type: microwaveMealRecipe
+  id: RecipePelmeni
+  name: pelmeni recipe
+  result: FoodPelmeniBowl
+  time: 10
+  reagents:
+    Water: 20
+  solids:
+    FoodBowlBig: 1
+    FoodMeatMeatball: 1
+    FoodDoughSlice: 3
