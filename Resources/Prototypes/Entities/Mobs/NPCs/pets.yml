@@ -618,6 +618,7 @@
   - type: Tag
     tags:
     - FootstepSound
+    - DoorBumpOpener
     - CannotSuicide
   - type: Appearance
   - type: DamageStateVisuals
