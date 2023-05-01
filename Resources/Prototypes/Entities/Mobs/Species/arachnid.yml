@@ -22,7 +22,7 @@
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: full
   - type: Hunger
-    baseDecayRate: 0.1 # Probably faster than humans?
+    baseDecayRate: 0.05 # Probably faster than humans?
   - type: Thirst
   # Damage and speed
   - type: Bloodstream
@@ -44,8 +44,8 @@
         Blunt: 0.20 #per second, scales with pressure and other constants.
   - type: SlowOnDamage
     speedModifierThresholds: # This is an ouch, but it does make up for their extra speed
-      50: 0.6
-      70: 0.4
+      65: 0.7
+      80: 0.4
   # Misc
   - type: Speech
     speechSounds: Arachnid

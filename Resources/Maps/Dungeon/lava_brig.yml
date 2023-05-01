@@ -10010,7 +10010,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 1160
-  type: MagazineBoxAntiMaterial
+  type: MagazineBoxAntiMateriel
   components:
   - pos: 30.58447,8.638441
     parent: 0
