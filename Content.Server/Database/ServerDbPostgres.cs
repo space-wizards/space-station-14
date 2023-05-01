@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -119,7 +119,7 @@ namespace Content.Server.Database
                 query = query == null ? newQ : query.Union(newQ);
             }
 
-            if (address != null)
+            if (address != null && !exemptFlags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.IP))
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
@@ -163,13 +163,13 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.UserId is { } guid)
             {
                 uid = new NetUserId(guid);
             }
 
             NetUserId? aUid = null;
-            if (ban.BanningAdmin is {} aGuid)
+            if (ban.BanningAdmin is { } aGuid)
             {
                 aUid = new NetUserId(aGuid);
             }
@@ -196,7 +196,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? aUid = null;
-            if (unban.UnbanningAdmin is {} aGuid)
+            if (unban.UnbanningAdmin is { } aGuid)
             {
                 aUid = new NetUserId(aGuid);
             }
@@ -345,13 +345,13 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.UserId is { } guid)
             {
                 uid = new NetUserId(guid);
             }
 
             NetUserId? aUid = null;
-            if (ban.BanningAdmin is {} aGuid)
+            if (ban.BanningAdmin is { } aGuid)
             {
                 aUid = new NetUserId(aGuid);
             }
@@ -379,7 +379,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? aUid = null;
-            if (unban.UnbanningAdmin is {} aGuid)
+            if (unban.UnbanningAdmin is { } aGuid)
             {
                 aUid = new NetUserId(aGuid);
             }
@@ -473,8 +473,8 @@ namespace Content.Server.Database
             // Join with the player table to find their last seen username, if they have one.
             var admins = await db.PgDbContext.Admin
                 .Include(a => a.Flags)
-                .GroupJoin(db.PgDbContext.Player, a => a.UserId, p => p.UserId, (a, grouping) => new {a, grouping})
-                .SelectMany(t => t.grouping.DefaultIfEmpty(), (t, p) => new {t.a, p!.LastSeenUserName})
+                .GroupJoin(db.PgDbContext.Player, a => a.UserId, p => p.UserId, (a, grouping) => new { a, grouping })
+                .SelectMany(t => t.grouping.DefaultIfEmpty(), (t, p) => new { t.a, p!.LastSeenUserName })
                 .ToArrayAsync(cancel);
 
             var adminRanks = await db.DbContext.AdminRank.Include(a => a.Flags).ToArrayAsync(cancel);
