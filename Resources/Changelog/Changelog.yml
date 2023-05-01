@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix some more instances of NPCs dancing., type: Fix}
-  - {message: NPCs have rudimentary stuck detection., type: Fix}
-  id: 3102
-  time: '2023-03-05T05:13:09.0000000+00:00'
 - author: keronshb
   changes:
   - {message: You no longer can rapidly eat food, type: Tweak}
@@ -2885,3 +2879,11 @@ Entries:
   - {message: Increased toxin poison damage from 2 to 4., type: Tweak}
   id: 3601
   time: '2023-05-01T16:54:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Old NPC targeting has been ported to the new system and will prefer
+      the closest target over the weakest one much more., type: Fix}
+  - {message: NPC mice will now eat food., type: Add}
+  - {message: Runtime will now attack mice., type: Add}
+  id: 3602
+  time: '2023-05-01T18:57:11.0000000+00:00'
