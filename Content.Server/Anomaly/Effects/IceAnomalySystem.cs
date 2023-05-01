@@ -17,7 +17,6 @@ namespace Content.Server.Anomaly.Effects;
 /// </summary>
 public sealed class IceAnomalySystem : EntitySystem
 {
-    [Dependency] private readonly EntityManager _entman = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
