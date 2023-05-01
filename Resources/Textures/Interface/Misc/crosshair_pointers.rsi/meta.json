@@ -8,10 +8,10 @@
   },
   "states": [
     {
-      "name": "gunsight"
+      "name": "gun_sight"
     },
     {
-      "name": "meleesight"
+      "name": "melee_sight"
     }
   ]
 }
