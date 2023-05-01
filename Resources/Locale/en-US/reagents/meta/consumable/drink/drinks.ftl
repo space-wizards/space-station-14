@@ -78,4 +78,3 @@ reagent-desc-posca = Poor warriors' drink from a forgotten era.
 
 reagent-name-the-martinez = The Martinez
 reagent-desc-the-martinez = The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
-
