@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Lava is now clickable., type: Tweak}
-  id: 3091
-  time: '2023-03-03T00:01:07.0000000+00:00'
 - author: Errant
   changes:
   - {message: Salvage magnet shows remaining cooldown time when examined., type: Tweak}
@@ -2881,3 +2876,11 @@ Entries:
       when wearing a rig and bandolier, type: Tweak}
   id: 3590
   time: '2023-05-01T02:16:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Entering your ringtone uplink code now locks and unlocks your uplink
+      rather then directly opening it., type: Tweak}
+  - {message: 'When you set ringtone, if it is your uplink code it will not be saved.',
+    type: Tweak}
+  id: 3591
+  time: '2023-05-01T06:30:09.0000000+00:00'
