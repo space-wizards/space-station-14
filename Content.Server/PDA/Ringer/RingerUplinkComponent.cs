@@ -10,9 +10,15 @@ namespace Content.Server.PDA.Ringer;
 public sealed class RingerUplinkComponent : Component
 {
     /// <summary>
-    /// Notes to set ringtone to in order to open the uplink.
+    /// Notes to set ringtone to in order to lock or unlock the uplink.
     /// Automatically initialized to random notes.
     /// </summary>
     [DataField("code")]
     public Note[] Code = new Note[RingerSystem.RingtoneLength];
+
+    /// <summary>
+    /// Whether to show the toggle uplink button in pda settings.
+    /// </summary>
+    [DataField("unlocked"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Unlocked;
 }

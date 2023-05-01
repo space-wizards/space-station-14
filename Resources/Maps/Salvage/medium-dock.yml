@@ -1176,7 +1176,7 @@ entities:
     parent: 50
     type: Transform
 - uid: 114
-  type: TriphasicScanningModuleStockPart
+  type: QuadraticCapacitorStockPart
   components:
   - pos: -5.6509933,-2.338189
     parent: 50

@@ -1,0 +1,11 @@
+﻿# basic dictionary that maps old entity ids to new entity ids.
+# an empty or "null" string results in the entity getting deleted.
+
+# e.g., you can swap all walls with windows and delete all tables by adding lines like:
+#
+# Window: WallSolid
+# WallSolid: Window
+# Table: null
+
+chem_dispenser: ChemDispenser
+

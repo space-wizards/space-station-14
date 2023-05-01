@@ -342,7 +342,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         Climb(uid, uid, uid, climbable, true, component);
     }
 
-    private void OnBuckleChange(EntityUid uid, ClimbingComponent component, BuckleChangeEvent args)
+    private void OnBuckleChange(EntityUid uid, ClimbingComponent component, ref BuckleChangeEvent args)
     {
         if (!args.Buckling)
             return;
