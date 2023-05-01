@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Tiles now support edges. For now this support has been added to grass.,
-    type: Add}
-  id: 3098
-  time: '2023-03-05T01:19:50.0000000+00:00'
 - author: CaptainSqrBeard
   changes:
   - {message: Default marking colors now can be applied differently, type: Tweak}
@@ -2888,3 +2882,8 @@ Entries:
   - {message: Fix up space cleaner and lots of changes to make it better., type: Tweak}
   id: 3597
   time: '2023-05-01T14:25:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cleanbots now mop floors rather than drain near them., type: Tweak}
+  id: 3598
+  time: '2023-05-01T14:30:15.0000000+00:00'
