@@ -1,10 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: 'Disposals are now pressurized again, so you can safely travel through
-      them in hazardous environments or space.', type: Fix}
-  id: 3096
-  time: '2023-03-04T23:08:44.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix breaking planet tiles leading to the void., type: Fix}
@@ -2888,3 +2882,9 @@ Entries:
     type: Tweak}
   id: 3595
   time: '2023-05-01T13:47:00.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Nuke agent role is now selected separately in the character customization
+      menu, type: Tweak}
+  id: 3596
+  time: '2023-05-01T14:20:56.0000000+00:00'
