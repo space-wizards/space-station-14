@@ -78,7 +78,7 @@ public sealed class IceAnomalySystem : EntitySystem
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
         var ent = Spawn(component.ProjectilePrototype, spawnCoords);
-        var direction = targetCoords.ToMapPos(_entman, _xform) - mapPos.Position;
+        var direction = targetCoords.ToMapPos(EntityManager, _xform) - mapPos.Position;
 
         if (!TryComp<ProjectileComponent>(ent, out var comp))
             return;
