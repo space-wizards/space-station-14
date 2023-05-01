@@ -19,3 +19,9 @@
   license: "CC-BY-SA-3.0"
   copyright: "Made and posted by GentleJester#8754 on the SS14 discord."
   source: "https://discord.com/channels/310555209753690112/311537926376783886/1097222920813674527"
+
+- files:
+  - slime1.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/tgstation/tgstation"
+  source: "https://github.com/nero1024/tgstation/blob/83ccc939a20489de8ab81cb47e6f8e84c490adc2/sound/effects/footstep/slime1.ogg"

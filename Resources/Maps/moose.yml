@@ -42234,7 +42234,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 5390
-  type: AdvancedScanningModuleStockPart
+  type: AdvancedCapacitorStockPart
   components:
   - pos: -9.340726,-53.888344
     parent: 6
@@ -42252,7 +42252,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 5393
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: -9.525309,-54.22893
     parent: 6

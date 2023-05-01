@@ -20,7 +20,6 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Timing;
@@ -39,7 +38,6 @@ namespace Content.Client.UserInterface.Systems.Actions;
 
 public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<ActionsSystem>
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IOverlayManager _overlays = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -47,6 +45,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     [UISystemDependency] private readonly ActionsSystem? _actionsSystem = default;
     [UISystemDependency] private readonly InteractionOutlineSystem? _interactionOutline = default;
     [UISystemDependency] private readonly TargetOutlineSystem? _targetOutline = default;
+    [UISystemDependency] private readonly SpriteSystem _spriteSystem = default!;
 
     private const int DefaultPageIndex = 0;
     private ActionButtonContainer? _container;
@@ -65,7 +64,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     /// <summary>
     /// Action slot we are currently selecting a target for.
     /// </summary>
-    public TargetedAction? SelectingTargetFor { get; private set; } = null;
+    public TargetedAction? SelectingTargetFor { get; private set; }
 
     public ActionUIController()
     {
@@ -190,15 +189,15 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (!_timing.IsFirstTimePredicted || _actionsSystem == null || SelectingTargetFor is not { } action)
             return false;
 
-        if (_playerManager.LocalPlayer?.ControlledEntity is not EntityUid user)
+        if (_playerManager.LocalPlayer?.ControlledEntity is not { } user)
             return false;
 
-        if (!_entities.TryGetComponent(user, out ActionsComponent? comp))
+        if (!EntityManager.TryGetComponent(user, out ActionsComponent? comp))
             return false;
 
         // Is the action currently valid?
         if (!action.Enabled
-            || action.Charges != null && action.Charges == 0
+            || action.Charges is 0
             || action.Cooldown.HasValue && action.Cooldown.Value.End > _timing.CurTime)
         {
             // The user is targeting with this action, but it is not valid. Maybe mark this click as
@@ -247,7 +246,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
         }
         else
-            _entities.RaisePredictiveEvent(new RequestPerformActionEvent(action, coords));
+            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(action, coords));
 
         if (!action.Repeat)
             StopTargeting();
@@ -279,7 +278,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
         }
         else
-            _entities.RaisePredictiveEvent(new RequestPerformActionEvent(action, args.EntityUid));
+            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(action, args.EntityUid));
 
         if (!action.Repeat)
             StopTargeting();
@@ -414,6 +413,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnActionAdded(ActionType action)
     {
+        // if the action is toggled when we add it, start targetting
+        if (action is TargetedAction targetAction && action.Toggled)
+            StartTargeting(targetAction);
+
         foreach (var page in _pages)
         {
             for (var i = 0; i < page.Size; i++)
@@ -433,6 +436,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (_container == null)
             return;
+
+        // stop targeting if the action is removed
+        if (action == SelectingTargetFor)
+            StopTargeting();
 
         foreach (var button in _container.GetButtons())
         {
@@ -520,8 +527,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         return filter switch
         {
             Filters.Enabled => action.Enabled,
-            Filters.Item => action.Provider != null && action.Provider != _actionsSystem?.PlayerActions?.Owner,
-            Filters.Innate => action.Provider == null || action.Provider == _actionsSystem?.PlayerActions?.Owner,
+            Filters.Item => action.Provider != null && action.Provider != _playerManager.LocalPlayer?.ControlledEntity,
+            Filters.Innate => action.Provider == null || action.Provider == _playerManager.LocalPlayer?.ControlledEntity,
             Filters.Instant => action is InstantAction,
             Filters.Targeted => action is TargetedAction,
             _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, null)
@@ -582,10 +589,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (action.DisplayName.Contains(search, StringComparison.OrdinalIgnoreCase))
                 return true;
 
-            if (action.Provider == null || action.Provider == _actionsSystem?.PlayerActions?.Owner)
+            if (action.Provider == null || action.Provider == _playerManager.LocalPlayer?.ControlledEntity)
                 return false;
 
-            var name = _entities.GetComponent<MetaDataComponent>(action.Provider.Value).EntityName;
+            var name = EntityManager.GetComponent<MetaDataComponent>(action.Provider.Value).EntityName;
             return name.Contains(search, StringComparison.OrdinalIgnoreCase);
         });
 
@@ -731,12 +738,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             if (action.EntityIcon != null)
             {
-                _dragShadow.Texture = _entities.GetComponent<SpriteComponent>(action.EntityIcon.Value).Icon?
+                _dragShadow.Texture = EntityManager.GetComponent<SpriteComponent>(action.EntityIcon.Value).Icon?
                     .GetFrame(RSI.State.Direction.South, 0);
             }
             else if (action.Icon != null)
             {
-                _dragShadow.Texture = action.Icon!.Frame0();
+                _dragShadow.Texture = _spriteSystem.Frame0(action.Icon);
             }
             else
             {
@@ -761,13 +768,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _dragShadow.Visible = false;
     }
 
-    public void ReloadActionContainer()
-    {
-        UnloadGui();
-        LoadGui();
-    }
-
-    public void UnloadGui()
+    private void UnloadGui()
     {
         _actionsSystem?.UnlinkAllActions();
 
@@ -780,7 +781,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         ActionsBar.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
     }
 
-    public void LoadGui()
+    private void LoadGui()
     {
         if (ActionsBar == null)
         {
@@ -809,7 +810,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _container.ActionUnpressed += OnActionUnpressed;
     }
 
-    public void ClearActions()
+    private void ClearActions()
     {
         _container?.ClearActionData();
     }
@@ -906,7 +907,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     /// If currently targeting with no slot or a different slot, switches to
     /// targeting with the specified slot.
     /// </summary>
-    public void ToggleTargeting(TargetedAction action)
+    private void ToggleTargeting(TargetedAction action)
     {
         if (SelectingTargetFor == action)
         {
@@ -935,9 +936,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 handOverlay.EntityOverride = action.Provider;
             }
             else if (action.Toggled && action.IconOn != null)
-                handOverlay.IconOverride = action.IconOn.Frame0();
+                handOverlay.IconOverride = _spriteSystem.Frame0(action.IconOn);
             else if (action.Icon != null)
-                handOverlay.IconOverride = action.Icon.Frame0();
+                handOverlay.IconOverride = _spriteSystem.Frame0(action.Icon);
         }
 
         // TODO: allow world-targets to check valid positions. E.g., maybe:
@@ -962,7 +963,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     /// <summary>
     /// Switch out of targeting mode if currently selecting target for an action
     /// </summary>
-    public void StopTargeting()
+    private void StopTargeting()
     {
         if (SelectingTargetFor == null)
             return;
