@@ -71,7 +71,7 @@ public sealed class IceAnomalySystem : EntitySystem
         float severity
         )
     {
-        var mapPos = coords.ToMap(_entman, _xform);
+        var mapPos = coords.ToMap(EntityManager, _xform);
 
         var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
                 ? coords.WithEntityId(grid.Owner, EntityManager)
