@@ -13,6 +13,7 @@ namespace Content.Server.CartridgeLoader.Cartridges
         [Dependency] private readonly PricingSystem _pricingSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -32,8 +33,6 @@ namespace Content.Server.CartridgeLoader.Cartridges
                 ("price", $"{price:F2}")), args.InteractEvent.User, args.InteractEvent.User);
             args.InteractEvent.Handled = true;
 
-            //NetProbeCartridgeSystem: Limit the amount of saved probe results to 9
-            //This is hardcoded because the UI doesn't support a dynamic number of results
             if (component.AppraisedItems.Count >= component.MaxSavedItems)
                 component.AppraisedItems.RemoveAt(0);
 
