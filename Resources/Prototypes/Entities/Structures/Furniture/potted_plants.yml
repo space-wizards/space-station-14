@@ -277,3 +277,4 @@
   # don't want someone destroying your pocket dimension do we
   - type: Destructible
     thresholds: []
+  - type: CargoSellBlacklist
