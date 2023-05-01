@@ -411,7 +411,6 @@ public abstract partial class SharedBuckleSystem
         if (attemptEvent.Cancelled)
             return false;
 
-        Logger.Debug($"{force}");
         if (!force)
         {
             if (_gameTiming.CurTime < buckleComp.BuckleTime + buckleComp.UnbuckleDelay)
