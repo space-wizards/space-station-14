@@ -289,7 +289,7 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-      - id: MobSpiderAngry
+      - id: MobGiantSpiderAngry
         amount: 4
         maxAmount: 8
 

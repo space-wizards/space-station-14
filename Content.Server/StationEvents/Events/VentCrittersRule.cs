@@ -17,6 +17,9 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
         base.Started(uid, component, gameRule, args);
 
         var spawnChoice = RobustRandom.Pick(component.Entries);
+        // TODO: What we should actually do is take the component count and then multiply a prob by that
+        // then just iterate until we get it
+        // This will be on average twice as fast.
         var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
         RobustRandom.Shuffle(spawnLocations);
 
