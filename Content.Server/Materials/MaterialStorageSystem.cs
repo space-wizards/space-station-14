@@ -40,15 +40,20 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         }
     }
 
-    public override bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
+    public override bool TryInsertMaterialEntity(EntityUid user,
+        EntityUid toInsert,
+        EntityUid receiver,
+        MaterialStorageComponent? storage = null,
+        MaterialComponent? material = null,
+        PhysicalCompositionComponent? composition = null)
     {
-        if (!Resolve(receiver, ref component))
+        if (!Resolve(receiver, ref storage) || !Resolve(toInsert, ref material, ref composition, false))
             return false;
         if (TryComp<ApcPowerReceiverComponent>(receiver, out var power) && !power.Powered)
             return false;
-        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
+        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition))
             return false;
-        _audio.PlayPvs(component.InsertingSound, receiver);
+        _audio.PlayPvs(storage.InsertingSound, receiver);
         _popup.PopupEntity(Loc.GetString("machine-insert-item", ("user", user), ("machine", receiver),
             ("item", toInsert)), receiver);
         QueueDel(toInsert);
@@ -116,10 +121,10 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
             return new List<EntityUid>();
 
         var entProto = _prototypeManager.Index<EntityPrototype>(materialProto.StackEntity);
-        if (!entProto.TryGetComponent<MaterialComponent>(out var material))
+        if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
             return new List<EntityUid>();
 
-        var materialPerStack = material.Materials[materialProto.ID];
+        var materialPerStack = composition.MaterialComposition[materialProto.ID];
         var amountToSpawn = amount / materialPerStack;
         overflowMaterial = amount - amountToSpawn * materialPerStack;
         return _stackSystem.SpawnMultiple(materialProto.StackEntity, amountToSpawn, coordinates);

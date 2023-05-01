@@ -22,7 +22,6 @@ public sealed class ProximityBeeperSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ProximityBeeperComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<ProximityBeeperComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ProximityBeeperComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<ProximityBeeperComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
     }
@@ -32,12 +31,6 @@ public sealed class ProximityBeeperSystem : EntitySystem
             return;
 
         args.Handled = TryToggle(uid, component, args.User);
-    }
-
-    private void OnInit(EntityUid uid, ProximityBeeperComponent component, MapInitEvent args)
-    {
-        if (component.NextBeepTime < _timing.CurTime)
-            component.NextBeepTime = _timing.CurTime;
     }
 
     private void OnUnpaused(EntityUid uid, ProximityBeeperComponent component, ref EntityUnpausedEvent args)
@@ -113,7 +106,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
         component.NextBeepTime = _timing.CurTime;
         UpdateBeep(uid, component, false);
         if (draw != null)
-            draw.Enabled = true;
+            _powerCell.SetPowerCellDrawEnabled(uid, true, draw);
         return true;
     }
 
@@ -130,8 +123,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
         component.Enabled = false;
         _appearance.SetData(uid, ProximityBeeperVisuals.Enabled, false);
-        if (TryComp<PowerCellDrawComponent>(uid, out var draw))
-            draw.Enabled = true;
+        _powerCell.SetPowerCellDrawEnabled(uid, true);
         UpdateBeep(uid, component);
         return true;
     }

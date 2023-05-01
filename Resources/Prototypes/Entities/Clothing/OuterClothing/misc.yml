@@ -222,7 +222,7 @@
     sprite: Clothing/OuterClothing/Misc/nunrobe.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/nunrobe.rsi
-    
+
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterGhostSheet
@@ -233,6 +233,9 @@
     sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
+  - type: Construction
+    graph: GhostSheet
+    node: ghost_sheet
 
 - type: entity
   parent: ClothingOuterBase

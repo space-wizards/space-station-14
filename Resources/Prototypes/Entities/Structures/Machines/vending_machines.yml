@@ -72,7 +72,7 @@
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-mechanical
   - type: StaticPrice
-    price: 200
+    price: 100
   - type: Appearance
   - type: WiresVisuals
 

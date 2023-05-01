@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Toxin
   name: reagent-name-toxin
   group: Toxins
@@ -44,7 +44,6 @@
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
-
 
 - type: reagent
   id: ChloralHydrate
@@ -474,3 +473,27 @@
         component: Pacified
         refresh: false
         type: Add
+
+- type: reagent
+  id: Honk
+  name: reagent-name-honk
+  desc: reagent-desc-honk
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal
+        damage:
+          types:
+            Poison: 0.06
+      - !type:ChemCauseDisease
+          causeChance: 1
+          disease: ActiveHonkVirus ##makes target honk and potential chance to be cluwned.
