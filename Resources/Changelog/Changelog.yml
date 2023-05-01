@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Verbs are now usable in the stripping menu., type: Add}
-  - {message: Added a new verb for toggling hardsuit helmets., type: Add}
-  id: 3104
-  time: '2023-03-05T17:12:09.0000000+00:00'
 - author: Duke Vanity
   changes:
   - {message: 3 new mutations for botany, type: Add}
@@ -2882,3 +2876,8 @@ Entries:
   - {message: Wide melee attacks are now also lag compensated., type: Add}
   id: 3603
   time: '2023-05-01T19:07:17.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Now slimes can be a ghost role, type: Fix}
+  id: 3604
+  time: '2023-05-01T19:20:06.0000000+00:00'
