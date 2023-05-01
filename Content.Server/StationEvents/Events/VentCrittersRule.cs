@@ -7,15 +7,21 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleComponent>
 {
+    /*
+     * DO NOT COPY PASTE THIS TO MAKE YOUR MOB EVENT.
+     * USE THE PROTOTYPE.
+     */
+
     protected override void Started(EntityUid uid, VentCrittersRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
-        var spawnChoice = RobustRandom.Pick(component.SpawnedPrototypeChoices);
+        var spawnChoice = RobustRandom.Pick(component.Entries);
         var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
         RobustRandom.Shuffle(spawnLocations);
 
-        var spawnAmount = RobustRandom.Next(4, 12); // A small colony of critters.
+        // A small colony of critters.
+        var spawnAmount = RobustRandom.Next(spawnChoice.Amount, spawnChoice.MaxAmount);
         Sawmill.Info($"Spawning {spawnAmount} of {spawnChoice}");
         foreach (var location in spawnLocations)
         {
@@ -23,7 +29,7 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
                 break;
 
             var coords = Transform(location.Owner);
-            Spawn(spawnChoice, coords.Coordinates);
+            Spawn(spawnChoice.PrototypeId, coords.Coordinates);
         }
     }
 }
