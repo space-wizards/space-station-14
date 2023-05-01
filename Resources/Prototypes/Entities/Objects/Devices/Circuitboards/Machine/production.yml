@@ -364,7 +364,7 @@
     - type: Sprite
       state: medical
     - type: MachineBoard
-      prototype: chem_dispenser
+      prototype: ChemDispenser
       requirements:
         Capacitor: 1
       materialRequirements:

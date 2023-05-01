@@ -1,92 +1,4 @@
 Entries:
-- author: Visne
-  changes:
-  - {message: Removed annoying margin between viewport and chat in separated HUD.,
-    type: Tweak}
-  id: 3080
-  time: '2023-02-28T16:11:39.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - {message: Admins may now configure a message to be sent to players when they join
-      the lobby., type: Add}
-  id: 3081
-  time: '2023-02-28T16:15:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Change L6 firerate from 8 to 5 in line with rifles., type: Tweak}
-  id: 3082
-  time: '2023-02-28T19:10:20.0000000+00:00'
-- author: GoodWheatley
-  changes:
-  - {message: 'After the Hypopen Incident of 2556, The recipe for Lexorin now requires
-      Heartbreaker Toxin instead of Ammonia.', type: Tweak}
-  - {message: You need to heat up the chemicals for Mindbreaker Toxin to get them
-      to react., type: Tweak}
-  - {message: 'Due to budget cuts, the Syndicate is now offering an inferior version
-      of the hypopen that only holds 10 units of chemicals.', type: Tweak}
-  id: 3083
-  time: '2023-02-28T20:02:18.0000000+00:00'
-- author: vanx
-  changes:
-  - {message: Added a ghost warp to the singularity, type: Add}
-  id: 3084
-  time: '2023-02-28T20:03:58.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: 'added fake cap gun, can be purchased in clown and mime uplink', type: Add}
-  id: 3085
-  time: '2023-02-28T20:06:55.0000000+00:00'
-- author: router
-  changes:
-  - {message: Made sound emotes not abhorrent. You can now add some punctuation marks
-      after emotes., type: Tweak}
-  id: 3086
-  time: '2023-02-28T20:13:17.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: Youtool no longer has free utility belts., type: Remove}
-  id: 3087
-  time: '2023-02-28T20:36:02.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Janitors discovered the ability to put paper in trash bags!, type: Add}
-  id: 3088
-  time: '2023-02-28T21:00:39.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Walls and construction now properly cancel out of a doafter., type: Fix}
-  - {message: Cancelling screwing doors or anything with wires won't prevent further
-      doafters from running anymore., type: Fix}
-  - {message: EscapeInventory can no longer spam and cancels on drop again., type: Fix}
-  - {message: Mopping won't break anymore if cancelled, type: Fix}
-  - {message: Meatspikes won't break anymore on use or if cancelled., type: Fix}
-  id: 3089
-  time: '2023-03-01T00:51:43.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Wizard bedsheet sprite animation has been fixed., type: Fix}
-  id: 3090
-  time: '2023-03-01T13:31:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Lava is now clickable., type: Tweak}
-  id: 3091
-  time: '2023-03-03T00:01:07.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Salvage magnet shows remaining cooldown time when examined., type: Tweak}
-  id: 3092
-  time: '2023-03-03T16:25:43.0000000+00:00'
-- author: Nylux
-  changes:
-  - {message: Changed the name of planet-related tiles to be more readable., type: Tweak}
-  id: 3093
-  time: '2023-03-04T04:50:43.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Cardboard boxes now have airholes to prevent suffocation., type: Fix}
-  id: 3094
-  time: '2023-03-04T19:45:31.0000000+00:00'
 - author: 08A
   changes:
   - {message: Added the pipe layer in construction mode for the majority of atmos
@@ -2885,3 +2797,93 @@ Entries:
     type: Add}
   id: 3579
   time: '2023-04-29T16:19:07.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Powered electrified grilles now create sparks when touched., type: Add}
+  id: 3580
+  time: '2023-04-29T20:05:10.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: 'Nanotrasen has striken the defective recipe for Impedrezene from its
+      list. Impedrezene now causes sluggishness and massive brain damage, but the
+      recipe is changed to 1 water + 1 oxygen + 1 mercury + temp>370 = 1 impedrezene.',
+    type: Tweak}
+  id: 3581
+  time: '2023-04-29T21:04:17.0000000+00:00'
+- author: DawBla
+  changes:
+  - {message: Nanotrasen now supplies the station with off-brand wirecutters. Cutting
+      cables and lattices takes slightly longer., type: Tweak}
+  id: 3582
+  time: '2023-04-29T21:50:32.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Eye damage now darkens the screen, rather than brightening it.', type: Fix}
+  id: 3583
+  time: '2023-04-30T01:44:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The space dragon event is now less common and starts later in rounds.,
+    type: Tweak}
+  id: 3584
+  time: '2023-04-30T01:51:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Fixed items that use drain power cells passively (anomaly locators,
+      etc) draining instantly.', type: Fix}
+  id: 3585
+  time: '2023-04-30T06:06:45.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Resprited the plating and tech maint tiles., type: Tweak}
+  id: 3586
+  time: '2023-04-30T06:36:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove kvass., type: Remove}
+  id: 3587
+  time: '2023-04-30T07:16:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Flares no longer flicker., type: Tweak}
+  id: 3588
+  time: '2023-04-30T17:56:17.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'Arachnids suffer less now from hunger decay, asphyxiation and slowdown
+      from damage.', type: Tweak}
+  - {message: Arachnids can now wear glasses.... somehow, type: Tweak}
+  id: 3589
+  time: '2023-05-01T01:05:25.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Changed the side sprites of tactical vests to fix weird looking sprites
+      when wearing a rig and bandolier, type: Tweak}
+  id: 3590
+  time: '2023-05-01T02:16:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Entering your ringtone uplink code now locks and unlocks your uplink
+      rather then directly opening it., type: Tweak}
+  - {message: 'When you set ringtone, if it is your uplink code it will not be saved.',
+    type: Tweak}
+  id: 3591
+  time: '2023-05-01T06:30:09.0000000+00:00'
+- author: MagnusCrowe
+  changes:
+  - {message: Added the paramedic role, type: Add}
+  id: 3592
+  time: '2023-05-01T07:13:57.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: 'Three kinds of aggressive slimes, and their peaceful versions', type: Add}
+  - {message: 'A new event for the station, in which slimes come out of the vent scrubber.',
+    type: Add}
+  id: 3593
+  time: '2023-05-01T08:21:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Camera rotation should be more responsive after recently traversing
+      a grid., type: Tweak}
+  id: 3594
+  time: '2023-05-01T08:29:35.0000000+00:00'
