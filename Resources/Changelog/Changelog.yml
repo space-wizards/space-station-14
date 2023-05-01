@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Cardboard boxes now have airholes to prevent suffocation., type: Fix}
-  id: 3094
-  time: '2023-03-04T19:45:31.0000000+00:00'
 - author: 08A
   changes:
   - {message: Added the pipe layer in construction mode for the majority of atmos
@@ -2886,3 +2881,9 @@ Entries:
     type: Add}
   id: 3593
   time: '2023-05-01T08:21:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Camera rotation should be more responsive after recently traversing
+      a grid., type: Tweak}
+  id: 3594
+  time: '2023-05-01T08:29:35.0000000+00:00'
