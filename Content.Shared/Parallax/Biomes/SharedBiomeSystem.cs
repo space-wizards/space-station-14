@@ -1,11 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Maps;
-using Robust.Shared.GameStates;
+using Content.Shared.Parallax.Biomes.Layers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Parallax.Biomes;
@@ -72,7 +71,7 @@ public abstract class SharedBiomeSystem : EntitySystem
         throw new ArgumentOutOfRangeException();
     }
 
-    public bool TryGetBiomeTile(EntityUid uid, MapGridComponent grid, FastNoiseLite noise, Vector2i indices, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetBiomeTile(EntityUid uid, MapGridComponent grid, Vector2i indices, [NotNullWhen(true)] out Tile? tile)
     {
         if (grid.TryGetTileRef(indices, out var tileRef) && !tileRef.Tile.IsEmpty)
         {
@@ -86,14 +85,13 @@ public abstract class SharedBiomeSystem : EntitySystem
             return false;
         }
 
-        return TryGetBiomeTile(indices, ProtoManager.Index<BiomePrototype>(biome.BiomePrototype),
-            biome.Noise, grid, out tile);
+        return TryGetBiomeTile(indices, biome.Layers, biome.Noise, grid, out tile);
     }
 
     /// <summary>
     /// Tries to get the tile, real or otherwise, for the specified indices.
     /// </summary>
-    public bool TryGetBiomeTile(Vector2i indices, BiomePrototype prototype, FastNoiseLite noise, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetBiomeTile(Vector2i indices, List<IBiomeLayer> layers, FastNoiseLite noise, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
     {
         if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
         {
@@ -103,16 +101,16 @@ public abstract class SharedBiomeSystem : EntitySystem
 
         var oldSeed = noise.GetSeed();
 
-        for (var i = prototype.Layers.Count - 1; i >= 0; i--)
+        for (var i = layers.Count - 1; i >= 0; i--)
         {
-            var layer = prototype.Layers[i];
+            var layer = layers[i];
 
             if (layer is not BiomeTileLayer tileLayer)
                 continue;
 
             SetNoise(noise, oldSeed, layer.Noise);
 
-            if (TryGetTile(indices, noise, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
+            if (TryGetTile(indices, noise, tileLayer.Invert, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
             {
                 noise.SetSeed(oldSeed);
                 return true;
@@ -127,9 +125,10 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
-    private bool TryGetTile(Vector2i indices, FastNoiseLite seed, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
+    private bool TryGetTile(Vector2i indices, FastNoiseLite seed, bool invert, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
     {
         var found = seed.GetNoise(indices.X, indices.Y);
+        found = invert ? found * -1 : found;
 
         if (found < threshold)
         {
@@ -159,10 +158,10 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the relevant entity for this tile.
     /// </summary>
-    protected bool TryGetEntity(Vector2i indices, BiomePrototype prototype, FastNoiseLite noise, MapGridComponent grid,
+    protected bool TryGetEntity(Vector2i indices, List<IBiomeLayer> layers, FastNoiseLite noise, MapGridComponent grid,
         [NotNullWhen(true)] out string? entity)
     {
-        if (!TryGetBiomeTile(indices, prototype, noise, grid, out var tileRef))
+        if (!TryGetBiomeTile(indices, layers, noise, grid, out var tileRef))
         {
             entity = null;
             return false;
@@ -171,13 +170,15 @@ public abstract class SharedBiomeSystem : EntitySystem
         var tileId = TileDefManager[tileRef.Value.TypeId].ID;
         var oldSeed = noise.GetSeed();
 
-        for (var i = prototype.Layers.Count - 1; i >= 0; i--)
+        for (var i = layers.Count - 1; i >= 0; i--)
         {
-            var layer = prototype.Layers[i];
+            var layer = layers[i];
 
             // Decals might block entity so need to check if there's one in front of us.
             switch (layer)
             {
+                case BiomeDummyLayer:
+                    continue;
                 case IBiomeWorldLayer worldLayer:
                     if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
@@ -188,7 +189,9 @@ public abstract class SharedBiomeSystem : EntitySystem
             }
 
             SetNoise(noise, oldSeed, layer.Noise);
+            var invert = layer.Invert;
             var value = noise.GetNoise(indices.X, indices.Y);
+            value = invert ? value * -1 : value;
 
             if (value < layer.Threshold)
             {
@@ -215,10 +218,10 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the relevant decals for this tile.
     /// </summary>
-    public bool TryGetDecals(Vector2i indices, BiomePrototype prototype, FastNoiseLite noise, MapGridComponent grid,
+    public bool TryGetDecals(Vector2i indices, List<IBiomeLayer> layers, FastNoiseLite noise, MapGridComponent grid,
         [NotNullWhen(true)] out List<(string ID, Vector2 Position)>? decals)
     {
-        if (!TryGetBiomeTile(indices, prototype, noise, grid, out var tileRef))
+        if (!TryGetBiomeTile(indices, layers, noise, grid, out var tileRef))
         {
             decals = null;
             return false;
@@ -227,13 +230,15 @@ public abstract class SharedBiomeSystem : EntitySystem
         var tileId = TileDefManager[tileRef.Value.TypeId].ID;
         var oldSeed = noise.GetSeed();
 
-        for (var i = prototype.Layers.Count - 1; i >= 0; i--)
+        for (var i = layers.Count - 1; i >= 0; i--)
         {
-            var layer = prototype.Layers[i];
+            var layer = layers[i];
 
             // Entities might block decal so need to check if there's one in front of us.
             switch (layer)
             {
+                case BiomeDummyLayer:
+                    continue;
                 case IBiomeWorldLayer worldLayer:
                     if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
@@ -244,11 +249,15 @@ public abstract class SharedBiomeSystem : EntitySystem
             }
 
             SetNoise(noise, oldSeed, layer.Noise);
+            var invert = layer.Invert;
 
             // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
             {
-                if (noise.GetNoise(indices.X, indices.Y) < layer.Threshold)
+                var value = noise.GetNoise(indices.X, indices.Y);
+                value = invert ? value * -1 : value;
+
+                if (value < layer.Threshold)
                     continue;
 
                 decals = null;
@@ -264,6 +273,7 @@ public abstract class SharedBiomeSystem : EntitySystem
                 {
                     var index = new Vector2(indices.X + x * 1f / decalLayer.Divisions, indices.Y + y * 1f / decalLayer.Divisions);
                     var decalValue = noise.GetNoise(index.X, index.Y);
+                    decalValue = invert ? decalValue * -1 : decalValue;
 
                     if (decalValue < decalLayer.Threshold)
                         continue;

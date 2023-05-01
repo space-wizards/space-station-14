@@ -32,25 +32,25 @@ namespace Content.Client.Inventory
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;
         public Action<SlotData>? OnSlotRemoved = null;
-        public Action<ClientInventoryComponent>? OnLinkInventory = null;
+        public Action<InventorySlotsComponent>? OnLinkInventorySlots = null;
         public Action? OnUnlinkInventory = null;
         public Action<SlotSpriteUpdate>? OnSpriteUpdate = null;
 
-        private readonly Queue<(ClientInventoryComponent comp, EntityEventArgs args)> _equipEventsQueue = new();
+        private readonly Queue<(InventorySlotsComponent comp, EntityEventArgs args)> _equipEventsQueue = new();
 
         public override void Initialize()
         {
             UpdatesOutsidePrediction = true;
             base.Initialize();
 
-            SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>(OnPlayerDetached);
+            SubscribeLocalEvent<InventorySlotsComponent, PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<InventorySlotsComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
-            SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<InventoryComponent, ComponentShutdown>(OnShutdown);
 
-            SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>((_, comp, args) =>
+            SubscribeLocalEvent<InventorySlotsComponent, DidEquipEvent>((_, comp, args) =>
                 _equipEventsQueue.Enqueue((comp, args)));
-            SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>((_, comp, args) =>
+            SubscribeLocalEvent<InventorySlotsComponent, DidUnequipEvent>((_, comp, args) =>
                 _equipEventsQueue.Enqueue((comp, args)));
 
             SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
@@ -86,7 +86,7 @@ namespace Content.Client.Inventory
             QuickEquip(uid, component, args);
         }
 
-        private void OnDidUnequip(ClientInventoryComponent component, DidUnequipEvent args)
+        private void OnDidUnequip(InventorySlotsComponent component, DidUnequipEvent args)
         {
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
@@ -95,7 +95,7 @@ namespace Content.Client.Inventory
             OnSpriteUpdate?.Invoke(update);
         }
 
-        private void OnDidEquip(ClientInventoryComponent component, DidEquipEvent args)
+        private void OnDidEquip(InventorySlotsComponent component, DidEquipEvent args)
         {
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
@@ -106,7 +106,7 @@ namespace Content.Client.Inventory
             OnSpriteUpdate?.Invoke(update);
         }
 
-        private void OnShutdown(EntityUid uid, ClientInventoryComponent component, ComponentShutdown args)
+        private void OnShutdown(EntityUid uid, InventoryComponent component, ComponentShutdown args)
         {
             if (component.Owner != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
@@ -114,18 +114,18 @@ namespace Content.Client.Inventory
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent args)
+        private void OnPlayerDetached(EntityUid uid, InventorySlotsComponent component, PlayerDetachedEvent args)
         {
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerAttached(EntityUid uid, ClientInventoryComponent component, PlayerAttachedEvent args)
+        private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, PlayerAttachedEvent args)
         {
             if (TryGetSlots(uid, out var definitions))
             {
                 foreach (var definition in definitions)
                 {
-                    if (!TryGetSlotContainer(uid, definition.Name, out var container, out _, component))
+                    if (!TryGetSlotContainer(uid, definition.Name, out var container, out _))
                         continue;
 
                     if (!component.SlotData.TryGetValue(definition.Name, out var data))
@@ -138,7 +138,7 @@ namespace Content.Client.Inventory
                 }
             }
 
-            OnLinkInventory?.Invoke(component);
+            OnLinkInventorySlots?.Invoke(component);
         }
 
         public override void Shutdown()
@@ -150,18 +150,21 @@ namespace Content.Client.Inventory
         protected override void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)
         {
             base.OnInit(uid, component, args);
-            _clothingVisualsSystem.InitClothing(uid, (ClientInventoryComponent) component);
+            _clothingVisualsSystem.InitClothing(uid, component);
 
-            if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
+            if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate) ||
+                !TryComp(uid, out InventorySlotsComponent? inventorySlots))
+            {
                 return;
+            }
 
             foreach (var slot in invTemplate.Slots)
             {
-                TryAddSlotDef(uid, (ClientInventoryComponent)component, slot);
+                TryAddSlotDef(uid, inventorySlots, slot);
             }
         }
 
-        public void ReloadInventory(ClientInventoryComponent? component = null)
+        public void ReloadInventory(InventorySlotsComponent? component = null)
         {
             var player = _playerManager.LocalPlayer?.ControlledEntity;
             if (player == null || !Resolve(player.Value, ref component, false))
@@ -170,10 +173,10 @@ namespace Content.Client.Inventory
             }
 
             OnUnlinkInventory?.Invoke();
-            OnLinkInventory?.Invoke(component);
+            OnLinkInventorySlots?.Invoke(component);
         }
 
-        public void SetSlotHighlight(EntityUid owner, ClientInventoryComponent component, string slotName, bool state)
+        public void SetSlotHighlight(EntityUid owner, InventorySlotsComponent component, string slotName, bool state)
         {
             var oldData = component.SlotData[slotName];
             var newData = component.SlotData[slotName] = new SlotData(oldData, state);
@@ -181,7 +184,7 @@ namespace Content.Client.Inventory
                 EntitySlotUpdate?.Invoke(newData);
         }
 
-        public void UpdateSlot(EntityUid owner, ClientInventoryComponent component, string slotName,
+        public void UpdateSlot(EntityUid owner, InventorySlotsComponent component, string slotName,
             bool? blocked = null, bool? highlight = null)
         {
             var oldData = component.SlotData[slotName];
@@ -200,7 +203,7 @@ namespace Content.Client.Inventory
                 EntitySlotUpdate?.Invoke(newData);
         }
 
-        public bool TryAddSlotDef(EntityUid owner, ClientInventoryComponent component, SlotDefinition newSlotDef)
+        public bool TryAddSlotDef(EntityUid owner, InventorySlotsComponent component, SlotDefinition newSlotDef)
         {
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData))
@@ -211,7 +214,7 @@ namespace Content.Client.Inventory
             return true;
         }
 
-        public void RemoveSlotDef(EntityUid owner, ClientInventoryComponent component, SlotData slotData)
+        public void RemoveSlotDef(EntityUid owner, InventorySlotsComponent component, SlotData slotData)
         {
             if (component.SlotData.Remove(slotData.SlotName))
             {
@@ -220,7 +223,7 @@ namespace Content.Client.Inventory
             }
         }
 
-        public void RemoveSlotDef(EntityUid owner, ClientInventoryComponent component, string slotName)
+        public void RemoveSlotDef(EntityUid owner, InventorySlotsComponent component, string slotName)
         {
             if (!component.SlotData.TryGetValue(slotName, out var slotData))
                 return;

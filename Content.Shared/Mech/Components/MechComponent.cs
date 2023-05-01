@@ -138,13 +138,6 @@ public sealed class MechComponent : Component
     [DataField("startingEquipment", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> StartingEquipment = new();
 
-    /// <summary>
-    /// The battery the mech initially has when it spawns
-    /// Good for admemes and nukie mechs.
-    /// </summary>
-    [DataField("startingBattery", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? StartingBattery;
-
     #region Action Prototypes
     [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string MechCycleAction = "MechCycleEquipment";

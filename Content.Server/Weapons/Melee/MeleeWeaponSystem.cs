@@ -55,7 +55,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!args.CanInteract || !args.CanAccess || component.HideFromExamine)
             return;
 
-        var getDamage = new MeleeHitEvent(new List<EntityUid>(), args.User, component.Damage);
+        var getDamage = new MeleeHitEvent(new List<EntityUid>(), args.User, uid, component.Damage);
         getDamage.IsHit = false;
         RaiseLocalEvent(uid, getDamage);
 
@@ -79,7 +79,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             Text = Loc.GetString("damage-examinable-verb-text"),
             Message = Loc.GetString("damage-examinable-verb-message"),
             Category = VerbCategory.Examine,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
         };
 
         args.Verbs.Add(verb);

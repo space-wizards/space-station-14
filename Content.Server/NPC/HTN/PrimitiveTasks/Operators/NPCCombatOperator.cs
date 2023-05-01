@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Interaction;
+using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.NPC.Systems;
 using Content.Shared.Examine;
@@ -8,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Map;
+//using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
@@ -15,6 +17,7 @@ public abstract class NPCCombatOperator : HTNOperator
 {
     [Dependency] protected readonly IEntityManager EntManager = default!;
     private FactionSystem _factions = default!;
+    private FactionExceptionSystem _factionException = default!;
     protected InteractionSystem Interaction = default!;
     private PathfindingSystem _pathfinding = default!;
 
@@ -38,6 +41,7 @@ public abstract class NPCCombatOperator : HTNOperator
         base.Initialize(sysManager);
         sysManager.GetEntitySystem<ExamineSystemShared>();
         _factions = sysManager.GetEntitySystem<FactionSystem>();
+        _factionException = sysManager.GetEntitySystem<FactionExceptionSystem>();
         Interaction = sysManager.GetEntitySystem<InteractionSystem>();
         _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
     }
@@ -85,6 +89,8 @@ public abstract class NPCCombatOperator : HTNOperator
             paths.Add(UpdateTarget(owner, existingTarget, existingTarget, ownerCoordinates, blackboard, radius, canMove, xformQuery, targets));
         }
 
+        EntManager.TryGetComponent<FactionExceptionComponent>(owner, out var factionException);
+
         // TODO: Need a perception system instead
         // TODO: This will be expensive so will be good to optimise and cut corners.
         foreach (var target in _factions
@@ -93,7 +99,8 @@ public abstract class NPCCombatOperator : HTNOperator
             if (mobQuery.TryGetComponent(target, out var mobState) &&
                 mobState.CurrentState > MobState.Alive ||
                 target == existingTarget ||
-                target == owner)
+                target == owner ||
+                (factionException != null && _factionException.IsIgnored(factionException, target)))
             {
                 continue;
             }

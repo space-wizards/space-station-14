@@ -63,7 +63,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Plasma: 100
   - type: Stack
     stackType: Plasma
@@ -113,7 +114,8 @@
     - Sheet
     - DroneUsable
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Plastic: 100
   - type: Stack
     stackType: Plastic
@@ -147,7 +149,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Uranium: 100
   - type: Stack
     stackType: Uranium

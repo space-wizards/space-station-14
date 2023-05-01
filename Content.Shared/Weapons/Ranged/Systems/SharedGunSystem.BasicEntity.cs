@@ -11,23 +11,6 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BasicEntityAmmoProviderComponent, ComponentInit>(OnBasicEntityInit);
         SubscribeLocalEvent<BasicEntityAmmoProviderComponent, TakeAmmoEvent>(OnBasicEntityTakeAmmo);
         SubscribeLocalEvent<BasicEntityAmmoProviderComponent, GetAmmoCountEvent>(OnBasicEntityAmmoCount);
-
-        SubscribeLocalEvent<BasicEntityAmmoProviderComponent, ComponentGetState>(OnBasicEntityGetState);
-        SubscribeLocalEvent<BasicEntityAmmoProviderComponent, ComponentHandleState>(OnBasicEntityHandleState);
-    }
-
-    private void OnBasicEntityGetState(EntityUid uid, BasicEntityAmmoProviderComponent component, ref ComponentGetState args)
-    {
-        args.State = new BasicEntityAmmoProviderComponentState(component.Capacity, component.Count);
-    }
-
-    private void OnBasicEntityHandleState(EntityUid uid, BasicEntityAmmoProviderComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is BasicEntityAmmoProviderComponentState state)
-        {
-            component.Capacity = state.Capacity;
-            component.Count = state.Count;
-        }
     }
 
     private void OnBasicEntityInit(EntityUid uid, BasicEntityAmmoProviderComponent component, ComponentInit args)

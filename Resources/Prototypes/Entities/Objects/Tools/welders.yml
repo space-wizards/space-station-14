@@ -127,6 +127,12 @@
     enabled: false
     radius: 1.5
     color: lightblue
+  - type: SolutionRegeneration
+    solution: Welder
+    generated:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 1
 
 - type: entity
   name: emergency welding tool

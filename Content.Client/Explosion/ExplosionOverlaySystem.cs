@@ -48,28 +48,35 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
     private void OnCompRemove(EntityUid uid, ExplosionVisualsComponent component, ComponentRemove args)
     {
-        QueueDel(component.LightEntity);
+        if (TryComp(uid, out ExplosionVisualsTexturesComponent? textures))
+            QueueDel(textures.LightEntity);
     }
 
     private void OnExplosionInit(EntityUid uid, ExplosionVisualsComponent component, ComponentInit args)
     {
-        if (!_protoMan.TryIndex(component.ExplosionType, out ExplosionPrototype? type))
+        EnsureComp<ExplosionVisualsTexturesComponent>(uid);
+
+        if (!_protoMan.TryIndex(component.ExplosionType, out ExplosionPrototype? type) ||
+            !TryComp(uid, out ExplosionVisualsTexturesComponent? textures))
+        {
             return;
+        }
 
         // spawn in a client-side light source at the epicenter
         var lightEntity = Spawn("ExplosionLight", component.Epicenter);
         var light = EnsureComp<PointLightComponent>(lightEntity);
         light.Energy = light.Radius = component.Intensity.Count;
         light.Color = type.LightColor;
-        component.LightEntity = lightEntity;
-        component.FireColor = type.FireColor;
-        component.IntensityPerState = type.IntensityPerState;
+
+        textures.LightEntity = lightEntity;
+        textures.FireColor = type.FireColor;
+        textures.IntensityPerState = type.IntensityPerState;
 
         var fireRsi = _resCache.GetResource<RSIResource>(type.TexturePath).RSI;
         foreach (var state in fireRsi)
         {
-            component.FireFrames.Add(state.GetFrames(RSI.State.Direction.South));
-            if (component.FireFrames.Count == type.FireStates)
+            textures.FireFrames.Add(state.GetFrames(RSI.State.Direction.South));
+            if (textures.FireFrames.Count == type.FireStates)
                 break;
         }
     }

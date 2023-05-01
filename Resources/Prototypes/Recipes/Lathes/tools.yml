@@ -1,5 +1,8 @@
 - type: latheRecipe
   id: Wirecutter
+  icon:
+    sprite: Objects/Tools/wirecutters.rsi
+    state: cutters-map
   result: Wirecutter
   completetime: 2
   materials:
@@ -8,6 +11,9 @@
 
 - type: latheRecipe
   id: Screwdriver
+  icon:
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver-map
   result: Screwdriver
   completetime: 2
   materials:

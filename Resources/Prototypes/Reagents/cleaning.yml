@@ -36,6 +36,7 @@
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
+  slippery: true
   physicalDesc: reagent-physical-desc-shiny
   flavor: funny
   color: "#77b58e"

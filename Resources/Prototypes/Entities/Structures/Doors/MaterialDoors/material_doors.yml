@@ -12,6 +12,7 @@
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -31,15 +32,13 @@
     closeTimeTwo: 0.6
     openTimeOne: 0.6
     openTimeTwo: 0.2
+    openingAnimationTime: 1.2
+    closingAnimationTime: 1.2
     openSound:
       path: /Audio/Effects/stonedoor_openclose.ogg
     closeSound:
       path: /Audio/Effects/stonedoor_openclose.ogg
   - type: Appearance
-    visuals:
-      - type: AirlockVisualizer
-        simpleVisuals: true
-        animationTime: 1.2
   - type: Airtight
     fixVacuum: true
   - type: Damageable
@@ -187,4 +186,25 @@
   - type: Construction
     graph: DoorGraph
     node: silverDoor
+
+- type: entity
+  id: BananiumDoor
+  name: bananium door
+  parent: BaseMaterialDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/bananium_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: DoorGraph
+    node: bananiumDoor
+  - type: Door
+    openSound:
+      path: /Audio/Items/bikehorn.ogg
+    closeSound:
+      path: /Audio/Items/bikehorn.ogg
 

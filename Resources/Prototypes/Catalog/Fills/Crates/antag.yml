@@ -7,13 +7,9 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterHardsuitPirateCap
-        amount: 1
       - id: ClothingNeckCloakPirateCap
-        amount: 1
       - id: EnergyCutlass
-        amount: 1
       - id: MicroBombImplanter
-        amount: 1
 
 - type: entity
   id: CratePirateChest
@@ -26,7 +22,6 @@
       - id: WeaponLauncherPirateCannon
         amount: 2
       - id: ClothingOuterCoatGentle
-        amount: 1
       - id: Cutlass
         amount: 2
       - id: CannonBall
