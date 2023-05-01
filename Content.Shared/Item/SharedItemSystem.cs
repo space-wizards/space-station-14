@@ -19,9 +19,6 @@ public abstract class SharedItemSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
-
-        SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
-        SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
         SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract);
 
         SubscribeLocalEvent<ItemComponent, ComponentGetState>(OnGetState);
@@ -90,21 +87,6 @@ public abstract class SharedItemSystem : EntitySystem
     private void OnGetState(EntityUid uid, ItemComponent component, ref ComponentGetState args)
     {
         args.State = new ItemComponentState(component.Size, component.HeldPrefix);
-    }
-
-    // Although netsync is being set to false for items client can still update these
-    // Realistically:
-    // Container should already hide these
-    // Client is the only thing that matters.
-
-    private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)
-    {
-        component.Visible = true;
-    }
-
-    private void OnEquipped(EntityUid uid, SharedSpriteComponent component, GotEquippedEvent args)
-    {
-        component.Visible = false;
     }
 
     private void AddPickupVerb(EntityUid uid, ItemComponent component, GetVerbsEvent<InteractionVerb> args)

@@ -42,7 +42,6 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
 
-        SubscribeLocalEvent<PowerCellDrawComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PowerCellDrawComponent, EntityUnpausedEvent>(OnUnpaused);
 
         // funny
@@ -136,12 +135,6 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         RaiseLocalEvent(uid, ref ev);
     }
 
-    private void OnMapInit(EntityUid uid, PowerCellDrawComponent component, MapInitEvent args)
-    {
-        if (component.NextUpdateTime < _timing.CurTime)
-            component.NextUpdateTime = _timing.CurTime;
-    }
-
     private void OnUnpaused(EntityUid uid, PowerCellDrawComponent component, ref EntityUnpausedEvent args)
     {
         component.NextUpdateTime += args.PausedTime;
@@ -193,6 +186,15 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     }
 
     #endregion
+
+    public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        component.Enabled = enabled;
+        component.NextUpdateTime = _timing.CurTime;
+    }
 
     /// <summary>
     /// Returns whether the entity has a slotted battery and charge for the requested action.

@@ -59651,12 +59651,6 @@ entities:
   - pos: -24.5,22.5
     parent: 0
     type: Transform
-- uid: 7655
-  type: KvassTankFull
-  components:
-  - pos: -17.5,33.5
-    parent: 0
-    type: Transform
 - uid: 7656
   type: WallReinforced
   components:
