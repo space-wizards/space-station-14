@@ -24,12 +24,12 @@
       collection: MaleYawn
     Snore:
       collection: Snores
-    Honk:
-      collection: BikeHorn
     Crying:
       collection: MaleCry
     Whistle:
       collection: Whistles
+    Honk:
+      collection: BikeHorn
 
 - type: emoteSounds
   id: FemaleHuman
@@ -56,12 +56,12 @@
       collection: FemaleYawn
     Snore:
       collection: Snores
-    Honk:
-      collection: CluwneHorn
     Crying:
       collection: FemaleCry
     Whistle:
       collection: Whistles
+    Honk:
+      collection: CluwneHorn
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -112,12 +112,12 @@
       collection: MaleScreams
     Laugh:
       collection: MaleLaugh
-    Honk:
-      collection: BikeHorn
     Whistle:
       collection: Whistles
     Crying:
       collection: MaleCry
+    Honk:
+      collection: BikeHorn
   params:
     variation: 0.125
     pitchscale: 0.75
