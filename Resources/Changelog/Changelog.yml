@@ -1,14 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Walls and construction now properly cancel out of a doafter., type: Fix}
-  - {message: Cancelling screwing doors or anything with wires won't prevent further
-      doafters from running anymore., type: Fix}
-  - {message: EscapeInventory can no longer spam and cancels on drop again., type: Fix}
-  - {message: Mopping won't break anymore if cancelled, type: Fix}
-  - {message: Meatspikes won't break anymore on use or if cancelled., type: Fix}
-  id: 3089
-  time: '2023-03-01T00:51:43.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Wizard bedsheet sprite animation has been fixed., type: Fix}
@@ -2883,3 +2873,10 @@ Entries:
   - {message: Flares no longer flicker., type: Tweak}
   id: 3588
   time: '2023-04-30T17:56:17.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'Arachnids suffer less now from hunger decay, asphyxiation and slowdown
+      from damage.', type: Tweak}
+  - {message: Arachnids can now wear glasses.... somehow, type: Tweak}
+  id: 3589
+  time: '2023-05-01T01:05:25.0000000+00:00'
