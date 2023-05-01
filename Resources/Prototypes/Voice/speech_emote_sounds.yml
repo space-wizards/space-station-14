@@ -57,7 +57,7 @@
     Snore:
       collection: Snores
     Honk:
-      collection: BikeHorn
+      collection: CluwneHorn
     Crying:
       collection: FemaleCry
     Whistle:
@@ -72,6 +72,8 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
+    Honk:
+      collection: BikeHorn
 
 - type: emoteSounds
   id: UnisexVox
@@ -87,8 +89,21 @@
       path: /Audio/Voice/Diona/diona_scream.ogg
     Laugh:
       collection: DionaLaugh
+    Honk:
+      collection: BikeHorn
   params:
     variation: 0.125
+
+
+- type: emoteSounds
+  id: UnisexArachnid
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+    Laugh:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
 
 - type: emoteSounds
   id: UnisexDwarf
