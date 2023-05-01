@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix breaking planet tiles leading to the void., type: Fix}
-  id: 3097
-  time: '2023-03-05T01:11:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Tiles now support edges. For now this support has been added to grass.,
     type: Add}
   id: 3098
@@ -2888,3 +2883,8 @@ Entries:
       menu, type: Tweak}
   id: 3596
   time: '2023-05-01T14:20:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix up space cleaner and lots of changes to make it better., type: Tweak}
+  id: 3597
+  time: '2023-05-01T14:25:33.0000000+00:00'
