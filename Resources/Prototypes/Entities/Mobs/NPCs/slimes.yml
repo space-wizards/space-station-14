@@ -110,10 +110,11 @@
     interactFailureString: petting-failure-generic
   - type: ReplacementAccent
     accent: slimes
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
+  - type: GhostTakeoverAvailable
 
 - type: entity
   name: blue slime
