@@ -1,9 +1,4 @@
 Entries:
-- author: Nylux
-  changes:
-  - {message: Changed the name of planet-related tiles to be more readable., type: Tweak}
-  id: 3093
-  time: '2023-03-04T04:50:43.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Cardboard boxes now have airholes to prevent suffocation., type: Fix}
@@ -2884,3 +2879,10 @@ Entries:
   - {message: Added the paramedic role, type: Add}
   id: 3592
   time: '2023-05-01T07:13:57.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: 'Three kinds of aggressive slimes, and their peaceful versions', type: Add}
+  - {message: 'A new event for the station, in which slimes come out of the vent scrubber.',
+    type: Add}
+  id: 3593
+  time: '2023-05-01T08:21:39.0000000+00:00'
