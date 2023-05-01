@@ -1,10 +1,4 @@
 Entries:
-- author: Cripes
-  changes:
-  - {message: Fixed bug where cargo orders would only half-fill the shuttle capacity.,
-    type: Fix}
-  id: 3101
-  time: '2023-03-05T04:27:30.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix some more instances of NPCs dancing., type: Fix}
@@ -2886,3 +2880,8 @@ Entries:
       in maintenance.', type: Add}
   id: 3600
   time: '2023-05-01T14:43:31.0000000+00:00'
+- author: ProPandaBear
+  changes:
+  - {message: Increased toxin poison damage from 2 to 4., type: Tweak}
+  id: 3601
+  time: '2023-05-01T16:54:47.0000000+00:00'
