@@ -174,7 +174,7 @@
   parent: EncryptionKey
   id: EncryptionKeySecurity
   name: security encryption key
-  description: An encryption key used by security.
+  description: An encryption key used by security. Maybe it has additional encryption?
   components:
   - type: EncryptionKey
     channels:
