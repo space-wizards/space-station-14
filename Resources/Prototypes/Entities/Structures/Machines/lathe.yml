@@ -313,6 +313,9 @@
       - OreProcessorMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
+      - HonkerCentralElectronics
+      - HonkerPeripheralsElectronics
+      - HonkerTargetingElectronics
       - GeneratorPlasmaMachineCircuitboard
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
