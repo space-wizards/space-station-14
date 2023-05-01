@@ -113,7 +113,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
         component.NextBeepTime = _timing.CurTime;
         UpdateBeep(uid, component, false);
         if (draw != null)
-            draw.Enabled = true;
+            _powerCell.SetPowerCellDrawEnabled(uid, true, draw);
         return true;
     }
 
@@ -130,8 +130,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
         component.Enabled = false;
         _appearance.SetData(uid, ProximityBeeperVisuals.Enabled, false);
-        if (TryComp<PowerCellDrawComponent>(uid, out var draw))
-            draw.Enabled = true;
+        _powerCell.SetPowerCellDrawEnabled(uid, true);
         UpdateBeep(uid, component);
         return true;
     }

@@ -67,3 +67,9 @@ accent-words-pig-1 = Oink.
 accent-words-pig-2 = Oink?
 accent-words-pig-3 = Oink!
 accent-words-pig-4 = Oink oink!
+
+# Kangaroo
+accent-words-kangaroo-1 = Grr!
+accent-words-kangaroo-2 = Hisss!
+accent-words-kangaroo-3 = Shreak!
+accent-words-kangaroo-4 = Chuu!

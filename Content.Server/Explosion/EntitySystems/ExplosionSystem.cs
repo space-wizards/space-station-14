@@ -1,10 +1,12 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Chat.Managers;
 using Content.Server.Explosion.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Camera;
+using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
@@ -38,6 +40,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly PVSOverrideSystem _pvsSys = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
@@ -227,11 +230,18 @@ public sealed partial class ExplosionSystem : EntitySystem
             return;
 
         if (user == null)
+        {
             _adminLogger.Add(LogType.Explosion, LogImpact.High,
                 $"{ToPrettyString(uid):entity} exploded ({typeId}) at {pos.Coordinates:coordinates} with intensity {totalIntensity} slope {slope}");
+        }
         else
+        {
             _adminLogger.Add(LogType.Explosion, LogImpact.High,
                 $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at {pos.Coordinates:coordinates} with intensity {totalIntensity} slope {slope}");
+            var alertMinExplosionIntensity = _cfg.GetCVar(CCVars.AdminAlertExplosionMinIntensity);
+            if (alertMinExplosionIntensity > -1 && totalIntensity >= alertMinExplosionIntensity)
+                _chat.SendAdminAlert(user.Value, $"caused {ToPrettyString(uid)} to explode ({typeId}:{totalIntensity}) at {pos.Coordinates:coordinates}");
+        }
     }
 
     /// <summary>

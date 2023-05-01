@@ -1,4 +1,5 @@
 using Content.Shared.CCVar;
+using Content.Shared.Follower.Components;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
@@ -50,6 +51,8 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, ComponentGetState>(OnInputGetState);
             SubscribeLocalEvent<InputMoverComponent, ComponentHandleState>(OnInputHandleState);
             SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
+
+            SubscribeLocalEvent<FollowedComponent, EntParentChangedMessage>(OnFollowedParentChange);
 
             _configManager.OnValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked, true);
             _configManager.OnValueChanged(CCVars.GameDiagonalMovement, SetDiagonalMovement, true);
@@ -143,6 +146,21 @@ namespace Content.Shared.Movement.Systems
                 return (relativeXform.WorldRotation + rotation);
 
             return rotation;
+        }
+
+        private void OnFollowedParentChange(EntityUid uid, FollowedComponent component, ref EntParentChangedMessage args)
+        {
+            var moverQuery = GetEntityQuery<InputMoverComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+
+            foreach (var foll in component.Following)
+            {
+                if (!moverQuery.TryGetComponent(foll, out var mover))
+                    continue;
+
+                var ev = new EntParentChangedMessage(foll, null, args.OldMapId, xformQuery.GetComponent(foll));
+                OnInputParentChange(foll, mover, ref ev);
+            }
         }
 
         private void OnInputParentChange(EntityUid uid, InputMoverComponent component, ref EntParentChangedMessage args)

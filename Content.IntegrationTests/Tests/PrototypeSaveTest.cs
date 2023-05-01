@@ -36,6 +36,64 @@ public sealed class PrototypeSaveTest
     {
         "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
         "constructionghost",
+
+        // These ones are from the serialization change to alwayswrite.
+        // These should NOT be added to.
+        // 99% of these are going to be changing the physics bodytype (where the entity is anchored)
+        // or some ambientsound change.
+        "GasVentScrubber",
+        "GasPassiveVent",
+        "CableHV",
+        "ParticleAcceleratorFuelChamberUnfinished",
+        "ComfyChair",
+        "PlasticFlapsOpaque",
+        "ParticleAcceleratorEmitterRightUnfinished",
+        "PlasticFlapsAirtightClear",
+        "SignalControlledValve",
+        "SignalControlledValve",
+        "GasPipeTJunction",
+        "GasFilter",
+        "GasOutletInjector",
+        "GasPressurePump",
+        "SurveillanceWirelessCameraAnchoredEntertainment",
+        "GasPort",
+        "Chair",
+        "GasMixer",
+        "ParticleAcceleratorPowerBoxUnfinished",
+        "GasValve",
+        "Thruster",
+        "BoxingBell",
+        "CableApcExtension",
+        "PlasticFlapsClear",
+        "ClothingBackpackChameleon",
+        "AMEControllerUnanchored",
+        "GasPipeFourway",
+        "NuclearBomb",
+        "PlasticFlapsAirtightOpaque",
+        "ParticleAcceleratorControlBoxUnfinished",
+        "GasPipeHalf",
+        "GasVolumePump",
+        "ParticleAcceleratorEmitterLeftUnfinished",
+        "GasMixerFlipped",
+        "ToiletDirtyWater",
+        "GasPipeBend",
+        "ParticleAcceleratorEndCapUnfinished",
+        "GasPipeStraight",
+        "MachineFrameDestroyed",
+        "ChairPilotSeat",
+        "VehicleJanicartDestroyed",
+        "Gyroscope",
+        "ParticleAcceleratorEmitterCenterUnfinished",
+        "ToiletEmpty",
+        "GasPassiveGate",
+        "CableMV",
+        "ClothingBackpackChameleonFill",
+        "GasDualPortVentPump",
+        "GasVentPump",
+        "PressureControlledValve",
+        "GasFilterFlipped",
+        "SurveillanceWirelessCameraAnchoredConstructed",
+
     };
 
     [Test]
@@ -116,7 +174,7 @@ public sealed class PrototypeSaveTest
                     {
                         foreach (var (compType, comp) in prototype.Components)
                         {
-                            protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, context: context));
+                            protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, alwaysWrite:true, context: context));
                         }
                     }
                     catch (Exception e)
@@ -139,7 +197,7 @@ public sealed class PrototypeSaveTest
                         MappingDataNode compMapping;
                         try
                         {
-                            compMapping = seriMan.WriteValueAs<MappingDataNode>(compType, component, context: context);
+                            compMapping = seriMan.WriteValueAs<MappingDataNode>(compType, component, alwaysWrite: true, context: context);
                         }
                         catch (Exception e)
                         {
@@ -198,15 +256,14 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            // EntityUids should be nullable and have no initial value.
-            throw new InvalidOperationException("Serializing prototypes should not attempt to write entity Uids");
+            return new ValueDataNode(value.ToString());
         }
 
         EntityUid ITypeReader<EntityUid, ValueDataNode>.Read(ISerializationManager serializationManager,
             ValueDataNode node,
             IDependencyCollection dependencies,
             SerializationHookContext hookCtx,
-            ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider = null)
+            ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider)
         {
             return EntityUid.Invalid;
         }

@@ -29,6 +29,16 @@
     - DiscreteHealthAnalyzer
 
 - type: entity
+  id: HandheldHealthAnalyzerEmpty
+  parent: HandheldHealthAnalyzer
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default 
+
+- type: entity
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerGigacancer
   suffix: gigacancer
@@ -57,3 +67,12 @@
   - type: HealthAnalyzer
     fake: true
     disease: ActiveZombieVirus
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerHonk
+  suffix: Honk Infector
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: ActiveHonkVirus

@@ -73,7 +73,6 @@ public sealed class SmokeSystem : EntitySystem
     private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
     {
         if (component.SpreadAmount == 0 ||
-            args.Grid == null ||
             !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution) ||
             args.NeighborFreeTiles.Count == 0)
         {
@@ -94,9 +93,9 @@ public sealed class SmokeSystem : EntitySystem
         var smokePerSpread = component.SpreadAmount / args.NeighborFreeTiles.Count;
         component.SpreadAmount -= smokePerSpread;
 
-        foreach (var tile in args.NeighborFreeTiles)
+        foreach (var neighbor in args.NeighborFreeTiles)
         {
-            var coords = args.Grid.GridTileToLocal(tile);
+            var coords = neighbor.Grid.GridTileToLocal(neighbor.Tile);
             var ent = Spawn(prototype.ID, coords.SnapToGrid());
             var neighborSmoke = EnsureComp<SmokeComponent>(ent);
             neighborSmoke.SpreadAmount = Math.Max(0, smokePerSpread - 1);

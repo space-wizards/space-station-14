@@ -29,3 +29,13 @@
   - type: StationLimitedNetwork
   - type: StaticPrice
     price: 500
+
+- type: entity
+  id: HandheldCrewMonitorEmpty
+  parent: HandheldCrewMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default 

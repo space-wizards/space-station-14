@@ -6,7 +6,13 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13-RP"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/b7392a25f826d038d35309cf36875f2066c3eb05/sound/effects/footstep"
-  
+
+- files:
+  - bounce.ogg
+  license: "CC-BY-SA-4.0"
+  copyright: "Made by JustInvoke freesound.org"
+  source: "https://freesound.org/people/JustInvoke/sounds/446100/"
+ 
 - files:
   - jesterstep1.ogg
   - jesterstep2.ogg

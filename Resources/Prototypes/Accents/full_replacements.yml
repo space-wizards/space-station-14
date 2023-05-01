@@ -91,3 +91,11 @@
   - accent-words-pig-2
   - accent-words-pig-3
   - accent-words-pig-4
+
+- type: accent
+  id: kangaroo
+  fullReplacements:
+  - accent-words-kangaroo-1
+  - accent-words-kangaroo-2
+  - accent-words-kangaroo-3
+  - accent-words-kangaroo-4

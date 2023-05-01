@@ -50,7 +50,7 @@
 
 - type: latheRecipe
   id: HandheldCrewMonitor
-  result: HandheldCrewMonitor
+  result: HandheldCrewMonitorEmpty
   completetime: 2
   materials:
     Glass: 1200
@@ -59,7 +59,7 @@
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer
-  result: HandheldHealthAnalyzer
+  result: HandheldHealthAnalyzerEmpty
   completetime: 4
   materials:
     Glass: 500

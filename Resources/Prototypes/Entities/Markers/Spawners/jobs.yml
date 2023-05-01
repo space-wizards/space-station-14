@@ -453,7 +453,7 @@
   - type: Sprite
     layers:
       - state: green
-      - state: brigmed
+      - state: brigmedic
 
 # SPECIAL
 # ERT
