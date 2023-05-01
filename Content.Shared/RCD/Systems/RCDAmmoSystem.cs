@@ -4,7 +4,6 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.RCD.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.RCD.Systems;
@@ -12,7 +11,6 @@ namespace Content.Shared.RCD.Systems;
 public sealed class RCDAmmoSystem : EntitySystem
 {
     [Dependency] private readonly SharedChargesSystem _charges = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 

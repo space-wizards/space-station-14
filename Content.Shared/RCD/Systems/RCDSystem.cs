@@ -7,6 +7,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.RCD.Components;
 using Content.Shared.Tag;
@@ -32,8 +33,9 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
-    private readonly int RCDModeCount = Enum.GetValues(typeof(RcdMode)).Length;
+    private readonly int RcdModeCount = Enum.GetValues(typeof(RcdMode)).Length;
 
     public override void Initialize()
     {
@@ -70,6 +72,13 @@ public sealed class RCDSystem : EntitySystem
 
         var user = args.User;
 
+        TryComp<LimitedChargesComponent>(uid, out var charges);
+        if (_charges.IsEmpty(uid, charges))
+        {
+            _popup.PopupClient(Loc.GetString("rcd-component-no-ammo-message"), uid, user);
+            return;
+        }
+
         var location = args.ClickLocation;
         // Initial validity check
         if (!location.IsValid(EntityManager))
@@ -85,23 +94,39 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var mapGrid = _mapMan.GetGrid(gridId.Value);
-        var tile = mapGrid.GetTileRef(location);
-        var snapPos = mapGrid.TileIndicesFor(location);
-
-        var doAfterArgs = new DoAfterArgs(user, comp.Delay, new RCDDoAfterEvent(location), uid, target: args.Target, used: uid)
+        var doAfterArgs = new DoAfterArgs(user, comp.Delay, new RCDDoAfterEvent(location, comp.Mode), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
             NeedHand = true,
             BreakOnHandChange = true,
             BreakOnUserMove = true,
             BreakOnTargetMove = args.Target != null,
-            AttemptFrequency = AttemptFrequency.EveryTick,
-            ExtraCheck = () => IsRCDStillValid(uid, comp, args.User, args.Target, mapGrid, tile, comp.Mode) // All of the sanity checks are here
+            AttemptFrequency = AttemptFrequency.EveryTick
         };
 
         args.Handled = true;
         _doAfter.TryStartDoAfter(doAfterArgs);
+    }
+
+    private void OnDoAfterAttempt(EntityUid uid, RCDComponent comp, DoAfterAttemptEvent<RCDDoAfterEvent> args)
+    {
+        var location = args.Event.Location;
+
+        var gridId = location.GetGridUid(EntityManager);
+        if (!HasComp<MapGridComponent>(gridId))
+        {
+            location = location.AlignWithClosestGridTile();
+            gridId = location.GetGridUid(EntityManager);
+            // Check if fixing it failed / get final grid ID
+            if (!HasComp<MapGridComponent>(gridId))
+                return;
+        }
+
+        var mapGrid = _mapMan.GetGrid(gridId.Value);
+        var tile = mapGrid.GetTileRef(location);
+
+        if (!IsRCDStillValid(uid, comp, args.Event.User, args.Event.Target, mapGrid, tile, args.Event.StartingMode))
+            args.Cancel();
     }
 
     private void OnDoAfter(EntityUid uid, RCDComponent comp, RCDDoAfterEvent args)
@@ -136,7 +161,7 @@ public sealed class RCDSystem : EntitySystem
                 break;
             //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
             case RcdMode.Deconstruct:
-                if (!tile.IsBlockedTurf(true)) // Delete the turf
+                if (!IsTileBlocked(tile)) // Delete the turf
                 {
                     mapGrid.SetTile(snapPos, Tile.Empty);
                     _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridUid} tile: {snapPos} to space");
@@ -181,13 +206,6 @@ public sealed class RCDSystem : EntitySystem
     private bool IsRCDStillValid(EntityUid uid, RCDComponent comp, EntityUid user, EntityUid? target, MapGridComponent mapGrid, TileRef tile, RcdMode startingMode)
     {
         //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
-        TryComp<LimitedChargesComponent>(uid, out var charges);
-        if (_charges.IsEmpty(uid, charges))
-        {
-            _popup.PopupClient(Loc.GetString("rcd-component-no-ammo-message"), uid, user);
-            return false;
-        }
-
         if (comp.Mode != startingMode)
             return false;
 
@@ -217,7 +235,7 @@ public sealed class RCDSystem : EntitySystem
                 }
 
                 //They tried to decon a turf but the turf is blocked
-                if (target == null && tile.IsBlockedTurf(true))
+                if (target == null && IsTileBlocked(tile))
                 {
                     _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
                     return false;
@@ -238,7 +256,7 @@ public sealed class RCDSystem : EntitySystem
                     return false;
                 }
 
-                if (tile.IsBlockedTurf(true))
+                if (IsTileBlocked(tile))
                 {
                     _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
                     return false;
@@ -250,7 +268,7 @@ public sealed class RCDSystem : EntitySystem
                     _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-airlock-tile-not-empty-message"), uid, user);
                     return false;
                 }
-                if (tile.IsBlockedTurf(true))
+                if (IsTileBlocked(tile))
                 {
                     _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
                     return false;
@@ -266,12 +284,17 @@ public sealed class RCDSystem : EntitySystem
         _audio.PlayPredicted(comp.SwapModeSound, uid, user);
 
         var mode = (int) comp.Mode;
-        mode = ++mode % RCDModeCount;
+        mode = ++mode % RcdModeCount;
         comp.Mode = (RcdMode) mode;
         Dirty(comp);
 
         var msg = Loc.GetString("rcd-component-change-mode", ("mode", comp.Mode.ToString()));
         _popup.PopupClient(msg, uid, user);
+    }
+
+    private bool IsTileBlocked(TileRef tile)
+    {
+        return _turf.IsTileBlocked(tile, CollisionGroup.MobMask);
     }
 }
 
@@ -281,13 +304,17 @@ public sealed class RCDDoAfterEvent : DoAfterEvent
     [DataField("location", required: true)]
     public readonly EntityCoordinates Location = default!;
 
+    [DataField("startingMode", required: true)]
+    public readonly RcdMode StartingMode = default!;
+
     private RCDDoAfterEvent()
     {
     }
 
-    public RCDDoAfterEvent(EntityCoordinates location)
+    public RCDDoAfterEvent(EntityCoordinates location, RcdMode startingMode)
     {
         Location = location;
+        StartingMode = startingMode;
     }
 
     public override DoAfterEvent Clone() => this;
