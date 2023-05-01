@@ -24,6 +24,8 @@
       collection: MaleYawn
     Snore:
       collection: Snores
+    Honk:
+      collection: BikeHorn
     Crying:
       collection: MaleCry
     Whistle:
@@ -54,6 +56,8 @@
       collection: FemaleYawn
     Snore:
       collection: Snores
+    Honk:
+      collection: BikeHorn
     Crying:
       collection: FemaleCry
     Whistle:
@@ -93,6 +97,8 @@
       collection: MaleScreams
     Laugh:
       collection: MaleLaugh
+    Honk:
+      collection: BikeHorn
     Whistle:
       collection: Whistles
     Crying:
