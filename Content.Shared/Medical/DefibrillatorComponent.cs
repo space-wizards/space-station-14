@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -10,7 +11,7 @@ namespace Content.Shared.Medical;
 /// This is used for defibrillators; a machine that shocks a dead
 /// person back into the world of the living.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class DefibrillatorComponent : Component
 {
     /// <summary>
@@ -20,32 +21,53 @@ public sealed class DefibrillatorComponent : Component
     public bool Enabled;
 
     /// <summary>
-    /// Whether or not the cooldown after zapping someone has ended.
+    /// The time at which the zap cooldown will be completed
     /// </summary>
-    [DataField("cooldownEnded"), ViewVariables(VVAccess.ReadWrite)]
-    public bool CooldownEnded = true;
+    [DataField("nextZapTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan NextZapTime = TimeSpan.Zero;
 
-    [DataField("nextShockTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan NextShockTime = TimeSpan.Zero;
+    /// <summary>
+    /// The minimum time between zaps
+    /// </summary>
+    [DataField("zapDelay"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan ZapDelay = TimeSpan.FromSeconds(5);
 
-    [DataField("shockDelay"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan ShockDelay = TimeSpan.FromSeconds(5);
-
+    /// <summary>
+    /// How much damage is healed from getting zapped.
+    /// </summary>
     [DataField("zapHeal", required: true), ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier ZapHeal = default!;
 
+    /// <summary>
+    /// The electrical damage from getting zapped.
+    /// </summary>
     [DataField("zapDamage"), ViewVariables(VVAccess.ReadWrite)]
     public int ZapDamage = 5;
 
+    /// <summary>
+    /// How long the victim will be electrocuted after getting zapped.
+    /// </summary>
     [DataField("writheDuration"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan WritheDuration = TimeSpan.FromSeconds(3);
 
+    /// <summary>
+    /// How long the doafter for zapping someone takes
+    /// </summary>
+    /// <remarks>
+    /// This is synced with the audio; do not change one but not the other.
+    /// </remarks>
     [DataField("doAfterDuration"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(3);
 
+    /// <summary>
+    /// The sound when someone is zapped.
+    /// </summary>
     [DataField("zapSound")]
     public SoundSpecifier? ZapSound;
 
+    /// <summary>
+    /// The sound when the defib is powered on.
+    /// </summary>
     [DataField("powerOnSound")]
     public SoundSpecifier? PowerOnSound;
 

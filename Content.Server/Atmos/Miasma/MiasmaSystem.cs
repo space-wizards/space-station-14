@@ -179,7 +179,7 @@ namespace Content.Server.Atmos.Miasma
         {
             if (args.NewMobState == MobState.Dead)
                 return;
-            RemComp(uid, component);
+            RemCompDeferred(uid, component);
         }
 
         public bool IsRotting(EntityUid uid, PerishableComponent? perishable = null, MetaDataComponent? metadata = null)
