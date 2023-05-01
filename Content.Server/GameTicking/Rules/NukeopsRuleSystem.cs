@@ -408,8 +408,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             var playersPerOperative = nukeops.PlayersPerOperative;
             var maxOperatives = nukeops.MaxOperatives;
 
+            // Dear lord what is happening HERE.
             var everyone = new List<IPlayerSession>(ev.PlayerPool);
             var prefList = new List<IPlayerSession>();
+            var medPrefList = new List<IPlayerSession>();
             var cmdrPrefList = new List<IPlayerSession>();
             var operatives = new List<IPlayerSession>();
 
@@ -427,7 +429,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 {
                     prefList.Add(player);
                 }
-                if (profile.AntagPreferences.Contains(_nukeopsRuleConfig.MedicRoleProto))
+                if (profile.AntagPreferences.Contains(nukeops.MedicRoleProto))
 	            {
 	                medPrefList.Add(player);
 	            }
@@ -441,13 +443,51 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             for (var i = 0; i < numNukies; i++)
             {
+                // TODO: Please fix this if you touch it.
                 IPlayerSession nukeOp;
                 // Only one commander, so we do it at the start
                 if (i == 0)
                 {
                     if (cmdrPrefList.Count == 0)
                     {
-
+                        if (medPrefList.Count == 0)
+                        {
+                            if (prefList.Count == 0)
+                            {
+                                if (everyone.Count == 0)
+                                {
+                                    Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
+                                    break;
+                                }
+                                nukeOp = _random.PickAndTake(everyone);
+                                Logger.InfoS("preset", "Insufficient preferred nukeop commanders, agents or nukies, picking at random.");
+                            }
+                            else
+                            {
+                                nukeOp = _random.PickAndTake(prefList);
+                                everyone.Remove(nukeOp);
+                                Logger.InfoS("preset", "Insufficient preferred nukeop commander or agents, picking at random from regular op list.");
+                            }
+                        }
+                        else
+                        {
+                            nukeOp = _random.PickAndTake(medPrefList);
+                            everyone.Remove(nukeOp);
+                            prefList.Remove(nukeOp);
+                            Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking an agent");
+                        }
+                    }
+                    else
+                    {
+                        nukeOp = _random.PickAndTake(cmdrPrefList);
+                        everyone.Remove(nukeOp);
+                        prefList.Remove(nukeOp);
+                        medPrefList.Remove(nukeOp);
+                        Logger.InfoS("preset", "Selected a preferred nukeop commander.");
+                    }
+                }
+                else if (i == 1)
+                {
                     if (medPrefList.Count == 0)
                     {
                         if (prefList.Count == 0)
@@ -471,89 +511,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                     {
                         nukeOp = _random.PickAndTake(medPrefList);
                         everyone.Remove(nukeOp);
-                        prefList.Remove(nukeOp);
                         Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking an agent");
                     }
 
                 }
                 else
                 {
-                    nukeOp = _random.PickAndTake(cmdrPrefList);
+                    nukeOp = _random.PickAndTake(prefList);
                     everyone.Remove(nukeOp);
-                    prefList.Remove(nukeOp);
-                    medPrefList.Remove(nukeOp);
                     Logger.InfoS("preset", "Selected a preferred nukeop commander.");
                 }
-            }
-            else if (i == 1)
 
-                    if (medPrefList.Count == 0)
-                    {
-                        if (prefList.Count == 0)
-                        {
-                            if (everyone.Count == 0)
-                            {
-                                Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
-                                break;
-                            }
-                            nukeOp = _random.PickAndTake(everyone);
-                            Logger.InfoS("preset", "Insufficient preferred nukeop commanders, agents or nukies, picking at random.");
-                        }
-                        else
-                        {
-                            nukeOp = _random.PickAndTake(prefList);
-                            everyone.Remove(nukeOp);
-                            Logger.InfoS("preset", "Insufficient preferred nukeop commander or agents, picking at random from regular op list.");
-                        }
-                    }
-                    else
-                    {
-                        nukeOp = _random.PickAndTake(medPrefList);
-                        everyone.Remove(nukeOp);
-                        prefList.Remove(nukeOp);
-                        Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking an agent");
-                    }
-
-                }
-                else
-                {
-                    nukeOp = _random.PickAndTake(cmdrPrefList);
-                    everyone.Remove(nukeOp);
-                    prefList.Remove(nukeOp);
-                    medPrefList.Remove(nukeOp);
-                    Logger.InfoS("preset", "Selected a preferred nukeop commander.");
-                }
-            }
-            else if (i == 1)
-            {
-                if (medPrefList.Count == 0)
-                {
-                    if (prefList.Count == 0)
-                    {
-                        if (everyone.Count == 0)
-                        {
-                            Logger.InfoS("preset",
-                                "Insufficient ready players to fill up with nukeops, stopping the selection");
-                            break;
-                        }
-
-                        nukeOp = _random.PickAndTake(everyone);
-                        Logger.InfoS("preset", "Insufficient preferred nukeop agents or nukies, picking at random.");
-                    }
-                    else
-                    {
-                        nukeOp = _random.PickAndTake(prefList);
-                        everyone.Remove(nukeOp);
-                        Logger.InfoS("preset", "Insufficient preferred nukeop agents, picking at random from regular op list.");
-                    }
-                }
-                else
-                {
-                    nukeOp = _random.PickAndTake(medPrefList);
-                    everyone.Remove(nukeOp);
-                    prefList.Remove(nukeOp);
-                    Logger.InfoS("preset", "Selected a preferred nukeop agent.");
-                }
+                operatives.Add(nukeOp);
             }
 
             SpawnOperatives(numNukies, operatives, false, nukeops);
@@ -699,7 +668,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 break;
             case 1:
                 name = Loc.GetString("nukeops-role-agent") + " " + _random.PickAndTake(component.OperativeNames[component.NormalNames]);
-                role = _nukeopsRuleConfig.MedicRoleProto;
+                role = component.MedicRoleProto;
                 gear = component.MedicStartGearPrototype;
                 break;
             default:
