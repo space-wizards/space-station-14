@@ -1,9 +1,4 @@
 Entries:
-- author: CaptainSqrBeard
-  changes:
-  - {message: Default marking colors now can be applied differently, type: Tweak}
-  id: 3099
-  time: '2023-03-05T02:59:08.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: 'Three new traits have been added Lightweight Drunk, Paracusia, and
@@ -2887,3 +2882,8 @@ Entries:
   - {message: Cleanbots now mop floors rather than drain near them., type: Tweak}
   id: 3598
   time: '2023-05-01T14:30:15.0000000+00:00'
+- author: illersaver
+  changes:
+  - {message: Added vapes!, type: Add}
+  id: 3599
+  time: '2023-05-01T14:34:12.0000000+00:00'
