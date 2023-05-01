@@ -33,14 +33,12 @@
     Mold: 3
     Pax: 3
     Toxin: 5
-    
-
 
 - type: entity
   name: strange pill
   parent: Pill
   id: StrangePill
-  description: This unusual pill bears no markings. Theres no telling what it contains.
+  description: This unusual pill bears no markings. There's no telling what it contains.
   components:
   - type: SolutionContainerManager
     solutions:

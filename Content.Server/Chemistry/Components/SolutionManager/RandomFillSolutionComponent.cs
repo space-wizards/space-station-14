@@ -1,5 +1,7 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Random;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.Components.SolutionManager;
 
@@ -18,7 +20,7 @@ public sealed class RandomFillSolutionComponent : Component
     /// <summary>
     ///     Weighted random prototype Id. Used to pick reagent.
     /// </summary>
-    [DataField("weightedRandomId")]
+    [DataField("weightedRandomId", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
     public string WeightedRandomId { get; set; } = "default";
 
     /// <summary>
