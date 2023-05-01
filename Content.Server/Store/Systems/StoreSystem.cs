@@ -1,7 +1,9 @@
 using Content.Server.Mind.Components;
+using Content.Server.PDA.Ringer;
 using Content.Server.Store.Components;
 using Content.Server.UserInterface;
 using Content.Shared.FixedPoint;
+using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -32,6 +34,7 @@ public sealed partial class StoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
 
         InitializeUi();
         InitializeCommand();
@@ -70,9 +73,9 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Target == null || !TryComp<StoreComponent>(args.Target, out var store))
             return;
 
-        // require the store to be open before inserting currency
+        // if the store can be locked, it must be unlocked first before inserting currency
         var user = args.User;
-        if (!TryComp<ActorComponent>(user, out var actor) || !_ui.SessionHasOpenUi(uid, StoreUiKey.Key, actor.PlayerSession))
+        if (TryComp<RingerUplinkComponent>(args.Target, out var uplink) && !uplink.Unlocked)
             return;
 
         args.Handled = TryAddCurrency(GetCurrencyValue(uid, component), args.Target.Value, store);
@@ -83,6 +86,11 @@ public sealed partial class StoreSystem : EntitySystem
             _popup.PopupEntity(msg, args.Target.Value);
             QueueDel(args.Used);
         }
+    }
+
+    private void OnImplantActivate(EntityUid uid, StoreComponent component, OpenUplinkImplantEvent args)
+    {
+        ToggleUi(args.Performer, uid, component);
     }
 
     /// <summary>
@@ -176,6 +184,8 @@ public sealed partial class StoreSystem : EntitySystem
 
         var ui = _ui.GetUiOrNull(uid, StoreUiKey.Key);
         if (ui != null)
+        {
             _ui.SetUiState(ui, new StoreInitializeState(preset.StoreName));
+        }
     }
 }

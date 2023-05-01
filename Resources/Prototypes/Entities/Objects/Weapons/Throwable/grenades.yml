@@ -143,7 +143,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/modular.rsi
-    state: empty
+    layers:
+    - state: empty
+      map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Item
     size: 8
   - type: PayloadCase
@@ -168,6 +170,14 @@
       states:
         enum.Trigger.TriggerVisualState.Primed: primed
         enum.Trigger.TriggerVisualState.Unprimed: complete
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          emptyCase: { state: empty }
+          wiredCase: { state: wired }
+          caseWithTrigger: { state: no-payload }
+          grenade: { state: complete }
   - type: StaticPrice
     price: 25
 

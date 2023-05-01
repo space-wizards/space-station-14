@@ -521,7 +521,7 @@
 
 #ERT
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: ClothingHeadHelmetHardsuitSyndieCommander
   id: ClothingHeadHelmetHardsuitERTLeader
   noSpawn: true
   name: ERT leader hardsuit helmet
@@ -535,7 +535,7 @@
     color: "#addbff"
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTEngineer
   noSpawn: true
   name: ERT engineer hardsuit helmet
@@ -548,7 +548,7 @@
     color: "#f4ffad"
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndieElite
   id: ClothingHeadHelmetHardsuitERTMedical
   noSpawn: true
   name: ERT medic hardsuit helmet
@@ -563,7 +563,7 @@
     protection: 0.20
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTSecurity
   noSpawn: true
   name: ERT security hardsuit helmet
@@ -576,7 +576,7 @@
     color: "#ffadc6"
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTJanitor
   noSpawn: true
   name: ERT janitor hardsuit helmet

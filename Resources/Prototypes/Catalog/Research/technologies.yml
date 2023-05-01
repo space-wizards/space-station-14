@@ -99,6 +99,7 @@
   unlockedRecipes:
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
+  - Vape
 
 - type: technology
   name: technologies-virology

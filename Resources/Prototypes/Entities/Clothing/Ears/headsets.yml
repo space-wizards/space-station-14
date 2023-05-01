@@ -147,6 +147,19 @@
     sprite: Clothing/Ears/Headsets/medical.rsi
 
 - type: entity
+  parent: ClothingHeadsetMedical
+  id: ClothingHeadsetCMO
+  name: cmo headset
+  description: A headset used by the CMO.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyMedical
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+
+- type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetScience
   name: science headset
