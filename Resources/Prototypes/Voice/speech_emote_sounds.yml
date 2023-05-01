@@ -26,6 +26,10 @@
       collection: Snores
     Honk:
       collection: BikeHorn
+    Crying:
+      collection: MaleCry
+    Whistle:
+      collection: Whistles
 
 - type: emoteSounds
   id: FemaleHuman
@@ -54,6 +58,10 @@
       collection: Snores
     Honk:
       collection: CluwneHorn
+    Crying:
+      collection: FemaleCry
+    Whistle:
+      collection: Whistles
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -106,6 +114,10 @@
       collection: MaleLaugh
     Honk:
       collection: BikeHorn
+    Whistle:
+      collection: Whistles
+    Crying:
+      collection: MaleCry
   params:
     variation: 0.125
     pitchscale: 0.75
@@ -120,6 +132,8 @@
       collection: Snaps
       params:
         volume: -6
+    Salute:
+      collection: Salutes
 
 - type: emoteSounds
   id: DionaBodyEmotes
