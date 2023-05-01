@@ -234,13 +234,13 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (TryComp<StackComponent>(uid, out var stack))
             {
-              //Not deleting whole stack piece will make troubles with grinding object
-              if (stack.Count > 1) 
-              {
-                _stack.SetCount(uid, stack.Count - 1);
-                _solutionContainerSystem.TryAddSolution(uid, solution, split);
-                return;
-              }
+                //Not deleting whole stack piece will make troubles with grinding object
+                if (stack.Count > 1) 
+                {
+                    _stack.SetCount(uid, stack.Count - 1);
+                    _solutionContainerSystem.TryAddSolution(uid, solution, split);
+                    return;
+                }
             }
             else if (component.UsesRemaining > 0)
             {
