@@ -121792,13 +121792,13 @@ entities:
     parent: 82
     type: Transform
 - uid: 15004
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 24.905888,58.755814
     parent: 82
     type: Transform
 - uid: 15005
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 25.017,58.575256
     parent: 82
@@ -121828,7 +121828,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 15010
-  type: AdvancedScanningModuleStockPart
+  type: AdvancedCapacitorStockPart
   components:
   - pos: 25.575817,58.709774
     parent: 82

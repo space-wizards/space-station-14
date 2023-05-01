@@ -81049,7 +81049,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 9425
-  type: MicroLaserStockPart
+  type: MicroManipulatorStockPart
   components:
   - pos: -45.496006,-9.58335
     parent: 60
@@ -106413,7 +106413,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 13015
-  type: ScanningModuleStockPart
+  type: CapacitorStockPart
   components:
   - pos: -67.444885,9.609138
     parent: 60
@@ -106425,7 +106425,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 13017
-  type: ScanningModuleStockPart
+  type: CapacitorStockPart
   components:
   - pos: -67.61676,9.687263
     parent: 60
@@ -153533,13 +153533,13 @@ entities:
   - bodyType: Static
     type: Physics
 - uid: 19181
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 23.305836,21.651909
     parent: 60
     type: Transform
 - uid: 19182
-  type: HighPowerMicroLaserStockPart
+  type: NanoManipulatorStockPart
   components:
   - pos: 23.430836,21.558159
     parent: 60

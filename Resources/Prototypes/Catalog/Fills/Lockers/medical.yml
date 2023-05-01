@@ -89,3 +89,19 @@
       - id: BoxPillCanister
       - id: BoxBottle
         amount: 2
+        
+- type: entity
+  id: LockerParamedicFilled
+  suffix: Filled
+  parent: LockerParamedic
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetVoidParamed
+      - id: ClothingOuterHardsuitVoidParamed
+      - id: ClothingOuterCoatParamedicWB
+      - id: ClothingHeadHatParamedicsoft
+      - id: ClothingUniformJumpsuitParamedic
+      - id: ClothingUniformJumpskirtParamedic
+      - id: ClothingEyesHudMedical
+      

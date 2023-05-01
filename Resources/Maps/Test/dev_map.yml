@@ -3569,12 +3569,6 @@ entities:
   - pos: 3.6877818,5.312015
     parent: 179
     type: Transform
-- uid: 463
-  type: HighPowerMicroLaserStockPart
-  components:
-  - pos: -5.7834854,8.24448
-    parent: 179
-    type: Transform
 - uid: 464
   type: WallSolid
   components:
@@ -5247,24 +5241,6 @@ entities:
   type: MopBucket
   components:
   - pos: 7.5,16.5
-    parent: 179
-    type: Transform
-- uid: 697
-  type: MicroLaserStockPart
-  components:
-  - pos: -5.3147354,8.275752
-    parent: 179
-    type: Transform
-- uid: 698
-  type: QuadUltraMicroLaserStockPart
-  components:
-  - pos: -6.6168184,8.327871
-    parent: 179
-    type: Transform
-- uid: 699
-  type: UltraHighPowerMicroLaserStockPart
-  components:
-  - pos: -6.200152,8.2966
     parent: 179
     type: Transform
 - uid: 700
