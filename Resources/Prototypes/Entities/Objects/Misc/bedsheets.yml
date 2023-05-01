@@ -272,7 +272,7 @@
   description: Not worse than cotton.
   components:
   - type: Sprite
-    state: sheetrd
+    state: sheetbrigmedic
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/brigmedic.rsi
 

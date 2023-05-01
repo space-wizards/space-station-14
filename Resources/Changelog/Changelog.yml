@@ -1,102 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Walls and construction now properly cancel out of a doafter., type: Fix}
-  - {message: Cancelling screwing doors or anything with wires won't prevent further
-      doafters from running anymore., type: Fix}
-  - {message: EscapeInventory can no longer spam and cancels on drop again., type: Fix}
-  - {message: Mopping won't break anymore if cancelled, type: Fix}
-  - {message: Meatspikes won't break anymore on use or if cancelled., type: Fix}
-  id: 3089
-  time: '2023-03-01T00:51:43.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Wizard bedsheet sprite animation has been fixed., type: Fix}
-  id: 3090
-  time: '2023-03-01T13:31:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Lava is now clickable., type: Tweak}
-  id: 3091
-  time: '2023-03-03T00:01:07.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Salvage magnet shows remaining cooldown time when examined., type: Tweak}
-  id: 3092
-  time: '2023-03-03T16:25:43.0000000+00:00'
-- author: Nylux
-  changes:
-  - {message: Changed the name of planet-related tiles to be more readable., type: Tweak}
-  id: 3093
-  time: '2023-03-04T04:50:43.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Cardboard boxes now have airholes to prevent suffocation., type: Fix}
-  id: 3094
-  time: '2023-03-04T19:45:31.0000000+00:00'
-- author: 08A
-  changes:
-  - {message: Added the pipe layer in construction mode for the majority of atmos
-      utilities, type: Add}
-  id: 3095
-  time: '2023-03-04T20:31:47.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: 'Disposals are now pressurized again, so you can safely travel through
-      them in hazardous environments or space.', type: Fix}
-  id: 3096
-  time: '2023-03-04T23:08:44.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix breaking planet tiles leading to the void., type: Fix}
-  id: 3097
-  time: '2023-03-05T01:11:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Tiles now support edges. For now this support has been added to grass.,
-    type: Add}
-  id: 3098
-  time: '2023-03-05T01:19:50.0000000+00:00'
-- author: CaptainSqrBeard
-  changes:
-  - {message: Default marking colors now can be applied differently, type: Tweak}
-  id: 3099
-  time: '2023-03-05T02:59:08.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: 'Three new traits have been added Lightweight Drunk, Paracusia, and
-      Muted! Check their descriptions to see what they do.', type: Add}
-  - {message: Alcohol is now slightly more effective., type: Tweak}
-  id: 3100
-  time: '2023-03-05T03:44:13.0000000+00:00'
-- author: Cripes
-  changes:
-  - {message: Fixed bug where cargo orders would only half-fill the shuttle capacity.,
-    type: Fix}
-  id: 3101
-  time: '2023-03-05T04:27:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some more instances of NPCs dancing., type: Fix}
-  - {message: NPCs have rudimentary stuck detection., type: Fix}
-  id: 3102
-  time: '2023-03-05T05:13:09.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: You no longer can rapidly eat food, type: Tweak}
-  - {message: You no longer can chug drinks, type: Tweak}
-  - {message: Fixes cancelling fixing a window instantly fixes it, type: Fix}
-  - {message: Fixes doafters being spammed on headset encryption key removal, type: Fix}
-  - {message: Cancelling a butcher attempt on clothes will no longer brick it, type: Fix}
-  - {message: Fixes players not being able to dump trash into a bin, type: Fix}
-  id: 3103
-  time: '2023-03-05T05:26:03.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Verbs are now usable in the stripping menu., type: Add}
-  - {message: Added a new verb for toggling hardsuit helmets., type: Add}
-  id: 3104
-  time: '2023-03-05T17:12:09.0000000+00:00'
 - author: Duke Vanity
   changes:
   - {message: 3 new mutations for botany, type: Add}
@@ -2883,3 +2785,99 @@ Entries:
   - {message: Flares no longer flicker., type: Tweak}
   id: 3588
   time: '2023-04-30T17:56:17.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'Arachnids suffer less now from hunger decay, asphyxiation and slowdown
+      from damage.', type: Tweak}
+  - {message: Arachnids can now wear glasses.... somehow, type: Tweak}
+  id: 3589
+  time: '2023-05-01T01:05:25.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Changed the side sprites of tactical vests to fix weird looking sprites
+      when wearing a rig and bandolier, type: Tweak}
+  id: 3590
+  time: '2023-05-01T02:16:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Entering your ringtone uplink code now locks and unlocks your uplink
+      rather then directly opening it., type: Tweak}
+  - {message: 'When you set ringtone, if it is your uplink code it will not be saved.',
+    type: Tweak}
+  id: 3591
+  time: '2023-05-01T06:30:09.0000000+00:00'
+- author: MagnusCrowe
+  changes:
+  - {message: Added the paramedic role, type: Add}
+  id: 3592
+  time: '2023-05-01T07:13:57.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: 'Three kinds of aggressive slimes, and their peaceful versions', type: Add}
+  - {message: 'A new event for the station, in which slimes come out of the vent scrubber.',
+    type: Add}
+  id: 3593
+  time: '2023-05-01T08:21:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Camera rotation should be more responsive after recently traversing
+      a grid., type: Tweak}
+  id: 3594
+  time: '2023-05-01T08:29:35.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: RCD ammo can now be used partially without wasting any charges., type: Tweak}
+  - {message: 'RCD is now partially predicted on clients, should be nicer to use.',
+    type: Tweak}
+  id: 3595
+  time: '2023-05-01T13:47:00.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Nuke agent role is now selected separately in the character customization
+      menu, type: Tweak}
+  id: 3596
+  time: '2023-05-01T14:20:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix up space cleaner and lots of changes to make it better., type: Tweak}
+  id: 3597
+  time: '2023-05-01T14:25:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cleanbots now mop floors rather than drain near them., type: Tweak}
+  id: 3598
+  time: '2023-05-01T14:30:15.0000000+00:00'
+- author: illersaver
+  changes:
+  - {message: Added vapes!, type: Add}
+  id: 3599
+  time: '2023-05-01T14:34:12.0000000+00:00'
+- author: MisterMecky
+  changes:
+  - {message: 'Added strange pills, which contain a random reagent. These can be found
+      in maintenance.', type: Add}
+  id: 3600
+  time: '2023-05-01T14:43:31.0000000+00:00'
+- author: ProPandaBear
+  changes:
+  - {message: Increased toxin poison damage from 2 to 4., type: Tweak}
+  id: 3601
+  time: '2023-05-01T16:54:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Old NPC targeting has been ported to the new system and will prefer
+      the closest target over the weakest one much more., type: Fix}
+  - {message: NPC mice will now eat food., type: Add}
+  - {message: Runtime will now attack mice., type: Add}
+  id: 3602
+  time: '2023-05-01T18:57:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Wide melee attacks are now also lag compensated., type: Add}
+  id: 3603
+  time: '2023-05-01T19:07:17.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Now slimes can be a ghost role, type: Fix}
+  id: 3604
+  time: '2023-05-01T19:20:06.0000000+00:00'
