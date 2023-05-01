@@ -1,11 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: 'Three new traits have been added Lightweight Drunk, Paracusia, and
-      Muted! Check their descriptions to see what they do.', type: Add}
-  - {message: Alcohol is now slightly more effective., type: Tweak}
-  id: 3100
-  time: '2023-03-05T03:44:13.0000000+00:00'
 - author: Cripes
   changes:
   - {message: Fixed bug where cargo orders would only half-fill the shuttle capacity.,
@@ -2887,3 +2880,9 @@ Entries:
   - {message: Added vapes!, type: Add}
   id: 3599
   time: '2023-05-01T14:34:12.0000000+00:00'
+- author: MisterMecky
+  changes:
+  - {message: 'Added strange pills, which contain a random reagent. These can be found
+      in maintenance.', type: Add}
+  id: 3600
+  time: '2023-05-01T14:43:31.0000000+00:00'
