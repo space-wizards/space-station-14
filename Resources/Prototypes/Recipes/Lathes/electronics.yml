@@ -293,6 +293,14 @@
     Gold: 100
 
 - type: latheRecipe
+  id: MaterialReclaimerMachineCircuitboard
+  result: MaterialReclaimerMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
   id: OreProcessorMachineCircuitboard
   result: OreProcessorMachineCircuitboard
   completetime: 4
@@ -411,6 +419,14 @@
 - type: latheRecipe
   id: MicrowaveMachineCircuitboard
   result: MicrowaveMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: FatExtractorMachineCircuitboard
+  result: FatExtractorMachineCircuitboard
   completetime: 4
   materials:
      Steel: 100

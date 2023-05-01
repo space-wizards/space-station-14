@@ -162,8 +162,9 @@ public sealed class HTNSystem : EntitySystem
     public void UpdateNPC(ref int count, int maxUpdates, float frameTime)
     {
         _planQueue.Process();
+        var query = EntityQueryEnumerator<ActiveNPCComponent, HTNComponent>();
 
-        foreach (var (_, comp) in EntityQuery<ActiveNPCComponent, HTNComponent>())
+        while(query.MoveNext(out var uid, out _, out var comp))
         {
             // If we're over our max count or it's not MapInit then ignore the NPC.
             if (count >= maxUpdates)
@@ -173,10 +174,10 @@ public sealed class HTNSystem : EntitySystem
             {
                 if (comp.PlanningJob.Exception != null)
                 {
-                    _sawmill.Fatal($"Received exception on planning job for {comp.Owner}!");
-                    _npc.SleepNPC(comp.Owner);
+                    _sawmill.Fatal($"Received exception on planning job for {uid}!");
+                    _npc.SleepNPC(uid);
                     var exc = comp.PlanningJob.Exception;
-                    RemComp<HTNComponent>(comp.Owner);
+                    RemComp<HTNComponent>(uid);
                     throw exc;
                 }
 
@@ -222,16 +223,15 @@ public sealed class HTNSystem : EntitySystem
                         {
                             text.AppendLine($"BTR: {string.Join(", ", comp.Plan.BranchTraversalRecord)}");
                             text.AppendLine($"tasks:");
-
-                            foreach (var task in comp.Plan.Tasks)
-                            {
-                                text.AppendLine($"- {task.ID}");
-                            }
+                            var root = _prototypeManager.Index<HTNCompoundTask>(comp.RootTask);
+                            var btr = new List<int>();
+                            var level = -1;
+                            AppendDebugText(root, text, comp.Plan.BranchTraversalRecord, btr, ref level);
                         }
 
                         RaiseNetworkEvent(new HTNMessage()
                         {
-                            Uid = comp.Owner,
+                            Uid = uid,
                             Text = text.ToString(),
                         }, session.ConnectedClient);
                     }
@@ -244,6 +244,49 @@ public sealed class HTNSystem : EntitySystem
             Update(comp, frameTime);
             count++;
         }
+    }
+
+    private void AppendDebugText(HTNTask task, StringBuilder text, List<int> planBtr, List<int> btr, ref int level)
+    {
+        // If it's the selected BTR then highlight.
+        for (var i = 0; i < btr.Count; i++)
+        {
+            text.Append('-');
+        }
+
+        text.Append(' ');
+
+        if (task is HTNPrimitiveTask primitive)
+        {
+            text.AppendLine(primitive.ID);
+            return;
+        }
+
+        if (task is HTNCompoundTask compound)
+        {
+            level++;
+            text.AppendLine(compound.ID);
+            var branches = _compoundBranches[compound];
+
+            for (var i = 0; i < branches.Length; i++)
+            {
+                var branch = branches[i];
+                btr.Add(i);
+                text.AppendLine($" branch {string.Join(" ", btr)}:");
+
+                foreach (var sub in branch)
+                {
+                    AppendDebugText(sub, text, planBtr, btr, ref level);
+                }
+
+                btr.RemoveAt(btr.Count - 1);
+            }
+
+            level--;
+            return;
+        }
+
+        throw new NotImplementedException();
     }
 
     private void Update(HTNComponent component, float frameTime)

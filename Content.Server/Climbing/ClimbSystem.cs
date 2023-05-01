@@ -1,6 +1,5 @@
 using Content.Server.Body.Systems;
 using Content.Server.Climbing.Components;
-using Content.Server.DoAfter;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
@@ -36,13 +35,12 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly BonkSystem _bonkSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -57,7 +55,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
         SubscribeLocalEvent<ClimbableComponent, DragDropTargetEvent>(OnClimbableDragDrop);
 
-        SubscribeLocalEvent<ClimbingComponent, DoAfterEvent<ClimbExtraEvent>>(OnDoAfter);
+        SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
         SubscribeLocalEvent<ClimbingComponent, ComponentGetState>(OnClimbingGetState);
@@ -95,42 +93,41 @@ public sealed class ClimbSystem : SharedClimbSystem
         // TODO VERBS ICON add a climbing icon?
         args.Verbs.Add(new AlternativeVerb
         {
-            Act = () => TryMoveEntity(component, args.User, args.User, args.Target),
+            Act = () => TryClimb(args.User, args.User, args.Target, component),
             Text = Loc.GetString("comp-climbable-verb-climb")
         });
     }
 
     private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, ref DragDropTargetEvent args)
     {
-        TryMoveEntity(component, args.User, args.Dragged, uid);
+        TryClimb(args.User, args.Dragged, uid, component);
     }
 
-    private void TryMoveEntity(ClimbableComponent component, EntityUid user, EntityUid entityToMove,
-        EntityUid climbable)
+    public void TryClimb(EntityUid user,
+        EntityUid entityToMove,
+        EntityUid climbable,
+        ClimbableComponent? comp = null,
+        ClimbingComponent? climbing = null)
     {
-        if (!TryComp(entityToMove, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
+        if (!Resolve(climbable, ref comp) || !Resolve(entityToMove, ref climbing))
             return;
 
-        if (_bonkSystem.TryBonk(entityToMove, climbable))
+        // Note, IsClimbing does not mean a DoAfter is active, it means the target has already finished a DoAfter and
+        // is currently on top of something..
+        if (climbing.IsClimbing)
             return;
 
-        var ev = new ClimbExtraEvent();
-
-        var args = new DoAfterEventArgs(user, component.ClimbDelay, target: climbable, used: entityToMove)
+        var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
-            BreakOnDamage = true,
-            BreakOnStun = true,
-            RaiseOnUser = user == entityToMove,
-            RaiseOnTarget = user != entityToMove,
-            RaiseOnUsed = false,
+            BreakOnDamage = true
         };
 
-        _doAfterSystem.DoAfter(args, ev);
+        _doAfterSystem.TryStartDoAfter(args);
     }
 
-    private void OnDoAfter(EntityUid uid, ClimbingComponent component, DoAfterEvent<ClimbExtraEvent> args)
+    private void OnDoAfter(EntityUid uid, ClimbingComponent component, ClimbDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
@@ -345,7 +342,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         Climb(uid, uid, uid, climbable, true, component);
     }
 
-    private void OnBuckleChange(EntityUid uid, ClimbingComponent component, BuckleChangeEvent args)
+    private void OnBuckleChange(EntityUid uid, ClimbingComponent component, ref BuckleChangeEvent args)
     {
         if (!args.Buckling)
             return;
@@ -437,10 +434,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         _fixtureRemoveQueue.Clear();
     }
 
-    private sealed class ClimbExtraEvent : EntityEventArgs
-    {
-        //Honestly this is only here because otherwise this activates on every single doafter on a human
-    }
 }
 
 /// <summary>

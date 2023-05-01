@@ -125,7 +125,10 @@ public sealed partial class DungeonJob
         }
 
         var tiles = new List<(Vector2i, Tile)>();
-        var dungeon = new Dungeon();
+        var dungeon = new Dungeon()
+        {
+            Position = _position
+        };
         var availablePacks = new List<DungeonRoomPackPrototype>();
         var chosenPacks = new DungeonRoomPackPrototype?[gen.RoomPacks.Count];
         var packTransforms = new Matrix3[gen.RoomPacks.Count];
@@ -423,6 +426,16 @@ public sealed partial class DungeonJob
                 ValidateResume();
             }
         }
+
+        // Calculate center
+        var dungeonCenter = Vector2.Zero;
+
+        foreach (var room in dungeon.Rooms)
+        {
+            dungeonCenter += room.Center;
+        }
+
+        dungeon.Center = (Vector2i) (dungeonCenter / dungeon.Rooms.Count);
 
         return dungeon;
     }

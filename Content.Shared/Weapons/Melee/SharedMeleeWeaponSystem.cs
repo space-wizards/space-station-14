@@ -59,6 +59,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         base.Initialize();
         Sawmill = Logger.GetSawmill("melee");
 
+        SubscribeLocalEvent<MeleeWeaponComponent, EntityUnpausedEvent>(OnMeleeUnpaused);
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MeleeWeaponComponent, HandDeselectedEvent>(OnMeleeDropped);
@@ -70,6 +71,21 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<DisarmAttackEvent>(OnDisarmAttack);
         SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
+
+#if DEBUG
+        SubscribeLocalEvent<MeleeWeaponComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, MeleeWeaponComponent component, MapInitEvent args)
+    {
+        if (component.NextAttack > Timing.CurTime)
+            Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
+#endif
+    }
+
+    private void OnMeleeUnpaused(EntityUid uid, MeleeWeaponComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextAttack += args.PausedTime;
     }
 
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
@@ -78,6 +94,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         if (!component.ResetOnHandSelected)
+            return;
+
+        if (Paused(uid))
             return;
 
         // If someone swaps to this weapon then reset its cd.
@@ -249,7 +268,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Use inhands entity if we got one.
-        if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
+        if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
             hands.ActiveHandEntity is { } held)
         {
             if (EntityManager.TryGetComponent(held, out melee))
@@ -405,10 +424,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         var damage = component.Damage * GetModifier(component, true);
 
-        // Can't attack yourself
         // For consistency with wide attacks stuff needs damageable.
-        if (user == ev.Target ||
-            Deleted(ev.Target) ||
+        if (Deleted(ev.Target) ||
             !HasComp<DamageableComponent>(ev.Target) ||
             !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
             // Not in LOS.
@@ -418,7 +435,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             // is when a melee weapon is examined. Misses are inferred from an
             // empty HitEntities.
             // TODO: This needs fixing
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, damage);
+            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage);
             RaiseLocalEvent(meleeUid, missEvent);
             Audio.PlayPredicted(component.SwingSound, meleeUid, user);
             return;
@@ -427,7 +444,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(new List<EntityUid> { ev.Target.Value }, user, damage);
+        var hitEvent = new MeleeHitEvent(new List<EntityUid> { ev.Target.Value }, user, meleeUid, damage);
         RaiseLocalEvent(meleeUid, hitEvent);
 
         if (hitEvent.Handled)
@@ -522,7 +539,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         if (entities.Count == 0)
         {
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, damage);
+            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage);
             RaiseLocalEvent(meleeUid, missEvent);
 
             Audio.PlayPredicted(component.SwingSound, meleeUid, user);
@@ -544,7 +561,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(targets, user, damage);
+        var hitEvent = new MeleeHitEvent(targets, user, meleeUid, damage);
         RaiseLocalEvent(meleeUid, hitEvent);
 
         if (hitEvent.Handled)
@@ -762,5 +779,5 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         DoLunge(user, angle, localPos, animation);
     }
 
-    public abstract void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation);
+    public abstract void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true);
 }

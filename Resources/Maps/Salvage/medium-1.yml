@@ -1089,12 +1089,6 @@ entities:
   - pos: 0.5,0.5
     parent: 0
     type: Transform
-- uid: 85
-  type: PaperWrittenSalvageLoreMedium1PlasmaTrap
-  components:
-  - pos: 0.48327154,0.5698495
-    parent: 0
-    type: Transform
 - uid: 86
   type: ClothingEyesGlassesMeson
   components:

@@ -17,30 +17,30 @@ namespace Content.Shared.Access.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentRemove>(OnComponentRemove);
-            SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentHandleState>(OnHandleState);
+            SubscribeLocalEvent<IdCardConsoleComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<IdCardConsoleComponent, ComponentRemove>(OnComponentRemove);
+            SubscribeLocalEvent<IdCardConsoleComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<IdCardConsoleComponent, ComponentHandleState>(OnHandleState);
         }
 
-        private void OnHandleState(EntityUid uid, SharedIdCardConsoleComponent component, ref ComponentHandleState args)
+        private void OnHandleState(EntityUid uid, IdCardConsoleComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not IdCardConsoleComponentState state) return;
             component.AccessLevels = state.AccessLevels;
         }
 
-        private void OnGetState(EntityUid uid, SharedIdCardConsoleComponent component, ref ComponentGetState args)
+        private void OnGetState(EntityUid uid, IdCardConsoleComponent component, ref ComponentGetState args)
         {
             args.State = new IdCardConsoleComponentState(component.AccessLevels);
         }
 
-        private void OnComponentInit(EntityUid uid, SharedIdCardConsoleComponent component, ComponentInit args)
+        private void OnComponentInit(EntityUid uid, IdCardConsoleComponent component, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid, SharedIdCardConsoleComponent.PrivilegedIdCardSlotId, component.PrivilegedIdSlot);
-            _itemSlotsSystem.AddItemSlot(uid, SharedIdCardConsoleComponent.TargetIdCardSlotId, component.TargetIdSlot);
+            _itemSlotsSystem.AddItemSlot(uid, IdCardConsoleComponent.PrivilegedIdCardSlotId, component.PrivilegedIdSlot);
+            _itemSlotsSystem.AddItemSlot(uid, IdCardConsoleComponent.TargetIdCardSlotId, component.TargetIdSlot);
         }
 
-        private void OnComponentRemove(EntityUid uid, SharedIdCardConsoleComponent component, ComponentRemove args)
+        private void OnComponentRemove(EntityUid uid, IdCardConsoleComponent component, ComponentRemove args)
         {
             _itemSlotsSystem.RemoveItemSlot(uid, component.PrivilegedIdSlot);
             _itemSlotsSystem.RemoveItemSlot(uid, component.TargetIdSlot);

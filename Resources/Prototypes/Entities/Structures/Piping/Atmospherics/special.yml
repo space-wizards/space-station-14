@@ -22,3 +22,6 @@
   - type: Airtight
     noAirWhenFullyAirBlocked: false
   - type: Clickable
+  - type: Tag
+    tags:
+      - SpreaderIgnore

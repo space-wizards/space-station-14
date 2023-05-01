@@ -8,7 +8,6 @@
     sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
-  - type: BoxingGloves
   - type: StaminaDamageOnHit
     damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
     # This needs to be moved to boxinggloves
@@ -25,6 +24,9 @@
     fiberMaterial: fibers-leather
     fiberColor: fibers-red
   - type: FingerprintMask
+  - type: Tag
+    tags:
+    - Kangaroo
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed
@@ -73,6 +75,20 @@
     fiberMaterial: fibers-leather
     fiberColor: fibers-yellow
   - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesBoxingBlue
+  id: ClothingHandsGlovesBoxingRigged
+  name: blue boxing gloves
+  description: Blue gloves for competitive boxing. Feels like they're heavier than usual...
+  components:
+  - type: StaminaDamageOnHit
+    damage: 30
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 8
 
 - type: entity
   parent: ClothingHandsBase
@@ -242,7 +258,7 @@
   id: ThievingGloves
   suffix: Thieving
   name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
-  description: Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
+  description: Regular black gloves that do not keep you from frying.
   components:
     - type: Tag
       tags: [] # ignore "WhitelistChameleon" tag
@@ -266,3 +282,15 @@
   description:  A cursed pair of cluwne hands.
   components:
   - type: Unremoveable
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ForensicGloves
+  name: forensic gloves
+  description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/forensic.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/forensic.rsi
+  - type: FingerprintMask

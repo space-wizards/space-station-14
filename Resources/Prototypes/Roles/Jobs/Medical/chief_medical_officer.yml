@@ -16,6 +16,7 @@
   icon: "ChiefMedicalOfficer"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
+  canBeAntag: false
   access:
   - Medical
   - Command
@@ -31,7 +32,7 @@
     shoes: ClothingShoesColorBrown
     outerClothing: ClothingOuterCoatLabCmo
     id: CMOPDA
-    ears: ClothingHeadsetAltMedical
+    ears: ClothingHeadsetCMO
     belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtCMO
   satchel: ClothingBackpackSatchelCMOFilled

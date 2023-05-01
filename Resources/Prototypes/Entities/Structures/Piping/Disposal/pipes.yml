@@ -96,6 +96,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-s
+  - type: DisposalTube
+    containerId: DisposalTransit
   - type: DisposalTransit
   - type: ContainerContainer
     containers:
@@ -122,6 +124,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-tagger
+  - type: DisposalTube
+    containerId: DisposalTagger
   - type: DisposalTagger
   - type: ContainerContainer
     containers:
@@ -154,6 +158,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-t
+  - type: DisposalTube
+    containerId: DisposalEntry
   - type: DisposalEntry
   - type: ContainerContainer
     containers:
@@ -187,6 +193,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j1s
+  - type: DisposalTube
+    containerId: DisposalRouter
   - type: DisposalRouter
     degrees:
     - 0
@@ -232,6 +240,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j2s
+  - type: DisposalTube
+    containerId: DisposalRouter
   - type: DisposalRouter
     degrees:
     - 0
@@ -269,6 +279,8 @@
     - map: [ "pipe" ]
       state: conpipe-j1
     visible: true
+  - type: DisposalTube
+    containerId: DisposalJunction
   - type: DisposalJunction
     degrees:
     - 0
@@ -308,6 +320,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j2
+  - type: DisposalTube
+    containerId: DisposalJunction
   - type: DisposalJunction
     degrees:
     - 0
@@ -344,6 +358,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-y
+  - type: DisposalTube
+    containerId: DisposalJunction
   - type: DisposalJunction
     degrees:
     - 0
@@ -381,6 +397,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-c
+  - type: DisposalTube
+    containerId: DisposalBend
   - type: DisposalBend
   - type: ContainerContainer
     containers:

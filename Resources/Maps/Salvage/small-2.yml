@@ -568,12 +568,6 @@ entities:
   - pos: -3.5,0.5
     parent: 0
     type: Transform
-- uid: 55
-  type: SalvageLorePaperGamingSpawner
-  components:
-  - pos: -1.5,-2.5
-    parent: 0
-    type: Transform
 - uid: 56
   type: SalvageMobSpawner75
   components:

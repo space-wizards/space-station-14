@@ -15,7 +15,7 @@ namespace Content.Server.Guardian
         /// Percentage of damage reflected from the guardian to the host
         /// </summary>
         [DataField("damageShare")]
-        public float DamageShare { get; set; } = 0.85f;
+        public float DamageShare { get; set; } = 0.65f;
 
         /// <summary>
         /// Maximum distance the guardian can travel before it's forced to recall, use YAML to set

@@ -62,21 +62,28 @@ public sealed class EmoteOnDamageSystem : EntitySystem
         if (!Resolve(uid, ref emoteOnDamage, logMissing: false))
             return false;
 
+        DebugTools.Assert(emoteOnDamage.LifeStage <= ComponentLifeStage.Running);
         DebugTools.Assert(_prototypeManager.HasIndex<EmotePrototype>(emotePrototypeId), "Prototype not found. Did you make a typo?");
 
         return emoteOnDamage.Emotes.Add(emotePrototypeId);
     }
 
     /// <summary>
-    /// Stop preforming an emote.
+    /// Stop preforming an emote. Note that by default this will queue empty components for removal.
     /// </summary>
-    public bool RemoveEmote(EntityUid uid, string emotePrototypeId, EmoteOnDamageComponent? emoteOnDamage = null)
+    public bool RemoveEmote(EntityUid uid, string emotePrototypeId, EmoteOnDamageComponent? emoteOnDamage = null, bool removeEmpty = true)
     {
         if (!Resolve(uid, ref emoteOnDamage, logMissing: false))
             return false;
 
         DebugTools.Assert(_prototypeManager.HasIndex<EmotePrototype>(emotePrototypeId), "Prototype not found. Did you make a typo?");
 
-        return emoteOnDamage.Emotes.Remove(emotePrototypeId);
+        if (!emoteOnDamage.Emotes.Remove(emotePrototypeId))
+            return false;
+
+        if (removeEmpty && emoteOnDamage.Emotes.Count == 0)
+            RemCompDeferred(uid, emoteOnDamage);
+
+        return true;
     }
 }

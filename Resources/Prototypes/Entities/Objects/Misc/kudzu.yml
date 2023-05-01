@@ -69,22 +69,27 @@
             types:
               Heat: 10
     - type: AtmosExposed
-    - type: Spreader
-      growthResult: Kudzu
-      chance: 1
+    - type: Kudzu
     - type: GrowingKudzu
-      growthTickSkipChance: 0.6666
+      growthTickChance: 0.3
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
+    - type: EdgeSpreader
+    - type: NodeContainer
+      nodes:
+        kudzu:
+          !type:SpreaderNode
+          nodeGroupID: Spreader
+
 
 - type: entity
   id: WeakKudzu
   parent: Kudzu
+  suffix: Weak
   components:
-    - type: Spreader
-      growthResult: WeakKudzu
-      chance: 0.3
+    - type: Kudzu
+      spreadChance: 0.3
 
 - type: entity
   id: FleshKudzu
@@ -128,9 +133,6 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-    - type: Spreader
-      growthResult: FleshKudzu
-      chance: 0.2
     - type: DamageContacts
       damage:
         types:
@@ -139,6 +141,13 @@
       ignoreWhitelist:
         tags:
         - Flesh
+    - type: Kudzu
+    - type: EdgeSpreader
+    - type: NodeContainer
+      nodes:
+        kudzu:
+          !type:SpreaderNode
+          nodeGroupID: Spreader
     - type: SlowContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3

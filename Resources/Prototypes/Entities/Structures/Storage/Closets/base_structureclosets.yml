@@ -52,6 +52,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:DoActsBehavior
@@ -86,6 +92,8 @@
   - type: Weldable
   - type: WallMount
     arc: 180
+  - type: StaticPrice
+    price: 50
   - type: Transform
     noRot: false
   - type: Sprite
@@ -116,6 +124,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 150

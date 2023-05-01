@@ -10,7 +10,6 @@
     flavors:
       - food
   - type: Food
-  - type: Recyclable
   - type: SpaceGarbage
   - type: Sprite
     netsync: false

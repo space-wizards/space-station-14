@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Interaction;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC;
@@ -18,6 +20,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         {"FollowCloseRange", 3f},
         {"FollowRange", 7f},
         {"IdleRange", 7f},
+        {"InteractRange", SharedInteractionSystem.InteractionRange},
         {"MaximumIdleTime", 7f},
         {MedibotInjectRange, 4f},
         {MeleeMissChance, 0.3f},

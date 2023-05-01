@@ -14,6 +14,7 @@
   icon: "ResearchDirector"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
+  canBeAntag: false
   access:
   - Research
   - Command
@@ -26,7 +27,7 @@
     jumpsuit: ClothingUniformJumpsuitResearchDirector
     back: ClothingBackpackResearchDirectorFilled
     shoes: ClothingShoesColorBrown
-    outerClothing: ClothingOuterCoatLab
+    outerClothing: ClothingOuterCoatRnd
     id: RnDPDA
     ears: ClothingHeadsetRD
   innerclothingskirt: ClothingUniformJumpskirtResearchDirector

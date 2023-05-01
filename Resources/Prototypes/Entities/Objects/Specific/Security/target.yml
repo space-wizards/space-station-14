@@ -29,6 +29,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 1000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 500
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -84,6 +90,12 @@
     state: target_f
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 4000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 2000

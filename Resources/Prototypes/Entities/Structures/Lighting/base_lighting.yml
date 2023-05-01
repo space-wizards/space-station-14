@@ -112,6 +112,12 @@
     damage:
       types:
         Heat: 5
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -15
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/light_hum.ogg
 
 #LED lights
 - type: entity
