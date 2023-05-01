@@ -80,7 +80,6 @@ public sealed class SpraySystem : EntitySystem
 
         if (diffLength > component.SprayDistance)
         {
-            diffPos = diffNorm * component.SprayDistance;
             diffLength = component.SprayDistance;
         }
 
