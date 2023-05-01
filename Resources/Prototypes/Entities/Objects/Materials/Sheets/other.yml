@@ -150,7 +150,7 @@
   components:
   - type: Material
   - type: Food
-    transferAmount: 10
+    transferAmount: 50
   - type: PhysicalComposition
     materialComposition:
       Uranium: 100
@@ -176,6 +176,7 @@
         - ReagentId: Uranium
           Quantity: 10
       food:
+        maxVol: 50
         reagents:
         - ReagentId: Uranium
           Quantity: 10

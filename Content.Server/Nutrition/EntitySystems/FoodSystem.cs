@@ -231,7 +231,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             args.Repeat = !forceFeed;
-
+ 
             if (TryComp<StackComponent>(uid, out var stack))
             {
                 //Not deleting whole stack piece will make troubles with grinding object
