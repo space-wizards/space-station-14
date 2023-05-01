@@ -64,7 +64,7 @@ namespace Content.Shared.Pulling
             if (EntityManager.TryGetComponent<BuckleComponent?>(puller, out var buckle))
             {
                 // Prevent people pulling the chair they're on, etc.
-                if (buckle.Buckled && (buckle.LastEntityBuckledTo == pulled))
+                if (buckle is { PullStrap: false, Buckled: true } && (buckle.LastEntityBuckledTo == pulled))
                 {
                     return false;
                 }
