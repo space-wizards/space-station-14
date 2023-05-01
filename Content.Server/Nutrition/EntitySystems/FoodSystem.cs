@@ -47,7 +47,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly ReactiveSystem _reaction = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly StackSystem _stack = default!;
 
         public override void Initialize()
         {
@@ -230,23 +230,20 @@ namespace Content.Server.Nutrition.EntitySystems
                 _utensilSystem.TryBreak(utensil, args.User);
             }
 
-            if (TryComp<StackComponent>(uid, out var stack)) 
+            args.Repeat = !forceFeed;
+
+            if (TryComp<StackComponent>(uid, out var stack))
             {
-              //Not deleting whole stack piece will make troubles with grinder
+              //Not deleting whole stack piece will make troubles with grinding object
               if (stack.Count > 1) 
               {
-                if (!forceFeed)
-                  args.Repeat = true;
-                _stackSystem.SetCount(uid, stack.Count - 1);
+                _stack.SetCount(uid, stack.Count - 1);
                 _solutionContainerSystem.TryAddSolution(uid, solution, split);
                 return;
               }
             }
             else if (component.UsesRemaining > 0)
             {
-                if (!forceFeed)
-                    args.Repeat = true;
-
                 return;
             }
 
