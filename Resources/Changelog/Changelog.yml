@@ -1,10 +1,4 @@
 Entries:
-- author: 08A
-  changes:
-  - {message: Added the pipe layer in construction mode for the majority of atmos
-      utilities, type: Add}
-  id: 3095
-  time: '2023-03-04T20:31:47.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: 'Disposals are now pressurized again, so you can safely travel through
@@ -2887,3 +2881,10 @@ Entries:
       a grid., type: Tweak}
   id: 3594
   time: '2023-05-01T08:29:35.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: RCD ammo can now be used partially without wasting any charges., type: Tweak}
+  - {message: 'RCD is now partially predicted on clients, should be nicer to use.',
+    type: Tweak}
+  id: 3595
+  time: '2023-05-01T13:47:00.0000000+00:00'
