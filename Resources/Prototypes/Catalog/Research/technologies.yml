@@ -405,7 +405,7 @@
   description: technologies-advanced-atmospherics-technology-description
   icon:
     sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-    state: freezer_off
+    state: freezerOff
   requiredPoints: 7500
   requiredTechnologies:
   - ElectricalEngineering
@@ -516,11 +516,10 @@
   - TechDiskComputerCircuitboard
   - CapacitorStockPart
   - MatterBinStockPart
-  - MicroLaserStockPart
   - MicroManipulatorStockPart
-  - ScanningModuleStockPart
   - NodeScanner
   - AnomalyScanner
+  - AnomalyLocator
 
 - type: technology
   name: technologies-anomaly-technology
@@ -535,6 +534,10 @@
   unlockedRecipes:
   - AnomalyVesselCircuitboard
   - APECircuitboard
+  - WeaponPistolCHIMP
+  - CartridgeAnomalousParticleDelta
+  - CartridgeAnomalousParticleEpsilon
+  - CartridgeAnomalousParticleZeta
 
 - type: technology
   name: technologies-robotics-technology
@@ -550,6 +553,8 @@
   - ProximitySensor
   - LeftArmBorg
   - RightArmBorg
+  - LeftLegBorg
+  - RightLegBorg
   - Drone
   - ExosuitFabricatorMachineCircuitboard
 
@@ -581,9 +586,7 @@
   unlockedRecipes:
   - AdvancedCapacitorStockPart
   - AdvancedMatterBinStockPart
-  - HighPowerMicroLaserStockPart
   - NanoManipulatorStockPart
-  - AdvancedScanningModuleStockPart
 
 - type: technology
   name: technologies-magboots-technology
@@ -612,6 +615,4 @@
   unlockedRecipes:
   - SuperCapacitorStockPart
   - SuperMatterBinStockPart
-  - UltraHighPowerMicroLaserStockPart
   - PicoManipulatorStockPart
-  - PhasicScanningModuleStockPart

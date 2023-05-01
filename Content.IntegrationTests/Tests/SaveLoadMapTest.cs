@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
+using Content.Shared.CCVar;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -26,6 +28,8 @@ namespace Content.IntegrationTests.Tests
             var mapLoader = sEntities.System<MapLoaderSystem>();
             var xformSystem = sEntities.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
             var resManager = server.ResolveDependency<IResourceManager>();
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
 
             await server.WaitAssertion(() =>
             {

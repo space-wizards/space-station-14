@@ -40,7 +40,7 @@ namespace Content.Server.Bed
             SubscribeLocalEvent<StasisBedComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
-        private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, BuckleChangeEvent args)
+        private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, ref BuckleChangeEvent args)
         {
             _prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction);
             if (args.Buckling)
@@ -92,7 +92,7 @@ namespace Content.Server.Bed
             _appearance.SetData(uid, StasisBedVisuals.IsOn, isOn);
         }
 
-        private void OnBuckleChange(EntityUid uid, StasisBedComponent component, BuckleChangeEvent args)
+        private void OnBuckleChange(EntityUid uid, StasisBedComponent component, ref BuckleChangeEvent args)
         {
             // In testing this also received an unbuckle event when the bed is destroyed
             // So don't worry about that

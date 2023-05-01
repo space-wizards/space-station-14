@@ -10,7 +10,10 @@ public sealed class ParticleAcceleratorPartVisualizerSystem : VisualizerSystem<P
     {
         if (args.Sprite == null)
             return;
-        
+
+        if (!args.Sprite.LayerMapTryGet(ParticleAcceleratorVisualLayers.Unlit, out var index))
+            return;
+
         if (!AppearanceSystem.TryGetData<ParticleAcceleratorVisualState>(uid, ParticleAcceleratorVisuals.VisualState, out var state, args.Component))
         {
             state = ParticleAcceleratorVisualState.Unpowered;
@@ -18,12 +21,12 @@ public sealed class ParticleAcceleratorPartVisualizerSystem : VisualizerSystem<P
 
         if (state != ParticleAcceleratorVisualState.Unpowered)
         {
-            args.Sprite.LayerSetVisible(ParticleAcceleratorVisualLayers.Unlit, true);
-            args.Sprite.LayerSetState(ParticleAcceleratorVisualLayers.Unlit, comp.StateBase + comp.StatesSuffixes[state]);
+            args.Sprite.LayerSetVisible(index, true);
+            args.Sprite.LayerSetState(index, comp.StateBase + comp.StatesSuffixes[state]);
         }
         else
         {
-            args.Sprite.LayerSetVisible(ParticleAcceleratorVisualLayers.Unlit, false);
+            args.Sprite.LayerSetVisible(index, false);
         }
     }
 }

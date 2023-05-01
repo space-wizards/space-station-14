@@ -61,6 +61,6 @@
   result: AdvMopItem
   completetime: 2
   materials:
-    Plastic: 100
+    Plastic: 400
     Steel: 100
     Glass: 100

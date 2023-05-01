@@ -486,7 +486,7 @@ namespace Content.Shared.Cuffs
                 }
             }
 
-            _audio.PlayPvs(handcuffComponent.StartCuffSound, handcuff);
+            _audio.PlayPredicted(handcuffComponent.StartCuffSound, handcuff, user);
         }
 
         /// <summary>
@@ -567,7 +567,7 @@ namespace Content.Shared.Cuffs
             if (attempt.Cancelled)
                 return;
 
-            _audio.PlayPvs(cuff.EndUncuffSound, target);
+            _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
             cuffable.Container.Remove(cuffsToRemove);
 

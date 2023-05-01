@@ -74,7 +74,9 @@
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
-    state: off
+    layers:
+    - state: off
+      map: ["enum.PoweredLightLayers.Base"]
   - type: PointLight
     enabled: false
   - type: PoweredLight

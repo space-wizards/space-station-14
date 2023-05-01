@@ -53,11 +53,14 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
                 _menu.UpdateBalance(msg.Balance);
                 _menu.PopulateStoreCategoryButtons(msg.Listings);
                 _menu.UpdateListing(msg.Listings.ToList());
+                _menu.SetFooterVisibility(msg.ShowFooter);
                 break;
             case StoreInitializeState msg:
                 _windowName = msg.Name;
                 if (_menu != null && _menu.Window != null)
+                {
                     _menu.Window.Title = msg.Name;
+                }
                 break;
         }
     }

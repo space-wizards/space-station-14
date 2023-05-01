@@ -170,6 +170,7 @@
       - ConveyorBeltAssembly
       - AppraisalTool
       - AnomalyScanner
+      - AnomalyLocator
       - RCD
       - RCDAmmo
       - HydroponicsToolScythe
@@ -196,20 +197,14 @@
       - Drone
       - Flash
       - MicroManipulatorStockPart
-      - ScanningModuleStockPart
-      - MicroLaserStockPart
       - MatterBinStockPart
       - CapacitorStockPart
       - AdvancedCapacitorStockPart
       - AdvancedMatterBinStockPart
-      - HighPowerMicroLaserStockPart
       - NanoManipulatorStockPart
-      - AdvancedScanningModuleStockPart
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
-      - UltraHighPowerMicroLaserStockPart
       - PicoManipulatorStockPart
-      - PhasicScanningModuleStockPart
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
@@ -235,6 +230,10 @@
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
+      - WeaponPistolCHIMP
+      - CartridgeAnomalousParticleDelta
+      - CartridgeAnomalousParticleEpsilon
+      - CartridgeAnomalousParticleZeta
       - SynthesizerInstrument
       - RPED
       - ClothingShoesBootsMag
@@ -364,6 +363,8 @@
     - ProximitySensor
     - LeftArmBorg
     - RightArmBorg
+    - LeftLegBorg
+    - RightLegBorg
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm
@@ -463,7 +464,6 @@
   - type: Lathe
     idleState: icon
     runningState: icon
-    machinePartPrintSpeed: Laser
     staticRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
@@ -656,3 +656,4 @@
         - SheetUranium1
         - IngotGold1
         - IngotSilver1
+        - MaterialBananium1
