@@ -382,19 +382,6 @@
     sprite: Objects/Consumable/Drinks/rewriter.rsi
     state: icon
 
-
-- type: reagent
-  id: Kvass
-  name: reagent-name-kvass
-  parent: BaseDrink
-  desc: reagent-desc-kvass
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: bread
-  color: "#381600"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/kvass.rsi
-    state: icon
-
 - type: reagent
   id: TheMartinez
   name: reagent-name-the-martinez
