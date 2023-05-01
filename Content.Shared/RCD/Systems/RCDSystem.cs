@@ -111,6 +111,10 @@ public sealed class RCDSystem : EntitySystem
 
     private void OnDoAfterAttempt(EntityUid uid, RCDComponent comp, DoAfterAttemptEvent<RCDDoAfterEvent> args)
     {
+        // sus client crash why
+        if (args.Event?.DoAfter?.Args == null)
+            return;
+
         var location = args.Event.Location;
 
         var gridId = location.GetGridUid(EntityManager);
@@ -249,7 +253,7 @@ public sealed class RCDSystem : EntitySystem
                 return true;
             //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile, thus we early return to avoid the tile set code.
             case RcdMode.Walls:
-                if (!tile.Tile.IsEmpty)
+                if (tile.Tile.IsEmpty)
                 {
                     _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-wall-tile-not-empty-message"), uid, user);
                     return false;
@@ -262,7 +266,7 @@ public sealed class RCDSystem : EntitySystem
                 }
                 return true;
             case RcdMode.Airlock:
-                if (!tile.Tile.IsEmpty)
+                if (tile.Tile.IsEmpty)
                 {
                     _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-airlock-tile-not-empty-message"), uid, user);
                     return false;
