@@ -16,8 +16,6 @@
   - node: assembly
     entity: AirlockAssembly
     actions:
-    - !type:SpriteStateChange
-      state: assembly
     - !type:SnapToGrid {}
     - !type:SetAnchor {}
     edges:

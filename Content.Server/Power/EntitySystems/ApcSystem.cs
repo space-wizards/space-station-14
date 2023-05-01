@@ -143,7 +143,7 @@ namespace Content.Server.Power.EntitySystems
 
             var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess,
                 (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
-                battery.AvailableSupply / battery.Capacity);
+                battery.CurrentStorage / battery.Capacity);
 
             _ui.TrySetUiState(uid, ApcUiKey.Key, state, ui: ui);
         }

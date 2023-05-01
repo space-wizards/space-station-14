@@ -119,6 +119,16 @@
     deconstructionTarget: null
 
 - type: entity
+  name: double-barreled shotgun
+  parent: WeaponShotgunDoubleBarreled
+  id: WeaponShotgunDoubleBarreledRubber
+  description: An immortal classic. Uses .50 shotgun shells.
+  suffix: Non-Lethal
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
+
+- type: entity
   name: Enforcer
   parent: BaseWeaponShotgun
   id: WeaponShotgunEnforcer

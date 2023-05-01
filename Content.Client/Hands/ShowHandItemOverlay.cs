@@ -16,6 +16,7 @@ namespace Content.Client.Hands
         [Dependency] private readonly IClyde _clyde = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
+        private HandsSystem? _hands;
         private readonly IRenderTexture _renderBackbuffer;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -58,9 +59,10 @@ namespace Content.Client.Hands
                 return;
             }
 
-            var handEntity = EntityOverride ?? EntitySystem.Get<HandsSystem>().GetActiveHandEntity();
+            _hands ??= _entMan.System<HandsSystem>();
+            var handEntity = _hands.GetActiveHandEntity();
 
-            if (handEntity == null || !_entMan.HasComponent<SpriteComponent>(handEntity))
+            if (handEntity == null || !_entMan.TryGetComponent(handEntity, out SpriteComponent? sprite))
                 return;
 
             var halfSize = _renderBackbuffer.Size / 2;
@@ -68,7 +70,7 @@ namespace Content.Client.Hands
 
             screen.RenderInRenderTarget(_renderBackbuffer, () =>
             {
-                screen.DrawEntity(handEntity.Value, halfSize, new Vector2(1f, 1f) * uiScale, Direction.South);
+                screen.DrawEntity(handEntity.Value, halfSize, new Vector2(1f, 1f) * uiScale, Angle.Zero, Angle.Zero, Direction.South, sprite);
             }, Color.Transparent);
 
             screen.DrawTexture(_renderBackbuffer.Texture, mousePos - halfSize + offset, Color.White.WithAlpha(0.75f));
