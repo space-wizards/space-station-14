@@ -573,18 +573,9 @@
 - type: entity
   name: Smile
   id: MobSlimesPet
-  parent: SimpleMobBase
+  parent: MobAdultSlimes
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
-  - type: GhostRole
-    makeSentient: true
-    allowSpeech: true
-    allowMovement: true
-    name: ghost-role-information-smile-name
-    description: ghost-role-information-smile-description
-  - type: GhostTakeoverAvailable
-  - type: ReplacementAccent
-    accent: slimes
   - type: Sprite
     drawdepth: Mobs
     netsync: false
@@ -688,7 +679,6 @@
     coldDamageThreshold: 0
   - type: HeatResistance
   - type: StandingState
-  - type: CombatMode
   - type: MeleeWeapon
     hidden: true
     soundHit:
@@ -699,6 +689,12 @@
       types:
         Blunt: 1
         Caustic: 1
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-smile-name
+    description: ghost-role-information-smile-description
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-slimes

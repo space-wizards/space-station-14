@@ -21,4 +21,4 @@ ghost-role-information-slimes-name = Slime
 ghost-role-information-slimes-description = Everything around you irritates your instincts, destroy them!
 
 ghost-role-information-smile-name = Smile
-ghost-role-information-smile-description = The resident RND, a favorite specimen of experiments for scientists, because he survives. And he's so cute.
+ghost-role-information-smile-description = Science's best lab slime. Survived so many experiments that it got promoted to pet.
