@@ -1,14 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: You no longer can rapidly eat food, type: Tweak}
-  - {message: You no longer can chug drinks, type: Tweak}
-  - {message: Fixes cancelling fixing a window instantly fixes it, type: Fix}
-  - {message: Fixes doafters being spammed on headset encryption key removal, type: Fix}
-  - {message: Cancelling a butcher attempt on clothes will no longer brick it, type: Fix}
-  - {message: Fixes players not being able to dump trash into a bin, type: Fix}
-  id: 3103
-  time: '2023-03-05T05:26:03.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Verbs are now usable in the stripping menu., type: Add}
@@ -2887,3 +2877,8 @@ Entries:
   - {message: Runtime will now attack mice., type: Add}
   id: 3602
   time: '2023-05-01T18:57:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Wide melee attacks are now also lag compensated., type: Add}
+  id: 3603
+  time: '2023-05-01T19:07:17.0000000+00:00'
