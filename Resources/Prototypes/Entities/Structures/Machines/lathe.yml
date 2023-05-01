@@ -412,8 +412,10 @@
       - ClothingEyesGlassesSecurity
       - RiotShield
       - CartridgePistol
+      - CartridgeHeavyPistol
       - CartridgeMagnum
       - CartridgePistolRubber
+      - CartridgeHeavyPistolRubber
       - CartridgeMagnumRubber
       - ShellShotgun
       - ShellShotgunBeanbag
@@ -428,6 +430,8 @@
       - TargetClown
       - MagazineBoxPistol
       - MagazineBoxPistolRubber
+      - MagazineBoxHeavyPistol
+      - MagazineBoxHeavyPistolRubber
       - MagazineBoxMagnum
       - MagazineBoxMagnumRubber
       - MagazineBoxRifle

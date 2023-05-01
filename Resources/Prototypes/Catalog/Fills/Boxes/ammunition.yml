@@ -103,45 +103,45 @@
 - type: entity
   name: box of Vector magazines
   parent: BoxMagazine
-  id: BoxMagazineMagnumSubMachineGun
+  id: BoxMagazineHeavyPistolSubMachineGun
   description: A box full of Vector magazines.
   components:
   - type: StorageFill
     contents:
-      - id: MagazineMagnumSubMachineGun
+      - id: MagazineHeavyPistolSubMachineGun
         amount: 3
 
 - type: entity
   name: box of Vector (high-velocity) magazines
   parent: BoxMagazine
-  id: BoxMagazineMagnumSubMachineGunHighVelocity
+  id: BoxMagazineHeavyPistolSubMachineGunHighVelocity
   description: A box full of Vector (high-velocity) magazines.
   components:
   - type: StorageFill
     contents:
-      - id: MagazineMagnumSubMachineGunHighVelocity
+      - id: MagazineHeavyPistolSubMachineGunHighVelocity
         amount: 3
 
 - type: entity
   name: box of Vector (practice) magazines
   parent: BoxMagazine
-  id: BoxMagazineMagnumSubMachineGunPractice
+  id: BoxMagazineHeavyPistolSubMachineGunPractice
   description: A box full of Vector (practice) magazines.
   components:
   - type: StorageFill
     contents:
-      - id: MagazineMagnumSubMachineGunPractice
+      - id: MagazineHeavyPistolSubMachineGunPractice
         amount: 3
 
 - type: entity
   name: box of Vector (rubber) magazines
   parent: BoxMagazine
-  id: BoxMagazineMagnumSubMachineGunRubber
+  id: BoxMagazineHeavyPistolSubMachineGunRubber
   description: A box full of Vector (rubber) magazines.
   components:
   - type: StorageFill
     contents:
-      - id: MagazineMagnumSubMachineGunRubber
+      - id: MagazineHeavyPistolSubMachineGunRubber
         amount: 3
 
 # Pistol

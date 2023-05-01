@@ -1,0 +1,54 @@
+- type: entity
+  id: BaseCartridgeHeavyPistol
+  name: cartridge (.40 heavy)
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeHeavyPistol
+  - type: CartridgeAmmo
+    proto: BulletHeavyPistol
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 10
+
+- type: entity
+  id: CartridgeHeavyPistol
+  name: cartridge (.40 heavy)
+  parent: BaseCartridgeHeavyPistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletHeavyPistol
+
+- type: entity
+  id: CartridgeHeavyPistolHighVelocity
+  name: cartridge (.40 heavy high-velocity)
+  parent: BaseCartridgeHeavyPistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletHeavyPistolHighVelocity
+
+- type: entity
+  id: CartridgeHeavyPistolPractice
+  name: cartridge (.40 heavy practice)
+  parent: BaseCartridgeHeavyPistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletHeavyPistolPractice
+
+- type: entity
+  id: CartridgeHeavyPistolRubber
+  name: cartridge (.40 heavy rubber)
+  parent: BaseCartridgeHeavyPistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletHeavyPistolRubber

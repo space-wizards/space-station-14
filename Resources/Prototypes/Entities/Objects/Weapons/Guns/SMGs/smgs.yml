@@ -105,7 +105,7 @@
   name: Vector
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunVector
-  description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
+  description: An excellent fully automatic Heavy SMG. Uses .40 heavy ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
@@ -127,20 +127,20 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineMagnumSubMachineGun
+        startingItem: MagazineHeavyPistolSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
         priority: 2
         whitelist:
           tags:
-            - MagazineMagnumSubMachineGun
+            - MagazineHeavyPistolSubMachineGun
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeMagnum
+        startingItem: CartridgeHeavyPistol
         priority: 1
         whitelist:
           tags:
-            - CartridgeMagnum
+            - CartridgeHeavyPistol
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -205,27 +205,27 @@
   name: Vector
   parent: WeaponSubMachineGunVector
   id: WeaponSubMachineGunVectorRubber
-  description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
+  description: An excellent fully automatic Heavy SMG. Uses .40 heavy ammo.
   suffix: Non-Lethal
   components:
   - type: ItemSlots
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineMagnumSubMachineGunRubber
+        startingItem: MagazineHeavyPistolSubMachineGunRubber
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
         priority: 2
         whitelist:
           tags:
-            - MagazineMagnumSubMachineGun
+            - MagazineHeavyPistolSubMachineGun
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeMagnumRubber
+        startingItem: CartridgeHeavyPistolRubber
         priority: 1
         whitelist:
           tags:
-            - CartridgeMagnum
+            - CartridgeHeavyPistol
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot

@@ -116,6 +116,9 @@
   id: CartridgeMagnum
 
 - type: Tag
+  id: CartridgeHeavyPistol
+
+- type: Tag
   id: CartridgePistol
 
 - type: Tag
@@ -431,6 +434,9 @@
 
 - type: Tag
   id: MagazineMagnumSubMachineGun
+
+- type: Tag
+  id: MagazineHeavyPistolSubMachineGun
 
 - type: Tag
   id: MagazinePistolSubMachineGun

@@ -1,0 +1,89 @@
+- type: entity
+  id: BaseMagazineHeavyPistolSubMachineGun
+  name: "Vector magazine (.40 heavy)"
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - MagazineHeavyPistolSubMachineGun
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeHeavyPistol
+    capacity: 25
+  - type: Item
+    size: 10
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazineHeavyPistolSubMachineGun
+  name: "Vector magazine (.40 heavy)"
+  parent: BaseMagazineHeavyPistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeHeavyPistol
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineHeavyPistolSubMachineGunHighVelocity
+  name: "Vector magazine (.40 heavy High-Velocity)"
+  parent: BaseMagazineHeavyPistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeHeavyPistolHighVelocity
+  - type: Sprite
+    layers:
+    - state: high_velocity
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineHeavyPistolSubMachineGunPractice
+  name: "Vector magazine (.40 heavy practice)"
+  parent: BaseMagazineHeavyPistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeHeavyPistolPractice
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineHeavyPistolSubMachineGunRubber
+  name: "Vector magazine (.40 heavy rubber)"
+  parent: BaseMagazineHeavyPistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeHeavyPistolRubber
+  - type: Sprite
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

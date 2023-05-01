@@ -69,6 +69,14 @@
     Steel: 5
 
 - type: latheRecipe
+  id: CartridgeHeavyPistolRubber
+  result: CartridgeHeavyPistolRubber
+  completetime: 2
+  materials:
+    Plastic: 5
+    Steel: 5
+
+- type: latheRecipe
   id: CartridgeMagnumRubber
   result: CartridgeMagnumRubber
   completetime: 2
@@ -102,6 +110,13 @@
 - type: latheRecipe
   id: CartridgePistol
   result: CartridgePistol
+  completetime: 2
+  materials:
+    Steel: 10
+
+- type: latheRecipe
+  id: CartridgeHeavyPistol
+  result: CartridgeHeavyPistol
   completetime: 2
   materials:
     Steel: 10
@@ -199,6 +214,21 @@
 - type: latheRecipe
   id: MagazineBoxPistolRubber
   result: MagazineBoxPistolRubber
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 300
+
+- type: latheRecipe
+  id: MagazineBoxHeavyPistol
+  result: MagazineBoxHeavyPistol
+  completetime: 5
+  materials:
+    Steel: 950
+
+- type: latheRecipe
+  id: MagazineBoxHeavyPistolRubber
+  result: MagazineBoxHeavyPistolRubber
   completetime: 5
   materials:
     Steel: 350
