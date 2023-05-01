@@ -12,6 +12,12 @@ using Robust.Shared.Map;
 
 namespace Content.Client.CombatMode
 {
+    /// <summary>
+    ///   This shows something like crosshairs for the combat mode next to the mouse cursor.
+    ///   For weapons with the gun class, a crosshair of one type is displayed,
+    ///   while for all other types of weapons and items in hand, as well as for an empty hand,
+    ///   a crosshair of a different type is displayed. These crosshairs simply show the state of combat mode (on|off).
+    /// </summary>
     public sealed class ShowCombatModeIndicatorsOverlay : Overlay
     {
         private IConfigurationManager _cfg;
@@ -26,12 +32,6 @@ namespace Content.Client.CombatMode
         private Texture _meleeSight;
         private bool _isShowIndicators;
 
-        /// <summary>
-        ///   This shows something like crosshairs for the combat mode next to the mouse cursor.
-        ///   For weapons with the gun class, a crosshair of one type is displayed,
-        ///   while for all other types of weapons and items in hand, as well as for an empty hand,
-        ///   a crosshair of a different type is displayed. These crosshairs simply show the state of combat mode (on|off).
-        /// </summary>
         public ShowCombatModeIndicatorsOverlay(IConfigurationManager cfg, IInputManager input, IEntityManager entMan,
                 IEyeManager eye, CombatModeSystem combatSys)
         {
