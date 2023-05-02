@@ -3,7 +3,6 @@ using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mech.Equipment.Systems;
 using Content.Shared.Timing;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using System.Linq;
 
 namespace Content.Shared.Mech.Equipment.Systems;
@@ -11,7 +10,7 @@ namespace Content.Shared.Mech.Equipment.Systems;
 /// <summary>
 /// Handles everything for mech soundboard.
 /// </summary>
-public sealed class SharedMechSoundboardSystem : EntitySystem
+public sealed class MechSoundboardSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -20,24 +19,8 @@ public sealed class SharedMechSoundboardSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MechSoundboardComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MechSoundboardComponent, ComponentHandleState>(OnHandleState);
-
         SubscribeLocalEvent<MechSoundboardComponent, MechEquipmentUiStateReadyEvent>(OnUiStateReady);
         SubscribeLocalEvent<MechSoundboardComponent, MechEquipmentUiMessageRelayEvent>(OnSoundboardMessage);
-    }
-
-    private void OnGetState(EntityUid uid, MechSoundboardComponent comp, ref ComponentGetState args)
-    {
-        args.State = new MechSoundboardComponentState(comp.Sounds);
-    }
-
-    private void OnHandleState(EntityUid uid, MechSoundboardComponent comp, ref ComponentHandleState args)
-    {
-        if (args.Current is not MechSoundboardComponentState state)
-            return;
-
-        comp.Sounds = state.Sounds;
     }
 
     private void OnUiStateReady(EntityUid uid, MechSoundboardComponent comp, MechEquipmentUiStateReadyEvent args)
@@ -65,7 +48,6 @@ public sealed class SharedMechSoundboardSystem : EntitySystem
         if (_useDelay.ActiveDelay(uid))
             return;
 
-        // TODO: add usedelay to honk
         // honk!!!!!
         var mech = equipment.EquipmentOwner.Value;
         _useDelay.BeginDelay(uid);
