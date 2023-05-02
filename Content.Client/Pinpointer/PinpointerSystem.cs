@@ -21,7 +21,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         while (query.MoveNext(out var _, out var pinpointer, out var sprite))
         {
             if (!pinpointer.HasTarget)
-                return;
+                continue;
             var eye = _eyeManager.CurrentEye;
             var angle = pinpointer.ArrowAngle + eye.Rotation;
 
