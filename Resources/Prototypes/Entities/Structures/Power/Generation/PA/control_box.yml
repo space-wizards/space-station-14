@@ -7,7 +7,7 @@
     - type: Sprite
       sprite: Structures/Power/Generation/PA/control_box.rsi
       layers:
-        - state: boxc
+        - state: completed
           map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
         - state: unlitp
           map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
@@ -35,14 +35,11 @@
     - type: Wires
       BoardName: "Mk2 Particle Accelerator"
       LayoutId: ParticleAccelerator
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
-      
       
 # Unfinished
 
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorControlBoxUnfinished
   name: PA control computer
   suffix: Unfinished
@@ -52,10 +49,5 @@
       bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/control_box.rsi
-      state: box
     - type: Construction
       graph: ParticleAcceleratorControlBox
-      node: start
-      defaultTarget: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]

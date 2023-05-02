@@ -8,11 +8,7 @@
 <Box>
 <GuideEntityEmbed Entity="CapacitorStockPart"/>
 <GuideEntityEmbed Entity="MatterBinStockPart"/>
-<GuideEntityEmbed Entity="MicroLaserStockPart"/>
-</Box>
-<Box>
 <GuideEntityEmbed Entity="MicroManipulatorStockPart"/>
-<GuideEntityEmbed Entity="ScanningModuleStockPart"/>
 </Box>
 Вы можете осмотреть часть, чтобы узнать как тип, так и уровень, которые варьируются от 1 до 4.
 

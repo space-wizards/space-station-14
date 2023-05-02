@@ -786,6 +786,11 @@
     equippedPrefix: 0
     slots:
     - HEAD
+  - type: Faction
+    factions:
+      - Mouse
+  - type: HTN
+    rootTask: MouseCompound
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -866,6 +871,7 @@
   - type: DiseaseCarrier #The other class lab animal and disease vector
     naturalImmunities:
       - AMIV
+      - ActiveHonkVirus
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50

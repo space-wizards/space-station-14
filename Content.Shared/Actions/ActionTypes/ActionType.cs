@@ -158,37 +158,10 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     public ItemActionIconStyle ItemIconStyle;
 
     /// <summary>
-    ///     If not null, the user will speak these words when performing the action. Convenient feature to have for some
-    ///     actions. Gets passed through localization.
-    /// </summary>
-    [DataField("speech")]
-    public string? Speech;
-
-    /// <summary>
     ///     If not null, this sound will be played when performing this action.
     /// </summary>
     [DataField("sound")]
     public SoundSpecifier? Sound;
-
-    /// <summary>
-    ///     A pop-up to show the user when performing this action. Gets passed through localization.
-    /// </summary>
-    [DataField("userPopup")]
-    public string? UserPopup;
-
-    /// <summary>
-    ///     A pop-up to show to all players when performing this action. Gets passed through localization.
-    /// </summary>
-    [DataField("popup")]
-    public string? Popup;
-
-    /// <summary>
-    ///     If not null, this string will be appended to the pop-up localization strings when the action was toggled on
-    ///     after execution. Exists to make it easy to have a different pop-up for turning the action on or off (e.g.,
-    ///     combat mode toggle).
-    /// </summary>
-    [DataField("popupToggleSuffix")]
-    public string? PopupToggleSuffix = null;
 
     /// <summary>
     ///     Compares two actions based on their properties. This is used to determine equality when the client requests the
@@ -256,12 +229,8 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         AutoRemove = toClone.AutoRemove;
         ItemIconStyle = toClone.ItemIconStyle;
         CheckCanInteract = toClone.CheckCanInteract;
-        Speech = toClone.Speech;
         UseDelay = toClone.UseDelay;
         Sound = toClone.Sound;
-        UserPopup = toClone.UserPopup;
-        Popup = toClone.Popup;
-        PopupToggleSuffix = toClone.PopupToggleSuffix;
         ItemIconStyle = toClone.ItemIconStyle;
         _entityIcon = toClone._entityIcon;
     }

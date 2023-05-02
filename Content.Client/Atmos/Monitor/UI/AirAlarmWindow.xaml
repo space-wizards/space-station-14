@@ -8,7 +8,7 @@
         <BoxContainer Orientation="Horizontal" Margin="0 0 0 2">
             <!-- Left column (view of entity) -->
             <PanelContainer Margin="2 0 6 0" StyleClasses="Inset" VerticalAlignment="Center" VerticalExpand="True">
-                <SpriteView Name="EntityView" OverrideDirection="South" Scale="2 2" />
+                <SpriteView Name="EntityView" OverrideDirection="South" Scale="2 2" SetSize="64 64"/>
             </PanelContainer>
             <!-- Center column (pressure, temperature, alarm state) -->
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 6 0">

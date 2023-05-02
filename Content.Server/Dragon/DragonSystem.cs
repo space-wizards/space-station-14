@@ -17,6 +17,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.NPC.Systems;
+using Content.Server.Station.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
@@ -24,7 +25,7 @@ using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Dragon
 {
-    public sealed partial class DragonSystem : GameRuleSystem
+    public sealed partial class DragonSystem : GameRuleSystem<DragonRuleComponent>
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -37,6 +38,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
 
         /// <summary>
