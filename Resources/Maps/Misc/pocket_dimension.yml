@@ -24,8 +24,8 @@ entities:
         volume: 2500
         temperature: 293.15
         moles:
-        - 54.148
-        - 203.925
+        - 21.824779
+        - 82.10312
         - 0
         - 0
         - 0
@@ -82,55 +82,6 @@ entities:
       type: DecalGrid
     - nextUpdate: 0
       type: SpreaderGrid
-    - version: 2
-      data:
-        tiles:
-          -1,-1:
-            0: 51200
-            1: 14335
-          0,0:
-            0: 33
-            1: 1878
-          -1,0:
-            0: 12
-            1: 4083
-          0,-1:
-            0: 4352
-            1: 26231
-        uniqueMixes:
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 21.824879
-          - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        chunkSize: 4
-      type: GridAtmosphere
-    - type: GasTileOverlay
     - nextShake: 0
       shakeTimes: 10
       type: GravityShake
