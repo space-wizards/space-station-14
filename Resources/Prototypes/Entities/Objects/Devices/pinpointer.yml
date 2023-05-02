@@ -8,7 +8,6 @@
   - type: Transform
     noRot: True
   - type: Sprite
-    netsync: false
     noRot: True
     sprite: Objects/Devices/pinpointer.rsi
     layers:
@@ -16,6 +15,8 @@
       map: ["enum.PinpointerLayers.Base"]
     - state: pinonnull
       map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
   - type: Item
     sprite: Objects/Devices/pinpointer.rsi
   - type: Pinpointer
