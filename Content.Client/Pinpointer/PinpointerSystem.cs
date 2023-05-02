@@ -57,44 +57,21 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        // check if pinpointer screen is active
-        if (!_appearance.TryGetData<bool>(uid, PinpointerVisuals.IsActive, out var isActive, args.Component) || !isActive)
-        {
-            sprite.LayerSetVisible(PinpointerLayers.Screen, false);
-            return;
-        }
-
-        sprite.LayerSetVisible(PinpointerLayers.Screen, true);
-
-        // check distance and direction to target
-        if (!_appearance.TryGetData<Distance>(uid, PinpointerVisuals.TargetDistance, out var dis, args.Component) ||
+        if (!_appearance.TryGetData<Distance>(uid, PinpointerVisuals.TargetDistance, out var distance, args.Component) ||
             !_appearance.TryGetData<Angle>(uid, PinpointerVisuals.ArrowAngle, out var angle, args.Component))
         {
-            sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
             sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
             return;
         }
 
-        switch (dis)
+        switch (distance)
         {
-            case Distance.Reached:
-                sprite.LayerSetState(PinpointerLayers.Screen, "pinondirect");
-                sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
-                break;
             case Distance.Close:
-                sprite.LayerSetState(PinpointerLayers.Screen, "pinonclose");
-                sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
-                break;
             case Distance.Medium:
-                sprite.LayerSetState(PinpointerLayers.Screen, "pinonmedium");
-                sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
-                break;
             case Distance.Far:
-                sprite.LayerSetState(PinpointerLayers.Screen, "pinonfar");
                 sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
                 break;
-            case Distance.Unknown:
-                sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
+            default:
                 sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
                 break;
         }
