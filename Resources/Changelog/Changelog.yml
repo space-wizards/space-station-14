@@ -1,12 +1,4 @@
 Entries:
-- author: GoodWheatley
-  changes:
-  - {message: Stimpacks are now available in the uplink for 8 TC., type: Add}
-  - {message: Stimkits are now available in the uplink for 12 TC., type: Add}
-  - {message: Experimental Stimpacks are now available in operative uplinks for 15
-      TC., type: Add}
-  id: 3117
-  time: '2023-03-06T05:28:15.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Cardborg Helmet now hides identity., type: Add}
@@ -2887,3 +2879,8 @@ Entries:
       harder to use as bombs.', type: Tweak}
   id: 3616
   time: '2023-05-02T22:12:09.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Sprinting should be a little louder than walking, type: Tweak}
+  id: 3617
+  time: '2023-05-02T23:33:53.0000000+00:00'
