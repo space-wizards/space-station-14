@@ -15,21 +15,22 @@ public sealed partial class PinpointerComponent : Component
     [DataField("component")]
     public string? Component;
 
-    [DataField("mediumDistance")]
+    [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
     public float MediumDistance = 16f;
 
-    [DataField("closeDistance")]
+    [DataField("closeDistance"), ViewVariables(VVAccess.ReadWrite)]
     public float CloseDistance = 8f;
 
-    [DataField("reachedDistance")]
+    [DataField("reachedDistance"), ViewVariables(VVAccess.ReadWrite)]
     public float ReachedDistance = 1f;
 
     /// <summary>
     ///     Pinpointer arrow precision in radians.
     /// </summary>
-    [DataField("precision")]
+    [DataField("precision"), ViewVariables(VVAccess.ReadWrite)]
     public double Precision = 0.09;
 
+    [ViewVariables]
     public EntityUid? Target = null;
 
     [ViewVariables]
@@ -44,6 +45,7 @@ public sealed partial class PinpointerComponent : Component
     [AutoNetworkedField]
     public Distance DistanceToTarget = Distance.Unknown;
 
+    [ViewVariables]
     public bool HasTarget => DistanceToTarget != Distance.Unknown;
 }
 
