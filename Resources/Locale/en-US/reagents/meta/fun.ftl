@@ -15,3 +15,6 @@ reagent-desc-saxoite = Smells like jazz.
 
 reagent-name-licoxide = Licoxide
 reagent-desc-licoxide = It looks... electrifying.
+
+reagent-name-restorative-nanites = restorative nanites
+reagent-desc-restorative-nanites = Once in the body, it provides treatment for most types of damage.
