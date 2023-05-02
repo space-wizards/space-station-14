@@ -69,7 +69,7 @@ namespace Content.Server.Power.EntitySystems
         }
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
         {
-            var attemptEv = new ToggleMainBreakerAttemptEvent();
+            var attemptEv = new ApcToggleMainBreakerAttemptEvent();
             RaiseLocalEvent(uid, ref attemptEv);
             if (attemptEv.Cancelled)
             {
@@ -199,5 +199,5 @@ namespace Content.Server.Power.EntitySystems
     }
 
     [ByRefEvent]
-    public record struct ToggleMainBreakerAttemptEvent(bool Cancelled);
+    public record struct ApcToggleMainBreakerAttemptEvent(bool Cancelled);
 }

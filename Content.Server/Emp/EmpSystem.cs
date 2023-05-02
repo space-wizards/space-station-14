@@ -23,7 +23,7 @@ public sealed class EmpSystem : SharedEmpSystem
 
         SubscribeLocalEvent<EmpDisabledComponent, RadioSendAttemptEvent>(OnRadioSendAttempt);
         SubscribeLocalEvent<EmpDisabledComponent, RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
-        SubscribeLocalEvent<EmpDisabledComponent, ToggleMainBreakerAttemptEvent>(OnToggleMainBreaker);
+        SubscribeLocalEvent<EmpDisabledComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
         SubscribeLocalEvent<EmpDisabledComponent, SurveillanceCameraSetActiveAttemptEvent>(OnCameraSetActive);
     }
 
@@ -89,7 +89,7 @@ public sealed class EmpSystem : SharedEmpSystem
         args.Cancelled = true;
     }
 
-    private void OnToggleMainBreaker(EntityUid uid, EmpDisabledComponent component, ref ToggleMainBreakerAttemptEvent args)
+    private void OnApcToggleMainBreaker(EntityUid uid, EmpDisabledComponent component, ref ApcToggleMainBreakerAttemptEvent args)
     {
         args.Cancelled = true;
     }
