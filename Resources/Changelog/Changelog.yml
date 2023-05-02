@@ -1,9 +1,4 @@
 Entries:
-- author: furontier
-  changes:
-  - {message: Added lizard crate to cargo request console, type: Add}
-  id: 3108
-  time: '2023-03-06T02:33:47.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Clipping a plant puts the seed packet in your hands instead of on the
@@ -2881,3 +2876,9 @@ Entries:
       agents, type: Tweak}
   id: 3607
   time: '2023-05-02T01:29:03.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Treacherous scientists may now spend their TC on Omega Cartridges for
+      the CHIMP. Go APE., type: Add}
+  id: 3608
+  time: '2023-05-02T06:11:05.0000000+00:00'
