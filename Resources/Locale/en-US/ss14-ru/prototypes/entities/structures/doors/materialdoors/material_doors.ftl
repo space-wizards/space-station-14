@@ -19,3 +19,6 @@ ent-GoldDoor = gold door
 ent-SilverDoor = silver door
     .desc = A door, where will it lead?
     .suffix = { "" }
+ent-BananiumDoor = bananium door
+    .desc = A door, where will it lead?
+    .suffix = { "" }

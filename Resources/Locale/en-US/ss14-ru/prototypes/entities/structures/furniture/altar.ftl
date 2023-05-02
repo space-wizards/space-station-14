@@ -55,3 +55,6 @@ ent-AltarHeaven = heaven altar
 ent-AltarFangs = fanged altar
     .desc = { ent-AltarHeaven.desc }
     .suffix = { "" }
+ent-AltarBananium = honkmother altar
+    .desc = A bananium altar dedicated to the honkmother.
+    .suffix = { "" }

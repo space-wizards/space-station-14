@@ -52,3 +52,6 @@ ent-ClothingOuterDogi = samurai dogi
 ent-ClothingOuterCoatParamedicWB = paramedic windbreaker
     .desc = A paramedic's trusty windbreaker, for all the space wind.
     .suffix = { "" }
+ent-ClothingOuterCoatAMG = armored medical gown
+    .desc = The version of the medical gown, with elements of a bulletproof vest, looks strange, but your heart is protected.
+    .suffix = { "" }
