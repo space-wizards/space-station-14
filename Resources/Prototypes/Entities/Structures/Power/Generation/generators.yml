@@ -246,8 +246,6 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/buzzing.ogg
-  - type: StaticPrice
-    price: 650
   - type: Destructible
     thresholds:
       - trigger:

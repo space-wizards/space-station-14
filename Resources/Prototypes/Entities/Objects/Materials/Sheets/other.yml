@@ -150,7 +150,7 @@
   components:
   - type: Material
   - type: Food
-    transferAmount: 30
+    transferAmount: 10
   - type: PhysicalComposition
     materialComposition:
       Uranium: 100
@@ -168,20 +168,12 @@
   - type: Item
     heldPrefix: uranium
   - type: Extractable
-    grindableSolutionName: uranium
+    grindableSolutionName: food
   - type: SolutionContainerManager
     solutions:
-      uranium:
-        reagents:
-        - ReagentId: Uranium
-          Quantity: 10
       food:
         reagents:
         - ReagentId: Uranium
-          Quantity: 10
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
           Quantity: 10
 
 - type: entity
