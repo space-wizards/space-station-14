@@ -5,6 +5,8 @@
   save: false
   description: Boo!
   components:
+  - type: ContentEye
+    maxZoom: 1.44,1.44
   - type: Mind
   - type: Clickable
   - type: InteractionOutline

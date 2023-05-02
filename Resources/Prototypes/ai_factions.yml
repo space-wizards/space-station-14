@@ -13,8 +13,14 @@
   - Xeno
 
 - type: faction
+  id: Mouse
+  hostile:
+    - PetsNT
+
+- type: faction
   id: PetsNT
   hostile:
+  - Mouse
   - SimpleHostile
   - Xeno
 

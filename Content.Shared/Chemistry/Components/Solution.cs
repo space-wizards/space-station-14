@@ -435,12 +435,20 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         /// Splits a solution without the specified reagent.
         /// </summary>
-        public Solution SplitSolutionWithout(FixedPoint2 toTake, string without)
+        public Solution SplitSolutionWithout(FixedPoint2 toTake, params string[] without)
         {
-            TryGetReagent(without, out var existing);
-            RemoveReagent(without, toTake);
+            var existing = new FixedPoint2[without.Length];
+            for (var i = 0; i < without.Length; i++)
+            {
+                TryGetReagent(without[i], out existing[i]);
+                RemoveReagent(without[i], existing[i]);
+            }
+
             var sol = SplitSolution(toTake);
-            AddReagent(without, existing);
+
+            for (var i = 0; i < without.Length; i++)
+                AddReagent(without[i], existing[i]);
+
             return sol;
         }
 
