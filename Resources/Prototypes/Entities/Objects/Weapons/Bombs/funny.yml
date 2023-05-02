@@ -11,6 +11,11 @@
     - type: Item
       sprite: Objects/Weapons/Bombs/hot_potato.rsi
       size: 5
+    - type: AmbientSound
+      enabled: false
+      range: 8
+      sound:
+        path: /Audio/Effects/lightburn.ogg
     - type: MeleeWeapon
       damage:
         types:

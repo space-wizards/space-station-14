@@ -1,3 +1,4 @@
+using Content.Server.Audio;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
@@ -15,6 +16,7 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
 
     public override void Initialize()
     {
@@ -27,6 +29,7 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
     {
         EnsureComp<ActiveHotPotatoComponent>(uid);
         comp.CanTransfer = false;
+        _ambientSound.SetAmbience(uid, true);
         Dirty(comp);
     }
 
