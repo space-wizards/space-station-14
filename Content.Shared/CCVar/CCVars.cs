@@ -957,6 +957,45 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> WhitelistMaxPlayers =
             CVarDef.Create("whitelist.max_players", int.MaxValue, CVar.SERVERONLY);
+        /*
+         * Prime Whitelist
+         */
+
+        /// <summary>
+        ///     Controls whether the server will deny any players that are not whitelisted in the Prime DB.
+        /// </summary>
+        public static readonly CVarDef<bool> PrimelistEnabled =
+            CVarDef.Create("primelist.enabled", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     IP address of the Prime database server
+        /// </summary>
+        public static readonly CVarDef<string> PrimelistDatabaseIp =
+            CVarDef.Create("primelist.ip", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Port of the Prime database server
+        /// </summary>
+        public static readonly CVarDef<int> PrimelistDatabasePort =
+            CVarDef.Create("primelist.port", 3306, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Name of the Prime database server
+        /// </summary>
+        public static readonly CVarDef<string> PrimelistDatabaseName =
+            CVarDef.Create("primelist.database", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Username for the Prime database server
+        /// </summary>
+        public static readonly CVarDef<string> PrimelistDatabaseUsername =
+            CVarDef.Create("primelist.username", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Password for the Prime database server
+        /// </summary>
+        public static readonly CVarDef<string> PrimelistDatabasePassword =
+            CVarDef.Create("primelist.password", string.Empty, CVar.SERVERONLY);
 
         /*
          * VOTE
@@ -1090,7 +1129,7 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> CargoShuttles =
             CVarDef.Create("shuttle.cargo", true, CVar.SERVERONLY);
-        
+
         /// <summary>
         /// Whether to automatically spawn escape shuttles.
         /// </summary>

@@ -4,6 +4,7 @@ using Content.Server.Corvax.Sponsors;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
+using Content.Server.SS220.PrimeWhitelist;
 using Content.Shared.CCVar;
 using Content.Shared.Corvax.CCCVars;
 using Content.Shared.GameTicking;
@@ -33,6 +34,7 @@ namespace Content.Server.Connection
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly SponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
         [Dependency] private readonly ILocalizationManager _loc = default!;
+        [Dependency] private readonly Primelist _primelist = default!;
 
         public void Initialize()
         {
@@ -159,6 +161,14 @@ namespace Content.Server.Connection
                 return (ConnectionDenyReason.Ban, message, bans);
             }
 
+            if (_cfg.GetCVar(CCVars.PrimelistEnabled))
+            {
+                if (!await _primelist.IsPrimelisted(e.UserName))
+                {
+                    var msg = Loc.GetString(_cfg.GetCVar(CCVars.WhitelistReason));
+                    return (ConnectionDenyReason.Whitelist, msg, null);
+                }
+            }
             if (_cfg.GetCVar(CCVars.WhitelistEnabled))
             {
                 var min = _cfg.GetCVar(CCVars.WhitelistMinPlayers);
