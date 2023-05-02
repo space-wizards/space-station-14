@@ -27,9 +27,16 @@ internal sealed class PrimelistDb
     {
         await using var db = await GetDb();
         var query = db.PgDbContext.Whitelist
-            .Where(p =>p.Ckey==ckey&&p.IsValid);
-        var whitelist = await query.FirstOrDefaultAsync();
-        return whitelist;
+            .Where(p =>p.Ckey==ckey&&p.IsValid).OrderByDescending(p=>p.Date);
+        try
+        {
+            var whitelist = await query.FirstOrDefaultAsync();
+            return whitelist;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 
     public class PrimelistDbContext : DbContext
@@ -131,9 +138,9 @@ public sealed class Primelist
         var record = await _db.GetPrimelistRecord(accountName);
         if (record == null)
             return false;
-        var now = DateTime.Now;
-        if (now < record.DateStart && now > record.DateEnd)
-            return false;
-        return true;
+        var now = DateTime.UtcNow;
+        if (record.DateStart < now && now < record.DateEnd)
+            return true;
+        return false;
     }
 }
