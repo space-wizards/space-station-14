@@ -173,7 +173,7 @@ namespace Content.Server.Flash
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)
         {
-            if(component.Enabled)
+            if (!HasComp<IgnoreFlashImmunityComponent>(args.Target) && component.Enabled)
                 args.Cancel();
         }
 
