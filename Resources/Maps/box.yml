@@ -7479,17 +7479,27 @@ entities:
           - 0
         chunkSize: 4
       type: GridAtmosphere
-    - joints: {}
+    - joints:
+        docking46345: !type:WeldJoint
+          bodyB: 11906
+          bodyA: 8364
+          id: docking46345
+          localAnchorB: -0.5,-1
+          localAnchorA: -66.5,22
+          damping: 42.40074
+          stiffness: 380.58823
       type: Joint
     - type: OccluderTree
     - type: Shuttle
     - nextUpdate: 5417.8279988
       type: GridPathfinding
     - type: RadiationGridResistance
-    - shakeTimes: 10
+    - nextShake: 0
+      shakeTimes: 10
       type: GravityShake
     - type: GasTileOverlay
-    - type: SpreaderGrid
+    - nextUpdate: 0
+      type: SpreaderGrid
   - uid: 11906
     components:
     - type: MetaData
@@ -7523,14 +7533,23 @@ entities:
         version: 2
         nodes: []
       type: DecalGrid
-    - joints: {}
+    - joints:
+        docking46345: !type:WeldJoint
+          bodyB: 11906
+          bodyA: 8364
+          id: docking46345
+          localAnchorB: -0.5,-1
+          localAnchorA: -66.5,22
+          damping: 42.40074
+          stiffness: 380.58823
       type: Joint
     - type: OccluderTree
     - type: Shuttle
     - nextUpdate: 47.0665638
       type: GridPathfinding
     - type: RadiationGridResistance
-    - type: SpreaderGrid
+    - nextUpdate: 0
+      type: SpreaderGrid
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 7161
@@ -10936,7 +10955,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 21828
       type: Docking
-    - SecondsUntilStateChange: -30243.695
+    - SecondsUntilStateChange: -30519.346
       changeAirtight: False
       state: Opening
       type: Door
@@ -11236,7 +11255,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 562
       type: Docking
-    - SecondsUntilStateChange: -30243.695
+    - SecondsUntilStateChange: -30519.346
       changeAirtight: False
       state: Opening
       type: Door
@@ -89641,6 +89660,15 @@ entities:
     - pos: 69.43106,-78.4392
       parent: 8364
       type: Transform
+- proto: EmergencyRollerBedSpawnFolded
+  entities:
+  - uid: 26582
+    components:
+    - pos: 29.443144,-21.50305
+      parent: 8364
+      type: Transform
+    - nextSound: 271.164496
+      type: EmitSoundOnCollide
 - proto: Emitter
   entities:
   - uid: 4518
@@ -138696,6 +138724,13 @@ entities:
         - 0
         - 0
       type: EntityStorage
+- proto: LockerParamedicFilled
+  entities:
+  - uid: 26581
+    components:
+    - pos: 31.5,-21.5
+      parent: 8364
+      type: Transform
 - proto: LockerQuarterMasterFilled
   entities:
   - uid: 15377
@@ -143191,6 +143226,8 @@ entities:
       pos: 11.5,8.5
       parent: 8364
       type: Transform
+    - enabled: False
+      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6530
@@ -160293,6 +160330,13 @@ entities:
     - pos: -0.5,-6.5
       parent: 8364
       type: Transform
+- proto: SpawnPointParamedic
+  entities:
+  - uid: 26580
+    components:
+    - pos: 31.5,-20.5
+      parent: 8364
+      type: Transform
 - proto: SpawnPointQuartermaster
   entities:
   - uid: 14633
@@ -161009,8 +161053,6 @@ entities:
     - pos: -21.5,-35.5
       parent: 8364
       type: Transform
-    - startingCharge: 3527296.2
-      type: Battery
     - loadingNetworkDemand: 60.000237
       currentSupply: 60.000237
       supplyRampPosition: 60.000237
@@ -161020,8 +161062,6 @@ entities:
     - pos: 85.5,-44.5
       parent: 8364
       type: Transform
-    - startingCharge: 2779041.8
-      type: Battery
     - loadingNetworkDemand: 260.0401
       currentSupply: 260.0401
       supplyRampPosition: 260.0401
@@ -161059,8 +161099,6 @@ entities:
     - pos: 24.5,22.5
       parent: 8364
       type: Transform
-    - startingCharge: 3354776.5
-      type: Battery
     - loadingNetworkDemand: 45.00018
       currentSupply: 45.00018
       supplyRampPosition: 45.00018
@@ -161072,8 +161110,6 @@ entities:
     - pos: -44.5,9.5
       parent: 8364
       type: Transform
-    - startingCharge: 3899839
-      type: Battery
     - loadingNetworkDemand: 19.980549
       currentSupply: 19.980549
       supplyRampPosition: 19.980549
