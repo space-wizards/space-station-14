@@ -49,6 +49,14 @@
     groups:
     - id: Gas
       rateModifier: 100.0
+  - type: Extractable
+    grindableSolutionName: organ
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Slime
+        Quantity: 10
   - type: SolutionContainerManager
     solutions:
       organ:

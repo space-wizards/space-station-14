@@ -10,6 +10,12 @@
   - type: Food
   - type: Extractable
     grindableSolutionName: organ
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 10
   - type: SolutionContainerManager
     solutions:
       organ:
