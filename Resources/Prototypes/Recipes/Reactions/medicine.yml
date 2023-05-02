@@ -11,16 +11,16 @@
     Dylovene: 3
 
 - type: reaction
-  id: Ethylredoxrazine
+  id: Antihol
   reactants:
     Oxygen:
       amount: 1
-    Dylovene:
+    Charcoal:
       amount: 1
-    Carbon:
+    Ethanol:
       amount: 1
   products:
-    Ethylredoxrazine: 3
+    Antihol: 3
 
 - type: reaction
   id: Cryptobiolin

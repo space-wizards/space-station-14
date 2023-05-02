@@ -89,10 +89,10 @@
         type: Remove
 
 - type: reagent
-  id: Ethylredoxrazine
-  name: reagent-name-ethylredoxrazine
+  id: Antihol
+  name: reagent-name-antihol
   group: Medicine
-  desc: reagent-desc-ethylredoxrazine
+  desc: reagent-desc-antihol
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
   color: "#2d5708"
