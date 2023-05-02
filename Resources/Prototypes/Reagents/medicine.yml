@@ -962,3 +962,27 @@
           types:
             Bloodloss: -6
             Asphyxiation: -1
+
+- type: reagent
+  id: Fomepizole
+  name: reagent-name-fomepizole
+  group: Medicine
+  desc: reagent-desc-fomepizole
+  physicalDesc: reagent-physical-desc-odorless
+  flavor: medicine
+  color: "#afdd9a"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 10.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: Stutter
+        time: 10.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        time: 10.0
+        type: Remove

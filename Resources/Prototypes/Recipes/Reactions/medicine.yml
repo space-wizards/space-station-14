@@ -424,3 +424,15 @@
       amount: 1
   products:
     Oxygenis: 3
+
+- type: reaction
+  id: Fomepizole
+  reactants:
+    Ammonia:
+      amount: 1
+    Synaptizine:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Fomepizole: 3

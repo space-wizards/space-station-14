@@ -109,5 +109,8 @@ reagent-desc-atropine = It can pull critical patients out of the grave, but it's
 reagent-name-calomel = calomel
 reagent-desc-calomel = Removes reagents from the blood. If the damage is less than 180, an overdose occurs.
 
-reagent-name-oxygenis = Oxygenis
+reagent-name-oxygenis = oxygenis
 reagent-desc-oxygenis = Synthetic blood. Restores blood.
+
+reagent-name-fomepizole = fomepizole
+reagent-desc-fomepizole = Puts the helicopter on the landing - Calms the nerves well, preventing nervous shaking and hallucinations.
