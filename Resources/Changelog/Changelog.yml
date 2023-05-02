@@ -1,11 +1,6 @@
 Entries:
 - author: eclips_e
   changes:
-  - {message: Slimes can now get drunk, type: Tweak}
-  id: 3114
-  time: '2023-03-06T04:32:22.0000000+00:00'
-- author: eclips_e
-  changes:
   - {message: Pins no longer weigh as much as a crowbar, type: Fix}
   id: 3115
   time: '2023-03-06T04:33:41.0000000+00:00'
@@ -2886,3 +2881,8 @@ Entries:
   - {message: round end zombie survivor list now shows more survivors, type: Tweak}
   id: 3613
   time: '2023-05-02T14:31:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Paused lights will no longer be in darkness by default., type: Tweak}
+  id: 3614
+  time: '2023-05-02T14:57:48.0000000+00:00'
