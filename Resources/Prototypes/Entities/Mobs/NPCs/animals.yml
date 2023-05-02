@@ -742,6 +742,9 @@
   - type: MonkeyAccent
   - type: Puller
   - type: CanHostGuardian
+  - type: Faction
+    factions:
+    - SimpleNeutral
   - type: GhostRole
     makeSentient: true
     name: monkey

@@ -24,6 +24,9 @@
     - Chapel
   - type: Mind
     showExamineInfo: true
+  - type: Faction
+    factions:
+    - SimpleNeutral
   - type: Alerts
   - type: Familiar
 
