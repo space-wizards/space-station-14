@@ -205,12 +205,7 @@
         Cold: 10
   - type: IceAnomaly
     supercriticalExplosion: Cryo
-    explosionTotalIntentsity: 600
-    explosionDropoff: 5
-    explosionMaxTileIntensity: 100
+    explosionTotalIntentsity: 1000
+    explosionDropoff: 1
+    explosionMaxTileIntensity: 10
     projectilePrototype: ProjectileIcicle
-    projectileDamage: # Values are scaled by severity
-      types:
-        Pierce: 50
-        Cold: 50
-        Structural: 30

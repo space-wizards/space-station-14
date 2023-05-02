@@ -84,10 +84,7 @@ public sealed class IceAnomalySystem : EntitySystem
         if (!TryComp<ProjectileComponent>(ent, out var comp))
             return;
 
-        foreach (var key in component.ProjectileDamage.DamageDict.Keys)
-        {
-            comp.Damage.DamageDict[key] = component.ProjectileDamage.DamageDict[key] * severity;
-        }
+        comp.Damage *= severity;
 
         _gunSystem.ShootProjectile(ent, direction, Vector2.Zero, uid, component.MaxProjectileSpeed * severity);
     }

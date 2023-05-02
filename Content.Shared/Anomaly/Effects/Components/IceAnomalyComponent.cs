@@ -19,9 +19,6 @@ public sealed class IceAnomalyComponent : Component
     public string ProjectilePrototype = default!;
 
 
-    [DataField("projectileDamage", required: true)]
-    public DamageSpecifier ProjectileDamage = default!;
-
     /// <summary>
     /// The MAXIMUM speed <see cref="ProjectilePrototype"/> can travel
     /// </summary>
