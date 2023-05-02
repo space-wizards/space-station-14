@@ -370,3 +370,13 @@
       amount: 1
   products:
     SodiumCarbonate: 4
+
+- type: reaction
+  id: Ash
+  impact: Medium
+  minTemp: 600
+  reactants:
+    Oil:
+      amount: 1
+  products:
+    Ash: 1
