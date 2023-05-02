@@ -7571,7 +7571,8 @@ entities:
       type: GridPathfinding
     - type: GasTileOverlay
     - type: RadiationGridResistance
-    - type: SpreaderGrid
+    - nextUpdate: 0
+      type: SpreaderGrid
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 12657
@@ -120663,8 +120664,6 @@ entities:
       pos: 69.5,-24.5
       parent: 5350
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - color: '#03FCD3FF'
       type: AtmosPipeColor
     - bodyType: Static
@@ -131134,11 +131133,6 @@ entities:
     - pos: -34.4662,-36.43679
       parent: 5350
       type: Transform
-  - uid: 15663
-    components:
-    - pos: -23.590824,-24.432009
-      parent: 5350
-      type: Transform
   - uid: 16241
     components:
     - pos: -17.467426,-36.423878
@@ -133983,6 +133977,13 @@ entities:
         - 0
         - 0
       type: EntityStorage
+- proto: LockerParamedicFilled
+  entities:
+  - uid: 14105
+    components:
+    - pos: -23.5,-23.5
+      parent: 5350
+      type: Transform
 - proto: LockerQuarterMasterFilled
   entities:
   - uid: 3864
@@ -142753,6 +142754,8 @@ entities:
       pos: -44.5,-10.5
       parent: 5350
       type: Transform
+    - powerLoad: 0
+      type: ApcPowerReceiver
   - uid: 17281
     components:
     - rot: 3.141592653589793 rad
@@ -149149,6 +149152,20 @@ entities:
     - pos: 1.3298075,-0.66304445
       parent: 5350
       type: Transform
+  - uid: 15663
+    components:
+    - name: Medical Garage Door opener
+      type: MetaData
+    - pos: -20.888597,-23.402483
+      parent: 5350
+      type: Transform
+    - outputs:
+        Pressed:
+        - port: Toggle
+          uid: 14414
+      type: SignalTransmitter
+    - nextSound: 44.2999965
+      type: EmitSoundOnCollide
 - proto: ResearchAndDevelopmentServer
   entities:
   - uid: 19540
@@ -149713,6 +149730,8 @@ entities:
         Toggle:
         - port: Pressed
           uid: 15655
+        - port: Pressed
+          uid: 15663
       type: SignalReceiver
   - uid: 17337
     components:
@@ -150425,7 +150444,7 @@ entities:
     - pos: 9.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -17465.836
+    - SecondsUntilStateChange: -17538.686
       state: Closing
       type: Door
     - inputs:
@@ -150440,7 +150459,7 @@ entities:
     - pos: 10.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -17465.836
+    - SecondsUntilStateChange: -17538.686
       state: Closing
       type: Door
     - inputs:
@@ -150455,7 +150474,7 @@ entities:
     - pos: 11.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -17465.836
+    - SecondsUntilStateChange: -17538.686
       state: Closing
       type: Door
     - inputs:
@@ -150470,7 +150489,7 @@ entities:
     - pos: 13.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -17465.836
+    - SecondsUntilStateChange: -17538.686
       state: Closing
       type: Door
     - inputs:
@@ -150485,7 +150504,7 @@ entities:
     - pos: 14.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -17465.836
+    - SecondsUntilStateChange: -17538.686
       state: Closing
       type: Door
     - inputs:
@@ -150500,7 +150519,7 @@ entities:
     - pos: 15.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -17465.836
+    - SecondsUntilStateChange: -17538.686
       state: Closing
       type: Door
     - inputs:
@@ -155136,6 +155155,13 @@ entities:
   - uid: 24216
     components:
     - pos: -2.5,-8.5
+      parent: 5350
+      type: Transform
+- proto: SpawnPointParamedic
+  entities:
+  - uid: 14104
+    components:
+    - pos: -21.5,-25.5
       parent: 5350
       type: Transform
 - proto: SpawnPointQuartermaster
