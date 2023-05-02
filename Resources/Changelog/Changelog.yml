@@ -1,10 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Added the function to put appraisal tools in your belt slot or inside
-      belts., type: Tweak}
-  id: 3111
-  time: '2023-03-06T04:23:02.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed comfy chair and pilot seat crafting cost and yield., type: Tweak}
@@ -2881,3 +2875,8 @@ Entries:
       and space drugs!, type: Tweak}
   id: 3610
   time: '2023-05-02T08:00:58.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added new sprites for bags in hand., type: Add}
+  id: 3611
+  time: '2023-05-02T08:24:37.0000000+00:00'
