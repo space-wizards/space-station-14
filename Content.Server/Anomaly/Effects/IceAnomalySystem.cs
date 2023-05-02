@@ -120,7 +120,7 @@ public sealed class IceAnomalySystem : EntitySystem
 
                 mix.AdjustMoles(component.SupercriticalGas, component.SupercriticalMoleAmount);
                 mix.Temperature += component.FreezeZoneExposeTemperature;
-                _atmosphere.HotspotExpose(grid.Value, indices, component.FreezeZoneExposeTemperature, mix.Volume, uid, true);
+                _atmosphere.HotspotExpose(grid.Value, indices, component.FreezeZoneExposeTemperature, component.FreezeZoneExposeVolume, uid, true);
             }
         }
     }

@@ -79,7 +79,7 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
 
             if (grid != null && anom.Severity > pyro.AnomalyHotspotThreshold)
             {
-                _atmosphere.HotspotExpose(grid.Value, indices, pyro.HotspotExposeTemperature, pyro.FreezeZoneExposeVolume, ent, true);
+                _atmosphere.HotspotExpose(grid.Value, indices, pyro.HotspotExposeTemperature, pyro.HotspotExposeVolume, ent, true);
             }
         }
     }
