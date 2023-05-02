@@ -1,4 +1,4 @@
-using Content.Shared.Clothing;
+using Content.Shared.Weapons.Melee;
 
 namespace Content.Server.Speech.Components
 {

@@ -293,9 +293,9 @@
   - type: FingerprintMask
   - type: MeleeSpeech
   - type: ActivatableUI  #At the minute using the activateinhand hotkey on them quick-equips them, then yanks them back off when the UI opens. Let me know if this is a problem. It's the same way with agent ID though, so it's probably no issue
-    key: enum.NorthStarUiKey.Key
+    key: enum.MeleeSpeechUiKey.Key
     closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
-      - key: enum.NorthStarUiKey.Key
-        type: NorthStarBoundUserInterface
+      - key: enum.MeleeSpeechUiKey.Key
+        type: MeleeSpeechBoundUserInterface

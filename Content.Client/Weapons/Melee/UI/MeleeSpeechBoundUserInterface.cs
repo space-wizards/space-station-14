@@ -1,16 +1,16 @@
 using Robust.Client.GameObjects;
-using Content.Shared.Clothing;
+using Content.Shared.Weapons.Melee;
 
-namespace Content.Client.Clothing.UI
+namespace Content.Client.Weapons.Melee.UI
 {
     /// <summary>
-    /// Initializes a <see cref="NorthStarWindow"/> and updates it when new server messages are received.
+    /// Initializes a <see cref="MeleeSpeechWindow"/> and updates it when new server messages are received.
     /// </summary>
-    public sealed class NorthStarBoundUserInterface : BoundUserInterface
+    public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
     {
-        private NorthStarWindow? _window;
+        private MeleeSpeechWindow? _window;
 
-        public NorthStarBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public MeleeSpeechBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Content.Client.Clothing.UI
         {
             base.Open();
 
-            _window = new NorthStarWindow();
+            _window = new MeleeSpeechWindow();
             if (State != null)
                 UpdateState(State);
 

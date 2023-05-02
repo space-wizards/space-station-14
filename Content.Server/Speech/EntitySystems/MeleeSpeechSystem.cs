@@ -1,6 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Speech.Components;
-using Content.Shared.Clothing;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Database;
 
 
@@ -58,7 +58,7 @@ namespace Content.Server.Speech.EntitySystems
 
                 return true;
             meleeSpeechComp.Battlecry = battlecry;
-            Dirty(id);
+            Dirty(meleeSpeechComp);
 
             _adminLogger.Add(LogType.Verb, LogImpact.Medium, $" {ToPrettyString(uid):entity}'s battlecry has been changed to {battlecry}");
             //I'm not exactly certain how admin logs should be categorized, let me know if this is wrong 

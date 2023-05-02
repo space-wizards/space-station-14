@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Clothing
+namespace Content.Shared.Weapons.Melee
 {
     public abstract class SharedMeleeSpeechSystem : EntitySystem
     {
@@ -11,7 +11,7 @@ namespace Content.Shared.Clothing
     /// Useful when there are multiple UI for an object. Here it's future-proofing only.
     /// </summary>
     [Serializable, NetSerializable]
-    public enum NorthStarUiKey : byte
+    public enum MeleeSpeechUiKey : byte
     {
         Key,
     }
