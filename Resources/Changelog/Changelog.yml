@@ -1,11 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'Added soybeans (juiceable into soy milk) and rice, along with soy sauce
-      and tofu and tofu bread recipes.', type: Add}
-  - {message: Adjusted soy milk and oat milk colors, type: Tweak}
-  id: 3110
-  time: '2023-03-06T02:52:03.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Added the function to put appraisal tools in your belt slot or inside
@@ -2882,3 +2875,9 @@ Entries:
     type: Add}
   id: 3609
   time: '2023-05-02T07:53:10.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: You can now emag medibots to make them inject people with chloral hydrate
+      and space drugs!, type: Tweak}
+  id: 3610
+  time: '2023-05-02T08:00:58.0000000+00:00'
