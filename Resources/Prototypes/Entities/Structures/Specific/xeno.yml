@@ -1,7 +1,6 @@
 - type: entity
   id: XenoWardingTower
   name: Xeno warding tower
-  description: a
   placement:
     mode: SnapgridCenter
     snap:
@@ -16,6 +15,7 @@
         Heat:
           collection:
             MeatLaserImpact
+    - type: Clickable
     - type: InteractionOutline
     - type: Sprite
       netsync: false

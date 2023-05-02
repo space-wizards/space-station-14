@@ -104,6 +104,7 @@
     enabled: false
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+  - type: AnimationPlayer
   - type: Fixtures
     fixtures:
     - shape:
