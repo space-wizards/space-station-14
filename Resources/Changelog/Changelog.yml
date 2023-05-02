@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added small margins to the round summary window., type: Tweak}
-  id: 3113
-  time: '2023-03-06T04:30:07.0000000+00:00'
 - author: eclips_e
   changes:
   - {message: Slimes can now get drunk, type: Tweak}
@@ -2884,3 +2879,10 @@ Entries:
       around., type: Tweak}
   id: 3612
   time: '2023-05-02T10:14:56.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: round end zombie percentage is now calculated as = (infected humanoid
+      bodies) / (total humanoid bodies), type: Tweak}
+  - {message: round end zombie survivor list now shows more survivors, type: Tweak}
+  id: 3613
+  time: '2023-05-02T14:31:15.0000000+00:00'
