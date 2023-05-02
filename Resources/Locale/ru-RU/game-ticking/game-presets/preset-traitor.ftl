@@ -43,7 +43,7 @@ traitor-role-greeting =
     Смерть NanoTrasen!
 traitor-role-uplink-code =
     Установите свой рингтон на ноты { $code } для блокировки или разблокировки аплинка.
-    Не забывайте блокировать и менять его, иначе экипаж станции легко откроет и его!
+    Не забывайте блокировать его, иначе экипаж станции легко откроет его тоже!
 # don't need all the flavour text for character menu
 traitor-role-codewords-short =
     Кодовые слова:

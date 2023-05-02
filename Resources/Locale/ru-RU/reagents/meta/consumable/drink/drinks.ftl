@@ -50,5 +50,3 @@ reagent-name-pilk = пилк
 reagent-desc-pilk = Тошнотворная смесь молока и колы.
 reagent-name-posca = поска
 reagent-desc-posca = Напиток бедных воинов из забытой эпохи.
-reagent-name-kvass = квас
-reagent-desc-kvass = Прохладный освежающий напиток с привкусом социализма.

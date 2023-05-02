@@ -13,3 +13,6 @@ ent-LockerWallMedicalDoctorFilled = настенный врачебный шка
 ent-LockerChemistryFilled = { ent-LockerChemistry }
     .suffix = Заполненный
     .desc = { ent-LockerChemistry.desc }
+ent-LockerParamedicFilled = { ent-LockerParamedic }
+    .suffix = Filled
+    .desc = { ent-LockerParamedic.desc }

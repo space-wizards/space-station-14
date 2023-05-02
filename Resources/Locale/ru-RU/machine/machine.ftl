@@ -6,6 +6,9 @@ machine-upgrade-decreased-by-percentage = [color=yellow]{ CAPITALIZE($upgraded) 
 machine-upgrade-increased-by-amount = [color=yellow]{ CAPITALIZE($upgraded) }[/color] увеличено на { $difference }.
 machine-upgrade-decreased-by-amount = [color=yellow]{ CAPITALIZE($upgraded) }[/color] уменьшено на { $difference }.
 machine-upgrade-not-upgraded = [color=yellow]{ CAPITALIZE($upgraded) }[/color] не улучшено.
+machine-part-name-capacitor = Конденсатор
+machine-part-name-manipulator = Манипулятор
+machine-part-name-matter-bin = Ёмкость материи
 upgrade-power-draw = потребляемая мощность
 upgrade-max-charge = максимальный заряд
 upgrade-power-supply = блок питания

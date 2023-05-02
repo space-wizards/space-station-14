@@ -13,7 +13,7 @@ anomaly-scanner-severity-percentage = Опасность на: [color=gray]{ $pe
 anomaly-scanner-stability-low = Текущая стабильность аномалии: [color=gold]Распадается[/color]
 anomaly-scanner-stability-medium = Текущая стабильность аномалии: [color=forestgreen]Стабильно[/color]
 anomaly-scanner-stability-high = Текущая стабильность аномалии: [color=crimson]Растёт[/color]
-anomaly-scanner-point-output = Приблизительная генерация очков: [color=gray]{ $point }[/color]
+anomaly-scanner-point-output = Генерация очков: [color=gray]{ $point }[/color]
 anomaly-scanner-particle-readout = Анализ реакции частиц:
 anomaly-scanner-particle-danger = - [color=crimson]Опасный тип:[/color] { $type }
 anomaly-scanner-particle-unstable = - [color=plum]Нестабильный тип:[/color] { $type }
@@ -33,3 +33,6 @@ anomaly-generator-charges =
        *[other] { $charges } зарядов
     }
 anomaly-generator-announcement = Аномалия была сгенерирована!
+# Flavor text on the footer
+anomaly-generator-flavor-left = Аномалия может возникнуть внутри оператора.
+anomaly-generator-flavor-right = v1.1

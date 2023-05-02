@@ -7,3 +7,6 @@ ent-BaseCigar = { ent-BaseSmokable }
 ent-BaseSmokingPipe = { ent-BaseSmokable }
     .desc = { ent-BaseSmokable.desc }
     .suffix = { "" }
+ent-BaseVape = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+    .suffix = { "" }

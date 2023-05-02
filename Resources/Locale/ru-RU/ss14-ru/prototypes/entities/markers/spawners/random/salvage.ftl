@@ -25,3 +25,6 @@ ent-SalvageMobSpawner75 = { ent-SalvageMobSpawner }
 ent-SpawnMobKangarooSalvage = спавнер космического кенгуру на обломке
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
+ent-SpawnMobSpiderSalvage = Salvage Space Spider Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = { "" }

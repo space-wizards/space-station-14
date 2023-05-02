@@ -12,3 +12,5 @@ ghost-role-information-hamster-name = Хомяк
 ghost-role-information-hamster-description = Сварливый маленький комочек шерсти.
 ghost-role-information-hamlet-name = Хомяк Гамлет
 ghost-role-information-hamlet-description = Живёт на мостике станции, немного вспыльчив и всегда голодный.
+ghost-role-information-slimes-name = Слайм
+ghost-role-information-slimes-description = Все вокруг раздражает ваши инстинкты, уничтожьте их!

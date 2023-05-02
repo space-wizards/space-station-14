@@ -172,3 +172,6 @@ ent-ClothingUniformJumpskirtLawyerPurple = фиолетовая адвокатс
 ent-ClothingUniformJumpskirtLawyerGood = хорошая адвокатская юбка-костюм
     .desc = Кричащий костюм c юбкой, идеально подходящий УГОЛОВНОМУ адвокату!
     .suffix = { "" }
+ent-ClothingUniformJumpskirtOfLife = skirt of life
+    .desc = A skirt that symbolizes the joy and positivity of our life.
+    .suffix = { "" }

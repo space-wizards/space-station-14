@@ -13,3 +13,6 @@ ent-MobFleshClamp = { ent-BaseMobFlesh }
 ent-MobFleshLover = { ent-BaseMobFlesh }
     .desc = { ent-BaseMobFlesh.desc }
     .suffix = { "" }
+ent-MobAbomination = abomination
+    .desc = A rejected clone, in constant pain and seeking revenge.
+    .suffix = { "" }

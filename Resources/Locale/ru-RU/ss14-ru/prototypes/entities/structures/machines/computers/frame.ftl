@@ -1,3 +1,6 @@
+ent-BaseStructureComputer = { ent-BaseStructure }
+    .desc = { ent-BaseStructure.desc }
+    .suffix = { "" }
 ent-ComputerFrame = каркас компьютера
     .desc = Строящийся компьютер.
     .suffix = { "" }

@@ -25,3 +25,6 @@ ent-CartridgeAnomalousParticleEpsilon = картридж (эпсилон час�
 ent-CartridgeAnomalousParticleZeta = картридж (зета частицы)
     .desc = { ent-BaseAnomalousCartridge.desc }
     .suffix = { "" }
+ent-CartridgeAnomalousParticleOmega = cartridge (omega particle)
+    .desc = An experimental and often dangerous particle.
+    .suffix = { "" }

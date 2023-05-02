@@ -1,0 +1,14 @@
+marking-ArachnidAppendagesDefault = Придатки (длинные)
+marking-ArachnidAppendagesDefault-long = Придаток
+marking-ArachnidAppendagesDefault-web = Паутина
+marking-ArachnidAppendagesSharp = Придатки (острые)
+marking-ArachnidAppendagesSharp-sharp = Придаток
+marking-ArachnidAppendagesSharp-web = Паутина
+marking-ArachnidTorsoStripes = Полосы
+marking-ArachnidTorsoStripes-stripes = Дизайн
+marking-ArachnidTorsoSlashes = Косые полосы
+marking-ArachnidTorsoSlashes-slashes = Дизайн
+marking-ArachnidTorsoCross = Крест
+marking-ArachnidTorsoCross-cross = Дизайн
+marking-ArachnidTorsoX = Х
+marking-ArachnidTorsoX-x = Дизайн

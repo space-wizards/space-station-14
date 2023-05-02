@@ -20,3 +20,5 @@ activate-micro-bomb-action-name = Активировать Микробомбу
 activate-micro-bomb-action-description = Активирует Вашу внутреннюю микробомбу, полностью уничтожая Вас и ваше снаряжение
 use-freedom-implant-action-name = Вырваться на свободу
 use-freedom-implant-action-description = Активация имплантата свободы избавит Вас от любых ограничений для рук
+open-uplink-implant-action-name = Открыть Аплинк
+open-uplink-implant-action-description = Открывает аплинк синдиката, встроенный в вашу кожу

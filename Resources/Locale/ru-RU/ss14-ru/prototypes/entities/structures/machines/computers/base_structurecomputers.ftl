@@ -1,3 +1,3 @@
 ent-BaseComputer = компьютер
-    .desc = { ent-ComputerFrame.desc }
+    .desc = { ent-BaseStructureComputer.desc }
     .suffix = { "" }

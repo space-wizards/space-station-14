@@ -55,3 +55,6 @@ ent-AltarHeaven = небесный алтарь
 ent-AltarFangs = клыкастый алтарь
     .desc = { ent-AltarHeaven.desc }
     .suffix = { "" }
+ent-AltarBananium = honkmother altar
+    .desc = A bananium altar dedicated to the honkmother.
+    .suffix = { "" }

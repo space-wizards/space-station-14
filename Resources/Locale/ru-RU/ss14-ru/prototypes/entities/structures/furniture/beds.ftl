@@ -7,3 +7,6 @@ ent-MedicalBed = больничная койка
 ent-DogBed = собачья лежанка
     .desc = Удобная лежанка для собак. Вы даже можете пристегнуть своего питомца в случае, отключения гравитации.
     .suffix = { "" }
+ent-Mattress = mattress
+    .desc = Better sleep in that then on the floor i guess.
+    .suffix = { "" }
