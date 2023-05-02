@@ -1,5 +1,4 @@
 using Content.Server.Cargo.Systems;
-using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CartridgeLoader;
@@ -12,7 +11,6 @@ namespace Content.Server.CartridgeLoader.Cartridges
         [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
         [Dependency] private readonly PricingSystem _pricingSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly GameTicker _gameTicker = default!;
 
         public override void Initialize()
         {
@@ -36,10 +34,7 @@ namespace Content.Server.CartridgeLoader.Cartridges
             if (component.AppraisedItems.Count >= component.MaxSavedItems)
                 component.AppraisedItems.RemoveAt(0);
 
-            var item = new AppraisedItem(
-                Name(args.InteractEvent.Target.Value),
-                $"{price:F2}",
-                _gameTicker.RoundDuration().Minutes);
+            var item = new AppraisedItem(Name(args.InteractEvent.Target.Value), $"{price:F2}");
 
             component.AppraisedItems.Add(item);
             UpdateUiState(uid,args.Loader,component);
@@ -63,7 +58,7 @@ namespace Content.Server.CartridgeLoader.Cartridges
         {
             foreach (var item in component.AppraisedItems)
             {
-                item.Minutes = _gameTicker.RoundDuration().Minutes - item.MinutesCreation;
+                item.UpdateElapsedTimeData();
             }
         }
     }

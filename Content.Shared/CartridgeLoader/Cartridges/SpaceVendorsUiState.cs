@@ -18,12 +18,20 @@ public sealed class AppraisedItem
 {
     public readonly string Name;
     public readonly string Price;
-    public readonly int MinutesCreation;
     public int Minutes = 0;
-    public AppraisedItem(string name, string price, int minutesCreation)
+
+    private readonly DateTime _dateTimeCreation;
+
+    public AppraisedItem(string name, string price)
     {
         Name = name;
         Price = price;
-        MinutesCreation = minutesCreation;
+        _dateTimeCreation = DateTime.Now;
+    }
+
+    public void UpdateElapsedTimeData()
+    {
+        TimeSpan date = DateTime.Now - _dateTimeCreation;
+        Minutes = date.Hours * 60 + date.Minutes;
     }
 }
