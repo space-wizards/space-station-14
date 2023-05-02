@@ -61,3 +61,24 @@
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 0.5
+
+- type: reagent
+  id: Fat
+  name: reagent-name-fat
+  group: Biological
+  desc: reagent-desc-fat
+  flavor: terrible
+  color: "#d8d8b0"
+  physicalDesc: reagent-physical-desc-terrible
+  slippery: false
+  metabolisms:
+    Food:
+      # Delicious!
+      effects:
+      - !type:SatiateHunger
+        factor: 1
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+        probability: 0.33
