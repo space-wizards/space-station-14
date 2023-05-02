@@ -553,6 +553,7 @@
   unlockedRecipes:
   - ProximitySensor
   - LeftArmBorg
+  - LightHeadBorg
   - RightArmBorg
   - LeftLegBorg
   - RightLegBorg
