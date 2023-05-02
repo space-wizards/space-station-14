@@ -1,9 +1,11 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.HotPotato;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Containers;
 
 namespace Content.Server.HotPotato;
 
@@ -11,6 +13,8 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
 {
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
     public override void Initialize()
     {
@@ -51,5 +55,17 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
         }
         comp.CanTransfer = false;
         Dirty(comp);
+    }
+
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<ActiveHotPotatoComponent, HotPotatoComponent>();
+        while (query.MoveNext(out var uid, out var _, out var potato))
+        {
+            if (_container.TryGetContainingContainer(uid, out var container) && TryComp<DamageableComponent>(container.Owner, out var damageable))
+            {
+                _damageableSystem.DamageChanged(container.Owner, damageable, frameTime * potato.HoldingDamage, origin: uid);
+            }
+        }
     }
 }
