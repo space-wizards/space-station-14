@@ -203,9 +203,16 @@
     anomalyContactDamage:
       types:
         Cold: 10
-  - type: IceAnomaly
+  - type: AnomalyExplosion
     supercriticalExplosion: Cryo
     explosionTotalIntensity: 1000
     explosionDropoff: 1
     explosionMaxTileIntensity: 10
+  - type: AnomalyProjectile
     projectilePrototype: ProjectileIcicle
+  - type: TempAffecting
+    tempChangePerSecond: -25
+    hotspotExposeTemperature: -1000
+  - type: GasProducer
+    releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
+    releaseOnMaxSeverity: true
