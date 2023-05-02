@@ -1,4 +1,5 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Radio;
 using Content.Shared.Emp;
 using Content.Shared.Examine;
@@ -21,6 +22,7 @@ public sealed class EmpSystem : SharedEmpSystem
 
         SubscribeLocalEvent<EmpDisabledComponent, RadioSendAttemptEvent>(OnRadioSendAttempt);
         SubscribeLocalEvent<EmpDisabledComponent, RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
+        SubscribeLocalEvent<EmpDisabledComponent, ToggleMainBreakerAttemptEvent>(OnToggleMainBreaker);
     }
 
     public void EmpPulse(MapCoordinates coordinates, float range, float energyConsumption, float duration)
@@ -81,6 +83,11 @@ public sealed class EmpSystem : SharedEmpSystem
     }
 
     private void OnRadioReceiveAttempt(EntityUid uid, EmpDisabledComponent component, ref RadioReceiveAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
+    private void OnToggleMainBreaker(EntityUid uid, EmpDisabledComponent component, ref ToggleMainBreakerAttemptEvent args)
     {
         args.Cancelled = true;
     }

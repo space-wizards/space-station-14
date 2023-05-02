@@ -7,7 +7,6 @@ using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Emp;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -70,9 +69,11 @@ namespace Content.Server.Power.EntitySystems
         }
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
         {
-            if (HasComp<EmpDisabledComponent>(uid))
+            var attemptEv = new ToggleMainBreakerAttemptEvent();
+            RaiseLocalEvent(uid, ref attemptEv);
+            if (attemptEv.Cancelled)
             {
-                _popup.PopupCursor(Loc.GetString("apc-component-on-emp-disabled"),
+                _popup.PopupCursor(Loc.GetString("apc-component-on-toggle-cancel"),
                     args.Session, PopupType.Medium);
                 return;
             }
@@ -196,4 +197,7 @@ namespace Content.Server.Power.EntitySystems
             }
         }
     }
+
+    [ByRefEvent]
+    public record struct ToggleMainBreakerAttemptEvent(bool Cancelled);
 }
