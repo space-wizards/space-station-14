@@ -27,9 +27,9 @@
       canCreateVacuum: false
     - type: DeleteOnTrigger
     - type: HotPotato
-      heatDamage:
-      types:
-        Heat : 0.1 #per second, scales with temperature & other constants
+      holdingDamage:
+        types:
+          Heat: 1
     - type: Appearance
       visuals:
         - type: GenericEnumVisualizer

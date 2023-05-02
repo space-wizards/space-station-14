@@ -62,9 +62,9 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
         var query = EntityQueryEnumerator<ActiveHotPotatoComponent, HotPotatoComponent>();
         while (query.MoveNext(out var uid, out var _, out var potato))
         {
-            if (_container.TryGetContainingContainer(uid, out var container) && TryComp<DamageableComponent>(container.Owner, out var damageable))
+            if (_container.TryGetContainingContainer(uid, out var container))
             {
-                _damageableSystem.DamageChanged(container.Owner, damageable, frameTime * potato.HoldingDamage, origin: uid);
+                _damageableSystem.TryChangeDamage(container.Owner, frameTime * potato.HoldingDamage, origin: uid);
             }
         }
     }
