@@ -60,7 +60,7 @@ namespace Content.Server.Speech.EntitySystems
             meleeSpeechComp.Battlecry = battlecry;
             Dirty(meleeSpeechComp);
 
-            _adminLogger.Add(LogType.Verb, LogImpact.Medium, $" {ToPrettyString(uid):entity}'s battlecry has been changed to {battlecry}");
+            _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $" {ToPrettyString(uid):entity}'s battlecry has been changed to {battlecry}");
             //I'm not exactly certain how admin logs should be categorized, let me know if this is wrong 
             return true;
         }
