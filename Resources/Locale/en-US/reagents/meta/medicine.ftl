@@ -108,3 +108,6 @@ reagent-desc-atropine = It can pull critical patients out of the grave, but it's
 
 reagent-name-calomel = calomel
 reagent-desc-calomel = Removes reagents from the blood. If the damage is less than 180, an overdose occurs.
+
+reagent-name-oxygenis = Oxygenis
+reagent-desc-oxygenis = Synthetic blood. Restores blood.

@@ -410,3 +410,17 @@
       amount: 1
   products:
     Calomel: 2
+
+- type: reaction
+  id: Oxygenis
+  reactants:
+    DexalinPlus:
+      amount: 1
+    Iron:
+      amount: 1
+    Blood:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Oxygenis: 3

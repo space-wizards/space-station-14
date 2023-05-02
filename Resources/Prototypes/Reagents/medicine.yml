@@ -942,3 +942,20 @@
             Poison: 2.5
       - !type:ChemCleanBloodstream
         cleanseRate: 5
+
+- type: reagent
+  id: Oxygenis
+  name: reagent-name-oxygenis
+  group: Medicine
+  desc: reagent-desc-oxygenis
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: medicine
+  color: "#ff0000"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Bloodloss: -6
+            Asphyxiation: -1
