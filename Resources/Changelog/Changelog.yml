@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed comfy chair and pilot seat crafting cost and yield., type: Tweak}
-  id: 3112
-  time: '2023-03-06T04:29:26.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added small margins to the round summary window., type: Tweak}
@@ -2880,3 +2875,12 @@ Entries:
   - {message: Added new sprites for bags in hand., type: Add}
   id: 3611
   time: '2023-05-02T08:24:37.0000000+00:00'
+- author: Menshin
+  changes:
+  - {message: 'Despite clowns complains, Nanotrasen have recalled all magic zipties
+      that spawned myriads of themselves on removal and replaced them with plain ones.',
+    type: Fix}
+  - {message: Starting to uncuff someone (or self) now gives a popup feedback to observers
+      around., type: Tweak}
+  id: 3612
+  time: '2023-05-02T10:14:56.0000000+00:00'
