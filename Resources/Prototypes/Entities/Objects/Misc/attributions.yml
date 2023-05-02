@@ -1,3 +1,4 @@
 - files: ["authorbooks.yml"]
   license: "CC-BY-SA-3.0"
-  copyright: "all books are written by luckyshotpictures" (github)
+  copyright: "Created by luckyshotpictures (github) for space-station-14."
+  source: "https://github.com/space-wizards/space-station-14/pull/15585"
