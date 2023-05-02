@@ -2,6 +2,8 @@ namespace Content.Shared.Pinpointer;
 
 public abstract class SharedPinpointerSystem : EntitySystem
 {
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+
     /// <summary>
     ///     Manually set distance from pinpointer to target
     /// </summary>
@@ -48,20 +50,5 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
         pinpointer.IsActive = isActive;
         Dirty(pinpointer);
-    }
-
-
-    /// <summary>
-    ///     Toggle Pinpointer screen. If it has target it will start tracking it.
-    /// </summary>
-    /// <returns>True if pinpointer was activated, false otherwise</returns>
-    public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
-    {
-        if (!Resolve(uid, ref pinpointer))
-            return false;
-
-        var isActive = !pinpointer.IsActive;
-        SetActive(uid, isActive, pinpointer);
-        return isActive;
     }
 }

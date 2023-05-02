@@ -7,7 +7,6 @@ namespace Content.Client.Pinpointer;
 public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -28,15 +27,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         var query = EntityQueryEnumerator<PinpointerComponent, AppearanceComponent>();
         while (query.MoveNext(out var uid, out var pinpointer, out var appearance))
         {
-            UpdateAppearance(uid, pinpointer, appearance);
             UpdateArrowAngle(uid, pinpointer, appearance);
         }
-    }
-
-    private void UpdateAppearance(EntityUid uid, PinpointerComponent pinpointer, AppearanceComponent appearance)
-    {
-        _appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
-        _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
     }
 
     /// <summary>
@@ -49,7 +41,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             return;
         var eye = _eyeManager.CurrentEye;
         var angle = pinpointer.ArrowAngle + eye.Rotation;
-        _appearance.SetData(uid, PinpointerVisuals.ArrowAngle, angle, appearance);
+        Appearance.SetData(uid, PinpointerVisuals.ArrowAngle, angle, appearance);
     }
 
     private void OnAppearanceChange(EntityUid uid, PinpointerComponent component, ref AppearanceChangeEvent args)
@@ -57,8 +49,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        if (!_appearance.TryGetData<Distance>(uid, PinpointerVisuals.TargetDistance, out var distance, args.Component) ||
-            !_appearance.TryGetData<Angle>(uid, PinpointerVisuals.ArrowAngle, out var angle, args.Component))
+        if (!Appearance.TryGetData<Distance>(uid, PinpointerVisuals.TargetDistance, out var distance, args.Component) ||
+            !Appearance.TryGetData<Angle>(uid, PinpointerVisuals.ArrowAngle, out var angle, args.Component))
         {
             sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
             return;

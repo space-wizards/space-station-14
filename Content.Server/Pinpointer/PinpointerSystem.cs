@@ -23,6 +23,25 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         LocateTarget(uid, component);
     }
 
+    public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
+    {
+        if (!Resolve(uid, ref pinpointer))
+            return false;
+
+        var isActive = !pinpointer.IsActive;
+        SetActive(uid, isActive, pinpointer);
+        UpdateAppearance(uid, pinpointer);
+        return isActive;
+    }
+
+    private void UpdateAppearance(EntityUid uid, PinpointerComponent pinpointer, AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref appearance))
+            return;
+        Appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
+        Appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
+    }
+
     private void OnLocateTarget(ref FTLCompletedEvent ev)
     {
         // This feels kind of expensive, but it only happens once per hyperspace jump
@@ -130,6 +149,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
 
         var dirVec = CalculateDirection(uid, target.Value);
+        var oldDist = pinpointer.DistanceToTarget;
         if (dirVec != null)
         {
             var angle = dirVec.Value.ToWorldAngle();
@@ -141,6 +161,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             SetDistance(uid, Distance.Unknown, pinpointer);
         }
+        if (oldDist != pinpointer.DistanceToTarget)
+            UpdateAppearance(uid, pinpointer);
     }
 
     /// <summary>

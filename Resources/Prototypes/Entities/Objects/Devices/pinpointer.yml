@@ -34,6 +34,7 @@
           Close: { state: pinonclose }
           Medium: { state: pinonmedium }
           Far: { state: pinonfar }
+  - type: AnimationPlayer
 
 - type: entity
   name: pinpointer
