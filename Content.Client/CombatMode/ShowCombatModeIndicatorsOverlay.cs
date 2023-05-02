@@ -28,7 +28,7 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public CombatModeOverlaySetting _settings = new(
+    public CombatModeIndicatorsOverlaySettings _settings = new(
         Color.White.WithAlpha(0.3f),
         Color.Black.WithAlpha(0.5f),
         // 1 is a little big
@@ -107,13 +107,13 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
     }
 }
 
-public struct CombatModeOverlaySetting
+public struct CombatModeIndicatorsOverlaySettings
 {
     public Color MainColor;
     public Color StrokeColor;
     public float Scale;
 
-    public CombatModeOverlaySetting(Color color, Color stroke, float scale)
+    public CombatModeIndicatorsOverlaySettings(Color color, Color stroke, float scale)
     {
         MainColor = color;
         StrokeColor = stroke;
