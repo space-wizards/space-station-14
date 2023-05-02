@@ -109,6 +109,11 @@ namespace Content.Shared.VendingMachines
         public float DenyAccumulator = 0f;
         public float DispenseOnHitAccumulator = 0f;
 
+        /// <summary>
+        ///     While disabled by EMP it randomly ejects items
+        /// </summary>
+        public TimeSpan NextEmpEject = TimeSpan.Zero;
+
         #region Client Visuals
         /// <summary>
         /// RSI state for when the vending machine is unpowered.
