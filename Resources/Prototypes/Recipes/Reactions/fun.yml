@@ -53,3 +53,20 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: SoapHomemade
+
+- type: reaction
+  id: Meatification
+  impact: Low
+  quantized: true
+  reactants:
+    Fat:
+      amount: 25
+    Nutriment:
+      amount: 5
+    Blood:
+      amount: 10
+    Carbon:
+      amount: 10
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodMeat
