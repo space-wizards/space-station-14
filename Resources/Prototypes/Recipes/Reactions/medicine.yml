@@ -400,3 +400,13 @@
       amount: 1
   products:
     Atropine: 3
+
+- type: reaction
+  id: Calomel
+  reactants:
+    Mercury:
+      amount: 1
+    Chlorine:
+      amount: 1
+  products:
+    Calomel: 2

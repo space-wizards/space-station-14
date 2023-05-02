@@ -105,3 +105,6 @@ reagent-desc-saline-glucose-solution = Used for treating injuries, burns and blo
 
 reagent-name-atropine = atropine
 reagent-desc-atropine = It can pull critical patients out of the grave, but it's easy to get an overdose.
+
+reagent-name-calomel = calomel
+reagent-desc-calomel = Removes reagents from the blood. If the damage is less than 180, an overdose occurs.
