@@ -786,6 +786,11 @@
     equippedPrefix: 0
     slots:
     - HEAD
+  - type: Faction
+    factions:
+      - Mouse
+  - type: HTN
+    rootTask: MouseCompound
   - type: Physics
   - type: Fixtures
     fixtures:

@@ -67,6 +67,7 @@
   - MedicalDoctor
   - MedicalIntern
   - Psychologist
+  - Paramedic
 
 - type: department
   id: Security

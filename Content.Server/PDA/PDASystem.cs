@@ -15,6 +15,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Content.Server.Mind.Components;
 using Content.Server.Traitor;
+using Content.Shared.Light.Component;
 
 namespace Content.Server.PDA
 {

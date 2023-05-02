@@ -24,12 +24,15 @@
   - type: Sprite
     sprite: Objects/Misc/flare.rsi
     layers:
-      - state: flare_base
-      - state: flare_burn
+      - map: [ enum.ExpendableLightVisualLayers.Base ]
+        state: flare_base
+      - map: [ enum.ExpendableLightVisualLayers.Glow ]
+        state: flare_burn
         color: "#FFFFFF"
         visible: false
         shader: unshaded
-      - state: flare_unlit
+      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+        state: flare_unlit
         color: "#FF0000"
   - type: Icon
     sprite: Objects/Misc/flare.rsi
@@ -38,8 +41,6 @@
     sprite: Objects/Misc/flare.rsi
     heldPrefix: unlit
   - type: Appearance
-    visuals:
-      - type: ExpendableLightVisualizer
   - type: PointLight
     enabled: false
     color: "#FF8080"
