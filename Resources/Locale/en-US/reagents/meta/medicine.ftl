@@ -102,3 +102,6 @@ reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soo
 
 reagent-name-saline-glucose-solution = saline-glucose solution
 reagent-desc-saline-glucose-solution = Used for treating injuries, burns and bloodloss. Overdosing will cause vomiting.
+
+reagent-name-atropine = atropine
+reagent-desc-atropine = It can pull critical patients out of the grave, but it's easy to get an overdose.
