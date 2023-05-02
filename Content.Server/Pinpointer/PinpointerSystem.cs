@@ -9,6 +9,7 @@ namespace Content.Server.Pinpointer;
 public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -38,8 +39,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     {
         if (!Resolve(uid, ref appearance))
             return;
-        Appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
-        Appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
+        _appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
+        _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
     }
 
     private void OnLocateTarget(ref FTLCompletedEvent ev)
@@ -154,7 +155,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             var angle = dirVec.Value.ToWorldAngle();
             TrySetArrowAngle(uid, angle, pinpointer);
-            var dist = CalculateDistance(uid, dirVec.Value, pinpointer);
+            var dist = CalculateDistance(dirVec.Value, pinpointer);
             SetDistance(uid, dist, pinpointer);
         }
         else
@@ -184,11 +185,11 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             return null;
 
         // get world direction vector
-        var dir = (_transform.GetWorldPosition(trg, xformQuery) - _transform.GetWorldPosition(pin, xformQuery));
+        var dir = _transform.GetWorldPosition(trg, xformQuery) - _transform.GetWorldPosition(pin, xformQuery);
         return dir;
     }
 
-    private Distance CalculateDistance(EntityUid uid, Vector2 vec, PinpointerComponent pinpointer)
+    private static Distance CalculateDistance(Vector2 vec, PinpointerComponent pinpointer)
     {
         var dist = vec.Length;
         if (dist <= pinpointer.ReachedDistance)

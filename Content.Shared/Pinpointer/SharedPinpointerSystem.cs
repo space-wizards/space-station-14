@@ -2,8 +2,6 @@ namespace Content.Shared.Pinpointer;
 
 public abstract class SharedPinpointerSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-
     /// <summary>
     ///     Manually set distance from pinpointer to target
     /// </summary>
