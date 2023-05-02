@@ -77,8 +77,3 @@
       effects:
       - !type:SatiateHunger
         factor: 1
-      - !type:ChemVomit
-        conditions:
-        - !type:ReagentThreshold
-          min: 10
-        probability: 0.33
