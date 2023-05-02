@@ -283,10 +283,14 @@
   components:
   - type: Unremoveable
 <<<<<<< HEAD
+<<<<<<< HEAD
   
   #---------------------------------------------------------------------------------
 
   
+=======
+
+>>>>>>> b564ae66de8cf34155b10996d3b06a60df8d946e
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesNorthStar
@@ -296,7 +300,7 @@
   - type: Sprite
     sprite: Clothing/Hands/Gloves/Northstar.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Northstar.rsi    #might be worth making the worn sprite more noticeable, they're pretty powerful for a stealthy weapon  #Yet somehow less powerful than the rigged boxing gloves?!??!!?!
+    sprite: Clothing/Hands/Gloves/Northstar.rsi    #might be worth making the worn sprite more noticeable, they're pretty powerful for a stealthy weapon  #Yet somehow less powerful than the rigged boxing gloves?
   - type: MeleeWeapon
     attackRate: 4
     damage:
@@ -317,7 +321,10 @@
     interfaces:
       - key: enum.MeleeSpeechUiKey.Key
         type: MeleeSpeechBoundUserInterface
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> b564ae66de8cf34155b10996d3b06a60df8d946e
 
 - type: entity
   parent: ClothingHandsBase
@@ -329,5 +336,9 @@
     sprite: Clothing/Hands/Gloves/forensic.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/forensic.rsi
+<<<<<<< HEAD
   - type: FingerprintMask
 >>>>>>> bc4a0d8f82c52030fa3b4c056c95d03dd8023c24
+=======
+  - type: FingerprintMask
+>>>>>>> b564ae66de8cf34155b10996d3b06a60df8d946e
