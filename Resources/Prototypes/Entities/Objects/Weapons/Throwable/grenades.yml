@@ -51,7 +51,7 @@
       params:
         volume: 5
     initialBeepDelay: 0
-    beepInterval: 666 # single beep at start
+    beepInterval: 2 # 2 beeps total (at 0 and 2)
 
 - type: entity
   name: flashbang
