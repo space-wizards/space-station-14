@@ -624,7 +624,7 @@
   description: uplink-revolver-cap-gun-fake-desc
   productEntity: RevolverCapGunFake
   cost:
-    Telecrystal: 10
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:
