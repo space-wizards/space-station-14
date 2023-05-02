@@ -156,7 +156,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate);
 
-        MessageTransmissionRange range = MTRFromLegacyFlags(hideChat, hideGlobalGhostChat);
+        var range = MTRFromLegacyFlags(hideChat, hideGlobalGhostChat);
 
         // Was there an emote in the message? If so, send it.
         if (player != null && emoteStr != message && emoteStr != null)
@@ -173,7 +173,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             if (TryProccessRadioMessage(source, message, out var modMessage, out var channel))
             {
-                SendEntityWhisper(source, modMessage, hideChat, hideGlobalGhostChat, channel, nameOverride);
+                SendEntityWhisper(source, modMessage, range, channel, nameOverride);
                 return;
             }
         }
@@ -185,7 +185,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 SendEntitySpeak(source, message, range, nameOverride);
                 break;
             case InGameICChatType.Whisper:
-                SendEntityWhisper(source, message, hideChat, hideGlobalGhostChat, null, nameOverride);
+                SendEntityWhisper(source, message, range, null, nameOverride);
                 break;
             case InGameICChatType.Emote:
                 SendEntityEmote(source, message, range, nameOverride);
@@ -282,7 +282,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     #region Private API
 
-    private void SendEntitySpeak(EntityUid source, string originalMessage, MessageTransmissionRange range, string? nameOverride)
+    private void SendEntitySpeak(EntityUid source, string originalMessage, MessageTransmitRange range, string? nameOverride)
     {
         if (!_actionBlocker.CanSpeak(source))
             return;
@@ -335,7 +335,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
     }
 
-    private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat, bool hideGlobalGhostChat, RadioChannelPrototype? channel, string? nameOverride)
+    private void SendEntityWhisper(EntityUid source, string originalMessage, MessageTransmitRange range, RadioChannelPrototype? channel, string? nameOverride)
     {
         if (!_actionBlocker.CanSpeak(source))
             return;
@@ -374,16 +374,16 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (session.AttachedEntity is not { Valid: true } playerEntity)
                 continue;
 
-            if (hideGlobalGhostChat && data.Observer && data.Range < 0)
+            if (MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full)
                 continue; // Won't get logged to chat, and ghosts are too far away to see the pop-up, so we just won't send it to them.
 
             if (data.Range <= WhisperRange)
-                _chatManager.ChatMessageToOne(ChatChannel.Whisper, message, wrappedMessage, source, data.HideChatOverride ?? hideChat, session.ConnectedClient);
+                _chatManager.ChatMessageToOne(ChatChannel.Whisper, message, wrappedMessage, source, false, session.ConnectedClient);
             else
-                _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedobfuscatedMessage, source, data.HideChatOverride ?? hideChat, session.ConnectedClient);
+                _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedobfuscatedMessage, source, false, session.ConnectedClient);
         }
 
-        _replay.QueueReplayMessage(new ChatMessage(ChatChannel.Whisper, message, wrappedMessage, source, hideChat));
+        _replay.QueueReplayMessage(new ChatMessage(ChatChannel.Whisper, message, wrappedMessage, source, MessageRangeHideChatForReplay(range)));
 
         var ev = new EntitySpokeEvent(source, message, channel, obfuscatedMessage);
         RaiseLocalEvent(source, ev, true);
@@ -406,7 +406,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
     }
 
-    private void SendEntityEmote(EntityUid source, string action, MessageTransmissionRange range, string? nameOverride, bool checkEmote = true)
+    private void SendEntityEmote(EntityUid source, string action, MessageTransmitRange range, string? nameOverride, bool checkEmote = true)
     {
         if (!_actionBlocker.CanEmote(source)) return;
 
@@ -442,7 +442,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("entityName", name),
             ("message", FormattedMessage.EscapeText(message)));
 
-        SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? MessageTransmissionRange.HideChat : MessageTransmissionRange.Normal);
+        SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? MessageTransmitRange.HideChat : MessageTransmitRange.Normal);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
     }
 
@@ -475,20 +475,66 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     #region Utility
 
+    private enum MessageRangeCheckResult {
+        Disallowed,
+        HideChat,
+        Full
+    }
+
+    /// <summary>
+    ///     If hideChat should be set as far as replays are concerned.
+    /// </summary>
+    private bool MessageRangeHideChatForReplay(MessageTransmitRange range)
+    {
+        return range == MessageTransmitRange.HideChat;
+    }
+
+    /// <summary>
+    ///     Checks if a target as returned from GetRecipients should receive the message.
+    ///     Keep in mind data.Range is -1 for out of range observers.
+    /// </summary>
+    private MessageRangeCheckResult MessageRangeCheck(ICommonSession session, ICChatRecipientData data, MessageTransmitRange range)
+    {
+        var initialResult = MessageRangeCheckResult.Full;
+        switch (range)
+        {
+            case MessageTransmitRange.Normal:
+                initialResult = MessageRangeCheckResult.Full;
+                break;
+            case MessageTransmitRange.GhostRangeLimit:
+                initialResult = (data.Observer && data.Range < 0 && !_adminManager.IsAdmin((IPlayerSession) session)) ? MessageRangeCheckResult.HideChat : MessageRangeCheckResult.Full;
+                break;
+            case MessageTransmitRange.HideChat:
+                initialResult = MessageRangeCheckResult.HideChat;
+                break;
+            case MessageTransmitRange.NoGhosts:
+                initialResult = (data.Observer && !_adminManager.IsAdmin((IPlayerSession) session)) ? MessageRangeCheckResult.Disallowed : MessageRangeCheckResult.Full;
+                break;
+        }
+        var insistHideChat = data.HideChatOverride ?? false;
+        var insistNoHideChat = !(data.HideChatOverride ?? true);
+        if (insistHideChat && initialResult == MessageRangeCheckResult.Full)
+            return MessageRangeCheckResult.HideChat;
+        if (insistNoHideChat && initialResult == MessageRangeCheckResult.HideChat)
+            return MessageRangeCheckResult.Full;
+        return initialResult;
+    }
+
     /// <summary>
     ///     Sends a chat message to the given players in range of the source entity.
     /// </summary>
-    private void SendInVoiceRange(ChatChannel channel, string message, string wrappedMessage, EntityUid source, MessageTransmissionRange range)
+    private void SendInVoiceRange(ChatChannel channel, string message, string wrappedMessage, EntityUid source, MessageTransmitRange range)
     {
-        var hideChat = range == MessageTransmissionRange.HideChat;
-        var hideGlobalGhostChat = range == MessageTransmissionRange.GhostRangeLimit;
         foreach (var (session, data) in GetRecipients(source, VoiceRange))
         {
-            var entHideChat = data.HideChatOverride ?? (hideChat || hideGlobalGhostChat && data.Observer && data.Range < 0);
+            var entRange = MessageRangeCheck(session, data, range);
+            if (entRange == MessageRangeCheckResult.Disallowed)
+                continue;
+            var entHideChat = entRange == MessageRangeCheckResult.HideChat;
             _chatManager.ChatMessageToOne(channel, message, wrappedMessage, source, entHideChat, session.ConnectedClient);
         }
 
-        _replay.QueueReplayMessage(new ChatMessage(channel, message, wrappedMessage, source, hideChat));
+        _replay.QueueReplayMessage(new ChatMessage(channel, message, wrappedMessage, source, MessageRangeHideChatForReplay(range)));
     }
 
     /// <summary>
@@ -612,29 +658,16 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
     }
 
-    /// <summary>
-    ///     Controls transmission of chat.
-    /// </summary>
-    public enum MessageTransmissionRange : byte
+    public MessageTransmitRange MTRFromLegacyFlags(bool hideChat, bool hideGlobalGhostChat)
     {
-        /// Acts normal, ghosts can hear across the map, etc.
-        Normal,
-        /// Normal but ghosts are still range-limited.
-        GhostRangeLimit,
-        /// Totally hidden from the chat window.
-        HideChat
-    }
-
-    public MessageTransmissionRange MTRFromLegacyFlags(bool hideChat, bool hideGlobalGhostChat)
-    {
-        MessageTransmissionRange range = MessageTransmissionRange.Normal;
+        var range = MessageTransmitRange.Normal;
         if (hideChat)
         {
-            range = MessageTransmissionRange.HideChat;
+            range = MessageTransmitRange.HideChat;
         }
         else if (hideGlobalGhostChat)
         {
-            range = MessageTransmissionRange.GhostRangeLimit;
+            range = MessageTransmitRange.GhostRangeLimit;
         }
         return range;
     }
@@ -740,3 +773,19 @@ public enum InGameOOCChatType : byte
     Looc,
     Dead
 }
+
+/// <summary>
+///     Controls transmission of chat.
+/// </summary>
+public enum MessageTransmitRange : byte
+{
+    /// Acts normal, ghosts can hear across the map, etc.
+    Normal,
+    /// Normal but ghosts are still range-limited.
+    GhostRangeLimit,
+    /// Hidden from the chat window.
+    HideChat,
+    /// Ghosts can't hear or see it at all. Regular players can if in-range.
+    NoGhosts
+}
+
