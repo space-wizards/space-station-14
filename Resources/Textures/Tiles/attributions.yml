@@ -3,8 +3,8 @@
 
 - files: ["tech_maint.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Sprite created by Flareguy, with parts and inspiration taken from moonheart08's tiles and the original tiles from CEV-Eris at commit 28e589f0ff72a009adf17db767e90be39054f0f2."
-  source: "https://github.com/space-wizards/space-station-14/pull/15817"
+  copyright: "CEV-Eris commit 28e589f0ff72a009adf17db767e90be39054f0f2"
+  source: "https://github.com/discordia-space/CEV-Eris/"
 
 - files: [ "asteroid_sand.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
   license: "CC-BY-SA-3.0"
@@ -28,7 +28,7 @@
 
 - files: ["shuttleblue.png", "shuttleorange.png", "shuttlepurple.png", "shuttlered.png", "shuttlewhite.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "original sprites from paradisestation commit 69c831afcd9aef25a2889b507e4f36a3a5fc6def, originally from /VG/ eris"
+  copyright: "paradisestation commit 69c831afcd9aef25a2889b507e4f36a3a5fc6def, originally from /VG/ eris"
   source: "https://github.com/ParadiseSS13/Paradise"
 
 - files: ["deprecated.png"]
@@ -60,8 +60,3 @@
   license: "CC0-1.0"
   copyright: "Created by EmoGarbage404 (github) for space-station-14."
   source: "https://github.com/space-wizards/space-station-14/pull/13766"
-  
-- files: ["plating.png"]
-  license: "CC-BY-SA-3.0"
-  copyright: "Edited by Flareguy for https://github.com/space-wizards/space-station-14, original sprite taken from tgstation at commit fb2d71495bfe81446159ef528534193d09dd8d34."
-  source: "https://github.com/space-wizards/space-station-14/pull/15817"

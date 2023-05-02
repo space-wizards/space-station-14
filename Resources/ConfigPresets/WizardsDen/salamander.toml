@@ -24,3 +24,6 @@ enable_during_round = true
 
 [ic]
 flavor_text = true
+
+[hub]
+tags = "lang:en,region:am_n_w,rp:med"
