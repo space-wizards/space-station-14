@@ -372,3 +372,15 @@
       amount: 1
   products:
     Sigynate: 4
+
+- type: reaction
+  id: SalineGlucoseSolution
+  reactants:
+    Water:
+      amount: 1
+    Sugar:
+      amount: 1
+    TableSalt:
+      amount: 1
+  products:
+    SalineGlucoseSolution: 3

@@ -847,3 +847,30 @@
         - !type:ReagentThreshold
           min: 30
         probability: 0.02
+
+- type: reagent
+  id: SalineGlucoseSolution
+  name: reagent-name-saline-glucose-solution
+  group: Medicine
+  desc: reagent-desc-saline-glucose-solution
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: medicine
+  color: "#b2a4d2"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        probability: 0.33
+        damage:
+          groups:
+            Burn: -1
+            Brute: -1
+          types:
+            Bloodloss: -1
+      - !type:ChemVomit
+        probability: 0.15
+        conditions:
+          - !type:ReagentThreshold
+            min: 100
+      - !type:SatiateHunger
+        factor: -1
