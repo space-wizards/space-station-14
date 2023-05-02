@@ -2,18 +2,25 @@ using Content.Shared.Emag.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.Shared.DoAfter;
-using Robust.Shared.Serialization;
+using Content.Shared.Interaction;
+using Content.Shared.Popups;
+using Robust.Shared.Network;
 
 namespace Content.Shared.VendingMachines;
 
-public abstract class SharedVendingMachineSystem : EntitySystem
+public abstract partial class SharedVendingMachineSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<VendingMachineComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<VendingMachineRestockComponent, AfterInteractEvent>(OnAfterInteract);
     }
 
     protected virtual void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
@@ -111,9 +118,4 @@ public abstract class SharedVendingMachineSystem : EntitySystem
             }
         }
     }
-}
-
-[Serializable, NetSerializable]
-public sealed class RestockDoAfterEvent : SimpleDoAfterEvent
-{
 }
