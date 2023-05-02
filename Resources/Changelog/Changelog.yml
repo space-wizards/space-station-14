@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Lockers of heads of staff were supplied with encryption key boxes.,
-    type: Add}
-  id: 3107
-  time: '2023-03-06T02:32:08.0000000+00:00'
 - author: furontier
   changes:
   - {message: Added lizard crate to cargo request console, type: Add}
@@ -2881,3 +2875,9 @@ Entries:
       doors, type: Fix}
   id: 3606
   time: '2023-05-02T00:40:31.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Syndicate discounted the fake capgun to please their clown and mime
+      agents, type: Tweak}
+  id: 3607
+  time: '2023-05-02T01:29:03.0000000+00:00'
