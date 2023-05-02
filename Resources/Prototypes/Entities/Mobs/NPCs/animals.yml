@@ -786,6 +786,11 @@
     equippedPrefix: 0
     slots:
     - HEAD
+  - type: Faction
+    factions:
+      - Mouse
+  - type: HTN
+    rootTask: MouseCompound
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -1227,6 +1232,8 @@
     delay: 10
     beepSound:
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
+      params:
+        volume: -2
     beepInterval: 1
   - type: Explosive
     explosionType: Default

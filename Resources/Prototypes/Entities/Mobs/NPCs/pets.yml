@@ -107,6 +107,11 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
+  - type: Faction
+    factions:
+      - PetsNT
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Grammar
     attributes:
       gender: female
