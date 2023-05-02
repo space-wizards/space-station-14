@@ -1,6 +1,7 @@
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radio;
+using Content.Server.SurveillanceCamera;
 using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Robust.Shared.Map;
@@ -23,6 +24,7 @@ public sealed class EmpSystem : SharedEmpSystem
         SubscribeLocalEvent<EmpDisabledComponent, RadioSendAttemptEvent>(OnRadioSendAttempt);
         SubscribeLocalEvent<EmpDisabledComponent, RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
         SubscribeLocalEvent<EmpDisabledComponent, ToggleMainBreakerAttemptEvent>(OnToggleMainBreaker);
+        SubscribeLocalEvent<EmpDisabledComponent, SurveillanceCameraSetActiveAttemptEvent>(OnCameraSetActive);
     }
 
     public void EmpPulse(MapCoordinates coordinates, float range, float energyConsumption, float duration)
@@ -88,6 +90,11 @@ public sealed class EmpSystem : SharedEmpSystem
     }
 
     private void OnToggleMainBreaker(EntityUid uid, EmpDisabledComponent component, ref ToggleMainBreakerAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
+    private void OnCameraSetActive(EntityUid uid, EmpDisabledComponent component, ref SurveillanceCameraSetActiveAttemptEvent args)
     {
         args.Cancelled = true;
     }

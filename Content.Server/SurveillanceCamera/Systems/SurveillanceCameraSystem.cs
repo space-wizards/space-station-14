@@ -5,7 +5,6 @@ using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
-using Content.Shared.Emp;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -274,13 +273,10 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             return;
         }
 
-        if (HasComp<EmpDisabledComponent>(camera))
-        {
-            return;
-        }
-
         if (setting)
         {
+            var attemptEv = new SurveillanceCameraSetActiveAttemptEvent();
+            RaiseLocalEvent(camera, ref attemptEv);
             component.Active = setting;
         }
         else
@@ -439,3 +435,6 @@ public sealed class SurveillanceCameraDeactivateEvent : EntityEventArgs
         Camera = camera;
     }
 }
+
+[ByRefEvent]
+public record struct SurveillanceCameraSetActiveAttemptEvent(bool Cancelled);
