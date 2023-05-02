@@ -1,10 +1,4 @@
 Entries:
-- author: FluffiestFloof
-  changes:
-  - {message: Garlic and Garlic Bread slice recipe., type: Add}
-  - {message: Kimchi Salad recipe now use Garlic and Coleslaw uses Vinaigrette., type: Tweak}
-  id: 3106
-  time: '2023-03-06T01:50:09.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Lockers of heads of staff were supplied with encryption key boxes.,
@@ -2881,3 +2875,9 @@ Entries:
   - {message: bulletproof and reflective armor now have proper sprites, type: Fix}
   id: 3605
   time: '2023-05-01T22:53:40.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where wires could sometimes not be cut or pulsed in high-sec
+      doors, type: Fix}
+  id: 3606
+  time: '2023-05-02T00:40:31.0000000+00:00'
