@@ -71,9 +71,3 @@
   color: "#d8d8b0"
   physicalDesc: reagent-physical-desc-terrible
   slippery: false
-  metabolisms:
-    Food:
-      # Delicious!
-      effects:
-      - !type:SatiateHunger
-        factor: 1
