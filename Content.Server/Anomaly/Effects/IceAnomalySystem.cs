@@ -17,7 +17,6 @@ namespace Content.Server.Anomaly.Effects;
 /// </summary>
 public sealed class IceAnomalySystem : EntitySystem
 {
-    [Dependency] private readonly EntityManager _entman = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
@@ -72,14 +71,14 @@ public sealed class IceAnomalySystem : EntitySystem
         float severity
         )
     {
-        var mapPos = coords.ToMap(_entman, _xform);
+        var mapPos = coords.ToMap(EntityManager, _xform);
 
         var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
                 ? coords.WithEntityId(grid.Owner, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
         var ent = Spawn(component.ProjectilePrototype, spawnCoords);
-        var direction = targetCoords.ToMapPos(_entman, _xform) - mapPos.Position;
+        var direction = targetCoords.ToMapPos(EntityManager, _xform) - mapPos.Position;
 
         if (!TryComp<ProjectileComponent>(ent, out var comp))
             return;
