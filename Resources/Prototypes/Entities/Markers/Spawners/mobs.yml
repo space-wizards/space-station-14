@@ -344,7 +344,7 @@
   - type: ConditionalSpawner
     prototypes:
     - MobBoxingKangaroo
-
+  
 - type: entity
   name: Space Spider Spawner
   id: SpawnMobSpaceSpider
@@ -357,3 +357,81 @@
   - type: ConditionalSpawner
     prototypes:
     - MobSpiderSpace
+
+- type: entity
+  name: Slimes Spawner Blue Good
+  id: SpawnMobAdultSlimesBlue
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobAdultSlimesBlueGood
+
+- type: entity
+  name: Slimes Spawner Blue Angry
+  id: SpawnMobAdultSlimesBlueAngry
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobAdultSlimesBlueAngry
+
+- type: entity
+  name: Slimes Spawner Green Good
+  id: SpawnMobAdultSlimesGreen
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobAdultSlimesGreenGood
+
+- type: entity
+  name: Slimes Spawner Green Angry
+  id: SpawnMobAdultSlimesGreenAngry
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobAdultSlimesGreenAngry
+
+- type: entity
+  name: Slimes Spawner Yellow Good
+  id: SpawnMobAdultSlimesYellow
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobAdultSlimesYellowGood
+
+- type: entity
+  name: Slimes Spawner Yellow Angry
+  id: SpawnMobAdultSlimesYellowAngry
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobAdultSlimesYellowAngry

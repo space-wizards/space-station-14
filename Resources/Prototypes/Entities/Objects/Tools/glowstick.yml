@@ -9,29 +9,29 @@
       spentName: expendable-light-spent-green-glowstick-name
       spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900 # time in seconds
+      glowColorLit: "#00FF00"
       fadeOutDuration: 300
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
+      iconStateLit: glowstick_lit
+      iconStateSpent: glowstick_unlit
       litSound:
         path: /Audio/Items/Handcuffs/rope_breakout.ogg
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#00FF00"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#00FF00"
+      - map: [ enum.ExpendableLightVisualLayers.Base ]
+        state: glowstick_base
+      - map: [ enum.ExpendableLightVisualLayers.Glow ]
+        state: glowstick_glow
+        visible: false
+        shader: unshaded
+      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+        state: glowstick_unlit
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
       heldPrefix: unlit
     - type: Appearance
-      visuals:
-        - type: ExpendableLightVisualizer
-          iconStateOn: glowstick_lit
-          iconStateSpent: glowstick_unlit
     - type: PointLight
       enabled: false
       color: "#00FF00"
@@ -70,21 +70,10 @@
     - type: ExpendableLight
       spentName: expendable-light-spent-red-glowstick-name
       glowDuration: 10 # time in seconds
+      glowColorLit: "#FF0000"
       fadeOutDuration: 5
-    - type: Sprite
-      layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#FF0000"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#FF0000"
     - type: PointLight
-      enabled: false
       color: "#FF0000"
-      radius: 5
-      energy: 0
 
 - type: entity
   name: purple glowstick
@@ -93,20 +82,9 @@
   components:
     - type: ExpendableLight
       spentName: expendable-light-spent-purple-glowstick-name
-    - type: Sprite
-      layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#FF00FF"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#FF00FF"
+      glowColorLit: "#FF00FF"
     - type: PointLight
-      enabled: false
       color: "#FF00FF"
-      radius: 5
-      energy: 0
 
 - type: entity
   name: yellow glowstick
@@ -115,21 +93,9 @@
   components:
     - type: ExpendableLight
       spentName: expendable-light-spent-yellow-glowstick-name
-    - type: Sprite
-      sprite: Objects/Misc/glowstick.rsi
-      layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#FFFF00"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#FFFF00"
+      glowColorLit: "#FFFF00"
     - type: PointLight
-      enabled: false
       color: "#FFFF00"
-      radius: 5
-      energy: 0
 
 - type: entity
   name: blue glowstick
@@ -138,22 +104,9 @@
   components:
     - type: ExpendableLight
       spentName: expendable-light-spent-blue-glowstick-name
-    - type: Sprite
-      sprite: Objects/Misc/glowstick.rsi
-      layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#0000FF"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#0000FF"
-      heldPrefix: unlit
+      glowColorLit: "#0000FF"
     - type: PointLight
-      enabled: false
       color: "#0000FF"
-      radius: 5
-      energy: 0
 
 # ----------------------------------------------------------------------------
 # THE FOLLOWING ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
