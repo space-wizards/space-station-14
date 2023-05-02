@@ -129,12 +129,12 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Splits a solution without the specified reagent.
+    /// Splits a solution without the specified reagent(s).
     /// </summary>
     public Solution SplitSolutionWithout(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity,
-        string reagent)
+        params string[] reagents)
     {
-        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagent);
+        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagents);
         UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }
