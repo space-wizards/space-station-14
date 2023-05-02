@@ -1,0 +1,13 @@
+- type: instantAction
+  id: ChangelingShop
+  icon: Interface/Actions/shop.png
+  name: Shop
+  description: Opens the evolution shop.
+  serverEvent: !type:ChangelingShopActionEvent
+
+- type: entityTargetAction
+  id: AbsorbDNA
+  icon: EstacaoPirata/Interface/Actions/ling_actions.rsi/ling_absorb.png
+  name: AbsorbDNA
+  description: Absorbs DNA of the target.
+  serverEvent: !type:AbsorbDNAActionEvent

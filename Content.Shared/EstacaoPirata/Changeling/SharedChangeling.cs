@@ -5,8 +5,18 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Changeling;
 
 [Serializable, NetSerializable]
-public sealed class AbsorbDNAEvent : SimpleDoAfterEvent
+public sealed class AbsorbDNADoAfterEvent : SimpleDoAfterEvent
 {
+}
+
+public sealed class AbsorbDNAActionEvent : EntityTargetActionEvent
+{
+    //public readonly EntityUid Target;
+
+    // public AbsorbDNAActionEvent(EntityUid target)
+    // {
+    //     Target = target;
+    // }
 }
 
 public sealed class AbsorbDNADoAfterComplete : EntityEventArgs

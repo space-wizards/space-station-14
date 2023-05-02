@@ -8,7 +8,7 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Changeling;
 
-namespace Content.Server.Changeling.Shop
+namespace Content.Server.EstacaoPirata.Changeling.Shop
 {
     public sealed class ChangelingShopSystem : EntitySystem //mudar tudo
     {
@@ -71,13 +71,13 @@ namespace Content.Server.Changeling.Shop
 
         public bool AddEvolutionMenu(EntityUid user, ActionType action, FixedPoint2? balance, string evoMenuPresetId = "StorePresetUplink", EntityUid? evoMenuEntity = null)
         {
-            
+
             actions.AddAction(user, action, null); // alvo, acao, o que da a acao (no caso nulo)
 
             var store = new StoreComponent();
             //if(evoMenuEntity == null)
             //{
-                
+
             //}
 
             return false;

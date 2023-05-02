@@ -28,7 +28,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 using Content.Shared.Changeling;
 
-namespace Content.Server.Changeling.EntitySystems;
+namespace Content.Server.EstacaoPirata.Changeling.EntitySystems;
 
 public sealed partial class ChangelingSystem
 {
@@ -39,8 +39,8 @@ public sealed partial class ChangelingSystem
 
     private void InitializeAbilities()
     {
-        
+
     }
 
-    
+
 }

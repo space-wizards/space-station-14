@@ -2,6 +2,8 @@ using Robust.Shared.Audio;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Humanoid;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Changeling;
 
@@ -14,7 +16,7 @@ public sealed class ChangelingComponent : Component
     /// Stating points that the changeling will have, they can be spent on abilities
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("startingPoints")]
-    public int StartingPoints = 10;
+     public int StartingPoints = 10;
 
     /// <summary>
     /// Starting chemicals that the changeling will have at the start, they can be spent on using abilities
@@ -64,13 +66,34 @@ public sealed class ChangelingComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("pointBalance")]
     public int PointBalance = 0;
 
+    /// <summary>
+    /// List of absorbed entities
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("entitiesAbsorbed")]
+    public List<HumanoidData> storedHumanoids = new List<HumanoidData>();
+
+
     #endregion
 
     #region Abilities
         #region Evolution Menu
 
         #endregion
-        #region Absorb DNA Sting
+        #region Absorb DNA
+    /// <summary>
+    /// DNA absorption cost in chemicals
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("AbsorbDNACost")]
+    public int AbsorbDNACost = 0;
+
+    /// <summary>
+    /// DNA absorption delay time
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("AbsorbDNADelay")]
+    public float AbsorbDNADelay = 10f;
+
+        #endregion
+        #region DNA Sting
 
     /// <summary>
     /// DNA Sting cost in chemicals
@@ -124,4 +147,11 @@ public sealed class ChangelingComponent : Component
 
     // [DataField("knocksound")]
     // public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Items/airhorn.ogg");
+}
+
+public struct HumanoidData
+{
+    public MetaDataComponent _metaDataComponent;
+
+    public HumanoidAppearanceComponent _appearanceComponent;
 }
