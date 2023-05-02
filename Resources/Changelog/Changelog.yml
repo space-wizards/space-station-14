@@ -1,9 +1,4 @@
 Entries:
-- author: eclips_e
-  changes:
-  - {message: Pins no longer weigh as much as a crowbar, type: Fix}
-  id: 3115
-  time: '2023-03-06T04:33:41.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: grenades emit sound on trigger again, type: Fix}
@@ -2886,3 +2881,8 @@ Entries:
   - {message: Paused lights will no longer be in darkness by default., type: Tweak}
   id: 3614
   time: '2023-05-02T14:57:48.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: explosive grenades now beep on trigger exactly one time, type: Tweak}
+  id: 3615
+  time: '2023-05-02T15:13:40.0000000+00:00'
