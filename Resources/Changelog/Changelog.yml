@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Clipping a plant puts the seed packet in your hands instead of on the
-      floor., type: Tweak}
-  - {message: Extracting seeds now tries to put the packets in your hands., type: Tweak}
-  id: 3109
-  time: '2023-03-06T02:37:57.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'Added soybeans (juiceable into soy milk) and rice, along with soy sauce
@@ -2882,3 +2875,10 @@ Entries:
       the CHIMP. Go APE., type: Add}
   id: 3608
   time: '2023-05-02T06:11:05.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Due to accessibility concerns, the Syndicate has added a dedicated
+      uplink locking button. Setting ringtone to the code again still works though.',
+    type: Add}
+  id: 3609
+  time: '2023-05-02T07:53:10.0000000+00:00'
