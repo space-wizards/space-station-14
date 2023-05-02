@@ -251,3 +251,9 @@
         visualType: Medium
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.2
+    Food:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:OrganType
+          type: Plant
