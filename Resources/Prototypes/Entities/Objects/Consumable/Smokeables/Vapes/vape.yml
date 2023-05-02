@@ -1,0 +1,10 @@
+- type: entity
+  id: Vape
+  parent: BaseVape
+  name: vape
+  description: "Like a cigar, but for tough teens. (WARNING:Pour only water into the vape)"
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Vapes/vape-standart.rsi
+    netsync: false
+    state: icon

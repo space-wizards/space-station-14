@@ -63,7 +63,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 _physics.SetLinearDamping(physics, 0f);
                 _physics.SetAngularDamping(physics, 0f);
 
-                _throwing.TryThrow(vapor.Owner, dir * speed, speed, user: user, pushbackRatio: 50f);
+                _throwing.TryThrow(vapor.Owner, dir, speed, user: user, pushbackRatio: 50f);
 
                 var distance = (target.Position - vaporXform.WorldPosition).Length;
                 var time = (distance / physics.LinearVelocity.Length);

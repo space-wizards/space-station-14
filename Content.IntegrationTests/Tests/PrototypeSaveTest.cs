@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Coordinates;
+using Content.Shared.Sound.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -18,6 +19,7 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -166,16 +168,19 @@ public sealed class PrototypeSaveTest
                 foreach (var prototype in prototypes)
                 {
                     uid = entityMan.SpawnEntity(prototype.ID, testLocation);
-                    server.RunTicks(1);
 
                     // get default prototype data
                     Dictionary<string, MappingDataNode> protoData = new();
                     try
                     {
+                        context.WritingReadingPrototypes = true;
+
                         foreach (var (compType, comp) in prototype.Components)
                         {
-                            protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, alwaysWrite:true, context: context));
+                            protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, alwaysWrite: true, context: context));
                         }
+
+                        context.WritingReadingPrototypes = false;
                     }
                     catch (Exception e)
                     {
@@ -239,6 +244,7 @@ public sealed class PrototypeSaveTest
         ITypeSerializer<EntityUid, ValueDataNode>
     {
         public SerializationManager.SerializerProvider SerializerProvider { get; }
+        public bool WritingReadingPrototypes { get; set; }
 
         public TestEntityUidContext()
         {
