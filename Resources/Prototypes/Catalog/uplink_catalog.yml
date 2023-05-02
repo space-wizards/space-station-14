@@ -664,6 +664,20 @@
     - Clown
     - Mime
 
+- type: listing
+  id: UplinkChimpAmmo
+  name: uplink-chimp-ammo-name
+  description: uplink-chimp-ammo-desc
+  productEntity: BoxMagazineChimpOmega
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - Scientist
+
 # Armor
 
 - type: listing
