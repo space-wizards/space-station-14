@@ -46,7 +46,7 @@
   - type: Anchorable
   - type: Pullable
   - type: Storage
-    capacity: 100
+    capacity: 200
     whitelist:
       tags:
         - Document

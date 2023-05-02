@@ -5,6 +5,10 @@
   components:
   - type: StorageFill
     contents:
+      - id: BookRandom
+        prob: 0.4
+        amount: 1
+        maxAmount: 4
       - id: BookNarsieLegend
         prob: 0.1
       - id: BookTruth
@@ -65,13 +69,3 @@
         prob: 0.1
       - id: BookInspiration
         prob: 0.1
-      - id: BookRandom
-        prob: 0.4
-      - id: BookRandom
-        prob: 0.4
-      - id: BookRandom
-        prob: 0.4
-      - id: BookRandom
-        prob: 0.4
-      - id: BookRandom
-        prob: 1
