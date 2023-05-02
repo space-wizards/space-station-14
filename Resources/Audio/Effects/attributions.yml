@@ -28,7 +28,7 @@
   copyright: "Taken from felix.blume via freesound.org and cropped + mixed from stereo to mono."
   source: "https://freesound.org/people/felix.blume/sounds/414093/"
 
-- files: ["beep1.ogg"]
+- files: ["beep1.ogg", "beep1_double.ogg"]
   license: "CC0-1.0"
   copyright: "Taken from thisusernameis via freesound.org + mixed from stereo to mono."
   source: "https://freesound.org/people/thisusernameis/sounds/426891/"
