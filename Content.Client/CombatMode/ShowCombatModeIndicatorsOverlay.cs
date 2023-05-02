@@ -51,10 +51,10 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
         _combatSystem = combatSys;
 
         var spriteSys = _entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
-        _gunSight = spriteSys.Frame0(new SpriteSpecifier.Texture(
-            new($"/Textures/Interface/Misc/crosshair_pointers.rsi/gun_sight.png")));
-        _meleeSight = spriteSys.Frame0(new SpriteSpecifier.Texture(
-            new($"/Textures/Interface/Misc/crosshair_pointers.rsi/melee_sight.png")));
+        _gunSight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new($"/Textures/Interface/Misc/crosshair_pointers.rsi"),
+            "gun_sight"));
+        _meleeSight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new($"/Textures/Interface/Misc/crosshair_pointers.rsi"),
+             "melee_sight"));
 
         _isShowIndicators = _cfg.GetCVar(CCVars.HudHeldItemShow);
 
