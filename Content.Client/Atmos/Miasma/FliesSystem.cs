@@ -30,7 +30,7 @@ public sealed class FliesSystem : EntitySystem
         if (sprite.LayerMapTryGet(FliesKey.Key, out var _))
             return;
 
-        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/flies.rsi"), "flies"));
+        var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ("Objects/Misc/flies.rsi"), "flies"));
         sprite.LayerMapSet(FliesKey.Key, layer);
     }
 

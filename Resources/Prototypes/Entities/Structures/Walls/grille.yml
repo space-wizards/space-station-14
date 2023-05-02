@@ -17,7 +17,13 @@
       netsync: false
       drawdepth: Walls
       sprite: Structures/Walls/grille.rsi
-      state: grille
+      layers:
+        - state: grille
+        - state: electrified
+          sprite: Effects/electricity.rsi
+          map: ["enum.ElectrifiedLayers.Powered"]
+          shader: unshaded
+          visible: false
     - type: Icon
       sprite: Structures/Walls/grille.rsi
       state: grille
@@ -71,6 +77,14 @@
               node: grilleBroken
             - !type:DoActsBehavior
               acts: ["Breakage"]
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.ElectrifiedVisuals.IsPowered:
+          enum.ElectrifiedLayers.Powered:
+            True: { visible: True }
+            False: { visible: False }
+    - type: AnimationPlayer
 
 - type: entity
   id: GrilleBroken

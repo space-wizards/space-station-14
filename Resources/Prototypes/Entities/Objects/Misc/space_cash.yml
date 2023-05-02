@@ -5,7 +5,8 @@
   description: You gotta have money.
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Credit: 1
   - type: StaticPrice
     price: 0

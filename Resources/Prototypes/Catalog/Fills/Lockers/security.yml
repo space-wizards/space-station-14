@@ -47,20 +47,26 @@
 - type: entity
   id: LockerBrigmedicFilled
   suffix: Brigmedic, Filled
-  parent: LockerSecurity
+  parent: LockerBrigmedic
   components:
   - type: StorageFill
     contents:
-      - id: Flash
       - id: WeaponDisabler
-      - id: ClothingOuterHardsuitBrigmed
-      - id: EncryptionKeyMedical
+      - id: TrackingImplanter
+        amount: 2
+      - id: ClothingOuterHardsuitBrigmedic
       - id: BoxSterileMask
+      - id: ClothingHeadHatBeretBrigmedic
+      - id: ClothingOuterCoatAMG
+      - id: ClothingUniformJumpsuitBrigmedic
+      - id: ClothingUniformJumpskirtBrigmedic
+      - id: ClothingUniformJumpskirtOfLife
+        prob: 0.1
       - id: MedkitFilled
       - id: MedkitCombatFilled
         prob: 0.6
       - id: MedkitAdvancedFilled
-        prob: 0.3
+        prob: 0.4
       - id: MedkitOxygenFilled
         prob: 0.3
       - id: MedkitBruteFilled
@@ -69,6 +75,8 @@
         prob: 0.3
       - id: MedkitBurnFilled
         prob: 0.7
+      - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
+        prob: 0.15
 
 - type: entity
   id: LockerDetectiveFilled
@@ -87,6 +95,7 @@
       - id: WeaponRevolverInspector
       - id: DrinkDetFlask
       - id: SpeedLoaderMagnum
+      - id: ForensicGloves
 
 - type: entity
   id: ClosetBombFilled
@@ -100,9 +109,10 @@
       - id: ClothingMaskGas
 
 - type: entity
-  id: ShotgunSafeDisabler
+  id: GunSafeDisabler
   suffix: Disabler
-  parent: ShotgunSafe
+  parent: GunSafe
+  name: gun safe disabler
   components:
   - type: StorageFill
     contents:
@@ -110,9 +120,10 @@
         amount: 5
 
 - type: entity
-  id: ShotgunSafePistolMK58
+  id: GunSafePistolMk58
   suffix: MK58
-  parent: ShotgunSafe
+  parent: GunSafe
+  name: gun safe Mk58
   components:
   - type: StorageFill
     contents:
@@ -122,9 +133,10 @@
         amount: 8
 
 - type: entity
-  id: ShotgunSafeRifleLecter
+  id: GunSafeRifleLecter
   suffix: Lecter
-  parent: ShotgunSafe
+  parent: GunSafe
+  name: gun safe lecter
   components:
   - type: StorageFill
     contents:
@@ -134,9 +146,10 @@
         amount: 4
 
 - type: entity
-  id: ShotgunSafeSubMachineGunVector
+  id: GunSafeSubMachineGunVector
   suffix: Vector
-  parent: ShotgunSafe
+  parent: GunSafe
+  name: gun safe vector
   components:
   - type: StorageFill
     contents:
@@ -146,9 +159,10 @@
         amount: 4
 
 - type: entity
-  id: ShotgunSafeShotgunEnforcer
+  id: GunSafeShotgunEnforcer
   suffix: Enforcer
-  parent: ShotgunSafe
+  parent: GunSafe
+  name: gun safe enforcer
   components:
   - type: StorageFill
     contents:
@@ -158,9 +172,10 @@
         amount: 4
 
 - type: entity
-  id: ShotgunSafeShotgunKammerer
+  id: GunSafeShotgunKammerer
   suffix: Kammerer
-  parent: ShotgunSafe
+  parent: GunSafe
+  name: gun safe kammerer
   components:
   - type: StorageFill
     contents:
@@ -170,9 +185,10 @@
         amount: 4
 
 - type: entity
-  id: ShotgunSafeSubMachineGunWt550
+  id: GunSafeSubMachineGunWt550
   suffix: Wt550
-  parent: ShotgunSafe
+  parent: GunSafe
+  name: gun safe Wt550
   components:
   - type: StorageFill
     contents:
@@ -182,9 +198,10 @@
         amount: 4
 
 - type: entity
-  id: ShotgunSafeLaserCarbine
+  id: GunSafeLaserCarbine
   suffix: Laser Carbine
-  parent: ShotgunSafe
+  parent: GunSafe
+  name: gun safe laser carbine
   components:
   - type: StorageFill
     contents:

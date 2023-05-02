@@ -5,6 +5,7 @@ using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Server.Body.Systems;
 using Content.Server.Mind.Components;
+using Content.Server.Players;
 using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Shared.Body.Part;
@@ -13,8 +14,13 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using NUnit.Framework;
+using Robust.Client.GameObjects;
+using Robust.Client.Input;
+using Robust.Client.UserInterface;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
@@ -32,6 +38,8 @@ namespace Content.IntegrationTests.Tests.Interaction;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract partial class InteractionTest
 {
+    protected virtual string PlayerPrototype => "AdminObserver";
+
     protected PairTracker PairTracker = default!;
     protected TestMapData MapData = default!;
 
@@ -57,6 +65,9 @@ public abstract partial class InteractionTest
     /// </summary>
     protected EntityUid Player;
 
+    protected ICommonSession ClientSession = default!;
+    protected IPlayerSession ServerSession = default!;
+
     /// <summary>
     /// The current target entity. This is the default entity for various helper functions.
     /// </summary>
@@ -77,7 +88,7 @@ public abstract partial class InteractionTest
     protected ITileDefinitionManager TileMan = default!;
     protected IMapManager MapMan = default!;
     protected IPrototypeManager ProtoMan = default!;
-    protected IGameTiming Timing = default!;
+    protected IGameTiming STiming = default!;
     protected IComponentFactory Factory = default!;
     protected SharedHandsSystem HandSys = default!;
     protected StackSystem Stack = default!;
@@ -90,6 +101,10 @@ public abstract partial class InteractionTest
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
+    protected IGameTiming CTiming = default!;
+    protected IUserInterfaceManager UiMan = default!;
+    protected IInputManager InputManager = default!;
+    protected InputSystem InputSystem = default!;
     protected ConstructionSystem CConSys = default!;
     protected ExamineSystem ExamineSys = default!;
     protected InteractionTestSystem CTestSystem = default!;
@@ -98,10 +113,10 @@ public abstract partial class InteractionTest
     protected HandsComponent Hands = default!;
     protected DoAfterComponent DoAfters = default!;
 
-    public float TickPeriod => (float)Timing.TickPeriod.TotalSeconds;
+    public float TickPeriod => (float)STiming.TickPeriod.TotalSeconds;
 
     [SetUp]
-    public async Task Setup()
+    public virtual async Task Setup()
     {
         PairTracker = await PoolManager.GetServerClient(new PoolSettings());
 
@@ -111,7 +126,7 @@ public abstract partial class InteractionTest
         MapMan = Server.ResolveDependency<IMapManager>();
         ProtoMan = Server.ResolveDependency<IPrototypeManager>();
         Factory = Server.ResolveDependency<IComponentFactory>();
-        Timing = Server.ResolveDependency<IGameTiming>();
+        STiming = Server.ResolveDependency<IGameTiming>();
         HandSys = SEntMan.System<SharedHandsSystem>();
         InteractSys = SEntMan.System<SharedInteractionSystem>();
         ToolSys = SEntMan.System<ToolSystem>();
@@ -123,6 +138,10 @@ public abstract partial class InteractionTest
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
+        UiMan = Client.ResolveDependency<IUserInterfaceManager>();
+        CTiming = Client.ResolveDependency<IGameTiming>();
+        InputManager = Client.ResolveDependency<IInputManager>();
+        InputSystem = CEntMan.System<InputSystem>();
         CTestSystem = CEntMan.System<InteractionTestSystem>();
         CConSys = CEntMan.System<ConstructionSystem>();
         ExamineSys = CEntMan.System<ExamineSystem>();
@@ -138,16 +157,20 @@ public abstract partial class InteractionTest
         var cPlayerMan = Client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
         if (cPlayerMan.LocalPlayer?.Session == null)
             Assert.Fail("No player");
-        var cSession = cPlayerMan.LocalPlayer!.Session!;
-        var sSession = sPlayerMan.GetSessionByUserId(cSession.UserId);
+        ClientSession = cPlayerMan.LocalPlayer!.Session!;
+        ServerSession = sPlayerMan.GetSessionByUserId(ClientSession.UserId);
 
         // Spawn player entity & attach
         EntityUid? old = default;
         await Server.WaitPost(() =>
         {
+            // Fuck you mind system I want an hour of my life back
+            // Mind system is a time vampire
+            ServerSession.ContentData()?.WipeMind();
+
             old = cPlayerMan.LocalPlayer.ControlledEntity;
-            Player = SEntMan.SpawnEntity(PlayerEntity, PlayerCoords);
-            sSession.AttachToEntity(Player);
+            Player = SEntMan.SpawnEntity(PlayerPrototype, PlayerCoords);
+            ServerSession.AttachToEntity(Player);
             Hands = SEntMan.GetComponent<HandsComponent>(Player);
             DoAfters = SEntMan.GetComponent<DoAfterComponent>(Player);
         });
@@ -159,17 +182,11 @@ public abstract partial class InteractionTest
         // Delete old player entity.
         await Server.WaitPost(() =>
         {
-            if (old == null)
-                return;
-
-            // Fuck you mind system I want an hour of my life back
-            if (SEntMan.TryGetComponent(old, out MindComponent? mind))
-                mind.GhostOnShutdown = false;
-
-            SEntMan.DeleteEntity(old.Value);
+            if (old != null)
+                SEntMan.DeleteEntity(old.Value);
         });
 
-        // Ensure that the player only has one hand, so that they do not accidentally pick up deconstruction protucts
+        // Ensure that the player only has one hand, so that they do not accidentally pick up deconstruction products
         await Server.WaitPost(() =>
         {
             var bodySystem = SEntMan.System<BodySystem>();
@@ -185,11 +202,11 @@ public abstract partial class InteractionTest
         // Final player asserts/checks.
         await PoolManager.ReallyBeIdle(PairTracker.Pair, 5);
         Assert.That(cPlayerMan.LocalPlayer.ControlledEntity, Is.EqualTo(Player));
-        Assert.That(sPlayerMan.GetSessionByUserId(cSession.UserId).AttachedEntity, Is.EqualTo(Player));
+        Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(Player));
     }
 
     [TearDown]
-    public async Task Cleanup()
+    public virtual async Task Cleanup()
     {
         await Server.WaitPost(() => MapMan.DeleteMap(MapId));
         await PairTracker.CleanReturnAsync();

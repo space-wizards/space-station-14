@@ -405,8 +405,8 @@ public sealed partial class CargoSystem
                 // - anything anchored (e.g. light fixtures)
                 // - anything blacklisted (e.g. players).
                 if (toSell.Contains(ent) ||
-                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored) ||
-                    !CanSell(ent, mobStateQuery))
+                    xformQuery.TryGetComponent(ent, out var xform) &&
+                    (xform.Anchored || !CanSell(ent, xform, mobStateQuery, xformQuery)))
                 {
                     continue;
                 }
@@ -423,12 +423,20 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool CanSell(EntityUid uid, EntityQuery<MobStateComponent> mobStateQuery)
+    private bool CanSell(EntityUid uid, TransformComponent xform, EntityQuery<MobStateComponent> mobStateQuery, EntityQuery<TransformComponent> xformQuery)
     {
         if (mobStateQuery.TryGetComponent(uid, out var mobState) &&
             mobState.CurrentState != MobState.Dead)
         {
             return false;
+        }
+
+        // Recursively check for mobs at any point.
+        var children = xform.ChildEnumerator;
+        while (children.MoveNext(out var child))
+        {
+            if (!CanSell(child.Value, xformQuery.GetComponent(child.Value), mobStateQuery, xformQuery))
+                return false;
         }
 
         return true;
