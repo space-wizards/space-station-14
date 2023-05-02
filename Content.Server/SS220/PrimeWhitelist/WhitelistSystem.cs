@@ -28,7 +28,7 @@ internal sealed class PrimelistDb
         await using var db = await GetDb();
         var query = db.PgDbContext.Whitelist
             .Where(p =>p.Ckey==ckey&&p.IsValid);
-        var whitelist = await query.SingleOrDefaultAsync();
+        var whitelist = await query.FirstOrDefaultAsync();
         return whitelist;
     }
 
