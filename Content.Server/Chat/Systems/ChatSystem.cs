@@ -120,17 +120,32 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// <param name="message">The message being spoken or emoted</param>
     /// <param name="desiredType">The chat type</param>
     /// <param name="hideChat">Whether or not this message should appear in the chat window</param>
-    /// <param name="hideGlobalGhostChat">Whether or not this message should appear in the chat window for out-of-range ghosts (which otherwise ignore range restrictions)</param>
     /// <param name="shell"></param>
     /// <param name="player">The player doing the speaking</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
-    public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, bool hideChat, bool hideGlobalGhostChat = false,
+    public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, bool hideChat,
+        IConsoleShell? shell = null, IPlayerSession? player = null, string? nameOverride = null, bool checkRadioPrefix = true)
+    {
+        TrySendInGameICMessage(source, message, desiredType, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, shell, player, nameOverride, checkRadioPrefix);
+    }
+
+    /// <summary>
+    ///     Sends an in-character chat message to relevant clients.
+    /// </summary>
+    /// <param name="source">The entity that is speaking</param>
+    /// <param name="message">The message being spoken or emoted</param>
+    /// <param name="desiredType">The chat type</param>
+    /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
+    /// <param name="shell"></param>
+    /// <param name="player">The player doing the speaking</param>
+    /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
+    public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, ChatTransmitRange range,
         IConsoleShell? shell = null, IPlayerSession? player = null, string? nameOverride = null, bool checkRadioPrefix = true)
     {
         if (HasComp<GhostComponent>(source))
         {
             // Ghosts can only send dead chat messages, so we'll forward it to InGame OOC.
-            TrySendInGameOOCMessage(source, message, InGameOOCChatType.Dead, hideChat, shell, player);
+            TrySendInGameOOCMessage(source, message, InGameOOCChatType.Dead, range == ChatTransmitRange.HideChat, shell, player);
             return;
         }
 
@@ -150,13 +165,10 @@ public sealed partial class ChatSystem : SharedChatSystem
             message = message[1..];
         }
 
-        hideGlobalGhostChat |= hideChat;
         bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
         bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
 
         message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate);
-
-        var range = MTRFromLegacyFlags(hideChat, hideGlobalGhostChat);
 
         // Was there an emote in the message? If so, send it.
         if (player != null && emoteStr != message && emoteStr != null)
@@ -282,7 +294,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     #region Private API
 
-    private void SendEntitySpeak(EntityUid source, string originalMessage, MessageTransmitRange range, string? nameOverride)
+    private void SendEntitySpeak(EntityUid source, string originalMessage, ChatTransmitRange range, string? nameOverride)
     {
         if (!_actionBlocker.CanSpeak(source))
             return;
@@ -335,7 +347,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
     }
 
-    private void SendEntityWhisper(EntityUid source, string originalMessage, MessageTransmitRange range, RadioChannelPrototype? channel, string? nameOverride)
+    private void SendEntityWhisper(EntityUid source, string originalMessage, ChatTransmitRange range, RadioChannelPrototype? channel, string? nameOverride)
     {
         if (!_actionBlocker.CanSpeak(source))
             return;
@@ -406,7 +418,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
     }
 
-    private void SendEntityEmote(EntityUid source, string action, MessageTransmitRange range, string? nameOverride, bool checkEmote = true)
+    private void SendEntityEmote(EntityUid source, string action, ChatTransmitRange range, string? nameOverride, bool checkEmote = true)
     {
         if (!_actionBlocker.CanEmote(source)) return;
 
@@ -442,7 +454,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("entityName", name),
             ("message", FormattedMessage.EscapeText(message)));
 
-        SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? MessageTransmitRange.HideChat : MessageTransmitRange.Normal);
+        SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
     }
 
@@ -484,30 +496,30 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// <summary>
     ///     If hideChat should be set as far as replays are concerned.
     /// </summary>
-    private bool MessageRangeHideChatForReplay(MessageTransmitRange range)
+    private bool MessageRangeHideChatForReplay(ChatTransmitRange range)
     {
-        return range == MessageTransmitRange.HideChat;
+        return range == ChatTransmitRange.HideChat;
     }
 
     /// <summary>
     ///     Checks if a target as returned from GetRecipients should receive the message.
     ///     Keep in mind data.Range is -1 for out of range observers.
     /// </summary>
-    private MessageRangeCheckResult MessageRangeCheck(ICommonSession session, ICChatRecipientData data, MessageTransmitRange range)
+    private MessageRangeCheckResult MessageRangeCheck(ICommonSession session, ICChatRecipientData data, ChatTransmitRange range)
     {
         var initialResult = MessageRangeCheckResult.Full;
         switch (range)
         {
-            case MessageTransmitRange.Normal:
+            case ChatTransmitRange.Normal:
                 initialResult = MessageRangeCheckResult.Full;
                 break;
-            case MessageTransmitRange.GhostRangeLimit:
+            case ChatTransmitRange.GhostRangeLimit:
                 initialResult = (data.Observer && data.Range < 0 && !_adminManager.IsAdmin((IPlayerSession) session)) ? MessageRangeCheckResult.HideChat : MessageRangeCheckResult.Full;
                 break;
-            case MessageTransmitRange.HideChat:
+            case ChatTransmitRange.HideChat:
                 initialResult = MessageRangeCheckResult.HideChat;
                 break;
-            case MessageTransmitRange.NoGhosts:
+            case ChatTransmitRange.NoGhosts:
                 initialResult = (data.Observer && !_adminManager.IsAdmin((IPlayerSession) session)) ? MessageRangeCheckResult.Disallowed : MessageRangeCheckResult.Full;
                 break;
         }
@@ -523,7 +535,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// <summary>
     ///     Sends a chat message to the given players in range of the source entity.
     /// </summary>
-    private void SendInVoiceRange(ChatChannel channel, string message, string wrappedMessage, EntityUid source, MessageTransmitRange range)
+    private void SendInVoiceRange(ChatChannel channel, string message, string wrappedMessage, EntityUid source, ChatTransmitRange range)
     {
         foreach (var (session, data) in GetRecipients(source, VoiceRange))
         {
@@ -658,20 +670,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
     }
 
-    public MessageTransmitRange MTRFromLegacyFlags(bool hideChat, bool hideGlobalGhostChat)
-    {
-        var range = MessageTransmitRange.Normal;
-        if (hideChat)
-        {
-            range = MessageTransmitRange.HideChat;
-        }
-        else if (hideGlobalGhostChat)
-        {
-            range = MessageTransmitRange.GhostRangeLimit;
-        }
-        return range;
-    }
-
     private string ObfuscateMessageReadability(string message, float chance)
     {
         var modifiedMessage = new StringBuilder(message);
@@ -777,7 +775,7 @@ public enum InGameOOCChatType : byte
 /// <summary>
 ///     Controls transmission of chat.
 /// </summary>
-public enum MessageTransmitRange : byte
+public enum ChatTransmitRange : byte
 {
     /// Acts normal, ghosts can hear across the map, etc.
     Normal,
