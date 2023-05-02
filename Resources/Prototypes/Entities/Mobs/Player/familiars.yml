@@ -26,7 +26,7 @@
     showExamineInfo: true
   - type: Faction
     factions:
-    - Victim
+    - PetsNT
   - type: Alerts
   - type: Familiar
 
@@ -56,7 +56,7 @@
   - type: MobMover
   - type: Faction
     factions:
-    - Victim
+    - PetsNT
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-corrupted-corgi

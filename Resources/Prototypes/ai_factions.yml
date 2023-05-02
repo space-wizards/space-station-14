@@ -7,6 +7,9 @@
     - PetsNT
 
 - type: faction
+  id: Delicious
+
+- type: faction
   id: NanoTrasen
   hostile:
   - SimpleHostile
@@ -31,13 +34,10 @@
   - NanoTrasen
   - Syndicate
   - PetsNT
-  - Victim
+  - Delicious
 
 - type: faction
   id: SimpleNeutral
-
-- type: faction
-  id: Victim
 
 - type: faction
   id: Syndicate
@@ -53,4 +53,4 @@
   - NanoTrasen
   - Syndicate
   - PetsNT
-  - Victim
+  - Delicious
