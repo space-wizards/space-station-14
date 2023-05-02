@@ -182,13 +182,13 @@
             Piercing: -2.5
             Poison: -2.5
             Cellular: -1.5
-            Asphyxiation: -7.5
+            Asphyxiation: -5
       - !type:Electrocute
         probability: 0.01
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 20
+          min: 15
         damage:
           types:
             Shock: 2.5
@@ -196,4 +196,4 @@
         probability: 0.3
         conditions:
         - !type:ReagentThreshold
-          min: 20
+          min: 15
