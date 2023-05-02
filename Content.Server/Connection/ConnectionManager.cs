@@ -163,7 +163,7 @@ namespace Content.Server.Connection
 
             if (_cfg.GetCVar(CCVars.PrimelistEnabled))
             {
-                if (!await _primelist.IsPrimelisted(e.UserName))
+                if (!await _primelist.IsPrimelisted(e.UserName.ToLower()))
                 {
                     var msg = Loc.GetString(_cfg.GetCVar(CCVars.WhitelistReason));
                     return (ConnectionDenyReason.Whitelist, msg, null);
