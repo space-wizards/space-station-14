@@ -135,8 +135,8 @@
     sprite: Structures/Specific/Anomalies/ice_anom.rsi
   - type: Projectile
     damage:
-      groups:
-        Pierce: 20
+      types:
+        Piercing: 20
         Cold: 20
         Structural: 40
 

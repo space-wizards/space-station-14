@@ -41,8 +41,9 @@ public sealed class IceAnomalySystem : EntitySystem
     {
         var xform = Transform(uid);
         var projectilesShot = 0;
+        var range = Math.Abs(component.ProjectileRange * stability); // Apparently this shit can be a negative somehow?
 
-        foreach (var entity in _lookup.GetEntitiesInRange(uid, component.ProjectileRange * stability, LookupFlags.Dynamic))
+        foreach (var entity in _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic))
         {
             if (projectilesShot >= component.MaxProjectiles * severity)
                 return;
