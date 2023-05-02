@@ -4,6 +4,7 @@
     - NanoTrasen
     - Syndicate
     - Xeno
+    - PetsNT
 
 - type: faction
   id: NanoTrasen
@@ -29,9 +30,14 @@
   hostile:
   - NanoTrasen
   - Syndicate
+  - PetsNT
+  - Victim
 
 - type: faction
   id: SimpleNeutral
+
+- type: faction
+  id: Victim
 
 - type: faction
   id: Syndicate
@@ -39,9 +45,12 @@
   - NanoTrasen
   - SimpleHostile
   - Xeno
+  - PetsNT
 
 - type: faction
   id: Xeno
   hostile:
   - NanoTrasen
   - Syndicate
+  - PetsNT
+  - Victim

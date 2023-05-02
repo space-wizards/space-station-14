@@ -744,7 +744,7 @@
   - type: CanHostGuardian
   - type: Faction
     factions:
-    - SimpleNeutral
+    - Victim
   - type: GhostRole
     makeSentient: true
     name: monkey
