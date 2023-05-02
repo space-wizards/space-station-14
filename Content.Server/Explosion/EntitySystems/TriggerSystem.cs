@@ -52,6 +52,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly BodySystem _body = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -155,7 +156,7 @@ namespace Content.Server.Explosion.EntitySystems
             return triggerEvent.Handled;
         }
 
-        public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound, AudioParams beepParams)
+        public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound)
         {
             if (delay <= 0)
             {
@@ -198,7 +199,6 @@ namespace Content.Server.Explosion.EntitySystems
             var active = AddComp<ActiveTimerTriggerComponent>(uid);
             active.TimeRemaining = delay;
             active.User = user;
-            active.BeepParams = beepParams;
             active.BeepSound = beepSound;
             active.BeepInterval = beepInterval;
             active.TimeUntilBeep = initialBeepDelay == null ? active.BeepInterval : initialBeepDelay.Value;
@@ -222,15 +222,16 @@ namespace Content.Server.Explosion.EntitySystems
         private void UpdateTimer(float frameTime)
         {
             HashSet<EntityUid> toRemove = new();
-            foreach (var timer in EntityQuery<ActiveTimerTriggerComponent>())
+            var query = EntityQueryEnumerator<ActiveTimerTriggerComponent>();
+            while (query.MoveNext(out var uid, out var timer))
             {
                 timer.TimeRemaining -= frameTime;
                 timer.TimeUntilBeep -= frameTime;
 
                 if (timer.TimeRemaining <= 0)
                 {
-                    Trigger(timer.Owner, timer.User);
-                    toRemove.Add(timer.Owner);
+                    Trigger(uid, timer.User);
+                    toRemove.Add(uid);
                     continue;
                 }
 
@@ -238,8 +239,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
 
                 timer.TimeUntilBeep += timer.BeepInterval;
-                var filter = Filter.Pvs(timer.Owner, entityManager: EntityManager);
-                SoundSystem.Play(timer.BeepSound.GetSound(), filter, timer.Owner, timer.BeepParams);
+                _audio.PlayPvs(timer.BeepSound, uid, timer.BeepSound.Params);
             }
 
             foreach (var uid in toRemove)
