@@ -21,3 +21,6 @@ reagent-desc-ammonia = An effective fertilizer which is better than what is avai
 
 reagent-name-diethylamine = diethylamine
 reagent-desc-diethylamine = A very potent fertilizer.
+
+reagent-name-saltpetre = saltpetre
+reagent-desc-saltpetre = Weakly fertilizes plants. Causes poisoning when consumed. It serves as an ingredient for black powder.
