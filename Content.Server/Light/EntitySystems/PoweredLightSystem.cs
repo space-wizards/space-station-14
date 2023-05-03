@@ -334,6 +334,10 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, ref PowerChangedEvent args)
         {
+            // TODO: Power moment
+            if (MetaData(uid).EntityPaused)
+                return;
+
             UpdateLight(uid, component);
         }
 
