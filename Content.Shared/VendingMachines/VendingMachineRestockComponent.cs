@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.VendingMachines;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedVendingMachineSystem))]
 public sealed class VendingMachineRestockComponent : Component
 {
     /// <summary>
@@ -29,7 +29,14 @@ public sealed class VendingMachineRestockComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("soundRestockStart")]
-    public SoundSpecifier SoundRestockStart = new SoundPathSpecifier("/Audio/Machines/vending_restock_start.ogg");
+    public SoundSpecifier SoundRestockStart = new SoundPathSpecifier("/Audio/Machines/vending_restock_start.ogg")
+    {
+        Params = new AudioParams
+        {
+            Volume = -2f,
+            Variation = 0.2f
+        }
+    };
 
     /// <summary>
     ///     Sound that plays when finished restocking a machine.

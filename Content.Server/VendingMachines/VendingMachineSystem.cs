@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Cargo.Systems;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
@@ -26,11 +25,8 @@ namespace Content.Server.VendingMachines
     public sealed class VendingMachineSystem : SharedVendingMachineSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-        [Dependency] private readonly AudioSystem _audioSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _action = default!;
         [Dependency] private readonly PricingSystem _pricing = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
@@ -66,7 +62,7 @@ namespace Content.Server.VendingMachines
 
             foreach (var entry in component.Inventory.Values)
             {
-                if (!_prototypeManager.TryIndex<EntityPrototype>(entry.ID, out var proto))
+                if (!PrototypeManager.TryIndex<EntityPrototype>(entry.ID, out var proto))
                 {
                     _sawmill.Error($"Unable to find entity prototype {entry.ID} on {ToPrettyString(uid)} vending.");
                     continue;
@@ -89,7 +85,7 @@ namespace Content.Server.VendingMachines
 
             if (component.Action != null)
             {
-                var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.Action));
+                var action = new InstantAction(PrototypeManager.Index<InstantActionPrototype>(component.Action));
                 _action.AddAction(uid, action, uid);
             }
         }
@@ -177,9 +173,9 @@ namespace Content.Server.VendingMachines
 
             TryRestockInventory(uid, component);
 
-            _popupSystem.PopupEntity(Loc.GetString("vending-machine-restock-done", ("this", args.Args.Used), ("user", args.Args.User), ("target", uid)), args.Args.User, PopupType.Medium);
+            Popup.PopupEntity(Loc.GetString("vending-machine-restock-done", ("this", args.Args.Used), ("user", args.Args.User), ("target", uid)), args.Args.User, PopupType.Medium);
 
-            _audioSystem.PlayPvs(restockComponent.SoundRestockDone, uid, AudioParams.Default.WithVolume(-2f).WithVariation(0.2f));
+            Audio.PlayPvs(restockComponent.SoundRestockDone, uid, AudioParams.Default.WithVolume(-2f).WithVariation(0.2f));
 
             Del(args.Args.Used.Value);
 
@@ -206,7 +202,7 @@ namespace Content.Server.VendingMachines
                 return;
 
             vendComponent.Denying = true;
-            _audioSystem.PlayPvs(vendComponent.SoundDeny, uid, AudioParams.Default.WithVolume(-2f));
+            Audio.PlayPvs(vendComponent.SoundDeny, uid, AudioParams.Default.WithVolume(-2f));
             TryUpdateVisualState(uid, vendComponent);
         }
 
@@ -227,7 +223,7 @@ namespace Content.Server.VendingMachines
             if (_accessReader.IsAllowed(sender, accessReader) || HasComp<EmaggedComponent>(uid))
                 return true;
 
-            _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid);
+            Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid);
             Deny(uid, vendComponent);
             return false;
         }
@@ -255,14 +251,14 @@ namespace Content.Server.VendingMachines
 
             if (entry == null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid);
+                Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid);
                 Deny(uid, vendComponent);
                 return;
             }
 
             if (entry.Amount <= 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid);
+                Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid);
                 Deny(uid, vendComponent);
                 return;
             }
@@ -278,7 +274,7 @@ namespace Content.Server.VendingMachines
             entry.Amount--;
             UpdateVendingMachineInterfaceState(uid, vendComponent);
             TryUpdateVisualState(uid, vendComponent);
-            _audioSystem.PlayPvs(vendComponent.SoundVend, uid, AudioParams.Default.WithVolume(-2f));
+            Audio.PlayPvs(vendComponent.SoundVend, uid);
         }
 
         /// <summary>
@@ -354,7 +350,9 @@ namespace Content.Server.VendingMachines
                 EjectItem(uid, vendComponent, forceEject);
             }
             else
+            {
                 TryEjectVendorItem(uid, item.Type, item.ID, throwItem, vendComponent);
+            }
         }
 
         private void EjectItem(EntityUid uid, VendingMachineComponent? vendComponent = null, bool forceEject = false)
@@ -461,11 +459,11 @@ namespace Content.Server.VendingMachines
             {
                 double total = 0;
 
-                if (_prototypeManager.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
+                if (PrototypeManager.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
                 {
                     foreach (var (item, amount) in inventoryPrototype.StartingInventory)
                     {
-                        if (_prototypeManager.TryIndex(item, out EntityPrototype? entity))
+                        if (PrototypeManager.TryIndex(item, out EntityPrototype? entity))
                             total += _pricing.GetEstimatedPrice(entity) * amount;
                     }
                 }

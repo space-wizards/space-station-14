@@ -11,10 +11,10 @@ namespace Content.Shared.VendingMachines;
 public abstract partial class SharedVendingMachineSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     public override void Initialize()
     {
@@ -36,7 +36,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             return;
         }
 
-        if (!_prototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
+        if (!PrototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
             return;
 
         AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, component);
@@ -103,9 +103,9 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         foreach (var (id, amount) in entries)
         {
-            if (_prototypeManager.HasIndex<EntityPrototype>(id))
+            if (PrototypeManager.HasIndex<EntityPrototype>(id))
             {
-                if (inventory.TryGetValue(id, out VendingMachineInventoryEntry? entry))
+                if (inventory.TryGetValue(id, out var entry))
                     // Prevent a machine's stock from going over three times
                     // the prototype's normal amount. This is an arbitrary
                     // number and meant to be a convenience for someone

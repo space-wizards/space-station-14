@@ -18,7 +18,7 @@ public abstract partial class SharedVendingMachineSystem
         {
             if (_net.IsServer)
             {
-                _popup.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
+                Popup.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
                         ("this", uid),
                         ("user", user),
                         ("target", target)),
@@ -41,7 +41,7 @@ public abstract partial class SharedVendingMachineSystem
         {
             if (_net.IsServer)
             {
-                _popup.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user),
+                Popup.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user),
                         ("target", target)), user);
             }
 
@@ -81,12 +81,12 @@ public abstract partial class SharedVendingMachineSystem
 
         if (_net.IsServer)
         {
-            _popup.PopupEntity(Loc.GetString("vending-machine-restock-start", ("this", uid), ("user", args.User),
+            Popup.PopupEntity(Loc.GetString("vending-machine-restock-start", ("this", uid), ("user", args.User),
                     ("target", target)),
                 args.User,
                 PopupType.Medium);
         }
 
-        _audio.PlayPredicted(component.SoundRestockStart, uid, args.User, AudioParams.Default.WithVolume(-2f).WithVariation(0.2f));
+        Audio.PlayPredicted(component.SoundRestockStart, uid, args.User);
     }
 }
