@@ -1,12 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Added a new alternate jumpsuit for Atmospheric Technicians, type: Add}
-  - {message: 'Added a new alternate jumpsuit for Scientists, along with a matching
-      tie', type: Add}
-  - {message: Changed the tie sprites to look slightly less weird, type: Tweak}
-  id: 3130
-  time: '2023-03-06T19:42:10.0000000+00:00'
 - author: Menshin
   changes:
   - {message: The flip verb now has a icon and can be found under the rotation category.,
@@ -2896,3 +2888,8 @@ Entries:
   - {message: The rot now consumes (dwarves), type: Fix}
   id: 3629
   time: '2023-05-03T17:16:26.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Mimes with unbroken vows can no longer scream or laugh, type: Fix}
+  id: 3630
+  time: '2023-05-03T17:24:00.0000000+00:00'
