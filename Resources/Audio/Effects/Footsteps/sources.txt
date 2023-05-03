@@ -11,3 +11,5 @@ grass1.ogg and grass2.ogg are taken from https://freesound.org/people/D001447733
 grass3.ogg and grass4.ogg are taken from https://freesound.org/people/jevans27/sounds/563529/ by jevans27 licensed under CC-0 and split/modified by mirrorcult
 
 snowstep1.ogg, snowstep2.ogg, snowstep3.ogg, and snowstep4.ogg are taken from https://freesound.org/people/alexo400/sounds/543385/ by alexo400 licensed under CC-0 and split by EmoGarbage404
+
+heavystep1.ogg, heavystep2.ogg, heavystep3.ogg, heavystep4.ogg are taken from https://mp3crown.org/downloadmp3/oeh0x71lkbx_heavy-footstep-sound-effect-hd-hq.html 

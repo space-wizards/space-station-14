@@ -12,7 +12,7 @@
   license: "CC-BY-SA-4.0"
   copyright: "Made by JustInvoke freesound.org"
   source: "https://freesound.org/people/JustInvoke/sounds/446100/"
- 
+
 - files:
   - jesterstep1.ogg
   - jesterstep2.ogg
@@ -25,3 +25,12 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from https://github.com/tgstation/tgstation"
   source: "https://github.com/nero1024/tgstation/blob/83ccc939a20489de8ab81cb47e6f8e84c490adc2/sound/effects/footstep/slime1.ogg"
+
+- files:
+  - heavystep1.ogg
+  - heavystep2.ogg
+  - heavystep3.ogg
+  - heavystep4.ogg
+  license: "CC-BY-3.0"
+  copyright: "Taken from https://mp3crown.org. Converted from MP3 to OGG and downgraded to -7db"
+  source: "https://mp3crown.org/downloadmp3/oeh0x71lkbx_heavy-footstep-sound-effect-hd-hq.html"

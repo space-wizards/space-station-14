@@ -65,7 +65,7 @@
   files:
   - /Audio/Effects/Footsteps/clownstep1.ogg
   - /Audio/Effects/Footsteps/clownstep2.ogg
-  
+
 - type: soundCollection
   id: FootstepJester
   files:
@@ -80,8 +80,10 @@
 - type: soundCollection
   id: FootstepHeavy
   files:
-  - /Audio/Effects/Footsteps/suitstep1.ogg
-  - /Audio/Effects/Footsteps/suitstep2.ogg
+  - /Audio/Effects/Footsteps/heavystep1.ogg
+  - /Audio/Effects/Footsteps/heavystep2.ogg
+  - /Audio/Effects/Footsteps/heavystep3.ogg
+  - /Audio/Effects/Footsteps/heavystep4.ogg
 
 - type: soundCollection
   id: FootstepAsteroid
