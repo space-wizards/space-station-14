@@ -23,12 +23,6 @@ namespace Content.Server.Body.Components
         public string BodySolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
-        ///     Initial internal solution storage volume
-        /// </summary>
-        [DataField("initialMaxVolume", readOnly: true)]
-        public readonly FixedPoint2 InitialMaxVolume = FixedPoint2.New(50);
-
-        /// <summary>
         ///     Time in seconds between reagents being ingested and them being
         ///     transferred to <see cref="BloodstreamComponent"/>
         /// </summary>
