@@ -448,7 +448,7 @@ namespace Content.Server.VendingMachines
                 if (comp.NextEmpEject < _timing.CurTime)
                 {
                     EjectRandom(uid, true, false, comp);
-                    comp.NextEmpEject = _timing.CurTime + TimeSpan.FromSeconds(5 * comp.EjectDelay);
+                    comp.NextEmpEject += TimeSpan.FromSeconds(5 * comp.EjectDelay);
                 }
             }
         }
@@ -490,8 +490,12 @@ namespace Content.Server.VendingMachines
 
         private void OnEmpPulse(EntityUid uid, VendingMachineComponent component, ref EmpPulseEvent args)
         {
-            args.Affected = !component.Broken && this.IsPowered(uid, EntityManager);
-            args.Disabled = !component.Broken && this.IsPowered(uid, EntityManager);
+            if (!component.Broken && this.IsPowered(uid, EntityManager))
+            {
+                args.Affected = true;
+                args.Disabled = true;
+                component.NextEmpEject = _timing.CurTime;
+            }
         }
     }
 }
