@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
-public sealed class AnomalyExplosionComponent : Component
+public sealed class ExplosionAnomalyComponent : Component
 {
     /// <summary>
     /// The explosion prototype to spawn

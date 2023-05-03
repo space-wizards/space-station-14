@@ -1,4 +1,3 @@
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
@@ -11,9 +10,9 @@ using Robust.Shared.Random;
 namespace Content.Server.Anomaly.Effects;
 
 /// <summary>
-/// This handles <see cref="AnomalyProjectileComponent"/> and the events from <seealso cref="AnomalySystem"/>
+/// This handles <see cref="ProjectileAnomalyComponent"/> and the events from <seealso cref="AnomalySystem"/>
 /// </summary>
-public sealed class AnomalyProjectileSystem : EntitySystem
+public sealed class ProjectileAnomalySystem : EntitySystem
 {
     [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -23,21 +22,21 @@ public sealed class AnomalyProjectileSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<AnomalyProjectileComponent, AnomalyPulseEvent>(OnPulse);
-        SubscribeLocalEvent<AnomalyProjectileComponent, AnomalySupercriticalEvent>(OnSupercritical);
+        SubscribeLocalEvent<ProjectileAnomalyComponent, AnomalyPulseEvent>(OnPulse);
+        SubscribeLocalEvent<ProjectileAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
     }
 
-    private void OnPulse(EntityUid uid, AnomalyProjectileComponent component, ref AnomalyPulseEvent args)
+    private void OnPulse(EntityUid uid, ProjectileAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         ShootProjectilesAtEntites(uid, component, args.Severity, args.Stability);
     }
 
-    private void OnSupercritical(EntityUid uid, AnomalyProjectileComponent component, ref AnomalySupercriticalEvent args)
+    private void OnSupercritical(EntityUid uid, ProjectileAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
         ShootProjectilesAtEntites(uid, component, 1.0f, 1.0f);
     }
 
-    private void ShootProjectilesAtEntites(EntityUid uid, AnomalyProjectileComponent component, float severity, float stability)
+    private void ShootProjectilesAtEntites(EntityUid uid, ProjectileAnomalyComponent component, float severity, float stability)
     {
         var xform = Transform(uid);
         var projectilesShot = 0;
@@ -66,7 +65,7 @@ public sealed class AnomalyProjectileSystem : EntitySystem
 
     private void ShootProjectile(
         EntityUid uid,
-        AnomalyProjectileComponent component,
+        ProjectileAnomalyComponent component,
         EntityCoordinates coords,
         EntityCoordinates targetCoords,
         float severity

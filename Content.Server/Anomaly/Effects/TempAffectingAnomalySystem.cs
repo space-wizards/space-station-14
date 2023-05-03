@@ -6,9 +6,9 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Anomaly.Effects;
 
 /// <summary>
-/// This handles <see cref="TempAffectingComponent"/>
+/// This handles <see cref="TempAffectingAnomalyComponent"/>
 /// </summary>
-public sealed class TempAffectingSystem : EntitySystem
+public sealed class TempAffectingAnomalySystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
@@ -17,7 +17,7 @@ public sealed class TempAffectingSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<TempAffectingComponent, AnomalyComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<TempAffectingAnomalyComponent, AnomalyComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var comp, out var anom, out var xform))
         {
             var grid = xform.GridUid;

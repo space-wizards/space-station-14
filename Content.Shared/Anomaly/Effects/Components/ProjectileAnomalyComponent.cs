@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
-public sealed class AnomalyProjectileComponent : Component
+public sealed class ProjectileAnomalyComponent : Component
 {
     /// <sumarry>
     /// The prototype of the projectile that will be shot when the anomaly pulses

@@ -1,25 +1,23 @@
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Anomaly.Effects;
 
 /// <summary>
-/// This handles <see cref="AnomalyExplosionComponent"/>
+/// This handles <see cref="ExplosionAnomalyComponent"/>
 /// </summary>
-public sealed class AnomalyExplosionSystem : EntitySystem
+public sealed class ExplosionAnomalySystem : EntitySystem
 {
     [Dependency] private readonly ExplosionSystem _boom = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<AnomalyExplosionComponent, AnomalySupercriticalEvent>(OnSupercritical);
+        SubscribeLocalEvent<ExplosionAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
     }
 
-    private void OnSupercritical(EntityUid uid, AnomalyExplosionComponent component, ref AnomalySupercriticalEvent args)
+    private void OnSupercritical(EntityUid uid, ExplosionAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
         _boom.QueueExplosion(
             uid,

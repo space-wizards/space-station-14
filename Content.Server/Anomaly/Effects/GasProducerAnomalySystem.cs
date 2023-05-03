@@ -7,9 +7,9 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Anomaly.Effects;
 
 /// <summary>
-/// This handles <see cref="GasProducerComponent"/> and the events from <seealso cref="AnomalySystem"/>
+/// This handles <see cref="GasProducerAnomalyComponent"/> and the events from <seealso cref="AnomalySystem"/>
 /// </summary>
-public sealed class GasProducerSystem : EntitySystem
+public sealed class GasProducerAnomalySystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
@@ -17,10 +17,10 @@ public sealed class GasProducerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GasProducerComponent, AnomalySupercriticalEvent>(OnSupercritical);
+        SubscribeLocalEvent<GasProducerAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
     }
 
-    private void OnSupercritical(EntityUid uid, GasProducerComponent component, ref AnomalySupercriticalEvent args)
+    private void OnSupercritical(EntityUid uid, GasProducerAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
         if (!component.ReleaseOnMaxSeverity)
             return;
@@ -32,7 +32,7 @@ public sealed class GasProducerSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<GasProducerComponent>();
+        var query = EntityQueryEnumerator<GasProducerAnomalyComponent>();
         while (query.MoveNext(out var ent, out var comp))
         {
             if (!comp.ReleasePassively)

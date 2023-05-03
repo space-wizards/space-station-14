@@ -6,7 +6,7 @@ namespace Content.Shared.Anomaly.Effects.Components;
 /// This component is used for handling gas producing anomalies
 /// </summary>
 [RegisterComponent]
-public sealed class GasProducerComponent : Component
+public sealed class GasProducerAnomalyComponent : Component
 {
     /// <summary>
     /// Should this gas be released when an anomaly reaches max severity?
