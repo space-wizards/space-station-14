@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Catwalks allow you to pass over lava unharmed., type: Add}
-  id: 3129
-  time: '2023-03-06T19:11:28.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Added a new alternate jumpsuit for Atmospheric Technicians, type: Add}
@@ -2896,3 +2891,8 @@ Entries:
       up some mess but holds less liquid.', type: Add}
   id: 3628
   time: '2023-05-03T17:01:55.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: The rot now consumes (dwarves), type: Fix}
+  id: 3629
+  time: '2023-05-03T17:16:26.0000000+00:00'
