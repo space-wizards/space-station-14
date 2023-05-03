@@ -345,7 +345,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!component.RequiresSpecialDigestion)
                 return true;
 
-            foreach (var (comp, organ) in stomachs)
+            foreach (var (comp, _) in stomachs)
             {
                 if (comp.SpecialDigestible == null)
                     continue;

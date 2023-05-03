@@ -36,7 +36,7 @@ namespace Content.Server.Body.Components
         public float DigestionDelay = 20;
 
         /// <summary>
-        ///
+        ///     A whitelist for what special-digestible-required foods this stomach is capable of eating.
         /// </summary>
         [DataField("specialDigestible")]
         public EntityWhitelist? SpecialDigestible = null;
