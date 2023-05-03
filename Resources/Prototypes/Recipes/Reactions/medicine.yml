@@ -452,3 +452,15 @@
       amount: 1
   products:
     Haloperidol: 5
+
+- type: reaction
+  id: DeadlyPowder
+  reactants:
+    CarpoToxin:
+      amount: 5
+    ChloralHydrate:
+      amount: 5
+    Copper:
+      amount: 5
+  products:
+    DeadlyPowder: 5

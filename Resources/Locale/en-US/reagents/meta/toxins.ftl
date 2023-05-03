@@ -54,3 +54,6 @@ reagent-desc-allicin = An organosulfur compound found in alliums like garlic, on
 
 reagent-name-pax = pax
 reagent-desc-pax = A psychiatric drug which prevents the patient from directly harming anyone.
+
+reagent-name-deadly-powder = deadly powder
+reagent-desc-deadly-powder = A dangerous toxin. Causes poisoning, paralyzes for the duration of action and makes you feel dead.
