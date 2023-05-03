@@ -1,11 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: 'Added Emp Grenade to uplink (4 TC). Drains power from nearby batteries
-      (laser gun, stun baton and etc.), turns off APCs and breaks lights around.',
-    type: Add}
-  id: 3126
-  time: '2023-03-06T19:05:12.0000000+00:00'
 - author: vulppine
   changes:
   - {message: Chat size storage. Now you don't have to resize the chat constantly
@@ -2895,3 +2888,9 @@ Entries:
   - {message: Reduced how long it takes to restock a vendor., type: Tweak}
   id: 3625
   time: '2023-05-03T05:38:03.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: 'A normal slime will have a neutral label, and a separate description
+      in the ghost role.', type: Fix}
+  id: 3626
+  time: '2023-05-03T12:32:53.0000000+00:00'
