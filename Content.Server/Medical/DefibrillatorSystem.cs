@@ -56,7 +56,10 @@ public sealed class DefibrillatorSystem : EntitySystem
 
     private void OnUnpaused(EntityUid uid, DefibrillatorComponent component, ref EntityUnpausedEvent args)
     {
-        component.NextZapTime += args.PausedTime;
+        if (component.NextZapTime == null)
+            return;
+
+        component.NextZapTime = component.NextZapTime.Value + args.PausedTime;
     }
 
     private void OnUseInHand(EntityUid uid, DefibrillatorComponent component, UseInHandEvent args)
@@ -115,7 +118,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (component.Enabled)
             return false;
 
-        if (_powerCell.HasActivatableCharge(uid))
+        if (!_powerCell.HasActivatableCharge(uid))
             return false;
 
         component.Enabled = true;
@@ -248,10 +251,12 @@ public sealed class DefibrillatorSystem : EntitySystem
         var query = EntityQueryEnumerator<DefibrillatorComponent>();
         while (query.MoveNext(out var uid, out var defib))
         {
-            if (_timing.CurTime < defib.NextZapTime)
+            if (defib.NextZapTime == null || _timing.CurTime < defib.NextZapTime)
                 continue;
+
             _audio.PlayPvs(defib.ReadySound, uid);
             _appearance.SetData(uid, DefibrillatorVisuals.Ready, true);
+            defib.NextZapTime = null;
         }
     }
 }
