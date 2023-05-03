@@ -1,9 +1,4 @@
 Entries:
-- author: eclips_e
-  changes:
-  - {message: Male and female slimes now scream and laugh properly, type: Fix}
-  id: 3133
-  time: '2023-03-06T19:45:47.180167+00:00'
 - author: Slava0135
   changes:
   - {message: Removed heads encryption keys. Heads get second key in headsets (command
@@ -2892,3 +2887,9 @@ Entries:
   - {message: 'Added four hawaiian shirts, aloha!', type: Add}
   id: 3632
   time: '2023-05-03T21:47:50.0000000+00:00'
+- author: Floofi
+  changes:
+  - {message: 'Added ''The Martinez'' as a reference to Cyberpunk 2077.  (1 Ice, 1
+      Lemon juice, 2 vodka, 2 cola)', type: Add}
+  id: 3633
+  time: '2023-05-03T22:23:44.0000000+00:00'
