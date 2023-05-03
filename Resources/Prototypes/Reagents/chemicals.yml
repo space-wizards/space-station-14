@@ -41,7 +41,14 @@
   name: reagent-name-ash
   desc: reagent-desc-ash
   physicalDesc: reagent-physical-desc-powdery
-  color: white
+  color: "#263436"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
 
 - type: reagent
   id: SodiumCarbonate
