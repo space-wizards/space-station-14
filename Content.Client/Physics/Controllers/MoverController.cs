@@ -68,8 +68,12 @@ namespace Content.Client.Physics.Controllers
             var xformQuery = GetEntityQuery<TransformComponent>();
             var moverQuery = GetEntityQuery<InputMoverComponent>();
             var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
+            var mobMoverQuery = GetEntityQuery<MobMoverComponent>();
+            var pullableQuery = GetEntityQuery<SharedPullableComponent>();
+            var physicsQuery = GetEntityQuery<PhysicsComponent>();
+            var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
 
-            if (!TryComp(player, out InputMoverComponent? mover) ||
+            if (!moverQuery.TryGetComponent(player, out var mover) ||
                 !xformQuery.TryGetComponent(player, out var xform))
             {
                 return;
@@ -106,24 +110,24 @@ namespace Content.Client.Physics.Controllers
             {
                 foreach (var joint in jointComponent.GetJoints.Values)
                 {
-                    if (TryComp(joint.BodyAUid, out PhysicsComponent? physics))
+                    if (physicsQuery.TryGetComponent(joint.BodyAUid, out var physics))
                         physics.Predict = true;
 
-                    if (TryComp(joint.BodyBUid, out physics))
+                    if (physicsQuery.TryGetComponent(joint.BodyBUid, out physics))
                         physics.Predict = true;
                 }
             }
 
             // If we're being pulled then we won't predict anything and will receive server lerps so it looks way smoother.
-            if (TryComp(player, out SharedPullableComponent? pullableComp))
+            if (pullableQuery.TryGetComponent(player, out var pullableComp))
             {
-                if (pullableComp.Puller is {Valid: true} puller && TryComp<PhysicsComponent?>(puller, out var pullerBody))
+                if (pullableComp.Puller is {Valid: true} puller && TryComp<PhysicsComponent>(puller, out var pullerBody))
                 {
                     pullerBody.Predict = false;
                     body.Predict = false;
 
                     if (TryComp<SharedPullerComponent>(player, out var playerPuller) && playerPuller.Pulling != null &&
-                        TryComp<PhysicsComponent>(playerPuller.Pulling, out var pulledBody))
+                        physicsQuery.TryGetComponent(playerPuller.Pulling, out var pulledBody))
                     {
                         pulledBody.Predict = false;
                     }
@@ -131,7 +135,19 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(player, mover, physicsUid, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
+            HandleMobMovement(
+                player,
+                mover,
+                physicsUid,
+                body,
+                xformMover,
+                frameTime,
+                xformQuery,
+                moverQuery,
+                mobMoverQuery,
+                relayTargetQuery,
+                pullableQuery,
+                modifierQuery);
         }
 
         protected override bool CanSound()

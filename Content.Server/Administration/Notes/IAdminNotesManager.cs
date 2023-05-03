@@ -9,7 +9,7 @@ public interface IAdminNotesManager
 {
     event Action<SharedAdminNote>? NoteAdded;
     event Action<SharedAdminNote>? NoteModified;
-    event Action<int>? NoteDeleted;
+    event Action<SharedAdminNote>? NoteDeleted;
 
     bool CanCreate(IPlayerSession admin);
     bool CanDelete(IPlayerSession admin);
@@ -20,6 +20,5 @@ public interface IAdminNotesManager
     Task DeleteNote(int noteId, IPlayerSession deletedBy);
     Task ModifyNote(int noteId, IPlayerSession editedBy, string message);
     Task<List<AdminNote>> GetNotes(Guid player);
-    Task<int> CountNotes(Guid player);
     Task<string> GetPlayerName(Guid player);
 }

@@ -23,6 +23,9 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: Tag
+    tags:
+      - WhitelistChameleon
 
 - type: entity
   abstract: true

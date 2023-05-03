@@ -45,7 +45,7 @@
     guides:
     - AnomalousResearch
   - type: EmitSoundOnSpawn
-    sound: 
+    sound:
       path: /Audio/Effects/teleport_arrival.ogg
 
 - type: entity
@@ -66,6 +66,12 @@
     color: "#fca3c0"
     castShadows: false
   - type: PyroclasticAnomaly
+  - type: TempAffectingAnomaly
+    tempChangePerSecond: 25
+    hotspotExposeTemperature: 1000
+  - type: GasProducerAnomaly
+    releasedGas: 3
+    releaseOnMaxSeverity: true
 
 - type: entity
   id: AnomalyGravity
@@ -179,3 +185,41 @@
     anomalyContactDamage:
       types:
         Radiation: 10
+
+
+- type: entity
+  id: AnomalyIce
+  parent: BaseAnomaly
+  suffix: Ice
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 2.5
+    color: "#befaff"
+    castShadows: false
+  - type: Anomaly
+    anomalyContactDamage:
+      types:
+        Cold: 10
+  - type: ExplosionAnomaly
+    supercriticalExplosion: Cryo
+    explosionTotalIntensity: 1000
+    explosionDropoff: 1
+    explosionMaxTileIntensity: 10
+  - type: ProjectileAnomaly
+    projectilePrototype: ProjectileIcicle
+    targetNonSentientChance: 0.1
+  - type: TempAffectingAnomaly
+    tempChangePerSecond: -25
+    hotspotExposeTemperature: -1000
+  - type: GasProducerAnomaly
+    releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
+    releaseOnMaxSeverity: true

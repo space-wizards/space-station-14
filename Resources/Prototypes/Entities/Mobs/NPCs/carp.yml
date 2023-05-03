@@ -129,13 +129,14 @@
   parent: MobCarp
   suffix: "Salvage Ruleset"
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       prob: 0.33
       name: space carp on salvage wreck
       allowMovement: true
       allowSpeech: true
       description: |
         Defend the loot inside the salvage wreck!
+    - type: GhostTakeoverAvailable
     - type: SalvageMobRestrictions
 
 - type: entity
@@ -144,11 +145,12 @@
   suffix: DragonBrood
   parent: BaseMobCarp
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       allowMovement: true
       allowSpeech: true
       makeSentient: true
       name: Sentient Carp
       description: Help the dragon flood the station with carps!
+    - type: GhostTakeoverAvailable
     - type: HTN
       rootTask: DragonCarpCompound

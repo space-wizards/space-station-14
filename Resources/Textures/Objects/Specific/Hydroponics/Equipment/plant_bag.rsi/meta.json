@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, inhand sprites by лазік#7305",
   "size": {
     "x": 32,
     "y": 32
@@ -13,6 +13,14 @@
     {
       "name": "equipped-BELT",
       "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+       "name": "inhand-right",
+       "directions": 4
     }
   ]
 }

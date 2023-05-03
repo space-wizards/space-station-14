@@ -20,6 +20,7 @@ namespace Content.Server.Entry
             "UIFragment",
             "PDABorderColor",
             "InventorySlots",
+            "LightFade",
         };
     }
 }

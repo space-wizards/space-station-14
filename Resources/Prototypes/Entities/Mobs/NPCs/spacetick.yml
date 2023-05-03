@@ -74,12 +74,13 @@
           Quantity: 5
   - type: MeleeChemicalInjector
     solution: melee
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     prob: 0.33
     makeSentient: true
     name: space tick
     description: |
       Wreak havoc on the station!
+  - type: GhostTakeoverAvailable
   - type: ReplacementAccent
     accent: genericAggressive
 
@@ -88,9 +89,10 @@
   parent: MobTick
   suffix: "Salvage Ruleset"
   components:
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     name: space tick on salvage wreck
     description: |
       Defend the loot inside the salvage wreck!
+  - type: GhostTakeoverAvailable
   - type: SalvageMobRestrictions
 

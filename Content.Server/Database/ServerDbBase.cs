@@ -330,22 +330,6 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             bool includeUnbanned);
 
-        /// <summary>
-        ///     Counts an user's bans.
-        ///     This will return pardoned bans as well.
-        ///     One of <see cref="address"/> or <see cref="userId"/> need to not be null.
-        /// </summary>
-        /// <param name="address">The ip address of the user.</param>
-        /// <param name="userId">The id of the user.</param>
-        /// <param name="hwId">The HWId of the user.</param>
-        /// <param name="includeUnbanned">Include pardoned and expired bans.</param>
-        /// <returns>The user's ban history.</returns>
-        public abstract Task<int> CountServerBansAsync(
-            IPAddress? address,
-            NetUserId? userId,
-            ImmutableArray<byte>? hwId,
-            bool includeUnbanned);
-
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
 
@@ -763,7 +747,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        private async Task<IQueryable<AdminLog>> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        private static IQueryable<AdminLog> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
             IQueryable<AdminLog> query = db.AdminLog;
 
@@ -858,7 +842,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
 
             await foreach (var log in query.Select(log => log.Message).AsAsyncEnumerable())
             {
@@ -869,7 +853,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
             query = query.Include(log => log.Players);
 
             await foreach (var log in query.AsAsyncEnumerable())
@@ -887,7 +871,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
 
             await foreach (var json in query.Select(log => log.Json).AsAsyncEnumerable())
             {
@@ -1010,19 +994,6 @@ namespace Content.Server.Database
                 .Include(note => note.LastEditedBy)
                 .Include(note => note.Player)
                 .ToListAsync();
-        }
-
-        public async Task<int> CountAdminNotes(Guid player)
-        {
-            await using var db = await GetDb();
-            return await db.DbContext.AdminNotes
-                .Where(note => note.PlayerUserId == player)
-                .Where(note => !note.Deleted)
-                .Include(note => note.Round)
-                .Include(note => note.CreatedBy)
-                .Include(note => note.LastEditedBy)
-                .Include(note => note.Player)
-                .CountAsync();
         }
 
         public async Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt)

@@ -3,6 +3,7 @@ using Content.Server.Light.Events;
 using Content.Server.Mind.Components;
 using Content.Shared.Actions;
 using Content.Shared.Light;
+using Content.Shared.Light.Component;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -49,7 +50,7 @@ namespace Content.Server.Light.EntitySystems
 
             ActivationVerb verb = new();
             verb.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
-            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/light.svg.192dpi.png"));
+            verb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png"));
             verb.Act = () => ToggleLight(uid, component);
             verb.Priority = -1; // For things like PDA's, Open-UI and other verbs that should be higher priority.
 
