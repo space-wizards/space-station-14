@@ -14,6 +14,7 @@ using Robust.Shared.Timing;
 using Content.Server.Chat.Systems;
 using Content.Server.Speech.Components;
 using Content.Shared.Chat.Prototypes;
+using Content.Server.Speech.EntitySystems;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -31,8 +32,8 @@ namespace Content.Server.Abilities.Mime
             SubscribeLocalEvent<MimePowersComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<MimePowersComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
-            SubscribeLocalEvent<MimePowersComponent, EmoteEvent>(OnEmote);
-            SubscribeLocalEvent<MimePowersComponent, ScreamActionEvent>(OnScreamAction);
+            SubscribeLocalEvent<MimePowersComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
+            SubscribeLocalEvent<MimePowersComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
         }
         public override void Update(float frameTime)
         {
