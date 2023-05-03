@@ -231,7 +231,7 @@ public sealed class StationSpawningSystem : EntitySystem
 
         _accessSystem.SetAccessToJob(cardId, jobPrototype, extendedAccess);
 
-        _pdaSystem.SetOwner(pdaComponent, characterName);
+        _pdaSystem.SetOwner(idUid.Value, pdaComponent, characterName);
     }
 
 

@@ -3,6 +3,7 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Robust.Server.GameObjects;
@@ -65,11 +66,14 @@ namespace Content.Server.Physics.Controllers
             var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
             var moverQuery = GetEntityQuery<InputMoverComponent>();
+            var mobMoverQuery = GetEntityQuery<MobMoverComponent>();
+            var pullableQuery = GetEntityQuery<SharedPullableComponent>();
+            var inputQueryEnumerator = AllEntityQuery<InputMoverComponent>();
+            var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
 
-            foreach (var mover in EntityQuery<InputMoverComponent>(true))
+            while (inputQueryEnumerator.MoveNext(out var uid, out var mover))
             {
-                var uid = mover.Owner;
-                EntityUid physicsUid = uid;
+                var physicsUid = uid;
 
                 if (relayQuery.HasComponent(uid))
                     continue;
@@ -97,7 +101,18 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                HandleMobMovement(uid, mover, physicsUid, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
+                HandleMobMovement(uid,
+                    mover,
+                    physicsUid,
+                    body,
+                    xformMover,
+                    frameTime,
+                    xformQuery,
+                    moverQuery,
+                    mobMoverQuery,
+                    relayTargetQuery,
+                    pullableQuery,
+                    modifierQuery);
             }
 
             HandleShuttleMovement(frameTime);

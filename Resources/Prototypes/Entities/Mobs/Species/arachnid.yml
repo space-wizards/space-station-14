@@ -1,0 +1,89 @@
+- type: entity
+  save: false
+  name: Urist McWeb
+  parent: BaseMobOrganic
+  id: BaseMobArachnid
+  abstract: true
+  components:
+  # The important nessessities
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.0
+    baseSprintSpeed: 5.0
+  - type: Body
+    prototype: Arachnid
+    requiredLegs: 2
+  - type: Perishable
+  - type: HumanoidAppearance
+    species: Arachnid
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Arachnid # spooder
+  - type: Icon
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: full
+  - type: Hunger
+    baseDecayRate: 0.05 # Probably faster than humans?
+  - type: Thirst
+  # Damage and speed
+  - type: Bloodstream
+    bloodReagent: SpiderBlood
+  - type: Temperature
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.2 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.1 #per second, scales with temperature & other constants
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.20 #per second, scales with pressure and other constants.
+  - type: SlowOnDamage
+    speedModifierThresholds: # This is an ouch, but it does make up for their extra speed
+      65: 0.7
+      80: 0.4
+  # Misc
+  - type: Speech
+    speechSounds: Arachnid
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
+  - type: Inventory
+    templateId: arachnid
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcClaw
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 3
+        Poison: 1
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatSpider
+        amount: 5
+
+- type: entity
+  save: false
+  name: Urist McFluff
+  parent: MobHumanDummy
+  id: MobArachnidDummy
+  noSpawn: true
+  description: A dummy arachnid meant to be used in character setup. # Hey! It's not dumb :(
+  components:
+  - type: Inventory
+    templateId: arachnid
+  - type: HumanoidAppearance
+    species: Arachnid
+
+#88w88

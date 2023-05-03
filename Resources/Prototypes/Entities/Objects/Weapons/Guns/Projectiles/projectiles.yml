@@ -397,6 +397,29 @@
     healthPerWeakeningeHit: -0.1
     stabilityPerWeakeningeHit: -0.2
 
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleOmegaStrong
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+      - state: magicm_green
+        shader: unshaded
+  - type: AnomalousParticle
+    particleType: Default
+    severityOverride: true
+    severityPerSeverityHit: 0.1
+    stabilityPerDestabilizingHit: 0.05
+    healthPerWeakeningeHit: 1
+    stabilityPerWeakeningeHit: -0.05
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Heat: 20
+
 # Launcher projectiles (grenade / rocket)
 - type: entity
   id: BulletRocket
