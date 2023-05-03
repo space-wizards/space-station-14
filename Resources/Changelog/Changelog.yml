@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Space bears can now fit through doorsz, type: Tweak}
-  id: 3132
-  time: '2023-03-06T19:45:47.179430+00:00'
 - author: eclips_e
   changes:
   - {message: Male and female slimes now scream and laugh properly, type: Fix}
@@ -2892,3 +2887,8 @@ Entries:
   - {message: HoP's airlocks on Moose now work with their door remote., type: Fix}
   id: 3631
   time: '2023-05-03T18:38:48.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: 'Added four hawaiian shirts, aloha!', type: Add}
+  id: 3632
+  time: '2023-05-03T21:47:50.0000000+00:00'
