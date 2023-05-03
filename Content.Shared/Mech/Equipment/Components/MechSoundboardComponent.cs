@@ -11,6 +11,6 @@ public sealed partial class MechSoundboardComponent : Component
     /// <summary>
     /// List of sounds that can be played
     /// </summary>
-    [DataField("sounds"), ViewVariables(VVAccess.ReadWrite), AutoNetworkField]
+    [DataField("sounds"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public List<SoundCollectionSpecifier> Sounds = new();
 }

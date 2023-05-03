@@ -116,6 +116,9 @@ public sealed class MechGrabberUiState : BoundUserInterfaceState
     public int MaxContents;
 }
 
+/// <summary>
+/// List of sound collection ids to be localized and displayed.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class MechSoundboardUiState : BoundUserInterfaceState
 {
