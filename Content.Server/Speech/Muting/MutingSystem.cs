@@ -1,3 +1,4 @@
+using Content.Server.Abilities.Mime;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
@@ -33,14 +34,20 @@ namespace Content.Server.Speech.Muting
             if (args.Handled)
                 return;
 
-            _popupSystem.PopupEntity(Loc.GetString("speech-muted"), uid, uid);
+            if (HasComp<MimePowersComponent>(uid))
+                _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
+            else
+                _popupSystem.PopupEntity(Loc.GetString("speech-muted"), uid, uid);
             args.Handled = true;
         }
 
 
         private void OnSpeakAttempt(EntityUid uid, MutedComponent component, SpeakAttemptEvent args)
         {
-            _popupSystem.PopupEntity(Loc.GetString("speech-muted"), uid, uid);
+            if (HasComp<MimePowersComponent>(uid))
+                _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
+            else
+                _popupSystem.PopupEntity(Loc.GetString("speech-muted"), uid, uid);
             args.Cancel();
         }
     }
