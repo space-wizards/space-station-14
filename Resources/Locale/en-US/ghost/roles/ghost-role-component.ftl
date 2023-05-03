@@ -18,7 +18,8 @@ ghost-role-information-hamlet-name = Hamlet the hamster.
 ghost-role-information-hamlet-description = Lives in the station bridge, has a bit of a temper and is always hungry.
 
 ghost-role-information-slimes-name = Slime
-ghost-role-information-slimes-description = Everything around you irritates your instincts, destroy them!
+ghost-role-information-slimes-description = An ordinary slime with no special needs or interests. He just lives.
+ghost-role-information-angry-slimes-description = Everything around you irritates your instincts, destroy them!
 
 ghost-role-information-smile-name = Smile
 ghost-role-information-smile-description = Science's best lab slime. Survived so many experiments that it got promoted to pet.
