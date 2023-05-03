@@ -1,9 +1,4 @@
 Entries:
-- author: 08A
-  changes:
-  - {message: Fixed entity spawn menu preview for pipes, type: Fix}
-  id: 3119
-  time: '2023-03-06T17:01:36.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Body parts can now be put in trash bags. Viscera Cleanup Detail!, type: Add}
@@ -2887,3 +2882,8 @@ Entries:
   - {message: Added defibrillators to the medical techfab., type: Add}
   id: 3618
   time: '2023-05-03T00:10:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix defib., type: Fix}
+  id: 3619
+  time: '2023-05-03T01:32:07.0000000+00:00'
