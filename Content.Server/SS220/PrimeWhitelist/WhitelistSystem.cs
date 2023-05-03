@@ -137,10 +137,15 @@ public sealed class Primelist
     {
         var record = await _db.GetPrimelistRecord(accountName);
         if (record == null)
+        {
+            _sawmill.Debug($"{accountName} is not in primelist");
             return false;
+        }
         var now = DateTime.UtcNow;
-        if (record.DateStart < now && now < record.DateEnd)
+        var check = now >= record.DateStart && (record.DateEnd == null || now <= record.DateEnd);
+        if (check)
             return true;
+        _sawmill.Debug($"{accountName} record is outdated, from {record.DateStart} to {record.DateEnd}");
         return false;
     }
 }
