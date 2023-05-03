@@ -2,8 +2,6 @@
 
 # Shown when an RCD is examined in details range
 rcd-component-examine-detail = Находится в режиме { $mode }.
-# Shown when an RCD is examined in details range
-rcd-component-examine-detail-count = Находится в режиме { $mode }.
 
 ### Interaction Messages
 
