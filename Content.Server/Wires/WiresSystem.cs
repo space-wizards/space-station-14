@@ -165,10 +165,10 @@ public sealed class WiresSystem : SharedWiresSystem
                     else
                         types.Add(actionType, 1);
 
-                    d.Id = i;
                     if (!d.Action.AddWire(d, types[actionType]))
                         d.Action = null;
                 }
+                d.Id = i;
 
                 data.Add(id, new WireLayout.WireData(d.Letter, d.Color, i));
                 wires.WiresList[i] = wireSet[id];

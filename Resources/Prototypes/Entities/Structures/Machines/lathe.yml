@@ -467,6 +467,7 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingMaskSterile
