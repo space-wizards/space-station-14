@@ -1,6 +1,6 @@
 using Content.Shared.Atmos;
 
-namespace Content.Shared.Anomaly.Effects.Components;
+namespace Content.Server.Anomaly.Components;
 
 /// <summary>
 /// This component is used for handling gas producing anomalies

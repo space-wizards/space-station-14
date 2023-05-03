@@ -1,4 +1,4 @@
-namespace Content.Shared.Anomaly.Effects.Components;
+namespace Content.Server.Anomaly.Components;
 
 /// <summary>
 /// This component is used for handling anomalies that affect the temperature

@@ -1,6 +1,6 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Anomaly.Effects.Components;
 
 namespace Content.Server.Anomaly.Effects;
 

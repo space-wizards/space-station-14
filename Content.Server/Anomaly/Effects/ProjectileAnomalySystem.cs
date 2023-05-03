@@ -1,7 +1,7 @@
+using Content.Server.Anomaly.Components;
+using Content.Server.Mind.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Anomaly.Effects.Components;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -28,27 +28,28 @@ public sealed class ProjectileAnomalySystem : EntitySystem
 
     private void OnPulse(EntityUid uid, ProjectileAnomalyComponent component, ref AnomalyPulseEvent args)
     {
-        ShootProjectilesAtEntites(uid, component, args.Severity, args.Stability);
+        ShootProjectilesAtEntities(uid, component, args.Severity);
     }
 
     private void OnSupercritical(EntityUid uid, ProjectileAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
-        ShootProjectilesAtEntites(uid, component, 1.0f, 1.0f);
+        ShootProjectilesAtEntities(uid, component, 1.0f);
     }
 
-    private void ShootProjectilesAtEntites(EntityUid uid, ProjectileAnomalyComponent component, float severity, float stability)
+    private void ShootProjectilesAtEntities(EntityUid uid, ProjectileAnomalyComponent component, float severity)
     {
         var xform = Transform(uid);
         var projectilesShot = 0;
-        var range = Math.Abs(component.ProjectileRange * stability); // Apparently this shit can be a negative somehow?
+        var range = component.ProjectileRange * severity;
+        var mobQuery = GetEntityQuery<MindComponent>();
 
         foreach (var entity in _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic))
         {
             if (projectilesShot >= component.MaxProjectiles * severity)
                 return;
 
-            // Living entities are more likely to be shot at than non living
-            if (!HasComp<MobStateComponent>(entity) && !_random.Prob(component.TargetNonLivingChance))
+            // Sentient entities are more likely to be shot at than non sentient
+            if (!mobQuery.HasComponent(entity) && !_random.Prob(component.TargetNonSentientChance))
                 continue;
 
             var targetCoords = Transform(entity).Coordinates.Offset(_random.NextVector2(-1, 1));

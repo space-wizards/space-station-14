@@ -1,10 +1,7 @@
-using Content.Shared.Atmos;
-using Content.Shared.Damage;
 using Content.Shared.Explosion;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Anomaly.Effects.Components;
+namespace Content.Server.Anomaly.Components;
 
 [RegisterComponent]
 public sealed class ExplosionAnomalyComponent : Component

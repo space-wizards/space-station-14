@@ -1,7 +1,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Anomaly.Effects.Components;
+namespace Content.Server.Anomaly.Components;
 
 [RegisterComponent]
 public sealed class ProjectileAnomalyComponent : Component
@@ -31,8 +31,8 @@ public sealed class ProjectileAnomalyComponent : Component
     public float ProjectileRange = 50f;
 
     /// <summary>
-    /// Chance that a non living entity will be targeted, value must be between 0.0-1.0
+    /// Chance that a non sentient entity will be targeted, value must be between 0.0-1.0
     /// </summary>
-    [DataField("targetNonLivingChance")]
-    public float TargetNonLivingChance = 0.5f;
+    [DataField("targetNonSentientChance")]
+    public float TargetNonSentientChance = 0.5f;
 }

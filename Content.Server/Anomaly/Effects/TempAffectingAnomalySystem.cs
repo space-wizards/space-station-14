@@ -1,6 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Anomaly.Effects.Components;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Anomaly.Effects;
