@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Mech.Equipment.Components;
 
-[RegisterComponent, NetworkedComponent, AutoNetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedMechSoundboardSystem))]
 public sealed partial class MechSoundboardComponent : Component
 {
