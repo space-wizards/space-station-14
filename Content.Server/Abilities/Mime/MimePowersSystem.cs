@@ -124,6 +124,7 @@ namespace Content.Server.Abilities.Mime
 
             mimePowers.Enabled = true;
             mimePowers.ReadyToRepent = false;
+            mimePowers.VowBroken = false;
             AddComp<MutedComponent>(uid);
             _alertsSystem.ClearAlert(uid, AlertType.VowBroken);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
