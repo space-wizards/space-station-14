@@ -373,9 +373,9 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
           # they gotta be in crit first
-          min: 100
+        - !type:MobStateCondition
+          mobstate: Critical
         damage:
           types:
             Asphyxiation: -5
