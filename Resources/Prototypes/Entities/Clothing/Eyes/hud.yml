@@ -30,3 +30,6 @@
     sprite: Clothing/Eyes/Hud/sec.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/sec.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
