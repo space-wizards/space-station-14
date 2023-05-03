@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'Added lime, orange; and citrus salad recipe.', type: Add}
-  - {message: Lime and orange cakes now require fruits instead of juice, type: Tweak}
-  id: 3123
-  time: '2023-03-06T18:45:39.0000000+00:00'
 - author: pofitlo
   changes:
   - {message: Cigarettes vending machine can be emagged for a new inventory entry,
@@ -2895,3 +2889,9 @@ Entries:
       better.', type: Fix}
   id: 3622
   time: '2023-05-03T05:07:23.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Overdosing is stronger and diphenhydramine and ethylredoxrazine now
+      have anti poison properties., type: Add}
+  id: 3623
+  time: '2023-05-03T05:21:21.0000000+00:00'
