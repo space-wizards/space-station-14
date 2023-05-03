@@ -1,9 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Body parts can now be put in trash bags. Viscera Cleanup Detail!, type: Add}
-  id: 3120
-  time: '2023-03-06T17:33:54.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed bugs with clothing getting stuck after a polymorph., type: Fix}
@@ -2887,3 +2882,9 @@ Entries:
   - {message: Fix defib., type: Fix}
   id: 3619
   time: '2023-05-03T01:32:07.0000000+00:00'
+- author: DjfjdfofdjfjD
+  changes:
+  - {message: 'Inaprovaline now works when you are in critical condition, not when
+      you have more than 100 dmg.', type: Fix}
+  id: 3620
+  time: '2023-05-03T03:44:31.0000000+00:00'
