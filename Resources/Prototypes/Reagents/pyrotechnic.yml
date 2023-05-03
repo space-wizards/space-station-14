@@ -169,3 +169,18 @@
   color: "#9e6b38"
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0
+
+- type: reagent
+  id: BlackPowder
+  name: reagent-name-black-powder
+  desc: reagent-desc-black-powder
+  physicalDesc: reagent-physical-desc-sour
+  flavor: bitter
+  color: "#122022"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
