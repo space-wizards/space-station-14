@@ -889,22 +889,22 @@
       - !type:HealthChange
         conditions:
         - !type:TotalDamage
-          min: 150
-        damage:
-          groups:
-            Brute: -1.5
-            Burn: -1.5
-          types:
-            Poison: -0.5
-            Asphyxiation: -0.5
-      - !type:HealthChange
-        conditions:
-        - !type:TotalDamage
           min: 0
           max: 149
         damage:
           types:
             Poison: 1
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          min: 150
+        damage:
+          groups:
+            Brute: -2.5
+            Burn: -2.5
+          types:
+            Poison: -1.5
+            Asphyxiation: -1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
