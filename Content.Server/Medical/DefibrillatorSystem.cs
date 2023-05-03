@@ -35,7 +35,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
-    [Dependency] private readonly MiasmaSystem _miasma = default!;
+    [Dependency] private readonly RottingSystem _rotting = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -156,7 +156,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (_timing.CurTime < component.NextZapTime)
             return false;
 
-        if (!TryComp<MobStateComponent>(target, out var mobState) || _miasma.IsRotting(target))
+        if (!TryComp<MobStateComponent>(target, out var mobState) || _rotting.IsRotten(target))
             return false;
 
         if (!_powerCell.HasActivatableCharge(uid, user: user))
