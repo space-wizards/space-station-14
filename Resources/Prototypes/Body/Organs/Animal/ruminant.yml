@@ -7,4 +7,4 @@
   - type: SolutionContainerManager
     solutions:
       stomach:
-        maxVol: 40
+        maxVol: 80
