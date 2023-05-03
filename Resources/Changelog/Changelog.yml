@@ -1,10 +1,4 @@
 Entries:
-- author: pofitlo
-  changes:
-  - {message: Cigarettes vending machine can be emagged for a new inventory entry,
-    type: Tweak}
-  id: 3124
-  time: '2023-03-06T18:54:22.0000000+00:00'
 - author: MagnusCrowe
   changes:
   - {message: 'Added paramedic hat and jacket, at the medidrobe while supplies last',
@@ -2895,3 +2889,10 @@ Entries:
       have anti poison properties., type: Add}
   id: 3623
   time: '2023-05-03T05:21:21.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed bomb suit explosion resistance values (50% for helmet and 80%
+      for suit - 90% in total - which is enough to survive minibomb explosion), type: Fix}
+  - {message: you can now examine explosion resistance of armor, type: Add}
+  id: 3624
+  time: '2023-05-03T05:23:08.0000000+00:00'
