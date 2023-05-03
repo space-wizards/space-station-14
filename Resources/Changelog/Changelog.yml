@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: 'Fix incorrect access denied popup when trying to open a locker with
-      a remote in hand,', type: Fix}
-  id: 3128
-  time: '2023-03-06T19:10:35.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Catwalks allow you to pass over lava unharmed., type: Add}
@@ -2896,3 +2890,9 @@ Entries:
     type: Add}
   id: 3627
   time: '2023-05-03T12:47:17.0000000+00:00'
+- author: Naive817
+  changes:
+  - {message: 'NT employees now know how to make damp rags from cloth, it can clean
+      up some mess but holds less liquid.', type: Add}
+  id: 3628
+  time: '2023-05-03T17:01:55.0000000+00:00'
