@@ -318,6 +318,20 @@ namespace Content.Server.Nutrition.EntitySystems
         }
 
         /// <summary>
+        ///     Returns true if the food item can be digested by the user.
+        /// </summary>
+        public bool IsDigestibleBy(EntityUid uid, EntityUid food, FoodComponent? foodComp = null)
+        {
+            if (!Resolve(food, ref foodComp, false))
+                return false;
+
+            if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(uid, out var stomachs))
+                return false;
+
+            return IsDigestibleBy(food, foodComp, stomachs);
+        }
+
+        /// <summary>
         ///     Returns true if <paramref name="stomachs"/> has a <see cref="StomachComponent"/> that is capable of
         ///     digesting this <paramref name="food"/> (or if they even have enough stomachs in the first place).
         /// </summary>

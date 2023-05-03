@@ -84,13 +84,16 @@
     - type: Food
       requiredStomachs: 2 # ruminants have 4 stomachs but i dont care to give them literally 4 stomachs. 2 is good
       # TODO make botany plants edible to ruminants as well ...
+      delay: 0.5
+    - type: FlavorProfile
+      flavors:
+      - fiber
     - type: SolutionContainerManager
       solutions:
         food:
           reagents:
           - ReagentId: Nutriment
             Quantity: 2
-    - type: RuminantTarget
 
 - type: entity
   id: WeakKudzu
@@ -164,10 +167,10 @@
         tags:
         - Flesh
     - type: Food # delightfully devilish !
+      delay: 0.5
     - type: SolutionContainerManager
       solutions:
         food:
           reagents:
           - ReagentId: Protein
             Quantity: 2
-    - type: RuminantTarget
