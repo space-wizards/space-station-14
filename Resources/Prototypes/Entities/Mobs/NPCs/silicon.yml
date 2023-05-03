@@ -239,6 +239,13 @@
   description: No substitute for a doctor, but better than nothing.
   components:
   - type: Medibot
+  - type: EmaggableMedibot
+    # when you are fine, medibot will help you go sleep
+    standardMed: ChloralHydrate
+    standardMedAmount: 5
+    # when you are crit, medibot will help you have fun
+    emergencyMed: SpaceDrugs
+    emergencyMedAmount: 25
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/medibot.rsi
