@@ -137,6 +137,15 @@ namespace Content.Server.PDA
                         _store.ToggleUi(msg.Session.AttachedEntity!.Value, uid, store);
                     break;
                 }
+                case PDALockUplinkMessage _:
+                {
+                    if (TryComp<RingerUplinkComponent>(uid, out var uplink))
+                    {
+                        _ringer.LockUplink(uid, uplink);
+                        UpdatePdaUi(uid, pda);
+                    }
+                    break;
+                }
             }
         }
 
