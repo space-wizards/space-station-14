@@ -79,6 +79,9 @@ namespace Content.Server.Armor
 
             var examineMarkup = GetArmorExamine(armorModifiers);
 
+            var ev = new ArmorExamineEvent(examineMarkup);
+            RaiseLocalEvent(uid, ref ev);
+
             _examine.AddDetailedExamineVerb(args, component, examineMarkup, Loc.GetString("armor-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png", Loc.GetString("armor-examinable-verb-message"));
         }
 
@@ -110,3 +113,6 @@ namespace Content.Server.Armor
         }
     }
 }
+
+[ByRefEvent]
+public record struct ArmorExamineEvent(FormattedMessage Msg);

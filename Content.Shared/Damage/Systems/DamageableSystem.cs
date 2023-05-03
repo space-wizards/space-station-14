@@ -2,6 +2,8 @@ using System.Linq;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
@@ -16,6 +18,7 @@ namespace Content.Shared.Damage
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly INetManager _netMan = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
 
         public override void Initialize()
         {
@@ -264,7 +267,10 @@ namespace Content.Shared.Damage
 
         private void OnRejuvenate(EntityUid uid, DamageableComponent component, RejuvenateEvent args)
         {
+            TryComp<MobThresholdsComponent>(uid, out var thresholds);
+            _mobThreshold.SetAllowRevives(uid, true, thresholds); // do this so that the state changes when we set the damage
             SetAllDamage(uid, component, 0);
+            _mobThreshold.SetAllowRevives(uid, false, thresholds);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)
