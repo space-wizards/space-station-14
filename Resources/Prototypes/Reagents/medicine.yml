@@ -873,7 +873,6 @@
           - !type:ReagentThreshold
             min: 100
       - !type:SatiateHunger
-        factor: -1
 
 - type: reagent
   id: Atropine
