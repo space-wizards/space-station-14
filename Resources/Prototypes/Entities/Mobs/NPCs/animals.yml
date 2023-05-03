@@ -199,7 +199,7 @@
     needsHands: true
   - type: Faction
     factions:
-    - Delicious
+    - Passive
 
 - type: entity
   name: mallard duck #Quack
@@ -253,7 +253,7 @@
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Faction
     factions:
-    - Delicious
+    - Passive
 
 - type: entity
   name: white duck #Quack
@@ -415,7 +415,7 @@
     molsPerSecondPerUnitMass: 0.0015
   - type: Faction
     factions:
-    - Delicious
+    - Passive
 
 - type: entity
   name: crab
@@ -518,7 +518,7 @@
       path: /Audio/Animals/goat_bah.ogg
   - type: Faction
     factions:
-    - Delicious
+    - Passive
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -567,7 +567,7 @@
   - type: Puller
   - type: Faction
     factions:
-    - Delicious
+    - Passive
 
 - type: entity
   name: gorilla
@@ -758,7 +758,7 @@
   - type: CanHostGuardian
   - type: Faction
     factions:
-    - Delicious
+    - Passive
   - type: GhostRole
     makeSentient: true
     name: monkey
@@ -1191,7 +1191,7 @@
       path: /Audio/Animals/penguin_squawk.ogg
   - type: Faction
     factions:
-    - Delicious
+    - Passive
 
 - type: entity
   name: grenade penguin
@@ -2148,4 +2148,4 @@
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Faction
     factions:
-    - Delicious
+    - Passive

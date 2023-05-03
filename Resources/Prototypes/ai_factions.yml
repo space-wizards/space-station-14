@@ -7,9 +7,6 @@
     - PetsNT
 
 - type: faction
-  id: Delicious
-
-- type: faction
   id: NanoTrasen
   hostile:
   - SimpleHostile
@@ -20,6 +17,9 @@
   id: Mouse
   hostile:
     - PetsNT
+
+- type: faction
+  id: Passive
 
 - type: faction
   id: PetsNT
@@ -34,7 +34,7 @@
   - NanoTrasen
   - Syndicate
   - PetsNT
-  - Delicious
+  - Passive
 
 - type: faction
   id: SimpleNeutral
@@ -53,4 +53,4 @@
   - NanoTrasen
   - Syndicate
   - PetsNT
-  - Delicious
+  - Passive
