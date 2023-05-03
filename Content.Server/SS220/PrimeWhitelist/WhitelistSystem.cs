@@ -142,7 +142,8 @@ public sealed class Primelist
             return false;
         }
         var now = DateTime.UtcNow;
-        var check = now >= record.DateStart && (record.DateEnd == null || now <= record.DateEnd);
+        record.DateEnd ??= DateTime.MaxValue;
+        var check = now >= record.DateStart && (now <= record.DateEnd || record.DateEnd == DateTime.MinValue);
         if (check)
             return true;
         _sawmill.Debug($"{accountName} record is outdated, from {record.DateStart} to {record.DateEnd}");
