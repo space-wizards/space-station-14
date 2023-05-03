@@ -11,10 +11,21 @@ public sealed class DamageOnHoldingSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<DamageOnHoldingComponent, EntityUnpausedEvent>(OnUnpaused);
+    }
+
     public void SetEnabled(EntityUid uid, bool enabled)
     {
         if (TryComp<DamageOnHoldingComponent>(uid, out var component))
             component.Enabled = enabled;
+    }
+
+    private void OnUnpaused(EntityUid uid, DamageOnHoldingComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextDamage += args.PausedTime;
     }
 
     public override void Update(float frameTime)
