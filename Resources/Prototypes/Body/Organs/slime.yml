@@ -49,8 +49,6 @@
     groups:
     - id: Gas
       rateModifier: 100.0
-  - type: Extractable
-    grindableSolutionName: organ
   - type: SolutionContainerManager
     solutions:
       organ:
