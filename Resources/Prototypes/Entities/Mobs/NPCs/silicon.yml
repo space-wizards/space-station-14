@@ -194,9 +194,6 @@
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
-  - type: Drain
-    range: 1
-    unitsDestroyedPerSecond: 6
   - type: Construction
     graph: CleanBot
     node: bot
@@ -220,7 +217,6 @@
   - type: SolutionContainerManager
     solutions:
       absorbed:
-      drainBuffer:
         maxVol: 50
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
