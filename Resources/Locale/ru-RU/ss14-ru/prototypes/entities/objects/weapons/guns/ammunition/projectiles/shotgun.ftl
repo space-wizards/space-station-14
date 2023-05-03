@@ -1,0 +1,14 @@
+ent-PelletShotgunSlug = дробина (.50 пуля)
+    .desc = { ent-BaseBullet.desc }
+ent-PelletShotgunBeanbag = дробина (.50)
+    .desc = { ent-BaseBullet.desc }
+ent-PelletShotgun = дробина (.50)
+    .desc = { ent-BaseBullet.desc }
+ent-PelletShotgunIncendiary = дробина (.50 зажигательная)
+    .desc = { ent-BaseBullet.desc }
+ent-PelletShotgunPractice = дробина (.50 учебная)
+    .desc = { ent-BaseBulletPractice.desc }
+ent-PelletShotgunTranquilizer = дробина (.50 транквилизатор)
+    .desc = { ent-BaseBulletPractice.desc }
+ent-PelletShotgunFlare = дробина (.50 фальшфейер)
+    .desc = { ent-BaseBullet.desc }
