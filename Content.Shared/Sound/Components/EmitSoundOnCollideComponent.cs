@@ -12,11 +12,11 @@ public sealed class EmitSoundOnCollideComponent : BaseEmitSoundComponent
     /// Minimum velocity required for the sound to play.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("minVelocity")]
-    public float MinimumVelocity = 0.25f;
+    public float MinimumVelocity = 1f;
 
     /// <summary>
     /// To avoid sound spam add a cooldown to it.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("nextSound", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan NextSound;
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextSound", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextSound = TimeSpan.FromSeconds(0.2);
 }

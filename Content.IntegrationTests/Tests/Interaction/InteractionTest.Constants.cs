@@ -33,8 +33,6 @@ public abstract partial class InteractionTest
     protected const string Cap4 = "QuadraticCapacitorStockPart";
     protected const string Manipulator1 = "MicroManipulatorStockPart";
     protected const string Manipulator4 = "FemtoManipulatorStockPart";
-    protected const string Laser1 = "MicroLaserStockPart";
-    protected const string Laser2 = "QuadUltraMicroLaserStockPart";
     protected const string Battery1 = "PowerCellSmall";
     protected const string Battery4 = "PowerCellHyper";
 }

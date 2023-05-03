@@ -99,7 +99,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (target != user)
             {
-                _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target.Value);
+                _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target.Value, target.Value);
                 // TODO: This should just be using melee attacks...
                 // meleeSys.SendLunge(angle, user);
             }
