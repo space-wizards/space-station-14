@@ -832,7 +832,9 @@
         - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: Blood
-          Quantity: 50
+          Quantity: 45
+        - ReagentId: Fat
+          Quantity: 5
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -2026,7 +2028,9 @@
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Blood
-          Quantity: 60
+          Quantity: 55
+        - ReagentId: Fat
+          Quantity: 5
   - type: Butcherable
     spawned:
     - id: FoodMeat
