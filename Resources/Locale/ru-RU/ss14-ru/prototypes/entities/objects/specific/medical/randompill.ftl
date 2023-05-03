@@ -1,3 +1,3 @@
-ent-StrangePill = strange pill
-    .desc = This unusual pill bears no markings. There's no telling what it contains.
+ent-StrangePill = странная таблетка
+    .desc = Эта необычная таблетка не имеет никаких маркировок. Неизвестно, что она содержит.
     .suffix = { "" }

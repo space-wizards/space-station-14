@@ -1,6 +1,6 @@
-ent-Bonfire = bonfire
-    .desc = What can be better then late evening under the sky with guitar and friends.
+ent-Bonfire = костёр
+    .desc = Что может быть лучше позднего вечера под открытым небом с гитарой и друзьями.
     .suffix = { "" }
-ent-LegionnaireBonfire = legionnaire bonfire
-    .desc = There, in the land of lava and ash, place to to cook marshmallow and potato.
+ent-LegionnaireBonfire = костёр легионеров
+    .desc = Там, в краях лавы и пепла, можно приготовить зефир и картофель.
     .suffix = { "" }
