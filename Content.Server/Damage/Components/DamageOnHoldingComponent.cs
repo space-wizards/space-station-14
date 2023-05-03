@@ -16,6 +16,9 @@ public sealed class DamageOnHoldingComponent : Component
     [DataField("damage"), ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = new();
 
+    /// <summary>
+    /// Delay between damage events in seconds
+    /// </summary>
     [DataField("interval"), ViewVariables(VVAccess.ReadWrite)]
     public float Interval = 1f;
 
