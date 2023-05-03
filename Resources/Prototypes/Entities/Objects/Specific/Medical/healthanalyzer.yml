@@ -67,3 +67,12 @@
   - type: HealthAnalyzer
     fake: true
     disease: ActiveZombieVirus
+
+- type: entity
+  parent: HandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerHonk
+  suffix: Honk Infector
+  components:
+  - type: HealthAnalyzer
+    fake: true
+    disease: ActiveHonkVirus

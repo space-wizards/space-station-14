@@ -217,6 +217,21 @@
   - type: SpaceGarbage
 
 - type: entity
+  name: bananium peel
+  parent: TrashBananaPeel
+  id: TrashBananiumPeel
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: peel
+  - type: Item
+    sprite: Objects/Materials/materials.rsi
+    heldPrefix: peel
+  - type: Slippery
+    paralyzeTime: 4
+    launchForwardsMultiplier: 5
+
+- type: entity
   name: banana peel
   suffix: Explosive
   parent: TrashBananaPeel

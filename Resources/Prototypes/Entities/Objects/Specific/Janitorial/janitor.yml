@@ -374,3 +374,39 @@
             - !type:PlaySoundBehavior
               sound:
                 path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  parent: BaseItem
+  name: damp rag
+  id: RagItem
+  description: For cleaning up messes, you suppose.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Janitorial/rag.rsi
+      state: rag
+    - type: Spillable
+      solution: absorbed
+    - type: MeleeWeapon
+      soundNoDamage:
+        path: "/Audio/Effects/Fluids/splat.ogg"
+      damage:
+        types:
+          Blunt: 0
+    - type: Item
+      size: 10
+      sprite: Objects/Specific/Janitorial/rag.rsi
+    - type: Absorbent
+      pickupAmount: 15
+    - type: Construction
+      graph: Rag
+      node: rag
+    - type: SolutionContainerManager
+      solutions:
+        absorbed:
+          maxVol: 30
+    - type: UseDelay
+      delay: 1.5
+    - type: Tag
+      tags:
+        - DroneUsable
+        - Mop

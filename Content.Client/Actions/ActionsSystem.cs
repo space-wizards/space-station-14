@@ -1,16 +1,13 @@
 using System.IO;
 using System.Linq;
-using Content.Client.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -28,9 +25,6 @@ namespace Content.Client.Actions
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public event Action<ActionType>? ActionAdded;
         public event Action<ActionType>? ActionRemoved;

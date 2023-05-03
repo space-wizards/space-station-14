@@ -197,20 +197,14 @@
       - Drone
       - Flash
       - MicroManipulatorStockPart
-      - ScanningModuleStockPart
-      - MicroLaserStockPart
       - MatterBinStockPart
       - CapacitorStockPart
       - AdvancedCapacitorStockPart
       - AdvancedMatterBinStockPart
-      - HighPowerMicroLaserStockPart
       - NanoManipulatorStockPart
-      - AdvancedScanningModuleStockPart
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
-      - UltraHighPowerMicroLaserStockPart
       - PicoManipulatorStockPart
-      - PhasicScanningModuleStockPart
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
@@ -245,6 +239,7 @@
       - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
+      - Vape
 
 - type: entity
   parent: Protolathe
@@ -369,6 +364,8 @@
     - ProximitySensor
     - LeftArmBorg
     - RightArmBorg
+    - LeftLegBorg
+    - RightLegBorg
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm
@@ -468,8 +465,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
-    machinePartPrintSpeed: Laser
     staticRecipes:
+      - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingMaskSterile
@@ -661,3 +658,4 @@
         - SheetUranium1
         - IngotGold1
         - IngotSilver1
+        - MaterialBananium1
