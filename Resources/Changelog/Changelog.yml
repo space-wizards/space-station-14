@@ -1,10 +1,4 @@
 Entries:
-- author: MagnusCrowe
-  changes:
-  - {message: 'Added paramedic hat and jacket, at the medidrobe while supplies last',
-    type: Add}
-  id: 3125
-  time: '2023-03-06T19:04:12.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: 'Added Emp Grenade to uplink (4 TC). Drains power from nearby batteries
@@ -2896,3 +2890,8 @@ Entries:
   - {message: you can now examine explosion resistance of armor, type: Add}
   id: 3624
   time: '2023-05-03T05:23:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced how long it takes to restock a vendor., type: Tweak}
+  id: 3625
+  time: '2023-05-03T05:38:03.0000000+00:00'
