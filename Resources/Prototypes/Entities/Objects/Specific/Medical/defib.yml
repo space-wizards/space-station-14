@@ -34,20 +34,6 @@
     zapHeal:
       types:
         Asphyxiation: -40
-    zapSound:
-      path: /Audio/Items/Defib/defib_zap.ogg
-    powerOnSound:
-      path: /Audio/Items/Defib/defib_SaftyOn.ogg
-    powerOffSound:
-      path: /Audio/Items/Defib/defib_saftyOff.ogg
-    chargeSound:
-      path: /Audio/Items/Defib/defib_charge.ogg
-    failureSound:
-      path: /Audio/Items/Defib/defib_failed.ogg
-    successSound:
-      path: /Audio/Items/Defib/defib_success.ogg
-    readySound:
-      path: /Audio/Items/Defib/defib_ready.ogg
   - type: PowerCellDraw
     useRate: 100
   - type: Appearance
@@ -64,4 +50,4 @@
   - type: ItemSlots
     slots:
       cell_slot:
-        name: power-cell-slot-component-slot-name-default 
+        name: power-cell-slot-component-slot-name-default
