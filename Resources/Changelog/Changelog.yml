@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Cardborg Helmet now hides identity., type: Add}
-  - {message: Cardborg Helmet now blocks ingestion., type: Add}
-  id: 3118
-  time: '2023-03-06T16:59:48.0000000+00:00'
 - author: 08A
   changes:
   - {message: Fixed entity spawn menu preview for pipes, type: Fix}
@@ -2884,3 +2878,12 @@ Entries:
   - {message: Sprinting should be a little louder than walking, type: Tweak}
   id: 3617
   time: '2023-05-02T23:33:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Healing items (bruise packs, ointment, gauze) now work on dead creatures.',
+    type: Tweak}
+  - {message: Added defibrillators. Zap people who have recently died with these in
+      order to revive them. Make sure you patch up their body first!, type: Add}
+  - {message: Added defibrillators to the medical techfab., type: Add}
+  id: 3618
+  time: '2023-05-03T00:10:20.0000000+00:00'
