@@ -193,9 +193,22 @@
     - type: StorageFill
       contents:
         - id: VehicleSyndicateSegway
-          amount: 1
         - id: VehicleKeySyndicateSegway
-          amount: 1
+
+- type: entity
+  id: CrateFunBoxing
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesBoxingRed
+      - id: ClothingHandsGlovesBoxingBlue
+      - id: ClothingHandsGlovesBoxingYellow
+      - id: ClothingHandsGlovesBoxingGreen
+      - id: UniformShortsRed
+        amount: 3
+      - id: UniformShortsRedWithTop
+        amount: 3
 
 - type: entity
   id: CrateFunPirate
@@ -206,12 +219,9 @@
       - id: ClothingUniformJumpsuitPirate
         amount: 2
       - id: ClothingHeadHatPirate
-        amount: 1
       - id: ClothingOuterCoatPirate
-        amount: 1
       - id: ClothingShoesBootsLaceup
         amount: 2
       - id: HatBandRed
-        amount: 1
       - id: FoamCutlass
         amount: 2

@@ -7,13 +7,13 @@
   - type: StorageFill
     contents:
       - id: HandheldHealthAnalyzer
-        amount: 1
       - id: Brutepack
         amount: 2
       - id: Ointment
         amount: 2
+      - id: Gauze
       - id: PillTricordrazine
-        amount: 3
+        amount: 5
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
@@ -23,10 +23,11 @@
   components:
   - type: StorageFill
     contents:
+      - id: SyringeInaprovaline
       - id: Ointment
         amount: 4
       - id: PillKelotane
-        amount: 3
+        amount: 5
 
 - type: entity
   id: MedkitBruteFilled
@@ -37,14 +38,11 @@
     contents:
       - id: Brutepack
         amount: 2 # TO DO: Advanced brute pack
-      - id: PillIron
-        amount: 2
       - id: Gauze
-        amount: 1
       - id: Bloodpack
-        amount: 1
       - id: SyringeTranexamicAcid
-        amount: 1
+      - id: PillIron
+        amount: 5
 
 - type: entity
   id: MedkitToxinFilled
@@ -54,13 +52,12 @@
   - type: StorageFill
     contents:
       - id: SyringeSpaceacillin
-        amount: 1
+        amount: 2
       - id: SyringeIpecac
-        amount: 1
-      - id: PillDylovene
-        amount: 3
+        amount: 2
       - id: AntiPoisonMedipen
-        amount: 1
+      - id: PillDylovene
+        amount: 7
 
 - type: entity
   id: MedkitOxygenFilled
@@ -69,12 +66,12 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingMaskBreathMedical
+      - id: EmergencyOxygenTank
       - id: EmergencyMedipen
-        amount: 1
-      - id: PillDexalin
-        amount: 3
       - id: SyringeInaprovaline
-        amount: 2
+      - id: PillDexalin
+        amount: 7
 
 - type: entity
   id: MedkitRadiationFilled
@@ -84,11 +81,11 @@
   - type: StorageFill
     contents:
       - id: Ointment
-        amount: 2
-      - id: PillHyronalin
         amount: 3
       - id: EmergencyMedipen
-        amount: 1
+        amount: 2
+      - id: PillHyronalin
+        amount: 9
 
 - type: entity
   id: MedkitAdvancedFilled
@@ -99,10 +96,8 @@
     contents:
       - id: Brutepack
         amount: 2 # TO DO: Advanced fills
-      - id: Gauze
-        amount: 1
       - id: Ointment
-        amount: 1
+      - id: Gauze
       - id: Bloodpack
         amount: 2
 
@@ -114,14 +109,12 @@
   - type: StorageFill
     contents:
       - id: HandheldHealthAnalyzer
-        amount: 1
       - id: SyringeEphedrine
-        amount: 1 # TO DO: More combat meds
       - id: SyringeTranexamicAcid
-        amount: 1
       - id: AntiPoisonMedipen
-        amount: 1
       - id: Bloodpack
+        amount: 2
+      - id: PillTricordrazine
         amount: 2
 
 - type: entity
@@ -133,4 +126,3 @@
     contents:
       - id: StimpackMini
         amount: 6
-        

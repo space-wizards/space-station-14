@@ -11,6 +11,10 @@ using Robust.Shared.Player;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
+using Content.Server.Chat.Systems;
+using Content.Server.Speech.Components;
+using Content.Shared.Chat.Prototypes;
+using Content.Server.Speech.EntitySystems;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -28,6 +32,8 @@ namespace Content.Server.Abilities.Mime
             SubscribeLocalEvent<MimePowersComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<MimePowersComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
+            SubscribeLocalEvent<MimePowersComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
+            SubscribeLocalEvent<MimePowersComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
         }
         public override void Update(float frameTime)
         {
@@ -58,6 +64,25 @@ namespace Content.Server.Abilities.Mime
 
             _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
             args.Cancel();
+        }
+
+        private void OnEmote(EntityUid uid, MimePowersComponent component, ref EmoteEvent args)
+        {
+            if (!component.Enabled || args.Handled)
+                return;
+
+            //still leaves the text so it looks like they are pantomiming a laugh
+            if (args.Emote.Category.HasFlag(EmoteCategory.Vocal))
+                args.Handled = true;
+        }
+
+        private void OnScreamAction(EntityUid uid, MimePowersComponent component, ScreamActionEvent args)
+        {
+            if (!component.Enabled || args.Handled)
+                return;
+
+            _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
+            args.Handled = true;
         }
 
         /// <summary>

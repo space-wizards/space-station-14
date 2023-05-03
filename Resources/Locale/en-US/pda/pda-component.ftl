@@ -16,9 +16,11 @@ comp-pda-io-program-fallback-title = Program
 
 comp-pda-io-no-programs-available = No Programs Available
 
-pda-bound-user-interface-uplink-tab-title = Uplink
+pda-bound-user-interface-show-uplink-title = Open Uplink
+pda-bound-user-interface-show-uplink-description = Access your uplink
 
-pda-bound-user-interface-uplink-tab-description = Access your uplink
+pda-bound-user-interface-lock-uplink-title = Lock Uplink
+pda-bound-user-interface-lock-uplink-description = Prevent anyone from accessing your uplink without the code
 
 comp-pda-ui-menu-title = PDA
 

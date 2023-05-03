@@ -64,6 +64,11 @@
   description: signal-port-description-med-scanner-receiver
 
 - type: receiverPort
+  id: AutoClose
+  name: signal-port-name-hold-open
+  description: signal-port-description-hold-open
+
+- type: receiverPort
   id: ArtifactAnalyzerReceiver
   name: signal-port-name-artifact-analyzer-receiver
   description: signal-port-description-artifact-analyzer-receiver

@@ -20,3 +20,46 @@
   - type: GuideHelp
     guides:
     - ScannersAndVessels
+
+- type: entity
+  id: AnomalyLocator
+  parent: [ BaseItem, PowerCellSlotSmallItem ]
+  name: anomaly locator
+  description: A device designed to aid in the locating of anomalies. Did you check the gas miners?
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Research/anomalylocator.rsi
+    netsync: false
+    layers:
+    - state: icon
+    - state: screen
+      shader: unshaded
+      visible: false
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ProximityBeeperVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: PowerCellDraw
+    drawRate: 5
+    useRate: 0
+  - type: ProximityBeeper
+    component: Anomaly
+    beepSound:
+      path: "/Audio/Items/locator_beep.ogg"
+      params:
+        maxdistance: 1
+        volume: -8
+
+- type: entity
+  id: AnomalyLocatorEmpty
+  parent: AnomalyLocator
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

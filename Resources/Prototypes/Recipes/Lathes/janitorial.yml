@@ -28,6 +28,13 @@
     Plastic: 100
 
 - type: latheRecipe
+  id: MegaSprayBottle
+  result: MegaSprayBottle
+  completetime: 3
+  materials:
+    Plastic: 250
+
+- type: latheRecipe
   id: SprayBottle
   result: SprayBottle
   completetime: 2
@@ -54,6 +61,6 @@
   result: AdvMopItem
   completetime: 2
   materials:
-    Plastic: 100
+    Plastic: 400
     Steel: 100
     Glass: 100

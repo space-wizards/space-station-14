@@ -19,7 +19,7 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-die-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Mobs/Ghosts/ghost_human.rsi"), "icon");
 
         public float Progress => (_mind?.CharacterDeadIC ?? true) ? 1f : 0f;
 
