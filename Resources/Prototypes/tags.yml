@@ -95,7 +95,7 @@
   id: Cartridge
 
 - type: Tag
-  id: CartridgeAntiMaterial
+  id: CartridgeAntiMateriel
 
 - type: Tag
   id: CartridgeCap
@@ -491,9 +491,6 @@
 
 - type: Tag
   id: Pickaxe
-
-- type: Tag
-  id: Pill
 
 - type: Tag
   id: PillCanister

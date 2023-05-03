@@ -17,6 +17,6 @@ public sealed class EmitSoundOnCollideComponent : BaseEmitSoundComponent
     /// <summary>
     /// To avoid sound spam add a cooldown to it.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("nextSound", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan NextSound;
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextSound", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextSound = TimeSpan.FromSeconds(0.2);
 }

@@ -217,6 +217,22 @@
   - type: AccessReader
     access: [ [ "Medical" ] ]
 
+# Paramedic
+- type: entity
+  id: LockerParamedic
+  parent: LockerBase
+  name: paramedic's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: paramed
+      state_open: paramed_open
+      state_closed: paramed_door
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
+
+
 # Chemical
 - type: entity
   id: LockerChemistry

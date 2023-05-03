@@ -15,11 +15,6 @@
 
     - node: girder
       entity: Girder
-      actions:
-        - !type:SpriteChange
-          specifier:
-            sprite: /Textures/Structures/Walls/solid.rsi
-            state: wall_girder
       edges:
         - to: start
           completed:

@@ -17,7 +17,7 @@ anomaly-scanner-severity-percentage = Current severity: [color=gray]{$percent}[/
 anomaly-scanner-stability-low = Current anomaly state: [color=gold]Decaying[/color]
 anomaly-scanner-stability-medium = Current anomaly state: [color=forestgreen]Stable[/color]
 anomaly-scanner-stability-high = Current anomaly state: [color=crimson]Growing[/color]
-anomaly-scanner-point-output = Approximate point output: [color=gray]{$point}[/color]
+anomaly-scanner-point-output = Point output: [color=gray]{$point}[/color]
 anomaly-scanner-particle-readout = Particle Reaction Analysis:
 anomaly-scanner-particle-danger = - [color=crimson]Danger type:[/color] {$type}
 anomaly-scanner-particle-unstable = - [color=plum]Unstable type:[/color] {$type}
@@ -36,6 +36,7 @@ anomaly-generator-charges = {$charges ->
     *[other] {$charges} charges
 }
 anomaly-generator-announcement = An anomaly has been generated!
+
 
 # Flavor text on the footer
 anomaly-generator-flavor-left = Anomaly may spawn inside the operator.

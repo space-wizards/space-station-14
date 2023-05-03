@@ -124,3 +124,19 @@
     whitelist:
       components:
       - Body
+
+- type: entity
+  id: ProjectileIcicle
+  parent: BaseBulletHighVelocity
+  name: Icicle
+  description: Brrrrr.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 20
+        Cold: 20
+        Structural: 40
+

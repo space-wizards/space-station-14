@@ -15,6 +15,14 @@
       "directions": 4
     },
     {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
       "name": "insert_overlay"
     },
     {
@@ -96,6 +104,9 @@
     },
     {
       "name": "pda-medical"
+    },
+    {
+      "name": "pda-paramedic"
     },
     {
       "name": "pda-mime"

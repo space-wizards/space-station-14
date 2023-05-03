@@ -284,6 +284,7 @@
   suffix: Full
   components:
   - type: Material
+  - type: PhysicalComposition
     materialComposition:
       Bananium: 150
   - type: Sprite

@@ -596,6 +596,24 @@
   - !type:TileNotBlocked
 
 - type: construction
+  name: glass shuttle airlock
+  id: AirlockGlassShuttle
+  graph: AirlockShuttle
+  startNode: start
+  targetNode: airlockGlass
+  category: construction-category-structures
+  description: It opens, it closes, and maybe crushes you. Necessary for connecting two space craft together. This one has a window.
+  icon:
+    sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
+    state: closed
+  #  state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: windoor
   id: Windoor
   graph: Windoor
