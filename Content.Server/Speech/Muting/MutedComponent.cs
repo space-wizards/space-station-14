@@ -1,4 +1,4 @@
-namespace Content.Shared.Speech.Muting
+namespace Content.Server.Speech.Muting
 {
     [RegisterComponent]
     public sealed class MutedComponent : Component
