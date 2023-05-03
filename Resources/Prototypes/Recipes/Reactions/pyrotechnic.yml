@@ -51,3 +51,56 @@
     visualType: LargeCaution
   products:
     ChlorineTrifluoride: 4
+
+- type: reaction
+  id: BlackPowder
+  reactants:
+    Saltpetre:
+      amount: 5
+    Sulfur:
+      amount: 2
+    Charcoal:
+      amount: 3
+  products:
+    BlackPowder: 10
+
+- type: reaction
+  id: BlackPowderExplosion
+  impact: High
+  minTemp: 480
+  priority: 20
+  reactants:
+    BlackPowder:
+      amount: 1
+  effects:
+  - !type:ExplosionReactionEffect
+    explosionType: Default # 15 damage per intensity.
+    maxIntensity: 2 # at most 30 damage per tile.
+    intensityPerUnit: 0.35 # 100 reagent for maximum explosion
+    intensitySlope: 2
+    maxTotalIntensity: 35
+  - !type:PopupMessage
+    messages: [ "powder-explosion" ]
+    type: Pvs
+    visualType: LargeCaution
+
+- type: reaction
+  id: BlackPowderExplosionPhlogiston
+  impact: High
+  priority: 20
+  reactants:
+    BlackPowder:
+      amount: 1
+    Phlogiston:
+      amount: 1
+  effects:
+  - !type:ExplosionReactionEffect
+    explosionType: Default # 15 damage per intensity.
+    maxIntensity: 2 # at most 30 damage per tile.
+    intensityPerUnit: 0.6 # 50+50 reagent for maximum explosion
+    intensitySlope: 2
+    maxTotalIntensity: 30
+  - !type:PopupMessage
+    messages: [ "powder-explosion" ]
+    type: Pvs
+    visualType: LargeCaution
