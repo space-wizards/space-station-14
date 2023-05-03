@@ -436,3 +436,19 @@
       amount: 1
   products:
     Fomepizole: 3
+
+- type: reaction
+  id: Haloperidol
+  reactants:
+    Hyronalin:
+      amount: 1
+    Aluminum:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Fluorine:
+      amount: 1
+    Oil:
+      amount: 1
+  products:
+    Haloperidol: 5

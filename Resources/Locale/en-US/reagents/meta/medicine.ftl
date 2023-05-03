@@ -114,3 +114,6 @@ reagent-desc-oxygenis = Synthetic blood. Restores blood.
 
 reagent-name-fomepizole = fomepizole
 reagent-desc-fomepizole = Puts the helicopter on the landing - Calms the nerves well, preventing nervous shaking and hallucinations.
+
+reagent-name-haloperidol = haloperidol
+reagent-desc-haloperidol = A tranquilizer. Cleanses the body of most drugs and stimulants. Quickly relieves the narcotic state, hallucinations and nervous tremors. May cause drowsiness and cancer.
