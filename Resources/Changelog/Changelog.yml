@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed bugs with clothing getting stuck after a polymorph., type: Fix}
-  id: 3121
-  time: '2023-03-06T17:37:18.0000000+00:00'
 - author: 08A
   changes:
   - {message: (Construction Menu) Reset ghost preview when selecting a craft, type: Fix}
@@ -2888,3 +2883,12 @@ Entries:
       you have more than 100 dmg.', type: Fix}
   id: 3620
   time: '2023-05-03T03:44:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Thanks to new NT stomach medication, examining players no longer shows
+      them as perpetually bloated.', type: Fix}
+  - {message: 'Cold temperatures, body bags, and morgues now properly prevent rotting.',
+    type: Fix}
+  - {message: Zombies no longer passively produce miasma., type: Tweak}
+  id: 3621
+  time: '2023-05-03T04:57:47.0000000+00:00'
