@@ -1,9 +1,4 @@
 Entries:
-- author: 08A
-  changes:
-  - {message: (Construction Menu) Reset ghost preview when selecting a craft, type: Fix}
-  id: 3122
-  time: '2023-03-06T18:08:54.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'Added lime, orange; and citrus salad recipe.', type: Add}
@@ -2892,3 +2887,11 @@ Entries:
   - {message: Zombies no longer passively produce miasma., type: Tweak}
   id: 3621
   time: '2023-05-03T04:57:47.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: 'Multiple lawsuits from entities beyond Time have led Nanotrasen to
+      fix the hole in reality caused by looking above and a little to the left of
+      a disabler lying on the floor. This should make the game around 500,000 times
+      better.', type: Fix}
+  id: 3622
+  time: '2023-05-03T05:07:23.0000000+00:00'
