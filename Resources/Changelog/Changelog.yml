@@ -1,10 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: Chat size storage. Now you don't have to resize the chat constantly
-      every time you start up the game!, type: Add}
-  id: 3127
-  time: '2023-03-06T19:06:57.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: 'Fix incorrect access denied popup when trying to open a locker with
@@ -2894,3 +2888,11 @@ Entries:
       in the ghost role.', type: Fix}
   id: 3626
   time: '2023-05-03T12:32:53.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: 'Adds a neutral faction Delicious, to Monkeys. Now they are not untouchable.
+      They are a delicacy for the antagas.', type: Add}
+  - {message: 'Adds a faction PetsNT for the cat Exception, Remilia and Cerberus.',
+    type: Add}
+  id: 3627
+  time: '2023-05-03T12:47:17.0000000+00:00'
