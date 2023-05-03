@@ -1090,7 +1090,7 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitHawaBlue
+  id: ClothingUniformJumpsuitHawaiBlue
   name: blue hawaiian shirt
   description: Blue as a huge ocean.
   components:
