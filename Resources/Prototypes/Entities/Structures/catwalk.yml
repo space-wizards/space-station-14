@@ -22,6 +22,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepCatwalk
+      params:
+        volume: 8
   - type: Tag
     tags:
       - Catwalk

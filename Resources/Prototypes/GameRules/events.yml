@@ -244,6 +244,38 @@
     weight: 5
     duration: 60
   - type: VentCrittersRule
+    entries:
+    - id: MobMouse
+      amount: 4
+      maxAmount: 12
+    - id: MobMouse1
+      amount: 4
+      maxAmount: 12
+    - id: MobMouse2
+      amount: 4
+      maxAmount: 12
+
+- type: entity
+  id: SlimesSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+      - id: MobAdultSlimesBlueAngry
+        amount: 6
+        maxAmount: 10
+      - id: MobAdultSlimesGreenAngry
+        amount: 6
+        maxAmount: 10
+      - id: MobAdultSlimesYellowAngry
+        amount: 6
+        maxAmount: 10
 
 - type: entity
   id: SpiderSpawn
@@ -255,7 +287,11 @@
     minimumPlayers: 15
     weight: 5
     duration: 60
-  - type: SpiderSpawnRule
+  - type: VentCrittersRule
+    entries:
+      - id: MobGiantSpiderAngry
+        amount: 4
+        maxAmount: 8
 
 - type: entity
   id: ZombieOutbreak

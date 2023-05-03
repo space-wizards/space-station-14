@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             if (args.Scale != 1f)
                 return;
 
-            string disease = EntitySystem.Get<MiasmaSystem>().RequestPoolDisease();
+            string disease = EntitySystem.Get<RottingSystem>().RequestPoolDisease();
 
             EntitySystem.Get<DiseaseSystem>().TryAddDisease(args.SolutionEntity, disease);
         }

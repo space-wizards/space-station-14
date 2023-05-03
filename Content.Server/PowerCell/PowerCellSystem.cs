@@ -42,7 +42,6 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
 
-        SubscribeLocalEvent<PowerCellDrawComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PowerCellDrawComponent, EntityUnpausedEvent>(OnUnpaused);
 
         // funny
@@ -134,12 +133,6 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         var ev = new PowerCellSlotEmptyEvent();
         RaiseLocalEvent(uid, ref ev);
-    }
-
-    private void OnMapInit(EntityUid uid, PowerCellDrawComponent component, MapInitEvent args)
-    {
-        if (component.NextUpdateTime < _timing.CurTime)
-            component.NextUpdateTime = _timing.CurTime;
     }
 
     private void OnUnpaused(EntityUid uid, PowerCellDrawComponent component, ref EntityUnpausedEvent args)

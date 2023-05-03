@@ -45,7 +45,6 @@ public sealed class SmokeSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SmokeComponent, EntityUnpausedEvent>(OnSmokeUnpaused);
-        SubscribeLocalEvent<SmokeComponent, MapInitEvent>(OnSmokeMapInit);
         SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
         SubscribeLocalEvent<SmokeDissipateSpawnComponent, TimedDespawnEvent>(OnSmokeDissipate);
@@ -164,11 +163,6 @@ public sealed class SmokeSystem : EntitySystem
                 return;
             }
         }
-    }
-
-    private void OnSmokeMapInit(EntityUid uid, SmokeComponent component, MapInitEvent args)
-    {
-        component.NextReact = _timing.CurTime;
     }
 
     private void OnSmokeUnpaused(EntityUid uid, SmokeComponent component, ref EntityUnpausedEvent args)

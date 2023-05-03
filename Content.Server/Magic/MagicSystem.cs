@@ -3,6 +3,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Doors.Systems;
+using Content.Server.Magic.Components;
 using Content.Server.Magic.Events;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
@@ -72,7 +73,7 @@ public sealed class MagicSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        _actionsSystem.AddActions(args.Args.User, component.Spells, uid);
+        _actionsSystem.AddActions(args.Args.User, component.Spells, component.LearnPermanently ? null : uid);
         args.Handled = true;
     }
 
@@ -166,12 +167,14 @@ public sealed class MagicSystem : EntitySystem
         {
             // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
             var mapPos = pos.ToMap(EntityManager);
-            EntityCoordinates spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
+            var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
                 ? pos.WithEntityId(grid.Owner, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
             var ent = Spawn(ev.Prototype, spawnCoords);
-            _gunSystem.ShootProjectile(ent, ev.Target.Position - mapPos.Position, userVelocity, ev.Performer);
+            var direction = ev.Target.ToMapPos(EntityManager, _transformSystem) -
+                            spawnCoords.ToMapPos(EntityManager, _transformSystem);
+            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer);
         }
     }
 
