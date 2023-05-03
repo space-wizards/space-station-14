@@ -106,8 +106,8 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _popupSystem.PopupEntity(
                     forceFeed
-                        ? Loc.GetString("food-system-cant-digest-other", ("food", food))
-                        : Loc.GetString("food-system-cant-digest", ("food", food)), user, user);
+                        ? Loc.GetString("food-system-cant-digest-other", ("entity", food))
+                        : Loc.GetString("food-system-cant-digest", ("entity", food)), user, user);
                 return false;
             }
 
