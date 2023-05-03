@@ -1103,7 +1103,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHawaiRed
   name: red hawaiian shirt
-  description: Red as juicy watermelons.
+  description: Red as a juicy watermelons.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hawaired.rsi
@@ -1114,7 +1114,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHawaiYellow
   name: yellow hawaiian shirt
-  description: Yellow as bright sun.
+  description: Yellow as a bright sun.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
