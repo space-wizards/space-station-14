@@ -87,7 +87,7 @@ public sealed class RadioSystem : EntitySystem
         var hasMicro = HasComp<RadioMicrophoneComponent>(radioSource);
 
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
-        var radioQuery = AllEntityQuery<ActiveRadioComponent, TransformComponent>();
+        var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
         var sentAtLeastOnce = false;
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {

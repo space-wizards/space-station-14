@@ -17,9 +17,6 @@ public abstract class SharedSalvageSystem : EntitySystem
     [Dependency] private readonly ILocalizationManager _loc = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
-    public static readonly TimeSpan MissionCooldown = TimeSpan.FromMinutes(5);
-    public static readonly TimeSpan MissionFailedCooldown = TimeSpan.FromMinutes(15);
-
     #region Descriptions
 
     public string GetMissionDescription(SalvageMission mission)
@@ -60,7 +57,7 @@ public abstract class SharedSalvageSystem : EntitySystem
     {
         switch (rating)
         {
-            case DifficultyRating.None:
+            case DifficultyRating.Minimal:
                 return 1;
             case DifficultyRating.Minor:
                 return 2;
@@ -227,7 +224,7 @@ public enum SalvageMissionType : byte
 [Serializable, NetSerializable]
 public enum DifficultyRating : byte
 {
-    None,
+    Minimal,
     Minor,
     Moderate,
     Hazardous,

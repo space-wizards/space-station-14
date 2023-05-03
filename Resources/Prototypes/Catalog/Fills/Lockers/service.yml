@@ -6,7 +6,7 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterVestKevlar
-      - id: WeaponShotgunDoubleBarreled
+      - id: WeaponShotgunDoubleBarreledRubber
       - id: DrinkShaker
       - id: ClothingEyesGlassesBeer
       - id: DrinkBottleBeer

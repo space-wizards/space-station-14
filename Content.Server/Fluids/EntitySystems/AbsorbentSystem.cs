@@ -31,6 +31,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         base.Initialize();
         SubscribeLocalEvent<AbsorbentComponent, ComponentInit>(OnAbsorbentInit);
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<AbsorbentComponent, InteractNoHandEvent>(OnInteractNoHand);
         SubscribeLocalEvent<AbsorbentComponent, SolutionChangedEvent>(OnAbsorbentSolutionChange);
     }
 
@@ -79,31 +80,38 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         Dirty(component);
     }
 
+    private void OnInteractNoHand(EntityUid uid, AbsorbentComponent component, InteractNoHandEvent args)
+    {
+        if (args.Handled || args.Target == null)
+            return;
+
+        Mop(uid, args.Target.Value, uid, component);
+        args.Handled = true;
+    }
+
     private void OnAfterInteract(EntityUid uid, AbsorbentComponent component, AfterInteractEvent args)
     {
-        if (!args.CanReach || args.Handled || _useDelay.ActiveDelay(uid))
+        if (!args.CanReach || args.Handled || args.Target == null)
             return;
 
-        if (!_solutionSystem.TryGetSolution(args.Used, AbsorbentComponent.SolutionName, out var absorberSoln))
-            return;
+        Mop(args.User, args.Target.Value, args.Used, component);
+        args.Handled = true;
+    }
 
-        // Didn't click anything so don't do anything.
-        if (args.Target is not { Valid: true } target)
-        {
+    private void Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
+    {
+        if (!_solutionSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
             return;
-        }
 
         // If it's a puddle try to grab from
-        if (!TryPuddleInteract(args.User, uid, target, component, absorberSoln))
+        if (!TryPuddleInteract(user, used, target, component, absorberSoln))
         {
             // Do a transfer, try to get water onto us and transfer anything else to them.
 
             // If it's anything else transfer to
-            if (!TryTransferAbsorber(args.User, uid, target, component, absorberSoln))
+            if (!TryTransferAbsorber(user, used, target, component, absorberSoln))
                 return;
         }
-
-        args.Handled = true;
     }
 
     /// <summary>

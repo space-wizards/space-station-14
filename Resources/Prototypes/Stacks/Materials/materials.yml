@@ -46,3 +46,10 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cotton }
   spawn: MaterialCotton1
   maxCount: 30
+
+- type: stack
+  id: Bananium
+  name: bananium
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: bananium }
+  spawn: MaterialBananium1
+  maxCount: 10

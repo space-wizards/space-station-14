@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.CPUJob.JobQueues;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
@@ -359,7 +360,10 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
                 foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, random))
                 {
-                    _entManager.SpawnEntity(entry, spawnPosition);
+                    var uid = _entManager.CreateEntityUninitialized(entry, spawnPosition);
+                    _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
+                    _entManager.RemoveComponent<GhostRoleComponent>(uid);
+                    _entManager.InitializeAndStartEntity(uid);
                 }
 
                 await SuspendIfOutOfTime();

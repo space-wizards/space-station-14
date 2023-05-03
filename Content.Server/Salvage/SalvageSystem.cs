@@ -41,6 +41,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly ShuttleConsoleSystem _shuttleConsoles = default!;
@@ -69,6 +70,12 @@ namespace Content.Server.Salvage
 
             InitializeExpeditions();
             InitializeRunner();
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            ShutdownExpeditions();
         }
 
         private void OnRoundEnd(GameRunLevelChangedEvent ev)

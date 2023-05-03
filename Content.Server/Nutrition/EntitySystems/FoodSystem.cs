@@ -146,8 +146,6 @@ namespace Content.Server.Nutrition.EntitySystems
                 // Mice and the like can eat without hands.
                 // TODO maybe set this based on some CanEatWithoutHands event or component?
                 NeedHand = forceFeed,
-                //Works better with cancel duplicate on because you can just use again to stop
-                CancelDuplicate = false,
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterArgs);
@@ -178,7 +176,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // TODO this should really be checked every tick.
             if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value))
                 return;
-            
+
             var forceFeed = args.User != args.Target;
 
             args.Handled = true;
@@ -231,9 +229,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (component.UsesRemaining > 0)
             {
-                if (!forceFeed)
-                    args.Repeat = true;
-
                 return;
             }
 

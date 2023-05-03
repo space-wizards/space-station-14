@@ -1,4 +1,5 @@
 using Content.Shared.Salvage;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Salvage.Expeditions;
@@ -33,6 +34,20 @@ public sealed class SalvageExpeditionComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("stage")]
     public ExpeditionStage Stage = ExpeditionStage.Added;
+
+    /// <summary>
+    /// Countdown audio stream.
+    /// </summary>
+    public IPlayingAudioStream? Stream = null;
+
+    /// <summary>
+    /// Sound that plays when the mission end is imminent.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
+    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Misc/tension_session.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-15),
+    };
 }
 
 public enum ExpeditionStage : byte
@@ -40,5 +55,6 @@ public enum ExpeditionStage : byte
     Added,
     Running,
     Countdown,
+    MusicCountdown,
     FinalCountdown,
 }

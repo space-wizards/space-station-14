@@ -8,6 +8,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/wall_bonk.ogg
+      params:
+        volume: 2
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Effects/drop.ogg
@@ -56,3 +61,34 @@
       storagebase: !type:Container
         ents: []
 
+
+# PowerCellSlot parents
+- type: entity
+  id: PowerCellSlotSmallItem
+  abstract: true
+  components:
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot { }
+    - type: PowerCellSlot
+      cellSlotId: cell_slot
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellSmall
+
+- type: entity
+  id: PowerCellSlotMediumItem
+  abstract: true
+  components:
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot { }
+    - type: PowerCellSlot
+      cellSlotId: cell_slot
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellMedium

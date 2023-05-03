@@ -1,4 +1,5 @@
 using Content.Server.Decals;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Decals;
 using Content.Shared.Parallax.Biomes;
@@ -193,7 +194,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         if (!TryComp<BiomeComponent>(targetMapUid, out var biome))
             return;
 
-        var targetArea = new Box2(targetMap.Position - 64f, targetMap.Position + 64f);
+        var targetArea = new Box2(targetMap.Position - 32f, targetMap.Position + 32f);
         Preload(targetMapUid, biome, targetArea);
     }
 
@@ -313,6 +314,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     #region Load
 
+    /// <summary>
+    /// Loads all of the chunks for a particular biome, as well as handle any marker chunks.
+    /// </summary>
     private void LoadChunks(
         BiomeComponent component,
         EntityUid gridUid,
@@ -346,8 +350,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     for (var j = 0; j < 5; j++)
                     {
                         var point = new Vector2(
-                            chunk.X + buffer * rand.NextFloat() * (layerProto.Size - buffer),
-                            chunk.Y + buffer * rand.NextFloat() * (layerProto.Size - buffer));
+                            chunk.X + buffer + rand.NextFloat() * (layerProto.Size - buffer),
+                            chunk.Y + buffer + rand.NextFloat() * (layerProto.Size - buffer));
 
                         var coords = new EntityCoordinates(gridUid, point);
                         var tile = grid.LocalToTile(coords);
@@ -358,7 +362,13 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                         for (var k = 0; k < layerProto.GroupCount; k++)
                         {
-                            Spawn(layerProto.Prototype, new EntityCoordinates(gridUid, point));
+                            // If it is a ghost role then purge it
+                            // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
+                            // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
+                            var uid = EntityManager.CreateEntityUninitialized(layerProto.Prototype, new EntityCoordinates(gridUid, point));
+                            RemComp<GhostTakeoverAvailableComponent>(uid);
+                            RemComp<GhostRoleComponent>(uid);
+                            EntityManager.InitializeAndStartEntity(uid);
                         }
 
                         break;
@@ -381,6 +391,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
     }
 
+    /// <summary>
+    /// Loads a particular queued chunk for a biome.
+    /// </summary>
     private void LoadChunk(
         BiomeComponent component,
         EntityUid gridUid,
@@ -494,6 +507,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     #region Unload
 
+    /// <summary>
+    /// Handles all of the queued chunk unloads for a particular biome.
+    /// </summary>
     private void UnloadChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, FastNoiseLite noise)
     {
         var active = _activeChunks[component];
@@ -510,6 +526,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
     }
 
+    /// <summary>
+    /// Unloads a specific biome chunk.
+    /// </summary>
     private void UnloadChunk(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, Vector2i chunk, FastNoiseLite noise, List<(Vector2i, Tile)> tiles)
     {
         // Reverse order to loading
