@@ -5,12 +5,12 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Mech.Equipment.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedMechSoundboardSystem))]
+[Access(typeof(MechSoundboardSystem))]
 public sealed partial class MechSoundboardComponent : Component
 {
     /// <summary>
     /// List of sounds that can be played
     /// </summary>
-    [DataField("sounds"), ViewVariables(VVAccess.ReadWrite), NetworkedField]
+    [DataField("sounds"), ViewVariables(VVAccess.ReadWrite), AutoNetworkField]
     public List<SoundCollectionSpecifier> Sounds = new();
 }
