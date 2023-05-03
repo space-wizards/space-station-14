@@ -7,13 +7,6 @@
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fat
-        Quantity: 10
-      - ReagentId: Blood
-        Quantity: 10
   - type: StaticPrice
     price: 50
 
