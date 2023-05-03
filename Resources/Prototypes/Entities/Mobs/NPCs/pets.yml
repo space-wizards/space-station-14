@@ -125,6 +125,9 @@
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
+  - type: Faction
+    factions:
+      - PetsNT
   - type: Grammar
     attributes:
       gender: male

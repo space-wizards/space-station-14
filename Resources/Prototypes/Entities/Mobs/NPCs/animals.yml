@@ -197,6 +197,9 @@
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Puller
     needsHands: true
+  - type: Faction
+    factions:
+    - Passive
 
 - type: entity
   name: mallard duck #Quack
@@ -248,6 +251,9 @@
     accent: duck
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: Faction
+    factions:
+    - Passive
 
 - type: entity
   name: white duck #Quack
@@ -407,7 +413,9 @@
       path: /Audio/Animals/cow_moo.ogg
   - type: Perishable
     molsPerSecondPerUnitMass: 0.0015
-
+  - type: Faction
+    factions:
+    - Passive
 
 - type: entity
   name: crab
@@ -508,6 +516,9 @@
     interactFailureString: petting-failure-goat
     interactSuccessSound:
       path: /Audio/Animals/goat_bah.ogg
+  - type: Faction
+    factions:
+    - Passive
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -554,6 +565,9 @@
   - type: Bloodstream
     bloodMaxVolume: 100
   - type: Puller
+  - type: Faction
+    factions:
+    - Passive
 
 - type: entity
   name: gorilla
@@ -742,6 +756,9 @@
   - type: MonkeyAccent
   - type: Puller
   - type: CanHostGuardian
+  - type: Faction
+    factions:
+    - Passive
   - type: GhostRole
     makeSentient: true
     name: monkey
@@ -1172,6 +1189,9 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/penguin_squawk.ogg
+  - type: Faction
+    factions:
+    - Passive
 
 - type: entity
   name: grenade penguin
@@ -2128,3 +2148,6 @@
     accent: pig
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: Faction
+    factions:
+    - Passive
