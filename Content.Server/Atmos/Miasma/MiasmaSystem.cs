@@ -132,6 +132,7 @@ namespace Content.Server.Atmos.Miasma
             // Core rotting stuff
             SubscribeLocalEvent<RottingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<RottingComponent, OnTemperatureChangeEvent>(OnTempChange);
+            SubscribeLocalEvent<RottingComponent, MobStateChangedEvent>(OnRottingMobStateChanged);
             SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<PerishableComponent, BeingGibbedEvent>(OnGibbed);
             SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnExamined);
@@ -174,10 +175,24 @@ namespace Content.Server.Atmos.Miasma
             }
         }
 
+        private void OnRottingMobStateChanged(EntityUid uid, RottingComponent component, MobStateChangedEvent args)
+        {
+            if (args.NewMobState == MobState.Dead)
+                return;
+            RemCompDeferred(uid, component);
+        }
+
+        public bool IsRotting(EntityUid uid, PerishableComponent? perishable = null, MetaDataComponent? metadata = null)
+        {
+            if (!Resolve(uid, ref perishable, ref metadata, false))
+                return true;
+            return IsRotting(perishable, metadata);
+        }
+
         /// <summary>
         ///     Has enough time passed for <paramref name="perishable"/> to start rotting?
         /// </summary>
-        private bool IsRotting(PerishableComponent perishable, MetaDataComponent? metadata = null)
+        public bool IsRotting(PerishableComponent perishable, MetaDataComponent? metadata = null)
         {
             if (perishable.TimeOfDeath == TimeSpan.Zero)
                 return false;
