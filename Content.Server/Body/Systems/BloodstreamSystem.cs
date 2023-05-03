@@ -122,8 +122,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 _stutteringSystem.DoStutter(uid, TimeSpan.FromSeconds(bloodstream.UpdateInterval*2), false);
 
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
-                bloodstream.DrunkTime += bloodstream.UpdateInterval * 2;
-                bloodstream.StutterTime += bloodstream.UpdateInterval * 2;
+                bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
             }
             else if (_mobStateSystem.IsAlive(uid))
             {
@@ -131,11 +130,10 @@ public sealed class BloodstreamSystem : EntitySystem
                 _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage, true, false);
 
                 // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
-                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.DrunkTime);
-                _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StutterTime);
+                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime);
+                _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StatusTime);
                 // Reset the drunk and stutter time to zero
-                bloodstream.DrunkTime = 0;
-                bloodstream.StutterTime = 0;
+                bloodstream.StatusTime = 0;
             }
         }
     }

@@ -1,6 +1,7 @@
 using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Speech.EntitySystems;
+
 public abstract class SharedStutteringSystem : EntitySystem
 {
     public const string StutterKey = "Stutter";
@@ -11,6 +12,7 @@ public abstract class SharedStutteringSystem : EntitySystem
     public virtual void DoStutter(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
     {
     }
+
     public virtual void DoRemoveStutterTime(EntityUid uid, double timeRemoved)
     {
         _statusEffectsSystem.TryRemoveTime(uid, StutterKey, TimeSpan.FromSeconds(timeRemoved));
