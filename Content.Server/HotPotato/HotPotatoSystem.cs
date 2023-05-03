@@ -1,12 +1,11 @@
 using Content.Server.Audio;
+using Content.Server.Damage.Systems;
 using Content.Server.Explosion.EntitySystems;
-using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.HotPotato;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Containers;
 
 namespace Content.Server.HotPotato;
 
@@ -14,9 +13,8 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
 {
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
+    [Dependency] private readonly DamageOnHoldingSystem _damageOnHolding = default!;
 
     public override void Initialize()
     {
@@ -30,6 +28,7 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
         EnsureComp<ActiveHotPotatoComponent>(uid);
         comp.CanTransfer = false;
         _ambientSound.SetAmbience(uid, true);
+        _damageOnHolding.SetEnabled(uid, true);
         Dirty(comp);
     }
 
@@ -58,17 +57,5 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
         }
         comp.CanTransfer = false;
         Dirty(comp);
-    }
-
-    public override void Update(float frameTime)
-    {
-        var query = EntityQueryEnumerator<ActiveHotPotatoComponent, HotPotatoComponent>();
-        while (query.MoveNext(out var uid, out var _, out var potato))
-        {
-            if (_container.TryGetContainingContainer(uid, out var container))
-            {
-                _damageableSystem.TryChangeDamage(container.Owner, frameTime * potato.HoldingDamage, origin: uid);
-            }
-        }
     }
 }

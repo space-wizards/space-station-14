@@ -1,4 +1,3 @@
-using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.HotPotato;
@@ -18,11 +17,4 @@ public sealed partial class HotPotatoComponent : Component
     [DataField("canTransfer"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public bool CanTransfer = true;
-
-    /// <summary>
-    /// Damage per second dealt when holding it
-    /// </summary>
-    [DataField("holdingDamage")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public DamageSpecifier HoldingDamage = new();
 }

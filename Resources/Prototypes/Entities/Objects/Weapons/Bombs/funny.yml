@@ -32,7 +32,9 @@
       canCreateVacuum: false
     - type: DeleteOnTrigger
     - type: HotPotato
-      holdingDamage:
+    - type: DamageOnHolding
+      enabled: false
+      damage:
         types:
           Heat: 1
     - type: Appearance
