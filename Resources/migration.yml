@@ -9,3 +9,25 @@
 
 chem_dispenser: ChemDispenser
 
+# brigmedic stuff. Remove this sometime soon.
+SpawnPointBrigmedic: null
+ClothingHeadsetBrigmedic: null
+ClothingHeadHatBeretBrigmedic: null
+ClothingHeadHelmetHardsuitBrigmedic: null
+ClothingOuterHardsuitBrigmedic: null
+ClothingOuterCoatAMG: null
+ClothingUniformJumpsuitBrigmedic: null
+ClothingUniformJumpskirtBrigmedic: null
+ClothingUniformJumpskirtOfLife: null
+ClothingBackpackBrigmedic: null
+ClothingBackpackBrigmedicFilled: null
+ClothingBackpackSatchelBrigmedic: null
+ClothingBackpackSatchelBrigmedicFilled: null
+ClothingBackpackDuffelBrigmedic: null
+ClothingBackpackDuffelBrigmedicFilled: null
+BrigmedicIDCard: null
+BrigmedicPDA: null
+BoxSurvivalBrigmedic: null
+LockerBrigmedic: null
+LockerBrigmedicFilled: null
+BedsheetBrigmedic: null
