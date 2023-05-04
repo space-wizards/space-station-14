@@ -9,7 +9,7 @@
 
 chem_dispenser: ChemDispenser
 
-# Brigmedic equipment. Removed 3/5/23
+# 2023-05-03
 SpawnPointBrigmedic: null
 ClothingHeadsetBrigmedic: null
 ClothingHeadHatBeretBrigmedic: null
@@ -31,3 +31,14 @@ BoxSurvivalBrigmedic: null
 LockerBrigmedic: null
 LockerBrigmedicFilled: null
 BedsheetBrigmedic: null
+
+# 2023-05-04
+BoxMagazineMagnumSubMachineGun: BoxMagazinePistolSubMachineGun
+BoxMagazineMagnumSubMachineGunPractice: BoxMagazinePistolSubMachineGunPractice
+BoxMagazineMagnumSubMachineGunRubber: BoxMagazinePistolSubMachineGunRubber
+
+MagazineMagnumSubMachineGun: MagazinePistolSubMachineGun
+MagazineMagnumSubMachineGunHighVelocity: MagazinePistolSubMachineGunHighVelocity
+MagazineMagnumSubMachineGunPractice: MagazinePistolSubMachineGunPractice
+MagazineMagnumSubMachineGunRubber: MagazinePistolSubMachineGunRubber
+WeaponSubMachineGunVector: WeaponSubMachineGunDrozd
