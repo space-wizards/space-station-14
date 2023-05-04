@@ -292,21 +292,21 @@
   - type: Sprite
     sprite: Clothing/Hands/Gloves/northstar.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/northstar.rsi    #might be worth making the worn sprite more noticeable, they're pretty powerful for a stealthy weapon  #Yet somehow less powerful than the rigged boxing gloves?
+    sprite: Clothing/Hands/Gloves/northstar.rsi
   - type: MeleeWeapon
     attackRate: 4
     damage:
       types:
        Blunt: 7.5
     soundHit:
-      collection: BoxingHit
+      collection: Punch
     animation: WeaponArcFist
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-blue
   - type: FingerprintMask
   - type: MeleeSpeech
-  - type: ActivatableUI  #At the minute using the activateinhand hotkey on them quick-equips them, then yanks them back off when the UI opens. Let me know if this is a problem. It's the same way with agent ID though, so it's probably no issue
+  - type: ActivatableUI 
     key: enum.MeleeSpeechUiKey.Key
     closeOnHandDeselect: false
   - type: UserInterface
