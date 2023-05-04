@@ -11,16 +11,16 @@
     Dylovene: 3
 
 - type: reaction
-  id: Ethylredoxrazine
+  id: Antihol
   reactants:
     Oxygen:
       amount: 1
-    Dylovene:
+    Charcoal:
       amount: 1
-    Carbon:
+    Ethanol:
       amount: 1
   products:
-    Ethylredoxrazine: 3
+    Antihol: 3
 
 - type: reaction
   id: Cryptobiolin
@@ -363,13 +363,96 @@
   impact: Medium
   minTemp: 370
   reactants:
-    SodiumCarbonate: 
+    SodiumCarbonate:
       amount: 1
     Kelotane:
       amount: 1
     Water:
       amount: 1
-    Sugar: 
+    Sugar:
       amount: 1
   products:
     Sigynate: 4
+
+- type: reaction
+  id: SalineGlucoseSolution
+  reactants:
+    Water:
+      amount: 1
+    Sugar:
+      amount: 1
+    TableSalt:
+      amount: 1
+  products:
+    SalineGlucoseSolution: 3
+
+- type: reaction
+  id: Atropine
+  reactants:
+    Ethanol:
+      amount: 1
+    Acetone:
+      amount: 1
+    Diethylamine:
+      amount: 1
+    Phenol:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+  products:
+    Atropine: 3
+
+- type: reaction
+  id: Calomel
+  reactants:
+    Mercury:
+      amount: 1
+    Chlorine:
+      amount: 1
+  products:
+    Calomel: 2
+
+- type: reaction
+  id: Oxygenis
+  reactants:
+    DexalinPlus:
+      amount: 1
+    Iron:
+      amount: 1
+    Blood:
+      amount: 1
+    Water:
+      amount: 1
+  effects:
+  - !type:CreateGas
+    gas: Oxygen
+  products:
+    Oxygenis: 3
+
+- type: reaction
+  id: Fomepizole
+  reactants:
+    Ammonia:
+      amount: 1
+    Synaptizine:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Fomepizole: 3
+
+- type: reaction
+  id: Haloperidol
+  reactants:
+    Hyronalin:
+      amount: 1
+    Aluminum:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Lithium:
+      amount: 1
+    Oil:
+      amount: 1
+  products:
+    Haloperidol: 5
