@@ -93,10 +93,10 @@
             Poison: -3
 
 - type: reagent
-  id: Ethylredoxrazine
-  name: reagent-name-ethylredoxrazine
+  id: Antihol
+  name: reagent-name-antihol
   group: Medicine
-  desc: reagent-desc-ethylredoxrazine
+  desc: reagent-desc-antihol
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
   color: "#2d5708"
@@ -838,7 +838,7 @@
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
         probability: 0.1
-        
+
 - type: reagent
   id: Sigynate
   name: reagent-name-sigynate
@@ -878,3 +878,237 @@
         - !type:ReagentThreshold
           min: 30
         probability: 0.02
+
+- type: reagent
+  id: SalineGlucoseSolution
+  name: reagent-name-saline-glucose-solution
+  group: Medicine
+  desc: reagent-desc-saline-glucose-solution
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: medicine
+  color: "#b2a4d2"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        probability: 0.33
+        damage:
+          groups:
+            Burn: -1
+            Brute: -1
+          types:
+            Bloodloss: -1
+      - !type:ChemVomit
+        probability: 0.15
+        conditions:
+          - !type:ReagentThreshold
+            min: 100
+      - !type:SatiateHunger
+
+- type: reagent
+  id: Atropine
+  name: reagent-name-atropine
+  group: Medicine
+  desc: reagent-desc-atropine
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: "#415252"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          min: 0
+          max: 149
+        damage:
+          types:
+            Poison: 1
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          min: 150
+        damage:
+          groups:
+            Brute: -2.5
+            Burn: -2.5
+          types:
+            Poison: -1.5
+            Asphyxiation: -1.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
+        damage:
+          types:
+            Poison: 2
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 0.75
+        type: Add
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 0.75
+        type: Add
+
+- type: reagent
+  id: Calomel
+  name: reagent-name-calomel
+  group: Medicine
+  desc: reagent-desc-calomel
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: medicine
+  color: "#2da94c"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          min: 0
+          max: 179
+        damage:
+          types:
+            Poison: 1.5
+      - !type:ChemCleanBloodstream
+        conditions:
+        - !type:TotalDamage
+          min: 180
+        cleanseRate: 5
+
+- type: reagent
+  id: Oxygenis
+  name: reagent-name-oxygenis
+  group: Medicine
+  desc: reagent-desc-oxygenis
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: medicine
+  color: "#ff0000"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Bloodloss: -6
+            Asphyxiation: -1
+
+- type: reagent
+  id: Fomepizole
+  name: reagent-name-fomepizole
+  group: Medicine
+  desc: reagent-desc-fomepizole
+  physicalDesc: reagent-physical-desc-odorless
+  flavor: medicine
+  color: "#afdd9a"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 10.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: Stutter
+        time: 10.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        time: 10.0
+        type: Remove
+
+- type: reagent
+  id: Haloperidol
+  name: reagent-name-haloperidol
+  group: Medicine
+  desc: reagent-desc-haloperidol
+  physicalDesc: reagent-physical-desc-odorless
+  flavor: medicine
+  color: "#ded0ee"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        probability: 0.2
+        damage:
+          types:
+            Cellular: 1
+      - !type:AdjustReagent
+        reagent: Epinephrine
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Epinephrine
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:AdjustReagent
+        reagent: Ephedrine
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Ephedrine
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:AdjustReagent
+        reagent: Stimulants
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Stimulants
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:AdjustReagent
+        reagent: THC
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: THC
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:AdjustReagent
+        reagent: SpaceDrugs
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: SpaceDrugs
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:AdjustReagent
+        reagent: Desoxyephedrine
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Desoxyephedrine
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 5.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: Stutter
+        time: 5.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        time: 5.0
+        type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+        probability: 0.5
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: true
