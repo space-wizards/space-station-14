@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: added emp artifact effect., type: Add}
-  id: 3144
-  time: '2023-03-09T08:30:01.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Mop indicator is now fixed, type: Fix}
@@ -2891,3 +2886,9 @@ Entries:
   - {message: Cat crate have more types of cats, type: Tweak}
   id: 3643
   time: '2023-05-04T19:00:51.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Mute people can no longer scream or vocalize emotes., type: Fix}
+  - {message: Lightweight drunk now applies to the drunk accent as well., type: Fix}
+  id: 3644
+  time: '2023-05-04T19:02:31.0000000+00:00'
