@@ -6,7 +6,7 @@
                   VerticalExpand="True">
         <ItemList Name="Sounds"
                   VerticalExpand="True"
-                  MinHeight="120"
+                  MinHeight="160"
                   HorizontalExpand="True"
                   SelectMode="Button"/>
     </BoxContainer>
