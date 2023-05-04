@@ -50,5 +50,5 @@ reagent-name-pilk = пилк
 reagent-desc-pilk = Тошнотворная смесь молока и колы.
 reagent-name-posca = поска
 reagent-desc-posca = Напиток бедных воинов из забытой эпохи.
-reagent-name-the-martinez = The Martinez
-reagent-desc-the-martinez = The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
+reagent-name-the-martinez = бокал Мартинеза
+reagent-desc-the-martinez = Легенда Эджраннерства. Помнят по напитку, забывают по пьяни.

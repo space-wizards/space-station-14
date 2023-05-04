@@ -17,5 +17,5 @@ ent-PelletShotgunTranquilizer = дробина (.50 транквилизатор
     .desc = { ent-BaseBulletPractice.desc }
     .suffix = { "" }
 ent-PelletShotgunFlare = дробина (.50 фальшфейер)
-    .desc = { ent-BaseBullet.desc }
+    .desc = { "" }
     .suffix = { "" }
