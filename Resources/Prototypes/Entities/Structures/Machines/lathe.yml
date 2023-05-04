@@ -466,6 +466,7 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingMaskSterile
@@ -575,8 +576,6 @@
       - ClothingUniformJumpskirtScientist
       - ClothingUniformJumpsuitSec
       - ClothingUniformJumpskirtSec
-      - ClothingUniformJumpsuitBrigmedic
-      - ClothingUniformJumpskirtBrigmedic
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
       - ClothingOuterWinterCap

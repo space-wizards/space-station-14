@@ -275,7 +275,7 @@
     modifiers:
       coefficients:
         Slash: 0.9
-        Piercing: 0.9  
+        Piercing: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -291,7 +291,7 @@
     modifiers:
       coefficients:
         Slash: 0.9
-        Piercing: 0.9  
+        Piercing: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -1041,7 +1041,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
   - type: Unremoveable
-  
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDameDane
@@ -1076,3 +1076,47 @@
     sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiBlack
+  name: black hawaiian shirt
+  description: Black as a starry night.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiBlue
+  name: blue hawaiian shirt
+  description: Blue as a huge ocean.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblue.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiRed
+  name: red hawaiian shirt
+  description: Red as a juicy watermelons.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaired.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaired.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiYellow
+  name: yellow hawaiian shirt
+  description: Yellow as a bright sun.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi

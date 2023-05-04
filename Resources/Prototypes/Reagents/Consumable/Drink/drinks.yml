@@ -382,3 +382,14 @@
     sprite: Objects/Consumable/Drinks/rewriter.rsi
     state: icon
 
+- type: reagent
+  id: TheMartinez
+  name: reagent-name-the-martinez
+  parent: BaseDrink
+  desc: reagent-desc-the-martinez
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: themartinez
+  color: "#75b1f0"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/the_martinez.rsi
+    state: icon
