@@ -391,3 +391,6 @@ ent-DrinkRamen = cup ramen
 ent-DrinkHellRamen = hell ramen
     .desc = Just add 10ml boiling water. Super spicy flavor.
     .suffix = { "" }
+ent-DrinkTheMartinez = The Martinez glass
+    .desc = The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
+    .suffix = { "" }

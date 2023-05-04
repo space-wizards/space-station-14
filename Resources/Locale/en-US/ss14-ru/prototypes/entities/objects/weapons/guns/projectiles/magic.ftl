@@ -22,3 +22,6 @@ ent-BulletInstakillMagic = magical lead cylinder
 ent-ProjectilePolyboltCluwne = cluwne polybolt
     .desc = knoH KnoH!
     .suffix = { "" }
+ent-ProjectileIcicle = Icicle
+    .desc = Brrrrr.
+    .suffix = { "" }

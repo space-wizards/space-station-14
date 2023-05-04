@@ -19,3 +19,6 @@ ent-JanitorialTrolley = janitorial trolley
 ent-FloorDrain = drain
     .desc = Drains puddles around it. Useful for dumping mop buckets or keeping certain rooms clean.
     .suffix = { "" }
+ent-RagItem = damp rag
+    .desc = For cleaning up messes, you suppose.
+    .suffix = { "" }
