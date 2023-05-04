@@ -1,14 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed the war announcement sound to be shorter., type: Tweak}
-  id: 3141
-  time: '2023-03-07T02:49:55.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed held toolbox sprites to be more robust, type: Tweak}
-  id: 3142
-  time: '2023-03-07T13:48:34.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix toy bap sounds., type: Fix}
@@ -2891,3 +2881,13 @@ Entries:
       blood instead of red.', type: Tweak}
   id: 3640
   time: '2023-05-04T18:26:20.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Mime's stamp now spawns in mime's satchel, type: Tweak}
+  id: 3641
+  time: '2023-05-04T18:30:22.0000000+00:00'
+- author: SonicDC
+  changes:
+  - {message: Changed the ability to paint glass airlocks!, type: Tweak}
+  id: 3642
+  time: '2023-05-04T18:31:16.0000000+00:00'
