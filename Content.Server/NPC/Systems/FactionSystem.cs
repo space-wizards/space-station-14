@@ -1,6 +1,6 @@
-using System.Linq;
 using Content.Server.NPC.Components;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.NPC.Systems
 {
@@ -9,8 +9,9 @@ namespace Content.Server.NPC.Systems
     /// </summary>
     public sealed class FactionSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly FactionExceptionSystem _factionException = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -115,7 +116,14 @@ namespace Content.Server.NPC.Systems
             if (!Resolve(entity, ref component, false))
                 return Array.Empty<EntityUid>();
 
-            return GetNearbyFactions(entity, range, component.HostileFactions);
+            var hostiles = GetNearbyFactions(entity, range, component.HostileFactions);
+            if (TryComp<FactionExceptionComponent>(entity, out var factionException))
+            {
+                // ignore anything from enemy faction that we are explicitly friendly towards
+                return hostiles.Where(target => !_factionException.IsIgnored(factionException, target));
+            }
+
+            return hostiles;
         }
 
         public IEnumerable<EntityUid> GetNearbyFriendlies(EntityUid entity, float range, FactionComponent? component = null)
