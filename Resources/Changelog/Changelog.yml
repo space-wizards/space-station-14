@@ -1,13 +1,6 @@
 Entries:
 - author: Slava0135
   changes:
-  - {message: added telecommunication server. You can put encryption keys there. In
-      the future will be necessary to transmit radio messages., type: Add}
-  - {message: encryption key insert/remove popups now always appear, type: Fix}
-  id: 3135
-  time: '2023-03-06T21:11:37.0000000+00:00'
-- author: Slava0135
-  changes:
   - {message: during solar flare doors can toggle randomly., type: Add}
   - {message: powered lights can break during solar flare and not just at start.,
     type: Tweak}
@@ -2894,3 +2887,8 @@ Entries:
   - {message: Light replacers printed by lathes are no longer full of lights., type: Fix}
   id: 3634
   time: '2023-05-04T02:09:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Flare pellets no longer apply fire stacks., type: Tweak}
+  id: 3635
+  time: '2023-05-04T02:46:03.0000000+00:00'
