@@ -97,7 +97,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterHardsuitEngineering
+      - id: ClothingOuterHardsuitEVAEngineering
+      - id: ClothingHeadHelmetEVAEngineering
       - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskGas
       - id: OxygenTankFilled
