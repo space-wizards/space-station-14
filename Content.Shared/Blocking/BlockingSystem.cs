@@ -187,7 +187,6 @@ public sealed partial class BlockingSystem : EntitySystem
                 BlockingComponent.BlockFixtureID,
                 hard: true,
                 collisionLayer: (int) CollisionGroup.WallLayer,
-                collisionMask: (int) CollisionGroup.MobMask,
                 body: physicsComponent);
         }
 
