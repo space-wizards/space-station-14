@@ -7,7 +7,7 @@ namespace Content.Shared.Localizations
         [Dependency] private readonly ILocalizationManager _loc = default!;
 
         // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
+        private const string Culture = "ru-RU";
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
@@ -35,7 +35,7 @@ namespace Content.Shared.Localizations
 
         private static ILocValue FormatLoc(LocArgs args)
         {
-            var id = ((LocValueString)args.Args[0]).Value;
+            var id = ((LocValueString) args.Args[0]).Value;
 
             return new LocValueString(Loc.GetString(id));
         }

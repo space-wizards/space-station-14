@@ -74,6 +74,8 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepWater
+        params:
+          volume: 6
     - type: Slippery
       launchForwardsMultiplier: 2.0
     - type: Transform
@@ -91,8 +93,7 @@
     - type: Fixtures
       fixtures:
         - id: slipFixture
-          shape:
-            !type:PhysShapeAabb
+          shape: !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"
           mask:
             - ItemMask
@@ -112,6 +113,5 @@
     - type: StepTrigger
     - type: NodeContainer
       nodes:
-        puddle:
-          !type:SpreaderNode
+        puddle: !type:SpreaderNode
           nodeGroupID: Spreader

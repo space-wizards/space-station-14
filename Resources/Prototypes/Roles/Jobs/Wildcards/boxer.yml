@@ -7,7 +7,8 @@
   icon: "Boxer"
   supervisors: job-supervisors-hop
   access:
-  - Service
+    - Service
+    - Maintenance
 
 - type: startingGear
   id: BoxerGear
@@ -17,6 +18,8 @@
     id: BoxerPDA
     ears: ClothingHeadsetService
     gloves: ClothingHandsGlovesBoxingRed
+    shoes: ClothingShoesColorRed
+    belt: ClothingBeltChampion
   innerclothingskirt: UniformShortsRedWithTop
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

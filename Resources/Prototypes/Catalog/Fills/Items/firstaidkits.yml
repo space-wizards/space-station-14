@@ -4,117 +4,125 @@
   suffix: Filled
   parent: Medkit
   components:
-  - type: StorageFill
-    contents:
-      - id: HandheldHealthAnalyzer
-      - id: Brutepack
-        amount: 2
-      - id: Ointment
-        amount: 2
-      - id: PillTricordrazine
-        amount: 3
-      # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
+    - type: StorageFill
+      contents:
+        - id: HandheldHealthAnalyzer
+        - id: Brutepack
+          amount: 2
+        - id: Ointment
+          amount: 2
+        - id: Gauze
+        - id: PillTricordrazine
+          amount: 5
+        # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
   id: MedkitBurnFilled
   suffix: Filled
   parent: MedkitBurn
   components:
-  - type: StorageFill
-    contents:
-      - id: Ointment
-        amount: 4
-      - id: PillKelotane
-        amount: 3
+    - type: StorageFill
+      contents:
+        - id: SyringeInaprovaline
+        - id: Ointment
+          amount: 4
+        - id: PillKelotane
+          amount: 5
 
 - type: entity
   id: MedkitBruteFilled
   suffix: Filled
   parent: MedkitBrute
   components:
-  - type: StorageFill
-    contents:
-      - id: Brutepack
-        amount: 2 # TO DO: Advanced brute pack
-      - id: PillIron
-        amount: 2
-      - id: Gauze
-      - id: Bloodpack
-      - id: SyringeTranexamicAcid
+    - type: StorageFill
+      contents:
+        - id: Brutepack
+          amount: 2 # TO DO: Advanced brute pack
+        - id: Gauze
+        - id: Bloodpack
+        - id: SyringeTranexamicAcid
+        - id: PillIron
+          amount: 5
 
 - type: entity
   id: MedkitToxinFilled
   suffix: Filled
   parent: MedkitToxin
   components:
-  - type: StorageFill
-    contents:
-      - id: SyringeSpaceacillin
-      - id: SyringeIpecac
-      - id: PillDylovene
-        amount: 3
-      - id: AntiPoisonMedipen
+    - type: StorageFill
+      contents:
+        - id: SyringeSpaceacillin
+          amount: 2
+        - id: SyringeIpecac
+          amount: 2
+        - id: AntiPoisonMedipen
+        - id: PillDylovene
+          amount: 7
 
 - type: entity
   id: MedkitOxygenFilled
   suffix: Filled
   parent: MedkitO2
   components:
-  - type: StorageFill
-    contents:
-      - id: EmergencyMedipen
-      - id: PillDexalin
-        amount: 3
-      - id: SyringeInaprovaline
-        amount: 2
+    - type: StorageFill
+      contents:
+        - id: ClothingMaskBreathMedical
+        - id: EmergencyOxygenTank
+        - id: EmergencyMedipen
+        - id: SyringeInaprovaline
+        - id: PillDexalin
+          amount: 7
 
 - type: entity
   id: MedkitRadiationFilled
   suffix: Filled
   parent: MedkitRadiation
   components:
-  - type: StorageFill
-    contents:
-      - id: Ointment
-        amount: 2
-      - id: PillHyronalin
-        amount: 3
-      - id: EmergencyMedipen
+    - type: StorageFill
+      contents:
+        - id: Ointment
+          amount: 3
+        - id: EmergencyMedipen
+          amount: 2
+        - id: PillHyronalin
+          amount: 9
 
 - type: entity
   id: MedkitAdvancedFilled
   suffix: Filled
   parent: MedkitAdvanced
   components:
-  - type: StorageFill
-    contents:
-      - id: Brutepack
-        amount: 2 # TO DO: Advanced fills
-      - id: Gauze
-      - id: Ointment
-      - id: Bloodpack
-        amount: 2
+    - type: StorageFill
+      contents:
+        - id: Brutepack
+          amount: 2 # TO DO: Advanced fills
+        - id: Ointment
+        - id: Gauze
+        - id: Bloodpack
+          amount: 2
 
 - type: entity
   id: MedkitCombatFilled
   suffix: Filled
   parent: MedkitCombat
   components:
-  - type: StorageFill
-    contents:
-      - id: HandheldHealthAnalyzer
-      - id: SyringeEphedrine
-      - id: SyringeTranexamicAcid
-      - id: AntiPoisonMedipen
-      - id: Bloodpack
-        amount: 2
+    - type: StorageFill
+      contents:
+        - id: HandheldHealthAnalyzer
+        - id: SyringeEphedrine
+        - id: SyringeTranexamicAcid
+        - id: AntiPoisonMedipen
+        - id: Bloodpack
+          amount: 2
+        - id: PillTricordrazine
+          amount: 2
 
 - type: entity
   id: StimkitFilled
   suffix: Stimkit, Filled
   parent: Medkit
   components:
-  - type: StorageFill
-    contents:
-      - id: StimpackMini
-        amount: 6
+    - type: StorageFill
+      contents:
+        - id: StimpackMini
+          amount: 6

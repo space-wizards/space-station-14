@@ -35,32 +35,6 @@
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
-#Space Ninja Outfit
-- type: startingGear
-  id: SpaceNinjaGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlack
-    # belt holds katana so satchel has the tools for sabotaging things
-    back: ClothingBackpackSatchelTools
-    mask: ClothingMaskGasSyndicate
-    head: ClothingHeadHelmetSpaceNinja
-    # TODO: space ninja mask
-    eyes: ClothingEyesGlassesMeson
-    gloves: ClothingHandsGlovesSpaceNinja
-    outerClothing: ClothingOuterSuitSpaceninja
-    shoes: ClothingShoesSpaceNinja
-    id: AgentIDCard
-    ears: ClothingHeadsetGrey
-    pocket1: SpiderCharge
-    pocket2: HandheldGPSBasic
-    belt: EnergyKatana
-    suitstorage: YellowOxygenTankFilled
-  inhand:
-    left hand: JetpackBlackFilled
-  innerclothingskirt: ClothingUniformJumpskirtColorBlack
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
-
 #Deathsquad Outfit
 - type: startingGear
   id: DeadsquadGear
@@ -189,3 +163,8 @@
   innerclothingskirt: ClothingUniformJumpsuitColorBrown
   satchel: ClothingBackpackDuffelCBURN
   duffelbag: ClothingBackpackDuffelCBURN
+
+- type: startingGear
+  id: BoxingKangarooGear
+  equipment:
+    gloves: ClothingHandsGlovesBoxingBlue

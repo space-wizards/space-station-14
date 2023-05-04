@@ -27,7 +27,7 @@
       ]
     },
     {
-      "name": "apc0"
+      "name": "base"
     },
     {
       "name": "emag-unlit",
@@ -84,7 +84,7 @@
       "name": "apco2-3"
     },
     {
-      "name": "apco3-0",
+      "name": "powered-1",
       "delays": [
         [
           0.1,
@@ -102,7 +102,7 @@
       ]
     },
     {
-      "name": "apco3-1",
+      "name": "powered-2",
       "delays": [
         [
           0.1,
@@ -117,7 +117,7 @@
       ]
     },
     {
-      "name": "apco3-2",
+      "name": "powered-3",
       "delays": [
         [
           1,

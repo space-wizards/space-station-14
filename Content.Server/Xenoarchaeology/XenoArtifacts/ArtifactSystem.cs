@@ -51,7 +51,7 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </remarks>
     private void GetPrice(EntityUid uid, ArtifactComponent component, ref PriceCalculationEvent args)
     {
-        args.Price =+ GetResearchPointValue(uid, component) * component.PriceMultiplier;
+        args.Price = +GetResearchPointValue(uid, component) * component.PriceMultiplier;
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public sealed partial class ArtifactSystem : EntitySystem
         var fullyExploredBonus = component.NodeTree.All(x => x.Triggered) || getMaxPrice ? 1.25f : 1;
         sumValue -= component.ConsumedPoints;
 
-        return (int) (sumValue * fullyExploredBonus);
+        return (int) (sumValue * fullyExploredBonus) - component.ConsumedPoints;
     }
 
     /// <summary>

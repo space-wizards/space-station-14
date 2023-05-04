@@ -2,7 +2,7 @@
   id: Sneeze
   category: Vocal
   chatMessages: [sneezes]
-    
+
 - type: emote
   id: Cough
   category: Vocal
@@ -43,3 +43,8 @@
   id: Snore
   category: Vocal
   chatMessages: [snores]
+
+- type: emote
+  id: Honk
+  category: Vocal
+  chatMessages: [honks]

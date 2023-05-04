@@ -274,10 +274,10 @@ public sealed partial class CargoSystem
             return orders;
 
         var spaceRemaining = GetCargoSpace(shuttleUid);
-        for( var i = 0; i < component.Orders.Count && spaceRemaining > 0; i++)
+        for (var i = 0; i < component.Orders.Count && spaceRemaining > 0; i++)
         {
             var order = component.Orders[i];
-            if(order.Approved)
+            if (order.Approved)
             {
                 var numToShip = order.OrderQuantity - order.NumDispatched;
                 if (numToShip > spaceRemaining)
@@ -405,8 +405,8 @@ public sealed partial class CargoSystem
                 // - anything anchored (e.g. light fixtures)
                 // - anything blacklisted (e.g. players).
                 if (toSell.Contains(ent) ||
-                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored) ||
-                    !CanSell(ent, mobStateQuery))
+                    xformQuery.TryGetComponent(ent, out var xform) &&
+                    (xform.Anchored || !CanSell(ent, xform, mobStateQuery, xformQuery)))
                 {
                     continue;
                 }
@@ -423,12 +423,20 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool CanSell(EntityUid uid, EntityQuery<MobStateComponent> mobStateQuery)
+    private bool CanSell(EntityUid uid, TransformComponent xform, EntityQuery<MobStateComponent> mobStateQuery, EntityQuery<TransformComponent> xformQuery)
     {
         if (mobStateQuery.TryGetComponent(uid, out var mobState) &&
             mobState.CurrentState != MobState.Dead)
         {
             return false;
+        }
+
+        // Recursively check for mobs at any point.
+        var children = xform.ChildEnumerator;
+        while (children.MoveNext(out var child))
+        {
+            if (!CanSell(child.Value, xformQuery.GetComponent(child.Value), mobStateQuery, xformQuery))
+                return false;
         }
 
         return true;
@@ -442,7 +450,7 @@ public sealed partial class CargoSystem
         while (pads.Count > 0)
         {
             var coordinates = new EntityCoordinates(shuttleUid, xformQuery.GetComponent(_random.PickAndTake(pads).Entity).LocalPosition);
-            if(!FulfillOrder(orderDatabase, coordinates, shuttle.PrinterOutput))
+            if (!FulfillOrder(orderDatabase, coordinates, shuttle.PrinterOutput))
             {
                 break;
             }
@@ -466,7 +474,7 @@ public sealed partial class CargoSystem
 
         SellPallets(gridUid, out var price);
         var stackPrototype = _prototypeManager.Index<StackPrototype>(component.CashType);
-        _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());
+        _stack.Spawn((int) price, stackPrototype, uid.ToCoordinates());
         UpdatePalletConsoleInterface(uid);
     }
 

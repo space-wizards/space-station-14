@@ -11,7 +11,7 @@ public sealed partial class GameTicker
     public string? LobbyBackground { get; private set; }
 
     [ViewVariables]
-    private List<ResourcePath>? _lobbyBackgrounds;
+    private List<ResPath>? _lobbyBackgrounds;
 
     private static readonly string[] WhitelistedBackgroundExtensions = new string[] {"png", "jpg", "jpeg"};
 

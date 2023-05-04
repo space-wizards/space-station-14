@@ -3,5 +3,8 @@
   parent: OrganAnimalStomach
   noSpawn: true
   components:
-  - type: Stomach
-    maxVol: 50
+    - type: Stomach
+    - type: SolutionContainerManager
+      solutions:
+        stomach:
+          maxVol: 50

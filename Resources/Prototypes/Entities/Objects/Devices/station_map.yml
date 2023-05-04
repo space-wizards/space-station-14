@@ -1,8 +1,10 @@
 - type: entity
-  id: StationMap
+  id: HandheldStationMap
   name: station map
   description: Displays a readout of the current station.
-  parent: BaseItem
+  parent:
+    - BaseItem
+    - PowerCellSlotSmallItem
   suffix: Handheld
   components:
     - type: StationMap
@@ -13,6 +15,10 @@
         - state: tablet
         - state: generic
           shader: unshaded
+    - type: PowerCellDraw
+      drawRate: 0
+      useRate: 20
+    - type: ActivatableUIRequiresPowerCell
     - type: ActivatableUI
       inHandsOnly: true
       singleUser: true
@@ -21,12 +27,11 @@
       damageContainer: Inorganic
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
+        - trigger: !type:DamageTrigger
             damage: 100
           behaviors:
             - !type:DoActsBehavior
-              acts: [ "Destruction" ]
+              acts: ["Destruction"]
     - type: UserInterface
       interfaces:
         - key: enum.StationMapUiKey.Key

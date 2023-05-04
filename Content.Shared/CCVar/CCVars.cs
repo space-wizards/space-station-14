@@ -449,6 +449,17 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> DatabaseSqliteDelay =
             CVarDef.Create("database.sqlite_delay", DefaultSqliteDelay, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Amount of concurrent SQLite database operations.
+        /// </summary>
+        /// <remarks>
+        /// Note that SQLite is not a properly asynchronous database and also has limited read/write concurrency.
+        /// Increasing this number may allow more concurrent reads, but it probably won't matter much.
+        /// SQLite operations are normally ran on the thread pool, which may cause thread pool starvation if the concurrency is too high.
+        /// </remarks>
+        public static readonly CVarDef<int> DatabaseSqliteConcurrency =
+            CVarDef.Create("database.sqlite_concurrency", 3, CVar.SERVERONLY);
+
 #if DEBUG
         private const int DefaultSqliteDelay = 1;
 #else
@@ -603,6 +614,12 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
+        /// </summary>
+        public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
+            CVarDef.Create("admin.alert.explosion_min_intensity", 60, CVar.SERVERONLY);
 
         /*
          * Explosions
@@ -1084,6 +1101,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> CargoShuttles =
             CVarDef.Create("shuttle.cargo", true, CVar.SERVERONLY);
+        
+        /// <summary>
+        /// Whether to automatically spawn escape shuttles.
+        /// </summary>
+        public static readonly CVarDef<bool> DisableGridFill =
+            CVarDef.Create("shuttle.disable_grid_fill", false, CVar.SERVERONLY);
 
         /*
          * Emergency
@@ -1328,8 +1351,16 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string>
             SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
 
-        /*
+        /// <summary>
+        /// Cooldown for successful missions.
+        /// </summary>
+        public static readonly CVarDef<float>
+            SalvageExpeditionCooldown = CVarDef.Create("salvage.expedition_cooldown", 300f, CVar.REPLICATED);
 
+        public static readonly CVarDef<float>
+            SalvageExpeditionFailedCooldown = CVarDef.Create("salvage.expedition_failed_cooldown", 900f, CVar.REPLICATED);
+
+        /*
          * Flavor
          */
 

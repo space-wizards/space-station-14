@@ -38,28 +38,25 @@ public sealed class AdminFaxEui : BaseEui
 
     public override void HandleMessage(EuiMessageBase msg)
     {
+        base.HandleMessage(msg);
+
         switch (msg)
         {
-            case AdminFaxEuiMsg.Close:
-            {
-                Close();
-                break;
-            }
             case AdminFaxEuiMsg.Follow followData:
-            {
-                if (Player.AttachedEntity == null ||
-                    !_entityManager.HasComponent<GhostComponent>(Player.AttachedEntity.Value))
-                    return;
+                {
+                    if (Player.AttachedEntity == null ||
+                        !_entityManager.HasComponent<GhostComponent>(Player.AttachedEntity.Value))
+                        return;
 
-                _followerSystem.StartFollowingEntity(Player.AttachedEntity.Value, followData.TargetFax);
-                break;
-            }
+                    _followerSystem.StartFollowingEntity(Player.AttachedEntity.Value, followData.TargetFax);
+                    break;
+                }
             case AdminFaxEuiMsg.Send sendData:
-            {
-                var printout = new FaxPrintout(sendData.Content, sendData.Title, null, sendData.StampState, new() { sendData.From });
-                _faxSystem.Receive(sendData.Target, printout);
-                break;
-            }
+                {
+                    var printout = new FaxPrintout(sendData.Content, sendData.Title, null, sendData.StampState, new() { sendData.From });
+                    _faxSystem.Receive(sendData.Target, printout);
+                    break;
+                }
         }
     }
 }

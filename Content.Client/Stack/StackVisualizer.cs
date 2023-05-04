@@ -76,7 +76,7 @@ namespace Content.Client.Stack
         /// </summary>
         [DataField("composite")] private bool _isComposite;
 
-        [DataField("sprite")] private ResourcePath? _spritePath;
+        [DataField("sprite")] private ResPath? _spritePath;
 
         [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)

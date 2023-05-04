@@ -1,9 +1,0 @@
-- type: antag
-  id: SpaceNinja
-  name: roles-antag-space-ninja-name
-  antagonist: true
-  setPreference: false
-  objective: roles-antag-space-ninja-objective
-#  special:
-#  - !type:AddImplantSpecial
-#    implants: [ MicroBombImplant ]

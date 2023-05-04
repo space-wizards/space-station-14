@@ -1,5 +1,5 @@
 - type: entity
-  id: WallStationMapBroken
+  id: StationMapBroken
   name: station map
   description: A virtual map of the surrounding station.
   suffix: Wall broken
@@ -18,20 +18,19 @@
       damageContainer: Inorganic
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
+        - trigger: !type:DamageTrigger
             damage: 100
           behaviors:
             - !type:PlaySoundBehavior
               sound:
                 collection: GlassBreak
             - !type:DoActsBehavior
-              acts: [ "Destruction" ]
+              acts: ["Destruction"]
 
 - type: entity
-  id: WallStationMap
+  id: StationMap
   name: station map
-  parent: WallStationMapBroken
+  parent: StationMapBroken
   suffix: Wall
   placement:
     mode: SnapgridCenter
@@ -43,7 +42,7 @@
       layers:
         - state: station_map0
         - state: unshaded
-          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
           shader: unshaded
     - type: ApcPowerReceiver
       powerLoad: 200
@@ -56,8 +55,7 @@
       key: enum.StationMapUiKey.Key
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
+        - trigger: !type:DamageTrigger
             damage: 100
           behaviors:
             - !type:PlaySoundBehavior
@@ -65,11 +63,11 @@
                 collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
-                WallStationMapBroken:
+                StationMapBroken:
                   min: 1
                   max: 1
             - !type:DoActsBehavior
-              acts: [ "Destruction" ]
+              acts: ["Destruction"]
     - type: UserInterface
       interfaces:
         - key: enum.StationMapUiKey.Key

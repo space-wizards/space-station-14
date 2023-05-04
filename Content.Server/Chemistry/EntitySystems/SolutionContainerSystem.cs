@@ -129,12 +129,12 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Splits a solution without the specified reagent.
+    /// Splits a solution without the specified reagent(s).
     /// </summary>
     public Solution SplitSolutionWithout(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity,
-        string reagent)
+        params string[] reagents)
     {
-        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagent);
+        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagents);
         UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }
@@ -444,13 +444,13 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         var removedSolution = new Solution();
 
         // RemoveReagent does a RemoveSwap, meaning we don't have to copy the list if we iterate it backwards.
-        for (var i = solution.Contents.Count-1; i >= 0; i--)
+        for (var i = solution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagentId, _) = solution.Contents[i];
 
             var removedQuantity = solution.RemoveReagent(reagentId, quantity);
 
-            if(removedQuantity > 0)
+            if (removedQuantity > 0)
                 removedSolution.AddReagent(reagentId, removedQuantity);
         }
 
@@ -486,7 +486,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(uid);
         RaiseLocalEvent(uid, ref getMixableSolutionAttempt);
-        if(getMixableSolutionAttempt.MixedSolution != null)
+        if (getMixableSolutionAttempt.MixedSolution != null)
         {
             solution = getMixableSolutionAttempt.MixedSolution;
             return true;

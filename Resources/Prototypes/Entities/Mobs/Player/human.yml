@@ -4,34 +4,34 @@
   parent: BaseMobHuman
   id: MobHuman
   components:
-  - type: CombatMode
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: hugging-success-generic
-    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
-    messagePerceivedByOthers: hugging-success-generic-others
-  - type: Mind
-    showExamineInfo: true
-  - type: Input
-    context: "human"
-  - type: MobMover
-  - type: InputMover
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 1.0
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
-  - type: Alerts
-  - type: Actions
-  - type: Eye
-  - type: CameraRecoil
-  - type: Examiner
-  - type: CanHostGuardian
-  - type: Faction
-    factions:
-    - NanoTrasen
+    - type: CombatMode
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: hugging-success-generic
+      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+      messagePerceivedByOthers: hugging-success-generic-others
+    - type: Mind
+      showExamineInfo: true
+    - type: Input
+      context: "human"
+    - type: MobMover
+    - type: InputMover
+    - type: Respirator
+      damage:
+        types:
+          Asphyxiation: 1.0
+      damageRecovery:
+        types:
+          Asphyxiation: -1.0
+    - type: Alerts
+    - type: Actions
+    - type: Eye
+    - type: CameraRecoil
+    - type: Examiner
+    - type: CanHostGuardian
+    - type: Faction
+      factions:
+        - NanoTrasen
 
 #Syndie
 - type: entity
@@ -46,7 +46,7 @@
       nameSegments: [names_death_commando]
     - type: Faction
       factions:
-      - Syndicate
+        - Syndicate
 
 # Nuclear Operative
 - type: entity
@@ -72,31 +72,8 @@
       prototypes: [SyndicateOperativeGearFull]
     - type: RandomMetadata
       nameSegments:
-      - SyndicateNamesPrefix
-      - SyndicateNamesNormal
+        - SyndicateNamesPrefix
+        - SyndicateNamesNormal
     - type: Faction
       factions:
-      - Syndicate
-
-# Space Ninja
-- type: entity
-  noSpawn: true
-  name: Space Ninja
-  parent: MobHuman
-  id: MobHumanSpaceNinja
-  components:
-  - type: Loadout
-    prototype: SpaceNinjaGear
-    prototypes: [SpaceNinjaGear]
-  - type: Faction
-    factions:
-    - Syndicate
-  - type: Ninja
-  - type: RandomMetadata
-    nameSegments:
-    - names_ninja_title
-    - names_ninja
-  - type: Tag
-    tags:
-    # fight with honor!
-    - GunsDisabled
+        - Syndicate

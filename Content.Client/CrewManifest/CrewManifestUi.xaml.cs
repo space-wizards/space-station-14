@@ -121,7 +121,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
             AddChild(gridContainer);
 
-            var path = new ResourcePath("/Textures/Interface/Misc/job_icons.rsi");
+            var path = new ResPath("/Textures/Interface/Misc/job_icons.rsi");
             cache.TryGetResource(path, out RSIResource? rsi);
 
             foreach (var entry in entries)

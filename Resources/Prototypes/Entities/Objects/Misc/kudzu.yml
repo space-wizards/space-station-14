@@ -10,8 +10,7 @@
     - type: MeleeSound
       soundGroups:
         Brute:
-          path:
-            "/Audio/Weapons/slash.ogg"
+          path: "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/kudzu.rsi
       state: kudzu_11
@@ -25,23 +24,21 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-      - hard: false
-        density: 7
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        layer:
-        - MidImpassable
+        - hard: false
+          density: 7
+          shape: !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+            - MidImpassable
     - type: Damageable
       damageModifierSet: Wood
     - type: Destructible
       thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+        - trigger: !type:DamageTrigger
+            damage: 10
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
     - type: Temperature
       heatDamage:
         types:
@@ -60,14 +57,14 @@
         Flammable: [Touch]
         Extinguish: [Touch]
       reactions:
-      - reagents: [WeedKiller, PlantBGone]
-        methods: [Touch]
-        effects:
-        - !type:HealthChange
-          scaled: true
-          damage:
-            types:
-              Heat: 10
+        - reagents: [WeedKiller, PlantBGone]
+          methods: [Touch]
+          effects:
+            - !type:HealthChange
+              scaled: true
+              damage:
+                types:
+                  Heat: 10
     - type: AtmosExposed
     - type: Kudzu
     - type: GrowingKudzu
@@ -78,10 +75,21 @@
     - type: EdgeSpreader
     - type: NodeContainer
       nodes:
-        kudzu:
-          !type:SpreaderNode
+        kudzu: !type:SpreaderNode
           nodeGroupID: Spreader
-
+    - type: Food
+      requiredStomachs: 2 # ruminants have 4 stomachs but i dont care to give them literally 4 stomachs. 2 is good
+      # TODO make botany plants edible to ruminants as well ...
+      delay: 0.5
+    - type: FlavorProfile
+      flavors:
+        - fiber
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 2
 
 - type: entity
   id: WeakKudzu
@@ -103,8 +111,7 @@
     - type: MeleeSound
       soundGroups:
         Brute:
-          path:
-            "/Audio/Weapons/slash.ogg"
+          path: "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/fleshkudzu.rsi
       state: base
@@ -117,22 +124,20 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-      - hard: false
-        density: 7
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        layer:
-        - MidImpassable
+        - hard: false
+          density: 7
+          shape: !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+            - MidImpassable
     - type: Damageable
     - type: Destructible
       thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+        - trigger: !type:DamageTrigger
+            damage: 10
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
     - type: DamageContacts
       damage:
         types:
@@ -140,17 +145,24 @@
           Piercing: 1.5
       ignoreWhitelist:
         tags:
-        - Flesh
+          - Flesh
     - type: Kudzu
     - type: EdgeSpreader
     - type: NodeContainer
       nodes:
-        kudzu:
-          !type:SpreaderNode
+        kudzu: !type:SpreaderNode
           nodeGroupID: Spreader
     - type: SlowContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3
       ignoreWhitelist:
         tags:
-        - Flesh
+          - Flesh
+    - type: Food # delightfully devilish !
+      delay: 0.5
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+            - ReagentId: Protein
+              Quantity: 2
