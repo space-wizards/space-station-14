@@ -1388,6 +1388,9 @@
   - type: NoSlip
   - type: Spider
   - type: IgnoreSpiderWeb
+  - type: Bloodstream
+    bloodMaxVolume: 150
+    bloodReagent: SpiderBlood
 
 - type: entity
   name: tarantula
