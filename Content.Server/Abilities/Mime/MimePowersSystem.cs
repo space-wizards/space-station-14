@@ -15,6 +15,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Speech.Components;
 using Content.Shared.Chat.Prototypes;
 using Content.Server.Speech.EntitySystems;
+using Content.Server.Speech.Muting;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -30,10 +31,7 @@ namespace Content.Server.Abilities.Mime
         {
             base.Initialize();
             SubscribeLocalEvent<MimePowersComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<MimePowersComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
-            SubscribeLocalEvent<MimePowersComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
-            SubscribeLocalEvent<MimePowersComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
         }
         public override void Update(float frameTime)
         {
@@ -54,35 +52,9 @@ namespace Content.Server.Abilities.Mime
 
         private void OnComponentInit(EntityUid uid, MimePowersComponent component, ComponentInit args)
         {
+            EnsureComp<MutedComponent>(uid);
             _actionsSystem.AddAction(uid, component.InvisibleWallAction, uid);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
-        }
-        private void OnSpeakAttempt(EntityUid uid, MimePowersComponent component, SpeakAttemptEvent args)
-        {
-            if (!component.Enabled)
-                return;
-
-            _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
-            args.Cancel();
-        }
-
-        private void OnEmote(EntityUid uid, MimePowersComponent component, ref EmoteEvent args)
-        {
-            if (!component.Enabled || args.Handled)
-                return;
-
-            //still leaves the text so it looks like they are pantomiming a laugh
-            if (args.Emote.Category.HasFlag(EmoteCategory.Vocal))
-                args.Handled = true;
-        }
-
-        private void OnScreamAction(EntityUid uid, MimePowersComponent component, ScreamActionEvent args)
-        {
-            if (!component.Enabled || args.Handled)
-                return;
-
-            _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
-            args.Handled = true;
         }
 
         /// <summary>
@@ -130,6 +102,7 @@ namespace Content.Server.Abilities.Mime
             mimePowers.Enabled = false;
             mimePowers.VowBroken = true;
             mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
+            RemComp<MutedComponent>(uid);
             _alertsSystem.ClearAlert(uid, AlertType.VowOfSilence);
             _alertsSystem.ShowAlert(uid, AlertType.VowBroken);
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallAction);
@@ -152,6 +125,7 @@ namespace Content.Server.Abilities.Mime
             mimePowers.Enabled = true;
             mimePowers.ReadyToRepent = false;
             mimePowers.VowBroken = false;
+            AddComp<MutedComponent>(uid);
             _alertsSystem.ClearAlert(uid, AlertType.VowBroken);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
             _actionsSystem.AddAction(uid, mimePowers.InvisibleWallAction, uid);
