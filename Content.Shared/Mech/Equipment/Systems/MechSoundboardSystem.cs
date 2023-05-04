@@ -26,7 +26,7 @@ public sealed class MechSoundboardSystem : EntitySystem
     private void OnUiStateReady(EntityUid uid, MechSoundboardComponent comp, MechEquipmentUiStateReadyEvent args)
     {
         // you have to specify a collection so it must exist probably
-        var sounds = comp.Sounds.Select(sound => sound.Collection!.Value);
+        var sounds = comp.Sounds.Select(sound => sound.Collection!);
         var state = new MechSoundboardUiState
         {
             Sounds = sounds.ToList()
