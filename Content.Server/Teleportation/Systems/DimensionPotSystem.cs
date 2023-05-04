@@ -36,12 +36,10 @@ public sealed class DimensionPotSystem : EntitySystem
 
     private void OnRemoved(EntityUid uid, DimensionPotComponent comp, ComponentRemove args)
     {
-        _sawmill.Warning($"Somehow destroyed pocket dimension {comp.PocketDimensionMap} from {ToPrettyString(uid):pot}");
-
-        if (comp.PocketDimensionMap != MapId.Nullspace)
+        if (comp.PocketDimensionMap != null)
         {
             // everything inside will be destroyed so this better be indestructible
-            QueueDel(_mapMan.GetMapEntityId(comp.PocketDimensionMap));
+            QueueDel(comp.PocketDimensionMap.Value);
         }
 
         if (comp.PotPortal != null)
@@ -66,17 +64,18 @@ public sealed class DimensionPotSystem : EntitySystem
     /// </summary>
     private void HandleActivation(EntityUid uid, DimensionPotComponent comp, EntityUid user)
     {
-		if (comp.PocketDimensionMap == MapId.Nullspace)
+		if (comp.PocketDimensionMap == null)
 		{
-			comp.PocketDimensionMap = _mapMan.CreateMap();
-			if (!_mapLoader.TryLoad(comp.PocketDimensionMap, comp.PocketDimensionPath, out var roots))
+			var map = _mapMan.CreateMap();
+			if (!_mapLoader.TryLoad(map, comp.PocketDimensionPath.ToString(), out var roots))
 			{
 				_sawmill.Error($"Failed to load pocket dimension map {comp.PocketDimensionPath}");
 				QueueDel(uid);
 				return;
 			}
 
-			if (TryComp<GravityComponent>(_mapMan.GetMapEntityId(comp.PocketDimensionMap), out var gravity))
+            comp.PocketDimensionMap = _mapMan.GetMapEntityId(map);
+			if (TryComp<GravityComponent>(comp.PocketDimensionMap, out var gravity))
 				gravity.Enabled = true;
 
 			// find the pocket dimension's first grid and put the portal there
@@ -89,7 +88,7 @@ public sealed class DimensionPotSystem : EntitySystem
 				// spawn the permanent portal into the pocket dimension, now ready to be used
 				var pos = Transform(root).Coordinates;
 				comp.DimensionPortal = Spawn(comp.DimensionPortalPrototype, pos);
-				_sawmill.Info($"Created pocket dimension on grid {root} of map {comp.PocketDimensionMap}");
+				_sawmill.Info($"Created pocket dimension on grid {root} of map {map}");
 
 				// if someone closes your portal you can use the one inside to escape
 				_link.TryLink(uid, comp.DimensionPortal.Value);
@@ -102,6 +101,7 @@ public sealed class DimensionPotSystem : EntitySystem
 				return;
 			}
 		}
+
         var dimension = comp.DimensionPortal!.Value;
         if (comp.PotPortal != null)
         {

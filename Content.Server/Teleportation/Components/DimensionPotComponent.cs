@@ -4,6 +4,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Teleportation.Components;
 
@@ -19,25 +20,25 @@ public sealed class DimensionPotComponent : Component
     /// The portal on the pot, if it is open right now.
     /// </summary>
     [ViewVariables]
-    public EntityUid? PotPortal = null;
+    public EntityUid? PotPortal;
 
     /// <summary>
-    /// The portal in the pocket dimension, usually exists.
+    /// The portal in the pocket dimension, exists after first opening.
     /// </summary>
     [ViewVariables]
-    public EntityUid? DimensionPortal = null;
+    public EntityUid? DimensionPortal;
 
     /// <summary>
-    /// Map of the pocket dimension, usually exists.
+    /// Map of the pocket dimension, exists after first opening.
     /// </summary>
     [ViewVariables]
-    public MapId PocketDimensionMap = MapId.Nullspace;
+    public EntityUid? PocketDimensionMap;
 
     /// <summary>
     /// Path to the pocket dimension's map file
     /// </summary>
     [DataField("pocketDimensionPath")]
-    public string PocketDimensionPath = "/Maps/Misc/pocket_dimension.yml";
+    public ResPath PocketDimensionPath = new ResPath("/Maps/Misc/pocket_dimension.yml");
 
     /// <summary>
     /// The prototype to spawn for the portal spawned on the pot.
