@@ -102,9 +102,9 @@
   effects:
     - !type:ExplosionReactionEffect
       explosionType: Default
-      maxIntensity: 1 # at most 15 damage per tile
+      maxIntensity: 3
       intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion
-      intensitySlope: 2
+      intensitySlope: .5
       maxTotalIntensity: 25
 
 - type: reaction
