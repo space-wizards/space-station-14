@@ -1,11 +1,4 @@
 Entries:
-- author: jamessimo
-  changes:
-  - {message: APC UI gets a visual update, type: Tweak}
-  - {message: APC will now disable its toggle and show a tooltip if you don't have
-      access., type: Tweak}
-  id: 3140
-  time: '2023-03-07T01:55:35.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed the war announcement sound to be shorter., type: Tweak}
@@ -2892,3 +2885,9 @@ Entries:
       local HOS if you wish to be security's in house doctor., type: Tweak}
   id: 3639
   time: '2023-05-04T14:19:49.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'Tarantulas have evolved (or devolved, however you see it) to have blue
+      blood instead of red.', type: Tweak}
+  id: 3640
+  time: '2023-05-04T18:26:20.0000000+00:00'
