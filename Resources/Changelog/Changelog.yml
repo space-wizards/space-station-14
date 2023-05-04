@@ -1,9 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added custom parallax to Aspid, type: Add}
-  id: 3138
-  time: '2023-03-07T00:33:03.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Weather can now last indefinitely., type: Tweak}
@@ -2893,3 +2888,8 @@ Entries:
   - {message: Add Drozd., type: Add}
   id: 3637
   time: '2023-05-04T03:35:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Removed brigmedic., type: Remove}
+  id: 3638
+  time: '2023-05-04T10:08:01.0000000+00:00'
