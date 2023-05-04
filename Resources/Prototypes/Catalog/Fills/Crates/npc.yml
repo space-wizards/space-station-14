@@ -31,12 +31,6 @@
       - id: MobCatCaracal
         prob: 0.5
         orGroup: MobCat
-      - id: MobCatRuntime
-        prob: 0.05
-        orGroup: MobCat
-      - id: MobCatException
-        prob: 0.05
-        orGroup: MobCat
       - id: MobCatFloppa
         prob: 0.01
         orGroup: MobCat
