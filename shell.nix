@@ -23,6 +23,7 @@ in pkgs.mkShell {
   buildInputs = [ pkgs.gtk3 ];
   inputsFrom = dependencies;
   shellHook = ''
+    export GLIBC_TUNABLES=glibc.rtld.dynamic_sort=1
     export XDG_DATA_DIRS=$GSETTINGS_SCHEMAS_PATH
     export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath dependencies}
   '';
