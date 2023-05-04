@@ -66,6 +66,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretBrigmedic
+  name: medical beret
+  description: White beret, looks like a cream pie on the head.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBowlerHat
   name: bowler hat
   description: Stylish bowler hat.

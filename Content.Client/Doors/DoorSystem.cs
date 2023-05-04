@@ -4,8 +4,8 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Doors;
@@ -80,7 +80,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (AppearanceSystem.TryGetData<string>(uid, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
         {
-            if (!_resourceCache.TryGetResource<RSIResource>(SharedSpriteComponent.TextureRoot / baseRsi, out var res))
+            if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi, out var res))
             {
                 Logger.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
             }
@@ -89,7 +89,7 @@ public sealed class DoorSystem : SharedDoorSystem
                 layer.Rsi = res?.RSI;
             }
         }
-        
+
         TryComp<AnimationPlayerComponent>(uid, out var animPlayer);
         if (_animationSystem.HasRunningAnimation(uid, animPlayer, DoorComponent.AnimationKey))
             _animationSystem.Stop(uid, animPlayer, DoorComponent.AnimationKey); // Halt all running anomations.

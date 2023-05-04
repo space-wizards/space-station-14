@@ -20,29 +20,41 @@ namespace Content.Server.Database
     /// </summary>
     public sealed class ServerDbSqlite : ServerDbBase
     {
-        // For SQLite we use a single DB context via SQLite.
+        private readonly Func<DbContextOptions<SqliteServerDbContext>> _options;
+
         // This doesn't allow concurrent access so that's what the semaphore is for.
         // That said, this is bloody SQLite, I don't even think EFCore bothers to truly async it.
-        private readonly SemaphoreSlim _prefsSemaphore = new(1, 1);
+        private readonly SemaphoreSlim _prefsSemaphore;
 
         private readonly Task _dbReadyTask;
-        private readonly SqliteServerDbContext _prefsCtx;
 
         private int _msDelay;
 
-        public ServerDbSqlite(DbContextOptions<SqliteServerDbContext> options)
+        public ServerDbSqlite(Func<DbContextOptions<SqliteServerDbContext>> options, bool inMemory)
         {
-            _prefsCtx = new SqliteServerDbContext(options);
+            _options = options;
+
+            var prefsCtx = new SqliteServerDbContext(options());
 
             var cfg = IoCManager.Resolve<IConfigurationManager>();
+
+            // When inMemory we re-use the same connection, so we can't have any concurrency.
+            var concurrency = inMemory ? 1 : cfg.GetCVar(CCVars.DatabaseSqliteConcurrency);
+            _prefsSemaphore = new SemaphoreSlim(concurrency, concurrency);
+
             if (cfg.GetCVar(CCVars.DatabaseSynchronous))
             {
-                _prefsCtx.Database.Migrate();
+                prefsCtx.Database.Migrate();
                 _dbReadyTask = Task.CompletedTask;
+                prefsCtx.Dispose();
             }
             else
             {
-                _dbReadyTask = Task.Run(() => _prefsCtx.Database.Migrate());
+                _dbReadyTask = Task.Run(() =>
+                {
+                    prefsCtx.Database.Migrate();
+                    prefsCtx.Dispose();
+                });
             }
 
             cfg.OnValueChanged(CCVars.DatabaseSqliteDelay, v => _msDelay = v, true);
@@ -74,7 +86,7 @@ namespace Content.Server.Database
             // So just pull down the whole list into memory.
             var bans = await GetAllBans(db.SqliteDbContext, includeUnbanned: false, exempt);
 
-            return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId)) is { } foundBan
+            return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId, exempt)) is { } foundBan
                 ? ConvertBan(foundBan)
                 : null;
         }
@@ -92,7 +104,7 @@ namespace Content.Server.Database
             var queryBans = await GetAllBans(db.SqliteDbContext, includeUnbanned, exempt);
 
             return queryBans
-                .Where(b => BanMatches(b, address, userId, hwId))
+                .Where(b => BanMatches(b, address, userId, hwId, exempt))
                 .Select(ConvertBan)
                 .ToList()!;
         }
@@ -117,13 +129,14 @@ namespace Content.Server.Database
             return await query.ToListAsync();
         }
 
-        private static bool BanMatches(
-            ServerBan ban,
+        private static bool BanMatches(ServerBan ban,
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId,
+            ServerBanExemptFlags? exemptFlags)
         {
-            if (address != null && ban.Address is not null && IPAddressExt.IsInSubnet(address, ban.Address.Value))
+            if (!exemptFlags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.IP)
+                && address != null && ban.Address is not null && IPAddressExt.IsInSubnet(address, ban.Address.Value))
             {
                 return true;
             }
@@ -522,30 +535,34 @@ namespace Content.Server.Database
 
             await _prefsSemaphore.WaitAsync();
 
-            return new DbGuardImpl(this);
+            var dbContext = new SqliteServerDbContext(_options());
+
+            return new DbGuardImpl(this, dbContext);
         }
 
         protected override async Task<DbGuard> GetDb()
         {
-            return await GetDbImpl();
+            return await GetDbImpl().ConfigureAwait(false);
         }
 
         private sealed class DbGuardImpl : DbGuard
         {
             private readonly ServerDbSqlite _db;
+            private readonly SqliteServerDbContext _ctx;
 
-            public DbGuardImpl(ServerDbSqlite db)
+            public DbGuardImpl(ServerDbSqlite db, SqliteServerDbContext dbContext)
             {
                 _db = db;
+                _ctx = dbContext;
             }
 
-            public override ServerDbContext DbContext => _db._prefsCtx;
-            public SqliteServerDbContext SqliteDbContext => _db._prefsCtx;
+            public override ServerDbContext DbContext => _ctx;
+            public SqliteServerDbContext SqliteDbContext => _ctx;
 
-            public override ValueTask DisposeAsync()
+            public override async ValueTask DisposeAsync()
             {
+                await _ctx.DisposeAsync();
                 _db._prefsSemaphore.Release();
-                return default;
             }
         }
     }

@@ -103,12 +103,20 @@ binds:
 - function: FocusLocalChatWindow
   type: State
   key: Period
+- function: FocusEmote
+  type: State
+  mod1: Shift
+  key: Apostrophe
 - function: FocusWhisperChatWindow
   type: State
   key: Comma
 - function: FocusRadioWindow
   type: State
   key: SemiColon
+- function: FocusLOOCWindow
+  type: State
+  mod1: Shift
+  key: Num9
 - function: FocusOOCWindow
   type: State
   key: LBracket
