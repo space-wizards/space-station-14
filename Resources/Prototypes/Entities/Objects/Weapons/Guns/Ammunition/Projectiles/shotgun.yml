@@ -138,7 +138,8 @@
     range: 7
     sound:
       path: /Audio/Items/Flare/flare_burn.ogg
-      loop: true
+      params:
+        loop: true
   - type: IgniteOnCollide
     fireStacks: 1
   - type: PointLight
