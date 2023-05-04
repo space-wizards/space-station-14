@@ -380,6 +380,7 @@
     - HonkerRArm
     - HonkerLLeg
     - HonkerRLeg
+    - MechEquipmentHorn
   - type: MaterialStorage
     whitelist:
       tags:
