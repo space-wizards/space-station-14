@@ -1,3 +1,3 @@
-ent-OrganAnimalRuminantStomach = ruminant stomach
+ent-OrganAnimalRuminantStomach = желудок жвачного животного
     .desc = { ent-OrganAnimalStomach.desc }
     .suffix = { "" }
