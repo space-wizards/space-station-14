@@ -85,8 +85,8 @@ reagent-desc-ultravasculine = Rapidly flushes toxins from the body, but places s
 reagent-name-oculine = oculine
 reagent-desc-oculine = Heals eye damage.
 
-reagent-name-ethylredoxrazine = ethylredoxrazine
-reagent-desc-ethylredoxrazine = Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
+reagent-name-antihol = antihol
+reagent-desc-antihol = Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
 
 reagent-name-cognizine = cognizine
 reagent-desc-cognizine = A mysterious chemical which is able to make any non-sentient creature sentient.
@@ -99,3 +99,21 @@ reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine
 
 reagent-name-sigynate = sigynate
 reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids.  Tastes sweet!
+
+reagent-name-saline-glucose-solution = saline-glucose solution
+reagent-desc-saline-glucose-solution = Used for treating injuries, burns and bloodloss. Overdosing will cause vomiting.
+
+reagent-name-atropine = atropine
+reagent-desc-atropine = It can pull critical patients out of the grave, but it's easy to get an overdose.
+
+reagent-name-calomel = calomel
+reagent-desc-calomel = Removes reagents from the blood. If the damage is less than 180, an overdose occurs.
+
+reagent-name-oxygenis = oxygenis
+reagent-desc-oxygenis = Synthetic blood. Restores blood.
+
+reagent-name-fomepizole = fomepizole
+reagent-desc-fomepizole = Puts the helicopter on the landing - Calms the nerves well, preventing nervous shaking and hallucinations.
+
+reagent-name-haloperidol = haloperidol
+reagent-desc-haloperidol = A tranquilizer. Cleanses the body of most drugs and stimulants. Quickly relieves the narcotic state, hallucinations and nervous tremors. May cause drowsiness and cancer.
