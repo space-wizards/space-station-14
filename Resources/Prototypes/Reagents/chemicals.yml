@@ -43,7 +43,7 @@
   physicalDesc: reagent-physical-desc-powdery
   color: "#263436"
   metabolisms:
-    Poison:
+    Medicine:
       effects:
       - !type:HealthChange
         damage:
