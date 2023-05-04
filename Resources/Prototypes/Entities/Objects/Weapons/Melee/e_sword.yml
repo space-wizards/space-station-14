@@ -164,3 +164,62 @@
   - type: Item
     size: 5
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
+
+- type: entity
+  name: captain's energy sabre
+  parent: BaseItem
+  id: CaptainEnergySabre
+  description: A weapon belonging to the captain of the station.
+  components:
+  - type: EnergySword
+    colorOptions:
+      - White
+    litDamageBonus:
+        types:
+            Slash: 8.5
+            Heat: 8.5
+            Blunt: -1.0
+    litDisarmMalus: 0.6
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/captain_e_sword.rsi
+    layers:
+      - state: e_sword
+      - state: e_sword_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: MeleeWeapon
+    attackRate: 1.5
+    soundHit:
+      path: /Audio/Weapons/eblade1.ogg
+    damage:
+      types:
+        Blunt: 1.0
+  - type: Item
+    size: 5
+    sprite: Objects/Weapons/Melee/captain_e_sword.rsi
+  - type: UseDelay
+    delay: 1.0
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 2
+    energy: 2
+    color: white
+  - type: Appearance
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
+  - type: DisarmMalus
+    malus: 0
+  - type: Reflect
+    enabled: false
+    reflectProb: 0.25
+    spread: 45

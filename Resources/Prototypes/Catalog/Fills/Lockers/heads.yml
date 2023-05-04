@@ -50,7 +50,7 @@
         prob: 0.1
       - id: CigarGoldCase
         prob: 0.25
-      - id: ClothingBeltSheathFilled
+      - id: CaptainEnergySabre
       - id: DoorRemoteCommand
       - id: ClothingNeckCloakCapFormal
       - id: ClothingUniformJumpsuitCapFormal
