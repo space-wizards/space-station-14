@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Weather can now last indefinitely., type: Tweak}
-  - {message: Lattices now draw under weather, type: Tweak}
-  - {message: Weather can now transition from one state to another., type: Tweak}
-  id: 3139
-  time: '2023-03-07T01:28:51.0000000+00:00'
 - author: jamessimo
   changes:
   - {message: APC UI gets a visual update, type: Tweak}
@@ -2893,3 +2886,9 @@ Entries:
   - {message: Removed brigmedic., type: Remove}
   id: 3638
   time: '2023-05-04T10:08:01.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Brigmedic jumpsuit blueprints have been returned to the HOP. Ask your
+      local HOS if you wish to be security's in house doctor., type: Tweak}
+  id: 3639
+  time: '2023-05-04T14:19:49.0000000+00:00'
