@@ -9,7 +9,7 @@
 
 chem_dispenser: ChemDispenser
 
-# brigmedic stuff. Remove this sometime soon.
+# Brigmedic equipment. Removed 3/5/23
 SpawnPointBrigmedic: null
 ClothingHeadsetBrigmedic: null
 ClothingHeadHatBeretBrigmedic: null
