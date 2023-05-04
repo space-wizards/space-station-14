@@ -1,10 +1,4 @@
 Entries:
-- author: Menshin
-  changes:
-  - {message: Trinary atmos devices connectors will now properly align with pipes,
-    type: Fix}
-  id: 3137
-  time: '2023-03-07T00:08:04.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added custom parallax to Aspid, type: Add}
@@ -2893,3 +2887,9 @@ Entries:
   - {message: Animal stomachs now have slightly lower capacity., type: Tweak}
   id: 3636
   time: '2023-05-04T02:49:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove Vector., type: Remove}
+  - {message: Add Drozd., type: Add}
+  id: 3637
+  time: '2023-05-04T03:35:33.0000000+00:00'
