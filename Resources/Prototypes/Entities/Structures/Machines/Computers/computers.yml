@@ -270,6 +270,8 @@
     color: "#1f8c28"
   - type: Computer
     board: CriminalRecordsComputerCircuitboard
+  - type: AccessReader
+    access: [["Security"]]
 
 - type: entity
   parent: BaseComputer

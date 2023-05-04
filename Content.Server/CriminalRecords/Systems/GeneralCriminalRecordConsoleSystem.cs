@@ -2,6 +2,7 @@ using System.Security.AccessControl;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
+using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
@@ -10,9 +11,13 @@ using Content.Shared.Security;
 using Content.Server.Security.Components;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Database;
+using Content.Shared.Emag.Components;
+using Content.Shared.Popups;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -26,6 +31,8 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _stationRecordsSystem = default!;
     [Dependency] private readonly RadioSystem _radioSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -52,6 +59,13 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
     private void OnButtonPressed(EntityUid uid, GeneralCriminalRecordConsoleComponent component,
         CriminalRecordArrestButtonPressed msg)
     {
+        if (msg.Session.AttachedEntity is not {Valid: true} mob) return;
+        if (!CanUse(mob, uid))
+        {
+            _popupSystem.PopupEntity("DENIED!!!", uid, msg.Session);
+            return;
+        }
+
         TryComp<SecurityInfoComponent>(msg.Session.AttachedEntity, out var secInfo);
 
         if (msg.Reason != string.Empty && msg.Name != null && msg.Session.AttachedEntity != null && secInfo != null)
@@ -99,6 +113,13 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
     private void OnStatusSelected(EntityUid uid, GeneralCriminalRecordConsoleComponent component,
         CriminalStatusOptionButtonSelected msg)
     {
+        if (msg.Session.AttachedEntity is not {Valid: true} mob) return;
+        if (!CanUse(mob, uid))
+        {
+            _popupSystem.PopupEntity("DENIED!!!", uid, msg.Session);
+            return;
+        }
+
         TryComp<SecurityInfoComponent>(msg.Session.AttachedEntity, out var secInfo);
 
         if (msg.Reason != string.Empty && secInfo != null && msg.Session.AttachedEntity != null)
@@ -158,6 +179,15 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
             _stationRecordsSystem.Synchronize(station!.Value);
             UpdateUserInterface(uid, component);
         }
+    }
+
+    private bool CanUse(EntityUid user, EntityUid console)
+    {
+        if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !HasComp<EmaggedComponent>(console))
+        {
+            return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
+        }
+        return true;
     }
 
     private void UpdateUserInterface(EntityUid uid, GeneralCriminalRecordConsoleComponent? console = null)
