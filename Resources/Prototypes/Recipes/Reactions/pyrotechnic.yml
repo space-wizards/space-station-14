@@ -77,7 +77,7 @@
     explosionType: Default # 15 damage per intensity.
     maxIntensity: 2 # at most 30 damage per tile.
     intensityPerUnit: 0.35 # 100 reagent for maximum explosion
-    intensitySlope: 2
+    intensitySlope: 1
     maxTotalIntensity: 35
   - !type:PopupMessage
     messages: [ "powder-explosion" ]
