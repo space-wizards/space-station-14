@@ -393,6 +393,20 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitBrigmedic
+  result: ClothingUniformJumpsuitBrigmedic
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtBrigmedic
+  result: ClothingUniformJumpskirtBrigmedic
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitWarden
   result: ClothingUniformJumpsuitWarden
   completetime: 4
