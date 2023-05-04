@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprite edited by Flareguy for SS14, original unedited sprite can be found in https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e",
+  "copyright": "Sprites originally by cboyjet#6274, edited by Flareguy for SS14. Heavily edited from the /tg/station generic spacesuit sprites, found in https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e",
   "size": {
     "x": 32,
     "y": 32
@@ -11,7 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "equipped-HELMET",
+      "name": "equipped-OUTERCLOTHING",
       "directions": 4
     },
     {

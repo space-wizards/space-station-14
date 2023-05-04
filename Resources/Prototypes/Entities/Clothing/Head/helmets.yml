@@ -69,6 +69,48 @@
     - HelmetEVA
 
 - type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetEVAEngineering
+  name: engineering EVA helmet
+  description: A modified EVA helmet that is fitted with a screen to help provide welding protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/eva_engineering.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/eva_engineering.rsi
+  - type: IngestionBlocker
+  - type: EyeProtection
+  - type: Tag
+    tags:
+    - HelmetEVA
+
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetSyndicate
+  name: syndicate EVA helmet
+  description: A fancy EVA helmet that is fitted with a robust visor, capable of dampening most bright flashes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/syndicate.rsi
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped_helmet
+      - state: equipped_visor
+        shader: unshaded
+  - type: PointLight
+    enabled: true
+    color: "#FF8831"
+    radius: 1.0
+    energy: 9.0
+  - type: IngestionBlocker
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: Tag
+    tags:
+    - HelmetEVA
+
+- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetHelmet
   name: helmet
@@ -151,21 +193,6 @@
     tags:
     - HidesHair
   - type: IdentityBlocker
-
-- type: entity
-  parent: ClothingHeadEVAHelmetBase
-  id: ClothingHeadHelmetSyndicate
-  name: syndicate EVA helmet
-  description: A stylish, robust syndicate helmet
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/syndicate.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/syndicate.rsi
-  - type: IngestionBlocker
-  - type: Tag
-    tags:
-    - HelmetEVA
 
 - type: entity
   parent: ClothingHeadBase
