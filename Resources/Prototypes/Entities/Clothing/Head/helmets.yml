@@ -98,11 +98,6 @@
       - state: equipped_helmet
       - state: equipped_visor
         shader: unshaded
-  - type: PointLight
-    enabled: true
-    color: "#FF8831"
-    radius: 1.0
-    energy: 9.0
   - type: IngestionBlocker
   - type: FlashImmunity
   - type: EyeProtection

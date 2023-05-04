@@ -11,7 +11,11 @@
       "name": "icon"
     },
     {
-      "name": "equipped-HELMET",
+      "name": "equipped_helmet",
+      "directions": 4
+    },
+    {
+      "name": "equipped_visor",
       "directions": 4
     },
     {
