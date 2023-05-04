@@ -6,7 +6,7 @@
 # Window: WallSolid
 # WallSolid: Window
 # Table: null
-
+#
 chem_dispenser: ChemDispenser
 KvassTankFull: null
 DrinkKvassGlass: null
@@ -19,9 +19,6 @@ ClothingHeadHatBeretBrigmedic: null
 ClothingHeadHelmetHardsuitBrigmedic: null
 ClothingOuterHardsuitBrigmedic: null
 ClothingOuterCoatAMG: null
-ClothingUniformJumpsuitBrigmedic: null
-ClothingUniformJumpskirtBrigmedic: null
-ClothingUniformJumpskirtOfLife: null
 ClothingBackpackBrigmedic: null
 ClothingBackpackBrigmedicFilled: null
 ClothingBackpackSatchelBrigmedic: null
