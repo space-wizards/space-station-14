@@ -43,9 +43,8 @@
   - type: SolutionContainerManager
     solutions:
       stomach:
-        maxVol: 100
+        maxVol: 40
   - type: Stomach
-    maxVolume: 10
   - type: Metabolizer
     maxReagents: 3
     metabolizerTypes: [ Animal ]

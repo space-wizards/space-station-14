@@ -1,10 +1,10 @@
 ﻿- type: entity
-  id: OrganReptilianStomach
+  id: OrganAnimalRuminantStomach
   parent: OrganAnimalStomach
+  name: ruminant stomach
   noSpawn: true
   components:
-  - type: Stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
-        maxVol: 50
+        maxVol: 80

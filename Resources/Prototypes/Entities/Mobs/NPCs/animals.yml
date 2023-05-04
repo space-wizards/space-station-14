@@ -416,6 +416,10 @@
   - type: Faction
     factions:
     - Passive
+  - type: Body
+    prototype: AnimalRuminant
+  - type: HTN
+    rootTask: RuminantCompound
 
 - type: entity
   name: crab
@@ -519,6 +523,10 @@
   - type: Faction
     factions:
     - Passive
+  - type: Body
+    prototype: AnimalRuminant
+  - type: HTN
+    rootTask: RuminantCompound
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
