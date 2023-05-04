@@ -1,5 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-               Title="{Loc 'general-station-record-console-window-title'}"
+               Title="{Loc 'general-criminal-record-console-window-title'}"
                MinSize="750 500">
     <BoxContainer>
         <!-- Record listing -->
@@ -10,13 +10,13 @@
             </ScrollContainer>
         </BoxContainer>
         <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
-            <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'general-station-record-console-select-record-info'}"/>
+            <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'general-criminal-record-console-select-record-info'}"/>
             <BoxContainer Name="RecordContainer" Orientation="Vertical" />
             <PanelContainer Name="CriminalDivider" StyleClasses="LowDivider" Visible="False" Margin="0 5 0 5" />
             <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
-                <LineEdit Name="ReasonLineEdit" HorizontalExpand="True" Visible="False" PlaceHolder="Reason"/>
+                <LineEdit Name="ReasonLineEdit" HorizontalExpand="True" Visible="False" PlaceHolder="{Loc 'general-criminal-record-reason-placeholder'}"/>
                 <BoxContainer Orientation="Horizontal" Margin="5 5 5 5" >
-                    <Button Name="ArrestButton" Text="Arrest/Unarrest" Visible="False" HorizontalExpand="True" />
+                    <Button Name="ArrestButton" Visible="False" HorizontalExpand="True" />
                     <OptionButton Name="StatusOptionButton" Visible="False" HorizontalExpand="True" />
                 </BoxContainer>
             </BoxContainer>

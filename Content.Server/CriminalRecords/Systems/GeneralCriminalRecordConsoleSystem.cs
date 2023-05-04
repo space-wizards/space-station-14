@@ -1,11 +1,7 @@
-using System.Security.AccessControl;
-using System.Threading.Tasks;
-using Content.Server.Administration.Logs;
-using Content.Server.Database;
+using Content.Server.CriminalRecords.Components;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
-using Content.Shared.Preferences;
 using Content.Shared.Radio;
 using Content.Shared.Security;
 using Content.Server.Security.Components;
@@ -13,11 +9,8 @@ using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CriminalRecords;
-using Content.Shared.Database;
 using Content.Shared.Emag.Components;
-using Content.Shared.Popups;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -62,7 +55,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         if (msg.Session.AttachedEntity is not {Valid: true} mob) return;
         if (!CanUse(mob, uid))
         {
-            _popupSystem.PopupEntity("DENIED!!!", uid, msg.Session);
+            _popupSystem.PopupEntity(Loc.GetString("general-criminal-record-permission-denied"), uid, msg.Session);
             return;
         }
 
@@ -75,8 +68,8 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
             var messages = new Dictionary<SecurityStatus, string>()
             {
-                { SecurityStatus.Detained, $"{msg.Name} has been detained for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" },
-                { SecurityStatus.None, $"{msg.Name} has been released from the detention for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" }
+                { SecurityStatus.Detained, Loc.GetString("general-criminal-record-console-detained-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) },
+                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-undetained-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
             _radioSystem.SendRadioMessage(uid, messages[secInfo.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"));
@@ -89,8 +82,8 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
             var messages = new Dictionary<SecurityStatus, string>()
             {
-                { SecurityStatus.Detained, $"{msg.Name} has been detained for by {Name(msg.Session.AttachedEntity.Value)}" },
-                { SecurityStatus.None, $"{msg.Name} has been released from the detention by {Name(msg.Session.AttachedEntity.Value)}" }
+                { SecurityStatus.Detained, Loc.GetString("general-criminal-record-console-detained-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) },
+                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-undetained-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
             _radioSystem.SendRadioMessage(uid, messages[secInfo.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"));
@@ -100,13 +93,12 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
         TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
 
-        GeneralCriminalRecord? record;
-        _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out record, stationRecordsComponent);
+        _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out GeneralCriminalRecord? record, stationRecordsComponent);
 
         record!.Reason = secInfo!.Reason;
         record.Status = secInfo.Status;
 
-        _stationRecordsSystem.Synchronize(station!.Value);
+        _stationRecordsSystem.Synchronize(station.Value);
         UpdateUserInterface(uid, component);
     }
 
@@ -116,21 +108,24 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         if (msg.Session.AttachedEntity is not {Valid: true} mob) return;
         if (!CanUse(mob, uid))
         {
-            _popupSystem.PopupEntity("DENIED!!!", uid, msg.Session);
+            _popupSystem.PopupEntity(Loc.GetString("general-criminal-record-permission-denied"), uid, msg.Session);
             return;
         }
 
         TryComp<SecurityInfoComponent>(msg.Session.AttachedEntity, out var secInfo);
 
-        if (msg.Reason != string.Empty && secInfo != null && msg.Session.AttachedEntity != null)
+        if (msg.Status == secInfo!.Status)
+            return;
+
+        if (msg.Reason != string.Empty && msg.Session.AttachedEntity != null)
         {
             secInfo.Status = secInfo.Status == SecurityStatus.None ? SecurityStatus.Wanted : SecurityStatus.None;
             secInfo.Reason = msg.Reason!;
 
             var messages = new Dictionary<SecurityStatus, string>()
             {
-                { SecurityStatus.Wanted, $"{msg.Name} is wanted for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" },
-                { SecurityStatus.None, $"{msg.Name} is not wanted anymore for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" }
+                { SecurityStatus.Wanted, Loc.GetString("general-criminal-record-console-wanted-with-reason", ("name", msg.Name)!, ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) },
+                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-not-wanted-with-reason", ("name", msg.Name)!, ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
             _radioSystem.SendRadioMessage(uid, messages[secInfo.Status],
@@ -140,28 +135,24 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
             TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
 
-            GeneralCriminalRecord? record;
-            _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out record, stationRecordsComponent);
+            _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out GeneralCriminalRecord? record, stationRecordsComponent);
 
-            if (secInfo.Status == SecurityStatus.None)
-                record!.Reason = string.Empty;
-            else
-                record!.Reason = secInfo.Reason;
+            record!.Reason = secInfo.Status == SecurityStatus.None ? string.Empty : secInfo.Reason;
             record.Status = secInfo.Status;
 
-            _stationRecordsSystem.Synchronize(station!.Value);
+            _stationRecordsSystem.Synchronize(station.Value);
             UpdateUserInterface(uid, component);
         }
 
-        else if (msg.Reason == string.Empty && secInfo != null && msg.Session.AttachedEntity != null)
+        else if (msg.Reason == string.Empty && msg.Session.AttachedEntity != null)
         {
             secInfo.Status = secInfo.Status == SecurityStatus.None ? SecurityStatus.Wanted : SecurityStatus.None;
             secInfo.Reason = msg.Reason;
 
             var messages = new Dictionary<SecurityStatus, string>()
             {
-                { SecurityStatus.Wanted, $"{msg.Name} is wanted by {Name(msg.Session.AttachedEntity.Value)}" },
-                { SecurityStatus.None, $"{msg.Name} is not wanted anymore by {Name(msg.Session.AttachedEntity.Value)}" }
+                { SecurityStatus.Wanted, Loc.GetString("general-criminal-record-console-wanted-without-reason", ("name", msg.Name)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) },
+                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-not-wanted-without-reason", ("name", msg.Name)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
             _radioSystem.SendRadioMessage(uid, messages[secInfo.Status],
@@ -170,13 +161,12 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
             TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
 
-            GeneralCriminalRecord? record;
-            _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out record, stationRecordsComponent);
+            _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out GeneralCriminalRecord? record, stationRecordsComponent);
 
-            record!.Reason = secInfo!.Reason;
+            record!.Reason = secInfo.Reason;
             record.Status = secInfo.Status;
 
-            _stationRecordsSystem.Synchronize(station!.Value);
+            _stationRecordsSystem.Synchronize(station.Value);
             UpdateUserInterface(uid, component);
         }
     }

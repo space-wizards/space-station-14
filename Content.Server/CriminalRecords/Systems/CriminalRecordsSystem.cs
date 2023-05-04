@@ -1,7 +1,7 @@
 using Content.Server.StationRecords.Systems;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
-namespace Content.Server.CriminalnRecords.Systems;
+namespace Content.Server.CriminalRecords.Systems;
 
 /// <summary>
 ///     Criminal records
@@ -17,7 +17,7 @@ public sealed class CriminalRecordsSystem : EntitySystem
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(OnGeneralRecordCreated);
     }
 
-    public void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
+    private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
     {
 
         var record = new GeneralCriminalRecord()

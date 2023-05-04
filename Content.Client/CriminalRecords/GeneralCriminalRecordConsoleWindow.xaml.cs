@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Net.Mime;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
@@ -18,13 +16,11 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
     private bool _isPopulating;
     public Action<BaseButton.ButtonEventArgs, string?, string?>? OnArrestButtonPressed;
     public Action<OptionButton.ItemSelectedEventArgs, SecurityStatus, string?, string?>? OnStatusOptionButtonSelected;
-    private string? RecordName;
+    private string? _recordName;
 
     public GeneralCriminalRecordConsoleWindow()
     {
         RobustXamlLoader.Load(this);
-
-        var itemIndex = 0;
 
         RecordListing.OnItemSelected += args =>
         {
@@ -33,7 +29,6 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
                 return;
             }
 
-            itemIndex = args.ItemIndex;
             OnKeySelected?.Invoke(cast);
         };
 
@@ -43,13 +38,13 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
                 OnKeySelected?.Invoke(null);
         };
 
-        ArrestButton.OnPressed += e => OnArrestButtonPressed?.Invoke(e, ReasonLineEdit.Text, RecordName);
+        ArrestButton.OnPressed += e => OnArrestButtonPressed?.Invoke(e, ReasonLineEdit.Text, _recordName);
 
         StatusOptionButton.OnItemSelected += args =>
         {
             args.Button.SelectId(args.Id);
             OnStatusOptionButtonSelected?.Invoke(args, (SecurityStatus) StatusOptionButton.GetItemMetadata(args.Id)!,
-                ReasonLineEdit.Text, RecordName);
+                ReasonLineEdit.Text, _recordName);
         };
 
     }
@@ -60,7 +55,7 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
         {
             RecordListingStatus.Visible = true;
             RecordListing.Visible = false;
-            RecordListingStatus.Text = Loc.GetString("general-station-record-console-empty-state");
+            RecordListingStatus.Text = Loc.GetString("general-criminal-record-console-empty-state");
             return;
         }
 
@@ -70,6 +65,8 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 
         RecordContainerStatus.Visible = state.CriminalRecord == null;
 
+        ArrestButton.Text = state.CriminalRecord?.Status == SecurityStatus.Detained ? Loc.GetString("general-criminal-record-unarrest-button") : Loc.GetString("general-criminal-record-arrest-button");
+
         ReasonLineEdit.Visible = state.SelectedKey != null;
         ArrestButton.Visible = state.SelectedKey != null;
         CriminalDivider.Visible = state.SelectedKey != null;
@@ -77,7 +74,7 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 
         StatusOptionButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.Detained;
 
-        if (state.CriminalRecord != null & state.StationRecord != null)
+        if ((state.CriminalRecord != null) & (state.StationRecord != null))
         {
             ReasonLineEdit.Visible = state.SelectedKey != null;
             ArrestButton.Visible = state.SelectedKey != null;
@@ -90,22 +87,22 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
             {
                 StatusOptionButton.Clear();
 
-                var id_none = AddStatusSelect("None", SecurityStatus.None);
+                var idNone = AddStatusSelect(SecurityStatus.None.ToString(), SecurityStatus.None);
                 if (SecurityStatus.None == state.CriminalRecord?.Status)
-                    StatusOptionButton.Select(id_none);
+                    StatusOptionButton.Select(idNone);
 
-                var id_wanted = AddStatusSelect("Wanted", SecurityStatus.Wanted);
+                var idWanted = AddStatusSelect(SecurityStatus.Wanted.ToString(), SecurityStatus.Wanted);
                 if (SecurityStatus.Wanted == state.CriminalRecord?.Status)
-                    StatusOptionButton.Select(id_wanted);
+                    StatusOptionButton.Select(idWanted);
             }
             else
-                StatusOptionButton.AddItem("Detained");
+                StatusOptionButton.AddItem(SecurityStatus.Detained.ToString());
 
             RecordContainerStatus.Visible = state.SelectedKey == null;
             RecordContainerStatus.Text = state.SelectedKey != null
-                ? Loc.GetString("general-station-record-console-no-record-found")
-                : Loc.GetString("general-station-record-console-select-record-info");
-            RecordName = state.StationRecord?.Name;
+                ? Loc.GetString("general-criminal-record-console-no-record-found")
+                : Loc.GetString("general-criminal-record-console-select-record-info");
+            _recordName = state.StationRecord?.Name;
             PopulateRecordContainer(state.StationRecord!, state.CriminalRecord!);
         }
         else
@@ -151,30 +148,32 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
             },
             new Label()
             {
-                Text = Loc.GetString("general-station-record-console-record-age", ("age", stationRecord.Age.ToString()))
+                Text = Loc.GetString("general-criminal-record-console-record-age", ("age", stationRecord.Age.ToString()))
 
             },
             new Label()
             {
-                Text = Loc.GetString("general-station-record-console-record-title", ("job", Loc.GetString(stationRecord.JobTitle)))
+                Text = Loc.GetString("general-criminal-record-console-record-title", ("job", Loc.GetString(stationRecord.JobTitle)))
             },
             new Label()
             {
-                Text = Loc.GetString("general-station-record-console-record-species", ("species", stationRecord.Species))
+                Text = Loc.GetString("general-criminal-record-console-record-species", ("species", stationRecord.Species))
             },
             new Label()
             {
-                Text = Loc.GetString("general-station-record-console-record-gender", ("gender", stationRecord.Gender.ToString()))
+                Text = Loc.GetString("general-criminal-record-console-record-gender", ("gender", stationRecord.Gender.ToString()))
             },
             new Label()
             {
-                Text = Loc.GetString("general-station-record-console-record-fingerprint", ("fingerprint", stationRecord.Fingerprint is null ? Loc.GetString("generic-not-available-shorthand") : stationRecord.Fingerprint))
+                Text = Loc.GetString("general-criminal-record-console-record-fingerprint", ("fingerprint", stationRecord.Fingerprint ?? Loc.GetString("generic-not-available-shorthand")))
             },
             new Label()
             {
-                Text = $"Status: {criminalRecord.Status.ToString()}" // TODO: make it colorful
+                Text = Loc.GetString("general-criminal-record-console-record-status", ("status", criminalRecord.Status.ToString())!)
             }
         };
+
+
 
         foreach (var control in recordControls)
         {

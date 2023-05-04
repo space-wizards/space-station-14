@@ -1,11 +1,10 @@
 using Content.Shared.Security;
-using Robust.Shared.Enums;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CriminalRecords;
 
 /// <summary>
-///     General station record. Indicates the crewmember's name and job.
+///     General criminal record.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class GeneralCriminalRecord
@@ -20,5 +19,5 @@ public sealed class GeneralCriminalRecord
     ///     Reason of the current status.
     /// </summary>
     [ViewVariables]
-    public string Reason = String.Empty;
+    public string Reason = string.Empty;
 }
