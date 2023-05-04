@@ -52,7 +52,7 @@ namespace Content.Server.Abilities.Mime
 
         private void OnComponentInit(EntityUid uid, MimePowersComponent component, ComponentInit args)
         {
-            AddComp<MutedComponent>(uid);
+            EnsureComp<MutedComponent>(uid);
             _actionsSystem.AddAction(uid, component.InvisibleWallAction, uid);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
         }
