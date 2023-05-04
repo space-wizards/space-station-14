@@ -4,7 +4,6 @@
   parent: SimpleMobBase
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
-  suffix: Good
   components:
   - type: Faction
     factions:
@@ -120,9 +119,8 @@
 
 - type: entity
   name: blue slime
-  id: MobAdultSlimesBlueGood
+  id: MobAdultSlimesBlue
   parent: MobAdultSlimes
-  suffix: Good
   components:
   - type: DamageStateVisuals
     states:
@@ -130,6 +128,9 @@
         Base: blue_adult_slime
       Dead:
         Base: blue_adult_slime_dead
+  - type: GhostRole
+    makeSentient: true
+    description: ghost-role-information-slimes-description
 
 - type: entity
   name: blue slime
@@ -150,8 +151,7 @@
 - type: entity
   name: green slime
   parent: MobAdultSlimes
-  id: MobAdultSlimesGreenGood
-  suffix: Good
+  id: MobAdultSlimesGreen
   components:
     - type: Sprite
       layers:
@@ -170,6 +170,9 @@
           Structural: 4
           Caustic: 1
           Poison: 4
+    - type: GhostRole
+      makeSentient: true
+      description: ghost-role-information-slimes-description
 
 - type: entity
   name: green slime
@@ -201,8 +204,7 @@
 - type: entity
   name: yellow slime
   parent: MobAdultSlimes
-  id: MobAdultSlimesYellowGood
-  suffix: Good
+  id: MobAdultSlimesYellow
   components:
     - type: Sprite
       layers:
@@ -221,6 +223,9 @@
           Structural: 4
           Caustic: 1
           Cellular: 3
+    - type: GhostRole
+      makeSentient: true
+      description: ghost-role-information-slimes-description
 
 - type: entity
   name: yellow slime

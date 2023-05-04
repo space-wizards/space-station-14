@@ -866,9 +866,23 @@
     Pilk: 2
 
 - type: reaction
+  id: TheMartinez
+  reactants:
+    Cola:
+      amount: 2
+    Vodka:
+      amount: 2
+    Ice:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+  products:
+    TheMartinez: 6
+
+- type: reaction
   id: Cola
   reactants:
-    Carbon:
+    Ipecac:
       amount: 1
     Oxygen:
       amount: 1

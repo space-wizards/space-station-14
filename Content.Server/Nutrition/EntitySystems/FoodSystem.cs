@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
@@ -5,6 +6,7 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -85,15 +87,29 @@ namespace Content.Server.Nutrition.EntitySystems
         public bool TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
         {
             //Suppresses self-eating
-            if (food == user || EntityManager.TryGetComponent<MobStateComponent>(food, out var mobState) && _mobStateSystem.IsAlive(food, mobState)) // Suppresses eating alive mobs
+            if (food == user || TryComp<MobStateComponent>(food, out var mobState) && _mobStateSystem.IsAlive(food, mobState)) // Suppresses eating alive mobs
                 return false;
 
             // Target can't be fed or they're already eating
-            if (!EntityManager.HasComponent<BodyComponent>(target))
+            if (!TryComp<BodyComponent>(target, out var body))
                 return false;
 
             if (!_solutionContainerSystem.TryGetSolution(food, foodComp.SolutionName, out var foodSolution) || foodSolution.Name == null)
                 return false;
+
+            if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(target, out var stomachs, body))
+                return false;
+
+            var forceFeed = user != target;
+
+            if (!IsDigestibleBy(food, foodComp, stomachs))
+            {
+                _popupSystem.PopupEntity(
+                    forceFeed
+                        ? Loc.GetString("food-system-cant-digest-other", ("entity", food))
+                        : Loc.GetString("food-system-cant-digest", ("entity", food)), user, user);
+                return false;
+            }
 
             var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(food, user, foodSolution);
 
@@ -112,8 +128,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (!TryGetRequiredUtensils(user, foodComp, out _))
                 return true;
-
-            var forceFeed = user != target;
 
             if (forceFeed)
             {
@@ -183,11 +197,30 @@ namespace Content.Server.Nutrition.EntitySystems
             var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.Volume) : solution.Volume;
 
             var split = _solutionContainerSystem.SplitSolution(uid, solution, transferAmount);
+
             //TODO: Get the stomach UID somehow without nabbing owner
-            var firstStomach = stomachs.FirstOrNull(stomach => _stomachSystem.CanTransferSolution(stomach.Comp.Owner, split));
+            // Get the stomach with the highest available solution volume
+            var highestAvailable = FixedPoint2.Zero;
+            StomachComponent? stomachToUse = null;
+            foreach (var (stomach, _) in stomachs)
+            {
+                var owner = stomach.Owner;
+                if (!_stomachSystem.CanTransferSolution(owner, split))
+                    continue;
+
+                if (!_solutionContainerSystem.TryGetSolution(owner, StomachSystem.DefaultSolutionName,
+                        out var stomachSol))
+                    continue;
+
+                if (stomachSol.AvailableVolume <= highestAvailable)
+                    continue;
+
+                stomachToUse = stomach;
+                highestAvailable = stomachSol.AvailableVolume;
+            }
 
             // No stomach so just popup a message that they can't eat.
-            if (firstStomach == null)
+            if (stomachToUse == null)
             {
                 _solutionContainerSystem.TryAddSolution(uid, solution, split);
                 _popupSystem.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Target.Value, args.User);
@@ -195,7 +228,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.Owner, split, firstStomach.Value.Comp);
+            _stomachSystem.TryTransferSolution(stomachToUse.Owner, split, stomachToUse);
 
             var flavors = args.FlavorMessage;
 
@@ -285,49 +318,43 @@ namespace Content.Server.Nutrition.EntitySystems
         }
 
         /// <summary>
-        ///     Force feeds someone remotely. Does not require utensils (well, not the normal type anyways).
+        ///     Returns true if the food item can be digested by the user.
         /// </summary>
-        public void ProjectileForceFeed(EntityUid uid, EntityUid target, EntityUid? user, FoodComponent? food = null, BodyComponent? body = null)
+        public bool IsDigestibleBy(EntityUid uid, EntityUid food, FoodComponent? foodComp = null)
         {
-            // TODO: Combine with regular feeding because holy code duplication batman.
-            if (!Resolve(uid, ref food, false) || !Resolve(target, ref body, false))
-                return;
+            if (!Resolve(food, ref foodComp, false))
+                return false;
 
-            if (IsMouthBlocked(target))
-                return;
+            if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(uid, out var stomachs))
+                return false;
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, food.SolutionName, out var foodSolution))
-                return;
+            return IsDigestibleBy(food, foodComp, stomachs);
+        }
 
-            if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(target, out var stomachs, body))
-                return;
+        /// <summary>
+        ///     Returns true if <paramref name="stomachs"/> has a <see cref="StomachComponent"/> that is capable of
+        ///     digesting this <paramref name="food"/> (or if they even have enough stomachs in the first place).
+        /// </summary>
+        private bool IsDigestibleBy(EntityUid food, FoodComponent component, List<(StomachComponent, OrganComponent)> stomachs)
+        {
+            var digestible = true;
 
-            if (food.UsesRemaining <= 0)
-                DeleteAndSpawnTrash(food, uid);
+            if (stomachs.Count < component.RequiredStomachs)
+                return false;
 
-            var firstStomach = stomachs.FirstOrNull(
-                stomach => _stomachSystem.CanTransferSolution(((IComponent) stomach.Comp).Owner, foodSolution));
+            if (!component.RequiresSpecialDigestion)
+                return true;
 
-            if (firstStomach == null)
-                return;
+            foreach (var (comp, _) in stomachs)
+            {
+                if (comp.SpecialDigestible == null)
+                    continue;
 
-            // logging
-            if (user == null)
-                _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} was thrown into the mouth of {ToPrettyString(target):target}");
-            else
-                _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} into the mouth of {ToPrettyString(target):target}");
+                if (!comp.SpecialDigestible.IsValid(food, EntityManager))
+                    return false;
+            }
 
-            var filter = user == null ? Filter.Entities(target) : Filter.Entities(target, user.Value);
-            _popupSystem.PopupEntity(Loc.GetString(food.EatMessage, ("food", food.Owner)), target, filter, true);
-
-            foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, foodSolution, firstStomach.Value.Comp);
-            SoundSystem.Play(food.UseSound.GetSound(), Filter.Pvs(target), target, AudioParams.Default.WithVolume(-1f));
-
-            if (string.IsNullOrEmpty(food.TrashPrototype))
-                EntityManager.QueueDeleteEntity(food.Owner);
-            else
-                DeleteAndSpawnTrash(food, uid);
+            return digestible;
         }
 
         private bool TryGetRequiredUtensils(EntityUid user, FoodComponent component,

@@ -194,7 +194,7 @@
     contents:
       - id: WeaponSubMachineGunWt550
         amount: 2
-      - id: MagazineMagnumSubMachineGun
+      - id: MagazinePistolSubMachineGun
         amount: 4
 
 - type: entity
