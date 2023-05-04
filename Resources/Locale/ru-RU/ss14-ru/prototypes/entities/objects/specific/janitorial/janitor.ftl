@@ -19,3 +19,6 @@ ent-JanitorialTrolley = тележка уборщика
 ent-FloorDrain = дренаж
     .desc = Сливает лужи вокруг в себя. Пригодится для опорожнения ведер или поддержания чистоты в определенных помещениях.
     .suffix = { "" }
+ent-RagItem = damp rag
+    .desc = For cleaning up messes, you suppose.
+    .suffix = { "" }
