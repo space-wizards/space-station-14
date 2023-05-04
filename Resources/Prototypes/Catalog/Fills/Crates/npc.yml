@@ -31,9 +31,6 @@
       - id: MobCatCaracal
         prob: 0.5
         orGroup: MobCat
-      - id: MobCatFloppa
-        prob: 0.01
-        orGroup: MobCat
       - id: MobBingus
         prob: 0.005
         orGroup: MobCat
