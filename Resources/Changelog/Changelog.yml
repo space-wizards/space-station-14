@@ -1,12 +1,6 @@
 Entries:
 - author: Slava0135
   changes:
-  - {message: Removed heads encryption keys. Heads get second key in headsets (command
-      encryption key) to access command channel., type: Remove}
-  id: 3134
-  time: '2023-03-06T21:05:42.0000000+00:00'
-- author: Slava0135
-  changes:
   - {message: added telecommunication server. You can put encryption keys there. In
       the future will be necessary to transmit radio messages., type: Add}
   - {message: encryption key insert/remove popups now always appear, type: Fix}
@@ -2893,3 +2887,10 @@ Entries:
       Lemon juice, 2 vodka, 2 cola)', type: Add}
   id: 3633
   time: '2023-05-03T22:23:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now examine light replacers to see how many lights are inside.,
+    type: Add}
+  - {message: Light replacers printed by lathes are no longer full of lights., type: Fix}
+  id: 3634
+  time: '2023-05-04T02:09:36.0000000+00:00'
