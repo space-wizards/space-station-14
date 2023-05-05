@@ -1,22 +1,23 @@
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ArtifactSystem))]
 public sealed class ArtifactComponent : Component
 {
     /// <summary>
-    /// The artifact's node tree.
+    /// Every node contained in the tree
     /// </summary>
-    [ViewVariables]
-    public ArtifactTree? NodeTree;
+    [DataField("nodeTree"), ViewVariables]
+    public List<ArtifactNode> NodeTree = new();
 
     /// <summary>
     /// The current node the artifact is on.
     /// </summary>
-    [ViewVariables]
-    public ArtifactNode? CurrentNode;
+    [DataField("currentNodeId"), ViewVariables]
+    public int? CurrentNodeId;
 
     #region Node Tree Gen
     /// <summary>
@@ -35,60 +36,47 @@ public sealed class ArtifactComponent : Component
     /// <summary>
     /// Cooldown time between artifact activations (in seconds).
     /// </summary>
-    [DataField("timer", customTypeSerializer: typeof(TimespanSerializer))]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("timer"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan CooldownTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// Is this artifact under some suppression device?
     /// f true, will ignore all trigger activations attempts.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("isSuppressed"), ViewVariables(VVAccess.ReadWrite)]
     public bool IsSuppressed;
 
     /// <summary>
     /// The last time the artifact was activated.
     /// </summary>
-    [DataField("lastActivationTime", customTypeSerializer: typeof(TimespanSerializer))]
+    [DataField("lastActivationTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastActivationTime;
 
     /// <summary>
-    /// The base price of each node for an artifact
+    /// A multiplier applied to the calculated point value
+    /// to determine the monetary value of the artifact
     /// </summary>
-    [DataField("pricePerNode")]
-    public int PricePerNode = 500;
+    [DataField("priceMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    public float PriceMultiplier = 0.05f;
 
     /// <summary>
     /// The base amount of research points for each artifact node.
     /// </summary>
-    [DataField("pointsPerNode")]
+    [DataField("pointsPerNode"), ViewVariables(VVAccess.ReadWrite)]
     public int PointsPerNode = 5000;
+
+    /// <summary>
+    /// Research points which have been "consumed" from the theoretical max value of the artifact.
+    /// </summary>
+    [DataField("consumedPoints"), ViewVariables(VVAccess.ReadWrite)]
+    public int ConsumedPoints;
 
     /// <summary>
     /// A multiplier that is raised to the power of the average depth of a node.
     /// Used for calculating the research point value of an artifact node.
     /// </summary>
-    [DataField("pointDangerMultiplier")]
+    [DataField("pointDangerMultiplier"), ViewVariables(VVAccess.ReadWrite)]
     public float PointDangerMultiplier = 1.35f;
-}
-
-/// <summary>
-/// A tree of nodes.
-/// </summary>
-[DataDefinition]
-public sealed class ArtifactTree
-{
-    /// <summary>
-    /// The first node of the tree
-    /// </summary>
-    [ViewVariables]
-    public ArtifactNode StartNode = default!;
-
-    /// <summary>
-    /// Every node contained in the tree
-    /// </summary>
-    [ViewVariables]
-    public readonly List<ArtifactNode> AllNodes = new();
 }
 
 /// <summary>
@@ -98,51 +86,51 @@ public sealed class ArtifactTree
 public sealed class ArtifactNode : ICloneable
 {
     /// <summary>
-    /// A numeric id corresponding to each node. used for display purposes
+    /// A numeric id corresponding to each node.
     /// </summary>
-    [ViewVariables]
+    [DataField("id"), ViewVariables]
     public int Id;
 
     /// <summary>
     /// how "deep" into the node tree. used for generation and price/value calculations
     /// </summary>
-    [ViewVariables]
-    public int Depth = 0;
+    [DataField("depth"), ViewVariables]
+    public int Depth;
 
     /// <summary>
     /// A list of surrounding nodes. Used for tree traversal
     /// </summary>
-    [ViewVariables]
-    public List<ArtifactNode> Edges = new();
+    [DataField("edges"), ViewVariables]
+    public HashSet<int> Edges = new();
 
     /// <summary>
     /// Whether or not the node has been entered
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool Discovered = false;
+    [DataField("discovered"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Discovered;
 
     /// <summary>
     /// The trigger for the node
     /// </summary>
-    [ViewVariables]
-    public ArtifactTriggerPrototype Trigger = default!;
+    [DataField("trigger", customTypeSerializer: typeof(PrototypeIdSerializer<ArtifactTriggerPrototype>), required: true), ViewVariables]
+    public string Trigger = default!;
 
     /// <summary>
     /// Whether or not the node has been triggered
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool Triggered = false;
+    [DataField("triggered"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Triggered;
 
     /// <summary>
     /// The effect when the node is activated
     /// </summary>
-    [ViewVariables]
-    public ArtifactEffectPrototype Effect = default!;
+    [DataField("effect", customTypeSerializer: typeof(PrototypeIdSerializer<ArtifactEffectPrototype>), required: true), ViewVariables]
+    public string Effect = default!;
 
     /// <summary>
     /// Used for storing cumulative information about nodes
     /// </summary>
-    [ViewVariables]
+    [DataField("nodeData"), ViewVariables]
     public Dictionary<string, object> NodeData = new();
 
     public object Clone()

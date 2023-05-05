@@ -14,6 +14,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
+using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -159,9 +160,10 @@ public sealed class ArrivalsSystem : EntitySystem
         if (!_cfgManager.GetCVar(CCVars.ArrivalsReturns) && args.FromMapUid != null)
         {
             var pendingEntQuery = GetEntityQuery<PendingClockInComponent>();
+            var arrivalsBlacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
             var mobQuery = GetEntityQuery<MobStateComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
-            DumpChildren(uid, ref args, pendingEntQuery, mobQuery, xformQuery);
+            DumpChildren(uid, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
 
         var pendingQuery = AllEntityQuery<PendingClockInComponent, TransformComponent>();
@@ -180,6 +182,7 @@ public sealed class ArrivalsSystem : EntitySystem
     private void DumpChildren(EntityUid uid,
         ref FTLStartedEvent args,
         EntityQuery<PendingClockInComponent> pendingEntQuery,
+        EntityQuery<ArrivalsBlacklistComponent> arrivalsBlacklistQuery,
         EntityQuery<MobStateComponent> mobQuery,
         EntityQuery<TransformComponent> xformQuery)
     {
@@ -188,7 +191,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         var xform = xformQuery.GetComponent(uid);
 
-        if (mobQuery.HasComponent(uid))
+        if (mobQuery.HasComponent(uid) || arrivalsBlacklistQuery.HasComponent(uid))
         {
             var rotation = xform.LocalRotation;
             _transform.SetCoordinates(uid, new EntityCoordinates(args.FromMapUid!.Value, args.FTLFrom.Transform(xform.LocalPosition)));
@@ -200,7 +203,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         while (children.MoveNext(out var child))
         {
-            DumpChildren(child.Value, ref args, pendingEntQuery, mobQuery, xformQuery);
+            DumpChildren(child.Value, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
     }
 
@@ -280,7 +283,7 @@ public sealed class ArrivalsSystem : EntitySystem
         // TODO: Need some kind of comp to shunt people off if they try to get on?
         if (TryComp<TransformComponent>(arrivals, out var arrivalsXform))
         {
-            while (query.MoveNext(out var comp, out var shuttle, out var xform))
+            while (query.MoveNext(out var uid, out var comp, out var shuttle, out var xform))
             {
                 if (comp.NextTransfer > curTime || !TryComp<StationDataComponent>(comp.Station, out var data))
                     continue;
@@ -289,7 +292,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 if (xform.MapUid != arrivalsXform.MapUid)
                 {
                     if (arrivals.IsValid())
-                        _shuttles.FTLTravel(shuttle, arrivals, dock: true);
+                        _shuttles.FTLTravel(uid, shuttle, arrivals, dock: true);
                 }
                 // Go to station
                 else
@@ -297,7 +300,7 @@ public sealed class ArrivalsSystem : EntitySystem
                     var targetGrid = _station.GetLargestGrid(data);
 
                     if (targetGrid != null)
-                        _shuttles.FTLTravel(shuttle, targetGrid.Value, dock: true);
+                        _shuttles.FTLTravel(uid, shuttle, targetGrid.Value, dock: true);
                 }
 
                 comp.NextTransfer += TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
@@ -318,7 +321,7 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         var mapId = _mapManager.CreateMap();
 
-        if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap).ToString(), out var uids))
+        if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap), out var uids))
         {
             return;
         }
@@ -327,6 +330,7 @@ public sealed class ArrivalsSystem : EntitySystem
         {
             EnsureComp<ArrivalsSourceComponent>(id);
             EnsureComp<ProtectedGridComponent>(id);
+            EnsureComp<PreventPilotComponent>(id);
         }
 
         // Handle roundstart stations.
@@ -395,7 +399,7 @@ public sealed class ArrivalsSystem : EntitySystem
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
-            _shuttles.FTLTravel(shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
+            _shuttles.FTLTravel(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
             arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
         }
 

@@ -1,0 +1,113 @@
+- type: entity
+  id: BaseArachnidOrgan
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Arachnid/organs.rsi
+  - type: Organ
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+
+- type: entity
+  id: OrganArachnidStomach
+  parent: OrganAnimalStomach
+  name: Stomach
+  description: "Gross. This is hard to stomach."
+  noSpawn: true
+  components:
+  - type: Stomach
+    updateInterval: 1.5
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+  - type: Metabolizer
+    updateFrequency: 1.5
+
+- type: entity
+  id: OrganArachnidHeart
+  parent: BaseHumanOrgan
+  name: heart
+  description: "I feel bad for the heartless bastard who lost this."
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: heart-on
+  - type: Organ
+  - type: Metabolizer
+    updateFrequency: 1.5
+    maxReagents: 2
+    metabolizerTypes: [Animal]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  id: OrganArachnidLiver
+  parent: BaseHumanOrgan
+  name: liver
+  description: "Pairing suggestion: chianti and fava beans."
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: liver
+  - type: Organ
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    updateFrequency: 1.5
+    maxReagents: 1
+    metabolizerTypes: [Animal]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  id: OrganArachnidKidneys
+  parent: BaseHumanOrgan
+  name: kidneys
+  description: "Filters toxins from the bloodstream."
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  - type: Organ
+  # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
+  - type: Metabolizer
+    updateFrequency: 1.5
+    maxReagents: 5
+    metabolizerTypes: [Animal]
+    removeEmpty: true
+
+- type: entity
+  id: OrganArachnidEyes
+  parent: BaseArachnidOrgan
+  name: eyes
+  description: "Eyes see you!"
+  components:
+  - type: Sprite
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+  - type: Organ
+
+- type: entity
+  id: OrganArachnidTongue
+  parent: BaseArachnidOrgan
+  name: tongue
+  description: "A fleshy muscle mostly used for lying."
+  components:
+  - type: Sprite
+    state: tongue
+  - type: Organ

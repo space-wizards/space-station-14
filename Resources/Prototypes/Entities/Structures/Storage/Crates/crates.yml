@@ -157,6 +157,18 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateChemistrySecure
+  name: secure chemistry crate
+  components:
+    - type: Icon
+      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    - type: Sprite
+      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    - type: AccessReader
+      access: [["Chemistry"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CratePrivateSecure
   name: private crate
   components:
@@ -335,3 +347,26 @@
   - type: StaticPrice
     price: 60
 
+- type: entity
+  parent: CrateGeneric
+  id: CratePirate
+  name: pirate chest
+  description: A space pirate chest, not for station lubbers.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    layers:
+    - state: crate
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    state: crate_icon
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: crate_open
+      state_closed: crate_door

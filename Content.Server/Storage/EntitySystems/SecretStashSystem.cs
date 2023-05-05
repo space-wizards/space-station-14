@@ -47,7 +47,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>True if item was hidden inside stash</returns>
         public bool TryHideItem(EntityUid uid, EntityUid userUid, EntityUid itemToHideUid,
             SecretStashComponent? component = null, ItemComponent? item = null,
-            MetaDataComponent? itemMeta = null, SharedHandsComponent? hands = null)
+            MetaDataComponent? itemMeta = null, HandsComponent? hands = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
@@ -94,7 +94,7 @@ namespace Content.Server.Storage.EntitySystems
         /// </summary>
         /// <returns>True if user received item</returns>
         public bool TryGetItem(EntityUid uid, EntityUid userUid, SecretStashComponent? component = null,
-            SharedHandsComponent? hands = null)
+            HandsComponent? hands = null)
         {
             if (!Resolve(uid, ref component))
                 return false;

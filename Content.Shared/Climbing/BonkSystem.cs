@@ -2,11 +2,13 @@ using Content.Shared.Interaction;
 using Content.Shared.Stunnable;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Robust.Shared.Configuration;
 using Content.Shared.Popups;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Climbing;
 
@@ -18,12 +20,25 @@ public sealed class BonkSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<BonkableComponent, DragDropTargetEvent>(OnDragDrop);
+        SubscribeLocalEvent<BonkableComponent, BonkDoAfterEvent>(OnBonkDoAfter);
     }
+
+    private void OnBonkDoAfter(EntityUid uid, BonkableComponent component, BonkDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled || args.Args.Target == null)
+            return;
+
+        TryBonk(args.Args.User, uid, component);
+
+        args.Handled = true;
+    }
+
 
     public bool TryBonk(EntityUid user, EntityUid bonkableUid, BonkableComponent? bonkableComponent = null)
     {
@@ -55,8 +70,25 @@ public sealed class BonkSystem : EntitySystem
 
     }
 
-    private void OnDragDrop(EntityUid uid, BonkableComponent bonkableComponent, ref DragDropTargetEvent args)
+    private void OnDragDrop(EntityUid uid, BonkableComponent component, ref DragDropTargetEvent args)
     {
-        TryBonk(args.Dragged, uid);
+        if (args.Handled)
+            return;
+
+        var doAfterArgs = new DoAfterArgs(args.Dragged, component.BonkDelay, new BonkDoAfterEvent(), uid, target: uid)
+        {
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            BreakOnDamage = true
+        };
+
+        _doAfter.TryStartDoAfter(doAfterArgs);
+
+        args.Handled = true;
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class BonkDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

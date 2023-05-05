@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -41,7 +40,7 @@ public abstract partial class InventorySystem
     protected void QuickEquip(EntityUid uid, ClothingComponent component, UseInHandEvent args)
     {
         if (!TryComp(args.User, out InventoryComponent? inv)
-            || !TryComp(args.User, out SharedHandsComponent? hands)
+            || !TryComp(args.User, out HandsComponent? hands)
             || !_prototypeManager.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var prototype))
             return;
 
@@ -108,7 +107,7 @@ public abstract partial class InventorySystem
         if (eventArgs.SenderSession.AttachedEntity is not { Valid: true } actor)
             return;
 
-        if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<SharedHandsComponent>(actor, out var hands))
+        if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<HandsComponent>(actor, out var hands))
             return;
 
         var held = hands.ActiveHandEntity;
@@ -147,10 +146,6 @@ public abstract partial class InventorySystem
         if (!_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
             return;
 
-        var gotUnequipped = new GotUnequippedHandEvent(actor, held.Value, hands.ActiveHand!);
-        var didUnequip = new DidUnequipHandEvent(actor, held.Value, hands.ActiveHand!);
-        RaiseLocalEvent(held.Value, gotUnequipped, false);
-        RaiseLocalEvent(actor, didUnequip, true);
         RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
 
         TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true);
@@ -245,7 +240,7 @@ public abstract partial class InventorySystem
         return actor != target &&
             HasComp<StrippableComponent>(target) &&
             HasComp<StrippingComponent>(actor) &&
-            HasComp<SharedHandsComponent>(actor);
+            HasComp<HandsComponent>(actor);
     }
 
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason,

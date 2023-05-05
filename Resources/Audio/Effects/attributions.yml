@@ -22,3 +22,13 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "chime.ogg taken from Citadel Station."
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61"
+
+- files: ["tree_fell.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from felix.blume via freesound.org and cropped + mixed from stereo to mono."
+  source: "https://freesound.org/people/felix.blume/sounds/414093/"
+
+- files: ["beep1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from thisusernameis via freesound.org + mixed from stereo to mono."
+  source: "https://freesound.org/people/thisusernameis/sounds/426891/"

@@ -9,7 +9,7 @@
            Name = "MenuButtons"
            VerticalExpand="False"
            Orientation="Horizontal"
-           HorizontalAlignment="Left"
+           HorizontalAlignment="Stretch"
            VerticalAlignment="Top"
            SeparationOverride="5"
 >

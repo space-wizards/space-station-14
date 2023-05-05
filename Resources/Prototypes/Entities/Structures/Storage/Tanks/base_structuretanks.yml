@@ -7,7 +7,7 @@
   components:
   - type: Sprite
     netsync: false
-    snapCardinals: true
+    noRot: true
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -25,6 +25,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTypeTrigger
         damageType: Heat

@@ -30,7 +30,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1
+        damage: 25
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -122,7 +128,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 125
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -161,8 +167,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+        damage: 125
+      behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
@@ -197,8 +203,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+        damage: 150
+      behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
@@ -246,6 +252,12 @@
     tableMassLimit: 60
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 5
@@ -337,7 +349,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 250
       behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -548,7 +560,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 125
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]

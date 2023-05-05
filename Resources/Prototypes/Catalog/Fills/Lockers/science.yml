@@ -8,6 +8,6 @@
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetScience
       - id: ClothingMaskSterile
-      - id: ClothingOuterCoatLab
+      - id: ClothingOuterCoatRnd
       - id: AnomalyScanner
       - id: NodeScanner

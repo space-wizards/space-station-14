@@ -85,7 +85,7 @@ namespace Content.Shared.Lathe
         [DataField("partRatingMaterialUseMultiplier")]
         public float PartRatingMaterialUseMultiplier = DefaultPartRatingMaterialUseMultiplier;
 
-        public const float DefaultPartRatingMaterialUseMultiplier = 0.75f;
+        public const float DefaultPartRatingMaterialUseMultiplier = 0.85f;
         #endregion
     }
 

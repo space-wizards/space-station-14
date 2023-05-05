@@ -1,0 +1,71 @@
+- type: utilityQuery
+  id: NearbyFood
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: Food
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:InverseBoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:FoodValueCon
+      curve: !type:QuadraticCurve
+        slope: 1.0
+        exponent: 0.4
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
+  id: NearbyMeleeTargets
+  query:
+    - !type:NearbyHostilesQuery
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetHealthCon
+      curve: !type:PresetCurve
+        preset: TargetHealth
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+    - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
+  id: NearbyRangedTargets
+  query:
+    - !type:NearbyHostilesQuery
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetHealthCon
+      curve: !type:PresetCurve
+        preset: TargetHealth
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+    - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
+
+
+# Presets
+- type: utilityCurvePreset
+  id: TargetDistance
+  curve: !type:QuadraticCurve
+    slope: -1
+    exponent: 1
+    yOffset: 1
+    xOffset: 0
+
+- type: utilityCurvePreset
+  id: TargetHealth
+  curve: !type:QuadraticCurve
+    slope: 1.0
+    exponent: 0.4
+    xOffset: -0.02

@@ -17,7 +17,7 @@ public sealed partial class AnomalySystem
     {
         SubscribeLocalEvent<AnomalyScannerComponent, BoundUIOpenedEvent>(OnScannerUiOpened);
         SubscribeLocalEvent<AnomalyScannerComponent, AfterInteractEvent>(OnScannerAfterInteract);
-        SubscribeLocalEvent<AnomalyScannerComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<AnomalyScannerComponent, ScannerDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<AnomalyShutdownEvent>(OnScannerAnomalyShutdown);
         SubscribeLocalEvent<AnomalySeverityChangedEvent>(OnScannerAnomalySeverityChanged);
@@ -81,7 +81,7 @@ public sealed partial class AnomalySystem
         if (!HasComp<AnomalyComponent>(target))
             return;
 
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ScanDoAfterDuration, target:target, used:uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.ScanDoAfterDuration, new ScannerDoAfterEvent(), uid, target: target, used: uid)
         {
             DistanceThreshold = 2f
         });
@@ -144,8 +144,7 @@ public sealed partial class AnomalySystem
         msg.AddMarkup(stateLoc);
         msg.PushNewline();
 
-        var points = GetAnomalyPointValue(anomaly, anomalyComp) / 10 * 10; //round to tens place
-        msg.AddMarkup(Loc.GetString("anomaly-scanner-point-output", ("point", points)));
+        msg.AddMarkup(Loc.GetString("anomaly-scanner-point-output", ("point", GetAnomalyPointValue(anomaly, anomalyComp))));
         msg.PushNewline();
         msg.PushNewline();
 

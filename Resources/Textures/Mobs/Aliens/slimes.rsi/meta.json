@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from the tgstation at https://github.com/tgstation/tgstation/blob/bb89e65aebb14d6ba0ce7fc43363fbc3f1279e79/icons/mob/simple/slimes.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "blue_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "blue_adult_slime_dead"
+    },
+    {
+      "name": "green_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "green_adult_slime_dead"
+    },
+    {
+      "name": "yellow_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+	},
+	{
+      "name": "yellow_adult_slime_dead"
+    }
+  ]
+}

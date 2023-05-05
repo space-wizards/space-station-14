@@ -17,6 +17,4 @@ public sealed class ResistLockerComponent : Component
     /// </summary>
     [ViewVariables]
     public bool IsResisting = false;
-
-    public CancellationTokenSource? CancelToken;
 }
