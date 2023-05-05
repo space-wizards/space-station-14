@@ -7018,9 +7018,6 @@ entities:
     - pos: -11.5,-16.5
       parent: 1
       type: Transform
-    - following:
-      - invalid
-      type: Followed
 - proto: AirlockMaintSalvageLocked
   entities:
   - uid: 3597
@@ -28565,9 +28562,6 @@ entities:
       pos: -21.5,-2.5
       parent: 1
       type: Transform
-    - following:
-      - invalid
-      type: Followed
   - uid: 2868
     components:
     - rot: 1.5707963267948966 rad
@@ -34659,9 +34653,6 @@ entities:
     - pos: -14.5,-3.5
       parent: 1
       type: Transform
-    - following:
-      - invalid
-      type: Followed
   - uid: 3824
     components:
     - pos: 2.5,23.5
@@ -84491,9 +84482,6 @@ entities:
       pos: -9.5,-16.5
       parent: 1
       type: Transform
-    - following:
-      - invalid
-      type: Followed
   - uid: 514
     components:
     - rot: 3.141592653589793 rad
