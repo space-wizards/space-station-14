@@ -126,7 +126,7 @@
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
   - type: StaminaDamageOnCollide
-    damage: 15
+    damage: 22 # 5 hits to stun sounds reasonable
 
 # Energy projectiles
 - type: entity
