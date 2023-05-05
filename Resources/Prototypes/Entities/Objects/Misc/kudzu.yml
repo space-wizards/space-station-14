@@ -154,6 +154,25 @@
         tags:
         - Flesh
     - type: Kudzu
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 20
+      coldDamage:
+        types:
+          Cold: 5 #per second, scales with temperature & other constants
+      heatDamageThreshold: 360
+      coldDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
+      cold:
+       types: { }
+      damage:
+       types:
+         Heat: 1
+    - type: GrowingKudzu
+      growthTickChance: 0.3
+    - type: AtmosExposed
     - type: EdgeSpreader
     - type: NodeContainer
       nodes:
