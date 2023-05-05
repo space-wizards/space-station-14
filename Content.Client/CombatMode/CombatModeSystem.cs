@@ -17,7 +17,6 @@ namespace Content.Client.CombatMode
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IEyeManager _eye = default!;
         public event Action? LocalPlayerCombatModeUpdated;
         public override void Initialize()
@@ -28,7 +27,7 @@ namespace Content.Client.CombatMode
             _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay(
                 _cfg,
                 _inputManager,
-                _entMan,
+                EntityManager,
                 _eye,
                 this));
         }

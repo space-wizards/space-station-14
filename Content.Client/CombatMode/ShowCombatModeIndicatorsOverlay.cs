@@ -8,7 +8,6 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Utility;
-using Robust.Shared.Map;
 
 namespace Content.Client.CombatMode;
 
@@ -28,12 +27,9 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public CombatModeIndicatorsOverlaySettings _settings = new(
-        Color.White.WithAlpha(0.3f),
-        Color.Black.WithAlpha(0.5f),
-        // 1 is a little big
-        0.8f
-    );
+    public Color MainColor = Color.White.WithAlpha(0.3f);
+    public Color StrokeColor = Color.Black.WithAlpha(0.5f);
+    public float Scale = 0.8f;  // 1 is a little big
 
     private Texture _gunSight;
     private Texture _meleeSight;
@@ -62,61 +58,46 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
             isShow => _isShowIndicators = isShow, true);
     }
 
-    protected override void Draw(in OverlayDrawArgs args)
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         if (!_isShowIndicators)
-            return;
+            return false;
 
         if (!_combatSystem.IsInCombatMode())
-            return;
+            return false;
 
-        var mouseScreen = _inputManager.MouseScreenPosition;
-        var mousePosMap = _eye.ScreenToMap(mouseScreen);
+        var mousePosMap = _eye.ScreenToMap(_inputManager.MouseScreenPosition);
+        if (mousePosMap.MapId != args.MapId)
+            return false;
 
-        if (mousePosMap.MapId == MapId.Nullspace)
-            return;
+        return true;
+    }
 
-        EntityUid? handEntity = _entMan.System<HandsSystem>().GetActiveHandEntity();
-        bool isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
+    protected override void Draw(in OverlayDrawArgs args)
+    {
+        var handEntity = _entMan.System<HandsSystem>().GetActiveHandEntity();
+        var isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
 
         var screen = args.ScreenHandle;
-        var mousePos = mouseScreen.Position;
+        var mousePos = _inputManager.MouseScreenPosition.Position;
         var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
-        float limitedScale = uiScale > 1.25f ? 1.25f : uiScale;
+        var limitedScale = uiScale > 1.25f ? 1.25f : uiScale;
 
         var sight = isHandGunItem ? _gunSight : _meleeSight;
-        DrawSight(sight, screen, mousePos, limitedScale * _settings.Scale);
+        DrawSight(sight, screen, mousePos, limitedScale * Scale);
     }
     private void DrawSight(Texture sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
     {
         screen.DrawTextureRect(sight,
-            GetRectForTexture(sight.Size, centerPos, scale), _settings.StrokeColor);
+            GetRectForTexture(sight.Size, centerPos, scale), StrokeColor);
         screen.DrawTextureRect(sight,
-            GetRectForTexture(sight.Size, centerPos, scale, true), _settings.MainColor);
+            GetRectForTexture(sight.Size, centerPos, scale, 7f), MainColor);
     }
 
-    static private UIBox2 GetRectForTexture(Vector2 textureSize, Vector2 pos, float scale,
-        bool expanded = false)
+    private static UIBox2 GetRectForTexture(Vector2 textureSize, Vector2 pos, float scale,
+        float expandedSize = 0f)
     {
-        Vector2 sightSize = textureSize * scale;
-
-        if (expanded)
-            sightSize += 7;
-
+        var sightSize = (textureSize * scale) + expandedSize;
         return UIBox2.FromDimensions(pos - (sightSize / 2), sightSize);
-    }
-}
-
-public struct CombatModeIndicatorsOverlaySettings
-{
-    public Color MainColor;
-    public Color StrokeColor;
-    public float Scale;
-
-    public CombatModeIndicatorsOverlaySettings(Color color, Color stroke, float scale)
-    {
-        MainColor = color;
-        StrokeColor = stroke;
-        Scale = scale;
     }
 }
