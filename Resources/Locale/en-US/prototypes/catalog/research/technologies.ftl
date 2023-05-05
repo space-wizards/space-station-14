@@ -88,6 +88,9 @@ technologies-archaeology-description = Advanced equipment for uncovering the sec
 technologies-ripley-technology = Exosuit: Ripley
 technologies-ripley-technology-description = The latest and greatest in mechanized cargo construction.
 
+technologies-clown-technology = Exosuit: H.O.N.K.
+technologies-clown-technology-description = Honk?!
+
 technologies-adv-parts-technology-description = Like the previous ones, but better!
 technologies-adv-parts-technology = Advanced parts technology
 

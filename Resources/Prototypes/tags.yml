@@ -141,16 +141,16 @@
   id: CigPack
 
 - type: Tag
-  id: HardsuitEVA
-
-- type: Tag
-  id: HelmetEVA
+  id: ClownMask
 
 - type: Tag
   id: ClownRecorder
 
 - type: Tag
   id: ClownRubberStamp
+
+- type: Tag
+  id: ClownShoes
 
 - type: Tag
   id: CluwneHorn
@@ -328,7 +328,13 @@
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
 - type: Tag
+  id: HardsuitEVA
+
+- type: Tag
   id: Head
+
+- type: Tag
+  id: HelmetEVA
 
 - type: Tag
   id: HideContextMenu
@@ -347,6 +353,27 @@
 
 - type: Tag
   id: HolosignProjector
+
+- type: Tag
+  id: HonkerCentralControlModule
+
+- type: Tag
+  id: HonkerPeripheralsControlModule
+
+- type: Tag
+  id: HonkerTargetingControlModule
+
+- type: Tag
+  id: HonkerLArm
+
+- type: Tag
+  id: HonkerLLeg
+
+- type: Tag
+  id: HonkerRLeg
+
+- type: Tag
+  id: HonkerRArm
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete

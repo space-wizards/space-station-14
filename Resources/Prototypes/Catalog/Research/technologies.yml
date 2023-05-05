@@ -312,6 +312,27 @@
   - RipleyLLeg
   - RipleyRLeg
 
+- type: technology
+  name: technologies-clown-technology
+  id: ClownTechnology
+  description: technologies-clown-technology-description
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: honker
+  requiredPoints: 15000
+  requiredTechnologies:
+  - RipleyTechnology
+  unlockedRecipes:
+  - HonkerCentralElectronics
+  - HonkerPeripheralsElectronics
+  - HonkerTargetingElectronics
+  - MechEquipmentHorn
+  - HonkerHarness
+  - HonkerLArm
+  - HonkerRArm
+  - HonkerLLeg
+  - HonkerRLeg
+
 # Industrial Engineering Technology Tree
 
 - type: technology
