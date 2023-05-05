@@ -1,17 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed vehicles and mechs not properly inheriting access., type: Fix}
-  id: 3159
-  time: '2023-03-12T12:55:02.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Upgraded all headsets to 4 slots. Head staff headsets will now have
-      a free slot on their headset., type: Add}
-  - {message: Fixed blood-red over-ear headset description to match it's actual stats;
-      5 key slots., type: Fix}
-  id: 3160
-  time: '2023-03-12T13:51:28.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: grille can now be built on all tiles and in space, type: Tweak}
@@ -2901,3 +2888,13 @@ Entries:
   - {message: You can no longer puff empty vapes, type: Fix}
   id: 3658
   time: '2023-05-05T17:48:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix suit sensors not being set for latejoins., type: Fix}
+  id: 3659
+  time: '2023-05-05T17:51:58.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Handheld crew monitors and station maps now use battery charge, type: Fix}
+  id: 3660
+  time: '2023-05-05T17:52:40.0000000+00:00'
