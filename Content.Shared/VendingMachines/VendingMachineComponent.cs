@@ -118,6 +118,7 @@ namespace Content.Shared.VendingMachines
         /// <summary>
         ///     While disabled by EMP it randomly ejects items
         /// </summary>
+        [DataField("nextEmpEject", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan NextEmpEject = TimeSpan.Zero;
 
         #region Client Visuals
