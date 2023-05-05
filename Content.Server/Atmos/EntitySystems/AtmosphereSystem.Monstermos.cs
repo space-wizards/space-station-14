@@ -284,7 +284,7 @@ namespace Content.Server.Atmos.EntitySystems
                             var otherTile2 = otherTile.AdjacentTiles[k];
 
                             if (taker.MonstermosInfo.MoleDelta >= 0) break; // We're done here now. Let's not do more work than needed.
-                            if (otherTile2 == null || otherTile2.MonstermosInfo.LastQueueCycle != queueCycle) continue;
+                            if (otherTile2 == null || otherTile2.AdjacentBits == 0 || otherTile2.MonstermosInfo.LastQueueCycle != queueCycle) continue;
                             DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                             if (otherTile2.MonstermosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                             _equalizeQueue[queueLength++] = otherTile2;
@@ -342,6 +342,8 @@ namespace Content.Server.Atmos.EntitySystems
                     var direction = (AtmosDirection) (1 << j);
                     if (!otherTile.AdjacentBits.IsFlagSet(direction)) continue;
                     var otherTile2 = otherTile.AdjacentTiles[j]!;
+                    if (otherTile2.AdjacentBits == 0)
+                        continue;
                     DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                     if (otherTile2.Air != null && CompareExchange(otherTile2.Air, tile.Air) == GasCompareResult.NoExchange) continue;
                     AddActiveTile(gridAtmosphere, otherTile2);
@@ -452,7 +454,7 @@ namespace Content.Server.Atmos.EntitySystems
                 AddActiveTile(gridAtmosphere, otherTile);
                 var otherTile2 = otherTile.AdjacentTiles[otherTile.MonstermosInfo.CurrentTransferDirection.ToIndex()];
                 if (otherTile2?.Air == null) continue;
-                var sum = otherTile2.Air.TotalMoles;
+                var sum = otherTile2.Air.TotalMoles * 0.2f;
                 totalMolesRemoved += sum;
                 otherTile.MonstermosInfo.CurrentTransferAmount += sum;
                 otherTile2.MonstermosInfo.CurrentTransferAmount += otherTile.MonstermosInfo.CurrentTransferAmount;
@@ -465,13 +467,22 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile2.PressureDirection = otherTile.MonstermosInfo.CurrentTransferDirection;
                 }
 
+                if (tile.Air != null && tile.Air.Pressure > 20.0)
+                {
+                    // Transfer the air into the other tile (space wind :)
+                    ReleaseGasTo(otherTile.Air!, otherTile2.Air!, sum);
+                    // And then some magically into space
+                    ReleaseGasTo(otherTile2.Air!, null, sum * 0.5f);
+                }
+                else
+                {
+                    // This gas mixture cannot be null, no tile in _depressurizeProgressionOrder can have a null gas mixture
+                    otherTile.Air!.Clear();
 
-                // This gas mixture cannot be null, no tile in _depressurizeProgressionOrder can have a null gas mixture
-                otherTile.Air!.Clear();
-
-                // This is a little hacky, but hear me out. It makes sense. We have just vacuumed all of the tile's air
-                // therefore there is no more gas in the tile, therefore the tile should be as cold as space!
-                otherTile.Air.Temperature = Atmospherics.TCMB;
+                    // This is a little hacky, but hear me out. It makes sense. We have just vacuumed all of the tile's air
+                    // therefore there is no more gas in the tile, therefore the tile should be as cold as space!
+                    otherTile.Air.Temperature = Atmospherics.TCMB;
+                }
 
                 InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices, visuals);
                 HandleDecompressionFloorRip(mapGrid, otherTile, sum);
@@ -488,7 +499,7 @@ namespace Content.Server.Atmos.EntitySystems
                 _physics.ApplyAngularImpulse(mapGrid.Owner, Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved, body: gridPhysics);
             }
 
-            if(tileCount > 10 && (totalMolesRemoved / tileCount) > 20)
+            if(tileCount > 10 && (totalMolesRemoved / tileCount) > 10)
                 _adminLog.Add(LogType.ExplosiveDepressurization, LogImpact.High,
                     $"Explosive depressurization removed {totalMolesRemoved} moles from {tileCount} tiles starting from position {tile.GridIndices:position} on grid ID {tile.GridIndex:grid}");
 
