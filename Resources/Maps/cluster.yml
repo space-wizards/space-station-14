@@ -7018,6 +7018,9 @@ entities:
     - pos: -11.5,-16.5
       parent: 1
       type: Transform
+    - following:
+      - invalid
+      type: Followed
 - proto: AirlockMaintSalvageLocked
   entities:
   - uid: 3597
@@ -28562,6 +28565,9 @@ entities:
       pos: -21.5,-2.5
       parent: 1
       type: Transform
+    - following:
+      - invalid
+      type: Followed
   - uid: 2868
     components:
     - rot: 1.5707963267948966 rad
@@ -31427,73 +31433,59 @@ entities:
     - pos: -11.479882,-31.566597
       parent: 1
       type: Transform
-- proto: DefibrillatorCabinet
+- proto: DefibrillatorCabinetFilled
   entities:
-  - uid: 8372
+  - uid: 328
     components:
     - rot: 1.5707963267948966 rad
       pos: -17.5,16.5
       parent: 1
       type: Transform
-  - uid: 8373
+  - uid: 8372
     components:
     - rot: 3.141592653589793 rad
       pos: -12.5,17.5
       parent: 1
       type: Transform
-  - uid: 9831
+  - uid: 8373
     components:
     - rot: -1.5707963267948966 rad
       pos: -22.5,5.5
       parent: 1
       type: Transform
-  - uid: 12543
+  - uid: 9831
     components:
     - rot: 1.5707963267948966 rad
       pos: 6.5,4.5
       parent: 1
       type: Transform
-  - uid: 12551
+  - uid: 12543
     components:
     - rot: -1.5707963267948966 rad
       pos: -38.5,8.5
       parent: 1
       type: Transform
-  - uid: 12552
+  - uid: 12551
     components:
     - rot: 1.5707963267948966 rad
       pos: -0.5,-17.5
       parent: 1
       type: Transform
-  - uid: 12553
+  - uid: 12552
     components:
     - rot: 3.141592653589793 rad
       pos: -9.5,-27.5
       parent: 1
       type: Transform
-  - uid: 12555
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -0.5,25.5
-      parent: 1
-      type: Transform
-  - uid: 12559
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 24.5,6.5
-      parent: 1
-      type: Transform
-  - uid: 12561
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 47.5,23.5
-      parent: 1
-      type: Transform
-- proto: DefibrillatorCabinetFilled
-  entities:
   - uid: 12554
     components:
     - pos: -21.5,12.5
+      parent: 1
+      type: Transform
+  - uid: 12555
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 24.5,6.5
       parent: 1
       type: Transform
   - uid: 12556
@@ -31509,6 +31501,18 @@ entities:
   - uid: 12558
     components:
     - pos: -19.5,4.5
+      parent: 1
+      type: Transform
+  - uid: 12559
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 47.5,23.5
+      parent: 1
+      type: Transform
+  - uid: 12561
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -0.5,25.5
       parent: 1
       type: Transform
   - uid: 12607
@@ -34655,6 +34659,9 @@ entities:
     - pos: -14.5,-3.5
       parent: 1
       type: Transform
+    - following:
+      - invalid
+      type: Followed
   - uid: 3824
     components:
     - pos: 2.5,23.5
@@ -78646,12 +78653,6 @@ entities:
       pos: -0.5,26.5
       parent: 1
       type: Transform
-  - uid: 328
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -0.5,25.5
-      parent: 1
-      type: Transform
   - uid: 329
     components:
     - rot: -1.5707963267948966 rad
@@ -83767,6 +83768,12 @@ entities:
       pos: 0.5,66.5
       parent: 1
       type: Transform
+  - uid: 12553
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -0.5,25.5
+      parent: 1
+      type: Transform
 - proto: WallSolid
   entities:
   - uid: 2
@@ -84484,6 +84491,9 @@ entities:
       pos: -9.5,-16.5
       parent: 1
       type: Transform
+    - following:
+      - invalid
+      type: Followed
   - uid: 514
     components:
     - rot: 3.141592653589793 rad
