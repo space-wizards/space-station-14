@@ -74,6 +74,8 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepWater
+        params:
+          volume: 6
     - type: Slippery
       launchForwardsMultiplier: 2.0
     - type: Transform

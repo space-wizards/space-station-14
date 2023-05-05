@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
@@ -26,12 +23,11 @@ public sealed class SecretStartsTest
 
         var server = pairTracker.Pair.Server;
         await server.WaitIdleAsync();
-        var protoMan = server.ResolveDependency<IPrototypeManager>();
         var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
 
         await server.WaitAssertion(() =>
         {
-            gameTicker.StartGameRule(protoMan.Index<GameRulePrototype>("Secret"));
+            gameTicker.StartGameRule("Secret");
         });
 
         // Wait three ticks for any random update loops that might happen
@@ -39,9 +35,9 @@ public sealed class SecretStartsTest
 
         await server.WaitAssertion(() =>
         {
-            foreach (var rule in gameTicker.AddedGameRules)
+            foreach (var rule in gameTicker.GetAddedGameRules())
             {
-                Assert.That(gameTicker.StartedGameRules.Contains(rule));
+                Assert.That(gameTicker.GetActiveGameRules().Contains(rule));
             }
 
             // End all rules

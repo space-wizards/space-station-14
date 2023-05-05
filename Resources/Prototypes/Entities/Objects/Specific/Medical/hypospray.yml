@@ -264,28 +264,3 @@
     - id: Hypopen
     sound:
       path: /Audio/Effects/unwrap.ogg
-
-- type: entity
-  name: brigmedic hypospray
-  parent: BaseItem
-  description: An injector (most often) of medicines in liquid form, it has a small inscription on it "PROPERTY OF A BRIGMEDIC, HANDS OFF!"
-  id: BrigmedicHypo
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Medical/brigmedichypo.rsi
-    state: hypo
-  - type: Item
-    sprite: Objects/Specific/Medical/brigmedichypo.rsi
-  - type: SolutionContainerManager
-    solutions:
-      hypospray:
-        maxVol: 5
-  - type: RefillableSolution
-    solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
-  - type: Hypospray
-  - type: UseDelay
-    delay: 2.5
-  - type: StaticPrice
-    price: 550

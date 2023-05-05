@@ -98,7 +98,7 @@ public sealed class BanExemptionGetCommand : LocalizedCommands
         {
             var mask = (ServerBanExemptFlags) (1 << i);
             if ((mask & flags) == 0)
-                break;
+                continue;
 
             if (!first)
                 joined.Append(", ");

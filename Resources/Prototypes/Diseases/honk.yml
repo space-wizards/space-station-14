@@ -1,0 +1,60 @@
+- type: disease
+  id: ActiveHonkVirus
+  name: disease-proto-honk
+  infectious: false
+  cureResist: 0.2
+  stages:
+    - 0
+    - 120
+    - 780
+  effects:
+    # toxin
+    - !type:DiseaseAdjustReagent
+      probability: 0.07
+      reagent: Toxin
+      amount: 1
+      stages:
+        - 0
+        - 1
+        - 2
+    # honks
+    - !type:DiseaseHonk
+      probability: 0.03
+      emote: Honk
+      stages:
+        - 0
+    - !type:DiseaseHonk
+      probability: 0.04
+      emote: Honk
+      stages:
+        - 1
+    - !type:DiseaseHonk
+      probability: 0.06
+      emote: Honk
+      stages:
+        - 2
+    # stuttering accent chance when speaking
+    - !type:DiseaseGenericStatusEffect
+      probability: 0.3
+      key: Stutter
+      component: StutteringAccent
+      stages:
+        - 1
+    - !type:DiseaseGenericStatusEffect
+      probability: 0.6
+      key: Stutter
+      component: StutteringAccent
+      stages:
+        - 2
+    # possible cluwnification if ignored too long
+    - !type:DiseaseAddComponent
+      comp: Cluwne
+      probability: 0.0007
+      stages:
+        - 2
+  cures:
+    - !type:DiseaseReagentCure
+      reagent: BananaHonk
+      min: 5
+    - !type:DiseaseJustWaitCure
+      maxLength: 900
