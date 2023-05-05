@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Shared.Doors.Components;
 using NUnit.Framework;
