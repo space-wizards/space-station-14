@@ -261,3 +261,37 @@
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobMimeBot
+  name: mimebot
+  description: Why not give mimebot a friendly wave.
+  components:
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mimebot
+      sprite: Mobs/Silicon/Bots/mimebot.rsi
+  - type: MimePowers
+  - type: Appearance
+  - type: Construction
+    graph: MimeBot
+    node: bot
+  - type: GhostRole
+    makeSentient: true
+    name: mimebot
+    description: A Mimebot, act like a mime but dont act like a greytider.
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-mimebot
+    interactFailureString: petting-failure-mimebot
+  - type: Inventory
+    templateId: head
