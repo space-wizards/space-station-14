@@ -386,20 +386,14 @@
       prototype: BiomassReclaimer
       requirements:
         MatterBin: 2
-        Manipulator: 1
+        Manipulator: 4
       tagRequirements:
-        Pipe:
-          Amount: 1
-          DefaultPrototype: GasPipeStraight
-          ExamineName: pipe
-        BorgArm:
-          Amount: 3
-          DefaultPrototype: LeftArmBorg
-          ExamineName: borg arm
         Knife:
           Amount: 3
           DefaultPrototype: KitchenKnife
-          ExamineName: knife
+          ExamineName: Knife
+      materialRequirements:
+        Steel: 5
 
 - type: entity
   id: HydroponicsTrayMachineCircuitboard
