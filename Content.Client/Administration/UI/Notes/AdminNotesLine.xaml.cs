@@ -1,3 +1,4 @@
+using System.Text;
 using Content.Client.Resources;
 using Content.Shared.Administration.Notes;
 using Content.Shared.Database;
@@ -55,8 +56,8 @@ public sealed partial class AdminNotesLine : BoxContainer
     private void Refresh()
     {
         string? iconPath;
-        if(Note.NoteType == NoteType.Note)
-            SeverityIcons.TryGetValue(Note.NoteSeverity, out iconPath);
+        if(Note.NoteSeverity is not null)
+            SeverityIcons.TryGetValue(Note.NoteSeverity.Value, out iconPath);
         else
             NoteTypeIcons.TryGetValue(Note.NoteType, out iconPath);
 
@@ -82,13 +83,90 @@ public sealed partial class AdminNotesLine : BoxContainer
             SecretLabel.Visible = true;
         }
 
-        if (Note.ExpiryTime is not null)
+        if (Note.UnbannedTime is not null)
         {
-            ExpiresLabel.Text = $"{Loc.GetString("admin-note-editor-expiry-label")} {Note.ExpiryTime.Value: yyyy-MM-dd HH:mm:ss} (in {Note.ExpiryTime.Value - DateTime.UtcNow:d'd 'hh':'mm})";
+            ExtraLabel.Text = Loc.GetString("admin-notes-unbanned", ("admin", Note.UnbannedByName ?? "[error]"), ("date", Note.UnbannedTime));
+            ExtraLabel.Visible = true;
+        }
+        else if (Note.ExpiryTime is not null)
+        {
+            // Notes should never be visible when expired, bans should
+            if (Note.ExpiryTime.Value > DateTime.UtcNow)
+            {
+                ExpiresLabel.Text = Loc.GetString("admin-note-editor-expiry-label-params",
+                    ("date", Note.ExpiryTime.Value.ToString("yyyy-MM-dd HH:mm:ss")),
+                    ("expiresIn", (Note.ExpiryTime.Value - DateTime.UtcNow).ToString("d'd 'hh':'mm")));
+                ExpiresLabel.Modulate = Color.FromHex("#86DC3D");
+            }
+            else
+            {
+                ExpiresLabel.Text = Loc.GetString("admin-note-editor-expiry-label-expired");
+            }
             ExpiresLabel.Visible = true;
         }
 
-        NoteLabel.SetMessage(Note.Message);
+        if (Note.LastEditedAt > Note.CreatedAt)
+        {
+            EditedLabel.Text = Loc.GetString("admin-notes-edited", ("author", Note.EditedByName), ("date", Note.LastEditedAt));
+            EditedLabel.Visible = true;
+        }
+
+        switch (Note.NoteType)
+        {
+            case NoteType.ServerBan:
+                NoteLabel.SetMessage(FormatBanMessage());
+                break;
+            case NoteType.RoleBan:
+                NoteLabel.SetMessage(FormatRoleBanMessage());
+                break;
+            case NoteType.Note:
+            case NoteType.Watchlist:
+            case NoteType.Message:
+            default:
+                NoteLabel.SetMessage(Note.Message);
+                break;
+        }
+
+        if (Note.Seen == true)
+        {
+            ExtraLabel.Text = Loc.GetString("admin-notes-message-seen");
+            ExtraLabel.Visible = true;
+        }
+    }
+
+    private string FormatBanMessage()
+    {
+        var banMessage = new StringBuilder($"{Loc.GetString("admin-notes-banned-from")} {Loc.GetString("admin-notes-the-server")} ");
+        return FormatBanMessageCommon(banMessage);
+    }
+
+    private string FormatRoleBanMessage()
+    {
+        var banMessage = new StringBuilder($"{Loc.GetString("admin-notes-banned-from")} {string.Join(", ", Note.BannedRoles ?? new []{"unknown"})} ");
+        return FormatBanMessageCommon(banMessage);
+    }
+
+    private string FormatBanMessageCommon(StringBuilder sb)
+    {
+        if (Note.ExpiryTime is null)
+        {
+            sb.Append(Loc.GetString("admin-notes-permanently"));
+        }
+        else
+        {
+            sb.Append("for ");
+            var banLength = Note.ExpiryTime.Value - Note.CreatedAt;
+            if (banLength.Days > 0)
+                sb.Append(Loc.GetString("admin-notes-days", ("days", banLength.TotalDays.ToString(".00"))));
+            else if (banLength.Hours > 0)
+                sb.Append(Loc.GetString("admin-notes-hours", ("hours", banLength.TotalHours.ToString(".00"))));
+            else
+                sb.Append(Loc.GetString("admin-notes-minutes", ("minutes", banLength.TotalMinutes.ToString(".00"))));
+        }
+
+        sb.Append(" - ");
+        sb.Append(Note.Message);
+        return sb.ToString();
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)

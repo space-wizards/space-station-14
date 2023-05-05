@@ -16,7 +16,7 @@ public sealed partial class NoteEdit : FancyWindow
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
 
-    public event Action<int, NoteType, string, NoteSeverity, bool, DateTime?>? SubmitPressed;
+    public event Action<int, NoteType, string, NoteSeverity?, bool, DateTime?>? SubmitPressed;
 
     public NoteEdit(SharedAdminNote? note, string playerName, bool canCreate, bool canEdit)
     {
@@ -27,16 +27,16 @@ public sealed partial class NoteEdit : FancyWindow
 
         ResetSubmitButton();
 
-        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-note"));
-        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-message"));
-        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-watchlist"));
+        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-note"), (int) NoteType.Note);
+        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-message"), (int) NoteType.Message);
+        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-watchlist"), (int) NoteType.Watchlist);
         TypeOption.OnItemSelected += OnTypeChanged;
 
 
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-none"));
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-low"));
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-medium"));
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-high"));
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-none"), (int) Shared.Database.NoteSeverity.None);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-low"), (int) Shared.Database.NoteSeverity.Minor);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-medium"), (int) Shared.Database.NoteSeverity.Medium);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-high"), (int) Shared.Database.NoteSeverity.High);
         SeverityOption.OnItemSelected += OnSeverityChanged;
 
         PermanentCheckBox.OnPressed += OnPermanentPressed;
@@ -56,18 +56,20 @@ public sealed partial class NoteEdit : FancyWindow
             NoteId = note.Id;
 
             NoteType = note.NoteType;
+            TypeOption.AddItem(Loc.GetString("admin-note-editor-type-server-ban"), (int) NoteType.ServerBan);
+            TypeOption.AddItem(Loc.GetString("admin-note-editor-type-role-ban"), (int) NoteType.RoleBan);
             TypeOption.SelectId((int)NoteType);
             TypeOption.Disabled = true;
 
             NoteTextEdit.InsertAtCursor(note.Message);
 
-            NoteSeverity = note.NoteSeverity;
+            NoteSeverity = note.NoteSeverity ?? Shared.Database.NoteSeverity.Minor;
             SeverityOption.SelectId((int)NoteSeverity);
-            if (note.NoteType != NoteType.Note)
-                SeverityOption.Disabled = true;
+            SeverityOption.Disabled = note.NoteType is not (NoteType.Note or NoteType.ServerBan or NoteType.RoleBan);
 
             IsSecret = note.Secret;
             SecretCheckBox.Pressed = note.Secret;
+            SecretCheckBox.Disabled = note.NoteType is not NoteType.Note;
             ExpiryTime = note.ExpiryTime;
             if (ExpiryTime is not null)
             {
@@ -88,7 +90,7 @@ public sealed partial class NoteEdit : FancyWindow
     private bool IsSecret { get; set; }
     private bool ConfirmingSubmit { get; set; }
     private NoteType NoteType { get; set; }
-    private NoteSeverity NoteSeverity { get; set; }
+    private NoteSeverity? NoteSeverity { get; set; } = Shared.Database.NoteSeverity.None;
     private DateTime? ExpiryTime { get; set; }
 
     private void OnTypeChanged(OptionButton.ItemSelectedEventArgs args)
@@ -96,7 +98,7 @@ public sealed partial class NoteEdit : FancyWindow
         // We should be resetting the underlying values too but the server handles that anyway
         switch (args.Id)
         {
-            case 0: // Note: your standard note, does nothing special
+            case (int) NoteType.Note: // Note: your standard note, does nothing special
                 NoteType = NoteType.Note;
                 SecretCheckBox.Disabled = false;
                 SecretCheckBox.Pressed = false;
@@ -104,21 +106,23 @@ public sealed partial class NoteEdit : FancyWindow
                 PermanentCheckBox.Pressed = true;
                 UpdatePermanentCheckboxFields();
                 break;
-            case 1: // Message: these are shown to the player when they log on
+            case (int) NoteType.Message: // Message: these are shown to the player when they log on
                 NoteType = NoteType.Message;
                 SecretCheckBox.Disabled = true;
                 SecretCheckBox.Pressed = false;
                 SeverityOption.Disabled = true;
-                SeverityOption.SelectId(0);
+                SeverityOption.SelectId((int) Shared.Database.NoteSeverity.None);
+                NoteSeverity = null;
                 PermanentCheckBox.Pressed = false;
                 UpdatePermanentCheckboxFields();
                 break;
-            case 2: // Watchlist: these are always secret and only shown to admins when the player logs on
+            case (int) NoteType.Watchlist: // Watchlist: these are always secret and only shown to admins when the player logs on
                 NoteType = NoteType.Watchlist;
                 SecretCheckBox.Disabled = true;
                 SecretCheckBox.Pressed = true;
                 SeverityOption.Disabled = true;
-                SeverityOption.SelectId(0);
+                SeverityOption.SelectId((int) Shared.Database.NoteSeverity.None);
+                NoteSeverity = null;
                 PermanentCheckBox.Pressed = false;
                 UpdatePermanentCheckboxFields();
                 break;

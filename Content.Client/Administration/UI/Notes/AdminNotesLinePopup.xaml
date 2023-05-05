@@ -2,7 +2,7 @@
        xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
     <PanelContainer>
         <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
+            <gfx:StyleBoxFlat BackgroundColor="#25252A" BorderThickness="1" BorderColor="#18181B"/>
         </PanelContainer.PanelOverride>
         <BoxContainer Orientation="Vertical">
             <Label Name="PlayerNameLabel"/>

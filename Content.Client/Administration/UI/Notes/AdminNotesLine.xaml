@@ -17,6 +17,7 @@
     </BoxContainer>
     <RichTextLabel Name="NoteLabel" />
     <Label Name="ExpiresLabel" Text="{Loc admin-note-editor-expiry-label}" Visible="False" />
+    <Label Name="ExtraLabel" Visible="False" Modulate="#1AA7EC" />
     <Label Name="EditedLabel" Visible="False" />
     <cc:HSeparator Name="Separator" />
 </BoxContainer>

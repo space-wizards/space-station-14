@@ -1,6 +1,8 @@
 <ui:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                VerticalExpand="True" HorizontalExpand="True"
+                Title="{Loc admin-remarks-title}"
                 SetSize="600 400">
     <PanelContainer>
         <PanelContainer.PanelOverride>

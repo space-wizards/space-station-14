@@ -14,9 +14,9 @@ public sealed class AdminNotesEui : BaseEui
         NoteWindow = new AdminNotesWindow();
         NoteControl = NoteWindow.Notes;
 
-        NoteControl.NoteChanged += (id, text, severity, secret, expiryTime) => SendMessage(new EditNoteRequest(id, text, severity, secret, expiryTime));
+        NoteControl.NoteChanged += (id, type, text, severity, secret, expiryTime) => SendMessage(new EditNoteRequest(id, type, text, severity, secret, expiryTime));
         NoteControl.NewNoteEntered += (type, text, severity, secret, expiryTime) => SendMessage(new CreateNoteRequest(type, text, severity, secret, expiryTime));
-        NoteControl.NoteDeleted += id => SendMessage(new DeleteNoteRequest(id));
+        NoteControl.NoteDeleted += (id, type) => SendMessage(new DeleteNoteRequest(id, type));
     }
 
     private AdminNotesWindow NoteWindow { get; }
@@ -29,7 +29,7 @@ public sealed class AdminNotesEui : BaseEui
         {
             return;
         }
-
+        
         NoteWindow.SetTitlePlayer(s.NotedPlayerName);
         NoteControl.SetPlayerName(s.NotedPlayerName);
         NoteControl.SetNotes(s.Notes);
