@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: AME fuel jars now show their fuel level when examined., type: Tweak}
-  id: 3158
-  time: '2023-03-12T12:39:11.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed vehicles and mechs not properly inheriting access., type: Fix}
@@ -2901,3 +2896,8 @@ Entries:
       vendomats, closets and etc...)', type: Tweak}
   id: 3657
   time: '2023-05-05T15:14:33.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can no longer puff empty vapes, type: Fix}
+  id: 3658
+  time: '2023-05-05T17:48:48.0000000+00:00'
