@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Separated HUD mode now expands the game viewport instead of the chat
-      window when resizing the game window., type: Tweak}
-  id: 3146
-  time: '2023-03-09T13:56:44.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Admins can now spawn dungeons with procedurally generated layouts.,
@@ -2893,3 +2887,8 @@ Entries:
   - {message: Air vent pumps are limited to 2.0 * supply pressure at most, type: Add}
   id: 3645
   time: '2023-05-05T00:34:15.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed some rollebed interactions, including a possible crash.', type: Fix}
+  id: 3646
+  time: '2023-05-05T07:27:15.0000000+00:00'
