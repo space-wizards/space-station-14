@@ -18,10 +18,13 @@ namespace Content.Client.CombatMode;
 /// </summary>
 public sealed class ShowCombatModeIndicatorsOverlay : Overlay
 {
-    private IInputManager _inputManager;
-    private IEntityManager _entMan;
-    private IEyeManager _eye;
-    private CombatModeSystem _combatSystem;
+    private readonly IInputManager _inputManager;
+    private readonly IEntityManager _entMan;
+    private readonly IEyeManager _eye;
+    private readonly CombatModeSystem _combatSystem;
+
+    private readonly Texture _gunSight;
+    private readonly Texture _meleeSight;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
@@ -29,8 +32,6 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
     public Color StrokeColor = Color.Black.WithAlpha(0.5f);
     public float Scale = 0.8f;  // 1 is a little big
 
-    private Texture _gunSight;
-    private Texture _meleeSight;
     public ShowCombatModeIndicatorsOverlay(IInputManager input, IEntityManager entMan,
             IEyeManager eye, CombatModeSystem combatSys)
     {
@@ -68,14 +69,15 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
         var sight = isHandGunItem ? _gunSight : _meleeSight;
         DrawSight(sight, args.ScreenHandle, mousePos, limitedScale * Scale);
     }
+
     private void DrawSight(Texture sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
     {
-        var sightSize = (sight.Size * scale);
+        var sightSize = sight.Size * scale;
         var expandedSize = sightSize + 7f;
 
         screen.DrawTextureRect(sight,
-            UIBox2.FromDimensions(centerPos - (sightSize / 2), sightSize), StrokeColor);
+            UIBox2.FromDimensions(centerPos - sightSize * 0.5f, sightSize), StrokeColor);
         screen.DrawTextureRect(sight,
-            UIBox2.FromDimensions(centerPos - (expandedSize / 2), expandedSize), MainColor);
+            UIBox2.FromDimensions(centerPos - expandedSize * 0.5f, expandedSize), MainColor);
     }
 }
