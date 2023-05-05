@@ -1,12 +1,13 @@
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Client.Player;
-using Robust.Shared.GameStates;
-using Robust.Shared.Input.Binding;
-using Robust.Client.Graphics;
-using Robust.Shared.Configuration;
 using Robust.Client.Input;
+using Robust.Client.Graphics;
+using Robust.Shared.Input.Binding;
+using Robust.Shared.GameStates;
+using Robust.Shared.Configuration;
 
 namespace Content.Client.CombatMode
 {
@@ -24,12 +25,9 @@ namespace Content.Client.CombatMode
             base.Initialize();
 
             SubscribeLocalEvent<CombatModeComponent, ComponentHandleState>(OnHandleState);
-            _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay(
-                _cfg,
-                _inputManager,
-                EntityManager,
-                _eye,
-                this));
+
+            OnShowCombatIndicatorsChanged(_cfg.GetCVar(CCVars.HudHeldItemShow));
+            _cfg.OnValueChanged(CCVars.HudHeldItemShow, OnShowCombatIndicatorsChanged, true);
         }
 
         private void OnHandleState(EntityUid uid, CombatModeComponent component, ref ComponentHandleState args)
@@ -45,6 +43,7 @@ namespace Content.Client.CombatMode
         public override void Shutdown()
         {
             CommandBinds.Unregister<CombatModeSystem>();
+
             _overlayManager.RemoveOverlay<ShowCombatModeIndicatorsOverlay>();
 
             base.Shutdown();
@@ -85,6 +84,23 @@ namespace Content.Client.CombatMode
             }
 
             LocalPlayerCombatModeUpdated?.Invoke();
+        }
+
+        private void OnShowCombatIndicatorsChanged(bool isShow)
+        {
+            if (isShow)
+                AddCombatModeIndicatorsOverlay();
+            else
+                _overlayManager.RemoveOverlay<ShowCombatModeIndicatorsOverlay>();
+        }
+
+        private void AddCombatModeIndicatorsOverlay()
+        {
+            _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay(
+                _inputManager,
+                EntityManager,
+                _eye,
+                this));
         }
     }
 }

@@ -1,11 +1,10 @@
-using Content.Shared.CCVar;
+
 using Content.Client.Hands.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Utility;
 
@@ -19,7 +18,6 @@ namespace Content.Client.CombatMode;
 /// </summary>
 public sealed class ShowCombatModeIndicatorsOverlay : Overlay
 {
-    private IConfigurationManager _cfg;
     private IInputManager _inputManager;
     private IEntityManager _entMan;
     private IEyeManager _eye;
@@ -33,14 +31,11 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
 
     private Texture _gunSight;
     private Texture _meleeSight;
-    private bool _isShowIndicators;
-
-    public ShowCombatModeIndicatorsOverlay(IConfigurationManager cfg, IInputManager input, IEntityManager entMan,
+    public ShowCombatModeIndicatorsOverlay(IInputManager input, IEntityManager entMan,
             IEyeManager eye, CombatModeSystem combatSys)
     {
         IoCManager.InjectDependencies(this);
 
-        _cfg = cfg;
         _inputManager = input;
         _entMan = entMan;
         _eye = eye;
@@ -51,18 +46,10 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
             "gun_sight"));
         _meleeSight = spriteSys.Frame0(new SpriteSpecifier.Rsi(new($"/Textures/Interface/Misc/crosshair_pointers.rsi"),
              "melee_sight"));
-
-        _isShowIndicators = _cfg.GetCVar(CCVars.HudHeldItemShow);
-
-        _cfg.OnValueChanged(CCVars.HudHeldItemShow,
-            isShow => _isShowIndicators = isShow, true);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        if (!_isShowIndicators)
-            return false;
-
         if (!_combatSystem.IsInCombatMode())
             return false;
 
