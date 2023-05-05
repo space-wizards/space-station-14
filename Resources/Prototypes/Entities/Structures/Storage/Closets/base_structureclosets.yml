@@ -168,21 +168,23 @@
       map: ["enum.WeldableLayers.BaseWelded"]
 
 #Base suit storage unit
-#I am terribly sorry for doing this but the game malds if I don't make it a base type like this.
+#I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.
 - type: entity
   id: SuitStorageBase
   parent: BaseStructureDynamic
   name: suit storage unit
+  description: A fancy hi-tech storage unit made for storing space suits.
   components:
   - type: ResistLocker
   - type: Transform
     noRot: true
+    anchored: true
   - type: Sprite
     noRot: true
     netsync: false
     sprite: Structures/Storage/suit_storage.rsi
     layers:
-    - state: open
+    - state: base
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
