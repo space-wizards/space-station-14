@@ -169,6 +169,7 @@ public abstract partial class SharedBuckleSystem
     /// <param name="strapComp"> strap component of the thing we are strapping to </param>
     private void UpdateBuckleStatus(EntityUid uid, BuckleComponent buckleComp, StrapComponent? strapComp = null)
     {
+        AppearanceSystem.SetData(uid, StrapVisuals.State, buckleComp.Buckled);
         if (buckleComp.BuckledTo != null)
         {
             if (!Resolve(buckleComp.BuckledTo.Value, ref strapComp))
@@ -411,7 +412,6 @@ public abstract partial class SharedBuckleSystem
         if (attemptEvent.Cancelled)
             return false;
 
-        Logger.Debug($"{force}");
         if (!force)
         {
             if (_gameTiming.CurTime < buckleComp.BuckleTime + buckleComp.UnbuckleDelay)
@@ -472,8 +472,6 @@ public abstract partial class SharedBuckleSystem
         {
             _standingSystem.Down(buckleUid);
         }
-        // Sync StrapComponent data
-        AppearanceSystem.SetData(strapUid, StrapVisuals.State, false);
         if (strapComp.BuckledEntities.Remove(buckleUid))
         {
             strapComp.OccupiedSize -= buckleComp.Size;
@@ -481,6 +479,7 @@ public abstract partial class SharedBuckleSystem
             Dirty(strapComp);
         }
 
+        AppearanceSystem.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
         _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, buckleUid);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, false);

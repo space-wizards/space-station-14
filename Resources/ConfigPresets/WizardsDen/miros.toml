@@ -6,3 +6,6 @@ soft_max_players = 50
 
 [net]
 tickrate = 20
+
+[hub]
+tags = "lang:en,region:eu_w,rp:low"

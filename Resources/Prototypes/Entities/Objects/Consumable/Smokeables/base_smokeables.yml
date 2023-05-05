@@ -61,3 +61,21 @@
     solutions:
       smokable:
         maxVol: 20
+
+- type: entity
+  parent: BaseItem
+  id: BaseVape
+  abstract: true
+  components:
+  - type: Vape
+    damage:
+      groups:
+        Burn: 2
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 10
+  - type: RefillableSolution
+    solution: smokable
+  - type: ExaminableSolution
+    solution: smokable
