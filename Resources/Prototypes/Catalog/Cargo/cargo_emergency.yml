@@ -57,3 +57,13 @@
   cost: 300
   category: Emergency
   group: market
+
+- type: cargoProduct
+  id: EmergencyBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/general.rsi
+    state: icon
+  product: CrateGenericBiosuit
+  cost: 800
+  category: Emergency
+  group: market

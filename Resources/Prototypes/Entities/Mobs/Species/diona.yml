@@ -26,14 +26,6 @@
         amount: 5
   - type: Bloodstream
     bloodReagent: Water
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
   - type: Fixtures
     fixtures:
       - shape:
@@ -47,6 +39,7 @@
           - MobLayer
   - type: Inventory
     templateId: diona
+  - type: InventorySlots
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
@@ -68,5 +61,6 @@
   components:
   - type: Inventory
     templateId: diona
+  - type: InventorySlots
   - type: HumanoidAppearance
     species: Diona

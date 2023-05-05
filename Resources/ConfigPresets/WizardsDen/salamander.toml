@@ -11,6 +11,19 @@ rules_header = "ui-rules-header-rp"
 [whitelist]
 enabled = true
 reason = "whitelist-not-whitelisted-rp"
+min_players = 10
+
+[shuttle]
+emergency_early_launch_allowed = true
+
+[biomass]
+easy_mode = false
+
+[ooc]
+enable_during_round = true
 
 [ic]
 flavor_text = true
+
+[hub]
+tags = "lang:en,region:am_n_w,rp:med"

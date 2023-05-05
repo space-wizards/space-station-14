@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Toxin
   name: reagent-name-toxin
   group: Toxins
@@ -17,7 +17,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 4
 
 - type: reagent
   id: CarpoToxin
@@ -44,7 +44,6 @@
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
-
 
 - type: reagent
   id: ChloralHydrate
@@ -132,7 +131,7 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.5
       - !type:Emote
         emote: Scream
@@ -142,7 +141,7 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: 2
       - !type:PopupMessage
         type: Local
@@ -168,7 +167,7 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.3
       - !type:Emote
         emote: Scream
@@ -178,7 +177,7 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: 2
       - !type:PopupMessage
         type: Local
@@ -211,7 +210,7 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.1
       - !type:Emote
         emote: Scream
@@ -222,7 +221,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Caustic: 2
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -475,89 +474,26 @@
         refresh: false
         type: Add
 
-# Mutation toxins. Appeareance, flavour, and physical description have had very little thought put into them, and are in fact taken
-# from other reagents.
 - type: reagent
-  id: HumanMutaToxin
-  name: reagent-name-human-muta-tox
-  desc: reagent-desc-human-muta-tox
-  physicalDesc: reagent-physical-desc-ferrous
-  flavor: metallic
-  color: "#800000"
+  id: Honk
+  name: reagent-name-honk
+  desc: reagent-desc-honk
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
+  color: "#F2E9D2"
   metabolisms:
     Poison:
+      metabolismRate: 0.05
       effects:
-        - !type:ChemCauseDisease
-          conditions:
-          - !type:ReagentThreshold
-            min: 20
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal
+        damage:
+          types:
+            Poison: 0.06
+      - !type:ChemCauseDisease
           causeChance: 1
-          disease: HumanMutation
-
-- type: reagent
-  id: SlimePersonMutaToxin
-  name: reagent-name-slime-person-muta-tox
-  desc: reagent-desc-slime-person-muta-tox
-  physicalDesc: reagent-physical-desc-viscous
-  flavor: slimy
-  color: "#2cf274"
-  metabolisms:
-    Poison:
-      effects:
-        - !type:ChemCauseDisease
-          conditions:
-          - !type:ReagentThreshold
-            min: 20
-          causeChance: 1
-          disease: SlimePersonMutation
-
-- type: reagent
-  id: SkeletonMutaToxin
-  name: reagent-name-skeleton-muta-tox
-  desc: reagent-desc-skeleton-muta-tox
-  physicalDesc: reagent-physical-desc-opaque
-  flavor: milk
-  color: "#DFDFDF"
-  metabolisms:
-    Poison:
-      effects:
-        - !type:ChemCauseDisease
-          conditions:
-          - !type:ReagentThreshold
-            min: 20
-          causeChance: 1
-          disease: SkeletonMutation
-
-- type: reagent
-  id: ReptilianMutaToxin
-  name: reagent-name-reptilian-muta-tox
-  desc: reagent-desc-reptilian-muta-tox
-  physicalDesc: reagent-physical-desc-crystalline
-  flavor: metallic
-  color: "#364266"
-  metabolisms:
-    Poison:
-      effects:
-        - !type:ChemCauseDisease
-          conditions:
-          - !type:ReagentThreshold
-            min: 20
-          causeChance: 1
-          disease: ReptilianMutation
-
-- type: reagent
-  id: MonkeyMutaToxin
-  name: reagent-name-monkey-muta-tox
-  desc: reagent-desc-monkey-muta-tox
-  physicalDesc: reagent-physical-desc-fibrous
-  flavor: meaty
-  color: "#3B1E08"
-  metabolisms:
-    Poison:
-      effects:
-        - !type:ChemCauseDisease
-          conditions:
-          - !type:ReagentThreshold
-            min: 20
-          causeChance: 1
-          disease: MonkeyMutation
+          disease: ActiveHonkVirus ##makes target honk and potential chance to be cluwned.

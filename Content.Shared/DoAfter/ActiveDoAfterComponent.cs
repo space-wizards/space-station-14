@@ -5,8 +5,7 @@ namespace Content.Shared.DoAfter;
 /// <summary>
 ///     Added to entities that are currently performing any doafters.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed class ActiveDoAfterComponent : Component
 {
-
 }

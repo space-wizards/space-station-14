@@ -20,6 +20,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<EntityStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
         SubscribeLocalEvent<EntityStorageComponent, WeldableChangedEvent>(OnWelded);
 
@@ -30,19 +31,22 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         SubscribeLocalEvent<InsideEntityStorageComponent, EntGotRemovedFromContainerMessage>(OnRemoved);
     }
 
+    private void OnMapInit(EntityUid uid, EntityStorageComponent component, MapInitEvent args)
+    {
+        if (!component.Open && component.Air.TotalMoles == 0)
+        {
+            // If we're closed on spawn and have no air already saved, we need to pull some air into our environment from where we spawned,
+            // so that we have -something-. For example, if you bought an animal crate or something.
+            TakeGas(uid, component);
+        }
+    }
+
     protected override void OnInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
     {
         base.OnInit(uid, component, args);
 
         if (TryComp<ConstructionComponent>(uid, out var construction))
             _construction.AddContainer(uid, ContainerName, construction);
-
-        if (!component.Open)
-        {
-            // If we're closed on spawn, we need to pull some air into our environment from where we spawned,
-            // so that we have -something-. For example, if you bought an animal crate or something.
-            TakeGas(uid, (EntityStorageComponent) component);
-        }
     }
 
     private void OnWeldableAttempt(EntityUid uid, EntityStorageComponent component, WeldableAttemptEvent args)
@@ -77,7 +81,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
         {
-            _atmos.Merge(serverComp.Air, environment.RemoveVolume(SharedEntityStorageComponent.GasMixVolume));
+            _atmos.Merge(serverComp.Air, environment.RemoveVolume(serverComp.Air.Volume));
         }
     }
 

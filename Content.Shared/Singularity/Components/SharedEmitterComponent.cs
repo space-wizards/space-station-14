@@ -40,26 +40,6 @@ public sealed class EmitterComponent : Component
     public int PowerUseActive = 600;
 
     /// <summary>
-    /// The base amount of power that is consumed.
-    /// Used in machine part rating calculations.
-    /// </summary>
-    [DataField("basePowerUseActive"), ViewVariables(VVAccess.ReadWrite)]
-    public int BasePowerUseActive = 600;
-
-    /// <summary>
-    /// Multiplier that is applied to the basePowerUseActive
-    /// to get the actual power use.
-    /// </summary>
-    [DataField("powerUseMultiplier")]
-    public float PowerUseMultiplier = 0.75f;
-
-    /// <summary>
-    /// The machine part used to reduce the power use of the machine.
-    /// </summary>
-    [DataField("machinePartPowerUse", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartPowerUse = "Capacitor";
-
-    /// <summary>
     /// The amount of shots that are fired in a single "burst"
     /// </summary>
     [DataField("fireBurstSize")]
@@ -114,7 +94,7 @@ public sealed class EmitterComponent : Component
     /// The machine part that affects burst delay.
     /// </summary>
     [DataField("machinePartFireRate", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartFireRate = "Laser";
+    public string MachinePartFireRate = "Capacitor";
 
     /// <summary>
     /// The visual state that is set when the emitter is turned on

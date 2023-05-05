@@ -1,7 +1,7 @@
-using Content.Server.DoAfter;
-using Content.Server.Hands.Components;
+using Content.Server.Actions.Events;
 using Content.Server.Hands.Systems;
 using Content.Server.Wieldable.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -9,17 +9,15 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
-using Content.Server.Actions.Events;
-using Content.Shared.DoAfter;
 using Content.Shared.Weapons.Melee.Events;
-
+using Content.Shared.Wieldable;
+using Robust.Shared.Player;
 
 namespace Content.Server.Wieldable
 {
     public sealed class WieldableSystem : EntitySystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfter = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedItemSystem _itemSystem = default!;
@@ -31,7 +29,7 @@ namespace Content.Server.Wieldable
             base.Initialize();
 
             SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<WieldableComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<WieldableComponent, WieldableDoAfterEvent>(OnDoAfter);
             SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
             SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
             SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
@@ -126,15 +124,13 @@ namespace Content.Server.Wieldable
             if (ev.Cancelled)
                 return;
 
-            var doargs = new DoAfterEventArgs(user, component.WieldTime, used:used)
+            var doargs = new DoAfterArgs(user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
             {
                 BreakOnUserMove = false,
-                BreakOnDamage = true,
-                BreakOnStun = true,
-                BreakOnTargetMove = true
+                BreakOnDamage = true
             };
 
-            _doAfter.DoAfter(doargs);
+            _doAfter.TryStartDoAfter(doargs);
         }
 
         /// <summary>

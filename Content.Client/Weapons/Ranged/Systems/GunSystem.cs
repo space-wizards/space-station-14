@@ -158,7 +158,7 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         // Define target coordinates relative to gun entity, so that network latency on moving grids doesn't fuck up the target location.
-        var coordinates = EntityCoordinates.FromMap(entity, mousePos, Transform, EntityManager);
+        var coordinates = EntityCoordinates.FromMap(entity, mousePos, TransformSystem, EntityManager);
 
         Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
@@ -169,15 +169,26 @@ public sealed partial class GunSystem : SharedGunSystem
         });
     }
 
-    public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
+    public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
+        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null, bool throwItems = false)
     {
         // Rather than splitting client / server for every ammo provider it's easier
         // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
         // This also means any ammo specific stuff can be grabbed as necessary.
-        var direction = fromCoordinates.ToMapPos(EntityManager, Transform) - toCoordinates.ToMapPos(EntityManager, Transform);
+        var direction = fromCoordinates.ToMapPos(EntityManager, TransformSystem) - toCoordinates.ToMapPos(EntityManager, TransformSystem);
 
         foreach (var (ent, shootable) in ammo)
         {
+            if (throwItems)
+            {
+                Recoil(user, direction);
+                if (ent!.Value.IsClientSide())
+                    Del(ent.Value);
+                else
+                    RemComp<AmmoComponent>(ent.Value);
+                continue;
+            }
+
             switch (shootable)
             {
                 case CartridgeAmmoComponent cartridge:
@@ -245,6 +256,9 @@ public sealed partial class GunSystem : SharedGunSystem
         else if (TryComp<TransformComponent>(uid, out var xform))
             coordinates = xform.Coordinates;
         else
+            return;
+
+        if (!coordinates.IsValid(EntityManager))
             return;
 
         var ent = Spawn(message.Prototype, coordinates);

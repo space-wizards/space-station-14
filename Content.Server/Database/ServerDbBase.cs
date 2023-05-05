@@ -332,6 +332,52 @@ namespace Content.Server.Database
 
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
+
+        protected static async Task<ServerBanExemptFlags?> GetBanExemptionCore(DbGuard db, NetUserId? userId)
+        {
+            if (userId == null)
+                return null;
+
+            var exemption = await db.DbContext.BanExemption
+                .SingleOrDefaultAsync(e => e.UserId == userId.Value.UserId);
+
+            return exemption?.Flags;
+        }
+
+        public async Task UpdateBanExemption(NetUserId userId, ServerBanExemptFlags flags)
+        {
+            await using var db = await GetDb();
+
+            if (flags == 0)
+            {
+                // Delete whatever is there.
+                await db.DbContext.BanExemption.Where(u => u.UserId == userId.UserId).ExecuteDeleteAsync();
+                return;
+            }
+
+            var exemption = await db.DbContext.BanExemption.SingleOrDefaultAsync(u => u.UserId == userId.UserId);
+            if (exemption == null)
+            {
+                exemption = new ServerBanExemption
+                {
+                    UserId = userId
+                };
+
+                db.DbContext.BanExemption.Add(exemption);
+            }
+
+            exemption.Flags = flags;
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId)
+        {
+            await using var db = await GetDb();
+
+            var flags = await GetBanExemptionCore(db, userId);
+            return flags ?? ServerBanExemptFlags.None;
+        }
+
         #endregion
 
         #region Role Bans
@@ -701,7 +747,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        private async Task<IQueryable<AdminLog>> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        private static IQueryable<AdminLog> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
             IQueryable<AdminLog> query = db.AdminLog;
 
@@ -796,7 +842,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
 
             await foreach (var log in query.Select(log => log.Message).AsAsyncEnumerable())
             {
@@ -807,7 +853,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
             query = query.Include(log => log.Players);
 
             await foreach (var log in query.AsAsyncEnumerable())
@@ -825,7 +871,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
 
             await foreach (var json in query.Select(log => log.Json).AsAsyncEnumerable())
             {
@@ -985,6 +1031,5 @@ namespace Content.Server.Database
 
             public abstract ValueTask DisposeAsync();
         }
-
     }
 }

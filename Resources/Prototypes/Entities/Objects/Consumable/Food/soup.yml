@@ -26,6 +26,13 @@
         Blunt: 5
   - type: Spillable
     solution: food
+  # soup weapon!
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

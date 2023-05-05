@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Access.Components.SharedIdCardConsoleComponent;
+using static Content.Shared.Access.Components.IdCardConsoleComponent;
 
 namespace Content.Server.Access.Systems;
 
@@ -31,15 +31,15 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedIdCardConsoleComponent, WriteToTargetIdMessage>(OnWriteToTargetIdMessage);
+        SubscribeLocalEvent<IdCardConsoleComponent, WriteToTargetIdMessage>(OnWriteToTargetIdMessage);
 
         // one day, maybe bound user interfaces can be shared too.
-        SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
-        SubscribeLocalEvent<SharedIdCardConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
-        SubscribeLocalEvent<SharedIdCardConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
+        SubscribeLocalEvent<IdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
+        SubscribeLocalEvent<IdCardConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
+        SubscribeLocalEvent<IdCardConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
     }
 
-    private void OnWriteToTargetIdMessage(EntityUid uid, SharedIdCardConsoleComponent component, WriteToTargetIdMessage args)
+    private void OnWriteToTargetIdMessage(EntityUid uid, IdCardConsoleComponent component, WriteToTargetIdMessage args)
     {
         if (args.Session.AttachedEntity is not { Valid: true } player)
             return;
@@ -49,7 +49,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         UpdateUserInterface(uid, component, args);
     }
 
-    private void UpdateUserInterface(EntityUid uid, SharedIdCardConsoleComponent component, EntityEventArgs args)
+    private void UpdateUserInterface(EntityUid uid, IdCardConsoleComponent component, EntityEventArgs args)
     {
         if (!component.Initialized)
             return;
@@ -110,7 +110,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
     /// <summary>
     /// Called whenever an access button is pressed, adding or removing that access from the target ID card.
-    /// Writes data passed from the UI into the ID stored in <see cref="SharedIdCardConsoleComponent.TargetIdSlot"/>, if present.
+    /// Writes data passed from the UI into the ID stored in <see cref="IdCardConsoleComponent.TargetIdSlot"/>, if present.
     /// </summary>
     private void TryWriteToTargetId(EntityUid uid,
         string newFullName,
@@ -118,7 +118,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         List<string> newAccessList,
         string newJobProto,
         EntityUid player,
-        SharedIdCardConsoleComponent? component = null)
+        IdCardConsoleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -167,12 +167,12 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     }
 
     /// <summary>
-    /// Returns true if there is an ID in <see cref="SharedIdCardConsoleComponent.PrivilegedIdSlot"/> and said ID satisfies the requirements of <see cref="AccessReaderComponent"/>.
+    /// Returns true if there is an ID in <see cref="IdCardConsoleComponent.PrivilegedIdSlot"/> and said ID satisfies the requirements of <see cref="AccessReaderComponent"/>.
     /// </summary>
     /// <remarks>
     /// Other code relies on the fact this returns false if privileged Id is null. Don't break that invariant.
     /// </remarks>
-    private bool PrivilegedIdIsAuthorized(EntityUid uid, SharedIdCardConsoleComponent? component = null)
+    private bool PrivilegedIdIsAuthorized(EntityUid uid, IdCardConsoleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return true;

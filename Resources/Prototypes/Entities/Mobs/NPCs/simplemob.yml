@@ -67,7 +67,7 @@
     bloodlossHealDamage:
       types:
         Bloodloss:
-          -0.25
+          -1
   - type: Damageable
     damageContainer: Biological
   - type: RadiationReceiver
@@ -139,8 +139,6 @@
   - type: Polymorphable
   - type: Pullable
   - type: Buckle
-  - type: Recyclable
-    safe: false
   - type: StandingState
   - type: Alerts
   - type: NameIdentifier

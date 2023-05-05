@@ -824,7 +824,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeAmanitaPie
-  name: amanita pie
+  name: amanita pie recipe
   result: FoodPieAmanita
   time: 15
   solids:
@@ -841,6 +841,18 @@
     Slime: 15
   solids:
     FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGrapeTart
+  name: grape tart recipe
+  result: FoodTartGrape
+  time: 15
+  reagents:
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodGrape: 3
 
 #Donks i guess
 - type: microwaveMealRecipe
@@ -1046,6 +1058,43 @@
     FoodCarrot: 1
     FoodCabbage: 1
     FoodGarlic: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFruitSalad
+  name: fruit salad recipe
+  result: FoodSaladFruit
+  time: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOrange: 1
+    FoodApple: 1
+    FoodGrape: 1
+    FoodWatermelonSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeJungleSalad
+  name: jungle salad recipe
+  result: FoodSaladJungle
+  time: 5
+  solids:
+    FoodBowlBig: 1
+    FoodBanana: 1
+    FoodApple: 1
+    FoodGrape: 1
+    FoodWatermelonSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeWatermelonFruitBowlSalad
+  name: watermelon fruit bowl recipe
+  result: FoodSaladWatermelonFruitBowl
+  time: 5
+  solids:
+    FoodWatermelon: 1
+    FoodApple: 1
+    FoodBanana: 1
+    FoodLemon: 1
+    FoodOrange: 1
+    FoodAmbrosiaVulgaris: 1
 
 # NOT ACTUAL FOOD
 

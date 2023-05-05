@@ -100,5 +100,6 @@
     containers:
       - scanner-body
   - type: CryoPod
+  - type: CryoPodAir
   - type: ContainerTemperatureDamageThresholds
     coldDamageThreshold: 10

@@ -8,3 +8,14 @@
     uiWindowPos: 0,0
     strippingWindowPos: 0,0
     displayName: Head
+  - name: mask
+    slotTexture: mask
+    slotFlags: MASK
+    uiWindowPos: 1,1
+    strippingWindowPos: 1,1
+    displayName: Mask
+    whitelist:
+      tags:
+        - PetWearable
+      components:
+        - Smokable

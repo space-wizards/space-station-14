@@ -121,7 +121,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     private void OnRelayMovement(EntityUid uid, SharedEntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
     {
-        if (!HasComp<SharedHandsComponent>(args.Entity))
+        if (!HasComp<HandsComponent>(args.Entity))
             return;
 
         if (_timing.CurTime < component.LastInternalOpenAttempt + SharedEntityStorageComponent.InternalOpenAttemptDelay)
@@ -146,13 +146,13 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (component.Open)
         {
             verb.Text = Loc.GetString("verb-common-close");
-            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
+            verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
         }
         else
         {
             verb.Text = Loc.GetString("verb-common-open");
             verb.Icon = new SpriteSpecifier.Texture(
-                new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
+                new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
         }
         verb.Act = () => ToggleOpen(args.User, args.Target, component);
         args.Verbs.Add(verb);
@@ -311,7 +311,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (!Resolve(target, ref component))
             return false;
 
-        if (!HasComp<SharedHandsComponent>(user))
+        if (!HasComp<HandsComponent>(user))
             return false;
 
         if (component.IsWeldedShut)

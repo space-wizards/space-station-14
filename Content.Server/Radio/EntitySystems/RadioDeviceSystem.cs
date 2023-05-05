@@ -206,15 +206,15 @@ public sealed class RadioDeviceSystem : EntitySystem
         }
     }
 
-    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, RadioReceiveEvent args)
+    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, ref RadioReceiveEvent args)
     {
-        var nameEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
-        RaiseLocalEvent(args.Source, nameEv);
+        var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource));
+        RaiseLocalEvent(args.MessageSource, nameEv);
 
         var name = Loc.GetString("speech-name-relay", ("speaker", Name(uid)),
             ("originalName", nameEv.Name));
 
-        var hideGlobalGhostChat = true; // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, nameOverride: name, hideGlobalGhostChat:hideGlobalGhostChat, checkRadioPrefix: false);
+        // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
+        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
     }
 }
