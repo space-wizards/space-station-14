@@ -1,11 +1,6 @@
 Entries:
 - author: Alekshhh
   changes:
-  - {message: Changed space bears visually. Growr., type: Tweak}
-  id: 3150
-  time: '2023-03-10T13:45:44.0000000+00:00'
-- author: Alekshhh
-  changes:
   - {message: Changed Paperwork to no longer be a demon sent from hell. Old one will
       be adapted into a zombie sprite instead..., type: Tweak}
   id: 3151
@@ -2893,3 +2888,9 @@ Entries:
       their petters., type: Fix}
   id: 3649
   time: '2023-05-05T13:03:47.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: 'After detectives complained about the weakness of the .45 magnum cartridge,
+      NT upgraded the cartridge to a higher lethal force.', type: Tweak}
+  id: 3650
+  time: '2023-05-05T13:10:05.0000000+00:00'
