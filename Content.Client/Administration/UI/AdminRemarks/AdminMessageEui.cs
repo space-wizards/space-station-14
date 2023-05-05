@@ -16,6 +16,7 @@ public sealed class AdminMessageEui : BaseEui
         _popup = new AdminMessagePopupWindow();
         _popup.OnAcceptPressed += () => SendMessage(new Accept());
         _popup.OnDismissPressed += () => SendMessage(new Dismiss());
+        _popup.OnClose += () => SendMessage(new CloseEuiMessage());
     }
 
     public override void HandleState(EuiStateBase state)

@@ -78,7 +78,6 @@ public sealed partial class AdminNotesLinePopup : Popup
 
     private void ResetDeleteButton()
     {
-        Logger.Debug("Reset delete callback in note popup");
         ConfirmingDelete = false;
         DeleteButton.Text = Loc.GetString("admin-notes-delete");
         DeleteButton.ModulateSelfOverride = null;

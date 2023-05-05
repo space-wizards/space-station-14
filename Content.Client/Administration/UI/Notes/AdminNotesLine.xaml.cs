@@ -68,7 +68,7 @@ public sealed partial class AdminNotesLine : BoxContainer
         }
         else
         {
-            SeverityRect.Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ResourcePath(iconPath)));
+            SeverityRect.Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ResPath(iconPath)));
         }
 
         TimeLabel.Text = Note.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss");

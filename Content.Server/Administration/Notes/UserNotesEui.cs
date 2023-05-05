@@ -6,7 +6,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Shared.Configuration;
-using static Content.Shared.Administration.Notes.UserNotesEuiMsg;
 
 namespace Content.Server.Administration.Notes;
 
@@ -34,20 +33,6 @@ public sealed class UserNotesEui : BaseEui
         return new UserNotesEuiState(
             Notes
         );
-    }
-
-    public override async void HandleMessage(EuiMessageBase msg)
-    {
-        base.HandleMessage(msg);
-
-        switch (msg)
-        {
-            case Close _:
-            {
-                Close();
-                break;
-            }
-        }
     }
 
     public async Task UpdateNotes()

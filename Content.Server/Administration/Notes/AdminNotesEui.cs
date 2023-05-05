@@ -60,16 +60,10 @@ public sealed class AdminNotesEui : BaseEui
 
         switch (msg)
         {
-            case Close _:
-                {
-                    Close();
-                    break;
-                }
             case CreateNoteRequest request:
                 {
                     if (!_notesMan.CanCreate(Player))
                     {
-                        Close();
                         break;
                     }
 
@@ -90,7 +84,6 @@ public sealed class AdminNotesEui : BaseEui
                 {
                     if (!_notesMan.CanDelete(Player))
                     {
-                        Close();
                         break;
                     }
 
@@ -101,7 +94,6 @@ public sealed class AdminNotesEui : BaseEui
                 {
                     if (!_notesMan.CanEdit(Player))
                     {
-                        Close();
                         break;
                     }
 
@@ -154,7 +146,12 @@ public sealed class AdminNotesEui : BaseEui
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
     {
-        if (args.Player == Player && !_notesMan.CanView(Player))
+        if (args.Player != Player)
+        {
+            return;
+        }
+
+        if (!_notesMan.CanView(Player))
         {
             Close();
         }

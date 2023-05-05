@@ -3,7 +3,6 @@ using Content.Client.Eui;
 using Content.Shared.Administration.Notes;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
-using static Content.Shared.Administration.Notes.AdminNoteEuiMsg;
 
 namespace Content.Client.Administration.UI.AdminRemarks;
 
@@ -13,6 +12,7 @@ public sealed class UserNotesEui : BaseEui
     public UserNotesEui()
     {
         NoteWindow = new AdminRemarksWindow();
+        NoteWindow.OnClose += () => SendMessage(new CloseEuiMessage());
     }
 
     private AdminRemarksWindow NoteWindow { get; }
