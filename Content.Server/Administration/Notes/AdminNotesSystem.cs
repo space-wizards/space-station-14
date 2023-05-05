@@ -1,5 +1,6 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
+using Content.Server.EUI;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
@@ -18,6 +19,7 @@ public sealed class AdminNotesSystem : EntitySystem, IPostInjectInit
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly EuiManager _euis = default!;
 
     public const string SawmillId = "admin.notes_system";
     private ISawmill _sawmill = default!;
@@ -74,7 +76,16 @@ public sealed class AdminNotesSystem : EntitySystem, IPostInjectInit
 
         foreach (var message in messages)
         {
-            _chat.DispatchServerMessage(e.Session, Loc.GetString("admin-notes-new-message",("admin", message.CreatedBy.LastSeenUserName), ("message", message.Message)));
+            var messageString = Loc.GetString("admin-notes-new-message", ("admin", message.CreatedBy?.LastSeenUserName ?? "[System]"), ("message", message.Message));
+            // Only open the popup if the user hasn't seen it yet
+            if (!message.Seen)
+            {
+                var ui = new AdminMessageEui();
+                _euis.OpenEui(ui, e.Session);
+                ui.SetMessage(message);
+            }
+            // Send the message anyway
+            _chat.DispatchServerMessage(e.Session, messageString);
         }
     }
 

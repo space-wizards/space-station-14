@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -60,7 +60,7 @@ namespace Content.Server.Database
             await using var db = await GetDbImpl();
 
             var exempt = await GetBanExemptionCore(db, userId);
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false, exempt)
+            var query = MakeBanLookupQuery(address, userId, hwId, (DbGuardImpl)db, includeUnbanned: false, exempt)
                 .OrderByDescending(b => b.BanTime);
 
             var ban = await query.FirstOrDefaultAsync();
@@ -114,7 +114,7 @@ namespace Content.Server.Database
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
-                    .Where(b => b.UserId == uid.UserId);
+                    .Where(b => b.PlayerUserId == uid.UserId);
 
                 query = query == null ? newQ : query.Union(newQ);
             }
@@ -163,7 +163,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.PlayerUserId is {} guid)
             {
                 uid = new NetUserId(guid);
             }
@@ -183,7 +183,10 @@ namespace Content.Server.Database
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
+                ban.RoundId,
+                ban.PlaytimeAtNote,
                 ban.Reason,
+                ban.Severity,
                 aUid,
                 unbanDef);
         }
@@ -216,10 +219,13 @@ namespace Content.Server.Database
                 Address = serverBan.Address,
                 HWId = serverBan.HWId?.ToArray(),
                 Reason = serverBan.Reason,
+                Severity = serverBan.Severity,
                 BanningAdmin = serverBan.BanningAdmin?.UserId,
                 BanTime = serverBan.BanTime.UtcDateTime,
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
-                UserId = serverBan.UserId?.UserId
+                RoundId = serverBan.RoundId,
+                PlaytimeAtNote = serverBan.PlaytimeAtNote,
+                PlayerUserId = serverBan.UserId?.UserId
             });
 
             await db.PgDbContext.SaveChangesAsync();
@@ -304,7 +310,7 @@ namespace Content.Server.Database
             {
                 var newQ = db.PgDbContext.RoleBan
                     .Include(p => p.Unban)
-                    .Where(b => b.UserId == uid.UserId);
+                    .Where(b => b.PlayerUserId == uid.UserId);
 
                 query = query == null ? newQ : query.Union(newQ);
             }
@@ -345,7 +351,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.PlayerUserId is {} guid)
             {
                 uid = new NetUserId(guid);
             }
@@ -365,7 +371,10 @@ namespace Content.Server.Database
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
+                ban.RoundId,
+                ban.PlaytimeAtNote,
                 ban.Reason,
+                ban.Severity,
                 aUid,
                 unbanDef,
                 ban.RoleId);
@@ -399,10 +408,13 @@ namespace Content.Server.Database
                 Address = serverRoleBan.Address,
                 HWId = serverRoleBan.HWId?.ToArray(),
                 Reason = serverRoleBan.Reason,
+                Severity = serverRoleBan.Severity,
                 BanningAdmin = serverRoleBan.BanningAdmin?.UserId,
                 BanTime = serverRoleBan.BanTime.UtcDateTime,
                 ExpirationTime = serverRoleBan.ExpirationTime?.UtcDateTime,
-                UserId = serverRoleBan.UserId?.UserId,
+                RoundId = serverRoleBan.RoundId,
+                PlaytimeAtNote = serverRoleBan.PlaytimeAtNote,
+                PlayerUserId = serverRoleBan.UserId?.UserId,
                 RoleId = serverRoleBan.Role,
             });
 

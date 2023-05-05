@@ -1,7 +1,9 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.EUI;
 using Content.Shared.Administration.Notes;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Shared.Configuration;
 using static Content.Shared.Administration.Notes.UserNotesEuiMsg;
@@ -25,7 +27,7 @@ public sealed class UserNotesEui : BaseEui
         }
     }
 
-    private Dictionary<int, SharedAdminNote> Notes { get; set; } = new();
+    private Dictionary<(int, NoteType), SharedAdminNote> Notes { get; set; } = new();
 
     public override EuiStateBase GetNewState()
     {
@@ -50,21 +52,13 @@ public sealed class UserNotesEui : BaseEui
 
     public async Task UpdateNotes()
     {
-        var notes = new Dictionary<int, SharedAdminNote>();
         if (!_seeOwnNotes)
         {
             Logger.WarningS("admin.notes", $"User {Player.Name} with ID {Player.UserId} tried to update their own user notes when see_own_notes was set to false");
             return;
         }
 
-        foreach (var note in await _notesMan.GetVisibleNotes(Player.UserId))
-        {
-            note.ExpiryTime = null;
-            notes.Add(note.Id, note.ToShared());
-        }
-
-        Notes = notes;
-
+        Notes = (await _notesMan.GetVisibleRemarks(Player.UserId)).Select(note => note.ToShared()).ToDictionary(note => (note.Id, note.NoteType));
         StateDirty();
     }
 }

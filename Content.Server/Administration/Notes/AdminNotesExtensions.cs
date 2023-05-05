@@ -1,27 +1,71 @@
+using System.Diagnostics;
 using Content.Server.Database;
 using Content.Shared.Administration.Notes;
+using Content.Shared.Database;
 
 namespace Content.Server.Administration.Notes;
 
 public static class AdminNotesExtensions
 {
-    public static SharedAdminNote ToShared(this AdminNote note)
+    public static SharedAdminNote ToShared(this IAdminRemarksCommon note)
     {
+        NoteSeverity? severity = null;
+        var secret = false;
+        NoteType type;
+        string[]? bannedRoles = null;
+        string? unbannedByName = null;
+        DateTime? unbannedTime = null;
+        bool? seen = null;
+        switch (note)
+        {
+            case AdminNote adminNote:
+                type = NoteType.Note;
+                severity = adminNote.NoteSeverity;
+                secret = adminNote.Secret;
+                break;
+            case AdminWatchlist:
+                type = NoteType.Watchlist;
+                secret = true;
+                break;
+            case AdminMessage adminMessage:
+                type = NoteType.Message;
+                seen = adminMessage.Seen;
+                break;
+            case ServerBanNote ban:
+                type = NoteType.ServerBan;
+                severity = ban.Severity;
+                unbannedTime = ban.UnbanTime;
+                unbannedByName = ban.UnbanningAdmin?.LastSeenUserName ?? "[System]";
+                break;
+            case ServerRoleBanNote roleBan:
+                type = NoteType.RoleBan;
+                severity = roleBan.Severity;
+                bannedRoles = roleBan.Roles;
+                unbannedTime = roleBan.UnbanTime;
+                unbannedByName = roleBan.UnbanningAdmin?.LastSeenUserName ?? "[System]";
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), note.GetType(), "Unknown note type");
+        }
         return new SharedAdminNote(
             note.Id,
-            note.PlayerUserId,
+            note.PlayerUserId!.Value, // There may be bans without a user, but why would we ever be converting them to shared notes?
             note.RoundId,
             note.Round?.Server.Name,
             note.PlaytimeAtNote,
-            note.NoteType,
+            type,
             note.Message,
-            note.NoteSeverity,
-            note.Secret,
-            note.CreatedBy.LastSeenUserName,
-            note.LastEditedBy.LastSeenUserName,
+            severity,
+            secret,
+            note.CreatedBy?.LastSeenUserName ?? "[System]",
+            note.LastEditedBy?.LastSeenUserName ?? string.Empty,
             note.CreatedAt,
             note.LastEditedAt,
-            note.ExpiryTime
+            note.ExpirationTime,
+            bannedRoles,
+            unbannedTime,
+            unbannedByName,
+            seen
         );
     }
 }
