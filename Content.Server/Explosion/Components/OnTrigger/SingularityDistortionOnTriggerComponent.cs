@@ -10,7 +10,7 @@ namespace Content.Server.Explosion.Components;
 public sealed class SingularityDistortionOnTriggerComponent : Component
 {
     [DataField("removeOnTrigger")]
-    public bool RemoveOnTrigger = false;
+    public bool RemoveOnTrigger = true;
 
     /// <summary>
     /// Used to tweak SingularityDistortionComponent's Intencity

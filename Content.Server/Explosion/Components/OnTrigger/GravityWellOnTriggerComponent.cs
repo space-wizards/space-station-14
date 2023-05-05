@@ -10,7 +10,7 @@ namespace Content.Server.Explosion.Components;
 public sealed class GravityWellOnTriggerComponent : Component
 {
     [DataField("removeOnTrigger")]
-    public bool RemoveOnTrigger = false;
+    public bool RemoveOnTrigger = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("radialAcceleration")]

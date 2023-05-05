@@ -36,8 +36,7 @@ namespace Content.Server.Explosion.EntitySystems
         {
             Triggered = triggered;
             User = user;
-        }    [Dependency] private readonly SharedAudioSystem _audio = default!;
-
+        }
     }
 
     [UsedImplicitly]
@@ -86,33 +85,33 @@ namespace Content.Server.Explosion.EntitySystems
         {
             var singulo = EnsureComp<SingularityDistortionComponent>(uid);
 
-            if (singulo != null)
-            {
-                singulo.Intensity = component.Intensity;
-            }
+            singulo.Intensity = component.Intensity;
+            if (component.RemoveOnTrigger)
+                RemCompDeferred<SingularityDistortionOnTriggerComponent>(uid);
         }
 
         private void HandleGravityWellTrigger(EntityUid uid, GravityWellOnTriggerComponent component, TriggerEvent args)
         {
             var well = EnsureComp<GravityWellComponent>(uid);
-            if (well != null)
-            {
-                well.BaseRadialAcceleration     = component.RadialAcceleration;
-                well.BaseTangentialAcceleration = component.TangentialAcceleration;
-            }
+            well.BaseRadialAcceleration = component.RadialAcceleration;
+            well.BaseTangentialAcceleration = component.TangentialAcceleration;
+            if (component.RemoveOnTrigger)
+                RemCompDeferred<GravityWellOnTriggerComponent>(uid);
         }
 
         private void HandlePointLightTrigger(EntityUid uid, PointLightEnableOnTriggerComponent component, TriggerEvent args)
         {
-            if (HasComp<PointLightComponent>(uid))
-                _pointLightSystem.SetEnabled(uid, true);
+            if (TryComp<PointLightComponent>(uid, out var comp))
+                _pointLightSystem.SetEnabled(uid, true, comp);
+            if (component.RemoveOnTrigger)
+                RemCompDeferred<PointLightEnableOnTriggerComponent>(uid);
         }
 
         private void HandleSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
         {
             _audio.PlayPvs(component.Sound, uid);
             if (component.RemoveOnTrigger)
-                RemCompDeferred<AnchorOnTriggerComponent>(uid);
+                RemCompDeferred<SoundOnTriggerComponent>(uid);
         }
 
         private void HandleAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)

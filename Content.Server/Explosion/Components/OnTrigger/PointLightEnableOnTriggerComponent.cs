@@ -10,5 +10,5 @@ namespace Content.Server.Explosion.Components;
 public sealed class PointLightEnableOnTriggerComponent : Component
 {
     [DataField("removeOnTrigger")]
-    public bool RemoveOnTrigger = false;
+    public bool RemoveOnTrigger = true;
 }

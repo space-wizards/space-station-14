@@ -9,5 +9,5 @@ namespace Content.Server.Explosion.Components;
 public sealed class AnchorOnTriggerComponent : Component
 {
     [DataField("removeOnTrigger")]
-    public bool RemoveOnTrigger = false;
+    public bool RemoveOnTrigger = true;
 }

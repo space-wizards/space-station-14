@@ -10,7 +10,7 @@ namespace Content.Server.Explosion.Components;
 public sealed class SoundOnTriggerComponent : Component
 {
     [DataField("removeOnTrigger")]
-    public bool RemoveOnTrigger = false;
+    public bool RemoveOnTrigger = true;
 
     [DataField("sound")]
     public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Effects/Grenades/supermatter_start.ogg");
