@@ -824,3 +824,18 @@
       materialRequirements:
         Steel: 1
         Cable: 2
+
+- type: entity
+  id: HardsuitFabricatorCircuitboard
+  parent: BaseMachineCircuitboard
+  name: hardsuit fabricator machine board
+  description: A machine printed circuit board for an hardsuit fabricator
+  components:
+    - type: MachineBoard
+      prototype: HardsuitFabricator
+      requirements:
+        MatterBin: 2
+        Manipulator: 2
+        Laser: 2
+      materialRequirements:
+        Steel: 5

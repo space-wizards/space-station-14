@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites created by MrGreen06 on Discord",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	{
+      "name": "building",
+      "delays": [
+        [
+          1.3,
+          1.3,
+          1.2,
+          1.2
+        ]
+      ]
+    },
+	{
+	  "name": "icon"
+	},
+	{
+	  "name": "unlit"
+	}
+  ]
+}

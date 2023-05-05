@@ -657,3 +657,35 @@
         - SheetUranium1
         - IngotGold1
         - IngotSilver1
+
+- type: entity
+  parent: Autolathe
+  id: HardsuitFabricator
+  name: hardsuit fabricator
+  description: It produces hardsuits for the crew in seconnds.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/hardsuit_fabricator.rsi
+      netsync: false
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - type: Machine
+      board: HardsuitFabricatorCircuitboard
+    - type: MaterialStorage
+      dropOnDeconstruct: false 
+      ignoreColor: true
+      whitelist:
+        tags:
+          - Sheet
+          - RawMaterial
+          - Ingot
+    - type: Lathe
+      staticRecipes:
+        - ClothingOuterHardsuitEngineering
+        - ClothingOuterHardsuitAtmos
+        - ClothingOuterHardsuitSalvage
+        - ClothingOuterHardsuitSecurity
