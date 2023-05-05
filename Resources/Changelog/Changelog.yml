@@ -1,9 +1,4 @@
 Entries:
-- author: CaptainSqrBeard
-  changes:
-  - {message: Fixed slime hair was not translucent, type: Fix}
-  id: 3157
-  time: '2023-03-11T21:04:58.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: AME fuel jars now show their fuel level when examined., type: Tweak}
@@ -2899,3 +2894,10 @@ Entries:
       no longer grant access to captain''s office for example.', type: Tweak}
   id: 3656
   time: '2023-05-05T13:56:54.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: its now possible to block doorways with shields, type: Tweak}
+  - {message: 'doors won''t close if there are anchored entities inside (e.g. walls,
+      vendomats, closets and etc...)', type: Tweak}
+  id: 3657
+  time: '2023-05-05T15:14:33.0000000+00:00'
