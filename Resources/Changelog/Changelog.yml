@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: 'Changed space bears to glow, and resprited their hide.', type: Tweak}
-  id: 3156
-  time: '2023-03-11T14:35:53.0000000+00:00'
 - author: CaptainSqrBeard
   changes:
   - {message: Fixed slime hair was not translucent, type: Fix}
@@ -2893,3 +2888,14 @@ Entries:
   - {message: Stuttering during blood loss, type: Add}
   id: 3655
   time: '2023-05-05T13:46:52.0000000+00:00'
+- author: moony
+  changes:
+  - {message: ID Card Console now requires the privileged ID have the access being
+      granted., type: Tweak}
+  - {message: 'The ID Card Console is no longer access locked, all cards can use it.',
+    type: Tweak}
+  - {message: 'The HoP has had additional accesses added to their card so they can
+      continue to function as normal. This does NOT include head accesses, they can
+      no longer grant access to captain''s office for example.', type: Tweak}
+  id: 3656
+  time: '2023-05-05T13:56:54.0000000+00:00'
