@@ -26,7 +26,6 @@ namespace Content.Client.CombatMode
 
             SubscribeLocalEvent<CombatModeComponent, ComponentHandleState>(OnHandleState);
 
-            OnShowCombatIndicatorsChanged(_cfg.GetCVar(CCVars.HudHeldItemShow));
             _cfg.OnValueChanged(CCVars.HudHeldItemShow, OnShowCombatIndicatorsChanged, true);
         }
 
@@ -89,18 +88,17 @@ namespace Content.Client.CombatMode
         private void OnShowCombatIndicatorsChanged(bool isShow)
         {
             if (isShow)
-                AddCombatModeIndicatorsOverlay();
+            {
+                _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay(
+                    _inputManager,
+                    EntityManager,
+                    _eye,
+                    this));
+            }
             else
+            {
                 _overlayManager.RemoveOverlay<ShowCombatModeIndicatorsOverlay>();
-        }
-
-        private void AddCombatModeIndicatorsOverlay()
-        {
-            _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay(
-                _inputManager,
-                EntityManager,
-                _eye,
-                this));
+            }
         }
     }
 }
