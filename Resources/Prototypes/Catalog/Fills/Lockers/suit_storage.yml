@@ -207,7 +207,7 @@
 
 #Pirate Captain's hardsuit
 - type: entity
-  id: SuitStorageSyndie
+  id: SuitStoragePirateCap
   parent: SuitStorageBase
   suffix: Pirate Captain
   components:
