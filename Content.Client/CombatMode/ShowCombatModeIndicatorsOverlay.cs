@@ -75,16 +75,12 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
     }
     private void DrawSight(Texture sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
     {
-        screen.DrawTextureRect(sight,
-            GetRectForTexture(sight.Size, centerPos, scale), StrokeColor);
-        screen.DrawTextureRect(sight,
-            GetRectForTexture(sight.Size, centerPos, scale, 7f), MainColor);
-    }
+         var sightSize = (sight.Size * scale);
+         var expandedSize = sightSize + 7f;
 
-    private static UIBox2 GetRectForTexture(Vector2 textureSize, Vector2 pos, float scale,
-        float expandedSize = 0f)
-    {
-        var sightSize = (textureSize * scale) + expandedSize;
-        return UIBox2.FromDimensions(pos - (sightSize / 2), sightSize);
+        screen.DrawTextureRect(sight,
+            UIBox2.FromDimensions(centerPos - (sightSize / 2), sightSize), StrokeColor);
+        screen.DrawTextureRect(sight,
+            UIBox2.FromDimensions(centerPos - (expandedSize / 2), expandedSize), MainColor);
     }
 }
