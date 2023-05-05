@@ -90,7 +90,7 @@
 
 - type: entity
   name: supermatter grenade
-  description: Grenade that simulates delamination of supermatter engine, pulling things in heap and explode after some time.
+  description: Grenade that simulates delamination of the supermatter engine, pulling things in a heap and exploding after some time.
   parent: GrenadeBase
   id: SupermatterGrenade
   components:
@@ -145,8 +145,8 @@
     removeOnTrigger: true
   - type: TwoStagedGrenade
     explodeAfterGravityPull: True
-    explossionDelay: 13.2
-    ambienceSoundOffset: 0.4
+    explosionDelay: 10.1
+    ambienceSoundOffset: 0.35
     # componentsToAdd:
     #   - ExplodeOnTriggerComponent
     #   - AmbientSoundComponent
@@ -167,7 +167,7 @@
 
 - type: entity
   name: whitehole grenade
-  description: Grenade that are repulses everything around for sometime. Very useful in close rooms and for chasing someone.
+  description: Grenade that are repulses everything a round for some time. Very useful in small rooms and for chasing someone.
   parent: SupermatterGrenade
   id: WhiteholeGrenade
   components:
@@ -187,8 +187,8 @@
       volume: 5
   - type: TwoStagedGrenade
     explodeAfterGravityPull: False
-    explossionDelay: 13.6
-    ambienceSoundOffset: 0.8
+    explosionDelay: 10.4
+    ambienceSoundOffset: 0.74
   - type: SingularityDistortionOnTrigger
     removeOnTrigger: true
     intensity: -100 

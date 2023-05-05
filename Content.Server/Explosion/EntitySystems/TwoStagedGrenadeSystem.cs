@@ -26,7 +26,7 @@ public sealed class TwoStagedGrenadeSystem : EntitySystem
             return;
 
         component.IsSecondStageBegan = true;
-        component.TimeOfExplosion = _timing.CurTime + TimeSpan.FromSeconds(component.ExplossionDelay);
+        component.TimeOfExplosion = _timing.CurTime + TimeSpan.FromSeconds(component.ExplosionDelay);
         component.AmbienceStartTime = _timing.CurTime + TimeSpan.FromSeconds(component.AmbienceSoundOffset);
     }
 

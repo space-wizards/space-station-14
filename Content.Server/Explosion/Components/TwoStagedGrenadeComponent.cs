@@ -15,8 +15,8 @@ public sealed class TwoStagedGrenadeComponent : Component
     /// Time after first trigger (i.e. how long will second stage take) that will pass and grenade will be triggered again.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("explossionDelay")]
-    public float ExplossionDelay = 0f;
+    [DataField("explosionDelay")]
+    public float ExplosionDelay = 0f;
 
     public TimeSpan TimeOfExplosion = TimeSpan.Zero;
 
