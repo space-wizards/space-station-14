@@ -299,6 +299,11 @@
     Telecrystal: 30
   categories:
   - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
 
 #TODO: Remove this from the uplink
 - type: listing

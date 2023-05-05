@@ -601,6 +601,20 @@
   itemDrop: FloorTileItemBlue
   heatCapacity: 10000
 
+- type: tile
+  id: FloorDimension
+  name: tiles-dimension
+  sprite: /Textures/Tiles/grass.png
+  baseTurfs:
+  - Plating
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepGrass
+  itemDrop: FloorTileItemGrass
+  isSpace: true
+  heatCapacity: 10000
+
 # Departamental
 - type: tile
   id: FloorFreezer

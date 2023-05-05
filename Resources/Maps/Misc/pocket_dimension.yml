@@ -5,7 +5,7 @@ meta:
   postmapinit: false
 tilemap:
   0: Space
-  55: FloorPlanetGrass
+  55: FloorDimension
 entities:
 - proto: ""
   entities:
