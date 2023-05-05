@@ -277,6 +277,8 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         {
             var attemptEv = new SurveillanceCameraSetActiveAttemptEvent();
             RaiseLocalEvent(camera, ref attemptEv);
+            if (attemptEv.Cancelled)
+                return;
             component.Active = setting;
         }
         else
