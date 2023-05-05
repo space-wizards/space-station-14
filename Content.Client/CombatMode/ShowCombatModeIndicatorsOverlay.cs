@@ -48,35 +48,30 @@ public sealed class ShowCombatModeIndicatorsOverlay : Overlay
              "melee_sight"));
     }
 
-    protected override bool BeforeDraw(in OverlayDrawArgs args)
-    {
-        if (!_combatSystem.IsInCombatMode())
-            return false;
-
-        var mousePosMap = _eye.ScreenToMap(_inputManager.MouseScreenPosition);
-        if (mousePosMap.MapId != args.MapId)
-            return false;
-
-        return true;
-    }
-
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (!_combatSystem.IsInCombatMode())
+            return;
+
+        var mouseScreenPosition = _inputManager.MouseScreenPosition;
+        var mousePosMap = _eye.ScreenToMap(mouseScreenPosition);
+        if (mousePosMap.MapId != args.MapId)
+            return;
+
         var handEntity = _entMan.System<HandsSystem>().GetActiveHandEntity();
         var isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
 
-        var screen = args.ScreenHandle;
-        var mousePos = _inputManager.MouseScreenPosition.Position;
+        var mousePos = mouseScreenPosition.Position;
         var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
         var limitedScale = uiScale > 1.25f ? 1.25f : uiScale;
 
         var sight = isHandGunItem ? _gunSight : _meleeSight;
-        DrawSight(sight, screen, mousePos, limitedScale * Scale);
+        DrawSight(sight, args.ScreenHandle, mousePos, limitedScale * Scale);
     }
     private void DrawSight(Texture sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
     {
-         var sightSize = (sight.Size * scale);
-         var expandedSize = sightSize + 7f;
+        var sightSize = (sight.Size * scale);
+        var expandedSize = sightSize + 7f;
 
         screen.DrawTextureRect(sight,
             UIBox2.FromDimensions(centerPos - (sightSize / 2), sightSize), StrokeColor);

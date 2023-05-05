@@ -28,6 +28,8 @@ namespace Content.Client.Hands
         {
             IoCManager.InjectDependencies(this);
 
+            Logger.Debug("init hand entity!");
+
             _renderBackbuffer = _clyde.CreateRenderTarget(
                 (64, 64),
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb, true),
