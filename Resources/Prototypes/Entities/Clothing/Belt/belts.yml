@@ -517,6 +517,9 @@
   name: suspenders
   description: For holding your pants up.
   components:
+  - type: Tag
+    tags:
+    - MimeBelt
   - type: Sprite
     sprite: Clothing/Belt/suspenders.rsi
     state: icon

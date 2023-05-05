@@ -313,6 +313,9 @@
       - OreProcessorMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
+      - HonkerCentralElectronics
+      - HonkerPeripheralsElectronics
+      - HonkerTargetingElectronics
       - GeneratorPlasmaMachineCircuitboard
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
@@ -366,12 +369,19 @@
     - RightArmBorg
     - LeftLegBorg
     - RightLegBorg
+    - LightHeadBorg
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm
     - RipleyLLeg
     - RipleyRLeg
     - MechEquipmentGrabber
+    - HonkerHarness
+    - HonkerLArm
+    - HonkerRArm
+    - HonkerLLeg
+    - HonkerRLeg
+    - MechEquipmentHorn
   - type: MaterialStorage
     whitelist:
       tags:

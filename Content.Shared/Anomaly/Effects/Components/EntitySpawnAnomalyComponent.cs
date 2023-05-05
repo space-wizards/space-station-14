@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
-public sealed class FleshAnomalyComponent : Component
+public sealed class EntitySpawnAnomalyComponent : Component
 {
     /// <summary>
     /// A list of entities that are random picked to be spawned on each pulse
@@ -32,8 +32,8 @@ public sealed class FleshAnomalyComponent : Component
     /// <summary>
     /// The tile that is spawned by the anomaly's effect
     /// </summary>
-    [DataField("fleshTileId", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>)), ViewVariables(VVAccess.ReadWrite)]
-    public string FleshTileId = "FloorFlesh";
+    [DataField("floorTileId", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>)), ViewVariables(VVAccess.ReadWrite)]
+    public string FloorTileId = "FloorFlesh";
 
     /// <summary>
     /// The entity spawned when the anomaly goes supercritical

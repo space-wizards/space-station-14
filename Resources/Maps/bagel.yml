@@ -79080,6 +79080,8 @@ entities:
       pos: 37.5,0.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 11723
@@ -79088,6 +79090,8 @@ entities:
       pos: 40.5,0.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 11739
@@ -79096,6 +79100,8 @@ entities:
       pos: 40.5,3.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 12629
@@ -79148,6 +79154,8 @@ entities:
       pos: 41.5,-0.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13516
@@ -79156,6 +79164,8 @@ entities:
       pos: 37.5,-0.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13517
@@ -79164,6 +79174,8 @@ entities:
       pos: 37.5,-1.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13537
@@ -83743,6 +83755,18 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
+  - uid: 1641
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 4.5,18.5
+      parent: 60
+      type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
+    - bodyType: Static
+      type: Physics
+    - nextSound: 34.4476301
+      type: EmitSoundOnCollide
   - uid: 1657
     components:
     - pos: -25.5,-16.5
@@ -91014,6 +91038,17 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
+  - uid: 7835
+    components:
+    - pos: 4.5,15.5
+      parent: 60
+      type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
+    - bodyType: Static
+      type: Physics
+    - nextSound: 40.0467708
+      type: EmitSoundOnCollide
   - uid: 7856
     components:
     - rot: -1.5707963267948966 rad
@@ -92387,6 +92422,8 @@ entities:
       pos: 38.5,0.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13206
@@ -92394,6 +92431,8 @@ entities:
     - pos: 49.5,8.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13210
@@ -92402,6 +92441,8 @@ entities:
       pos: 40.5,-0.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13237
@@ -92459,6 +92500,8 @@ entities:
     - pos: 49.5,7.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13505
@@ -92467,6 +92510,8 @@ entities:
       pos: 46.5,2.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13506
@@ -92475,6 +92520,8 @@ entities:
       pos: 45.5,2.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13507
@@ -92483,6 +92530,8 @@ entities:
       pos: 41.5,0.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13508
@@ -92490,6 +92539,8 @@ entities:
     - pos: 49.5,4.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13509
@@ -92498,6 +92549,8 @@ entities:
       pos: 41.5,1.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13511
@@ -92506,6 +92559,8 @@ entities:
       pos: 43.5,3.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13512
@@ -92514,6 +92569,8 @@ entities:
       pos: 44.5,2.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13513
@@ -92522,6 +92579,8 @@ entities:
       pos: 43.5,2.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13514
@@ -92530,6 +92589,8 @@ entities:
       pos: 42.5,2.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13518
@@ -92538,6 +92599,8 @@ entities:
       pos: 38.5,-0.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13519
@@ -92546,6 +92609,8 @@ entities:
       pos: 42.5,3.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13520
@@ -92553,6 +92618,8 @@ entities:
     - pos: 40.5,2.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13526
@@ -92561,6 +92628,8 @@ entities:
       pos: 41.5,3.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13529
@@ -92568,6 +92637,8 @@ entities:
     - pos: 40.5,1.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13539
@@ -92666,6 +92737,8 @@ entities:
       pos: 39.5,0.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13587
@@ -92693,6 +92766,8 @@ entities:
     - pos: 49.5,6.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13594
@@ -92839,6 +92914,8 @@ entities:
       pos: 39.5,-0.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13810
@@ -93634,6 +93711,8 @@ entities:
     - pos: 49.5,5.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 14268
@@ -97256,16 +97335,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-  - uid: 16648
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 4.5,17.5
-      parent: 60
-      type: Transform
-    - color: '#FF1212FF'
-      type: AtmosPipeColor
-    - bodyType: Static
-      type: Physics
   - uid: 16649
     components:
     - rot: -1.5707963267948966 rad
@@ -97340,6 +97409,19 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
+  - uid: 16658
+    components:
+    - pos: 4.5,16.5
+      parent: 60
+      type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
+    - bodyType: Static
+      type: Physics
+    - enabled: True
+      type: AmbientSound
+    - nextSound: 39.6163766
+      type: EmitSoundOnCollide
   - uid: 16660
     components:
     - rot: -1.5707963267948966 rad
@@ -97418,35 +97500,6 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,15.5
-      parent: 60
-      type: Transform
-    - color: '#0335FCFF'
-      type: AtmosPipeColor
-    - bodyType: Static
-      type: Physics
-  - uid: 16678
-    components:
-    - pos: 4.5,17.5
-      parent: 60
-      type: Transform
-    - color: '#0335FCFF'
-      type: AtmosPipeColor
-    - bodyType: Static
-      type: Physics
-  - uid: 16679
-    components:
-    - pos: 4.5,16.5
-      parent: 60
-      type: Transform
-    - color: '#0335FCFF'
-      type: AtmosPipeColor
-    - bodyType: Static
-      type: Physics
-    - enabled: True
-      type: AmbientSound
-  - uid: 16680
-    components:
-    - pos: 4.5,15.5
       parent: 60
       type: Transform
     - color: '#0335FCFF'
@@ -104749,6 +104802,8 @@ entities:
       pos: 49.5,3.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13504
@@ -104756,6 +104811,8 @@ entities:
     - pos: 47.5,2.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13510
@@ -104764,6 +104821,8 @@ entities:
       pos: 41.5,2.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13534
@@ -104820,6 +104879,8 @@ entities:
     - pos: 49.5,9.5
       parent: 60
       type: Transform
+    - color: '#0335FCFF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 14015
@@ -105779,6 +105840,17 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
+  - uid: 16648
+    components:
+    - pos: 4.5,17.5
+      parent: 60
+      type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
+    - bodyType: Static
+      type: Physics
+    - nextSound: 37.5504514
+      type: EmitSoundOnCollide
   - uid: 16654
     components:
     - rot: 3.141592653589793 rad
@@ -105792,15 +105864,6 @@ entities:
   - uid: 16656
     components:
     - pos: 2.5,18.5
-      parent: 60
-      type: Transform
-    - color: '#0335FCFF'
-      type: AtmosPipeColor
-    - bodyType: Static
-      type: Physics
-  - uid: 16658
-    components:
-    - pos: 4.5,18.5
       parent: 60
       type: Transform
     - color: '#0335FCFF'
@@ -110192,6 +110255,8 @@ entities:
       pos: 36.5,-1.5
       parent: 60
       type: Transform
+    - color: '#FF1212FF'
+      type: AtmosPipeColor
     - bodyType: Static
       type: Physics
   - uid: 13563
@@ -110434,7 +110499,7 @@ entities:
       pos: 4.5,14.5
       parent: 60
       type: Transform
-    - color: '#0335FCFF'
+    - color: '#FF1212FF'
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
@@ -120750,13 +120815,6 @@ entities:
         - 0
         - 0
       type: EntityStorage
-- proto: LockerBrigmedicFilled
-  entities:
-  - uid: 1641
-    components:
-    - pos: -19.5,-2.5
-      parent: 60
-      type: Transform
 - proto: LockerCaptainFilled
   entities:
   - uid: 18504
@@ -121629,6 +121687,11 @@ entities:
         - 0
         - 0
       type: EntityStorage
+  - uid: 16678
+    components:
+    - pos: -19.5,-2.5
+      parent: 60
+      type: Transform
 - proto: LockerParamedicFilled
   entities:
   - uid: 185
@@ -142450,13 +142513,6 @@ entities:
   - uid: 6491
     components:
     - pos: 31.5,-36.5
-      parent: 60
-      type: Transform
-- proto: SpawnPointBrigmedic
-  entities:
-  - uid: 7835
-    components:
-    - pos: -19.5,-4.5
       parent: 60
       type: Transform
 - proto: SpawnPointCaptain
