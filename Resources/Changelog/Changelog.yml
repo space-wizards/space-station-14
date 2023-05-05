@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: 'HOP will always have a spare ID in his locker, rather than a 90% chance.',
-    type: Fix}
-  id: 3154
-  time: '2023-03-11T03:27:11.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added a default landing sound for items., type: Add}
@@ -2893,3 +2887,9 @@ Entries:
       use at your own risk. HONK!', type: Add}
   id: 3653
   time: '2023-05-05T13:21:13.0000000+00:00'
+- author: Vaaankas
+  changes:
+  - {message: Added fun!, type: Add}
+  - {message: Removed fun!, type: Remove}
+  id: 3654
+  time: '2023-05-05T13:37:14.0000000+00:00'
