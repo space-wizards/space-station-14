@@ -17,12 +17,22 @@ public enum NoteType
     Note = 0,
 
     /// <summary>
-    ///     A message, type of note that gets explicitly shown to the player
-    /// </summary>
-    Message = 1,
-
-    /// <summary>
     ///     Watchlist, a secret note that gets shown to online admins every time a player connects
     /// </summary>
-    Watchlist = 2,
+    Watchlist = 1,
+
+    /// <summary>
+    ///     A message, type of note that gets explicitly shown to the player
+    /// </summary>
+    Message = 2,
+
+    /// <summary>
+    ///     A server ban, converted to a shared note
+    /// </summary>
+    ServerBan = 3,
+
+    /// <summary>
+    ///     A role ban, converted to a shared note
+    /// </summary>
+    RoleBan = 4,
 }
