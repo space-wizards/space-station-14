@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix weather being blocked by trees and tile entities such as puddles.,
-    type: Fix}
-  id: 3153
-  time: '2023-03-11T03:11:19.0000000+00:00'
 - author: Whisper
   changes:
   - {message: 'HOP will always have a spare ID in his locker, rather than a 90% chance.',
@@ -2893,3 +2887,9 @@ Entries:
   - {message: You can't pry blast doors anymore, type: Tweak}
   id: 3652
   time: '2023-05-05T13:16:23.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Clown scientists have shared their experimental technology with Nanotrasen,
+      use at your own risk. HONK!', type: Add}
+  id: 3653
+  time: '2023-05-05T13:21:13.0000000+00:00'
