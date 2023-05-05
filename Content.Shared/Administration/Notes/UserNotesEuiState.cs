@@ -7,11 +7,11 @@ namespace Content.Shared.Administration.Notes;
 [Serializable, NetSerializable]
 public sealed class UserNotesEuiState : EuiStateBase
 {
-    public UserNotesEuiState(Dictionary<int, SharedAdminNote> notes)
+    public UserNotesEuiState(Dictionary<(int, NoteType), SharedAdminNote> notes)
     {
         Notes = notes;
     }
-    public Dictionary<int, SharedAdminNote> Notes { get; }
+    public Dictionary<(int, NoteType), SharedAdminNote> Notes { get; }
 }
 
 public static class UserNotesEuiMsg
