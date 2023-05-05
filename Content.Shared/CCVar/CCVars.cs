@@ -608,7 +608,7 @@ namespace Content.Shared.CCVar
         /// Should users be able to see their own notes? Admins will be able to see and set notes regardless
         /// </summary>
         public static readonly CVarDef<bool> SeeOwnNotes =
-            CVarDef.Create("admin.see_own_notes", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("admin.see_own_notes", false, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         /// The amount of days before the note starts fading. It will slowly lose opacity until it reaches stale. Set to 0 to disable.
@@ -622,6 +622,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<double> NoteStaleDays =
             CVarDef.Create("admin.note_stale_days", 365.2422, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// How much time does the user have to wait in seconds before confirming that they saw an admin message?
+        /// </summary>
+        public static readonly CVarDef<float> MessageWaitTime =
+            CVarDef.Create("admin.message_wait_time", 3f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Explosions
