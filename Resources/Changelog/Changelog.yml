@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added a default landing sound for items., type: Add}
-  id: 3155
-  time: '2023-03-11T08:26:01.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: 'Changed space bears to glow, and resprited their hide.', type: Tweak}
@@ -2893,3 +2888,8 @@ Entries:
   - {message: Removed fun!, type: Remove}
   id: 3654
   time: '2023-05-05T13:37:14.0000000+00:00'
+- author: Ilushkins33
+  changes:
+  - {message: Stuttering during blood loss, type: Add}
+  id: 3655
+  time: '2023-05-05T13:46:52.0000000+00:00'
