@@ -83,6 +83,3 @@ alerts-pulled-desc = You're being pulled. Move to break free.
 
 alerts-pulling-name = Pulling
 alerts-pulling-desc = You're pulling something. Click the alert to stop.
-
-alerts-suit-power-name = Suit Power
-alerts-suit-power-desc = How much power your space ninja suit has.

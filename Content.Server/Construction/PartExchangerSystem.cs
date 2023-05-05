@@ -83,7 +83,7 @@ public sealed class PartExchangerSystem : EntitySystem
             storage.Storage.Insert(unused.Owner);
             _storage.Insert(uid, unused.Owner, null, false);
         }
-        _construction.RefreshParts(machine);
+        _construction.RefreshParts(args.Args.Target.Value, machine);
 
         args.Handled = true;
     }

@@ -10,6 +10,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.StatusEffect;
 using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
@@ -29,6 +30,7 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
         public override void Initialize()
         {
@@ -53,6 +55,10 @@ namespace Content.Server.Bed.Sleep
             _prototypeManager.TryIndex<InstantActionPrototype>("Wake", out var wakeAction);
             if (args.FellAsleep)
             {
+                // Expiring status effects would remove the components needed for sleeping
+                _statusEffectsSystem.TryRemoveStatusEffect(uid, "Stun");
+                _statusEffectsSystem.TryRemoveStatusEffect(uid, "KnockedDown");
+
                 EnsureComp<StunnedComponent>(uid);
                 EnsureComp<KnockedDownComponent>(uid);
 

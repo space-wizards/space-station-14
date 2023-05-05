@@ -13,8 +13,10 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ExamineEntity = "ExamineEntity";
         public static readonly BoundKeyFunction FocusChat = "FocusChatInputWindow";
         public static readonly BoundKeyFunction FocusLocalChat = "FocusLocalChatWindow";
+        public static readonly BoundKeyFunction FocusEmote = "FocusEmote";
         public static readonly BoundKeyFunction FocusWhisperChat = "FocusWhisperChatWindow";
         public static readonly BoundKeyFunction FocusRadio = "FocusRadioWindow";
+        public static readonly BoundKeyFunction FocusLOOC = "FocusLOOCWindow";
         public static readonly BoundKeyFunction FocusOOC = "FocusOOCWindow";
         public static readonly BoundKeyFunction FocusAdminChat = "FocusAdminChatWindow";
         public static readonly BoundKeyFunction FocusDeadChat = "FocusDeadChatWindow";
@@ -43,6 +45,10 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction TakeScreenshot = "TakeScreenshot";
         public static readonly BoundKeyFunction TakeScreenshotNoUI = "TakeScreenshotNoUI";
         public static readonly BoundKeyFunction Point = "Point";
+        public static readonly BoundKeyFunction ZoomOut = "ZoomOut";
+        public static readonly BoundKeyFunction ZoomIn = "ZoomIn";
+        public static readonly BoundKeyFunction ResetZoom = "ResetZoom";
+
         public static readonly BoundKeyFunction ArcadeUp = "ArcadeUp";
         public static readonly BoundKeyFunction ArcadeDown = "ArcadeDown";
         public static readonly BoundKeyFunction ArcadeLeft = "ArcadeLeft";
@@ -50,6 +56,7 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Arcade1 = "Arcade1";
         public static readonly BoundKeyFunction Arcade2 = "Arcade2";
         public static readonly BoundKeyFunction Arcade3 = "Arcade3";
+
         public static readonly BoundKeyFunction OpenActionsMenu = "OpenAbilitiesMenu";
         public static readonly BoundKeyFunction ShuttleStrafeLeft = "ShuttleStrafeLeft";
         public static readonly BoundKeyFunction ShuttleStrafeUp = "ShuttleStrafeUp";

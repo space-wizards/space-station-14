@@ -53,8 +53,7 @@
     malus: 0
   - type: Reflect
     enabled: false
-    energeticChance: 0.5
-    kineticChance: 0.25
+    reflectProb: 0.25
     spread: 45
 
 - type: entity

@@ -234,6 +234,31 @@
 
 - type: entity
   parent: DrinkBaseCup
+  id: DrinkGreenTea
+  name: Green tea
+  description: A plain white porcelain teacup.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: GreenTea
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
   id: DrinkLean
   name: Grape Juice
   description: Damn, no fun allowed.

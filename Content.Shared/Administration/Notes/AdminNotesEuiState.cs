@@ -27,11 +27,6 @@ public sealed class AdminNotesEuiState : EuiStateBase
 public static class AdminNoteEuiMsg
 {
     [Serializable, NetSerializable]
-    public sealed class Close : EuiMessageBase
-    {
-    }
-
-    [Serializable, NetSerializable]
     public sealed class CreateNoteRequest : EuiMessageBase
     {
         public CreateNoteRequest(NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)

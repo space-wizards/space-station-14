@@ -14,11 +14,12 @@ namespace Content.Server.Construction.Completions
         [DataField("container")] public string Container { get; private set; } = string.Empty;
 
         // TODO use or generalize ConstructionSystem.ChangeEntity();
+        // TODO pass in node/edge & graph ID for better error logs.
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
             {
-                Logger.Warning($"Computer entity {uid} did not have a container manager! Aborting build computer action.");
+                Logger.Error($"Computer entity {entityManager.ToPrettyString(uid)} did not have a container manager! Aborting build computer action.");
                 return;
             }
 
@@ -26,20 +27,21 @@ namespace Content.Server.Construction.Completions
 
             if (!containerSystem.TryGetContainer(uid, Container, out var container, containerManager))
             {
-                Logger.Warning($"Computer entity {uid} did not have the specified '{Container}' container! Aborting build computer action.");
+                Logger.Error($"Computer entity {entityManager.ToPrettyString(uid)} did not have the specified '{Container}' container! Aborting build computer action.");
                 return;
             }
 
             if (container.ContainedEntities.Count != 1)
             {
-                Logger.Warning($"Computer entity {uid} did not have exactly one item in the specified '{Container}' container! Aborting build computer action.");
+                Logger.Error($"Computer entity {entityManager.ToPrettyString(uid)} did not have exactly one item in the specified '{Container}' container! Aborting build computer action.");
+                return;
             }
 
             var board = container.ContainedEntities[0];
 
             if (!entityManager.TryGetComponent(board, out ComputerBoardComponent? boardComponent))
             {
-                Logger.Warning($"Computer entity {uid} had an invalid entity in container \"{Container}\"! Aborting build computer action.");
+                Logger.Error($"Computer entity {entityManager.ToPrettyString(uid)} had an invalid entity in container \"{Container}\"! Aborting build computer action.");
                 return;
             }
 
