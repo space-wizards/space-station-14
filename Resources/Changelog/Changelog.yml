@@ -1,15 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed Paperwork to no longer be a demon sent from hell. Old one will
-      be adapted into a zombie sprite instead..., type: Tweak}
-  id: 3151
-  time: '2023-03-10T14:34:46.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Flora decals will now always face upright to the camera., type: Tweak}
-  id: 3152
-  time: '2023-03-10T18:29:29.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix weather being blocked by trees and tile entities such as puddles.,
@@ -2894,3 +2883,13 @@ Entries:
       NT upgraded the cartridge to a higher lethal force.', type: Tweak}
   id: 3650
   time: '2023-05-05T13:10:05.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Mimebots can now be constructed., type: Add}
+  id: 3651
+  time: '2023-05-05T13:15:49.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: You can't pry blast doors anymore, type: Tweak}
+  id: 3652
+  time: '2023-05-05T13:16:23.0000000+00:00'
