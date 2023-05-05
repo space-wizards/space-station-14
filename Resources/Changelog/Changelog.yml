@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Eyes will now still lerp on paused maps., type: Fix}
-  id: 3148
-  time: '2023-03-10T07:12:22.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Xeno turrets have been added, and they have a nasty acid!', type: Add}
@@ -2892,3 +2887,8 @@ Entries:
       monitors and etc.)', type: Add}
   id: 3647
   time: '2023-05-05T12:44:22.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed fire extinguisher not working, type: Fix}
+  id: 3648
+  time: '2023-05-05T12:48:38.0000000+00:00'
