@@ -78,43 +78,10 @@ public sealed class DepartmentBanCommand : IConsoleCommand
 
         var banManager = IoCManager.Resolve<RoleBanManager>();
 
-        // I know this code is horrible. This is temporary, I promise.
         foreach (var job in departmentProto.Roles)
         {
-            banManager.CreateJobBan(shell, target, job, reason, minutes, severity, false);
+            banManager.CreateJobBan(shell, target, job, reason, minutes, severity, DateTimeOffset.UtcNow);
         }
-
-        var playerLocator = IoCManager.Resolve<IPlayerLocator>();
-        var located = await playerLocator.LookupIdByNameOrIdAsync(target);
-        if (located?.LastAddress is null)
-            return;
-        var adminNotesManager = IoCManager.Resolve<IAdminNotesManager>();
-        var banMessage = new StringBuilder($"Banned from {department} ");
-        if (minutes == 0)
-        {
-            banMessage.Append("permanently");
-        }
-        else
-        {
-            var banLength = TimeSpan.FromMinutes(minutes);
-            if (banLength.Days > 0)
-                banMessage.Append($"{banLength.TotalDays} days");
-            else if (banLength.Hours > 0)
-                banMessage.Append($"{banLength.TotalHours} hours");
-            else
-                banMessage.Append($"{minutes} minutes");
-        }
-
-        banMessage.Append(" - ");
-        banMessage.Append(reason);
-
-        if (shell.Player is not IPlayerSession player)
-        {
-            Logger.WarningS("admin.notes", "While creating a department ban, player was null. A note could not be added.");
-            return;
-        }
-
-        await adminNotesManager.AddNote(player, located.UserId, NoteType.Note, banMessage.ToString(), severity, false, null);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

@@ -71,7 +71,7 @@ public sealed class RoleBanCommand : IConsoleCommand
                 return;
         }
 
-        IoCManager.Resolve<RoleBanManager>().CreateJobBan(shell, target, job, reason, minutes, severity);
+        IoCManager.Resolve<RoleBanManager>().CreateJobBan(shell, target, job, reason, minutes, severity, DateTimeOffset.UtcNow);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

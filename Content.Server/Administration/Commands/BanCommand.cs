@@ -4,8 +4,10 @@ using System.Net.Sockets;
 using System.Text;
 using Content.Server.Administration.Notes;
 using Content.Server.Database;
+using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Database;
+using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -16,8 +18,6 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Ban)]
     public sealed class BanCommand : LocalizedCommands
     {
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-
         public override string Command => "ban";
 
         public override async void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -26,7 +26,9 @@ namespace Content.Server.Administration.Commands
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
             var locator = IoCManager.Resolve<IPlayerLocator>();
             var dbMan = IoCManager.Resolve<IServerDbManager>();
-            var adminNotesManager = IoCManager.Resolve<IAdminNotesManager>();
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            var systems = IoCManager.Resolve<IEntitySystemManager>();
+            var db = IoCManager.Resolve<IServerDbManager>();
 
             string target;
             string reason;
@@ -88,12 +90,6 @@ namespace Content.Server.Administration.Commands
             var targetHWid = located.LastHWId;
             var targetAddr = located.LastAddress;
 
-            if (player != null && player.UserId == targetUid)
-            {
-                shell.WriteLine(LocalizationManager.GetString("cmd-ban-self"));
-                return;
-            }
-
             DateTimeOffset? expires = null;
             if (minutes > 0)
             {
@@ -111,6 +107,10 @@ namespace Content.Server.Administration.Commands
                 addrRange = (targetAddr, cidr);
             }
 
+            systems.TryGetEntitySystem<GameTicker>(out var ticker);
+            int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
+            var playtime = (await db.GetPlayTimes(targetUid)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall)?.TimeSpent ?? TimeSpan.Zero;
+
             var banDef = new ServerBanDef(
                 null,
                 targetUid,
@@ -118,7 +118,10 @@ namespace Content.Server.Administration.Commands
                 targetHWid,
                 DateTimeOffset.Now,
                 expires,
+                roundId,
+                playtime,
                 reason,
+                severity,
                 player?.UserId,
                 null);
 
@@ -130,43 +133,12 @@ namespace Content.Server.Administration.Commands
 
             shell.WriteLine(response.ToString());
 
-            if (plyMgr.TryGetSessionById(targetUid, out var targetPlayer))
-            {
-                var message = banDef.FormatBanMessage(_cfg, LocalizationManager);
-                targetPlayer.ConnectedClient.Disconnect(message);
-            }
-
-            // Without this the note foreign key constraint fails. You can ban player who have never before connected,
-            // but you can't note them. Neat!
-            if (located.LastAddress == null)
+            // Is the player connected?
+            if (!plyMgr.TryGetSessionById(targetUid, out var targetPlayer))
                 return;
-
-            var banMessage = new StringBuilder("Banned from the server ");
-            if (minutes == 0)
-            {
-                banMessage.Append("permanently");
-            }
-            else
-            {
-                banMessage.Append("for ");
-                var banLength = TimeSpan.FromMinutes(minutes);
-                if (banLength.Days > 0)
-                    banMessage.Append($"{banLength.TotalDays} days");
-                else if (banLength.Hours > 0)
-                    banMessage.Append($"{banLength.TotalHours} hours");
-                else
-                    banMessage.Append($"{minutes} minutes");
-            }
-
-            banMessage.Append(" - ");
-            banMessage.Append(reason);
-
-            if (player is null)
-            {
-                Logger.WarningS("admin.notes", "While creating a server ban, player was null. A note could not be added.");
-                return;
-            }
-            await adminNotesManager.AddNote(player, targetUid, NoteType.Note, banMessage.ToString(), severity, false, null);
+            // If they are, kick them
+            var message = banDef.FormatBanMessage(cfg, LocalizationManager);
+            targetPlayer.ConnectedClient.Disconnect(message);
         }
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
