@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Xeno turrets have been added, and they have a nasty acid!', type: Add}
-  id: 3149
-  time: '2023-03-10T13:25:34.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed space bears visually. Growr., type: Tweak}
@@ -2892,3 +2887,9 @@ Entries:
   - {message: fixed fire extinguisher not working, type: Fix}
   id: 3648
   time: '2023-05-05T12:48:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Chief Space Dragon has re-authorized space carp to be friendly to
+      their petters., type: Fix}
+  id: 3649
+  time: '2023-05-05T13:03:47.0000000+00:00'
