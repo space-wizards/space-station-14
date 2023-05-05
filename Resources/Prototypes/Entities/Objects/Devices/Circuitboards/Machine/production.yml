@@ -386,10 +386,10 @@
       prototype: BiomassReclaimer
       requirements:
         MatterBin: 2
-        Manipulator: 4
+        Manipulator: 1
       tagRequirements:
         Knife:
-          Amount: 3
+          Amount: 2
           DefaultPrototype: KitchenKnife
           ExamineName: Knife
       materialRequirements:
