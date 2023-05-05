@@ -131,7 +131,10 @@
     energy: 7.5
     color: "#cb5b7e"
     castShadows: false
-  - type: FleshAnomaly
+  - type: TileSpawnAnomaly
+    floorTileId: FloorFlesh
+  - type: EntitySpawnAnomaly
+    superCriticalSpawn: FleshKudzu
     spawns:
     - MobFleshJared
     - MobFleshGolem

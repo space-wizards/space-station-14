@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed class FleshAnomalySystem : EntitySystem
+public sealed class EntityAnomalySystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -21,12 +21,11 @@ public sealed class FleshAnomalySystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<FleshAnomalyComponent, AnomalyPulseEvent>(OnPulse);
-        SubscribeLocalEvent<FleshAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
-        SubscribeLocalEvent<FleshAnomalyComponent, AnomalyStabilityChangedEvent>(OnSeverityChanged);
+        SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyPulseEvent>(OnPulse);
+        SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
     }
 
-    private void OnPulse(EntityUid uid, FleshAnomalyComponent component, ref AnomalyPulseEvent args)
+    private void OnPulse(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         var range = component.SpawnRange * args.Stability;
         var amount = (int) (component.MaxSpawnAmount * args.Severity + 0.5f);
@@ -35,33 +34,14 @@ public sealed class FleshAnomalySystem : EntitySystem
         SpawnMonstersOnOpenTiles(component, xform, amount, range);
     }
 
-    private void OnSupercritical(EntityUid uid, FleshAnomalyComponent component, ref AnomalySupercriticalEvent args)
+    private void OnSupercritical(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
         var xform = Transform(uid);
         SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange);
         Spawn(component.SupercriticalSpawn, xform.Coordinates);
     }
 
-    private void OnSeverityChanged(EntityUid uid, FleshAnomalyComponent component, ref AnomalyStabilityChangedEvent args)
-    {
-        var xform = Transform(uid);
-        if (!_map.TryGetGrid(xform.GridUid, out var grid))
-            return;
-
-        var radius = component.SpawnRange * args.Stability;
-        var fleshTile = (ContentTileDefinition) _tiledef[component.FleshTileId];
-        var localpos = xform.Coordinates.Position;
-        var tilerefs = grid.GetLocalTilesIntersecting(
-            new Box2(localpos + (-radius, -radius), localpos + (radius, radius)));
-        foreach (var tileref in tilerefs)
-        {
-            if (!_random.Prob(0.33f))
-                continue;
-            _tile.ReplaceTile(tileref, fleshTile);
-        }
-    }
-
-    private void SpawnMonstersOnOpenTiles(FleshAnomalyComponent component, TransformComponent xform, int amount, float radius)
+    private void SpawnMonstersOnOpenTiles(EntitySpawnAnomalyComponent component, TransformComponent xform, int amount, float radius)
     {
         if (!component.Spawns.Any())
             return;
