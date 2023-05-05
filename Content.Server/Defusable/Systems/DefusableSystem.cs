@@ -143,8 +143,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
                 timerTrigger.Delay,
                 timerTrigger.BeepInterval,
                 timerTrigger.InitialBeepDelay,
-                timerTrigger.BeepSound,
-                timerTrigger.BeepParams
+                timerTrigger.BeepSound
             );
         }
 
