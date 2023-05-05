@@ -9,18 +9,21 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
+using Content.Shared.PowerCell;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical
 {
     public sealed class HealthAnalyzerSystem : EntitySystem
     {
+        [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly PowerCellSystem _cell = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
         public override void Initialize()
         {
@@ -52,6 +55,10 @@ namespace Content.Server.Medical
             _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
 
             UpdateScannedUser(uid, args.Args.User, args.Args.Target.Value, component);
+
+            TryComp<PowerCellDrawComponent>(uid, out var draw);
+            if (!_powerCell.HasActivatableCharge(uid, battery: draw))
+                _appearance.SetData(uid, PowerCellSlotVisuals.Enabled, false);
             // Below is for the traitor item
             // Piggybacking off another component's doafter is complete CBT so I gave up
             // and put it on the same component
