@@ -32,7 +32,7 @@ public sealed class EntitySpawnAnomalyComponent : Component
     /// <summary>
     /// The tile that is spawned by the anomaly's effect
     /// </summary>
-    [DataField("FloorTileId", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("floorTileId", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>)), ViewVariables(VVAccess.ReadWrite)]
     public string FloorTileId = "FloorFlesh";
 
     /// <summary>
