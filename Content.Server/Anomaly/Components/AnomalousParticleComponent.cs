@@ -1,4 +1,4 @@
-﻿using Content.Shared.Anomaly;
+using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 
 namespace Content.Server.Anomaly.Components;
@@ -49,4 +49,22 @@ public sealed class AnomalousParticleComponent : Component
     /// </summary>
     [DataField("stabilityPerWeakeningeHit")]
     public float StabilityPerWeakeningeHit = -0.1f;
+
+    /// <summary>
+    /// If this is true then the particle will always affect the stability of the anomaly.
+    /// </summary>
+    [DataField("destabilzingOverride")]
+    public bool DestabilzingOverride = false;
+
+    /// <summary>
+    /// If this is true then the particle will always affect the weakeness of the anomaly.
+    /// </summary>
+    [DataField("weakeningOverride")]
+    public bool WeakeningOverride = false;
+
+    /// <summary>
+    /// If this is true then the particle will always affect the severity of the anomaly.
+    /// </summary>
+    [DataField("severityOverride")]
+    public bool SeverityOverride = false;
 }

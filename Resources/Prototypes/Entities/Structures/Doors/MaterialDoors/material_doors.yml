@@ -187,3 +187,24 @@
     graph: DoorGraph
     node: silverDoor
 
+- type: entity
+  id: BananiumDoor
+  name: bananium door
+  parent: BaseMaterialDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/bananium_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: DoorGraph
+    node: bananiumDoor
+  - type: Door
+    openSound:
+      path: /Audio/Items/bikehorn.ogg
+    closeSound:
+      path: /Audio/Items/bikehorn.ogg
+

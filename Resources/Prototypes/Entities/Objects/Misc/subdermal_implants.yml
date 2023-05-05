@@ -113,6 +113,24 @@
     - type: SubdermalImplant
       implantAction: ActivateFreedomImplant
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: UplinkImplant
+  name: uplink implant
+  description: allows the user to open a hidden uplink at will
+  noSpawn: true
+  components:
+  - type: SubdermalImplant
+    implantAction: OpenUplinkImplant
+  - type: Store
+    preset: StorePresetUplink
+    balance:
+      Telecrystal: 0
+  - type: UserInterface
+    interfaces:
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
+
 #Nuclear Operative/Special Exclusive implants
 
 - type: entity
@@ -160,6 +178,8 @@
       delay: 7
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
+      params:
+        volume: -2
     - type: ExplodeOnTrigger
     - type: GibOnTrigger
       deleteItems: true

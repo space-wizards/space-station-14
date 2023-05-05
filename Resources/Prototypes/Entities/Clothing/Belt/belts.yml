@@ -241,12 +241,12 @@
         - Gauze
         - Ointment
         - CigPack
-        - Pill
         - PillCanister
         - Radio
       components:
         - Hypospray
         - Injector
+        - Pill
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -259,8 +259,9 @@
           - Hypospray
       pill:
         whitelist:
-          tags:
+          components:
           - Pill
+          tags:
           - PillCanister
       bottle_spray:
         whitelist:
@@ -516,6 +517,9 @@
   name: suspenders
   description: For holding your pants up.
   components:
+  - type: Tag
+    tags:
+    - MimeBelt
   - type: Sprite
     sprite: Clothing/Belt/suspenders.rsi
     state: icon

@@ -17,11 +17,13 @@ public abstract class SharedDrunkSystem : EntitySystem
         if (!Resolve(uid, ref status, false))
             return;
 
-        if (applySlur)
-            _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
-
         if (TryComp<LightweightDrunkComponent>(uid, out var trait))
             boozePower *= trait.BoozeStrengthMultiplier;
+
+        if (applySlur)
+        {
+            _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
+        }
 
         if (!_statusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
         {

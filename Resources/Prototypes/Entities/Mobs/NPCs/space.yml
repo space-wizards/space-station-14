@@ -204,3 +204,104 @@
     description: |
       Defend the loot inside the salvage wreck!
   - type: SalvageMobRestrictions
+
+- type: entity
+  name: space spider
+  id: MobSpiderSpace
+  parent: MobSpaceBasic
+  description: It's so glowing, it looks dangerous.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    sprite: Mobs/Animals/spacespider.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: spacespider
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Critical
+      130: Dead
+  - type: Stamina
+    excess: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: spacespider
+        BaseUnshaded: glow
+      Critical:
+        Base: spacespider_dead
+      Dead:
+        Base: spacespider_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 2
+    - id: EggSpider
+      amount: 1
+      prob: 0.5
+  - type: Bloodstream
+    bloodMaxVolume: 250
+    bloodReagent: Cryoxadone
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 6
+        Poison: 2
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 60
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 3
+  - type: ReplacementAccent
+    accent: xeno
+  - type: InteractionPopup
+    successChance: 0.20
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-generic
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#4faffb"
+  - type: NoSlip
+  - type: IgnoreSpiderWeb
+  - type: GhostRole
+    prob: 0.30
+    name: space spider
+    description: |
+      Space spiders are just as aggressive as regular spiders, feed.
+
+- type: entity
+  id: MobSpiderSpaceSalvage
+  parent: MobSpiderSpace
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostRole
+    prob: 0.30
+    name: space spider on salvage wreck
+    description: |
+      Space spiders are just as aggressive as regular spiders, feed.
+  - type: SalvageMobRestrictions

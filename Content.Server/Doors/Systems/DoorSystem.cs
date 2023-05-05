@@ -185,7 +185,7 @@ public sealed class DoorSystem : SharedDoorSystem
             var canEv = new BeforeDoorPryEvent(user, tool);
             RaiseLocalEvent(target, canEv, false);
 
-            if (canEv.Cancelled)
+            if (!door.CanPry || canEv.Cancelled)
                 // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
                 // under a windoor.
                 return true;

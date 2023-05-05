@@ -117,6 +117,8 @@
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
   - type: DiseaseCarrier
+    naturalImmunities:
+    - ActiveHonkVirus
     carrierDiseases:
     - VentCough
     - AMIV
@@ -267,6 +269,8 @@
     - id: FoodMeatRat
       amount: 1
   - type: DiseaseCarrier
+    naturalImmunities:
+      - ActiveHonkVirus
     carrierDiseases:
     - VentCough
     - AMIV
