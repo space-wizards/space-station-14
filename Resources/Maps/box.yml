@@ -10955,7 +10955,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 21828
       type: Docking
-    - SecondsUntilStateChange: -30519.346
+    - SecondsUntilStateChange: -30625.043
       changeAirtight: False
       state: Opening
       type: Door
@@ -11255,7 +11255,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 562
       type: Docking
-    - SecondsUntilStateChange: -30519.346
+    - SecondsUntilStateChange: -30625.043
       changeAirtight: False
       state: Opening
       type: Door
@@ -11967,12 +11967,6 @@ entities:
       type: Transform
 - proto: AirlockMedicalGlassLocked
   entities:
-  - uid: 256
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 47.5,-27.5
-      parent: 8364
-      type: Transform
   - uid: 1763
     components:
     - pos: 39.5,-25.5
@@ -12111,6 +12105,11 @@ entities:
       type: Transform
 - proto: AirlockMedicalScienceGlassLocked
   entities:
+  - uid: 256
+    components:
+    - pos: 47.5,-27.5
+      parent: 8364
+      type: Transform
   - uid: 2468
     components:
     - pos: 51.5,-27.5
@@ -72371,18 +72370,6 @@ entities:
       - Glass
       - Gold
       type: MaterialStorage
-- proto: CloningPod
-  entities:
-  - uid: 17861
-    components:
-    - pos: 45.5,-28.5
-      parent: 8364
-      type: Transform
-    - inputs:
-        CloningPodReceiver:
-        - port: CloningPodSender
-          uid: 17889
-      type: SignalReceiver
 - proto: CloningPodMachineCircuitboard
   entities:
   - uid: 16317
@@ -78077,14 +78064,6 @@ entities:
     - pos: 43.5,-26.5
       parent: 8364
       type: Transform
-    - outputs:
-        MedicalScannerSender:
-        - port: MedicalScannerReceiver
-          uid: 17860
-        CloningPodSender:
-        - port: CloningPodReceiver
-          uid: 17861
-      type: SignalTransmitter
 - proto: ComputerComms
   entities:
   - uid: 5678
@@ -80381,6 +80360,43 @@ entities:
   - uid: 19878
     components:
     - pos: -13.553344,-35.450806
+      parent: 8364
+      type: Transform
+- proto: DefibrillatorCabinetFilled
+  entities:
+  - uid: 17861
+    components:
+    - pos: 27.5,-22.5
+      parent: 8364
+      type: Transform
+  - uid: 25828
+    components:
+    - pos: 35.5,-44.5
+      parent: 8364
+      type: Transform
+  - uid: 26583
+    components:
+    - pos: 35.5,-47.5
+      parent: 8364
+      type: Transform
+  - uid: 26584
+    components:
+    - pos: 32.5,-26.5
+      parent: 8364
+      type: Transform
+  - uid: 26585
+    components:
+    - pos: 30.5,-31.5
+      parent: 8364
+      type: Transform
+  - uid: 26586
+    components:
+    - pos: -42.5,6.5
+      parent: 8364
+      type: Transform
+  - uid: 26587
+    components:
+    - pos: 7.5,-28.5
       parent: 8364
       type: Transform
 - proto: DeployableBarrier
@@ -137578,13 +137594,6 @@ entities:
         - 0
         - 0
       type: EntityStorage
-- proto: LockerBrigmedicFilled
-  entities:
-  - uid: 25828
-    components:
-    - pos: -9.5,30.5
-      parent: 8364
-      type: Transform
 - proto: LockerCaptainFilled
   entities:
   - uid: 5702
@@ -139398,6 +139407,21 @@ entities:
       type: SignalReceiver
 - proto: MachineFrame
   entities:
+  - uid: 17860
+    components:
+    - pos: 45.5,-28.5
+      parent: 8364
+      type: Transform
+  - uid: 17890
+    components:
+    - pos: 45.5,-26.5
+      parent: 8364
+      type: Transform
+  - uid: 22008
+    components:
+    - pos: 38.5,-28.5
+      parent: 8364
+      type: Transform
   - uid: 27189
     components:
     - pos: 33.5,-85.5
@@ -139707,23 +139731,6 @@ entities:
   - uid: 18695
     components:
     - pos: 44.5,-58.5
-      parent: 8364
-      type: Transform
-- proto: MedicalScanner
-  entities:
-  - uid: 17860
-    components:
-    - pos: 45.5,-26.5
-      parent: 8364
-      type: Transform
-    - inputs:
-        MedicalScannerReceiver:
-        - port: MedicalScannerSender
-          uid: 17889
-      type: SignalReceiver
-  - uid: 17890
-    components:
-    - pos: 38.5,-28.5
       parent: 8364
       type: Transform
 - proto: MedicalScannerMachineCircuitboard
@@ -142973,8 +142980,6 @@ entities:
     - pos: -76.5,-3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 855
@@ -142982,8 +142987,6 @@ entities:
     - pos: 10.5,28.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 2259
@@ -142992,8 +142995,6 @@ entities:
       pos: 51.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 2385
@@ -143001,8 +143002,6 @@ entities:
     - pos: 56.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 4032
@@ -143010,8 +143009,6 @@ entities:
     - pos: 17.5,-70.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5244
@@ -143020,8 +143017,6 @@ entities:
       pos: 67.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5495
@@ -143030,8 +143025,6 @@ entities:
       pos: -8.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5496
@@ -143040,8 +143033,6 @@ entities:
       pos: 7.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5497
@@ -143050,8 +143041,6 @@ entities:
       pos: 4.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5498
@@ -143060,8 +143049,6 @@ entities:
       pos: -5.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5553
@@ -143070,8 +143057,6 @@ entities:
       pos: 3.5,-11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5630
@@ -143079,8 +143064,6 @@ entities:
     - pos: -8.5,-11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5631
@@ -143089,8 +143072,6 @@ entities:
       pos: -8.5,-19.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5644
@@ -143099,8 +143080,6 @@ entities:
       pos: -7.5,-24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5696
@@ -143109,8 +143088,6 @@ entities:
       pos: 12.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5731
@@ -143119,8 +143096,6 @@ entities:
       pos: -3.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5748
@@ -143128,8 +143103,6 @@ entities:
     - pos: 0.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5765
@@ -143138,8 +143111,6 @@ entities:
       pos: 2.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5767
@@ -143148,8 +143119,6 @@ entities:
       pos: -4.5,-11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 5946
@@ -143158,8 +143127,6 @@ entities:
       pos: 24.5,4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6223
@@ -143168,8 +143135,6 @@ entities:
       pos: 9.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6258
@@ -143178,8 +143143,6 @@ entities:
       pos: 11.5,5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6259
@@ -143187,8 +143150,6 @@ entities:
     - pos: 15.5,1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6513
@@ -143197,8 +143158,6 @@ entities:
       pos: 9.5,1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6514
@@ -143207,8 +143166,6 @@ entities:
       pos: 8.5,12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6515
@@ -143216,8 +143173,6 @@ entities:
     - pos: 14.5,12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6516
@@ -143226,8 +143181,6 @@ entities:
       pos: 11.5,8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6530
@@ -143236,8 +143189,6 @@ entities:
       pos: 23.5,8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6533
@@ -143245,8 +143196,6 @@ entities:
     - pos: 23.5,15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6534
@@ -143254,8 +143203,6 @@ entities:
     - pos: 25.5,15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6535
@@ -143264,8 +143211,6 @@ entities:
       pos: 19.5,12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6536
@@ -143274,8 +143219,6 @@ entities:
       pos: 27.5,12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6693
@@ -143284,8 +143227,6 @@ entities:
       pos: 22.5,4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 6929
@@ -143293,8 +143234,6 @@ entities:
     - pos: 22.5,0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 7004
@@ -143303,8 +143242,6 @@ entities:
       pos: 18.5,-8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 7012
@@ -143312,8 +143249,6 @@ entities:
     - pos: 22.5,0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 7014
@@ -143322,8 +143257,6 @@ entities:
       pos: 25.5,-10.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 7173
@@ -143332,8 +143265,6 @@ entities:
       pos: 31.5,-10.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 7235
@@ -143342,8 +143273,6 @@ entities:
       pos: 30.5,-4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 8008
@@ -143352,8 +143281,6 @@ entities:
       pos: 16.5,-31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 8475
@@ -143361,8 +143288,6 @@ entities:
     - pos: 15.5,28.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 8655
@@ -143371,8 +143296,6 @@ entities:
       pos: -13.5,22.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 8770
@@ -143381,8 +143304,6 @@ entities:
       pos: -9.5,31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 8771
@@ -143391,8 +143312,6 @@ entities:
       pos: -3.5,26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 8773
@@ -143401,8 +143320,6 @@ entities:
       pos: -14.5,27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 8774
@@ -143410,8 +143327,6 @@ entities:
     - pos: 5.5,28.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9183
@@ -143420,8 +143335,6 @@ entities:
       pos: -2.5,37.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9271
@@ -143429,8 +143342,6 @@ entities:
     - pos: -17.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9272
@@ -143439,8 +143350,6 @@ entities:
       pos: -15.5,19.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9273
@@ -143449,8 +143358,6 @@ entities:
       pos: -2.5,31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9274
@@ -143459,8 +143366,6 @@ entities:
       pos: 4.5,33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9275
@@ -143468,8 +143373,6 @@ entities:
     - pos: 3.5,39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9276
@@ -143478,8 +143381,6 @@ entities:
       pos: 9.5,36.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9277
@@ -143487,8 +143388,6 @@ entities:
     - pos: 8.5,41.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9278
@@ -143497,8 +143396,6 @@ entities:
       pos: 16.5,39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9280
@@ -143506,8 +143403,6 @@ entities:
     - pos: 15.5,35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9281
@@ -143516,8 +143411,6 @@ entities:
       pos: 11.5,34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9282
@@ -143526,8 +143419,6 @@ entities:
       pos: 10.5,30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9598
@@ -143535,8 +143426,6 @@ entities:
     - pos: 23.5,42.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9600
@@ -143545,8 +143434,6 @@ entities:
       pos: 25.5,34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9653
@@ -143555,8 +143442,6 @@ entities:
       pos: -8.5,16.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9654
@@ -143565,8 +143450,6 @@ entities:
       pos: -4.5,13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9655
@@ -143575,8 +143458,6 @@ entities:
       pos: -14.5,16.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 9656
@@ -143585,8 +143466,6 @@ entities:
       pos: -11.5,13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10006
@@ -143595,8 +143474,6 @@ entities:
       pos: -21.5,20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10101
@@ -143604,8 +143481,6 @@ entities:
     - pos: -21.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10459
@@ -143614,8 +143489,6 @@ entities:
       pos: 40.5,-8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10465
@@ -143623,8 +143496,6 @@ entities:
     - pos: 38.5,-4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10466
@@ -143633,8 +143504,6 @@ entities:
       pos: 33.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10708
@@ -143643,8 +143512,6 @@ entities:
       pos: 49.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10709
@@ -143653,8 +143520,6 @@ entities:
       pos: 42.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10710
@@ -143663,8 +143528,6 @@ entities:
       pos: 42.5,-3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10711
@@ -143673,8 +143536,6 @@ entities:
       pos: 49.5,-3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10712
@@ -143682,8 +143543,6 @@ entities:
     - pos: 46.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10736
@@ -143692,8 +143551,6 @@ entities:
       pos: 49.5,0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10737
@@ -143702,8 +143559,6 @@ entities:
       pos: 44.5,-0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11035
@@ -143711,8 +143566,6 @@ entities:
     - pos: 71.5,6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11037
@@ -143720,8 +143573,6 @@ entities:
     - pos: 64.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11039
@@ -143729,8 +143580,6 @@ entities:
     - pos: 71.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11040
@@ -143739,8 +143588,6 @@ entities:
       pos: 72.5,-4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11041
@@ -143749,8 +143596,6 @@ entities:
       pos: 65.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11042
@@ -143758,8 +143603,6 @@ entities:
     - pos: 57.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11043
@@ -143768,8 +143611,6 @@ entities:
       pos: 53.5,-3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11044
@@ -143778,8 +143619,6 @@ entities:
       pos: 59.5,-4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11045
@@ -143788,8 +143627,6 @@ entities:
       pos: 55.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11046
@@ -143798,8 +143635,6 @@ entities:
       pos: 62.5,-10.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11047
@@ -143807,8 +143642,6 @@ entities:
     - pos: 63.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11884
@@ -143816,8 +143649,6 @@ entities:
     - pos: 77.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11885
@@ -143826,8 +143657,6 @@ entities:
       pos: 78.5,-8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11886
@@ -143836,8 +143665,6 @@ entities:
       pos: 80.5,-8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11887
@@ -143846,8 +143673,6 @@ entities:
       pos: 77.5,-15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11888
@@ -143856,8 +143681,6 @@ entities:
       pos: 82.5,-12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11961
@@ -143865,8 +143688,6 @@ entities:
     - pos: -4.5,9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11962
@@ -143875,8 +143696,6 @@ entities:
       pos: -6.5,4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11966
@@ -143885,8 +143704,6 @@ entities:
       pos: -14.5,7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11968
@@ -143894,8 +143711,6 @@ entities:
     - pos: -9.5,9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11976
@@ -143904,8 +143719,6 @@ entities:
       pos: 0.5,17.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12125
@@ -143913,8 +143726,6 @@ entities:
     - pos: -31.5,6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12320
@@ -143923,8 +143734,6 @@ entities:
       pos: -46.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12321
@@ -143933,8 +143742,6 @@ entities:
       pos: -41.5,1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12322
@@ -143943,8 +143750,6 @@ entities:
       pos: -37.5,4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12351
@@ -143952,8 +143757,6 @@ entities:
     - pos: -59.5,5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12426
@@ -143962,8 +143765,6 @@ entities:
       pos: -67.5,15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12428
@@ -143972,8 +143773,6 @@ entities:
       pos: -67.5,14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12438
@@ -143981,8 +143780,6 @@ entities:
     - pos: -69.5,-3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12461
@@ -143991,8 +143788,6 @@ entities:
       pos: -65.5,18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12481
@@ -144000,8 +143795,6 @@ entities:
     - pos: -69.5,10.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12482
@@ -144009,8 +143802,6 @@ entities:
     - pos: -75.5,10.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12483
@@ -144019,8 +143810,6 @@ entities:
       pos: -63.5,9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12484
@@ -144029,8 +143818,6 @@ entities:
       pos: -63.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12487
@@ -144039,8 +143826,6 @@ entities:
       pos: -53.5,0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12488
@@ -144048,8 +143833,6 @@ entities:
     - pos: -65.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12489
@@ -144058,8 +143841,6 @@ entities:
       pos: -63.5,-9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12490
@@ -144068,8 +143849,6 @@ entities:
       pos: -53.5,-4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12491
@@ -144078,8 +143857,6 @@ entities:
       pos: -62.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12492
@@ -144087,8 +143864,6 @@ entities:
     - pos: -62.5,1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12493
@@ -144097,8 +143872,6 @@ entities:
       pos: -74.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12787
@@ -144107,8 +143880,6 @@ entities:
       pos: -1.5,13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12850
@@ -144117,8 +143888,6 @@ entities:
       pos: -31.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12851
@@ -144127,8 +143896,6 @@ entities:
       pos: -43.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12852
@@ -144136,8 +143903,6 @@ entities:
     - pos: -48.5,-0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12853
@@ -144145,8 +143910,6 @@ entities:
     - pos: -36.5,-0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12854
@@ -144154,8 +143917,6 @@ entities:
     - pos: -26.5,-0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12855
@@ -144164,8 +143925,6 @@ entities:
       pos: -19.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12856
@@ -144174,8 +143933,6 @@ entities:
       pos: 5.5,19.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12857
@@ -144184,8 +143941,6 @@ entities:
       pos: -1.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12858
@@ -144194,8 +143949,6 @@ entities:
       pos: 0.5,8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12859
@@ -144203,8 +143956,6 @@ entities:
     - pos: 9.5,21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12860
@@ -144212,8 +143963,6 @@ entities:
     - pos: -3.5,21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12861
@@ -144222,8 +143971,6 @@ entities:
       pos: -9.5,19.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12862
@@ -144231,8 +143978,6 @@ entities:
     - pos: 73.5,-12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12863
@@ -144241,8 +143986,6 @@ entities:
       pos: 65.5,-15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12864
@@ -144250,8 +143993,6 @@ entities:
     - pos: 60.5,-12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12865
@@ -144259,8 +144000,6 @@ entities:
     - pos: 54.5,-12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12866
@@ -144269,8 +144008,6 @@ entities:
       pos: 51.5,-9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12867
@@ -144279,8 +144016,6 @@ entities:
       pos: 48.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12868
@@ -144288,8 +144023,6 @@ entities:
     - pos: 41.5,-12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12869
@@ -144297,8 +144030,6 @@ entities:
     - pos: 18.5,-12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12870
@@ -144306,8 +144037,6 @@ entities:
     - pos: 36.5,-22.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12871
@@ -144316,8 +144045,6 @@ entities:
       pos: 37.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 12872
@@ -144326,8 +144053,6 @@ entities:
       pos: 24.5,-23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13034
@@ -144335,8 +144060,6 @@ entities:
     - pos: -14.5,-0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13035
@@ -144344,8 +144067,6 @@ entities:
     - pos: -7.5,-0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13036
@@ -144354,8 +144075,6 @@ entities:
       pos: -3.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13037
@@ -144364,8 +144083,6 @@ entities:
       pos: 2.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13038
@@ -144373,8 +144090,6 @@ entities:
     - pos: 1.5,1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13041
@@ -144382,8 +144097,6 @@ entities:
     - pos: 11.5,-0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13043
@@ -144392,8 +144105,6 @@ entities:
       pos: 14.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13044
@@ -144402,8 +144113,6 @@ entities:
       pos: 12.5,-9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13060
@@ -144412,8 +144121,6 @@ entities:
       pos: 16.5,-17.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13061
@@ -144422,8 +144129,6 @@ entities:
       pos: 14.5,-21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13064
@@ -144431,8 +144136,6 @@ entities:
     - pos: 10.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13066
@@ -144441,8 +144144,6 @@ entities:
       pos: -5.5,-31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13067
@@ -144450,8 +144151,6 @@ entities:
     - pos: -1.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13068
@@ -144459,8 +144158,6 @@ entities:
     - pos: -11.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13069
@@ -144469,8 +144166,6 @@ entities:
       pos: -16.5,-31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13070
@@ -144479,8 +144174,6 @@ entities:
       pos: -17.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13071
@@ -144489,8 +144182,6 @@ entities:
       pos: -15.5,-21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13072
@@ -144499,8 +144190,6 @@ entities:
       pos: -17.5,-15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13073
@@ -144509,8 +144198,6 @@ entities:
       pos: -15.5,-11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13074
@@ -144519,8 +144206,6 @@ entities:
       pos: -13.5,-9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13075
@@ -144529,8 +144214,6 @@ entities:
       pos: -17.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13809
@@ -144539,8 +144222,6 @@ entities:
       pos: -10.5,-17.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14154
@@ -144549,8 +144230,6 @@ entities:
       pos: 23.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14240
@@ -144559,8 +144238,6 @@ entities:
       pos: -47.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14241
@@ -144569,8 +144246,6 @@ entities:
       pos: -36.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14242
@@ -144579,8 +144254,6 @@ entities:
       pos: -43.5,-9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14243
@@ -144589,8 +144262,6 @@ entities:
       pos: -37.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14329
@@ -144599,8 +144270,6 @@ entities:
       pos: -21.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14330
@@ -144609,8 +144278,6 @@ entities:
       pos: -27.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14331
@@ -144619,8 +144286,6 @@ entities:
       pos: -33.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14456
@@ -144629,8 +144294,6 @@ entities:
       pos: -49.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14507
@@ -144639,8 +144302,6 @@ entities:
       pos: -22.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14565
@@ -144648,8 +144309,6 @@ entities:
     - pos: -57.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14944
@@ -144657,8 +144316,6 @@ entities:
     - pos: -33.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14945
@@ -144667,8 +144324,6 @@ entities:
       pos: -33.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14946
@@ -144677,8 +144332,6 @@ entities:
       pos: -30.5,-23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14947
@@ -144686,8 +144339,6 @@ entities:
     - pos: -38.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14948
@@ -144696,8 +144347,6 @@ entities:
       pos: -28.5,-23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14949
@@ -144706,8 +144355,6 @@ entities:
       pos: -23.5,-16.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14950
@@ -144715,8 +144362,6 @@ entities:
     - pos: -20.5,-21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14951
@@ -144725,8 +144370,6 @@ entities:
       pos: -19.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14952
@@ -144734,8 +144377,6 @@ entities:
     - pos: -27.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 14953
@@ -144744,8 +144385,6 @@ entities:
       pos: -23.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 15060
@@ -144754,8 +144393,6 @@ entities:
       pos: -1.5,-59.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16343
@@ -144764,8 +144401,6 @@ entities:
       pos: -12.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16344
@@ -144773,8 +144408,6 @@ entities:
     - pos: -7.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16345
@@ -144783,8 +144416,6 @@ entities:
       pos: -7.5,-39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16394
@@ -144793,8 +144424,6 @@ entities:
       pos: 0.5,-34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16397
@@ -144803,8 +144432,6 @@ entities:
       pos: -1.5,-48.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16399
@@ -144813,8 +144440,6 @@ entities:
       pos: -3.5,-55.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16400
@@ -144823,8 +144448,6 @@ entities:
       pos: 0.5,-53.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16499
@@ -144833,8 +144456,6 @@ entities:
       pos: -16.5,-53.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16501
@@ -144843,8 +144464,6 @@ entities:
       pos: -6.5,-57.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16548
@@ -144852,8 +144471,6 @@ entities:
     - pos: 5.5,-40.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16549
@@ -144862,8 +144479,6 @@ entities:
       pos: 7.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16728
@@ -144872,8 +144487,6 @@ entities:
       pos: 14.5,-48.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16729
@@ -144882,8 +144495,6 @@ entities:
       pos: 13.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16730
@@ -144892,8 +144503,6 @@ entities:
       pos: 15.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16731
@@ -144901,8 +144510,6 @@ entities:
     - pos: 14.5,-54.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16732
@@ -144910,8 +144517,6 @@ entities:
     - pos: 10.5,-40.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16733
@@ -144919,8 +144524,6 @@ entities:
     - pos: 17.5,-40.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16734
@@ -144928,8 +144531,6 @@ entities:
     - pos: 21.5,-40.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16735
@@ -144938,8 +144539,6 @@ entities:
       pos: 22.5,-58.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 16736
@@ -144948,8 +144547,6 @@ entities:
       pos: 11.5,-58.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17154
@@ -144958,8 +144555,6 @@ entities:
       pos: -10.5,-73.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17155
@@ -144968,8 +144563,6 @@ entities:
       pos: -8.5,-77.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17156
@@ -144978,8 +144571,6 @@ entities:
       pos: 7.5,-77.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17158
@@ -144987,8 +144578,6 @@ entities:
     - pos: -6.5,-69.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17159
@@ -144996,8 +144585,6 @@ entities:
     - pos: 5.5,-69.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17321
@@ -145005,8 +144592,6 @@ entities:
     - pos: -0.5,-69.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17322
@@ -145014,8 +144599,6 @@ entities:
     - pos: -0.5,-76.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17335
@@ -145024,8 +144607,6 @@ entities:
       pos: -12.5,-72.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17518
@@ -145033,8 +144614,6 @@ entities:
     - pos: 8.5,-50.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17521
@@ -145042,8 +144621,6 @@ entities:
     - pos: 3.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17522
@@ -145052,8 +144629,6 @@ entities:
       pos: 9.5,-56.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17524
@@ -145061,8 +144636,6 @@ entities:
     - pos: 2.5,-59.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17525
@@ -145071,8 +144644,6 @@ entities:
       pos: 2.5,-63.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17526
@@ -145081,8 +144652,6 @@ entities:
       pos: 9.5,-65.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17527
@@ -145090,8 +144659,6 @@ entities:
     - pos: 2.5,-65.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17528
@@ -145099,8 +144666,6 @@ entities:
     - pos: -1.5,-61.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17529
@@ -145108,8 +144673,6 @@ entities:
     - pos: -6.5,-61.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17530
@@ -145117,8 +144680,6 @@ entities:
     - pos: -12.5,-61.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17531
@@ -145127,8 +144688,6 @@ entities:
       pos: -9.5,-67.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17532
@@ -145136,8 +144695,6 @@ entities:
     - pos: -24.5,-64.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17533
@@ -145146,8 +144703,6 @@ entities:
       pos: -26.5,-69.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17534
@@ -145155,8 +144710,6 @@ entities:
     - pos: -16.5,-68.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17549
@@ -145165,8 +144718,6 @@ entities:
       pos: -36.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17688
@@ -145175,8 +144726,6 @@ entities:
       pos: 9.5,-74.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 17689
@@ -145184,8 +144733,6 @@ entities:
     - pos: 12.5,-70.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18371
@@ -145194,8 +144741,6 @@ entities:
       pos: 41.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18372
@@ -145204,8 +144749,6 @@ entities:
       pos: 24.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18373
@@ -145214,8 +144757,6 @@ entities:
       pos: 35.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18374
@@ -145224,8 +144765,6 @@ entities:
       pos: 39.5,-17.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18375
@@ -145233,8 +144772,6 @@ entities:
     - pos: 32.5,-16.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18376
@@ -145242,8 +144779,6 @@ entities:
     - pos: 28.5,-16.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18377
@@ -145252,8 +144787,6 @@ entities:
       pos: 28.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18378
@@ -145262,8 +144795,6 @@ entities:
       pos: 32.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18379
@@ -145272,8 +144803,6 @@ entities:
       pos: 47.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18380
@@ -145281,8 +144810,6 @@ entities:
     - pos: 44.5,-22.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18381
@@ -145291,8 +144818,6 @@ entities:
       pos: 44.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18384
@@ -145300,8 +144825,6 @@ entities:
     - pos: 40.5,-31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18386
@@ -145310,8 +144833,6 @@ entities:
       pos: 41.5,-39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18387
@@ -145320,8 +144841,6 @@ entities:
       pos: 39.5,-44.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18388
@@ -145330,8 +144849,6 @@ entities:
       pos: 39.5,-49.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18390
@@ -145340,8 +144857,6 @@ entities:
       pos: 34.5,-52.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18391
@@ -145349,8 +144864,6 @@ entities:
     - pos: 45.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18392
@@ -145359,8 +144872,6 @@ entities:
       pos: 47.5,-59.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18393
@@ -145369,8 +144880,6 @@ entities:
       pos: 38.5,-59.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18394
@@ -145378,8 +144887,6 @@ entities:
     - pos: 41.5,-55.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18395
@@ -145388,8 +144895,6 @@ entities:
       pos: 34.5,-48.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18396
@@ -145398,8 +144903,6 @@ entities:
       pos: 34.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18397
@@ -145408,8 +144911,6 @@ entities:
       pos: 46.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18398
@@ -145417,8 +144918,6 @@ entities:
     - pos: 36.5,-38.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18399
@@ -145427,8 +144926,6 @@ entities:
       pos: 36.5,-43.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18402
@@ -145437,8 +144934,6 @@ entities:
       pos: 31.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18403
@@ -145447,8 +144942,6 @@ entities:
       pos: 36.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18404
@@ -145457,8 +144950,6 @@ entities:
       pos: 24.5,-28.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18405
@@ -145467,8 +144958,6 @@ entities:
       pos: 28.5,-34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18407
@@ -145477,8 +144966,6 @@ entities:
       pos: 24.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18408
@@ -145486,8 +144973,6 @@ entities:
     - pos: 19.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18409
@@ -145496,8 +144981,6 @@ entities:
       pos: 21.5,-36.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18410
@@ -145506,8 +144989,6 @@ entities:
       pos: 18.5,-24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18412
@@ -145516,8 +144997,6 @@ entities:
       pos: 18.5,-22.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18569
@@ -145526,8 +145005,6 @@ entities:
       pos: -6.5,39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18619
@@ -145536,8 +145013,6 @@ entities:
       pos: 5.5,-15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 18672
@@ -145545,8 +145020,6 @@ entities:
     - pos: 50.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 19115
@@ -145554,8 +145027,6 @@ entities:
     - pos: 34.5,-34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 19317
@@ -145564,8 +145035,6 @@ entities:
       pos: 41.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 19325
@@ -145574,8 +145043,6 @@ entities:
       pos: 16.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 19848
@@ -145584,8 +145051,6 @@ entities:
       pos: -2.5,-22.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20060
@@ -145594,8 +145059,6 @@ entities:
       pos: 0.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20694
@@ -145604,8 +145067,6 @@ entities:
       pos: 63.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20795
@@ -145614,8 +145075,6 @@ entities:
       pos: 77.5,-54.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20796
@@ -145623,8 +145082,6 @@ entities:
     - pos: 80.5,-49.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20808
@@ -145633,8 +145090,6 @@ entities:
       pos: 52.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20809
@@ -145643,8 +145098,6 @@ entities:
       pos: 63.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20810
@@ -145653,8 +145106,6 @@ entities:
       pos: 51.5,-23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20811
@@ -145663,8 +145114,6 @@ entities:
       pos: 59.5,-24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20812
@@ -145673,8 +145122,6 @@ entities:
       pos: 51.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20813
@@ -145683,8 +145130,6 @@ entities:
       pos: 52.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20814
@@ -145693,8 +145138,6 @@ entities:
       pos: 59.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20815
@@ -145702,8 +145145,6 @@ entities:
     - pos: 60.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20816
@@ -145711,8 +145152,6 @@ entities:
     - pos: 68.5,-22.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20817
@@ -145721,8 +145160,6 @@ entities:
       pos: 74.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20818
@@ -145731,8 +145168,6 @@ entities:
       pos: 74.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20819
@@ -145741,8 +145176,6 @@ entities:
       pos: 69.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20820
@@ -145751,8 +145184,6 @@ entities:
       pos: 59.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20821
@@ -145760,8 +145191,6 @@ entities:
     - pos: 78.5,-23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20822
@@ -145769,8 +145198,6 @@ entities:
     - pos: 61.5,-39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20826
@@ -145778,8 +145205,6 @@ entities:
     - pos: 72.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20827
@@ -145788,8 +145213,6 @@ entities:
       pos: 65.5,-34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20828
@@ -145798,8 +145221,6 @@ entities:
       pos: 67.5,-42.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20829
@@ -145808,8 +145229,6 @@ entities:
       pos: 65.5,-47.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20830
@@ -145818,8 +145237,6 @@ entities:
       pos: 68.5,-53.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20831
@@ -145827,8 +145244,6 @@ entities:
     - pos: 73.5,-49.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20832
@@ -145837,8 +145252,6 @@ entities:
       pos: 80.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20833
@@ -145846,8 +145259,6 @@ entities:
     - pos: 73.5,-43.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20834
@@ -145855,8 +145266,6 @@ entities:
     - pos: 77.5,-32.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20835
@@ -145865,8 +145274,6 @@ entities:
       pos: 78.5,-38.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20836
@@ -145875,8 +145282,6 @@ entities:
       pos: 85.5,-38.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20901
@@ -145885,8 +145290,6 @@ entities:
       pos: 18.5,-16.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 20902
@@ -145895,8 +145298,6 @@ entities:
       pos: -24.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21330
@@ -145904,8 +145305,6 @@ entities:
     - pos: 53.5,-39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21379
@@ -145914,8 +145313,6 @@ entities:
       pos: 63.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21380
@@ -145924,8 +145321,6 @@ entities:
       pos: 51.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21610
@@ -145934,8 +145329,6 @@ entities:
       pos: -1.5,-40.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21747
@@ -145944,8 +145337,6 @@ entities:
       pos: 74.5,-31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21766
@@ -145953,8 +145344,6 @@ entities:
     - pos: 5.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21771
@@ -145963,8 +145352,6 @@ entities:
       pos: 22.5,-21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21777
@@ -145973,8 +145360,6 @@ entities:
       pos: 22.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21780
@@ -145982,8 +145367,6 @@ entities:
     - pos: 9.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21782
@@ -145991,8 +145374,6 @@ entities:
     - pos: -10.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21818
@@ -146001,8 +145382,6 @@ entities:
       pos: 4.5,-36.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 22423
@@ -146011,8 +145390,6 @@ entities:
       pos: -2.5,-8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 22424
@@ -146021,8 +145398,6 @@ entities:
       pos: 1.5,-8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 22425
@@ -146031,8 +145406,6 @@ entities:
       pos: 30.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 22542
@@ -146041,8 +145414,6 @@ entities:
       pos: 55.5,-49.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 22711
@@ -146051,8 +145422,6 @@ entities:
       pos: 19.5,35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25864
@@ -146060,8 +145429,6 @@ entities:
     - pos: 30.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25867
@@ -146069,8 +145436,6 @@ entities:
     - pos: -13.5,-11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25869
@@ -146078,8 +145443,6 @@ entities:
     - pos: 57.5,-16.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25870
@@ -146087,8 +145450,6 @@ entities:
     - pos: 54.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25871
@@ -146097,8 +145458,6 @@ entities:
       pos: 57.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25876
@@ -146106,8 +145465,6 @@ entities:
     - pos: -19.5,-15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25877
@@ -146116,8 +145473,6 @@ entities:
       pos: -22.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25883
@@ -146125,8 +145480,6 @@ entities:
     - pos: 28.5,-4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25892
@@ -146134,8 +145487,6 @@ entities:
     - pos: 54.5,-43.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25893
@@ -146143,8 +145494,6 @@ entities:
     - pos: 61.5,-43.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25920
@@ -146153,8 +145502,6 @@ entities:
       pos: 38.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26368
@@ -146162,8 +145509,6 @@ entities:
     - pos: -19.5,45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26369
@@ -146172,8 +145517,6 @@ entities:
       pos: -11.5,50.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26370
@@ -146181,8 +145524,6 @@ entities:
     - pos: -14.5,45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26371
@@ -146190,8 +145531,6 @@ entities:
     - pos: -5.5,45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26372
@@ -146199,8 +145538,6 @@ entities:
     - pos: -9.5,41.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26373
@@ -146209,8 +145546,6 @@ entities:
       pos: -4.5,49.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26374
@@ -146218,8 +145553,6 @@ entities:
     - pos: -1.5,51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26375
@@ -146227,8 +145560,6 @@ entities:
     - pos: 3.5,51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26376
@@ -146236,8 +145567,6 @@ entities:
     - pos: -8.5,53.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26389
@@ -146245,8 +145574,6 @@ entities:
     - pos: -12.5,36.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26390
@@ -146255,8 +145582,6 @@ entities:
       pos: -4.5,36.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26831
@@ -146264,8 +145589,6 @@ entities:
     - pos: -8.5,4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26832
@@ -146274,8 +145597,6 @@ entities:
       pos: -14.5,1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26861
@@ -146284,8 +145605,6 @@ entities:
       pos: 51.5,-36.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26862
@@ -146294,8 +145613,6 @@ entities:
       pos: 47.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26883
@@ -146303,8 +145620,6 @@ entities:
     - pos: 67.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 26893
@@ -146313,8 +145628,6 @@ entities:
       pos: 72.5,0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27163
@@ -146323,8 +145636,6 @@ entities:
       pos: 26.5,-101.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27164
@@ -146333,8 +145644,6 @@ entities:
       pos: 26.5,-97.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27165
@@ -146343,8 +145652,6 @@ entities:
       pos: 30.5,-97.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27166
@@ -146353,8 +145660,6 @@ entities:
       pos: 30.5,-101.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27169
@@ -146363,8 +145668,6 @@ entities:
       pos: 30.5,-109.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27170
@@ -146373,8 +145676,6 @@ entities:
       pos: 25.5,-109.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27171
@@ -146383,8 +145684,6 @@ entities:
       pos: 25.5,-114.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27172
@@ -146393,8 +145692,6 @@ entities:
       pos: 31.5,-114.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27254
@@ -146403,8 +145700,6 @@ entities:
       pos: 18.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27355
@@ -146413,8 +145708,6 @@ entities:
       pos: -5.5,-50.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: PoweredlightExterior
@@ -146425,8 +145718,6 @@ entities:
       pos: -62.5,18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10007
@@ -146435,8 +145726,6 @@ entities:
       pos: 93.5,-23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 10008
@@ -146445,8 +145734,6 @@ entities:
       pos: 31.5,27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 11273
@@ -146455,8 +145742,6 @@ entities:
       pos: 46.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 13618
@@ -146465,8 +145750,6 @@ entities:
       pos: -50.5,27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21455
@@ -146474,8 +145757,6 @@ entities:
     - pos: 93.5,-32.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21456
@@ -146484,8 +145765,6 @@ entities:
       pos: 90.5,-56.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21457
@@ -146493,8 +145772,6 @@ entities:
     - pos: 80.5,-69.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21458
@@ -146502,8 +145779,6 @@ entities:
     - pos: 60.5,-73.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21459
@@ -146511,8 +145786,6 @@ entities:
     - pos: 50.5,-69.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21460
@@ -146520,8 +145793,6 @@ entities:
     - pos: -14.5,-76.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21461
@@ -146529,8 +145800,6 @@ entities:
     - pos: 13.5,-76.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21462
@@ -146539,8 +145808,6 @@ entities:
       pos: -42.5,-60.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21464
@@ -146549,8 +145816,6 @@ entities:
       pos: -36.5,-64.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: PoweredlightLED
@@ -146560,8 +145825,6 @@ entities:
     - pos: -34.5,1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21981
@@ -146569,8 +145832,6 @@ entities:
     - pos: -28.5,1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25944
@@ -146579,8 +145840,6 @@ entities:
       pos: -5.5,-24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 25945
@@ -146589,8 +145848,6 @@ entities:
       pos: 4.5,-24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27281
@@ -146599,8 +145856,6 @@ entities:
       pos: -1.5,41.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 27282
@@ -146609,8 +145864,6 @@ entities:
       pos: 3.5,41.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: PoweredlightSodium
@@ -146620,8 +145873,6 @@ entities:
     - pos: -36.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 21779
@@ -146629,8 +145880,6 @@ entities:
     - pos: -40.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: PoweredSmallLight
@@ -160091,13 +159340,6 @@ entities:
   - uid: 10526
     components:
     - pos: 44.5,-0.5
-      parent: 8364
-      type: Transform
-- proto: SpawnPointBrigmedic
-  entities:
-  - uid: 22008
-    components:
-    - pos: -8.5,30.5
       parent: 8364
       type: Transform
 - proto: SpawnPointCaptain
