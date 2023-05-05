@@ -26,7 +26,7 @@ namespace Content.Client.CombatMode
 
             SubscribeLocalEvent<CombatModeComponent, ComponentHandleState>(OnHandleState);
 
-            _cfg.OnValueChanged(CCVars.HudHeldItemShow, OnShowCombatIndicatorsChanged, true);
+            _cfg.OnValueChanged(CCVars.CombatModeIndicatorsPointShow, OnShowCombatIndicatorsChanged, true);
         }
 
         private void OnHandleState(EntityUid uid, CombatModeComponent component, ref ComponentHandleState args)
