@@ -50,7 +50,7 @@ public sealed class VentClogRuleComponent : Component
     /// Quantity of the evil reagent to put in the foam.
     /// </summary>
     [DataField("evilReagentQuantity"), ViewVariables(VVAccess.ReadWrite)]
-    public int EvilReagentQuantity = 50;
+    public int EvilReagentQuantity = 60;
 
     /// <summary>
     /// Spread of the foam for the evil reagent.
