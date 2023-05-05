@@ -51,7 +51,7 @@
 
 - type: latheRecipe
   id: AnomalyLocator
-  result: AnomalyLocatorNoBattery
+  result: AnomalyLocatorEmpty
   completetime: 3
   materials:
     Steel: 400
@@ -64,3 +64,11 @@
   materials:
     Plastic: 200
     Glass: 150
+
+- type: latheRecipe
+  id: WeaponPistolCHIMP
+  result: WeaponPistolCHIMP
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 400

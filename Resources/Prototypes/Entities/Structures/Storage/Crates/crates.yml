@@ -157,6 +157,18 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateChemistrySecure
+  name: secure chemistry crate
+  components:
+    - type: Icon
+      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    - type: Sprite
+      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    - type: AccessReader
+      access: [["Chemistry"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CratePrivateSecure
   name: private crate
   components:
