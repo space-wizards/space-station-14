@@ -1,10 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Mop indicator is now fixed, type: Fix}
-  - {message: Fixes drinking from bricking if you were full before drinking, type: Fix}
-  id: 3145
-  time: '2023-03-09T08:45:19.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Separated HUD mode now expands the game viewport instead of the chat
@@ -2892,3 +2886,10 @@ Entries:
   - {message: Lightweight drunk now applies to the drunk accent as well., type: Fix}
   id: 3644
   time: '2023-05-04T19:02:31.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Air vents leak in vacuum, eventually (10-30 mins) re-pressurizing sealed,
+      spaced sections', type: Add}
+  - {message: Air vent pumps are limited to 2.0 * supply pressure at most, type: Add}
+  id: 3645
+  time: '2023-05-05T00:34:15.0000000+00:00'
