@@ -5,6 +5,7 @@ using Content.Shared.Database;
 using Content.Shared.Eui;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Database;
 using Robust.Shared.Network;
 using static Content.Shared.Administration.Notes.AdminNoteEuiMsg;
 
@@ -15,6 +16,7 @@ public sealed class AdminNotesEui : BaseEui
     [Dependency] private readonly IAdminManager _admins = default!;
     [Dependency] private readonly IAdminNotesManager _notesMan = default!;
     [Dependency] private readonly IPlayerLocator _locator = default!;
+    [Dependency] private readonly IServerDbManager _db = default!;
 
     public AdminNotesEui()
     {
@@ -23,6 +25,7 @@ public sealed class AdminNotesEui : BaseEui
 
     private Guid NotedPlayer { get; set; }
     private string NotedPlayerName { get; set; } = string.Empty;
+    private bool HasConnectedBefore { get; set; }
     private Dictionary<(int, NoteType), SharedAdminNote> Notes { get; set; } = new();
 
     public override async void Opened()
@@ -50,7 +53,7 @@ public sealed class AdminNotesEui : BaseEui
         return new AdminNotesEuiState(
             NotedPlayerName,
             Notes,
-            _notesMan.CanCreate(Player),
+            _notesMan.CanCreate(Player) && HasConnectedBefore,
             _notesMan.CanDelete(Player),
             _notesMan.CanEdit(Player)
         );
@@ -136,7 +139,9 @@ public sealed class AdminNotesEui : BaseEui
 
     private async Task LoadFromDb()
     {
-        NotedPlayerName = (await _locator.LookupIdAsync((NetUserId) NotedPlayer))?.Username ?? string.Empty;
+        var locatedPlayer = await _locator.LookupIdAsync((NetUserId) NotedPlayer);
+        NotedPlayerName = locatedPlayer?.Username ?? string.Empty;
+        HasConnectedBefore = locatedPlayer?.LastAddress is not null;
         Notes = (from note in await _notesMan.GetAllAdminRemarks(NotedPlayer)
                  select note.ToShared())
             .ToDictionary(sharedNote => (sharedNote.Id, sharedNote.NoteType));

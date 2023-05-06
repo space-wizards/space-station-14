@@ -260,7 +260,7 @@ namespace Content.Server.Database
         Task<AdminMessage?> GetAdminMessage(int id);
         Task<ServerBanNote?> GetServerBanAsNoteAsync(int id);
         Task<ServerRoleBanNote?> GetServerRoleBanAsNoteAsync(int id);
-        Task<List<IAdminRemarksCommon>> GetAllAdminNotes(Guid player);
+        Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player);
         Task<List<IAdminRemarksCommon>> GetVisibleAdminNotes(Guid player);
         Task<List<AdminWatchlist>> GetActiveWatchlists(Guid player);
         Task<List<AdminMessage>> GetMessages(Guid player);
@@ -762,7 +762,7 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetServerRoleBanAsNoteAsync(id));
         }
 
-    public Task<List<IAdminRemarksCommon>> GetAllAdminNotes(Guid player)
+    public Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetAllAdminRemarks(player));

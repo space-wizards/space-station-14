@@ -1313,27 +1313,27 @@ namespace Content.Server.Database
         protected async Task<List<ServerBanNote>> GetServerBansAsNotesForUser(DbGuard db, Guid user)
         {
             return await (from ban in db.DbContext.Ban
-                        .Include(ban => ban.Unban)
-                        .Include(ban => ban.Round)
-                        .ThenInclude(r => r!.Server)
-                        .Include(ban => ban.CreatedBy)
-                        .Include(ban => ban.LastEditedBy)
-                        .Include(ban => ban.Unban)
                           where ban.PlayerUserId == user &&
                                 !ban.Hidden
-                          from player in db.DbContext.Player
-                          where player.UserId == user
-                          select new { ban, player })
+                          select ban)
+                .Include(ban => ban.Unban)
+                .Include(ban => ban.Round)
+                .ThenInclude(r => r!.Server)
+                .Include(ban => ban.CreatedBy)
+                .Include(ban => ban.LastEditedBy)
+                .Include(ban => ban.Unban)
                 .ToAsyncEnumerable()
-                .SelectAwait(async o =>
-                    new ServerBanNote(o.ban.Id, o.ban.RoundId, o.ban.Round, o.ban.PlayerUserId, o.player,
-                        o.ban.PlaytimeAtNote, o.ban.Reason, o.ban.Severity, o.ban.CreatedBy, o.ban.BanTime,
-                        o.ban.LastEditedBy, o.ban.LastEditedAt, o.ban.ExpirationTime, o.ban.Hidden,
-                        o.ban.Unban?.UnbanningAdmin == null
+                .SelectAwait(async ban =>
+                    new ServerBanNote(ban.Id, ban.RoundId, ban.Round, ban.PlayerUserId,
+                        // You can't group queries, as player will not always exist. When it doesn't, the
+                        // whole query returns nothing
+                        await db.DbContext.Player.SingleOrDefaultAsync(p => p.UserId == user),
+                        ban.PlaytimeAtNote, ban.Reason, ban.Severity, ban.CreatedBy, ban.BanTime,
+                        ban.LastEditedBy, ban.LastEditedAt, ban.ExpirationTime, ban.Hidden,
+                        ban.Unban?.UnbanningAdmin == null
                             ? null
-                            : await db.DbContext.Player.SingleOrDefaultAsync(p =>
-                                p.UserId == o.ban.Unban.UnbanningAdmin.Value),
-                        o.ban.Unban?.UnbanTime)
+                            : await db.DbContext.Player.SingleOrDefaultAsync(p => p.UserId == ban.Unban.UnbanningAdmin.Value),
+                        ban.Unban?.UnbanTime)
                 ).ToListAsync();
         }
 

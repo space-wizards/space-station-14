@@ -72,6 +72,13 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
     public async Task AddAdminRemark(IPlayerSession createdBy, Guid player, NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
     {
         message = message.Trim();
+
+        // There's a foreign key constraint in place here. If there's no player record, it will fail.
+        // Not like there's much use in adding notes on accounts that have never connected.
+        // You can still ban them just fine, which is why we should allow admins to view their bans with the notes panel
+        if (await _db.GetPlayerRecordByUserId((NetUserId) player) is null)
+            return;
+
         var sb = new StringBuilder($"{createdBy.Name} added a");
 
         if (secret && type == NoteType.Note)
@@ -298,7 +305,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 
     public async Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
     {
-        return await _db.GetAllAdminNotes(player);
+        return await _db.GetAllAdminRemarks(player);
     }
 
     public async Task<List<IAdminRemarksCommon>> GetVisibleRemarks(Guid player)
