@@ -220,3 +220,13 @@
   - type: Tag
     tags:
     - InnateDontDelete
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel # need to sprite mime's satchel
+  id: ClothingBackpackSatchelMimeFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: RubberStampMime

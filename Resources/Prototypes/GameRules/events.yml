@@ -5,7 +5,7 @@
   components:
   - type: StationEvent
     weight: 10
-    startAfter: 30
+    startDelay: 30
     duration: 35
   - type: AnomalySpawnRule
 
@@ -16,7 +16,7 @@
   components:
   - type: StationEvent
     weight: 5
-    startAfter: 30
+    startDelay: 30
     duration: 35
   - type: BluespaceArtifactRule
 
@@ -118,7 +118,7 @@
     earliestStart: 10
     minimumPlayers: 5
     weight: 5
-    startAfter: 20
+    startDelay: 20
   - type: GasLeakRule
 
 - type: entity
@@ -130,7 +130,7 @@
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
-    startAfter: 50
+    startDelay: 50
     duration: 240
   - type: KudzuGrowthRule
 
@@ -150,7 +150,7 @@
       params:
         volume: -4
     duration: null #ending is handled by MeteorSwarmRule
-    startAfter: 30
+    startDelay: 30
   - type: MeteorSwarmRule
 
 - type: entity
@@ -178,7 +178,7 @@
       path: /Audio/Announcements/power_off.ogg
       params:
        volume: -4
-    startAfter: 12
+    startDelay: 12
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
@@ -228,7 +228,7 @@
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
-    startAfter: 50
+    startDelay: 50
     duration: 60
   - type: VentClogRule
 

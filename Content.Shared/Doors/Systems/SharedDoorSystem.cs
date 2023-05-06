@@ -442,8 +442,7 @@ public abstract class SharedDoorSystem : EntitySystem
             if (!otherPhysics.CanCollide)
                 continue;
 
-            if (otherPhysics.BodyType == BodyType.Static || (physics.CollisionMask & otherPhysics.CollisionLayer) == 0
-                && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
+            if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
 
             if (_entityLookup.GetWorldAABB(otherPhysics.Owner).IntersectPercentage(doorAABB) < IntersectPercentage)
