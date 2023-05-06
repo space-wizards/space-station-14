@@ -35,7 +35,8 @@ public sealed class GunCrosshairOverlay : Overlay
     private float _unavailableSignSize = 22f;
     private float _maxRange = 20f;
 
-    public float MainScale = 0.7f;
+    public float MainScale = 0.72f;
+    public float MaxBulletRangeSpread = 0.5f;
 
     public GunCrosshairOverlay(IEntityManager entManager, IEyeManager eyeManager, IInputManager input,
         IPlayerManager player, IPrototypeManager prototypes, SharedPhysicsSystem physics, GunSystem system)
@@ -72,7 +73,7 @@ public sealed class GunCrosshairOverlay : Overlay
         }
 
         var mapPos = xform.MapPosition;
-        if (mapPos.MapId == MapId.Nullspace)
+        if (mapPos.MapId != args.MapId)
             return;
 
         // get gun
@@ -99,18 +100,18 @@ public sealed class GunCrosshairOverlay : Overlay
 
 
         var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
-        float scale = uiScale > 1.25f ? 1.25f : uiScale;
-        scale *= MainScale;
+        var scale = (uiScale > 1.25f ? 1.25f : uiScale) * MainScale;
 
         var direction = (mousePos.Position - mapPos.Position);
 
         // set data for calculating raycastResult
-        DataForCalculatingRCGunResult raycastData;
+        GunCrosshairDataForCalculatingRCResult raycastData;
         raycastData.MapPos = mapPos;
         raycastData.Player = player;
         raycastData.CollisionType = collisionMask;
-
-        CrosshairType crosshairType = CrosshairType.Available;
+        
+        // when it doesn't have any obstacles
+        GunCrosshairTypes crosshairType = GunCrosshairTypes.Available;
 
         if (GetRayCastResult(direction, raycastData, _maxRange)
                 is RayCastResults castRes)
@@ -118,18 +119,19 @@ public sealed class GunCrosshairOverlay : Overlay
             var mouseDistance = direction.Length;
 
             // the target is not far from hit
+            // it should use entity and mouse over
             if (0.5 > (castRes.HitPos - mousePos.Position).Length)
             {
                 // check bullet spread
-                if (CheckBulletSpread(direction, castRes.Distance - 0.5f, raycastData, gun.MaxAngle))
-                    crosshairType = CrosshairType.InTarget;
+                if (CheckBulletSpread(direction, castRes.Distance - MaxBulletRangeSpread, raycastData, gun.MaxAngle))
+                    crosshairType = GunCrosshairTypes.InTarget;
             }
+            // it have some obstacle
             else if (mouseDistance > castRes.Distance)
             {
-                crosshairType = CrosshairType.Unavailable;
+                crosshairType = GunCrosshairTypes.Unavailable;
                 var screenHitPosition = _eye.WorldToScreen(castRes.HitPos);
                 var screenPlayerPos = _eye.CoordinatesToScreen(xform.Coordinates).Position;
-                // draw sign for obstacle
                 DrawОbstacleSign(screen, screenHitPosition, screenPlayerPos, scale);
             }
         }
@@ -138,7 +140,7 @@ public sealed class GunCrosshairOverlay : Overlay
         DrawCrosshair(screen, mouseScreen.Position, scale, crosshairType);
     }
 
-    private RayCastResults? GetRayCastResult(Vector2 dir, DataForCalculatingRCGunResult data,
+    private RayCastResults? GetRayCastResult(Vector2 dir, GunCrosshairDataForCalculatingRCResult data,
         float maxRange)
     {
         var ray = new CollisionRay(data.MapPos.Position, dir.Normalized, data.CollisionType);
@@ -148,7 +150,7 @@ public sealed class GunCrosshairOverlay : Overlay
         return rayCastResults.Any() ? rayCastResults[0] : null;
     }
 
-    private bool CheckBulletSpread(Vector2 dir, float maxDistance, DataForCalculatingRCGunResult data,
+    private bool CheckBulletSpread(Vector2 dir, float maxDistance, GunCrosshairDataForCalculatingRCResult data,
         Angle angleSpread)
     {
         bool isRange = true;
@@ -169,60 +171,51 @@ public sealed class GunCrosshairOverlay : Overlay
     private void DrawОbstacleSign(DrawingHandleScreen screen,
         Vector2 hitPos, Vector2 playerPos, float scale)
     {
-        Vector2 bitHitDirection = playerPos + (hitPos - playerPos) * 0.8f;
-        screen.DrawLine(bitHitDirection, hitPos, Color.Red);
+        screen.DrawLine(playerPos + (hitPos - playerPos) * 0.8f, hitPos, Color.Red);
 
-        float circleRadius = 2f * scale;
+        var circleRadius = 2f * scale;
 
         screen.DrawCircle(hitPos, (circleRadius + 0.5f), Color.Black);
-        screen.DrawCircle(hitPos, circleRadius, Color.Red.WithAlpha(0.5f));
+        screen.DrawCircle(hitPos, circleRadius, Color.Red);
     }
 
     private void DrawCrosshair(DrawingHandleScreen screen, Vector2 circlePos,
-        float scale, CrosshairType type)
+        float scale, GunCrosshairTypes type)
     {
         Color color = type switch
         {
-            CrosshairType.Unavailable => Color.Red.WithAlpha(0.3f),
-            CrosshairType.InTarget => Color.GreenYellow,
+            GunCrosshairTypes.Unavailable => Color.Red.WithAlpha(0.2f),
+            GunCrosshairTypes.InTarget => Color.GreenYellow,
             _ => Color.Green,
         };
 
-        if (type == CrosshairType.Unavailable)
+        if (type == GunCrosshairTypes.Unavailable)
         {
-            var radius = _unavailableSignSize * scale;
-            screen.DrawCircle(circlePos, radius, color);
+            screen.DrawCircle(circlePos, _unavailableSignSize * scale, color);
         }
         else
         {
             // active crosshair | not active
-            var crosshair = type == CrosshairType.InTarget
+            var crosshair = type == GunCrosshairTypes.InTarget
                 ? _crosshairMarked
                 : _crosshair;
+            
+            Vector2 textureSize = crosshair.Size * scale;
 
             screen.DrawTextureRect(crosshair,
-                GetBoxForTexture(crosshair, circlePos, scale), color);
+                UIBox2.FromDimensions(circlePos - (textureSize / 2), textureSize), color);
         }
-    }
-
-    private UIBox2 GetBoxForTexture(Texture texture, Vector2 pos, float scale, float? expandedSize = null)
-    {
-        Vector2 textureSize = texture.Size * scale;
-        if (expandedSize != null)
-            textureSize += (float) expandedSize;
-        Vector2 beginPos = pos - (textureSize / 2);
-        return UIBox2.FromDimensions(beginPos, textureSize);
     }
 }
 
-public enum CrosshairType : byte
+public enum GunCrosshairTypes : byte
 {
     Available,
     Unavailable,
     InTarget,
 }
 
-public struct DataForCalculatingRCGunResult
+public struct GunCrosshairDataForCalculatingRCResult
 {
     public MapCoordinates MapPos;
     public EntityUid? Player;
