@@ -32,7 +32,7 @@ public sealed class KudzuSystem : EntitySystem
         if (growthDamage > 0)
         {
             GrowingKudzuComponent? growing;
-            if (!TryComp<GrowingKudzuComponent>(uid, out growing))
+            if (!TryComp(uid, out growing))
             {
                 growing = AddComp<GrowingKudzuComponent>(uid);
                 growing.GrowthLevel = 3;
@@ -107,6 +107,7 @@ public sealed class KudzuSystem : EntitySystem
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {
+        var appearanceQuery = GetEntityQuery<AppearanceComponent>();
         var query = EntityQueryEnumerator<GrowingKudzuComponent, KudzuComponent>();
         var curTime = _timing.CurTime;
 
@@ -152,7 +153,7 @@ public sealed class KudzuSystem : EntitySystem
                 RemCompDeferred<GrowingKudzuComponent>(uid);
             }
 
-            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
+            if (appearanceQuery.TryGetComponent(uid, out var appearance))
             {
                 _appearance.SetData(uid, KudzuVisuals.GrowthLevel, grow.GrowthLevel, appearance);
             }
