@@ -1,0 +1,102 @@
+# Markers
+- type: entity
+  id: SalvageShuttleMarker
+  parent: FTLPoint
+
+# Biome mods -> at least 1 required
+- type: salvageBiomeMod
+  id: Grasslands
+  biome: Grasslands
+
+- type: salvageBiomeMod
+  id: Lava
+  cost: 2
+  biome: Lava
+
+- type: salvageBiomeMod
+  id: Snow
+  biome: Snow
+
+- type: salvageBiomeMod
+  id: Caves
+  cost: 1
+  biome: Caves
+
+#- type: salvageBiomeMod
+#  id: Space
+#  cost: 1
+#  weather: false
+#  biome: null
+
+# Temperature mods -> not required
+# Also whitelist it
+
+# Weather mods -> not required
+- type: salvageWeatherMod
+  id: SnowfallHeavy
+  weather: SnowfallHeavy
+  cost: 1
+
+- type: salvageWeatherMod
+  id: Rain
+  weather: Rain
+
+# Light mods -> required
+# At some stage with sub-biomes this will probably be moved onto the biome itself
+- type: salvageLightMod
+  id: Daylight
+  desc: Daylight
+  color: "#D8B059"
+  biomes:
+    - Grasslands
+
+- type: salvageLightMod
+  id: Lavalight
+  desc: Daylight
+  color: "#A34931"
+  biomes:
+    - Lava
+
+- type: salvageLightMod
+  id: Evening
+  desc: Evening
+  color: "#2b3143"
+
+- type: salvageLightMod
+  id: Night
+  desc: Night time
+  color: null
+  cost: 1
+
+# Time mods -> at least 1 required
+- type: salvageTimeMod
+  id: StandardTime
+
+- type: salvageTimeMod
+  id: RushTime
+  desc: Rush
+  minDuration: 720
+  maxDuration: 780
+  cost: 1
+
+# Misc mods
+- type: salvageMod
+  id: LongDistance
+  desc: Long distance
+
+# Dungeons
+#  For now just simple 1-dungeon setups
+- type: salvageDungeonMod
+  id: Experiment
+  proto: Experiment
+  biomeMods:
+    - Caves
+    #- LowDesert
+    - Snow
+    - Grasslands
+
+- type: salvageDungeonMod
+  id: LavaBrig
+  proto: LavaBrig
+  biomeMods:
+    - Lava

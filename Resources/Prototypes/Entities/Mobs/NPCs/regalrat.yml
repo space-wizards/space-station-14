@@ -29,14 +29,15 @@
     bodyType: KinematicController
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.3
-      density: 230
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 230
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -82,11 +83,12 @@
         Base: dead
       Dead:
         Base: dead
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: Rat King
     description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
     rules: You are an antagonist, scavenge, attack, and grow your hoard!
+  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide
@@ -116,6 +118,8 @@
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
   - type: DiseaseCarrier
+    naturalImmunities:
+    - ActiveHonkVirus
     carrierDiseases:
     - VentCough
     - AMIV
@@ -163,14 +167,15 @@
         Blunt: 66 #oof ouch owie my bones
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 400
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 400
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7
@@ -207,14 +212,15 @@
     bodyType: KinematicController
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 30 #Bulky by mouse standards...
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 30 #Bulky by mouse standards...
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -254,7 +260,6 @@
     baseDecayRate: 0.1
   - type: Appearance
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: mouse-3
@@ -267,6 +272,8 @@
     - id: FoodMeatRat
       amount: 1
   - type: DiseaseCarrier
+    naturalImmunities:
+      - ActiveHonkVirus
     carrierDiseases:
     - VentCough
     - AMIV
@@ -283,11 +290,12 @@
       Female: Mouse
       Unsexed: Mouse
     wilhelmProbability: 0.001
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: Rat Servant
     description: You are a Rat Servant. You must follow your king's orders.
     rules: You are an antagonist, scavenge, attack, and serve your king!
+  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide

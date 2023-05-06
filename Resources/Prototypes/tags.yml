@@ -35,6 +35,18 @@
   id: BorgArm
 
 - type: Tag
+  id: BorgHead
+
+- type: Tag
+  id: BorgLeg
+
+- type: Tag
+  id: BorgLeftLeg
+
+- type: Tag
+  id: BorgRightLeg
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -86,13 +98,16 @@
   id: Cartridge
 
 - type: Tag
-  id: CartridgeAntiMaterial
+  id: CartridgeAntiMateriel
 
 - type: Tag
   id: CartridgeCap
 
 - type: Tag
   id: CartridgeCaselessRifle
+
+- type: Tag
+  id: CartridgeCHIMP
 
 - type: Tag
   id: CartridgeHeavyRifle
@@ -126,7 +141,19 @@
   id: CigPack
 
 - type: Tag
+  id: ClownMask
+
+- type: Tag
+  id: ClownRecorder
+
+- type: Tag
   id: ClownRubberStamp
+
+- type: Tag
+  id: ClownShoes
+
+- type: Tag
+  id: CluwneHorn
 
 - type: Tag
   id: Crayon
@@ -294,13 +321,29 @@
   id: Handcuffs
 
 - type: Tag
+  id: HappyHonk
+
+
+- type: Tag
+  id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
+
+- type: Tag
+  id: HardsuitEVA
+
+- type: Tag
   id: Head
+
+- type: Tag
+  id: HelmetEVA
 
 - type: Tag
   id: HideContextMenu
 
 - type: Tag
   id: HidesHair # for headwear.
+
+- type: Tag
+  id: HighRiskItem
 
 - type: Tag
   id: Hoe
@@ -310,6 +353,27 @@
 
 - type: Tag
   id: HolosignProjector
+
+- type: Tag
+  id: HonkerCentralControlModule
+
+- type: Tag
+  id: HonkerPeripheralsControlModule
+
+- type: Tag
+  id: HonkerTargetingControlModule
+
+- type: Tag
+  id: HonkerLArm
+
+- type: Tag
+  id: HonkerLLeg
+
+- type: Tag
+  id: HonkerRLeg
+
+- type: Tag
+  id: HonkerRArm
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -330,6 +394,10 @@
   id: Katana
 
 - type: Tag
+  id: Kangaroo
+
+
+- type: Tag
   id: KeyedInstrument
 
 - type: Tag
@@ -346,6 +414,12 @@
 
 - type: Tag
   id: MicroBomb
+
+- type: Tag
+  id: MimeBelt
+
+- type: Tag
+  id: MimeHappyHonk
 
 # Magazines ordered by slot then caliber
 
@@ -431,6 +505,9 @@
   id: NoBlockAnchoring
 
 - type: Tag
+  id: NozzleBackTank
+
+- type: Tag
   id: NukeOpsUplink
 
 - type: Tag
@@ -453,9 +530,6 @@
 
 - type: Tag
   id: Pickaxe
-
-- type: Tag
-  id: Pill
 
 - type: Tag
   id: PillCanister
@@ -579,6 +653,9 @@
   id: SpeedLoaderRifle
 
 - type: Tag
+  id: SpreaderIgnore
+
+- type: Tag
   id: StringInstrument
 
 - type: Tag
@@ -597,7 +674,19 @@
   id: Syringe
 
 - type: Tag
+  id: Spellbook
+
+- type: Tag
   id: Taser
+
+- type: Tag
+  id: TimerBrigElectronics
+
+- type: Tag
+  id: TimerScreenElectronics
+
+- type: Tag
+  id: TimerSignalElectronics
 
 - type: Tag
   id: Trash

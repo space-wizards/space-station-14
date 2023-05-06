@@ -37,7 +37,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly SharedAudioSystem _sharedAudioSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly PuddleSystem _puddleSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -60,7 +60,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                     {
                         Solution blood = new();
                         blood.AddReagent(reclaimer.BloodReagent, 50);
-                        _spillableSystem.SpillAt(reclaimer.Owner, blood, "PuddleBlood");
+                        _puddleSystem.TrySpillAt(reclaimer.Owner, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
                     {

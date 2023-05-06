@@ -88,15 +88,18 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (environment.Pressure > vent.MaxPressure)
                     return;
 
-                if (environment.Pressure < vent.UnderPressureLockoutThreshold)
-                {
-                    vent.UnderPressureLockout = true;
-                    return;
-                }
-                vent.UnderPressureLockout = false;
+                vent.UnderPressureLockout = (environment.Pressure < vent.UnderPressureLockoutThreshold);
 
                 if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
-                    pressureDelta = MathF.Min(pressureDelta, vent.ExternalPressureBound - environment.Pressure);
+                {
+                    // Vents cannot supply high pressures from an almost empty pipe, instead it's proportional to the pipe
+                    //   pressure, up to a limit.
+                    // This also means supply pipe pressure indicates minimum pressure on the station, with lower pressure
+                    //   sections getting air first.
+                    var supplyPressure = MathF.Min(pipe.Air.Pressure * vent.PumpPower, vent.ExternalPressureBound);
+                    // Calculate the ratio of supply pressure to current pressure.
+                    pressureDelta = MathF.Min(pressureDelta, supplyPressure - environment.Pressure);
+                }
 
                 if (pressureDelta <= 0)
                     return;
@@ -104,6 +107,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 // how many moles to transfer to change external pressure by pressureDelta
                 // (ignoring temperature differences because I am lazy)
                 var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
+
+                if (vent.UnderPressureLockout)
+                {
+                    // Leak only a small amount of gas as a proportion of supply pipe pressure.
+                    var pipeDelta = pipe.Air.Pressure - environment.Pressure;
+                    transferMoles = (float)timeDelta * pipeDelta * vent.UnderPressureLockoutLeaking;
+                    if (transferMoles < 0.0)
+                        return;
+                }
 
                 // limit transferMoles so the source doesn't go below its bound.
                 if ((vent.PressureChecks & VentPressureBound.InternalBound) != 0)

@@ -28,7 +28,7 @@
   - Bucket
   - MopItem
   - SprayBottle
-  - BodyBag
+
 - type: technology
   name: technologies-advanced-cleaning-technology
   id: AdvancedCleaningTechnology
@@ -38,10 +38,24 @@
     state: advmop
   requiredPoints: 5000
   requiredTechnologies:
-    - BasicResearch
     - CleaningTechnology
   unlockedRecipes:
     - AdvMopItem
+    - MegaSprayBottle
+
+- type: technology
+  id: AdvancedSprayTechnology
+  name: technologies-advanced-spray-technology
+  description: technologies-advanced-spray-technology-description
+  icon:
+    sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
+    state: icon
+  requiredPoints: 7500
+  requiredTechnologies:
+  - AdvancedCleaningTechnology
+  unlockedRecipes:
+  - WeaponSprayNozzle
+  - ClothingBackpackWaterTank
 
 # Food/Bev Service Technology Tree
 
@@ -61,6 +75,7 @@
   - MicrowaveMachineCircuitboard
   - BoozeDispenserMachineCircuitboard
   - SodaDispenserMachineCircuitboard
+  - FatExtractorMachineCircuitboard
 
 # Biological Technology Tree
 
@@ -84,14 +99,6 @@
   - ButchCleaver
   - KitchenKnife
   - MicrowaveMachineCircuitboard
-  - Medkit
-  - MedkitBurn
-  - MedkitToxin
-  - MedkitO2
-  - MedkitBrute
-  - MedkitAdvanced
-  - MedkitRadiation
-  - MedkitCombat
 
 - type: technology
   name: technologies-advanced-botany
@@ -106,8 +113,7 @@
   unlockedRecipes:
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
-  - HandheldHealthAnalyzer
-  - Implanter
+  - Vape
 
 - type: technology
   name: technologies-virology
@@ -120,10 +126,6 @@
   requiredTechnologies:
   - BiologicalTechnology
   unlockedRecipes:
-  - ClothingHandsGlovesLatex
-  - ClothingHandsGlovesNitrile
-  - ClothingMaskSterile
-  - DiseaseSwab
   - VaccinatorMachineCircuitboard
   - DiagnoserMachineCircuitboard
 
@@ -324,6 +326,27 @@
   - RipleyLLeg
   - RipleyRLeg
 
+- type: technology
+  name: technologies-clown-technology
+  id: ClownTechnology
+  description: technologies-clown-technology-description
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: honker
+  requiredPoints: 15000
+  requiredTechnologies:
+  - RipleyTechnology
+  unlockedRecipes:
+  - HonkerCentralElectronics
+  - HonkerPeripheralsElectronics
+  - HonkerTargetingElectronics
+  - MechEquipmentHorn
+  - HonkerHarness
+  - HonkerLArm
+  - HonkerRArm
+  - HonkerLLeg
+  - HonkerRLeg
+
 # Industrial Engineering Technology Tree
 
 - type: technology
@@ -350,6 +373,7 @@
   - AirAlarmElectronics
   - FireAlarmElectronics
   - MailingUnitElectronics
+  - SignalTimerElectronics
 
 - type: technology
   name: technologies-material-sheet-printing
@@ -364,6 +388,7 @@
   - SheetPlastic
   - SheetRGlass
   - SheetGlass1
+  - MaterialReclaimerMachineCircuitboard
 
 # Electromagnetic Theory Technology Tree
 
@@ -373,7 +398,7 @@
   description: technologies-electromagnetic-theory-description
   icon:
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    state: base
   requiredPoints: 10000
   requiredTechnologies:
   - BasicResearch
@@ -417,7 +442,7 @@
   description: technologies-advanced-atmospherics-technology-description
   icon:
     sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-    state: freezer_off
+    state: freezerOff
   requiredPoints: 7500
   requiredTechnologies:
   - ElectricalEngineering
@@ -528,11 +553,10 @@
   - TechDiskComputerCircuitboard
   - CapacitorStockPart
   - MatterBinStockPart
-  - MicroLaserStockPart
   - MicroManipulatorStockPart
-  - ScanningModuleStockPart
   - NodeScanner
   - AnomalyScanner
+  - AnomalyLocator
 
 - type: technology
   name: technologies-anomaly-technology
@@ -547,6 +571,10 @@
   unlockedRecipes:
   - AnomalyVesselCircuitboard
   - APECircuitboard
+  - WeaponPistolCHIMP
+  - CartridgeAnomalousParticleDelta
+  - CartridgeAnomalousParticleEpsilon
+  - CartridgeAnomalousParticleZeta
 
 - type: technology
   name: technologies-robotics-technology
@@ -561,7 +589,10 @@
   unlockedRecipes:
   - ProximitySensor
   - LeftArmBorg
+  - LightHeadBorg
   - RightArmBorg
+  - LeftLegBorg
+  - RightLegBorg
   - Drone
   - ExosuitFabricatorMachineCircuitboard
 
@@ -593,9 +624,20 @@
   unlockedRecipes:
   - AdvancedCapacitorStockPart
   - AdvancedMatterBinStockPart
-  - HighPowerMicroLaserStockPart
   - NanoManipulatorStockPart
-  - AdvancedScanningModuleStockPart
+
+- type: technology
+  name: technologies-magboots-technology
+  id: MagbootsTechnology
+  description: technologies-magboots-technology-description
+  icon:
+    sprite: Clothing/Shoes/Boots/magboots.rsi
+    state: icon
+  requiredPoints: 8500
+  requiredTechnologies:
+    - ScientificTechnology
+  unlockedRecipes:
+    - ClothingShoesBootsMag
 
 - type: technology
   name: technologies-super-parts-technology
@@ -611,6 +653,4 @@
   unlockedRecipes:
   - SuperCapacitorStockPart
   - SuperMatterBinStockPart
-  - UltraHighPowerMicroLaserStockPart
   - PicoManipulatorStockPart
-  - PhasicScanningModuleStockPart

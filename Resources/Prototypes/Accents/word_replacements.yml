@@ -61,3 +61,15 @@
     accent-dwarf-words-33: accent-dwarf-words-replace-33
     accent-dwarf-words-34: accent-dwarf-words-replace-34
     accent-dwarf-words-35: accent-dwarf-words-replace-35
+
+- type: accent
+  id: pirate
+  wordReplacements:
+    accent-pirate-replaced-1: accent-pirate-replacement-1
+    accent-pirate-replaced-2: accent-pirate-replacement-2
+    accent-pirate-replaced-3: accent-pirate-replacement-3
+    accent-pirate-replaced-4: accent-pirate-replacement-4
+    accent-pirate-replaced-5: accent-pirate-replacement-4
+    accent-pirate-replaced-6: accent-pirate-replacement-3
+    accent-pirate-replaced-7: accent-pirate-replacement-5
+    accent-pirate-replaced-8: accent-pirate-replacement-6

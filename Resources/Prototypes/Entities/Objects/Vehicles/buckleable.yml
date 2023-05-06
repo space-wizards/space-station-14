@@ -29,16 +29,16 @@
   - type: Clickable
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.4
-      density: 360
-      restitution: 0.0
-      mask:
-      - MobMask
-      layer:
-      - TableLayer
-  - type: VehicleVisuals
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 360
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - TableLayer
   - type: Appearance
   - type: Repairable
     fuelcost: 20
@@ -79,6 +79,7 @@
   - type: StaticPrice
     price: 750 # Grand Theft Auto.
 
+
 - type: entity
   id: VehicleJanicart
   parent: BaseVehicle
@@ -86,6 +87,9 @@
   description: The janitor's trusty steed.
   components:
   - type: Vehicle
+    southOver: true
+    westOver: true
+    eastOver: true
     northOverride: -0.15
     southOverride: 0.22
   - type: Sprite
@@ -175,7 +179,9 @@
   description: The future of transportation. Popularized by St. James, the patron saint of security officers and internet forum moderators.
   components:
   - type: Vehicle
-    northOnly: true
+    northOver: true
+    westOver: true
+    eastOver: true
     northOverride: -0.1
     southOverride: 0.1
     hornSound:
@@ -222,6 +228,8 @@
   description: All-Tile Vehicle.
   components:
   - type: Vehicle
+    southOver: true
+    northOver: true
     northOverride: -0.1
     southOverride: 0.1
   - type: Sprite
@@ -275,7 +283,9 @@
   description: Be an enemy of the corporation, in style.
   components:
     - type: Vehicle
-      northOnly: true
+      southOver: true
+      westOver: true
+      eastOver: true
       northOverride: -0.1
       southOverride: 0.1
       hornSound:
@@ -317,6 +327,8 @@
   description: Bad to the Bone.
   components:
     - type: Vehicle
+      southOver: true
+      northOver: true
       northOverride: -0.1
       southOverride: 0.1
     - type: Sprite

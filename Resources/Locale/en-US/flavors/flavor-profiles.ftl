@@ -17,6 +17,7 @@ flavor-base-spicy = spicy
 flavor-base-metallic = metallic
 flavor-base-meaty = meaty
 flavor-base-fishy = fishy
+flavor-base-crabby = crabby
 flavor-base-cheesy = cheesy
 flavor-base-funny = funny
 flavor-base-tingly = tingly
@@ -40,6 +41,7 @@ flavor-base-shocking = shocking
 flavor-base-cheap = cheap
 flavor-base-piquant = piquant
 flavor-base-sharp = sharp
+flavor-base-syrupy = syrupy
 
 # lmao
 flavor-base-terrible = terrible
@@ -68,6 +70,8 @@ flavor-complex-batter = like batter
 flavor-complex-butter = like butter
 flavor-complex-egg = like egg
 flavor-complex-bacon = like bacon
+flavor-complex-chicken = like chicken
+flavor-complex-duck = like duck
 flavor-complex-chocolate = like chocolate
 flavor-complex-pasta = like pasta
 flavor-complex-rice = like rice
@@ -78,8 +82,8 @@ flavor-complex-ice-cream = like ice cream
 flavor-complex-dough = like dough
 flavor-complex-sweet-dough = like sweet dough
 flavor-complex-tofu = like tofu
+flavor-complex-miso = like miso
 flavor-complex-muffin = like a muffin
-
 flavor-complex-peas = like peas
 flavor-complex-pineapple = like pineapple
 flavor-complex-onion = like onion
@@ -98,6 +102,11 @@ flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
 flavor-complex-garlic = like garlic
 flavor-complex-grape = like grapes
+flavor-complex-meatballs = like meatballs
+flavor-complex-nettles = like nettles
+flavor-complex-jungle = like jungle
+flavor-complex-vegetables = like vegetables
+# use it when there multiple types of veggies
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
@@ -118,9 +127,22 @@ flavor-complex-boritos = like gaming
 flavor-complex-nachos = like nachos
 flavor-complex-donk = like cheap pizza
 flavor-complex-copypasta = like a repetitive joke
+flavor-complex-bad-joke = like a bad joke
 flavor-complex-memory-leek = like a fork bomb
 flavor-complex-gunpowder = like gunpowder
 flavor-complex-validhunting = like validhunting
+flavor-complex-people = like people
+flavor-complex-cat = like cat
+flavor-complex-homerun = like a home run
+flavor-complex-grass = like grass
+flavor-complex-flare = like a smoking flare
+flavor-complex-cobwebs = like cobwebs
+flavor-complex-sadness = like sadness
+flavor-complex-hope = like hope
+flavor-complex-chaos = like chaos
+flavor-complex-squirming = like squirming
+flavor-complex-electrons = like electrons
+flavor-complex-parents = like someone's parents
 
 # Drink-specific flavors.
 
@@ -165,6 +187,8 @@ flavor-complex-atomic-cola = like hoarding bottle caps
 flavor-complex-cuba-libre = like spiked cola
 flavor-complex-gin-tonic = like spiked lemon-lime soda
 flavor-complex-screwdriver = like spiked orange juice
+flavor-complex-themartinez = like violets and lemon vodka
+flavor-complex-cogchamp = like brass
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk

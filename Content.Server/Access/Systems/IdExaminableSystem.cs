@@ -36,7 +36,7 @@ public sealed class IdExaminableSystem : EntitySystem
             Category = VerbCategory.Examine,
             Disabled = !detailsRange,
             Message = Loc.GetString("id-examinable-component-verb-disabled"),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/character.svg.192dpi.png"))
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/character.svg.192dpi.png"))
         };
 
         args.Verbs.Add(verb);

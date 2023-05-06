@@ -33,18 +33,6 @@ public sealed class CrewManifestEui : BaseEui
         return new(name, entries);
     }
 
-    public override void HandleMessage(EuiMessageBase msg)
-    {
-        base.HandleMessage(msg);
-
-        switch (msg)
-        {
-            case CrewManifestEuiClosed:
-                Closed();
-                break;
-        }
-    }
-
     public override void Closed()
     {
         base.Closed();

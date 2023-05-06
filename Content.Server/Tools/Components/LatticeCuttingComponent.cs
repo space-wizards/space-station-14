@@ -1,4 +1,4 @@
-﻿using Content.Shared.Tools;
+using Content.Shared.Tools;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Tools.Components;
@@ -10,7 +10,7 @@ public sealed class LatticeCuttingComponent : Component
     public string QualityNeeded = "Cutting";
 
     [DataField("delay")]
-    public float Delay = 0.25f;
+    public float Delay = 1f;
 
     [DataField("vacuumDelay")]
     public float VacuumDelay = 1.75f;

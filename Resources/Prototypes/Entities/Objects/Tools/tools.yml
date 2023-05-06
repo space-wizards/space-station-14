@@ -35,6 +35,9 @@
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
   - type: LatticeCutting
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: StaticPrice
     price: 40
 
@@ -74,6 +77,9 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           screwdriver: Rainbow
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: StaticPrice
     price: 40
 
@@ -106,6 +112,9 @@
       - Anchoring
     useSound:
       path: /Audio/Items/ratchet.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: StaticPrice
     price: 40
 
@@ -139,6 +148,9 @@
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: TilePrying
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: StaticPrice
     price: 40
 
@@ -200,6 +212,10 @@
   - type: Tag
     tags:
       - DroneUsable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Plastic: 100
   - type: StaticPrice
     price: 60
 
@@ -242,6 +258,10 @@
           path: /Audio/Items/drill_use.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+      Plastic: 100
   - type: StaticPrice
     price: 100
 
@@ -252,6 +272,9 @@
   description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
+  - type: LimitedCharges
+    maxCharges: 5
+    charges: 5
   - type: UseDelay
     delay: 1.0
   - type: Sprite
@@ -264,6 +287,10 @@
     quickEquip: false
     slots:
     - Belt
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 600
+      Plastic: 100
   - type: StaticPrice
     price: 100
 
@@ -272,8 +299,19 @@
   parent: RCD
   suffix: Empty
   components:
-  - type: RCD
-    ammo: 0
+  - type: LimitedCharges
+    maxCharges: 5
+    charges: 0
+
+- type: entity
+  id: RCDExperimental
+  parent: RCD
+  suffix: Admeme
+  name: experimental rcd
+  description: A bluespace-enhanced RCD that regenerates charges passively.
+  components:
+  - type: AutoRecharge
+    rechargeDuration: 5
 
 - type: entity
   name: RCD Ammo
@@ -288,6 +326,10 @@
   - type: Item
     sprite: Objects/Tools/rcd.rsi
     heldPrefix: ammo
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Plastic: 100
   - type: StaticPrice
     price: 60
 
@@ -310,6 +352,12 @@
         Blunt: 10
   - type: Item
     sprite: Objects/Tools/shovel.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Wood: 50
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   name: omnitool
