@@ -13,9 +13,14 @@
       Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    capacity: 6
+    capacity: 5
+    whitelist:
+      tags:
+      - Cigarette
+      - Cigar
+      - Matchstick
   - type: Item
-    size: 6
+    size: 5
   - type: StorageFill
     contents:
     - id: Cigarette

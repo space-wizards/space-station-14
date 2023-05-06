@@ -71,6 +71,14 @@
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
+    size: 5
+  - type: Storage
+    capacity: 5
+    whitelist:
+      tags:
+      - Matchstick
+      - Cigarette
+      - Cigar
     size: 10
   - type: StorageFill
     contents:
