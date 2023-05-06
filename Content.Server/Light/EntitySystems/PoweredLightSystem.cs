@@ -224,20 +224,19 @@ namespace Content.Server.Light.EntitySystems
         /// <summary>
         ///     Try to break bulb inside light fixture
         /// </summary>
-        public bool TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
+        public void TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
         {
             // check bulb state
             var bulbUid = GetBulb(uid, light);
             if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
-                return false;
+                return;
             if (lightBulb.State == LightBulbState.Broken)
-                return false;
+                return;
 
             // break it
             _bulbSystem.SetState(bulbUid.Value, LightBulbState.Broken, lightBulb);
             _bulbSystem.PlayBreakSound(bulbUid.Value, lightBulb);
             UpdateLight(uid, light);
-            return true;
         }
         #endregion
 
@@ -429,8 +428,8 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)
         {
-            if (TryDestroyBulb(uid, component))
-                args.Affected = true;
+            args.Affected = true;
+            TryDestroyBulb(uid, component);
         }
     }
 }

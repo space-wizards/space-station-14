@@ -15,10 +15,4 @@ public sealed class EmpOnTriggerComponent : Component
     /// </summary>
     [DataField("energyConsumption"), ViewVariables(VVAccess.ReadWrite)]
     public float EnergyConsumption;
-
-    /// <summary>
-    /// How long it disables targets in seconds
-    /// </summary>
-    [DataField("disableDuration"), ViewVariables(VVAccess.ReadWrite)]
-    public float DisableDuration = 60f;
 }
