@@ -170,11 +170,12 @@ namespace Content.Shared.Chemistry.Reaction
 
         /// <summary>
         ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
-        ///     Removes the reactants from the solution, then returns a solution with all products.
+        ///     Removes the reactants from the solution, adds products, and returns a list of products.
         /// </summary>
-        private Solution PerformReaction(Solution solution, EntityUid owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
+        private List<string> PerformReaction(Solution solution, EntityUid owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
             var energy = solution.GetThermalEnergy(_prototypeManager);
+
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
             {
@@ -186,10 +187,11 @@ namespace Content.Shared.Chemistry.Reaction
             }
 
             //Create products
-            var products = new Solution();
+            var products = new List<string>();
             foreach (var product in reaction.Products)
             {
-                products.AddReagent(product.Key, product.Value * unitReactions);
+                products.Add(product.Key);
+                solution.AddReagent(product.Key, product.Value * unitReactions);
             }
 
             var newCap = solution.GetHeatCapacity(_prototypeManager);
@@ -237,7 +239,7 @@ namespace Content.Shared.Chemistry.Reaction
         private bool ProcessReactions(Solution solution, EntityUid owner, FixedPoint2 maxVolume, SortedSet<ReactionPrototype> reactions, ReactionMixerComponent? mixerComponent)
         {
             HashSet<ReactionPrototype> toRemove = new();
-            Solution? products = null;
+            List<string>? products = null;
 
             // attempt to perform any applicable reaction
             foreach (var reaction in reactions)
@@ -256,30 +258,23 @@ namespace Content.Shared.Chemistry.Reaction
             if (products == null)
                 return false;
 
-            // Remove any reactions that were not applicable. Avoids re-iterating over them in future.
-            foreach (var proto in toRemove)
-            {
-                reactions.Remove(proto);
-            }
-
-            if (products.Volume <= 0)
+            if (products.Count == 0)
                 return true;
 
             // remove excess product
             // TODO spill excess?
-            var excessVolume = solution.Volume + products.Volume - maxVolume;
+            var excessVolume = solution.Volume - maxVolume;
             if (excessVolume > 0)
-                products.RemoveSolution(excessVolume);
+                solution.RemoveSolution(excessVolume);
 
             // Add any reactions associated with the new products. This may re-add reactions that were already iterated
             // over previously. The new product may mean the reactions are applicable again and need to be processed.
-            foreach (var reactant in products.Contents)
+            foreach (var product in products)
             {
-                if (_reactions.TryGetValue(reactant.ReagentId, out var reactantReactions))
+                if (_reactions.TryGetValue(product, out var reactantReactions))
                     reactions.UnionWith(reactantReactions);
             }
 
-            solution.AddSolution(products, _prototypeManager);
             return true;
         }
 
