@@ -2,7 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Changeling;
+namespace Content.Shared.EstacaoPirata.Changeling;
 
 [Serializable, NetSerializable]
 public sealed class AbsorbDNADoAfterEvent : SimpleDoAfterEvent

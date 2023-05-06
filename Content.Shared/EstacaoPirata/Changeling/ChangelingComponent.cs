@@ -1,11 +1,11 @@
 using Robust.Shared.Audio;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Humanoid;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Changeling;
+namespace Content.Shared.EstacaoPirata.Changeling;
 
 [RegisterComponent]
 [NetworkedComponent]
@@ -100,7 +100,7 @@ public sealed class ChangelingComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("DNAStingCost")]
     public int DNAStingCost = 25;
-        
+
         #endregion
         #region Arm Blade
     /// <summary>
@@ -151,7 +151,11 @@ public sealed class ChangelingComponent : Component
 
 public struct HumanoidData
 {
-    public MetaDataComponent _metaDataComponent;
+    public EntityPrototype? EntityPrototype;
 
-    public HumanoidAppearanceComponent _appearanceComponent;
+    public MetaDataComponent? MetaDataComponent;
+
+    public HumanoidAppearanceComponent? AppearanceComponent;
+
+    public string? Dna;
 }

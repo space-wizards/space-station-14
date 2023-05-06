@@ -1,11 +1,10 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Changeling;
+using Content.Shared.EstacaoPirata.Changeling;
 using Content.Shared.Interaction;
 using Robust.Shared.Player;
 using Content.Server.EstacaoPirata.Changeling.Shop;
 using Content.Server.Humanoid;
-using Content.Server.EstacaoPirata.Changeling;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Robust.Shared.Prototypes;
@@ -122,56 +121,54 @@ public sealed class ChangelingSystem : EntitySystem
 
     private void AbsorbDNA(EntityUid user,HumanoidAppearanceComponent userAppearance, EntityUid target, HumanoidAppearanceComponent targetAppearance, ChangelingComponent comp)
     {
-        HumanoidData temp = new HumanoidData();
+        HumanoidData tempNewHumanoid = new HumanoidData();
 
-        // if(!TryComp<MindComponent>(target, out var mindComp))
-        // {
-        //     temp._name = "Urist McHands";
-        // }
-        // else
-        // {
-        //     if(mindComp.Mind != null)
-        //         temp._name = mindComp.Mind.CharacterName;
-        //     else
-        //         temp._name = "Urist McHands";
-        // }
+        if (!TryComp<MetaDataComponent>(target, out var targetMeta))
+            return;
+        if (!TryComp<MetaDataComponent>(user, out var userMeta))
+            return;
+        if (!TryPrototype(target, out var prototype, targetMeta))
+            return;
+        if (!TryComp<DnaComponent>(user, out var dnaComp))
+            return;
 
-
-        temp._appearanceComponent = targetAppearance;
-
-        TryComp<MetaDataComponent>(target, out var targetMeta);
-        TryComp<MetaDataComponent>(user, out var userMeta);
-        TryComp<VocalComponent>(target, out var targetVocal);
-        TryComp<VocalComponent>(user, out var userVocal);
-        if(targetMeta != null && userMeta != null)
-        {
-            userMeta.EntityName = targetMeta.EntityName;
-            //Dirty(comp);
-            //EntityManager.DirtyEntity(user, userMeta);
-            //userMeta.Dirty(_entMana);
-            temp._metaDataComponent = targetMeta;
-
-        }
-
-
+        tempNewHumanoid.EntityPrototype = prototype;
+        tempNewHumanoid.MetaDataComponent = targetMeta;
+        tempNewHumanoid.AppearanceComponent = targetAppearance;
+        tempNewHumanoid.Dna = dnaComp.DNA;
 
         Dirty(user, userMeta); // TENTANDO FAZER FICAR DIRTY
 
-
-        _humanoidSystem.CloneAppearance(target, user, targetAppearance, userAppearance);
-
         if (comp.DNAStrandBalance >= comp.DNAStrandCap)
-            return;
+        {
+            var tempHumanoidData = comp.storedHumanoids.Last();
+            comp.storedHumanoids.Remove(tempHumanoidData);
+            comp.storedHumanoids.Add(tempNewHumanoid);
+        }
+        else
+        {
+            comp.DNAStrandBalance += 1;
+            comp.storedHumanoids.Add(tempNewHumanoid);
+        }
 
-        comp.DNAStrandBalance += 1;
-        comp.storedHumanoids.Add(temp);
+        // Coisas para mover para outro metodo
+        //userMeta.EntityName = targetMeta.EntityName;
+        //_humanoidSystem.CloneAppearance(target, user, targetAppearance, userAppearance);
 
+        // MELHOR: refatorar o MobChangeling, ao inves de fazer um mob especifico para ele, fazer um componente que diz se é ou não apenas
+        // isso facilitaria a troca de corpo, pq ai só precisaria criar um novo mob identico ao alvo e passar o componente de changeling pra ele com os valores
+        // if (TryPrototype(target, out var prototipo, targetMeta))
+        // {
+        //     var targetTransformComp = Transform(user);
+        //     var child = Spawn(prototipo.ID, targetTransformComp.Coordinates);
+        //
+        // }
     }
 
     private void ChangeAppearance(EntityUid user, HumanoidAppearanceComponent userAppearance, EntityUid target, HumanoidAppearanceComponent targetAppearance, ChangelingComponent comp)
     {
-        // consumir dna e copiar aparencia
+        // criar gameobject com os atributos de HumanoidData
 
-        _humanoidSystem.CloneAppearance(target, user, targetAppearance, userAppearance);
+        //_humanoidSystem.CloneAppearance(target, user, targetAppearance, userAppearance);
     }
 }

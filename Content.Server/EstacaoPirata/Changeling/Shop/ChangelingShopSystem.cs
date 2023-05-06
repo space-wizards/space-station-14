@@ -6,7 +6,7 @@ using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Changeling;
+using Content.Shared.EstacaoPirata.Changeling;
 
 namespace Content.Server.EstacaoPirata.Changeling.Shop
 {

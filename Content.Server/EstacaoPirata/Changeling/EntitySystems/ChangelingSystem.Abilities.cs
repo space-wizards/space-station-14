@@ -26,7 +26,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
-using Content.Shared.Changeling;
+using Content.Shared.EstacaoPirata.Changeling;
 
 namespace Content.Server.EstacaoPirata.Changeling.EntitySystems;
 

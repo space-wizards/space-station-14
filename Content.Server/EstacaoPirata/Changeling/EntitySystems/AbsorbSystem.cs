@@ -4,7 +4,7 @@ using Content.Server.EstacaoPirata.Changeling;
 using Content.Shared.Examine;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Changeling;
+using Content.Shared.EstacaoPirata.Changeling;
 using Robust.Shared.Random;
 using Content.Server.Forensics;
 using Robust.Shared.Utility;
