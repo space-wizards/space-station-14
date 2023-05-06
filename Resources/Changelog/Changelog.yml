@@ -1,9 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: Strip menu won't open when trying to wake sleeping players., type: Fix}
-  id: 3170
-  time: '2023-03-13T03:29:26.0000000+00:00'
 - author: Nylux
   changes:
   - {message: Dionas can now get drunk., type: Fix}
@@ -2900,3 +2895,11 @@ Entries:
   - {message: Changed the translation for the settings option!, type: Tweak}
   id: 3669
   time: '2023-05-06T05:06:42.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: Meat Kudzu (from anomoly) takes heat damage. Try unleashing a plasma
+      canister near it, type: Tweak}
+  - {message: 'Meat Kudzu spreads slightly more slowly, takes visible damage, has
+      growth prevented by damage.', type: Tweak}
+  id: 3670
+  time: '2023-05-06T05:08:51.0000000+00:00'
