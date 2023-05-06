@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed weldable entities becoming stuck in an un-weldable state., type: Fix}
-  - {message: Fixed tile placement sometimes placing two tiles in one click., type: Fix}
-  id: 3187
-  time: '2023-03-15T02:05:53.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fixed a bug that caused several DoAfters (the delayed actions with the
       progress bar) to stop working., type: Fix}
   id: 3188
@@ -2911,3 +2905,9 @@ Entries:
     type: Fix}
   id: 3686
   time: '2023-05-06T19:10:47.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug causing screen overlays (flashbang, admin HUD, etc) to
+      sometimes not get drawn.', type: Fix}
+  id: 3687
+  time: '2023-05-06T23:46:16.0000000+00:00'
