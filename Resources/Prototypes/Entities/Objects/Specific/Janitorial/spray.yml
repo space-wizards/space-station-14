@@ -51,7 +51,6 @@
   - type: Spray
     sprayedPrototype: BigVapor
     sprayVelocity: 5
-    sprayAliveTime: 5
     spraySound:
       path: /Audio/Effects/spray2.ogg
 
