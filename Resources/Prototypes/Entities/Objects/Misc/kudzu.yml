@@ -70,8 +70,8 @@
               Heat: 10
     - type: AtmosExposed
     - type: Kudzu
-    - type: GrowingKudzu
       growthTickChance: 0.3
+    - type: GrowingKudzu
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
@@ -119,10 +119,11 @@
             "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/fleshkudzu.rsi
-      state: base
+      state: kudzu_11
       drawdepth: Overdoors
       netsync: false
     - type: Appearance
+    - type: KudzuVisuals
     - type: Clickable
     - type: Transform
       anchored: true
@@ -141,7 +142,7 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 10
+          damage: 40
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
@@ -154,6 +155,33 @@
         tags:
         - Flesh
     - type: Kudzu
+      growthTickChance: 0.3
+      # Heals each time it manages to do a growth tick:
+      damageRecovery:
+        types:
+          Slash: -0.5
+          Heat: -1.0
+          Cold: -1.0
+          Blunt: -0.5 # Needs to be balanced (approx 3x) with vacuum damage to stall but not kill Kudzu
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 10
+      coldDamage:
+        types:
+          Cold: 5 #per second, scales with temperature & other constants
+    - type: Barotrauma
+      damage:
+        types:
+          Blunt: 0.15 #per second, scales with pressure and other constants.
+    - type: Flammable
+      fireSpread: true
+      damage:
+       types:
+         Heat: 1
+    - type: GrowingKudzu
+      growthTickChance: 0.3
+    - type: AtmosExposed
     - type: EdgeSpreader
     - type: NodeContainer
       nodes:
@@ -174,3 +202,11 @@
           reagents:
           - ReagentId: Protein
             Quantity: 2
+    - type: Respirator
+      damage:
+        types:
+          Asphyxiation: 0.25
+      damageRecovery:
+        types:
+          Asphyxiation: -0.25
+
