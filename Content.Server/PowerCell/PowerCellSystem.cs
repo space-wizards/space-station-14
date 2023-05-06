@@ -41,6 +41,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         SubscribeLocalEvent<PowerCellComponent, RejuvenateEvent>(OnRejuvenate);
 
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
+        SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnCellSlotExamined);
 
         SubscribeLocalEvent<PowerCellDrawComponent, EntityUnpausedEvent>(OnUnpaused);
 
@@ -287,10 +288,19 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void OnCellExamined(EntityUid uid, PowerCellComponent component, ExaminedEvent args)
     {
-        if (!TryComp(uid, out BatteryComponent? battery))
-            return;
+        if (TryComp<BatteryComponent>(uid, out var battery))
+            OnBatteryExamined(uid, battery, args);
+    }
 
-        var charge = battery.CurrentCharge / battery.MaxCharge * 100;
+    private void OnCellSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)
+    {
+        if (TryGetBatteryFromSlot(uid, out var battery))
+            OnBatteryExamined(uid, battery, args);
+    }
+
+    private void OnBatteryExamined(EntityUid uid, BatteryComponent component, ExaminedEvent args)
+    {
+        var charge = component.CurrentCharge / component.MaxCharge * 100;
         args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
     }
 }

@@ -35,14 +35,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
-      density: 1000
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 1000
   - type: Occluder
   - type: Airtight
   - type: StaticPrice
@@ -625,16 +626,17 @@
     - East
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PolygonShape
-          vertices:
-          - "-0.5,-0.5"
-          - "0.5,0.5"
-          - "0.5,-0.5"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -909,13 +911,14 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-      mask:
-      - FullTileMask
-      layer:
-      - GlassLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
   - type: Airtight
 
 - type: entity
@@ -931,7 +934,8 @@
       bodyType: Static
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
           mask:

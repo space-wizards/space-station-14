@@ -42,7 +42,24 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("underPressureLockoutThreshold")]
-        public float UnderPressureLockoutThreshold = 1;
+        public float UnderPressureLockoutThreshold = 2;
+
+        /// <summary>
+        ///     Pressure locked vents still leak a little (leading to eventual pressurization of sealed sections)
+        /// </summary>
+        /// <remarks>
+        ///     Ratio of pressure difference between pipes and atmosphere that will leak each second, in moles.
+        ///     If the pipes are 200 kPa and the room is spaced, at 0.01 UnderPressureLockoutLeaking, the room will fill
+        ///     at a rate of 2 moles / sec. It will then reach 2 kPa (UnderPressureLockoutThreshold) and begin normal
+        ///     filling after about 20 seconds (depending on room size).
+        ///
+        ///     Since we want to prevent automating the work of atmos, the leaking rate of 0.0001f is set to make auto
+        ///     repressurizing of the development map take about 30 minutes using an oxygen tank (high pressure)
+        /// </remarks>
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("underPressureLockoutLeaking")]
+        public float UnderPressureLockoutLeaking = 0.0001f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("externalPressureBound")]
@@ -88,6 +105,17 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("targetPressureChange")]
         public float TargetPressureChange = Atmospherics.OneAtmosphere;
+
+        /// <summary>
+        ///     Ratio of max output air pressure and pipe pressure, representing the vent's ability to increase pressure
+        /// </summary>
+        /// <remarks>
+        ///     Vents cannot suck a pipe completely empty, instead pressurizing a section to a max of
+        ///     pipe pressure * PumpPower (in kPa). So a 51 kPa pipe is required for 101 kPA sections at PumpPower 2.0
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("PumpPower")]
+        public float PumpPower = 2.0f;
 
         #region Machine Linking
         /// <summary>
