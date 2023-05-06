@@ -48,6 +48,8 @@
       80: 0.4
   # Misc
   - type: IgnoreFlashImmunity
+    slotBlacklist:
+    - eyes
   - type: Speech
     speechSounds: Arachnid
   - type: Vocal

@@ -173,7 +173,8 @@ namespace Content.Server.Flash
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)
         {
-            if (TryComp<IgnoreFlashImmunityComponent>(args.Target, out var ignoreComp))
+            if (TryComp<IgnoreFlashImmunityComponent>(args.Target, out var ignoreComp) &&
+                _inventory.TryGetContainingSlot(uid, out var slot) && ignoreComp.SlotBlacklist.Any(x => x == slot.Name))
             {
                 args.FlashDuration *= ignoreComp.FlashMultiplier;
                 return;
