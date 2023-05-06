@@ -2,13 +2,13 @@ using Content.Server.Cargo.Systems;
 using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
-using Content.Shared.PowerCell;
 using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
-{ [UsedImplicitly]
+{
+    [UsedImplicitly]
     public sealed class BatterySystem : EntitySystem
     {
         [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
