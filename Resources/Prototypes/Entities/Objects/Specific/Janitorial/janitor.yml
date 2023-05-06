@@ -114,7 +114,7 @@
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
+      shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.40,0.25,0.25"
       density: 60
@@ -236,14 +236,15 @@
           priority: 3 # Higher than drinking priority
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeCircle
-          radius: 0.3
-        density: 250
-        layer:
-        - MobLayer
-        mask:
-        - MobMask
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.3
+          density: 250
+          layer:
+          - MobLayer
+          mask:
+          - MobMask
     - type: Spillable
       spillDelay: 3.0
     - type: SolutionContainerManager

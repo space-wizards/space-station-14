@@ -1,7 +1,6 @@
-using Content.Server.Atmos.Monitor.Components;
 using Content.Shared.Doors.Components;
 
-namespace Content.Server.Doors.Components
+namespace Content.Shared.Doors.Components
 {
     /// <summary>
     /// Companion component to <see cref="DoorComponent"/> that handles firelock-specific behavior, including

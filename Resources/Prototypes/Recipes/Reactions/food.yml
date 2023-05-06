@@ -26,6 +26,21 @@
       entity: FoodDough
 
 - type: reaction
+  id: CreateCornmealDough
+  impact: Low
+  quantized: true
+  reactants:
+    Cornmeal:
+      amount: 15
+    Milk: #replace with yoghurt when added
+      amount: 10
+    Egg:
+      amount: 6
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodDoughCornmeal
+
+- type: reaction
   id: CreateCakeBatter
   impact: Low
   quantized: true

@@ -143,12 +143,14 @@
     count: 1
 
 - type: entity
-  parent: SheetOtherBase
+  parent: [SheetOtherBase, FoodBase]
   id: SheetUranium
   name: uranium
   suffix: Full
   components:
   - type: Material
+  - type: Food
+    transferAmount: 10
   - type: PhysicalComposition
     materialComposition:
       Uranium: 100
@@ -166,10 +168,10 @@
   - type: Item
     heldPrefix: uranium
   - type: Extractable
-    grindableSolutionName: uranium
+    grindableSolutionName: food
   - type: SolutionContainerManager
     solutions:
-      uranium:
+      food:
         reagents:
         - ReagentId: Uranium
           Quantity: 10

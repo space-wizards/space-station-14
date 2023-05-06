@@ -8528,16 +8528,14 @@ entities:
       pos: 8.5,28.5
       parent: 588
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
   - uid: 945
     components:
     - rot: 1.5707963267948966 rad
       pos: 10.5,28.5
       parent: 588
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
 - proto: FloorLavaEntity
   entities:
   - uid: 47

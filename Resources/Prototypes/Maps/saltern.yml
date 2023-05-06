@@ -1,0 +1,50 @@
+- type: gameMap
+  id: Saltern
+  mapName: 'Saltern'
+  mapPath: /Maps/saltern.yml
+  minPlayers: 0
+  maxPlayers: 35
+  fallback: true
+  stations:
+    Saltern:
+      mapNameTemplate: '{0} Saltern {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: '14'
+      overflowJobs:
+      - Passenger
+      availableJobs:
+        CargoTechnician: [ 2, 2 ]
+        Passenger: [ -1, -1 ]
+        Bartender: [ 1, 1 ]
+        Botanist: [ 2, 2 ]
+        Chef: [ 1, 1 ]
+        Clown: [ 1, 1 ]
+        Janitor: [ 1, 1 ]
+        Mime: [ 1, 1 ]
+        Captain: [ 1, 1 ]
+        HeadOfPersonnel: [ 1, 1 ]
+        ChiefEngineer: [ 1, 1 ]
+        StationEngineer: [ 3, 3 ]
+        AtmosphericTechnician: [ 2, 2 ]
+        ChiefMedicalOfficer: [ 1, 1 ]
+        MedicalDoctor: [ 2, 2 ]
+        Chemist: [ 2, 2 ]
+        ResearchDirector: [ 1, 1 ]
+        Scientist: [ 3, 3 ]
+        ResearchAssistant: [ 1, 1 ]
+        HeadOfSecurity: [ 1, 1 ]
+        SecurityOfficer: [ 3, 3 ]
+        Chaplain: [ 1, 1 ]
+        Librarian: [ 1, 1 ]
+        Musician: [ 1, 1 ]
+        Lawyer: [ 1, 1 ]
+        SalvageSpecialist: [ 1, 2 ]
+        Quartermaster: [ 1, 1 ]
+        TechnicalAssistant: [ 2, 2 ]
+        MedicalIntern: [ 2, 2 ]
+        ServiceWorker: [ 2, 2 ]
+        SecurityCadet: [ 2, 2 ]
+        Detective: [ 1, 1 ]
+        Warden: [ 1, 1 ]
+        Zookeeper: [1, 1]
