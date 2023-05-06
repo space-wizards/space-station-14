@@ -1,5 +1,6 @@
 using Content.Server.Damage.Systems;
 using Content.Shared.Damage;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Damage.Components;
 
@@ -22,6 +23,6 @@ public sealed class DamageOnHoldingComponent : Component
     [DataField("interval"), ViewVariables(VVAccess.ReadWrite)]
     public float Interval = 1f;
 
-    [ViewVariables]
+    [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextDamage = TimeSpan.Zero;
 }
