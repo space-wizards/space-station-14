@@ -427,7 +427,6 @@
   - ElectromagneticTheory
   - IndustrialEngineering
   unlockedRecipes:
-  - PowerDrill
   - SMESMachineCircuitboard
   - PowerComputerCircuitboard
   - GeneratorPlasmaMachineCircuitboard
@@ -638,6 +637,7 @@
   unlockedRecipes:
     - ClothingShoesBootsMag
     - WelderIndustrial
+    - PowerDrill
 
 - type: technology
   name: technologies-super-parts-technology
