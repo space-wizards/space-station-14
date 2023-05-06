@@ -1,10 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: 'Added the warden''s hardsuit to the warden''s locker. Don''t abuse
-      it, wardens.', type: Add}
-  id: 3175
-  time: '2023-03-13T17:47:56.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Welding doors will now stop mice, rat kings and other mobs from running
@@ -2904,3 +2898,9 @@ Entries:
   - {message: Matchbox inventory size was adjusted, type: Tweak}
   id: 3674
   time: '2023-05-06T07:27:50.0000000+00:00'
+- author: Fireheart
+  changes:
+  - {message: 'Improved paperwork interface, enabling fillable forms to be created
+      and sealed with a stamp.', type: Tweak}
+  id: 3675
+  time: '2023-05-06T07:35:22.0000000+00:00'
