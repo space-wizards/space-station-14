@@ -1,11 +1,4 @@
 Entries:
-- author: GoodWheatley
-  changes:
-  - {message: 'A recently discovered security vulnerability in Nanotrasen radio frequencies
-      has been exploited by the Syndicate, allowing the Syndicate Encryption Key to
-      access all station radio channels.', type: Add}
-  id: 3166
-  time: '2023-03-13T00:48:34.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: the handmade pistol is now a one shot firearm that uses shotgun shells
@@ -2898,3 +2891,11 @@ Entries:
   - {message: A minor update to rules., type: Tweak}
   id: 3665
   time: '2023-05-06T02:11:44.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: added random book generation to bookshelves., type: Add}
+  - {message: added construction for bookshelves., type: Add}
+  - {message: 'Changed the bookshelf - now it can store books, paper, folders and
+      the rest of the bureaucracy.', type: Tweak}
+  id: 3666
+  time: '2023-05-06T02:20:02.0000000+00:00'
