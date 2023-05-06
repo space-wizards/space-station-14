@@ -23,6 +23,6 @@ public sealed class DamageOnHoldingComponent : Component
     [DataField("interval"), ViewVariables(VVAccess.ReadWrite)]
     public float Interval = 1f;
 
-    [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextDamage = TimeSpan.Zero;
 }
