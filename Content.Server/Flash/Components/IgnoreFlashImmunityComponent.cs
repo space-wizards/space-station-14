@@ -6,5 +6,10 @@ namespace Content.Server.Flash.Components
     [RegisterComponent]
     internal sealed class IgnoreFlashImmunityComponent : Component
     {
+        /// <summary>
+        /// How much the flash should be reduced by for each piece of immunity?
+        /// </summary>
+        [DataField("FlashMultiplier")]
+        public float FlashMultiplier = 0.5f;
     }
 }

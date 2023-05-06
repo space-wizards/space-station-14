@@ -110,17 +110,17 @@ namespace Content.Server.Flash
         {
             if (!Resolve(target, ref flashable, false)) return;
 
-            var attempt = new FlashAttemptEvent(target, user, used);
+            var attempt = new FlashAttemptEvent(target, user, used, flashDuration);
             RaiseLocalEvent(target, attempt, true);
 
             if (attempt.Cancelled)
                 return;
 
             flashable.LastFlash = _timing.CurTime;
-            flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
+            flashable.Duration = attempt.FlashDuration / 1000f; // TODO: Make this sane...
             Dirty(flashable);
 
-            _stun.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
+            _stun.TrySlowdown(target, TimeSpan.FromSeconds(attempt.FlashDuration/1000f), true,
                 slowTo, slowTo);
 
             if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
@@ -173,7 +173,13 @@ namespace Content.Server.Flash
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)
         {
-            if (!HasComp<IgnoreFlashImmunityComponent>(args.Target) && component.Enabled)
+            if (TryComp<IgnoreFlashImmunityComponent>(args.Target, out var ignoreComp))
+            {
+                args.FlashDuration *= ignoreComp.FlashMultiplier;
+                return;
+            }
+
+            if (component.Enabled)
                 args.Cancel();
         }
 
@@ -193,12 +199,14 @@ namespace Content.Server.Flash
         public readonly EntityUid Target;
         public readonly EntityUid? User;
         public readonly EntityUid? Used;
+        public float FlashDuration;
 
-        public FlashAttemptEvent(EntityUid target, EntityUid? user, EntityUid? used)
+        public FlashAttemptEvent(EntityUid target, EntityUid? user, EntityUid? used, float flashDuration)
         {
             Target = target;
             User = user;
             Used = used;
+            FlashDuration = flashDuration;
         }
     }
 }
