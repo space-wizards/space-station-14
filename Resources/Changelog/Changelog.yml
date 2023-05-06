@@ -1,9 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Engivend deny sprite no longer shakes., type: Fix}
-  id: 3169
-  time: '2023-03-13T02:22:52.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: Strip menu won't open when trying to wake sleeping players., type: Fix}
@@ -2899,3 +2894,9 @@ Entries:
       radioactive emissions by 97.4% with RadAbsorb', type: Add}
   id: 3668
   time: '2023-05-06T04:47:19.0000000+00:00'
+- author: Arteben
+  changes:
+  - {message: Added additional indicators for the combat mode!, type: Add}
+  - {message: Changed the translation for the settings option!, type: Tweak}
+  id: 3669
+  time: '2023-05-06T05:06:42.0000000+00:00'
