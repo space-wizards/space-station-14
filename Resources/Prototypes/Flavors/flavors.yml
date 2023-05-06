@@ -45,6 +45,11 @@
   description: flavor-base-fishy
 
 - type: flavor
+  id: crabby
+  flavorType: Base
+  description: flavor-base-crabby
+
+- type: flavor
   id: cheesy
   flavorType: Base
   description: flavor-base-cheesy
@@ -223,6 +228,16 @@
   id: bacon
   flavorType: Complex
   description: flavor-complex-bacon
+
+- type: flavor
+  id: chicken
+  flavorType: Complex
+  description: flavor-complex-chicken
+
+- type: flavor
+  id: duck
+  flavorType: Complex
+  description: flavor-complex-duck
 
 - type: flavor
   id: chocolate
@@ -454,6 +469,31 @@
   flavorType: Complex
   description: flavor-complex-validhunting
 
+- type: flavor
+  id: people
+  flavorType: Complex
+  description: flavor-complex-people
+
+- type: flavor
+  id: cat
+  flavorType: Complex
+  description: flavor-complex-cat
+
+- type: flavor
+  id: homerun
+  flavorType: Complex
+  description: flavor-complex-homerun
+
+- type: flavor
+  id: grass
+  flavorType: Complex
+  description: flavor-complex-grass
+
+- type: flavor
+  id: flare
+  flavorType: Complex
+  description: flavor-complex-flare
+  
 - type: flavor
   id: cobwebs
   flavorType: Complex
