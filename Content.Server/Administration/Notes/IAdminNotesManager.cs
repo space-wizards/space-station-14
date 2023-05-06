@@ -45,6 +45,5 @@ public interface IAdminNotesManager
     /// <param name="player">Desired player's <see cref="Guid"/></param>
     /// <returns>All unread messages</returns>
     Task<List<AdminMessage>> GetNewMessages(Guid player);
-    Task<string> GetPlayerName(Guid player);
     Task MarkMessageAsSeen(int id);
 }

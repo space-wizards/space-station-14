@@ -5,6 +5,7 @@ using Content.Shared.Database;
 using Content.Shared.Eui;
 using System.Linq;
 using System.Threading.Tasks;
+using Robust.Shared.Network;
 using static Content.Shared.Administration.Notes.AdminNoteEuiMsg;
 
 namespace Content.Server.Administration.Notes;
@@ -13,6 +14,7 @@ public sealed class AdminNotesEui : BaseEui
 {
     [Dependency] private readonly IAdminManager _admins = default!;
     [Dependency] private readonly IAdminNotesManager _notesMan = default!;
+    [Dependency] private readonly IPlayerLocator _locator = default!;
 
     public AdminNotesEui()
     {
@@ -134,13 +136,10 @@ public sealed class AdminNotesEui : BaseEui
 
     private async Task LoadFromDb()
     {
-        NotedPlayerName = await _notesMan.GetPlayerName(NotedPlayer);
-        var notes = (
-                from note in await _notesMan.GetAllAdminRemarks(NotedPlayer)
-                select note.ToShared())
+        NotedPlayerName = (await _locator.LookupIdAsync((NetUserId) NotedPlayer))?.Username ?? string.Empty;
+        Notes = (from note in await _notesMan.GetAllAdminRemarks(NotedPlayer)
+                 select note.ToShared())
             .ToDictionary(sharedNote => (sharedNote.Id, sharedNote.NoteType));
-        Notes = notes;
-
         StateDirty();
     }
 

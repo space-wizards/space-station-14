@@ -109,7 +109,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 
         _systems.TryGetEntitySystem(out GameTicker? ticker);
         int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
-        var serverName = _config.GetCVar(CVars.GameHostName); // This could probably be done another way, but this is fine. For displaying only.
+        var serverName = _config.GetCVar(CCVars.AdminLogsServerName); // This could probably be done another way, but this is fine. For displaying only.
         var createdAt = DateTime.UtcNow;
         var playtime = (await _db.GetPlayTimes(player)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall)?.TimeSpent ?? TimeSpan.Zero;
         int noteId;
@@ -319,11 +319,6 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
     public async Task<List<AdminMessage>> GetNewMessages(Guid player)
     {
         return await _db.GetMessages(player);
-    }
-
-    public async Task<string> GetPlayerName(Guid player)
-    {
-        return (await _db.GetPlayerRecordByUserId(new NetUserId(player)))?.LastSeenUserName ?? string.Empty;
     }
 
     public async Task MarkMessageAsSeen(int id)
