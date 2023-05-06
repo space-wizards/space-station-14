@@ -36,7 +36,8 @@ public sealed class EventManagerSystem : EntitySystem
     private void OnUnpaused(EntityUid uid, StationEventComponent component, ref EntityUnpausedEvent args)
     {
         component.StartTime += args.PausedTime;
-        component.EndTime += args.PausedTime;
+        if (component.EndTime != null)
+            component.EndTime = component.EndTime.Value + args.PausedTime;
     }
 
     public override void Shutdown()

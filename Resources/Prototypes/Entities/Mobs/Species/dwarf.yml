@@ -46,6 +46,7 @@
     accent: dwarf
   - type: Speech
     speechSounds: Bass
+  - type: Perishable
 
 - type: entity
   save: false

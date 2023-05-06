@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a/icons/mob/augmentation/augments.dmi",
+  "states": [
+    {
+      "name": "l_leg"
+    },
+    {
+      "name": "r_leg"
+    }
+  ]
+}

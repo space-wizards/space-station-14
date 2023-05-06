@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/goonstation/goonstation/commit/80921812d898aef31f8889d31269254baeff2786#diff-a2065731f293aa1b66d4f8ae294351482c89da49b9dd5e64de3ceec4438c8d95",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "light_borg_head"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+﻿# basic dictionary that maps old entity ids to new entity ids.
+# an empty or "null" string results in the entity getting deleted.
+
+# e.g., you can swap all walls with windows and delete all tables by adding lines like:
+#
+# Window: WallSolid
+# WallSolid: Window
+# Table: null
+#
+chem_dispenser: ChemDispenser
+KvassTankFull: null
+DrinkKvassGlass: null
+KvassTank: null
+
+# 2023-05-03
+SpawnPointBrigmedic: null
+ClothingHeadsetBrigmedic: null
+ClothingHeadHatBeretBrigmedic: null
+ClothingHeadHelmetHardsuitBrigmedic: null
+ClothingOuterHardsuitBrigmedic: null
+ClothingOuterCoatAMG: null
+ClothingBackpackBrigmedic: null
+ClothingBackpackBrigmedicFilled: null
+ClothingBackpackSatchelBrigmedic: null
+ClothingBackpackSatchelBrigmedicFilled: null
+ClothingBackpackDuffelBrigmedic: null
+ClothingBackpackDuffelBrigmedicFilled: null
+BrigmedicIDCard: null
+BrigmedicPDA: null
+BoxSurvivalBrigmedic: null
+LockerBrigmedic: null
+LockerBrigmedicFilled: null
+BedsheetBrigmedic: null
+
+# 2023-05-04
+BoxMagazineMagnumSubMachineGun: BoxMagazinePistolSubMachineGun
+BoxMagazineMagnumSubMachineGunPractice: BoxMagazinePistolSubMachineGunPractice
+BoxMagazineMagnumSubMachineGunRubber: BoxMagazinePistolSubMachineGunRubber
+
+MagazineMagnumSubMachineGun: MagazinePistolSubMachineGun
+MagazineMagnumSubMachineGunHighVelocity: MagazinePistolSubMachineGunHighVelocity
+MagazineMagnumSubMachineGunPractice: MagazinePistolSubMachineGunPractice
+MagazineMagnumSubMachineGunRubber: MagazinePistolSubMachineGunRubber
+WeaponSubMachineGunVector: WeaponSubMachineGunDrozd
+WeaponSubMachineGunVectorRubber: WeaponSubMachineGunDrozdRubber
+
+MagazineBoxAntiMaterial: MagazineBoxAntiMateriel
+CartridgeAntiMaterial: CartridgeAntiMateriel
+BulletAntiMaterial: BulletAntiMateriel
