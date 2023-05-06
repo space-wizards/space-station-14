@@ -2540,13 +2540,13 @@ Entries:
   time: '2023-05-01T19:20:06.0000000+00:00'
 - author: TaralGit
   changes:
-  - {message: bulletproof and reflective armor now have proper sprites, type: Fix}
+  - {message: Bulletproof and reflective armor now have proper sprites., type: Fix}
   id: 3605
   time: '2023-05-01T22:53:40.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed an issue where wires could sometimes not be cut or pulsed in high-sec
-      doors, type: Fix}
+      doors., type: Fix}
   id: 3606
   time: '2023-05-02T00:40:31.0000000+00:00'
 - author: Mumohan
@@ -2590,9 +2590,9 @@ Entries:
   time: '2023-05-02T10:14:56.0000000+00:00'
 - author: Slava0135
   changes:
-  - {message: round end zombie percentage is now calculated as = (infected humanoid
-      bodies) / (total humanoid bodies), type: Tweak}
-  - {message: round end zombie survivor list now shows more survivors, type: Tweak}
+  - {message: Round end zombie percentage is now calculated as = (infected humanoid
+      bodies) / (total humanoid bodies)., type: Tweak}
+  - {message: Round end zombie survivor list now shows more survivors., type: Tweak}
   id: 3613
   time: '2023-05-02T14:31:15.0000000+00:00'
 - author: metalgearsloth
@@ -2661,9 +2661,9 @@ Entries:
   time: '2023-05-03T05:21:21.0000000+00:00'
 - author: Slava0135
   changes:
-  - {message: fixed bomb suit explosion resistance values (50% for helmet and 80%
-      for suit - 90% in total - which is enough to survive minibomb explosion), type: Fix}
-  - {message: you can now examine explosion resistance of armor, type: Add}
+  - {message: Fixed bomb suit explosion resistance values (50% for helmet and 80%
+      for suit - 90% in total - which is enough to survive minibomb explosion)., type: Fix}
+  - {message: You can now examine explosion resistance of armor., type: Add}
   id: 3624
   time: '2023-05-03T05:23:08.0000000+00:00'
 - author: EmoGarbage404
@@ -2693,12 +2693,12 @@ Entries:
   time: '2023-05-03T17:01:55.0000000+00:00'
 - author: notquitehadouken
   changes:
-  - {message: The rot now consumes (dwarves), type: Fix}
+  - {message: The rot now consumes (dwarves)., type: Fix}
   id: 3629
   time: '2023-05-03T17:16:26.0000000+00:00'
 - author: themias
   changes:
-  - {message: Mimes with unbroken vows can no longer scream or laugh, type: Fix}
+  - {message: Mimes with unbroken vows can no longer scream or laugh., type: Fix}
   id: 3630
   time: '2023-05-03T17:24:00.0000000+00:00'
 - author: crazybrain
@@ -2795,13 +2795,13 @@ Entries:
   time: '2023-05-05T07:27:15.0000000+00:00'
 - author: Slava0135
   changes:
-  - {message: 'items with powercell slots now display charge (e.g. flashlights, handheld
+  - {message: 'Items with powercell slots now display charge (e.g. flashlights, handheld
       monitors and etc.)', type: Add}
   id: 3647
   time: '2023-05-05T12:44:22.0000000+00:00'
 - author: Slava0135
   changes:
-  - {message: fixed fire extinguisher not working, type: Fix}
+  - {message: Fixed fire extinguisher not working., type: Fix}
   id: 3648
   time: '2023-05-05T12:48:38.0000000+00:00'
 - author: deltanedas
@@ -2832,16 +2832,10 @@ Entries:
       use at your own risk. HONK!', type: Add}
   id: 3653
   time: '2023-05-05T13:21:13.0000000+00:00'
-- author: Vaaankas
-  changes:
-  - {message: Added fun!, type: Add}
-  - {message: Removed fun!, type: Remove}
-  id: 3654
-  time: '2023-05-05T13:37:14.0000000+00:00'
 - author: Ilushkins33
   changes:
   - {message: Stuttering during blood loss, type: Add}
-  id: 3655
+  id: 3654
   time: '2023-05-05T13:46:52.0000000+00:00'
 - author: moony
   changes:
@@ -2852,51 +2846,51 @@ Entries:
   - {message: 'The HoP has had additional accesses added to their card so they can
       continue to function as normal. This does NOT include head accesses, they can
       no longer grant access to captain''s office for example.', type: Tweak}
-  id: 3656
+  id: 3655
   time: '2023-05-05T13:56:54.0000000+00:00'
 - author: Slava0135
   changes:
-  - {message: its now possible to block doorways with shields, type: Tweak}
+  - {message: It's now possible to block doorways with shields., type: Tweak}
   - {message: 'doors won''t close if there are anchored entities inside (e.g. walls,
       vendomats, closets and etc...)', type: Tweak}
-  id: 3657
+  id: 3656
   time: '2023-05-05T15:14:33.0000000+00:00'
 - author: themias
   changes:
-  - {message: You can no longer puff empty vapes, type: Fix}
-  id: 3658
+  - {message: You can no longer puff empty vapes., type: Fix}
+  id: 3657
   time: '2023-05-05T17:48:48.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix suit sensors not being set for latejoins., type: Fix}
-  id: 3659
+  id: 3658
   time: '2023-05-05T17:51:58.0000000+00:00'
 - author: themias
   changes:
   - {message: Handheld crew monitors and station maps now use battery charge, type: Fix}
-  id: 3660
+  id: 3659
   time: '2023-05-05T17:52:40.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Lighters now consume less fuel when lighting them., type: Tweak}
-  id: 3661
+  id: 3660
   time: '2023-05-06T01:03:14.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Some station events will no longer start instantly., type: Fix}
-  id: 3662
+  id: 3661
   time: '2023-05-06T01:24:16.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: EMP now temporarily disables headsets/cameras/APCs and makes vendomats
       throw items for 60 seconds., type: Add}
-  - {message: broken bulbs are not affected by EMP, type: Fix}
-  id: 3663
+  - {message: Broken bulbs are not affected by EMP., type: Fix}
+  id: 3662
   time: '2023-05-06T01:38:10.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added the spray nozzle and backpack water tank. In conjunction, you
       can let off a never ending stream of water, space cleaner, or napalm.', type: Add}
   - {message: Added advanced spray technology., type: Add}
-  id: 3664
+  id: 3663
   time: '2023-05-06T01:50:09.0000000+00:00'
