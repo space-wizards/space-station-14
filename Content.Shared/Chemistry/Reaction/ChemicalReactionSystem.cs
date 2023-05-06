@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry.Reaction
 {
-    public sealed class SharedChemicalReactionSystem : EntitySystem
+    public sealed class ChemicalReactionSystem : EntitySystem
     {
 
         /// <summary>

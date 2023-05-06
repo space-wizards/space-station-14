@@ -34,7 +34,7 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
     [Dependency]
-    private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
+    private readonly ChemicalReactionSystem _chemistrySystem = default!;
 
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
