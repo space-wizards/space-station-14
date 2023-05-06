@@ -1025,6 +1025,7 @@ namespace Content.Server.Database
             return await db.DbContext.AdminNotes
                 .Where(note => note.Id == id)
                 .Include(note => note.Round)
+                .ThenInclude(r => r!.Server)
                 .Include(note => note.CreatedBy)
                 .Include(note => note.LastEditedBy)
                 .Include(note => note.DeletedBy)
@@ -1038,6 +1039,7 @@ namespace Content.Server.Database
             return await db.DbContext.AdminWatchlists
                 .Where(note => note.Id == id)
                 .Include(note => note.Round)
+                .ThenInclude(r => r!.Server)
                 .Include(note => note.CreatedBy)
                 .Include(note => note.LastEditedBy)
                 .Include(note => note.DeletedBy)
@@ -1051,6 +1053,7 @@ namespace Content.Server.Database
             return await db.DbContext.AdminMessages
                 .Where(note => note.Id == id)
                 .Include(note => note.Round)
+                .ThenInclude(r => r!.Server)
                 .Include(note => note.CreatedBy)
                 .Include(note => note.LastEditedBy)
                 .Include(note => note.DeletedBy)
@@ -1065,6 +1068,7 @@ namespace Content.Server.Database
             var ban = await db.DbContext.Ban
                 .Include(ban => ban.Unban)
                 .Include(ban => ban.Round)
+                .ThenInclude(r => r!.Server)
                 .Include(ban => ban.CreatedBy)
                 .Include(ban => ban.LastEditedBy)
                 .Include(ban => ban.Unban)
@@ -1107,17 +1111,18 @@ namespace Content.Server.Database
                 unbanningAdmin, ban.Unban?.UnbanTime);
         }
 
-public async Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
+        public async Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
         {
             await using var db = await GetDb();
             List<IAdminRemarksCommon> notes = new();
             notes.AddRange(
                 await (from note in db.DbContext.AdminNotes
-                    where note.PlayerUserId == player &&
-                          !note.Deleted &&
-                          (note.ExpirationTime == null || DateTime.UtcNow < note.ExpirationTime)
-                    select note)
+                       where note.PlayerUserId == player &&
+                             !note.Deleted &&
+                             (note.ExpirationTime == null || DateTime.UtcNow < note.ExpirationTime)
+                       select note)
                 .Include(note => note.Round)
+                .ThenInclude(r => r!.Server)
                 .Include(note => note.CreatedBy)
                 .Include(note => note.LastEditedBy)
                 .Include(note => note.Player)
@@ -1240,12 +1245,13 @@ public async Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
             List<IAdminRemarksCommon> notesCol = new();
             notesCol.AddRange(
                 await (from note in db.DbContext.AdminNotes
-                    where note.PlayerUserId == player &&
-                          !note.Secret &&
-                          !note.Deleted &&
-                          (note.ExpirationTime == null || DateTime.UtcNow < note.ExpirationTime)
-                    select note)
+                       where note.PlayerUserId == player &&
+                             !note.Secret &&
+                             !note.Deleted &&
+                             (note.ExpirationTime == null || DateTime.UtcNow < note.ExpirationTime)
+                       select note)
                 .Include(note => note.Round)
+                .ThenInclude(r => r!.Server)
                 .Include(note => note.CreatedBy)
                 .Include(note => note.Player)
                 .ToListAsync());
@@ -1262,11 +1268,12 @@ public async Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
         protected async Task<List<AdminWatchlist>> GetActiveWatchlistsImpl(DbGuard db, Guid player)
         {
             return await (from watchlist in db.DbContext.AdminWatchlists
-                    where watchlist.PlayerUserId == player &&
-                          !watchlist.Deleted &&
-                          (watchlist.ExpirationTime == null || DateTime.UtcNow < watchlist.ExpirationTime)
-                    select watchlist)
+                          where watchlist.PlayerUserId == player &&
+                                !watchlist.Deleted &&
+                                (watchlist.ExpirationTime == null || DateTime.UtcNow < watchlist.ExpirationTime)
+                          select watchlist)
                 .Include(note => note.Round)
+                .ThenInclude(r => r!.Server)
                 .Include(note => note.CreatedBy)
                 .Include(note => note.LastEditedBy)
                 .Include(note => note.Player)
@@ -1282,11 +1289,12 @@ public async Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
         protected async Task<List<AdminMessage>> GetMessagesImpl(DbGuard db, Guid player)
         {
             return await (from message in db.DbContext.AdminMessages
-                    where message.PlayerUserId == player &&
-                          !message.Deleted &&
-                          (message.ExpirationTime == null || DateTime.UtcNow < message.ExpirationTime)
-                    select message)
+                          where message.PlayerUserId == player &&
+                                !message.Deleted &&
+                                (message.ExpirationTime == null || DateTime.UtcNow < message.ExpirationTime)
+                          select message)
                 .Include(note => note.Round)
+                .ThenInclude(r => r!.Server)
                 .Include(note => note.CreatedBy)
                 .Include(note => note.LastEditedBy)
                 .Include(note => note.Player)
@@ -1307,14 +1315,15 @@ public async Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
             return await (from ban in db.DbContext.Ban
                         .Include(ban => ban.Unban)
                         .Include(ban => ban.Round)
+                        .ThenInclude(r => r!.Server)
                         .Include(ban => ban.CreatedBy)
                         .Include(ban => ban.LastEditedBy)
                         .Include(ban => ban.Unban)
-                    where ban.PlayerUserId == user &&
-                          !ban.Hidden
-                    from player in db.DbContext.Player
-                    where player.UserId == user
-                    select new { ban, player })
+                          where ban.PlayerUserId == user &&
+                                !ban.Hidden
+                          from player in db.DbContext.Player
+                          where player.UserId == user
+                          select new { ban, player })
                 .ToAsyncEnumerable()
                 .SelectAwait(async o =>
                     new ServerBanNote(o.ban.Id, o.ban.RoundId, o.ban.Round, o.ban.PlayerUserId, o.player,
@@ -1331,13 +1340,14 @@ public async Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
         protected async Task<List<ServerRoleBanNote>> GetGroupedServerRoleBansAsNotesForUser(DbGuard db, Guid user)
         {
             // Server side query
-            var bansQuery = 
+            var bansQuery =
                 (from ban in db.DbContext.RoleBan
-                    where ban.PlayerUserId == user &&
-                          !ban.Hidden
-                    select ban)
+                 where ban.PlayerUserId == user &&
+                       !ban.Hidden
+                 select ban)
                 .Include(ban => ban.Unban)
                 .Include(ban => ban.Round)
+                .ThenInclude(r => r!.Server)
                 .Include(ban => ban.CreatedBy)
                 .Include(ban => ban.LastEditedBy)
                 .Include(ban => ban.Unban)
@@ -1346,20 +1356,20 @@ public async Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
             // Client side query, as EF can't do groups yet
             var bansEnumerable =
                 (from ban in bansQuery
-                    group ban by new
-                    {
-                        ban.BanTime,
-                        ban.CreatedBy,
-                        ban.Reason,
-                        Unbanned = ban.Unban == null
-                    }
+                 group ban by new
+                 {
+                     ban.BanTime,
+                     ban.CreatedBy,
+                     ban.Reason,
+                     Unbanned = ban.Unban == null
+                 }
                     into banGroup
-                    select banGroup)
+                 select banGroup)
                 .AsAsyncEnumerable();
 
             List<ServerRoleBanNote> bans = new();
             var player = await db.DbContext.Player.SingleOrDefaultAsync(p => p.UserId == user);
-            await foreach(var banGroup in bansEnumerable)
+            await foreach (var banGroup in bansEnumerable)
             {
                 var firstBan = await banGroup.FirstAsync();
                 Player? unbanningAdmin = null;
