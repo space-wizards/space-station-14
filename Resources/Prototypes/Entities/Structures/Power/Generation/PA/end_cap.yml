@@ -22,6 +22,8 @@
   suffix: Unfinished
   description: Formally known as the Alpha Particle Generation Array. This is where Alpha particles are generated from [REDACTED]. It looks unfinished.
   components:
+    - type: Physics
+      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/end_cap.rsi
     - type: Construction

@@ -45,6 +45,8 @@
   suffix: Unfinished
   description: This controls the density of the particles. It looks unfinished.
   components:
+    - type: Physics
+      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/control_box.rsi
     - type: Construction
