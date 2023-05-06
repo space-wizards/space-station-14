@@ -47,9 +47,13 @@ public static class AdminNotesExtensions
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), note.GetType(), "Unknown note type");
         }
+
+        // There may be bans without a user, but why would we ever be converting them to shared notes?
+        if (note.PlayerUserId is null)
+            throw new ArgumentNullException(nameof(note.PlayerUserId), "Player user ID cannot be null for a note");
         return new SharedAdminNote(
             note.Id,
-            note.PlayerUserId!.Value, // There may be bans without a user, but why would we ever be converting them to shared notes?
+            note.PlayerUserId.Value,
             note.RoundId,
             note.Round?.Server.Name,
             note.PlaytimeAtNote,
