@@ -1,10 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: 'Changed meat kudzu spread by half, but it deals additional piercing
-      damage.', type: Tweak}
-  id: 3165
-  time: '2023-03-12T23:45:01.0000000+00:00'
 - author: GoodWheatley
   changes:
   - {message: 'A recently discovered security vulnerability in Nanotrasen radio frequencies
@@ -2899,3 +2893,8 @@ Entries:
   - {message: Added 30 new books., type: Add}
   id: 3664
   time: '2023-05-06T02:10:10.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: A minor update to rules., type: Tweak}
+  id: 3665
+  time: '2023-05-06T02:11:44.0000000+00:00'
