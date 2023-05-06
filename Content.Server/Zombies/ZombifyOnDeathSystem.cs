@@ -107,6 +107,9 @@ namespace Content.Server.Zombies
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
 
+            //funny voice
+            EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
+
             //This is needed for stupid entities that fuck up combat mode component
             //in an attempt to make an entity not attack. This is the easiest way to do it.
             RemComp<CombatModeComponent>(target);

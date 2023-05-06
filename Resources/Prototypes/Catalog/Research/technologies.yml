@@ -373,6 +373,7 @@
   - AirAlarmElectronics
   - FireAlarmElectronics
   - MailingUnitElectronics
+  - SignalTimerElectronics
 
 - type: technology
   name: technologies-material-sheet-printing
