@@ -43,57 +43,25 @@ public sealed class PrototypeSaveTest
         // These should NOT be added to.
         // 99% of these are going to be changing the physics bodytype (where the entity is anchored)
         // or some ambientsound change.
-        "GasVentScrubber",
-        "GasPassiveVent",
-        "CableHV",
-        "ParticleAcceleratorFuelChamberUnfinished",
         "ComfyChair",
         "PlasticFlapsOpaque",
-        "ParticleAcceleratorEmitterRightUnfinished",
         "PlasticFlapsAirtightClear",
-        "SignalControlledValve",
-        "SignalControlledValve",
-        "GasPipeTJunction",
-        "GasFilter",
-        "GasOutletInjector",
-        "GasPressurePump",
         "SurveillanceWirelessCameraAnchoredEntertainment",
-        "GasPort",
         "Chair",
-        "GasMixer",
-        "ParticleAcceleratorPowerBoxUnfinished",
-        "GasValve",
         "Thruster",
         "BoxingBell",
-        "CableApcExtension",
         "PlasticFlapsClear",
         "ClothingBackpackChameleon",
         "AMEControllerUnanchored",
-        "GasPipeFourway",
         "NuclearBomb",
         "PlasticFlapsAirtightOpaque",
-        "ParticleAcceleratorControlBoxUnfinished",
-        "GasPipeHalf",
-        "GasVolumePump",
-        "ParticleAcceleratorEmitterLeftUnfinished",
-        "GasMixerFlipped",
         "ToiletDirtyWater",
-        "GasPipeBend",
-        "ParticleAcceleratorEndCapUnfinished",
-        "GasPipeStraight",
         "MachineFrameDestroyed",
         "ChairPilotSeat",
         "VehicleJanicartDestroyed",
         "Gyroscope",
-        "ParticleAcceleratorEmitterCenterUnfinished",
         "ToiletEmpty",
-        "GasPassiveGate",
-        "CableMV",
         "ClothingBackpackChameleonFill",
-        "GasDualPortVentPump",
-        "GasVentPump",
-        "PressureControlledValve",
-        "GasFilterFlipped",
         "SurveillanceWirelessCameraAnchoredConstructed",
 
     };
@@ -127,7 +95,7 @@ public sealed class PrototypeSaveTest
 
             grid = mapManager.CreateGrid(mapId);
 
-            var tileDefinition = tileDefinitionManager["UnderPlating"];
+            var tileDefinition = tileDefinitionManager["FloorSteel"]; // Wires n such disable ambiance while under the floor
             var tile = new Tile(tileDefinition.TileId);
             var coordinates = grid.ToCoordinates();
 
