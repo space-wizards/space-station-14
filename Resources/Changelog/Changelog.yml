@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: grille can now be built on all tiles and in space, type: Tweak}
-  id: 3161
-  time: '2023-03-12T20:46:44.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Reduced cost of bottles in the medical techfab. 200 glass to 50 glass.,
@@ -2898,3 +2893,8 @@ Entries:
   - {message: Handheld crew monitors and station maps now use battery charge, type: Fix}
   id: 3660
   time: '2023-05-05T17:52:40.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Lighters now consume less fuel when lighting them., type: Tweak}
+  id: 3661
+  time: '2023-05-06T01:03:14.0000000+00:00'
