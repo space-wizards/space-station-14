@@ -166,7 +166,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         return HasCharge(uid, battery.UseRate, cell, user);
     }
-    /// <summary>SharedAppearanceSystem
+    /// <summary>
     /// Tries to use the <see cref="PowerCellDrawComponent.UseRate"/> for this entity.
     /// </summary>
     /// <param name="user">Popup to this user with the relevant detail if specified.</param>
@@ -243,6 +243,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             return false;
         }
 
+        _sharedAppearanceSystem.SetData(uid, PowerCellSlotVisuals.Enabled, battery.Charge > 0);
         return true;
     }
 
