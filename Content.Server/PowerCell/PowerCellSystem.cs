@@ -16,6 +16,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Timing;
+using Content.Server.Emp;
 
 namespace Content.Server.PowerCell;
 
@@ -48,6 +49,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         // funny
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
         SubscribeLocalEvent<BatteryComponent, BeingMicrowavedEvent>(OnMicrowaved);
+        SubscribeLocalEvent<PowerCellSlotComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     public override void Update(float frameTime)
@@ -302,5 +304,14 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     {
         var charge = component.CurrentCharge / component.MaxCharge * 100;
         args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
+    }
+
+    private void OnEmpPulse(EntityUid uid, PowerCellSlotComponent component, ref EmpPulseEvent args)
+    {
+        if (TryGetBatteryFromSlot(uid, out var batteryUid, out var battery, component))
+        {
+            args.Affected = true;
+            _battery.UseCharge(batteryUid.Value, args.EnergyConsumption, battery);
+        }
     }
 }
