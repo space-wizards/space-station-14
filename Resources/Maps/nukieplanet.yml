@@ -11305,24 +11305,6 @@ entities:
     - pos: -15.435635,22.055351
       parent: 104
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.90000004,-0.90000004
-          - 0.90000004,0.90000004
-          - -0.90000004,0.90000004
-          - -0.90000004,-0.90000004
-        mask:
-        - Impassable
-        - HighImpassable
-        layer: []
-        density: 1
-        hard: True
-        restitution: 0.3
-        friction: 0.2
-        id: null
-      type: Fixtures
   - uid: 2315
     components:
     - pos: -1.5,-16.5

@@ -2863,46 +2863,7 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.45,-0.45
-          - 0.45,0.45
-          - -0.45,0.45
-          - -0.45,-0.45
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - MidImpassable
-        - LowImpassable
-        density: 60
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.4,0.5
-          - 0.1,1.2
-          - -0.1,1.2
-          - -0.4,0.5
-        mask: []
-        layer:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: thruster-burn
-      type: Fixtures
+
     - containers:
         machine_board: !type:Container
           showEnts: False
@@ -2928,46 +2889,7 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.45,-0.45
-          - 0.45,0.45
-          - -0.45,0.45
-          - -0.45,-0.45
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - MidImpassable
-        - LowImpassable
-        density: 60
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.4,0.5
-          - 0.1,1.2
-          - -0.1,1.2
-          - -0.4,0.5
-        mask: []
-        layer:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: thruster-burn
-      type: Fixtures
+
     - containers:
         machine_board: !type:Container
           showEnts: False
@@ -2993,46 +2915,7 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.45,-0.45
-          - 0.45,0.45
-          - -0.45,0.45
-          - -0.45,-0.45
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - MidImpassable
-        - LowImpassable
-        density: 60
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.4,0.5
-          - 0.1,1.2
-          - -0.1,1.2
-          - -0.4,0.5
-        mask: []
-        layer:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: thruster-burn
-      type: Fixtures
+
     - containers:
         machine_board: !type:Container
           showEnts: False
@@ -3058,46 +2941,7 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.45,-0.45
-          - 0.45,0.45
-          - -0.45,0.45
-          - -0.45,-0.45
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - MidImpassable
-        - LowImpassable
-        density: 60
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.4,0.5
-          - 0.1,1.2
-          - -0.1,1.2
-          - -0.4,0.5
-        mask: []
-        layer:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: thruster-burn
-      type: Fixtures
+
     - containers:
         machine_board: !type:Container
           showEnts: False
@@ -3123,46 +2967,7 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.45,-0.45
-          - 0.45,0.45
-          - -0.45,0.45
-          - -0.45,-0.45
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - MidImpassable
-        - LowImpassable
-        density: 60
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.4,0.5
-          - 0.1,1.2
-          - -0.1,1.2
-          - -0.4,0.5
-        mask: []
-        layer:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: thruster-burn
-      type: Fixtures
+
     - containers:
         machine_board: !type:Container
           showEnts: False
@@ -3188,46 +2993,7 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.45,-0.45
-          - 0.45,0.45
-          - -0.45,0.45
-          - -0.45,-0.45
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - MidImpassable
-        - LowImpassable
-        density: 60
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.4,0.5
-          - 0.1,1.2
-          - -0.1,1.2
-          - -0.4,0.5
-        mask: []
-        layer:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: thruster-burn
-      type: Fixtures
+
     - containers:
         machine_board: !type:Container
           showEnts: False
@@ -3252,46 +3018,7 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.45,-0.45
-          - 0.45,0.45
-          - -0.45,0.45
-          - -0.45,-0.45
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - MidImpassable
-        - LowImpassable
-        density: 60
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.4,0.5
-          - 0.1,1.2
-          - -0.1,1.2
-          - -0.4,0.5
-        mask: []
-        layer:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: thruster-burn
-      type: Fixtures
+
     - containers:
         machine_board: !type:Container
           showEnts: False
@@ -3316,46 +3043,7 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.45,-0.45
-          - 0.45,0.45
-          - -0.45,0.45
-          - -0.45,-0.45
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - MidImpassable
-        - LowImpassable
-        density: 60
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.4,0.5
-          - 0.1,1.2
-          - -0.1,1.2
-          - -0.4,0.5
-        mask: []
-        layer:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: thruster-burn
-      type: Fixtures
+
     - containers:
         machine_board: !type:Container
           showEnts: False
