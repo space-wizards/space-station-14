@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using System.Linq;
 using Content.Shared.Movement.Systems;
+using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
@@ -31,7 +32,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
     [Dependency] private readonly IStateManager _stateMan = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IBaseClient _client = default!;
 
     public override void Initialize()
     {
@@ -64,7 +65,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
     {
         if (Exists(observer.Entity) && Transform(observer.Entity).MapID != MapId.Nullspace)
         {
-            _player.LocalPlayer!.AttachEntity(observer.Entity);
+            _player.LocalPlayer!.AttachEntity(observer.Entity, EntityManager, _client);
             return;
         }
 
@@ -151,7 +152,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
             }),
 
             Text = "Observe",
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/vv.svg.192dpi.png"))
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/vv.svg.192dpi.png"))
         };
 
         ev.Verbs.Add(verb);
@@ -171,7 +172,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
             return;
         }
 
-        _player.LocalPlayer.AttachEntity(target);
+        _player.LocalPlayer.AttachEntity(target, EntityManager, _client);
         EnsureComp<ReplayObserverComponent>(target);
 
         if (old == null)
@@ -199,7 +200,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
         if (gridAttach)
             _transform.AttachToGridOrMap(ent);
 
-        _player.LocalPlayer.AttachEntity(ent);
+        _player.LocalPlayer.AttachEntity(ent, EntityManager, _client);
 
         if (old != null)
         {

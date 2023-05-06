@@ -30,7 +30,7 @@ public sealed class ReplayMainScreen : State
 
     private ReplayMainMenuControl _mainMenuControl = default!;
 
-    public static readonly ResourcePath DefaultReplayDirectory = new("/replays");
+    public static readonly ResPath DefaultReplayDirectory = new("/replays");
 
     private IWritableDirProvider? _directory;
 
@@ -71,7 +71,7 @@ public sealed class ReplayMainScreen : State
         if (_directory == null)
             return;
 
-        if (_mainMenuControl.ReplaySelect?.SelectedMetadata is not ResourcePath path)
+        if (_mainMenuControl.ReplaySelect?.SelectedMetadata is not ResPath path)
             return;
 
         var dir = _directory.OpenSubdirectory(path);
@@ -86,9 +86,9 @@ public sealed class ReplayMainScreen : State
 
         if (_directory != null)
         {
-            foreach (var file in _directory.DirectoryEntries(ResourcePath.Root))
+            foreach (var file in _directory.DirectoryEntries(ResPath.Root))
             {
-                var path = new ResourcePath(file).ToRootedPath();
+                var path = new ResPath(file).ToRootedPath();
                 if (!_directory.Exists(path / Manager.ReplayManager.YamlFilename))
                     continue;
 

@@ -44,7 +44,7 @@ public sealed partial class ReplayManager
         var metaData = LoadMetadata(directory);
 
         int i = 0;
-        var name = new ResourcePath("0.dat").ToRootedPath();
+        var name = new ResPath("0.dat").ToRootedPath();
         var intBuf = new byte[4];
         int uncompressedSize;
 
@@ -69,7 +69,7 @@ public sealed partial class ReplayManager
             }
 
             i++;
-            name = new ResourcePath($"{i}.dat").ToRootedPath();
+            name = new ResPath($"{i}.dat").ToRootedPath();
         }
 
         compressionContext.Dispose();
@@ -80,7 +80,7 @@ public sealed partial class ReplayManager
 
     private (HashSet<string> CVars, TimeSpan Duration, TimeSpan StartTime) LoadMetadata(IWritableDirProvider directory)
     {
-        using var file = directory.OpenRead(new ResourcePath(YamlFilename).ToRootedPath());
+        using var file = directory.OpenRead(new ResPath(YamlFilename).ToRootedPath());
         var data = (MappingDataNode) DataNodeParser.ParseYamlStream(new StreamReader(file)).First().Root!;
 
         var typeHash = Convert.FromHexString(((ValueDataNode) data["typeHash"]).Value);
@@ -96,19 +96,19 @@ public sealed partial class ReplayManager
             throw new Exception($"{nameof(IRobustSerializer)} hashes do not match. Loading replays using a bad replay-client version?");
         }
 
-        using var stringFile = directory.OpenRead(new ResourcePath("strings.dat").ToRootedPath());
+        using var stringFile = directory.OpenRead(new ResPath("strings.dat").ToRootedPath());
         var stringData = new byte[stringFile.Length];
         stringFile.Read(stringData);
         _serializer.SetStringSerializerPackage(stringHash, stringData);
 
-        using var cvarsFile = directory.OpenRead(new ResourcePath("cvars.toml").ToRootedPath());
+        using var cvarsFile = directory.OpenRead(new ResPath("cvars.toml").ToRootedPath());
         // Note, this does not invoke the received-initial-cvars event. But at least currently, that doesn't matter
         var cvars = _netConf.LoadFromTomlStream(cvarsFile);
 
         _timing.CurTick = new GameTick(uint.Parse(startTick));
         _timing.TimeBase = (new TimeSpan(long.Parse(timeBaseTimespan)), new GameTick(uint.Parse(timeBaseTick)));
 
-        var initFile = new ResourcePath("init_messages.dat").ToRootedPath();
+        var initFile = new ResPath("init_messages.dat").ToRootedPath();
         if (directory.Exists(initFile))
         {
             using var initMessageFile = directory.OpenRead(initFile);
