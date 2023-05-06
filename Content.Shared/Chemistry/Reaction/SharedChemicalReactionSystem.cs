@@ -174,9 +174,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private Solution PerformReaction(Solution solution, EntityUid owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
-            // We do this so that ReagentEffect can have something to work with, even if it's
-            // a little meaningless.
-            var randomReagent = _prototypeManager.Index<ReagentPrototype>(_random.Pick(reaction.Reactants).Key);
+            var energy = solution.GetThermalEnergy(_prototypeManager);
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
             {
@@ -194,8 +192,11 @@ namespace Content.Shared.Chemistry.Reaction
                 products.AddReagent(product.Key, product.Value * unitReactions);
             }
 
-            // Trigger reaction effects
-            OnReaction(solution, reaction, randomReagent, owner, unitReactions);
+            var newCap = solution.GetHeatCapacity(_prototypeManager);
+            if (newCap > 0)
+                solution.Temperature = energy / newCap;
+
+            OnReaction(solution, reaction, null, owner, unitReactions);
 
             return products;
         }
