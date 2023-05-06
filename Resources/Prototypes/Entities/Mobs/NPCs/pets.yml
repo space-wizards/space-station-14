@@ -613,7 +613,9 @@
     baseSprintSpeed: 5
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Effects/Footsteps/slime2.ogg
+      path: /Audio/Effects/Footsteps/slime1.ogg
+      params:
+        volume: -6
   - type: Tag
     tags:
     - FootstepSound
