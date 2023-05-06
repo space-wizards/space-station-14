@@ -23,14 +23,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Sprite
     netsync: false
     noRot: true
@@ -163,23 +164,24 @@
   - type: Portal
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-    - id: portalFixture
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.48,0.25,0.48"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
-      hard: false
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
   - type: Anomaly
     pulseSound:
       collection: RadiationPulse

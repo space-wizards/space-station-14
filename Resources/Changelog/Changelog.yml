@@ -1,137 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: grille can now be built on all tiles and in space, type: Tweak}
-  id: 3161
-  time: '2023-03-12T20:46:44.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Reduced cost of bottles in the medical techfab. 200 glass to 50 glass.,
-    type: Tweak}
-  id: 3162
-  time: '2023-03-12T23:37:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: ID card console sorts jobs now., type: Tweak}
-  id: 3163
-  time: '2023-03-12T23:40:17.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: The blood red hardsuit sprite is no longer identical to that of the
-      syndicate commander's hardsuit., type: Tweak}
-  id: 3164
-  time: '2023-03-12T23:42:42.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: 'Changed meat kudzu spread by half, but it deals additional piercing
-      damage.', type: Tweak}
-  id: 3165
-  time: '2023-03-12T23:45:01.0000000+00:00'
-- author: GoodWheatley
-  changes:
-  - {message: 'A recently discovered security vulnerability in Nanotrasen radio frequencies
-      has been exploited by the Syndicate, allowing the Syndicate Encryption Key to
-      access all station radio channels.', type: Add}
-  id: 3166
-  time: '2023-03-13T00:48:34.0000000+00:00'
-- author: TaralGit
-  changes:
-  - {message: the handmade pistol is now a one shot firearm that uses shotgun shells
-      and has a more fitting sprite, type: Tweak}
-  id: 3167
-  time: '2023-03-13T00:52:57.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Slimeperson life support crate now can be ordered from cargo, type: Add}
-  id: 3168
-  time: '2023-03-13T01:04:27.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Engivend deny sprite no longer shakes., type: Fix}
-  id: 3169
-  time: '2023-03-13T02:22:52.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: Strip menu won't open when trying to wake sleeping players., type: Fix}
-  id: 3170
-  time: '2023-03-13T03:29:26.0000000+00:00'
-- author: Nylux
-  changes:
-  - {message: Dionas can now get drunk., type: Fix}
-  id: 3171
-  time: '2023-03-13T03:48:32.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Science lockers now come with both a node scanner *and* an anomaly scanner,
-    type: Add}
-  id: 3172
-  time: '2023-03-13T04:02:08.0000000+00:00'
-- author: furontier
-  changes:
-  - {message: Flashes can no longer affect blind players., type: Tweak}
-  id: 3173
-  time: '2023-03-13T04:03:51.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed security and HoS hardsuits lights from red to yellow., type: Tweak}
-  id: 3174
-  time: '2023-03-13T17:45:48.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: 'Added the warden''s hardsuit to the warden''s locker. Don''t abuse
-      it, wardens.', type: Add}
-  id: 3175
-  time: '2023-03-13T17:47:56.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Welding doors will now stop mice, rat kings and other mobs from running
-      under them.', type: Tweak}
-  id: 3176
-  time: '2023-03-13T19:26:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Makeshift handcuffs are now the correct color, green.', type: Fix}
-  id: 3177
-  time: '2023-03-13T23:39:06.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Changed the held sprites of almost every uniform to be more accurate.,
-    type: Tweak}
-  id: 3178
-  time: '2023-03-14T00:12:58.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed being able to emag machines by snipping the access wire., type: Fix}
-  id: 3179
-  time: '2023-03-14T02:55:19.0000000+00:00'
-- author: ficcialfaint
-  changes:
-  - {message: Station Records Computer now shows fingerprints, type: Add}
-  id: 3180
-  time: '2023-03-14T02:55:56.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Changed the sprite of frezon canisters., type: Tweak}
-  - {message: Fixed frezon canisters spawning with N2O in them., type: Fix}
-  id: 3181
-  time: '2023-03-14T03:42:07.0000000+00:00'
-- author: moony
-  changes:
-  - {message: The flashbang now darkens the screen instead of brightening it., type: Tweak}
-  id: 3182
-  time: '2023-03-14T05:37:22.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a deconstruction bug that could cause entities to get "stuck"
-      to other entities., type: Fix}
-  id: 3183
-  time: '2023-03-15T00:14:19.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: The syndicate encryption key no longer allows you to access every radio
-      channel., type: Remove}
-  id: 3184
-  time: '2023-03-15T00:38:00.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added the Lava Brig dungeon theme., type: Add}
@@ -2562,13 +2429,13 @@ Entries:
   time: '2023-05-01T19:20:06.0000000+00:00'
 - author: TaralGit
   changes:
-  - {message: bulletproof and reflective armor now have proper sprites, type: Fix}
+  - {message: Bulletproof and reflective armor now have proper sprites., type: Fix}
   id: 3605
   time: '2023-05-01T22:53:40.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed an issue where wires could sometimes not be cut or pulsed in high-sec
-      doors, type: Fix}
+      doors., type: Fix}
   id: 3606
   time: '2023-05-02T00:40:31.0000000+00:00'
 - author: Mumohan
@@ -2612,9 +2479,9 @@ Entries:
   time: '2023-05-02T10:14:56.0000000+00:00'
 - author: Slava0135
   changes:
-  - {message: round end zombie percentage is now calculated as = (infected humanoid
-      bodies) / (total humanoid bodies), type: Tweak}
-  - {message: round end zombie survivor list now shows more survivors, type: Tweak}
+  - {message: Round end zombie percentage is now calculated as = (infected humanoid
+      bodies) / (total humanoid bodies)., type: Tweak}
+  - {message: Round end zombie survivor list now shows more survivors., type: Tweak}
   id: 3613
   time: '2023-05-02T14:31:15.0000000+00:00'
 - author: metalgearsloth
@@ -2683,9 +2550,9 @@ Entries:
   time: '2023-05-03T05:21:21.0000000+00:00'
 - author: Slava0135
   changes:
-  - {message: fixed bomb suit explosion resistance values (50% for helmet and 80%
-      for suit - 90% in total - which is enough to survive minibomb explosion), type: Fix}
-  - {message: you can now examine explosion resistance of armor, type: Add}
+  - {message: Fixed bomb suit explosion resistance values (50% for helmet and 80%
+      for suit - 90% in total - which is enough to survive minibomb explosion)., type: Fix}
+  - {message: You can now examine explosion resistance of armor., type: Add}
   id: 3624
   time: '2023-05-03T05:23:08.0000000+00:00'
 - author: EmoGarbage404
@@ -2715,12 +2582,12 @@ Entries:
   time: '2023-05-03T17:01:55.0000000+00:00'
 - author: notquitehadouken
   changes:
-  - {message: The rot now consumes (dwarves), type: Fix}
+  - {message: The rot now consumes (dwarves)., type: Fix}
   id: 3629
   time: '2023-05-03T17:16:26.0000000+00:00'
 - author: themias
   changes:
-  - {message: Mimes with unbroken vows can no longer scream or laugh, type: Fix}
+  - {message: Mimes with unbroken vows can no longer scream or laugh., type: Fix}
   id: 3630
   time: '2023-05-03T17:24:00.0000000+00:00'
 - author: crazybrain
@@ -2817,13 +2684,13 @@ Entries:
   time: '2023-05-05T07:27:15.0000000+00:00'
 - author: Slava0135
   changes:
-  - {message: 'items with powercell slots now display charge (e.g. flashlights, handheld
+  - {message: 'Items with powercell slots now display charge (e.g. flashlights, handheld
       monitors and etc.)', type: Add}
   id: 3647
   time: '2023-05-05T12:44:22.0000000+00:00'
 - author: Slava0135
   changes:
-  - {message: fixed fire extinguisher not working, type: Fix}
+  - {message: Fixed fire extinguisher not working., type: Fix}
   id: 3648
   time: '2023-05-05T12:48:38.0000000+00:00'
 - author: deltanedas
@@ -2854,16 +2721,10 @@ Entries:
       use at your own risk. HONK!', type: Add}
   id: 3653
   time: '2023-05-05T13:21:13.0000000+00:00'
-- author: Vaaankas
-  changes:
-  - {message: Added fun!, type: Add}
-  - {message: Removed fun!, type: Remove}
-  id: 3654
-  time: '2023-05-05T13:37:14.0000000+00:00'
 - author: Ilushkins33
   changes:
   - {message: Stuttering during blood loss, type: Add}
-  id: 3655
+  id: 3654
   time: '2023-05-05T13:46:52.0000000+00:00'
 - author: moony
   changes:
@@ -2874,27 +2735,178 @@ Entries:
   - {message: 'The HoP has had additional accesses added to their card so they can
       continue to function as normal. This does NOT include head accesses, they can
       no longer grant access to captain''s office for example.', type: Tweak}
-  id: 3656
+  id: 3655
   time: '2023-05-05T13:56:54.0000000+00:00'
 - author: Slava0135
   changes:
-  - {message: its now possible to block doorways with shields, type: Tweak}
+  - {message: It's now possible to block doorways with shields., type: Tweak}
   - {message: 'doors won''t close if there are anchored entities inside (e.g. walls,
       vendomats, closets and etc...)', type: Tweak}
-  id: 3657
+  id: 3656
   time: '2023-05-05T15:14:33.0000000+00:00'
 - author: themias
   changes:
-  - {message: You can no longer puff empty vapes, type: Fix}
-  id: 3658
+  - {message: You can no longer puff empty vapes., type: Fix}
+  id: 3657
   time: '2023-05-05T17:48:48.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix suit sensors not being set for latejoins., type: Fix}
-  id: 3659
+  id: 3658
   time: '2023-05-05T17:51:58.0000000+00:00'
 - author: themias
   changes:
   - {message: Handheld crew monitors and station maps now use battery charge, type: Fix}
-  id: 3660
+  id: 3659
   time: '2023-05-05T17:52:40.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Lighters now consume less fuel when lighting them., type: Tweak}
+  id: 3660
+  time: '2023-05-06T01:03:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Some station events will no longer start instantly., type: Fix}
+  id: 3661
+  time: '2023-05-06T01:24:16.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: EMP now temporarily disables headsets/cameras/APCs and makes vendomats
+      throw items for 60 seconds., type: Add}
+  - {message: Broken bulbs are not affected by EMP., type: Fix}
+  id: 3662
+  time: '2023-05-06T01:38:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the spray nozzle and backpack water tank. In conjunction, you
+      can let off a never ending stream of water, space cleaner, or napalm.', type: Add}
+  - {message: Added advanced spray technology., type: Add}
+  id: 3663
+  time: '2023-05-06T01:50:09.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: Added 30 new books., type: Add}
+  id: 3664
+  time: '2023-05-06T02:10:10.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: A minor update to rules., type: Tweak}
+  id: 3665
+  time: '2023-05-06T02:11:44.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: added random book generation to bookshelves., type: Add}
+  - {message: added construction for bookshelves., type: Add}
+  - {message: 'Changed the bookshelf - now it can store books, paper, folders and
+      the rest of the bureaucracy.', type: Tweak}
+  id: 3666
+  time: '2023-05-06T02:20:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed zombies being able to speak., type: Fix}
+  id: 3667
+  time: '2023-05-06T04:18:56.0000000+00:00'
+- author: AsikKEsel
+  changes:
+  - {message: 'Added uranium glass and uranium window. Don''t worry, scientists reduce
+      radioactive emissions by 97.4% with RadAbsorb', type: Add}
+  id: 3668
+  time: '2023-05-06T04:47:19.0000000+00:00'
+- author: Arteben
+  changes:
+  - {message: Added additional indicators for the combat mode!, type: Add}
+  - {message: Changed the translation for the settings option!, type: Tweak}
+  id: 3669
+  time: '2023-05-06T05:06:42.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: Meat Kudzu (from anomoly) takes heat damage. Try unleashing a plasma
+      canister near it, type: Tweak}
+  - {message: 'Meat Kudzu spreads slightly more slowly, takes visible damage, has
+      growth prevented by damage.', type: Tweak}
+  id: 3670
+  time: '2023-05-06T05:08:51.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Fixed firelocks not lighting up when blocking fire, space, or pressure.',
+    type: Fix}
+  id: 3671
+  time: '2023-05-06T05:54:36.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Wet floor holosign lifetime increased from 30 to 90 seconds, type: Tweak}
+  id: 3672
+  time: '2023-05-06T06:44:38.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: Uranium sheets is now edible., type: Add}
+  id: 3673
+  time: '2023-05-06T07:23:05.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Cigarette pack and matchbox sizes were downed to 5, type: Tweak}
+  - {message: Matchbox inventory size was adjusted, type: Tweak}
+  id: 3674
+  time: '2023-05-06T07:27:50.0000000+00:00'
+- author: Fireheart
+  changes:
+  - {message: 'Improved paperwork interface, enabling fillable forms to be created
+      and sealed with a stamp.', type: Tweak}
+  id: 3675
+  time: '2023-05-06T07:35:22.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Added several soup recipes, type: Add}
+  - {message: Added soup flavors, type: Add}
+  id: 3676
+  time: '2023-05-06T07:36:34.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Saltern has been refitted with the latest and greatest, it is now back
+      in rotation.', type: Add}
+  - {message: Omega has been derotated due to excessive wear and tear., type: Remove}
+  id: 3677
+  time: '2023-05-06T07:41:24.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added 5 new bread loaves, type: Add}
+  - {message: Added a recipe for all bread loaves, type: Add}
+  - {message: Changed all bread sprites, type: Tweak}
+  id: 3678
+  time: '2023-05-06T07:41:32.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added 3 new burgers and made 8 unused burgers craftable., type: Add}
+  - {message: Cargo can now purchase a crate of crabs., type: Add}
+  id: 3679
+  time: '2023-05-06T07:43:09.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: You can open and close firelock doors like airlock doors if they are
+      safe. You still need a crowbar for unsafe doors., type: Add}
+  id: 3680
+  time: '2023-05-06T10:21:26.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: hot potato now deals damage while you are holding it, type: Add}
+  id: 3681
+  time: '2023-05-06T10:30:16.0000000+00:00'
+- author: ar4ill
+  changes:
+  - {message: 'Added roboticist jumpsuit, jumpskirt and labcoat. They''re available
+      in RoboDrobe.', type: Add}
+  - {message: Robotics wardrobe is now filled., type: Tweak}
+  id: 3682
+  time: '2023-05-06T10:38:47.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'After several complaints, the blueprint for the biomass reclaimer has
+      been streamlined.', type: Tweak}
+  id: 3683
+  time: '2023-05-06T10:57:34.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Added construction for signal timer, screen timer and brig timer.',
+    type: Add}
+  id: 3684
+  time: '2023-05-06T11:15:07.0000000+00:00'
