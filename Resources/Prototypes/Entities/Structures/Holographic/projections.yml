@@ -15,7 +15,7 @@
     state: icon
     netsync: false
   - type: TimedDespawn
-    lifetime: 30
+    lifetime: 90
 
 - type: entity
   id: HoloFan
