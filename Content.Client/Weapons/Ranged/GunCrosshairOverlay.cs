@@ -32,10 +32,10 @@ public sealed class GunCrosshairOverlay : Overlay
     private readonly Texture _crosshair;
     private readonly Texture _crosshairMarked;
 
-    private float _unavailableSignSize = 24f;
+    private float _unavailableSignSize = 22f;
     private float _maxRange = 20f;
 
-    public float MainScale = 1f;
+    public float MainScale = 0.7f;
 
     public GunCrosshairOverlay(IEntityManager entManager, IEyeManager eyeManager, IInputManager input,
         IPlayerManager player, IPrototypeManager prototypes, SharedPhysicsSystem physics, GunSystem system)
@@ -175,7 +175,7 @@ public sealed class GunCrosshairOverlay : Overlay
         float circleRadius = 2f * scale;
 
         screen.DrawCircle(hitPos, (circleRadius + 0.5f), Color.Black);
-        screen.DrawCircle(hitPos, circleRadius, Color.Red);
+        screen.DrawCircle(hitPos, circleRadius, Color.Red.WithAlpha(0.5f));
     }
 
     private void DrawCrosshair(DrawingHandleScreen screen, Vector2 circlePos,
@@ -185,13 +185,12 @@ public sealed class GunCrosshairOverlay : Overlay
         {
             CrosshairType.Unavailable => Color.Red.WithAlpha(0.3f),
             CrosshairType.InTarget => Color.GreenYellow,
-            _ => Color.PaleGreen,
+            _ => Color.Green,
         };
 
         if (type == CrosshairType.Unavailable)
         {
             var radius = _unavailableSignSize * scale;
-            screen.DrawCircle(circlePos, radius + 1, Color.Black, false);
             screen.DrawCircle(circlePos, radius, color);
         }
         else
@@ -201,8 +200,6 @@ public sealed class GunCrosshairOverlay : Overlay
                 ? _crosshairMarked
                 : _crosshair;
 
-            screen.DrawTextureRect(crosshair,
-                GetBoxForTexture(crosshair, circlePos, scale, 4), Color.Black);
             screen.DrawTextureRect(crosshair,
                 GetBoxForTexture(crosshair, circlePos, scale), color);
         }
