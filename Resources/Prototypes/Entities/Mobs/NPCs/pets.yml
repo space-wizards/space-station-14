@@ -506,14 +506,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 130
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:

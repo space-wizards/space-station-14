@@ -57,14 +57,14 @@
   - type: Fixtures
     fixtures:
       fix1:
-	    hard: false
-	    shape:
-	      !type:PhysShapeAabb
-	      bounds: "-0.4,-0.4,0.4,0.4"
-	    mask:
-	    - ItemMask
-	    layer:
-	    - SlipLayer
+        hard: false
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
   - type: Smoke
   - type: NodeContainer
     nodes:
