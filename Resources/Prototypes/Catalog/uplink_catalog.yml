@@ -407,6 +407,11 @@
     Telecrystal: 4
   categories:
   - UplinkImplants
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
 
 # Bundles
 
