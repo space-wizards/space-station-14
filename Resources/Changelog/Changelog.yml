@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Puddles now use water footsteps., type: Tweak}
-  id: 3186
-  time: '2023-03-15T01:34:38.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed weldable entities becoming stuck in an un-weldable state., type: Fix}
@@ -2910,3 +2905,9 @@ Entries:
   - {message: Changed size for additional combat mode indicators., type: Tweak}
   id: 3685
   time: '2023-05-06T16:07:55.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Nukies can no longer buy uplink implanters to access agent-only offers.,
+    type: Fix}
+  id: 3686
+  time: '2023-05-06T19:10:47.0000000+00:00'
