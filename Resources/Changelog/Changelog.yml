@@ -1,10 +1,4 @@
 Entries:
-- author: TaralGit
-  changes:
-  - {message: the handmade pistol is now a one shot firearm that uses shotgun shells
-      and has a more fitting sprite, type: Tweak}
-  id: 3167
-  time: '2023-03-13T00:52:57.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Slimeperson life support crate now can be ordered from cargo, type: Add}
@@ -2899,3 +2893,8 @@ Entries:
       the rest of the bureaucracy.', type: Tweak}
   id: 3666
   time: '2023-05-06T02:20:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed zombies being able to speak., type: Fix}
+  id: 3667
+  time: '2023-05-06T04:18:56.0000000+00:00'
