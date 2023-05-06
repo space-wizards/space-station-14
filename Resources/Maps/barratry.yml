@@ -12289,7 +12289,7 @@ entities:
         hard: True
         restitution: 0
         friction: 0.4
-        id: nul      - shape: !type:PhysShapeCircle
+      - shape: !type:PhysShapeCircle
           radius: 0.2
           position: 0,-0.5
         mask: []
