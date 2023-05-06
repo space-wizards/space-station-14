@@ -47,6 +47,14 @@
      Plastic: 50
 
 - type: latheRecipe
+  id: SignalTimerElectronics
+  result: SignalTimerElectronics
+  completetime: 2
+  materials:
+     Steel: 50
+     Plastic: 50
+
+- type: latheRecipe
   id: CloningPodMachineCircuitboard
   result: CloningPodMachineCircuitboard
   completetime: 4

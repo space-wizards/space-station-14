@@ -680,6 +680,15 @@
   id: Taser
 
 - type: Tag
+  id: TimerBrigElectronics
+
+- type: Tag
+  id: TimerScreenElectronics
+
+- type: Tag
+  id: TimerSignalElectronics
+
+- type: Tag
   id: Trash
 
 - type: Tag
