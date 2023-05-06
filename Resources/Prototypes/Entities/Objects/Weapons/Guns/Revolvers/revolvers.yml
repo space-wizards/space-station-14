@@ -57,7 +57,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Gun
-    fireRate: 2.5
+    fireRate: 2
   - type: RevolverAmmoProvider
     capacity: 5
     chambers: [ True, True, True, True, True ]
