@@ -17,9 +17,9 @@ public sealed class DamageOnHoldingSystem : EntitySystem
         SubscribeLocalEvent<DamageOnHoldingComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
-    public void SetEnabled(EntityUid uid, bool enabled)
+    public void SetEnabled(EntityUid uid, bool enabled, DamageOnHoldingComponent? component = null)
     {
-        if (TryComp<DamageOnHoldingComponent>(uid, out var component))
+        if (Resolve(uid, ref component))
             component.Enabled = enabled;
     }
 
