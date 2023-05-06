@@ -99,8 +99,6 @@
     fireRate: 2
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
-  - type: StaticPrice
-    price: 2000
 
 - type: entity
   name: Python
