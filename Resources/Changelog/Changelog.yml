@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Slimeperson life support crate now can be ordered from cargo, type: Add}
-  id: 3168
-  time: '2023-03-13T01:04:27.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Engivend deny sprite no longer shakes., type: Fix}
@@ -2898,3 +2893,9 @@ Entries:
   - {message: Fixed zombies being able to speak., type: Fix}
   id: 3667
   time: '2023-05-06T04:18:56.0000000+00:00'
+- author: AsikKEsel
+  changes:
+  - {message: 'Added uranium glass and uranium window. Don''t worry, scientists reduce
+      radioactive emissions by 97.4% with RadAbsorb', type: Add}
+  id: 3668
+  time: '2023-05-06T04:47:19.0000000+00:00'
