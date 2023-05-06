@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Welding doors will now stop mice, rat kings and other mobs from running
-      under them.', type: Tweak}
-  id: 3176
-  time: '2023-03-13T19:26:21.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Makeshift handcuffs are now the correct color, green.', type: Fix}
@@ -2904,3 +2898,9 @@ Entries:
       and sealed with a stamp.', type: Tweak}
   id: 3675
   time: '2023-05-06T07:35:22.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Added several soup recipes, type: Add}
+  - {message: Added soup flavors, type: Add}
+  id: 3676
+  time: '2023-05-06T07:36:34.0000000+00:00'
