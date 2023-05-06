@@ -42,12 +42,11 @@
     jumpsuit: ClothingUniformJumpsuitColorBlack
     # belt holds katana so satchel has the tools for sabotaging things
     back: ClothingBackpackSatchelTools
-    mask: ClothingMaskGasSyndicate
+    mask: ClothingMaskGasNinja
     head: ClothingHeadHelmetSpaceNinja
-    # TODO: space ninja mask
-    eyes: ClothingEyesGlassesMeson
+    eyes: ClothingEyesVisorNinja
     gloves: ClothingHandsGlovesSpaceNinja
-    outerClothing: ClothingOuterSuitSpaceninja
+    outerClothing: ClothingOuterSuitSpaceNinja
     shoes: ClothingShoesSpaceNinja
     id: AgentIDCard
     ears: ClothingHeadsetGrey

@@ -355,3 +355,15 @@
   - type: Clothing
     sprite: Clothing/Mask/bat.rsi
   - type: BreathMask
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskNinja
+  name: ninja mask
+  description: A close-fitting nano-enhanced mask that acts both as an air filter and a post-modern fashion statement.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/ninja.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/ninja.rsi
+  - type: EyeProtection

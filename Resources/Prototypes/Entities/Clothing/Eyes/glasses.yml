@@ -144,3 +144,15 @@
       coefficients:
         Heat: 0.95
   - type: GroupExamine
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesVisorNinja
+  name: ninja visor
+  description: TODO
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
+  - type: FlashImmunity
