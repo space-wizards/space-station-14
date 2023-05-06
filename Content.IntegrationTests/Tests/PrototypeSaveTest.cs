@@ -38,23 +38,6 @@ public sealed class PrototypeSaveTest
     {
         "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
         "constructionghost",
-
-        // These ones are from the serialization change to alwayswrite.
-        // These should NOT be added to.
-        // 99% of these are going to be changing the physics bodytype (where the entity is anchored)
-        // or some ambientsound change.
-        "BoxingBell",
-        "ClothingBackpackChameleon",
-        "ClothingBackpackChameleonFill",
-        "AMEControllerUnanchored",
-        "NuclearBomb",
-        "MachineFrameDestroyed",
-        "VehicleJanicartDestroyed",
-        "Gyroscope",
-        "Thruster",
-        "SurveillanceWirelessCameraAnchoredEntertainment",
-        "SurveillanceWirelessCameraAnchoredConstructed",
-
     };
 
     [Test]
