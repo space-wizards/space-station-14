@@ -1,9 +1,4 @@
 Entries:
-- author: Nylux
-  changes:
-  - {message: Dionas can now get drunk., type: Fix}
-  id: 3171
-  time: '2023-03-13T03:48:32.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Science lockers now come with both a node scanner *and* an anomaly scanner,
@@ -2903,3 +2898,9 @@ Entries:
       growth prevented by damage.', type: Tweak}
   id: 3670
   time: '2023-05-06T05:08:51.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Fixed firelocks not lighting up when blocking fire, space, or pressure.',
+    type: Fix}
+  id: 3671
+  time: '2023-05-06T05:54:36.0000000+00:00'
