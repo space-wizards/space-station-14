@@ -13,7 +13,7 @@
       Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    capacity: 6
+    capacity: 5
     whitelist:
       tags:
       - Cigarette
