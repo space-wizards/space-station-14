@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Science lockers now come with both a node scanner *and* an anomaly scanner,
-    type: Add}
-  id: 3172
-  time: '2023-03-13T04:02:08.0000000+00:00'
 - author: furontier
   changes:
   - {message: Flashes can no longer affect blind players., type: Tweak}
@@ -2904,3 +2898,8 @@ Entries:
     type: Fix}
   id: 3671
   time: '2023-05-06T05:54:36.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Wet floor holosign lifetime increased from 30 to 90 seconds, type: Tweak}
+  id: 3672
+  time: '2023-05-06T06:44:38.0000000+00:00'
