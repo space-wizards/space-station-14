@@ -134,6 +134,14 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_interactionSystem.InRangeUnobstructed(user, target, MaxFeedDistance, popup: true))
                 return (false, true);
 
+            // TODO make do-afters account for fixtures in the range check.
+            if (!Transform(user).MapPosition.InRange(Transform(target).MapPosition, MaxFeedDistance))
+            {
+                var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
+                _popupSystem.PopupEntity(message, user, user);
+                return (false, true);
+            }
+
             if (!TryGetRequiredUtensils(user, foodComp, out _))
                 return (false, true);
 
