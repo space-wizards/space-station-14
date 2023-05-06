@@ -28,8 +28,7 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
     - id: Empty
       type: BecomesStation
     - type: OccluderTree

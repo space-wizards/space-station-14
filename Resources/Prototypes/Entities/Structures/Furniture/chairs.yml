@@ -12,12 +12,13 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 100
-      mask:
-      - TableMask
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - TableMask
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
     noRot: true

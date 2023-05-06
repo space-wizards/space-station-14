@@ -25,11 +25,12 @@ namespace Content.IntegrationTests.Tests.Doors
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-          bounds: ""-0.49,-0.49,0.49,0.49""
-      layer:
-      - Impassable
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+            bounds: ""-0.49,-0.49,0.49,0.49""
+        layer:
+        - Impassable
 
 - type: entity
   name: AirlockDummy
@@ -43,11 +44,12 @@ namespace Content.IntegrationTests.Tests.Doors
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: ""-0.49,-0.49,0.49,0.49""
-      mask:
-      - Impassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: ""-0.49,-0.49,0.49,0.49""
+        mask:
+        - Impassable
 ";
         [Test]
         public async Task OpenCloseDestroyTest()

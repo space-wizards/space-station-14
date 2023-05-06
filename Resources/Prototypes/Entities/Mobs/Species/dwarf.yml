@@ -27,16 +27,17 @@
     requiredLegs: 2
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      # they r smaller
-      density: 120
-      restitution: 0.0
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        # they r smaller
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Vocal
     sounds:
       Male: UnisexDwarf
