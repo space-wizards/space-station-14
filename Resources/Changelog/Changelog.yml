@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: The flashbang now darkens the screen instead of brightening it., type: Tweak}
-  id: 3182
-  time: '2023-03-14T05:37:22.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a deconstruction bug that could cause entities to get "stuck"
@@ -2908,3 +2903,10 @@ Entries:
   - {message: hot potato now deals damage while you are holding it, type: Add}
   id: 3681
   time: '2023-05-06T10:30:16.0000000+00:00'
+- author: ar4ill
+  changes:
+  - {message: 'Added roboticist jumpsuit, jumpskirt and labcoat. They''re available
+      in RoboDrobe.', type: Add}
+  - {message: Robotics wardrobe is now filled., type: Tweak}
+  id: 3682
+  time: '2023-05-06T10:38:47.0000000+00:00'
