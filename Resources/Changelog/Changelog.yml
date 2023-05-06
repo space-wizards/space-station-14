@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a deconstruction bug that could cause entities to get "stuck"
-      to other entities., type: Fix}
-  id: 3183
-  time: '2023-03-15T00:14:19.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: The syndicate encryption key no longer allows you to access every radio
@@ -2910,3 +2904,9 @@ Entries:
   - {message: Robotics wardrobe is now filled., type: Tweak}
   id: 3682
   time: '2023-05-06T10:38:47.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'After several complaints, the blueprint for the biomass reclaimer has
+      been streamlined.', type: Tweak}
+  id: 3683
+  time: '2023-05-06T10:57:34.0000000+00:00'
