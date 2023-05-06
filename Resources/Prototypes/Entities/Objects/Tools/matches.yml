@@ -73,7 +73,7 @@
     heldPrefix: matchbox
     size: 5
   - type: Storage
-    capacity: 6
+    capacity: 5
     whitelist:
       tags:
       - Matchstick
