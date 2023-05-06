@@ -83,8 +83,6 @@
   id: AMEControllerUnanchored
   suffix: Unanchored
   components:
-  - type: Transform
-    anchored: false
   - type: Physics
     bodyType: Dynamic
 

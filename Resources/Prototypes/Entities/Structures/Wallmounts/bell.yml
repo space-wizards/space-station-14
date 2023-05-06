@@ -30,7 +30,7 @@
     enabled: false
   - type: Physics
     canCollide: false
-    bodyType: Static
+    bodyType: Dynamic
   - type: Fixtures
   - type: Damageable
     damageContainer: Inorganic
