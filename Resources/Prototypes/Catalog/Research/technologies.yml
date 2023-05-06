@@ -626,17 +626,18 @@
   - NanoManipulatorStockPart
 
 - type: technology
-  name: technologies-magboots-technology
-  id: MagbootsTechnology
-  description: technologies-magboots-technology-description
+  name: technologies-engineering-equipment-technology
+  id: EngineeringEquipmentTechnology
+  description: technologies-engineering-equipment-technology-description
   icon:
-    sprite: Clothing/Shoes/Boots/magboots.rsi
+    sprite: Objects/Tools/welder_industrial.rsi
     state: icon
-  requiredPoints: 8500
+  requiredPoints: 12500
   requiredTechnologies:
     - ScientificTechnology
   unlockedRecipes:
     - ClothingShoesBootsMag
+    - WelderIndustrial
 
 - type: technology
   name: technologies-super-parts-technology

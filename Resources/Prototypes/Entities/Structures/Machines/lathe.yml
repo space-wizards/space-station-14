@@ -244,6 +244,7 @@
       - NodeScanner
       - HolofanProjector
       - Vape
+      - WelderIndustrial
 
 - type: entity
   parent: Protolathe
