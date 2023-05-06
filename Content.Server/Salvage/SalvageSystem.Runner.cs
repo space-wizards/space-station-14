@@ -126,18 +126,18 @@ public sealed partial class SalvageSystem
                 comp.Stage = ExpeditionStage.FinalCountdown;
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", TimeSpan.FromSeconds(30).Seconds)));
             }
+            else if (comp.Stage < ExpeditionStage.MusicCountdown && remaining < TimeSpan.FromMinutes(2))
+            {
+                // TODO: Some way to play audio attached to a map for players.
+               comp.Stream = _audio.PlayGlobal(comp.Sound,
+                    Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true);
+                comp.Stage = ExpeditionStage.MusicCountdown;
+                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
+            }
             else if (comp.Stage < ExpeditionStage.Countdown && remaining < TimeSpan.FromMinutes(5))
             {
                 comp.Stage = ExpeditionStage.Countdown;
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(5).Minutes)));
-            }
-            else if (comp.Stage < ExpeditionStage.MusicCountdown && remaining < TimeSpan.FromMinutes(2))
-            {
-                // TODO: Some way to play audio attached to a map for players.
-               comp.Stream = _audio.PlayGlobal(new SoundPathSpecifier("/Audio/Misc/salvage.ogg"),
-                    Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true, AudioParams.Default.WithVolume(-7));
-                comp.Stage = ExpeditionStage.MusicCountdown;
-                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
             }
             // Auto-FTL out any shuttles
             else if (remaining < TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime) + TimeSpan.FromSeconds(0.5))

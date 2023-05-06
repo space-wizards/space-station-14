@@ -616,13 +616,6 @@
     Cloth: 500
 
 - type: latheRecipe
-  id: ClothingOuterWinterMed
-  result: ClothingOuterWinterMed
-  completetime: 3.2
-  materials:
-    Cloth: 500
-
-- type: latheRecipe
   id: ClothingOuterWinterPara
   result: ClothingOuterWinterPara
   completetime: 3.2

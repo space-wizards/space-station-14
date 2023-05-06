@@ -38,14 +38,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.25,0.5"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Construction
     graph: Machine
     node: machine
@@ -82,9 +83,6 @@
   - type: Climbable
   - type: ApcPowerReceiver
     powerLoad: 200 #Receives most of its power from the console
-  - type: UpgradePowerDraw #upgrade it for the meme?
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
   - type: EmptyOnMachineDeconstruct
     containers:
     - scanner-bodyContainer
