@@ -46,7 +46,7 @@ namespace Content.Server.Construction
             //TODO VERBS add more construction verbs? Until then, removing construction category
             verb.Text = Loc.GetString("deconstructible-verb-begin-deconstruct");
             verb.Icon = new SpriteSpecifier.Texture(
-                new ResourcePath("/Textures/Interface/hammer_scaled.svg.192dpi.png"));
+                new ("/Textures/Interface/hammer_scaled.svg.192dpi.png"));
 
             verb.Act = () =>
             {

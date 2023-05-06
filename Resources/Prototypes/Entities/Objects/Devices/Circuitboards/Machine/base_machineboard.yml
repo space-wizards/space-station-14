@@ -14,3 +14,9 @@
         - DroneUsable
     - type: StaticPrice
       price: 100
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 400
+      chemicalComposition:
+        Silicon: 20
+

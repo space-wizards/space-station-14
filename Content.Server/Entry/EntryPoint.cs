@@ -45,6 +45,7 @@ namespace Content.Server.Entry
         private ServerUpdateManager _updateManager = default!;
         private PlayTimeTrackingManager? _playTimeTracking;
         private IEntitySystemManager? _sysMan;
+        private IServerDbManager? _dbManager;
 
         /// <inheritdoc />
         public override void Init()
@@ -94,13 +95,14 @@ namespace Content.Server.Entry
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
                 _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
                 _sysMan = IoCManager.Resolve<IEntitySystemManager>();
+                _dbManager = IoCManager.Resolve<IServerDbManager>();
 
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
                 IoCManager.Resolve<IAdminLogManager>().Initialize();
                 IoCManager.Resolve<IConnectionManager>().Initialize();
-                IoCManager.Resolve<IServerDbManager>().Init();
+                _dbManager.Init();
                 IoCManager.Resolve<IServerPreferencesManager>().Init();
                 IoCManager.Resolve<INodeGroupFactory>().Initialize();
                 IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
@@ -125,7 +127,7 @@ namespace Content.Server.Entry
             var dest = configManager.GetCVar(CCVars.DestinationFile);
             if (!string.IsNullOrEmpty(dest))
             {
-                var resPath = new ResourcePath(dest).ToRootedPath();
+                var resPath = new ResPath(dest).ToRootedPath();
                 var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
                 ChemistryJsonGenerator.PublishJson(file);
                 file.Flush();
@@ -173,6 +175,7 @@ namespace Content.Server.Entry
         {
             _playTimeTracking?.Shutdown();
             _sysMan?.GetEntitySystemOrNull<StationSystem>()?.OnServerDispose();
+            _dbManager?.Shutdown();
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)

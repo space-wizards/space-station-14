@@ -1,0 +1,116 @@
+﻿- type: constructionGraph
+  id: Honker
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: honker
+      steps:
+      - tool: Honking
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 1
+
+      - tag: HonkerCentralControlModule
+        name: H.O.N.K. central control module
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "mainboard"
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 2
+
+      - tool: Honking
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 3
+
+      - tag: HonkerPeripheralsControlModule
+        name: H.O.N.K. peripherals control module
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: id_mod
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 4
+
+      - tool: Honking
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 5
+
+      - tag: HonkerTargetingControlModule
+        name: H.O.N.K. weapon control and targeting module
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: id_mod
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 6
+
+      - tool: Honking
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 7
+
+#i omitted the steps involving inserting machine parts because
+#currently mechs don't support upgrading. add them back in once that's squared away.
+
+      - component: PowerCell
+        name: power cell
+        store: battery-container
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 8
+
+      - tool: Honking
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 9
+
+      - tag: ClownMask
+        icon:
+          sprite: "Clothing/Mask/clown.rsi"
+          state: "icon"
+        name: "a clown's mask"
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 10
+
+      - tag: ClownShoes
+        icon:
+          sprite: "Clothing/Shoes/Specific/clown.rsi"
+          state: "icon"
+        name: "a clown's shoes"
+        doAfter: 1
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 11
+
+      - tool: Honking
+        doAfter: 1
+
+  - node: honker
+    actions:
+    - !type:BuildMech
+      mechPrototype: MechHonker

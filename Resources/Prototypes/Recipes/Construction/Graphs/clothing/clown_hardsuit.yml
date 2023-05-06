@@ -1,0 +1,49 @@
+﻿- type: constructionGraph
+  id: ClownHardsuit
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: clownHardsuit
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: HardsuitEVA
+              name: EVA suit
+              icon:
+                sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
+                state: icon
+              doAfter: 1
+            - tag: HelmetEVA
+              name: EVA helmet
+              icon:
+                sprite: Clothing/Head/Helmets/eva.rsi
+                state: icon
+              doAfter: 1
+            - tag: CrayonPurple
+              name: purple crayon
+              icon:
+                sprite: Objects/Fun/crayons.rsi
+                state: purple
+              doAfter: 1
+            - tag: CrayonRed
+              name: red crayon
+              icon:
+                sprite: Objects/Fun/crayons.rsi
+                state: red
+              doAfter: 1
+            - tag: CrayonYellow
+              name: yellow crayon
+              icon:
+                sprite: Objects/Fun/crayons.rsi
+                state: yellow
+              doAfter: 1
+            - tag: ClownRecorder
+              name: clown recorder
+              icon:
+                sprite: Objects/Fun/clownrecorder.rsi
+                state: icon
+              doAfter: 1
+    - node: clownHardsuit
+      entity: ClothingOuterHardsuitClown

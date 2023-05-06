@@ -25,11 +25,10 @@ namespace Content.Server.AME
         [ViewVariables]
         private AMEControllerComponent? _masterController;
 
-        [Dependency] private readonly IRobustRandom _random = default!;
-
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
         [Dependency] private readonly IChatManager _chat = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public AMEControllerComponent? MasterController => _masterController;
 
@@ -41,7 +40,6 @@ namespace Content.Server.AME
         {
             base.LoadNodes(groupNodes);
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
             MapGridComponent? grid = null;
 
             foreach (var node in groupNodes)
@@ -50,7 +48,7 @@ namespace Content.Server.AME
                 if (_entMan.TryGetComponent(nodeOwner, out AMEShieldComponent? shield))
                 {
                     var xform = _entMan.GetComponent<TransformComponent>(nodeOwner);
-                    if (xform.GridUid != grid?.Owner && !mapManager.TryGetGrid(xform.GridUid, out grid))
+                    if (xform.GridUid != grid?.Owner && !_mapManager.TryGetGrid(xform.GridUid, out grid))
                         continue;
 
                     if (grid == null)

@@ -44,3 +44,23 @@
       - HolofanProjector
   - type: StaticPrice
     price: 80
+
+
+- type: entity
+  parent: Holoprojector
+  id: HoloprojectorSecurity
+  name: holobarrier projector
+  description: Creates a solid but fragile holographic barrier.
+  components:
+    - type: HolosignProjector
+      signProto: HolosignSecurity
+      chargeUse: 120
+    - type: Sprite
+      sprite: Objects/Devices/Holoprojectors/security.rsi
+      state: icon
+      netsync: false
+    - type: Tag
+      tags:
+        - HolofanProjector
+    - type: StaticPrice
+      price: 80

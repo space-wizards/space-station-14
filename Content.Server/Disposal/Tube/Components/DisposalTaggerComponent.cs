@@ -10,13 +10,9 @@ using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IDisposalTubeComponent))]
-    [ComponentReference(typeof(DisposalTubeComponent))]
     public sealed class DisposalTaggerComponent : DisposalTransitComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string ContainerId => "DisposalTagger";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("tag")]
@@ -30,12 +26,6 @@ namespace Content.Server.Disposal.Tube.Components
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
 
         [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
-
-        public override Direction NextDirection(DisposalHolderComponent holder)
-        {
-            holder.Tags.Add(Tag);
-            return base.NextDirection(holder);
-        }
 
         protected override void Initialize()
         {

@@ -456,7 +456,6 @@ namespace Content.Server.GameTicking
             // Clear up any game rules.
             ClearGameRules();
 
-            _addedGameRules.Clear();
             _allPreviousGameRules.Clear();
 
             // Round restart cleanup event, so entity systems can reset.

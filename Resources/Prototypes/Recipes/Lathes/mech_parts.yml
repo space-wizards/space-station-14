@@ -1,9 +1,10 @@
+# Ripley
 - type: latheRecipe
   id: RipleyHarness
   result: RipleyHarness
   completetime: 10
   materials:
-    Steel: 3000
+    Steel: 1500
     Glass: 1200
 
 - type: latheRecipe
@@ -11,32 +12,32 @@
   result: RipleyLArm
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
+    Steel: 1000
+    Glass: 750
 
 - type: latheRecipe
   id: RipleyLLeg
   result: RipleyLLeg
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
+    Steel: 1000
+    Glass: 750
 
 - type: latheRecipe
   id: RipleyRLeg
   result: RipleyRLeg
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
+    Steel: 1000
+    Glass: 750
 
 - type: latheRecipe
   id: RipleyRArm
   result: RipleyRArm
   completetime: 10
   materials:
-    Steel: 3000
-    Glass: 1200
+    Steel: 1000
+    Glass: 750
 
 - type: latheRecipe
   id: MechEquipmentGrabber
@@ -45,3 +46,57 @@
   materials:
     Steel: 500
     Plastic: 200
+
+# H.O.N.K.
+- type: latheRecipe
+  id: HonkerHarness
+  result: HonkerHarness
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerLArm
+  result: HonkerLArm
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerLLeg
+  result: HonkerLLeg
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerRLeg
+  result: HonkerRLeg
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerRArm
+  result: HonkerRArm
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: MechEquipmentHorn
+  result: MechEquipmentHorn
+  completetime: 10
+  materials:
+    Steel: 500
+    Bananium: 200

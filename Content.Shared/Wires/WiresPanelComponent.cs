@@ -11,7 +11,7 @@ public sealed class WiresPanelComponent : Component
     /// <summary>
     ///     Is the panel open for this entity's wires?
     /// </summary>
-    [ViewVariables]
+    [DataField("open")]
     public bool Open;
 
     /// <summary>
@@ -19,12 +19,6 @@ public sealed class WiresPanelComponent : Component
     /// </summary>
     [ViewVariables]
     public bool Visible = true;
-
-    /// <summary>
-    ///     Marks if maintenance panel being open/closed by someone with a screwdriver.
-    ///     Prevents do after spam.
-    /// </summary>
-    public bool IsScrewing;
 
     [DataField("screwdriverOpenSound")]
     public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");

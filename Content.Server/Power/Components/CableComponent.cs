@@ -26,7 +26,7 @@ namespace Content.Server.Power.Components
         public CableType CableType = CableType.HighVoltage;
 
         [DataField("cuttingDelay")]
-        public float CuttingDelay = 0.25f;
+        public float CuttingDelay = 1f;
     }
 
     public enum CableType

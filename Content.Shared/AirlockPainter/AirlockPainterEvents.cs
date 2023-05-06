@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.AirlockPainter
@@ -28,5 +29,23 @@ namespace Content.Shared.AirlockPainter
         {
             SelectedStyle = selectedStyle;
         }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class AirlockPainterDoAfterEvent : DoAfterEvent
+    {
+        [DataField("sprite", required: true)]
+        public readonly string Sprite = default!;
+
+        private AirlockPainterDoAfterEvent()
+        {
+        }
+
+        public AirlockPainterDoAfterEvent(string sprite)
+        {
+            Sprite = sprite;
+        }
+
+        public override DoAfterEvent Clone() => this;
     }
 }

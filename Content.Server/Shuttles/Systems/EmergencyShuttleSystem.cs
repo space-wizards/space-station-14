@@ -64,6 +64,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
    private bool _emergencyShuttleEnabled;
 
+   private const string DockTag = "DockEmergency";
+
    public override void Initialize()
    {
        _sawmill = Logger.GetSawmill("shuttle.emergency");
@@ -125,7 +127,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        if (targetGrid == null)
            return;
 
-       var config = _dock.GetDockingConfig(stationData.EmergencyShuttle.Value, targetGrid.Value);
+       var config = _dock.GetDockingConfig(stationData.EmergencyShuttle.Value, targetGrid.Value, DockTag);
        if (config == null)
            return;
 
@@ -162,7 +164,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
        var xformQuery = GetEntityQuery<TransformComponent>();
 
-       if (_shuttle.TryFTLDock(stationData.EmergencyShuttle.Value, shuttle, targetGrid.Value))
+       if (_shuttle.TryFTLDock(stationData.EmergencyShuttle.Value, shuttle, targetGrid.Value, DockTag))
        {
            if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
            {

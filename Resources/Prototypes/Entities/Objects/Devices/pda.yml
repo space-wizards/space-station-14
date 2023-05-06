@@ -239,19 +239,20 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      id: "slips"
-      hard: false
-      layer:
-      - SlipLayer
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      density: 5
-      mask:
-      - ItemMask
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        hard: false
+        layer:
+          - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 5
+        mask:
+        - ItemMask
 
 - type: entity
   parent: BasePDA
@@ -473,7 +474,26 @@
     scanDelay: 1.2
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
-
+      
+- type: entity
+  parent: BasePDA
+  id: ParamedicPDA
+  name: paramedic PDA
+  description: Shiny and sterile. Has a built-in rapid health analyzer.
+  components:
+  - type: PDA
+    id: ParamedicIDCard
+    state: pda-paramedic
+  - type: PDABorderColor
+    borderColor: "#d7d7d0"
+    accentVColor: "#2a4b5b"
+  - type: Icon
+    state: pda-paramedic
+  - type: HealthAnalyzer
+    scanDelay: 0.5
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+      
 - type: entity
   parent: BasePDA
   id: ChemistryPDA
@@ -553,14 +573,23 @@
     state: pda-security
 
 - type: entity
-  parent: PassengerPDA
+  parent: BasePDA
   id: CentcomPDA
   name: CentCom PDA
-  description: Colored the numbing grey of bureaucracy.
+  description: Light green sign of walking bureaucracy.
   components:
   - type: PDA
     id: CentcomIDCardSyndie
-    state: pda
+    state: pda-centcom
+    penSlot:
+      startingItem: PenCentcom
+      whitelist:
+        tags:
+        - Write
+  - type: PDABorderColor
+    borderColor: "#32CD32"
+  - type: Icon
+    state: pda-centcom
 
 - type: entity
   parent: BasePDA
@@ -708,6 +737,26 @@
     borderColor: "#774705"
   - type: Icon
     state: pda-detective
+
+- type: entity
+  parent: BasePDA
+  id: BrigmedicPDA
+  name: brigmedic PDA
+  description: I wonder whose pulse is on the screen? I hope he doesnt stop... PDA has a built-in health analyzer.
+  components:
+  - type: PDA
+    id: BrigmedicIDCard
+    state: pda-brigmedic
+  - type: PDABorderColor
+    borderColor: "#A32D26"
+    accentHColor: "#d7d7d0"
+    accentVColor: "#d7d7d0"
+  - type: Icon
+    state: pda-brigmedic
+  - type: HealthAnalyzer
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: ClownPDA
