@@ -172,7 +172,7 @@
     modifiers:
       coefficients:
         Slash: 0.9
-        Piercing: 0.9  
+        Piercing: 0.9
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -188,7 +188,7 @@
     modifiers:
       coefficients:
         Slash: 0.9
-        Piercing: 0.9  
+        Piercing: 0.9
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -320,6 +320,17 @@
     sprite: Clothing/Uniforms/Jumpskirt/scientist.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/scientist.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtRoboticist
+  name: roboticist jumpskirt
+  description: It's a slimming black with reinforced seams; great for industrial work.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/roboticist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/roboticist.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
