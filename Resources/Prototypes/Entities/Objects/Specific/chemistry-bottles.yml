@@ -101,15 +101,12 @@
   id: ChemistryEmptyBottle02
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-2
       - state: bottle-2-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
     fillBaseName: bottle-2-
 
 - type: entity
@@ -118,15 +115,12 @@
   id: ChemistryEmptyBottle03
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-3
       - state: bottle-3-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
     fillBaseName: bottle-3-
 
 - type: entity
@@ -135,15 +129,12 @@
   id: ChemistryEmptyBottle04
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-4
       - state: bottle-4-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
     fillBaseName: bottle-4-
 
 - type: entity
