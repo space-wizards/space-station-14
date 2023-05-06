@@ -49,11 +49,6 @@
     vital: true
   - type: Input
     context: "ghost"
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 0
-    baseSprintSpeed: 0
-  - type: InputMover
-  - type: GhostOnMove
   - type: Tag
     tags:
       - Head
@@ -137,9 +132,9 @@
   - type: BodyPart
     partType: Leg
     symmetry: Left
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2.7
-    baseSprintSpeed : 4.5
+  - type: MovementBodyPart
+    walkSpeed : 2.7
+    sprintSpeed : 4.5
 
 - type: entity
   id: RightLegReptilian
@@ -156,9 +151,9 @@
   - type: BodyPart
     partType: Leg
     symmetry: Right
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2.7
-    baseSprintSpeed : 4.5
+  - type: MovementBodyPart
+    walkSpeed : 2.7
+    sprintSpeed : 4.5
 
 - type: entity
   id: LeftFootReptilian

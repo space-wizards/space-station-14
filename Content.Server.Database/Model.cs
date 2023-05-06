@@ -459,6 +459,14 @@ namespace Content.Server.Database
         /// Ban is a datacenter range, connections usually imply usage of a VPN service.
         /// </summary>
         Datacenter = 1 << 0,
+
+        /// <summary>
+        /// Ban only matches the IP.
+        /// </summary>
+        /// <remarks>
+        /// Intended use is for users with shared connections. This should not be used as an alternative to <see cref="Datacenter"/>.
+        /// </remarks>
+        IP = 1 << 1,
         // @formatter:on
     }
 

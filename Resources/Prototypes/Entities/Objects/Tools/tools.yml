@@ -272,6 +272,9 @@
   description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
+  - type: LimitedCharges
+    maxCharges: 5
+    charges: 5
   - type: UseDelay
     delay: 1.0
   - type: Sprite
@@ -296,8 +299,19 @@
   parent: RCD
   suffix: Empty
   components:
-  - type: RCD
-    ammo: 0
+  - type: LimitedCharges
+    maxCharges: 5
+    charges: 0
+
+- type: entity
+  id: RCDExperimental
+  parent: RCD
+  suffix: Admeme
+  name: experimental rcd
+  description: A bluespace-enhanced RCD that regenerates charges passively.
+  components:
+  - type: AutoRecharge
+    rechargeDuration: 5
 
 - type: entity
   name: RCD Ammo

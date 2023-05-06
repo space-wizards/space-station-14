@@ -1,0 +1,256 @@
+﻿- type: entity
+  name: basic slime
+  id: MobAdultSlimes
+  parent: SimpleMobBase
+  abstract: true
+  description: It looks so much like jelly. I wonder what it tastes like?
+  components:
+  - type: Faction
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    sprite: Mobs/Aliens/slimes.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: blue_adult_slime
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 4
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Effects/Footsteps/slime1.ogg
+      params:
+        volume: 3
+  - type: Tag
+    tags:
+    - FootstepSound
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodMeatSlime
+      amount: 2
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+    maxSaturation: 15
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Slime
+  - type: Bloodstream
+    bloodReagent: Slime
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.45
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [ Water ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaled: true
+        damage:
+          types:
+            Heat: 3
+      - !type:PopupMessage
+        type: Local
+        messages: [ "slime-hurt-by-water-popup" ]
+        probability: 0.25
+  - type: CombatMode
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Weapons/punch3.ogg
+    angle: 0
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 6
+        Structural: 4
+        Caustic: 4
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-slimes
+    interactFailureString: petting-failure-generic
+  - type: ReplacementAccent
+    accent: slimes
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-slimes-name
+    description: ghost-role-information-slimes-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: blue slime
+  id: MobAdultSlimesBlue
+  parent: MobAdultSlimes
+  components:
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: blue_adult_slime
+      Dead:
+        Base: blue_adult_slime_dead
+  - type: GhostRole
+    makeSentient: true
+    description: ghost-role-information-slimes-description
+
+- type: entity
+  name: blue slime
+  parent: MobAdultSlimes
+  id: MobAdultSlimesBlueAngry
+  suffix: Angry
+  components:
+    - type: Faction
+      factions:
+        - SimpleHostile
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: blue_adult_slime
+        Dead:
+          Base: blue_adult_slime_dead
+
+- type: entity
+  name: green slime
+  parent: MobAdultSlimes
+  id: MobAdultSlimesGreen
+  components:
+    - type: Sprite
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: green_adult_slime
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: green_adult_slime
+        Dead:
+          Base: green_adult_slime_dead
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 6
+          Structural: 4
+          Caustic: 1
+          Poison: 4
+    - type: GhostRole
+      makeSentient: true
+      description: ghost-role-information-slimes-description
+
+- type: entity
+  name: green slime
+  parent: MobAdultSlimes
+  id: MobAdultSlimesGreenAngry
+  suffix: Angry
+  components:
+    - type: Faction
+      factions:
+        - SimpleHostile
+    - type: Sprite
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: green_adult_slime
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: green_adult_slime
+        Dead:
+          Base: green_adult_slime_dead
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 6
+          Structural: 4
+          Caustic: 1
+          Poison: 4
+
+- type: entity
+  name: yellow slime
+  parent: MobAdultSlimes
+  id: MobAdultSlimesYellow
+  components:
+    - type: Sprite
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: yellow_adult_slime
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: yellow_adult_slime
+        Dead:
+          Base: yellow_adult_slime_dead
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 6
+          Structural: 4
+          Caustic: 1
+          Cellular: 3
+    - type: GhostRole
+      makeSentient: true
+      description: ghost-role-information-slimes-description
+
+- type: entity
+  name: yellow slime
+  parent: MobAdultSlimes
+  id: MobAdultSlimesYellowAngry
+  suffix: Angry
+  components:
+    - type: Faction
+      factions:
+        - SimpleHostile
+    - type: Sprite
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: yellow_adult_slime
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: yellow_adult_slime
+        Dead:
+          Base: yellow_adult_slime_dead
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 6
+          Structural: 4
+          Caustic: 1
+          Cellular: 3

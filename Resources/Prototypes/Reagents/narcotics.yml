@@ -306,6 +306,7 @@
   - !type:PlantAdjustHealth
     amount: -5
 
+# TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent
   id: Impedrezene
   name: reagent-name-impedrezene
@@ -314,6 +315,26 @@
   physicalDesc: reagent-physical-desc-acrid
   flavor: bitter
   color: "#215263"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 10
+        refresh: false
+      - !type:ChemVomit # Vomiting is a symptom of brain damage
+        probability: 0.05
+      - !type:Drunk # Headaches and slurring are major symptoms of brain damage, this is close enough
+        boozePower: 5
 
 - type: reagent
   id: SpaceDrugs

@@ -99,13 +99,6 @@ public sealed partial class BotanySystem : EntitySystem
         var seedComp = EnsureComp<SeedComponent>(seed);
         seedComp.Seed = proto;
 
-        if (TryComp(seed, out SpriteComponent? sprite))
-        {
-            // TODO visualizer
-            // SeedPrototype state will always be seed. Blame the spriter if that's not the case!
-            sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(proto.PlantRsi, "seed"));
-        }
-
         var name = Loc.GetString(proto.Name);
         var noun = Loc.GetString(proto.Noun);
         var val = Loc.GetString("botany-seed-packet-name", ("seedName", name), ("seedNoun", noun));

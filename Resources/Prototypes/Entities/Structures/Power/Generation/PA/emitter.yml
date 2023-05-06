@@ -1,139 +1,76 @@
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterLeft
   name: PA containment emitter L
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
     - type: Sprite
       sprite: Structures/Power/Generation/PA/emitter_left.rsi
-      layers:
-        - state: leftc
-          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: unlitp
-          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
-          shader: unshaded
-          visible: false
-    - type: Appearance
-    - type: ParticleAcceleratorPartVisuals
-      stateBase: unlit
-    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Left
     - type: Construction
       graph: ParticleAcceleratorEmitterLeft
-      node: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
-
 
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterCenter
   name: PA containment emitter C
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
     - type: Sprite
       sprite: Structures/Power/Generation/PA/emitter_center.rsi
-      layers:
-        - state: centerc
-          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: unlitp
-          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
-          shader: unshaded
-          visible: false
-    - type: Appearance
-    - type: ParticleAcceleratorPartVisuals
-      stateBase: unlit
-    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Center
+    - type: Construction
       graph: ParticleAcceleratorEmitterCenter
-      node: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
 
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterRight
   name: PA containment emitter R
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
     - type: Sprite
       sprite: Structures/Power/Generation/PA/emitter_right.rsi
-      layers:
-        - state: rightc
-          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: unlitp
-          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
-          shader: unshaded
-          visible: false
-    - type: Appearance
-    - type: ParticleAcceleratorPartVisuals
-      stateBase: unlit
-    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Right
     - type: Construction
       graph: ParticleAcceleratorEmitterRight
-      node: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
 
 # Unfinished
 
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEmitterLeftUnfinished
   name: PA containment emitter L
   suffix: Unfinished, Left
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Physics
-      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/emitter_left.rsi
-      state: left
     - type: Construction
       graph: ParticleAcceleratorEmitterLeft
-      node: start
-      defaultTarget: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
 
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEmitterCenterUnfinished
   name: PA containment emitter C
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Physics
-      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/emitter_center.rsi
-      state: center
     - type: Construction
       graph: ParticleAcceleratorEmitterCenter
-      node: start
-      defaultTarget: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
 
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEmitterRightUnfinished
   name: PA containment emitter R
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Physics
-      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/emitter_right.rsi
-      state: right
     - type: Construction
       graph: ParticleAcceleratorEmitterRight
-      node: start
-      defaultTarget: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]

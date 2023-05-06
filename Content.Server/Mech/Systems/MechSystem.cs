@@ -16,6 +16,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
 namespace Content.Server.Mech.Systems;
@@ -41,6 +42,7 @@ public sealed class MechSystem : SharedMechSystem
         _sawmill = Logger.GetSawmill("mech");
 
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
@@ -60,7 +62,8 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
 
         #region Equipment UI message relays
-        SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(RecieveEquipmentUiMesssages);
+        SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(ReceiveEquipmentUiMesssages);
+        SubscribeLocalEvent<MechComponent, MechSoundboardPlayMessage>(ReceiveEquipmentUiMesssages);
         #endregion
     }
 
@@ -69,6 +72,7 @@ public sealed class MechSystem : SharedMechSystem
         if (component.Broken || component.Integrity <= 0 || component.Energy <= 0)
             args.Cancel();
     }
+
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
@@ -93,6 +97,18 @@ public sealed class MechSystem : SharedMechSystem
         }
     }
 
+    private void OnInsertBattery(EntityUid uid, MechComponent component, EntInsertedIntoContainerMessage args)
+    {
+        if (args.Container != component.BatterySlot || !TryComp<BatteryComponent>(args.Entity, out var battery))
+            return;
+
+        component.Energy = battery.CurrentCharge;
+        component.MaxEnergy = battery.MaxCharge;
+
+        Dirty(component);
+        _actionBlocker.UpdateCanMove(uid);
+    }
+
     private void OnRemoveBattery(EntityUid uid, MechComponent component, RemoveBatteryEvent args)
     {
         if (args.Cancelled || args.Handled)
@@ -114,12 +130,6 @@ public sealed class MechSystem : SharedMechSystem
 
         component.Integrity = component.MaxIntegrity;
         component.Energy = component.MaxEnergy;
-
-        if (component.StartingBattery != null)
-        {
-            var battery = Spawn(component.StartingBattery, Transform(uid).Coordinates);
-            InsertBattery(uid, battery, component);
-        }
 
         _actionBlocker.UpdateCanMove(uid);
         Dirty(component);
@@ -253,7 +263,7 @@ public sealed class MechSystem : SharedMechSystem
         UpdateUserInterface(uid, component);
     }
 
-    private void RecieveEquipmentUiMesssages<T>(EntityUid uid, MechComponent component, T args) where T : MechEquipmentUiMessage
+    private void ReceiveEquipmentUiMesssages<T>(EntityUid uid, MechComponent component, T args) where T : MechEquipmentUiMessage
     {
         var ev = new MechEquipmentUiMessageRelayEvent(args);
         var allEquipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
