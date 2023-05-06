@@ -215,6 +215,8 @@
       - Bucket
       - MopItem
       - AdvMopItem
+      - WeaponSprayNozzle
+      - ClothingBackpackWaterTank
       - SprayBottle
       - MegaSprayBottle
       - FireExtinguisher

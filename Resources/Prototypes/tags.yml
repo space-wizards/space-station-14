@@ -505,6 +505,9 @@
   id: NoBlockAnchoring
 
 - type: Tag
+  id: NozzleBackTank
+
+- type: Tag
   id: NukeOpsUplink
 
 - type: Tag
@@ -669,6 +672,9 @@
 
 - type: Tag
   id: Syringe
+
+- type: Tag
+  id: Spellbook
 
 - type: Tag
   id: Taser
