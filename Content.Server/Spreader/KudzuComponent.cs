@@ -30,7 +30,7 @@ public sealed class KudzuComponent : Component
     /// How much the kudzu heals each tick
     /// </summary>
     [DataField("damageRecovery")]
-    public DamageSpecifier DamageRecovery = default!;
+    public DamageSpecifier? DamageRecovery = null;
 
     [DataField("growthTickChance")]
     public float GrowthTickChance = 1f;

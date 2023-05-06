@@ -107,10 +107,10 @@ public sealed class KudzuSystem : EntitySystem
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<GrowingKudzuComponent, KudzuComponent, AppearanceComponent>();
+        var query = EntityQueryEnumerator<GrowingKudzuComponent, KudzuComponent>();
         var curTime = _timing.CurTime;
 
-        while (query.MoveNext(out var uid, out var grow, out var kudzu, out var appearance))
+        while (query.MoveNext(out var uid, out var grow, out var kudzu))
         {
             if (grow.NextTick > curTime)
             {
@@ -126,9 +126,13 @@ public sealed class KudzuSystem : EntitySystem
 
             if (TryComp<DamageableComponent>(uid, out var damage))
             {
-                if (damage.TotalDamage > 1.0){
-                    // Gradually heal
-                    _damageable.TryChangeDamage(uid, kudzu.DamageRecovery, true);
+                if (damage.TotalDamage > 1.0)
+                {
+                    if (kudzu.DamageRecovery != null)
+                    {
+                        // This kudzu features healing, so Gradually heal
+                        _damageable.TryChangeDamage(uid, kudzu.DamageRecovery, true);
+                    }
                     if (damage.TotalDamage >= kudzu.GrowthBlock)
                     {
                         // Don't grow when quite damaged
@@ -148,7 +152,10 @@ public sealed class KudzuSystem : EntitySystem
                 RemCompDeferred<GrowingKudzuComponent>(uid);
             }
 
-            _appearance.SetData(uid, KudzuVisuals.GrowthLevel, grow.GrowthLevel, appearance);
+            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
+            {
+                _appearance.SetData(uid, KudzuVisuals.GrowthLevel, grow.GrowthLevel, appearance);
+            }
         }
     }
 }
