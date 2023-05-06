@@ -1,0 +1,5 @@
+﻿- type: palette
+  id: Emmaged
+  name: Emmaged
+  colors:
+    red: "#FF0000FF"
