@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Reduced cost of bottles in the medical techfab. 200 glass to 50 glass.,
-    type: Tweak}
-  id: 3162
-  time: '2023-03-12T23:37:00.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: ID card console sorts jobs now., type: Tweak}
@@ -2898,3 +2892,8 @@ Entries:
   - {message: Lighters now consume less fuel when lighting them., type: Tweak}
   id: 3661
   time: '2023-05-06T01:03:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Some station events will no longer start instantly., type: Fix}
+  id: 3662
+  time: '2023-05-06T01:24:16.0000000+00:00'
