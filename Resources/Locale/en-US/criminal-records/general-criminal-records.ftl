@@ -34,3 +34,13 @@ general-criminal-record-console-wanted-without-reason = {$name} is wanted by {$g
 
 general-criminal-record-console-not-wanted-with-reason = {$name} is not wanted anymore for {$reason} by {$goodguyname}
 general-criminal-record-console-not-wanted-without-reason = {$name} is not wanted anymore by {$goodguyname}
+
+
+## Filters
+
+general-criminal-record-for-filter-line-placeholder = Input text and press "Enter"
+general-criminal-record-name-filter = Name of person
+general-criminal-record-prints-filter = Fingerprints
+general-criminal-record-dna-filter = DNA
+general-criminal-record-console-search-records = Search
+general-criminal-record-console-reset-filters = Reset

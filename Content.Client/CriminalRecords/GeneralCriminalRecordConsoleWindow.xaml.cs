@@ -1,3 +1,4 @@
+using Content.Client.Message;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
@@ -13,14 +14,23 @@ namespace Content.Client.CriminalRecords;
 public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 {
     public Action<StationRecordKey?>? OnKeySelected;
-    private bool _isPopulating;
+    public Action<GeneralStationRecordFilterType, string>? OnFiltersChanged;
     public Action<BaseButton.ButtonEventArgs, string?, string?>? OnArrestButtonPressed;
     public Action<OptionButton.ItemSelectedEventArgs, SecurityStatus, string?, string?>? OnStatusOptionButtonSelected;
+    private bool _isPopulating;
     private string? _recordName;
+    private GeneralStationRecordFilterType _currentFilterType;
 
     public GeneralCriminalRecordConsoleWindow()
     {
         RobustXamlLoader.Load(this);
+
+        _currentFilterType = GeneralStationRecordFilterType.Name;
+
+        foreach (var item in Enum.GetValues<GeneralStationRecordFilterType>())
+        {
+            StationRecordsFilterType.AddItem(GetTypeFilterLocals(item), (int)item);
+        }
 
         RecordListing.OnItemSelected += args =>
         {
@@ -38,6 +48,33 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
                 OnKeySelected?.Invoke(null);
         };
 
+        StationRecordsFilterType.OnItemSelected += eventArgs =>
+        {
+            var type = (GeneralStationRecordFilterType)eventArgs.Id;
+
+            if (_currentFilterType != type)
+            {
+                _currentFilterType = type;
+                FilterListingOfRecords();
+            }
+        };
+
+        StationRecordsFiltersValue.OnTextEntered += args =>
+        {
+            FilterListingOfRecords(args.Text);
+        };
+
+        StationRecordsFilters.OnPressed += _ =>
+        {
+            FilterListingOfRecords(StationRecordsFiltersValue.Text);
+        };
+
+        StationRecordsFiltersReset.OnPressed += _ =>
+        {
+            StationRecordsFiltersValue.Text = "";
+            FilterListingOfRecords();
+        };
+
         ArrestButton.OnPressed += e => OnArrestButtonPressed?.Invoke(e, ReasonLineEdit.Text, _recordName);
 
         StatusOptionButton.OnItemSelected += args =>
@@ -51,16 +88,35 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 
     public void UpdateState(GeneralCriminalRecordConsoleState state)
     {
+        if (state.Filter != null)
+        {
+            if (state.Filter.Type != _currentFilterType)
+            {
+                _currentFilterType = state.Filter.Type;
+            }
+
+            if (state.Filter.Value != StationRecordsFiltersValue.Text)
+            {
+                StationRecordsFiltersValue.Text = state.Filter.Value;
+            }
+        }
+
+        StationRecordsFilterType.SelectId((int)_currentFilterType);
+
         if (state.RecordListing == null)
         {
             RecordListingStatus.Visible = true;
             RecordListing.Visible = false;
             RecordListingStatus.Text = Loc.GetString("general-criminal-record-console-empty-state");
+            RecordContainer.Visible = false;
+            RecordContainerStatus.Visible = false;
             return;
         }
 
         RecordListingStatus.Visible = false;
         RecordListing.Visible = true;
+        RecordContainer.Visible = true;
+
         PopulateRecordListing(state.RecordListing!, state.SelectedKey);
 
         RecordContainerStatus.Visible = state.CriminalRecord == null;
@@ -138,6 +194,24 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
         RecordContainer.DisposeAllChildren();
         RecordContainer.RemoveAllChildren();
         // sure
+        var status = new RichTextLabel() { };
+
+        if (criminalRecord.Status == SecurityStatus.None)
+        {
+            status.SetMarkup(Loc.GetString("general-criminal-record-console-record-status", ("status",
+                criminalRecord.Status.ToString())!));
+        }
+        else if (criminalRecord.Status == SecurityStatus.Wanted)
+        {
+            status.SetMarkup(Loc.GetString("general-criminal-record-console-record-status", ("status",
+                $"[color=red]{criminalRecord.Status.ToString()}[/color]")));
+        }
+        else if (criminalRecord.Status == SecurityStatus.Detained)
+        {
+            status.SetMarkup(Loc.GetString("general-criminal-record-console-record-status", ("status",
+                $"[color=dodgerblue]{criminalRecord.Status.ToString()}[/color]")));
+        }
+
 
         var recordControls = new Control[]
         {
@@ -169,12 +243,13 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
             },
             new Label()
             {
-                Text = Loc.GetString("general-station-record-console-record-dna", ("dna", stationRecord.DNA ?? Loc.GetString("generic-not-available-shorthand")))
+                Text = Loc.GetString("general-criminal-record-console-record-dna", ("dna", stationRecord.DNA ?? Loc.GetString("generic-not-available-shorthand")))
             },
-            new Label()
+            new PanelContainer()
             {
-                Text = Loc.GetString("general-criminal-record-console-record-status", ("status", criminalRecord.Status.ToString())!)
-            }
+                StyleClasses = {"LowDivider"}, Margin = new Thickness(0, 5, 0, 5)
+            },
+            status
         };
 
 
@@ -186,10 +261,8 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 
         if (criminalRecord.Reason != string.Empty)
         {
-            var label = new Label()
-            {
-                Text = criminalRecord.Reason
-            };
+            var label = new RichTextLabel() { };
+            label.SetMessage(criminalRecord.Reason);
             RecordContainer.AddChild(label);
         }
     }
@@ -199,5 +272,18 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
         StatusOptionButton.AddItem(name);
         StatusOptionButton.SetItemMetadata(StatusOptionButton.ItemCount - 1, status);
         return StatusOptionButton.ItemCount - 1;
+    }
+
+    private void FilterListingOfRecords(string text = "")
+    {
+        if (!_isPopulating)
+        {
+            OnFiltersChanged?.Invoke(_currentFilterType, text);
+        }
+    }
+
+    private string GetTypeFilterLocals(GeneralStationRecordFilterType type)
+    {
+        return Loc.GetString($"general-criminal-record-{type.ToString().ToLower()}-filter");
     }
 }

@@ -6,4 +6,5 @@ namespace Content.Server.CriminalRecords.Components;
 public sealed class GeneralCriminalRecordConsoleComponent : Component
 {
     public StationRecordKey? ActiveKey { get; set; }
+    public GeneralStationRecordsFilter? Filter { get; set; }
 }

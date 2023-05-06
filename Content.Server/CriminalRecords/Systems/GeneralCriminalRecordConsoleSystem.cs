@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.CriminalRecords.Components;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
@@ -31,10 +32,22 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
     {
         SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, SelectGeneralCriminalRecord>(OnKeySelected);
+        SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, GeneralStationRecordsFilterMsg>(OnFiltersChanged);
         SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, CriminalRecordArrestButtonPressed>(OnButtonPressed);
         SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, CriminalStatusOptionButtonSelected>(OnStatusSelected);
+    }
+
+    private void OnFiltersChanged(EntityUid uid,
+        GeneralCriminalRecordConsoleComponent component, GeneralStationRecordsFilterMsg msg)
+    {
+        if (component.Filter == null ||
+            component.Filter.Type != msg.Type || component.Filter.Value != msg.Value)
+        {
+            component.Filter = new GeneralStationRecordsFilter(msg.Type, msg.Value);
+            UpdateUserInterface(uid, component);
+        }
     }
 
     private void UpdateUserInterface<T>(EntityUid uid, GeneralCriminalRecordConsoleComponent component, T ev)
@@ -72,7 +85,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
                 { SecurityStatus.None, Loc.GetString("general-criminal-record-console-undetained-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
-            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"));
+            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
         }
 
         else if (msg.Reason == string.Empty && msg.Name != null && msg.Session.AttachedEntity != null && secInfo != null)
@@ -86,7 +99,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
                 { SecurityStatus.None, Loc.GetString("general-criminal-record-console-undetained-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
-            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"));
+            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
         }
 
         var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
@@ -95,7 +108,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
         _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out GeneralCriminalRecord? record, stationRecordsComponent);
 
-        record!.Reason = secInfo!.Reason;
+        record!.Reason = secInfo!.Status == SecurityStatus.None ? string.Empty : secInfo.Reason;
         record.Status = secInfo.Status;
 
         _stationRecordsSystem.Synchronize(station.Value);
@@ -129,7 +142,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
             };
 
             _radioSystem.SendRadioMessage(uid, messages[secInfo.Status],
-                _prototypeManager.Index<RadioChannelPrototype>("Security"));
+                _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
 
             var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
 
@@ -156,14 +169,14 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
             };
 
             _radioSystem.SendRadioMessage(uid, messages[secInfo.Status],
-                _prototypeManager.Index<RadioChannelPrototype>("Security"));
+                _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
             var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
 
             TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
 
             _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out GeneralCriminalRecord? record, stationRecordsComponent);
 
-            record!.Reason = secInfo.Reason;
+            record!.Reason = secInfo.Status == SecurityStatus.None ? string.Empty : secInfo.Reason;
             record.Status = secInfo.Status;
 
             _stationRecordsSystem.Synchronize(station.Value);
@@ -189,30 +202,41 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
         var owningStation = _stationSystem.GetOwningStation(uid);
 
-
-
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecordsComponent))
         {
-            _userInterface.GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?.SetState(new GeneralCriminalRecordConsoleState(null, null, null, null));
+            GeneralCriminalRecordConsoleState state = new(null, null, null, null, null);
+            SetStateForInterface(uid, state);
             return;
         }
 
-        var enumerator = _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecordsComponent);
+        var consoleRecords =
+            _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecordsComponent);
 
         var listing = new Dictionary<StationRecordKey, string>();
-        foreach (var pair in enumerator)
+        foreach (var pair in consoleRecords)
         {
+            if (console != null && console.Filter != null
+                                && IsSkippedRecord(console.Filter, pair.Item2))
+            {
+                continue;
+            }
+
             listing.Add(pair.Item1, pair.Item2.Name);
         }
 
         if (listing.Count == 0)
         {
-            _userInterface.GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?.SetState(new GeneralCriminalRecordConsoleState(null, null, null, null));
+            GeneralCriminalRecordConsoleState state = new(null, null, null, null, console?.Filter);
+            SetStateForInterface(uid, state);
             return;
+        }
+        else if (listing.Count == 1)
+        {
+            console!.ActiveKey = listing.Keys.First();
         }
 
         GeneralStationRecord? stationRecord = null;
-        if (console.ActiveKey != null)
+        if (console!.ActiveKey != null)
         {
             _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out stationRecord,
                 stationRecordsComponent);
@@ -225,8 +249,41 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
                 stationRecordsComponent);
         }
 
+        GeneralCriminalRecordConsoleState newState = new(console.ActiveKey, stationRecord, criminalRecord, listing, console.Filter);
+        SetStateForInterface(uid, newState);
+    }
+
+    private void SetStateForInterface(EntityUid uid, GeneralCriminalRecordConsoleState newState)
+    {
         _userInterface
-            .GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?
-            .SetState(new GeneralCriminalRecordConsoleState(console.ActiveKey, stationRecord, criminalRecord, listing));
+            .GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)
+            ?.SetState(newState);
+    }
+
+    private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
+        GeneralStationRecord someRecord)
+    {
+        bool isFilter = filter.Value.Length > 0;
+        string filterLowerCaseValue = "";
+
+        if (!isFilter)
+            return false;
+
+        filterLowerCaseValue = filter.Value.ToLower();
+
+        return filter.Type switch
+        {
+            GeneralStationRecordFilterType.Name =>
+                !someRecord.Name.ToLower().Contains(filterLowerCaseValue),
+            GeneralStationRecordFilterType.Prints => someRecord.Fingerprint != null
+                                                     && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
+            GeneralStationRecordFilterType.DNA => someRecord.DNA != null
+                                                  && IsFilterWithSomeCodeValue(someRecord.DNA, filterLowerCaseValue),
+        };
+    }
+
+    private bool IsFilterWithSomeCodeValue(string value, string filter)
+    {
+        return !value.ToLower().StartsWith(filter);
     }
 }

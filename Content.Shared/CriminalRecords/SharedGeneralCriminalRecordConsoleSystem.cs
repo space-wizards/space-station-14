@@ -22,6 +22,10 @@ public enum GeneralCriminalRecordConsoleKey : byte
 ///     - SelectedKey non-null, Record non-null, RecordListing non-null
 ///         - The selected key has a record tied to it, and the record has been sent.
 ///
+///     - there is added new filters and so added new states
+///         -SelectedKey null, Record null, RecordListing null, filters non-null
+///            the station may have data, but they all did not pass through the filters
+///
 ///     Other states are erroneous.
 /// </summary>
 [Serializable, NetSerializable]
@@ -34,13 +38,15 @@ public sealed class GeneralCriminalRecordConsoleState : BoundUserInterfaceState
     public GeneralCriminalRecord? CriminalRecord { get; }
     public GeneralStationRecord? StationRecord { get; }
     public Dictionary<StationRecordKey, string>? RecordListing { get; }
+    public GeneralStationRecordsFilter? Filter { get; }
 
-    public GeneralCriminalRecordConsoleState(StationRecordKey? key, GeneralStationRecord? stationRecord, GeneralCriminalRecord? criminalRecord, Dictionary<StationRecordKey, string>? recordListing)
+    public GeneralCriminalRecordConsoleState(StationRecordKey? key, GeneralStationRecord? stationRecord, GeneralCriminalRecord? criminalRecord, Dictionary<StationRecordKey, string>? recordListing, GeneralStationRecordsFilter? newFilter)
     {
         SelectedKey = key;
         StationRecord = stationRecord;
         CriminalRecord = criminalRecord;
         RecordListing = recordListing;
+        Filter = newFilter;
     }
 
     public bool IsEmpty() => SelectedKey == null && StationRecord == null && CriminalRecord == null && RecordListing == null;
