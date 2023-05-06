@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
@@ -10,6 +11,7 @@ public partial class SharedGunSystem
 {
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
 
     private void InitializeContainer()
     {
@@ -29,6 +31,9 @@ public partial class SharedGunSystem
                 break;
 
             var ent = container.ContainedEntities[0];
+
+            if (component.ParalyzeTime != null)
+                _stunSystem.TryParalyze(ent, TimeSpan.FromSeconds(component.ParalyzeTime.Value), true);
 
             if (_netMan.IsServer)
                 container.Remove(ent);

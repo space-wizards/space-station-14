@@ -15,4 +15,9 @@ public sealed class ContainerAmmoProviderComponent : AmmoProviderComponent
     [DataField("provider")]
     [ViewVariables]
     public EntityUid? ProviderUid;
+
+    [DataField("paralyzeTime")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float? ParalyzeTime;
+
 }
