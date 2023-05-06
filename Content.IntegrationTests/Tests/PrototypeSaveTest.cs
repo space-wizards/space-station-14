@@ -43,15 +43,11 @@ public sealed class PrototypeSaveTest
         // These should NOT be added to.
         // 99% of these are going to be changing the physics bodytype (where the entity is anchored)
         // or some ambientsound change.
-        "PlasticFlapsOpaque",
-        "PlasticFlapsAirtightClear",
         "BoxingBell",
-        "PlasticFlapsClear",
         "ClothingBackpackChameleon",
         "ClothingBackpackChameleonFill",
         "AMEControllerUnanchored",
         "NuclearBomb",
-        "PlasticFlapsAirtightOpaque",
         "MachineFrameDestroyed",
         "VehicleJanicartDestroyed",
         "Gyroscope",
