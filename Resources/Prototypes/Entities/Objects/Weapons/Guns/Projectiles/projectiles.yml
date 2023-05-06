@@ -567,6 +567,47 @@
       muzzleFlash: null
 
 - type: entity
+  id: BulletWaterShot
+  name: water
+  noSpawn: true
+  components:
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0 #it's just water, bro
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/water_shot.rsi
+    layers:
+    - state: icon
+      map: ["enum.VaporVisualLayers.Base"]
+  - type: Ammo
+    muzzleFlash: null
+  - type: SolutionContainerManager
+    solutions:
+      vapor:
+        maxVol: 50
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.25,0.25,0.25"
+      hard: false
+      mask:
+      - FullTileMask
+      - Opaque
+  - type: Vapor
+    active: true
+  - type: Appearance
+  - type: VaporVisuals
+
+- type: entity
   id: BulletCannonBall
   name: cannonball
   parent: BaseBulletTrigger
