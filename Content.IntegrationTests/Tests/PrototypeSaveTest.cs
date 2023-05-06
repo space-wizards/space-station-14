@@ -168,6 +168,7 @@ public sealed class PrototypeSaveTest
                 foreach (var prototype in prototypes)
                 {
                     uid = entityMan.SpawnEntity(prototype.ID, testLocation);
+                    context.Prototype = prototype.ID;
 
                     // get default prototype data
                     Dictionary<string, MappingDataNode> protoData = new();
@@ -177,9 +178,11 @@ public sealed class PrototypeSaveTest
 
                         foreach (var (compType, comp) in prototype.Components)
                         {
+                            context.WritingComponent = compType;
                             protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, alwaysWrite: true, context: context));
                         }
 
+                        context.WritingComponent = string.Empty;
                         context.WritingReadingPrototypes = false;
                     }
                     catch (Exception e)
@@ -246,6 +249,9 @@ public sealed class PrototypeSaveTest
         public SerializationManager.SerializerProvider SerializerProvider { get; }
         public bool WritingReadingPrototypes { get; set; }
 
+        public string WritingComponent = string.Empty;
+        public string Prototype = string.Empty;
+
         public TestEntityUidContext()
         {
             SerializerProvider = new();
@@ -262,6 +268,13 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
+            if (WritingComponent != "Transform")
+            {
+                // Maybe this will be necessary in the future, but at the moment it just indicates that there is some
+                // issue, like a non-nullable entityUid data-field.
+                Assert.Fail($"Uninitialized entities should not be saving entity Uids. Component: {WritingComponent}. Prototype: {Prototype}");
+            }
+
             return new ValueDataNode(value.ToString());
         }
 
