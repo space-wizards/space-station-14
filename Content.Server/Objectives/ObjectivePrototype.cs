@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
 
@@ -38,7 +38,7 @@ namespace Content.Server.Objectives
         {
             foreach (var requirement in _requirements)
             {
-                if (!requirement.CanBeAssigned(mind)) return false;
+                if (!requirement.CanBeAssigned(mind)) continue;
             }
 
             if (!CanBeDuplicateAssignment)
