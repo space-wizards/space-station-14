@@ -11,7 +11,8 @@
             "name": "plushie_ratvar"
         },
         {
-            "name": "plushie_rouny"
+            "name": "plushie_rouny",
+            "directions": 4
         },
         {
             "name": "plushie_spacelizard"

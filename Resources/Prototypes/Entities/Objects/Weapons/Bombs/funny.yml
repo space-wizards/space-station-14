@@ -18,6 +18,8 @@
     - type: OnUseTimerTrigger
       delay: 180
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
+      params:
+        volume: -2
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Default

@@ -16,13 +16,12 @@ namespace Content.Server.StationEvents.Events
             base.Started(uid, component, gameRule, args);
 
             var mod = Math.Sqrt(GetSeverityModifier());
-            component._waveCounter = (int) (RobustRandom.Next(component.MinimumWaves, component.MaximumWaves) * mod);
+            component.WaveCounter = (int) (RobustRandom.Next(component.MinimumWaves, component.MaximumWaves) * mod);
         }
 
         protected override void ActiveTick(EntityUid uid, MeteorSwarmRuleComponent component, GameRuleComponent gameRule, float frameTime)
         {
-            base.ActiveTick(uid, component, gameRule, frameTime);
-            if (component._waveCounter <= 0)
+            if (component.WaveCounter <= 0)
             {
                 ForceEndSelf(uid, gameRule);
                 return;
@@ -30,14 +29,14 @@ namespace Content.Server.StationEvents.Events
 
             var mod = GetSeverityModifier();
 
-            component._cooldown -= frameTime;
+            component.Cooldown -= frameTime;
 
-            if (component._cooldown > 0f)
+            if (component.Cooldown > 0f)
                 return;
 
-            component._waveCounter--;
+            component.WaveCounter--;
 
-            component._cooldown += (component.MaximumCooldown - component.MinimumCooldown) * RobustRandom.NextFloat() / mod + component.MinimumCooldown;
+            component.Cooldown += (component.MaximumCooldown - component.MinimumCooldown) * RobustRandom.NextFloat() / mod + component.MinimumCooldown;
 
             Box2? playableArea = null;
             var mapId = GameTicker.DefaultMap;
@@ -64,7 +63,7 @@ namespace Content.Server.StationEvents.Events
                 var angle = new Angle(RobustRandom.NextFloat() * MathF.Tau);
                 var offset = angle.RotateVec(new Vector2((maximumDistance - minimumDistance) * RobustRandom.NextFloat() + minimumDistance, 0));
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
-                var meteor = EntityManager.SpawnEntity("MeteorLarge", spawnPosition);
+                var meteor = Spawn("MeteorLarge", spawnPosition);
                 var physics = EntityManager.GetComponent<PhysicsComponent>(meteor);
                 _physics.SetBodyStatus(physics, BodyStatus.InAir);
                 _physics.SetLinearDamping(physics, 0f);

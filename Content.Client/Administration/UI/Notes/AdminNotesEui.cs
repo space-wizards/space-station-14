@@ -17,6 +17,18 @@ public sealed class AdminNotesEui : BaseEui
         NoteControl.OnNoteChanged += (id, text) => SendMessage(new EditNoteRequest(id, text));
         NoteControl.OnNewNoteEntered += text => SendMessage(new CreateNoteRequest(text));
         NoteControl.OnNoteDeleted += id => SendMessage(new DeleteNoteRequest(id));
+        NoteWindow.OnClose += OnClosed;
+    }
+
+    private void OnClosed()
+    {
+        SendMessage(new CloseEuiMessage());
+    }
+
+    public override void Closed()
+    {
+        base.Closed();
+        NoteWindow.Close();
     }
 
     private AdminNotesWindow NoteWindow { get; }

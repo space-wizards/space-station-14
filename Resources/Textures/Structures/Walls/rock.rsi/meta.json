@@ -1,80 +1,83 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/817e7c1f225876b45891e3f06908e6d032f0a8bc/icons/turf/walls.dmi",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "rock"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/817e7c1f225876b45891e3f06908e6d032f0a8bc/icons/turf/walls.dmiMade, rock_bananium made by brainfood1183 (github) for ss14",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "rock_south"
-    },
-    {
-      "name": "rock_east"
-    },
-    {
-      "name": "rock_north"
-    },
-    {
-      "name": "rock_west"
-    },
-    {
-      "name": "rock_bauxite"
-    },
-    {
-      "name": "rock_carbon"
-    },
-    {
-      "name": "rock_copper"
-    },
-    {
-      "name": "rock_diamond"
-    },
-    {
-      "name": "rock_gold"
-    },
-    {
-      "name": "rock_hematite"
-    },
-    {
-      "name": "rock_lead"
-    },
-    {
-      "name": "rock_marble"
-    },
-    {
-      "name": "rock_painite"
-    },
-    {
-      "name": "rock_phoron"
-    },
-    {
-      "name": "rock_platinum"
-    },
-    {
-      "name": "rock_quartz"
-    },
-    {
-      "name": "rock_rutile"
-    },
-    {
-      "name": "rock_silver"
-    },
-    {
-      "name": "rock_tin"
-    },
-    {
-      "name": "rock_uranium"
-    },
-    {
-      "name": "rock_verdantium"
-    },
-    {
-      "name": "rock_void_opal"
-    }
-  ]
+    "states": [
+        {
+            "name": "rock"
+        },
+        {
+            "name": "rock_south"
+        },
+        {
+            "name": "rock_east"
+        },
+        {
+            "name": "rock_north"
+        },
+        {
+            "name": "rock_west"
+        },
+        {
+            "name": "rock_bauxite"
+        },
+        {
+            "name": "rock_carbon"
+        },
+        {
+            "name": "rock_copper"
+        },
+        {
+            "name": "rock_diamond"
+        },
+        {
+            "name": "rock_gold"
+        },
+        {
+            "name": "rock_hematite"
+        },
+        {
+            "name": "rock_lead"
+        },
+        {
+            "name": "rock_marble"
+        },
+        {
+            "name": "rock_painite"
+        },
+        {
+            "name": "rock_phoron"
+        },
+        {
+            "name": "rock_platinum"
+        },
+        {
+            "name": "rock_quartz"
+        },
+        {
+            "name": "rock_rutile"
+        },
+        {
+            "name": "rock_silver"
+        },
+        {
+            "name": "rock_tin"
+        },
+        {
+            "name": "rock_uranium"
+        },
+        {
+            "name": "rock_verdantium"
+        },
+        {
+            "name": "rock_void_opal"
+        },
+        {
+            "name": "rock_bananium"
+        }
+    ]
 }
