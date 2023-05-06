@@ -1312,6 +1312,9 @@ namespace Content.Server.Database
         // These two are here because they get converted into notes later
         protected async Task<List<ServerBanNote>> GetServerBansAsNotesForUser(DbGuard db, Guid user)
         {
+            // You can't group queries, as player will not always exist. When it doesn't, the
+            // whole query returns nothing
+            var player = await db.DbContext.Player.SingleOrDefaultAsync(p => p.UserId == user);
             return await (from ban in db.DbContext.Ban
                           where ban.PlayerUserId == user &&
                                 !ban.Hidden
@@ -1324,10 +1327,7 @@ namespace Content.Server.Database
                 .Include(ban => ban.Unban)
                 .ToAsyncEnumerable()
                 .SelectAwait(async ban =>
-                    new ServerBanNote(ban.Id, ban.RoundId, ban.Round, ban.PlayerUserId,
-                        // You can't group queries, as player will not always exist. When it doesn't, the
-                        // whole query returns nothing
-                        await db.DbContext.Player.SingleOrDefaultAsync(p => p.UserId == user),
+                    new ServerBanNote(ban.Id, ban.RoundId, ban.Round, ban.PlayerUserId, player,
                         ban.PlaytimeAtNote, ban.Reason, ban.Severity, ban.CreatedBy, ban.BanTime,
                         ban.LastEditedBy, ban.LastEditedAt, ban.ExpirationTime, ban.Hidden,
                         ban.Unban?.UnbanningAdmin == null
