@@ -133,3 +133,20 @@
     damage:
       types:
         Piercing: 15
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassUranium
+  name: uranium glass shard
+  description: A small piece of uranium glass.
+  components:
+  - type: Sprite
+    color: "#8eff7a"
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - SheetUranium1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 15
