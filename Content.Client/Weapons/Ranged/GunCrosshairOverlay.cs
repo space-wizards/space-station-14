@@ -21,7 +21,7 @@ public sealed class GunCrosshairOverlay : Overlay
 {
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    private IEntityManager _entManager;
+    private readonly IEntityManager _entManager;
     private readonly IEyeManager _eye;
     private readonly IInputManager _input;
     private readonly IPlayerManager _player;
@@ -29,10 +29,13 @@ public sealed class GunCrosshairOverlay : Overlay
     private readonly IPrototypeManager _protoManager;
     private readonly SharedPhysicsSystem _physics;
 
-    private Texture _crosshair;
-    private Texture _crosshairMarked;
-    private float _unavailableSignSize = 20f;
+    private readonly Texture _crosshair;
+    private readonly Texture _crosshairMarked;
+
+    private float _unavailableSignSize = 24f;
     private float _maxRange = 20f;
+
+    public float MainScale = 1f;
 
     public GunCrosshairOverlay(IEntityManager entManager, IEyeManager eyeManager, IInputManager input,
         IPlayerManager player, IPrototypeManager prototypes, SharedPhysicsSystem physics, GunSystem system)
@@ -96,7 +99,8 @@ public sealed class GunCrosshairOverlay : Overlay
 
 
         var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
-        float limetedScale = uiScale > 1.25f ? 1.25f : uiScale;
+        float scale = uiScale > 1.25f ? 1.25f : uiScale;
+        scale *= MainScale;
 
         var direction = (mousePos.Position - mapPos.Position);
 
@@ -126,12 +130,12 @@ public sealed class GunCrosshairOverlay : Overlay
                 var screenHitPosition = _eye.WorldToScreen(castRes.HitPos);
                 var screenPlayerPos = _eye.CoordinatesToScreen(xform.Coordinates).Position;
                 // draw sign for obstacle
-                DrawОbstacleSign(screen, screenHitPosition, screenPlayerPos, limetedScale);
+                DrawОbstacleSign(screen, screenHitPosition, screenPlayerPos, scale);
             }
         }
 
         // draw crosshair for some type
-        DrawCrosshair(screen, mouseScreen.Position, limetedScale, crosshairType);
+        DrawCrosshair(screen, mouseScreen.Position, scale, crosshairType);
     }
 
     private RayCastResults? GetRayCastResult(Vector2 dir, DataForCalculatingRCGunResult data,
