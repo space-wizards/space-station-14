@@ -23,7 +23,7 @@ public sealed class SolarFlare : StationEventSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ActiveRadioComponent, RadioReceiveAttemptEvent>(OnRadioSendAttempt);
+        SubscribeLocalEvent<RadioReceiveAttemptEvent>(OnRadioSendAttempt);
     }
 
     public override void Added()
@@ -69,10 +69,10 @@ public sealed class SolarFlare : StationEventSystem
         }
     }
 
-    private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, RadioReceiveAttemptEvent args)
+    private void OnRadioSendAttempt(ref RadioReceiveAttemptEvent args)
     {
         if (RuleStarted && _event.AffectedChannels.Contains(args.Channel.ID))
-            if (!_event.OnlyJamHeadsets || (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
-                args.Cancel();
+            if (!_event.OnlyJamHeadsets || (HasComp<HeadsetComponent>(args.RadioReceiver) || HasComp<HeadsetComponent>(args.RadioSource)))
+                args.Cancelled = true;
     }
 }

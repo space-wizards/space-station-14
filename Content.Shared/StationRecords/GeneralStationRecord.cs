@@ -63,4 +63,10 @@ public sealed class GeneralStationRecord
     /// </summary>
     [ViewVariables]
     public string? Fingerprint;
+
+    /// <summary>
+    ///     DNA of the person.
+    /// </summary>
+    [ViewVariables]
+    public string? DNA;
 }

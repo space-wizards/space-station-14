@@ -59,6 +59,8 @@ namespace Content.Client.Lobby
             _lobby.CharacterSetupState.AddChild(_characterSetup);
             chatController.SetMainChat(true);
 
+            _voteManager.SetPopupContainer(_lobby.VoteContainer);
+
             _characterSetup.CloseButton.OnPressed += _ =>
             {
                 _lobby.SwitchState(LobbyGui.LobbyGuiState.Default);
@@ -90,6 +92,8 @@ namespace Content.Client.Lobby
             _gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
+
+            _lobby!.VoteContainer.Orphan();
 
             _lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
             _lobby!.ReadyButton.OnPressed -= OnReadyPressed;
@@ -137,6 +141,10 @@ namespace Content.Client.Lobby
             if (_gameTicker.Paused)
             {
                 text = Loc.GetString("lobby-state-paused");
+            }
+            else if ((_gameTicker.StartTime - _gameTicker.PreloadTime) < _gameTiming.CurTime)
+            {
+                text = Loc.GetString("lobby-state-preloading");
             }
             else
             {

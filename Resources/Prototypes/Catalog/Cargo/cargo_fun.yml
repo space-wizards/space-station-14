@@ -1,20 +1,60 @@
 - type: cargoProduct
-  id: FunInstruments
+  id: FunInstrumentsVariety
   icon:
     sprite: Objects/Fun/Instruments/accordion.rsi
     state: icon
-  product: CrateFunInstruments
-  cost: 3000
+  product: CrateFunInstrumentsVariety
+  cost: 2000
   category: Fun
   group: market
 
 - type: cargoProduct
-  id: FunBrass
+  id: FunInstrumentsBrass
   icon:
     sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: tuba
-  product: CrateFunBrass
+  product: CrateFunInstrumentsBrass
   cost: 2500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunInstrumentsString
+  icon:
+    sprite: Objects/Fun/Instruments/bassguitar.rsi
+    state: icon
+  product: CrateFunInstrumentsString
+  cost: 2500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunInstrumentsWoodwind
+  icon:
+    sprite: Objects/Fun/Instruments/harmonica.rsi
+    state: icon
+  product: CrateFunInstrumentsWoodwind
+  cost: 2500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunInstrumentsKeyedPercussion
+  icon:
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: icon
+  product: CrateFunInstrumentsKeyedPercussion
+  cost: 2500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunInstrumentsSpecial
+  icon:
+    sprite: Objects/Fun/Instruments/gunpet.rsi
+    state: icon
+  product: CrateFunInstrumentsSpecial
+  cost: 10000
   category: Fun
   group: market
 

@@ -1,5 +1,4 @@
 ﻿using Content.Server.Body.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
@@ -9,6 +8,7 @@ using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.Kitchen;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
@@ -21,7 +21,7 @@ public sealed class SharpSystem : EntitySystem
 {
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
@@ -32,7 +32,7 @@ public sealed class SharpSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SharpComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<SharpComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<SharpComponent, SharpDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<ButcherableComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
     }
@@ -63,16 +63,15 @@ public sealed class SharpSystem : EntitySystem
             return;
 
         var doAfter =
-            new DoAfterEventArgs(user, sharp.ButcherDelayModifier * butcher.ButcherDelay, target: target, used: knife)
+            new DoAfterArgs(user, sharp.ButcherDelayModifier * butcher.ButcherDelay, new SharpDoAfterEvent(), knife, target: target, used: knife)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 NeedHand = true
             };
 
-        _doAfterSystem.DoAfter(doAfter);
+        _doAfterSystem.TryStartDoAfter(doAfter);
     }
 
     private void OnDoAfter(EntityUid uid, SharpComponent component, DoAfterEvent args)

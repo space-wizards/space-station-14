@@ -31,6 +31,35 @@
       - Mop
 
 - type: entity
+  parent: BaseItem
+  name: advanced mop
+  id: AdvMopItem
+  description: Motorized mop that have a bigger reservoir and can mop multiple puddles at once. Automatic Clown Countermeasure no included.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Janitorial/advmop.rsi
+      state: advmop
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 10
+    - type: Item
+      size: 15
+      sprite: Objects/Specific/Janitorial/advmop.rsi
+    - type: Absorbent
+      maxEntities: 3
+      pickupAmount: 25
+      speed: 12.5
+    - type: SolutionContainerManager
+      solutions:
+        absorbed:
+          maxVol: 100
+    - type: Tag
+      tags:
+        - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
+        - Mop
+
+- type: entity
   name: mop bucket
   id: MopBucket
   description: Holds water and the tears of the janitor.
@@ -136,11 +165,13 @@
             tags:
               - Mop
           insertOnInteract: false # or it conflicts with bucket logic
+          priority: 4 # Higher than trash bag slot
         trashbag_slot:
           name: Bag
           whitelist:
             tags:
               - TrashBag
+          priority: 3 # Higher than drinking priority
     - type: Fixtures
       fixtures:
       - shape:
@@ -172,6 +203,12 @@
       damageModifierSet: Metallic
     - type: Destructible
       thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 400
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
             damage: 200
@@ -276,6 +313,12 @@
       damageModifierSet: Metallic
     - type: Destructible
       thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
             damage: 100

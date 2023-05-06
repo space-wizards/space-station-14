@@ -28,6 +28,12 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
+            damage: 80
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
             damage: 40 #This is probably enough damage before it breaks
           behaviors:
             - !type:DoActsBehavior
@@ -106,6 +112,12 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
+            damage: 60
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
             damage: 30 #Weaker shield
           behaviors:
             - !type:DoActsBehavior
@@ -138,6 +150,12 @@
       node: makeshiftShield
     - type: Destructible
       thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
             damage: 20 #Very weak shield

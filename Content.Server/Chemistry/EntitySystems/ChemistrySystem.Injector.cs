@@ -1,6 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -28,7 +29,7 @@ public sealed partial class ChemistrySystem
     {
         SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
         SubscribeLocalEvent<InjectorComponent, SolutionChangedEvent>(OnSolutionChange);
-        SubscribeLocalEvent<InjectorComponent, DoAfterEvent>(OnInjectDoAfter);
+        SubscribeLocalEvent<InjectorComponent, InjectorDoAfterEvent>(OnInjectDoAfter);
         SubscribeLocalEvent<InjectorComponent, ComponentStartup>(OnInjectorStartup);
         SubscribeLocalEvent<InjectorComponent, UseInHandEvent>(OnInjectorUse);
         SubscribeLocalEvent<InjectorComponent, AfterInteractEvent>(OnInjectorAfterInteract);
@@ -129,18 +130,10 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectDoAfter(EntityUid uid, InjectorComponent component, DoAfterEvent args)
     {
-        if (args.Cancelled)
-        {
-            component.IsInjecting = false;
-            return;
-        }
-
-        if (args.Handled || args.Args.Target == null)
+        if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
         UseInjector(args.Args.Target.Value, args.Args.User, uid, component);
-
-        component.IsInjecting = false;
         args.Handled = true;
     }
 
@@ -223,10 +216,6 @@ public sealed partial class ChemistrySystem
         if (!_solutions.TryGetSolution(injector, InjectorComponent.SolutionName, out var solution))
             return;
 
-        //If it found it's injecting
-        if (component.IsInjecting)
-            return;
-
         var actualDelay = MathF.Max(component.Delay, 1f);
 
         // Injections take 1 second longer per additional 5u
@@ -269,17 +258,12 @@ public sealed partial class ChemistrySystem
                 _adminLogger.Add(LogType.Ingestion, $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
         }
 
-        component.IsInjecting = true;
-
-        _doAfter.DoAfter(new DoAfterEventArgs(user, actualDelay, target:target, used:injector)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(user, actualDelay, new InjectorDoAfterEvent(), injector, target: target, used: injector)
         {
-            RaiseOnTarget = isTarget,
-            RaiseOnUser = !isTarget,
             BreakOnUserMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true,
             BreakOnTargetMove = true,
-            MovementThreshold = 0.1f
+            MovementThreshold = 0.1f,
         });
     }
 
@@ -434,4 +418,5 @@ public sealed partial class ChemistrySystem
         Dirty(component);
         AfterDraw(component, injector);
     }
+
 }

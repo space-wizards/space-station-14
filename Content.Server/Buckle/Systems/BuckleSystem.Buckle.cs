@@ -189,7 +189,7 @@ public sealed partial class BuckleSystem
             }
         }
 
-        if (!HasComp<SharedHandsComponent>(user))
+        if (!HasComp<HandsComponent>(user))
         {
             _popups.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user, user);
             return false;

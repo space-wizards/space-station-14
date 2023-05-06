@@ -6,7 +6,7 @@
 /Content.*/Administration/ @moonheart08 @PaulRitter @DrSmugleaf
 /Content.*/Station/ @moonheart08
 /Content.*/Maps/ @moonheart08
-/Content.*/GameTicking/ @moonheart08 @Zumorica
+/Content.*/GameTicking/ @moonheart08
 /Resources/Server\ Info/ @moonheart08
 /Resources/engineCommandPerms.yml @moonheart08
 /Resources/clientCommandPerms.yml @moonheart08
@@ -15,19 +15,6 @@
 /Resources/Prototypes/Maps/ @moonheart08
 /Resources/Prototypes/Entities/Mobs/Player/ @moonheart08 @mirrorcult @DrSmugleaf
 /Resources/Prototypes/Entities/Mobs/Species/ @moonheart08 @mirrorcult @DrSmugleaf
-
-/Content.*/Atmos/ @Zumorica
-/Content.*/Botany/ @Zumorica
-/Content.*/Construction/ @Zumorica
-/Content.*/Holiday/ @Zumorica
-/Content.*/Instruments/ @Zumorica
-/Content.*/Stunnable/ @Zumorica
-/Resources/Prototypes/game_* @Zumorica # Both game_presets.yml and game_rules.yml
-/Resources/Prototypes/holidays.yml @Zumorica
-/Resources/Prototypes/tool_qualities.yml @Zumorica
-/Resources/Prototypes/Atmospherics/ @Zumorica
-/Resources/Prototypes/Recipes/Construction @Zumorica
-/Resources/Prototypes/Recipes/Crafting @Zumorica
 
 /Content.*/Body/ @mirrorcult @DrSmugleaf
 /Content.*/Chemistry/ @mirrorcult

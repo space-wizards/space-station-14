@@ -75,8 +75,9 @@ namespace Content.Client.Physics.Controllers
                 return;
             }
 
+            var physicsUid = player;
             PhysicsComponent? body;
-            TransformComponent? xformMover = xform;
+            var xformMover = xform;
 
             if (mover.ToParent && HasComp<RelayInputMoverComponent>(xform.ParentUid))
             {
@@ -85,6 +86,8 @@ namespace Content.Client.Physics.Controllers
                 {
                     return;
                 }
+
+                physicsUid = xform.ParentUid;
             }
             else if (!TryComp(player, out body))
             {
@@ -128,7 +131,7 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(player, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
+            HandleMobMovement(player, mover, physicsUid, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
         }
 
         protected override bool CanSound()

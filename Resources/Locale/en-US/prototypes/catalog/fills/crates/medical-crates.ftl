@@ -29,3 +29,6 @@ ent-CrateEmergencyAdvancedKit = Emergency advanced kit
 
 ent-CrateEmergencyRadiationKit = Emergency radiation kit
     .desc = Crate filled with four radiation treatment kits
+    
+ent-CrateVirologyBiosuit = Virology bio suit crate
+    .desc = Contains 2 biohazard suits to ensure that no disease will distract you from treating the crew. Requires Medical access to open.

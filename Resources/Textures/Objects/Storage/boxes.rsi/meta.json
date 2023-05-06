@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/cc65477c04f7403ca8a457bd5bae69a01abadbf0, encryptokey was taken from Baystation12 at https://github.com/infinitystation/Baystation12/blob/073f678cdce92edb8fcd55f9ffc9f0523bf31506/icons/obj/radio.dmi and modified by lapatison",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/cc65477c04f7403ca8a457bd5bae69a01abadbf0, encryptokey was taken from Baystation12 at https://github.com/infinitystation/Baystation12/blob/073f678cdce92edb8fcd55f9ffc9f0523bf31506/icons/obj/radio.dmi and modified by lapatison. boxwidetoy, shelltoy, swab, flare, inflatable, trashbag, magazine, holo and forensic created by potato1234x (github) for ss14 based on toys.rsi, mouth_swab.rsi, flare.rsi, inflatable_wall.rsi, trashbag.rsi, caseless_pistol_mag.rsi, guardians.rsi and bureaucracy.rsi respectively",
   "size": {
     "x": 32,
     "y": 32
@@ -35,13 +35,16 @@
             "name": "sechud"
         },
         {
-          "name": "bottle"
+			"name": "bottle"
         },
         {
             "name": "box"
         },
         {
             "name": "boxwide"
+        },
+        {
+            "name": "boxwidetoy"
         },
         {
             "name": "box_hug"
@@ -71,13 +74,25 @@
             "name": "flashbang"
         },
         {
+            "name": "flare"
+        },
+        {
+            "name": "forensic"
+        },
+        {
             "name": "glasses"
         },
         {
             "name": "handcuff"
         },
         {
+            "name": "holo"
+        },
+        {
             "name": "implant"
+        },
+        {
+            "name": "inflatable"
         },
         {
             "name": "latex"
@@ -90,6 +105,9 @@
         },
         {
             "name": "lighttube"
+        },
+        {
+            "name": "magazine"
         },
         {
             "name": "mousetraps"
@@ -110,7 +128,13 @@
             "name": "sterile"
         },
         {
+            "name": "swab"
+        },
+        {
             "name": "syringe"
+        },
+        {
+            "name": "trashbag"
         },
         {
             "name": "writing"
@@ -160,6 +184,9 @@
         },
         {
             "name": "shellslug"
+        },
+        {
+            "name": "shelltoy"
         },
         {
             "name": "ziptie"

@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -39,18 +40,6 @@ namespace Content.Server.Nutrition.Components
         /// </summary>
         [DataField("eatMessage")]
         public string EatMessage = "food-nom";
-
-        /// <summary>
-        /// Is this entity being forcefed?
-        /// </summary>
-        [DataField("forceFeed")]
-        public bool ForceFeed;
-
-        /// <summary>
-        /// Is this entity eating or being fed?
-        /// </summary>
-        [DataField(("eating"))]
-        public bool Eating;
 
         /// <summary>
         /// How long it takes to eat the food personally.

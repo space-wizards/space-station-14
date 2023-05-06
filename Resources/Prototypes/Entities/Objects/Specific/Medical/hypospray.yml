@@ -24,9 +24,9 @@
     price: 750
 
 - type: entity
-  name: gorlax hypospray
+  name: gorlex hypospray
   parent: BaseItem
-  description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for gorlax marauder operatives.
+  description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for Gorlex Marauder operatives.
   id: SyndiHypo
   components:
   - type: Sprite

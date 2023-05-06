@@ -26,14 +26,6 @@
         amount: 5
   - type: Bloodstream
     bloodReagent: Water
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
   - type: Fixtures
     fixtures:
       - shape:

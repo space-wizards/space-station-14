@@ -7,6 +7,14 @@
   price: 0.1
 
 - type: material
+  id: Cardboard
+  stackEntity: MaterialCardboard1
+  name: materials-cardboard
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cardboard }
+  color: "#70736c"
+  price: 0.05
+
+- type: material
   id: Cloth
   stackEntity: MaterialCloth1
   name: materials-cloth

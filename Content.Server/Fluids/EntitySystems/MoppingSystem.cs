@@ -1,7 +1,5 @@
-using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
@@ -20,7 +18,7 @@ namespace Content.Server.Fluids.EntitySystems;
 [UsedImplicitly]
 public sealed class MoppingSystem : SharedMoppingSystem
 {
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SpillableSystem _spillableSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -35,8 +33,8 @@ public sealed class MoppingSystem : SharedMoppingSystem
         base.Initialize();
         SubscribeLocalEvent<AbsorbentComponent, ComponentInit>(OnAbsorbentInit);
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<AbsorbentComponent, AbsorbantDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<AbsorbentComponent, SolutionChangedEvent>(OnAbsorbentSolutionChange);
-        SubscribeLocalEvent<AbsorbentComponent, DoAfterEvent<AbsorbantData>>(OnDoAfter);
     }
 
     private void OnAbsorbentInit(EntityUid uid, AbsorbentComponent component, ComponentInit args)
@@ -256,48 +254,34 @@ public sealed class MoppingSystem : SharedMoppingSystem
         if (!component.InteractingEntities.Add(target))
             return;
 
-        var aborbantData = new AbsorbantData(targetSolution, msg, sfx, transferAmount);
+        var ev = new AbsorbantDoAfterEvent(targetSolution, msg, sfx, transferAmount);
 
-        var doAfterArgs = new DoAfterEventArgs(user, delay, target: target, used:used)
+        var doAfterArgs = new DoAfterArgs(user, delay, ev, used, target: target, used: used)
         {
             BreakOnUserMove = true,
-            BreakOnStun = true,
             BreakOnDamage = true,
             MovementThreshold = 0.2f
         };
 
-        _doAfterSystem.DoAfter(doAfterArgs, aborbantData);
+        _doAfterSystem.TryStartDoAfter(doAfterArgs);
     }
 
-    private void OnDoAfter(EntityUid uid, AbsorbentComponent component, DoAfterEvent<AbsorbantData> args)
+    private void OnDoAfter(EntityUid uid, AbsorbentComponent component, AbsorbantDoAfterEvent args)
     {
-        if (args.Args.Target == null)
+        if (args.Target == null)
             return;
 
-        if (args.Cancelled)
-        {
-            //Remove the interacting entities or else it breaks the mop
-            component.InteractingEntities.Remove(args.Args.Target.Value);
-            return;
-        }
+        component.InteractingEntities.Remove(args.Target.Value);
 
-        if (args.Handled)
+        if (args.Cancelled || args.Handled)
             return;
 
-        _audio.PlayPvs(args.AdditionalData.Sound, uid);
-        _popups.PopupEntity(Loc.GetString(args.AdditionalData.Message, ("target", args.Args.Target.Value), ("used", uid)), uid);
-        _solutionSystem.TryTransferSolution(args.Args.Target.Value, uid, args.AdditionalData.TargetSolution,
-            AbsorbentComponent.SolutionName, args.AdditionalData.TransferAmount);
-        component.InteractingEntities.Remove(args.Args.Target.Value);
+        _audio.PlayPvs(args.Sound, uid);
+        _popups.PopupEntity(Loc.GetString(args.Message, ("target", args.Target.Value), ("used", uid)), uid);
+        _solutionSystem.TryTransferSolution(args.Target.Value, uid, args.TargetSolution,
+            AbsorbentComponent.SolutionName, args.TransferAmount);
+        component.InteractingEntities.Remove(args.Target.Value);
 
         args.Handled = true;
-    }
-
-    private record struct AbsorbantData(string TargetSolution, string Message, SoundSpecifier Sound, FixedPoint2 TransferAmount)
-    {
-        public readonly string TargetSolution = TargetSolution;
-        public readonly string Message = Message;
-        public readonly SoundSpecifier Sound = Sound;
-        public readonly FixedPoint2 TransferAmount = TransferAmount;
     }
 }

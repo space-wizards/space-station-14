@@ -161,6 +161,7 @@
       - id: PlushieSlime
         prob: 0.1
       - id: DoorRemoteResearch
+      - id: ClothingHeadHatBeretRND
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
@@ -209,3 +210,4 @@
       - id: SecurityTechFabCircuitboard
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
+      - id: HoloprojectorSecurity

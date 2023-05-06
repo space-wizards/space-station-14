@@ -39,7 +39,5 @@ namespace Content.Server.RCD.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("ammo")]
         public int CurrentAmmo = DefaultAmmoCount;
-
-        public CancellationTokenSource? CancelToken = null;
     }
 }

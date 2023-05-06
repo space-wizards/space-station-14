@@ -171,6 +171,10 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
         Margin = new Thickness(4, 8);
 
+        // By default, we will map-initialize guidebook entities.
+        if (!args.TryGetValue("Init", out var mapInit) || !bool.Parse(mapInit))
+            _entityManager.RunMapInit(ent, _entityManager.GetComponent<MetaDataComponent>(ent));
+
         control = this;
         return true;
     }

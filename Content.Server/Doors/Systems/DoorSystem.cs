@@ -20,6 +20,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Tools;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Content.Shared.DoAfter;
 
 namespace Content.Server.Doors.Systems;
 
@@ -41,8 +42,7 @@ public sealed class DoorSystem : SharedDoorSystem
         // Mob prying doors
         SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
 
-        SubscribeLocalEvent<DoorComponent, PryFinishedEvent>(OnPryFinished);
-        SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
+        SubscribeLocalEvent<DoorComponent, DoorPryDoAfterEvent>(OnPryFinished);
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
@@ -174,9 +174,6 @@ public sealed class DoorSystem : SharedDoorSystem
     /// </summary>
     public bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
     {
-        if (door.BeingPried)
-            return false;
-
         if (door.State == DoorState.Welded)
             return false;
 
@@ -194,20 +191,14 @@ public sealed class DoorSystem : SharedDoorSystem
         var modEv = new DoorGetPryTimeModifierEvent(user);
         RaiseLocalEvent(target, modEv, false);
 
-        door.BeingPried = true;
-        var toolEvData = new ToolEventData(new PryFinishedEvent(), cancelledEv: new PryCancelledEvent(),targetEntity: target);
-        _toolSystem.UseTool(tool, user, target, modEv.PryTimeModifier * door.PryTime, new[] { door.PryingQuality }, toolEvData);
+        _toolSystem.UseTool(tool, user, target, modEv.PryTimeModifier * door.PryTime, door.PryingQuality, new DoorPryDoAfterEvent());
         return true; // we might not actually succeeded, but a do-after has started
     }
 
-    private void OnPryCancelled(EntityUid uid, DoorComponent door, PryCancelledEvent args)
+    private void OnPryFinished(EntityUid uid, DoorComponent door, DoAfterEvent args)
     {
-        door.BeingPried = false;
-    }
-
-    private void OnPryFinished(EntityUid uid, DoorComponent door, PryFinishedEvent args)
-    {
-        door.BeingPried = false;
+        if (args.Cancelled)
+            return;
 
         if (door.State == DoorState.Closed)
             StartOpening(uid, door);
@@ -308,7 +299,4 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 }
-
-public sealed class PryFinishedEvent : EntityEventArgs { }
-public sealed class PryCancelledEvent : EntityEventArgs { }
 

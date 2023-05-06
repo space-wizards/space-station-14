@@ -28,6 +28,7 @@ namespace Content.Client.Communications.UI
 
         public CommunicationsConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
+
         }
 
         protected override void Open()

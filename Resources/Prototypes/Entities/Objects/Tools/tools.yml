@@ -217,7 +217,7 @@
     state: drill_screw
   - type: Item
     sprite: Objects/Tools/drill.rsi
-    size: 20
+    size: 10
   - type: Tool
     qualities:
       - Screwing
@@ -243,7 +243,7 @@
         changeSound:
           path: /Audio/Items/change_drill.ogg
   - type: StaticPrice
-    price: 60
+    price: 100
 
 - type: entity
   name: RCD
@@ -274,7 +274,7 @@
   components:
   - type: RCD
     ammo: 0
-  
+
 - type: entity
   name: RCD Ammo
   parent: BaseItem

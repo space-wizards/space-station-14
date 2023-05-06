@@ -15,6 +15,17 @@
 
 - type: entity
   abstract: true
+  parent: ClothingHeadBase
+  id: ClothingHeadBaseButcherable
+  components:
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 1
+
+- type: entity
+  abstract: true
   parent: Clothing
   id: HatBase
   components:

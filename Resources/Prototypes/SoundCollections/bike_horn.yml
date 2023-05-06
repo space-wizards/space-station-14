@@ -8,3 +8,8 @@
   files:
   - /Audio/Items/brokenbikehorn.ogg
 
+- type: soundCollection
+  id: DeskBell
+  files:
+  - /Audio/Items/desk_bell_ring.ogg
+

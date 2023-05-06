@@ -329,7 +329,7 @@
   description: Usually cold and empty... like your heart.
   components:
   - type: AccessReader
-    access: [["Security"]] # TODO access [["Detective"]]
+    access: [["Detective"]]
 
 - type: entity
   id: LockerEvidence

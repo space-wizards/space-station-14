@@ -40,18 +40,38 @@
     - 7,9,12,16
     - 1,5,6,12
 
+# 17x5 corridor through middle with 2 7x5 rooms off to the side.
+- type: dungeonRoomPack
+  id: LargeArea6
+  size: 17,17
+  rooms:
+    - 0,6,17,11
+    - 0,0,7,5
+    - 10,0,17,5
+
+# 3x7 corridor leading to 7x7 room.
+- type: dungeonRoomPack
+  id: LargeArea7
+  size: 17,17
+  rooms:
+    - 0,7,7,10
+    - 8,5,15,12
+
+# 17x5 corridor to 7x7
+- type: dungeonRoomPack
+  id: LargeArea8
+  size: 17,17
+  rooms:
+    - 0,1,17,6
+    - 5,7,12,14
+
 # Medium
 # Whole area room
-#- type: dungeonRoomPack
-#  id: MediumArea1
-#  size: 5,17
-#  rooms:
-#    - 0,6,15,9
-#    - 11,12,16,17
-#    - 11,0,16,5
-#  roomConnections:
-#    - 13,5
-#    - 13,9
+- type: dungeonRoomPack
+  id: MediumArea1
+  size: 5,17
+  rooms:
+    - 0,0,5,17
 
 # Three 5x5 rooms
 - type: dungeonRoomPack
@@ -79,6 +99,30 @@
     - 1,0,4,5
     - 0,6,5,11
     - 1,12,4,17
+
+# 3x5 then a 13x3
+- type: dungeonRoomPack
+  id: MediumArea5
+  size: 5,17
+  rooms:
+    - 0,0,5,3
+    - 1,4,4,17
+
+# 5x5 then a 11x3
+- type: dungeonRoomPack
+  id: MediumArea6
+  size: 5,17
+  rooms:
+    - 0,0,5,5
+    - 1,6,4,17
+
+# 5x5 then a 11x5
+- type: dungeonRoomPack
+  id: MediumArea7
+  size: 5,17
+  rooms:
+    - 0,0,5,5
+    - 0,6,5,17
 
 # Small
 - type: dungeonRoomPack

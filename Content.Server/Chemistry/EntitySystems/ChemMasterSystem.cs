@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Labels;
-using Content.Server.Labels.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
@@ -16,9 +15,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
-using Robust.Shared.Utility;
-
 
 namespace Content.Server.Chemistry.EntitySystems
 {

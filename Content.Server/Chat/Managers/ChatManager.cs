@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Administration.Systems;
+using Content.Server.Mind.Components;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
 using Content.Server.Station.Systems;
@@ -39,6 +41,7 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly INetConfigurationManager _netConfigManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -101,6 +104,31 @@ namespace Content.Server.Chat.Managers
 
             ChatMessageToMany(ChatChannel.Admin, message, wrappedMessage, default, false, true, clients);
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement: {message}");
+        }
+
+        public void SendAdminAlert(string message)
+        {
+            var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
+
+            var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
+                ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")), ("message", FormattedMessage.EscapeText(message)));
+
+            ChatMessageToMany(ChatChannel.AdminAlert, message, wrappedMessage, default, false, true, clients);
+        }
+
+        public void SendAdminAlert(EntityUid player, string message, MindComponent? mindComponent = null)
+        {
+            if(mindComponent == null && !_entityManager.TryGetComponent(player, out mindComponent))
+            {
+                SendAdminAlert(message);
+                return;
+            }
+
+            var adminSystem = _entityManager.System<AdminSystem>();
+            var antag = mindComponent.Mind!.UserId != null
+                        && (adminSystem.GetCachedPlayerInfo(mindComponent.Mind!.UserId.Value)?.Antag ?? false);
+
+            SendAdminAlert($"{mindComponent.Mind!.Session?.Name}{(antag ? " (ANTAG)" : "")} {message}");
         }
 
         public void SendHookOOC(string sender, string message)

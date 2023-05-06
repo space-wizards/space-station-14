@@ -16,7 +16,7 @@
 
 - type: technology
   name: technologies-cleaning-technology
-  id: MopBucket
+  id: CleaningTechnology
   description: technologies-cleaning-technology-description
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -29,6 +29,19 @@
   - MopItem
   - SprayBottle
   - BodyBag
+- type: technology
+  name: technologies-advanced-cleaning-technology
+  id: AdvancedCleaningTechnology
+  description: technologies-advanced-cleaning-technology-description
+  icon:
+    sprite: Objects/Specific/Janitorial/advmop.rsi
+    state: advmop
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicResearch
+    - CleaningTechnology
+  unlockedRecipes:
+    - AdvMopItem
 
 # Food/Bev Service Technology Tree
 

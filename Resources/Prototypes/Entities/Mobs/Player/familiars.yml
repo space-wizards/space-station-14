@@ -75,3 +75,8 @@
   - type: Mind
     showExamineInfo: true
   - type: Familiar
+  - type: Vocal
+    sounds:
+      Male: Cerberus
+      Female: Cerberus
+      Unsexed: Cerberus

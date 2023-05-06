@@ -29,6 +29,7 @@ namespace Content.Server.Database
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
         public DbSet<ServerBan> Ban { get; set; } = default!;
         public DbSet<ServerUnban> Unban { get; set; } = default!;
+        public DbSet<ServerBanExemption> BanExemption { get; set; } = default!;
         public DbSet<ConnectionLog> ConnectionLog { get; set; } = default!;
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
@@ -125,8 +126,13 @@ namespace Content.Server.Database
                 .HasIndex(p => p.BanId)
                 .IsUnique();
 
-            modelBuilder.Entity<ServerBan>()
-                .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+            modelBuilder.Entity<ServerBan>().ToTable(t =>
+                t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL"));
+
+            // Ban exemption can't have flags 0 since that wouldn't exempt anything.
+            // The row should be removed if setting to 0.
+            modelBuilder.Entity<ServerBanExemption>().ToTable(t =>
+                t.HasCheckConstraint("FlagsNotZero", "flags != 0"));
 
             modelBuilder.Entity<ServerRoleBan>()
                 .HasIndex(p => p.UserId);
@@ -141,8 +147,8 @@ namespace Content.Server.Database
                 .HasIndex(p => p.BanId)
                 .IsUnique();
 
-            modelBuilder.Entity<ServerRoleBan>()
-                .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+            modelBuilder.Entity<ServerRoleBan>().ToTable(t =>
+                t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL"));
 
             modelBuilder.Entity<Player>()
                 .HasIndex(p => p.UserId)
@@ -440,37 +446,146 @@ namespace Content.Server.Database
         DateTime UnbanTime { get; set; }
     }
 
+    /// <summary>
+    /// Flags for use with <see cref="ServerBanExemption"/>.
+    /// </summary>
+    [Flags]
+    public enum ServerBanExemptFlags
+    {
+        // @formatter:off
+        None       = 0,
+
+        /// <summary>
+        /// Ban is a datacenter range, connections usually imply usage of a VPN service.
+        /// </summary>
+        Datacenter = 1 << 0,
+        // @formatter:on
+    }
+
+    /// <summary>
+    /// A ban from playing on the server.
+    /// If an incoming connection matches any of UserID, IP, or HWID, they will be blocked from joining the server.
+    /// </summary>
+    /// <remarks>
+    /// At least one of UserID, IP, or HWID must be given (otherwise the ban would match nothing).
+    /// </remarks>
     [Table("server_ban")]
     public class ServerBan : IBanCommon<ServerUnban>
     {
         public int Id { get; set; }
+
+        /// <summary>
+        /// The user ID of the banned player.
+        /// </summary>
         public Guid? UserId { get; set; }
+
+        /// <summary>
+        /// CIDR IP address range of the ban. The whole range can match the ban.
+        /// </summary>
         [Column(TypeName = "inet")] public (IPAddress, int)? Address { get; set; }
+
+        /// <summary>
+        /// Hardware ID of the banned player.
+        /// </summary>
         public byte[]? HWId { get; set; }
 
+        /// <summary>
+        /// The time when the ban was applied by an administrator.
+        /// </summary>
         public DateTime BanTime { get; set; }
 
+        /// <summary>
+        /// The time the ban will expire. If null, the ban is permanent and will not expire naturally.
+        /// </summary>
         public DateTime? ExpirationTime { get; set; }
 
+        /// <summary>
+        /// The administrator-stated reason for applying the ban.
+        /// </summary>
         public string Reason { get; set; } = null!;
+
+        /// <summary>
+        /// User ID of the admin that applied the ban.
+        /// </summary>
         public Guid? BanningAdmin { get; set; }
 
+        /// <summary>
+        /// Optional flags that allow adding exemptions to the ban via <see cref="ServerBanExemption"/>.
+        /// </summary>
+        public ServerBanExemptFlags ExemptFlags { get; set; }
+
+        /// <summary>
+        /// If present, an administrator has manually repealed this ban.
+        /// </summary>
         public ServerUnban? Unban { get; set; }
+
+        /// <summary>
+        /// Whether this ban should be automatically deleted from the database when it expires.
+        /// </summary>
+        /// <remarks>
+        /// This isn't done automatically by the game,
+        /// you will need to set up something like a cron job to clear this from your database,
+        /// using a command like this:
+        /// psql -d ss14 -c "DELETE FROM server_ban WHERE auto_delete AND expiration_time &lt; NOW()"
+        /// </remarks>
+        public bool AutoDelete { get; set; }
 
         public List<ServerBanHit> BanHits { get; set; } = null!;
     }
 
+    /// <summary>
+    /// An explicit repeal of a <see cref="ServerBan"/> by an administrator.
+    /// Having an entry for a ban neutralizes it.
+    /// </summary>
     [Table("server_unban")]
     public class ServerUnban : IUnbanCommon
     {
         [Column("unban_id")] public int Id { get; set; }
 
+        /// <summary>
+        /// The ID of ban that is being repealed.
+        /// </summary>
         public int BanId { get; set; }
+
+        /// <summary>
+        /// The ban that is being repealed.
+        /// </summary>
         public ServerBan Ban { get; set; } = null!;
 
+        /// <summary>
+        /// The admin that repealed the ban.
+        /// </summary>
         public Guid? UnbanningAdmin { get; set; }
 
+        /// <summary>
+        /// The time the ban repealed.
+        /// </summary>
         public DateTime UnbanTime { get; set; }
+    }
+
+    /// <summary>
+    /// An exemption for a specific user to a certain type of <see cref="ServerBan"/>.
+    /// </summary>
+    /// <example>
+    /// Certain players may need to be exempted from VPN bans due to issues with their ISP.
+    /// We would tag all VPN bans with <see cref="ServerBanExemptFlags.Datacenter"/>,
+    /// and then add an exemption for these players to this table with the same flag.
+    /// They will only be exempted from VPN bans, other bans (if they manage to get any) will still apply.
+    /// </example>
+    [Table("server_ban_exemption")]
+    public sealed class ServerBanExemption
+    {
+        /// <summary>
+        /// The UserID of the exempted player.
+        /// </summary>
+        [Key]
+        public Guid UserId { get; set; }
+
+        /// <summary>
+        /// The ban flags to exempt this player from.
+        /// If any bit overlaps <see cref="ServerBan.ExemptFlags"/>, the ban is ignored.
+        /// </summary>
+        public ServerBanExemptFlags Flags { get; set; }
     }
 
     [Table("connection_log")]

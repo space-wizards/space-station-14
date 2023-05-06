@@ -1,14 +1,24 @@
 - type: soundCollection
-  id: Sneezes
+  id: MaleSneezes
   files:
-  - /Audio/Effects/Diseases/sneeze1.ogg
-  - /Audio/Effects/Diseases/sneeze2.ogg
+    - /Audio/Voice/Human/male_sneeze_1.ogg
 
 - type: soundCollection
-  id: Coughs
+  id: FemaleSneezes
   files:
-  - /Audio/Effects/Diseases/cough1.ogg
-  - /Audio/Effects/Diseases/cough2.ogg
+    - /Audio/Voice/Human/female_sneeze_1.ogg
+
+- type: soundCollection
+  id: MaleCoughs
+  files:
+  - /Audio/Voice/Human/male_cough_1.ogg
+  - /Audio/Voice/Human/male_cough_2.ogg
+
+- type: soundCollection
+  id: FemaleCoughs
+  files:
+  - /Audio/Voice/Human/female_cough_1.ogg
+  - /Audio/Voice/Human/female_cough_2.ogg
 
 - type: soundCollection
   id: CatMeows
@@ -32,14 +42,18 @@
   - /Audio/Effects/Diseases/beepboop.ogg
 
 - type: soundCollection
-  id: Yawns
+  id: MaleYawn
   files:
-  - /Audio/Effects/Diseases/yawn1.ogg
-  - /Audio/Effects/Diseases/yawn2.ogg
+  - /Audio/Voice/Human/male_yawn_1.ogg
+
+- type: soundCollection
+  id: FemaleYawn
+  files:
+  - /Audio/Voice/Human/female_yawn_1.ogg
 
 - type: soundCollection
   id: Snores
   files:
-  - /Audio/Effects/Diseases/snore1.ogg
-  - /Audio/Effects/Diseases/snore2.ogg
-  - /Audio/Effects/Diseases/snore3.ogg
+  - /Audio/Voice/Human/snore1.ogg
+  - /Audio/Voice/Human/snore2.ogg
+  - /Audio/Voice/Human/snore3.ogg

@@ -4,6 +4,7 @@
   id: ShardBase
   description: It's a shard of some unknown material.
   components:
+  - type: Sharp
   - type: Sprite
     layers:
       - sprite: Objects/Materials/Shards/shard.rsi

@@ -34,6 +34,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
+        [ViewVariables] public TimeSpan PreloadTime { get; private set; }
         [ViewVariables] public TimeSpan RoundStartTimeSpan { get; private set; }
         [ViewVariables] public new bool Paused { get; private set; }
 
@@ -89,6 +90,7 @@ namespace Content.Client.GameTicking.Managers
         private void LobbyStatus(TickerLobbyStatusEvent message)
         {
             StartTime = message.StartTime;
+            PreloadTime = message.PreloadTime;
             RoundStartTimeSpan = message.RoundStartTimeSpan;
             IsGameStarted = message.IsRoundStarted;
             AreWeReady = message.YouAreReady;

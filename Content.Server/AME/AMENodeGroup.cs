@@ -1,5 +1,7 @@
 using System.Linq;
+using Content.Server.Administration.Systems;
 using Content.Server.AME.Components;
+using Content.Server.Chat.Managers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
@@ -26,6 +28,8 @@ namespace Content.Server.AME
         [Dependency] private readonly IRobustRandom _random = default!;
 
         [Dependency] private readonly IEntityManager _entMan = default!;
+
+        [Dependency] private readonly IChatManager _chat = default!;
 
         public AMEControllerComponent? MasterController => _masterController;
 
@@ -133,10 +137,21 @@ namespace Content.Server.AME
                     if (instability != 0)
                     {
                         overloading = true;
+                        var integrityCheck = 100;
                         foreach(AMEShieldComponent core in _cores)
                         {
+                            var oldIntegrity = core.CoreIntegrity;
                             core.CoreIntegrity -= instability;
+
+                            if (oldIntegrity > 95
+                                && core.CoreIntegrity <= 95
+                                && core.CoreIntegrity < integrityCheck)
+                                integrityCheck = core.CoreIntegrity;
                         }
+
+                        // Admin alert
+                        if (integrityCheck != 100 && _masterController != null)
+                            _chat.SendAdminAlert($"AME overloading: {_entMan.ToPrettyString(_masterController.Owner)}");
                     }
                 }
                 // Note the float conversions. The maths will completely fail if not done using floats.

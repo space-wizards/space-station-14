@@ -356,3 +356,19 @@
       amount: 1
   products:
     Cognizine: 1
+
+- type: reaction
+  id: Sigynate
+  impact: Medium
+  minTemp: 370
+  reactants:
+    SodiumCarbonate: 
+      amount: 1
+    Kelotane:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar: 
+      amount: 1
+  products:
+    Sigynate: 4

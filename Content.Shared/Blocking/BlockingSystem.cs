@@ -14,7 +14,6 @@ using Content.Shared.Popups;
 using Content.Shared.Toggleable;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -85,7 +84,7 @@ public sealed partial class BlockingSystem : EntitySystem
             return;
 
         var blockQuery = GetEntityQuery<BlockingComponent>();
-        var handQuery = GetEntityQuery<SharedHandsComponent>();
+        var handQuery = GetEntityQuery<HandsComponent>();
 
         if (!handQuery.TryGetComponent(args.Performer, out var hands))
             return;
@@ -265,7 +264,7 @@ public sealed partial class BlockingSystem : EntitySystem
             StopBlocking(uid, component, user);
 
         var userQuery = GetEntityQuery<BlockingUserComponent>();
-        var handQuery = GetEntityQuery<SharedHandsComponent>();
+        var handQuery = GetEntityQuery<HandsComponent>();
 
         if (!handQuery.TryGetComponent(user, out var hands))
             return;

@@ -15,3 +15,8 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+  - type: Construction
+    graph: BoxCardboard
+    node: boxcardboard
+    containers:
+      - entity_storage

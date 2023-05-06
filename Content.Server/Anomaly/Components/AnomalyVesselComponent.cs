@@ -1,4 +1,5 @@
-﻿using Content.Shared.Construction.Prototypes;
+﻿using Content.Shared.Anomaly;
+using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -11,7 +12,7 @@ namespace Content.Server.Anomaly.Components;
 /// they generate points for the selected server based on
 /// the anomaly's stability and severity.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedAnomalySystem))]
 public sealed class AnomalyVesselComponent : Component
 {
     /// <summary>

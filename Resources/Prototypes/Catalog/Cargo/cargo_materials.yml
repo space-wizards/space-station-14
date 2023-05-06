@@ -59,6 +59,16 @@
   group: market
 
 - type: cargoProduct
+  id: CardboardMaterial
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cardboard_3
+  product: CrateMaterialCardboard
+  cost: 750
+  category: Materials
+  group: market
+
+- type: cargoProduct
   id: MaterialFuelTank
   icon:
     sprite: Structures/Storage/tanks.rsi

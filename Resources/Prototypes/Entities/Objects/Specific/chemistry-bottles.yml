@@ -42,6 +42,12 @@
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
     solution: drink
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: TrashOnEmpty
     solution: drink
   - type: StaticPrice
