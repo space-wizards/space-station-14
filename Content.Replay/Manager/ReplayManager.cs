@@ -3,7 +3,6 @@ using Robust.Client.Configuration;
 using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Client.Serialization;
 using Robust.Client.Timing;
 using Robust.Client.UserInterface;
@@ -15,7 +14,6 @@ namespace Content.Replay.Manager;
 
 public sealed partial class ReplayManager
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IClydeAudio _clydeAudio = default!;
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IClientGameTiming _timing = default!;
@@ -38,8 +36,8 @@ public sealed partial class ReplayManager
 
     public int ScrubbingIndex;
     public bool ActivelyScrubbing = false;
-    public int? Steps = null;
-    private bool _playing = false;
+    public int? Steps;
+    private bool _playing;
 
     public bool Playing
     {
@@ -56,7 +54,7 @@ public sealed partial class ReplayManager
         }
     }
 
-    private bool _initialized = false;
+    private bool _initialized;
 
     public void Initialize()
     {

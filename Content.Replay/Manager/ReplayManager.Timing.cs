@@ -11,6 +11,8 @@ namespace Content.Replay.Manager;
 // This partial class contains codes for modifying the current game tick/time.
 public sealed partial class ReplayManager
 {
+    [Dependency] private readonly IMidiManager _midi = default!;
+
     /// <summary>
     ///     Set the current replay index (aka, jump to a specific point in time).
     /// </summary>
@@ -58,7 +60,7 @@ public sealed partial class ReplayManager
             _gameState.ApplyGameState(state, CurrentReplay.NextState);
             ProcessMessages(CurrentReplay.CurMessages, skipEffectEvents);
 
-            // TODO REPLAYS find a way to just block audio/midi from starting, instead of stopping it after every application.
+            // TODO REPLAYS find a way to just block audio/midi from starting, instead of stopping it after every state application.
             StopAudio();
 
             DebugTools.Assert(CurrentReplay.LastApplied + 1 == state.ToSequence);
@@ -125,21 +127,11 @@ public sealed partial class ReplayManager
     public void StopAudio()
     {
         _clydeAudio.StopAllAudio();
-        _consoleHost.ExecuteCommand("midipanic");
-        // fuck this doesn't even work.
-        // uhhhh
-        IoCManager.Resolve<IMidiManager>().Volume = -100;
 
-        // TODO REPLAYS properly stop all midi streams
-        /*
-         * Vera's comments on stopping midi:
-         *
-         * midipanic is meant to reset the state of all synthesizers, it is generally meant to be used to clear any stuck notes, not to stop MIDI entirely.
-         * What you would want would be:
-         * 1. Stop InstrumentComponent's logic.
-         * 2. Somehow clear the MIDI scheduler. Fluidsynth might or might not have an API for this. And if the API does exist, NFluidsynth might or might not wrap this API.
-         * 3. Run midipanic logic
-         *
-         */
+        foreach (var renderer in _midi.Renderers)
+        {
+            renderer.ClearEvents();
+            renderer.StopAllNotes();
+        }
     }
 }
