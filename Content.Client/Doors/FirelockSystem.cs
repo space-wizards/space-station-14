@@ -1,13 +1,10 @@
 using Content.Shared.Doors.Components;
 using Robust.Client.GameObjects;
-using Robust.Client.ResourceManagement;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Doors;
 
 public sealed class FirelockSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
 
     public override void Initialize()
@@ -18,7 +15,7 @@ public sealed class FirelockSystem : EntitySystem
 
     private void OnAppearanceChange(EntityUid uid, FirelockComponent comp, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null || !_gameTiming.IsFirstTimePredicted)
+        if (args.Sprite == null)
             return;
 
         // Apply the closed lights bool to the sprite
