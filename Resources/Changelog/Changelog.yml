@@ -1,10 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: The blood red hardsuit sprite is no longer identical to that of the
-      syndicate commander's hardsuit., type: Tweak}
-  id: 3164
-  time: '2023-03-12T23:42:42.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: 'Changed meat kudzu spread by half, but it deals additional piercing
@@ -2899,3 +2893,10 @@ Entries:
   - {message: broken bulbs are not affected by EMP, type: Fix}
   id: 3663
   time: '2023-05-06T01:38:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the spray nozzle and backpack water tank. In conjunction, you
+      can let off a never ending stream of water, space cleaner, or napalm.', type: Add}
+  - {message: Added advanced spray technology., type: Add}
+  id: 3664
+  time: '2023-05-06T01:50:09.0000000+00:00'
