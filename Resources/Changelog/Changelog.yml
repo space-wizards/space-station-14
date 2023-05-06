@@ -1,11 +1,6 @@
 Entries:
 - author: Alekshhh
   changes:
-  - {message: Changed security and HoS hardsuits lights from red to yellow., type: Tweak}
-  id: 3174
-  time: '2023-03-13T17:45:48.0000000+00:00'
-- author: Alekshhh
-  changes:
   - {message: 'Added the warden''s hardsuit to the warden''s locker. Don''t abuse
       it, wardens.', type: Add}
   id: 3175
@@ -2903,3 +2898,9 @@ Entries:
   - {message: Uranium sheets is now edible., type: Add}
   id: 3673
   time: '2023-05-06T07:23:05.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Cigarette pack and matchbox sizes were downed to 5, type: Tweak}
+  - {message: Matchbox inventory size was adjusted, type: Tweak}
+  id: 3674
+  time: '2023-05-06T07:27:50.0000000+00:00'
