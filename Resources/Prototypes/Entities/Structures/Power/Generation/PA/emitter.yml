@@ -46,8 +46,6 @@
   suffix: Unfinished, Left
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Physics
-      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/emitter_left.rsi
     - type: Construction
@@ -60,8 +58,6 @@
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Physics
-      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/emitter_center.rsi
     - type: Construction
@@ -74,8 +70,6 @@
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Physics
-      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/emitter_right.rsi
     - type: Construction
