@@ -1,9 +1,4 @@
 Entries:
-- author: furontier
-  changes:
-  - {message: Flashes can no longer affect blind players., type: Tweak}
-  id: 3173
-  time: '2023-03-13T04:03:51.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed security and HoS hardsuits lights from red to yellow., type: Tweak}
@@ -2903,3 +2898,8 @@ Entries:
   - {message: Wet floor holosign lifetime increased from 30 to 90 seconds, type: Tweak}
   id: 3672
   time: '2023-05-06T06:44:38.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: Uranium sheets is now edible., type: Add}
+  id: 3673
+  time: '2023-05-06T07:23:05.0000000+00:00'
