@@ -168,7 +168,7 @@ public sealed class PrototypeSaveTest
                 foreach (var prototype in prototypes)
                 {
                     uid = entityMan.SpawnEntity(prototype.ID, testLocation);
-                    context.Prototype = prototype.ID;
+                    context.Prototype = prototype;
 
                     // get default prototype data
                     Dictionary<string, MappingDataNode> protoData = new();
@@ -205,6 +205,7 @@ public sealed class PrototypeSaveTest
                         MappingDataNode compMapping;
                         try
                         {
+                            context.WritingComponent = compName;
                             compMapping = seriMan.WriteValueAs<MappingDataNode>(compType, component, alwaysWrite: true, context: context);
                         }
                         catch (Exception e)
@@ -250,7 +251,7 @@ public sealed class PrototypeSaveTest
         public bool WritingReadingPrototypes { get; set; }
 
         public string WritingComponent = string.Empty;
-        public string Prototype = string.Empty;
+        public EntityPrototype Prototype = default!;
 
         public TestEntityUidContext()
         {
@@ -268,11 +269,12 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            if (WritingComponent != "Transform")
+            if (WritingComponent != "Transform" && !Prototype.NoSpawn)
             {
                 // Maybe this will be necessary in the future, but at the moment it just indicates that there is some
-                // issue, like a non-nullable entityUid data-field.
-                Assert.Fail($"Uninitialized entities should not be saving entity Uids. Component: {WritingComponent}. Prototype: {Prototype}");
+                // issue, like a non-nullable entityUid data-field. If a component MUST have an entity uid to work with,
+                // then the prototype very likely has to be a no-spawn entity that is never meant to be directly spawned.
+                Assert.Fail($"Uninitialized entities should not be saving entity Uids. Component: {WritingComponent}. Prototype: {Prototype.ID}");
             }
 
             return new ValueDataNode(value.ToString());
