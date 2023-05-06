@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed being able to emag machines by snipping the access wire., type: Fix}
-  id: 3179
-  time: '2023-03-14T02:55:19.0000000+00:00'
 - author: ficcialfaint
   changes:
   - {message: Station Records Computer now shows fingerprints, type: Add}
@@ -2907,3 +2902,9 @@ Entries:
   - {message: Changed all bread sprites, type: Tweak}
   id: 3678
   time: '2023-05-06T07:41:32.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added 3 new burgers and made 8 unused burgers craftable., type: Add}
+  - {message: Cargo can now purchase a crate of crabs., type: Add}
+  id: 3679
+  time: '2023-05-06T07:43:09.0000000+00:00'
