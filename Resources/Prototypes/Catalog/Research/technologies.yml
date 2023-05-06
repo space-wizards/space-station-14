@@ -427,7 +427,6 @@
   - ElectromagneticTheory
   - IndustrialEngineering
   unlockedRecipes:
-  - PowerDrill
   - SMESMachineCircuitboard
   - PowerComputerCircuitboard
   - GeneratorPlasmaMachineCircuitboard
@@ -653,3 +652,19 @@
   - SuperCapacitorStockPart
   - SuperMatterBinStockPart
   - PicoManipulatorStockPart
+
+- type: technology
+  name: technologies-advanced-tools-technology
+  id: AdvancedToolsTechnology
+  description: technologies-advanced-tools-technology-description
+  icon:
+    sprite: Clothing/Shoes/Boots/magboots.rsi
+    state: icon
+  requiredPoints: 8500
+  requiredTechnologies:
+    - ScientificTechnology
+    - IndustrialEngineering
+  unlockedRecipes:
+    - WelderIndustrialAdvanced
+    - PowerDrill
+    - JawsOfLife

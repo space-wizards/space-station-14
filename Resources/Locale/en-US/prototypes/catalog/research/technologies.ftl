@@ -103,3 +103,5 @@ technologies-super-parts-technology-description = New heights of machine perform
 technologies-magboots-technology = Magboots technology
 technologies-magboots-technology-description = Magboots for a space escape from the assistant.
 
+technologies-advanced-tools-technology = Advanced tools technology
+technologies-advanced-tools-technology-description = Cutting-edge equipment for precision work.
