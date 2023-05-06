@@ -33,6 +33,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
     [Dependency] private readonly IBaseClient _client = default!;
+    [Dependency] private readonly SharedContentEyeSystem _eye = default!;
 
     public override void Initialize()
     {
@@ -193,8 +194,11 @@ public sealed partial class ReplayObserverSystem : EntitySystem
 
         var old = _player.LocalPlayer.ControlledEntity;
 
+        // TODO use an actual prototype.
         var ent = Spawn("MobObserver", coords);
+        _eye.SetMaxZoom(ent, Vector2.One * 5);
         EnsureComp<ReplayObserverComponent>(ent);
+
         var xform = Transform(ent);
 
         if (gridAttach)
