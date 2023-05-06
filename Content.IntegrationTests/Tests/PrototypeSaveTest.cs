@@ -43,25 +43,20 @@ public sealed class PrototypeSaveTest
         // These should NOT be added to.
         // 99% of these are going to be changing the physics bodytype (where the entity is anchored)
         // or some ambientsound change.
-        "ComfyChair",
         "PlasticFlapsOpaque",
         "PlasticFlapsAirtightClear",
-        "SurveillanceWirelessCameraAnchoredEntertainment",
-        "Chair",
-        "Thruster",
         "BoxingBell",
         "PlasticFlapsClear",
         "ClothingBackpackChameleon",
+        "ClothingBackpackChameleonFill",
         "AMEControllerUnanchored",
         "NuclearBomb",
         "PlasticFlapsAirtightOpaque",
-        "ToiletDirtyWater",
         "MachineFrameDestroyed",
-        "ChairPilotSeat",
         "VehicleJanicartDestroyed",
         "Gyroscope",
-        "ToiletEmpty",
-        "ClothingBackpackChameleonFill",
+        "Thruster",
+        "SurveillanceWirelessCameraAnchoredEntertainment",
         "SurveillanceWirelessCameraAnchoredConstructed",
 
     };
