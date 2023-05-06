@@ -65,7 +65,6 @@
       - !type:SpawnPrototype
         prototype: SheetGlass1
         amount: 5
-      - !type:DeleteEntity { }
       steps:
       - tool: Screwing
         doAfter: 2
@@ -163,7 +162,6 @@
       - !type:SpawnPrototype
         prototype: SheetRGlass1
         amount: 5
-      - !type:DeleteEntity { }
       steps:
       - tool: Screwing
         doAfter: 4

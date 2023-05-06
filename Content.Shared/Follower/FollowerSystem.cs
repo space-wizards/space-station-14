@@ -2,6 +2,7 @@ using Content.Shared.Database;
 using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -38,7 +39,7 @@ public sealed class FollowerSystem : EntitySystem
             }),
             Impact = LogImpact.Low,
             Text = Loc.GetString("verb-follow-text"),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
         };
 
         ev.Verbs.Add(verb);
@@ -64,19 +65,25 @@ public sealed class FollowerSystem : EntitySystem
     public void StartFollowingEntity(EntityUid follower, EntityUid entity)
     {
         // No recursion for you
-        if (Transform(entity).ParentUid == follower)
-            return;
+        var targetXform = Transform(entity);
+        while (targetXform.ParentUid.IsValid())
+        {
+            if (targetXform.ParentUid == follower)
+                return;
+
+            targetXform = Transform(targetXform.ParentUid);
+        }
 
         var followerComp = EnsureComp<FollowerComponent>(follower);
         followerComp.Following = entity;
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
-        followedComp.Following.Add(follower);
+
+        if (!followedComp.Following.Add(follower))
+            return;
 
         var xform = Transform(follower);
-        _transform.SetParent(follower, xform, entity);
-        xform.LocalPosition = Vector2.Zero;
-        xform.LocalRotation = Angle.Zero;
+        _transform.SetCoordinates(follower, xform, new EntityCoordinates(entity, Vector2.Zero), Angle.Zero);
 
         EnsureComp<OrbitVisualsComponent>(follower);
 
@@ -85,6 +92,7 @@ public sealed class FollowerSystem : EntitySystem
 
         RaiseLocalEvent(follower, followerEv, true);
         RaiseLocalEvent(entity, entityEv, false);
+        Dirty(followedComp);
     }
 
     /// <summary>
@@ -105,10 +113,10 @@ public sealed class FollowerSystem : EntitySystem
         RemComp<FollowerComponent>(uid);
 
         var xform = Transform(uid);
-        xform.AttachToGridOrMap();
+        _transform.AttachToGridOrMap(uid, xform);
         if (xform.MapID == MapId.Nullspace)
         {
-            Del(uid);
+            QueueDel(uid);
             return;
         }
 
@@ -119,6 +127,7 @@ public sealed class FollowerSystem : EntitySystem
 
         RaiseLocalEvent(uid, uidEv, true);
         RaiseLocalEvent(target, targetEv, false);
+        Dirty(followed);
     }
 
     /// <summary>

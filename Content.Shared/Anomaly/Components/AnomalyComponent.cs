@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -85,7 +85,7 @@ public sealed class AnomalyComponent : Component
     /// The time at which the next artifact pulse will occur.
     /// </summary>
     [DataField("nextPulseTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan NextPulseTime = TimeSpan.MaxValue;
+    public TimeSpan NextPulseTime = TimeSpan.Zero;
 
     /// <summary>
     /// The minimum interval between pulses.
@@ -150,44 +150,16 @@ public sealed class AnomalyComponent : Component
     public AnomalousParticleType SeverityParticleType;
 
     /// <summary>
-    /// The amount that the <see cref="Severity"/> increases by when hit
-    /// of an anomalous particle of <seealso cref="SeverityParticleType"/>.
-    /// </summary>
-    [DataField("severityPerSeverityHit")]
-    public float SeverityPerSeverityHit = 0.025f;
-
-    /// <summary>
     /// The particle type that destabilizes the anomaly.
     /// </summary>
     [DataField("destabilizingParticleType")]
     public AnomalousParticleType DestabilizingParticleType;
 
     /// <summary>
-    /// The amount that the <see cref="Stability"/> increases by when hit
-    /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
-    /// </summary>
-    [DataField("stabilityPerDestabilizingHit")]
-    public float StabilityPerDestabilizingHit = 0.04f;
-
-    /// <summary>
     /// The particle type that weakens the anomalys health.
     /// </summary>
     [DataField("weakeningParticleType")]
     public AnomalousParticleType WeakeningParticleType;
-
-    /// <summary>
-    /// The amount that the <see cref="Stability"/> increases by when hit
-    /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
-    /// </summary>
-    [DataField("healthPerWeakeningeHit")]
-    public float HealthPerWeakeningeHit = -0.05f;
-
-    /// <summary>
-    /// The amount that the <see cref="Stability"/> increases by when hit
-    /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
-    /// </summary>
-    [DataField("stabilityPerWeakeningeHit")]
-    public float StabilityPerWeakeningeHit = -0.1f;
 
     #region Points and Vessels
     /// <summary>

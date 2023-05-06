@@ -1,7 +1,10 @@
-﻿using Content.Shared.GameTicking;
+﻿using System.Linq;
+using Content.Shared.GameTicking;
 using Content.Shared.NameIdentifier;
+using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NameIdentifier;
 
@@ -13,18 +16,35 @@ public sealed class NameIdentifierSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
+    /// <summary>
+    /// Free IDs available per <see cref="NameIdentifierGroupPrototype"/>.
+    /// </summary>
     [ViewVariables]
-    public Dictionary<NameIdentifierGroupPrototype, HashSet<int>> CurrentIds = new();
+    public Dictionary<string, List<int>> CurrentIds = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NameIdentifierComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<NameIdentifierComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NameIdentifierComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupIds);
 
         InitialSetupPrototypes();
         _prototypeManager.PrototypesReloaded += OnReloadPrototypes;
+    }
+
+    private void OnComponentShutdown(EntityUid uid, NameIdentifierComponent component, ComponentShutdown args)
+    {
+        if (CurrentIds.TryGetValue(component.Group, out var ids))
+        {
+            // Avoid inserting the value right back at the end or shuffling in place:
+            // just pick a random spot to put it and then move that one to the end.
+            var randomIndex = _robustRandom.Next(ids.Count);
+            var random = ids[randomIndex];
+            ids[randomIndex] = component.Identifier;
+            ids.Add(random);
+        }
     }
 
     public override void Shutdown()
@@ -38,43 +58,52 @@ public sealed class NameIdentifierSystem : EntitySystem
     ///     Generates a new unique name/suffix for a given entity and adds it to <see cref="CurrentIds"/>
     ///     but does not set the entity's name.
     /// </summary>
-    public string GenerateUniqueName(EntityUid uid, NameIdentifierGroupPrototype proto)
+    public string GenerateUniqueName(EntityUid uid, NameIdentifierGroupPrototype proto, out int randomVal)
     {
+        randomVal = 0;
         var entityName = Name(uid);
-        if (!CurrentIds.TryGetValue(proto, out var set))
+        if (!CurrentIds.TryGetValue(proto.ID, out var set))
             return entityName;
 
-        if (set.Count == (proto.MaxValue - proto.MinValue) + 1)
+        if (set.Count == 0)
         {
             // Oh jeez. We're outta numbers.
             return entityName;
         }
 
-        // This is kind of inefficient with very large amounts of entities but its better than any other method
-        // I could come up with.
-
-        var randomVal = _robustRandom.Next(proto.MinValue, proto.MaxValue);
-        while (set.Contains(randomVal))
-        {
-            randomVal = _robustRandom.Next(proto.MinValue, proto.MaxValue);
-        }
-
-        set.Add(randomVal);
+        randomVal = set[^1];
+        set.RemoveAt(set.Count - 1);
 
         return proto.Prefix is not null
             ? $"{proto.Prefix}-{randomVal}"
             : $"{randomVal}";
     }
 
-    private void OnComponentInit(EntityUid uid, NameIdentifierComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, NameIdentifierComponent component, MapInitEvent args)
     {
         if (!_prototypeManager.TryIndex<NameIdentifierGroupPrototype>(component.Group, out var group))
             return;
 
-        // Generate a new name.
-        var meta = MetaData(uid);
-        var uniqueName = GenerateUniqueName(uid, group);
+        int id;
+        string uniqueName;
 
+        // If it has an existing valid identifier then use that, otherwise generate a new one.
+        if (component.Identifier != -1 &&
+            CurrentIds.TryGetValue(component.Group, out var ids) &&
+            ids.Remove(component.Identifier))
+        {
+            id = component.Identifier;
+            uniqueName = group.Prefix is not null
+                ? $"{group.Prefix}-{id}"
+                : $"{id}";
+        }
+        else
+        {
+            uniqueName = GenerateUniqueName(uid, group, out id);
+            component.Identifier = id;
+        }
+
+        var meta = MetaData(uid);
         // "DR-1234" as opposed to "drone (DR-1234)"
         meta.EntityName = group.FullName
             ? uniqueName
@@ -85,8 +114,21 @@ public sealed class NameIdentifierSystem : EntitySystem
     {
         foreach (var proto in _prototypeManager.EnumeratePrototypes<NameIdentifierGroupPrototype>())
         {
-            CurrentIds.Add(proto, new());
+            AddGroup(proto);
         }
+    }
+
+    private void AddGroup(NameIdentifierGroupPrototype proto)
+    {
+        var values = new List<int>(proto.MaxValue - proto.MinValue);
+
+        for (var i = proto.MinValue; i < proto.MaxValue; i++)
+        {
+            values.Add(i);
+        }
+
+        _robustRandom.Shuffle(values);
+        CurrentIds.Add(proto.ID, values);
     }
 
     private void OnReloadPrototypes(PrototypesReloadedEventArgs ev)
@@ -94,24 +136,36 @@ public sealed class NameIdentifierSystem : EntitySystem
         if (!ev.ByType.TryGetValue(typeof(NameIdentifierGroupPrototype), out var set))
             return;
 
-        foreach (var (_, proto) in set.Modified)
+        var toRemove = new ValueList<string>();
+
+        foreach (var proto in CurrentIds.Keys)
         {
-            if (proto is not NameIdentifierGroupPrototype group)
-                continue;
+            if (!_prototypeManager.HasIndex<NameIdentifierGroupPrototype>(proto))
+            {
+                toRemove.Add(proto);
+            }
+        }
 
+        foreach (var proto in toRemove)
+        {
+            CurrentIds.Remove(proto);
+        }
+
+        foreach (var proto in set.Modified.Values)
+        {
             // Only bother adding new ones.
-            if (CurrentIds.ContainsKey(group))
+            if (CurrentIds.ContainsKey(proto.ID))
                 continue;
 
-            CurrentIds.Add(group, new());
+            AddGroup((NameIdentifierGroupPrototype) proto);
         }
     }
 
     private void CleanupIds(RoundRestartCleanupEvent ev)
     {
-        foreach (var (_, set) in CurrentIds)
+        foreach (var values in CurrentIds.Values)
         {
-            set.Clear();
+            _robustRandom.Shuffle(values);
         }
     }
 }
