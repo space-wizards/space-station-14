@@ -493,7 +493,7 @@
   id: flare
   flavorType: Complex
   description: flavor-complex-flare
-  
+
 - type: flavor
   id: cobwebs
   flavorType: Complex
@@ -725,11 +725,6 @@
   description: flavor-complex-garlic
 
 - type: flavor
-  id: bottledlightning
-  flavorType: Complex
-  description: flavor-complex-bottledlightning
-
-- type: flavor
   id: bad-joke
   flavorType: Complex
   description: flavor-complex-bad-joke
@@ -793,7 +788,7 @@
   id: chaos
   flavorType: Complex
   description: flavor-complex-chaos
-  
+
 - type: flavor
   id: themartinez
   flavorType: Complex
