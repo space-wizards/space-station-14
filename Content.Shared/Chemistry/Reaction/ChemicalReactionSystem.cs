@@ -1,19 +1,15 @@
 using System.Linq;
-using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction.Events;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry.Reaction
 {
     public sealed class ChemicalReactionSystem : EntitySystem
     {
-
         /// <summary>
         ///     The maximum number of reactions that may occur when a solution is changed.
         /// </summary>
@@ -174,7 +170,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private List<string> PerformReaction(Solution solution, EntityUid owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
-            var energy = solution.GetThermalEnergy(_prototypeManager);
+            var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(_prototypeManager) : 0;
 
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
@@ -194,9 +190,12 @@ namespace Content.Shared.Chemistry.Reaction
                 solution.AddReagent(product.Key, product.Value * unitReactions);
             }
 
-            var newCap = solution.GetHeatCapacity(_prototypeManager);
-            if (newCap > 0)
-                solution.Temperature = energy / newCap;
+            if (reaction.ConserveEnergy)
+            {
+                var newCap = solution.GetHeatCapacity(_prototypeManager);
+                if (newCap > 0)
+                    solution.Temperature = energy / newCap;
+            }
 
             OnReaction(solution, reaction, null, owner, unitReactions);
 
