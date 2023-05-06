@@ -1,10 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Changed the sprite of frezon canisters., type: Tweak}
-  - {message: Fixed frezon canisters spawning with N2O in them., type: Fix}
-  id: 3181
-  time: '2023-03-14T03:42:07.0000000+00:00'
 - author: moony
   changes:
   - {message: The flashbang now darkens the screen instead of brightening it., type: Tweak}
@@ -2909,3 +2903,8 @@ Entries:
       safe. You still need a crowbar for unsafe doors., type: Add}
   id: 3680
   time: '2023-05-06T10:21:26.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: hot potato now deals damage while you are holding it, type: Add}
+  id: 3681
+  time: '2023-05-06T10:30:16.0000000+00:00'
