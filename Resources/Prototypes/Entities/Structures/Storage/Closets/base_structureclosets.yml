@@ -175,8 +175,9 @@
   parent: BaseStructureDynamic
   name: suit storage unit
   description: A fancy hi-tech storage unit made for storing space suits.
-  price: 80
   components:
+  - type: StaticPrice
+    price: 80
   - type: ResistLocker
   - type: Transform
     noRot: true
