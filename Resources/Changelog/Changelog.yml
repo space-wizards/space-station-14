@@ -1,17 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: 'Makeshift handcuffs are now the correct color, green.', type: Fix}
-  id: 3177
-  time: '2023-03-13T23:39:06.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Changed the held sprites of almost every uniform to be more accurate.,
-    type: Tweak}
-  id: 3178
-  time: '2023-03-14T00:12:58.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Fixed being able to emag machines by snipping the access wire., type: Fix}
   id: 3179
   time: '2023-03-14T02:55:19.0000000+00:00'
@@ -2904,3 +2893,17 @@ Entries:
   - {message: Added soup flavors, type: Add}
   id: 3676
   time: '2023-05-06T07:36:34.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Saltern has been refitted with the latest and greatest, it is now back
+      in rotation.', type: Add}
+  - {message: Omega has been derotated due to excessive wear and tear., type: Remove}
+  id: 3677
+  time: '2023-05-06T07:41:24.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added 5 new bread loaves, type: Add}
+  - {message: Added a recipe for all bread loaves, type: Add}
+  - {message: Changed all bread sprites, type: Tweak}
+  id: 3678
+  time: '2023-05-06T07:41:32.0000000+00:00'
