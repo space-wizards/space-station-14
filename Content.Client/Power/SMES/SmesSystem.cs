@@ -4,9 +4,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Power.SMES;
 
-public sealed class SmesVisualizerSystem : VisualizerSystem<SmesVisualsComponent>
+public sealed class SmesVisualizerSystem : VisualizerSystem<SmesComponent>
 {
-    protected override void OnAppearanceChange(EntityUid uid, SmesVisualsComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, SmesComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
