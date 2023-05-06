@@ -181,7 +181,7 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             if (throwItems)
             {
-                Recoil(user, direction);
+                Recoil(user, direction, gun.CameraRecoilScalar);
                 if (ent!.Value.IsClientSide())
                     Del(ent.Value);
                 else
@@ -197,7 +197,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         SetCartridgeSpent(ent!.Value, cartridge, true);
                         MuzzleFlash(gunUid, cartridge, user);
                         Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
-                        Recoil(user, direction);
+                        Recoil(user, direction, gun.CameraRecoilScalar);
                         // TODO: Can't predict entity deletions.
                         //if (cartridge.DeleteOnSpawn)
                         //    Del(cartridge.Owner);
@@ -214,7 +214,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 case AmmoComponent newAmmo:
                     MuzzleFlash(gunUid, newAmmo, user);
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
-                    Recoil(user, direction);
+                    Recoil(user, direction, gun.CameraRecoilScalar);
                     if (ent!.Value.IsClientSide())
                         Del(ent.Value);
                     else
@@ -222,18 +222,18 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case HitscanPrototype:
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
-                    Recoil(user, direction);
+                    Recoil(user, direction, gun.CameraRecoilScalar);
                     break;
             }
         }
     }
 
-    private void Recoil(EntityUid? user, Vector2 recoil)
+    private void Recoil(EntityUid? user, Vector2 recoil, float recoilScalar)
     {
-        if (!Timing.IsFirstTimePredicted || user == null || recoil == Vector2.Zero)
+        if (!Timing.IsFirstTimePredicted || user == null || recoil == Vector2.Zero || recoilScalar == 0)
             return;
 
-        _recoil.KickCamera(user.Value, recoil.Normalized * 0.5f);
+        _recoil.KickCamera(user.Value, recoil.Normalized * 0.5f * recoilScalar);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

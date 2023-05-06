@@ -43,6 +43,20 @@
     - AdvMopItem
     - MegaSprayBottle
 
+- type: technology
+  id: AdvancedSprayTechnology
+  name: technologies-advanced-spray-technology
+  description: technologies-advanced-spray-technology-description
+  icon:
+    sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
+    state: icon
+  requiredPoints: 7500
+  requiredTechnologies:
+  - AdvancedCleaningTechnology
+  unlockedRecipes:
+  - WeaponSprayNozzle
+  - ClothingBackpackWaterTank
+
 # Food/Bev Service Technology Tree
 
 - type: technology
