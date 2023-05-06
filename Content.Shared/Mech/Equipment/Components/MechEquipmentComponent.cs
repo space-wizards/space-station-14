@@ -1,12 +1,11 @@
-﻿using System.Threading;
-using Content.Shared.DoAfter;
+﻿using Content.Shared.DoAfter;
 using Content.Shared.Mech.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mech.Equipment.Components;
 
 /// <summary>
-/// A piece of equipment that can be installed into <see cref="SharedMechComponent"/>
+/// A piece of equipment that can be installed into <see cref="MechComponent"/>
 /// </summary>
 [RegisterComponent]
 public sealed class MechEquipmentComponent : Component

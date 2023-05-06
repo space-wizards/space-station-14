@@ -124,12 +124,6 @@
   - type: Sprite
     netsync: false
     state: bacon
-  - type: RandomSprite
-    available:
-      - enum.DamageStateVisualLayers.Base:
-          bacon: ""
-      - enum.DamageStateVisualLayers.Base:
-          bacon2: ""
   - type: SolutionContainerManager
     solutions:
       food:
@@ -246,6 +240,7 @@
   - type: Tag
     tags:
     - Raw
+    - HighRiskItem
   - type: Sprite
     state: corgi
   - type: SolutionContainerManager
@@ -996,11 +991,7 @@
     - Raw
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet
-      color: black
-    - state: cutlet-alpha
-      color: red
+    state: spidercutlet
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1023,11 +1014,7 @@
     - Raw
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet
-      color: black
-    - state: cutlet-alpha
-      color: green
+    state: xenocutlet
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1216,11 +1203,7 @@
     - Cooked
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet-cooked
-      color: black
-    - state: cutlet-alpha
-      color: red
+    state: spidercutlet-cooked
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1241,11 +1224,7 @@
     - Cooked
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet-cooked
-      color: black
-    - state: cutlet-alpha
-      color: green
+    state: xenocutlet-cooked
   - type: SolutionContainerManager
     solutions:
       food:

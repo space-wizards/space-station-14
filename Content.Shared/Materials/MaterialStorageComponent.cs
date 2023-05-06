@@ -16,6 +16,12 @@ public sealed class MaterialStorageComponent : Component
     public Dictionary<string, int> Storage { get; set; } = new();
 
     /// <summary>
+    /// Whether or not interacting with the materialstorage inserts the material in hand.
+    /// </summary>
+    [DataField("insertOnInteract")]
+    public bool InsertOnInteract = true;
+
+    /// <summary>
     ///     How much material the storage can store in total.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("storageLimit")]

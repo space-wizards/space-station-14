@@ -19,9 +19,6 @@ public abstract class SharedItemSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
-
-        SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
-        SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
         SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract);
 
         SubscribeLocalEvent<ItemComponent, ComponentGetState>(OnGetState);
@@ -92,21 +89,6 @@ public abstract class SharedItemSystem : EntitySystem
         args.State = new ItemComponentState(component.Size, component.HeldPrefix);
     }
 
-    // Although netsync is being set to false for items client can still update these
-    // Realistically:
-    // Container should already hide these
-    // Client is the only thing that matters.
-
-    private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)
-    {
-        component.Visible = true;
-    }
-
-    private void OnEquipped(EntityUid uid, SharedSpriteComponent component, GotEquippedEvent args)
-    {
-        component.Visible = false;
-    }
-
     private void AddPickupVerb(EntityUid uid, ItemComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (args.Hands == null ||
@@ -119,7 +101,7 @@ public abstract class SharedItemSystem : EntitySystem
         InteractionVerb verb = new();
         verb.Act = () => _handsSystem.TryPickupAnyHand(args.User, args.Target, checkActionBlocker: false,
             handsComp: args.Hands, item: component);
-        verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"));
+        verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"));
 
         // if the item already in a container (that is not the same as the user's), then change the text.
         // this occurs when the item is in their inventory or in an open backpack

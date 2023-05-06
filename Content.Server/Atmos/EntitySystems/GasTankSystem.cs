@@ -263,7 +263,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 pressure = component.Air.Pressure;
-                var range = (pressure - component.TankFragmentPressure) / component.TankFragmentScale;
+                var range = MathF.Sqrt((pressure - component.TankFragmentPressure) / component.TankFragmentScale);
 
                 // Let's cap the explosion, yeah?
                 // !1984

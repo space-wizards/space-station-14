@@ -77,6 +77,7 @@
       - Electrocution
       - Drunk
       - SlurredSpeech
+      - RatvarianLanguage
       - PressureImmunity
       - Muted
       - ForcedSleep
@@ -86,6 +87,7 @@
   - type: Blindable
   # Other
   - type: Inventory
+  - type: InventorySlots
   - type: Clickable
   - type: InteractionOutline
   - type: Icon
@@ -150,7 +152,8 @@
     bodyType: KinematicController
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeCircle
           radius: 0.35
         density: 185
@@ -280,8 +283,6 @@
     spawned:
       - id: FoodMeat
         amount: 5
-  #  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
-  #    safe: false
   - type: Speech
     speechSounds: Alto
   - type: Vocal
@@ -311,6 +312,7 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: InventorySlots
     - type: ContainerContainer
     - type: Icon
       sprite: Mobs/Species/Human/parts.rsi
@@ -369,15 +371,16 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
-        density: 185
-        restitution: 0.0
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.35,-0.35,0.35,0.35"
+          density: 185
+          restitution: 0.0
+          mask:
+          - MobMask
+          layer:
+          - MobLayer
     - type: HumanoidAppearance
       species: Human
     - type: Body

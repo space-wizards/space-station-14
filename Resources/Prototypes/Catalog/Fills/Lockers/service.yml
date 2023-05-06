@@ -6,7 +6,7 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterVestKevlar
-      - id: WeaponShotgunDoubleBarreled
+      - id: WeaponShotgunDoubleBarreledRubber
       - id: DrinkShaker
       - id: ClothingEyesGlassesBeer
       - id: DrinkBottleBeer
@@ -17,6 +17,8 @@
         prob: 0.5
       - id: BoxBeanbag
         amount: 2
+      - id: RagItem
+        amound: 2
 
 #- type: entity
 #  id: LockerFormalFilled
@@ -63,11 +65,8 @@
       - id: TrashBag
         amount: 2
       - id: LightReplacer
-        amount: 1
       - id: BoxLightMixed
-        amount: 1
       - id: Holoprojector
-        amount: 1
       - id: SoapNT
         amount: 2
       - id: FlashlightLantern

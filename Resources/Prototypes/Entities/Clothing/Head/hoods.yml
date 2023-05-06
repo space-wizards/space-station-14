@@ -41,7 +41,6 @@
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
 
-
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioScientist

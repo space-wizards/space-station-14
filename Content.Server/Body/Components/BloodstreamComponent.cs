@@ -51,12 +51,14 @@ namespace Content.Server.Body.Components
 
         /// <summary>
         ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
+        ///     The default values are defined per mob/species in YML.
         /// </summary>
         [DataField("bloodlossDamage", required: true)]
         public DamageSpecifier BloodlossDamage = new();
 
         /// <summary>
         ///     The base bloodloss damage to be healed if above <see cref="BloodlossThreshold"/>
+        ///     The default values are defined per mob/species in YML.
         /// </summary>
         [DataField("bloodlossHealDamage", required: true)]
         public DamageSpecifier BloodlossHealDamage = new();
@@ -72,7 +74,7 @@ namespace Content.Server.Body.Components
         ///     How much reagent of blood should be restored each update interval?
         /// </summary>
         [DataField("bloodRefreshAmount")]
-        public float BloodRefreshAmount = 0.3f;
+        public float BloodRefreshAmount = 1.0f;
 
         /// <summary>
         ///     How much blood needs to be in the temporary solution in order to create a puddle?
@@ -146,5 +148,11 @@ namespace Content.Server.Body.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public Solution BloodTemporarySolution = default!;
+
+        /// <summary>
+        /// Variable that stores the amount of status time added by having a low blood level.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float StatusTime;
     }
 }
