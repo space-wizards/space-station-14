@@ -1,5 +1,7 @@
 ﻿using Content.Shared.Inventory;
+using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Whitelist;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -7,7 +9,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// This is used for relaying ammo events
 /// to an entity in the user's clothing slot.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedGunSystem))]
 public sealed class ClothingSlotAmmoProviderComponent : AmmoProviderComponent
 {
     /// <summary>

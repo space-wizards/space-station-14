@@ -11,6 +11,7 @@
     sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
     size: 30
   - type: Gun
+    cameraRecoilScalar: 0 #no recoil
     fireRate: 4
     selectedMode: FullAuto
     availableModes:
