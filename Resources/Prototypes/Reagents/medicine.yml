@@ -110,7 +110,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: -0.5        
+            Poison: -0.5
 
 - type: reagent
   id: Arithrazine
@@ -158,7 +158,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 30
-        probability: 0.02           
+        probability: 0.02
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
@@ -253,7 +253,7 @@
           types:
             Asphyxiation: 3
             Cold: 1
-            
+
 - type: reagent
   id: DexalinPlus
   name: reagent-name-dexalin-plus
@@ -285,7 +285,7 @@
           types:
             Asphyxiation: 5
             Cold: 3
-            
+
 # this ones a doozy
 - type: reagent
   id: Epinephrine
@@ -1050,16 +1050,6 @@
         conditions:
         - !type:ReagentThreshold
           reagent: Ephedrine
-          min: 1
-        reagent: Haloperidol
-        amount: -1
-      - !type:AdjustReagent
-        reagent: Stimulants
-        amount: -2
-      - !type:AdjustReagent
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Stimulants
           min: 1
         reagent: Haloperidol
         amount: -1
