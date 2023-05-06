@@ -86,6 +86,8 @@
     anchored: true
   - type: Rotatable
     rotateWhileAnchored: true
+  - type: Physics
+    bodyType: Static
   - type: Anchorable
   - type: Sprite
     state: bar

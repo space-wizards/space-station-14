@@ -327,6 +327,33 @@
     Glass: 900
     Gold: 100
 
+- type: latheRecipe
+  id: HonkerCentralElectronics
+  result: HonkerCentralElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Bananium: 100
+
+- type: latheRecipe
+  id: HonkerPeripheralsElectronics
+  result: HonkerPeripheralsElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Bananium: 100
+
+- type: latheRecipe
+  id: HonkerTargetingElectronics
+  result: HonkerTargetingElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Bananium: 100
+
 # Power
 - type: latheRecipe
   id: APCElectronics
