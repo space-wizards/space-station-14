@@ -81,7 +81,7 @@ public sealed class FollowerSystem : EntitySystem
 
     private void OnGotEquippedHand(EntityUid uid, FollowerComponent component, GotEquippedHandEvent args)
     {
-        StopFollowingEntity(uid, component.Following);
+        StopFollowingEntity(uid, component.Following, deparent:false);
     }
 
     // Since we parent our observer to the followed entity, we need to detach
@@ -138,7 +138,7 @@ public sealed class FollowerSystem : EntitySystem
     ///     Forces an entity to stop following another entity, if it is doing so.
     /// </summary>
     /// <param name="deparent">Should the entity deparent itself</param>
-    public void StopFollowingEntity(EntityUid uid, EntityUid target, FollowedComponent? followed = null)
+    public void StopFollowingEntity(EntityUid uid, EntityUid target, FollowedComponent? followed = null, bool deparent = true)
     {
         if (!Resolve(target, ref followed, false))
             return;
@@ -161,7 +161,7 @@ public sealed class FollowerSystem : EntitySystem
         RaiseLocalEvent(uid, uidEv);
         RaiseLocalEvent(target, targetEv);
 
-        if (!Deleted(uid))
+        if (!Deleted(uid) && deparent)
         {
             var xform = Transform(uid);
             _transform.AttachToGridOrMap(uid, xform);
