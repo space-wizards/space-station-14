@@ -353,7 +353,7 @@ public abstract partial class SharedBuckleSystem
 
        ReAttach(buckleUid, strapUid, buckleComp, strapComp);
        SetBuckledTo(buckleUid,strapUid, strapComp, buckleComp);
-       _audioSystem.PlayPredicted(strapComp.BuckleSound, strapUid, buckleUid);
+       _audioSystem.PlayPredicted(strapComp.BuckleSound, strapUid, null);
 
        var ev = new BuckleChangeEvent(strapUid, buckleUid, true);
        RaiseLocalEvent(ev.BuckledEntity, ref ev);
@@ -480,7 +480,7 @@ public abstract partial class SharedBuckleSystem
             Dirty(strapComp);
         }
 
-        _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, buckleUid);
+        _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, null);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, false);
         RaiseLocalEvent(buckleUid, ref ev);
