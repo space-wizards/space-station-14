@@ -4253,8 +4253,6 @@ entities:
     - pos: -0.5,12.5
       parent: 31
       type: Transform
-    - nextSound: 1091.5623458
-      type: EmitSoundOnCollide
 - proto: BedsheetCaptain
   entities:
   - uid: 515
@@ -23611,8 +23609,6 @@ entities:
     - pos: 10.66112,-19.235216
       parent: 31
       type: Transform
-    - nextSound: 1657.4095923
-      type: EmitSoundOnCollide
 - proto: ClothingBeltUtilityFilled
   entities:
   - uid: 7373
@@ -30686,8 +30682,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 654.1639683
-      type: EmitSoundOnCollide
   - uid: 5993
     components:
     - pos: -5.5,15.5
@@ -30717,8 +30711,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 653.4139296
-      type: EmitSoundOnCollide
   - uid: 6025
     components:
     - pos: -11.5,16.5
@@ -37419,8 +37411,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 647.725641
-      type: EmitSoundOnCollide
   - uid: 5995
     components:
     - rot: 3.141592653589793 rad
@@ -37595,8 +37585,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 647.9467274
-      type: EmitSoundOnCollide
   - uid: 6027
     components:
     - rot: 3.141592653589793 rad
@@ -41824,8 +41812,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 663.4805432
-      type: EmitSoundOnCollide
   - uid: 6050
     components:
     - rot: 3.141592653589793 rad
@@ -42131,8 +42117,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 645.5912304
-      type: EmitSoundOnCollide
   - uid: 8872
     components:
     - rot: 1.5707963267948966 rad
@@ -42925,8 +42909,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 666.3300904
-      type: EmitSoundOnCollide
   - uid: 6018
     components:
     - rot: 1.5707963267948966 rad
@@ -53813,10 +53795,6 @@ entities:
     - pos: -20.389076,-20.48394
       parent: 31
       type: Transform
-    - nextFire: 1628.3269246
-      type: Gun
-    - nextSound: 1628.5269246
-      type: EmitSoundOnCollide
 - proto: RiotShield
   entities:
   - uid: 4025
