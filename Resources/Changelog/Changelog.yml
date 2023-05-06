@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: The syndicate encryption key no longer allows you to access every radio
-      channel., type: Remove}
-  id: 3184
-  time: '2023-03-15T00:38:00.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added the Lava Brig dungeon theme., type: Add}
@@ -2910,3 +2904,9 @@ Entries:
       been streamlined.', type: Tweak}
   id: 3683
   time: '2023-05-06T10:57:34.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Added construction for signal timer, screen timer and brig timer.',
+    type: Add}
+  id: 3684
+  time: '2023-05-06T11:15:07.0000000+00:00'
