@@ -41,7 +41,6 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-
     - type: OccluderTree
     - type: Shuttle
     - nextUpdate: 4665.7478885
