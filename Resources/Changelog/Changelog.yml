@@ -1,9 +1,4 @@
 Entries:
-- author: ficcialfaint
-  changes:
-  - {message: Station Records Computer now shows fingerprints, type: Add}
-  id: 3180
-  time: '2023-03-14T02:55:56.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Changed the sprite of frezon canisters., type: Tweak}
@@ -2908,3 +2903,9 @@ Entries:
   - {message: Cargo can now purchase a crate of crabs., type: Add}
   id: 3679
   time: '2023-05-06T07:43:09.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: You can open and close firelock doors like airlock doors if they are
+      safe. You still need a crowbar for unsafe doors., type: Add}
+  id: 3680
+  time: '2023-05-06T10:21:26.0000000+00:00'
