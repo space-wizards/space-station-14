@@ -124,6 +124,8 @@
     - type: Transform
       anchored: true
       noRot: true
+    - type: Physics
+      bodyType: Static
     - type: Construction
       graph: Machine
       node: destroyedMachineFrame
