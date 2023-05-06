@@ -169,6 +169,10 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
             },
             new Label()
             {
+                Text = Loc.GetString("general-station-record-console-record-dna", ("dna", stationRecord.DNA ?? Loc.GetString("generic-not-available-shorthand")))
+            },
+            new Label()
+            {
                 Text = Loc.GetString("general-criminal-record-console-record-status", ("status", criminalRecord.Status.ToString())!)
             }
         };

@@ -15,6 +15,7 @@ general-criminal-record-console-record-title = Job: {$job}
 general-criminal-record-console-record-species = Species: {$species}
 general-criminal-record-console-record-gender = Gender: {$gender}
 general-criminal-record-console-record-fingerprint = Fingerprint: {$fingerprint}
+general-criminal-record-console-record-dna = DNA: {$dna}
 general-criminal-record-console-record-status = Status: {$status}
 
 ## Security channel notifications
