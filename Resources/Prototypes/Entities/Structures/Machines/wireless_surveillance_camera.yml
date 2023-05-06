@@ -49,8 +49,6 @@
     - type: Anchorable
     - type: Transform
       anchored: true
-    - type: Physics
-      bodyType: Static
     - type: Sprite
       noRot: true
       sprite: Structures/monitors.rsi
