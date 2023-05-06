@@ -130,7 +130,7 @@ public sealed partial class ReplayManager
 
         foreach (var renderer in _midi.Renderers)
         {
-            renderer.ClearEvents();
+            renderer.ClearAllEvents();
             renderer.StopAllNotes();
         }
     }
