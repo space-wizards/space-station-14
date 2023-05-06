@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry.Reaction
 {
-    public abstract class SharedChemicalReactionSystem : EntitySystem
+    public sealed class SharedChemicalReactionSystem : EntitySystem
     {
 
         /// <summary>
@@ -20,8 +20,8 @@ namespace Content.Shared.Chemistry.Reaction
         private const int MaxReactionIterations = 20;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         /// <summary>
         ///     A cache of all existant chemical reactions indexed by one of their
@@ -201,11 +201,15 @@ namespace Content.Shared.Chemistry.Reaction
             return products;
         }
 
-        protected virtual void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid owner, FixedPoint2 unitReactions)
+        private void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype? reagent, EntityUid owner, FixedPoint2 unitReactions)
         {
             var args = new ReagentEffectArgs(owner, null, solution,
-                randomReagent,
+                reagent,
                 unitReactions, EntityManager, null, 1f);
+
+            var coordinates = Transform(owner).Coordinates;
+            _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
+                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(owner):metabolizer} at {coordinates}");
 
             foreach (var effect in reaction.Effects)
             {
@@ -215,12 +219,14 @@ namespace Content.Shared.Chemistry.Reaction
                 if (effect.ShouldLog)
                 {
                     var entity = args.SolutionEntity;
-                    AdminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
+                    _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
                         $"Reaction effect {effect.GetType().Name:effect} of reaction ${reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                 }
 
                 effect.Effect(args);
             }
+
+            _audio.PlayPvs(reaction.Sound, owner);
         }
 
         /// <summary>
