@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: ID card console sorts jobs now., type: Tweak}
-  id: 3163
-  time: '2023-03-12T23:40:17.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: The blood red hardsuit sprite is no longer identical to that of the
@@ -2897,3 +2892,10 @@ Entries:
   - {message: Some station events will no longer start instantly., type: Fix}
   id: 3662
   time: '2023-05-06T01:24:16.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: EMP now temporarily disables headsets/cameras/APCs and makes vendomats
+      throw items for 60 seconds., type: Add}
+  - {message: broken bulbs are not affected by EMP, type: Fix}
+  id: 3663
+  time: '2023-05-06T01:38:10.0000000+00:00'
