@@ -1,9 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added the Lava Brig dungeon theme., type: Add}
-  id: 3185
-  time: '2023-03-15T01:07:53.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Puddles now use water footsteps., type: Tweak}
@@ -2910,3 +2905,8 @@ Entries:
     type: Add}
   id: 3684
   time: '2023-05-06T11:15:07.0000000+00:00'
+- author: Arteben
+  changes:
+  - {message: Changed size for additional combat mode indicators., type: Tweak}
+  id: 3685
+  time: '2023-05-06T16:07:55.0000000+00:00'
