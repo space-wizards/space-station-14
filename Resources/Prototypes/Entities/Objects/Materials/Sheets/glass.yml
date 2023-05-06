@@ -215,7 +215,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       UraniumGlass: 100
   - type: Stack
     stackType: UraniumGlass
@@ -254,7 +255,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       ReinforcedUraniumGlass: 100
   - type: Stack
     stackType: ReinforcedUraniumGlass
