@@ -39,3 +39,5 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepWater
+      params:
+        volume: 8

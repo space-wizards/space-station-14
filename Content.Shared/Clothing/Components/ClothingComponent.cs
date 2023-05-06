@@ -16,7 +16,7 @@ public sealed class ClothingComponent : Component
 {
     [DataField("clothingVisuals")]
     [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)] // TODO remove execute permissions.
-    public Dictionary<string, List<SharedSpriteComponent.PrototypeLayerData>> ClothingVisuals = new();
+    public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("quickEquip")]
@@ -39,6 +39,15 @@ public sealed class ClothingComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("equippedPrefix")]
     public string? EquippedPrefix;
+
+    /// <summary>
+    /// Allows the equipped state to be directly overwritten.
+    /// useful when prototyping INNERCLOTHING items into OUTERCLOTHING items without duplicating/modifying RSIs etc.
+    /// </summary>
+    [Access(typeof(ClothingSystem))]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("equippedState")]
+    public string? EquippedState;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprite")]

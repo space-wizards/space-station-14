@@ -13,6 +13,7 @@
     state: plasticflaps
     drawdepth: Mobs
   - type: Physics
+    bodyType: Static
   - type: Transform
     anchored: true
   - type: Fixtures

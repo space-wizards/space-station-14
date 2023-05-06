@@ -19,7 +19,7 @@ public abstract class SharedNetworkResourceManager : IDisposable
     /// <summary>
     ///     The prefix for any and all downloaded network resources.
     /// </summary>
-    private static readonly ResourcePath Prefix = ResourcePath.Root / "Uploaded";
+    private static readonly ResPath Prefix = ResPath.Root / "Uploaded";
 
     protected readonly MemoryContentRoot ContentRoot = new();
 
@@ -47,6 +47,6 @@ public abstract class SharedNetworkResourceManager : IDisposable
     public sealed class ReplayResourceUploadMsg
     {
         public byte[] Data = default!;
-        public ResourcePath RelativePath = default!;
+        public ResPath RelativePath = default!;
     }
 }

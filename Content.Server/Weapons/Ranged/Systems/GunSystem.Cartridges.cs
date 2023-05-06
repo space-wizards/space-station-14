@@ -38,7 +38,7 @@ public sealed partial class GunSystem
             Text = Loc.GetString("damage-examinable-verb-text"),
             Message = Loc.GetString("damage-examinable-verb-message"),
             Category = VerbCategory.Examine,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
         };
 
         args.Verbs.Add(verb);

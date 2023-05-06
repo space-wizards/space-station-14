@@ -9,24 +9,6 @@ namespace Content.Shared.APC
         ///     APC lights/HUD.
         /// </summary>
         ChargeState,
-
-        /// <summary>
-        ///     APC frame.
-        /// </summary>
-        PanelState
-    }
-
-    [Serializable, NetSerializable]
-    public enum ApcPanelState
-    {
-        /// <summary>
-        ///     APC is closed.
-        /// </summary>
-        Closed,
-        /// <summary>
-        ///     APC opened.
-        /// </summary>
-        Open
     }
 
     [Serializable, NetSerializable]

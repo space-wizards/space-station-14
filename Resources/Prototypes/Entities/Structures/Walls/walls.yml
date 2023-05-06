@@ -26,6 +26,8 @@
     drawdepth: Walls
   - type: Icon
     state: full
+  - type: PlacementReplacement
+    key: walls
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -75,6 +77,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
   - type: IconSmooth
     key: walls
     base: brick
@@ -112,7 +115,7 @@
 - type: entity
   parent: BaseWall
   id: WallClown
-  name: clown wall
+  name: bananium wall
   components:
   - type: Tag
     tags:
@@ -122,6 +125,9 @@
     sprite: Structures/Walls/clown.rsi
   - type: Icon
     sprite: Structures/Walls/clown.rsi
+  - type: Construction
+    graph: Girder
+    node: bananiumWall
   - type: Destructible
     thresholds:
     - trigger:
@@ -459,8 +465,17 @@
     key: walls
     base: reinf_over
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: ReinforcedWallVisualizer
+      enum.ReinforcedWallVisuals.DeconstructionStage:
+        ReinforcedWallVisualLayers.Deconstruction:
+          -1: { visible: false }
+          0: { state: reinf_construct-0, visible: true}
+          1: { state: reinf_construct-1, visible: true}
+          2: { state: reinf_construct-2, visible: true}
+          3: { state: reinf_construct-3, visible: true}
+          4: { state: reinf_construct-4, visible: true}
+          5: { state: reinf_construct-5, visible: true}
   - type: StaticPrice
     price: 150
   - type: RadiationBlocker

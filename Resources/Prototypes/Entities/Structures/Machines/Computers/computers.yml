@@ -409,8 +409,6 @@
   name: ID card computer
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
   components:
-  - type: AccessReader
-    access: [["HeadOfPersonnel"]]
   - type: IdCardConsole
     privilegedIdSlot:
       name: id-card-console-privileged-id
@@ -469,13 +467,6 @@
   name: body scanner computer
   description: A body scanner.
   components:
-  - type: BodyScanner
-  - type: ActivatableUI
-    key: enum.BodyScannerUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.BodyScannerUiKey.Key
-      type: BodyScannerBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 500
   - type: Computer
@@ -723,6 +714,49 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
+
+- type: entity
+  id: ComputerSalvageExpedition
+  parent: BaseComputer
+  name: salvage expeditions computer
+  description: Used take salvage missions.
+  components:
+    - type: Sprite
+      layers:
+        - map: ["computerLayerBody"]
+          state: computer
+        - map: ["computerLayerKeyboard"]
+          state: generic_keyboard
+        - map: [ "computerLayerScreen" ]
+          state: mining
+        - map: ["computerLayerKeys"]
+          state: tech_key
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.ComputerVisuals.Powered:
+          computerLayerScreen:
+            True: { visible: true, shader: unshaded }
+            False: { visible: false }
+          computerLayerKeys:
+            True: { visible: true, shader: unshaded }
+            False: { visible: true }
+    - type: SalvageExpeditionConsole
+    - type: ActivatableUI
+      key: enum.SalvageConsoleUiKey.Expedition
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.SalvageConsoleUiKey.Expedition
+          type: SalvageExpeditionConsoleBoundUserInterface
+    - type: Computer
+      board: SalvageExpeditionsComputerCircuitboard
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#b89f25"
+    - type: AccessReader
+      access: [["Salvage"]]
 
 - type: entity
   parent: BaseComputer

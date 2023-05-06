@@ -66,6 +66,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretBrigmedic
+  name: medical beret
+  description: White beret, looks like a cream pie on the head.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_brigmedic.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBowlerHat
   name: bowler hat
   description: Stylish bowler hat.
@@ -541,7 +552,18 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadClothingHeadHatWatermelon
+  id: ClothingHeadHatPirateTricord
+  name: pirate hat
+  description: 'Yo ho ho and a bottle of rum!'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/piratetricord.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/piratetricord.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWatermelon
   name: watermelon helmet
   description: A carelessly cut half of a watermelon, gutted from the inside, to be worn as a helmet. It can soften the blow to the head.
   components:
@@ -553,3 +575,14 @@
     modifiers:
       coefficients:
         Blunt: 0.95
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHetmanHat
+  name: Hetman hat
+  description: From the Zaporozhian Sich with love.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/hetman_hat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/hetman_hat.rsi

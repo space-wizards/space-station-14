@@ -38,7 +38,7 @@ namespace Content.Client.Chemistry.UI
 
             // Pill type selection buttons, in total there are 20 pills.
             // Pill rsi file should have states named as pill1, pill2, and so on.
-            var resourcePath = new ResourcePath(PillsRsiPath);
+            var resourcePath = new ResPath(PillsRsiPath);
             var pillTypeGroup = new ButtonGroup();
             PillTypeButtons = new Button[20];
             for (uint i = 0; i < PillTypeButtons.Length; i++)

@@ -74,7 +74,7 @@
     sprite: Structures/Storage/tanks.rsi
     state: fueltank
   product: WeldingFuelTankFull
-  cost: 2000
+  cost: 1500
   category: Materials
   group: market
 
@@ -84,6 +84,6 @@
     sprite: Structures/Storage/tanks.rsi
     state: watertank
   product: WaterTankFull
-  cost: 2000
+  cost: 1000
   category: Materials
   group: market

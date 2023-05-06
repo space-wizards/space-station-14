@@ -19,9 +19,6 @@
   - type: Appearance
   - type: ApcPowerReceiver
     powerLoad: 1000
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
   - type: ExtensionCableReceiver
   - type: Damageable
     damageContainer: Inorganic

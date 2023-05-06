@@ -171,7 +171,7 @@
     graph: WindowDirectional
     node: windowDirectional
   - type: StaticPrice
-    price: 5
+    price: 10
 
 - type: entity
   id: WindowTintedDirectional
@@ -195,8 +195,6 @@
     state: tinted_window
   - type: Occluder
     boundingBox: "-0.5,-0.5,0.5,-0.3"
-  - type: StaticPrice
-    price: 5
 
 - type: entity
   id: WindowFrostedDirectional
@@ -215,5 +213,3 @@
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
-  - type: StaticPrice
-    price: 5

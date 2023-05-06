@@ -60,10 +60,7 @@
       path: /Audio/Machines/airlock_deny.ogg
   - type: Airtight
     fixVacuum: true
-    airBlockedDirection:
-      - East
-      - West
-      - South
+    noAirWhenFullyAirBlocked: false
   - type: Tag
     tags:
       - ForceNoFixRotations

@@ -5,17 +5,11 @@
   - type: StorageFill
     contents:
       - id: ClothingHeadHelmetBombSuit
-        amount: 1
       - id: ClothingMaskGas
-        amount: 1
       - id: Screwdriver
-        amount: 1
       - id: Wirecutter
-        amount: 1
       - id: Multitool
-        amount: 1
       - id: ClothingOuterSuitBomb
-        amount: 1
 
 - type: entity
   id: CrateEmergencyFire
@@ -79,7 +73,6 @@
       - id: GeigerCounter
         amount: 2
       - id: DrinkVodkaBottleFull
-        amount: 1
       - id: DrinkShotGlass
         amount: 2
 

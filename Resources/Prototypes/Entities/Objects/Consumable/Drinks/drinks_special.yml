@@ -29,6 +29,9 @@
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
 
 - type: entity
   parent: DrinkGlassBase

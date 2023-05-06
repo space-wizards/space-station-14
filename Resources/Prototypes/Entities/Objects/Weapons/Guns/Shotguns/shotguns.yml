@@ -119,6 +119,16 @@
     deconstructionTarget: null
 
 - type: entity
+  name: double-barreled shotgun
+  parent: WeaponShotgunDoubleBarreled
+  id: WeaponShotgunDoubleBarreledRubber
+  description: An immortal classic. Uses .50 shotgun shells.
+  suffix: Non-Lethal
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
+
+- type: entity
   name: Enforcer
   parent: BaseWeaponShotgun
   id: WeaponShotgunEnforcer
@@ -184,3 +194,17 @@
     graph: ShotgunSawn
     node: shotgunsawn
     deconstructionTarget: null
+
+- type: entity
+  name: blunderbuss
+  parent: BaseWeaponShotgun
+  id: WeaponShotgunBlunderbuss
+  suffix: Pirate
+  description: Deadly at close range.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
+  - type: Gun
+    fireRate: 2
+  - type: BallisticAmmoProvider
+    capacity: 1
