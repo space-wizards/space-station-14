@@ -680,6 +680,71 @@
   description: flavor-complex-bottledlightning
 
 - type: flavor
+  id: bad-joke
+  flavorType: Complex
+  description: flavor-complex-bad-joke
+
+- type: flavor
+  id: vegetables
+  flavorType: Complex
+  description: flavor-complex-vegetables
+
+- type: flavor
+  id: sadness
+  flavorType: Complex
+  description: flavor-complex-sadness
+
+- type: flavor
+  id: nettles
+  flavorType: Complex
+  description: flavor-complex-nettles
+
+- type: flavor
+  id: parents
+  flavorType: Complex
+  description: flavor-complex-parents
+
+- type: flavor
+  id: jungle
+  flavorType: Complex
+  description: flavor-complex-jungle
+
+- type: flavor
+  id: squirming
+  flavorType: Complex
+  description: flavor-complex-squirming
+
+- type: flavor
+  id: miso
+  flavorType: Complex
+  description: flavor-complex-miso
+
+- type: flavor
+  id: electrons
+  flavorType: Complex
+  description: flavor-complex-electrons
+
+- type: flavor
+  id: bottledlightning
+  flavorType: Complex
+  description: flavor-complex-bottledlightning
+
+- type: flavor
+  id: meatballs
+  flavorType: Complex
+  description: flavor-complex-meatballs
+
+- type: flavor
+  id: hope
+  flavorType: Complex
+  description: flavor-complex-hope
+
+- type: flavor
+  id: chaos
+  flavorType: Complex
+  description: flavor-complex-chaos
+  
+- type: flavor
   id: themartinez
   flavorType: Complex
   description: flavor-complex-themartinez
