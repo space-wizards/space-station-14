@@ -4,7 +4,7 @@ general-criminal-record-console-empty-state = No records found!
 general-criminal-record-console-no-record-found = No record was found for the selected person.
 
 general-criminal-record-arrest-button = Arrest
-general-criminal-record-unarrest-button = Unarrest
+general-criminal-record-release-button = release
 
 general-criminal-record-reason-placeholder = Reason
 
@@ -19,7 +19,7 @@ general-criminal-record-console-record-dna = DNA: {$dna}
 general-criminal-record-console-record-status = Status: {$status}
 
 ## Security channel notifications
-### On Arrest/Unarrest button pressed
+### On Arrest/Release button pressed
 
 general-criminal-record-console-detained-with-reason = {$name} has been detained for {$reason} by {$goodguyname}
 general-criminal-record-console-detained-without-reason = {$name} has been detained by {$goodguyname}

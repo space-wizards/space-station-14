@@ -121,7 +121,7 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 
         RecordContainerStatus.Visible = state.CriminalRecord == null;
 
-        ArrestButton.Text = state.CriminalRecord?.Status == SecurityStatus.Detained ? Loc.GetString("general-criminal-record-unarrest-button") : Loc.GetString("general-criminal-record-arrest-button");
+        ArrestButton.Text = state.CriminalRecord?.Status == SecurityStatus.Detained ? Loc.GetString("general-criminal-record-release-button") : Loc.GetString("general-criminal-record-arrest-button");
 
         ReasonLineEdit.Visible = state.SelectedKey != null;
         ArrestButton.Visible = state.SelectedKey != null;
