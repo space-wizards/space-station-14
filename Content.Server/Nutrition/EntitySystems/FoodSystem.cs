@@ -73,7 +73,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (ev.Handled)
                 return;
 
-            ev.Handled = TryFeed(ev.User, ev.User, uid, foodComponent);
+            ev.Handled = Feed(ev.User, ev.User, uid, foodComponent);
         }
 
         /// <summary>
@@ -84,13 +84,13 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled || args.Target == null || !args.CanReach)
                 return;
 
-            args.Handled = TryFeed(args.User, args.Target.Value, uid, foodComponent);
+            args.Handled = Feed(args.User, args.Target.Value, uid, foodComponent);
         }
 
         /// <summary>
-        ///     Attempt make some entity eat something. Returns true if any interaction occurs (not necessarily successful).
+        ///     Attempt make some entity eat something. Returns true if ANY interaction occurs (not necessarily successful).
         /// </summary>
-        public bool TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
+        public bool Feed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
         {
             //Suppresses self-eating
             if (food == user || TryComp<MobStateComponent>(food, out var mobState) && _mobStateSystem.IsAlive(food, mobState)) // Suppresses eating alive mobs
@@ -328,7 +328,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 Act = () =>
                 {
-                    TryFeed(ev.User, ev.User, uid, component);
+                    Feed(ev.User, ev.User, uid, component);
                 },
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
                 Text = Loc.GetString("food-system-verb-eat"),
