@@ -40,6 +40,7 @@ flavor-base-shocking = shocking
 flavor-base-cheap = cheap
 flavor-base-piquant = piquant
 flavor-base-sharp = sharp
+flavor-base-syrupy = syrupy
 
 # lmao
 flavor-base-terrible = terrible
@@ -127,6 +128,7 @@ flavor-complex-bad-joke = like a bad joke
 flavor-complex-memory-leek = like a fork bomb
 flavor-complex-gunpowder = like gunpowder
 flavor-complex-validhunting = like validhunting
+flavor-complex-cobwebs = like cobwebs
 flavor-complex-sadness = like sadness
 flavor-complex-hope = like hope
 flavor-complex-chaos = like chaos

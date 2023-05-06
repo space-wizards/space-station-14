@@ -160,6 +160,11 @@
   description: flavor-base-sharp
 
 - type: flavor
+  id: syrupy
+  flavorType: Base
+  description: flavor-base-syrupy
+
+- type: flavor
   id: nothing
   flavorType: Complex
   description: flavor-complex-nothing
@@ -448,6 +453,11 @@
   id: validhunting
   flavorType: Complex
   description: flavor-complex-validhunting
+
+- type: flavor
+  id: cobwebs
+  flavorType: Complex
+  description: flavor-complex-cobwebs
 
 - type: flavor
   id: alcohol

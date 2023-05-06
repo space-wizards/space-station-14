@@ -964,11 +964,7 @@
     - Raw
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet
-      color: black
-    - state: cutlet-alpha
-      color: red
+    state: spidercutlet
   - type: SolutionContainerManager
     solutions:
       food:
@@ -991,11 +987,7 @@
     - Raw
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet
-      color: black
-    - state: cutlet-alpha
-      color: green
+    state: xenocutlet
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1184,11 +1176,7 @@
     - Cooked
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet-cooked
-      color: black
-    - state: cutlet-alpha
-      color: red
+    state: spidercutlet-cooked
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1209,11 +1197,7 @@
     - Cooked
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet-cooked
-      color: black
-    - state: cutlet-alpha
-      color: green
+    state: xenocutlet-cooked
   - type: SolutionContainerManager
     solutions:
       food:

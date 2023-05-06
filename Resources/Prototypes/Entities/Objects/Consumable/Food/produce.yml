@@ -583,12 +583,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 14
+        maxVol: 20
         reagents:
+        - ReagentId: Cornmeal
+          Quantity: 15
         - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
@@ -616,6 +616,13 @@
   - type: Tag
     tags:
       - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Cornmeal
+          Quantity: 10
 
 - type: entity
   name: onion
