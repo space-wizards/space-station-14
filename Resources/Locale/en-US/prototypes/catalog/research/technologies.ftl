@@ -7,6 +7,9 @@ technologies-cleaning-technology-description = Start to a shiny clean station.
 technologies-advanced-cleaning-technology = Advanced cleaning technology
 technologies-advanced-cleaning-technology-description = Advanced tools won't stop people from trashing the station, sadly.
 
+technologies-advanced-spray-technology = Advanced spray technology
+technologies-advanced-spray-technology-description = The newest ways to hose down the station. Filthy animals.
+
 technologies-foodbev-technology = Food and beverage technology
 technologies-food-and-beverage-technology-description = Robust service from better technology.
 
