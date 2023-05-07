@@ -37,7 +37,7 @@ namespace Content.Server.MachineLinking.Components
          * level hasn't actually changed.
          */
         [ViewVariables(VVAccess.ReadWrite)]
-        public SignalState lastState = SignalState.Low;
+        public SignalState LastState = SignalState.Low;
 
         [DataField("outputs")]
         [Access(typeof(SignalLinkerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends

@@ -141,7 +141,7 @@ namespace Content.Server.MachineLinking.System
             if (!Resolve(uid, ref component))
                 return;
 
-            if (state != SignalState.Momentary && state == component.lastState)
+            if (state != SignalState.Momentary && state == component.LastState)
             {
                 // no change in output signal
                 return;
@@ -150,7 +150,7 @@ namespace Content.Server.MachineLinking.System
             if (!component.Outputs.TryGetValue(port, out var receivers))
                 return;
 
-            component.lastState = state;
+            component.LastState = state;
             foreach (var receiver in receivers)
                 RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port, uid, state), false);
         }
