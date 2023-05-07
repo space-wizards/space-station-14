@@ -51,6 +51,8 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StackSystem _stack = default!;
 
+        public const float MaxFeedDistance = 1.0f;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -71,8 +73,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (ev.Handled)
                 return;
 
-            ev.Handled = true;
-            TryFeed(ev.User, ev.User, uid, foodComponent);
+            var result = TryFeed(ev.User, ev.User, uid, foodComponent);
+            ev.Handled = result.Handled;
         }
 
         /// <summary>
@@ -83,25 +85,25 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled || args.Target == null || !args.CanReach)
                 return;
 
-            args.Handled = true;
-            TryFeed(args.User, args.Target.Value, uid, foodComponent);
+            var result = TryFeed(args.User, args.Target.Value, uid, foodComponent);
+            args.Handled = result.Handled;
         }
 
-        public bool TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
+        public (bool Success, bool Handled) TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
         {
             //Suppresses self-eating
             if (food == user || TryComp<MobStateComponent>(food, out var mobState) && _mobStateSystem.IsAlive(food, mobState)) // Suppresses eating alive mobs
-                return false;
+                return (false, false);
 
             // Target can't be fed or they're already eating
             if (!TryComp<BodyComponent>(target, out var body))
-                return false;
+                return (false, false);
 
             if (!_solutionContainerSystem.TryGetSolution(food, foodComp.SolutionName, out var foodSolution) || foodSolution.Name == null)
-                return false;
+                return (false, false);
 
             if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(target, out var stomachs, body))
-                return false;
+                return (false, false);
 
             var forceFeed = user != target;
 
@@ -111,7 +113,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     forceFeed
                         ? Loc.GetString("food-system-cant-digest-other", ("entity", food))
                         : Loc.GetString("food-system-cant-digest", ("entity", food)), user, user);
-                return false;
+                return (false, true);
             }
 
             var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(food, user, foodSolution);
@@ -120,17 +122,28 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _popupSystem.PopupEntity(Loc.GetString("food-system-try-use-food-is-empty", ("entity", food)), user, user);
                 DeleteAndSpawnTrash(foodComp, food, user);
-                return false;
+                return (false, true);
             }
 
             if (IsMouthBlocked(target, user))
-                return false;
+                return (false, true);
 
             if (!_interactionSystem.InRangeUnobstructed(user, food, popup: true))
-                return true;
+                return (false, true);
+
+            if (!_interactionSystem.InRangeUnobstructed(user, target, MaxFeedDistance, popup: true))
+                return (false, true);
+
+            // TODO make do-afters account for fixtures in the range check.
+            if (!Transform(user).MapPosition.InRange(Transform(target).MapPosition, MaxFeedDistance))
+            {
+                var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
+                _popupSystem.PopupEntity(message, user, user);
+                return (false, true);
+            }
 
             if (!TryGetRequiredUtensils(user, foodComp, out _))
-                return true;
+                return (false, true);
 
             if (forceFeed)
             {
@@ -159,14 +172,14 @@ namespace Content.Server.Nutrition.EntitySystems
                 BreakOnDamage = true,
                 BreakOnTargetMove = forceFeed,
                 MovementThreshold = 0.01f,
-                DistanceThreshold = 1.0f,
+                DistanceThreshold = MaxFeedDistance,
                 // Mice and the like can eat without hands.
                 // TODO maybe set this based on some CanEatWithoutHands event or component?
                 NeedHand = forceFeed,
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterArgs);
-            return true;
+            return (true, true);
         }
 
         private void OnDoAfter(EntityUid uid, FoodComponent component, ConsumeDoAfterEvent args)
@@ -264,11 +277,11 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             args.Repeat = !forceFeed;
- 
+
             if (TryComp<StackComponent>(uid, out var stack))
             {
                 //Not deleting whole stack piece will make troubles with grinding object
-                if (stack.Count > 1) 
+                if (stack.Count > 1)
                 {
                     _stack.SetCount(uid, stack.Count - 1);
                     _solutionContainerSystem.TryAddSolution(uid, solution, split);
