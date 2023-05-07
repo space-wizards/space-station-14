@@ -293,22 +293,22 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             Impact = LogImpact.Low
         };
 
-        if (configurator.LinkModeActive)
+        if (configurator.LinkModeActive && (HasComp<DeviceLinkSinkComponent>(args.Target) || HasComp<DeviceLinkSourceComponent>(args.Target)))
         {
             var linkStarted = configurator.ActiveDeviceLink.HasValue;
             verb.Text = Loc.GetString(linkStarted ? "network-configurator-link" : "network-configurator-start-link");
             verb.Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
+            args.Verbs.Add(verb);
         }
-        else if (!HasComp<DeviceNetworkComponent>(args.Target))
+        else if (HasComp<DeviceNetworkComponent>(args.Target))
         {
             var isDeviceList = HasComp<DeviceListComponent>(args.Target);
             verb.Text = Loc.GetString(isDeviceList ? "network-configurator-configure" : "network-configurator-save-device");
             verb.Icon = isDeviceList
                 ? new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png"))
                 : new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
+            args.Verbs.Add(verb);
         }
-
-        args.Verbs.Add(verb);
     }
 
     /// <summary>
@@ -356,9 +356,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         AlternativeVerb verb = new()
         {
-            Text = Loc.GetString("network-configurator-save-device"),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
-            Act = () => TryAddNetworkDevice(args.Target, args.Using.Value, args.User),
+            Text = Loc.GetString("network-configurator-switch-mode"),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+            Act = () => SwitchMode(args.User, args.Target, configurator),
             Impact = LogImpact.Low
         };
         args.Verbs.Add(verb);

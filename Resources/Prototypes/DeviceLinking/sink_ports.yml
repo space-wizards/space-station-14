@@ -1,7 +1,7 @@
 - type: sinkPort
   id: AutoClose
-  name: signal-port-name-autoclose
-  description: signal-port-description-autoclose
+  name: signal-port-name-hold-open
+  description: signal-port-description-hold-open
 
 - type: sinkPort
   id: Toggle
