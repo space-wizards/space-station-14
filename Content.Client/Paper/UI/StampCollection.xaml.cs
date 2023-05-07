@@ -11,6 +11,7 @@ namespace Content.Client.Paper.UI
     {
         private List<StampWidget> _stamps = new();
 
+        // Seed for random number generator to place stamps
         public int PlacementSeed;
 
         public StampCollection()

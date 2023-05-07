@@ -174,9 +174,9 @@ namespace Content.Server.Paper
                 if (paperComp.StampState == null && TryComp<AppearanceComponent>(uid, out var appearance))
                 {
                     paperComp.StampState = spriteStampState;
-                    //<todo.eoin Allow multitple stamps on sprite
+                    // Would be nice to be able to display multiple sprites on the paper
+                    // but most of the existing images overlap
                     _appearance.SetData(uid, PaperVisuals.Stamp, paperComp.StampState, appearance);
-                    //<todo.eoin Modulate sprites - need to edit the images first
                 }
             }
             return true;

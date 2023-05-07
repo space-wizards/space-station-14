@@ -15,6 +15,7 @@ namespace Content.Server.Paper
 
         [DataField("stampedBy")]
         public List<StampInfo> StampedBy { get; set; } = new();
+
         /// <summary>
         ///     Stamp to be displayed on the paper, state from beauracracy.rsi
         /// </summary>
