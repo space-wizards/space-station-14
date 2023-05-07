@@ -10,24 +10,30 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Damage;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Zombies
 {
     public sealed class ZombieSystem : SharedZombieSystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
 
         public override void Initialize()
@@ -42,6 +48,39 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
             SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
+
+            SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
+        }
+
+        private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
+        {
+            var delay = TimeSpan.FromSeconds(_random.Next(30, 60));
+            component.NextCough = _timing.CurTime + delay;
+            component.NextTick = _timing.CurTime;
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            var query = EntityQueryEnumerator<PendingZombieComponent>();
+            var curTime = _timing.CurTime;
+
+            while (query.MoveNext(out var uid, out var comp))
+            {
+                if (comp.NextTick < curTime)
+                    continue;
+
+                comp.NextTick += TimeSpan.FromSeconds(1);
+
+                if (comp.NextCough < curTime)
+                {
+                    // cough cough
+                    var delay = TimeSpan.FromSeconds(_random.Next(30, 60));
+                    comp.NextCough += delay;
+                }
+
+                _damageable.TryChangeDamage(uid, comp.Damage, true, false);
+            }
         }
 
         private void OnSleepAttempt(EntityUid uid, ZombieComponent component, ref TryingToSleepEvent args)
