@@ -171,8 +171,7 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
     - id: Saltern
       type: BecomesStation
     - version: 2
@@ -2841,84 +2840,13 @@ entities:
       pos: -41.5,-11.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-          - -0.49,-0.49
-        mask:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 100
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PhysShapeCircle
-          radius: 0.2
-          position: 0,-0.5
-        mask: []
-        layer: []
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: docking
-      type: Fixtures
   - uid: 8020
     components:
     - rot: -1.5707963267948966 rad
       pos: -41.5,-9.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-          - -0.49,-0.49
-        mask:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 100
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PhysShapeCircle
-          radius: 0.2
-          position: 0,-0.5
-        mask: []
-        layer: []
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: docking
-      type: Fixtures
+
 - proto: AirlockExternalGlassShuttleEmergencyLocked
   entities:
   - uid: 9377
@@ -2927,168 +2855,24 @@ entities:
       pos: -44.5,8.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-          - -0.49,-0.49
-        mask:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 1
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PhysShapeCircle
-          radius: 0.2
-          position: 0,-0.5
-        mask: []
-        layer: []
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: docking
-      type: Fixtures
   - uid: 9388
     components:
     - rot: -1.5707963267948966 rad
       pos: -44.5,2.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-          - -0.49,-0.49
-        mask:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 1
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PhysShapeCircle
-          radius: 0.2
-          position: 0,-0.5
-        mask: []
-        layer: []
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: docking
-      type: Fixtures
   - uid: 9391
     components:
     - rot: -1.5707963267948966 rad
       pos: -44.5,10.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-          - -0.49,-0.49
-        mask:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 1
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PhysShapeCircle
-          radius: 0.2
-          position: 0,-0.5
-        mask: []
-        layer: []
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: docking
-      type: Fixtures
   - uid: 9392
     components:
     - rot: -1.5707963267948966 rad
       pos: -44.5,0.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-          - -0.49,-0.49
-        mask:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 1
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PhysShapeCircle
-          radius: 0.2
-          position: 0,-0.5
-        mask: []
-        layer: []
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: docking
-      type: Fixtures
 - proto: AirlockExternalGlassShuttleEscape
   entities:
   - uid: 7579
@@ -3097,84 +2881,12 @@ entities:
       pos: 41.5,-13.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-          - -0.49,-0.49
-        mask:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 100
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PhysShapeCircle
-          radius: 0.2
-          position: 0,-0.5
-        mask: []
-        layer: []
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: docking
-      type: Fixtures
   - uid: 8311
     components:
     - rot: 3.141592653589793 rad
       pos: -35.5,-20.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-          - -0.49,-0.49
-        mask:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 100
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PhysShapeCircle
-          radius: 0.2
-          position: 0,-0.5
-        mask: []
-        layer: []
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: docking
-      type: Fixtures
 - proto: AirlockExternalGlassShuttleLocked
   entities:
   - uid: 1771
@@ -3183,42 +2895,6 @@ entities:
       pos: 21.5,22.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-          - -0.49,-0.49
-        mask:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 1
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PhysShapeCircle
-          radius: 0.2
-          position: 0,-0.5
-        mask: []
-        layer: []
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: docking
-      type: Fixtures
 - proto: AirlockExternalLocked
   entities:
   - uid: 440
@@ -4577,8 +4253,6 @@ entities:
     - pos: -0.5,12.5
       parent: 31
       type: Transform
-    - nextSound: 1091.5623458
-      type: EmitSoundOnCollide
 - proto: BedsheetCaptain
   entities:
   - uid: 515
@@ -19580,8 +19254,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 4328
     components:
     - rot: 1.5707963267948966 rad
@@ -19590,8 +19263,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 6289
     components:
     - rot: 1.5707963267948966 rad
@@ -19600,8 +19272,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 6414
     components:
     - pos: 40.5,6.5
@@ -19609,8 +19280,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 6930
     components:
     - pos: 42.5,6.5
@@ -19618,8 +19288,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 6941
     components:
     - pos: 41.5,6.5
@@ -19627,8 +19296,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 8573
     components:
     - rot: 3.141592653589793 rad
@@ -19637,8 +19305,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
 - proto: CaptainIDCard
   entities:
   - uid: 3367
@@ -23758,27 +23425,6 @@ entities:
     - pos: -7.5,-8.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.25,-0.48
-          - 0.25,0.48
-          - -0.25,0.48
-          - -0.25,-0.48
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - BulletImpassable
-        - Opaque
-        density: 145
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      type: Fixtures
     - open: True
       removedMasks: 20
       type: EntityStorage
@@ -23963,8 +23609,6 @@ entities:
     - pos: 10.66112,-19.235216
       parent: 31
       type: Transform
-    - nextSound: 1657.4095923
-      type: EmitSoundOnCollide
 - proto: ClothingBeltUtilityFilled
   entities:
   - uid: 7373
@@ -29754,22 +29398,19 @@ entities:
     - pos: 17.5,-0.5
       parent: 31
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
   - uid: 9109
     components:
     - pos: -11.5,-4.5
       parent: 31
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
   - uid: 9110
     components:
     - pos: -21.5,9.5
       parent: 31
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
 - proto: FloorTileItemArcadeBlue
   entities:
   - uid: 7988
@@ -31041,8 +30682,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 654.1639683
-      type: EmitSoundOnCollide
   - uid: 5993
     components:
     - pos: -5.5,15.5
@@ -31072,8 +30711,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 653.4139296
-      type: EmitSoundOnCollide
   - uid: 6025
     components:
     - pos: -11.5,16.5
@@ -37774,8 +37411,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 647.725641
-      type: EmitSoundOnCollide
   - uid: 5995
     components:
     - rot: 3.141592653589793 rad
@@ -37950,8 +37585,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 647.9467274
-      type: EmitSoundOnCollide
   - uid: 6027
     components:
     - rot: 3.141592653589793 rad
@@ -42179,8 +41812,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 663.4805432
-      type: EmitSoundOnCollide
   - uid: 6050
     components:
     - rot: 3.141592653589793 rad
@@ -42486,8 +42117,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 645.5912304
-      type: EmitSoundOnCollide
   - uid: 8872
     components:
     - rot: 1.5707963267948966 rad
@@ -43280,8 +42909,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - nextSound: 666.3300904
-      type: EmitSoundOnCollide
   - uid: 6018
     components:
     - rot: 1.5707963267948966 rad
@@ -49641,8 +49268,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 3133
     components:
     - pos: 40.5,-0.5
@@ -49650,8 +49276,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 9119
     components:
     - pos: 14.5,12.5
@@ -49659,8 +49284,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
 - proto: Poweredlight
   entities:
   - uid: 41
@@ -52412,62 +52036,6 @@ entities:
       pos: -21.5,-15.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - -0.55,-0.55
-          - 0.55,-0.55
-          - 0.55,0.55
-          - -0.55,0.55
-        mask: []
-        layer:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: conveyor
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - -0.15,-0.15
-          - 0.15,-0.15
-          - 0.15,0.15
-          - -0.15,0.15
-        mask: []
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: brrt
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - -0.49,-0.49
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-        mask:
-        - Impassable
-        layer:
-        - BulletImpassable
-        - Opaque
-        density: 1
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: collision
-      type: Fixtures
     - inputs:
         Off:
         - port: Middle
@@ -54227,10 +53795,6 @@ entities:
     - pos: -20.389076,-20.48394
       parent: 31
       type: Transform
-    - nextFire: 1628.3269246
-      type: Gun
-    - nextSound: 1628.5269246
-      type: EmitSoundOnCollide
 - proto: RiotShield
   entities:
   - uid: 4025
@@ -65820,27 +65384,6 @@ entities:
     - pos: -13.5,7.5
       parent: 31
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.25,-0.48
-          - 0.25,0.48
-          - -0.25,0.48
-          - -0.25,-0.48
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - BulletImpassable
-        - Opaque
-        density: 145
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      type: Fixtures
     - open: True
       removedMasks: 20
       type: EntityStorage
@@ -66179,8 +65722,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
     - containers:
         WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot
           showEnts: False
@@ -66207,8 +65749,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
 - proto: WeaponDisabler
   entities:
   - uid: 1130

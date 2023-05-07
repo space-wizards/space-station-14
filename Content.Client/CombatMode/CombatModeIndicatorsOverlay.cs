@@ -30,7 +30,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
 
     public Color MainColor = Color.White.WithAlpha(0.3f);
     public Color StrokeColor = Color.Black.WithAlpha(0.5f);
-    public float Scale = 0.8f;  // 1 is a little big
+    public float Scale = 0.6f;  // 1 is a little big
 
     public CombatModeIndicatorsOverlay(IInputManager input, IEntityManager entMan,
             IEyeManager eye, CombatModeSystem combatSys, HandsSystem hands)

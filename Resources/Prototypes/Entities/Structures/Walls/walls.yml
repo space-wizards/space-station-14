@@ -433,6 +433,29 @@
               acts: [ "Destruction" ]
 
 - type: entity
+  parent: WallShuttleDiagonal
+  id: WallPlastitaniumDiagonal
+  name: plastitanium wall
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Walls
+    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
+  - type: Icon
+    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    state: state0
+
+- type: entity
   parent: BaseWall
   id: WallReinforced
   name: reinforced wall
@@ -733,6 +756,29 @@
   - type: IconSmooth
     key: walls
     base: solid
+
+- type: entity
+  parent: WallShuttleDiagonal
+  id: WallSolidDiagonal
+  name: solid wall
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Walls
+    sprite: Structures/Walls/solid_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
+  - type: Icon
+    sprite: Structures/Walls/solid_diagonal.rsi
+    state: state0
 
 - type: entity
   parent: BaseWall

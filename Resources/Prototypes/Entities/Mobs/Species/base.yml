@@ -83,7 +83,6 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
-  - type: DiseaseCarrier
   - type: Blindable
   # Other
   - type: Inventory
