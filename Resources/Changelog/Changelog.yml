@@ -1,10 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: Nukeops now uses your selected character's appearance and species. Nukeop
-      names are still randomized., type: Tweak}
-  id: 3199
-  time: '2023-03-20T00:48:06.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Bames Jond from the Syndicate has added his exploding pen to the uplink.,
@@ -2913,3 +2907,8 @@ Entries:
   - {message: fixed pinpointer screen not being visible in dark!, type: Fix}
   id: 3698
   time: '2023-05-07T08:20:44.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Telecommunication server added to CentComm station, type: Add}
+  id: 3699
+  time: '2023-05-07T10:06:05.0000000+00:00'
