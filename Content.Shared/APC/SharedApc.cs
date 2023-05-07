@@ -9,24 +9,6 @@ namespace Content.Shared.APC
         ///     APC lights/HUD.
         /// </summary>
         ChargeState,
-
-        /// <summary>
-        ///     APC frame.
-        /// </summary>
-        PanelState
-    }
-
-    [Serializable, NetSerializable]
-    public enum ApcPanelState
-    {
-        /// <summary>
-        ///     APC is closed.
-        /// </summary>
-        Closed,
-        /// <summary>
-        ///     APC opened.
-        /// </summary>
-        Open
     }
 
     [Serializable, NetSerializable]
@@ -57,12 +39,16 @@ namespace Content.Shared.APC
     public sealed class ApcBoundInterfaceState : BoundUserInterfaceState
     {
         public readonly bool MainBreaker;
+        public readonly bool HasAccess;
+        public readonly int Power;
         public readonly ApcExternalPowerState ApcExternalPower;
         public readonly float Charge;
 
-        public ApcBoundInterfaceState(bool mainBreaker, ApcExternalPowerState apcExternalPower, float charge)
+        public ApcBoundInterfaceState(bool mainBreaker, bool hasAccess, int power, ApcExternalPowerState apcExternalPower, float charge)
         {
             MainBreaker = mainBreaker;
+            HasAccess = hasAccess;
+            Power = power;
             ApcExternalPower = apcExternalPower;
             Charge = charge;
         }

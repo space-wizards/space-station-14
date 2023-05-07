@@ -1,5 +1,5 @@
-using System.Threading;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -46,11 +46,5 @@ namespace Content.Server.Nutrition.Components
         /// </summary>
         [DataField("forceFeedDelay")]
         public float ForceFeedDelay = 3;
-
-        /// <summary>
-        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
-        ///     currently "in use".
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
     }
 }

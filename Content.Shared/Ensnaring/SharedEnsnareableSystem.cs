@@ -1,8 +1,15 @@
+using Content.Shared.DoAfter;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ensnaring;
+
+[Serializable, NetSerializable]
+public sealed class EnsnareableDoAfterEvent : SimpleDoAfterEvent
+{
+}
 
 public abstract class SharedEnsnareableSystem : EntitySystem
 {
@@ -67,7 +74,8 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         Appearance.SetData(uid, EnsnareableVisuals.IsEnsnared, component.IsEnsnared, appearance);
     }
 
-    private void MovementSpeedModify(EntityUid uid, EnsnareableComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void MovementSpeedModify(EntityUid uid, EnsnareableComponent component,
+        RefreshMovementSpeedModifiersEvent args)
     {
         if (!component.IsEnsnared)
             return;

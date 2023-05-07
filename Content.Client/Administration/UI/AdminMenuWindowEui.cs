@@ -1,6 +1,8 @@
 using Content.Client.Eui;
 using Content.Shared.Administration;
+using Content.Shared.Eui;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.UI
 {
@@ -11,7 +13,7 @@ namespace Content.Client.Administration.UI
         public AdminAnnounceEui()
         {
             _window = new AdminAnnounceWindow();
-            _window.OnClose += () => SendMessage(new AdminAnnounceEuiMsg.Close());
+            _window.OnClose += () => SendMessage(new CloseEuiMessage());
             _window.AnnounceButton.OnPressed += AnnounceButtonOnOnPressed;
         }
 
@@ -19,7 +21,7 @@ namespace Content.Client.Administration.UI
         {
             SendMessage(new AdminAnnounceEuiMsg.DoAnnounce
             {
-                Announcement = _window.Announcement.Text,
+                Announcement = Rope.Collapse(_window.Announcement.TextRope),
                 Announcer =  _window.Announcer.Text,
                 AnnounceType =  (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station),
                 CloseAfter = !_window.KeepWindowOpen.Pressed,

@@ -61,7 +61,7 @@ namespace Content.Client.Info
 
         private static Control MakeSection(string title, string path, bool markup, IResourceManager res)
         {
-            return new InfoSection(title, res.ContentFileReadAllText($"/Server Info/{path}"), markup);
+            return new InfoSection(title, res.ContentFileReadAllText($"/ServerInfo/{path}"), markup);
         }
 
     }

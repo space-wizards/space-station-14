@@ -12,3 +12,9 @@ ent-CrateEmergencyRadiation = Radiation protection crate
 
 ent-CrateEmergencyInflatablewall = Inflatable wall crate
     .desc = Three stacks of inflatable walls for when the stations metal walls don't want to hold atmosphere anymore.
+
+ent-CrateGenericBiosuit = Emergency bio suit crate
+    .desc = Contains 2 biohazard suits to ensure that no disease will distract you from what you're doing there.
+
+ent-CrateSlimepersonLifeSupport = Slimeperson life support crate
+    .desc = Contains four breath masks and four large nitrogen tanks.

@@ -1,18 +1,21 @@
 # Flowers
 - type: decal
   id: FlowersBROne
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_flowers.rsi
     state: flowersbr1
 
 - type: decal
   id: FlowersBRTwo
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_flowers.rsi
     state: flowersbr2
 
 - type: decal
   id: FlowersBRThree
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_flowers.rsi
     state: flowersbr3
@@ -20,54 +23,63 @@
 # Grass
 - type: decal
   id: BushAOne
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_bushes.rsi
     state: busha1
 
 - type: decal
   id: BushATwo
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_bushes.rsi
     state: busha2
 
 - type: decal
   id: BushAThree
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_bushes.rsi
     state: busha3
 
 - type: decal
   id: BushCOne
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_bushes.rsi
     state: bushc1
 
 - type: decal
   id: BushCTwo
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_bushes.rsi
     state: bushc2
 
 - type: decal
   id: BushCThree
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_bushes.rsi
     state: bushc3
 
 - type: decal
   id: BushDOne
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_bushes.rsi
     state: bushd1
 
 - type: decal
   id: BushDTwo
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_bushes.rsi
     state: bushd2
 
 - type: decal
   id: BushDThree
+  snapCardinals: true
   sprite:
     sprite: /Textures/Decals/Flora/flora_bushes.rsi
     state: bushd3

@@ -12,7 +12,7 @@ public sealed class ChemicalPuddleArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ArtifactSystem _artifact = default!;
-    [Dependency] private readonly SpillableSystem _spillable = default!;
+    [Dependency] private readonly PuddleSystem _puddle = default!;
 
     /// <summary>
     /// The key for the node data entry containing
@@ -49,6 +49,6 @@ public sealed class ChemicalPuddleArtifactSystem : EntitySystem
             component.ChemicalSolution.AddReagent(reagent, amountPerChem);
         }
 
-        _spillable.SpillAt(uid, component.ChemicalSolution, component.PuddlePrototype);
+        _puddle.TrySpillAt(uid, component.ChemicalSolution, out _);
     }
 }

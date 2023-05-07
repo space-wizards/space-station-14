@@ -132,7 +132,7 @@ public abstract class SharedPortalSystem : EntitySystem
         // if they came from (not us), remove the timeout
         if (TryComp<PortalTimeoutComponent>(subject, out var timeout) && timeout.EnteredPortal != uid)
         {
-            RemComp<PortalTimeoutComponent>(subject);
+            RemCompDeferred<PortalTimeoutComponent>(subject);
         }
     }
 

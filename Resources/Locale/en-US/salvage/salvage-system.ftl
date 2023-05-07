@@ -18,4 +18,4 @@ salvage-system-magnet-examined-active = The salvage magnet is holding salvage in
     *[other] { $timeLeft } seconds.
 }
 salvage-system-magnet-examined-releasing = The salvage magnet is releasing the salvage.
-salvage-system-magnet-examined-cooling-down = The salvage magnet is cooling down.
+salvage-system-magnet-examined-cooling-down = The salvage magnet is cooling down. It will be ready in: {$timeLeft} seconds.

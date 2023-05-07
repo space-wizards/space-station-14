@@ -18,10 +18,6 @@ namespace Content.Server.Disease.Components
         /// If this vaccine has been used
         /// </summary>
         public bool Used = false;
-        /// <summary>
-        /// Token for interrupting injection do after.
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
 
         /// <summary>
         /// The disease prototype currently on the vaccine

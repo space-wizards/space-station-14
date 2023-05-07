@@ -25,6 +25,7 @@
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: ChamberMagazineAmmoProvider
@@ -62,10 +63,13 @@
   name: viper
   parent: BaseWeaponPistol
   id: WeaponPistolViper
-  description: A small, easily concealable, but somewhat underpowered gun. Uses .35 auto ammo.
+  description: A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    availableModes:
+    - FullAuto
+    - SemiAuto
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -91,24 +95,6 @@
       gun_chamber: !type:ContainerSlot
 
 - type: entity
-  name: handmade pistol
-  parent: BaseWeaponPistol
-  id: WeaponPistolHandmade
-  description: Looks unreliable. Uses .35 auto ammo.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
-    layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
-  - type: Gun
-    selectedMode: SemiAuto
-    availableModes:
-      - SemiAuto
-
-- type: entity
   name: cobra
   parent: BaseWeaponPistol
   id: WeaponPistolCobra
@@ -127,6 +113,10 @@
     fireRate: 4
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+      params:
+        volume: -14
+    availableModes:
+    - SemiAuto
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -167,5 +157,7 @@
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Gun
     fireRate: 5
+    availableModes:
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg

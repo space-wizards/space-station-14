@@ -16,7 +16,7 @@ namespace Content.Client.Power.APC
         {
             base.Open();
 
-            _menu = new ApcMenu(this);
+            _menu = new ApcMenu(this,Owner);
             _menu.OnClose += Close;
             _menu.OpenCentered();
         }

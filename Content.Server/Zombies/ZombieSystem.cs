@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Body.Systems;
+using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Cloning;
 using Content.Server.Disease;
@@ -7,15 +8,10 @@ using Content.Server.Disease.Components;
 using Content.Server.Drone.Components;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
-using Content.Server.Speech;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.Components;
-using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
-using Content.Shared.Movement.Systems;
-using Content.Shared.Bed.Sleep;
-using Content.Shared.Damage;
 using Content.Shared.Disease.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
@@ -24,6 +20,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Zombies
 {
@@ -34,6 +31,9 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
+        [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
+        [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
@@ -49,13 +49,11 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
-            SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
-            SubscribeLocalEvent<ActiveZombieComponent, AttemptSneezeCoughEvent>(OnSneeze);
-            SubscribeLocalEvent<ActiveZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
-
+            SubscribeLocalEvent<ZombieComponent, AttemptSneezeCoughEvent>(OnSneeze);
+            SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
         }
 
-        private void OnSleepAttempt(EntityUid uid, ActiveZombieComponent component, ref TryingToSleepEvent args)
+        private void OnSleepAttempt(EntityUid uid, ZombieComponent component, ref TryingToSleepEvent args)
         {
             args.Cancelled = true;
         }
@@ -78,18 +76,26 @@ namespace Content.Server.Zombies
         private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
         {
             if (args.NewMobState == MobState.Alive)
-                EnsureComp<ActiveZombieComponent>(uid);
+            {
+                // Groaning when damaged
+                EnsureComp<EmoteOnDamageComponent>(uid);
+                _emoteOnDamage.AddEmote(uid, "Scream");
+
+                // Random groaning
+                EnsureComp<AutoEmoteComponent>(uid);
+                _autoEmote.AddEmote(uid, "ZombieGroan");
+            }
             else
-                RemComp<ActiveZombieComponent>(uid);
+            {
+                // Stop groaning when damaged
+                _emoteOnDamage.RemoveEmote(uid, "Scream");
+
+                // Stop random groaning
+                _autoEmote.RemoveEmote(uid, "ZombieGroan");
+            }
         }
 
-        private void OnDamage(EntityUid uid, ActiveZombieComponent component, DamageChangedEvent args)
-        {
-            if (args.DamageIncreased)
-                DoGroan(uid, component);
-        }
-
-        private void OnSneeze(EntityUid uid, ActiveZombieComponent component, ref AttemptSneezeCoughEvent args)
+        private void OnSneeze(EntityUid uid, ZombieComponent component, ref AttemptSneezeCoughEvent args)
         {
             args.Cancelled = true;
         }
@@ -163,42 +169,6 @@ namespace Content.Server.Zombies
                     healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
                     _bloodstream.TryAddToChemicals(args.User, healingSolution);
                 }
-            }
-        }
-
-        private void DoGroan(EntityUid uid, ActiveZombieComponent component)
-        {
-            if (component.LastDamageGroanCooldown > 0)
-                return;
-
-            if (_robustRandom.Prob(0.5f)) //this message is never seen by players so it just says this for admins
-                // What? Is this REALLY the best way we have of letting admins know there are zombies in a round?
-                // [automated maintainer groan]
-                _chat.TrySendInGameICMessage(uid, "[automated zombie groan]", InGameICChatType.Speak, false);
-            else
-                _chat.TryEmoteWithoutChat(uid, component.GroanEmoteId);
-
-            component.LastDamageGroanCooldown = component.GroanCooldown;
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            foreach (var zombiecomp in EntityQuery<ActiveZombieComponent>())
-            {
-                zombiecomp.Accumulator += frameTime;
-                zombiecomp.LastDamageGroanCooldown -= frameTime;
-
-                if (zombiecomp.Accumulator < zombiecomp.RandomGroanAttempt)
-                    continue;
-                zombiecomp.Accumulator -= zombiecomp.RandomGroanAttempt;
-
-                if (!_robustRandom.Prob(zombiecomp.GroanChance))
-                    continue;
-
-                //either do a random accent line or scream
-                DoGroan(zombiecomp.Owner, zombiecomp);
             }
         }
 

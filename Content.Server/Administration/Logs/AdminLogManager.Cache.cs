@@ -122,14 +122,25 @@ public sealed partial class AdminLogManager
             query = query.Where(log => log.Date > filter.After);
         }
 
-        if (filter.AnyPlayers != null)
+        if (filter.IncludePlayers)
         {
-            query = query.Where(log => filter.AnyPlayers.Any(filterPlayer => log.Players.Contains(filterPlayer)));
-        }
+            if (filter.AnyPlayers != null)
+            {
+                query = query.Where(log =>
+                    filter.AnyPlayers.Any(filterPlayer => log.Players.Contains(filterPlayer)) ||
+                    log.Players.Length == 0 && filter.IncludeNonPlayers);
+            }
 
-        if (filter.AllPlayers != null)
+            if (filter.AllPlayers != null)
+            {
+                query = query.Where(log =>
+                    filter.AllPlayers.All(filterPlayer => log.Players.Contains(filterPlayer)) ||
+                    log.Players.Length == 0 && filter.IncludeNonPlayers);
+            }
+        }
+        else
         {
-            query = query.Where(log => filter.AllPlayers.All(filterPlayer => log.Players.Contains(filterPlayer)));
+            query = query.Where(log => log.Players.Length == 0);
         }
 
         if (filter.LogsSent != 0)

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat;
@@ -7,7 +8,10 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
+using Content.Client.Lobby.UI;
+using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
+using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
@@ -157,8 +161,14 @@ public sealed class ChatUIController : UIController
         _input.SetInputCommand(ContentKeyFunctions.FocusLocalChat,
             InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.Local)));
 
+        _input.SetInputCommand(ContentKeyFunctions.FocusEmote,
+            InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.Emotes)));
+
         _input.SetInputCommand(ContentKeyFunctions.FocusWhisperChat,
             InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.Whisper)));
+
+        _input.SetInputCommand(ContentKeyFunctions.FocusLOOC,
+            InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.LOOC)));
 
         _input.SetInputCommand(ContentKeyFunctions.FocusOOC,
             InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.OOC)));
@@ -180,22 +190,106 @@ public sealed class ChatUIController : UIController
 
         _input.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
             InputCmdHandler.FromDelegate(_ => CycleChatChannel(false)));
+
+        var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
+        gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+        gameplayStateLoad.OnScreenUnload += OnScreenUnload;
+    }
+
+    public void OnScreenLoad()
+    {
+        SetMainChat(true);
+
+        var viewportContainer = UIManager.ActiveScreen!.FindControl<LayoutContainer>("ViewportContainer");
+        SetSpeechBubbleRoot(viewportContainer);
+    }
+
+    public void OnScreenUnload()
+    {
+        SetMainChat(false);
     }
 
     public void SetMainChat(bool setting)
     {
-        // This isn't very nice to look at.
-        var widget = UIManager.ActiveScreen?.GetWidget<ChatBox>();
-        if (widget == null)
+        if (UIManager.ActiveScreen == null)
         {
-            widget = UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
-            if (widget == null)
-            {
-                return;
-            }
+            return;
         }
 
-        widget.Main = setting;
+        ChatBox chatBox;
+        string? chatSizeRaw;
+
+        switch (UIManager.ActiveScreen)
+        {
+            case DefaultGameScreen defaultScreen:
+                chatBox = defaultScreen.ChatBox;
+                chatSizeRaw = _config.GetCVar(CCVars.DefaultScreenChatSize);
+                SetChatSizing(chatSizeRaw, defaultScreen, setting);
+                break;
+            case SeparatedChatGameScreen separatedScreen:
+                chatBox = separatedScreen.ChatBox;
+                chatSizeRaw = _config.GetCVar(CCVars.SeparatedScreenChatSize);
+                SetChatSizing(chatSizeRaw, separatedScreen, setting);
+                break;
+            default:
+                // this could be better?
+                var maybeChat = UIManager.ActiveScreen.GetWidget<ChatBox>();
+
+                chatBox = maybeChat ?? throw new Exception("Cannot get chat box in screen!");
+
+                break;
+        }
+
+        chatBox.Main = setting;
+    }
+
+    private void SetChatSizing(string sizing, InGameScreen screen, bool setting)
+    {
+        if (!setting)
+        {
+            screen.OnChatResized -= StoreChatSize;
+            return;
+        }
+
+        screen.OnChatResized += StoreChatSize;
+
+        if (string.IsNullOrEmpty(sizing))
+        {
+            return;
+        }
+
+        var split = sizing.Split(",");
+
+        var chatSize = new Vector2(
+            float.Parse(split[0], CultureInfo.InvariantCulture),
+            float.Parse(split[1], CultureInfo.InvariantCulture));
+
+
+        screen.SetChatSize(chatSize);
+    }
+
+    private void StoreChatSize(Vector2 size)
+    {
+        if (UIManager.ActiveScreen == null)
+        {
+            throw new Exception("Cannot get active screen!");
+        }
+
+        var stringSize = $"{size.X},{size.Y}";
+        switch (UIManager.ActiveScreen)
+        {
+            case DefaultGameScreen _:
+                _config.SetCVar(CCVars.DefaultScreenChatSize, stringSize);
+                break;
+            case SeparatedChatGameScreen _:
+                _config.SetCVar(CCVars.SeparatedScreenChatSize, stringSize);
+                break;
+            default:
+                // do nothing
+                return;
+        }
+
+        _config.SaveToFile();
     }
 
     private void FocusChat()
@@ -408,6 +502,7 @@ public sealed class ChatUIController : UIController
         if (_admin.HasFlag(AdminFlags.Admin))
         {
             FilterableChannels |= ChatChannel.Admin;
+            FilterableChannels |= ChatChannel.AdminAlert;
             FilterableChannels |= ChatChannel.AdminChat;
             CanSendChannels |= ChatSelectChannel.Admin;
         }

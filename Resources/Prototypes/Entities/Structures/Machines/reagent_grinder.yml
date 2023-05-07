@@ -24,13 +24,14 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.08,-0.35,0.15,0.25"
-      mask:
-      - TabletopMachineMask
-      layer:
-      - TabletopMachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.08,-0.35,0.15,0.25"
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/juicer.rsi
@@ -41,9 +42,6 @@
       state: "juicer0"
   - type: ApcPowerReceiver
     powerLoad: 300
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
   - type: ItemSlots
     slots:
       beakerSlot:

@@ -3,21 +3,32 @@
   name: smoke
   noSpawn: true
   components:
+  - type: Occluder
   - type: Sprite
     drawdepth: Effects
     sprite: Effects/chemsmoke.rsi
     state: chemsmoke
   - type: Appearance
   - type: SmokeVisuals
-  - type: Occluder
   - type: Transform
     anchored: true
-  - type: SmokeSolutionAreaEffect
+  - type: Smoke
+  - type: NodeContainer
+    nodes:
+      smoke:
+        !type:SpreaderNode
+        nodeGroupID: Spreader
+  - type: EdgeSpreader
   - type: SolutionContainerManager
     solutions:
       solutionArea:
         maxVol: 600
         canReact: false
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+      - HideContextMenu
 
 - type: entity
   id: Foam
@@ -34,7 +45,9 @@
       - state: foam
         map: ["enum.FoamVisualLayers.Base"]
   - type: AnimationPlayer
+    netsync: false
   - type: Appearance
+  - type: SmokeVisuals
   - type: FoamVisuals
     animationTime: 0.6
     animationState: foam-dissolve
@@ -43,15 +56,22 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - hard: false
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      mask:
-      - ItemMask
-      layer:
-      - SlipLayer
-  - type: FoamSolutionAreaEffect
+      fix1:
+        hard: false
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
+  - type: Smoke
+  - type: NodeContainer
+    nodes:
+      smoke:
+        !type:SpreaderNode
+        nodeGroupID: Spreader
+  - type: EdgeSpreader
   - type: SolutionContainerManager
     solutions:
       solutionArea:
@@ -72,11 +92,13 @@
     - state: mfoam
       map: ["enum.FoamVisualLayers.Base"]
   - type: Appearance
+  - type: SmokeVisuals
   - type: FoamVisuals
     animationTime: 0.6
     animationState: mfoam-dissolve
-  - type: FoamSolutionAreaEffect
-    foamedMetalPrototype: FoamedIronMetal
+  - type: Smoke
+  - type: SmokeDissipateSpawn
+    prototype: FoamedIronMetal
 
 - type: entity
   id: AluminiumMetalFoam
@@ -90,11 +112,13 @@
       - state: mfoam
         map: ["enum.FoamVisualLayers.Base"]
   - type: Appearance
+  - type: SmokeVisuals
   - type: FoamVisuals
     animationTime: 0.6
     animationState: mfoam-dissolve
-  - type: FoamSolutionAreaEffect
-    foamedMetalPrototype: FoamedAluminiumMetal
+  - type: Smoke
+  - type: SmokeDissipateSpawn
+    prototype: FoamedAluminiumMetal
 
 - type: entity
   id: BaseFoamedMetal
@@ -116,12 +140,13 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - WallLayer
-      mask:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        layer:
+        - WallLayer
+        mask:
+        - WallLayer
   - type: Occluder
   - type: Transform
     anchored: true

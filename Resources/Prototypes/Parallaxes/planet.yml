@@ -14,11 +14,21 @@
       scrolling: "0.1, -0.05"
 
 - type: parallax
-  id: Grass
+  id: Dirt
   layers:
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Tiles/Planet/Grass/grass.png"
+      slowness: 0
+      scale: "1, 1"
+      shader: ""
+
+- type: parallax
+  id: Grass
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: /Textures/Tiles/Planet/Grass/grass.png
       slowness: 0
       scale: "1, 1"
       shader: ""

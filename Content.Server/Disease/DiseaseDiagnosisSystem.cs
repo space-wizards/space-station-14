@@ -1,24 +1,23 @@
-using System.Threading;
 using Content.Server.Disease.Components;
-using Content.Shared.Disease;
-using Content.Shared.Interaction;
-using Content.Shared.Inventory;
-using Content.Shared.Examine;
-using Content.Server.DoAfter;
-using Content.Server.Popups;
-using Content.Server.Hands.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Paper;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Robust.Shared.Random;
-using Robust.Shared.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.Utility;
-using Content.Shared.Tools.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Disease;
+using Content.Shared.DoAfter;
+using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
-using Robust.Server.GameObjects;
+using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Swab;
+using Content.Shared.Tools.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Disease
 {
@@ -27,7 +26,7 @@ namespace Content.Server.Disease
     /// </summary>
     public sealed class DiseaseDiagnosisSystem : EntitySystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -47,8 +46,7 @@ namespace Content.Server.Disease
             // Private Events
             SubscribeLocalEvent<DiseaseDiagnoserComponent, DiseaseMachineFinishedEvent>(OnDiagnoserFinished);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, DiseaseMachineFinishedEvent>(OnVaccinatorFinished);
-            SubscribeLocalEvent<TargetSwabSuccessfulEvent>(OnTargetSwabSuccessful);
-            SubscribeLocalEvent<SwabCancelledEvent>(OnSwabCancelled);
+            SubscribeLocalEvent<DiseaseSwabComponent, DiseaseSwabDoAfterEvent>(OnSwabDoAfter);
         }
 
         private Queue<EntityUid> AddQueue = new();
@@ -100,16 +98,7 @@ namespace Content.Server.Disease
         /// </summary>
         private void OnAfterInteract(EntityUid uid, DiseaseSwabComponent swab, AfterInteractEvent args)
         {
-            if (swab.CancelToken != null)
-            {
-                swab.CancelToken.Cancel();
-                swab.CancelToken = null;
-                return;
-            }
-            if (args.Target == null || !args.CanReach)
-                return;
-
-            if (!TryComp<DiseaseCarrierComponent>(args.Target, out var carrier))
+            if (args.Target == null || !args.CanReach || !HasComp<DiseaseCarrierComponent>(args.Target))
                 return;
 
             if (swab.Used)
@@ -126,14 +115,10 @@ namespace Content.Server.Disease
                 return;
             }
 
-            swab.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, swab.SwabDelay, swab.CancelToken.Token, target: args.Target)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, swab.SwabDelay, new DiseaseSwabDoAfterEvent(), uid, target: args.Target, used: uid)
             {
-                BroadcastFinishedEvent = new TargetSwabSuccessfulEvent(args.User, args.Target, swab, carrier),
-                BroadcastCancelledEvent = new SwabCancelledEvent(swab),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 NeedHand = true
             });
         }
@@ -309,35 +294,25 @@ namespace Content.Server.Disease
         {
             UpdateAppearance(uid, args.Powered, false);
         }
-        ///
-        /// Private events
-        ///
 
         /// <summary>
         /// Copies a disease prototype to the swab
         /// after the doafter completes.
         /// </summary>
-        private void OnTargetSwabSuccessful(TargetSwabSuccessfulEvent args)
+        private void OnSwabDoAfter(EntityUid uid, DiseaseSwabComponent component, DoAfterEvent args)
         {
-            if (args.Target == null)
+            if (args.Handled || args.Cancelled || !TryComp<DiseaseCarrierComponent>(args.Args.Target, out var carrier) || !TryComp<DiseaseSwabComponent>(args.Args.Used, out var swab))
                 return;
 
-            args.Swab.Used = true;
-            _popupSystem.PopupEntity(Loc.GetString("swab-swabbed", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, args.User);
+            swab.Used = true;
+            _popupSystem.PopupEntity(Loc.GetString("swab-swabbed", ("target", Identity.Entity(args.Args.Target.Value, EntityManager))), args.Args.Target.Value, args.Args.User);
 
-            if (args.Swab.Disease != null || args.Carrier.Diseases.Count == 0)
+            if (swab.Disease != null || carrier.Diseases.Count == 0)
                 return;
 
-            args.Swab.Disease = _random.Pick(args.Carrier.Diseases);
+            swab.Disease = _random.Pick(carrier.Diseases);
         }
 
-        /// <summary>
-        /// Cancels the swab doafter if needed.
-        /// </summary>
-        private static void OnSwabCancelled(SwabCancelledEvent args)
-        {
-            args.Swab.CancelToken = null;
-        }
 
         /// <summary>
         /// Prints a diagnostic report with its findings.
@@ -408,38 +383,6 @@ namespace Content.Server.Disease
                 return;
 
             vaxxComp.Disease = args.Machine.Disease;
-        }
-
-        /// <summary>
-        /// Cancels the mouth-swabbing doafter
-        /// </summary>
-        private sealed class SwabCancelledEvent : EntityEventArgs
-        {
-            public readonly DiseaseSwabComponent Swab;
-            public SwabCancelledEvent(DiseaseSwabComponent swab)
-            {
-                Swab = swab;
-            }
-        }
-
-        /// <summary>
-        /// Fires if the doafter for swabbing someone's mouth succeeds
-        /// </summary>
-        private sealed class TargetSwabSuccessfulEvent : EntityEventArgs
-        {
-            public EntityUid User { get; }
-            public EntityUid? Target { get; }
-            public DiseaseSwabComponent Swab { get; }
-
-            public DiseaseCarrierComponent Carrier { get; }
-
-            public TargetSwabSuccessfulEvent(EntityUid user, EntityUid? target, DiseaseSwabComponent swab, DiseaseCarrierComponent carrier)
-            {
-                User = user;
-                Target = target;
-                Swab = swab;
-                Carrier = carrier;
-            }
         }
 
         /// <summary>

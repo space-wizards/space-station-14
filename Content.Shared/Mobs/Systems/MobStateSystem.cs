@@ -104,7 +104,12 @@ public partial class MobStateSystem : EntitySystem
             return;
 
         component.CurrentState = state.CurrentState;
-        component.AllowedStates = new HashSet<MobState>(state.AllowedStates);
+
+        if (!component.AllowedStates.SetEquals(state.AllowedStates))
+        {
+            component.AllowedStates.Clear();
+            component.AllowedStates.UnionWith(state.AllowedStates);
+        }
     }
 
     private void OnGetComponentState(EntityUid uid, MobStateComponent component, ref ComponentGetState args)

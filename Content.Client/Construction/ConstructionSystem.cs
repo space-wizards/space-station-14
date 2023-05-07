@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
@@ -44,7 +45,7 @@ namespace Content.Client.Construction
                 .Bind(ContentKeyFunctions.OpenCraftingMenu,
                     new PointerInputCmdHandler(HandleOpenCraftingMenu))
                 .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleUse))
+                    new PointerInputCmdHandler(HandleUse, outsidePrediction: true))
                 .Register<ConstructionSystem>();
 
             SubscribeLocalEvent<ConstructionGhostComponent, ExaminedEvent>(HandleConstructionGhostExamined);
@@ -151,41 +152,59 @@ namespace Content.Client.Construction
         /// Creates a construction ghost at the given location.
         /// </summary>
         public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
+            => TrySpawnGhost(prototype, loc, dir, out _);
+
+        /// <summary>
+        /// Creates a construction ghost at the given location.
+        /// </summary>
+        public bool TrySpawnGhost(
+            ConstructionPrototype prototype,
+            EntityCoordinates loc,
+            Direction dir,
+            [NotNullWhen(true)] out EntityUid? ghost)
         {
+            ghost = null;
             if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
                 !user.IsValid())
             {
-                return;
+                return false;
             }
 
-            if (GhostPresent(loc)) return;
+            if (GhostPresent(loc))
+                return false;
 
             // This InRangeUnobstructed should probably be replaced with "is there something blocking us in that tile?"
             var predicate = GetPredicate(prototype.CanBuildInImpassable, loc.ToMap(EntityManager));
             if (!_interactionSystem.InRangeUnobstructed(user, loc, 20f, predicate: predicate))
-                return;
+                return false;
 
             foreach (var condition in prototype.Conditions)
             {
                 if (!condition.Condition(user, loc, dir))
-                    return;
+                    return false;
             }
 
-            var ghost = EntityManager.SpawnEntity("constructionghost", loc);
-            var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost);
+            ghost = EntityManager.SpawnEntity("constructionghost", loc);
+            var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost.Value);
             comp.Prototype = prototype;
             comp.GhostId = _nextId++;
-            EntityManager.GetComponent<TransformComponent>(ghost).LocalRotation = dir.ToAngle();
+            EntityManager.GetComponent<TransformComponent>(ghost.Value).LocalRotation = dir.ToAngle();
             _ghosts.Add(comp.GhostId, comp);
-            var sprite = EntityManager.GetComponent<SpriteComponent>(ghost);
+            var sprite = EntityManager.GetComponent<SpriteComponent>(ghost.Value);
             sprite.Color = new Color(48, 255, 48, 128);
-            sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
-            sprite.LayerSetSprite(0, prototype.Icon);
-            sprite.LayerSetShader(0, "unshaded");
-            sprite.LayerSetVisible(0, true);
+
+            for (int i = 0; i < prototype.Layers.Count; i++)
+            {
+                sprite.AddBlankLayer(i); // There is no way to actually check if this already exists, so we blindly insert a new one
+                sprite.LayerSetSprite(i, prototype.Layers[i]);
+                sprite.LayerSetShader(i, "unshaded");
+                sprite.LayerSetVisible(i, true);
+            }
 
             if (prototype.CanBuildInImpassable)
-                EnsureComp<WallMountComponent>(ghost).Arc = new(Math.Tau);
+                EnsureComp<WallMountComponent>(ghost.Value).Arc = new(Math.Tau);
+
+            return true;
         }
 
         /// <summary>
@@ -201,7 +220,7 @@ namespace Content.Client.Construction
             return false;
         }
 
-        private void TryStartConstruction(int ghostId)
+        public void TryStartConstruction(int ghostId)
         {
             var ghost = _ghosts[ghostId];
 

@@ -29,6 +29,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 ## Graphics menu
 
 ui-options-show-held-item = Show held item next to cursor?
+ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor?
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:
@@ -92,6 +93,9 @@ ui-options-function-walk = Walk
 ui-options-function-camera-rotate-left = Rotate left
 ui-options-function-camera-rotate-right = Rotate right
 ui-options-function-camera-reset = Reset
+ui-options-function-zoom-in = Zoom in
+ui-options-function-zoom-out = Zoom out
+ui-options-function-reset-zoom = Reset zoom
 
 ui-options-function-use = Use
 ui-options-function-use-secondary = Use secondary
@@ -115,8 +119,10 @@ ui-options-function-point = Point at location
 
 ui-options-function-focus-chat-input-window = Focus chat
 ui-options-function-focus-local-chat-window = Focus chat (IC)
+ui-options-function-focus-emote = Focus chat (Emote)
 ui-options-function-focus-whisper-chat-window = Focus chat (Whisper)
 ui-options-function-focus-radio-window = Focus chat (Radio)
+ui-options-function-focus-looc-window = Focus chat (LOOC)
 ui-options-function-focus-ooc-window = Focus chat (OOC)
 ui-options-function-focus-admin-chat-window = Focus chat (Admin)
 ui-options-function-focus-dead-chat-window = Focus chat (Dead)
@@ -135,6 +141,10 @@ ui-options-function-open-tile-spawn-window = Open tile spawn menu
 ui-options-function-open-decal-spawn-window = Open decal spawn menu
 ui-options-function-open-admin-menu = Open admin menu
 ui-options-function-open-guidebook = Open guidebook
+ui-options-function-window-close-all = Close all windows
+ui-options-function-window-close-recent = Close recent window
+ui-options-function-show-escape-menu = Toggle game menu
+ui-options-function-escape-context = Close recent window or toggle game menu
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)

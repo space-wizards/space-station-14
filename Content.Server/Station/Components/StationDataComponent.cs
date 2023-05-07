@@ -28,6 +28,6 @@ public sealed class StationDataComponent : Component
     /// <summary>
     /// The emergency shuttle assigned to this station.
     /// </summary>
-    [ViewVariables, Access(typeof(ShuttleSystem), Friend = AccessPermissions.ReadWrite)]
+    [ViewVariables, Access(typeof(ShuttleSystem), typeof(EmergencyShuttleSystem), Friend = AccessPermissions.ReadWrite)]
     public EntityUid? EmergencyShuttle;
 }

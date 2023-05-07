@@ -1,7 +1,8 @@
-using Content.Server.CombatMode;
 using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.CombatMode;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Robust.Shared.Physics;
@@ -32,7 +33,7 @@ public sealed partial class NPCSteeringSystem
      */
 
 
-    private SteeringObstacleStatus TryHandleFlags(NPCSteeringComponent component, PathPoly poly, EntityQuery<PhysicsComponent> bodyQuery)
+    private SteeringObstacleStatus TryHandleFlags(EntityUid uid, NPCSteeringComponent component, PathPoly poly, EntityQuery<PhysicsComponent> bodyQuery)
     {
         DebugTools.Assert(!poly.Data.IsFreeSpace);
         // TODO: Store PathFlags on the steering comp
@@ -41,9 +42,9 @@ public sealed partial class NPCSteeringSystem
         var layer = 0;
         var mask = 0;
 
-        if (TryComp<FixturesComponent>(component.Owner, out var manager))
+        if (TryComp<FixturesComponent>(uid, out var manager))
         {
-            (layer, mask) = _physics.GetHardCollision(component.Owner, manager);
+            (layer, mask) = _physics.GetHardCollision(uid, manager);
         }
         else
         {
@@ -55,14 +56,27 @@ public sealed partial class NPCSteeringSystem
         if ((poly.Data.CollisionLayer & mask) != 0x0 ||
             (poly.Data.CollisionMask & layer) != 0x0)
         {
+            var id = component.DoAfterId;
+
+            // Still doing what we were doing before.
+            var doAfterStatus = _doAfter.GetStatus(id);
+
+            switch (doAfterStatus)
+            {
+                case DoAfterStatus.Running:
+                    return SteeringObstacleStatus.Continuing;
+                case DoAfterStatus.Cancelled:
+                    return SteeringObstacleStatus.Failed;
+            }
+
             var obstacleEnts = new List<EntityUid>();
 
             GetObstacleEntities(poly, mask, layer, bodyQuery, obstacleEnts);
             var isDoor = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
-            var isAccess = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
+            var isAccessRequired = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
 
             // Just walk into it stupid
-            if (isDoor && !isAccess)
+            if (isDoor && !isAccessRequired)
             {
                 var doorQuery = GetEntityQuery<DoorComponent>();
 
@@ -76,20 +90,16 @@ public sealed partial class NPCSteeringSystem
                     {
                         if (door.State != DoorState.Opening)
                         {
-                            _interaction.InteractionActivate(component.Owner, ent);
+                            _interaction.InteractionActivate(uid, ent);
                             return SteeringObstacleStatus.Continuing;
                         }
                     }
-                    else
-                    {
-                        return SteeringObstacleStatus.Failed;
-                    }
                 }
 
-                return SteeringObstacleStatus.Completed;
+                // If we get to here then didn't succeed for reasons.
             }
 
-            if ((component.Flags & PathFlags.Prying) != 0x0 && isAccess && isDoor)
+            if ((component.Flags & PathFlags.Prying) != 0x0 && isDoor)
             {
                 var doorQuery = GetEntityQuery<DoorComponent>();
 
@@ -99,9 +109,11 @@ public sealed partial class NPCSteeringSystem
                     if (doorQuery.TryGetComponent(ent, out var door) && door.State != DoorState.Open)
                     {
                         // TODO: Use the verb.
-                        if (door.State != DoorState.Opening && !door.BeingPried)
-                            _doors.TryPryDoor(ent, component.Owner, component.Owner, door, true);
 
+                        if (door.State != DoorState.Opening)
+                            _doors.TryPryDoor(ent, uid, uid, door, out id, force: true);
+
+                        component.DoAfterId = id;
                         return SteeringObstacleStatus.Continuing;
                     }
                 }
@@ -112,11 +124,9 @@ public sealed partial class NPCSteeringSystem
             // Try smashing obstacles.
             else if ((component.Flags & PathFlags.Smashing) != 0x0)
             {
-                var meleeWeapon = _melee.GetWeapon(component.Owner);
-
-                if (meleeWeapon != null && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(component.Owner, out var combatMode))
+                if (_melee.TryGetWeapon(uid, out var meleeUid, out var meleeWeapon) && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(uid, out var combatMode))
                 {
-                    combatMode.IsInCombatMode = true;
+                    _combat.SetInCombatMode(uid, true, combatMode);
                     var destructibleQuery = GetEntityQuery<DestructibleComponent>();
 
                     // TODO: This is a hack around grilles and windows.
@@ -127,12 +137,12 @@ public sealed partial class NPCSteeringSystem
                         // TODO: Validate we can damage it
                         if (destructibleQuery.HasComponent(ent))
                         {
-                            _melee.AttemptLightAttack(component.Owner, component.Owner, meleeWeapon, ent);
+                            _melee.AttemptLightAttack(uid, uid, meleeWeapon, ent);
                             break;
                         }
                     }
 
-                    combatMode.IsInCombatMode = false;
+                    _combat.SetInCombatMode(uid, false, combatMode);
 
                     if (obstacleEnts.Count == 0)
                         return SteeringObstacleStatus.Completed;

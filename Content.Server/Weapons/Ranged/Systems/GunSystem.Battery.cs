@@ -6,6 +6,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -31,21 +32,23 @@ public sealed partial class GunSystem
         UpdateShots(uid, component);
     }
 
-    private void OnBatteryChargeChange(EntityUid uid, BatteryAmmoProviderComponent component, ChargeChangedEvent args)
+    private void OnBatteryChargeChange(EntityUid uid, BatteryAmmoProviderComponent component, ref ChargeChangedEvent args)
     {
-        UpdateShots(uid, component);
+        UpdateShots(uid, component, args.Charge, args.MaxCharge);
     }
 
     private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component)
     {
-        if (!TryComp<BatteryComponent>(uid, out var battery)) return;
-        UpdateShots(component, battery);
+        if (!TryComp<BatteryComponent>(uid, out var battery))
+            return;
+
+        UpdateShots(uid, component, battery.Charge, battery.MaxCharge);
     }
 
-    private void UpdateShots(BatteryAmmoProviderComponent component, BatteryComponent battery)
+    private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component, float charge, float maxCharge)
     {
-        var shots = (int) (battery.CurrentCharge / component.FireCost);
-        var maxShots = (int) (battery.MaxCharge / component.FireCost);
+        var shots = (int) (charge / component.FireCost);
+        var maxShots = (int) (maxCharge / component.FireCost);
 
         if (component.Shots != shots || component.Capacity != maxShots)
         {
@@ -54,7 +57,7 @@ public sealed partial class GunSystem
 
         component.Shots = shots;
         component.Capacity = maxShots;
-        UpdateBatteryAppearance(component.Owner, component);
+        UpdateBatteryAppearance(uid, component);
     }
 
     private void OnBatteryExaminableVerb(EntityUid uid, BatteryAmmoProviderComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -91,7 +94,7 @@ public sealed partial class GunSystem
             Text = Loc.GetString("damage-examinable-verb-text"),
             Message = Loc.GetString("damage-examinable-verb-message"),
             Category = VerbCategory.Examine,
-            IconTexture = "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
         };
 
         args.Verbs.Add(verb);
@@ -125,9 +128,7 @@ public sealed partial class GunSystem
 
     protected override void TakeCharge(EntityUid uid, BatteryAmmoProviderComponent component)
     {
-        if (!TryComp<BatteryComponent>(uid, out var battery)) return;
-
-        battery.CurrentCharge -= component.FireCost;
-        UpdateShots(component, battery);
+        // Will raise ChargeChangedEvent
+        _battery.UseCharge(uid, component.FireCost);
     }
 }
