@@ -318,7 +318,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         DeviceLinkSourceComponent? sourceComponent = null,
         DeviceLinkSinkComponent? sinkComponent = null)
     {
-        if (!Resolve(sourceUid, ref sourceComponent) || !Resolve(sinkUid, ref sinkComponent))
+        if (!Resolve(sourceUid, ref sourceComponent, false) || !Resolve(sinkUid, ref sinkComponent, false))
             return;
 
         if (sourceComponent.LinkedPorts.TryGetValue(sinkUid, out var ports))
