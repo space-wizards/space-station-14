@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Bames Jond from the Syndicate has added his exploding pen to the uplink.,
-    type: Add}
-  id: 3200
-  time: '2023-03-20T19:32:29.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix melee arcs showing up in the context menu., type: Fix}
@@ -2912,3 +2906,9 @@ Entries:
   - {message: Telecommunication server added to CentComm station, type: Add}
   id: 3699
   time: '2023-05-07T10:06:05.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added xeno plushie! Hisssss!, type: Add}
+  - {message: Plushie crate can have either a gray or blue shark, type: Tweak}
+  id: 3700
+  time: '2023-05-07T22:50:09.0000000+00:00'
