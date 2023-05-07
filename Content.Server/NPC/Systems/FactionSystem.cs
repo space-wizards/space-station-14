@@ -111,6 +111,22 @@ public sealed class FactionSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Returns the list of factions this entity belongs in.
+    /// </summary>
+    public List<string> GetFactionList(EntityUid uid)
+    {
+        var factionList = new List<string>();
+
+        if (!TryComp<FactionComponent>(uid, out var component))
+            return factionList;
+
+        foreach (var faction in component.Factions)
+            factionList.Add(faction);
+
+        return factionList;
+    }
+
     public IEnumerable<EntityUid> GetNearbyHostiles(EntityUid entity, float range, FactionComponent? component = null)
     {
         if (!Resolve(entity, ref component, false))

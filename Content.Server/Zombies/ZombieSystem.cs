@@ -272,8 +272,10 @@ namespace Content.Server.Zombies
             if (TryComp<TemperatureComponent>(target, out var tempComp) && zombiecomp.BeforeZombifiedColdTempThreshold is not null)
                 tempComp.ColdDamage = zombiecomp.BeforeZombifiedColdTempThreshold;
 
-            //Remove the entity from the zombie faction
-            _faction.RemoveFaction(target, "Zombie", false);
+            //Remove the entity from the zombie faction and restore the previous ones
+            _faction.RemoveFaction(target, "Zombie");
+            foreach(var faction in zombiecomp.BeforeZombifiedFactions)
+                _faction.AddFaction(target, faction);
 
             //You're officially cured, son.
             RemComp<ZombieComponent>(target);

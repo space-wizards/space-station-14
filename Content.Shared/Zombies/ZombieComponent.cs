@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using static Content.Shared.Humanoid.HumanoidAppearanceState;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Zombies
 {
@@ -66,17 +67,15 @@ namespace Content.Shared.Zombies
         public float AttackRange = 1.5f;
 
         /// <summary>
-        /// The damage specifier of the humanoid zombie
+        /// The damage values of the humanoid zombie
         /// </summary>
-        [DataField("zombieDamageSpecifier")]
-        public DamageSpecifier ZombieDamageSpecifier = new();
-        private void InitializeSpecifier()
+        [DataField("zombieDamageValues")]
+        public Dictionary<string, FixedPoint2> ZombieDamageValues = new Dictionary<string, FixedPoint2>
         {
-            ZombieDamageSpecifier = new DamageSpecifier();
-            ZombieDamageSpecifier.DamageDict.Add("Slash", 13);
-            ZombieDamageSpecifier.DamageDict.Add("Piercing", 7);
-            ZombieDamageSpecifier.DamageDict.Add("Structural", 10);
-        }
+            {"Slash", 13},
+            {"Piercing", 7},
+            {"Structural", 10}
+        };
 
         /// <summary>
         /// The role prototype of the zombie antag role
@@ -137,6 +136,12 @@ namespace Content.Shared.Zombies
         /// </summary>
         [DataField("beforeZombifiedColdTempThreshold")]
         public DamageSpecifier? BeforeZombifiedColdTempThreshold;
+
+        /// <summary>
+        /// The factions of the entity to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedFactions")]
+        public List<string> BeforeZombifiedFactions = new();
 
         [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
         public string? EmoteSoundsId = "Zombie";

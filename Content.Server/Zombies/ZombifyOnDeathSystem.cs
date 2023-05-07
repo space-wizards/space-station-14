@@ -161,8 +161,12 @@ namespace Content.Server.Zombies
                 _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombiecomp.BaseLayerExternal, humanoid: huApComp);
 
                 //This is done here because non-humanoids shouldn't get baller damage
+                //lord forgive me for the hardcoded damage
+                DamageSpecifier dspec = new();
+                foreach (var value in zombiecomp.ZombieDamageValues)
+                    dspec.DamageDict.Add(value.Key, value.Value);
                 zombiecomp.BeforeZombifiedDamage = melee.Damage;
-                melee.Damage = zombiecomp.ZombieDamageSpecifier;
+                melee.Damage = dspec;
             }
 
             //Save the original values then the zombie gets the assigned damage weaknesses and strengths
@@ -206,7 +210,10 @@ namespace Content.Server.Zombies
 
             _identity.QueueIdentityUpdate(target);
 
-            //Adds the zombified entity to the zombie faction
+            //Saves the old factions, removes them and adds the zombified entity to the zombie faction
+            zombiecomp.BeforeZombifiedFactions = _faction.GetFactionList(target);
+            foreach (var faction in zombiecomp.BeforeZombifiedFactions)
+                _faction.RemoveFaction(target, faction);
             _faction.AddFaction(target, "Zombie");
 
             //He's gotta have a mind if it's a humanoid
