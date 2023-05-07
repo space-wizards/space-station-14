@@ -238,6 +238,14 @@ namespace Content.Shared.Damage
             Dirty(comp);
         }
 
+        public string? GetDamageModifierSetId(EntityUid uid, DamageableComponent? comp = null)
+        {
+            if (!Resolve(uid, ref comp))
+                return null;
+
+            return comp.DamageModifierSetId;
+        }
+
         private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
         {
             if (_netMan.IsServer)

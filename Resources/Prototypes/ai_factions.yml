@@ -1,10 +1,11 @@
 - type: faction
   id: Dragon
   hostile:
-    - NanoTrasen
-    - Syndicate
-    - Xeno
-    - PetsNT
+  - NanoTrasen
+  - Syndicate
+  - Xeno
+  - PetsNT
+  - Zombie
 
 - type: faction
   id: NanoTrasen
@@ -12,6 +13,7 @@
   - SimpleHostile
   - Syndicate
   - Xeno
+  - Zombie
 
 - type: faction
   id: Mouse
@@ -27,6 +29,7 @@
   - Mouse
   - SimpleHostile
   - Xeno
+  - Zombie
 
 - type: faction
   id: SimpleHostile
@@ -35,6 +38,7 @@
   - Syndicate
   - Passive
   - PetsNT
+  - Zombie
 
 - type: faction
   id: SimpleNeutral
@@ -46,9 +50,19 @@
   - SimpleHostile
   - Xeno
   - PetsNT
+  - Zombie
 
 - type: faction
   id: Xeno
+  hostile:
+  - NanoTrasen
+  - Syndicate
+  - Passive
+  - PetsNT
+  - Zombie
+
+- type: faction
+  id: Zombie
   hostile:
   - NanoTrasen
   - Syndicate

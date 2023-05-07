@@ -11,6 +11,7 @@ using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Nutrition.Components;
+using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
@@ -48,6 +49,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _sharedHuApp = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
+        [Dependency] private readonly FactionSystem _faction = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
@@ -106,6 +108,8 @@ namespace Content.Server.Zombies
             RemComp<ThirstComponent>(target);
 
             //funny voice
+            if (TryComp<ReplacementAccentComponent>(target, out var replacementAccent))
+                zombiecomp.BeforeZombifiedAccent = replacementAccent.Accent;
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
 
             //This is needed for stupid entities that fuck up combat mode component
@@ -117,6 +121,13 @@ namespace Content.Server.Zombies
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
             var melee = EnsureComp<MeleeWeaponComponent>(target);
+
+            //First let's save the original values
+            zombiecomp.BeforeZombifiedClickAnimation = melee.ClickAnimation;
+            zombiecomp.BeforeZombifiedWideAnimation = melee.WideAnimation;
+            zombiecomp.BeforeZombifiedRange = melee.Range;
+
+            //Now the entity gets zombie values
             melee.ClickAnimation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
             melee.Range = 1.5f;
@@ -155,14 +166,19 @@ namespace Content.Server.Zombies
                 dspec.DamageDict.Add("Slash", 13);
                 dspec.DamageDict.Add("Piercing", 7);
                 dspec.DamageDict.Add("Structural", 10);
+                zombiecomp.BeforeZombifiedDamage = melee.Damage;
                 melee.Damage = dspec;
             }
 
-            //The zombie gets the assigned damage weaknesses and strengths
+            //Save the original values then the zombie gets the assigned damage weaknesses and strengths
+            if (_damageable.GetDamageModifierSetId(target) is not null)
+                zombiecomp.BeforeZombifiedModifierSetId = _damageable.GetDamageModifierSetId(target);
             _damageable.SetDamageModifierSetId(target, "Zombie");
 
             //This makes it so the zombie doesn't take bloodloss damage.
             //NOTE: they are supposed to bleed, just not take damage
+            if (_bloodstream.GetBloodLossThreshold(target) is not null)
+                zombiecomp.BeforeZombifiedBloodLossThreshold = _bloodstream.GetBloodLossThreshold(target);
             _bloodstream.SetBloodLossThreshold(target, 0f);
 
             //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
@@ -179,7 +195,10 @@ namespace Content.Server.Zombies
 
             //Make the zombie not die in the cold. Good for space zombies
             if (TryComp<TemperatureComponent>(target, out var tempComp))
+            {
+                zombiecomp.BeforeZombifiedColdTempThreshold = tempComp.ColdDamage;
                 tempComp.ColdDamage.ClampMax(0);
+            }
 
             //Heals the zombie from all the damage it took while human
             if (TryComp<DamageableComponent>(target, out var damageablecomp))
@@ -191,6 +210,9 @@ namespace Content.Server.Zombies
             meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
 
             _identity.QueueIdentityUpdate(target);
+
+            //Adds the zombified entity to the zombie faction
+            _faction.AddFaction(target, "Zombie");
 
             //He's gotta have a mind
             var mindcomp = EnsureComp<MindComponent>(target);

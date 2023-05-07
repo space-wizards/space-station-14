@@ -6,6 +6,7 @@ using Content.Server.Cloning;
 using Content.Server.Drone.Components;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
+using Content.Server.NPC.Systems;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Emoting.Systems;
@@ -19,6 +20,16 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Server.Atmos.Components;
+using Content.Server.Body.Components;
+using Content.Server.Nutrition.Components;
+using Content.Shared.CombatMode;
+using Content.Shared.Nutrition.Components;
+using Robust.Shared.Network.Messages;
+using Content.Server.Speech.Components;
+using Content.Shared.CombatMode;
+using Content.Shared.Weapons.Melee;
+using Content.Server.Temperature.Components;
 
 namespace Content.Server.Zombies
 {
@@ -30,10 +41,12 @@ namespace Content.Server.Zombies
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
+        [Dependency] private readonly FactionSystem _faction = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
+        [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
 
         public override void Initialize()
@@ -146,7 +159,7 @@ namespace Content.Server.Zombies
             var max = component.MaxZombieInfectionChance;
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
-            var chance = (max-min) * ((total - items)/total) + min;
+            var chance = (max - min) * ((total - items) / total) + min;
             return chance;
         }
 
@@ -195,15 +208,15 @@ namespace Content.Server.Zombies
         /// </summary>
         /// <param name="source">the entity having the ZombieComponent</param>
         /// <param name="target">the entity you want to unzombify (different from source in case of cloning, for example)</param>
-        /// <remarks>
-        ///     this currently only restore the name and skin/eye color from before zombified
-        ///     TODO: reverse everything else done in ZombifyEntity
-        /// </remarks>
-        public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
+        public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp, MobStateComponent? mobState = null)
         {
             if (!Resolve(source, ref zombiecomp))
                 return false;
 
+            if (!Resolve(target, ref mobState, logMissing: false))
+                return false;
+
+            //Restore eye and skin color
             foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
             {
                 _humanoidSystem.SetBaseLayerColor(target, layer, info.Color);
@@ -211,7 +224,60 @@ namespace Content.Server.Zombies
             }
             _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
 
+            //Restore the name
             MetaData(target).EntityName = zombiecomp.BeforeZombifiedEntityName;
+
+            //Restore the accent
+            if (zombiecomp.BeforeZombifiedAccent == "none")
+                RemComp<ReplacementAccentComponent>(target);
+            else
+                EnsureComp<ReplacementAccentComponent>(target).Accent = zombiecomp.BeforeZombifiedAccent;
+
+            //This is needed for stupid entities that fuck up combat mode component
+            //in an attempt to make an entity not attack. This is the easiest way to do it.
+            RemComp<CombatModeComponent>(target);
+            var combat = AddComp<CombatModeComponent>(target);
+            _combat.SetInCombatMode(target, false, combat);
+
+            //Restore the original melee damage. We assign the visual appearance
+            //and range here because of stuff we'll find out later
+            var melee = EnsureComp<MeleeWeaponComponent>(target);
+            if (zombiecomp.BeforeZombifiedDamage is not null)
+                melee.Damage = zombiecomp.BeforeZombifiedDamage;
+            melee.ClickAnimation = zombiecomp.AttackAnimation;
+            melee.WideAnimation = zombiecomp.AttackAnimation;
+            melee.Range = 1.5f;
+            Dirty(melee);
+
+            if (mobState.CurrentState == MobState.Alive)
+            {
+                // No more groaning when damaged
+                EnsureComp<EmoteOnDamageComponent>(target);
+                _emoteOnDamage.RemoveEmote(target, "Scream");
+
+                // No more random groaning
+                EnsureComp<AutoEmoteComponent>(target);
+                _autoEmote.RemoveEmote(target, "ZombieGroan");
+            }
+
+            //Restore the bloodloss threshold
+            if (zombiecomp.BeforeZombifiedBloodLossThreshold is not null)
+                _bloodstream.SetBloodLossThreshold(target, (float) zombiecomp.BeforeZombifiedBloodLossThreshold);
+
+            //Restore the damage taken modifier set
+            if (zombiecomp.BeforeZombifiedModifierSetId is not null)
+                _damageable.SetDamageModifierSetId(target, zombiecomp.BeforeZombifiedModifierSetId);
+
+            //No more cold immunity
+            if (TryComp<TemperatureComponent>(target, out var tempComp) && zombiecomp.BeforeZombifiedColdTempThreshold is not null)
+                tempComp.ColdDamage = zombiecomp.BeforeZombifiedColdTempThreshold;
+
+            //Remove the entity from the zombie faction
+            _faction.RemoveFaction(target, "Zombie", false);
+
+            //You're officially cured, son.
+            RemComp<ZombieComponent>(target);
+
             return true;
         }
 

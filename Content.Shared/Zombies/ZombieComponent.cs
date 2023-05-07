@@ -5,6 +5,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using static Content.Shared.Humanoid.HumanoidAppearanceState;
+using Content.Shared.Damage;
 
 namespace Content.Shared.Zombies
 {
@@ -81,6 +82,42 @@ namespace Content.Shared.Zombies
         /// </summary>
         [DataField("beforeZombifiedSkinColor")]
         public Color BeforeZombifiedSkinColor;
+
+        /// <summary>
+        /// The accent of the humanoid to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedAccent")]
+        public string BeforeZombifiedAccent = "none";
+
+        /// <summary>
+        /// The melee attack settings of the humanoid to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedClickAnimation")]
+        public string? BeforeZombifiedClickAnimation;
+
+        [DataField("beforeZombifiedWideAnimation")]
+        public string? BeforeZombifiedWideAnimation;
+
+        [DataField("beforeZombifiedRange")]
+        public float? BeforeZombifiedRange;
+
+        [DataField("beforeZombifiedDamage")]
+        public DamageSpecifier? BeforeZombifiedDamage;
+
+        [DataField("beforeZombifiedModifierSetId")]
+        public string? BeforeZombifiedModifierSetId;
+
+        /// <summary>
+        /// The bloodloss threshold of the entity to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedBloodLossThreshold")]
+        public float? BeforeZombifiedBloodLossThreshold;
+
+        /// <summary>
+        /// The cold damage threshold of the entity to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedColdTempThreshold")]
+        public DamageSpecifier? BeforeZombifiedColdTempThreshold;
 
         [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
         public string? EmoteSoundsId = "Zombie";
