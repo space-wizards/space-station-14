@@ -117,3 +117,24 @@ ghost-role-information-remilia-rules = You are an intelligent fruit bat. Follow 
 ghost-role-information-cerberus-name = Cerberus, Evil Famili
 ghost-role-information-cerberus-description = Obey your master. Spread chaos.
 ghost-role-information-cerberus-rules = You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
+
+ghost-role-information-ert-leader-name = ERT Leader
+ghost-role-information-ert-leader-description = Lead a team of specialists to resolve the stations issues.
+
+ghost-role-information-ert-janitor-name = ERT Janitor
+ghost-role-information-ert-janitor-description = Assist with custodial efforts to resolve the stations issues.
+
+ghost-role-information-ert-engineer-name = ERT Engineer
+ghost-role-information-ert-engineer-description = Assist with engineering efforts to resolve the stations issues.
+
+ghost-role-information-ert-security-name = ERT Security
+ghost-role-information-ert-security-description = Assist with security efforts to resolve the stations issues.
+
+ghost-role-information-ert-medical-name = ERT Medical
+ghost-role-information-ert-medical-description = Assist with medicaling efforts to resolve the stations issues.
+
+ghost-role-information-cburn-agent-name = CBURN Agent
+ghost-role-information-cburn-agent-description = A highly trained CentCom agent, capable of dealing with various threats.
+
+ghost-role-information-centcom-official-name = CentCom official
+ghost-role-information-centcom-official-description = Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
