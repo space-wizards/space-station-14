@@ -36,8 +36,8 @@
     sprite: Objects/Misc/bureaucracy.rsi
     netsync: false
     layers:
-    - state: paper_receipt
-    - state: paper_receipt_words
+    - state: paper_receipt_horizontal
+    - state: paper_receipt_horizontal_words
       map: ["enum.PaperVisualLayers.Writing"]
       visible: false
     - state: paper_stamp-generic

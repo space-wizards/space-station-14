@@ -202,6 +202,12 @@
       "name": "paper_receipt_words"
     },
     {
+      "name": "paper_receipt_horizontal"
+    },
+    {
+      "name": "paper_receipt_horizontal_words"
+    },
+    {
       "name": "paper_dotmatrix"
     },
     {
