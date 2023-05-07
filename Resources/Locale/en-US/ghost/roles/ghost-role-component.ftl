@@ -100,8 +100,20 @@ ghost-role-information-space-dragon-description = Call in 3 carp rifts and take 
 ghost-role-information-cluwne-name = Cluwne
 ghost-role-information-cluwne-description = Become a pitiful cluwne, your only goal in life is to find a sweet release from your suffering (usually by being beaten to death). A cluwne is not an antagonist but may defend itself. Crewmembers may murder cluwnes freely.
 
-ghost-role-information-
-ghost-role-information-
+ghost-role-information-skeleton-pirate-name = Skeleton Pirate
+ghost-role-information-skeleton-pirate-description = Cause chaos and loot the station for treasure.
 
-ghost-role-information-
-ghost-role-information-
+ghost-role-information-skeleton-biker-name = Skeleton Biker
+ghost-role-information-skeleton-biker-description = Ride around on your sweet ride.
+
+ghost-role-information-onestar-mecha-name = Onestar Mecha
+ghost-role-information-onestar-mecha-description = You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
+ghost-role-information-onestar-mecha-rules = Use your weapons to cause havoc. You are an antagonist.
+
+ghost-role-information-remilia-name = Remilia, the chaplain's familiar
+ghost-role-information-remilia-description = Obey your master. Eat fruit.
+ghost-role-information-remilia-rules = You are an intelligent fruit bat. Follow the chaplain around. Don't cause any trouble unless the chaplain tells you to.
+
+ghost-role-information-cerberus-name = Cerberus, Evil Famili
+ghost-role-information-cerberus-description = Obey your master. Spread chaos.
+ghost-role-information-cerberus-rules = You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
