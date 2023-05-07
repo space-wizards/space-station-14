@@ -5,6 +5,7 @@ using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands;
+using Content.Shared.Instruments;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
@@ -20,7 +21,7 @@ using static Robust.Shared.Replays.ReplayMessage;
 
 namespace Content.Replay.Manager;
 
-// This partial class has code for performing tick updates (effectively the actual playback part of replays).
+// This partial class has code foar performing tick updates (effectively the actual playback part of replays).
 public sealed partial class ReplayManager
 {
     private void TickUpdate(FrameEventArgs args)
@@ -122,6 +123,13 @@ public sealed partial class ReplayManager
                 case DamageEffectEvent:
                     if (!skipEffectEvents)
                         _entMan.DispatchReceivedNetworkMsg((EntityEventArgs)message);
+                    break;
+                case InstrumentStartMidiEvent:
+                case InstrumentMidiEventEvent:
+                case InstrumentStopMidiEvent:
+                    // TODO midi distance checks.
+                    // Or maybe just leave them disabled.
+                    // It seems to have a significant impact on performance.
                     break;
                 case EntityEventArgs args:
                     // Just raise the event and let systems handle it.
