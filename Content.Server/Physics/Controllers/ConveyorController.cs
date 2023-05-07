@@ -1,4 +1,6 @@
-using Content.Server.MachineLinking.Events;
+
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.MachineLinking.System;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
@@ -9,7 +11,6 @@ using Content.Shared.Physics.Controllers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Physics.Controllers;
@@ -17,8 +18,8 @@ namespace Content.Server.Physics.Controllers;
 public sealed class ConveyorController : SharedConveyorController
 {
     [Dependency] private readonly FixtureSystem _fixtures = default!;
+    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
     [Dependency] private readonly MaterialReclaimerSystem _materialReclaimer = default!;
-    [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -37,7 +38,7 @@ public sealed class ConveyorController : SharedConveyorController
 
     private void OnInit(EntityUid uid, ConveyorComponent component, ComponentInit args)
     {
-        _signalSystem.EnsureReceiverPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
+        _signalSystem.EnsureSinkPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
 
         if (TryComp<PhysicsComponent>(uid, out var physics))
         {
@@ -76,7 +77,7 @@ public sealed class ConveyorController : SharedConveyorController
         _appearance.SetData(uid, ConveyorVisuals.State, component.Powered ? component.State : ConveyorState.Off);
     }
 
-    private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
+    private void OnSignalReceived(EntityUid uid, ConveyorComponent component, ref SignalReceivedEvent args)
     {
         if (args.Port == component.OffPort)
             SetState(uid, ConveyorState.Off, component);

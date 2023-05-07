@@ -76,11 +76,16 @@
     key: walls
     mode: NoSprite
   - type: DoorSignalControl
-  - type: SignalReceiver
-    inputs:
-      Open: []
-      Close: []
-      Toggle: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Open
+      - Close
+      - Toggle
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
     messagePerceivedByOthers: comp-window-knock

@@ -78,16 +78,21 @@
     BoardName: "Airlock Control"
     LayoutId: Airlock
   - type: DoorSignalControl
-  - type: SignalReceiver
-    inputs:
-      Open: []
-      Close: []
-      Toggle: []
-      AutoClose: []
-      DoorBolt: []
-  - type: SignalTransmitter
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Open
+      - Close
+      - Toggle
+      - AutoClose
+      - DoorBolt
+  - type: DeviceLinkSource
     outputs:
-      DoorStatus: []
+      - DoorStatus
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
