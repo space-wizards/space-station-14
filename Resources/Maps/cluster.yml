@@ -65270,11 +65270,6 @@ entities:
       type: Transform
 - proto: Multitool
   entities:
-  - uid: 5602
-    components:
-    - pos: -23.498562,5.5177503
-      parent: 1
-      type: Transform
   - uid: 6072
     components:
     - pos: -5.580178,-15.315853
@@ -65297,6 +65292,17 @@ entities:
     - pos: -3.960114,-31.306107
       parent: 1
       type: Transform
+- proto: NetworkConfigurator
+  entities:
+  - uid: 5602
+    components:
+    - pos: -23.538898,5.5020247
+      parent: 1
+      type: Transform
+    - lastUseAttempt: 436.1594336
+      type: NetworkConfigurator
+    - nextSound: 436.3594336
+      type: EmitSoundOnCollide
 - proto: NitrogenCanister
   entities:
   - uid: 6803
