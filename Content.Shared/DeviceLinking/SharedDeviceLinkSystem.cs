@@ -442,6 +442,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
     private bool InRange(EntityUid sourceUid, EntityUid sinkUid, float range)
     {
+        // TODO: This should be using an existing method and also coordinates inrange instead.
         return Transform(sourceUid).MapPosition.InRange(Transform(sinkUid).MapPosition, range);
     }
 

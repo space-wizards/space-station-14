@@ -1,10 +1,12 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceNetwork;
 using Content.Server.Doors.Systems;
+using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
+using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
 
 namespace Content.Server.DeviceLinking.Systems
 {
@@ -14,6 +16,8 @@ namespace Content.Server.DeviceLinking.Systems
         [Dependency] private readonly AirlockSystem _airlockSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+
+        private const string DoorSignalState = "DoorState";
 
         public override void Initialize()
         {
@@ -27,7 +31,7 @@ namespace Content.Server.DeviceLinking.Systems
         {
 
             _signalSystem.EnsureSinkPorts(uid, component.OpenPort, component.ClosePort, component.TogglePort);
-            _signalSystem.EnsureTransmitterPorts(uid, component.OutOpen);
+            _signalSystem.EnsureSourcePorts(uid, component.OutOpen);
         }
 
         private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, ref SignalReceivedEvent args)
@@ -35,9 +39,13 @@ namespace Content.Server.DeviceLinking.Systems
             if (!TryComp(uid, out DoorComponent? door))
                 return;
 
+            var state = SignalState.Momentary;
+            args.Data?.TryGetValue(DoorSignalState, out state);
+
+
             if (args.Port == component.OpenPort)
             {
-                if (args.State == SignalState.High || args.State == SignalState.Momentary)
+                if (state == SignalState.High || state == SignalState.Momentary)
                 {
                     if (door.State != DoorState.Open)
                         _doorSystem.TryOpen(uid, door);
@@ -45,7 +53,7 @@ namespace Content.Server.DeviceLinking.Systems
             }
             else if (args.Port == component.ClosePort)
             {
-                if (args.State == SignalState.High || args.State == SignalState.Momentary)
+                if (state == SignalState.High || state == SignalState.Momentary)
                 {
                     if (door.State != DoorState.Closed)
                         _doorSystem.TryClose(uid, door);
@@ -53,38 +61,45 @@ namespace Content.Server.DeviceLinking.Systems
             }
             else if (args.Port == component.TogglePort)
             {
-                if (args.State == SignalState.High || args.State == SignalState.Momentary)
+                if (state == SignalState.High || state == SignalState.Momentary)
                 {
                     _doorSystem.TryToggleDoor(uid, door);
                 }
             }
             else if (args.Port == component.InBolt)
             {
-                if (args.State == SignalState.High)
+                if (state == SignalState.High)
                 {
-                    if(TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
-                        _airlockSystem.SetBoltsWithAudio(door.Owner, airlockComponent, true);
+                    if(TryComp<AirlockComponent>(uid, out var airlockComponent))
+                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, true);
                 }
                 else
                 {
-                    if(TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
-                        _airlockSystem.SetBoltsWithAudio(door.Owner, airlockComponent, false);
+                    if(TryComp<AirlockComponent>(uid, out var airlockComponent))
+                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, false);
                 }
             }
         }
 
         private void OnStateChanged(EntityUid uid, DoorSignalControlComponent door, DoorStateChangedEvent args)
         {
+            var data = new NetworkPayload()
+            {
+                { DoorSignalState, SignalState.Momentary }
+            };
+
             if (args.State == DoorState.Closed)
             {
-                _signalSystem.InvokePort(uid, door.OutOpen, SignalState.Low);
+                data[DoorSignalState] = SignalState.Low;
+                _signalSystem.InvokePort(uid, door.OutOpen, data);
             }
             else if (args.State == DoorState.Open
                   || args.State == DoorState.Opening
                   || args.State == DoorState.Closing
                   || args.State == DoorState.Emagging)
             {
-                _signalSystem.InvokePort(uid, door.OutOpen, SignalState.High);
+                data[DoorSignalState] = SignalState.High;
+                _signalSystem.InvokePort(uid, door.OutOpen, data);
             }
         }
     }

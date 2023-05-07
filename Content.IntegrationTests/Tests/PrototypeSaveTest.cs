@@ -84,6 +84,11 @@ public sealed class PrototypeSaveTest
         "WindoorSecureSalvageLocked",
         "WindoorServiceLocked",
         "WindoorCommandLocked",
+        "AirlockMaintMedLocked",
+        "AirlockArmoryGlassLocked",
+        "AirlockExternalGlassLocked",
+        "AirlockFreezerKitchenHydroLocked",
+        "AirlockGlassShuttle",
     };
 
     [Test]

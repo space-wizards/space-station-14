@@ -91,7 +91,7 @@
       - AutoClose
       - DoorBolt
   - type: DeviceLinkSource
-    outputs:
+    ports:
       - DoorStatus
   - type: UserInterface
     interfaces:
