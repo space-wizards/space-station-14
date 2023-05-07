@@ -31,6 +31,7 @@
   meltingPoint: -11.0
   tileReactions:
     - !type:CleanTileReaction {}
+    - !type:CleanDecalsReaction {}
 
 - type: reagent
   id: SpaceLube

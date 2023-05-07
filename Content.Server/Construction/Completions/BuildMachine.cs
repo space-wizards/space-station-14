@@ -100,7 +100,7 @@ namespace Content.Server.Construction.Completions
 
             if (entityManager.TryGetComponent(machine, out MachineComponent? machineComp))
             {
-                constructionSystem.RefreshParts(machineComp);
+                constructionSystem.RefreshParts(machine, machineComp);
             }
 
             var entChangeEv = new ConstructionChangeEntityEvent(machine, uid);

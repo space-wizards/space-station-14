@@ -56,7 +56,7 @@ public sealed class StickySystem : EntitySystem
         {
             DoContactInteraction = true,
             Text = Loc.GetString("comp-sticky-unstick-verb-text"),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
             Act = () => StartUnsticking(uid, args.User, component)
         });
     }

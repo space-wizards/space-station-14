@@ -90,9 +90,10 @@ namespace Content.IntegrationTests.Tests.Disposal
     bodyType: KinematicController
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
   - type: DoAfter
 
 - type: entity
@@ -107,9 +108,10 @@ namespace Content.IntegrationTests.Tests.Disposal
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
   - type: DoAfter
 
 - type: entity
@@ -126,15 +128,17 @@ namespace Content.IntegrationTests.Tests.Disposal
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
 
 - type: entity
   name: DisposalTrunkDummy
   id: DisposalTrunkDummy
   components:
   - type: DisposalEntry
+  - type: DisposalTube
   - type: Transform
     anchored: true
 ";

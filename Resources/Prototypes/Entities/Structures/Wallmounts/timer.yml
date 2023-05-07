@@ -19,7 +19,6 @@
     state: on
   - type: Appearance
   - type: Rotatable
-  - type: Fixtures
   - type: SignalTimer
     canEditLabel: false
   - type: SignalTransmitter
@@ -39,7 +38,10 @@
     usesApcPower: true
   - type: ExtensionCableReceiver
   - type: ActivatableUIRequiresPower
-      
+  - type: Construction
+    graph: Timer
+    node: signal
+
 - type: entity
   id: ScreenTimer
   parent: SignalTimer
@@ -53,6 +55,9 @@
     sprite: Structures/Wallmounts/textscreen.rsi
     state: textscreen
     noRot: true
+  - type: Construction
+    graph: Timer
+    node: screen
 
 - type: entity
   id: BrigTimer
@@ -62,3 +67,30 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+  - type: Construction
+    graph: Timer
+    node: brig
+
+# Construction Frame
+
+- type: entity
+  noSpawn: true
+  id: TimerFrame
+  name: timer frame
+  description: A construction frame for a timer.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Wallmounts/textscreen.rsi
+    state: textscreen
+  - type: Construction
+    graph: Timer
+    node: frame
+  - type: WallMount

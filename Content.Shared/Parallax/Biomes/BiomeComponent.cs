@@ -1,6 +1,10 @@
+using Content.Shared.Parallax.Biomes.Layers;
+using Content.Shared.Parallax.Biomes.Markers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Noise;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Parallax.Biomes;
 
@@ -13,12 +17,22 @@ public sealed partial class BiomeComponent : Component
     [AutoNetworkedField]
     public int Seed;
 
-    [ViewVariables(VVAccess.ReadWrite),
-     DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BiomePrototype>))]
+    /// <summary>
+    /// The underlying entity, decal, and tile layers for the biome.
+    /// </summary>
+    [DataField("layers")]
     [AutoNetworkedField]
-    public string BiomePrototype = "Grasslands";
+    public List<IBiomeLayer> Layers = new();
 
-    // TODO: Need to flag tiles as not requiring custom data anymore, e.g. if we spawn an ent and don't unspawn it.
+    /// <summary>
+    /// Templates to use for <see cref="Layers"/>. Optional as this can be set elsewhere.
+    /// </summary>
+    /// <remarks>
+    /// This is really just here for prototype reload support.
+    /// </remarks>
+    [ViewVariables(VVAccess.ReadWrite),
+     DataField("template", customTypeSerializer: typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
+    public string? Template;
 
     /// <summary>
     /// If we've already generated a tile and couldn't deload it then we won't ever reload it in future.
@@ -42,9 +56,16 @@ public sealed partial class BiomeComponent : Component
     [DataField("loadedChunks")]
     public readonly HashSet<Vector2i> LoadedChunks = new();
 
+    #region Markers
+
     /// <summary>
-    /// Are we currently in the process of generating?
-    /// Used to flag modified tiles without callers having to deal with it.
+    /// Track what markers we've loaded already to avoid double-loading.
     /// </summary>
-    public bool Generating = false;
+    [DataField("loadedMarkers", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<Vector2i>, BiomeMarkerLayerPrototype>))]
+    public readonly Dictionary<string, HashSet<Vector2i>> LoadedMarkers = new();
+
+    [DataField("markerLayers", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeMarkerLayerPrototype>))]
+    public List<string> MarkerLayers = new();
+
+    #endregion
 }

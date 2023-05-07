@@ -7,7 +7,11 @@
   - type: MedicalScanner
   - type: DeviceNetwork
     deviceNetId: Wired
+    receiveFrequencyId: BasicDevice
   - type: DeviceList
+  - type: DeviceLinkSink
+    ports:
+      - MedicalScannerReceiver
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/scanner.rsi
@@ -38,14 +42,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.25,0.5"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Construction
     graph: Machine
     node: machine
@@ -57,9 +62,6 @@
       scanner-bodyContainer: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
-  - type: SignalReceiver
-    inputs:
-      MedicalScannerReceiver: []
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
@@ -82,9 +84,6 @@
   - type: Climbable
   - type: ApcPowerReceiver
     powerLoad: 200 #Receives most of its power from the console
-  - type: UpgradePowerDraw #upgrade it for the meme?
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
   - type: EmptyOnMachineDeconstruct
     containers:
     - scanner-bodyContainer
