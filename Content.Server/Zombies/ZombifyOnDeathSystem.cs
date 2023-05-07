@@ -13,6 +13,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
+using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Traitor;
 using Content.Shared.CombatMode;
@@ -27,6 +28,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
+using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -54,6 +56,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly StunSystem _stunSystem = default!;
 
         public override void Initialize()
         {
@@ -101,7 +104,7 @@ namespace Content.Server.Zombies
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, or die in space
             RemComp<RespiratorComponent>(target);
-            RemComp<BarotraumaComponent>(target);
+            // RemComp<BarotraumaComponent>(target); Actually yes, they should die in space (to prevent zombie spacing)
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
 
@@ -169,6 +172,9 @@ namespace Content.Server.Zombies
             _serverInventory.TryUnequip(target, "gloves", true, true);
             //Should prevent instances of zombies using comms for information they shouldnt be able to have.
             _serverInventory.TryUnequip(target, "ears", true, true);
+            //Shouldn't be wearing a helmet. How are you going to bite things?
+            _serverInventory.TryUnequip(target, "head", true, true);
+            _serverInventory.TryUnequip(target, "mask", true, true);
 
             //popup
             _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
@@ -221,6 +227,14 @@ namespace Content.Server.Zombies
                 _sharedHands.RemoveHand(target, hand.Name);
             }
             RemComp<HandsComponent>(target);
+
+            // Zombiefication takes 5 seconds. Groan on the floor for a bit.
+            if (EntityManager.TryGetComponent<StatusEffectsComponent>(target, out var status))
+            {
+                _stunSystem.TryStun(target, TimeSpan.FromSeconds(5.0), true, status);
+                _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(4.5), true,
+                    status);
+            }
 
             //zombie gamemode stuff
             RaiseLocalEvent(new EntityZombifiedEvent(target));
