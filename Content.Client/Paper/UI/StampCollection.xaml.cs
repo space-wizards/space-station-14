@@ -51,9 +51,12 @@ namespace Content.Client.Paper.UI
                 }
 
                 var childHeLocal = _stamps[i].DesiredPixelSize * 0.5f;
+                var c = childHeLocal * MathF.Abs(MathF.Cos(stampOrientation));
+                var s = childHeLocal * MathF.Abs(MathF.Sin(stampOrientation));
+                var childHePage = new Vector2(c.X + s.Y, s.X + c.Y);
                 var controlBox = new UIBox2(PixelSizeBox.TopLeft, PixelSizeBox.TopLeft + finalSize * UIScale);
-                var clampedCenter = Clamp(Shrink(controlBox, childHeLocal), childCenterOnCircle); //<tood.eoin Should shrink by rotated HE
-                var realPosition = clampedCenter - childHeLocal;
+                var clampedCenter = Clamp(Shrink(controlBox, childHePage), childCenterOnCircle);
+                var realPosition = clampedCenter - childHePage;
                 _stamps[i].ArrangePixel(new UIBox2i(ToI(realPosition), ToI(realPosition) + _stamps[i].DesiredPixelSize));
             }
 
