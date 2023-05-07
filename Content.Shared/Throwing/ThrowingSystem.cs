@@ -1,6 +1,7 @@
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
+using Content.Shared.Projectiles;
 using Content.Shared.Tag;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -32,22 +33,49 @@ public sealed class ThrowingSystem : EntitySystem
     /// <param name="direction">A vector pointing from the entity to its destination.</param>
     /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
     /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
-    public void TryThrow(
-        EntityUid uid,
+    public void TryThrow(EntityUid uid,
         Vector2 direction,
         float strength = 1.0f,
         EntityUid? user = null,
-        float pushbackRatio = 5.0f,
-        PhysicsComponent? physics = null,
-        TransformComponent? transform = null,
-        EntityQuery<PhysicsComponent>? physicsQuery = null,
-        EntityQuery<TransformComponent>? xformQuery = null)
+        float pushbackRatio = 5.0f)
     {
-        if (strength <= 0 || direction == Vector2.Infinity || direction == Vector2.NaN || direction == Vector2.Zero)
+        var physicsQuery = GetEntityQuery<PhysicsComponent>();
+        if (!physicsQuery.TryGetComponent(uid, out var physics))
             return;
 
-        physicsQuery ??= GetEntityQuery<PhysicsComponent>();
-        if (physics == null && !physicsQuery.Value.TryGetComponent(uid, out physics))
+        var projectileQuery = GetEntityQuery<ProjectileComponent>();
+        var tagQuery = GetEntityQuery<TagComponent>();
+
+        TryThrow(
+            uid,
+            direction,
+            physics,
+            Transform(uid),
+            projectileQuery,
+            tagQuery,
+            strength,
+            user,
+            pushbackRatio);
+    }
+
+    /// <summary>
+    ///     Tries to throw the entity if it has a physics component, otherwise does nothing.
+    /// </summary>
+    /// <param name="uid">The entity being thrown.</param>
+    /// <param name="direction">A vector pointing from the entity to its destination.</param>
+    /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
+    /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
+    public void TryThrow(EntityUid uid,
+        Vector2 direction,
+        PhysicsComponent physics,
+        TransformComponent transform,
+        EntityQuery<ProjectileComponent> projectileQuery,
+        EntityQuery<TagComponent> tagQuery,
+        float strength = 1.0f,
+        EntityUid? user = null,
+        float pushbackRatio = 5.0f)
+    {
+        if (strength <= 0 || direction == Vector2.Infinity || direction == Vector2.NaN || direction == Vector2.Zero)
             return;
 
         if ((physics.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0)
@@ -56,20 +84,17 @@ public sealed class ThrowingSystem : EntitySystem
             return;
         }
 
+        if (projectileQuery.HasComponent(uid))
+            return;
+
         var comp = EnsureComp<ThrownItemComponent>(uid);
         comp.Thrower = user;
+
         // Give it a l'il spin.
-        if (!_tagSystem.HasTag(uid, "NoSpinOnThrow"))
+        if (!tagQuery.TryGetComponent(uid, out var tag) || !_tagSystem.HasTag(tag, "NoSpinOnThrow"))
             _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse, body: physics);
         else
-        {
-            if (transform == null)
-            {
-                xformQuery ??= GetEntityQuery<TransformComponent>();
-                transform = xformQuery.Value.GetComponent(uid);
-            }
             transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
-        }
 
         if (user != null)
             _interactionSystem.ThrownInteraction(user.Value, uid);
@@ -100,7 +125,7 @@ public sealed class ThrowingSystem : EntitySystem
         // Give thrower an impulse in the other direction
         if (user != null &&
             pushbackRatio > 0.0f &&
-            physicsQuery.Value.TryGetComponent(user.Value, out var userPhysics) &&
+            TryComp(user.Value, out PhysicsComponent? userPhysics) &&
             _gravity.IsWeightless(user.Value, userPhysics))
         {
             var msg = new ThrowPushbackAttemptEvent();

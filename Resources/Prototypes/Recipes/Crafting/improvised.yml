@@ -12,6 +12,19 @@
   objectType: Item
 
 - type: construction
+  name: ghost sheet
+  id: ghost_sheet
+  graph: GhostSheet
+  startNode: start
+  targetNode: ghost_sheet
+  category: construction-category-misc
+  description: Become a spooky ghost. Boo!
+  icon:
+    sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
   name: makeshift handcuffs
   id: makeshifthandcuffs
   graph: makeshifthandcuffs
@@ -86,3 +99,16 @@
     sprite: Clothing/Head/Misc/flower-crown.rsi
     state: icon
   objectType: Item
+
+- type: construction
+  name: damp rag
+  id: rag
+  graph: Rag
+  startNode: start
+  targetNode: rag
+  category: construction-category-tools
+  objectType: Item
+  description: A damp rag to clean up the ground. Better than slipping around all day.
+  icon:
+    sprite: Objects/Specific/Janitorial/rag.rsi
+    state: rag

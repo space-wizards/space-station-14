@@ -53,8 +53,7 @@
     malus: 0
   - type: Reflect
     enabled: false
-    energeticChance: 0.5
-    kineticChance: 0.25
+    reflectProb: 0.25
     spread: 45
 
 - type: entity
@@ -121,6 +120,23 @@
     - Write
   - type: DisarmMalus
     malus: 0
+
+- type: entity
+  parent: BaseItem
+  id: EnergyDaggerBox
+  name: e-dagger box
+  suffix: E-Dagger
+  description: A small box containing an e-dagger. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: e_dagger
+    netsync: false
+  - type: SpawnItemsOnUse
+    items:
+    - id: EnergyDagger
+    sound:
+      path: /Audio/Effects/unwrap.ogg
 
 - type: entity
   name: energy cutlass

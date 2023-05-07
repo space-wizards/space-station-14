@@ -22,7 +22,7 @@ public sealed class DrainComponent : Component
     /// How many units are ejected from the buffer per second.
     /// </summary>
     [DataField("unitsDestroyedPerSecond")]
-    public float UnitsDestroyedPerSecond = 1f;
+    public float UnitsDestroyedPerSecond = 3f;
 
     /// <summary>
     /// How many (unobstructed) tiles away the drain will

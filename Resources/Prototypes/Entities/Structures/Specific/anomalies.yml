@@ -23,14 +23,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Sprite
     netsync: false
     noRot: true
@@ -45,7 +46,7 @@
     guides:
     - AnomalousResearch
   - type: EmitSoundOnSpawn
-    sound: 
+    sound:
       path: /Audio/Effects/teleport_arrival.ogg
 
 - type: entity
@@ -66,6 +67,12 @@
     color: "#fca3c0"
     castShadows: false
   - type: PyroclasticAnomaly
+  - type: TempAffectingAnomaly
+    tempChangePerSecond: 25
+    hotspotExposeTemperature: 1000
+  - type: GasProducerAnomaly
+    releasedGas: 3
+    releaseOnMaxSeverity: true
 
 - type: entity
   id: AnomalyGravity
@@ -125,7 +132,10 @@
     energy: 7.5
     color: "#cb5b7e"
     castShadows: false
-  - type: FleshAnomaly
+  - type: TileSpawnAnomaly
+    floorTileId: FloorFlesh
+  - type: EntitySpawnAnomaly
+    superCriticalSpawn: FleshKudzu
     spawns:
     - MobFleshJared
     - MobFleshGolem
@@ -154,23 +164,24 @@
   - type: Portal
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-    - id: portalFixture
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.48,0.25,0.48"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
-      hard: false
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
   - type: Anomaly
     pulseSound:
       collection: RadiationPulse
@@ -179,3 +190,41 @@
     anomalyContactDamage:
       types:
         Radiation: 10
+
+
+- type: entity
+  id: AnomalyIce
+  parent: BaseAnomaly
+  suffix: Ice
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 2.5
+    color: "#befaff"
+    castShadows: false
+  - type: Anomaly
+    anomalyContactDamage:
+      types:
+        Cold: 10
+  - type: ExplosionAnomaly
+    supercriticalExplosion: Cryo
+    explosionTotalIntensity: 1000
+    explosionDropoff: 1
+    explosionMaxTileIntensity: 10
+  - type: ProjectileAnomaly
+    projectilePrototype: ProjectileIcicle
+    targetNonSentientChance: 0.1
+  - type: TempAffectingAnomaly
+    tempChangePerSecond: -25
+    hotspotExposeTemperature: -1000
+  - type: GasProducerAnomaly
+    releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
+    releaseOnMaxSeverity: true

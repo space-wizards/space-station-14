@@ -165,8 +165,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     {
         _userInterfaceSystem.TrySendUiMessage(
             uid,
-            SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key,
-            new SharedHealthAnalyzerComponent.HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity));
+            HealthAnalyzerUiKey.Key,
+            new HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)
@@ -205,7 +205,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         else
         {
             RemComp<ActiveCryoPodComponent>(uid);
-            _uiSystem.TryCloseAll(uid, SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key);
+            _uiSystem.TryCloseAll(uid, HealthAnalyzerUiKey.Key);
         }
         UpdateAppearance(uid, component);
     }

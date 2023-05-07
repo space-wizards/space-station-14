@@ -160,6 +160,36 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatRnd
+  name: scientist lab coat
+  description: A suit that protects against minor chemical spills. Has a purple stripe on the shoulder.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatRobo
+  name: roboticist lab coat
+  description: More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPirate
   name: pirate garb
   description: Yarr.
@@ -211,6 +241,23 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterDogi
+  name: samurai dogi
+  description: Dogi is a type of traditional Japanese clothing. The dogi is made of heavy, durable fabric, it is practical in combat and stylish in appearance. It is decorated with intricate patterns and embroidery on the back.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/dogi.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/dogi.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.65
+        Piercing: 0.85
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatParamedicWB
   name: paramedic windbreaker
   description: A paramedic's trusty windbreaker, for all the space wind.
@@ -219,4 +266,22 @@
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
-    
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatAMG
+  name: armored medical gown
+  description: The version of the medical gown, with elements of a bulletproof vest, looks strange, but your heart is protected.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.85
+        Piercing: 0.65
+        Heat: 0.85
+        Caustic: 0.75

@@ -95,7 +95,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 AlternativeVerb flushVerb = new();
                 flushVerb.Act = () => Engage(uid, component);
                 flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-                flushVerb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"));
+                flushVerb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"));
                 flushVerb.Priority = 1;
                 args.Verbs.Add(flushVerb);
 

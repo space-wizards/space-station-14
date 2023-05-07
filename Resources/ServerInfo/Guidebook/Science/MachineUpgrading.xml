@@ -1,0 +1,38 @@
+<Document>
+# Machine Upgrading
+
+Machines help the station run smoothly, and as a scientist, you can help them run even better!
+
+## Parts
+<Box>Stock Parts:</Box>
+<Box>
+<GuideEntityEmbed Entity="CapacitorStockPart"/>
+<GuideEntityEmbed Entity="MatterBinStockPart"/>
+<GuideEntityEmbed Entity="MicroManipulatorStockPart"/>
+</Box>
+You can examine each machine part to see both the type and the rating, which range from 1 to 4.
+
+Parts of higher levels can be researched as well as found through artifacts or salvage.
+<Box>
+<GuideEntityEmbed Entity="AdvancedMatterBinStockPart"/>
+<GuideEntityEmbed Entity="SuperMatterBinStockPart"/>
+<GuideEntityEmbed Entity="BluespaceMatterBinStockPart"/>
+</Box>
+
+## Upgrading
+To know if a machine can be upgraded, you can examine it and check for the [color=#a4885c]lightning bolt[/color] icon in the lower right corner. Clicking on it will allow you to see what kinds of upgrades the machine has.
+
+To check what parts a machine needs, you can examine its board. Try it here:
+<Box Orientation="Vertical">
+<GuideEntityEmbed Entity="ProtolatheMachineCircuitboard"/>
+<GuideEntityEmbed Entity="CloningPodMachineCircuitboard"/>
+<GuideEntityEmbed Entity="TraversalDistorterMachineCircuitboard"/>
+<GuideEntityEmbed Entity="ThermomachineFreezerMachineCircuitBoard"/>
+</Box>
+You can use any rating part for any part requirement. Using higher rated parts will increase how effective the machine is.
+
+If you want to upgrade an existing machine, simply deconstruct it with a screwdriver and crowbar, and replace the existing parts with parts of a higher level.
+
+You can also quickly upgrade machines by using an RPED, loading it with machine parts, and then clicking on a machine. It will quickly be upgraded with whatever parts were inserted.
+<GuideEntityEmbed Entity="RPED"/>
+</Document>

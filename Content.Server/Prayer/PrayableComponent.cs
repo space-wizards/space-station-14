@@ -41,7 +41,7 @@ namespace Content.Server.Prayer
         /// </summary>
         [DataField("verbImage")]
         [ViewVariables(VVAccess.ReadOnly)]
-        public SpriteSpecifier? VerbImage = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/pray.svg.png"));
+        public SpriteSpecifier? VerbImage = new SpriteSpecifier.Texture(new ("/Textures/Interface/pray.svg.png"));
     }
 }
 

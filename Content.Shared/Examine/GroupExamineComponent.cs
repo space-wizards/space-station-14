@@ -55,7 +55,7 @@ namespace Content.Shared.Examine
         ///     The icon path for the Examine Group.
         /// </summary>
         [DataField("icon")]
-        public SpriteSpecifier Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/examine-star.png"));
+        public SpriteSpecifier Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/examine-star.png"));
 
         /// <summary>
         ///     The text shown in the context verb menu.

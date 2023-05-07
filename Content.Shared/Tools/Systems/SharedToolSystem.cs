@@ -22,7 +22,9 @@ public abstract partial class SharedToolSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, ToolComponent tool, ToolDoAfterEvent args)
     {
-        PlayToolSound(uid, tool, args.User);
+        if (!args.Cancelled)
+            PlayToolSound(uid, tool, args.User);
+
         var ev = args.WrappedEvent;
         ev.DoAfter = args.DoAfter;
 
@@ -117,7 +119,7 @@ public abstract partial class SharedToolSystem : EntitySystem
             BreakOnDamage = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
-            NeedHand = true,
+            NeedHand = tool != user,
             AttemptFrequency = fuel <= 0 ? AttemptFrequency.Never : AttemptFrequency.EveryTick
         };
 
