@@ -25,7 +25,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedNinjaSystem _ninja = default!;
-    [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -66,14 +66,14 @@ public sealed class EnergyKatanaSystem : EntitySystem
         var uid = ninja.Katana.Value;
         if (!TryComp<EnergyKatanaComponent>(uid, out var katana) || !_hands.IsHolding(user, uid, out var _))
         {
-            ClientPopup("ninja-katana-not-held", user);
+            _popup.PopupClient("ninja-katana-not-held", user, user);
             return;
         }
 
         TryComp<LimitedChargesComponent>(uid, out var charges);
         if (_charges.IsEmpty(uid, charges))
         {
-            ClientPopup("ninja-katana-no-charges", user);
+            _popup.PopupClient("ninja-katana-no-charges", user, user);
             return;
         }
 
@@ -83,7 +83,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
         if (!_interaction.InRangeUnobstructed(origin, target, 0f, CollisionGroup.Opaque, uid => uid == user))
         {
             // can only dash if the destination is visible on screen
-            ClientPopup("ninja-katana-cant-see", user);
+            _popup.PopupClient("ninja-katana-cant-see", user, user);
             return;
         }
 
@@ -92,11 +92,5 @@ public sealed class EnergyKatanaSystem : EntitySystem
         _audio.PlayPredicted(katana.BlinkSound, user, user, AudioParams.Default.WithVolume(katana.BlinkVolume));
         if (charges != null)
             _charges.UseCharge(uid, charges);
-    }
-
-    private void ClientPopup(string msg, EntityUid user)
-    {
-        if (_net.IsClient)
-            _popups.PopupEntity(Loc.GetString(msg), user);
     }
 }

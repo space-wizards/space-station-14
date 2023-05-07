@@ -10,7 +10,7 @@ namespace Content.Server.Ninja.Systems;
 public sealed class SpiderChargeSystem : EntitySystem
 {
     [Dependency] private readonly NinjaSystem _ninja = default!;
-    [Dependency] private readonly PopupSystem _popups = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -28,7 +28,7 @@ public sealed class SpiderChargeSystem : EntitySystem
 
         if (!_ninja.GetNinjaRole(user, out var role))
         {
-            _popups.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
+            _popup.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
             args.Handled = true;
             return;
         }
@@ -42,7 +42,7 @@ public sealed class SpiderChargeSystem : EntitySystem
         var coords = args.ClickLocation.ToMap(EntityManager, _transform);
         if (!coords.InRange(target, comp.Range))
         {
-            _popups.PopupEntity(Loc.GetString("spider-charge-too-far"), user, user);
+            _popup.PopupEntity(Loc.GetString("spider-charge-too-far"), user, user);
             args.Handled = true;
         }
     }

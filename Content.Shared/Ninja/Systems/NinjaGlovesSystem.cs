@@ -37,7 +37,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedNinjaSystem _ninja = default!;
-    [Dependency] protected readonly SharedPopupSystem Popups = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -68,14 +68,17 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     /// <summary>
     /// Disable glove abilities and show the popup if they were enabled previously.
     /// </summary>
-    public void DisableGloves(EntityUid uid, NinjaGlovesComponent comp, EntityUid user)
+    public void DisableGloves(EntityUid uid, NinjaGlovesComponent comp)
     {
         if (comp.User != null)
         {
+            var user = comp.User.Value;
             comp.User = null;
             Dirty(comp);
+
             _appearance.SetData(uid, ToggleVisuals.Toggled, false);
-            Popups.PopupEntity(Loc.GetString("ninja-gloves-off"), user, user);
+            RemComp<InteractionRelayComponent>(user);
+            Popup.PopupClient(Loc.GetString("ninja-gloves-off"), user, user);
         }
     }
 
@@ -98,14 +101,14 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             || ninja.Suit == null
             || !HasComp<NinjaSuitComponent>(ninja.Suit.Value))
         {
-            ClientPopup(Loc.GetString("ninja-gloves-not-wearing-suit"), user);
+            Popup.PopupClient(Loc.GetString("ninja-gloves-not-wearing-suit"), user, user);
             return;
         }
 
         var enabling = comp.User == null;
         _appearance.SetData(uid, ToggleVisuals.Toggled, enabling);
         var message = Loc.GetString(enabling ? "ninja-gloves-on" : "ninja-gloves-off");
-        ClientPopup(message, user);
+        Popup.PopupClient(message, user, user);
 
         if (enabling)
         {
@@ -114,15 +117,12 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             // set up interaction relay for handling glove abilities, comp.User is used to see the actual user of the events
             // FIXME: probably breaks if ninja goes in ripley and exits, pretty minor but its reason to move away from relay if possible
             _interaction.SetRelay(user, uid, EnsureComp<InteractionRelayComponent>(user));
+            Dirty(comp);
         }
         else
         {
-            comp.User = null;
-            _ninja.AssignGloves(ninja, null);
-            RemComp<InteractionRelayComponent>(user);
+            DisableGloves(uid, comp);
         }
-
-        Dirty(comp);
     }
 
     private void OnExamined(EntityUid uid, NinjaGlovesComponent comp, ExaminedEvent args)
@@ -135,10 +135,12 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
     private void OnUnequipped(EntityUid uid, NinjaGlovesComponent comp, GotUnequippedEvent args)
     {
-        comp.User = null;
-        Dirty(comp);
-        if (TryComp<NinjaComponent>(args.Equipee, out var ninja))
-            _ninja.AssignGloves(ninja, null);
+        if (comp.User != null)
+        {
+            var user = comp.User.Value;
+            Popup.PopupClient(Loc.GetString("ninja-gloves-off"), user, user);
+            DisableGloves(uid, comp);
+        }
     }
 
     /// <summary>
@@ -182,7 +184,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         if (!handled)
             return;
 
-        ClientPopup(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(target, EntityManager))), user, PopupType.Medium);
+        Popup.PopupClient(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.Medium);
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} doorjacked {ToPrettyString(target):target}");
     }
 
@@ -202,7 +204,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         // take charge from battery
         if (!_ninja.TryUseCharge(user, comp.StunCharge))
         {
-            Popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            Popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
         }
 
@@ -234,7 +236,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         // fail fast if theres no tech right now
         if (database.TechnologyIds.Count == 0)
         {
-            ClientPopup(Loc.GetString("ninja-download-fail"), user);
+            Popup.PopupClient(Loc.GetString("ninja-download-fail"), user, user);
             return;
         }
 
@@ -258,10 +260,4 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
     // can't predict roles or anything announcements related so only done on server.
     protected virtual void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, TerrorDoAfterEvent args) { }
-
-    private void ClientPopup(string msg, EntityUid user, PopupType type = PopupType.Small)
-    {
-        if (_net.IsClient)
-            Popups.PopupEntity(msg, user, user, type);
-    }
 }

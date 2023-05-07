@@ -49,7 +49,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly PopupSystem _popups = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
@@ -88,8 +88,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
         if (HasComp<NinjaComponent>(user) || HasComp<NinjaSpawnerDataComponent>(user))
             return;
 
-        // add a game rule for this ninja, but will not start it so no spawner is created
-        AddComp<NinjaSpawnerDataComponent>(user).Rule = _gameTicker.AddGameRule("NinjaSpawn");
         AddComp<NinjaComponent>(user);
         SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
         GreetNinja(mind);
@@ -139,12 +137,17 @@ public sealed class NinjaSystem : SharedNinjaSystem
     }
 
     /// <summary>
-    /// Returns the space ninja's gamerule config
+    /// Returns the global ninja gamerule config
     /// </summary>
-    public NinjaSpawnRuleComponent RuleConfig(EntityUid uid)
+    public NinjaRuleComponent RuleConfig()
     {
-        var data = Comp<NinjaSpawnerDataComponent>(uid);
-        return Comp<NinjaSpawnRuleComponent>(data.Rule);
+        var rule = EntityQuery<NinjaRuleComponent>().FirstOrDefault();
+        if (rule != null)
+            return rule;
+
+        // TODO: fuck me this shit is awful, see TraitorRuleSystem i copy pasted
+        _gameTicker.StartGameRule("Ninja", out var ruleEntity);
+        return Comp<NinjaRuleComponent>(ruleEntity);
     }
 
     /// <summary>
@@ -173,11 +176,10 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// Set the station grid on an entity, either ninja spawner or the ninja itself.
     /// Used to tell a ghost that takes ninja role where the station is.
     /// </summary>
-    public void SetNinjaSpawnerData(EntityUid uid, EntityUid grid, EntityUid rule)
+    public void SetNinjaSpawnerData(EntityUid uid, EntityUid grid)
     {
         var comp = EnsureComp<NinjaSpawnerDataComponent>(uid);
         comp.Grid = grid;
-        comp.Rule = rule;
     }
 
     /// <summary>
@@ -207,7 +209,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// </summary>
     public void CallInThreat(EntityUid uid)
     {
-        var config = RuleConfig(uid);
+        var config = RuleConfig();
         if (config.Threats.Count == 0 || !GetNinjaRole(uid, out var role) || role.CalledInThreat)
             return;
 
@@ -229,13 +231,13 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         if (suitBattery.IsFullyCharged)
         {
-            _popups.PopupEntity(Loc.GetString("ninja-drain-full"), user, user, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("ninja-drain-full"), user, user, PopupType.Medium);
             return;
         }
 
         if (MathHelper.CloseToPercent(battery.CurrentCharge, 0))
         {
-            _popups.PopupEntity(Loc.GetString("ninja-drain-empty", ("battery", target)), user, user, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("ninja-drain-empty", ("battery", target)), user, user, PopupType.Medium);
             return;
         }
 
@@ -248,7 +250,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         {
             var output = input * drain.DrainEfficiency;
             _battery.SetCharge(suitBattery.Owner, suitBattery.CurrentCharge + output, suitBattery);
-            _popups.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
+            _popup.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
             // TODO: spark effects
             _audio.PlayPvs(drain.SparkSound, target);
         }
@@ -268,17 +270,13 @@ public sealed class NinjaSystem : SharedNinjaSystem
         // inherit spawner's data
         if (TryComp<NinjaSpawnerDataComponent>(args.Spawner, out var data))
         {
-            SetNinjaSpawnerData(uid, data.Grid, data.Rule);
-            AddImplants(uid);
+            SetNinjaSpawnerData(uid, data.Grid);
         }
     }
 
     private void AddImplants(EntityUid uid)
     {
-        if (!HasComp<NinjaSpawnerDataComponent>(uid))
-            return;
-
-        var config = RuleConfig(uid);
+        var config = RuleConfig();
         var coords = Transform(uid).Coordinates;
         foreach (var id in config.Implants)
         {
@@ -302,6 +300,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         if (!mind.TryGetSession(out var session) || mind.OwnedEntity == null)
             return;
 
+        // make sure to enable the traitor rule for the sweet greentext
         var traitorRule = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
         if (traitorRule == null)
         {
@@ -310,7 +309,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
             traitorRule = Comp<TraitorRuleComponent>(ruleEntity);
         }
 
-        var config = RuleConfig(mind.OwnedEntity.Value);
+        var config = RuleConfig();
         var role = new NinjaRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
         mind.AddRole(role);
         _traitorRule.AddToTraitors(traitorRule, role);

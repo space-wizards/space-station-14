@@ -51,7 +51,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
             ? Loc.GetString("ninja-download-fail")
             : Loc.GetString("ninja-download-success", ("count", gained), ("server", target));
 
-        Popups.PopupEntity(str, user, user, PopupType.Medium);
+        Popup.PopupEntity(str, user, user, PopupType.Medium);
     }
 
     protected override void OnTerror(EntityUid uid, NinjaTerrorComponent comp, InteractionAttemptEvent args)
@@ -65,7 +65,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         // can only do it once
         if (role.CalledInThreat)
         {
-            Popups.PopupEntity(Loc.GetString("ninja-terror-already-called"), user, user);
+            Popup.PopupEntity(Loc.GetString("ninja-terror-already-called"), user, user);
             return;
         }
 

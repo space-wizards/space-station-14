@@ -62,7 +62,7 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
         Sawmill.Info($"Creating ninja spawnpoint at {coords}");
         var spawner = Spawn("SpawnPointGhostSpaceNinja", coords);
 
-        // tell the player where the station is when they pick the role, and what the ninja rule is
-        _ninja.SetNinjaSpawnerData(spawner, gridUid.Value, uid);
+        // tell the player where the station is when they pick the role
+        _ninja.SetNinjaSpawnerData(spawner, gridUid.Value);
     }
 }

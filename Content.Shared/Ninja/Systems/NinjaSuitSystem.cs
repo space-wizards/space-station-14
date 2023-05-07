@@ -126,7 +126,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
             _ninja.AssignSuit(ninja, null);
             // disable glove abilities
             if (ninja.Gloves != null && TryComp<NinjaGlovesComponent>(ninja.Gloves.Value, out var gloves))
-                _gloves.DisableGloves(ninja.Gloves.Value, gloves, user);
+                _gloves.DisableGloves(ninja.Gloves.Value, gloves);
         }
 
         // force uncloak the user

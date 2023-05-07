@@ -16,7 +16,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly new NinjaSystem _ninja = default!;
-    [Dependency] private readonly PopupSystem _popups = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -68,7 +68,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var chargeNeeded = SuitWattage(comp);
         if (!comp.Cloaked && (!_ninja.GetNinjaBattery(user, out var battery) || battery.CurrentCharge < chargeNeeded || _useDelay.ActiveDelay(uid)))
         {
-            _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
         }
 
@@ -87,7 +87,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var user = args.Performer;
         if (!_ninja.TryUseCharge(user, comp.SoapCharge) || _useDelay.ActiveDelay(uid))
         {
-            _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
         }
 
@@ -110,7 +110,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var chargeNeeded = (float) distance * 3.6f;
         if (!_ninja.TryUseCharge(user, chargeNeeded) || _useDelay.ActiveDelay(uid))
         {
-            _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
         }
 
@@ -118,7 +118,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var message = _hands.TryPickupAnyHand(user, katana)
             ? "ninja-katana-recalled"
             : "ninja-hands-full";
-        _popups.PopupEntity(Loc.GetString(message), user, user);
+        _popup.PopupEntity(Loc.GetString(message), user, user);
     }
 
     private void OnEmp(EntityUid uid, NinjaSuitComponent comp, NinjaEmpEvent args)
@@ -127,7 +127,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var user = args.Performer;
         if (!_ninja.TryUseCharge(user, comp.EmpCharge) || _useDelay.ActiveDelay(uid))
         {
-            _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
         }
 
