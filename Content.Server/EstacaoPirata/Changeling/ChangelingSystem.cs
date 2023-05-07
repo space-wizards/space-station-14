@@ -22,6 +22,12 @@ using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Server.Speech.Components;
+using Content.Server.Traitor;
+using Content.Server.UserInterface;
+using Content.Shared.Implants;
+using Content.Shared.Implants.Components;
+using Content.Shared.Roles;
+using Content.Shared.Store;
 
 namespace Content.Server.EstacaoPirata.Changeling;
 public sealed class ChangelingSystem : EntitySystem
@@ -38,6 +44,9 @@ public sealed class ChangelingSystem : EntitySystem
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly EntityManager _entMana = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly SharedImplanterSystem _implanterSystem = default!;
+    [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
 
     public override void Initialize()
     {
@@ -47,20 +56,58 @@ public sealed class ChangelingSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingComponent, InstantActionEvent>(OnActionPeformed); // pra quando usar acao
 
-        SubscribeLocalEvent<ChangelingComponent, ChangelingShopActionEvent>(OnShop); // pra abrir o shop
+        //SubscribeLocalEvent<ChangelingComponent, ChangelingShopActionEvent>(OnShop); // pra abrir o shop
 
         SubscribeLocalEvent<ChangelingComponent, AbsorbDNAActionEvent>(OnAbsorbAction);
 
         SubscribeLocalEvent<ChangelingComponent, AbsorbDNADoAfterEvent>(OnDoAfter);
 
+        SubscribeLocalEvent<SubdermalImplantComponent, ChangelingShopActionEvent>(OnImplantShop);
+
         // Initialize abilities
+    }
+
+    private void OnImplantShop(EntityUid uid, SubdermalImplantComponent component, ChangelingShopActionEvent args)
+    {
+        if (!TryComp<StoreComponent>(uid, out var store))
+        {
+            store = AddComp<StoreComponent>(uid);
+            //_implanterSystem.Implant();
+        }
+
+        //var activatableUIComp = EnsureComp<ActivatableUIComponent>(uid);
+
+        store.Categories.Add("ChangelingAbilities");
+        store.CurrencyWhitelist.Add("Chemicals");
+
+
+
+        _store.ToggleUi(args.Performer, uid, store);
     }
 
     private void OnShop(EntityUid uid, ChangelingComponent component, ChangelingShopActionEvent args)
     {
-        if (!TryComp<StoreComponent>(uid, out var store))
+        if (!TryComp<StoreComponent>(args.Performer, out var store))
+        {
+            store = AddComp<StoreComponent>(args.Performer);
+            //_implanterSystem.Implant();
+        }
+
+        //var activatableUIComp = EnsureComp<ActivatableUIComponent>(uid);
+
+        store.Categories.Add("ChangelingAbilities");
+        store.CurrencyWhitelist.Add("Chemicals");
+
+        if (!TryComp<ServerUserInterfaceComponent>(uid, out var serverUI))
             return;
-        _store.ToggleUi(uid, uid, store);
+
+        //serverUI.
+
+
+        //serverUI.Interfaces.
+
+
+        _store.ToggleUi(uid, args.Performer, store);
     }
 
     private void OnStartup(EntityUid uid, ChangelingComponent component, ComponentStartup args)
@@ -68,12 +115,65 @@ public sealed class ChangelingSystem : EntitySystem
         //update the icon
         //ChangeEssenceAmount(uid, 0, component);
 
-        var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("ChangelingShop"));
-        _action.AddAction(uid, shopaction, null);
+
+
+        // var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("ChangelingShop"));
+        // _action.AddAction(uid, shopaction, null);
+
     //AbsorbDNA
         var absorbaction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("AbsorbDNA"));
         absorbaction.CanTargetSelf = false;
         _action.AddAction(uid, absorbaction, null);
+
+        // implante
+        var implantShopAction = new InstantAction(_proto.Index<InstantActionPrototype>("ActivateChangelingShop"));
+
+        var coords = Transform(uid).Coordinates;
+
+        var implant = Spawn("ChangelingShopImplant", coords);
+
+        if (!TryComp<SubdermalImplantComponent>(implant, out var implantComp))
+            return;
+
+        if (!TryComp<TransformComponent>(implant, out var implantTransform))
+            return;
+
+
+
+        _subdermalImplant.ForceImplant(uid, implant, implantComp);
+
+
+        // sei la
+        // if (!TryComp<TransformComponent>(uid, out var xform))
+        //     return;
+        //
+        // OpenStorageUI(uid, xform.ParentUid, storageComp);
+
+
+        // ActivatableUIComponent newComp = new ActivatableUIComponent();
+        //
+        // newComp.Key = StoreUiKey.Key;
+        //
+        // var activatableUIComp = EnsureComp<ActivatableUIComponent>(uid);
+        //
+        // activatableUIComp.Key = newComp.Key;
+
+
+
+
+
+
+        // Fazer isto em outro lugar
+
+        // if (!TryComp<MindComponent>(uid, out var mindComp))
+        //     return;
+        // var themind = mindComp.Mind;
+        // if (themind is null)
+        //     return;
+        // var role = new TraitorRole(themind, _proto.Index<AntagPrototype>("Changeling"));
+        // themind.AddRole(role);
+
+
     }
 
     private void OnDoAfter(EntityUid uid, ChangelingComponent component, AbsorbDNADoAfterEvent args)

@@ -1,0 +1,21 @@
+- type: entity
+  parent: BaseSubdermalImplant
+  id: ChangelingShopImplant
+  name: changeling shop implant
+  description: opens the changeling shop (this was made because I couldn't get the changeling entity to have a shop without this)
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      permanent: true
+      implantAction: ActivateChangelingShop
+    - type: UserInterface
+      interfaces:
+      - key: enum.StoreUiKey.Key
+        type: StoreBoundUserInterface
+    - type: ActivatableUI
+      key: enum.StoreUiKey.Key
+    - type: Store
+      categories:
+      - ChangelingAbilities
+      currencyWhitelist:
+      - Chemicals

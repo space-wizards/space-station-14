@@ -1,0 +1,4 @@
+- type: currency
+  id: Chemicals
+  displayName: store-currency-display-chemicals
+  canWithdraw: false

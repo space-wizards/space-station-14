@@ -1,0 +1,8 @@
+- type: entity
+  id: ChangelingShopImplanter
+  name: changeling shop implanter
+  description: a single use implanter, the implant is permanent. It is for test purposes only
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: ChangelingShopImplant

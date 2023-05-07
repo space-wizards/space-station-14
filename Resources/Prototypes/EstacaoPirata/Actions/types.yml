@@ -1,0 +1,8 @@
+- type: instantAction
+  id: ActivateChangelingShop
+  name: activate-changeling-shop-action-name
+  description: activate-changeling-shop-action-description
+  checkCanInteract: false
+  itemIconStyle: BigAction
+  icon: Interface/Actions/shop.png
+  event: !type:ChangelingShopActionEvent
