@@ -49,16 +49,8 @@ public sealed class SpaceVendorsCartridgeSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
-        UpdateElapsedTimeData(component);
+
         var state = new SpaceVendorsUiState(component.AppraisedItems);
         _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
-    }
-
-    private void UpdateElapsedTimeData(SpaceVendorsCartridgeComponent component)
-    {
-        foreach (var item in component.AppraisedItems)
-        {
-            item.UpdateElapsedTimeData();
-        }
     }
 }
