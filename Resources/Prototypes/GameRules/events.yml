@@ -94,19 +94,6 @@
     earliestStart: 60
     minimumPlayers: 15
   - type: NinjaSpawnRule
-    objectives:
-    - DownloadObjective
-    - DoorjackObjective
-    - SpiderChargeObjective
-    - TerrorObjective
-    - SurviveObjective
-    # TODO: implement and add security records hack objective
-    implants: [ MicroBombImplant ]
-    threats:
-    - announcement: terror-dragon
-      rule: Dragon
-    - announcement: terror-revenant
-      rule: RevenantSpawn
 
 - type: entity
   id: RevenantSpawn
