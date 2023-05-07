@@ -84,3 +84,24 @@ ghost-role-information-space-spider-description =  Space spiders are just as agg
 
 ghost-role-information-salvage-spider-name = Space spider on salvage wreck
 ghost-role-information-salvage-spider-description = Space spiders are just as aggressive as regular spiders, feed.
+
+ghost-role-information-guardian-name = Guardian
+ghost-role-information-guardian-description = Listen to your owner. Don't tank damage. Punch people hard.
+
+ghost-role-information-holoparasite-name = Holoparasite
+ghost-role-information-holoparasite-description = Listen to your owner. Don't tank damage. Punch people hard.
+
+ghost-role-information-ifrit-name = Ifrit
+ghost-role-information-ifrit-description = Listen to your owner. Don't tank damage. Punch people hard.
+
+ghost-role-information-space-dragon-name = Space dragon
+ghost-role-information-space-dragon-description = Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
+
+ghost-role-information-cluwne-name = Cluwne
+ghost-role-information-cluwne-description = Become a pitiful cluwne, your only goal in life is to find a sweet release from your suffering (usually by being beaten to death). A cluwne is not an antagonist but may defend itself. Crewmembers may murder cluwnes freely.
+
+ghost-role-information-
+ghost-role-information-
+
+ghost-role-information-
+ghost-role-information-

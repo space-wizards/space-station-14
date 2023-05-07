@@ -392,7 +392,7 @@
   randomizeName: false
   components:
     - type: GhostRole
-      name: Cluwne
-      description: Become a pitiful cluwne, your only goal in life is to find a sweet release from your suffering (usually by being beaten to death). A cluwne is not an antagonist but may defend itself. Crewmembers may murder cluwnes freely.
+      name: ghost-role-information-cluwne-name
+      description: ghost-role-information-cluwne-description
     - type: GhostTakeoverAvailable
     - type: Cluwne
