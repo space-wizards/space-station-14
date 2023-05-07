@@ -201,7 +201,6 @@ namespace Content.Client.Paper.UI
             StampDisplay.RemoveStamps();
             foreach(var stamper in state.StampedBy)
             {
-                //StampDisplay.AddChild(new StampWidget{ StampInfo = stamper });
                 StampDisplay.AddStamp(new StampWidget{ StampInfo = stamper });
             }
         }

@@ -58,16 +58,16 @@ namespace Content.Client.Paper.UI
         protected override Vector2 ArrangeOverride(Vector2 finalSize)
         {
             var random = new Random(PlacementSeed);
-            var r = (PixelSizeBox.Size * 0.5f).Length;
+            var r = (finalSize * 0.5f).Length;
             var dtheta = -MathHelper.DegreesToRadians(90);
-            var thisCenter = PixelSizeBox.TopLeft + PixelSizeBox.Size * 0.5f;
+            var thisCenter = PixelSizeBox.TopLeft + finalSize * 0.5f;
 
             for (var i = 0; i < _stamps.Count; i++)
             {
                 var stampOrientation = MathHelper.DegreesToRadians((random.NextFloat() - 0.5f) * 10.0f) ;
                 _stamps[i].Orientation = stampOrientation;
 
-                var theta = dtheta * 0.5f + dtheta * i + (i > 4 ? MathF.Log(1 + i / 4) * dtheta : 0); //<tood.eoin Better layout
+                var theta = dtheta * 0.5f + dtheta * i + (i > 4 ? MathF.Log(1 + i / 4) * dtheta : 0); // There is probably a better way to lay these out, to minimize overlaps
                 var childCenterOnCircle = thisCenter;
                 if (i > 0)
                 {
@@ -76,12 +76,13 @@ namespace Content.Client.Paper.UI
                 }
 
                 var childHeLocal = _stamps[i].DesiredPixelSize * 0.5f;
-                var clampedCenter = Clamp(Shrink(PixelSizeBox, childHeLocal), childCenterOnCircle); //<tood.eoin Should shrink by rotated HE
+                var controlBox = new UIBox2(PixelSizeBox.TopLeft, PixelSizeBox.TopLeft + finalSize);
+                var clampedCenter = Clamp(Shrink(controlBox, childHeLocal), childCenterOnCircle); //<tood.eoin Should shrink by rotated HE
                 var realPosition = clampedCenter - childHeLocal;
                 _stamps[i].ArrangePixel(new UIBox2i(ToI(realPosition), ToI(realPosition) + _stamps[i].DesiredPixelSize));
             }
 
-            return finalSize; //<todo.eoin Recalc real bounds
+            return finalSize;
         }
 
         private Vector2i ToI(Vector2 v)
