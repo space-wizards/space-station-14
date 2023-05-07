@@ -1,16 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: All entity storage now has a roughly 2.5x higher air capacity., type: Tweak}
-  - {message: Livestock crates now have ~10x higher air capacity compared to previously.,
-    type: Tweak}
-  id: 3194
-  time: '2023-03-19T00:56:39.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Voice mask can no longer be used from your pockets., type: Fix}
-  id: 3195
-  time: '2023-03-19T23:41:25.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Added waist bags, get them from your nearest clothesmate vendor today!',
@@ -2912,3 +2900,16 @@ Entries:
   - {message: Health analyzers and cloth now fit in medical belts., type: Add}
   id: 3693
   time: '2023-05-07T03:52:00.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: The network configurator. A tool used to link devices together., type: Add}
+  - {message: Configuring device lists is now done using the network configurator
+      instead of the multitool., type: Tweak}
+  id: 3694
+  time: '2023-05-07T06:07:24.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: You can now emag PDA and vehicles to change the color of the light,
+    type: Tweak}
+  id: 3695
+  time: '2023-05-07T06:08:04.0000000+00:00'
