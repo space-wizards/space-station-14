@@ -188,5 +188,5 @@
   id: MobMonkeyGear
   equipment:
     head: ClothingHeadHatTophat
-    jumpsuit: ClothingUniformJumpsuitBartender
+    jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: BartenderPDA
