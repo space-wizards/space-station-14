@@ -34,7 +34,7 @@ namespace Content.Client.Paper.UI
             var random = new Random(PlacementSeed);
             var r = (finalSize * 0.5f).Length;
             var dtheta = -MathHelper.DegreesToRadians(90);
-            var thisCenter = PixelSizeBox.TopLeft + finalSize * 0.5f;
+            var thisCenter = PixelSizeBox.TopLeft + finalSize * UIScale * 0.5f;
 
             for (var i = 0; i < _stamps.Count; i++)
             {
@@ -46,11 +46,11 @@ namespace Content.Client.Paper.UI
                 if (i > 0)
                 {
                     // First stamp can go in the center. Subsequent stamps have to find space.
-                    childCenterOnCircle += new Vector2(MathF.Cos(theta), MathF.Sin(theta)) * r;
+                    childCenterOnCircle += new Vector2(MathF.Cos(theta), MathF.Sin(theta)) * r * UIScale;
                 }
 
                 var childHeLocal = _stamps[i].DesiredPixelSize * 0.5f;
-                var controlBox = new UIBox2(PixelSizeBox.TopLeft, PixelSizeBox.TopLeft + finalSize);
+                var controlBox = new UIBox2(PixelSizeBox.TopLeft, PixelSizeBox.TopLeft + finalSize * UIScale);
                 var clampedCenter = Clamp(Shrink(controlBox, childHeLocal), childCenterOnCircle); //<tood.eoin Should shrink by rotated HE
                 var realPosition = clampedCenter - childHeLocal;
                 _stamps[i].ArrangePixel(new UIBox2i(ToI(realPosition), ToI(realPosition) + _stamps[i].DesiredPixelSize));
