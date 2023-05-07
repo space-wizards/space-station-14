@@ -1,5 +1,5 @@
 - files: ["electric.ogg"]
-  license: "Public Domain"
+  license: "CC0 1.0"
   copyright: "The-Sacha-Rush"
   source: "https://freesound.org/people/The-Sacha-Rush/sounds/657802/"
 
