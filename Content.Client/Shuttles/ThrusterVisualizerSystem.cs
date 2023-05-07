@@ -13,37 +13,22 @@ public sealed class ThrusterVisualizerSystem : VisualizerSystem<ThrusterVisualsC
     /// </summary>
     protected override void OnAppearanceChange(EntityUid uid, ThrusterVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null)
+        if (args.Sprite == null
+        || !AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.State, out var state, args.Component))
             return;
-        if(!AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.State, out var state, args.Component))
-            return;
 
-        switch (state)
-        {
-            case true:
-                args.Sprite.LayerSetVisible(ThrusterVisualLayers.ThrustOn, true);
-
-                if (AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.Thrusting, out var thrusting, args.Component) && thrusting)
-                {
-                    SetThrusting(uid, true, args.Component, args.Sprite);
-                }
-                else
-                {
-                    SetThrusting(uid, false, args.Component, args.Sprite);
-                }
-
-                break;
-            case false:
-                args.Sprite.LayerSetVisible(ThrusterVisualLayers.ThrustOn, false);
-                SetThrusting(uid, true, args.Component, args.Sprite);
-                break;
-        }
+        args.Sprite.LayerSetVisible(ThrusterVisualLayers.ThrustOn, state);
+        SetThrusting(
+            uid,
+            state && AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.Thrusting, out var thrusting, args.Component) && thrusting,
+            args.Sprite
+        );
     }
 
     /// <summary>
     /// Sets whether or not the exhaust plume of the thruster is visible or not.
     /// </summary>
-    private void SetThrusting(EntityUid uid, bool value, AppearanceComponent appearance, SpriteComponent sprite)
+    private static void SetThrusting(EntityUid _, bool value, SpriteComponent sprite)
     {
         if (sprite.LayerMapTryGet(ThrusterVisualLayers.Thrusting, out var thrustingLayer))
         {
