@@ -382,7 +382,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-mime
-    stampedColor: "#ffffff"
+    stampedColor: "#777777"
     stampState: "paper_stamp-mime"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -583,7 +583,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-ce
-    stampedColor: "#e1e100"
+    stampedColor: "#c69b17"
     stampState: "paper_stamp-ce"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
