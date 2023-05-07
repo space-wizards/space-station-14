@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.DeviceNetwork;
+namespace Content.Shared.DeviceNetwork.Components;
 
 [RegisterComponent]
 [NetworkedComponent]
