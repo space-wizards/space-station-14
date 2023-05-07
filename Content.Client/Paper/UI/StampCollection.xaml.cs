@@ -34,6 +34,7 @@ namespace Content.Client.Paper.UI
             var random = new Random(PlacementSeed);
             var r = (finalSize * 0.5f).Length;
             var dtheta = -MathHelper.DegreesToRadians(90);
+            var theta0 = random.Next(0, 3) * dtheta;
             var thisCenter = PixelSizeBox.TopLeft + finalSize * UIScale * 0.5f;
 
             for (var i = 0; i < _stamps.Count; i++)
@@ -41,7 +42,7 @@ namespace Content.Client.Paper.UI
                 var stampOrientation = MathHelper.DegreesToRadians((random.NextFloat() - 0.5f) * 10.0f) ;
                 _stamps[i].Orientation = stampOrientation;
 
-                var theta = dtheta * 0.5f + dtheta * i + (i > 4 ? MathF.Log(1 + i / 4) * dtheta : 0); // There is probably a better way to lay these out, to minimize overlaps
+                var theta = theta0 + dtheta * 0.5f + dtheta * i + (i > 4 ? MathF.Log(1 + i / 4) * dtheta : 0); // There is probably a better way to lay these out, to minimize overlaps
                 var childCenterOnCircle = thisCenter;
                 if (i > 0)
                 {
