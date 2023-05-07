@@ -54,8 +54,6 @@ namespace Content.Server.Zombies
 
         private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
         {
-            var delay = TimeSpan.FromSeconds(_random.Next(30, 60));
-            component.NextCough = _timing.CurTime + delay;
             component.NextTick = _timing.CurTime;
         }
 
@@ -71,14 +69,6 @@ namespace Content.Server.Zombies
                     continue;
 
                 comp.NextTick += TimeSpan.FromSeconds(1);
-
-                if (comp.NextCough < curTime)
-                {
-                    // cough cough
-                    var delay = TimeSpan.FromSeconds(_random.Next(30, 60));
-                    comp.NextCough += delay;
-                }
-
                 _damageable.TryChangeDamage(uid, comp.Damage, true, false);
             }
         }
@@ -175,6 +165,12 @@ namespace Content.Server.Zombies
 
                 if (!TryComp<MobStateComponent>(entity, out var mobState) || HasComp<DroneComponent>(entity))
                     continue;
+
+                if (_random.Prob(GetZombieInfectionChance(entity, component)))
+                {
+                    EnsureComp<PendingZombieComponent>(entity);
+                    EnsureComp<ZombifyOnDeathComponent>(entity);
+                }
 
                 if (HasComp<ZombieComponent>(entity))
                     args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;

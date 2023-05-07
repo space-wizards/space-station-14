@@ -18,9 +18,6 @@ public sealed class PendingZombieComponent : Component
         }
     };
 
-    [DataField("nextCough", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan NextCough;
-
     [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
 }
