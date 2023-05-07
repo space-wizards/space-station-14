@@ -2,3 +2,8 @@
   id: Chemicals
   displayName: store-currency-display-chemicals
   canWithdraw: false
+
+- type: currency
+  id: Points
+  displayName: store-currency-display-points
+  canWithdraw: false

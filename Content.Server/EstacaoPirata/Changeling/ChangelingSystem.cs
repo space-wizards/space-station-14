@@ -24,6 +24,7 @@ using Content.Shared.Administration.Logs;
 using Content.Server.Speech.Components;
 using Content.Server.Traitor;
 using Content.Server.UserInterface;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Roles;
@@ -47,16 +48,15 @@ public sealed class ChangelingSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly SharedImplanterSystem _implanterSystem = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChangelingComponent, ComponentStartup>(OnStartup); // teste
+        SubscribeLocalEvent<ChangelingComponent, ComponentStartup>(OnStartup);
 
-        SubscribeLocalEvent<ChangelingComponent, InstantActionEvent>(OnActionPeformed); // pra quando usar acao
-
-        //SubscribeLocalEvent<ChangelingComponent, ChangelingShopActionEvent>(OnShop); // pra abrir o shop
+        SubscribeLocalEvent<ChangelingComponent, InstantActionEvent>(OnActionPerformed); // pra quando usar acao
 
         SubscribeLocalEvent<ChangelingComponent, AbsorbDNAActionEvent>(OnAbsorbAction);
 
@@ -64,50 +64,37 @@ public sealed class ChangelingSystem : EntitySystem
 
         SubscribeLocalEvent<SubdermalImplantComponent, ChangelingShopActionEvent>(OnImplantShop);
 
+        SubscribeLocalEvent<ChangelingComponent, ChangelingArmBladeEvent>(OnArmBlade);
+
         // Initialize abilities
+    }
+
+    private void OnArmBlade(EntityUid uid, ChangelingComponent component, ChangelingArmBladeEvent args)
+    {
+        // checar se esta comprado?? acho que nao precisa
+
+        // checar se esta ativado
+        component.ArmBladeActivated = !component.ArmBladeActivated;
+
+        var targetTransformComp = Transform(args.Performer);
+        var armbladeEntity =Spawn("ArmBlade", targetTransformComp.Coordinates);
+        _handsSystem.TryPickup(args.Performer, armbladeEntity);
+        // if (TryPrototype(uid, out var prototipo, targetMeta))
+        // {
+        //     var targetTransformComp = Transform(user);
+        //     var child = Spawn(prototipo.ID, targetTransformComp.Coordinates);
+        //
+        // }
+
+
     }
 
     private void OnImplantShop(EntityUid uid, SubdermalImplantComponent component, ChangelingShopActionEvent args)
     {
         if (!TryComp<StoreComponent>(uid, out var store))
-        {
-            store = AddComp<StoreComponent>(uid);
-            //_implanterSystem.Implant();
-        }
-
-        //var activatableUIComp = EnsureComp<ActivatableUIComponent>(uid);
-
-        store.Categories.Add("ChangelingAbilities");
-        store.CurrencyWhitelist.Add("Chemicals");
-
-
-
-        _store.ToggleUi(args.Performer, uid, store);
-    }
-
-    private void OnShop(EntityUid uid, ChangelingComponent component, ChangelingShopActionEvent args)
-    {
-        if (!TryComp<StoreComponent>(args.Performer, out var store))
-        {
-            store = AddComp<StoreComponent>(args.Performer);
-            //_implanterSystem.Implant();
-        }
-
-        //var activatableUIComp = EnsureComp<ActivatableUIComponent>(uid);
-
-        store.Categories.Add("ChangelingAbilities");
-        store.CurrencyWhitelist.Add("Chemicals");
-
-        if (!TryComp<ServerUserInterfaceComponent>(uid, out var serverUI))
             return;
 
-        //serverUI.
-
-
-        //serverUI.Interfaces.
-
-
-        _store.ToggleUi(uid, args.Performer, store);
+        _store.ToggleUi(args.Performer, uid, store);
     }
 
     private void OnStartup(EntityUid uid, ChangelingComponent component, ComponentStartup args)
@@ -115,19 +102,12 @@ public sealed class ChangelingSystem : EntitySystem
         //update the icon
         //ChangeEssenceAmount(uid, 0, component);
 
-
-
-        // var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("ChangelingShop"));
-        // _action.AddAction(uid, shopaction, null);
-
-    //AbsorbDNA
+        //AbsorbDNA
         var absorbaction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("AbsorbDNA"));
         absorbaction.CanTargetSelf = false;
         _action.AddAction(uid, absorbaction, null);
 
-        // implante
-        var implantShopAction = new InstantAction(_proto.Index<InstantActionPrototype>("ActivateChangelingShop"));
-
+        // implante da loja
         var coords = Transform(uid).Coordinates;
 
         var implant = Spawn("ChangelingShopImplant", coords);
@@ -135,33 +115,15 @@ public sealed class ChangelingSystem : EntitySystem
         if (!TryComp<SubdermalImplantComponent>(implant, out var implantComp))
             return;
 
-        if (!TryComp<TransformComponent>(implant, out var implantTransform))
-            return;
-
-
-
         _subdermalImplant.ForceImplant(uid, implant, implantComp);
 
+        if (!TryComp<StoreComponent>(implant, out var storeComponent))
+            return;
 
-        // sei la
-        // if (!TryComp<TransformComponent>(uid, out var xform))
-        //     return;
-        //
-        // OpenStorageUI(uid, xform.ParentUid, storageComp);
+        storeComponent.Categories.Add("ChangelingAbilities");
+        storeComponent.CurrencyWhitelist.Add("Points");
 
-
-        // ActivatableUIComponent newComp = new ActivatableUIComponent();
-        //
-        // newComp.Key = StoreUiKey.Key;
-        //
-        // var activatableUIComp = EnsureComp<ActivatableUIComponent>(uid);
-        //
-        // activatableUIComp.Key = newComp.Key;
-
-
-
-
-
+        storeComponent.Balance.Add(component.StoreCurrencyName,component.StartingPoints);
 
         // Fazer isto em outro lugar
 
@@ -193,7 +155,7 @@ public sealed class ChangelingSystem : EntitySystem
     }
 
     // Acho que nao vou usar este
-    private void OnActionPeformed(EntityUid uid, ChangelingComponent component, InstantActionEvent args)
+    private void OnActionPerformed(EntityUid uid, ChangelingComponent component, InstantActionEvent args)
     {
     }
 

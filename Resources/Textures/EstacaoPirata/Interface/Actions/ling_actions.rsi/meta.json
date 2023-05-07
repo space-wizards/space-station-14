@@ -5,10 +5,13 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation.",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/mob/actions/actions_changeling.dmi.",
     "states": [
         {
             "name": "ling_absorb"
+        },
+        {
+            "name": "arm_blade"
         }
     ]
 }

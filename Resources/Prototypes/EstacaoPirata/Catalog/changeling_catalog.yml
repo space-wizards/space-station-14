@@ -1,0 +1,12 @@
+- type: listing
+  id: ChangelingArmBlade
+  name: armblade-listing-name
+  description: armblade-listing-description
+  productAction: ChangelingArmBlade
+  cost: 
+    Points: 2
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

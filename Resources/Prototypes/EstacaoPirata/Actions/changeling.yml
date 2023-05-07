@@ -8,7 +8,13 @@
 - type: entityTargetAction
   id: AbsorbDNA
   icon: { sprite: EstacaoPirata/Interface/Actions/ling_actions.rsi, state: ling_absorb }
-  name: AbsorbDNA
-  description: Absorbs DNA of the target.
+  name: action-absorb-dna-name
+  description: action-absorb-dna-description
   serverEvent: !type:AbsorbDNAActionEvent
   
+- type: instantAction
+  id: ChangelingArmBlade
+  icon: { sprite: EstacaoPirata/Interface/Actions/ling_actions.rsi, state: arm_blade }
+  name: action-arm-blade-name
+  description: action-arm-blade-description
+  serverEvent: !type:ChangelingArmBladeEvent

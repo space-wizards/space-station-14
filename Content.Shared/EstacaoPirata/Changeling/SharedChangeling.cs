@@ -37,6 +37,10 @@ public sealed class ChangelingShopActionEvent : InstantActionEvent
 {
 }
 
+public sealed class ChangelingArmBladeEvent : InstantActionEvent
+{
+}
+
 public sealed class ArmbladeActionEvent : InstantActionEvent
 {
 }

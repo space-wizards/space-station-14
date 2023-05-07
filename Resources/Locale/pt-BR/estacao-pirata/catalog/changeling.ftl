@@ -1,0 +1,2 @@
+armblade-listing-name = Lâmina de Braço
+armblade-listing-description = Transforma um dos braços do transmorfo em uma lâmina grotesca feita de osso e carne. Ela causa 25 pontos de dano por acerto e pode ser recolhida usando a habilidade novamente. A lâmina de braço também pode ser usada para forçar a abertura de portas.

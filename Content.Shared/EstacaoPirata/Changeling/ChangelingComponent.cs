@@ -12,6 +12,13 @@ namespace Content.Shared.EstacaoPirata.Changeling;
 public sealed class ChangelingComponent : Component
 {
     #region Points and Chemicals
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string StoreCurrencyName = "Points";
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string AbilityCurrencyName = "Chemicals";
+
     /// <summary>
     /// Stating points that the changeling will have, they can be spent on abilities
     /// </summary>
@@ -114,7 +121,15 @@ public sealed class ChangelingComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("armBladeBuyCost")]
     public int ArmBladeBuyCost = 2;
-        #endregion
+
+    /// <summary>
+    /// "Is the armblade activated or not"
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool ArmBladeActivated = false;
+
+    #endregion
+
     #endregion
 
 
