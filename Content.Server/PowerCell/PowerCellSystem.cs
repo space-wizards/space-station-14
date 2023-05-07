@@ -308,10 +308,9 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void OnEmpPulse(EntityUid uid, PowerCellSlotComponent component, ref EmpPulseEvent args)
     {
-        if (TryGetBatteryFromSlot(uid, out var batteryUid, out var battery, component))
+        if (TryGetBatteryFromSlot(uid, out var batteryUid, out _, component))
         {
-            args.Affected = true;
-            _battery.UseCharge(batteryUid.Value, args.EnergyConsumption, battery);
+            RaiseLocalEvent(batteryUid.Value, ref args);
         }
     }
 }
