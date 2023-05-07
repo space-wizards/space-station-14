@@ -18,32 +18,6 @@ namespace Content.Client.Paper.UI
             RobustXamlLoader.Load(this);
         }
 
-        /*
-        protected override void Draw(DrawingHandleScreen handle)
-        {
-            base.Draw(handle);
-            handle.DrawRect(PixelSizeBox, Color.Orange);
-            var r = (PixelSizeBox.Size * 0.5f).Length;
-            var dtheta = -MathHelper.DegreesToRadians(120);
-            var thisCenter = PixelSizeBox.TopLeft + PixelSizeBox.Size * 0.5f;
-
-            var random = new Random(1234); //todo.eoin Entity ID
-            for (var i = 0; i < _stamps.Count; i++)
-            {
-                var stampOrientation = MathHelper.DegreesToRadians((random.NextFloat() - 0.5f) * 10.0f) ;
-                _stamps[i].Orientation = stampOrientation;
-
-                var theta = dtheta * i;
-                var childCenterOnCircle = thisCenter + new Vector2(MathF.Cos(theta), MathF.Sin(theta)) * r;
-                var childHeLocal = _stamps[i].DesiredPixelSize * 0.5f;
-                var childHeInThis = new Vector2(childHeLocal.X * MathF.Cos(stampOrientation) + childHeLocal.Y * MathF.Sin(stampOrientation),
-                        childHeLocal.Y * MathF.Cos(stampOrientation) + childHeLocal.X * MathF.Sin(stampOrientation));
-                var clampedCenter = Clamp(Shrink(PixelSizeBox, childHeInThis), childCenterOnCircle);
-                handle.DrawCircle(clampedCenter, 10, Color.Green);
-             }
-        }
-        */
-
         public void RemoveStamps()
         {
             _stamps.Clear();
