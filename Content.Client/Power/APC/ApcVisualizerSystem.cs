@@ -19,6 +19,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
         {
             args.Sprite.LayerSetState(ApcVisualLayers.ChargeState, $"{comp.ScreenPrefix}-{comp.ScreenSuffixes[(sbyte)chargeState]}");
 
+            // LockState does nothing currently. The backend doesn't exist.
             if (AppearanceSystem.TryGetData<byte>(uid, ApcVisuals.LockState, out var lockStates, args.Component))
             {
                 for(var i = 0; i < comp.LockIndicators; ++i)
@@ -30,6 +31,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
                 }
             }
 
+            // ChannelState does nothing currently. The backend doesn't exist.
             if (AppearanceSystem.TryGetData<byte>(uid, ApcVisuals.ChannelState, out var channelStates, args.Component))
             {
                 for(var i = 0; i < comp.ChannelIndicators; ++i)
