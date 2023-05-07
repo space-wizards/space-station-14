@@ -22,14 +22,15 @@
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.45,0.25,0.45"
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
-      density: 200
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.45,0.25,0.45"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 200
   - type: Destructible
     thresholds:
     - trigger:
@@ -72,7 +73,7 @@
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-mechanical
   - type: StaticPrice
-    price: 200
+    price: 100
   - type: Appearance
   - type: WiresVisuals
 

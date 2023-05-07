@@ -44,6 +44,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         InitializeGenerator();
         InitializeScanner();
         InitializeVessel();
+        InitializeCommands();
     }
 
     private void OnMapInit(EntityUid uid, AnomalyComponent component, MapInitEvent args)
@@ -75,15 +76,15 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         // small function to randomize because it's easier to read like this
         float VaryValue(float v) => v * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
 
-        if (particle.ParticleType == component.DestabilizingParticleType)
+        if (particle.ParticleType == component.DestabilizingParticleType || particle.DestabilzingOverride)
         {
             ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerDestabilizingHit), component);
         }
-        else if (particle.ParticleType == component.SeverityParticleType)
+        if (particle.ParticleType == component.SeverityParticleType || particle.SeverityOverride)
         {
             ChangeAnomalySeverity(uid, VaryValue(particle.SeverityPerSeverityHit), component);
         }
-        else if (particle.ParticleType == component.WeakeningParticleType)
+        if (particle.ParticleType == component.WeakeningParticleType || particle.WeakeningOverride)
         {
             ChangeAnomalyHealth(uid, VaryValue(particle.HealthPerWeakeningeHit), component);
             ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerWeakeningeHit), component);

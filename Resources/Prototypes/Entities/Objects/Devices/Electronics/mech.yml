@@ -1,3 +1,5 @@
+# Ripley
+
 - type: entity
   id: RipleyCentralElectronics
   parent: BaseElectronics
@@ -23,3 +25,44 @@
     - type: Tag
       tags:
       - RipleyPeripheralsControlModule
+
+# H.O.N.K.
+
+- type: entity
+  id: HonkerCentralElectronics
+  parent: BaseElectronics
+  name: H.O.N.K. central control module
+  description: The electrical control center for the H.O.N.K. mech.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: mainboard
+    - type: Tag
+      tags:
+      - HonkerCentralControlModule
+
+- type: entity
+  id: HonkerPeripheralsElectronics
+  parent: BaseElectronics
+  name: H.O.N.K. peripherals control module
+  description: The electrical peripherals control for the H.O.N.K. mech.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: id_mod
+    - type: Tag
+      tags:
+      - HonkerPeripheralsControlModule
+
+- type: entity
+  id: HonkerTargetingElectronics
+  parent: BaseElectronics
+  name: H.O.N.K. weapon control and targeting module
+  description: The electrical targeting control for the H.O.N.K. mech.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: id_mod
+    - type: Tag
+      tags:
+      - HonkerTargetingControlModule

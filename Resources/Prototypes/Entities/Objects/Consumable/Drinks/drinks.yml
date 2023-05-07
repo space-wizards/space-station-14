@@ -1613,6 +1613,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkCogChampBase
+  name: cogchamp glass
+  description: This mix of Cognac, Screwdriver and Welding Fuel will have you seeing His light surely!
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: CogChamp
+              Quantity: 30
+    - type: Drink
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/cogchamp.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkSuiDreamGlass
   name: sui dream glass
   description: A froofy, fruity, and sweet mixed drink. Understanding the name only brings shame.
@@ -2187,16 +2204,16 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkKvassGlass
-  name: kvass glass
-  description: A cool refreshing drink with a taste of socialism.
+  id: DrinkTheMartinez
+  name: The Martinez glass
+  description: The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
   components:
     - type: SolutionContainerManager
       solutions:
         drink:
           maxVol: 30
           reagents:
-            - ReagentId: Kvass
+            - ReagentId: TheMartinez
               Quantity: 30
     - type: Sprite
-      sprite: Objects/Consumable/Drinks/kvass.rsi
+      sprite: Objects/Consumable/Drinks/the_martinez.rsi

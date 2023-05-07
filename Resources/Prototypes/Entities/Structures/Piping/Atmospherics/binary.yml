@@ -175,7 +175,7 @@
       graph: GasBinary
       node: valve
     - type: AmbientSound
-      enabled: false
+      enabled: true
       volume: -9
       range: 5
       sound:
@@ -229,7 +229,7 @@
     graph: GasBinary
     node: signalvalve
   - type: AmbientSound
-    enabled: false
+    enabled: true
     volume: -9
     range: 5
     sound:
@@ -313,6 +313,8 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: AmbientSound
+      enabled: true
 
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]
@@ -355,7 +357,7 @@
   - type: AtmosDevice
   - type: AtmosPipeColor
   - type: AmbientSound
-    enabled: false
+    enabled: true
     volume: -9
     range: 5
     sound:

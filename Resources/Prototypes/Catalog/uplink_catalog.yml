@@ -397,6 +397,22 @@
         components:
           - SurplusBundle
 
+- type: listing
+  id: UplinkUplinkImplanter # uplink uplink real
+  name: uplink-uplink-implanter-name
+  description: uplink-uplink-implanter-desc
+  icon: { sprite: /Textures/Objects/Devices/communication.rsi, state: old-radio }
+  productEntity: UplinkImplanter
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkImplants
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
 # Bundles
 
 - type: listing
@@ -613,7 +629,7 @@
   description: uplink-revolver-cap-gun-fake-desc
   productEntity: RevolverCapGunFake
   cost:
-    Telecrystal: 10
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:
@@ -652,6 +668,20 @@
     - Botanist
     - Clown
     - Mime
+
+- type: listing
+  id: UplinkChimpAmmo
+  name: uplink-chimp-ammo-name
+  description: uplink-chimp-ammo-desc
+  productEntity: BoxMagazineChimpOmega
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - Scientist
 
 # Armor
 

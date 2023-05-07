@@ -45,6 +45,13 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2 # 2 beeps total (at 0 and 2)
 
 - type: entity
   name: flashbang
@@ -143,7 +150,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/modular.rsi
-    state: empty
+    layers:
+    - state: empty
+      map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Item
     size: 8
   - type: PayloadCase
@@ -168,6 +177,14 @@
       states:
         enum.Trigger.TriggerVisualState.Primed: primed
         enum.Trigger.TriggerVisualState.Unprimed: complete
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          emptyCase: { state: empty }
+          wiredCase: { state: wired }
+          caseWithTrigger: { state: no-payload }
+          grenade: { state: complete }
   - type: StaticPrice
     price: 25
 

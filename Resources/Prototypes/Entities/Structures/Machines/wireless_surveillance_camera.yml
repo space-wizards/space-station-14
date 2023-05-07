@@ -16,7 +16,8 @@
       rotateWhileAnchored: true
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.45
           density: 80
@@ -48,6 +49,8 @@
     - type: Anchorable
     - type: Transform
       anchored: true
+    - type: Physics
+      bodyType: Static
     - type: Sprite
       noRot: true
       sprite: Structures/monitors.rsi
