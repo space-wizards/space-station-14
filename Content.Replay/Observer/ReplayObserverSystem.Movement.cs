@@ -5,6 +5,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using TerraFX.Interop.Windows;
 
 namespace Content.Replay.Observer;
 
@@ -69,16 +70,19 @@ public sealed partial class ReplayObserverSystem
         if ((Direction & DirectionFlag.East) != 0)
             effectiveDir &= ~DirectionFlag.West;
 
+        var query = GetEntityQuery<TransformComponent>();
+        var xform = query.GetComponent(player);
+        var pos = _transform.GetWorldPosition(xform, query);
+
         // A poor mans grid-traversal system.
         // Should also handle interrupting following.
+        // TODO do this properly.
+        _transform.SetCoordinates(player, new EntityCoordinates(xform.MapUid ?? default, pos));
         _transform.AttachToGridOrMap(player);
 
-        var query = GetEntityQuery<TransformComponent>();
         var parentRotation = _mover.GetParentGridAngle(mover, query);
         var localVec = effectiveDir.AsDir().ToAngle().ToWorldVec();
         var worldVec = parentRotation.RotateVec(localVec);
-        var xform = query.GetComponent(player);
-        var pos = _transform.GetWorldPosition(xform, query);
         var speed = CompOrNull<MovementSpeedModifierComponent>(player)?.BaseSprintSpeed ?? DefaultSpeed;
         var delta = worldVec * frameTime * speed;
         _transform.SetWorldPositionRotation(xform, pos + delta, delta.ToWorldAngle(), query);
