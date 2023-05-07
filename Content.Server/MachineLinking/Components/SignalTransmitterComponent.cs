@@ -3,13 +3,13 @@ using Content.Server.MachineLinking.System;
 namespace Content.Server.MachineLinking.Components
 {
     [DataDefinition]
-    public struct PortIdentifier
+    public readonly struct PortIdentifier
     {
         [DataField("uid")]
-        public EntityUid Uid;
+        public readonly EntityUid Uid;
 
         [DataField("port")]
-        public string Port;
+        public readonly string Port;
 
         public PortIdentifier(EntityUid uid, string port)
         {

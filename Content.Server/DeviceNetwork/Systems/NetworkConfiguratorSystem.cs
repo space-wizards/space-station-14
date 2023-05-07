@@ -289,11 +289,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         var verb = new UtilityVerb
         {
-            Text = Loc.GetString(isDeviceList ? "network-configurator-configure" : "network-configurator-save-device"),
-            Icon = isDeviceList ?
-                new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")) :
-                new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
-            Act = () => OnUsed(uid, component, args.Target, args.User),
+            Act = () => OnUsed(uid, configurator, args.Target, args.User),
             Impact = LogImpact.Low
         };
 
@@ -301,15 +297,15 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         {
             var linkStarted = configurator.ActiveDeviceLink.HasValue;
             verb.Text = Loc.GetString(linkStarted ? "network-configurator-link" : "network-configurator-start-link");
-            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
+            verb.Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
         }
         else if (!HasComp<DeviceNetworkComponent>(args.Target))
         {
             var isDeviceList = HasComp<DeviceListComponent>(args.Target);
             verb.Text = Loc.GetString(isDeviceList ? "network-configurator-configure" : "network-configurator-save-device");
             verb.Icon = isDeviceList
-                ? new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png"))
-                : new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
+                ? new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png"))
+                : new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
         }
 
         args.Verbs.Add(verb);
@@ -332,7 +328,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             AlternativeVerb verb = new()
             {
                 Text = Loc.GetString("network-configurator-save-device"),
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
                 Act = () => TryAddNetworkDevice(args.Target, args.Using.Value, args.User),
                 Impact = LogImpact.Low
             };
@@ -345,7 +341,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             AlternativeVerb verb = new()
             {
                 Text = Loc.GetString("network-configurator-link-defaults"),
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
                 Act = () => TryLinkDefaults(args.Using.Value, configurator, args.Target, args.User),
                 Impact = LogImpact.Low
             };
