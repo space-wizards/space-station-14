@@ -141,8 +141,8 @@
     node: bot
   - type: GhostRole
     makeSentient: true
-    name: honkbot
-    description: An artificial being of pure evil.
+    name: ghost-role-information-honkbot-name
+    description: ghost-role-information-honkbot-description
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-honkbot
@@ -170,8 +170,8 @@
     node: bot
   - type: GhostRole
     makeSentient: true
-    name: jonkbot
-    description: An artificial being of pure evil.
+    name: ghost-role-information-jonkbot-name
+    description: ghost-role-information-jonkbot-description
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Items/brokenbikehorn.ogg
@@ -289,8 +289,8 @@
     node: bot
   - type: GhostRole
     makeSentient: true
-    name: mimebot
-    description: A Mimebot, act like a mime but dont act like a greytider.
+    name: ghost-role-information-mimebot-name
+    description: ghost-role-information-mimebot-description
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-mimebot

@@ -576,9 +576,8 @@
     - FootstepSound
   - type: GhostRole
     prob: 0.25
-    name: Willow the kangaroo
-    description: |
-      You're a kangaroo named willow! willow likes to box.
+    name: ghost-role-information-willow-name
+    description: ghost-role-information-willow-description
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
