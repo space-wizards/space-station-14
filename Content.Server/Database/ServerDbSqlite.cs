@@ -3,14 +3,12 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
@@ -473,42 +471,6 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
 
             return round.Id;
-        }
-
-        public override async Task AddAdminLogs(List<QueuedLog> logs)
-        {
-            await using var db = await GetDb();
-
-            var nextId = 1;
-            if (await db.DbContext.AdminLog.AnyAsync())
-            {
-                nextId = db.DbContext.AdminLog.Max(round => round.Id) + 1;
-            }
-
-            var entities = new Dictionary<int, AdminLogEntity>();
-
-            foreach (var (log, entityData) in logs)
-            {
-                log.Id = nextId++;
-
-                var logEntities = new List<AdminLogEntity>(entityData.Count);
-                foreach (var (id, name) in entityData)
-                {
-                    var entity = entities.GetOrNew(id);
-                    entity.Name = name;
-                    logEntities.Add(entity);
-                }
-
-                foreach (var player in log.Players)
-                {
-                    player.LogId = log.Id;
-                }
-
-                log.Entities = logEntities;
-                db.DbContext.AdminLog.Add(log);
-            }
-
-            await db.DbContext.SaveChangesAsync();
         }
 
         public override async Task<int> AddAdminNote(AdminNote note)
