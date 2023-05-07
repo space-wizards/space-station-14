@@ -243,8 +243,8 @@
         - CigPack
         - PillCanister
         - Radio
-        - HandheldHealthAnalyzer
-        - Cloth
+        #- HandheldHealthAnalyzer
+        #- Cloth
       components:
         - Hypospray
         - Injector

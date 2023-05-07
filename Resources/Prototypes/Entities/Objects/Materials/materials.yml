@@ -63,6 +63,9 @@
   name: cloth
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - Gauze
   - type: Healing
     damageContainer: Biological
     damage:
