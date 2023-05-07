@@ -227,8 +227,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 5500
-  - type: DiseaseProtection
-    protection: 0.2
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.95
@@ -379,8 +377,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 5500
-  - type: DiseaseProtection
-    protection: 0.2
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.85
@@ -555,8 +551,6 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
-  - type: DiseaseProtection
-    protection: 0.15
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
@@ -659,8 +653,6 @@
     damageCoefficient: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
-  - type: DiseaseProtection
-    protection: 0.2
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -695,8 +687,6 @@
     damageCoefficient: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
-  - type: DiseaseProtection
-    protection: 0.4
 
 #ERT
 - type: entity
@@ -735,8 +725,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
-  - type: DiseaseProtection
-    protection: 0.25
 
 
 - type: entity

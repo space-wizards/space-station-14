@@ -203,8 +203,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingUniformBase
@@ -275,7 +273,7 @@
     modifiers:
       coefficients:
         Slash: 0.9
-        Piercing: 0.9  
+        Piercing: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -291,7 +289,7 @@
     modifiers:
       coefficients:
         Slash: 0.9
-        Piercing: 0.9  
+        Piercing: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -358,8 +356,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/medical.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/medical.rsi
-  - type: DiseaseProtection
-    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -382,21 +378,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
-  - type: DiseaseProtection
-    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitBrigmedic
   name: brigmedic jumpsuit
-  description: The uniform is issued to qualified persons who have been trained, but no one cares that the training took place half a day.
+  description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
-  - type: DiseaseProtection
-    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -456,6 +448,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/scientist_formal.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/scientist_formal.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRoboticist
+  name: roboticist jumpsuit
+  description: It's a slimming black with reinforced seams; great for industrial work.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/roboticist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/roboticist.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -979,8 +982,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
-  - type: DiseaseProtection
-    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -1009,8 +1010,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingUniformBase
@@ -1041,7 +1040,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
   - type: Unremoveable
-  
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDameDane
@@ -1076,3 +1075,47 @@
     sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiBlack
+  name: black hawaiian shirt
+  description: Black as a starry night.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiBlue
+  name: blue hawaiian shirt
+  description: Blue as a huge ocean.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblue.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiRed
+  name: red hawaiian shirt
+  description: Red as a juicy watermelons.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaired.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaired.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiYellow
+  name: yellow hawaiian shirt
+  description: Yellow as a bright sun.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi

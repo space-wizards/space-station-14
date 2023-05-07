@@ -35,7 +35,7 @@
             "name": "sechud"
         },
         {
-            "name": "bottle"
+			"name": "bottle"
         },
         {
             "name": "box"
@@ -60,6 +60,9 @@
         },
         {
             "name": "box_medical"
+        },
+        {
+            "name": "box_science"
         },
         {
             "name": "box_olive"
@@ -108,6 +111,9 @@
         },
         {
             "name": "lighttube"
+        },
+        {
+            "name": "omegacart"
         },
         {
             "name": "magazine"

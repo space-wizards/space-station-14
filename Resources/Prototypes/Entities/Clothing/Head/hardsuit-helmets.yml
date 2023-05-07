@@ -143,8 +143,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 5500
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -258,8 +256,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 5500
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -444,8 +440,6 @@
         Piercing: 0.8
         Heat: 0.2
         Radiation: 0.5
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -488,8 +482,6 @@
         Shock: 0.1
         Cold: 0.2
         Radiation: 0.2
-  - type: DiseaseProtection
-    protection: 0.25
 
 - type: entity
   parent: ClothingHeadHardsuitBase
@@ -563,8 +555,6 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: PointLight
     color: "#adffec"
-  - type: DiseaseProtection
-    protection: 0.20
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie

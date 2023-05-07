@@ -40,24 +40,23 @@
     angularDamping: 0
   - type: Fixtures
     fixtures:
-    - id: projectile
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.1,-0.1,0.1,0.1"
-      hard: false
-      mask:
-      - Impassable
-      - BulletImpassable
-    - &flybyfixture
-      id: fly-by
-      shape: !type:PhysShapeCircle
-        radius: 1.5
-      layer:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      hard: False
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: &flybyfixture
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
   - type: Projectile
     impactEffect: BulletImpactEffect
     damage:
@@ -81,15 +80,15 @@
         Blunt: 7 # more damage than a punch.
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.15,-0.45,0.15,0.15"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.15"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
 
 - type: entity
   id: BaseBulletHighVelocity
@@ -126,7 +125,7 @@
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
   - type: StaminaDamageOnCollide
-    damage: 15
+    damage: 22 # 5 hits to stun sounds reasonable
 
 # Energy projectiles
 - type: entity
@@ -150,14 +149,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.15"
+        hard: false
+        mask:
+          - Impassable
+          - BulletImpassable
+      fly-by: *flybyfixture
   - type: Ammo
   - type: Projectile
     damage:
@@ -189,15 +189,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.15,-0.3,0.15,0.3"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 30
@@ -229,15 +229,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.15,-0.3,0.15,0.3"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 5
@@ -267,14 +267,14 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      hard: false
-      id: projectile
-      mask:
-      - Opaque
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: *flybyfixture
   - type: Projectile
 #   soundHit:  Waiting on serv3
     damage:
@@ -327,14 +327,14 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      hard: false
-      id: projectile
-      mask:
-      - Opaque
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: *flybyfixture
   - type: Projectile
     damage:
       types:
@@ -396,6 +396,29 @@
     stabilityPerDestabilizingHit: 0.08
     healthPerWeakeningeHit: -0.1
     stabilityPerWeakeningeHit: -0.2
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleOmegaStrong
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+      - state: magicm_green
+        shader: unshaded
+  - type: AnomalousParticle
+    particleType: Default
+    severityOverride: true
+    severityPerSeverityHit: 0.1
+    stabilityPerDestabilizingHit: 0.05
+    healthPerWeakeningeHit: 1
+    stabilityPerWeakeningeHit: -0.05
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Heat: 20
 
 # Launcher projectiles (grenade / rocket)
 - type: entity
@@ -542,6 +565,48 @@
         - state: xeno_toxic
     - type: Ammo
       muzzleFlash: null
+
+- type: entity
+  id: BulletWaterShot
+  name: water
+  noSpawn: true
+  components:
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0 #it's just water, bro
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/water_shot.rsi
+    layers:
+    - state: icon
+      map: ["enum.VaporVisualLayers.Base"]
+  - type: Ammo
+    muzzleFlash: null
+  - type: SolutionContainerManager
+    solutions:
+      vapor:
+        maxVol: 50
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.30,0.10,0.15"
+        hard: false
+        mask:
+        - FullTileMask
+        - Opaque
+  - type: Vapor
+    active: true
+  - type: Appearance
+  - type: VaporVisuals
 
 - type: entity
   id: BulletCannonBall

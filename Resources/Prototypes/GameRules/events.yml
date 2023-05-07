@@ -5,7 +5,7 @@
   components:
   - type: StationEvent
     weight: 10
-    startAfter: 30
+    startDelay: 30
     duration: 35
     startAudio: # Corvax-Announcements
       path: /Audio/Corvax/Announcements/flux.ogg
@@ -20,7 +20,7 @@
   components:
   - type: StationEvent
     weight: 5
-    startAfter: 30
+    startDelay: 30
     duration: 35
     startAudio: # Corvax-Announcements
       path: /Audio/Corvax/Announcements/blusp_anomalies.ogg
@@ -64,31 +64,15 @@
   - type: BureaucraticErrorRule
 
 - type: entity
-  id: DiseaseOutbreak
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-disease-outbreak-announcement
-    startAudio:
-      path: /Audio/Announcements/outbreak7.ogg
-      params:
-        volume: -4
-    weight: 5
-    duration: 1
-    earliestStart: 15
-  - type: DiseaseOutbreakRule
-
-- type: entity
   id: Dragon
   parent: BaseGameRule
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 10
-    duration: 2
-    earliestStart: 15
-    minimumPlayers: 15
+    weight: 1
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
   - type: DragonRule
 
 - type: entity
@@ -132,7 +116,7 @@
     earliestStart: 10
     minimumPlayers: 5
     weight: 5
-    startAfter: 20
+    startDelay: 20
   - type: GasLeakRule
 
 - type: entity
@@ -144,7 +128,7 @@
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
-    startAfter: 50
+    startDelay: 50
     duration: 240
   - type: KudzuGrowthRule
 
@@ -168,7 +152,7 @@
       params:
         volume: -4
     duration: null #ending is handled by MeteorSwarmRule
-    startAfter: 30
+    startDelay: 30
   - type: MeteorSwarmRule
 
 - type: entity
@@ -196,7 +180,7 @@
       path: /Audio/Announcements/power_off.ogg
       params:
        volume: -4
-    startAfter: 12
+    startDelay: 12
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
@@ -252,7 +236,7 @@
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
-    startAfter: 50
+    startDelay: 50
     duration: 60
   - type: VentClogRule
 
@@ -268,6 +252,38 @@
     weight: 5
     duration: 60
   - type: VentCrittersRule
+    entries:
+    - id: MobMouse
+      amount: 4
+      maxAmount: 12
+    - id: MobMouse1
+      amount: 4
+      maxAmount: 12
+    - id: MobMouse2
+      amount: 4
+      maxAmount: 12
+
+- type: entity
+  id: SlimesSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+      - id: MobAdultSlimesBlueAngry
+        amount: 6
+        maxAmount: 10
+      - id: MobAdultSlimesGreenAngry
+        amount: 6
+        maxAmount: 10
+      - id: MobAdultSlimesYellowAngry
+        amount: 6
+        maxAmount: 10
 
 - type: entity
   id: SpiderSpawn
@@ -279,7 +295,11 @@
     minimumPlayers: 15
     weight: 5
     duration: 60
-  - type: SpiderSpawnRule
+  - type: VentCrittersRule
+    entries:
+      - id: MobGiantSpiderAngry
+        amount: 4
+        maxAmount: 8
 
 - type: entity
   id: ZombieOutbreak

@@ -36,18 +36,18 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 20
         damage:
           types:
-            Brute: 0.5
+            Brute: 2
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 20
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 20
         type: Local
         visualType: Medium
         messages: [ "generic-reagent-effect-nauseous" ]
@@ -55,7 +55,7 @@
       - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 20
         probability: 0.02
     Alcohol:
       effects:
@@ -87,6 +87,10 @@
         key: Jitter
         time: 3.0
         type: Remove
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -3
 
 - type: reagent
   id: Ethylredoxrazine
@@ -103,6 +107,10 @@
         key: Drunk
         time: 2.0
         type: Remove
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.5        
 
 - type: reagent
   id: Arithrazine
@@ -140,15 +148,21 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 15
         damage:
           types:
             Asphyxiation: 1
-            Poison: 0.5
-      - !type:Jitter
+            Poison: 3
+            Brute: 1
+      - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
           min: 30
+        probability: 0.02           
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
     Alcohol:
       effects:
       - !type:Drunk
@@ -203,16 +217,17 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 10
         damage:
           types:
             Asphyxiation: 1
+            Cold: 2
         groups:
             Brute: 0.5
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 10
 
 - type: reagent
   id: Dexalin
@@ -230,7 +245,15 @@
           types:
             Asphyxiation: -1
             Bloodloss: -0.5
-
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 20
+        damage:
+          types:
+            Asphyxiation: 3
+            Cold: 1
+            
 - type: reagent
   id: DexalinPlus
   name: reagent-name-dexalin-plus
@@ -254,7 +277,15 @@
           min: 1
         reagent: Lexorin
         amount: -3
-
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 25
+        damage:
+          types:
+            Asphyxiation: 5
+            Cold: 3
+            
 # this ones a doozy
 - type: reagent
   id: Epinephrine
@@ -340,7 +371,7 @@
           min: 30
         damage:
           types:
-           Heat: 0.5
+           Heat: 2
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
@@ -373,9 +404,9 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
           # they gotta be in crit first
-          min: 100
+        - !type:MobStateCondition
+          mobstate: Critical
         damage:
           types:
             Asphyxiation: -5
@@ -551,7 +582,6 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ChemCureDisease
       - !type:HealthChange
         damage:
           types:
@@ -807,7 +837,7 @@
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
         probability: 0.1
-        
+
 - type: reagent
   id: Sigynate
   name: reagent-name-sigynate

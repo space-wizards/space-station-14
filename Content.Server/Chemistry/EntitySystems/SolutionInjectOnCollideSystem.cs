@@ -53,7 +53,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var solRemoved = solution.SplitSolution(component.TransferAmount);
             var solRemovedVol = solRemoved.Volume;
-
+            
             var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);
 
             _bloodstreamSystem.TryAddToChemicals(target, solToInject, bloodstream);

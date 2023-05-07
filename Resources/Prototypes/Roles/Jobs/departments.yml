@@ -68,10 +68,11 @@
   - MedicalDoctor
   - MedicalIntern
   - Psychologist
+  - Paramedic
 
 - type: department
   id: Security
-  description: department-Command-description
+  description: department-Security-description
   color: "#DE3A3A"
   roles:
   - HeadOfSecurity
@@ -79,7 +80,6 @@
   - SecurityOfficer
   - Detective
   - Warden
-  - Brigmedic
 
 - type: department
   id: Science
