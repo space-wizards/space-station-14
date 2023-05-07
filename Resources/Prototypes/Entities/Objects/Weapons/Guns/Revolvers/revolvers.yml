@@ -82,6 +82,21 @@
     ammoSlots: [ null, null, null, null, null, null ]
 
 - type: entity
+  name: Rex
+  parent: BaseWeaponRevolver
+  id: WeaponRevolverRex
+  description: Robust revolver with rubberized grip and stainless steel finish, a good argument in dangerous situations. Uses .45 magnum ammo.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/rex.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/rex.rsi
+  - type: RevolverAmmoProvider
+    capacity: 6
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
+
+- type: entity
   name: Mateba
   parent: BaseWeaponRevolver
   id: WeaponRevolverMateba
