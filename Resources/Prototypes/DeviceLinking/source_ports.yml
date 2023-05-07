@@ -35,6 +35,11 @@
   defaultLinks: [ Off, Close ]
 
 - type: sourcePort
+  id: DoorStatus
+  name: signal-port-name-doorstatus
+  description: signal-port-description-status
+
+- type: sourcePort
   id: OrderSender
   name: signal-port-name-order-sender
   description: signal-port-description-order-sender
