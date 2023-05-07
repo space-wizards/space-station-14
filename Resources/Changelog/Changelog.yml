@@ -1,9 +1,4 @@
 Entries:
-- author: randy
-  changes:
-  - {message: all heads of staff now have flashes in their bag for self defence, type: Add}
-  id: 3189
-  time: '2023-03-15T04:37:50.0000000+00:00'
 - author: not-gavnaed
   changes:
   - {message: Added Station Records Computer on Aspid & Bagel, type: Add}
@@ -2910,3 +2905,9 @@ Entries:
   - {message: Added diagonal walls made of plasttitanium and solid wall!, type: Add}
   id: 3688
   time: '2023-05-07T00:36:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Explosions and other forces should no longer stop projectiles midair.,
+    type: Fix}
+  id: 3689
+  time: '2023-05-07T02:57:23.0000000+00:00'
