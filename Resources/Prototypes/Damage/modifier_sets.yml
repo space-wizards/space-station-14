@@ -174,7 +174,7 @@
     Caustic: 0.0
 
 - type: damageModifierSet
-  id: SlimePet # Very survivable slimes, you should never put such high damage
+  id: SlimePet # Very survivable slimes
   coefficients:
     Blunt: 0.5
     Slash: 0.8
