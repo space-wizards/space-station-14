@@ -1,9 +1,4 @@
 Entries:
-- author: robertGN
-  changes:
-  - {message: Foldable objects spawned folded now use the correct sprites, type: Fix}
-  id: 3197
-  time: '2023-03-20T00:46:38.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Cognizine works on animals that are already being controlled., type: Fix}
@@ -2912,3 +2907,8 @@ Entries:
   - {message: Airlocks can now be configured to interlock and cycle correctly., type: Add}
   id: 3696
   time: '2023-05-07T06:49:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove diseases pending a further refactor., type: Remove}
+  id: 3697
+  time: '2023-05-07T07:50:38.0000000+00:00'
