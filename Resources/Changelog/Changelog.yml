@@ -1,9 +1,4 @@
 Entries:
-- author: 778b
-  changes:
-  - {message: Added IFF console boards!, type: Add}
-  id: 3193
-  time: '2023-03-19T00:55:54.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: All entity storage now has a roughly 2.5x higher air capacity., type: Tweak}
@@ -2912,3 +2907,8 @@ Entries:
     type: Fix}
   id: 3692
   time: '2023-05-07T03:37:05.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Health analyzers and cloth now fit in medical belts., type: Add}
+  id: 3693
+  time: '2023-05-07T03:52:00.0000000+00:00'
