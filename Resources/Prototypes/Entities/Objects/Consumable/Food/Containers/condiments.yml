@@ -39,6 +39,15 @@
     state: packet-empty
   - type: TrashOnEmpty
     solution: food
+  - type: Tag
+    tags:
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
+  - type: SpaceGarbage
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   parent: BaseFoodCondimentPacket
