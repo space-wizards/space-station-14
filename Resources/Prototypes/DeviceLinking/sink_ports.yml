@@ -39,6 +39,11 @@
   description: signal-port-description-close
 
 - type: sinkPort
+  id: DoorBolt
+  name: signal-port-name-doorbolt
+  description: signal-port-description-doorbolt
+
+- type: sinkPort
   id: Trigger
   name: signal-port-name-trigger
   description: signal-port-description-trigger
