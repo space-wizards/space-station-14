@@ -12,6 +12,12 @@
     },
     {
       "name": "melee_sight"
+    },
+    {
+      "name": "crosshair"
+    },
+    {
+      "name": "crosshair_marked"
     }
   ]
 }

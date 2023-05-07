@@ -49,15 +49,11 @@ public sealed class GunCrosshairOverlay : Overlay
         _protoManager = prototypes;
         _physics = physics;
 
-        _crosshair = GetTextureFromRsi("crosshair");
-        _crosshairMarked = GetTextureFromRsi("crosshair_marked");
-    }
-
-    private Texture GetTextureFromRsi(string _spriteName)
-    {
-        var sprite = new SpriteSpecifier.Rsi(
-            new ResPath("/Textures/Interface/Misc/cross_hair.rsi"), _spriteName);
-        return _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
+        var spriteSys = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
+        _crosshair = spriteSys.Frame0(new SpriteSpecifier.Rsi(
+            new ResPath("/Textures/Interface/Misc/crosshair_pointers.rsi"), "crosshair"));
+        _crosshairMarked = spriteSys.Frame0(new SpriteSpecifier.Rsi(
+            new ResPath("/Textures/Interface/Misc/crosshair_pointers.rsi"), "crosshair_marked"));
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -102,16 +98,16 @@ public sealed class GunCrosshairOverlay : Overlay
         var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
         var scale = (uiScale > 1.25f ? 1.25f : uiScale) * MainScale;
 
-        var direction = (mousePos.Position - mapPos.Position);
+        var direction = mousePos.Position - mapPos.Position;
 
         // set data for calculating raycastResult
         GunCrosshairDataForCalculatingRCResult raycastData;
         raycastData.MapPos = mapPos;
         raycastData.Player = player;
         raycastData.CollisionType = collisionMask;
-        
+
         // when it doesn't have any obstacles
-        GunCrosshairTypes crosshairType = GunCrosshairTypes.Available;
+        var crosshairType = GunCrosshairTypes.Available;
 
         if (GetRayCastResult(direction, raycastData, _maxRange)
                 is RayCastResults castRes)
@@ -153,9 +149,9 @@ public sealed class GunCrosshairOverlay : Overlay
     private bool CheckBulletSpread(Vector2 dir, float maxDistance, GunCrosshairDataForCalculatingRCResult data,
         Angle angleSpread)
     {
-        bool isRange = true;
+        var isRange = true;
 
-        for (int i = 0; i < 2; i++)
+        for (var i = 0; i < 2; i++)
         {
             var angle = (i == 0) ? angleSpread : (-angleSpread);
 
@@ -175,16 +171,16 @@ public sealed class GunCrosshairOverlay : Overlay
 
         var circleRadius = 2f * scale;
 
-        screen.DrawCircle(hitPos, (circleRadius + 0.5f), Color.Black);
+        screen.DrawCircle(hitPos, circleRadius + 0.5f, Color.Black);
         screen.DrawCircle(hitPos, circleRadius, Color.Red);
     }
 
     private void DrawCrosshair(DrawingHandleScreen screen, Vector2 circlePos,
         float scale, GunCrosshairTypes type)
     {
-        Color color = type switch
+        var color = type switch
         {
-            GunCrosshairTypes.Unavailable => Color.Red.WithAlpha(0.2f),
+            GunCrosshairTypes.Unavailable => Color.Red.WithAlpha(0.3f),
             GunCrosshairTypes.InTarget => Color.GreenYellow,
             _ => Color.Green,
         };
@@ -199,11 +195,11 @@ public sealed class GunCrosshairOverlay : Overlay
             var crosshair = type == GunCrosshairTypes.InTarget
                 ? _crosshairMarked
                 : _crosshair;
-            
-            Vector2 textureSize = crosshair.Size * scale;
+
+            var textureSize = crosshair.Size * scale;
 
             screen.DrawTextureRect(crosshair,
-                UIBox2.FromDimensions(circlePos - (textureSize / 2), textureSize), color);
+                UIBox2.FromDimensions(circlePos - textureSize * 0.5f, textureSize), color);
         }
     }
 }
