@@ -6,12 +6,12 @@ namespace Content.Client.Shuttles;
 /// <summary>
 /// Handles making a thruster visibly turn on/emit an exhaust plume according to its state. 
 /// </summary>
-public sealed class ThrusterVisualizerSystem : VisualizerSystem<ThrusterVisualsComponent>
+public sealed class ThrusterSystem : VisualizerSystem<ThrusterComponent>
 {
     /// <summary>
     /// Updates whether or not the thruster is visibly active/thrusting.
     /// </summary>
-    protected override void OnAppearanceChange(EntityUid uid, ThrusterVisualsComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, ThrusterComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null
         || !AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.State, out var state, args.Component))
