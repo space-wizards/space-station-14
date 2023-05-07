@@ -1,5 +1,5 @@
-using Content.Shared.Hands.Components;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Hands.Components;
 
 namespace Content.Shared.Hands.EntitySystems;
 
@@ -8,7 +8,7 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
-    public bool TrySelect(EntityUid uid, EntityUid? entity, SharedHandsComponent? handsComp = null)
+    public bool TrySelect(EntityUid uid, EntityUid? entity, HandsComponent? handsComp = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -20,7 +20,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         return true;
     }
 
-    public bool TrySelect<TComponent>(EntityUid uid, [NotNullWhen(true)] out TComponent? component, SharedHandsComponent? handsComp = null) where TComponent : Component
+    public bool TrySelect<TComponent>(EntityUid uid, [NotNullWhen(true)] out TComponent? component, HandsComponent? handsComp = null) where TComponent : Component
     {
         component = null;
         if (!Resolve(uid, ref handsComp, false))
@@ -35,5 +35,5 @@ public abstract partial class SharedHandsSystem : EntitySystem
         return false;
     }
 
-    public bool TrySelectEmptyHand(EntityUid uid, SharedHandsComponent? handsComp = null) => TrySelect(uid, null, handsComp);
+    public bool TrySelectEmptyHand(EntityUid uid, HandsComponent? handsComp = null) => TrySelect(uid, null, handsComp);
 }

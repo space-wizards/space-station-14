@@ -1,7 +1,7 @@
-using Content.Server.Mech.Components;
 using Content.Server.Mech.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Construction;
+using Content.Shared.Mech.Components;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -23,6 +23,7 @@ public sealed class BuildMech : IGraphAction
     [DataField("container")]
     public string Container = "battery-container";
 
+    // TODO use or generalize ConstructionSystem.ChangeEntity();
     public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
         if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
@@ -64,8 +65,10 @@ public sealed class BuildMech : IGraphAction
             mechComp.BatterySlot.Insert(cell);
         }
 
-        // Delete the original entity.
-        entityManager.DeleteEntity(uid);
+        var entChangeEv = new ConstructionChangeEntityEvent(mech, uid);
+        entityManager.EventBus.RaiseLocalEvent(uid, entChangeEv);
+        entityManager.EventBus.RaiseLocalEvent(mech, entChangeEv, broadcast: true);
+        entityManager.QueueDeleteEntity(uid);
     }
 }
 

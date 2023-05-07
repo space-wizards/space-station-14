@@ -17,11 +17,13 @@ public abstract class SharedDrunkSystem : EntitySystem
         if (!Resolve(uid, ref status, false))
             return;
 
-        if (applySlur)
-            _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
-
         if (TryComp<LightweightDrunkComponent>(uid, out var trait))
             boozePower *= trait.BoozeStrengthMultiplier;
+
+        if (applySlur)
+        {
+            _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
+        }
 
         if (!_statusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
         {
@@ -32,4 +34,14 @@ public abstract class SharedDrunkSystem : EntitySystem
             _statusEffectsSystem.TryAddTime(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), status);
         }
     }
+
+    public void TryRemoveDrunkenness(EntityUid uid)
+    {
+        _statusEffectsSystem.TryRemoveStatusEffect(uid, DrunkKey);
+    }
+    public void TryRemoveDrunkenessTime(EntityUid uid, double timeRemoved)
+    {
+        _statusEffectsSystem.TryRemoveTime(uid, DrunkKey, TimeSpan.FromSeconds(timeRemoved));
+    }
+
 }

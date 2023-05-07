@@ -30,7 +30,7 @@ public sealed class UploadFile : IConsoleCommand
             return;
         }
 
-        var path = new ResourcePath(args[0]).ToRelativePath();
+        var path = new ResPath(args[0]).ToRelativePath();
 
         var dialog = IoCManager.Resolve<IFileDialogManager>();
 

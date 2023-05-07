@@ -59,7 +59,7 @@ namespace Content.Server.Tabletop
 
             ActivationVerb verb = new();
             verb.Text = Loc.GetString("tabletop-verb-play-game");
-            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/die.svg.192dpi.png"));
+            verb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/die.svg.192dpi.png"));
             verb.Act = () => OpenSessionFor(actor.PlayerSession, uid);
             args.Verbs.Add(verb);
         }

@@ -14,12 +14,6 @@ public sealed class ApcComponent : BaseApcNetComponent
     public ApcChargeState LastChargeState;
     public TimeSpan LastChargeStateTime;
 
-    /// <summary>
-    ///     Is the panel open for this entity's APC?
-    /// </summary>
-    [DataField("open")]
-    public bool IsApcOpen { get; set; }
-
     [ViewVariables]
     public ApcExternalPowerState LastExternalState;
     public TimeSpan LastUiUpdate;
@@ -41,11 +35,4 @@ public sealed class ApcComponent : BaseApcNetComponent
     {
         apcNet.RemoveApc(this);
     }
-
-    [DataField("screwdriverOpenSound")]
-    public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
-
-    [DataField("screwdriverCloseSound")]
-    public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
-
 }

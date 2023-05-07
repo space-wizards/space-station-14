@@ -1,4 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -8,13 +11,9 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
-using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Containers.ItemSlots
 {
@@ -193,7 +192,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent? hands))
+            if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
                 return;
 
             foreach (var slot in itemSlots.Slots.Values)
@@ -296,7 +295,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Does not check action blockers.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertFromHand(EntityUid uid, ItemSlot slot, EntityUid user, SharedHandsComponent? hands = null)
+        public bool TryInsertFromHand(EntityUid uid, ItemSlot slot, EntityUid user, HandsComponent? hands = null)
         {
             if (!Resolve(user, ref hands, false))
                 return false;
@@ -434,7 +433,7 @@ namespace Content.Shared.Containers.ItemSlots
                     {
                         verb.Text = Loc.GetString(slot.InsertVerbText);
                         verb.Icon = new SpriteSpecifier.Texture(
-                            new ResourcePath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
+                            new("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
                     }
                     else if (slot.EjectOnInteract)
                     {
@@ -442,7 +441,7 @@ namespace Content.Shared.Containers.ItemSlots
                         // category, we will use a single "Place <item>" verb.
                         verb.Text = Loc.GetString("place-item-verb-text", ("subject", verbSubject));
                         verb.Icon = new SpriteSpecifier.Texture(
-                            new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
+                            new("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
                     }
                     else
                     {
@@ -534,7 +533,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(uid, args.Using.Value, slot))
+                if (!slot.InsertOnInteract || !CanInsert(uid, args.Using.Value, slot))
                     continue;
 
                 var verbSubject = slot.Name != string.Empty
@@ -550,7 +549,7 @@ namespace Content.Shared.Containers.ItemSlots
                     insertVerb.Text = Loc.GetString(slot.InsertVerbText);
                     insertVerb.Icon =
                         new SpriteSpecifier.Texture(
-                            new ResourcePath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
+                            new("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
                 }
                 else if(slot.EjectOnInteract)
                 {
@@ -559,7 +558,7 @@ namespace Content.Shared.Containers.ItemSlots
                     insertVerb.Text = Loc.GetString("place-item-verb-text", ("subject", verbSubject));
                     insertVerb.Icon =
                         new SpriteSpecifier.Texture(
-                            new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
+                            new("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
                 }
                 else
                 {

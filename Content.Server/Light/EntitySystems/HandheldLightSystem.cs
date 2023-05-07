@@ -182,7 +182,7 @@ namespace Content.Server.Light.EntitySystems
             ActivationVerb verb = new()
             {
                 Text = Loc.GetString("verb-common-toggle-light"),
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
                 Act = component.Activated
                     ? () => TurnOff(uid, component)
                     : () => TurnOn(args.User, uid,  component)

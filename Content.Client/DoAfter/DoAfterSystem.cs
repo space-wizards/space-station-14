@@ -48,7 +48,7 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
         var time = GameTiming.CurTime;
         var comp = Comp<DoAfterComponent>(playerEntity.Value);
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var handsQuery = GetEntityQuery<SharedHandsComponent>();
+        var handsQuery = GetEntityQuery<HandsComponent>();
         Update(playerEntity.Value, active, comp, time, xformQuery, handsQuery);
     }
 }

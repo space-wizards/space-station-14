@@ -1,6 +1,6 @@
-using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Construction;
+using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;

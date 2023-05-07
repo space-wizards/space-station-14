@@ -18,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
@@ -98,11 +99,13 @@ public sealed class BodySystem : SharedBodySystem
 
     public override bool DropPart(EntityUid? partId, BodyPartComponent? part = null)
     {
-        var oldBody = CompOrNull<BodyPartComponent>(partId)?.Body;
+        if (partId == null || !Resolve(partId.Value, ref part))
+            return false;
 
         if (!base.DropPart(partId, part))
             return false;
 
+        var oldBody = part.Body;
         if (oldBody == null || !TryComp<HumanoidAppearanceComponent>(oldBody, out var humanoid))
             return true;
 
@@ -136,9 +139,15 @@ public sealed class BodySystem : SharedBodySystem
         if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
             return new HashSet<EntityUid>();
 
-        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems);
+        if (LifeStage(bodyId.Value) >= EntityLifeStage.Terminating || EntityManager.IsQueuedForDeletion(bodyId.Value))
+            return new HashSet<EntityUid>();
 
         var xform = Transform(bodyId.Value);
+        if (xform.MapUid == null)
+            return new HashSet<EntityUid>();
+
+        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems);
+
         var coordinates = xform.Coordinates;
         var filter = Filter.Pvs(bodyId.Value, entityManager: EntityManager);
         var audio = AudioParams.Default.WithVariation(0.025f);

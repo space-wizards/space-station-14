@@ -1,10 +1,12 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Chat.Managers;
 using Content.Server.Explosion.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Camera;
+using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
@@ -38,6 +40,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly PVSOverrideSystem _pvsSys = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
@@ -77,6 +80,8 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
 
+        SubscribeLocalEvent<ExplosionResistanceComponent, ArmorExamineEvent>(OnArmorExamine);
+
         // Handled by ExplosionSystem.Processing.cs
         SubscribeLocalEvent<MapChangedEvent>(OnMapChanged);
 
@@ -90,7 +95,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     private void OnReset(RoundRestartCleanupEvent ev)
     {
         _explosionQueue.Clear();
-        if (_activeExplosion !=null)
+        if (_activeExplosion != null)
             QueueDel(_activeExplosion.VisualEnt);
         _activeExplosion = null;
         _nodeGroupSystem.PauseUpdating = false;
@@ -108,8 +113,8 @@ public sealed partial class ExplosionSystem : EntitySystem
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
     {
         args.DamageCoefficient *= component.DamageCoefficient;
-        if (component.Resistances.TryGetValue(args.ExplotionPrototype, out var resistance))
-            args.DamageCoefficient *= resistance;
+        if (component.Modifiers.TryGetValue(args.ExplotionPrototype, out var modifier))
+            args.DamageCoefficient *= modifier;
     }
 
     /// <summary>
@@ -201,7 +206,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             return MathF.Cbrt(3 * totalIntensity / (slope * MathF.PI));
         }
 
-        return r0 * (MathF.Sqrt(12 * totalIntensity/ v0 - 3) / 6 + 0.5f);
+        return r0 * (MathF.Sqrt(12 * totalIntensity / v0 - 3) / 6 + 0.5f);
     }
 
     /// <summary>
@@ -227,11 +232,18 @@ public sealed partial class ExplosionSystem : EntitySystem
             return;
 
         if (user == null)
+        {
             _adminLogger.Add(LogType.Explosion, LogImpact.High,
                 $"{ToPrettyString(uid):entity} exploded ({typeId}) at {pos.Coordinates:coordinates} with intensity {totalIntensity} slope {slope}");
+        }
         else
+        {
             _adminLogger.Add(LogType.Explosion, LogImpact.High,
                 $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at {pos.Coordinates:coordinates} with intensity {totalIntensity} slope {slope}");
+            var alertMinExplosionIntensity = _cfg.GetCVar(CCVars.AdminAlertExplosionMinIntensity);
+            if (alertMinExplosionIntensity > -1 && totalIntensity >= alertMinExplosionIntensity)
+                _chat.SendAdminAlert(user.Value, $"caused {ToPrettyString(uid)} to explode ({typeId}:{totalIntensity}) at {pos.Coordinates:coordinates}");
+        }
     }
 
     /// <summary>
@@ -337,5 +349,13 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (effect > 0.01f)
                 _recoilSystem.KickCamera(uid, -delta.Normalized * effect);
         }
+    }
+
+    private void OnArmorExamine(EntityUid uid, ExplosionResistanceComponent component, ref ArmorExamineEvent args)
+    {
+        args.Msg.PushNewline();
+        args.Msg.AddMarkup(Loc.GetString("explosion-resistance-coefficient-value",
+            ("value", MathF.Round((1f - component.DamageCoefficient) * 100, 1))
+            ));
     }
 }

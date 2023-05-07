@@ -35,7 +35,7 @@ public sealed class DoAfterOverlay : Overlay
         _timing = timing;
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
         _meta = _entManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
-        var sprite = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
+        var sprite = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
 
         _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();

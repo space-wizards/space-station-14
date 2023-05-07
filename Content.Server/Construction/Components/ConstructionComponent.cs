@@ -34,9 +34,6 @@ namespace Content.Server.Construction.Components
         [DataField("deconstructionTarget")]
         public string? DeconstructionNode { get; set; } = "start";
 
-        [DataField("doAfter")]
-        public DoAfterId? DoAfter;
-
         [ViewVariables]
         // TODO Force flush interaction queue before serializing to YAML.
         // Otherwise you can end up with entities stuck in invalid states (e.g., waiting for DoAfters).

@@ -1,0 +1,59 @@
+# Appendages
+- type: marking
+  id: ArachnidAppendagesDefault
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: web
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: long
+
+- type: marking
+  id: ArachnidAppendagesSharp
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: web
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: sharp
+
+# Chest
+- type: marking
+  id: ArachnidTorsoStripes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: stripes
+
+- type: marking
+  id: ArachnidTorsoSlashes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: slashes
+
+- type: marking
+  id: ArachnidTorsoX
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: x
+
+- type: marking
+  id: ArachnidTorsoCross
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: cross

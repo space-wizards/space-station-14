@@ -2,8 +2,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
-using Content.Server.DoAfter;
-using Content.Server.Hands.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
@@ -12,11 +10,11 @@ using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
@@ -171,6 +169,8 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
+                            // TODO allow taking from several stacks.
+                            // Also update crafting steps to check if it works.
                             var splitStack = _stackSystem.Split(entity, materialStep.Amount, user.ToCoordinates(0, 0), stack);
 
                             if (splitStack == null)
@@ -290,43 +290,49 @@ namespace Content.Server.Construction
             return newEntity;
         }
 
-        // LEGACY CODE. See warning at the top of the file!
         private async void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
         {
-            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
+            if (args.SenderSession.AttachedEntity is {Valid: true} user)
+                await TryStartItemConstruction(ev.PrototypeName, user);
+        }
+
+        // LEGACY CODE. See warning at the top of the file!
+        public async Task<bool> TryStartItemConstruction(string prototype, EntityUid user)
+        {
+            if (!_prototypeManager.TryIndex(prototype, out ConstructionPrototype? constructionPrototype))
             {
-                _sawmill.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
-                return;
+                _sawmill.Error($"Tried to start construction of invalid recipe '{prototype}'!");
+                return false;
             }
 
             if (!_prototypeManager.TryIndex(constructionPrototype.Graph,
                     out ConstructionGraphPrototype? constructionGraph))
             {
                 _sawmill.Error(
-                    $"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
-                return;
+                    $"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{prototype}'!");
+                return false;
             }
 
             var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
-            if (args.SenderSession.AttachedEntity is not {Valid: true} user || !_actionBlocker.CanInteract(user, null))
-                return;
+            if (!_actionBlocker.CanInteract(user, null))
+                return false;
 
             if (!HasComp<HandsComponent>(user))
-                return;
+                return false;
 
             foreach (var condition in constructionPrototype.Conditions)
             {
                 if (!condition.Condition(user, user.ToCoordinates(0, 0), Direction.South))
-                    return;
+                    return false;
             }
 
             if (pathFind == null)
             {
                 throw new InvalidDataException(
-                    $"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
+                    $"Can't find path from starting node to target node in construction! Recipe: {prototype}");
             }
 
             var edge = startNode.GetEdge(pathFind[0].Name);
@@ -334,7 +340,7 @@ namespace Content.Server.Construction
             if (edge == null)
             {
                 throw new InvalidDataException(
-                    $"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
+                    $"Can't find edge from starting node to the next node in pathfinding! Recipe: {prototype}");
             }
 
             // No support for conditions here!
@@ -349,11 +355,12 @@ namespace Content.Server.Construction
             }
 
             if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is not { Valid: true } item)
-                return;
+                return false;
 
             // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
             // or drop the item as normal.
             _stackSystem.TryMergeToHands(item, user);
+            return true;
         }
 
         // LEGACY CODE. See warning at the top of the file!
@@ -492,7 +499,7 @@ namespace Content.Server.Construction
             xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
             xform.Anchored = wasAnchored;
 
-            RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
+            RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, structure));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");
             Cleanup();
         }

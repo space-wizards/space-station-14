@@ -6,12 +6,23 @@ namespace Content.Server.Power.SMES;
 /// <summary>
 ///     Handles the "user-facing" side of the actual SMES object.
 ///     This is operations that are specific to the SMES, like UI and visuals.
+///     Logic is handled in <see cref="PowerSmesSystem"/>
 ///     Code interfacing with the powernet is handled in <see cref="BatteryStorageComponent"/> and <see cref="BatteryDischargerComponent"/>.
 /// </summary>
-[RegisterComponent]
-[Access(typeof(PowerSmesSystem))]
+[RegisterComponent, Access(typeof(SmesSystem))]
 public sealed class SmesComponent : Component
 {
+    [ViewVariables]
+    public ChargeState LastChargeState;
+    [ViewVariables]
+    public TimeSpan LastChargeStateTime;
+    [ViewVariables]
+    public int LastChargeLevel;
+    [ViewVariables]
+    public TimeSpan LastChargeLevelTime;
+    [ViewVariables]
+    public TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);
+
     /// <summary>
     /// The number of distinct charge levels a SMES has.
     /// 0 is empty max is full.

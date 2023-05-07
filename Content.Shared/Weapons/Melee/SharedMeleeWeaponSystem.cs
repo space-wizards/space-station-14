@@ -41,7 +41,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
     [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-    [Dependency] protected   readonly SharedTransformSystem _transform = default!;
+    [Dependency] protected readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly StaminaSystem _stamina = default!;
 
     protected ISawmill Sawmill = default!;
@@ -59,15 +59,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         base.Initialize();
         Sawmill = Logger.GetSawmill("melee");
 
+        SubscribeLocalEvent<MeleeWeaponComponent, EntityUnpausedEvent>(OnMeleeUnpaused);
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MeleeWeaponComponent, HandDeselectedEvent>(OnMeleeDropped);
         SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnMeleeSelected);
 
+        SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
         SubscribeAllEvent<StartHeavyAttackEvent>(OnStartHeavyAttack);
         SubscribeAllEvent<StopHeavyAttackEvent>(OnStopHeavyAttack);
-        SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<DisarmAttackEvent>(OnDisarmAttack);
         SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
 
@@ -77,9 +78,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, MeleeWeaponComponent component, MapInitEvent args)
     {
-        if (component.NextAttack > TimeSpan.Zero)
+        if (component.NextAttack > Timing.CurTime)
             Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
 #endif
+    }
+
+    private void OnMeleeUnpaused(EntityUid uid, MeleeWeaponComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextAttack += args.PausedTime;
     }
 
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
@@ -262,7 +268,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Use inhands entity if we got one.
-        if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
+        if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
             hands.ActiveHandEntity is { } held)
         {
             if (EntityManager.TryGetComponent(held, out melee))
@@ -418,10 +424,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         var damage = component.Damage * GetModifier(component, true);
 
-        // Can't attack yourself
         // For consistency with wide attacks stuff needs damageable.
-        if (user == ev.Target ||
-            Deleted(ev.Target) ||
+        if (Deleted(ev.Target) ||
             !HasComp<DamageableComponent>(ev.Target) ||
             !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
             // Not in LOS.
@@ -431,7 +435,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             // is when a melee weapon is examined. Misses are inferred from an
             // empty HitEntities.
             // TODO: This needs fixing
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, damage);
+            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage);
             RaiseLocalEvent(meleeUid, missEvent);
             Audio.PlayPredicted(component.SwingSound, meleeUid, user);
             return;
@@ -440,7 +444,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(new List<EntityUid> { ev.Target.Value }, user, damage);
+        var hitEvent = new MeleeHitEvent(new List<EntityUid> { ev.Target.Value }, user, meleeUid, damage);
         RaiseLocalEvent(meleeUid, hitEvent);
 
         if (hitEvent.Handled)
@@ -509,37 +513,44 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
 
-    protected virtual void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
+    private void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
         // TODO: This is copy-paste as fuck with DoPreciseAttack
         if (!TryComp<TransformComponent>(user, out var userXform))
-        {
             return;
-        }
 
         var targetMap = ev.Coordinates.ToMap(EntityManager, _transform);
 
         if (targetMap.MapId != userXform.MapID)
-        {
             return;
-        }
 
         var userPos = _transform.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
         var distance = Math.Min(component.Range, direction.Length);
 
         var damage = component.Damage * GetModifier(component, false);
-
-        // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
-        var entities = ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user);
+        var entities = ev.Entities;
 
         if (entities.Count == 0)
         {
-            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, damage);
+            var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, meleeUid, damage);
             RaiseLocalEvent(meleeUid, missEvent);
 
             Audio.PlayPredicted(component.SwingSound, meleeUid, user);
             return;
+        }
+
+        // Validate client
+        for (var i = entities.Count - 1; i >= 0; i--)
+        {
+            if (ArcRaySuccessful(entities[i], userPos, direction.ToWorldAngle(), component.Angle, distance,
+                    userXform.MapID, user, session))
+            {
+                continue;
+            }
+
+            // Bad input
+            entities.RemoveAt(i);
         }
 
         var targets = new List<EntityUid>();
@@ -557,7 +568,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Sawmill.Debug($"Melee damage is {damage.Total} out of {component.Damage.Total}");
 
         // Raise event before doing damage so we can cancel damage if the event is handled
-        var hitEvent = new MeleeHitEvent(targets, user, damage);
+        var hitEvent = new MeleeHitEvent(targets, user, meleeUid, damage);
         RaiseLocalEvent(meleeUid, hitEvent);
 
         if (hitEvent.Handled)
@@ -629,7 +640,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
     }
 
-    private HashSet<EntityUid> ArcRayCast(Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId, EntityUid ignore)
+    protected HashSet<EntityUid> ArcRayCast(Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId, EntityUid ignore)
     {
         // TODO: This is pretty sucky.
         var widthRad = arcWidth;
@@ -653,6 +664,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         return resSet;
+    }
+
+    protected virtual bool ArcRaySuccessful(EntityUid targetUid, Vector2 position, Angle angle, Angle arcWidth, float range,
+        MapId mapId, EntityUid ignore, ICommonSession? session)
+    {
+        // Only matters for server.
+        return true;
     }
 
     private void PlayHitSound(EntityUid target, EntityUid? user, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound)
@@ -775,5 +793,5 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         DoLunge(user, angle, localPos, animation);
     }
 
-    public abstract void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation);
+    public abstract void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true);
 }

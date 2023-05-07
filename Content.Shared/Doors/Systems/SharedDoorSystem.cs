@@ -1,23 +1,20 @@
+using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Stunnable;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Timing;
-using System.Linq;
-using Content.Shared.DoAfter;
-using Content.Shared.Tag;
-using Content.Shared.Tools.Components;
-using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -30,7 +27,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
 
     /// <summary>
@@ -52,7 +49,7 @@ public abstract class SharedDoorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DoorComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<DoorComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DoorComponent, ComponentRemove>(OnRemove);
 
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
@@ -64,7 +61,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
     }
 
-    private void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
+    protected virtual void OnComponentInit(EntityUid uid, DoorComponent door, ComponentInit args)
     {
         if (door.NextStateChange != null)
             _activeDoors.Add(door);
@@ -91,7 +88,7 @@ public abstract class SharedDoorSystem : EntitySystem
             || door.State == DoorState.Opening && !door.Partial;
 
         SetCollidable(uid, collidable, door);
-        UpdateAppearance(uid, door);
+        AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
     }
 
     private void OnRemove(EntityUid uid, DoorComponent door, ComponentRemove args)
@@ -126,7 +123,7 @@ public abstract class SharedDoorSystem : EntitySystem
             _activeDoors.Add(door);
 
         RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State), false);
-        UpdateAppearance(uid, door);
+        AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
     }
 
     protected void SetState(EntityUid uid, DoorState state, DoorComponent? door = null)
@@ -170,19 +167,9 @@ public abstract class SharedDoorSystem : EntitySystem
         door.State = state;
         Dirty(door);
         RaiseLocalEvent(uid, new DoorStateChangedEvent(state), false);
-        UpdateAppearance(uid, door);
+        AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
     }
 
-    protected virtual void UpdateAppearance(EntityUid uid, DoorComponent? door = null)
-    {
-        if (!Resolve(uid, ref door))
-            return;
-
-        if (!TryComp(uid, out AppearanceComponent? appearance))
-            return;
-
-        _appearance.SetData(uid, DoorVisuals.State, door.State);
-    }
     #endregion
 
     #region Interactions
@@ -285,7 +272,7 @@ public abstract class SharedDoorSystem : EntitySystem
         // component, but no actual hands!? What!? Is this the sound of them head-butting the door to get it to open??
         // I'm 99% sure something is wrong here, but I kind of want to keep it this way.
 
-        if (user != null && TryComp(user.Value, out SharedHandsComponent? hands) && hands.Hands.Count == 0)
+        if (user != null && TryComp(user.Value, out HandsComponent? hands) && hands.Hands.Count == 0)
             PlaySound(uid, door.TryOpenDoorSound, AudioParams.Default.WithVolume(-2), user, predicted);
     }
 
@@ -368,7 +355,7 @@ public abstract class SharedDoorSystem : EntitySystem
         {
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
             door.State = DoorState.Opening;
-            UpdateAppearance(uid, door);
+            AppearanceSystem.SetData(uid, DoorVisuals.State, DoorState.Opening);
             return false;
         }
 
@@ -455,8 +442,7 @@ public abstract class SharedDoorSystem : EntitySystem
             if (!otherPhysics.CanCollide)
                 continue;
 
-            if (otherPhysics.BodyType == BodyType.Static || (physics.CollisionMask & otherPhysics.CollisionLayer) == 0
-                && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
+            if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
 
             if (_entityLookup.GetWorldAABB(otherPhysics.Owner).IntersectPercentage(doorAABB) < IntersectPercentage)
