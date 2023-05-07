@@ -238,6 +238,7 @@ namespace Content.Client.IconSmoothing
             {
                 if (!_mapManager.TryGetGrid(xform.GridUid, out grid))
                 {
+                    // TODO planetmaps
                     Logger.Error($"Failed to calculate IconSmoothComponent sprite in {uid} because grid {xform.GridUid} was missing.");
                     return;
                 }

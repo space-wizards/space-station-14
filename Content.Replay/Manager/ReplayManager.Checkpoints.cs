@@ -45,6 +45,10 @@ public sealed partial class ReplayManager
 
     private CheckpointState[] GenerateCheckpoints(HashSet<string> initialCvars, List<GameState> states, List<ReplayMessage> messages)
     {
+        _sawmill.Info($"Begin checkpoint generation");
+        var st = new Stopwatch();
+        st.Start();
+
         // given a set of states [0 to X], [X to X+1], [X+1 to X+2] ... we want to generate additional states like [0
         // to x+60 ], [0 to x+120], etc. This will make scrubbing/jumping to a state much faster, but requires some
         // pre-processing all of the states.
@@ -120,6 +124,7 @@ public sealed partial class ReplayManager
             if (ticksSinceLastCheckpoint < _checkpointInterval && spawnedTracker < _checkpointEntitySpawnThreshold && stateTracker < _checkpointEntityStateThreshold)
                 continue;
 
+            _sawmill.Info($"Generating new checkpoint. Progress: {i/(float)states.Count:P}");
             ticksSinceLastCheckpoint = 0;
             spawnedTracker = 0;
             stateTracker = 0;
@@ -132,6 +137,7 @@ public sealed partial class ReplayManager
             checkPoints.Add(new CheckpointState(newState, timeBase, cvars, i));
         }
 
+        _sawmill.Info($"Finished generating checkpoints. Elapsed time: {st.Elapsed}");
         return checkPoints.ToArray();
     }
 

@@ -50,6 +50,7 @@ public sealed partial class ReplayManager
 
         while (directory.Exists(name))
         {
+            _sawmill.Info($"Reading file: {name}");
             using var fileStream = directory.OpenRead(name);
             using var decompressStream = new ZStdDecompressStream(fileStream, false);
 
@@ -80,6 +81,7 @@ public sealed partial class ReplayManager
 
     private (HashSet<string> CVars, TimeSpan Duration, TimeSpan StartTime) LoadMetadata(IWritableDirProvider directory)
     {
+        _sawmill.Info($"Reading replay metadata");
         using var file = directory.OpenRead(new ResPath(YamlFilename).ToRootedPath());
         var data = (MappingDataNode) DataNodeParser.ParseYamlStream(new StreamReader(file)).First().Root!;
 
@@ -116,6 +118,7 @@ public sealed partial class ReplayManager
             ProcessMessages(initMessages, false);
         }
 
+        _sawmill.Info($"Successfully read metadata");
         return (cvars, duration, _timing.CurTime);
     }
 }

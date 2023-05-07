@@ -1,6 +1,5 @@
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Replay.Observer;
-using Robust.Client.Audio.Midi;
 using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
 using Robust.Shared.Timing;
@@ -11,8 +10,6 @@ namespace Content.Replay.Manager;
 // This partial class contains codes for modifying the current game tick/time.
 public sealed partial class ReplayManager
 {
-    [Dependency] private readonly IMidiManager _midi = default!;
-
     /// <summary>
     ///     Set the current replay index (aka, jump to a specific point in time).
     /// </summary>

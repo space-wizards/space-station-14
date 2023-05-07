@@ -1,4 +1,5 @@
 using Robust.Client;
+using Robust.Client.Audio.Midi;
 using Robust.Client.Configuration;
 using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
@@ -14,10 +15,12 @@ namespace Content.Replay.Manager;
 
 public sealed partial class ReplayManager
 {
+    [Dependency] private readonly IMidiManager _midi = default!;
     [Dependency] private readonly IClydeAudio _clydeAudio = default!;
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IClientGameTiming _timing = default!;
     [Dependency] private readonly IClientNetManager _netMan = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IGameController _controller = default!;
     [Dependency] private readonly IClientEntityManager _entMan = default!;
     [Dependency] private readonly IUserInterfaceManager _uiMan = default!;
@@ -25,7 +28,6 @@ public sealed partial class ReplayManager
     [Dependency] private readonly IClientGameStateManager _gameState = default!;
     [Dependency] private readonly IClientRobustSerializer _serializer = default!;
     [Dependency] private readonly IClientNetConfigurationManager _netConf = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
 
     public ReplayData? CurrentReplay { get; private set; }
 
@@ -55,6 +57,7 @@ public sealed partial class ReplayManager
     }
 
     private bool _initialized;
+    private ISawmill _sawmill = default!;
 
     public void Initialize()
     {
@@ -67,5 +70,6 @@ public sealed partial class ReplayManager
         _confMan.OnValueChanged(GameConfigVars.CheckpointEntitySpawnThreshold, (value) => _checkpointEntitySpawnThreshold = value, true);
         _confMan.OnValueChanged(GameConfigVars.CheckpointEntityStateThreshold, (value) => _checkpointEntityStateThreshold = value, true);
         _metaId = _factory.GetRegistration(typeof(MetaDataComponent)).NetID!.Value;
+        _sawmill = Logger.GetSawmill("replay");
     }
 }
