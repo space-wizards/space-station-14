@@ -367,7 +367,7 @@
   parent: BasePlushie
   id: PlushieXeno
   name: xeno plushie
-  description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
+  description: An adorable stuffed toy that resembles a scary xenomorf. You're lucky it's just a toy.
   components:
   - type: Sprite
     state: plushie_xeno
