@@ -1,6 +1,5 @@
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
-using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors;
@@ -22,7 +21,7 @@ namespace Content.Server.MachineLinking.System
             SubscribeLocalEvent<DoorSignalControlComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<DoorSignalControlComponent, DoorStateChangedEvent>(OnStateChanged);
         }
-        
+
         private void OnInit(EntityUid uid, DoorSignalControlComponent component, ComponentInit args)
         {
             _signalSystem.EnsureReceiverPorts(uid, component.OpenPort, component.ClosePort, component.TogglePort, component.InBolt);
