@@ -8,6 +8,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/wall_bonk.ogg
+      params:
+        volume: 2
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Effects/drop.ogg
@@ -27,14 +32,15 @@
     fixedRotation: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.25,0.25,0.25"
-      density: 20
-      mask:
-      - ItemMask
-      restitution: 0.3  # fite me
-      friction: 0.2
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3  # fite me
+        friction: 0.2
   - type: Sprite
     drawdepth: Items
     noRot: false
@@ -59,7 +65,6 @@
 
 # PowerCellSlot parents
 - type: entity
-  name: a
   id: PowerCellSlotSmallItem
   abstract: true
   components:
@@ -75,7 +80,6 @@
           startingItem: PowerCellSmall
 
 - type: entity
-  name: a
   id: PowerCellSlotMediumItem
   abstract: true
   components:

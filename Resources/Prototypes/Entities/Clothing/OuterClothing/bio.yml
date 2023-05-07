@@ -25,10 +25,8 @@
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Caustic: 0.5
+  - type: DiseaseProtection
+    protection: 0.5
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -41,10 +39,6 @@
     sprite: Clothing/OuterClothing/Bio/janitor.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/janitor.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Caustic: 0.5
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -57,10 +51,8 @@
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Caustic: 0.5
+  - type: DiseaseProtection
+    protection: 0.3
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -73,10 +65,8 @@
     sprite: Clothing/OuterClothing/Bio/security.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/security.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Caustic: 0.5
+  - type: DiseaseProtection
+    protection: 0.3
 
 - type: entity
   parent: ClothingOuterBioCmo
@@ -89,7 +79,5 @@
     sprite: Clothing/OuterClothing/Bio/virology.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/virology.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Caustic: 0.5
+  - type: DiseaseProtection
+    protection: 0.5

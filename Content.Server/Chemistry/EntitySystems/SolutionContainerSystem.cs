@@ -128,13 +128,21 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return splitSol;
     }
 
+    public Solution SplitStackSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity, int stackCount) 
+    {
+        var splitSol = solutionHolder.SplitSolution(quantity / stackCount);
+        Solution attackSolutionHolder = solutionHolder.SplitSolution(quantity - splitSol.Volume);
+        UpdateChemicals(targetUid, solutionHolder);
+        return splitSol;
+    }
+
     /// <summary>
-    /// Splits a solution without the specified reagent.
+    /// Splits a solution without the specified reagent(s).
     /// </summary>
     public Solution SplitSolutionWithout(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity,
-        string reagent)
+        params string[] reagents)
     {
-        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagent);
+        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagents);
         UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }

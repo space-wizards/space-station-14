@@ -28,14 +28,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
-      density: 100
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]

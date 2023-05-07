@@ -30,15 +30,16 @@
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
-    - shape:
-        # Circles, cuz rotation of rectangles looks very bad
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          # Circles, cuz rotation of rectangles looks very bad
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 3
@@ -132,14 +133,15 @@
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer
@@ -219,14 +221,15 @@
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 1
-      density: 160
-      mask:
-      - LargeMobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 1
+        density: 160
+        mask:
+        - LargeMobMask
+        layer:
+        - MobLayer
   - type: Appearance
     rotate: true
     states:

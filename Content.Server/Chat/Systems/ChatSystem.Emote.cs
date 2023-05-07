@@ -52,15 +52,13 @@ public partial class ChatSystem
     /// </summary>
     /// <param name="source">The entity that is speaking</param>
     /// <param name="emoteId">The id of emote prototype. Should has valid <see cref="EmotePrototype.ChatMessages"/></param>
-    /// <param name="hideChat">Whether or not this message should appear in the chat window</param>
-    /// <param name="hideGlobalGhostChat">Whether or not this message should appear in the chat window for out-of-range ghosts (which otherwise ignore range restrictions)</param>
+    /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
-    public void TryEmoteWithChat(EntityUid source, string emoteId, bool hideChat = false,
-        bool hideGlobalGhostChat = false, string? nameOverride = null)
+    public void TryEmoteWithChat(EntityUid source, string emoteId, ChatTransmitRange range = ChatTransmitRange.Normal, string? nameOverride = null)
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
             return;
-        TryEmoteWithChat(source, proto, hideChat, hideGlobalGhostChat, nameOverride);
+        TryEmoteWithChat(source, proto, range, nameOverride);
     }
 
     /// <summary>
@@ -68,17 +66,15 @@ public partial class ChatSystem
     /// </summary>
     /// <param name="source">The entity that is speaking</param>
     /// <param name="emote">The emote prototype. Should has valid <see cref="EmotePrototype.ChatMessages"/></param>
-    /// <param name="hideChat">Whether or not this message should appear in the chat window</param>
-    /// <param name="hideGlobalGhostChat">Whether or not this message should appear in the chat window for out-of-range ghosts (which otherwise ignore range restrictions)</param>
+    /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
-    public void TryEmoteWithChat(EntityUid source, EmotePrototype emote, bool hideChat = false,
-        bool hideGlobalGhostChat = false, string? nameOverride = null)
+    public void TryEmoteWithChat(EntityUid source, EmotePrototype emote, ChatTransmitRange range = ChatTransmitRange.Normal, string? nameOverride = null)
     {
         // check if proto has valid message for chat
         if (emote.ChatMessages.Count != 0)
         {
             var action = _random.Pick(emote.ChatMessages);
-            SendEntityEmote(source, action, hideChat, hideGlobalGhostChat, nameOverride, false);
+            SendEntityEmote(source, action, range, nameOverride, false);
         }
 
         // do the rest of emote event logic here

@@ -9,15 +9,16 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: Anchorable
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 100
-      mask:
-      - TableMask
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - TableMask
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
     noRot: true
@@ -56,6 +57,9 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: chair
@@ -69,6 +73,7 @@
   parent: SeatBase
   description: Apply butt.
   components:
+  - type: Anchorable
   - type: Sprite
     state: stool
   - type: Construction
@@ -84,6 +89,9 @@
     anchored: true
   - type: Rotatable
     rotateWhileAnchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
   - type: Sprite
     state: bar
   - type: Construction
@@ -122,6 +130,9 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: comfy
@@ -137,6 +148,9 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: shuttle
@@ -185,6 +199,7 @@
   parent: SeatBase
   description: Looks uncomfortable.
   components:
+  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: ritual
@@ -198,6 +213,7 @@
   parent: SeatBase
   description: It's staring back.
   components:
+  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: cursed

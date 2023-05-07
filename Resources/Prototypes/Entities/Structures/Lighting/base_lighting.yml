@@ -86,18 +86,19 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
-    deviceNetId: Apc
+    deviceNetId: Wireless
     receiveFrequencyId: SmartLight
-  - type: ApcNetworkConnection
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
   - type: Appearance
   - type: PoweredLightVisuals
     blinkingSound:
       path: "/Audio/Machines/light_tube_on.ogg"
-  - type: SignalReceiver
-    inputs:
-      On: []
-      Off: []
-      Toggle: []
 
 - type: entity
   id: Poweredlight
@@ -107,6 +108,8 @@
   components:
   - type: Sprite
     state: off
+  - type: PointLight
+    enabled: true
   - type: PoweredLight
     hasLampOnSpawn: LightTube
     damage:
@@ -264,16 +267,17 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
-    deviceNetId: Apc
+    deviceNetId: Wireless
     receiveFrequencyId: SmartLight
-  - type: ApcNetworkConnection
+  - type: WirelessNetworkConnection
+    range: 200
   - type: Appearance
   - type: PoweredLightVisuals
-  - type: SignalReceiver
-    inputs:
-      On: []
-      Off: []
-      Toggle: []
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
 
 - type: entity
   id: PoweredSmallLight
@@ -282,6 +286,8 @@
   components:
   - type: Sprite
     state: off
+  - type: PointLight
+    enabled: true
   - type: PoweredLight
     hasLampOnSpawn: LightBulb
     damage:

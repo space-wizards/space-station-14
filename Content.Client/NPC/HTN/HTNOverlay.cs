@@ -35,7 +35,7 @@ public sealed class HTNOverlay : Overlay
                 continue;
 
             var screenPos = args.ViewportControl.WorldToScreen(worldPos);
-            handle.DrawString(_font, screenPos + new Vector2(0, 10f), comp.DebugText);
+            handle.DrawString(_font, screenPos + new Vector2(0, 10f), comp.DebugText, Color.White);
         }
     }
 }

@@ -54,16 +54,18 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (!component.Initialized)
             return;
 
+        var privilegedIdName = string.Empty;
+        string[]? possibleAccess = null;
+        if (component.PrivilegedIdSlot.Item is { Valid: true } item)
+        {
+            privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
+            possibleAccess = _accessReader.FindAccessTags(item).ToArray();
+        }
+
         IdCardConsoleBoundUserInterfaceState newState;
         // this could be prettier
         if (component.TargetIdSlot.Item is not { Valid: true } targetId)
         {
-            var privilegedIdName = string.Empty;
-            if (component.PrivilegedIdSlot.Item is { Valid: true } item)
-            {
-                privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
-            }
-
             newState = new IdCardConsoleBoundUserInterfaceState(
                 component.PrivilegedIdSlot.HasItem,
                 PrivilegedIdIsAuthorized(uid, component),
@@ -71,6 +73,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 null,
                 null,
                 null,
+                possibleAccess,
                 string.Empty,
                 privilegedIdName,
                 string.Empty);
@@ -79,9 +82,6 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         {
             var targetIdComponent = EntityManager.GetComponent<IdCardComponent>(targetId);
             var targetAccessComponent = EntityManager.GetComponent<AccessComponent>(targetId);
-            var name = string.Empty;
-            if (component.PrivilegedIdSlot.Item is { Valid: true } item)
-                name = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
 
             var jobProto = string.Empty;
             if (_station.GetOwningStation(uid) is { } station
@@ -99,8 +99,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 targetIdComponent.FullName,
                 targetIdComponent.JobTitle,
                 targetAccessComponent.Tags.ToArray(),
+                possibleAccess,
                 jobProto,
-                name,
+                privilegedIdName,
                 EntityManager.GetComponent<MetaDataComponent>(targetId).EntityName);
         }
 
@@ -130,15 +131,28 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
         {
-            Logger.Warning("Tried to write unknown access tag.");
+            _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
             return;
         }
 
         var oldTags = _access.TryGetTags(targetId) ?? new List<string>();
         oldTags = oldTags.ToList();
 
+        var privilegedId = component.PrivilegedIdSlot.Item;
+
         if (oldTags.SequenceEqual(newAccessList))
             return;
+
+        // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
+        // var difference = newAccessList.Difference(oldTags);
+        var difference = (newAccessList.Union(oldTags)).Except(newAccessList.Intersect(oldTags)).ToHashSet();
+        // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
+        var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
+        if (!difference.IsSubsetOf(privilegedPerms))
+        {
+            _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
+            return;
+        }
 
         var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
         var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
@@ -155,6 +169,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     /// <summary>
     /// Returns true if there is an ID in <see cref="IdCardConsoleComponent.PrivilegedIdSlot"/> and said ID satisfies the requirements of <see cref="AccessReaderComponent"/>.
     /// </summary>
+    /// <remarks>
+    /// Other code relies on the fact this returns false if privileged Id is null. Don't break that invariant.
+    /// </remarks>
     private bool PrivilegedIdIsAuthorized(EntityUid uid, IdCardConsoleComponent? component = null)
     {
         if (!Resolve(uid, ref component))

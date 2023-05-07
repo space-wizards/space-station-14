@@ -27,3 +27,13 @@
   - type: Tag
     tags:
     - DiscreteHealthAnalyzer
+
+- type: entity
+  id: HandheldHealthAnalyzerEmpty
+  parent: HandheldHealthAnalyzer
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default 
