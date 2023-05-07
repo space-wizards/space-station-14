@@ -18,7 +18,7 @@ public sealed class GameConfigVars: CVars
     /// <summary>
     ///     Maximum number of ticks before a new checkpoint tick is generated.
     /// </summary>
-    public static readonly CVarDef<int> CheckpointInterval = CVarDef.Create("replay.checkpoint_interval", 600);
+    public static readonly CVarDef<int> CheckpointInterval = CVarDef.Create("replay.checkpoint_interval", 200);
 
     /// <summary>
     ///     Maximum number of entities that can be spawned before a new checkpoint tick is generated.
