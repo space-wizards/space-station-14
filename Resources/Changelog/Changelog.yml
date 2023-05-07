@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: 'Solar flare lost it''s ability to manipulate mechanical doors, curtains
-      and firelocks. Now it only affects autoclosing airlocks.', type: Fix}
-  id: 3192
-  time: '2023-03-18T10:57:38.0000000+00:00'
 - author: 778b
   changes:
   - {message: Added IFF console boards!, type: Add}
@@ -2912,3 +2906,9 @@ Entries:
   - {message: Monkeys may now wear soft EVA suits., type: Add}
   id: 3691
   time: '2023-05-07T03:24:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cursor item overlay no longer draws in the top-left when cursor offscreen.,
+    type: Fix}
+  id: 3692
+  time: '2023-05-07T03:37:05.0000000+00:00'
