@@ -929,10 +929,6 @@
       name: action-name-combat
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: DiseaseCarrier #The other class lab animal and disease vector
-    naturalImmunities:
-      - AMIV
-      - ActiveHonkVirus
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
@@ -962,8 +958,6 @@
         Base: splat-1
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: DiseaseCarrier #Why doesn't this save if it's only on the parent wtf
-
 
 - type: entity
   parent: MobMouse
@@ -988,8 +982,6 @@
         Base: splat-2
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: DiseaseCarrier
-
 
 - type: entity
   name: lizard #Weh
