@@ -100,6 +100,7 @@ namespace Content.Client.Options.UI.Tabs
 
             ShowHeldItemCheckBox.OnToggled += OnCheckBoxToggled;
             ShowCombatModeIndicatorsCheckBox.OnToggled += OnCheckBoxToggled;
+            ShowGunCrosshair.OnToggled += OnCheckBoxToggled;
             IntegerScalingCheckBox.OnToggled += OnCheckBoxToggled;
             ViewportLowResCheckBox.OnToggled += OnCheckBoxToggled;
             ParallaxLowQualityCheckBox.OnToggled += OnCheckBoxToggled;
@@ -118,6 +119,7 @@ namespace Content.Client.Options.UI.Tabs
             FpsCounterCheckBox.Pressed = _cfg.GetCVar(CCVars.HudFpsCounterVisible);
             ShowHeldItemCheckBox.Pressed = _cfg.GetCVar(CCVars.HudHeldItemShow);
             ShowCombatModeIndicatorsCheckBox.Pressed = _cfg.GetCVar(CCVars.CombatModeIndicatorsPointShow);
+            ShowGunCrosshair.Pressed = _cfg.GetCVar(CCVars.GunCrosshairShow);
             ViewportWidthSlider.Value = _cfg.GetCVar(CCVars.ViewportWidth);
 
             _cfg.OnValueChanged(CCVars.ViewportMinimumWidth, _ => UpdateViewportWidthRange());
@@ -161,6 +163,7 @@ namespace Content.Client.Options.UI.Tabs
             _cfg.SetCVar(CCVars.ParallaxLowQuality, ParallaxLowQualityCheckBox.Pressed);
             _cfg.SetCVar(CCVars.HudHeldItemShow, ShowHeldItemCheckBox.Pressed);
             _cfg.SetCVar(CCVars.CombatModeIndicatorsPointShow, ShowCombatModeIndicatorsCheckBox.Pressed);
+            _cfg.SetCVar(CCVars.GunCrosshairShow, ShowGunCrosshair.Pressed);
             _cfg.SetCVar(CCVars.HudFpsCounterVisible, FpsCounterCheckBox.Pressed);
             _cfg.SetCVar(CCVars.ViewportWidth, (int) ViewportWidthSlider.Value);
 
@@ -198,6 +201,7 @@ namespace Content.Client.Options.UI.Tabs
             var isPLQSame = ParallaxLowQualityCheckBox.Pressed == _cfg.GetCVar(CCVars.ParallaxLowQuality);
             var isShowHeldItemSame = ShowHeldItemCheckBox.Pressed == _cfg.GetCVar(CCVars.HudHeldItemShow);
             var isCombatModeIndicatorsSame = ShowCombatModeIndicatorsCheckBox.Pressed == _cfg.GetCVar(CCVars.CombatModeIndicatorsPointShow);
+            var isGunCrosshairShow = ShowGunCrosshair.Pressed == _cfg.GetCVar(CCVars.GunCrosshairShow);
             var isFpsCounterVisibleSame = FpsCounterCheckBox.Pressed == _cfg.GetCVar(CCVars.HudFpsCounterVisible);
             var isWidthSame = (int) ViewportWidthSlider.Value == _cfg.GetCVar(CCVars.ViewportWidth);
             var isLayoutSame = HudLayoutOption.SelectedMetadata is string opt && opt == _cfg.GetCVar(CCVars.UILayout);
@@ -214,6 +218,7 @@ namespace Content.Client.Options.UI.Tabs
                                    isHudThemeSame &&
                                    isShowHeldItemSame &&
                                    isCombatModeIndicatorsSame &&
+                                   isGunCrosshairShow &&
                                    isFpsCounterVisibleSame &&
                                    isWidthSame &&
                                    isLayoutSame;

@@ -17,6 +17,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -32,6 +34,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public bool SpreadOverlay
     {
@@ -75,15 +78,7 @@ public sealed partial class GunSystem : SharedGunSystem
         InitializeMagazineVisuals();
         InitializeSpentAmmo();
 
-        _overlayManager.AddOverlay(new GunCrosshairOverlay(
-            EntityManager,
-            _eyeManager,
-            _inputManager,
-            _player,
-            _protoManager,
-            _physics,
-            this
-        ));
+        _cfg.OnValueChanged(CCVars.GunCrosshairShow, OnShowGunCrosshair, true);
     }
 
     public override void Shutdown()
@@ -356,5 +351,25 @@ public sealed partial class GunSystem : SharedGunSystem
 
         _animPlayer.Stop(uid, uidPlayer, "muzzle-flash-light");
         _animPlayer.Play(uid, uidPlayer, animTwo, "muzzle-flash-light");
+    }
+
+    private void OnShowGunCrosshair(bool isShow)
+    {
+        if (isShow)
+        {
+            _overlayManager.AddOverlay(new GunCrosshairOverlay(
+                EntityManager,
+                _eyeManager,
+                _inputManager,
+                _player,
+                _protoManager,
+                _physics,
+                this
+            ));
+        }
+        else
+        {
+            _overlayManager.RemoveOverlay<GunCrosshairOverlay>();
+        }
     }
 }
