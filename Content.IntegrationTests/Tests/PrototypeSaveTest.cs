@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests;
 ///     modified during init. I.e., when the entity is saved to the map, its data is simply the default prototype data (ignoring transform component).
 /// </summary>
 /// <remarks>
-///     If you are here becaus your test is failing, one easy way of figuring out how to fix the prototype is to just
+///     If you are here because this test is failing on your PR, then one easy way of figuring out how to fix the prototype is to just
 ///     spawn it into a new empty map and seeing what the map yml looks like.
 /// </remarks>
 [TestFixture]
@@ -38,57 +38,8 @@ public sealed class PrototypeSaveTest
     {
         "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
         "constructionghost",
-        // URGH door pr but I just don't
-        "BlastDoorBridgeOpen",
-        "Windoor",
-        "WindoorSecure",
-        "WindoorSecureCargoLocked",
-        "WindoorTheatreLocked",
-        "BlastDoorBridge",
-        "WindoorSecureJanitorLocked",
-        "ShuttersWindow",
-        "WindoorScienceLocked",
-        "WindoorJanitorLocked",
-        "WindoorEngineeringLocked",
-        "BlastDoorExterior2",
-        "WindoorChemistryLocked",
-        "BlastDoorExterior3",
-        "WindoorMedicalLocked",
-        "ShuttersNormalOpen",
-        "WindoorBarKitchenLocked",
-        "BlastDoorOpen",
-        "ShuttersRadiationOpen",
-        "BlastDoorWindowsOpen",
-        "WindoorBarLocked",
-        "WindoorChapelLocked",
-        "WindoorArmoryLocked",
-        "BlastDoorExterior3Open",
-        "WindoorCargoLocked",
-        "WindoorSecurityLocked",
-        "WindoorExternalLocked",
-        "WindoorBrigLocked",
-        "WindoorHydroponicsLocked",
-        "ShuttersWindowOpen",
-        "WindoorKitchenHydroponicsLocked",
-        "WindoorSecureChapelLocked",
-        "BlastDoorExterior1Open",
-        "WindoorKitchenLocked",
-        "BlastDoor",
-        "BlastDoorWindows",
-        "BlastDoorExterior1",
-        "BlastDoorExterior2Open",
-        "WindoorSecureKitchenLocked",
-        "WindoorHeadOfPersonnelLocked",
-        "ShuttersRadiation",
-        "ShuttersNormal",
-        "WindoorSecureSalvageLocked",
-        "WindoorServiceLocked",
-        "WindoorCommandLocked",
-        "AirlockMaintMedLocked",
-        "AirlockArmoryGlassLocked",
-        "AirlockExternalGlassLocked",
-        "AirlockFreezerKitchenHydroLocked",
-        "AirlockGlassShuttle",
+        // Don't add to this list unless you have a good reason
+        // Or it is just temporary because tests stopped working and now master has too many broken entities.
     };
 
     [Test]
