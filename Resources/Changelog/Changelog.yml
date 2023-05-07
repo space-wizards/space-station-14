@@ -1,10 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Added waist bags, get them from your nearest clothesmate vendor today!',
-    type: Add}
-  id: 3196
-  time: '2023-03-20T00:45:38.0000000+00:00'
 - author: robertGN
   changes:
   - {message: Foldable objects spawned folded now use the correct sprites, type: Fix}
@@ -2913,3 +2907,8 @@ Entries:
     type: Tweak}
   id: 3695
   time: '2023-05-07T06:08:04.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Airlocks can now be configured to interlock and cycle correctly., type: Add}
+  id: 3696
+  time: '2023-05-07T06:49:11.0000000+00:00'
