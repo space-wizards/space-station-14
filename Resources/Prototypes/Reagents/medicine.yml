@@ -430,6 +430,19 @@
             Heat: -0.33
             Shock: -0.33
             Cold: -0.33
+      - !type:SatiateThirst
+        factor: -10
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - generic-reagent-effect-nauseous
+        probability: 0.08
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
 
 - type: reagent
   id: Leporazine
