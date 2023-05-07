@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="32"
-   height="32"
-   viewBox="0 0 32 32"
+   width="35.0625"
+   height="34"
+   viewBox="0 0 35.0625 34"
    fill="none"
    version="1.1"
    id="svg4"
@@ -78,8 +78,8 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="15.527471"
-     inkscape:cx="12.558388"
-     inkscape:cy="17.098728"
+     inkscape:cx="6.7300077"
+     inkscape:cy="17.16313"
      inkscape:window-x="0"
      inkscape:window-y="44"
      inkscape:window-maximized="0"
@@ -87,7 +87,7 @@
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#d1d1d1" />
-  <rect
+  <path
      x="0"
      y="0"
      width="32"
@@ -97,5 +97,7 @@
      id="rect2"
      clip-path="url(#clipPath298)"
      inkscape:path-effect="#path-effect302"
-     d="m 5,0 h 22 c 2.77,0 5,2.23 5,5 v 22 c 0,2.77 -2.23,5 -5,5 H 5 C 2.23,32 0,29.77 0,27 V 5 C 0,2.23 2.23,0 5,0 Z" />
+     d="m 5,0 h 22 c 2.77,0 5,2.23 5,5 v 22 c 0,2.77 -2.23,5 -5,5 H 5 C 2.23,32 0,29.77 0,27 V 5 C 0,2.23 2.23,0 5,0 Z"
+     sodipodi:type="rect"
+     transform="translate(1,1)" />
 </svg>

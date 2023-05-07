@@ -18,6 +18,7 @@ namespace Content.Client.Paper.UI
             RobustXamlLoader.Load(this);
         }
 
+        /*
         protected override void Draw(DrawingHandleScreen handle)
         {
             base.Draw(handle);
@@ -41,6 +42,7 @@ namespace Content.Client.Paper.UI
                 handle.DrawCircle(clampedCenter, 10, Color.Green);
              }
         }
+        */
 
         public void RemoveStamps()
         {

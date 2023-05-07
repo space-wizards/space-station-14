@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Paper.UI
 {
@@ -40,8 +41,13 @@ namespace Content.Client.Paper.UI
 
         protected override void Draw(DrawingHandleScreen handle)
         {
-            handle.SetTransform(GlobalPosition, Orientation, Vector2.One);
+            var prototypes = IoCManager.Resolve<IPrototypeManager>();
+            var shader = prototypes.Index<ShaderPrototype>("PaperStamp").InstanceUnique();
+            shader.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
+            handle.UseShader(shader);
+            handle.SetTransform(GlobalPosition * UIScale, Orientation, Vector2.One);
             base.Draw(handle);
+            handle.UseShader(null);
         }
     }
 }
