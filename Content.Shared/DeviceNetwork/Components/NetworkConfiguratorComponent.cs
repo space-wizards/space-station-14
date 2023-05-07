@@ -17,7 +17,7 @@ public sealed class NetworkConfiguratorComponent : Component
     /// </summary>
     [DataField("linkModeActive")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool LinkModeActive = false;
+    public bool LinkModeActive = true;
 
     /// <summary>
     /// The entity containing a <see cref="DeviceListComponent"/> this configurator is currently interacting with
