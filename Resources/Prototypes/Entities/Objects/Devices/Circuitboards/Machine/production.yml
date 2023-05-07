@@ -388,18 +388,12 @@
         MatterBin: 2
         Manipulator: 1
       tagRequirements:
-        Pipe:
-          Amount: 1
-          DefaultPrototype: GasPipeStraight
-          ExamineName: pipe
-        BorgArm:
-          Amount: 3
-          DefaultPrototype: LeftArmBorg
-          ExamineName: borg arm
         Knife:
-          Amount: 3
+          Amount: 2
           DefaultPrototype: KitchenKnife
-          ExamineName: knife
+          ExamineName: Knife
+      materialRequirements:
+        Steel: 5
 
 - type: entity
   id: HydroponicsTrayMachineCircuitboard

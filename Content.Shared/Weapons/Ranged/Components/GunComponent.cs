@@ -31,6 +31,13 @@ public partial class GunComponent : Component
     // These values are very small for now until we get a debug overlay and fine tune it
 
     /// <summary>
+    /// A scalar value applied to the vector governing camera recoil.
+    /// If 0, there will be no camera recoil.
+    /// </summary>
+    [DataField("cameraRecoilScalar"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public float CameraRecoilScalar = 1f;
+
+    /// <summary>
     /// Last time the gun fired.
     /// Used for recoil purposes.
     /// </summary>

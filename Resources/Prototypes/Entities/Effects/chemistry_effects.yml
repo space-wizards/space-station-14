@@ -56,14 +56,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - hard: false
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      mask:
-      - ItemMask
-      layer:
-      - SlipLayer
+      fix1:
+        hard: false
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
   - type: Smoke
   - type: NodeContainer
     nodes:
@@ -139,12 +140,13 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer:
-      - WallLayer
-      mask:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        layer:
+        - WallLayer
+        mask:
+        - WallLayer
   - type: Occluder
   - type: Transform
     anchored: true

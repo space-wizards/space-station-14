@@ -13,6 +13,7 @@ using Robust.Shared.GameStates;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 using Content.Shared.Popups;
 
@@ -297,9 +298,7 @@ public sealed partial class ChemistrySystem
     {
         if (!_solutions.TryGetSolution(injector, InjectorComponent.SolutionName, out var solution)
             || solution.Volume == 0)
-        {
             return;
-        }
 
         // Get transfer amount. May be smaller than _transferAmount if not enough room
         var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);
@@ -312,18 +311,18 @@ public sealed partial class ChemistrySystem
         }
 
         // Move units from attackSolution to targetSolution
-        var removedSolution = _solutions.SplitSolution(injector, solution, realTransferAmount);
+        Solution removedSolution;
+        if (TryComp<StackComponent>(targetEntity, out var stack)) 
+            removedSolution = _solutions.SplitStackSolution(injector, solution, realTransferAmount, stack.Count);
+        else
+          removedSolution = _solutions.SplitSolution(injector, solution, realTransferAmount);
 
         _reactiveSystem.DoEntityReaction(targetEntity, removedSolution, ReactionMethod.Injection);
 
         if (!asRefill)
-        {
             _solutions.Inject(targetEntity, targetSolution, removedSolution);
-        }
         else
-        {
             _solutions.Refill(targetEntity, targetSolution, removedSolution);
-        }
 
         _popup.PopupEntity(Loc.GetString("injector-component-transfer-success-message",
                 ("amount", removedSolution.Volume),

@@ -10,7 +10,7 @@ public sealed class DragonRiftComponent : SharedDragonRiftComponent
     /// <summary>
     /// Dragon that spawned this rift.
     /// </summary>
-    [DataField("dragon")] public EntityUid Dragon;
+    [DataField("dragon")] public EntityUid? Dragon;
 
     /// <summary>
     /// How long the rift has been active.

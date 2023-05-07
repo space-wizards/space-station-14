@@ -11,6 +11,9 @@
   - type: Transform
     anchored: true
     noRot: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
   - type: Sprite
     netsync: false
     drawdepth: ThinWire
