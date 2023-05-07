@@ -439,7 +439,9 @@
         type: Local
         messages:
         - generic-reagent-effect-nauseous
-        probability: 0.08
+        - generic-reagent-effect-thirsty
+        - generic-reagent-effect-parched
+        probability: 0.1
         conditions:
         - !type:ReagentThreshold
           min: 25
