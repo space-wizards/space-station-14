@@ -39,10 +39,10 @@
 - type: startingGear
   id: SpaceNinjaGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlack
+    jumpsuit: ClothingUniformJumpsuitNinja
     # belt holds katana so satchel has the tools for sabotaging things
     back: ClothingBackpackSatchelTools
-    mask: ClothingMaskGasNinja
+    mask: ClothingMaskNinja
     head: ClothingHeadHelmetSpaceNinja
     eyes: ClothingEyesVisorNinja
     gloves: ClothingHandsGlovesSpaceNinja
@@ -56,9 +56,6 @@
     suitstorage: YellowOxygenTankFilled
   inhand:
     left hand: JetpackBlackFilled
-  innerclothingskirt: ClothingUniformJumpskirtColorBlack
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
 
 #Deathsquad Outfit
 - type: startingGear

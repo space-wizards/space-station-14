@@ -85,10 +85,12 @@
 
 - type: entity
   id: NinjaSpawn
+  parent: BaseGameRule
+  noSpawn: true
   components:
   - type: StationEvent
     weight: 10
-    endAfter: 1
+    duration: 1
     earliestStart: 60
     minimumPlayers: 15
   - type: NinjaSpawnRule
@@ -98,6 +100,7 @@
     - SpiderChargeObjective
     - TerrorObjective
     - SurviveObjective
+    # TODO: implement and add security records hack objective
     implants: [ MicroBombImplant ]
     threats:
     - announcement: terror-dragon
