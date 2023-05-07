@@ -12,7 +12,7 @@
     noRot: true
     state: nuclearbomb_base
   - type: Physics
-    bodyType: Static
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
       fix1:

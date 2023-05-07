@@ -210,8 +210,8 @@ namespace Content.Server.Dragon
 
                 // We can't predict the rift being destroyed anyway so no point adding weakened to shared.
                 dragon.WeakenedAccumulator = dragon.WeakenedDuration;
-                _movement.RefreshMovementSpeedModifiers(component.Dragon.Value);
-                _popupSystem.PopupEntity(Loc.GetString("carp-rift-destroyed"), component.Dragon.Value, component.Dragon.Value);
+                _movement.RefreshMovementSpeedModifiers(component.Dragon);
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-destroyed"), component.Dragon, component.Dragon);
             }
         }
 

@@ -59,7 +59,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
         }
 
         var empRange = component.MaxElectrocuteRange * 3;
-        _emp.EmpPulse(Transform(uid).MapPosition, empRange, component.EmpEnergyConsumption, component.EmpDisabledDuration);
+        _emp.EmpPulse(Transform(uid).MapPosition, empRange, component.EmpEnergyConsumption);
     }
 
     public override void Update(float frameTime)

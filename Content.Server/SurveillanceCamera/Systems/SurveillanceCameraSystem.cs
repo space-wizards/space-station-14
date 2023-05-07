@@ -1,7 +1,6 @@
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
@@ -58,9 +57,6 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetName>(OnSetName);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
         SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
-        
-        SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
-        SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemoved>(OnEmpDisabledRemoved);
     }
 
     private void OnPacketReceived(EntityUid uid, SurveillanceCameraComponent component, DeviceNetworkPacketEvent args)
@@ -275,10 +271,6 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
         if (setting)
         {
-            var attemptEv = new SurveillanceCameraSetActiveAttemptEvent();
-            RaiseLocalEvent(camera, ref attemptEv);
-            if (attemptEv.Cancelled)
-                return;
             component.Active = setting;
         }
         else
@@ -400,21 +392,6 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
         _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
     }
-
-    private void OnEmpPulse(EntityUid uid, SurveillanceCameraComponent component, ref EmpPulseEvent args)
-    {
-        if (component.Active)
-        {
-            args.Affected = true;
-            args.Disabled = true;
-            SetActive(uid, false);
-        }
-    }
-
-    private void OnEmpDisabledRemoved(EntityUid uid, SurveillanceCameraComponent component, ref EmpDisabledRemoved args)
-    {
-        SetActive(uid, true);
-    }
 }
 
 public sealed class OnSurveillanceCameraViewerAddEvent : EntityEventArgs
@@ -437,6 +414,3 @@ public sealed class SurveillanceCameraDeactivateEvent : EntityEventArgs
         Camera = camera;
     }
 }
-
-[ByRefEvent]
-public record struct SurveillanceCameraSetActiveAttemptEvent(bool Cancelled);
