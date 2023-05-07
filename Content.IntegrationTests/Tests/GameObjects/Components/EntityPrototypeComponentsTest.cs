@@ -24,7 +24,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
             var client = pairTracker.Pair.Client;
 
             var sResourceManager = server.ResolveDependency<IResourceManager>();
-            var prototypePath = new ResourcePath("/Prototypes/");
+            var prototypePath = new ResPath("/Prototypes/");
             var paths = sResourceManager.ContentFindFiles(prototypePath)
                 .ToList()
                 .AsParallel()

@@ -9,19 +9,6 @@ namespace Content.IntegrationTests.Tests.Tiles;
 
 public sealed class TileConstructionTests : InteractionTest
 {
-    private void AssertGridCount(int value)
-    {
-        var count = 0;
-        var query = SEntMan.AllEntityQueryEnumerator<MapGridComponent, TransformComponent>();
-        while (query.MoveNext(out _, out var xform))
-        {
-            if (xform.MapUid == MapData.MapUid)
-                count++;
-        }
-
-        Assert.That(count, Is.EqualTo(value));
-    }
-
     /// <summary>
     /// Test placing and cutting a single lattice.
     /// </summary>

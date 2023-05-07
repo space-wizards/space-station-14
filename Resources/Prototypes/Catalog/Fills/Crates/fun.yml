@@ -187,6 +187,16 @@
       - id: KnifePlastic
 
 - type: entity
+  id: CrateFunWaterGuns
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponWaterBlaster
+      - id: WeaponWaterPistol
+        amount: 5
+
+- type: entity
   id: CrateFunSyndicateSegway
   parent: CrateLivestock
   components:
@@ -194,6 +204,21 @@
       contents:
         - id: VehicleSyndicateSegway
         - id: VehicleKeySyndicateSegway
+
+- type: entity
+  id: CrateFunBoxing
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesBoxingRed
+      - id: ClothingHandsGlovesBoxingBlue
+      - id: ClothingHandsGlovesBoxingYellow
+      - id: ClothingHandsGlovesBoxingGreen
+      - id: UniformShortsRed
+        amount: 3
+      - id: UniformShortsRedWithTop
+        amount: 3
 
 - type: entity
   id: CrateFunPirate

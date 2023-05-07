@@ -1,32 +1,49 @@
-using Content.Server.DeviceLinking.Components;
-using Content.Server.MachineLinking.System;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.MachineLinking.Components;
 using Content.Shared.Interaction.Events;
-using JetBrains.Annotations;
+using Content.Shared.Timing;
 
-namespace Content.Server.DeviceLinking.Systems
+namespace Content.Server.MachineLinking.System;
+
+public sealed class SignallerSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public sealed class SignallerSystem : EntitySystem
+    [Dependency] private readonly SignalLinkerSystem _signal = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<SignallerComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<SignallerComponent, UseInHandEvent>(OnUseInHand);
-        }
+        base.Initialize();
 
-        private void OnInit(EntityUid uid, SignallerComponent component, ComponentInit args)
-        {
-            _signalSystem.EnsureSourcePorts(uid, component.Port);
-        }
+        SubscribeLocalEvent<SignallerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SignallerComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<SignallerComponent, TriggerEvent>(OnTrigger);
+    }
 
-        private void OnUseInHand(EntityUid uid, SignallerComponent component, UseInHandEvent args)
-        {
-            if (args.Handled)
-                return;
-            _signalSystem.InvokePort(uid, component.Port);
-            args.Handled = true;
-        }
+    private void OnInit(EntityUid uid, SignallerComponent component, ComponentInit args)
+    {
+        _signal.EnsureSourcePorts(uid, component.Port);
+    }
+
+    private void OnUseInHand(EntityUid uid, SignallerComponent component, UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+        _signal.InvokePort(uid, component.Port);
+        args.Handled = true;
+    }
+
+    private void OnTrigger(EntityUid uid, SignallerComponent component, TriggerEvent args)
+    {
+        // if on cooldown, do nothing
+        var hasUseDelay = TryComp<UseDelayComponent>(uid, out var useDelay);
+        if (hasUseDelay && _useDelay.ActiveDelay(uid, useDelay))
+            return;
+
+        // set cooldown to prevent clocks
+        if (hasUseDelay)
+            _useDelay.BeginDelay(uid, useDelay);
+
+        _signal.InvokePort(uid, component.Port);
+        args.Handled = true;
     }
 }

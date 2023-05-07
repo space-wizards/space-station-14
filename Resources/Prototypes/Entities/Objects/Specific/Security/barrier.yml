@@ -9,21 +9,31 @@
   - type: Sprite
     sprite: Objects/Specific/Security/barrier.rsi
     netsync: false
-    state: idle
+    layers:
+    - state: "idle"
+      map: ["deployableBarrierBase"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.DeployableBarrierVisuals.State:
+        deployableBarrierBase:
+          enum.DeployableBarrierState.Idle: {state: "idle"}
+          enum.DeployableBarrierState.Deployed: {state: "deployed"}
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
     canCollide: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      density: 75
-      mask:
-      - MachineMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 75
+        mask:
+        - MachineMask
+        layer:
+        - WallLayer
   - type: AccessReader
     access: [["Security"]]
   - type: Lock
@@ -59,8 +69,5 @@
     enabled: false
     radius: 3
     color: red
-  - type: Appearance
-    visuals:
-    - type: DeployableBarrierVisualizer
   - type: StaticPrice
     price: 200

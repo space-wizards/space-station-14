@@ -28,6 +28,13 @@
     Plastic: 100
 
 - type: latheRecipe
+  id: MegaSprayBottle
+  result: MegaSprayBottle
+  completetime: 3
+  materials:
+    Plastic: 250
+
+- type: latheRecipe
   id: SprayBottle
   result: SprayBottle
   completetime: 2
@@ -43,17 +50,33 @@
 
 - type: latheRecipe
   id: LightReplacer
-  result: LightReplacer
+  result: LightReplacerEmpty
   completetime: 2.4
   materials:
     Steel: 100
-    Glass: 1000
+    Glass: 500
 
 - type: latheRecipe
   id: AdvMopItem
   result: AdvMopItem
   completetime: 2
   materials:
-    Plastic: 100
+    Plastic: 400
     Steel: 100
     Glass: 100
+
+- type: latheRecipe
+  id: WeaponSprayNozzle
+  result: WeaponSprayNozzle
+  completetime: 5
+  materials:
+    Steel: 1500
+    Glass: 500
+
+- type: latheRecipe
+  id: ClothingBackpackWaterTank
+  result: ClothingBackpackWaterTank
+  completetime: 4
+  materials:
+    Steel: 250
+    Glass: 1000

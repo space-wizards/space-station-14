@@ -16,9 +16,8 @@
     size: 3
     sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
   - type: Appearance
-    visuals:
-      - type: BurnStateVisualizer
-        unlitIcon: unlit-icon
+  - type: BurnStateVisuals
+    unlitIcon: unlit-icon
 
 - type: entity
   id: SmokingPipeFilledTobacco
@@ -31,15 +30,15 @@
       bowl_slot: !type:ContainerSlot
   - type: ItemSlots
   - type: SmokingPipe
-    bowl_slot: 
+    bowl_slot:
       name: Bowl
       startingItem: GroundTobacco
       whitelist:
         tags:
           - Smokable
-      insertSound: 
+      insertSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
-      ejectSound: 
+      ejectSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
 
 - type: entity
@@ -53,13 +52,13 @@
       bowl_slot: !type:ContainerSlot
   - type: ItemSlots
   - type: SmokingPipe
-    bowl_slot: 
+    bowl_slot:
       name: Bowl
       startingItem: GroundCannabis
       whitelist:
         tags:
           - Smokable
-      insertSound: 
+      insertSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
-      ejectSound: 
+      ejectSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg

@@ -16,3 +16,6 @@
   - type: DeviceLinkSource
     ports:
       - Pressed
+  - type: Tag
+    tags:
+    - Payload

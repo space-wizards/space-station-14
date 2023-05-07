@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
@@ -14,6 +15,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Stacks;
+using Content.Server.Popups;
 using Robust.Shared.Random;
 
 namespace Content.Server.Medical;
@@ -28,8 +30,8 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StackSystem _stacks = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -41,10 +43,12 @@ public sealed class HealingSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, DamageableComponent component, HealingDoAfterEvent args)
     {
+        var dontRepeat = false;
+
         if (!TryComp(args.Used, out HealingComponent? healing))
             return;
 
-        if (args.Handled || args.Cancelled || _mobStateSystem.IsDead(uid))
+        if (args.Handled || args.Cancelled)
             return;
 
         if (component.DamageContainerID is not null && !component.DamageContainerID.Equals(component.DamageContainerID))
@@ -52,7 +56,17 @@ public sealed class HealingSystem : EntitySystem
 
         // Heal some bloodloss damage.
         if (healing.BloodlossModifier != 0)
+        {
+            if (!TryComp<BloodstreamComponent>(uid, out var bloodstream))
+                return;
+            var isBleeding = bloodstream.BleedAmount > 0;
             _bloodstreamSystem.TryModifyBleedAmount(uid, healing.BloodlossModifier);
+            if (isBleeding != bloodstream.BleedAmount > 0)
+            {
+                dontRepeat = true;
+                _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), uid);
+            }
+        }
 
         // Restores missing blood
         if (healing.ModifyBloodLevel != 0)
@@ -65,19 +79,42 @@ public sealed class HealingSystem : EntitySystem
 
         var total = healed?.Total ?? FixedPoint2.Zero;
 
-        // Reverify that we can heal the damage.
+        // Re-verify that we can heal the damage.
         _stacks.Use(args.Used.Value, 1);
 
         if (uid != args.User)
+        {
             _adminLogger.Add(LogType.Healed,
                 $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {total:damage} damage");
+        }
         else
+        {
             _adminLogger.Add(LogType.Healed,
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
+        }
 
         _audio.PlayPvs(healing.HealingEndSound, uid, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
 
+        // Logic to determine the whether or not to repeat the healing action
+        args.Repeat = (HasDamage(component, healing) && !dontRepeat);
+        if (!args.Repeat && !dontRepeat)
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), uid);
         args.Handled = true;
+    }
+
+    private bool HasDamage(DamageableComponent component, HealingComponent healing)
+    {
+        var damageableDict = component.Damage.DamageDict;
+        var healingDict = healing.Damage.DamageDict;
+        foreach (var type in healingDict)
+        {
+            if (damageableDict[type.Key].Value > 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void OnHealingUse(EntityUid uid, HealingComponent component, UseInHandEvent args)
@@ -100,10 +137,7 @@ public sealed class HealingSystem : EntitySystem
 
     private bool TryHeal(EntityUid uid, EntityUid user, EntityUid target, HealingComponent component)
     {
-        if (_mobStateSystem.IsDead(target) || !TryComp<DamageableComponent>(target, out var targetDamage))
-            return false;
-
-        if (targetDamage.TotalDamage == 0)
+        if (!TryComp<DamageableComponent>(target, out var targetDamage))
             return false;
 
         if (component.DamageContainerID is not null &&
@@ -116,9 +150,20 @@ public sealed class HealingSystem : EntitySystem
         if (!TryComp<StackComponent>(uid, out var stack) || stack.Count < 1)
             return false;
 
+        if (!TryComp<BloodstreamComponent>(target, out var bloodstream))
+            return false;
+
+        if (!HasDamage(targetDamage, component) && !(bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume && component.ModifyBloodLevel > 0))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid);
+            return false;
+        }
+
         if (component.HealingBeginSound != null)
+        {
             _audio.PlayPvs(component.HealingBeginSound, uid,
                 AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
+        }
 
         var isNotSelf = user != target;
 

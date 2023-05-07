@@ -27,6 +27,8 @@
         maxVol: 250
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
   - type: Construction
     graph: Toilet
     node: toilet

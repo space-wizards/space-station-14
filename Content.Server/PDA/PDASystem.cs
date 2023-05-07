@@ -5,9 +5,9 @@ using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
 using Content.Server.PDA.Ringer;
+using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
-using Content.Server.Station.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
@@ -15,27 +15,25 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Content.Server.Mind.Components;
 using Content.Server.Traitor;
+using Content.Shared.Light.Component;
 
 namespace Content.Server.PDA
 {
     public sealed class PDASystem : SharedPDASystem
     {
+        [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
+        [Dependency] private readonly InstrumentSystem _instrument = default!;
+        [Dependency] private readonly RingerSystem _ringer = default!;
+        [Dependency] private readonly StationSystem _station = default!;
+        [Dependency] private readonly StoreSystem _store = default!;
+        [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
-        [Dependency] private readonly RingerSystem _ringerSystem = default!;
-        [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
-        [Dependency] private readonly StoreSystem _storeSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
-            SubscribeLocalEvent<PDAComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
-            SubscribeLocalEvent<PDAComponent, StoreAddedEvent>(OnUplinkInit);
-            SubscribeLocalEvent<PDAComponent, StoreRemovedEvent>(OnUplinkRemoved);
             SubscribeLocalEvent<PDAComponent, GridModifiedEvent>(OnGridChanged);
         }
 
@@ -46,53 +44,46 @@ namespace Content.Server.PDA
             if (!TryComp(uid, out ServerUserInterfaceComponent? uiComponent))
                 return;
 
-            UpdateStationName(pda);
+            UpdateStationName(uid, pda);
 
-            if (_uiSystem.TryGetUi(uid, PDAUiKey.Key, out var ui, uiComponent))
+            if (_ui.TryGetUi(uid, PDAUiKey.Key, out var ui, uiComponent))
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
         }
 
         protected override void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
         {
             base.OnItemInserted(uid, pda, args);
-            UpdatePDAUserInterface(pda);
+            UpdatePdaUi(uid, pda);
         }
 
         protected override void OnItemRemoved(EntityUid uid, PDAComponent pda, EntRemovedFromContainerMessage args)
         {
             base.OnItemRemoved(uid, pda, args);
-            UpdatePDAUserInterface(pda);
+            UpdatePdaUi(uid, pda);
         }
 
         private void OnLightToggle(EntityUid uid, PDAComponent pda, LightToggleEvent args)
         {
             pda.FlashlightOn = args.IsOn;
-            UpdatePDAUserInterface(pda);
+            UpdatePdaUi(uid, pda);
         }
 
-        public void SetOwner(PDAComponent pda, string ownerName)
+        public void SetOwner(EntityUid uid, PDAComponent pda, string ownerName)
         {
             pda.OwnerName = ownerName;
-            UpdatePDAUserInterface(pda);
-        }
-
-        private void OnUplinkInit(EntityUid uid, PDAComponent pda, ref StoreAddedEvent args)
-        {
-            UpdatePDAUserInterface(pda);
-        }
-
-        private void OnUplinkRemoved(EntityUid uid, PDAComponent pda, ref StoreRemovedEvent args)
-        {
-            UpdatePDAUserInterface(pda);
+            UpdatePdaUi(uid, pda);
         }
 
         private void OnGridChanged(EntityUid uid, PDAComponent pda, GridModifiedEvent args)
         {
-            UpdateStationName(pda);
-            UpdatePDAUserInterface(pda);
+            UpdateStationName(uid, pda);
+            UpdatePdaUi(uid, pda);
         }
 
-        private void UpdatePDAUserInterface(PDAComponent pda)
+        /// <summary>
+        /// Send new UI state to clients, call if you modify something like uplink.
+        /// </summary>
+        public void UpdatePdaUi(EntityUid uid, PDAComponent pda)
         {
             var ownerInfo = new PDAIdInfoText
             {
@@ -101,103 +92,72 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            if (!_uiSystem.TryGetUi(pda.Owner, PDAUiKey.Key, out var ui))
+            if (!_ui.TryGetUi(uid, PDAUiKey.Key, out var ui))
                 return;
 
-            var address = GetDeviceNetAddress(pda.Owner);
-            var hasInstrument = HasComp<InstrumentComponent>(pda.Owner);
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, false, hasInstrument, address);
+            var address = GetDeviceNetAddress(uid);
+            var hasInstrument = HasComp<InstrumentComponent>(uid);
+            var showUplink = HasComp<StoreComponent>(uid) && IsUnlocked(uid);
 
-            _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, state);
-
-            // TODO UPLINK RINGTONES/SECRETS This is just a janky placeholder way of hiding uplinks from non syndicate
-            // players. This should really use a sort of key-code entry system that selects an account which is not directly tied to
-            // a player entity.
-
-            if (!TryComp<StoreComponent>(pda.Owner, out var storeComponent))
-                return;
-
-            var uplinkState = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, hasInstrument, address);
-
-            foreach (var session in ui.SubscribedSessions)
-            {
-                if (session.AttachedEntity is not { Valid: true } user)
-                    continue;
-
-                if (storeComponent.AccountOwner == user || (TryComp<MindComponent>(session.AttachedEntity, out var mindcomp) && mindcomp.Mind != null &&
-                    mindcomp.Mind.HasRole<TraitorRole>()))
-                    _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, uplinkState, session);
-            }
+            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, showUplink, hasInstrument, address);
+            _cartridgeLoader?.UpdateUiState(uid, state);
         }
 
         private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
         {
-            var pdaEnt = pda.Owner;
+            var uid = pda.Owner;
             // todo: move this to entity events
             switch (msg.Message)
             {
                 case PDARequestUpdateInterfaceMessage _:
-                    UpdatePDAUserInterface(pda);
+                    UpdatePdaUi(uid, pda);
                     break;
                 case PDAToggleFlashlightMessage _:
                     {
-                        if (EntityManager.TryGetComponent(pdaEnt, out UnpoweredFlashlightComponent? flashlight))
-                            _unpoweredFlashlight.ToggleLight(pdaEnt, flashlight);
-                        break;
-                    }
-
-                case PDAShowUplinkMessage _:
-                    {
-                        if (msg.Session.AttachedEntity != null &&
-                            TryComp<StoreComponent>(pdaEnt, out var store))
-                            _storeSystem.ToggleUi(msg.Session.AttachedEntity.Value, pdaEnt, store);
+                        if (TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
+                            _unpoweredFlashlight.ToggleLight(uid, flashlight);
                         break;
                     }
                 case PDAShowRingtoneMessage _:
                     {
-                        if (EntityManager.TryGetComponent(pdaEnt, out RingerComponent? ringer))
-                            _ringerSystem.ToggleRingerUI(ringer, msg.Session);
+                        if (TryComp<RingerComponent>(uid, out var ringer))
+                            _ringer.ToggleRingerUI(ringer, msg.Session);
                         break;
                     }
                 case PDAShowMusicMessage _:
                 {
-                    if (TryComp(pdaEnt, out InstrumentComponent? instrument))
-                        _instrumentSystem.ToggleInstrumentUi(pdaEnt, msg.Session, instrument);
+                    if (TryComp<InstrumentComponent>(uid, out var instrument))
+                        _instrument.ToggleInstrumentUi(uid, msg.Session, instrument);
+                    break;
+                }
+                case PDAShowUplinkMessage _:
+                {
+                    // check if its locked again to prevent malicious clients opening locked uplinks
+                    if (TryComp<StoreComponent>(uid, out var store) && IsUnlocked(uid))
+                        _store.ToggleUi(msg.Session.AttachedEntity!.Value, uid, store);
+                    break;
+                }
+                case PDALockUplinkMessage _:
+                {
+                    if (TryComp<RingerUplinkComponent>(uid, out var uplink))
+                    {
+                        _ringer.LockUplink(uid, uplink);
+                        UpdatePdaUi(uid, pda);
+                    }
                     break;
                 }
             }
         }
 
-        private void UpdateStationName(PDAComponent pda)
+        private bool IsUnlocked(EntityUid uid)
         {
-            var station = _stationSystem.GetOwningStation(pda.Owner);
-            pda.StationName = station is null ? null : Name(station.Value);
+            return TryComp<RingerUplinkComponent>(uid, out var uplink) ? uplink.Unlocked : true;
         }
 
-        private void AfterUIOpen(EntityUid uid, PDAComponent pda, AfterActivatableUIOpenEvent args)
+        private void UpdateStationName(EntityUid uid, PDAComponent pda)
         {
-            //TODO: this is awful
-            // A new user opened the UI --> Check if they are a traitor and should get a user specific UI state override.
-            if (!TryComp<StoreComponent>(pda.Owner, out var storeComp))
-                return;
-
-            if (storeComp.AccountOwner != args.User &&
-                !(TryComp<MindComponent>(args.User, out var mindcomp) && mindcomp.Mind != null && mindcomp.Mind.HasRole<TraitorRole>()))
-                return;
-
-            if (!_uiSystem.TryGetUi(pda.Owner, PDAUiKey.Key, out var ui))
-                return;
-
-            var ownerInfo = new PDAIdInfoText
-            {
-                ActualOwnerName = pda.OwnerName,
-                IdOwner = pda.ContainedID?.FullName,
-                JobTitle = pda.ContainedID?.JobTitle
-            };
-
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, HasComp<InstrumentComponent>(pda.Owner), GetDeviceNetAddress(pda.Owner));
-
-            _cartridgeLoaderSystem?.UpdateUiState(uid, state, args.Session);
+            var station = _station.GetOwningStation(uid);
+            pda.StationName = station is null ? null : Name(station.Value);
         }
 
         private string? GetDeviceNetAddress(EntityUid uid)

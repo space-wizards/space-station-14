@@ -59,10 +59,14 @@
     attributes:
       proper: true
       gender: male
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
+    - id: SheetSteel1
   - type: Tag
     tags:
     - CannotSuicide
-
 
 - type: entity
   name: Lisa
@@ -89,6 +93,10 @@
     attributes:
       proper: true
       gender: female
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
   - type: Tag
     tags:
     - CannotSuicide
@@ -99,6 +107,11 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
+  - type: Faction
+    factions:
+      - PetsNT
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Grammar
     attributes:
       gender: female
@@ -112,6 +125,9 @@
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
+  - type: Faction
+    factions:
+      - PetsNT
   - type: Grammar
     attributes:
       gender: male
@@ -127,14 +143,15 @@
   components:
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 40
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 40
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Grammar
     attributes:
       gender: male
@@ -170,14 +187,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 12
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 12
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: cat
@@ -228,14 +246,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 20
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: puppy
@@ -326,14 +345,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: dog
@@ -486,14 +506,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 130
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -535,3 +556,29 @@
   - type: Tag
     tags:
     - CannotSuicide
+
+- type: entity
+  name: Willow
+  parent: MobKangaroo
+  id: MobKangarooWillow
+  description: Willow the boxing kangaroo.
+  components:
+  - type: InteractionPopup
+    successChance: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - FootstepSound
+  - type: GhostRole
+    prob: 0.25
+    name: Willow the kangaroo
+    description: |
+      You're a kangaroo named willow! willow likes to box.
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ BoxingKangarooGear ]

@@ -31,11 +31,13 @@
   meltingPoint: -11.0
   tileReactions:
     - !type:CleanTileReaction {}
+    - !type:CleanDecalsReaction {}
 
 - type: reagent
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
+  slippery: true
   physicalDesc: reagent-physical-desc-shiny
   flavor: funny
   color: "#77b58e"

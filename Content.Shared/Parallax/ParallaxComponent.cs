@@ -6,11 +6,11 @@ namespace Content.Shared.Parallax;
 /// <summary>
 /// Handles per-map parallax
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed class ParallaxComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+public sealed partial class ParallaxComponent : Component
 {
     // I wish I could use a typeserializer here but parallax is extremely client-dependent.
-    [DataField("parallax")]
+    [DataField("parallax"), AutoNetworkedField]
     public string Parallax = "Default";
 
     [UsedImplicitly, ViewVariables(VVAccess.ReadWrite)]
