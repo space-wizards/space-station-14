@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Cognizine works on animals that are already being controlled., type: Fix}
-  id: 3198
-  time: '2023-03-20T00:47:07.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Nukeops now uses your selected character's appearance and species. Nukeop
@@ -2912,3 +2907,9 @@ Entries:
   - {message: Remove diseases pending a further refactor., type: Remove}
   id: 3697
   time: '2023-05-07T07:50:38.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed pinpointer flickering!, type: Fix}
+  - {message: fixed pinpointer screen not being visible in dark!, type: Fix}
+  id: 3698
+  time: '2023-05-07T08:20:44.0000000+00:00'
