@@ -53,7 +53,7 @@ namespace Content.Server.PowerSink
         public override void Update(float frameTime)
         {
             var toRemove = new RemQueue<(EntityUid Entity, PowerSinkComponent Sink, BatteryComponent Battery)>();
-            var query = AllEntityQuery<PowerSinkComponent, PowerConsumerComponent, BatteryComponent, TransformComponent>();
+            var query = EntityQueryEnumerator<PowerSinkComponent, PowerConsumerComponent, BatteryComponent, TransformComponent>();
 
             // Realistically it's gonna be like <5 per station.
             while (query.MoveNext(out var entity, out var component, out var networkLoad, out var battery, out var transform))
@@ -95,7 +95,9 @@ namespace Content.Server.PowerSink
 
                     // Wind-up SFX
                     _audio.PlayPvs(component.ChargeFireSound, entity); // Play SFX
-                } else if (_gameTiming.CurTime >= component.ExplosionTime) {
+                } 
+                else if (_gameTiming.CurTime >= component.ExplosionTime)
+                {
                     // Explode!
                     toRemove.Add((entity, component, battery));
                 }
