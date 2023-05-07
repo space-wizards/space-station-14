@@ -663,23 +663,16 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var round = await db.DbContext.Round
-                .Include(round => round.Players)
-                .SingleAsync(round => round.Id == id);
-
-            var players = await db.DbContext.Player
+            // ReSharper disable once SuggestVarOrType_Elsewhere
+            Dictionary<Guid, int> players = await db.DbContext.Player
                 .Where(player => playerIds.Contains(player.UserId))
-                .ToListAsync();
+                .ToDictionaryAsync(player => player.UserId, player => player.Id);
 
-            var playerSet = new HashSet<Guid>(round.Players.Select(player => player.UserId));
-            foreach (var player in players)
+            foreach (var player in playerIds)
             {
-                if (playerSet.Contains(player.UserId))
-                {
-                    continue;
-                }
-
-                round.Players.Add(player);
+                await db.DbContext.Database.ExecuteSqlAsync($"""
+INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}) ON CONFLICT DO NOTHING
+""");
             }
 
             await db.DbContext.SaveChangesAsync();
