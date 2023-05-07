@@ -246,7 +246,7 @@ namespace Content.Server.Zombies
                 melee.Damage = zombiecomp.BeforeZombifiedDamage;
             melee.ClickAnimation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
-            melee.Range = 1.5f;
+            melee.Range = zombiecomp.BeforeZombifiedRange;
             Dirty(melee);
 
             if (mobState.CurrentState == MobState.Alive)

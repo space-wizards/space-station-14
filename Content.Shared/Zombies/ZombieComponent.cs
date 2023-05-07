@@ -60,6 +60,25 @@ namespace Content.Shared.Zombies
         public string AttackAnimation = "WeaponArcBite";
 
         /// <summary>
+        /// The attack range of the zombie
+        /// </summary>
+        [DataField("attackRange")]
+        public float AttackRange = 1.5f;
+
+        /// <summary>
+        /// The damage specifier of the humanoid zombie
+        /// </summary>
+        [DataField("zombieDamageSpecifier")]
+        public DamageSpecifier ZombieDamageSpecifier = new();
+        private void InitializeSpecifier()
+        {
+            ZombieDamageSpecifier = new DamageSpecifier();
+            ZombieDamageSpecifier.DamageDict.Add("Slash", 13);
+            ZombieDamageSpecifier.DamageDict.Add("Piercing", 7);
+            ZombieDamageSpecifier.DamageDict.Add("Structural", 10);
+        }
+
+        /// <summary>
         /// The role prototype of the zombie antag role
         /// </summary>
         [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
@@ -93,13 +112,13 @@ namespace Content.Shared.Zombies
         /// The melee attack settings of the humanoid to restore in case of cloning
         /// </summary>
         [DataField("beforeZombifiedClickAnimation")]
-        public string? BeforeZombifiedClickAnimation;
+        public string BeforeZombifiedClickAnimation = "";
 
         [DataField("beforeZombifiedWideAnimation")]
-        public string? BeforeZombifiedWideAnimation;
+        public string BeforeZombifiedWideAnimation = "";
 
         [DataField("beforeZombifiedRange")]
-        public float? BeforeZombifiedRange;
+        public float BeforeZombifiedRange;
 
         [DataField("beforeZombifiedDamage")]
         public DamageSpecifier? BeforeZombifiedDamage;

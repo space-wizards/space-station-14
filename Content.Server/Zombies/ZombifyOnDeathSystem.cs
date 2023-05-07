@@ -130,7 +130,7 @@ namespace Content.Server.Zombies
             //Now the entity gets zombie values
             melee.ClickAnimation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
-            melee.Range = 1.5f;
+            melee.Range = zombiecomp.AttackRange;
             Dirty(melee);
 
             if (mobState.CurrentState == MobState.Alive)
@@ -161,13 +161,8 @@ namespace Content.Server.Zombies
                 _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombiecomp.BaseLayerExternal, humanoid: huApComp);
 
                 //This is done here because non-humanoids shouldn't get baller damage
-                //lord forgive me for the hardcoded damage
-                DamageSpecifier dspec = new();
-                dspec.DamageDict.Add("Slash", 13);
-                dspec.DamageDict.Add("Piercing", 7);
-                dspec.DamageDict.Add("Structural", 10);
                 zombiecomp.BeforeZombifiedDamage = melee.Damage;
-                melee.Damage = dspec;
+                melee.Damage = zombiecomp.ZombieDamageSpecifier;
             }
 
             //Save the original values then the zombie gets the assigned damage weaknesses and strengths
@@ -214,9 +209,9 @@ namespace Content.Server.Zombies
             //Adds the zombified entity to the zombie faction
             _faction.AddFaction(target, "Zombie");
 
-            //He's gotta have a mind
+            //He's gotta have a mind if it's a humanoid
             var mindcomp = EnsureComp<MindComponent>(target);
-            if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
+            if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session) && HasComp<HumanoidAppearanceComponent>(target))
             {
                 //Zombie role for player manifest
                 mindcomp.Mind.AddRole(new TraitorRole(mindcomp.Mind, _proto.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
