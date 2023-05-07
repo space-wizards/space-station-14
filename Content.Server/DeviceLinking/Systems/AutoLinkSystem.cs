@@ -1,13 +1,14 @@
-using Content.Server.MachineLinking.Components;
+using Content.Server.DeviceLinking.Components;
+using Content.Server.MachineLinking.System;
 
-namespace Content.Server.MachineLinking.System;
+namespace Content.Server.DeviceLinking.Systems;
 
 /// <summary>
 /// This handles automatically linking autolinked entities at round-start.
 /// </summary>
 public sealed class AutoLinkSystem : EntitySystem
 {
-    [Dependency] private readonly SignalLinkerSystem _signalLinkerSystem = default!;
+    [Dependency] private readonly DeviceLinkSystem _deviceLinkSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -29,7 +30,7 @@ public sealed class AutoLinkSystem : EntitySystem
             if (rxXform.GridUid != xform.GridUid)
                 continue;
 
-            _signalLinkerSystem.TryLinkDefaults(receiver.Owner, uid, null);
+            _deviceLinkSystem.LinkDefaults(null, uid, receiver.Owner);
         }
     }
 }

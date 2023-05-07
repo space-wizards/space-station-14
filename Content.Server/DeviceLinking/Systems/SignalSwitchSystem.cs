@@ -1,14 +1,15 @@
-using Content.Server.MachineLinking.Components;
+using Content.Server.DeviceLinking.Components;
+using Content.Server.MachineLinking.System;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
-namespace Content.Server.MachineLinking.System
+namespace Content.Server.DeviceLinking.Systems
 {
     public sealed class SignalSwitchSystem : EntitySystem
     {
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
 
         public override void Initialize()
         {
@@ -20,7 +21,7 @@ namespace Content.Server.MachineLinking.System
 
         private void OnInit(EntityUid uid, SignalSwitchComponent component, ComponentInit args)
         {
-            _signalSystem.EnsureTransmitterPorts(uid, component.OnPort, component.OffPort);
+            _signalSystem.EnsureSourcePorts(uid, component.OnPort, component.OffPort);
         }
 
         private void OnActivated(EntityUid uid, SignalSwitchComponent component, ActivateInWorldEvent args)

@@ -1,4 +1,4 @@
-namespace Content.Server.MachineLinking.Events
+namespace Content.Shared.DeviceLinking.Events
 {
     public sealed class PortDisconnectedEvent : EntityEventArgs
     {

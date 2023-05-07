@@ -2,7 +2,7 @@ using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.MachineLinking.Components
+namespace Content.Server.DeviceLinking.Components
 {
     /// <summary>
     ///     Simple switch that will fire ports when toggled on or off. A button is jsut a switch that signals on the

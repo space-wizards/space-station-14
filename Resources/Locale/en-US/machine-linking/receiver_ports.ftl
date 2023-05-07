@@ -1,3 +1,6 @@
+signal-port-name-toggle = Autoclose
+signal-port-description-toggle = Toggles whether the device should automatically close.
+
 signal-port-name-toggle = Toggle
 signal-port-description-toggle = Toggles the state of a device.
 

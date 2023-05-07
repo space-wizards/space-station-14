@@ -10,15 +10,15 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.EUI;
 using Content.Server.Humanoid;
-using Content.Server.MachineLinking.System;
-using Content.Server.MachineLinking.Events;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.Materials;
-using Content.Server.Stack;
 using Content.Server.Jobs;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -43,7 +43,7 @@ namespace Content.Server.Cloning
 {
     public sealed class CloningSystem : EntitySystem
     {
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly EuiManager _euiManager = null!;
@@ -84,7 +84,7 @@ namespace Content.Server.Cloning
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
         {
             clonePod.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(clonePod.Owner, "clonepod-bodyContainer");
-            _signalSystem.EnsureReceiverPorts(uid, CloningPodComponent.PodPort);
+            _signalSystem.EnsureSinkPorts(uid, CloningPodComponent.PodPort);
         }
 
         private void OnPartsRefreshed(EntityUid uid, CloningPodComponent component, RefreshPartsEvent args)

@@ -1,16 +1,17 @@
-using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Events;
+using Content.Server.DeviceLinking.Components;
+using Content.Server.DeviceLinking.Events;
 using Content.Server.Doors.Systems;
+using Content.Server.MachineLinking.System;
 using Content.Shared.Doors.Components;
 using JetBrains.Annotations;
 
-namespace Content.Server.MachineLinking.System
+namespace Content.Server.DeviceLinking.Systems
 {
     [UsedImplicitly]
     public sealed class DoorSignalControlSystem : EntitySystem
     {
         [Dependency] private readonly DoorSystem _doorSystem = default!;
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
 
         public override void Initialize()
         {
@@ -18,13 +19,13 @@ namespace Content.Server.MachineLinking.System
             SubscribeLocalEvent<DoorSignalControlComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DoorSignalControlComponent, SignalReceivedEvent>(OnSignalReceived);
         }
-        
+
         private void OnInit(EntityUid uid, DoorSignalControlComponent component, ComponentInit args)
         {
-            _signalSystem.EnsureReceiverPorts(uid, component.OpenPort, component.ClosePort, component.TogglePort);
+            _signalSystem.EnsureSinkPorts(uid, component.OpenPort, component.ClosePort, component.TogglePort);
         }
 
-        private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, ref SignalReceivedEvent args)
         {
             if (!TryComp(uid, out DoorComponent? door))
                 return;

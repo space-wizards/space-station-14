@@ -1,13 +1,13 @@
+using Content.Server.DeviceLinking.Components;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.MachineLinking.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Timing;
 
-namespace Content.Server.MachineLinking.System;
+namespace Content.Server.DeviceLinking.Systems;
 
 public sealed class SignallerSystem : EntitySystem
 {
-    [Dependency] private readonly SignalLinkerSystem _signal = default!;
+    [Dependency] private readonly DeviceLinkSystem _link = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
@@ -21,14 +21,14 @@ public sealed class SignallerSystem : EntitySystem
 
     private void OnInit(EntityUid uid, SignallerComponent component, ComponentInit args)
     {
-        _signal.EnsureTransmitterPorts(uid, component.Port);
+        _link.EnsureSourcePorts(uid, component.Port);
     }
 
     private void OnUseInHand(EntityUid uid, SignallerComponent component, UseInHandEvent args)
     {
         if (args.Handled)
             return;
-        _signal.InvokePort(uid, component.Port);
+        _link.InvokePort(uid, component.Port);
         args.Handled = true;
     }
 
@@ -43,7 +43,7 @@ public sealed class SignallerSystem : EntitySystem
         if (hasUseDelay)
             _useDelay.BeginDelay(uid, useDelay);
 
-        _signal.InvokePort(uid, component.Port);
+        _link.InvokePort(uid, component.Port);
         args.Handled = true;
     }
 }

@@ -1,18 +1,16 @@
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.DeviceLinking.Events;
 using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Events;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
-using Content.Shared.MachineLinking.Events;
-using Content.Server.Database;
 
 namespace Content.Server.MachineLinking.System
 {
@@ -140,7 +138,10 @@ namespace Content.Server.MachineLinking.System
                 return;
 
             foreach (var receiver in receivers)
-                RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port, uid), false);
+            {
+                var eventArgs = new SignalReceivedEvent(receiver.Port, uid);
+                RaiseLocalEvent(receiver.Uid, ref eventArgs);
+            }
         }
 
         private void OnTransmitterStartup(EntityUid uid, SignalTransmitterComponent transmitter, ComponentStartup args)
