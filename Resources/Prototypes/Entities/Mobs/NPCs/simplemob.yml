@@ -49,15 +49,16 @@
     bodyType: KinematicController # Same for all inheritors
   - type: Fixtures
     fixtures:
-    - shape:
-        # Circles, cuz rotation of rectangles looks very bad
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          # Circles, cuz rotation of rectangles looks very bad
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: SolutionContainerManager
   - type: Bloodstream
     bloodlossDamage:

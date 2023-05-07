@@ -10,8 +10,6 @@
     sprite: Clothing/Mask/gas.rsi
   - type: BreathMask
   - type: IngestionBlocker
-  - type: DiseaseProtection
-    protection: 0.05
   - type: IdentityBlocker
 
 - type: entity
@@ -66,8 +64,6 @@
     sprite: Clothing/Mask/gascaptain.rsi
   - type: BreathMask
   - type: IngestionBlocker
-  - type: DiseaseProtection
-    protection: 0.05
 
 - type: entity
   parent: ClothingMaskGasAtmos
@@ -81,8 +77,6 @@
     sprite: Clothing/Mask/gascentcom.rsi
   - type: BreathMask
   - type: IngestionBlocker
-  - type: DiseaseProtection
-    protection: 0.05
 
 - type: entity
   parent: ClothingMaskGas
@@ -114,8 +108,6 @@
     sprite: Clothing/Mask/medical.rsi
   - type: BreathMask
   - type: IngestionBlocker
-  - type: DiseaseProtection
-    protection: 0.10
   - type: Tag
     tags:
     - PetWearable
@@ -149,8 +141,6 @@
     sprite: Clothing/Mask/breath.rsi
   - type: BreathMask
   - type: IngestionBlocker
-  - type: DiseaseProtection
-    protection: 0.05
   - type: Tag
     tags:
     - PetWearable
@@ -172,6 +162,10 @@
     sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
   - type: IdentityBlocker
+  # for H.O.N.K. construction
+  - type: Tag
+    tags:
+    - ClownMask
 
 - type: entity
   parent: ClothingMaskBase
@@ -209,8 +203,6 @@
   - type: Clothing
     sprite: Clothing/Mask/sterile.rsi
   - type: IngestionBlocker
-  - type: DiseaseProtection
-    protection: 0.1
 
 - type: entity
   parent: ClothingMaskBase
@@ -242,8 +234,6 @@
     sprite: Clothing/Mask/plaguedoctormask.rsi
   - type: BreathMask
   - type: IngestionBlocker
-  - type: DiseaseProtection
-    protection: 0.1
   - type: IdentityBlocker
 
 - type: entity

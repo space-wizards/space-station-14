@@ -31,19 +31,20 @@
     enabled: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      id: "slips"
-      hard: false
-      layer:
-      - LowImpassable
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      density: 30
-      mask:
-      - ItemMask
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
   - type: DamageOtherOnHit
     damage:
       types:
@@ -129,6 +130,23 @@
     refineResult:
     - SheetGlass1
     - SheetPlasma1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 15
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassUranium
+  name: uranium glass shard
+  description: A small piece of uranium glass.
+  components:
+  - type: Sprite
+    color: "#8eff7a"
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - SheetUranium1
   - type: DamageUserOnTrigger
     damage:
       types:

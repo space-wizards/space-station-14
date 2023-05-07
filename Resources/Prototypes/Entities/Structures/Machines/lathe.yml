@@ -24,14 +24,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -73,6 +74,7 @@
       - Wrench
       - Crowbar
       - Multitool
+      - NetworkConfigurator
       - AirlockPainter
       - CableStack
       - HandheldGPSBasic
@@ -109,14 +111,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: ResearchClient
   - type: Destructible
     thresholds:
@@ -212,9 +215,12 @@
       - FireAlarmElectronics
       - IntercomElectronics
       - MailingUnitElectronics
+      - SignalTimerElectronics
       - Bucket
       - MopItem
       - AdvMopItem
+      - WeaponSprayNozzle
+      - ClothingBackpackWaterTank
       - SprayBottle
       - MegaSprayBottle
       - FireExtinguisher
@@ -272,6 +278,7 @@
       - FireAlarmElectronics
       - MailingUnitElectronics
       - IntercomElectronics
+      - SignalTimerElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
@@ -313,6 +320,9 @@
       - OreProcessorMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
+      - HonkerCentralElectronics
+      - HonkerPeripheralsElectronics
+      - HonkerTargetingElectronics
       - GeneratorPlasmaMachineCircuitboard
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
@@ -373,6 +383,12 @@
     - RipleyLLeg
     - RipleyRLeg
     - MechEquipmentGrabber
+    - HonkerHarness
+    - HonkerLArm
+    - HonkerRArm
+    - HonkerLLeg
+    - HonkerRLeg
+    - MechEquipmentHorn
   - type: MaterialStorage
     whitelist:
       tags:
