@@ -595,7 +595,7 @@
       shader: unshaded
   - type: Fixtures
     fixtures:
-      area:
+      fix1:
         shape:
           !type:PhysShapeCircle
           radius: 0.25
