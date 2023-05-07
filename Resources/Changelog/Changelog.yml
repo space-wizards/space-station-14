@@ -1,9 +1,4 @@
 Entries:
-- author: not-gavnaed
-  changes:
-  - {message: Added Station Records Computer on Aspid & Bagel, type: Add}
-  id: 3190
-  time: '2023-03-15T23:50:08.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Some forms of healing will no longer unexpectedly affect bleeding.,
@@ -2911,3 +2906,8 @@ Entries:
     type: Fix}
   id: 3689
   time: '2023-05-07T02:57:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the water gun crate to cargo. Happy spraying., type: Add}
+  id: 3690
+  time: '2023-05-07T03:14:54.0000000+00:00'
