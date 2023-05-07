@@ -30,7 +30,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<UnpoweredFlashlightComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<UnpoweredFlashlightComponent, ToggleActionEvent>(OnToggleAction);
             SubscribeLocalEvent<UnpoweredFlashlightComponent, MindAddedMessage>(OnMindAdded);
-            SubscribeLocalEvent<UnpoweredFlashlightComponent, GotEmaggedEvent>(OnGotEmmaged);
+            SubscribeLocalEvent<UnpoweredFlashlightComponent, GotEmaggedEvent>(OnGotEmagged);
         }
 
         private void OnToggleAction(EntityUid uid, UnpoweredFlashlightComponent component, ToggleActionEvent args)
@@ -69,12 +69,12 @@ namespace Content.Server.Light.EntitySystems
             _actionsSystem.AddAction(uid, component.ToggleAction, null);
         }
 
-        private void OnGotEmmaged(EntityUid uid, UnpoweredFlashlightComponent component, ref GotEmaggedEvent args)
+        private void OnGotEmagged(EntityUid uid, UnpoweredFlashlightComponent component, ref GotEmaggedEvent args)
         {
             if (!TryComp<PointLightComponent>(uid, out var light))
                 return;
 
-            if (_prototypeManager.TryIndex<ColorPalettePrototype>(component.EmmagedColorsPrototype, out var possibleColors))
+            if (_prototypeManager.TryIndex<ColorPalettePrototype>(component.EmaggedColorsPrototype, out var possibleColors))
             {
                 var pick = _random.Pick(possibleColors.Colors.Values);
                 light.Color = pick;

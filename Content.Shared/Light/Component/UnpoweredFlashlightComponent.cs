@@ -21,9 +21,9 @@ public sealed class UnpoweredFlashlightComponent : Robust.Shared.GameObjects.Com
 
     /// <summary>
     ///  <see cref="ColorPalettePrototype"/> ID that determines the list
-    /// of colors to select from when we get emmaged
+    /// of colors to select from when we get emagged
     /// </summary>
-    [DataField("emmagedColorsPrototype")]
+    [DataField("emaggedColorsPrototype")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string EmmagedColorsPrototype = "Emmaged";
+    public string EmaggedColorsPrototype = "Emagged";
 }
