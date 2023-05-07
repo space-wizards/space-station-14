@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Some forms of healing will no longer unexpectedly affect bleeding.,
-    type: Fix}
-  - {message: 'Bleeding and bloodloss damage is now more relevant, and you should
-      expect to encounter it in medical more often', type: Tweak}
-  id: 3191
-  time: '2023-03-16T22:27:28.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: 'Solar flare lost it''s ability to manipulate mechanical doors, curtains
@@ -2911,3 +2903,12 @@ Entries:
   - {message: Added the water gun crate to cargo. Happy spraying., type: Add}
   id: 3690
   time: '2023-05-07T03:14:54.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Monkeys can now wear jumpsuits and jumpskirts (no pockets only pda slot).,
+    type: Add}
+  - {message: security are now authorized to handcuff monkeys., type: Add}
+  - {message: clowns are encouraged to creampie monkeys., type: Add}
+  - {message: Monkeys may now wear soft EVA suits., type: Add}
+  id: 3691
+  time: '2023-05-07T03:24:44.0000000+00:00'
