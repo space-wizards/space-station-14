@@ -78,8 +78,8 @@ namespace Content.Server.Forensics
         /// <summary>
         /// What the machine will print
         /// </summary>
-        [DataField("machineOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-        public string MachineOutput = string.Empty;
+        [DataField("machineOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string MachineOutput = "ForensicReportPaper";
 
     }
 }

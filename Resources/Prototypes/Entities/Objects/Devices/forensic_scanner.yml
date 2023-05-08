@@ -24,7 +24,6 @@
     - key: enum.ForensicScannerUiKey.Key
       type: ForensicScannerBoundUserInterface
   - type: ForensicScanner
-    machineOutput: ForensicReportPaper
 
 - type: entity
   name: forensic scanner report
@@ -34,7 +33,6 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    netsync: false
     layers:
     - state: paper_receipt_horizontal
     - state: paper_receipt_horizontal_words
