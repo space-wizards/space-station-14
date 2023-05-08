@@ -62,7 +62,8 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
 
         #region Equipment UI message relays
-        SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(RecieveEquipmentUiMesssages);
+        SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(ReceiveEquipmentUiMesssages);
+        SubscribeLocalEvent<MechComponent, MechSoundboardPlayMessage>(ReceiveEquipmentUiMesssages);
         #endregion
     }
 
@@ -262,7 +263,7 @@ public sealed class MechSystem : SharedMechSystem
         UpdateUserInterface(uid, component);
     }
 
-    private void RecieveEquipmentUiMesssages<T>(EntityUid uid, MechComponent component, T args) where T : MechEquipmentUiMessage
+    private void ReceiveEquipmentUiMesssages<T>(EntityUid uid, MechComponent component, T args) where T : MechEquipmentUiMessage
     {
         var ev = new MechEquipmentUiMessageRelayEvent(args);
         var allEquipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);

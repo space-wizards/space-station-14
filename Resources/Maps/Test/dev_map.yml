@@ -62,8 +62,6 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-    - fixtures: []
-      type: Fixtures
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -510,42 +508,7 @@ entities:
       pos: -17.5,9.5
       parent: 179
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-          - -0.49,-0.49
-        mask:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - InteractImpassable
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 100
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      - shape: !type:PhysShapeCircle
-          radius: 0.2
-          position: 0,-0.5
-        mask: []
-        layer: []
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: docking
-      type: Fixtures
+
 - proto: AirlockMedicalGlass
   entities:
   - uid: 177
@@ -2947,8 +2910,7 @@ entities:
     - pos: -13.5,2.5
       parent: 179
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
     missingComponents:
     - TimedDespawn
   - uid: 911
@@ -2956,8 +2918,7 @@ entities:
     - pos: -13.5,1.5
       parent: 179
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
     missingComponents:
     - TimedDespawn
 - proto: hydroponicsTray

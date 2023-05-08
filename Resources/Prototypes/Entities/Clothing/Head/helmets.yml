@@ -293,8 +293,6 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/paramedhelm.rsi
   - type: IngestionBlocker
-  - type: DiseaseProtection
-    protection: 0.15
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor

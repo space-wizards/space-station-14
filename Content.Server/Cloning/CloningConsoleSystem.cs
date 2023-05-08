@@ -4,11 +4,10 @@ using Robust.Shared.Timing;
 using Content.Server.Administration.Logs;
 using Content.Server.Medical.Components;
 using Content.Server.Cloning.Components;
-using Content.Server.MachineLinking.Components;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Mind.Components;
-using Content.Server.MachineLinking.System;
-using Content.Server.MachineLinking.Events;
 using Content.Server.UserInterface;
 using Content.Server.Power.EntitySystems;
 using Robust.Server.GameObjects;
@@ -16,7 +15,8 @@ using Robust.Server.Player;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Cloning;
 using Content.Shared.Database;
-using Content.Shared.MachineLinking.Events;
+using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -26,7 +26,7 @@ namespace Content.Server.Cloning
     [UsedImplicitly]
     public sealed class CloningConsoleSystem : EntitySystem
     {
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
@@ -48,7 +48,7 @@ namespace Content.Server.Cloning
 
         private void OnInit(EntityUid uid, CloningConsoleComponent component, ComponentInit args)
         {
-            _signalSystem.EnsureTransmitterPorts(uid, CloningConsoleComponent.ScannerPort, CloningConsoleComponent.PodPort);
+            _signalSystem.EnsureSourcePorts(uid, CloningConsoleComponent.ScannerPort, CloningConsoleComponent.PodPort);
         }
         private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
         {
@@ -72,20 +72,20 @@ namespace Content.Server.Cloning
 
         private void OnMapInit(EntityUid uid, CloningConsoleComponent component, MapInitEvent args)
         {
-            if (!TryComp<SignalTransmitterComponent>(uid, out var receiver))
+            if (!TryComp<DeviceLinkSourceComponent>(uid, out var receiver))
                 return;
 
             foreach (var port in receiver.Outputs.Values.SelectMany(ports => ports))
             {
-                if (TryComp<MedicalScannerComponent>(port.Uid, out var scanner))
+                if (TryComp<MedicalScannerComponent>(port, out var scanner))
                 {
-                    component.GeneticScanner = port.Uid;
+                    component.GeneticScanner = port;
                     scanner.ConnectedConsole = uid;
                 }
 
-                if (TryComp<CloningPodComponent>(port.Uid, out var pod))
+                if (TryComp<CloningPodComponent>(port, out var pod))
                 {
-                    component.CloningPod = port.Uid;
+                    component.CloningPod = port;
                     pod.ConnectedConsole = uid;
                 }
             }
@@ -93,15 +93,15 @@ namespace Content.Server.Cloning
 
         private void OnNewLink(EntityUid uid, CloningConsoleComponent component, NewLinkEvent args)
         {
-            if (TryComp<MedicalScannerComponent>(args.Receiver, out var scanner) && args.TransmitterPort == CloningConsoleComponent.ScannerPort)
+            if (TryComp<MedicalScannerComponent>(args.Sink, out var scanner) && args.SourcePort == CloningConsoleComponent.ScannerPort)
             {
-                component.GeneticScanner = args.Receiver;
+                component.GeneticScanner = args.Sink;
                 scanner.ConnectedConsole = uid;
             }
 
-            if (TryComp<CloningPodComponent>(args.Receiver, out var pod) && args.TransmitterPort == CloningConsoleComponent.PodPort)
+            if (TryComp<CloningPodComponent>(args.Sink, out var pod) && args.SourcePort == CloningConsoleComponent.PodPort)
             {
-                component.CloningPod = args.Receiver;
+                component.CloningPod = args.Sink;
                 pod.ConnectedConsole = uid;
             }
             RecheckConnections(uid, component.CloningPod, component.GeneticScanner, component);

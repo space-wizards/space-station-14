@@ -2,8 +2,6 @@ using System.Globalization;
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
@@ -38,7 +36,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-    [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -233,7 +230,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var prefList = new List<IPlayerSession>();
         foreach (var player in allPlayers)
         {
-            if (player.AttachedEntity != null && HasComp<DiseaseCarrierComponent>(player.AttachedEntity))
+            // TODO: A
+            if (player.AttachedEntity != null && HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
             {
                 playerList.Add(player);
 
@@ -287,7 +285,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             var inCharacterName = string.Empty;
             if (mind.OwnedEntity != null)
             {
-                _diseaseSystem.TryAddDisease(mind.OwnedEntity.Value, component.InitialZombieVirusPrototype);
+                EnsureComp<PendingZombieComponent>(mind.OwnedEntity.Value);
+                EnsureComp<ZombifyOnDeathComponent>(mind.OwnedEntity.Value);
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
 
                 var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombieRuleComponent.ZombifySelfActionPrototype));

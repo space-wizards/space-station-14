@@ -13,7 +13,6 @@ namespace Content.Server.Foldable
     [UsedImplicitly]
     public sealed class FoldableSystem : SharedFoldableSystem
     {
-        [Dependency] private readonly SharedBuckleSystem _buckle = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
@@ -63,20 +62,6 @@ namespace Content.Server.Foldable
 
             SetFolded(uid, comp, state);
             return true;
-        }
-
-        /// <summary>
-        /// Set the folded state of the given <see cref="FoldableComponent"/>
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="folded">If true, the component will become folded, else unfolded</param>
-        public override void SetFolded(EntityUid uid, FoldableComponent component, bool folded)
-        {
-            base.SetFolded(uid, component, folded);
-
-            // You can't buckle an entity to a folded object
-            _buckle.StrapSetEnabled(uid, !component.IsFolded);
         }
 
         #region Verb

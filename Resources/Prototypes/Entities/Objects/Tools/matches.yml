@@ -71,11 +71,13 @@
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
-    size: 10
+    size: 5
+  - type: Storage
+    capacity: 5
   - type: StorageFill
     contents:
       - id: Matchstick
-        amount: 6
+        amount: 5
   - type: ItemCounter
     count:
       tags: [Matchstick]

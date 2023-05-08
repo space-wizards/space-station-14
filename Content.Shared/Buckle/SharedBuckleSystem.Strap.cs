@@ -14,6 +14,7 @@ public abstract partial class SharedBuckleSystem
 {
     private void InitializeStrap()
     {
+        SubscribeLocalEvent<StrapComponent, ComponentStartup>(OnStrapStartup);
         SubscribeLocalEvent<StrapComponent, ComponentShutdown>(OnStrapShutdown);
         SubscribeLocalEvent<StrapComponent, ComponentRemove>((_, c, _) => StrapRemoveAll(c));
 
@@ -32,6 +33,11 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<StrapComponent, CanDropTargetEvent>(OnCanDropTarget);
 
         SubscribeLocalEvent<StrapComponent, MoveEvent>(OnStrapMoveEvent);
+    }
+
+    private void OnStrapStartup(EntityUid uid, StrapComponent component, ComponentStartup args)
+    {
+        AppearanceSystem.SetData(uid, StrapVisuals.State, component.BuckledEntities.Count != 0);
     }
 
     private void OnStrapShutdown(EntityUid uid, StrapComponent component, ComponentShutdown args)

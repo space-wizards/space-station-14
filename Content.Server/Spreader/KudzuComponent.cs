@@ -1,3 +1,5 @@
+using Content.Shared.Damage;
+
 namespace Content.Server.Spreader;
 
 /// <summary>
@@ -11,4 +13,26 @@ public sealed class KudzuComponent : Component
     /// </summary>
     [DataField("spreadChance")]
     public float SpreadChance = 1f;
+
+    /// <summary>
+    /// How much damage is required to reduce growth level
+    /// </summary>
+    [DataField("growthHealth")]
+    public float GrowthHealth = 10.0f;
+
+    /// <summary>
+    /// How much damage is required to prevent growth
+    /// </summary>
+    [DataField("growthBlock")]
+    public float GrowthBlock = 20.0f;
+
+    /// <summary>
+    /// How much the kudzu heals each tick
+    /// </summary>
+    [DataField("damageRecovery")]
+    public DamageSpecifier? DamageRecovery = null;
+
+    [DataField("growthTickChance")]
+    public float GrowthTickChance = 1f;
+
 }
