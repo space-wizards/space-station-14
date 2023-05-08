@@ -62,7 +62,9 @@ public sealed partial class GunSystem
         // share as much code as possible
         if (!Timing.IsFirstTimePredicted ||
             !TryComp<AmmoCounterComponent>(uid, out var clientComp))
+        {
             return;
+        }
 
         UpdateAmmoCount(uid, clientComp);
     }

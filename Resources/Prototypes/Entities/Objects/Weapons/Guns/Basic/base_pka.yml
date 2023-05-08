@@ -24,8 +24,7 @@
           True: { visible: False }
           False: { visible: True }
   - type: RechargeBasicEntityAmmo
-    minRechargeCooldown: 1.5
-    maxRechargeCooldown: 1.5
+    rechargeCooldown: 0.50
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider

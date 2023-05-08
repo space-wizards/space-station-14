@@ -41,6 +41,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] protected readonly ExamineSystemShared Examine = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private   readonly RechargeBasicEntityAmmoSystem _recharge = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
@@ -243,6 +244,9 @@ public abstract partial class SharedGunSystem : EntitySystem
             shots++;
         }
 
+        // NextFire has been touched regardless so need to dirty the gun.
+        Dirty(gun);
+
         // Get how many shots we're actually allowed to make, due to clip size or otherwise.
         // Don't do this in the loop so we still reset NextFire.
         switch (gun.SelectedMode)
@@ -288,7 +292,6 @@ public abstract partial class SharedGunSystem : EntitySystem
                 // May cause prediction issues? Needs more tweaking
                 gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
                 Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
-                Dirty(gun);
                 return;
             }
 
