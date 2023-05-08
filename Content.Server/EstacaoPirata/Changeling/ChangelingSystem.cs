@@ -20,6 +20,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using System.Linq;
 using Content.Server.Chat.Systems;
+using Content.Server.Construction.Completions;
 using Content.Shared.Administration.Logs;
 using Content.Server.Speech.Components;
 using Content.Server.Traitor;
@@ -29,6 +30,7 @@ using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Roles;
 using Content.Shared.Store;
+using Content.Shared.Hands.Components;
 
 namespace Content.Server.EstacaoPirata.Changeling;
 public sealed class ChangelingSystem : EntitySystem
@@ -71,22 +73,52 @@ public sealed class ChangelingSystem : EntitySystem
 
     private void OnArmBlade(EntityUid uid, ChangelingComponent component, ChangelingArmBladeEvent args)
     {
-        // checar se esta comprado?? acho que nao precisa
+        if (!TryComp<HandsComponent>(args.Performer, out var handsComponent))
+            return;
+        if (handsComponent.ActiveHand == null)
+            return;
+
+        var handContainer = handsComponent.ActiveHand.Container;
+
+        if (handContainer == null)
+            return;
 
         // checar se esta ativado
-        component.ArmBladeActivated = !component.ArmBladeActivated;
-
-        var targetTransformComp = Transform(args.Performer);
-        var armbladeEntity =Spawn("ArmBlade", targetTransformComp.Coordinates);
-        _handsSystem.TryPickup(args.Performer, armbladeEntity);
-        // if (TryPrototype(uid, out var prototipo, targetMeta))
-        // {
-        //     var targetTransformComp = Transform(user);
-        //     var child = Spawn(prototipo.ID, targetTransformComp.Coordinates);
-        //
-        // }
+        //component.ArmBladeActivated = !component.ArmBladeActivated;
 
 
+        // REFATORAR ISSO TUDO PRA USAR ArmBladeMaxHands, nao ficar spawnando e apagando entidade (usar o pause)
+        // e tambem fazer com que não se possa tirar o item da mão que está
+
+        if (!component.ArmBladeActivated)
+        {
+            var targetTransformComp = Transform(args.Performer);
+            var armbladeEntity = Spawn("ArmBlade", targetTransformComp.Coordinates);
+
+            if (handContainer.ContainedEntity != null)
+            {
+                _handsSystem.TryDrop(args.Performer, handsComponent.ActiveHand, targetTransformComp.Coordinates);
+            }
+
+            _handsSystem.TryPickup(args.Performer, armbladeEntity);
+
+            component.ArmBladeActivated = true;
+        }
+        else
+        {
+            if (handContainer.ContainedEntity != null)
+            {
+                if (TryPrototype(handContainer.ContainedEntity.Value, out var protoInHand))
+                {
+                    var result = _proto.HasIndex<EntityPrototype>("ArmBlade");
+                    if (result)
+                    {
+                        EntityManager.DeleteEntity(handContainer.ContainedEntity.Value);
+                        component.ArmBladeActivated = false;
+                    }
+                }
+            }
+        }
     }
 
     private void OnImplantShop(EntityUid uid, SubdermalImplantComponent component, ChangelingShopActionEvent args)

@@ -1,1 +1,1 @@
-store-currency-display-points = Pontos de evolução
+store-currency-display-points = Pontos

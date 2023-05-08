@@ -128,6 +128,9 @@ public sealed class ChangelingComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ArmBladeActivated = false;
 
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int ArmBladeMaxHands = 1;
+
     #endregion
 
     #endregion
