@@ -24,14 +24,14 @@ namespace Content.Shared.Zombies
         /// The baseline infection chance you have if you are completely nude
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MaxZombieInfectionChance = 0.90f;
+        public float MaxZombieInfectionChance = 0.40f;
 
         /// <summary>
         /// The minimum infection chance possible. This is simply to prevent
         /// being invincible by bundling up.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MinZombieInfectionChance = 0.20f;
+        public float MinZombieInfectionChance = 0.10f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ZombieMovementSpeedDebuff = 0.75f;
