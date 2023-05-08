@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix NPC faction cache not refreshing correctly., type: Fix}
-  id: 3204
-  time: '2023-03-22T04:58:23.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Adjusted ships on radar so they look much nicer., type: Tweak}
   id: 3205
   time: '2023-03-22T20:52:39.0000000+00:00'
@@ -2914,3 +2909,8 @@ Entries:
   - {message: The network configurator can now be found in the Engivend., type: Add}
   id: 3703
   time: '2023-05-08T11:45:15.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Updated the data and nuke disk sprites, type: Tweak}
+  id: 3704
+  time: '2023-05-08T12:28:38.0000000+00:00'
