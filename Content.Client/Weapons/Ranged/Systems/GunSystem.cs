@@ -11,6 +11,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
+using Robust.Client.State;
 using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
@@ -35,6 +36,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
 
     public bool SpreadOverlay
     {
@@ -364,6 +366,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 _player,
                 _protoManager,
                 _physics,
+                _stateManager,
                 this
             ));
         }

@@ -5,12 +5,14 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Client.State;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
+using Content.Client.Gameplay;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Physics;
@@ -28,18 +30,19 @@ public sealed class GunCrosshairOverlay : Overlay
     private readonly GunSystem _guns;
     private readonly IPrototypeManager _protoManager;
     private readonly SharedPhysicsSystem _physics;
-
+    private readonly IStateManager _stateManager;
     private readonly Texture _crosshair;
     private readonly Texture _crosshairMarked;
+    private readonly float _unavailableSignSize = 22f;
 
-    private float _unavailableSignSize = 22f;
-    private float _maxRange = 20f;
-
+    public float MaxRange = 20f;
     public float MainScale = 0.72f;
-    public float MaxBulletRangeSpread = 0.5f;
+    public float MaxBulletRangeSpread = 0.3f;
+    public float SanctuaryCoeff = 0.1f; // circle of sanctuary, awoid those who are nearby
 
     public GunCrosshairOverlay(IEntityManager entManager, IEyeManager eyeManager, IInputManager input,
-        IPlayerManager player, IPrototypeManager prototypes, SharedPhysicsSystem physics, GunSystem system)
+        IPlayerManager player, IPrototypeManager prototypes, SharedPhysicsSystem physics,
+        IStateManager stManager, GunSystem system)
     {
         _entManager = entManager;
         _eye = eyeManager;
@@ -48,6 +51,7 @@ public sealed class GunCrosshairOverlay : Overlay
         _guns = system;
         _protoManager = prototypes;
         _physics = physics;
+        _stateManager = stManager;
 
         var spriteSys = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
         _crosshair = spriteSys.Frame0(new SpriteSpecifier.Rsi(
@@ -62,14 +66,11 @@ public sealed class GunCrosshairOverlay : Overlay
 
         // get player position
         var player = _player.LocalPlayer?.ControlledEntity;
-        if (player == null ||
-            !_entManager.TryGetComponent<TransformComponent>(player, out var xform))
-        {
+        if (player == null || !_entManager.TryGetComponent<TransformComponent>(player, out var xform))
             return;
-        }
 
-        var mapPos = xform.MapPosition;
-        if (mapPos.MapId != args.MapId)
+        var playerMapPos = xform.MapPosition;
+        if (playerMapPos.MapId != args.MapId)
             return;
 
         // get gun
@@ -79,7 +80,7 @@ public sealed class GunCrosshairOverlay : Overlay
         // get mouse position
         var mouseScreen = _input.MouseScreenPosition;
         var mousePos = _eye.ScreenToMap(mouseScreen);
-        if (mapPos.MapId != mousePos.MapId)
+        if (playerMapPos.MapId != mousePos.MapId)
             return;
 
         // get collision mask
@@ -94,33 +95,42 @@ public sealed class GunCrosshairOverlay : Overlay
             collisionMask = (int) CollisionGroup.BulletImpassable;
         }
 
-
         var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
         var scale = (uiScale > 1.25f ? 1.25f : uiScale) * MainScale;
+        var maxAngle = gun.MaxAngle;
 
-        var direction = mousePos.Position - mapPos.Position;
+        var sanctuaryPos = playerMapPos.Position
+             - (mousePos.Position - playerMapPos.Position).Normalized * SanctuaryCoeff;
+        var direction = mousePos.Position - sanctuaryPos;
 
         // set data for calculating raycastResult
         GunCrosshairDataForCalculatingRCResult raycastData;
-        raycastData.MapPos = mapPos;
+        raycastData.MapPos = new MapCoordinates(sanctuaryPos, playerMapPos.MapId);
         raycastData.Player = player;
         raycastData.CollisionType = collisionMask;
 
         // when it doesn't have any obstacles
         var crosshairType = GunCrosshairTypes.Available;
 
-        if (GetRayCastResult(direction, raycastData, _maxRange)
-                is RayCastResults castRes)
+        // find rayCast for main gun vector
+        if (GetRayCastResult(direction, raycastData, MaxRange) is RayCastResults castRes)
         {
             var mouseDistance = direction.Length;
+            var currentState = _stateManager.CurrentState;
 
-            // the target is not far from hit
-            // it should use entity and mouse over
-            if (0.5 > (castRes.HitPos - mousePos.Position).Length)
+            // use entityUid for an under object if you can found it
+            if (currentState is GameplayStateBase tickScreen
+                && tickScreen.GetClickedEntity(mousePos) is EntityUid objectEntityUid
+                    && castRes.HitEntity == objectEntityUid
+                        && CheckBulletSpread(objectEntityUid, direction, raycastData, maxAngle))
             {
-                // check bullet spread
-                if (CheckBulletSpread(direction, castRes.Distance - MaxBulletRangeSpread, raycastData, gun.MaxAngle))
-                    crosshairType = GunCrosshairTypes.InTarget;
+                crosshairType = GunCrosshairTypes.InTarget;
+            }
+            // the wall or glass is not far from hit
+            else if (MaxBulletRangeSpread > (castRes.HitPos - mousePos.Position).Length
+                && CheckBulletSpread(castRes.Distance - MaxBulletRangeSpread, direction, raycastData, maxAngle))
+            {
+                crosshairType = GunCrosshairTypes.InTarget;
             }
             // it have some obstacle
             else if (mouseDistance > castRes.Distance)
@@ -140,35 +150,45 @@ public sealed class GunCrosshairOverlay : Overlay
         float maxRange)
     {
         var ray = new CollisionRay(data.MapPos.Position, dir.Normalized, data.CollisionType);
-        var rayCastResults =
-            _physics.IntersectRay(data.MapPos.MapId, ray, maxRange, data.Player, false).ToList();
+        var rayCastResults = _physics.IntersectRay(
+            data.MapPos.MapId, ray, maxRange, data.Player, false
+            ).ToList();
 
         return rayCastResults.Any() ? rayCastResults[0] : null;
     }
 
-    private bool CheckBulletSpread(Vector2 dir, float maxDistance, GunCrosshairDataForCalculatingRCResult data,
+    private bool CheckBulletSpread(EntityUid selectedEntityUid,
+        Vector2 dir, GunCrosshairDataForCalculatingRCResult data, Angle angleSpread)
+    {
+        for (var i = 0; i < 2; i++)
+        {
+            var angle = (i == 0) ? angleSpread : (-angleSpread);
+
+            var rayCastRes = GetRayCastResult(angle.RotateVec(dir), data, MaxRange);
+            if (rayCastRes is not RayCastResults castResuslt || castResuslt.HitEntity != selectedEntityUid)
+                return false;
+        }
+
+        return true;
+    }
+
+    private bool CheckBulletSpread(float maxDistance, Vector2 dir, GunCrosshairDataForCalculatingRCResult data,
         Angle angleSpread)
     {
-        var isRange = true;
-
         for (var i = 0; i < 2; i++)
         {
             var angle = (i == 0) ? angleSpread : (-angleSpread);
 
             if (GetRayCastResult(angle.RotateVec(dir), data, maxDistance) != null)
-            {
-                isRange = false;
-                break;
-            }
+                return false;
         }
 
-        return isRange;
+        return true;
     }
-    private void DrawОbstacleSign(DrawingHandleScreen screen,
+    private static void DrawОbstacleSign(DrawingHandleScreen screen,
         Vector2 hitPos, Vector2 playerPos, float scale)
     {
         screen.DrawLine(playerPos + (hitPos - playerPos) * 0.8f, hitPos, Color.Red);
-
         var circleRadius = 2f * scale;
 
         screen.DrawCircle(hitPos, circleRadius + 0.5f, Color.Black);
