@@ -5,3 +5,6 @@ enabled = false
 [npc]
 # Makes physics etc debugging easier.
 enabled = false
+
+[shuttle]
+auto_call_time = 0

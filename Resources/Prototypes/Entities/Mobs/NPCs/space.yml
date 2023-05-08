@@ -1,0 +1,303 @@
+﻿- type: entity
+  name: basic
+  id: MobSpaceBasic
+  parent: SimpleSpaceMobBase
+  abstract: true
+  description: It looks friendly. Why don't you give it a hug?
+  components:
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    sprite: Mobs/Animals/bear.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bear
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      150: Dead
+  - type: Stamina
+    excess: 150
+  - type: Bloodstream
+    bloodMaxVolume: 300
+    bloodReagent: Cryoxadone
+  - type: CombatMode
+  - type: Temperature
+    heatDamageThreshold: 500
+    coldDamageThreshold: 0
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Brute: 5
+        Slash: 10
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+  - type: Puller
+    needsHands: false
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#4faffb"
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: space bear
+  id: MobBearSpace
+  parent: MobSpaceBasic
+  description: It looks friendly. Why don't you give it a hug?
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    sprite: Mobs/Animals/bear.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bear
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: bear
+        BaseUnshaded: glow
+      Critical:
+        Base: bear_dead
+      Dead:
+        Base: bear_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatBear
+      amount: 3
+    - id: MaterialHideBear
+      amount: 1
+      prob: 0.3
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Vocal
+    sounds:
+      Unsexed: Bear
+  - type: InteractionPopup
+    successChance: 0.25
+    interactSuccessString: petting-success-bear
+    interactFailureString: petting-failure-bear
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg
+  - type: GhostRole
+    prob: 0.25
+    name: ghost-role-information-space-bear-name
+    description: ghost-role-information-space-bear-description
+
+- type: entity
+  id: MobBearSpaceSalvage
+  parent: MobBearSpace
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostRole
+    prob: 0.25
+    name: ghost-role-information-salvage-bear-name
+    description: ghost-role-information-salvage-bear-description
+  - type: SalvageMobRestrictions
+
+- type: entity
+  name: space kangaroo
+  id: MobKangarooSpace
+  parent: MobSpaceBasic
+  description: It looks friendly. Why don't you give it a hug?
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    sprite: Mobs/Animals/kangaroo.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: kangaroo-space
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 9
+        Slash: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 4.5
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: kangaroo-space
+        BaseUnshaded: glow
+      Critical:
+        Base: kangaroo-space-crit
+      Dead:
+        Base: kangaroo-space-dead
+  - type: Stamina
+    excess: 180
+  - type: Inventory
+    speciesId: kangaroo
+    templateId: spacekangaroo
+  - type: Vocal
+    sounds:
+      Unsexed: Kangaroo
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBounce
+  - type: ReplacementAccent
+    accent: kangaroo
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+    radius: 1.2
+    energy: 2
+    color: "#4faffb"
+  - type: GhostRole
+    prob: 0.25
+    name: ghost-role-information-space-kangaroo-name
+    description: ghost-role-information-space-kangaroo-description
+
+- type: entity
+  id: MobKangarooSpaceSalvage
+  parent: MobKangarooSpace
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostRole
+    prob: 0.25
+    name: ghost-role-information-salvage-kangaroo-name
+    description: ghost-role-information-salvage-kangaroo-description
+  - type: SalvageMobRestrictions
+
+- type: entity
+  name: space spider
+  id: MobSpiderSpace
+  parent: MobSpaceBasic
+  description: It's so glowing, it looks dangerous.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    sprite: Mobs/Animals/spacespider.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: spacespider
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Critical
+      130: Dead
+  - type: Stamina
+    excess: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: spacespider
+        BaseUnshaded: glow
+      Critical:
+        Base: spacespider_dead
+      Dead:
+        Base: spacespider_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 2
+    - id: EggSpider
+      amount: 1
+      prob: 0.5
+  - type: Bloodstream
+    bloodMaxVolume: 250
+    bloodReagent: Cryoxadone
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 6
+        Poison: 2
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 60
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 3
+  - type: ReplacementAccent
+    accent: xeno
+  - type: InteractionPopup
+    successChance: 0.20
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-generic
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#4faffb"
+  - type: NoSlip
+  - type: IgnoreSpiderWeb
+  - type: GhostRole
+    prob: 0.30
+    name: ghost-role-information-space-spider-name
+    description: ghost-role-information-space-spider-description
+
+- type: entity
+  id: MobSpiderSpaceSalvage
+  parent: MobSpiderSpace
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostRole
+    prob: 0.30
+    name: ghost-role-information-salvage-spider-name
+    description: ghost-role-information-salvage-spider-description
+  - type: SalvageMobRestrictions

@@ -286,7 +286,14 @@ namespace Content.Client.Construction.UI
 
         private void UpdateGhostPlacement()
         {
-            if (_selected == null || _selected.Type != ConstructionType.Structure) return;
+            if (_selected == null)
+                return;
+
+            if (_selected.Type != ConstructionType.Structure)
+            {
+                _placementManager.Clear();
+                return;
+            }
 
             var constructSystem = _systemManager.GetEntitySystem<ConstructionSystem>();
 

@@ -1,5 +1,5 @@
+using Content.Shared.Projectiles;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Serialization;
 
@@ -58,3 +58,9 @@ namespace Content.Shared.Projectiles
         }
     }
 }
+
+/// <summary>
+/// Raised when entity is just about to be hit with projectile but can reflect it
+/// </summary>
+[ByRefEvent]
+public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, ProjectileComponent Component, bool Cancelled);

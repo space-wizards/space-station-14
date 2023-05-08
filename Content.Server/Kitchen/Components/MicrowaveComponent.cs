@@ -12,7 +12,7 @@ namespace Content.Server.Kitchen.Components
         [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float CookTimeMultiplier = 1;
         [DataField("machinePartCookTimeMultiplier", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartCookTimeMultiplier = "Laser";
+        public string MachinePartCookTimeMultiplier = "Capacitor";
         [DataField("cookTimeScalingConstant")]
         public float CookTimeScalingConstant = 0.5f;
 
@@ -59,10 +59,12 @@ namespace Content.Server.Kitchen.Components
     public sealed class BeingMicrowavedEvent : HandledEntityEventArgs
     {
         public EntityUid Microwave;
+        public EntityUid? User;
 
-        public BeingMicrowavedEvent(EntityUid microwave)
+        public BeingMicrowavedEvent(EntityUid microwave, EntityUid? user)
         {
             Microwave = microwave;
+            User = user;
         }
     }
 }

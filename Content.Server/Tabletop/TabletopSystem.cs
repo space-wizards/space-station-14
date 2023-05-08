@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Tabletop
 {
@@ -58,7 +59,7 @@ namespace Content.Server.Tabletop
 
             ActivationVerb verb = new();
             verb.Text = Loc.GetString("tabletop-verb-play-game");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/die.svg.192dpi.png";
+            verb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/die.svg.192dpi.png"));
             verb.Act = () => OpenSessionFor(actor.PlayerSession, uid);
             args.Verbs.Add(verb);
         }

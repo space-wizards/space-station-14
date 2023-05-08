@@ -96,3 +96,6 @@ reagent-desc-ethyloxyephedrine = An unstable medicine derived from desoxyephedri
 
 reagent-name-diphenylmethylamine = diphenylmethylamine
 reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine. Useful for keeping someone awake.
+
+reagent-name-sigynate = sigynate
+reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids.  Tastes sweet!

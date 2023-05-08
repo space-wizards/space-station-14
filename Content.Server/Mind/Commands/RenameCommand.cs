@@ -1,10 +1,9 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration;
 using Content.Server.Administration.Systems;
-using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.PDA;
-using Content.Server.StationRecords;
+using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration;
 using Content.Shared.PDA;
@@ -31,7 +30,7 @@ public sealed class RenameCommand : IConsoleCommand
         }
 
         var name = args[1];
-        if (name.Length > SharedIdCardConsoleComponent.MaxFullNameLength)
+        if (name.Length > IdCardConsoleComponent.MaxFullNameLength)
         {
             shell.WriteLine("Name is too long.");
             return;
@@ -83,11 +82,13 @@ public sealed class RenameCommand : IConsoleCommand
         // PDAs
         if (entSysMan.TryGetEntitySystem<PDASystem>(out var pdaSystem))
         {
-            foreach (var pdaComponent in entMan.EntityQuery<PDAComponent>())
+            var query = entMan.EntityQueryEnumerator<PDAComponent>();
+            while (query.MoveNext(out var uid, out var pda))
             {
-                if (pdaComponent.OwnerName != oldName)
-                    continue;
-                pdaSystem.SetOwner(pdaComponent, name);
+                if (pda.OwnerName == oldName)
+                {
+                    pdaSystem.SetOwner(uid, pda, name);
+                }
             }
         }
 

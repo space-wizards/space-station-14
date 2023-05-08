@@ -1,19 +1,18 @@
-using Content.Client.CombatMode;
+using System.Linq;
 using Content.Client.Gameplay;
-using Content.Client.Hands;
+using Content.Shared.CombatMode;
+using Content.Shared.Hands.Components;
 using Content.Shared.Mobs.Components;
+using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.StatusEffect;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -62,9 +61,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
 
         var entity = entityNull.Value;
-        var weapon = GetWeapon(entity);
 
-        if (weapon == null)
+        if (!TryGetWeapon(entity, out var weaponUid, out var weapon))
             return;
 
         if (!CombatMode.IsInCombatMode(entity) || !Blocker.CanAttack(entity))
@@ -72,7 +70,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             weapon.Attacking = false;
             if (weapon.WindUpStart != null)
             {
-                EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weapon.Owner));
+                EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weaponUid));
             }
 
             return;
@@ -94,7 +92,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             // If it's an unarmed attack then do a disarm
-            if (weapon.Owner == entity)
+            if (weaponUid == entity)
             {
                 EntityUid? target = null;
 
@@ -103,11 +101,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
                 }
                 else
                 {
-                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
                 }
 
                 if (_stateManager.CurrentState is GameplayStateBase screen)
@@ -124,7 +122,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // Start a windup
             if (weapon.WindUpStart == null)
             {
-                EntityManager.RaisePredictiveEvent(new StartHeavyAttackEvent(weapon.Owner));
+                EntityManager.RaisePredictiveEvent(new StartHeavyAttackEvent(weaponUid));
                 weapon.WindUpStart = currentTime;
             }
 
@@ -138,14 +136,14 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
                 }
                 else
                 {
-                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
                 }
 
-                EntityManager.RaisePredictiveEvent(new HeavyAttackEvent(weapon.Owner, coordinates));
+                ClientHeavyAttack(entity, coordinates, weaponUid, weapon);
             }
 
             return;
@@ -153,7 +151,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (weapon.WindUpStart != null)
         {
-            EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weapon.Owner));
+            EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weaponUid));
         }
 
         // Light attack
@@ -179,11 +177,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (MapManager.TryFindGridAt(mousePos, out var grid))
             {
-                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
+                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
             }
             else
             {
-                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
             }
 
             EntityUid? target = null;
@@ -194,13 +192,13 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 target = screen.GetClickedEntity(mousePos);
             }
 
-            RaisePredictiveEvent(new LightAttackEvent(target, weapon.Owner, coordinates));
+            RaisePredictiveEvent(new LightAttackEvent(target, weaponUid, coordinates));
             return;
         }
 
         if (weapon.Attacking)
         {
-            RaisePredictiveEvent(new StopAttackEvent(weapon.Owner));
+            RaisePredictiveEvent(new StopAttackEvent(weaponUid));
         }
     }
 
@@ -220,9 +218,9 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             RaiseLocalEvent(new DamageEffectEvent(Color.Red, targets));
     }
 
-    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
+    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
-        if (!base.DoDisarm(user, ev, component, session))
+        if (!base.DoDisarm(user, ev, meleeUid, component, session))
             return false;
 
         if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
@@ -245,6 +243,34 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Raises a heavy attack event with the relevant attacked entities.
+    /// This is to avoid lag effecting the client's perspective too much.
+    /// </summary>
+    private void ClientHeavyAttack(EntityUid user, EntityCoordinates coordinates, EntityUid meleeUid, MeleeWeaponComponent component)
+    {
+        // Only run on first prediction to avoid the potential raycast entities changing.
+        if (!TryComp<TransformComponent>(user, out var userXform) ||
+            !Timing.IsFirstTimePredicted)
+        {
+            return;
+        }
+
+        var targetMap = coordinates.ToMap(EntityManager, TransformSystem);
+
+        if (targetMap.MapId != userXform.MapID)
+            return;
+
+        var userPos = TransformSystem.GetWorldPosition(userXform);
+        var direction = targetMap.Position - userPos;
+        var distance = Math.Min(component.Range, direction.Length);
+
+        // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
+        // Server will validate it with InRangeUnobstructed.
+        var entities = ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList();
+        RaisePredictiveEvent(new HeavyAttackEvent(meleeUid, entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), coordinates));
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

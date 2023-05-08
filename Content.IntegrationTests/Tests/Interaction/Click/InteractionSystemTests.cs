@@ -1,6 +1,5 @@
 #nullable enable annotations
 using System.Threading.Tasks;
-using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -27,13 +26,14 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: ""-0.25,-0.25,0.25,0.25""
-      layer:
-      - MobMask
-      mask:
-      - MobMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: ""-0.25,-0.25,0.25,0.25""
+        layer:
+        - MobMask
+        mask:
+        - MobMask
 ";
 
         [Test]
@@ -93,6 +93,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing);
             });
 
+            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -155,6 +156,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
             });
 
+            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -215,6 +217,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing);
             });
 
+            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -276,6 +279,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
             });
 
+            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -353,6 +357,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.True);
             });
 
+            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -367,6 +372,12 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 base.Initialize();
                 SubscribeLocalEvent<InteractUsingEvent>((e) => InteractUsingEvent?.Invoke(e));
                 SubscribeLocalEvent<InteractHandEvent>((e) => InteractHandEvent?.Invoke(e));
+            }
+
+            public void ClearHandlers()
+            {
+                InteractUsingEvent = null;
+                InteractHandEvent = null;
             }
         }
 

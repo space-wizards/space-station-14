@@ -21,9 +21,10 @@
   id: ERTLeader
   randomizeName: false
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-leader-name
+      description: ghost-role-information-ert-leader-description
     - type: GhostTakeoverAvailable
-      name: ERT Leader
-      description: Lead a team of specialists to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
     - type: RandomMetadata
@@ -48,9 +49,10 @@
   id: ERTLeaderEVA
   parent: ERTLeader
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-leader-name
+      description: ghost-role-information-ert-leader-description
     - type: GhostTakeoverAvailable
-      name: ERT Leader
-      description: Lead a team of specialists to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
 
@@ -76,9 +78,10 @@
   id: ERTJanitor
   parent: ERTLeader
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-janitor-name
+      description: ghost-role-information-ert-janitor-description
     - type: GhostTakeoverAvailable
-      name: ERT Janitor
-      description: Assist with custodial efforts to resolve the stations issues.
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -103,9 +106,10 @@
   id: ERTJanitorEVA
   parent: ERTJanitor
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-janitor-name
+      description: ghost-role-information-ert-janitor-description
     - type: GhostTakeoverAvailable
-      name: ERT Janitor
-      description: Assist with custodial efforts to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTJanitorGearEVA ]
 
@@ -131,9 +135,10 @@
   id: ERTEngineer
   parent: ERTLeader
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-engineer-name
+      description: ghost-role-information-ert-engineer-description
     - type: GhostTakeoverAvailable
-      name: ERT Engineer
-      description: Assist with engineering efforts to resolve the stations issues.
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -158,9 +163,10 @@
   id: ERTEngineerEVA
   parent: ERTEngineer
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-engineer-name
+      description: ghost-role-information-ert-engineer-description
     - type: GhostTakeoverAvailable
-      name: ERT Engineer
-      description: Assist with engineering efforts to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
 
@@ -186,9 +192,10 @@
   id: ERTSecurity
   parent: ERTLeader
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-security-name
+      description: ghost-role-information-ert-security-description
     - type: GhostTakeoverAvailable
-      name: ERT Security
-      description: Assist with security efforts to resolve the stations issues.
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -213,9 +220,10 @@
   id: ERTSecurityEVA
   parent: ERTSecurity
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-security-name
+      description: ghost-role-information-ert-security-description
     - type: GhostTakeoverAvailable
-      name: ERT Security
-      description: Assist with security efforts to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
 
@@ -241,9 +249,10 @@
   id: ERTMedical
   parent: ERTLeader
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-medical-name
+      description: ghost-role-information-ert-medical-description
     - type: GhostTakeoverAvailable
-      name: ERT Medical
-      description: Assist with medicaling efforts to resolve the stations issues.
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -268,9 +277,10 @@
   id: ERTMedicalEVA
   parent: ERTMedical
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-medical-name
+      description: ghost-role-information-ert-medical-description
     - type: GhostTakeoverAvailable
-      name: ERT Medical
-      description: Assist with medicaling efforts to resolve the stations issues.
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
 
@@ -292,9 +302,10 @@
   components:
     - type: Loadout
       prototypes: [CBURNGear]
+    - type: GhostRole
+      name: ghost-role-information-cburn-agent-name
+      description: ghost-role-information-cburn-agent-description
     - type: GhostTakeoverAvailable
-      name: CBURN Agent
-      description: A highly trained CentCom agent, capable of dealing with various threats.
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -315,9 +326,10 @@
 - type: randomHumanoidSettings
   id: CentcomOfficial
   components:
+    - type: GhostRole
+      name: ghost-role-information-centcom-official-name
+      description: ghost-role-information-centcom-official-description
     - type: GhostTakeoverAvailable
-      name: CentCom official
-      description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
     - type: Loadout
       prototypes: [ CentcomGear ]
 
@@ -357,3 +369,30 @@
   id: NukeOp
   components:
     - type: NukeOperative
+
+- type: entity
+  id: RandomHumanoidSpawnerCluwne
+  name: Cluwne
+  suffix: spawns a cluwne
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: cluwne
+    - type: RandomHumanoidSpawner
+      settings: Cluwne
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+
+- type: randomHumanoidSettings
+  id: Cluwne
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-cluwne-name
+      description: ghost-role-information-cluwne-description
+    - type: GhostTakeoverAvailable
+    - type: Cluwne

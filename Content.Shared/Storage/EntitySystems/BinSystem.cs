@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
@@ -141,12 +140,15 @@ public sealed class BinSystem : EntitySystem
     /// <param name="toRemove"></param>
     /// <param name="component"></param>
     /// <returns></returns>
-    public bool TryRemoveFromBin(EntityUid uid, [NotNullWhen(true)] EntityUid? toRemove, BinComponent? component = null)
+    public bool TryRemoveFromBin(EntityUid uid, EntityUid? toRemove, BinComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
-        
-        if (toRemove != component.Items.Last())
+
+        if (!component.Items.Any())
+            return false;
+
+        if (toRemove == null || toRemove != component.Items.LastOrDefault())
             return false;
 
         if (!component.ItemContainer.Remove(toRemove.Value))

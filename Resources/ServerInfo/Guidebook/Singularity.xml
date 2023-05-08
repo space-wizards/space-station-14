@@ -1,0 +1,106 @@
+<Document>
+# Gravitational Singularity Engine
+
+The Gravitational Singularity Engine can yield infinite power, with no fueling required. It can also destroy the whole station with equal ease. It uses a Particle Accelerator to fire high energy particles at a Singularity Generator to form a singularity. The singularity then pulses radiation which is absorbed by Radiation Collectors.
+
+## Setting it up
+
+The Gravitational Singularity Engine requires 4 subsystems to work properly:
+
+## Gravitational singularity generator
+<Box>
+<GuideEntityEmbed Entity="SingularityGenerator"/>
+</Box>
+The generator should be anchored at the center of the containment area since this is where the singularity will appear at.
+
+## Containment field generators and emitters
+<Box>
+<GuideEntityEmbed Entity="Emitter"/>
+<GuideEntityEmbed Entity="ContainmentFieldGenerator"/>
+<GuideEntityEmbed Entity="ContainmentField"/>
+</Box>
+The emitters connect to MV cables and fire lasers as long as they have power and are turned on.
+Fire emitters at containment field generators to activate them.
+If two containment field generators are active, in range and in the same cardinal axis, a containment field will appear.
+The containment field will repell the singularity, keeping it from escaping, and yield a little bit of power every time anything bounces off of them. 
+Emitter lasers and containment field can cause damage, avoid touching them when active.
+
+## Radition collectors
+<Box>
+<GuideEntityEmbed Entity="RadiationCollector"/>
+</Box>
+They connect to HV cables and generate power from nearby radiation sources when turned on.
+
+## Particle accelerator
+
+<Box>
+<GuideEntityEmbed Entity="ParticleAcceleratorEndCap"/>
+</Box>
+
+<Box>
+<GuideEntityEmbed Entity="ParticleAcceleratorControlBox" Caption="PA computer"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber"/>
+<GuideEntityEmbed Entity="CableHV"/>
+</Box>
+
+<Box>
+<GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
+</Box>
+
+<Box>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft" Caption="Emitter L"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter" Caption="Emitter C"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight" Caption="Emitter R"/>
+</Box>
+
+The Particle Accelerator (PA) is a multi-tile structure that launches acclerated particles from its emitters. Its emitters should always face the gravitational singularity generator.
+Some stations already have an unfinished PA. To complete, first ensure there is HV cable beneath the PA power box, anchor all parts, then add LV cable to each part.
+<Box>
+<GuideEntityEmbed Entity="CableApcStack"/>
+</Box>
+Then use a screwdriver to screw back the panels.
+Scan parts using the PA control computer to check if it's operational. If it shows up as incomplete, examine for what's missing.
+<Box>
+<GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
+</Box>
+
+## Turing on the Gravitational Singularity Engine
+
+[color=#a4885c]Do not[/color] turn the PA on unless all other subsystems are working properly.
+
+Turn power on using the PA control computer. Set strength to an appropiate level.
+The higher the output stength is set on PA control computer, the bigger the singularity will be.
+
+The PA will now draw power from the power net and start firing particles at the Gravitational singularity generator. 
+
+<Box>
+<GuideEntityEmbed Entity="ParticlesProjectile" Caption=""/>
+<GuideEntityEmbed Entity="ParticlesProjectile"/>
+<GuideEntityEmbed Entity="ParticlesProjectile" Caption=""/>
+</Box>
+
+A singularity will soon appear at the position of the Gravitational singularity generator.
+<Box>
+<GuideEntityEmbed Entity="Singularity"/>
+</Box>
+
+If no particle is hitting the singularity generator, the singularity will start to slowly decay until it disappear.
+
+## Safety
+Singularity emits radiation around it, so always keep a distance. Consider getting radiation shielding gear beforehand. Seek medical attention if experiencing health issues.
+
+<Box>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitEngineering"/>
+</Box>
+
+<Box>
+<GuideEntityEmbed Entity="ClosetRadiationSuit"/>
+<GuideEntityEmbed Entity="ClothingOuterSuitRad"/>
+<GuideEntityEmbed Entity="GeigerCounter"/>
+</Box>
+
+A singularity might move around, but the containment field will repel it.
+If a singularity escapes its containment field, often referred to as a "singuloose," it will attract and then consume everything in its way.
+
+In such circumstances, there is little to be done other than running in the opposite direction.
+</Document>

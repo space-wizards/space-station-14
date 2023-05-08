@@ -1,0 +1,4 @@
+- type: guideEntry
+  id: Radio
+  name: guide-entry-radio
+  text: "/ServerInfo/Guidebook/Controls/Radio.xml"

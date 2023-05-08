@@ -27,14 +27,63 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialCardboard
+  name: cardboard
+  suffix: Full
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 100
+  - type: Stack
+    stackType: Cardboard
+  - type: Sprite
+    state: cardboard_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - cardboard
+      - cardboard_2
+      - cardboard_3
+
+- type: entity
+  parent: MaterialCardboard
+  id: MaterialCardboard1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: cardboard
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
   id: MaterialCloth
   name: cloth
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - RawMaterial
+    - DroneUsable
+    - Gauze
+  - type: Healing
+    damageContainer: Biological
+    damage:
+      types:
+        Slash: -0.5
+        Piercing: -0.5
+    bloodlossModifier: -4
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: Cloth
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Cloth: 100
   - type: Extractable
     juiceSolution:
@@ -69,7 +118,8 @@
   - type: Stack
     stackType: Durathread
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Durathread: 100
   - type: Sprite
     state: durathread_3
@@ -100,12 +150,20 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Wood: 100
   - type: Stack
     stackType: WoodPlank
   - type: Sprite
     state: wood
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - wood
+      - wood_2
+      - wood_3
   - type: Item
     heldPrefix: wood
 
@@ -124,7 +182,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Biomass: 1
   - type: Stack
     stackType: Biomass
@@ -149,16 +208,28 @@
   name: bear hide
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Materials/materials.rsi
-    state: bearpelt
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bearpelt
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: bearpelt_glow
+      shader: unshaded
   - type: Item
     sprite: Clothing/Head/Misc/hides.rsi
     heldPrefix: bear
   - type: Clothing
+    netsync: false
     sprite: Clothing/Head/Misc/hides.rsi
     equippedPrefix: bear
     slots:
       - HEAD
+  - type: PointLight
+    radius: 1.2
+    energy: 1.5
+    color: "#4faffb"
+    slots:
 
 - type: entity
   parent: MaterialBase
@@ -205,5 +276,62 @@
   components:
   - type: Sprite
     state: cotton
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBananium
+  name: bananium
+  suffix: Full
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Bananium: 150
+  - type: Sprite
+    state: bananium_1
+  - type: Stack
+    stackType: Bananium
+    count: 10
+  - type: RadiationSource
+    intensity: 0.3
+  - type: FlavorProfile
+    flavors:
+      - banana
+  - type: Food
+    trash: TrashBananiumPeel
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Honk
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBanana
+        Quantity: 5
+      - ReagentId: Honk
+        Quantity: 5
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - bananium
+          - bananium_1
+
+- type: entity
+  parent: MaterialBananium
+  id: MaterialBananium1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: bananium
   - type: Stack
     count: 1

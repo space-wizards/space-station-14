@@ -31,6 +31,8 @@ public sealed class ResizableChatBox : ChatBox
 
         private byte _clampIn;
 
+        public Action<Vector2>? OnChatResizeFinish;
+
         protected override void EnteredTree()
         {
             base.EnteredTree();
@@ -73,6 +75,8 @@ public sealed class ResizableChatBox : ChatBox
 
                 // If this is done in MouseDown, Godot won't fire MouseUp as you need focus to receive MouseUps.
                 UserInterfaceManager.KeyboardFocused?.ReleaseKeyboardFocus();
+
+                OnChatResizeFinish?.Invoke(Size);
             }
 
             base.KeyBindUp(args);

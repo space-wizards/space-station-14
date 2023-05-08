@@ -1,19 +1,18 @@
-using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Popups;
 using Content.Server.Pulling;
-using Content.Server.Tools;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 
 namespace Content.Server.Construction
 {
@@ -22,16 +21,15 @@ namespace Content.Server.Construction
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly ToolSystem _tool = default!;
+        [Dependency] private readonly SharedToolSystem _tool = default!;
         [Dependency] private readonly PullingSystem _pulling = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<AnchorableComponent, TryAnchorCompletedEvent>(OnAnchorComplete);
-            SubscribeLocalEvent<AnchorableComponent, TryAnchorCancelledEvent>(OnAnchorCancelled);
             SubscribeLocalEvent<AnchorableComponent, TryUnanchorCompletedEvent>(OnUnanchorComplete);
-            SubscribeLocalEvent<AnchorableComponent, TryUnanchorCancelledEvent>(OnUnanchorCancelled);
             SubscribeLocalEvent<AnchorableComponent, ExaminedEvent>(OnAnchoredExamine);
         }
 
@@ -42,37 +40,31 @@ namespace Content.Server.Construction
             args.PushMarkup(Loc.GetString(messageId, ("target", uid)));
         }
 
-        private void OnUnanchorCancelled(EntityUid uid, AnchorableComponent component, TryUnanchorCancelledEvent args)
-        {
-            component.CancelToken = null;
-        }
-
         private void OnUnanchorComplete(EntityUid uid, AnchorableComponent component, TryUnanchorCompletedEvent args)
         {
-            component.CancelToken = null;
+            if (args.Cancelled || args.Used is not { } used)
+                return;
+
             var xform = Transform(uid);
 
-            RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, args.Using));
-            xform.Anchored = false;
-            RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using));
+            RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, used));
+            _transform.Unanchor(uid, xform);
+            RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, used));
 
             _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid);
 
             _adminLogger.Add(
                 LogType.Unanchor,
                 LogImpact.Low,
-                $"{EntityManager.ToPrettyString(args.User):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
+                $"{EntityManager.ToPrettyString(args.User):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(used):using}"
             );
-        }
-
-        private void OnAnchorCancelled(EntityUid uid, AnchorableComponent component, TryAnchorCancelledEvent args)
-        {
-            component.CancelToken = null;
         }
 
         private void OnAnchorComplete(EntityUid uid, AnchorableComponent component, TryAnchorCompletedEvent args)
         {
-            component.CancelToken = null;
+            if (args.Cancelled || args.Used is not { } used)
+                return;
+
             var xform = Transform(uid);
             if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
                 !TileFree(xform.Coordinates, anchorBody))
@@ -92,18 +84,23 @@ namespace Content.Server.Construction
 
             // TODO: Anchoring snaps rn anyway!
             if (component.Snap)
-                xform.Coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
+            {
+                _transform.SetCoordinates(uid, xform.Coordinates.SnapToGrid(EntityManager, _mapManager));
+            }
 
-            RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, args.Using));
-            xform.Anchored = true;
-            RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using));
+            RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, used));
+
+            if (!xform.Anchored)
+                _transform.AnchorEntity(uid, xform);
+
+            RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, used));
 
             _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid);
 
             _adminLogger.Add(
                 LogType.Anchor,
                 LogImpact.Low,
-                $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
+                $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(used):using}"
             );
         }
 
@@ -116,7 +113,12 @@ namespace Content.Server.Construction
                 return false;
 
             var tileIndices = grid.TileIndicesFor(coordinates);
-            var enumerator = grid.GetAnchoredEntitiesEnumerator(tileIndices);
+            return TileFree(grid, tileIndices, anchorBody.CollisionLayer, anchorBody.CollisionMask);
+        }
+
+        public bool TileFree(MapGridComponent grid, Vector2i gridIndices, int collisionLayer = 0, int collisionMask = 0)
+        {
+            var enumerator = grid.GetAnchoredEntitiesEnumerator(gridIndices);
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
             while (enumerator.MoveNext(out var ent))
@@ -128,8 +130,8 @@ namespace Content.Server.Construction
                     continue;
                 }
 
-                if ((body.CollisionMask & anchorBody.CollisionLayer) != 0x0 ||
-                    (body.CollisionLayer & anchorBody.CollisionMask) != 0x0)
+                if ((body.CollisionMask & collisionLayer) != 0x0 ||
+                    (body.CollisionLayer & collisionMask) != 0x0)
                 {
                     return false;
                 }
@@ -144,8 +146,7 @@ namespace Content.Server.Construction
         /// <returns>true if it is valid, false otherwise</returns>
         private bool Valid(EntityUid uid, EntityUid userUid, EntityUid usingUid, bool anchoring, AnchorableComponent? anchorable = null, ToolComponent? usingTool = null)
         {
-            if (!Resolve(uid, ref anchorable) ||
-                anchorable.CancelToken != null)
+            if (!Resolve(uid, ref anchorable))
                 return false;
 
             if (!Resolve(usingUid, ref usingTool))
@@ -194,10 +195,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            anchorable.CancelToken = new CancellationTokenSource();
-
-            _tool.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
-                new TryAnchorCompletedEvent(userUid, usingUid), new TryAnchorCancelledEvent(userUid, usingUid), uid, cancelToken: anchorable.CancelToken.Token);
+            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryAnchorCompletedEvent());
         }
 
         /// <summary>
@@ -209,18 +207,16 @@ namespace Content.Server.Construction
             TransformComponent? transform = null,
             ToolComponent? usingTool = null)
         {
-            if (!Resolve(uid, ref anchorable, ref transform) ||
-                anchorable.CancelToken != null)
+            if (!Resolve(uid, ref anchorable, ref transform))
                 return;
 
-            if (!Resolve(usingUid, ref usingTool)) return;
+            if (!Resolve(usingUid, ref usingTool))
+                return;
 
-            if (!Valid(uid, userUid, usingUid, false)) return;
+            if (!Valid(uid, userUid, usingUid, false))
+                return;
 
-            anchorable.CancelToken = new CancellationTokenSource();
-
-            _tool.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
-                new TryUnanchorCompletedEvent(userUid, usingUid), new TryUnanchorCancelledEvent(userUid, usingUid), uid, cancelToken: anchorable.CancelToken.Token);
+            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryUnanchorCompletedEvent());
         }
 
         /// <summary>
@@ -249,46 +245,6 @@ namespace Content.Server.Construction
 
                 // Log anchor attempt
                 _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
-            }
-        }
-
-        private abstract class AnchorEvent : EntityEventArgs
-        {
-            public EntityUid User;
-            public EntityUid Using;
-
-            protected AnchorEvent(EntityUid userUid, EntityUid usingUid)
-            {
-                User = userUid;
-                Using = usingUid;
-            }
-        }
-
-        private sealed class TryUnanchorCompletedEvent : AnchorEvent
-        {
-            public TryUnanchorCompletedEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
-            {
-            }
-        }
-
-        private sealed class TryUnanchorCancelledEvent : AnchorEvent
-        {
-            public TryUnanchorCancelledEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
-            {
-            }
-        }
-
-        private sealed class TryAnchorCompletedEvent : AnchorEvent
-        {
-            public TryAnchorCompletedEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
-            {
-            }
-        }
-
-        private sealed class TryAnchorCancelledEvent : AnchorEvent
-        {
-            public TryAnchorCancelledEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
-            {
             }
         }
     }

@@ -1,12 +1,12 @@
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Hands.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -79,7 +79,15 @@ namespace Content.Server.Nutrition.EntitySystems
             SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid),
                 transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
+            // Decrease size of item based on count - Could implement in the future
+            // Bug with this currently is the size in a container is not updated
+            // if (TryComp(uid, out ItemComponent? itemComp) && TryComp(sliceUid, out ItemComponent? sliceComp))
+            // {
+            //     itemComp.Size -= sliceComp.Size;
+            // }
+
             component.Count--;
+
             // If someone makes food proto with 1 slice...
             if (component.Count < 1)
             {

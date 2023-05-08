@@ -1,15 +1,12 @@
 using Content.Server.Body.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using System.Threading;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Humanoid;
 using Content.Server.NPC;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;
@@ -20,25 +17,28 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.NPC.Systems;
+using Content.Server.Station.Systems;
+using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Dragon
 {
-    public sealed partial class DragonSystem : GameRuleSystem
+    public sealed partial class DragonSystem : GameRuleSystem<DragonRuleComponent>
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
 
         /// <summary>
@@ -59,13 +59,12 @@ namespace Content.Server.Dragon
 
             SubscribeLocalEvent<DragonComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
-            SubscribeLocalEvent<DragonComponent, DragonDevourComplete>(OnDragonDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourActionEvent>(OnDevourAction);
             SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnDragonRift);
             SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
 
-            SubscribeLocalEvent<DragonComponent, DragonStructureDevourComplete>(OnDragonStructureDevourComplete);
-            SubscribeLocalEvent<DragonComponent, DragonDevourCancelledEvent>(OnDragonDevourCancelled);
+            SubscribeLocalEvent<DragonComponent, DragonDevourDoAfterEvent>(OnDoAfter);
+
             SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
 
             SubscribeLocalEvent<DragonRiftComponent, ComponentShutdown>(OnRiftShutdown);
@@ -74,6 +73,29 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonRiftComponent, ExaminedEvent>(OnRiftExamined);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRiftRoundEnd);
+        }
+
+        private void OnDoAfter(EntityUid uid, DragonComponent component, DragonDevourDoAfterEvent args)
+        {
+            if (args.Handled || args.Cancelled)
+                return;
+
+            var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
+
+            //Humanoid devours allow dragon to get eggs, corpses included
+            if (HasComp<HumanoidAppearanceComponent>(args.Args.Target))
+            {
+                ichorInjection.ScaleSolution(0.5f);
+                component.DragonStomach.Insert(args.Args.Target.Value);
+                _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
+            }
+
+            //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
+            //If it's not human, it must be a structure
+            else if (args.Args.Target != null)
+                EntityManager.QueueDeleteEntity(args.Args.Target.Value);
+
+            _audioSystem.PlayPvs(component.SoundDevour, uid);
         }
 
         public override void Update(float frameTime)
@@ -188,8 +210,8 @@ namespace Content.Server.Dragon
 
                 // We can't predict the rift being destroyed anyway so no point adding weakened to shared.
                 dragon.WeakenedAccumulator = dragon.WeakenedDuration;
-                _movement.RefreshMovementSpeedModifiers(component.Dragon);
-                _popupSystem.PopupEntity(Loc.GetString("carp-rift-destroyed"), component.Dragon, component.Dragon);
+                _movement.RefreshMovementSpeedModifiers(component.Dragon.Value);
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-destroyed"), component.Dragon.Value, component.Dragon.Value);
             }
         }
 
@@ -292,39 +314,6 @@ namespace Content.Server.Dragon
             }
         }
 
-        private void OnDragonDevourCancelled(EntityUid uid, DragonComponent component, DragonDevourCancelledEvent args)
-        {
-            component.CancelToken = null;
-        }
-
-        private void OnDragonDevourComplete(EntityUid uid, DragonComponent component, DragonDevourComplete args)
-        {
-            component.CancelToken = null;
-            var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
-
-            //Humanoid devours allow dragon to get eggs, corpses included
-            if (!EntityManager.HasComponent<HumanoidAppearanceComponent>(args.Target))
-            {
-                ichorInjection.ScaleSolution(0.5f);
-            }
-
-            _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
-            component.DragonStomach.Insert(args.Target);
-
-            if (component.SoundDevour != null)
-                _audioSystem.PlayPvs(component.SoundDevour, uid, component.SoundDevour.Params);
-        }
-
-        private void OnDragonStructureDevourComplete(EntityUid uid, DragonComponent component, DragonStructureDevourComplete args)
-        {
-            component.CancelToken = null;
-            //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
-            EntityManager.QueueDeleteEntity(args.Target);
-
-            if (component.SoundDevour != null)
-                _audioSystem.PlayPvs(component.SoundDevour, uid, component.SoundDevour.Params);
-        }
-
         private void Roar(DragonComponent component)
         {
             if (component.SoundRoar != null)
@@ -351,12 +340,8 @@ namespace Content.Server.Dragon
         /// </summary>
         private void OnDevourAction(EntityUid uid, DragonComponent component, DragonDevourActionEvent args)
         {
-            if (component.CancelToken != null ||
-                args.Handled ||
-                component.DevourWhitelist?.IsValid(args.Target, EntityManager) != true)
-            {
+            if (args.Handled || component.DevourWhitelist?.IsValid(args.Target, EntityManager) != true)
                 return;
-            }
 
             args.Handled = true;
             var target = args.Target;
@@ -368,15 +353,11 @@ namespace Content.Server.Dragon
                 {
                     case MobState.Critical:
                     case MobState.Dead:
-                        component.CancelToken = new CancellationTokenSource();
 
-                        _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, component.CancelToken.Token, target)
+                        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.DevourTime, new DragonDevourDoAfterEvent(), uid, target: target, used: uid)
                         {
-                            UserFinishedEvent = new DragonDevourComplete(uid, target),
-                            UserCancelledEvent = new DragonDevourCancelledEvent(),
                             BreakOnTargetMove = true,
                             BreakOnUserMove = true,
-                            BreakOnStun = true,
                         });
                         break;
                     default:
@@ -392,42 +373,11 @@ namespace Content.Server.Dragon
             if (component.SoundStructureDevour != null)
                 _audioSystem.PlayPvs(component.SoundStructureDevour, uid, component.SoundStructureDevour.Params);
 
-            component.CancelToken = new CancellationTokenSource();
-
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.StructureDevourTime, component.CancelToken.Token, target)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.StructureDevourTime, new DragonDevourDoAfterEvent(), uid, target: target, used: uid)
             {
-                UserFinishedEvent = new DragonStructureDevourComplete(uid, target),
-                UserCancelledEvent = new DragonDevourCancelledEvent(),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
             });
         }
-
-        private sealed class DragonDevourComplete : EntityEventArgs
-        {
-            public EntityUid User { get; }
-            public EntityUid Target { get; }
-
-            public DragonDevourComplete(EntityUid user, EntityUid target)
-            {
-                User = user;
-                Target = target;
-            }
-        }
-
-        private sealed class DragonStructureDevourComplete : EntityEventArgs
-        {
-            public EntityUid User { get; }
-            public EntityUid Target { get; }
-
-            public DragonStructureDevourComplete(EntityUid user, EntityUid target)
-            {
-                 User = user;
-                 Target = target;
-            }
-        }
-
-        private sealed class DragonDevourCancelledEvent : EntityEventArgs {}
     }
 }

@@ -8,16 +8,18 @@
     tags:
     - CigPack
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    capacity: 6
+    capacity: 5
   - type: Item
-    size: 6
+    size: 5
   - type: StorageFill
     contents:
     - id: Cigarette
-      amount: 6
+      amount: 5
   - type: ItemCounter
     count:
       tags: [Cigarette]
@@ -49,7 +51,6 @@
     - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
-    size: 6
 
 - type: entity
   id: CigPackRed
@@ -64,7 +65,6 @@
     - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
-    size: 6
 
 - type: entity
   id: CigPackBlue
@@ -79,7 +79,6 @@
     - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
-    size: 6
 
 - type: entity
   id: CigPackBlack
@@ -94,7 +93,6 @@
     - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
-    size: 6
 
 - type: entity
   id: CigPackSyndicate
@@ -105,7 +103,7 @@
   - type: StorageFill
     contents:
     - id: CigaretteSyndicate
-      amount: 6
+      amount: 5
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
@@ -113,4 +111,3 @@
     - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
-    size: 6

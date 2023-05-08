@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
@@ -6,8 +7,6 @@ using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
-using System.Linq;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -117,17 +116,18 @@ namespace Content.Shared.Throwing
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
-        public void LandComponent(ThrownItemComponent thrownItem, PhysicsComponent physics)
+        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics)
         {
             _physics.SetBodyStatus(physics, BodyStatus.OnGround);
 
-            if (thrownItem.Deleted || Deleted(thrownItem.Owner) || _containerSystem.IsEntityInContainer(thrownItem.Owner)) return;
+            if (thrownItem.Deleted || Deleted(uid) || _containerSystem.IsEntityInContainer(uid))
+                return;
 
-            var landing = thrownItem.Owner;
+            var landing = uid;
 
             // Unfortunately we can't check for hands containers as they have specific names.
-            if (thrownItem.Owner.TryGetContainerMan(out var containerManager) &&
-                EntityManager.HasComponent<SharedHandsComponent>(containerManager.Owner))
+            if (uid.TryGetContainerMan(out var containerManager) &&
+                EntityManager.HasComponent<HandsComponent>(containerManager.Owner))
             {
                 EntityManager.RemoveComponent(landing, thrownItem);
                 return;

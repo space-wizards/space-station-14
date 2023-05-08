@@ -3,12 +3,11 @@ using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Commands;
 using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.CCVar;
 using NUnit.Framework;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.GameRules
@@ -23,6 +22,7 @@ namespace Content.IntegrationTests.Tests.GameRules
             await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
+            var entityManager = server.ResolveDependency<IEntityManager>();
             var configManager = server.ResolveDependency<IConfigurationManager>();
             await server.WaitPost(() =>
             {
@@ -31,18 +31,17 @@ namespace Content.IntegrationTests.Tests.GameRules
                 command.Execute(null, string.Empty, Array.Empty<string>());
             });
 
-
             var sGameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
-            var maxTimeMaxTimeRestartRuleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MaxTimeRestartRuleSystem>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
+
+
+            sGameTicker.StartGameRule("MaxTimeRestart", out var ruleEntity);
+            Assert.That(entityManager.TryGetComponent<MaxTimeRestartRuleComponent>(ruleEntity, out var maxTime));
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
-
-                sGameTicker.StartGameRule(IoCManager.Resolve<IPrototypeManager>().Index<GameRulePrototype>(maxTimeMaxTimeRestartRuleSystem.Prototype));
-                maxTimeMaxTimeRestartRuleSystem.RoundMaxTime = TimeSpan.FromSeconds(3);
-
+                maxTime.RoundMaxTime = TimeSpan.FromSeconds(3);
                 sGameTicker.StartRound();
             });
 
@@ -51,7 +50,7 @@ namespace Content.IntegrationTests.Tests.GameRules
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
             });
 
-            var ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTimeMaxTimeRestartRuleSystem.RoundMaxTime.TotalSeconds * 1.1f);
+            var ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTime.RoundMaxTime.TotalSeconds * 1.1f);
             await PoolManager.RunTicksSync(pairTracker.Pair, ticks);
 
             await server.WaitAssertion(() =>
@@ -59,7 +58,7 @@ namespace Content.IntegrationTests.Tests.GameRules
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PostRound));
             });
 
-            ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTimeMaxTimeRestartRuleSystem.RoundEndDelay.TotalSeconds * 1.1f);
+            ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTime.RoundEndDelay.TotalSeconds * 1.1f);
             await PoolManager.RunTicksSync(pairTracker.Pair, ticks);
 
             await server.WaitAssertion(() =>

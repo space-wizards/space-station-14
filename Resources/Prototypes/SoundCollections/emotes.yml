@@ -23,3 +23,10 @@
     - /Audio/Effects/Emotes/snap1.ogg
     - /Audio/Effects/Emotes/snap2.ogg
     - /Audio/Effects/Emotes/snap3.ogg
+
+- type: soundCollection
+  id: DionaLaugh
+  files:
+    - /Audio/Voice/Diona/diona_rustle1.ogg
+    - /Audio/Voice/Diona/diona_rustle2.ogg
+    - /Audio/Voice/Diona/diona_rustle3.ogg
