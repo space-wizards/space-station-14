@@ -120,8 +120,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (climbing.IsClimbing)
             return;
 
-
-
         var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
