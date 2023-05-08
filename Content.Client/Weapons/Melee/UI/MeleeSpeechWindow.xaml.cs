@@ -8,11 +8,11 @@ namespace Content.Client.Weapons.Melee.UI;
 public sealed partial class MeleeSpeechWindow : DefaultWindow
 {
 
-	public event Action<string>? OnBattlecryEntered;
+    public event Action<string>? OnBattlecryEntered;
 
 	public MeleeSpeechWindow()
 	{
-		RobustXamlLoader.Load(this);
+        RobustXamlLoader.Load(this);
 
 		BattlecryLineEdit.OnTextEntered += e => OnBattlecryEntered?.Invoke(e.Text);
 	}
