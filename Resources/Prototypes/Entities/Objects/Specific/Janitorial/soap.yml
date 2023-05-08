@@ -21,15 +21,16 @@
     enabled: false
   - type: Physics
     bodyType: Dynamic
+    hard: false
   - type: Fixtures
     fixtures:
       slips:
         shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
-        hard: false
         layer:
         - SlipLayer
+        hard: false
       fix1:
         shape:
           !type:PhysShapeAabb
@@ -37,6 +38,7 @@
         density: 10
         mask:
         - ItemMask
+        hard: false
 
 - type: entity
   name: soap

@@ -30,6 +30,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
 
+
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
     ///     door. Used for safety close-blocking and crushing.
@@ -444,6 +445,9 @@ public abstract class SharedDoorSystem : EntitySystem
                 continue;
 
             if (!otherPhysics.CanCollide)
+                continue;
+
+            if (!otherPhysics.Hard)
                 continue;
 
             if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
