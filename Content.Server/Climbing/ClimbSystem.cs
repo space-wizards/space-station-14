@@ -101,6 +101,8 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, ref DragDropTargetEvent args)
     {
+        if (!HasComp<HandsComponent>(args.User))
+            return;
         TryClimb(args.User, args.Dragged, uid, component);
     }
 
@@ -118,8 +120,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (climbing.IsClimbing)
             return;
 
-        if (!HasComp<HandsComponent>(user))
-            return;
+
 
         var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
