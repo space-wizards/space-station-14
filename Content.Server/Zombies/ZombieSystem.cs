@@ -63,12 +63,27 @@ namespace Content.Server.Zombies
             var query = EntityQueryEnumerator<PendingZombieComponent>();
             var curTime = _timing.CurTime;
 
+            // Hurt the living infected
             while (query.MoveNext(out var uid, out var comp))
             {
-                if (comp.NextTick < curTime)
+                if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
                     continue;
 
-                comp.NextTick += TimeSpan.FromSeconds(1);
+                comp.InfectedSecs += 1;
+                // Pain of becoming a zombie grows over time
+                var pain_multiple = 0.1 + 0.02 * comp.InfectedSecs + 0.01 * comp.InfectedSecs * comp.InfectedSecs;
+                comp.NextTick = curTime;
+                _damageable.TryChangeDamage(uid, comp.Damage * pain_multiple, true, false);
+            }
+
+            var zomb_query = EntityQueryEnumerator<ZombieComponent>();
+            // Heal the zombified
+            while (zomb_query.MoveNext(out var uid, out var comp))
+            {
+                if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
+                    continue;
+
+                comp.NextTick = curTime;
                 _damageable.TryChangeDamage(uid, comp.Damage, true, false);
             }
         }

@@ -227,12 +227,14 @@ namespace Content.Server.Zombies
                 _sharedHands.RemoveHand(target, hand.Name);
             }
             RemComp<HandsComponent>(target);
+            // No longer waiting to become a zombie:
+            RemComp<PendingZombieComponent>(target);
 
-            // Zombiefication takes 5 seconds. Groan on the floor for a bit.
+            // Zombiefication takes a second. Groan on the floor for a bit.
             if (EntityManager.TryGetComponent<StatusEffectsComponent>(target, out var status))
             {
-                _stunSystem.TryStun(target, TimeSpan.FromSeconds(5.0), true, status);
-                _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(4.5), true,
+                _stunSystem.TryStun(target, TimeSpan.FromSeconds(2.0), true, status);
+                _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(1.8), true,
                     status);
             }
 
