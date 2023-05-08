@@ -107,7 +107,7 @@ namespace Content.Server.Zombies
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, or die in space
             RemComp<RespiratorComponent>(target);
-            // RemComp<BarotraumaComponent>(target); Actually yes, they should die in space (to prevent zombie spacing)
+            RemComp<BarotraumaComponent>(target); 
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
 
@@ -175,9 +175,6 @@ namespace Content.Server.Zombies
             _serverInventory.TryUnequip(target, "gloves", true, true);
             //Should prevent instances of zombies using comms for information they shouldnt be able to have.
             _serverInventory.TryUnequip(target, "ears", true, true);
-            //Shouldn't be wearing a helmet. How are you going to bite things?
-            _serverInventory.TryUnequip(target, "head", true, true);
-            _serverInventory.TryUnequip(target, "mask", true, true);
 
             //popup
             _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);

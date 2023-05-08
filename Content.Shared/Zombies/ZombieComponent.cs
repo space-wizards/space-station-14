@@ -98,9 +98,10 @@ namespace Content.Shared.Zombies
             DamageDict = new ()
             {
                 { "Blunt", -0.3 },
-                { "Slash", -0.5 },
+                { "Slash", -0.2 },
                 { "Heat", -0.2 },
                 { "Cold", -0.2 },
+                { "Shock", -0.2 },
             }
         };
     }
