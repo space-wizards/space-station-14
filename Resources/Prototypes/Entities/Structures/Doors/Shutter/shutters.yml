@@ -86,6 +86,9 @@
       - Open
       - Close
       - Toggle
+  - type: DeviceLinkSource
+    ports:
+    - DoorStatus
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
     messagePerceivedByOthers: comp-window-knock
