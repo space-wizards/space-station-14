@@ -13,6 +13,7 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -115,6 +116,9 @@ public sealed class ClimbSystem : SharedClimbSystem
         // Note, IsClimbing does not mean a DoAfter is active, it means the target has already finished a DoAfter and
         // is currently on top of something..
         if (climbing.IsClimbing)
+            return;
+
+        if (!HasComp<HandsComponent>(user))
             return;
 
         var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
