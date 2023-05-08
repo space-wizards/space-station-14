@@ -418,7 +418,7 @@
 
 - type: entity
   parent: BaseFoodCondimentBottle
-  id: FoodCondimentBottleVingegar
+  id: FoodCondimentBottleVinegar
   name: vinegar bottle
   description: Used in cooking to enhance flavor.
   components:
