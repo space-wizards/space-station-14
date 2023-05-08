@@ -181,14 +181,18 @@ namespace Content.Server.Zombies
                 if (!TryComp<MobStateComponent>(entity, out var mobState) || HasComp<DroneComponent>(entity))
                     continue;
 
-                if (_random.Prob(GetZombieInfectionChance(entity, component)))
-                {
-                    EnsureComp<PendingZombieComponent>(entity);
-                    EnsureComp<ZombifyOnDeathComponent>(entity);
-                }
-
                 if (HasComp<ZombieComponent>(entity))
+                {
                     args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
+                }
+                else
+                {
+                    if (_random.Prob(GetZombieInfectionChance(entity, component)))
+                    {
+                        EnsureComp<PendingZombieComponent>(entity);
+                        EnsureComp<ZombifyOnDeathComponent>(entity);
+                    }
+                }
 
                 if ((mobState.CurrentState == MobState.Dead || mobState.CurrentState == MobState.Critical)
                     && !HasComp<ZombieComponent>(entity))
