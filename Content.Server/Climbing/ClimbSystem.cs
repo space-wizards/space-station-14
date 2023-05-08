@@ -226,7 +226,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             if (fixture == args.OtherFixture)
                 continue;
             // If still colliding with a climbable, do not stop climbing
-            if (HasComp<ClimbableComponent>(fixture.Body.Owner))
+            if (HasComp<ClimbableComponent>(args.OtherEntity))
                 return;
         }
 
