@@ -31,7 +31,6 @@
       - state: ca_on
         map: ["enum.RadiationCollectorVisualLayers.Main"]
   - type: Appearance
-  - type: RadiationCollectorVisualizer
   - type: NodeContainer
     examinable: true
     nodes:
