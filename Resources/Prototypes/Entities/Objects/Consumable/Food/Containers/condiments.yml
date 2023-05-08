@@ -441,7 +441,7 @@
 - type: entity
   parent: BaseFoodCondimentBottle
   id: FoodCondimentBottleHotsauce
-  name: hotsauce
+  name: hotsauce bottle
   description: You can almost TASTE the stomach ulcers now!
   components:
   - type: SolutionContainerManager
@@ -463,7 +463,7 @@
 - type: entity
   parent: BaseFoodCondimentBottle
   id: FoodCondimentBottleKetchup
-  name: ketchup
+  name: ketchup bottle
   description: You feel more American already.
   components:
   - type: SolutionContainerManager
@@ -485,7 +485,7 @@
 - type: entity
   parent: BaseFoodCondimentBottle
   id: FoodCondimentBottleBBQ
-  name: BBQ sauce
+  name: BBQ sauce bottle
   description: Hand wipes not included.
   components:
   - type: SolutionContainerManager
