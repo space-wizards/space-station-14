@@ -161,7 +161,6 @@ namespace Content.Server.Zombies
                 _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombiecomp.BaseLayerExternal, humanoid: huApComp);
 
                 //This is done here because non-humanoids shouldn't get baller damage
-                //lord forgive me for the hardcoded damage
                 DamageSpecifier dspec = new();
                 foreach (var value in zombiecomp.ZombieDamageValues)
                     dspec.DamageDict.Add(value.Key, value.Value);
