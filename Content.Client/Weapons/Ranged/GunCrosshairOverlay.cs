@@ -35,7 +35,7 @@ public sealed class GunCrosshairOverlay : Overlay
     private readonly Texture _crosshairMarked;
     private readonly float _unavailableSignSize = 22f;
 
-    public float MaxRange = 20f;
+    public float? MaxRange; // in default maxRange get for centered player
     public float MainScale = 0.72f;
     public float MaxBulletRangeSpread = 0.3f;
     public float SanctuaryCoeff = 0.1f; // circle of sanctuary, awoid those who are nearby
@@ -97,7 +97,11 @@ public sealed class GunCrosshairOverlay : Overlay
 
         var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
         var scale = (uiScale > 1.25f ? 1.25f : uiScale) * MainScale;
+
         var maxAngle = gun.MaxAngle;
+
+        var worldViewport = _eye.GetWorldViewport();
+        var maxRange = MaxRange ?? (float)(0.3 * (worldViewport.Width + worldViewport.Height));
 
         var sanctuaryPos = playerMapPos.Position
              - (mousePos.Position - playerMapPos.Position).Normalized * SanctuaryCoeff;
@@ -108,12 +112,13 @@ public sealed class GunCrosshairOverlay : Overlay
         raycastData.MapPos = new MapCoordinates(sanctuaryPos, playerMapPos.MapId);
         raycastData.Player = player;
         raycastData.CollisionType = collisionMask;
+        raycastData.MaxRange = maxRange;
 
         // when it doesn't have any obstacles
         var crosshairType = GunCrosshairTypes.Available;
 
         // find rayCast for main gun vector
-        if (GetRayCastResult(direction, raycastData, MaxRange) is RayCastResults castRes)
+        if (GetRayCastResult(direction, raycastData) is RayCastResults castRes)
         {
             var mouseDistance = direction.Length;
             var currentState = _stateManager.CurrentState;
@@ -147,11 +152,11 @@ public sealed class GunCrosshairOverlay : Overlay
     }
 
     private RayCastResults? GetRayCastResult(Vector2 dir, GunCrosshairDataForCalculatingRCResult data,
-        float maxRange)
+        float? maxRange = null)
     {
         var ray = new CollisionRay(data.MapPos.Position, dir.Normalized, data.CollisionType);
         var rayCastResults = _physics.IntersectRay(
-            data.MapPos.MapId, ray, maxRange, data.Player, false
+            data.MapPos.MapId, ray, maxRange ?? data.MaxRange, data.Player, false
             ).ToList();
 
         return rayCastResults.Any() ? rayCastResults[0] : null;
@@ -164,7 +169,7 @@ public sealed class GunCrosshairOverlay : Overlay
         {
             var angle = (i == 0) ? angleSpread : (-angleSpread);
 
-            var rayCastRes = GetRayCastResult(angle.RotateVec(dir), data, MaxRange);
+            var rayCastRes = GetRayCastResult(angle.RotateVec(dir), data);
             if (rayCastRes is not RayCastResults castResuslt || castResuslt.HitEntity != selectedEntityUid)
                 return false;
         }
@@ -178,7 +183,6 @@ public sealed class GunCrosshairOverlay : Overlay
         for (var i = 0; i < 2; i++)
         {
             var angle = (i == 0) ? angleSpread : (-angleSpread);
-
             if (GetRayCastResult(angle.RotateVec(dir), data, maxDistance) != null)
                 return false;
         }
@@ -236,4 +240,5 @@ public struct GunCrosshairDataForCalculatingRCResult
     public MapCoordinates MapPos;
     public EntityUid? Player;
     public int CollisionType;
+    public float MaxRange;
 }
