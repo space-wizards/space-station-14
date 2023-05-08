@@ -361,7 +361,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (pointValue == 0)
             return;
 
-        _research.AddPointsToServer(server.Value, pointValue, serverComponent);
+        _research.ModifyServerPoints(server.Value, pointValue, serverComponent);
         _artifact.AdjustConsumedPoints(artifact.Value, pointValue);
 
         _audio.PlayPvs(component.DestroySound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));

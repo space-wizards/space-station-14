@@ -4,91 +4,56 @@ using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Research.UI
+namespace Content.Client.Research.UI;
+
+[UsedImplicitly]
+public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 {
-    [UsedImplicitly]
-    public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
+    private readonly IEntityManager _entityManager;
+
+    public int Points { get; private set; }
+
+    private ResearchConsoleMenu? _consoleMenu;
+    private TechnologyDatabaseComponent? _technologyDatabase;
+
+    private readonly SharedResearchSystem _research;
+
+    public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
-        public int Points { get; private set; }
-        public int PointsPerSecond { get; private set; }
-        private ResearchConsoleMenu? _consoleMenu;
-        private TechnologyDatabaseComponent? _technologyDatabase;
-        private readonly IEntityManager _entityManager;
-        private readonly SharedResearchSystem _research;
+        SendMessage(new ConsoleServerSyncMessage());
+        _entityManager = IoCManager.Resolve<IEntityManager>();
+        _research = _entityManager.System<SharedResearchSystem>();
+    }
 
-        public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
-        {
-            SendMessage(new ConsoleServerSyncMessage());
-            _entityManager = IoCManager.Resolve<IEntityManager>();
-            _research = _entityManager.System<SharedResearchSystem>();
-        }
+    protected override void Open()
+    {
+        base.Open();
 
-        protected override void Open()
-        {
-            base.Open();
+        var owner = Owner.Owner;
 
-            if (!_entityManager.TryGetComponent(Owner.Owner, out _technologyDatabase))
-                return;
+        if (!_entityManager.TryGetComponent(owner, out _technologyDatabase))
+            return;
 
-            _consoleMenu = new ResearchConsoleMenu(this);
+        _consoleMenu = new ResearchConsoleMenu(owner, this);
 
-            _consoleMenu.OnClose += Close;
+        _consoleMenu.OnClose += Close;
 
-            _consoleMenu.ServerSyncButton.OnPressed += (_) =>
-            {
-                SendMessage(new ConsoleServerSyncMessage());
-            };
+        _consoleMenu.OpenCentered();
+    }
 
-            _consoleMenu.ServerSelectionButton.OnPressed += (_) =>
-            {
-                SendMessage(new ConsoleServerSelectionMessage());
-            };
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
 
-            _consoleMenu.UnlockButton.OnPressed += (_) =>
-            {
-                if (_consoleMenu.TechnologySelected != null)
-                {
-                    SendMessage(new ConsoleUnlockTechnologyMessage(_consoleMenu.TechnologySelected.ID));
-                }
-            };
+        var castState = (ResearchConsoleBoundInterfaceState)state;
+        Points = castState.Points;
+    }
 
-            _consoleMenu.OpenCentered();
-        }
-
-        public bool IsTechnologyUnlocked(TechnologyPrototype technology)
-        {
-            if (_technologyDatabase == null)
-                return false;
-
-            return _research.IsTechnologyUnlocked(_technologyDatabase.Owner, technology, _technologyDatabase);
-        }
-
-        public bool CanUnlockTechnology(TechnologyPrototype technology)
-        {
-            if (_technologyDatabase == null)
-                return false;
-
-            return _research.ArePrerequesitesUnlocked(_technologyDatabase.Owner, technology, _technologyDatabase);
-        }
-
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-
-            var castState = (ResearchConsoleBoundInterfaceState)state;
-            Points = castState.Points;
-            PointsPerSecond = castState.PointsPerSecond;
-            // We update the user interface here.
-            _consoleMenu?.PopulatePoints();
-            _consoleMenu?.Populate();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-            _consoleMenu?.Dispose();
-        }
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
+        _consoleMenu?.Dispose();
     }
 }

@@ -1,87 +1,58 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
-            Title="{Loc 'research-console-menu-title'}"
-            MinSize="800 400"
-            SetSize="800 400">
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      Title="{Loc 'research-console-menu-title'}"
+                      MinSize="550 450"
+                      SetSize="650 550">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">
         <BoxContainer Orientation="Horizontal"
                       HorizontalExpand="True"
-                      VerticalExpand="True"
-                      SizeFlagsStretchRatio="2"
-                      SeparationOverride="10">
-            <BoxContainer Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                <Label Text="{Loc 'research-console-menu-unlocked-technologies-label'}" />
-                <ItemList Name="UnlockedTechnologies"
-                          SelectMode="Button"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                    <!-- Unlocked technologies are added here by code -->
-                </ItemList>
-            </BoxContainer>
-            <BoxContainer Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                <Label Text="{Loc 'research-console-menu-unlockable-technologies-label'}" />
-                <ItemList Name="UnlockableTechnologies"
-                          SelectMode="Button"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                    <!-- Unlockable technologies are added here by code -->
-                </ItemList>
-            </BoxContainer>
-            <BoxContainer Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                <Label Text="{Loc 'research-console-menu-future-technologies-label'}" />
-                <ItemList Name="FutureTechnologies"
-                          SelectMode="Button"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                    <!-- Future technologies are added here by code -->
-                </ItemList>
-            </BoxContainer>
+                      VerticalExpand="False"
+                      SizeFlagsStretchRatio="1"
+                      MinSize="75 75"
+                      Margin="10">
         </BoxContainer>
         <BoxContainer Orientation="Horizontal"
                       HorizontalExpand="True"
                       VerticalExpand="True"
-                      SizeFlagsStretchRatio="1">
-            <TextureRect Name="TechnologyIcon"
-                         HorizontalExpand="True"
-                         VerticalExpand="True"
-                         SizeFlagsStretchRatio="1"
-                         Stretch="KeepAspectCentered" />
+                      SizeFlagsStretchRatio="2">
             <BoxContainer Orientation="Vertical"
-                          HorizontalExpand="True"
                           VerticalExpand="True"
-                          SizeFlagsStretchRatio="3">
-                <Label Name="TechnologyName" />
-                <Label Name="TechnologyDescription" />
-                <Label Name="TechnologyRequirements" />
+                          HorizontalExpand="True"
+                          SizeFlagsStretchRatio="1"
+                          Margin="10"
+                          MinWidth="150">
+                <Label Text="Available Technologies"></Label>
+                <Control MinHeight="10"></Control>
+                <!-- TODO this has to be a custom ui element so it supports tooltips + colors -->
+                <ItemList Name="AvailableList" VerticalExpand="True"></ItemList>
             </BoxContainer>
             <BoxContainer Orientation="Vertical"
-                          HorizontalExpand="True"
                           VerticalExpand="True"
-                          SizeFlagsStretchRatio="1">
-                <Label Name="PointLabel" />
-                <Label Name="PointsPerSecondLabel" />
-                <BoxContainer Orientation="Vertical"
-                              Align="End"
-                              HorizontalExpand="True"
-                              VerticalExpand="True">
-                    <Button Name="ServerSelectionButton"
-                            Access="Public"
-                            Text="{Loc 'research-console-menu-server-selection-button'}" />
-                    <Button Name="ServerSyncButton"
-                            Access="Public"
-                            Text="{Loc 'research-console-menu-server-sync-button'}" />
-                    <Button Name="UnlockButton"
-                            Access="Public"
-                            Disabled="True" />
-                </BoxContainer>
+                          HorizontalExpand="True"
+                          SizeFlagsStretchRatio="2"
+                          Margin="0 0 10 10">
+                <PanelContainer VerticalExpand="True" MinSize="0 200">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    </PanelContainer.PanelOverride>
+                    <ScrollContainer
+                        HScrollEnabled="False"
+                        HorizontalExpand="True"
+                        SizeFlagsStretchRatio="2"
+                        VerticalExpand="True">
+                        <BoxContainer
+                            Name="TechnologyCardsContainer"
+                            MinSize="100 256"
+                            Orientation="Vertical"
+                            SizeFlagsStretchRatio="2"
+                            VerticalExpand="True">
+                        </BoxContainer>
+                    </ScrollContainer>
+                </PanelContainer>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>

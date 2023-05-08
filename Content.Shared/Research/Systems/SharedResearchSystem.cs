@@ -1,55 +1,145 @@
-﻿using Content.Shared.Research.Components;
+﻿using System.Linq;
+using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
-using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Research.Systems;
 
 public abstract class SharedResearchSystem : EntitySystem
 {
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ResearchServerComponent, ComponentGetState>(OnServerGetState);
-        SubscribeLocalEvent<ResearchServerComponent, ComponentHandleState>(OnServerHandleState);
-        SubscribeLocalEvent<TechnologyDatabaseComponent, ComponentGetState>(OnTechnologyGetState);
-        SubscribeLocalEvent<TechnologyDatabaseComponent, ComponentHandleState>(OnTechnologyHandleState);
+        SubscribeLocalEvent<TechnologyDatabaseComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnServerGetState(EntityUid uid, ResearchServerComponent component, ref ComponentGetState args)
+    private void OnMapInit(EntityUid uid, TechnologyDatabaseComponent component, MapInitEvent args)
     {
-        args.State = new ResearchServerState(component.ServerName, component.Points, component.Id);
+        UpdateTechnologyCards(uid, component);
     }
 
-    private void OnServerHandleState(EntityUid uid, ResearchServerComponent component, ref ComponentHandleState args)
+    public void UpdateTechnologyCards(EntityUid uid, TechnologyDatabaseComponent component)
     {
-        if (args.Current is not ResearchServerState state)
-            return;
-        component.ServerName = state.ServerName;
-        component.Points = state.Points;
-        component.Id = state.Id;
+        var availableTechnology = GetAvailableTechnologies(uid, component);
+
+        component.CurrentTechnologyCards.Clear();
+        foreach (var discipline in component.SupportedDisciplines)
+        {
+            var filtered = availableTechnology.
+                Where(p => p.Discipline == discipline).ToList();
+
+            if (!filtered.Any())
+                continue;
+
+            component.CurrentTechnologyCards.Add(_random.Pick(filtered).ID);
+        }
+        Dirty(component);
     }
 
-    private void OnTechnologyHandleState(EntityUid uid, TechnologyDatabaseComponent component, ref ComponentHandleState args)
+    public List<TechnologyPrototype> GetAvailableTechnologies(EntityUid uid, TechnologyDatabaseComponent? component = null)
     {
-        if (args.Current is not TechnologyDatabaseState state)
-            return;
-        component.TechnologyIds = new (state.Technologies);
-        component.RecipeIds = new(state.Recipes);
+        if (!Resolve(uid, ref component, false))
+            return new List<TechnologyPrototype>();
+
+        var availableTechnologies = new List<TechnologyPrototype>();
+        var disciplineTiers = GetDisciplineTiers(component);
+        foreach (var tech in PrototypeManager.EnumeratePrototypes<TechnologyPrototype>())
+        {
+            if (IsTechnologyAvailable(component, tech, disciplineTiers))
+                availableTechnologies.Add(tech);
+        }
+
+        return availableTechnologies;
     }
 
-    private void OnTechnologyGetState(EntityUid uid, TechnologyDatabaseComponent component, ref ComponentGetState args)
+    public bool IsTechnologyAvailable(TechnologyDatabaseComponent component, TechnologyPrototype tech, Dictionary<string, int>? disciplineTiers = null)
     {
-        args.State = new TechnologyDatabaseState(component.TechnologyIds, component.RecipeIds);
+        disciplineTiers ??= GetDisciplineTiers(component);
+
+        if (tech.Hidden)
+            return false;
+
+        if (!component.SupportedDisciplines.Contains(tech.Discipline))
+            return false;
+
+        if (tech.Tier > disciplineTiers[tech.Discipline])
+            return false;
+
+        if (component.UnlockedTechnologies.Contains(tech.ID))
+            return false;
+
+        foreach (var prereq in tech.TechnologyPrerequisites)
+        {
+            if (!component.UnlockedTechnologies.Contains(prereq))
+                return false;
+        }
+
+        return true;
+    }
+
+    public Dictionary<string, int> GetDisciplineTiers(TechnologyDatabaseComponent component)
+    {
+        var tiers = new Dictionary<string, int>();
+        foreach (var discipline in component.SupportedDisciplines)
+        {
+            tiers.Add(discipline, GetHighestDisciplineTier(component, discipline));
+        }
+
+        return tiers;
+    }
+
+    public int GetHighestDisciplineTier(TechnologyDatabaseComponent component, string disciplineId)
+    {
+        return GetHighestDisciplineTier(component, PrototypeManager.Index<DisciplinePrototype>(disciplineId));
+    }
+
+    public int GetHighestDisciplineTier(TechnologyDatabaseComponent component, DisciplinePrototype discipline)
+    {
+        var allTech = PrototypeManager.EnumeratePrototypes<TechnologyPrototype>()
+            .Where(p => p.Discipline == discipline.ID && !p.Hidden).ToList();
+        var allUnlocked = new List<TechnologyPrototype>();
+        foreach (var recipe in component.UnlockedRecipes)
+        {
+            var proto = PrototypeManager.Index<TechnologyPrototype>(recipe);
+            if (proto.Discipline != discipline.ID)
+                continue;
+            allUnlocked.Add(proto);
+        }
+
+        var tier = 1;
+        while (true)
+        {
+            if (!discipline.TierPrerequisites.TryGetValue(tier, out var threshold))
+                break;
+
+            var allTier = allTech.Where(p => p.Tier == tier).ToList();
+            var unlockedTier = allUnlocked.Where(p => p.Tier == tier).ToList();
+
+            if ((float) unlockedTier.Count / allTier.Count < threshold)
+                break;
+
+            if (tier >= discipline.LockoutTier &&
+                component.MainDiscipline != null &&
+                discipline.ID != component.MainDiscipline)
+                break;
+
+            tier++;
+        }
+        return tier;
     }
 
     /// <summary>
     ///     Returns whether a technology is unlocked on this database or not.
     /// </summary>
     /// <returns>Whether it is unlocked or not</returns>
-    public bool IsTechnologyUnlocked(EntityUid uid, TechnologyPrototype technology, TechnologyDatabaseComponent? component = null)
+    public bool IsTechnologyUnlocked(EntityUid uid, TechnologyPrototype oldTechnology, TechnologyDatabaseComponent? component = null)
     {
-        return Resolve(uid, ref component) && IsTechnologyUnlocked(uid, technology.ID, component);
+        return Resolve(uid, ref component) && IsTechnologyUnlocked(uid, oldTechnology.ID, component);
     }
 
     /// <summary>
@@ -58,26 +148,6 @@ public abstract class SharedResearchSystem : EntitySystem
     /// <returns>Whether it is unlocked or not</returns>
     public bool IsTechnologyUnlocked(EntityUid uid, string technologyId, TechnologyDatabaseComponent? component = null)
     {
-        return Resolve(uid, ref component, false) && component.TechnologyIds.Contains(technologyId);
-    }
-
-    /// <summary>
-    /// Returns whether or not all the prerequisite
-    /// technologies for a technology are unlocked.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="prototype"></param>
-    /// <param name="component"></param>
-    /// <returns>Whether or not the prerequesites are present</returns>
-    public bool ArePrerequesitesUnlocked(EntityUid uid, TechnologyPrototype prototype, TechnologyDatabaseComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-        foreach (var technologyId in prototype.RequiredTechnologies)
-        {
-            if (!IsTechnologyUnlocked(uid, technologyId, component))
-                return false;
-        }
-        return true;
+        return Resolve(uid, ref component, false) && component.UnlockedTechnologies.Contains(technologyId);
     }
 }

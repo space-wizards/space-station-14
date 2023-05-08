@@ -3,7 +3,7 @@
 
 # Base Technology
 
-- type: technology
+- type: oldTechnology
   name: technologies-basic-research-technology
   id: BasicResearch
   description: technologies-basic-research-technology-description
@@ -14,7 +14,7 @@
 
 # Cleaning Technology Tree
 
-- type: technology
+- type: oldTechnology
   name: technologies-cleaning-technology
   id: CleaningTechnology
   description: technologies-cleaning-technology-description
@@ -29,7 +29,7 @@
   - MopItem
   - SprayBottle
 
-- type: technology
+- type: oldTechnology
   name: technologies-advanced-cleaning-technology
   id: AdvancedCleaningTechnology
   description: technologies-advanced-cleaning-technology-description
@@ -43,7 +43,7 @@
     - AdvMopItem
     - MegaSprayBottle
 
-- type: technology
+- type: oldTechnology
   id: AdvancedSprayTechnology
   name: technologies-advanced-spray-technology
   description: technologies-advanced-spray-technology-description
@@ -59,7 +59,7 @@
 
 # Food/Bev Service Technology Tree
 
-- type: technology
+- type: oldTechnology
   name: technologies-foodbev-technology
   id: FoodBevTechnology
   description: technologies-food-and-beverage-technology-description
@@ -79,7 +79,7 @@
 
 # Biological Technology Tree
 
-- type: technology
+- type: oldTechnology
   name: technologies-biological-technology
   id: BiologicalTechnology
   description: technologies-biological-technology-description
@@ -100,7 +100,7 @@
   - KitchenKnife
   - MicrowaveMachineCircuitboard
 
-- type: technology
+- type: oldTechnology
   name: technologies-advanced-botany
   id: AdvancedBotany
   description: technologies-advanced-botany-description
@@ -115,7 +115,7 @@
   - HydroponicsTrayMachineCircuitboard
   - Vape
 
-- type: technology
+- type: oldTechnology
   name: technologies-virology
   id: Virology
   description: technologies-virology-description
@@ -131,7 +131,7 @@
 
 # Medical Technology Tree
 
-- type: technology
+- type: oldTechnology
   name: technologies-chemistry-technology
   id: ChemistryTechnology
   description: technologies-chemistry-technology-description
@@ -153,7 +153,7 @@
   - ChemistryEmptyBottle01
   - ChemicalPayload
 
-- type: technology
+- type: oldTechnology
   name: technologies-advanced-surgery
   id: AdvancedSugery
   description: technologies-advanced-surgery-description
@@ -171,7 +171,7 @@
   - Saw
   - Hemostat
 
-- type: technology
+- type: oldTechnology
   name: technologies-medical-machinery
   id: MedicalMachinery
   description: technologies-medical-machinery-description
@@ -189,7 +189,7 @@
   - HandheldCrewMonitor
   - BiomassReclaimerMachineCircuitboard
 
-- type: technology
+- type: oldTechnology
   name: technologies-advanced-life-support
   id: AdvancedLifeSupport
   description: technologies-advanced-life-support-description
@@ -209,7 +209,7 @@
 
 # Security Technology Tree
 
-- type: technology
+- type: oldTechnology
   name: technologies-surveillance
   id: SurveillanceTechnology
   description: technologies-surveillance-description
@@ -228,53 +228,9 @@
   - SurveillanceWirelessCameraMonitorCircuitboard
   - ComputerTelevisionCircuitboard
 
-#- type: technology
-#   name: "ballistic technology"
-#   id: BallisticTechnology
-#   description: Just a fancy term for guns.
-#   icon:
-#     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
-#     state: icon
-#   requiredPoints: 15000
-#   requiredTechnologies:
-#     - SecurityTechnology
-#
-# - type: technology
-#   name: "direct energy technology"
-#   id: DirectEnergyTechnology
-#   description: Basically laser guns.
-#   icon:
-#     sprite: Objects/Weapons/Guns/Battery/taser.rsi
-#     state: icon
-#   requiredPoints: 15000
-#   requiredTechnologies:
-#     - SecurityTechnology
-#
-# - type: technology
-#   name: "explosives technology"
-#   id: ExplosivesTechnology
-#   description: Let's just start with grenades for now.
-#   icon:
-#     sprite: Objects/Weapons/Grenades/flashbang.rsi
-#     state: icon
-#   requiredPoints: 15000
-#   requiredTechnologies:
-#     - SecurityTechnology
-#
-# - type: technology
-#   name: "armor technology"
-#   id: ArmorTechnology
-#   description: Basic protective gear for security personnel.
-#   icon:
-#     sprite: Clothing/OuterClothing/Vests/kevlar.rsi
-#     state: icon
-#   requiredPoints: 15000
-#   requiredTechnologies:
-#     - SecurityTechnology
-
 # Salvage Technology Tree
 
-- type: technology
+- type: oldTechnology
   name: technologies-salvage-equipment
   id: SalvageEquipment
   description: technologies-salvage-equipment-description
@@ -289,7 +245,7 @@
   - MiningDrill
   - OreProcessorMachineCircuitboard
 
-- type: technology
+- type: oldTechnology
   name: technologies-spacefaring
   id: SpacefaringTechnology
   description: technologies-spacefaring-description
@@ -306,7 +262,7 @@
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
 
-- type: technology
+- type: oldTechnology
   name: technologies-ripley-technology
   id: RipleyTechnology
   description: technologies-ripley-technology-description
@@ -326,7 +282,7 @@
   - RipleyLLeg
   - RipleyRLeg
 
-- type: technology
+- type: oldTechnology
   name: technologies-clown-technology
   id: ClownTechnology
   description: technologies-clown-technology-description
@@ -349,7 +305,7 @@
 
 # Industrial Engineering Technology Tree
 
-- type: technology
+- type: oldTechnology
   name: technologies-industrial-engineering
   id: IndustrialEngineering
   description: technologies-industrial-engineering-description
@@ -375,7 +331,7 @@
   - MailingUnitElectronics
   - SignalTimerElectronics
 
-- type: technology
+- type: oldTechnology
   name: technologies-material-sheet-printing
   id: Sheets
   description: technologies-material-sheet-printing-description
@@ -392,7 +348,7 @@
 
 # Electromagnetic Theory Technology Tree
 
-- type: technology
+- type: oldTechnology
   name: technologies-electromagnetic-theory
   id: ElectromagneticTheory
   description: technologies-electromagnetic-theory-description
@@ -416,7 +372,7 @@
   - TimerTrigger
   - TelecomServerCircuitboard
 
-- type: technology
+- type: oldTechnology
   name: technologies-electrical-engineering
   id: ElectricalEngineering
   description: technologies-electrical-engineering-description
@@ -436,7 +392,7 @@
   - SolarControlComputerCircuitboard
   - EmitterCircuitboard
 
-- type: technology
+- type: oldTechnology
   name: technologies-advanced-atmospherics-technology
   id: AdvancedAtmosTechnology
   description: technologies-advanced-atmospherics-technology-description
@@ -452,7 +408,7 @@
   - PortableScrubberMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
 
-- type: technology
+- type: oldTechnology
   name: technologies-rapid-upgrade
   id: RapidUpgrade
   description: technologies-rapid-upgrade-description
@@ -467,7 +423,7 @@
   - RCDAmmo
   - RPED
 
-- type: technology
+- type: oldTechnology
   name: technologies-compact-power-technology
   id: CompactPowerTechnology
   description: technologies-compact-power-technology-description
@@ -482,7 +438,7 @@
   - WallmountGeneratorElectronics
   - WallmountGeneratorAPUElectronics
 
-- type: technology
+- type: oldTechnology
   name: technologies-basic-powercell-printing
   id: PowerCellBasic
   description: technologies-basic-powercell-printing-description
@@ -495,7 +451,7 @@
   unlockedRecipes:
   - PowerCellSmall
 
-- type: technology
+- type: oldTechnology
   name: technologies-advanced-powercell-printing
   id: PowerCellAdvanced
   description: technologies-advanced-powercell-printing-description
@@ -508,7 +464,7 @@
   unlockedRecipes:
   - PowerCellMedium
 
-- type: technology
+- type: oldTechnology
   name: technologies-super-powercell-printing
   id: PowerCellSuper
   description: technologies-super-powercell-printing-description
@@ -523,7 +479,7 @@
 
 # Entertainment Technology Tree
 
-- type: technology
+- type: oldTechnology
   name: technologies-applied-musicology
   id: AppliedMusicology
   description: technologies-applied-musicology-description
@@ -539,7 +495,7 @@
 
 # Science Technology Tree
 
-- type: technology
+- type: oldTechnology
   name: technologies-scientific-technology
   id: ScientificTechnology
   description: technologies-scientific-technology-description
@@ -558,7 +514,7 @@
   - AnomalyScanner
   - AnomalyLocator
 
-- type: technology
+- type: oldTechnology
   name: technologies-anomaly-technology
   id: AnomalyTechnology
   description: technologies-anomaly-technology-description
@@ -576,7 +532,7 @@
   - CartridgeAnomalousParticleEpsilon
   - CartridgeAnomalousParticleZeta
 
-- type: technology
+- type: oldTechnology
   name: technologies-robotics-technology
   id: RoboticsTechnology
   description: technologies-robotics-technology-description
@@ -596,7 +552,7 @@
   - Drone
   - ExosuitFabricatorMachineCircuitboard
 
-- type: technology
+- type: oldTechnology
   name: technologies-archaeology
   id: ArchaeologicalEquipment
   description: technologies-archaeology-description
@@ -611,7 +567,7 @@
   - ArtifactAnalyzerMachineCircuitboard
   - TraversalDistorterMachineCircuitboard
 
-- type: technology
+- type: oldTechnology
   name: technologies-adv-parts-technology
   id: AdvancedPartsTechnology
   description: technologies-adv-parts-technology-description
@@ -626,7 +582,7 @@
   - AdvancedMatterBinStockPart
   - NanoManipulatorStockPart
 
-- type: technology
+- type: oldTechnology
   name: technologies-magboots-technology
   id: MagbootsTechnology
   description: technologies-magboots-technology-description
@@ -639,7 +595,7 @@
   unlockedRecipes:
     - ClothingShoesBootsMag
 
-- type: technology
+- type: oldTechnology
   name: technologies-super-parts-technology
   id: SuperPartsTechnology
   description: technologies-super-parts-technology-description

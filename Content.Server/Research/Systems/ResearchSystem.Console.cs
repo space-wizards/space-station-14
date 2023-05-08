@@ -36,15 +36,15 @@ public sealed partial class ResearchSystem
         if (TryGetClientServer(uid, out var server, out var serverComponent, clientComponent))
         {
             var points = clientComponent.ConnectedToServer ? serverComponent.Points : 0;
-            var pointsPerSecond = clientComponent.ConnectedToServer ? PointsPerSecond(server.Value, serverComponent) : 0;
-            state = new ResearchConsoleBoundInterfaceState(points, pointsPerSecond);
+            var pointsPerSecond = clientComponent.ConnectedToServer ? GetPointsPerSecond(server.Value, serverComponent) : 0;
+            state = new ResearchConsoleBoundInterfaceState(points);
         }
         else
         {
-            state = new ResearchConsoleBoundInterfaceState(default, default);
+            state = new ResearchConsoleBoundInterfaceState(default);
         }
 
-        _uiSystem.TrySetUiState(component.Owner, ResearchConsoleUiKey.Key, state);
+        _uiSystem.TrySetUiState(uid, ResearchConsoleUiKey.Key, state);
     }
 
     private void OnPointsChanged(EntityUid uid, ResearchConsoleComponent component, ref ResearchServerPointsChangedEvent args)

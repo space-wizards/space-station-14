@@ -11,3 +11,10 @@ research-console-menu-server-sync-button = Sync
 research-console-menu-server-unlock-button = Unlock
 research-console-tech-requirements-none = No technology requirements.
 research-console-tech-requirements-prototype-name = Requires: {$prototypeName}
+
+research-console-tier-discipline-info = Tier {$tier}, [color={$color}]{$discipline}[/color]
+
+research-console-cost = Cost: [color=orchid]{$amount}[/color]
+research-console-unlocks-list-start = Unlocks:
+research-console-unlocks-list-entry = - [color=yellow]{$name}[/color]
+research-console-unlocks-list-entry-generic = - [color=green]{$text}[/color]
