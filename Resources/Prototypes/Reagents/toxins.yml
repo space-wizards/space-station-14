@@ -475,9 +475,6 @@
         damage:
           types:
             Poison: 0.06
-      - !type:ChemCauseDisease
-          causeChance: 1
-          disease: ActiveHonkVirus ##makes target honk and potential chance to be cluwned.
 
 - type: reagent
   id: CrazyGlue

@@ -966,7 +966,7 @@
   parent: BaseItem
   id: WhoopieCushion
   name: whoopie cushion
-  description:  A practical joke device involving flatulence humour.
+  description: A practical joke device involving flatulence humour.
   components:
   - type: Sprite
     sprite: Objects/Fun/whoopie.rsi
@@ -1005,19 +1005,20 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      id: "slips"
-      hard: false
-      layer:
-      - SlipLayer
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      density: 30
-      mask:
-      - ItemMask
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
 
 - type: entity
   name: banana
