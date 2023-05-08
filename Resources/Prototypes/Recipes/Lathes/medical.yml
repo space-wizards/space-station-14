@@ -173,3 +173,11 @@
   completetime: 2
   materials:
     Plastic: 300
+
+- type: latheRecipe
+  id: HandLabeler
+  result: HandLabeler
+  name: hand labeler
+  completetime: 2
+  materials:
+    Plastic: 100
