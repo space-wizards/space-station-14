@@ -684,9 +684,8 @@
     - FootstepSound
   - type: GhostRole
     prob: 0.25
-    name: kangaroo
-    description: |
-      You're a kangaroo! Do whatever kangaroos do.
+    name: ghost-role-information-kangaroo-name
+    description: ghost-role-information-kangaroo-description
   - type: GhostTakeoverAvailable
   - type: Vocal
     sounds:
@@ -804,8 +803,8 @@
     - Passive
   - type: GhostRole
     makeSentient: true
-    name: monkey
-    description: Ook ook!
+    name: ghost-role-information-monkey-name
+    description: ghost-role-information-monkey-description
   - type: GhostTakeoverAvailable
 
 - type: entity

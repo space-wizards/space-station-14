@@ -16,8 +16,12 @@
       - id: PlushieRouny
       - id: PlushieRatvar
       - id: PlushieSharkBlue
+        orGroup: PlushieShark
+      - id: PlushieSharkGrey
+        orGroup: PlushieShark
       - id: PlushieAtmosian
       - id: PlushieDiona
+      - id: PlushieXeno
 
 - type: entity
   id: CrateFunInstrumentsVariety

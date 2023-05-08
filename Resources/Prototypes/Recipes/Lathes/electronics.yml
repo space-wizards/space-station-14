@@ -259,14 +259,6 @@
      Gold: 100
 
 - type: latheRecipe
-  id: CrewMonitoringComputerCircuitboard
-  result: CrewMonitoringComputerCircuitboard
-  completetime: 4
-  materials:
-     Steel: 100
-     Glass: 900
-
-- type: latheRecipe
   id: ShuttleConsoleCircuitboard
   result: ShuttleConsoleCircuitboard
   completetime: 4

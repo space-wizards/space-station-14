@@ -1,42 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Bames Jond from the Syndicate has added his exploding pen to the uplink.,
-    type: Add}
-  id: 3200
-  time: '2023-03-20T19:32:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix melee arcs showing up in the context menu., type: Fix}
-  id: 3201
-  time: '2023-03-22T02:34:23.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Re-sprited the riot suit to match the style., type: Tweak}
-  id: 3202
-  time: '2023-03-22T04:18:35.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: The looping sound from the torch has been removed., type: Remove}
-  id: 3203
-  time: '2023-03-22T04:20:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPC faction cache not refreshing correctly., type: Fix}
-  id: 3204
-  time: '2023-03-22T04:58:23.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Adjusted ships on radar so they look much nicer., type: Tweak}
-  id: 3205
-  time: '2023-03-22T20:52:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add additional rules around arrivals., type: Add}
-  - {message: Fix some instances of being able to return to the arrivals station.,
-    type: Fix}
-  id: 3206
-  time: '2023-03-23T01:37:43.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Monkeys spawned by artifacts no longer suffocate., type: Fix}
@@ -2912,3 +2874,44 @@ Entries:
   - {message: Telecommunication server added to CentComm station, type: Add}
   id: 3699
   time: '2023-05-07T10:06:05.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added xeno plushie! Hisssss!, type: Add}
+  - {message: Plushie crate can have either a gray or blue shark, type: Tweak}
+  id: 3700
+  time: '2023-05-07T22:50:09.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Cloth can go into the autolathe and uniform printer again., type: Fix}
+  id: 3701
+  time: '2023-05-08T00:34:27.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Adds crew monitoring console and server boards to cargo., type: Add}
+  - {message: 'A new category was added to cargo: circuitboards.', type: Add}
+  - {message: Removed crew monitoring console boards from lathes., type: Remove}
+  id: 3702
+  time: '2023-05-08T05:49:07.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: The network configurator can now be found in the Engivend., type: Add}
+  id: 3703
+  time: '2023-05-08T11:45:15.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Updated the data and nuke disk sprites, type: Tweak}
+  id: 3704
+  time: '2023-05-08T12:28:38.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Added hand labeler to the medical techfab. It costs 100 plastic., type: Add}
+  id: 3705
+  time: '2023-05-08T12:32:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix a shooting mispredict if you held left-click with a semi-auto gun
+      and then tried to fire afterwards., type: Fix}
+  - {message: Fix ammo counter for recharge weapons (mainly the PKA)., type: Fix}
+  - {message: Make the PKA feel nicer to shoot., type: Tweak}
+  id: 3706
+  time: '2023-05-08T12:37:40.0000000+00:00'
