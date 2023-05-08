@@ -23,7 +23,8 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.40
           density: 80
@@ -113,7 +114,8 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.40
           density: 10
@@ -131,11 +133,10 @@
   components:
     - type: GhostRole
       prob: 0.33
-      name: space carp on salvage wreck
+      name: ghost-role-information-salvage-carp-name
       allowMovement: true
       allowSpeech: true
-      description: |
-        Defend the loot inside the salvage wreck!
+      description: ghost-role-information-salvage-carp-description
     - type: GhostTakeoverAvailable
     - type: SalvageMobRestrictions
 
@@ -149,8 +150,8 @@
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Sentient Carp
-      description: Help the dragon flood the station with carps!
+      name: ghost-role-information-sentient-carp-name
+      description: ghost-role-information-sentient-carp-description
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask: DragonCarpCompound

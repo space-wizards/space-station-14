@@ -20,11 +20,12 @@
     canCollide: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.25,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
   - type: Transform
     anchored: true
   - type: Anchorable
@@ -172,11 +173,12 @@
           Anchored: { state: pipe-t }
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.25,0.4"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.4"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: trunk
@@ -219,11 +221,12 @@
       type: DisposalRouterBoundUserInterface
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: router
@@ -260,11 +263,12 @@
     mirrorEntity: DisposalRouter
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.5,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.5,0.5"
+        mask:
+        - SubfloorMask
 
 - type: entity
   id: DisposalJunction
@@ -299,11 +303,12 @@
     mirrorEntity: DisposalJunctionFlipped
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: junction
@@ -340,11 +345,12 @@
     mirrorEntity: DisposalJunction
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.5,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.5,0.5"
+        mask:
+        - SubfloorMask
 
 - type: entity
   id: DisposalYJunction
@@ -376,11 +382,12 @@
           Anchored: { state: pipe-y }
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.25"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.25"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: yJunction
@@ -411,11 +418,12 @@
           Anchored: { state: pipe-c }
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.25"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.25"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: bend

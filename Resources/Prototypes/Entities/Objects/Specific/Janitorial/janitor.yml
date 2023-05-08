@@ -114,14 +114,15 @@
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.40,0.25,0.25"
-      density: 60
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.40,0.25,0.25"
+        density: 60
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Pullable
   - type: Drink
     isOpen: true
@@ -215,14 +216,15 @@
           priority: 3 # Higher than drinking priority
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeCircle
-          radius: 0.3
-        density: 250
-        layer:
-        - MobLayer
-        mask:
-        - MobMask
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.3
+          density: 250
+          layer:
+          - MobLayer
+          mask:
+          - MobMask
     - type: Spillable
       spillDelay: 3.0
     - type: SolutionContainerManager
@@ -374,3 +376,39 @@
             - !type:PlaySoundBehavior
               sound:
                 path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  parent: BaseItem
+  name: damp rag
+  id: RagItem
+  description: For cleaning up messes, you suppose.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Janitorial/rag.rsi
+      state: rag
+    - type: Spillable
+      solution: absorbed
+    - type: MeleeWeapon
+      soundNoDamage:
+        path: "/Audio/Effects/Fluids/splat.ogg"
+      damage:
+        types:
+          Blunt: 0
+    - type: Item
+      size: 10
+      sprite: Objects/Specific/Janitorial/rag.rsi
+    - type: Absorbent
+      pickupAmount: 15
+    - type: Construction
+      graph: Rag
+      node: rag
+    - type: SolutionContainerManager
+      solutions:
+        absorbed:
+          maxVol: 30
+    - type: UseDelay
+      delay: 1.5
+    - type: Tag
+      tags:
+        - DroneUsable
+        - Mop
