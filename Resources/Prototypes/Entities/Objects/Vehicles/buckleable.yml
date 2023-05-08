@@ -375,7 +375,7 @@
 
 - type: entity
   id: VehicleUnicycle
-  parent: BaseVehicle
+  parent: [BaseVehicle, BaseFoldable, BaseItem]
   name: unicycle
   description: It only has one wheel!
   components:
@@ -391,7 +391,10 @@
     sprite: Objects/Vehicles/unicycle.rsi
     layers:
     - state: vehicle
-      map: ["enum.VehicleVisualLayers.AutoAnimate"]
+      map: ["enum.VehicleVisualLayers.AutoAnimate", "unfoldedLayer"]
+    - state: vehicle_folded
+      map: ["foldedLayer"]
+      visible: false
     netsync: false
     noRot: true
   - type: Strap

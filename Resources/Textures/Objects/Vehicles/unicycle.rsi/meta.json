@@ -32,6 +32,12 @@
           0.2
         ]
       ]
+    },
+    {
+      "name": "vehicle_folded"
+    },
+    {
+      "name": "vehicle_unfolded"
     }
   ]
 }
