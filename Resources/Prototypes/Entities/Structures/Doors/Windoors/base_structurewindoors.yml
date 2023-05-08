@@ -57,6 +57,9 @@
       - Close
       - Toggle
       - AutoClose
+  - type: DeviceLinkSource
+    ports:
+    - DoorStatus
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
