@@ -381,6 +381,44 @@
   placementMode: SnapgridCenter
 
 - type: construction
+  name: uranium window
+  id: UraniumWindow
+  graph: Window
+  startNode: start
+  targetNode: uraniumWindow
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear and much tougher than regular glass, with added RadAbsorb to protect you from deadly radiation.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/uranium_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: reinforced uranium window
+  id: ReinforcedUraniumWindow
+  graph: Window
+  startNode: start
+  targetNode: reinforcedUraniumWindow
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear and much tougher than regular glass, with added RadAbsorb to protect you from deadly radiation.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/reinforced_uranium_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: firelock
   id: Firelock
   graph: Firelock

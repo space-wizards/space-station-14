@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Construction;
+using Content.Server.DeviceLinking.Events;
 using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Events;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Server.Research.Systems;
@@ -10,7 +10,7 @@ using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Audio;
-using Content.Shared.MachineLinking.Events;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Xenoarchaeology.Equipment;
@@ -168,10 +168,10 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
     private void OnNewLink(EntityUid uid, AnalysisConsoleComponent component, NewLinkEvent args)
     {
-        if (!TryComp<ArtifactAnalyzerComponent>(args.Receiver, out var analyzer))
+        if (!TryComp<ArtifactAnalyzerComponent>(args.Sink, out var analyzer))
             return;
 
-        component.AnalyzerEntity = args.Receiver;
+        component.AnalyzerEntity = args.Sink;
         analyzer.Console = uid;
 
         UpdateUserInterface(uid, component);

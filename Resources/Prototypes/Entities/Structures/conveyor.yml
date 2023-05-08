@@ -22,24 +22,24 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - id: conveyor
-      shape: !type:PolygonShape
-        vertices:
-        - -0.55,-0.55
-        - 0.55,-0.55
-        - 0.55,0.55
-        - -0.55,0.55
-      layer:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      hard: False
+      conveyor:
+        shape: !type:PolygonShape
+          vertices:
+          - -0.55,-0.55
+          - 0.55,-0.55
+          - 0.55,0.55
+          - -0.55,0.55
+        layer:
+        - Impassable
+        - MidImpassable
+        - LowImpassable
+        hard: False
   - type: Conveyor
-  - type: SignalReceiver
-    inputs:
-      Reverse: []
-      Forward: []
-      Off: []
+  - type: DeviceLinkSink
+    ports:
+      - Reverse
+      - Forward
+      - Off
   - type: Appearance
   - type: GenericVisualizer
     visuals:

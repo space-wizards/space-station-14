@@ -9,7 +9,7 @@
     <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Split">
         <!-- Guide select -->
         <BoxContainer Orientation="Horizontal" Name="TreeBox">
-            <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True"/>
+            <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
             <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
         </BoxContainer>
         <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">

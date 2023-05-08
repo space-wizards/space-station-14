@@ -63,6 +63,11 @@
   name: cloth
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - RawMaterial
+    - DroneUsable
+    - Gauze
   - type: Healing
     damageContainer: Biological
     damage:

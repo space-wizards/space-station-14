@@ -432,7 +432,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         tiles.Clear();
 
         // Now do entities
-        var loadedEntities = new List<EntityUid>();
+        var loadedEntities = new Dictionary<EntityUid, Vector2i>();
         component.LoadedEntities.Add(chunk, loadedEntities);
 
         for (var x = 0; x < ChunkSize; x++)
@@ -460,7 +460,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     _transform.AnchorEntity(ent, xform, gridUid, grid, indices);
                 }
 
-                loadedEntities.Add(ent);
+                loadedEntities.Add(ent, indices);
             }
         }
 
@@ -548,11 +548,36 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         component.LoadedDecals.Remove(chunk);
 
         // Delete entities
-        // This is a TODO
         // Ideally any entities that aren't modified just get deleted and re-generated later
         // This is because if we want to save the map (e.g. persistent server) it makes the file much smaller
         // and also if the map is enormous will make stuff like physics broadphase much faster
-        // For now we'll just leave them because no entity diffs.
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
+        foreach (var (ent, tile) in component.LoadedEntities[chunk])
+        {
+            if (Deleted(ent) || !xformQuery.TryGetComponent(ent, out var xform))
+            {
+                modified.Add(tile);
+                continue;
+            }
+
+            // It's moved
+            var entTile = grid.LocalToTile(xform.Coordinates);
+
+            if (!xform.Anchored || entTile != tile)
+            {
+                modified.Add(tile);
+                continue;
+            }
+
+            if (!EntityManager.IsDefault(ent))
+            {
+                modified.Add(tile);
+                continue;
+            }
+
+            Del(ent);
+        }
 
         component.LoadedEntities.Remove(chunk);
 

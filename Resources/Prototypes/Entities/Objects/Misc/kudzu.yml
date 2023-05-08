@@ -25,13 +25,14 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-      - hard: false
-        density: 7
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        layer:
-        - MidImpassable
+        fix1:
+          hard: false
+          density: 7
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+          - MidImpassable
     - type: Damageable
       damageModifierSet: Wood
     - type: Destructible
@@ -70,8 +71,8 @@
               Heat: 10
     - type: AtmosExposed
     - type: Kudzu
-    - type: GrowingKudzu
       growthTickChance: 0.3
+    - type: GrowingKudzu
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
@@ -81,7 +82,19 @@
         kudzu:
           !type:SpreaderNode
           nodeGroupID: Spreader
-
+    - type: Food
+      requiredStomachs: 2 # ruminants have 4 stomachs but i dont care to give them literally 4 stomachs. 2 is good
+      # TODO make botany plants edible to ruminants as well ...
+      delay: 0.5
+    - type: FlavorProfile
+      flavors:
+      - fiber
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 2
 
 - type: entity
   id: WeakKudzu
@@ -107,29 +120,31 @@
             "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/fleshkudzu.rsi
-      state: base
+      state: kudzu_11
       drawdepth: Overdoors
       netsync: false
     - type: Appearance
+    - type: KudzuVisuals
     - type: Clickable
     - type: Transform
       anchored: true
     - type: Physics
     - type: Fixtures
       fixtures:
-      - hard: false
-        density: 7
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        layer:
-        - MidImpassable
+        fix1:
+          hard: false
+          density: 7
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+          - MidImpassable
     - type: Damageable
     - type: Destructible
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 10
+          damage: 40
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
@@ -142,6 +157,33 @@
         tags:
         - Flesh
     - type: Kudzu
+      growthTickChance: 0.3
+      # Heals each time it manages to do a growth tick:
+      damageRecovery:
+        types:
+          Slash: -0.5
+          Heat: -1.0
+          Cold: -1.0
+          Blunt: -0.5 # Needs to be balanced (approx 3x) with vacuum damage to stall but not kill Kudzu
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 10
+      coldDamage:
+        types:
+          Cold: 5 #per second, scales with temperature & other constants
+    - type: Barotrauma
+      damage:
+        types:
+          Blunt: 0.15 #per second, scales with pressure and other constants.
+    - type: Flammable
+      fireSpread: true
+      damage:
+       types:
+         Heat: 1
+    - type: GrowingKudzu
+      growthTickChance: 0.3
+    - type: AtmosExposed
     - type: EdgeSpreader
     - type: NodeContainer
       nodes:
@@ -154,3 +196,19 @@
       ignoreWhitelist:
         tags:
         - Flesh
+    - type: Food # delightfully devilish !
+      delay: 0.5
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+          - ReagentId: Protein
+            Quantity: 2
+    - type: Respirator
+      damage:
+        types:
+          Asphyxiation: 0.25
+      damageRecovery:
+        types:
+          Asphyxiation: -0.25
+

@@ -26,15 +26,18 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-      layer:
-        - SlipLayer
-      mask:
-        - ItemMask
-      density: 1000
-      hard: false
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepWater
+      params:
+        volume: 8

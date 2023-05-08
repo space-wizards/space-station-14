@@ -31,12 +31,13 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      mask:
-      - FullTileMask
-      layer:
-      - GlassLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -125,14 +126,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.39,0.49,-0.36"
-      density: 1500
-      mask:
-      - FullTileMask
-      layer:
-      - GlassLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.39,0.49,-0.36"
+        density: 1500
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
   - type: Repairable
   - type: Damageable
     damageContainer: Inorganic

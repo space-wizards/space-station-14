@@ -359,7 +359,7 @@
     - MobSpiderSpace
 
 - type: entity
-  name: Slimes Spawner Blue Good
+  name: Slimes Spawner Blue
   id: SpawnMobAdultSlimesBlue
   parent: MarkerBase
   components:
@@ -369,7 +369,7 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobAdultSlimesBlueGood
+      - MobAdultSlimesBlue
 
 - type: entity
   name: Slimes Spawner Blue Angry
@@ -385,7 +385,7 @@
       - MobAdultSlimesBlueAngry
 
 - type: entity
-  name: Slimes Spawner Green Good
+  name: Slimes Spawner Green
   id: SpawnMobAdultSlimesGreen
   parent: MarkerBase
   components:
@@ -395,7 +395,7 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobAdultSlimesGreenGood
+      - MobAdultSlimesGreen
 
 - type: entity
   name: Slimes Spawner Green Angry
@@ -411,7 +411,7 @@
       - MobAdultSlimesGreenAngry
 
 - type: entity
-  name: Slimes Spawner Yellow Good
+  name: Slimes Spawner Yellow
   id: SpawnMobAdultSlimesYellow
   parent: MarkerBase
   components:
@@ -421,7 +421,7 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobAdultSlimesYellowGood
+      - MobAdultSlimesYellow
 
 - type: entity
   name: Slimes Spawner Yellow Angry
