@@ -11,6 +11,28 @@ namespace Content.Shared.Random.Helpers
             return random.Pick(prototype.Values);
         }
 
+        public static string Pick(this WeightedRandomPrototype prototype, System.Random random)
+        {
+            var picks = prototype.Weights;
+            var sum = picks.Values.Sum();
+            var accumulated = 0f;
+
+            var rand = random.NextFloat() * sum;
+
+            foreach (var (key, weight) in picks)
+            {
+                accumulated += weight;
+
+                if (accumulated >= rand)
+                {
+                    return key;
+                }
+            }
+
+            // Shouldn't happen
+            throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
+        }
+
         public static string Pick(this WeightedRandomPrototype prototype, IRobustRandom? random = null)
         {
             IoCManager.Resolve(ref random);
@@ -32,6 +54,26 @@ namespace Content.Shared.Random.Helpers
 
             // Shouldn't happen
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
+        }
+
+        public static string Pick(this IRobustRandom random, Dictionary<string, float> weights)
+        {
+            var sum = weights.Values.Sum();
+            var accumulated = 0f;
+
+            var rand = random.NextFloat() * sum;
+
+            foreach (var (key, weight) in weights)
+            {
+                accumulated += weight;
+
+                if (accumulated >= rand)
+                {
+                    return key;
+                }
+            }
+
+            throw new InvalidOperationException($"Invalid weighted pick");
         }
     }
 }

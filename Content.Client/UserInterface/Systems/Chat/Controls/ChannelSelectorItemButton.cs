@@ -1,4 +1,4 @@
-﻿using Content.Client.Stylesheets;
+using Content.Client.Stylesheets;
 using Content.Shared.Chat;
 using Robust.Client.UserInterface.Controls;
 
@@ -14,8 +14,12 @@ public sealed class ChannelSelectorItemButton : Button
     {
         Channel = selector;
         AddStyleClass(StyleNano.StyleClassChatChannelSelectorButton);
-        Text = ChatUIController.GetChannelSelectorName(selector);
+
+        Text = ChannelSelectorButton.ChannelSelectorName(selector);
+
         var prefix = ChatUIController.ChannelPrefixes[selector];
-        if (prefix != default) Text = Loc.GetString("hud-chatbox-select-name-prefixed", ("name", Text), ("prefix", prefix));
+
+        if (prefix != default)
+            Text = Loc.GetString("hud-chatbox-select-name-prefixed", ("name", Text), ("prefix", prefix));
     }
 }

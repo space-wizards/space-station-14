@@ -1,13 +1,12 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.MachineLinking.Events;
-using Content.Server.MachineLinking.System;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
@@ -28,7 +27,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -88,15 +87,18 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (environment.Pressure > vent.MaxPressure)
                     return;
 
-                if (environment.Pressure < vent.UnderPressureLockoutThreshold)
-                {
-                    vent.UnderPressureLockout = true;
-                    return;
-                }
-                vent.UnderPressureLockout = false;
+                vent.UnderPressureLockout = (environment.Pressure < vent.UnderPressureLockoutThreshold);
 
                 if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
-                    pressureDelta = MathF.Min(pressureDelta, vent.ExternalPressureBound - environment.Pressure);
+                {
+                    // Vents cannot supply high pressures from an almost empty pipe, instead it's proportional to the pipe
+                    //   pressure, up to a limit.
+                    // This also means supply pipe pressure indicates minimum pressure on the station, with lower pressure
+                    //   sections getting air first.
+                    var supplyPressure = MathF.Min(pipe.Air.Pressure * vent.PumpPower, vent.ExternalPressureBound);
+                    // Calculate the ratio of supply pressure to current pressure.
+                    pressureDelta = MathF.Min(pressureDelta, supplyPressure - environment.Pressure);
+                }
 
                 if (pressureDelta <= 0)
                     return;
@@ -104,6 +106,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 // how many moles to transfer to change external pressure by pressureDelta
                 // (ignoring temperature differences because I am lazy)
                 var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
+
+                if (vent.UnderPressureLockout)
+                {
+                    // Leak only a small amount of gas as a proportion of supply pipe pressure.
+                    var pipeDelta = pipe.Air.Pressure - environment.Pressure;
+                    transferMoles = (float)timeDelta * pipeDelta * vent.UnderPressureLockoutLeaking;
+                    if (transferMoles < 0.0)
+                        return;
+                }
 
                 // limit transferMoles so the source doesn't go below its bound.
                 if ((vent.PressureChecks & VentPressureBound.InternalBound) != 0)
@@ -212,10 +223,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnInit(EntityUid uid, GasVentPumpComponent component, ComponentInit args)
         {
             if (component.CanLink)
-                _signalSystem.EnsureReceiverPorts(uid, component.PressurizePort, component.DepressurizePort);
+                _signalSystem.EnsureSinkPorts(uid, component.PressurizePort, component.DepressurizePort);
         }
 
-        private void OnSignalReceived(EntityUid uid, GasVentPumpComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, GasVentPumpComponent component, ref SignalReceivedEvent args)
         {
             if (!component.CanLink)
                 return;

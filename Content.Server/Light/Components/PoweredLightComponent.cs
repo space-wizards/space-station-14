@@ -1,7 +1,7 @@
 using System.Threading;
 using Content.Server.Light.EntitySystems;
 using Content.Shared.Damage;
-using Content.Shared.Light;
+using Content.Shared.Light.Component;
 using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -63,8 +63,6 @@ namespace Content.Server.Light.Components
 
         [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
         public string TogglePort = "Toggle";
-
-        public CancellationTokenSource? CancelToken;
 
         /// <summary>
         /// How long it takes to eject a bulb from this

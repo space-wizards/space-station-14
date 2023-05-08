@@ -175,11 +175,70 @@
       graph: GasBinary
       node: valve
     - type: AmbientSound
-      enabled: false
+      enabled: true
       volume: -9
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+
+- type: entity
+  parent: GasBinaryBase
+  id: SignalControlledValve
+  name: signal valve
+  description: A pipe with a valve that can be controlled with signals.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpSignalValve
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FilterVisuals.Enabled:
+        enabled:
+          True: { state: pumpSignalValveOn }
+          False: { state: pumpSignalValve }
+  - type: PipeColorVisuals
+  - type: GasValve
+  - type: SignalControlledValve
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Open
+      - Close
+      - Toggle
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+        volume: 100
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+        volume: 100
+  - type: Construction
+    graph: GasBinary
+    node: signalvalve
+  - type: AmbientSound
+    enabled: true
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_hiss.ogg
 
 - type: entity
   parent: GasBinaryBase
@@ -242,10 +301,15 @@
       inlet: inlet
       outlet: outlet
       canLink: true
-    - type: SignalReceiver
-      inputs:
-        Pressurize: []
-        Depressurize: []
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: DeviceLinkSink
+      ports:
+        - Pressurize
+        - Depressurize
     - type: Construction
       graph: GasBinary
       node: dualportventpump
@@ -259,6 +323,8 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: AmbientSound
+      enabled: true
 
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]
@@ -301,7 +367,7 @@
   - type: AtmosDevice
   - type: AtmosPipeColor
   - type: AmbientSound
-    enabled: false
+    enabled: true
     volume: -9
     range: 5
     sound:

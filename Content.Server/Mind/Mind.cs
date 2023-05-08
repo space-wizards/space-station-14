@@ -123,6 +123,13 @@ namespace Content.Server.Mind
         public bool PreventGhosting { get; set; }
 
         /// <summary>
+        ///     Prevents user from suiciding
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("preventSuicide")]
+        public bool PreventSuicide { get; set; }
+
+        /// <summary>
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
@@ -282,12 +289,12 @@ namespace Content.Server.Mind
         }
 
         /// <summary>
-        /// Removes an objective to this mind.
+        /// Removes an objective from this mind.
         /// </summary>
         /// <returns>Returns true if the removal succeeded.</returns>
         public bool TryRemoveObjective(int index)
         {
-            if (_objectives.Count >= index) return false;
+            if (index < 0 || index >= _objectives.Count) return false;
 
             var objective = _objectives[index];
 

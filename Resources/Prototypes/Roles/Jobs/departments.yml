@@ -14,6 +14,7 @@
   roles:
   - Bartender
   - Botanist
+  - Boxer
   - Chaplain
   - Chef
   - Clown
@@ -66,10 +67,11 @@
   - MedicalDoctor
   - MedicalIntern
   - Psychologist
+  - Paramedic
 
 - type: department
   id: Security
-  description: department-Command-description
+  description: department-Security-description
   color: "#DE3A3A"
   roles:
   - HeadOfSecurity
@@ -86,3 +88,13 @@
   - ResearchDirector
   - Scientist
   - ResearchAssistant
+
+- type: department
+  id: Specific
+  description: department-Specific-description
+  color: "#9FED58"
+  roles:
+  - Boxer
+  - Reporter
+  - Zookeeper
+  - Psychologist

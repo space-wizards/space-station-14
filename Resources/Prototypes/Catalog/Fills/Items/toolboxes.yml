@@ -7,12 +7,10 @@
   - type: StorageFill
     contents:
       - id: CrowbarRed
-        amount: 1
       - id: ClothingMaskBreath
         amount: 2
       - id: FoodSnackChocolate
       - id: FlashlightLantern
-        amount: 1
       - id: FlashlightLantern
         prob: 0.5
       - id: HarmonicaInstrument
@@ -69,14 +67,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: Screwdriver
-      - id: Wrench
-      - id: Welder
-      - id: Crowbar
-      - id: Multitool
-      - id: Wirecutter
+      - id: ClothingBeltUtilityFilled
       - id: ClothingHandsGlovesCombat
-      - id: ClothingBeltSyndieHolster
       - id: ClothingMaskGasSyndicate
 
 - type: entity
@@ -88,6 +80,5 @@
   - type: StorageFill
     contents:
       - id: IngotGold
-        amount: 1
       - id: DrinkGoldenCup
         prob: 0.05

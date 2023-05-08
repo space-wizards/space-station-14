@@ -12,7 +12,7 @@ namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
     [Migration("20220108185734_add-species")]
-    partial class addspecies
+    partial class AddSpecies
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

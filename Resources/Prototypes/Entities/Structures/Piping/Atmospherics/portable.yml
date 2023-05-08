@@ -12,14 +12,15 @@
     canCollide: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.4
-      density: 100
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi
@@ -51,8 +52,12 @@
     powerLoad: 2000
   - type: ExtensionCableReceiver
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: PowerDeviceVisualizer
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {visible: true}
+          False: {visible: false}
   - type: PortableScrubberVisuals
     idleState: icon
     runningState: icon-running
@@ -71,6 +76,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300

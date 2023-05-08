@@ -1,4 +1,4 @@
-﻿- type: stack
+- type: stack
   id: Ointment
   name: ointment
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: ointment }
@@ -24,4 +24,11 @@
   name: brutepack
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: gauze }
   spawn: Brutepack
+  maxCount: 10
+
+- type: stack
+  id: Bloodpack
+  name: bloodpack
+  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: bloodpack }
+  spawn: Bloodpack
   maxCount: 10

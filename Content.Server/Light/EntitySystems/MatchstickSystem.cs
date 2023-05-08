@@ -48,7 +48,7 @@ namespace Content.Server.Light.EntitySystems
 
                 var position = _transformSystem.GetGridOrMapTilePosition(match.Owner, xform);
 
-                _atmosphereSystem.HotspotExpose(gridUid, position, 400, 50, true);
+                _atmosphereSystem.HotspotExpose(gridUid, position, 400, 50, match.Owner, true);
             }
         }
 

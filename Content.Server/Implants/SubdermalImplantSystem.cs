@@ -1,15 +1,23 @@
-﻿using Content.Server.Cuffs.Components;
+﻿using Content.Server.Cuffs;
+using Content.Server.Store.Components;
+using Content.Server.Store.Systems;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
+using Content.Shared.Popups;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Implants;
 
 public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
+    [Dependency] private readonly CuffableSystem _cuffable = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
 
     public override void Initialize()
     {
@@ -17,7 +25,10 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
         SubscribeLocalEvent<SubdermalImplantComponent, UseFreedomImplantEvent>(OnFreedomImplant);
 
+        SubscribeLocalEvent<StoreComponent, AfterInteractUsingEvent>(OnUplinkInteractUsing);
+
         SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, AfterInteractUsingEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, SuicideEvent>(RelayToImplantEvent);
     }
 
@@ -26,10 +37,28 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         if (!TryComp<CuffableComponent>(component.ImplantedEntity, out var cuffs) || cuffs.Container.ContainedEntities.Count < 1)
             return;
 
-        if (TryComp<HandcuffComponent>(cuffs.LastAddedCuffs, out var cuff))
-        {
-            cuffs.Uncuff(component.ImplantedEntity.Value, cuffs.LastAddedCuffs, cuff, true);
-        }
+        _cuffable.Uncuff(component.ImplantedEntity.Value, cuffs.LastAddedCuffs, cuffs.LastAddedCuffs);
+        args.Handled = true;
+    }
+
+    private void OnUplinkInteractUsing(EntityUid uid, StoreComponent store, AfterInteractUsingEvent args)
+    {
+        // can only insert into yourself to prevent uplink checking with renault
+        if (args.Target != args.User)
+            return;
+
+        if (!TryComp<CurrencyComponent>(args.Used, out var currency))
+            return;
+
+        // same as store code, but message is only shown to yourself
+        args.Handled = _store.TryAddCurrency(_store.GetCurrencyValue(args.Used, currency), uid, store);
+
+        if (!args.Handled)
+            return;
+
+        var msg = Loc.GetString("store-currency-inserted-implant", ("used", args.Used));
+        _popup.PopupEntity(msg, args.User, args.User);
+        QueueDel(args.Used);
     }
 
     #region Relays

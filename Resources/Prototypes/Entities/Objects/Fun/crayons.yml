@@ -10,7 +10,6 @@
     - Write
     - Crayon
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage
   - type: UserInterface
     interfaces:

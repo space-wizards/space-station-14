@@ -22,6 +22,10 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
+  # for H.O.N.K. construction
+  - type: Tag
+    tags:
+    - ClownShoes
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -141,3 +145,19 @@
       sprite: Clothing/Shoes/Specific/jester.rsi
     - type: Clothing
       sprite: Clothing/Shoes/Specific/jester.rsi
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepJester
+
+- type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesCluwne
+  name: cluwne shoes
+  suffix: Unremoveable
+  description: "Cursed pair of cluwne shoes."
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/cluwne.rsi
+  - type: Unremoveable

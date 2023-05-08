@@ -6,6 +6,6 @@ namespace Content.Client.Chat.Managers
     {
         void Initialize();
 
-        public void SendMessage(ReadOnlyMemory<char> text, ChatSelectChannel channel);
+        public void SendMessage(string text, ChatSelectChannel channel);
     }
 }

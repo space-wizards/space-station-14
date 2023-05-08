@@ -20,6 +20,7 @@
       - id: Wirecutter
       - id: ClothingBeltUtility
       - id: OreBag
+      - id: ClothingBeltSalvageWebbing
 
 - type: entity
   id: CrateSalvageAssortedGoodies
@@ -41,6 +42,8 @@
       - id: WelderIndustrialAdvanced
         prob: 0.1
       - id: ResearchDisk
+        prob: 0.1
+      - id: ClothingBeltStorageWaistbag
         prob: 0.1
         #  - Service
       - id: CrayonBox

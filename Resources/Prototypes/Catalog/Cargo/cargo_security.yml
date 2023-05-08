@@ -34,7 +34,7 @@
     sprite: Clothing/OuterClothing/Armor/riot.rsi
     state: icon
   product: CrateSecurityRiot
-  cost: 2800
+  cost: 2900
   category: Security
   group: market
 
@@ -55,5 +55,15 @@
     state: handcuff
   product: CrateRestraints
   cost: 1000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: SecurityBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/security.rsi
+    state: icon
+  product: CrateSecurityBiosuit
+  cost: 800
   category: Security
   group: market

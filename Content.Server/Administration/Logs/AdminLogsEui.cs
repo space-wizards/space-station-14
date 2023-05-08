@@ -7,6 +7,7 @@ using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.Eui;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Configuration;
@@ -91,6 +92,8 @@ public sealed class AdminLogsEui : BaseEui
 
     public override async void HandleMessage(EuiMessageBase msg)
     {
+        base.HandleMessage(msg);
+
         if (!_adminManager.HasAdminFlag(Player, AdminFlags.Logs))
         {
             return;
@@ -98,11 +101,6 @@ public sealed class AdminLogsEui : BaseEui
 
         switch (msg)
         {
-            case Close _:
-            {
-                Close();
-                break;
-            }
             case LogsRequest request:
             {
                 _sawmill.Info($"Admin log request from admin with id {Player.UserId.UserId} and name {Player.Name}");
@@ -118,8 +116,10 @@ public sealed class AdminLogsEui : BaseEui
                     Impacts = request.Impacts,
                     Before = request.Before,
                     After = request.After,
+                    IncludePlayers = request.IncludePlayers,
                     AnyPlayers = request.AnyPlayers,
                     AllPlayers = request.AllPlayers,
+                    IncludeNonPlayers = request.IncludeNonPlayers,
                     LastLogId = 0,
                     Limit = _clientBatchSize
                 };
@@ -138,6 +138,16 @@ public sealed class AdminLogsEui : BaseEui
                 break;
             }
         }
+    }
+
+    public void SetLogFilter(string? search = null, bool invertTypes = false, HashSet<LogType>? types = null)
+    {
+        var message = new SetLogFilter(
+            search,
+            invertTypes,
+            types);
+
+        SendMessage(message);
     }
 
     private async void SendLogs(bool replace)

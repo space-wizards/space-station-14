@@ -11,13 +11,14 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.4
-      density: 1000
-      layer:
-      - HalfWallLayer
-      - Opaque
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 1000
+        layer:
+        - HalfWallLayer
+        - Opaque
   - type: Climbable
   - type: Damageable
     damageContainer: Inorganic
@@ -37,6 +38,7 @@
   description: Yep, it's a tree.
   abstract: true
   components:
+  - type: IgnoreWeather
   - type: SpriteFade
   - type: Clickable
   - type: Sprite
@@ -48,15 +50,22 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.35,-0.4,0.35,0.4"
-      density: 1000
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.4,0.35,0.4"
+        density: 1000
+        layer:
+        - WallLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/chop.ogg
+        params:
+          variation: 0.05
   - type: Destructible
     thresholds:
     - trigger:
@@ -69,6 +78,12 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/tree_fell.ogg
+          params:
+            volume: 5
+            variation: 0.05
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
@@ -87,12 +102,13 @@
     offset: 0,0.7
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.1,-0.3,0.1,0.3"
-      density: 4000
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.3,0.1,0.3"
+        density: 4000
+        layer:
+        - WallLayer
 
 - type: entity
   parent: BaseTree
@@ -104,12 +120,13 @@
     offset: 0,1.55
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.18,-0.35,0.18,0.35"
-      density: 2000
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.18,-0.35,0.18,0.35"
+        density: 2000
+        layer:
+        - WallLayer
 
 - type: entity
   parent: BaseTree
@@ -121,12 +138,13 @@
     offset: 0,1.15
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.1,-0.35,0.1,0.35"
-      density: 3500
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.35,0.1,0.35"
+        density: 3500
+        layer:
+        - WallLayer
 
 - type: entity
   parent: BaseRock
@@ -346,12 +364,13 @@
     state: treechristmas02
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.8,-1.5,0.8,-0.8"
-      density: 4500
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.8,-1.5,0.8,-0.8"
+        density: 4500
+        layer:
+        - WallLayer
   - type: LimitedItemGiver
     spawnEntries:
       - id: PresentRandom

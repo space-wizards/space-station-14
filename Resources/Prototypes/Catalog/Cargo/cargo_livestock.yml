@@ -39,6 +39,16 @@
   group: market
 
 - type: cargoProduct
+  id: LivestockCrab
+  icon:
+    sprite: Mobs/Animals/crab.rsi
+    state: crab
+  product: CrateNPCCrab
+  cost: 1800
+  category: Livestock
+  group: market
+
+- type: cargoProduct
   id: LivestockDuck
   icon:
     sprite: Mobs/Animals/duck.rsi
@@ -164,6 +174,26 @@
     sprite: Mobs/Animals/hamster.rsi
     state: icon-0
   product: CrateNPCHamster
+  cost: 2800
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockLizard
+  icon:
+    sprite: Mobs/Animals/lizard.rsi
+    state: lizard
+  product: CrateNPCLizard
+  cost: 1000
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockKangaroo
+  icon:
+    sprite: Mobs/Animals/kangaroo.rsi
+    state: kangaroo
+  product: CrateNPCKangaroo
   cost: 2800
   category: Livestock
   group: market

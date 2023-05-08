@@ -168,7 +168,7 @@
 - type: entity
   id: LockerWallMedical
   parent: BaseWallLocker
-  name: medical doctor's wall locker
+  name: medical wall locker
   components:
   - type: Appearance
     visuals:

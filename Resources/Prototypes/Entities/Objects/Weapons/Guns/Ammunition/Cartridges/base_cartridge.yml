@@ -4,12 +4,11 @@
   abstract: true
   components:
   - type: Sprite
-    drawdepth: FloorObjects
+    drawdepth: Items
     netsync: false
   - type: Tag
     tags:
     - Cartridge
   - type: Item
     size: 1
-  - type: Recyclable
   - type: SpaceGarbage
