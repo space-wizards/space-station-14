@@ -21,7 +21,6 @@
     enabled: false
   - type: Physics
     bodyType: Dynamic
-    hard: false
   - type: Fixtures
     fixtures:
       slips:
