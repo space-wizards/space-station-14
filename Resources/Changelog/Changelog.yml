@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix melee arcs showing up in the context menu., type: Fix}
-  id: 3201
-  time: '2023-03-22T02:34:23.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Re-sprited the riot suit to match the style., type: Tweak}
@@ -2912,3 +2907,8 @@ Entries:
   - {message: Plushie crate can have either a gray or blue shark, type: Tweak}
   id: 3700
   time: '2023-05-07T22:50:09.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Cloth can go into the autolathe and uniform printer again., type: Fix}
+  id: 3701
+  time: '2023-05-08T00:34:27.0000000+00:00'
