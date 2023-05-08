@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Adjusted ships on radar so they look much nicer., type: Tweak}
-  id: 3205
-  time: '2023-03-22T20:52:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Add additional rules around arrivals., type: Add}
   - {message: Fix some instances of being able to return to the arrivals station.,
     type: Fix}
@@ -2914,3 +2909,8 @@ Entries:
   - {message: Updated the data and nuke disk sprites, type: Tweak}
   id: 3704
   time: '2023-05-08T12:28:38.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Added hand labeler to the medical techfab. It costs 100 plastic., type: Add}
+  id: 3705
+  time: '2023-05-08T12:32:15.0000000+00:00'
