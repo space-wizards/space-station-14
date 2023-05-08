@@ -1,5 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Speech.Components;
+using Content.Shared.Speech.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Database;
 

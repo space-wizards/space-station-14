@@ -19,7 +19,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
-using Content.Server.Speech.Components;
+using Content.Shared.Speech.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
