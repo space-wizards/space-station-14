@@ -1,10 +1,33 @@
 # TODO: Removes the icon components from all these when that gets fixed.
 
-# Packets
-
-# Since this one is closed, the only way to insert liquid is with a syringe.
 - type: entity
   parent: BaseItem
+  id: BaseFoodCondiment
+  abstract: true
+  components:
+  - type: DrawableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/condiments.rsi
+  - type: Icon
+    netsync: false
+    sprite: Objects/Consumable/Food/condiments.rsi
+  - type: TrashOnEmpty
+    solution: food
+  - type: Tag
+    tags:
+    - Trash
+  - type: SpaceGarbage
+  - type: StaticPrice
+    price: 0
+
+# Packets
+
+- type: entity
+  parent: BaseFoodCondiment
   id: BaseFoodCondimentPacket
   name: condiment packet
   abstract: true
@@ -15,15 +38,12 @@
     refillable: false
     openSounds:
       collection: packetOpenSounds
-  - type: DrawableSolution
-    solution: food
+  # Since this one is closed, the only way to insert liquid is with a syringe.
   - type: InjectableSolution
     solution: food
-  - type: DrainableSolution
-    solution: food
-    # Note NOT refillable. 
-    # It be a shame if it turned out ALL drinks were ALWAYS refillable.... ffs.
-    # Well its fixed now, but I want to share my pain.
+  # Note NOT refillable. 
+  # It be a shame if it turned out ALL drinks were ALWAYS refillable.... ffs.
+  # Well its fixed now, but I want to share my pain.
   - type: SolutionContainerManager
     solutions:
       food:
@@ -31,31 +51,12 @@
   - type: SolutionTransfer
     maxTransferAmount: 10
   - type: Sprite
-    netsync: false
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: packet-empty
   - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: packet-empty
-  - type: TrashOnEmpty
-    solution: food
-  - type: Tag
-    tags:
-    - Trash
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
-  - type: SpaceGarbage
-  - type: StaticPrice
-    price: 0
-
-- type: entity
-  parent: BaseFoodCondimentPacket
-  id: FoodCondimentPacket
-  components:
-  - type: Tag
-    tags:
-    - Trash
 
 - type: entity
   parent: BaseFoodCondimentPacket
@@ -343,7 +344,7 @@
 # Bottles
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFoodCondiment
   id: BaseFoodCondimentBottle
   abstract: true
   name: condiment bottle
@@ -353,10 +354,6 @@
     solution: food
     openSounds:
       collection: pop
-  - type: RefillableSolution
-    solution: food
-  - type: DrainableSolution
-    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -366,23 +363,14 @@
     minTransferAmount: 5
     maxTransferAmount: 30
   - type: Sprite
-    netsync: false
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-empty
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: bottle-alpha-
-  - type: TrashOnEmpty
-    solution: food
-
-- type: entity
-  parent: BaseFoodCondimentBottle
-  id: FoodCondimentBottle
-  components:
-  - type: Tag
-    tags:
-    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -404,7 +392,6 @@
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: true
   - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-coldsauce
 
 - type: entity
@@ -427,8 +414,29 @@
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: true
   - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-enzyme
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleVingegar
+  name: vinegar bottle
+  description: Used in cooking to enhance flavor.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Vinegar
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-v
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    state: bottle-vinegar
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -450,7 +458,6 @@
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: true
   - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-hotsauce
 
 - type: entity
@@ -473,7 +480,6 @@
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: true
   - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-ketchup
 
 - type: entity
@@ -497,13 +503,12 @@
       visible: true
   # So there's no error.
   - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-ketchup
 
 # Shakers
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFoodCondimentBottle
   id: BaseFoodShaker
   abstract: true
   name: empty shaker
@@ -512,10 +517,6 @@
   - type: Drink
     solution: food
     isOpen: true
-  - type: RefillableSolution
-    solution: food
-  - type: DrainableSolution
-    solution: food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -543,22 +544,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Sprite
-    netsync: false
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: shaker-empty
-  - type: Appearance
-  - type: TrashOnEmpty
-    solution: food
-
-- type: entity
-  parent: BaseFoodShaker
-  id: FoodShakerEmpty
-  name: empty shaker
-  description: A shaker used to store and dispense spices.
-  components:
-  - type: Tag
-    tags:
-    - Trash
 
 - type: entity
   parent: BaseFoodShaker
@@ -572,12 +558,9 @@
         reagents:
         - ReagentId: TableSalt
           Quantity: 20
-  
   - type: Sprite
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: shaker-salt
   - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: shaker-salt
 
 - type: entity
@@ -592,160 +575,7 @@
         reagents:
         - ReagentId: Blackpepper
           Quantity: 20
-  
   - type: Sprite
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: shaker-pepper
   - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
     state: shaker-pepper
-
-# Small Bottles
-
-- type: entity
-  parent: BaseItem
-  id: BaseFoodCondimentBottleSmall
-  abstract: true
-  name: condiment bottle
-  description: A smaller glass bottle used to store condiments.
-  components:
-  - type: Drink
-    solution: food
-    openSounds:
-      collection: pop
-  - type: RefillableSolution
-    solution: food
-  - type: DrainableSolution
-    solution: food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-  - type: SolutionTransfer
-    maxTransferAmount: 15
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Consumable/Food/condiments.rsi
-    state: bottle-s-empty
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 3
-    fillBaseName: bottle-s-alpha-
-  - type: TrashOnEmpty
-    solution: food
-
-- type: entity
-  parent: BaseFoodCondimentBottleSmall
-  id: FoodCondimentBottleSmall
-  components:
-  - type: Tag
-    tags:
-    - Trash
-
-- type: entity
-  parent: BaseFoodCondimentBottleSmall
-  id: FoodCondimentBottleSmallColdsauce
-  name: coldsauce bottle
-  description: Leaves the tongue numb in its passage.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Frostoil
-          Quantity: 15
-  - type: Sprite
-    layers:
-    - state: bottle-s-empty
-    - state: label-s-c
-    - state: bottle-s-alpha-3
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: true
-  - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
-    state: bottle-s-coldsauce
-
-- type: entity
-  parent: BaseFoodCondimentBottleSmall
-  id: FoodCondimentBottleSmallHotsauce
-  name: hotsauce
-  description: You can almost TASTE the stomach ulcers now!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Hotsauce
-          Quantity: 15
-  - type: Sprite
-    layers:
-    - state: bottle-s-empty
-    - state: label-s-h
-    - state: bottle-s-alpha-3
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: true
-  - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
-    state: bottle-s-hotsauce
-
-- type: entity
-  parent: BaseFoodCondimentBottleSmall
-  id: FoodCondimentBottleSmallKetchup
-  name: ketchup
-  description: You feel more American already.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Ketchup
-          Quantity: 15
-  - type: Sprite
-    layers:
-    - state: bottle-s-empty
-    - state: label-s-k
-    - state: bottle-s-alpha-3
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: true
-  - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
-    state: bottle-s-ketchup
-
-- type: entity
-  parent: BaseFoodCondimentBottleSmall
-  id: FoodCondimentBottleSmallVinegar
-  name: vinegar
-  description: Used in cooking to enhance flavor.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Vinegar
-          Quantity: 15
-  - type: Sprite
-    layers:
-    - state: bottle-s-empty
-    - state: label-s-v
-    - state: bottle-s-alpha-3
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: true
-  - type: Icon
-    sprite: Objects/Consumable/Food/condiments.rsi
-    state: bottle-s-vinegar
-
-# Trash
-
-# Maybe in some dumb universe you could put liquid back in this and seal it
-# with a lighter or something.
-- type: entity
-  noSpawn: true
-  parent: BaseItem
-  id: FoodCondimentPacketTrash
-  name: empty condiment packet
-  description: A ripped condiment packet. Useless.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Food/condiments.rsi
-    netsync: false
-    state: packet-trash

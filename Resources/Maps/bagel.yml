@@ -76381,7 +76381,7 @@ entities:
       type: Transform
     - tags: []
       type: Tag
-- proto: FoodCondimentBottleSmallHotsauce
+- proto: FoodCondimentBottleHotsauce
   entities:
   - uid: 23671
     components:
