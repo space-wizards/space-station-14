@@ -19,6 +19,12 @@ using Content.Shared.Physics;
 
 namespace Content.Client.Weapons.Ranged;
 
+/// <summary>
+/// This crosshair near mouse pointer helps with aiming.
+/// When there are obstacles and the projectile cannot reach the target (mouse pointer),
+/// it turns red. Light green, when the projectile hits the target precisely.
+/// Use IntersectRay.
+/// </summary>
 public sealed class GunCrosshairOverlay : Overlay
 {
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -36,9 +42,9 @@ public sealed class GunCrosshairOverlay : Overlay
     private readonly float _unavailableSignSize = 22f;
 
     public float? MaxRange; // in default maxRange get for centered player
-    public float MainScale = 0.72f;
-    public float MaxBulletRangeSpread = 0.3f;
-    public float SanctuaryCoeff = 0.1f; // circle of sanctuary, awoid those who are nearby
+    public float MainScale = 0.72f; // for set see CombatModeIndicatorsOverlay
+    public float MaxExpectedBulletSpread = 0.3f;
+    public float SanctuaryCircleCoeff = 0.1f; // circle of sanctuary, awoid those who are nearby
 
     public GunCrosshairOverlay(IEntityManager entManager, IEyeManager eyeManager, IInputManager input,
         IPlayerManager player, IPrototypeManager prototypes, SharedPhysicsSystem physics,
@@ -64,36 +70,31 @@ public sealed class GunCrosshairOverlay : Overlay
     {
         var screen = args.ScreenHandle;
 
-        // get player position
         var player = _player.LocalPlayer?.ControlledEntity;
-        if (player == null || !_entManager.TryGetComponent<TransformComponent>(player, out var xform))
-            return;
-
-        var playerMapPos = xform.MapPosition;
-        if (playerMapPos.MapId != args.MapId)
-            return;
 
         // get gun
-        if (!_guns.TryGetGun(player.Value, out var gunUid, out var gun))
+        if (player == null || !_guns.TryGetGun(player.Value, out var gunUid, out var gun))
+            return;
+
+        // get player position
+        if (!_entManager.TryGetComponent<TransformComponent>(player, out var xform))
+            return;
+        var playerMapPos = xform.MapPosition;
+        if (playerMapPos.MapId != args.MapId)
             return;
 
         // get mouse position
         var mouseScreen = _input.MouseScreenPosition;
         var mousePos = _eye.ScreenToMap(mouseScreen);
-        if (playerMapPos.MapId != mousePos.MapId)
+        if (mousePos.MapId != args.MapId)
             return;
 
         // get collision mask
         int collisionMask;
-        if (_entManager.TryGetComponent<HitscanBatteryAmmoProviderComponent>(
-            gunUid, out var hitscan))
-        {
+        if (_entManager.TryGetComponent<HitscanBatteryAmmoProviderComponent>(gunUid, out var hitscan))
             collisionMask = _protoManager.Index<HitscanPrototype>(hitscan.Prototype).CollisionMask;
-        }
         else
-        {
             collisionMask = (int) CollisionGroup.BulletImpassable;
-        }
 
         var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
         var scale = (uiScale > 1.25f ? 1.25f : uiScale) * MainScale;
@@ -101,10 +102,10 @@ public sealed class GunCrosshairOverlay : Overlay
         var maxAngle = gun.MaxAngle;
 
         var worldViewport = _eye.GetWorldViewport();
-        var maxRange = MaxRange ?? (float)(0.3 * (worldViewport.Width + worldViewport.Height));
+        var maxRange = MaxRange ?? (float) (0.3 * (worldViewport.Width + worldViewport.Height));
 
         var sanctuaryPos = playerMapPos.Position
-             - (mousePos.Position - playerMapPos.Position).Normalized * SanctuaryCoeff;
+             - (mousePos.Position - playerMapPos.Position).Normalized * SanctuaryCircleCoeff;
         var direction = mousePos.Position - sanctuaryPos;
 
         // set data for calculating raycastResult
@@ -123,7 +124,7 @@ public sealed class GunCrosshairOverlay : Overlay
             var mouseDistance = direction.Length;
             var currentState = _stateManager.CurrentState;
 
-            // use entityUid for an under object if you can found it
+            // use entityUid for an mouse over object if you can found it
             if (currentState is GameplayStateBase tickScreen
                 && tickScreen.GetClickedEntity(mousePos) is EntityUid objectEntityUid
                     && castRes.HitEntity == objectEntityUid
@@ -132,12 +133,12 @@ public sealed class GunCrosshairOverlay : Overlay
                 crosshairType = GunCrosshairTypes.InTarget;
             }
             // the wall or glass is not far from hit
-            else if (MaxBulletRangeSpread > (castRes.HitPos - mousePos.Position).Length
-                && CheckBulletSpread(castRes.Distance - MaxBulletRangeSpread, direction, raycastData, maxAngle))
+            else if (MaxExpectedBulletSpread > (castRes.HitPos - mousePos.Position).Length
+                && CheckBulletSpread(castRes.Distance - MaxExpectedBulletSpread, direction, raycastData, maxAngle))
             {
                 crosshairType = GunCrosshairTypes.InTarget;
             }
-            // it have some obstacle
+            // if it have some obstacle
             else if (mouseDistance > castRes.Distance)
             {
                 crosshairType = GunCrosshairTypes.Unavailable;
@@ -217,8 +218,7 @@ public sealed class GunCrosshairOverlay : Overlay
         {
             // active crosshair | not active
             var crosshair = type == GunCrosshairTypes.InTarget
-                ? _crosshairMarked
-                : _crosshair;
+                ? _crosshairMarked : _crosshair;
 
             var textureSize = crosshair.Size * scale;
 
