@@ -371,3 +371,50 @@
             path: /Audio/Effects/Vehicle/vehiclestartup.ogg
             params:
               volume: -3
+
+- type: entity
+  id: VehicleUnicycle
+  parent: BaseVehicle
+  name: unicycle
+  description: It only has one wheel!
+  components:
+  - type: Vehicle
+    northOver: true
+    southOver: true
+    northOverride: -0.15
+    southOverride: 0.15
+    hasKey: true
+    hornSound:
+      path: /Audio/Effects/Vehicle/bicyclebell.ogg
+  - type: Sprite
+    sprite: Objects/Vehicles/unicycle.rsi
+    layers:
+    - state: vehicle
+      map: ["enum.VehicleVisualLayers.AutoAnimate"]
+    netsync: false
+    noRot: true
+  - type: Strap
+    buckleOffset: "0.1, -0.05"
+    maxBuckleDistance: 1
+  - type: MovementSpeedModifier
+    acceleration: 1
+    friction: 0.8
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 4.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 240
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg

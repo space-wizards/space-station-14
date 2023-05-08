@@ -121,6 +121,8 @@ flavor-complex-copypasta = like a repetitive joke
 flavor-complex-memory-leek = like a fork bomb
 flavor-complex-gunpowder = like gunpowder
 flavor-complex-validhunting = like validhunting
+flavor-complex-plastic = like plastic
+flavor-complex-glue = like glue
 
 # Drink-specific flavors.
 

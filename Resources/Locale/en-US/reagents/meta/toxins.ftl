@@ -57,3 +57,6 @@ reagent-desc-pax = A psychiatric drug which prevents the patient from directly h
 
 reagent-name-honk = honk
 reagent-desc-honk = A toxin found in bananium. Causes severe honking and internal bleeding, may also cause the patient to mutate.
+
+reagent-name-glue = crazy glue
+reagent-desc-glue = A toxic substance created by Honk.Co, do not eat glue.

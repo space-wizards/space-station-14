@@ -683,3 +683,13 @@
   id: themartinez
   flavorType: Complex
   description: flavor-complex-themartinez
+
+- type: flavor
+  id: plastic
+  flavorType: Complex
+  description: flavor-complex-plastic
+
+- type: flavor
+  id: glue
+  flavorType: Complex
+  description: flavor-complex-glue
