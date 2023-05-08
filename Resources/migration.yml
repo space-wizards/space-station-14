@@ -6,8 +6,11 @@
 # Window: WallSolid
 # WallSolid: Window
 # Table: null
-
+#
 chem_dispenser: ChemDispenser
+KvassTankFull: null
+DrinkKvassGlass: null
+KvassTank: null
 
 # 2023-05-03
 SpawnPointBrigmedic: null
@@ -16,9 +19,6 @@ ClothingHeadHatBeretBrigmedic: null
 ClothingHeadHelmetHardsuitBrigmedic: null
 ClothingOuterHardsuitBrigmedic: null
 ClothingOuterCoatAMG: null
-ClothingUniformJumpsuitBrigmedic: null
-ClothingUniformJumpskirtBrigmedic: null
-ClothingUniformJumpskirtOfLife: null
 ClothingBackpackBrigmedic: null
 ClothingBackpackBrigmedicFilled: null
 ClothingBackpackSatchelBrigmedic: null
@@ -42,3 +42,8 @@ MagazineMagnumSubMachineGunHighVelocity: MagazinePistolSubMachineGunHighVelocity
 MagazineMagnumSubMachineGunPractice: MagazinePistolSubMachineGunPractice
 MagazineMagnumSubMachineGunRubber: MagazinePistolSubMachineGunRubber
 WeaponSubMachineGunVector: WeaponSubMachineGunDrozd
+WeaponSubMachineGunVectorRubber: WeaponSubMachineGunDrozdRubber
+
+MagazineBoxAntiMaterial: MagazineBoxAntiMateriel
+CartridgeAntiMaterial: CartridgeAntiMateriel
+BulletAntiMaterial: BulletAntiMateriel

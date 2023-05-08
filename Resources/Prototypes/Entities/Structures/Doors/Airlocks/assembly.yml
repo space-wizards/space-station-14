@@ -12,14 +12,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.45"
-      density: 110
-      mask:
-      - FullTileMask
-      layer:
-      - HumanoidBlockLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 110
+        mask:
+        - FullTileMask
+        layer:
+        - HumanoidBlockLayer
   - type: Anchorable
     delay: 2
   - type: Pullable

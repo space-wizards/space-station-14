@@ -14,14 +14,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.39,0.49,-0.36"
-      density: 1500
-      mask:
-      - TabletopMachineMask
-      layer:
-      - GlassAirlockLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.39,0.49,-0.36"
+        density: 1500
+        mask:
+        - TabletopMachineMask
+        layer:
+        - GlassAirlockLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Windoors/windoor.rsi
@@ -45,12 +46,20 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DoorSignalControl
-  - type: SignalReceiver
-    inputs:
-      Open: []
-      Close: []
-      Toggle: []
-      AutoClose: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Open
+      - Close
+      - Toggle
+      - AutoClose
+  - type: DeviceLinkSource
+    ports:
+    - DoorStatus
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass

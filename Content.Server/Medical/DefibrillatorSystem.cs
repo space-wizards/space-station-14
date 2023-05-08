@@ -224,14 +224,14 @@ public sealed class DefibrillatorSystem : EntitySystem
             if (mindComp.Mind.CurrentEntity != target)
             {
                 _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
-                    InGameICChatType.Speak, true, true);
+                    InGameICChatType.Speak, true);
                 _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
             }
         }
         else
         {
             _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-no-mind"),
-                InGameICChatType.Speak, true, true);
+                InGameICChatType.Speak, true);
         }
 
         var sound = _mobState.IsAlive(target, mob) && session != null

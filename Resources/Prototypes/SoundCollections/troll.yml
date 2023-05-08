@@ -1,0 +1,43 @@
+# various troll sounds for H.O.N.K.
+- type: soundCollection
+  id: TrollAnimals
+  files:
+  - /Audio/Animals/bear.ogg
+  - /Audio/Animals/cat_hiss.ogg
+  - /Audio/Animals/cat_meow.ogg
+  - /Audio/Animals/chicken_cluck_happy.ogg
+  - /Audio/Animals/cow_moo.ogg
+  - /Audio/Animals/duck_quack_happy.ogg
+  - /Audio/Animals/ferret_happy.ogg
+  - /Audio/Animals/fox_squeak.ogg
+  - /Audio/Animals/frog_ribbit.ogg
+  - /Audio/Animals/goat_bah.ogg
+  - /Audio/Animals/goose_honk.ogg
+  - /Audio/Animals/lizard_happy.ogg
+  - /Audio/Animals/monkey_scream.ogg
+  - /Audio/Animals/mouse_squeak.ogg
+  - /Audio/Animals/parrot_raught.ogg
+  - /Audio/Animals/penguin_squawk.ogg
+  - /Audio/Animals/pig_oink.ogg
+  - /Audio/Animals/raccoon_chatter.ogg
+  - /Audio/Animals/sloth_squeak.ogg
+  - /Audio/Animals/small_dog_bark_happy.ogg
+  - /Audio/Animals/snake_hiss.ogg
+  - /Audio/Animals/space_dragon_roar.ogg
+
+- type: soundCollection
+  id: TrollBeeping
+  files:
+  - /Audio/Effects/countdown.ogg
+
+- type: soundCollection
+  id: TrollEsword
+  files:
+  - /Audio/Weapons/ebladeoff.ogg
+  - /Audio/Weapons/ebladeon.ogg
+  - /Audio/Weapons/eblade1.ogg
+
+- type: soundCollection
+  id: TrollMeeting
+  files:
+  - /Audio/Misc/emergency_meeting.ogg

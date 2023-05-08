@@ -7046,29 +7046,25 @@ entities:
     - pos: 0.5,47.5
       parent: 1653
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
   - uid: 718
     components:
     - pos: 4.5,25.5
       parent: 1653
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
   - uid: 796
     components:
     - pos: 8.5,24.5
       parent: 1653
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
   - uid: 896
     components:
     - pos: 0.5,22.5
       parent: 1653
       type: Transform
-    - fixtures: []
-      type: Fixtures
+
 - proto: FoamedAluminiumMetal
   entities:
   - uid: 646
@@ -9036,62 +9032,7 @@ entities:
       pos: 6.5,24.5
       parent: 1653
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - -0.55,-0.55
-          - 0.55,-0.55
-          - 0.55,0.55
-          - -0.55,0.55
-        mask: []
-        layer:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: conveyor
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - -0.15,-0.15
-          - 0.15,-0.15
-          - 0.15,0.15
-          - -0.15,0.15
-        mask: []
-        layer:
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        - BulletImpassable
-        - InteractImpassable
-        - Opaque
-        density: 1
-        hard: False
-        restitution: 0
-        friction: 0.4
-        id: brrt
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - -0.49,-0.49
-          - 0.49,-0.49
-          - 0.49,0.49
-          - -0.49,0.49
-        mask:
-        - Impassable
-        layer:
-        - BulletImpassable
-        - Opaque
-        density: 1
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: collision
-      type: Fixtures
+
 - proto: ReinforcedWindow
   entities:
   - uid: 739

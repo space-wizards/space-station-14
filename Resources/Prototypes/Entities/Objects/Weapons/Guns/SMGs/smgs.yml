@@ -141,10 +141,6 @@
           whitelist:
             tags:
               - CartridgePistol
-    - type: ContainerContainer
-      containers:
-        gun_magazine: !type:ContainerSlot
-        gun_chamber: !type:ContainerSlot
     - type: MagazineVisuals
       magState: mag
       steps: 1
@@ -192,10 +188,6 @@
         whitelist:
           tags:
             - CartridgeMagnum
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -252,6 +244,32 @@
     zeroVisible: true
   - type: Appearance
 
+# Rubber
+- type: entity
+  name: Drozd
+  parent: WeaponSubMachineGunDrozd
+  id: WeaponSubMachineGunDrozdRubber
+  suffix: Non-Lethal
+  components:
+    - type: ItemSlots
+      slots:
+        gun_magazine:
+          name: Magazine
+          startingItem: MagazinePistolSubMachineGunRubber
+          insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+          ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+          priority: 2
+          whitelist:
+            tags:
+              - MagazinePistolSubMachineGun
+        gun_chamber:
+          name: Chamber
+          startingItem: CartridgePistolRubber
+          priority: 1
+          whitelist:
+            tags:
+              - CartridgePistol
+
 - type: entity
   name: Vector
   parent: WeaponSubMachineGunVector
@@ -277,7 +295,3 @@
         whitelist:
           tags:
             - CartridgeMagnum
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot

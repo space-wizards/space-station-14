@@ -92,7 +92,7 @@
       bodyType: Static
     - type: Fixtures
       fixtures:
-        - id: slipFixture
+        slipFixture:
           shape:
             !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"

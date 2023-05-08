@@ -1,0 +1,25 @@
+<Document>
+# Networking
+Some devices on the station need to communicate with each other, and they do this by utilizing device networking.
+With networking machines and devices can send arbitrary data between each other.
+There are multiple networks that get used, such as the wireless and wired network.
+Each network device has a frequency it receives on. PDAs for example, use the frequency: [color=green]220.2[/color]
+
+## Device Lists
+Some devices need to know what other devices to communicate with specifically.
+<Box>
+  <GuideEntityEmbed Entity="AirAlarm"/>
+</Box>
+Air alarms for example require you to tell it which vents, scrubbers, sensors, and firelocks to interact with.
+You do that by using the Network Configurator.
+
+## Linking
+If devices basic or still more advanced but need finer control of how and what connects to each other they will generally use device linking.
+  <Box>
+    <GuideEntityEmbed Entity="SignalSwitch"/>
+    <GuideEntityEmbed Entity="Airlock"/>
+  </Box>
+With linking you can connect the outputs of a device like [color=gray]On[/color] or [color=gray]Off[/color] with the inputs of a device like the airlocks
+[color=gray]Open[/color] or [color=gray]Close[/color] inputs.
+The Network Configurator is also used for linking devices together.
+</Document>

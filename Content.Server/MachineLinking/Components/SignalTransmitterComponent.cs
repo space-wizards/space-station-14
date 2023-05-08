@@ -1,15 +1,16 @@
+using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
 
 namespace Content.Server.MachineLinking.Components
 {
     [DataDefinition]
-    public struct PortIdentifier
+    public readonly struct PortIdentifier
     {
         [DataField("uid")]
-        public EntityUid Uid;
+        public readonly EntityUid Uid;
 
         [DataField("port")]
-        public string Port;
+        public readonly string Port;
 
         public PortIdentifier(EntityUid uid, string port)
         {
@@ -30,6 +31,13 @@ namespace Content.Server.MachineLinking.Components
         [DataField("transmissionRange")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float TransmissionRange = 30f;
+
+        /*
+         * Remember last output state to avoid re-raising a SignalChangedEvent if the signal
+         * level hasn't actually changed.
+         */
+        [ViewVariables(VVAccess.ReadWrite)]
+        public SignalState LastState = SignalState.Low;
 
         [DataField("outputs")]
         [Access(typeof(SignalLinkerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
