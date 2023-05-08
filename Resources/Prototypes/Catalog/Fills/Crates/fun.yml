@@ -226,10 +226,10 @@
       - id: FoamCutlass
         amount: 2
 
-
 - type: entity
   id: CrateFunToyBox
   parent: CrateToyBox
+  suffix: Filled
   components:
   - type: StorageFill
     contents:
