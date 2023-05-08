@@ -1,11 +1,6 @@
 Entries:
 - author: DogZeroX
   changes:
-  - {message: Re-sprited the riot suit to match the style., type: Tweak}
-  id: 3202
-  time: '2023-03-22T04:18:35.0000000+00:00'
-- author: DogZeroX
-  changes:
   - {message: The looping sound from the torch has been removed., type: Remove}
   id: 3203
   time: '2023-03-22T04:20:21.0000000+00:00'
@@ -2912,3 +2907,10 @@ Entries:
   - {message: Cloth can go into the autolathe and uniform printer again., type: Fix}
   id: 3701
   time: '2023-05-08T00:34:27.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Adds crew monitoring console and server boards to cargo., type: Add}
+  - {message: 'A new category was added to cargo: circuitboards.', type: Add}
+  - {message: Removed crew monitoring console boards from lathes., type: Remove}
+  id: 3702
+  time: '2023-05-08T05:49:07.0000000+00:00'
