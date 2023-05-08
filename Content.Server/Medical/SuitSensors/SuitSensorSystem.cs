@@ -2,6 +2,7 @@ using Content.Server.Access.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
@@ -34,6 +35,7 @@ namespace Content.Server.Medical.SuitSensors
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
             SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<SuitSensorComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
@@ -56,7 +58,7 @@ namespace Content.Server.Medical.SuitSensors
             var curTime = _gameTiming.CurTime;
             var sensors = EntityManager.EntityQueryEnumerator<SuitSensorComponent, DeviceNetworkComponent>();
 
-            while (sensors.MoveNext(out var sensor, out var device))
+            while (sensors.MoveNext(out var uid, out var sensor, out var device))
             {
                 if (device.TransmitFrequency is null || !sensor.StationId.HasValue)
                     continue;
@@ -69,7 +71,7 @@ namespace Content.Server.Medical.SuitSensors
                 sensor.NextUpdate = curTime + sensor.UpdateRate;
 
                 // get sensor status
-                var status = GetSensorState(sensor.Owner, sensor);
+                var status = GetSensorState(uid, sensor);
                 if (status == null)
                     continue;
 
@@ -92,13 +94,40 @@ namespace Content.Server.Medical.SuitSensors
                     continue;
                 }
 
-                _deviceNetworkSystem.QueuePacket(sensor.Owner, sensor.ConnectedServer, payload, device: device);
+                _deviceNetworkSystem.QueuePacket(uid, sensor.ConnectedServer, payload, device: device);
+            }
+        }
+
+        private void OnPlayerSpawn(PlayerSpawnCompleteEvent ev)
+        {
+            // If the player spawns in arrivals then the grid underneath them may not be appropriate.
+            // in which case we'll just use the station spawn code told us they are attached to and set all of their
+            // sensors.
+            var sensorQuery = GetEntityQuery<SuitSensorComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            RecursiveSensor(ev.Mob, ev.Station, sensorQuery, xformQuery);
+        }
+
+        private void RecursiveSensor(EntityUid uid, EntityUid stationUid, EntityQuery<SuitSensorComponent> sensorQuery, EntityQuery<TransformComponent> xformQuery)
+        {
+            var xform = xformQuery.GetComponent(uid);
+            var enumerator = xform.ChildEnumerator;
+
+            while (enumerator.MoveNext(out var child))
+            {
+                if (sensorQuery.TryGetComponent(child, out var sensor))
+                {
+                    sensor.StationId = stationUid;
+                }
+
+                RecursiveSensor(child.Value, stationUid, sensorQuery, xformQuery);
             }
         }
 
         private void OnMapInit(EntityUid uid, SuitSensorComponent component, MapInitEvent args)
         {
-            component.StationId = _stationSystem.GetOwningStation(uid);
+            // Fallback
+            component.StationId ??= _stationSystem.GetOwningStation(uid);
 
             // generate random mode
             if (component.RandomMode)

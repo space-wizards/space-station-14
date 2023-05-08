@@ -79,6 +79,16 @@
   group: market
 
 - type: cargoProduct
+  id: CrateFunWaterGuns
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
+    state: display
+  product: CrateFunWaterGuns
+  cost: 750
+  category: Fun
+  group: market
+
+- type: cargoProduct
   id: FunPlushies
   icon:
     sprite: Objects/Fun/toys.rsi

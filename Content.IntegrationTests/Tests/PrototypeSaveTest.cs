@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests;
 ///     modified during init. I.e., when the entity is saved to the map, its data is simply the default prototype data (ignoring transform component).
 /// </summary>
 /// <remarks>
-///     If you are here becaus your test is failing, one easy way of figuring out how to fix the prototype is to just
+///     If you are here because this test is failing on your PR, then one easy way of figuring out how to fix the prototype is to just
 ///     spawn it into a new empty map and seeing what the map yml looks like.
 /// </remarks>
 [TestFixture]
@@ -38,64 +38,8 @@ public sealed class PrototypeSaveTest
     {
         "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
         "constructionghost",
-
-        // These ones are from the serialization change to alwayswrite.
-        // These should NOT be added to.
-        // 99% of these are going to be changing the physics bodytype (where the entity is anchored)
-        // or some ambientsound change.
-        "GasVentScrubber",
-        "GasPassiveVent",
-        "CableHV",
-        "ParticleAcceleratorFuelChamberUnfinished",
-        "ComfyChair",
-        "PlasticFlapsOpaque",
-        "ParticleAcceleratorEmitterRightUnfinished",
-        "PlasticFlapsAirtightClear",
-        "SignalControlledValve",
-        "SignalControlledValve",
-        "GasPipeTJunction",
-        "GasFilter",
-        "GasOutletInjector",
-        "GasPressurePump",
-        "SurveillanceWirelessCameraAnchoredEntertainment",
-        "GasPort",
-        "Chair",
-        "GasMixer",
-        "ParticleAcceleratorPowerBoxUnfinished",
-        "GasValve",
-        "Thruster",
-        "BoxingBell",
-        "CableApcExtension",
-        "PlasticFlapsClear",
-        "ClothingBackpackChameleon",
-        "AMEControllerUnanchored",
-        "GasPipeFourway",
-        "NuclearBomb",
-        "PlasticFlapsAirtightOpaque",
-        "ParticleAcceleratorControlBoxUnfinished",
-        "GasPipeHalf",
-        "GasVolumePump",
-        "ParticleAcceleratorEmitterLeftUnfinished",
-        "GasMixerFlipped",
-        "ToiletDirtyWater",
-        "GasPipeBend",
-        "ParticleAcceleratorEndCapUnfinished",
-        "GasPipeStraight",
-        "MachineFrameDestroyed",
-        "ChairPilotSeat",
-        "VehicleJanicartDestroyed",
-        "Gyroscope",
-        "ParticleAcceleratorEmitterCenterUnfinished",
-        "ToiletEmpty",
-        "GasPassiveGate",
-        "CableMV",
-        "ClothingBackpackChameleonFill",
-        "GasDualPortVentPump",
-        "GasVentPump",
-        "PressureControlledValve",
-        "GasFilterFlipped",
-        "SurveillanceWirelessCameraAnchoredConstructed",
-
+        // Don't add to this list unless you have a good reason
+        // Or it is just temporary because tests stopped working and now master has too many broken entities.
     };
 
     [Test]
@@ -127,7 +71,7 @@ public sealed class PrototypeSaveTest
 
             grid = mapManager.CreateGrid(mapId);
 
-            var tileDefinition = tileDefinitionManager["UnderPlating"];
+            var tileDefinition = tileDefinitionManager["FloorSteel"]; // Wires n such disable ambiance while under the floor
             var tile = new Tile(tileDefinition.TileId);
             var coordinates = grid.ToCoordinates();
 
@@ -168,6 +112,7 @@ public sealed class PrototypeSaveTest
                 foreach (var prototype in prototypes)
                 {
                     uid = entityMan.SpawnEntity(prototype.ID, testLocation);
+                    context.Prototype = prototype;
 
                     // get default prototype data
                     Dictionary<string, MappingDataNode> protoData = new();
@@ -177,9 +122,11 @@ public sealed class PrototypeSaveTest
 
                         foreach (var (compType, comp) in prototype.Components)
                         {
+                            context.WritingComponent = compType;
                             protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, alwaysWrite: true, context: context));
                         }
 
+                        context.WritingComponent = string.Empty;
                         context.WritingReadingPrototypes = false;
                     }
                     catch (Exception e)
@@ -202,6 +149,7 @@ public sealed class PrototypeSaveTest
                         MappingDataNode compMapping;
                         try
                         {
+                            context.WritingComponent = compName;
                             compMapping = seriMan.WriteValueAs<MappingDataNode>(compType, component, alwaysWrite: true, context: context);
                         }
                         catch (Exception e)
@@ -246,6 +194,9 @@ public sealed class PrototypeSaveTest
         public SerializationManager.SerializerProvider SerializerProvider { get; }
         public bool WritingReadingPrototypes { get; set; }
 
+        public string WritingComponent = string.Empty;
+        public EntityPrototype Prototype = default!;
+
         public TestEntityUidContext()
         {
             SerializerProvider = new();
@@ -262,6 +213,14 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
+            if (WritingComponent != "Transform" && !Prototype.NoSpawn)
+            {
+                // Maybe this will be necessary in the future, but at the moment it just indicates that there is some
+                // issue, like a non-nullable entityUid data-field. If a component MUST have an entity uid to work with,
+                // then the prototype very likely has to be a no-spawn entity that is never meant to be directly spawned.
+                Assert.Fail($"Uninitialized entities should not be saving entity Uids. Component: {WritingComponent}. Prototype: {Prototype.ID}");
+            }
+
             return new ValueDataNode(value.ToString());
         }
 

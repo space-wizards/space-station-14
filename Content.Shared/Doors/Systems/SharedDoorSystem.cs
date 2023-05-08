@@ -131,6 +131,10 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return;
 
+        // If no change, return to avoid firing a new DoorStateChangedEvent.
+        if (state == door.State)
+            return;
+
         switch (state)
         {
             case DoorState.Opening:
