@@ -613,8 +613,8 @@
       0: Alive
       200: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed: 3
-    baseSprintSpeed: 4
+    baseWalkSpeed: 2.8
+    baseSprintSpeed: 3.5
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/slime1.ogg
@@ -625,7 +625,6 @@
     - FootstepSound
     - DoorBumpOpener
     - CannotSuicide
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -640,14 +639,6 @@
       amount: 1
     - id: MaterialSmileExtract
       amount: 1
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 0.2
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
-    maxSaturation: 15
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: SlimePet
@@ -691,8 +682,6 @@
   - type: Temperature
     heatDamageThreshold: 800
     coldDamageThreshold: 0
-  - type: HeatResistance
-  - type: StandingState
   - type: MeleeWeapon
     hidden: true
     soundHit:
