@@ -82,7 +82,7 @@ public sealed class WieldableSystem : EntitySystem
         if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
         {
             if(!quiet)
-                _popupSystem.PopupEntity(Loc.GetString("wieldable-component-no-hands"), user, user);
+                _popupSystem.PopupClient(Loc.GetString("wieldable-component-no-hands"), user, user);
             return false;
         }
 
@@ -90,7 +90,7 @@ public sealed class WieldableSystem : EntitySystem
         if (!_handsSystem.IsHolding(user, uid, out _, hands))
         {
             if (!quiet)
-                _popupSystem.PopupEntity(Loc.GetString("wieldable-component-not-in-hands", ("item", uid)), user, user);
+                _popupSystem.PopupClient(Loc.GetString("wieldable-component-not-in-hands", ("item", uid)), user, user);
             return false;
         }
 
@@ -100,7 +100,7 @@ public sealed class WieldableSystem : EntitySystem
             {
                 var message = Loc.GetString("wieldable-component-not-enough-free-hands",
                     ("number", component.FreeHandsRequired), ("item", uid));
-                _popupSystem.PopupEntity(message, user, user);
+                _popupSystem.PopupClient(message, user, user);
             }
             return false;
         }
@@ -168,7 +168,7 @@ public sealed class WieldableSystem : EntitySystem
             _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.Args.User);
         }
 
-        _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield", ("item", uid)), args.Args.User, args.Args.User);
+        _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", uid)), args.Args.User, args.Args.User);
         _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", args.Args.User),("item", uid)), args.Args.User, Filter.PvsExcept(args.Args.User), true);
 
         Dirty(component);
@@ -194,7 +194,7 @@ public sealed class WieldableSystem : EntitySystem
             if (component.UnwieldSound != null)
                 _audioSystem.PlayPredicted(component.UnwieldSound, uid, args.User);
 
-            _popupSystem.PopupEntity(Loc.GetString("wieldable-component-failed-wield",
+            _popupSystem.PopupClient(Loc.GetString("wieldable-component-failed-wield",
                 ("item", uid)), args.User.Value, args.User.Value);
             _popupSystem.PopupEntity(Loc.GetString("wieldable-component-failed-wield-other",
                 ("user", args.User.Value), ("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value), true);
