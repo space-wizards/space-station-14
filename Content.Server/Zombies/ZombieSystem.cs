@@ -71,7 +71,8 @@ namespace Content.Server.Zombies
 
                 comp.InfectedSecs += 1;
                 // Pain of becoming a zombie grows over time
-                var pain_multiple = 0.1 + 0.02 * comp.InfectedSecs + 0.01 * comp.InfectedSecs * comp.InfectedSecs;
+                // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s.
+                var pain_multiple = 0.1 + 0.02 * comp.InfectedSecs + 0.0005 * comp.InfectedSecs * comp.InfectedSecs;
                 comp.NextTick = curTime;
                 _damageable.TryChangeDamage(uid, comp.Damage * pain_multiple, true, false);
             }

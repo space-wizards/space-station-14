@@ -14,7 +14,6 @@ using Content.Server.Mind.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
-using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Traitor;
 using Content.Shared.CombatMode;
@@ -30,7 +29,6 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
-using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -58,7 +56,6 @@ namespace Content.Server.Zombies
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
 
@@ -107,7 +104,7 @@ namespace Content.Server.Zombies
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, or die in space
             RemComp<RespiratorComponent>(target);
-            RemComp<BarotraumaComponent>(target); 
+            RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
 
@@ -236,14 +233,6 @@ namespace Content.Server.Zombies
             RemComp<HandsComponent>(target);
             // No longer waiting to become a zombie:
             RemComp<PendingZombieComponent>(target);
-
-            // Zombiefication takes a second. Groan on the floor for a bit.
-            if (EntityManager.TryGetComponent<StatusEffectsComponent>(target, out var status))
-            {
-                _stunSystem.TryStun(target, TimeSpan.FromSeconds(1.0), true, status);
-                _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(0.8), true,
-                    status);
-            }
 
             //zombie gamemode stuff
             RaiseLocalEvent(new EntityZombifiedEvent(target));
