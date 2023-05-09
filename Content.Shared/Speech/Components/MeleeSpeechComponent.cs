@@ -49,4 +49,3 @@ public sealed class MeleeSpeechBattlecryChangedMessage : BoundUserInterfaceMessa
         Battlecry = battlecry;
     }
 }
-

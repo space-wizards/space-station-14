@@ -100,14 +100,14 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void OnGameChange(GameRunLevelChangedEvent ev)
     {
-        switch(ev.New)
+        switch (ev.New)
         {
             case GameRunLevel.InRound:
-                if(!_configurationManager.GetCVar(CCVars.OocEnableDuringRound))
+                if (!_configurationManager.GetCVar(CCVars.OocEnableDuringRound))
                     _configurationManager.SetCVar(CCVars.OocEnabled, false);
                 break;
             case GameRunLevel.PostRound:
-                if(!_configurationManager.GetCVar(CCVars.OocEnableDuringRound))
+                if (!_configurationManager.GetCVar(CCVars.OocEnableDuringRound))
                     _configurationManager.SetCVar(CCVars.OocEnabled, true);
                 break;
         }
@@ -140,7 +140,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// <param name="shell"></param>
     /// <param name="player">The player doing the speaking</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
-    public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, ChatTransmitRange range, bool hideLog = false, 
+    public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, ChatTransmitRange range, bool hideLog = false,
         IConsoleShell? shell = null, IPlayerSession? player = null, string? nameOverride = null, bool checkRadioPrefix = true)
     {
         if (HasComp<GhostComponent>(source))
@@ -401,7 +401,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var ev = new EntitySpokeEvent(source, message, channel, obfuscatedMessage);
         RaiseLocalEvent(source, ev, true);
-        if(!hideLog)
+        if (!hideLog)
             if (originalMessage == message)
             {
                 if (name != Name(source))
@@ -435,7 +435,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (checkEmote)
             TryEmoteChatInput(source, action);
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range);
-        if(!hideLog)
+        if (!hideLog)
             if (name != Name(source))
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user} as {name}: {action}");
             else
