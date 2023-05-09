@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
   <Document>
+=======
+<Document>
+>>>>>>> Stashed changes
   # Robotics
   The science team has the ability to create several unique types of robots to suit the station's needs.
 
@@ -30,6 +34,10 @@
     <GuideEntityEmbed Entity="MechEquipmentGrabber" Caption="Hydraulic Clamp"/>
   </Box>
   A mech is useless without any equipment. [color=#a4885c]Equipment[/color] are tools which can only be used by a mech.
+<<<<<<< Updated upstream
   - To install equipment,just click the mech with the equipment you want to add in your hands to insert it.
+=======
+  - To install equipment, just click the mech with the equipment you want to add in your hands to insert it.
+>>>>>>> Stashed changes
   - To use equipment, perform the "Cycle Equipment" action until the tool you desire is equipped.
 </Document>
