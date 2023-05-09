@@ -90,9 +90,12 @@ public sealed class GunCrosshairOverlay : Overlay
             return;
 
         // get collision mask
+        // TODO find standart way for get collision mask
         int collisionMask;
         if (_entManager.TryGetComponent<HitscanBatteryAmmoProviderComponent>(gunUid, out var hitscan))
             collisionMask = _protoManager.Index<HitscanPrototype>(hitscan.Prototype).CollisionMask;
+        else if (_entManager.HasComponent<SolutionAmmoProviderComponent>(gunUid))
+            collisionMask = (int) CollisionGroup.Impassable;
         else
             collisionMask = (int) CollisionGroup.BulletImpassable;
 
