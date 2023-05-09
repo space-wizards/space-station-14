@@ -77,7 +77,7 @@ public partial class ChatSystem
         if (emote.ChatMessages.Count != 0)
         {
             var action = _random.Pick(emote.ChatMessages);
-            SendEntityEmote(source, action, range, hideLog, nameOverride, false);
+            SendEntityEmote(source, action, range, nameOverride, false, hideLog);
         }
 
         // do the rest of emote event logic here

@@ -127,7 +127,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, bool hideChat, bool hideLog = false,
         IConsoleShell? shell = null, IPlayerSession? player = null, string? nameOverride = null, bool checkRadioPrefix = true)
     {
-        TrySendInGameICMessage(source, message, desiredType, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, shell, player, nameOverride, checkRadioPrefix);
+        TrySendInGameICMessage(source, message, desiredType, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, hideLog, shell, player, nameOverride, checkRadioPrefix);
     }
 
     /// <summary>
@@ -195,13 +195,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         switch (desiredType)
         {
             case InGameICChatType.Speak:
-                SendEntitySpeak(source, message, range, hideLog, nameOverride);
+                SendEntitySpeak(source, message, range, nameOverride, hideLog);
                 break;
             case InGameICChatType.Whisper:
-                SendEntityWhisper(source, message, range, hideLog, null, nameOverride);
+                SendEntityWhisper(source, message, range, null, nameOverride, hideLog);
                 break;
             case InGameICChatType.Emote:
-                SendEntityEmote(source, message, range, hideLog, nameOverride);
+                SendEntityEmote(source, message, range, nameOverride, hideLog);
                 break;
         }
     }
@@ -295,7 +295,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     #region Private API
 
-    private void SendEntitySpeak(EntityUid source, string originalMessage, ChatTransmitRange range, bool hideLog = false, string? nameOverride)
+    private void SendEntitySpeak(EntityUid source, string originalMessage, ChatTransmitRange range, string? nameOverride, bool hideLog = false)
     {
         if (!_actionBlocker.CanSpeak(source))
             return;
@@ -349,7 +349,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
     }
 
-    private void SendEntityWhisper(EntityUid source, string originalMessage, ChatTransmitRange range, bool hideLog = false, RadioChannelPrototype? channel, string? nameOverride)
+    private void SendEntityWhisper(EntityUid source, string originalMessage, ChatTransmitRange range, RadioChannelPrototype? channel, string? nameOverride, bool hideLog = false)
     {
         if (!_actionBlocker.CanSpeak(source))
             return;
