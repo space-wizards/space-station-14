@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Monkeys spawned by artifacts no longer suffocate., type: Fix}
-  id: 3207
-  time: '2023-03-23T01:44:37.0000000+00:00'
 - author: MagnusCrowe
   changes:
   - {message: 'Fixed the caustic damage issue where caustic damage was actually heat
@@ -2915,3 +2910,15 @@ Entries:
   - {message: Make the PKA feel nicer to shoot., type: Tweak}
   id: 3706
   time: '2023-05-08T12:37:40.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Zombification happens post death, rather than just crit. So you lie
+      on the floor a bit before beginning your new life.', type: Tweak}
+  - {message: 'Zombies are more likely (10-40% depending on clothes) to inflict a
+      zombifying Damage over Time.  This was 5% - 50% before. A typical outfit without
+      outer suit, mask or helmet has a 17.5% chance of being infected each hit.',
+    type: Tweak}
+  - {message: Zombies have some heal over time. This might also bring them back from
+      the dead (again)., type: Tweak}
+  id: 3707
+  time: '2023-05-09T02:24:40.0000000+00:00'
