@@ -1,12 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Cargo shuttles now use FTL and not their own system. They have to FTL
-      back and forth to sell / purchase goods., type: Tweak}
-  id: 3214
-  time: '2023-03-23T05:10:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix some shuttle console rotations flipping the viewport., type: Fix}
   id: 3215
   time: '2023-03-23T05:52:21.0000000+00:00'
@@ -2908,3 +2902,9 @@ Entries:
       crews with mops.', type: Add}
   id: 3713
   time: '2023-05-09T23:51:48.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Airlocks are no longer scared of puddles and soap. They should now close
+      properly., type: Fix}
+  id: 3714
+  time: '2023-05-09T23:54:43.0000000+00:00'
