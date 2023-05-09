@@ -86,7 +86,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Heavy attack.
         if (altDown == BoundKeyState.Down)
         {
-            // TODO: Need to make alt-fire melee its own component
+            // TODO: Need to make alt-fire melee its own component I guess?
+            // Melee and guns share a lot in the middle but share virtually nothing at the start and end so
+            // it's kinda tricky.
+            // I think as long as we make secondaries their own component it's probably fine
+            // as long as guncomp has an alt-use key then it shouldn't be too much of a PITA to deal with.
             if (HasComp<GunComponent>(weaponUid))
             {
                 return;

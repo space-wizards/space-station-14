@@ -54,33 +54,20 @@
   - type: Item
     size: 30
 
+# Like a crusher... but better
 - type: entity
   name: crusher glaive
-  parent: BaseItem
+  parent: WeaponCrusher
   id: WeaponCrusherGlaive
-  description: An early design of the proto-kinetic accelerator.
+  description: An early design of the proto-kinetic accelerator, in glaive form.
   components:
-  - type: Sharp
+  - type: Gun
+    fireRate: 1
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.5
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
-    state: icon
   - type: MeleeWeapon
-    attackRate: 1.5
-    damage:
-      types:
-        Blunt: 5
-        Slash: 5
-        Structural: 5
-  - type: Wieldable
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
-        Blunt: 10
-        Slash: 10
-        Structural: 5
+    attackRate: 1.25
   - type: Item
     size: 150
-  - type: DisarmMalus
-  - type: Tool
-    qualities:
-      - Prying
