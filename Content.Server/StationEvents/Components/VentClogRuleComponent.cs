@@ -29,7 +29,7 @@ public sealed class VentClogRuleComponent : Component
     public int ReagentQuantity = 200;
 
     /// <summary>
-    /// The standard spreading of the foam, modfied by event severity.
+    /// The standard spreading of the foam, not modfied by event severity.
     /// </summary>
     [DataField("spread"), ViewVariables(VVAccess.ReadWrite)]
     public int Spread = 20;
@@ -41,20 +41,20 @@ public sealed class VentClogRuleComponent : Component
     public float Time = 20f;
 
     /// <summary>
-    /// A reagent that gets the "evil" numbers used instead of regular ones, if any.
+    /// Reagents that gets the weak numbers used instead of regular ones.
     /// </summary>
-    [DataField("evilReagent"), ViewVariables(VVAccess.ReadWrite)]
-    public string? EvilReagent = "SpaceLube";
+    [DataField("weakReagents"), ViewVariables(VVAccess.ReadWrite)]
+    public IReadOnlyList<string> WeakReagents = new[] { "SpaceLube" };
 
     /// <summary>
-    /// Quantity of the evil reagent to put in the foam.
+    /// Quantity of weak reagents to put in the foam.
     /// </summary>
-    [DataField("evilReagentQuantity"), ViewVariables(VVAccess.ReadWrite)]
-    public int EvilReagentQuantity = 60;
+    [DataField("weakReagentQuantity"), ViewVariables(VVAccess.ReadWrite)]
+    public int WeakReagentQuantity = 60;
 
     /// <summary>
-    /// Spread of the foam for the evil reagent.
+    /// Spread of the foam for weak reagents.
     /// </summary>
-    [DataField("evilSpread"), ViewVariables(VVAccess.ReadWrite)]
-    public int EvilSpread = 2;
+    [DataField("weakSpread"), ViewVariables(VVAccess.ReadWrite)]
+    public int WeakSpread = 2;
 }

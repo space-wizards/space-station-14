@@ -56,14 +56,22 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
                 reagent = RobustRandom.Pick(component.SafeishVentChemicals);
             }
 
-            // yes this is hardcoded to be just 1 but there is only 1 type of lube (right now...) so who cares
-            var evil = reagent == component.EvilReagent;
-            var quantity = (evil ? component.EvilReagentQuantity : component.ReagentQuantity) * mod;
+            var weak = false;
+            foreach (var id in component.WeakReagents)
+            {
+                if (reagent == id)
+                {
+                    weak = true;
+                    break;
+                }
+            }
+
+            var quantity = (weak ? component.WeakReagentQuantity : component.ReagentQuantity) * mod;
             solution.AddReagent(reagent, quantity);
 
             var foamEnt = Spawn("Foam", transform.Coordinates);
             var smoke = EnsureComp<SmokeComponent>(foamEnt);
-            smoke.SpreadAmount = evil ? component.EvilSpread : component.Spread;
+            smoke.SpreadAmount = weak ? component.WeakSpread : component.Spread;
             _smoke.Start(foamEnt, smoke, solution, component.Time);
             Audio.PlayPvs(component.Sound, transform.Coordinates);
         }
