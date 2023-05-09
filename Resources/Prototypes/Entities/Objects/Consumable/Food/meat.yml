@@ -59,7 +59,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
         - ReagentId: Fat
-          Quantity: 3
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
@@ -114,7 +114,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 2
         - ReagentId: Fat
-          Quantity: 3
+          Quantity: 9
 
 - type: entity
   name: raw bear meat
@@ -134,7 +134,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
         - ReagentId: Fat
-          Quantity: 3
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutlet
@@ -161,7 +161,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
         - ReagentId: Fat
-          Quantity: 3
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletSlice
@@ -188,7 +188,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
         - ReagentId: Fat
-          Quantity: 3
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutlet
@@ -215,7 +215,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
         - ReagentId: Fat
-          Quantity: 3
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatDuckCutlet
@@ -357,7 +357,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
         - ReagentId: Fat
-          Quantity: 3
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutlet
@@ -411,7 +411,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
         - ReagentId: Fat
-          Quantity: 3
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatSpiderCutlet
@@ -434,7 +434,7 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 10
         - ReagentId: Fat
-          Quantity: 2
+          Quantity: 3
 
 - type: entity
   name: meatwheat clump
