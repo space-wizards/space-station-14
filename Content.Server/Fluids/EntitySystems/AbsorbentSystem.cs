@@ -100,6 +100,9 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
     private void Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
     {
+        if (_useDelay.ActiveDelay(used))
+            return;
+
         if (!_solutionSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
             return;
 
