@@ -1,9 +1,4 @@
 Entries:
-- author: Van
-  changes:
-  - {message: added janitoral maid uniform with miniskirt, type: Add}
-  id: 3209
-  time: '2023-03-23T03:39:12.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: The guidebook can now be accessed from new buttons in the lobby and
@@ -2910,3 +2905,9 @@ Entries:
     type: Fix}
   id: 3708
   time: '2023-05-09T07:35:43.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Mice can no longer lift thousands times their weight (they can't drag
+      people onto tables anymore), type: Fix}
+  id: 3709
+  time: '2023-05-09T07:37:56.0000000+00:00'
