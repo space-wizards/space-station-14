@@ -302,6 +302,10 @@
     fiberColor: fibers-blue
   - type: FingerprintMask
   - type: MeleeSpeech
+  - type: ActivatableUI
+    key: enum.MeleeSpeechUiKey.Key
+    closeOnHandDeselect: false
+    rightClickOnly: true
   - type: UserInterface
     interfaces:
       - key: enum.MeleeSpeechUiKey.Key
