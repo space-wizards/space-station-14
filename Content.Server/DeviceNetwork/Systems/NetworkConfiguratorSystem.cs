@@ -148,17 +148,19 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return;
         }
 
-        if (HasComp<DeviceLinkSourceComponent>(target) && HasComp<DeviceLinkSourceComponent>(configurator.ActiveDeviceLink)
-            || HasComp<DeviceLinkSinkComponent>(target) && HasComp<DeviceLinkSinkComponent>(configurator.ActiveDeviceLink))
+        if (configurator.ActiveDeviceLink.HasValue
+            && (HasComp<DeviceLinkSourceComponent>(target)
+            && HasComp<DeviceLinkSinkComponent>(configurator.ActiveDeviceLink)
+            || HasComp<DeviceLinkSinkComponent>(target)
+            && HasComp<DeviceLinkSourceComponent>(configurator.ActiveDeviceLink)))
         {
+            OpenDeviceLinkUi(uid, target, user, configurator);
             return;
         }
 
-        if (configurator.ActiveDeviceLink.HasValue)
-        {
-            OpenDeviceLinkUi( uid, target, user, configurator);
+        if (HasComp<DeviceLinkSourceComponent>(target) && HasComp<DeviceLinkSourceComponent>(configurator.ActiveDeviceLink)
+            || HasComp<DeviceLinkSinkComponent>(target) && HasComp<DeviceLinkSinkComponent>(configurator.ActiveDeviceLink))
             return;
-        }
 
         _popupSystem.PopupEntity(Loc.GetString("network-configurator-link-mode-started",  ("device", Name(target.Value))), target.Value, user);
         configurator.ActiveDeviceLink = target;
