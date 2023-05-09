@@ -1,0 +1,79 @@
+- type: entity
+  name: crusher
+  parent: BaseItem
+  id: WeaponCrusher
+  description: An early design of the proto-kinetic accelerator.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/crusher.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 5
+        Slash: 5
+        Structural: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 10
+        Slash: 10
+        Structural: 5
+  - type: Item
+    size: 150
+  - type: DisarmMalus
+  - type: Tool
+    qualities:
+      - Prying
+
+- type: entity
+  name: crusher dagger
+  parent: BaseItem
+  id: WeaponCrusherDagger
+  description: A scaled down version of a proto-kinetic crusher, usually used in a last ditch scenario.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/crusher_dagger.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 6.5
+  - type: Item
+    size: 30
+
+- type: entity
+  name: crusher glaive
+  parent: BaseItem
+  id: WeaponCrusherGlaive
+  description: An early design of the proto-kinetic accelerator.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 5
+        Slash: 5
+        Structural: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 10
+        Slash: 10
+        Structural: 5
+  - type: Item
+    size: 150
+  - type: DisarmMalus
+  - type: Tool
+    qualities:
+      - Prying
