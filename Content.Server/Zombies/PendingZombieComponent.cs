@@ -12,12 +12,18 @@ public sealed class PendingZombieComponent : Component
 {
     [DataField("damage")] public DamageSpecifier Damage = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>()
+        DamageDict = new ()
         {
-            { "Blunt", FixedPoint2.New(1) }
+            { "Blunt", 0.5 },
+            { "Cellular", 0.2 },
+            { "Toxin", 0.2 },
         }
     };
 
     [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
+
+    // Scales damage over time.
+    [DataField("infectedSecs")]
+    public int InfectedSecs;
 }

@@ -251,7 +251,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.State != DoorState.Closed)
             return;
 
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
 
         if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
@@ -290,12 +290,13 @@ public sealed class DoorSystem : SharedDoorSystem
 
     protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
     {
+        var uid = body.Owner;
         if (component.BumpOpen)
         {
-            foreach (var other in PhysicsSystem.GetContactingEntities(body, approximate: true))
+            foreach (var other in PhysicsSystem.GetContactingEntities(uid, body, approximate: true))
             {
-                if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
-                    TryOpen(component.Owner, component, other.Owner, false, quiet: true)) break;
+                if (Tags.HasTag(other, "DoorBumpOpener") && TryOpen(uid, component, other, false, quiet: true))
+                    break;
             }
         }
     }

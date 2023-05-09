@@ -24,6 +24,9 @@ ghost-role-information-angry-slimes-description = Everything around you irritate
 ghost-role-information-smile-name = Smile
 ghost-role-information-smile-description = Science's best lab slime. Survived so many experiments that it got promoted to pet.
 
+ghost-role-information-punpun-name = Pun Pun
+ghost-role-information-punpun-description = An honorable member of the monkey society in charge of the bar and helping the bartenders in any way he can.
+
 ghost-role-information-xeno-name = Xeno
 ghost-role-information-xeno-description = You are a xeno, co-operate with your hive to kill all crewmembers!
 ghost-role-information-xeno-rules = You are an antagonist, smack, slash, and wack!
