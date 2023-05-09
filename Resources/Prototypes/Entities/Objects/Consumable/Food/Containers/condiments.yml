@@ -10,10 +10,8 @@
   - type: DrainableSolution
     solution: food
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
   - type: Icon
-    netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
   - type: TrashOnEmpty
     solution: food
