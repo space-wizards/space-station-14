@@ -660,7 +660,7 @@
   icon:
     sprite: Clothing/Shoes/Boots/magboots.rsi
     state: icon
-  requiredPoints: 8500
+  requiredPoints: 15000
   requiredTechnologies:
     - ScientificTechnology
     - IndustrialEngineering
