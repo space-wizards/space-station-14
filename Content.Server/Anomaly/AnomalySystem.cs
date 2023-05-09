@@ -67,7 +67,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
     private void OnStartCollide(EntityUid uid, AnomalyComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<AnomalousParticleComponent>(args.OtherFixture.Body.Owner, out var particle))
+        if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
             return;
 
         if (args.OtherFixture.ID != particle.FixtureId)
