@@ -13,6 +13,7 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -100,6 +101,10 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, ref DragDropTargetEvent args)
     {
+        // definitely a better way to check if two entities are equal
+        // but don't have computer access and i have to do this without syntax
+        if (args.User != args.Dragged && !HasComp<HandsComponent>(args.User))
+            return;
         TryClimb(args.User, args.Dragged, uid, component);
     }
 
