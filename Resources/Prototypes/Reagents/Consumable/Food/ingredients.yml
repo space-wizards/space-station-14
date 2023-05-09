@@ -12,6 +12,25 @@
       - !type:AdjustReagent
         reagent: Sugar
         amount: 0.4
+      - !type:SatiateThirst
+        factor: -0.2 #its flour
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
+
+- type: reagent
+  id: Cornmeal
+  name: reagent-name-cornmeal
+  group: Foods
+  desc: reagent-desc-cornmeal
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: corn #so corn doesnt taste chalky
+  color: tan
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateThirst
+        factor: -0.2 #its cornflour
       - !type:AdjustReagent
         reagent: Nutriment
         amount: 0.1

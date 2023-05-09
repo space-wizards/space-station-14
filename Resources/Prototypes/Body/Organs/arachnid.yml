@@ -26,8 +26,11 @@
   noSpawn: true
   components:
   - type: Stomach
-    maxVolume: 50
     updateInterval: 1.5
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
   - type: Metabolizer
     updateFrequency: 1.5
 

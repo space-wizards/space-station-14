@@ -80,7 +80,7 @@ public sealed class MedibotInjectOperator : HTNOperator
             _solution.TryAddReagent(target, injectable, botComp.EmergencyMed, botComp.EmergencyMedAmount, out var accepted);
             _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             _audio.PlayPvs(botComp.InjectSound, target);
-            _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, hideChat: false, hideGlobalGhostChat: true);
+            _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit);
             return HTNOperatorStatus.Finished;
         }
 
@@ -89,7 +89,7 @@ public sealed class MedibotInjectOperator : HTNOperator
             _solution.TryAddReagent(target, injectable, botComp.StandardMed, botComp.StandardMedAmount, out var accepted);
             _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             _audio.PlayPvs(botComp.InjectSound, target);
-            _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, hideChat: false, hideGlobalGhostChat: true);
+            _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit);
             return HTNOperatorStatus.Finished;
         }
 

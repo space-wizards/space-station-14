@@ -101,3 +101,22 @@
     - Trash
     - BorgLeg
     - BorgRightLeg
+
+- type: entity
+  id: LightHeadBorg
+  name: "borg head"
+  parent: PartSilicon
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Borg/head.rsi
+    state: "light_borg_head"
+  - type: Icon
+    sprite: Objects/Specific/Borg/head.rsi
+    state: "light_borg_head"
+  - type: BodyPart
+    partType: Head
+  - type: Tag
+    tags:
+    - Trash
+    - BorgHead

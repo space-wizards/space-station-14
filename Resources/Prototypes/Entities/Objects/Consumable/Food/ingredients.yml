@@ -128,6 +128,37 @@
 
 - type: entity
   parent: ReagentContainerBase
+  id: ReagentContainerCornmeal
+  name: cornmeal bag
+  description: A big bag of cornmeal. Good for cooking!
+  components:
+  - type: Sprite
+    state: cornmeal-big
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Cornmeal
+          Quantity: 50
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerCornmealSmall
+  name: cornmeal pack
+  description: A pack of cornmeal. Good for cooking!
+  components:
+  - type: Sprite
+    state: cornmeal
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Cornmeal
+          Quantity: 20
+
+- type: entity
+  parent: ReagentContainerBase
   id: ReagentContainerRice
   name: rice bag
   description: A big bag of rice. Good for cooking!
@@ -333,6 +364,35 @@
       - dough
   - type: Sprite
     state: dough-slice
+
+- type: entity
+  name: cornmeal dough
+  parent: FoodBakingBase
+  id: FoodDoughCornmeal
+  description: A piece of cornmeal dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chalky
+      - dough
+  - type: Sprite
+    state: cornmealdough
+  - type: SliceableFood
+    count: 3
+    slice: FoodDoughCornmealSlice
+
+- type: entity
+  name: cornmeal dough slice
+  parent: FoodBakingBase
+  id: FoodDoughCornmealSlice
+  description: A slice of cornmeal dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chalky
+      - dough
+  - type: Sprite
+    state: cornmealdough-slice
 
 - type: entity
   name: bun

@@ -1,0 +1,62 @@
+- type: sourcePort
+  id: Pressed
+  name: signal-port-name-pressed
+  description: signal-port-description-pressed
+  defaultLinks: [ Toggle, Trigger ]
+
+- type: sourcePort
+  id: On
+  name: signal-port-name-on-transmitter
+  description: signal-port-description-on-transmitter
+  defaultLinks: [ On, Open, Forward, Trigger ]
+
+- type: sourcePort
+  id: Off
+  name: signal-port-name-off-transmitter
+  description: signal-port-description-off-transmitter
+  defaultLinks: [ Off, Close ]
+
+- type: sourcePort
+  id: Left
+  name: signal-port-name-left
+  description: signal-port-description-left
+  defaultLinks: [ On, Open, Forward, Trigger ]
+
+- type: sourcePort
+  id: Right
+  name: signal-port-name-right
+  description: signal-port-description-right
+  defaultLinks: [ On, Open, Reverse, Trigger ]
+
+- type: sourcePort
+  id: Middle
+  name: signal-port-name-middle
+  description: signal-port-description-middle
+  defaultLinks: [ Off, Close ]
+
+- type: sourcePort
+  id: DoorStatus
+  name: signal-port-name-doorstatus
+  description: signal-port-description-status
+
+- type: sourcePort
+  id: OrderSender
+  name: signal-port-name-order-sender
+  description: signal-port-description-order-sender
+  defaultLinks: [ OrderReceiver ]
+
+- type: sourcePort
+  id: CloningPodSender
+  name: signal-port-name-pod-receiver
+  description: signal-port-description-pod-sender
+
+- type: sourcePort
+  id: MedicalScannerSender
+  name: signal-port-name-med-scanner-sender
+  description: signal-port-description-med-scanner-sender
+
+- type: sourcePort
+  id: ArtifactAnalyzerSender
+  name: signal-port-name-artifact-analyzer-sender
+  description: signal-port-description-artifact-analyzer-sender
+  defaultLinks: [ ArtifactAnalyzerReceiver ]
