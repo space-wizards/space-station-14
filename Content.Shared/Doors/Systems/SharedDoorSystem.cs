@@ -446,7 +446,9 @@ public abstract class SharedDoorSystem : EntitySystem
             if (!otherPhysics.CanCollide)
                 continue;
 
-            if (!otherPhysics.Hard)
+            //If the colliding entity is a slippable item (banana peel, soap, liquids, magic runes) ignore it by the airlock
+            // CollisionLayer 20 = SlipLayer, CollionMask 10 = ItemMask
+            if (otherPhysics.CollisionLayer == 20 && otherPhysics.CollisionMask == 10)
                 continue;
 
             if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)

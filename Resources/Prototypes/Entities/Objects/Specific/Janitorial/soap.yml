@@ -37,7 +37,6 @@
         density: 10
         mask:
         - ItemMask
-        hard: false
 
 - type: entity
   name: soap
