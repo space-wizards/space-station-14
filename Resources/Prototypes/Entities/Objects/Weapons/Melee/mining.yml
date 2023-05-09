@@ -8,6 +8,18 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher.rsi
     state: icon
+  - type: Gun
+    soundGunshot: /Audio/Weapons/plasma_cutter.ogg
+    fireRate: 0.75
+    useKey: false
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 1
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: BulletCharge
+    capacity: 1
+    count: 1
   - type: MeleeWeapon
     attackRate: 0.75
     damage:

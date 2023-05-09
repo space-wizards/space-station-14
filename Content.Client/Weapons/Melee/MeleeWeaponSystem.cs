@@ -6,6 +6,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -85,6 +86,12 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Heavy attack.
         if (altDown == BoundKeyState.Down)
         {
+            // TODO: Need to make alt-fire melee its own component
+            if (HasComp<GunComponent>(weaponUid))
+            {
+                return;
+            }
+
             // We did the click to end the attack but haven't pulled the key up.
             if (weapon.Attacking)
             {
