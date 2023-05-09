@@ -69,9 +69,8 @@ public sealed class SlowContactsSystem : EntitySystem
         var sprintSpeed = 1.0f;
 
         bool remove = true;
-        foreach (var colliding in _physics.GetContactingEntities(physicsComponent))
+        foreach (var ent in _physics.GetContactingEntities(uid, physicsComponent))
         {
-            var ent = colliding.Owner;
             if (!TryComp<SlowContactsComponent>(ent, out var slowContactsComponent))
                 continue;
 
@@ -92,14 +91,14 @@ public sealed class SlowContactsSystem : EntitySystem
 
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, ref EndCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
         if (HasComp<MovementSpeedModifierComponent>(otherUid))
             _toUpdate.Add(otherUid);
     }
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, ref StartCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
         if (!HasComp<MovementSpeedModifierComponent>(otherUid))
             return;
 

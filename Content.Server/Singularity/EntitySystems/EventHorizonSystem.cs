@@ -421,7 +421,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (args.OurFixture.ID != comp.HorizonFixtureId)
             return;
 
-        AttemptConsumeEntity(args.OtherFixture.Body.Owner, comp);
+        AttemptConsumeEntity(args.OtherEntity, comp);
     }
 
     /// <summary>
