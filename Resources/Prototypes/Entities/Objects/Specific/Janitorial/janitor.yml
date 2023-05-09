@@ -167,6 +167,52 @@
     tags:
       - WetFloorSign
 
+
+- type: entity
+  name: wet floor sign
+  suffix: Explosive
+  description: Caution! Wet Floor!
+  parent: BaseItem
+  id: WetFloorSignMineExplosive
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    state: caution
+  - type: Item
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    size: 15
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 0
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+          - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+  - type: LandMine
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 5 # about a ~67.5 total damage
+    totalIntensity: 60 # about a ~3 tile radius
+    canCreateVacuum: false
+  - type: DeleteOnTrigger
+
 - type: entity
   name: janitorial trolley
   id: JanitorialTrolley
