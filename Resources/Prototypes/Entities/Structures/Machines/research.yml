@@ -35,7 +35,6 @@
           SheetSteel1:
             min: 1
             max: 2
-  - type: DiseaseServer
   - type: AmbientSound
     volume: -9
     range: 5

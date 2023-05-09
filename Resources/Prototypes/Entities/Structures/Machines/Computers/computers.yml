@@ -378,10 +378,10 @@
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired
-  - type: SignalTransmitter
-    transmissionRange: 5
-    outputs:
-      ArtifactAnalyzerSender: []
+  - type: DeviceLinkSource
+    range: 5
+    ports:
+      - ArtifactAnalyzerSender
   - type: ActivatableUI
     key: enum.ArtifactAnalzyerUiKey.Key
   - type: UserInterface
@@ -409,8 +409,6 @@
   name: ID card computer
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
   components:
-  - type: AccessReader
-    access: [["HeadOfPersonnel"]]
   - type: IdCardConsole
     privilegedIdSlot:
       name: id-card-console-privileged-id
@@ -700,11 +698,11 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
-  - type: SignalTransmitter
-    transmissionRange: 4
-    outputs:
-      MedicalScannerSender: []
-      CloningPodSender: []
+  - type: DeviceLinkSource
+    range: 4
+    ports:
+      - MedicalScannerSender
+      - CloningPodSender
   - type: ActivatableUI
     key: enum.CloningConsoleUiKey.Key
   - type: UserInterface

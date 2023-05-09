@@ -1,7 +1,7 @@
 <paper:PaperWindow xmlns="https://spacestation14.io"
     xmlns:paper="clr-namespace:Content.Client.Paper.UI"
     MouseFilter="Stop" Resizable="True" MinSize="150 150"
-    SetSize="300 400"> <!-- Provide some reasonable sizes by default. Can be changed by the component -->
+    SetSize="510 660"> <!-- Provide some reasonable sizes by default. Can be changed by the component -->
 
     <BoxContainer Name="ContentsRoot" Orientation="Vertical">
         <PanelContainer StyleClasses="AngleRect" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="6">
@@ -12,9 +12,8 @@
                 <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True" MaxWidth="600">
                     <BoxContainer Orientation="Vertical" VerticalAlignment="Stretch">
                         <TextureButton Name="HeaderImage" HorizontalAlignment="Center" VerticalAlignment="Top" MouseFilter="Ignore"/>
-                        <Control Name="TextAlignmentPadding" VerticalAlignment="Top" />
-                        <RichTextLabel Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
-                            VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        <Control Name="TextAlignmentPadding" VerticalAlignment="Top"/>
+                        <RichTextLabel Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                         <RichTextLabel StyleClasses="PaperWrittenText" Name="WrittenTextLabel" VerticalAlignment="Top"/>
                         <PanelContainer Name="InputContainer" StyleClasses="TransparentBorderedWindowPanel" MinHeight="100"
                                         VerticalAlignment="Stretch" VerticalExpand="True" HorizontalExpand="True">

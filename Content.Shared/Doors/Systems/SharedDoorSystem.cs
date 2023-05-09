@@ -131,6 +131,10 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return;
 
+        // If no change, return to avoid firing a new DoorStateChangedEvent.
+        if (state == door.State)
+            return;
+
         switch (state)
         {
             case DoorState.Opening:
@@ -442,8 +446,7 @@ public abstract class SharedDoorSystem : EntitySystem
             if (!otherPhysics.CanCollide)
                 continue;
 
-            if (otherPhysics.BodyType == BodyType.Static || (physics.CollisionMask & otherPhysics.CollisionLayer) == 0
-                && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
+            if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
 
             if (_entityLookup.GetWorldAABB(otherPhysics.Owner).IntersectPercentage(doorAABB) < IntersectPercentage)

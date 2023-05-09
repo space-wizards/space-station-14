@@ -30,8 +30,8 @@ namespace Content.Server.Damage.Systems
         {
             if (!EntityManager.HasComponent<DamageableComponent>(uid)) return;
 
-            var otherBody = args.OtherFixture.Body.Owner;
-            var speed = args.OurFixture.Body.LinearVelocity.Length;
+            var otherBody = args.OtherEntity;
+            var speed = args.OurBody.LinearVelocity.Length;
 
             if (speed < component.MinimumSpeed) return;
 
