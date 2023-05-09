@@ -15,9 +15,6 @@
     sprite: Objects/Consumable/Food/condiments.rsi
   - type: TrashOnEmpty
     solution: food
-  - type: Tag
-    tags:
-    - Trash
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0
