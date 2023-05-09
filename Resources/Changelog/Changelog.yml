@@ -1,10 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: The guidebook can now be accessed from new buttons in the lobby and
-      the ingame topbar buttons., type: Tweak}
-  id: 3210
-  time: '2023-03-23T03:41:43.0000000+00:00'
 - author: adamsogm
   changes:
   - {message: Changed how full solution containers appear based on their actual fill
@@ -2911,3 +2905,8 @@ Entries:
       people onto tables anymore), type: Fix}
   id: 3709
   time: '2023-05-09T07:37:56.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds a pet Pun Pun for bartenders ghost role., type: Add}
+  id: 3710
+  time: '2023-05-09T07:39:43.0000000+00:00'
