@@ -1,12 +1,13 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Wieldable.Components;
+namespace Content.Shared.Wieldable.Components;
 
 /// <summary>
 ///     Used for objects that can be wielded in two or more hands,
 /// </summary>
-[RegisterComponent, Access(typeof(WieldableSystem))]
-public sealed class WieldableComponent : Component
+[RegisterComponent, NetworkedComponent, Access(typeof(WieldableSystem)), AutoGenerateComponentState]
+public sealed partial class WieldableComponent : Component
 {
     [DataField("wieldSound")]
     public SoundSpecifier? WieldSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
@@ -21,6 +22,7 @@ public sealed class WieldableComponent : Component
     [DataField("freeHandsRequired")]
     public int FreeHandsRequired = 1;
 
+    [AutoNetworkedField, DataField("wielded")]
     public bool Wielded = false;
 
     [DataField("wieldedInhandPrefix")]

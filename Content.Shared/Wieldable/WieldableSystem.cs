@@ -1,6 +1,4 @@
-using Content.Server.Actions.Events;
-using Content.Server.Hands.Systems;
-using Content.Server.Wieldable.Components;
+using Content.Shared.Actions.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -10,15 +8,15 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Wieldable;
+using Content.Shared.Wieldable.Components;
 using Robust.Shared.Player;
 
-namespace Content.Server.Wieldable;
+namespace Content.Shared.Wieldable;
 
 public sealed class WieldableSystem : EntitySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
+    [Dependency] private readonly SharedHandVirtualItemSystem _virtualItemSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -56,7 +54,7 @@ public sealed class WieldableSystem : EntitySystem
         // TODO VERB TOOLTIPS Make CanWield or some other function return string, set as verb tooltip and disable
         // verb. Or just don't add it to the list if the action is not executable.
 
-        // TODO VERBS ICON + localization
+        // TODO VERBS ICON
         InteractionVerb verb = new()
         {
             Text = component.Wielded ? Loc.GetString("wieldable-verb-text-unwield") : Loc.GetString("wieldable-verb-text-wield"),
@@ -163,9 +161,9 @@ public sealed class WieldableSystem : EntitySystem
         component.Wielded = true;
 
         if (component.WieldSound != null)
-            _audioSystem.PlayPvs(component.WieldSound, uid);
+            _audioSystem.PlayPredicted(component.WieldSound, uid, args.User);
 
-        for (int i = 0; i < component.FreeHandsRequired; i++)
+        for (var i = 0; i < component.FreeHandsRequired; i++)
         {
             _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.Args.User);
         }
@@ -173,6 +171,7 @@ public sealed class WieldableSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield", ("item", uid)), args.Args.User, args.Args.User);
         _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", args.Args.User),("item", uid)), args.Args.User, Filter.PvsExcept(args.Args.User), true);
 
+        Dirty(component);
         args.Handled = true;
     }
 
@@ -193,7 +192,7 @@ public sealed class WieldableSystem : EntitySystem
         if (!args.Force) // don't play sound/popup if this was a forced unwield
         {
             if (component.UnwieldSound != null)
-                _audioSystem.PlayPvs(component.UnwieldSound, uid);
+                _audioSystem.PlayPredicted(component.UnwieldSound, uid, args.User);
 
             _popupSystem.PopupEntity(Loc.GetString("wieldable-component-failed-wield",
                 ("item", uid)), args.User.Value, args.User.Value);
@@ -201,6 +200,7 @@ public sealed class WieldableSystem : EntitySystem
                 ("user", args.User.Value), ("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value), true);
         }
 
+        Dirty(component);
         _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
     }
 
@@ -230,33 +230,3 @@ public sealed class WieldableSystem : EntitySystem
         args.BonusDamage += component.BonusDamage;
     }
 }
-
-#region Events
-
-public sealed class BeforeWieldEvent : CancellableEntityEventArgs
-{
-}
-
-public sealed class BeforeUnwieldEvent : CancellableEntityEventArgs
-{
-}
-
-/// <summary>
-///     Raised on the item that has been unwielded.
-/// </summary>
-public sealed class ItemUnwieldedEvent : EntityEventArgs
-{
-    public EntityUid? User;
-    /// <summary>
-    ///     Whether the item is being forced to be unwielded, or if the player chose to unwield it themselves.
-    /// </summary>
-    public bool Force;
-
-    public ItemUnwieldedEvent(EntityUid? user = null, bool force=false)
-    {
-        User = user;
-        Force = force;
-    }
-}
-
-#endregion
