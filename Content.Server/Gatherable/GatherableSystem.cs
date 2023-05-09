@@ -5,18 +5,20 @@ using Content.Shared.EntityList;
 using Content.Shared.Gatherable;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Gatherable;
 
-public sealed class GatherableSystem : EntitySystem
+public sealed partial class GatherableSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
@@ -25,6 +27,7 @@ public sealed class GatherableSystem : EntitySystem
 
         SubscribeLocalEvent<GatherableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<GatherableComponent, GatherableDoAfterEvent>(OnDoAfter);
+        InitializeProjectile();
     }
 
     private void OnInteractUsing(EntityUid uid, GatherableComponent component, InteractUsingEvent args)
@@ -60,29 +63,37 @@ public sealed class GatherableSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
+        Gather(args.Args.Target.Value, component, tool.GatheringSound);
+        args.Handled = true;
+    }
+
+    public void Gather(EntityUid uid, GatherableComponent? component = null, SoundSpecifier? sound = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
         // Complete the gathering process
-        _destructible.DestroyEntity(args.Args.Target.Value);
-        _audio.PlayPvs(tool.GatheringSound, args.Args.Target.Value);
+        _destructible.DestroyEntity(uid);
+        _audio.PlayPvs(sound, uid);
 
         // Spawn the loot!
         if (component.MappedLoot == null)
             return;
 
-        var playerPos = Transform(args.Args.User).MapPosition;
+        var pos = Transform(uid).MapPosition;
 
         foreach (var (tag, table) in component.MappedLoot)
         {
             if (tag != "All")
             {
-                if (!_tagSystem.HasTag(tool.Owner, tag))
+                if (!_tagSystem.HasTag(uid, tag))
                     continue;
             }
             var getLoot = _prototypeManager.Index<EntityLootTablePrototype>(table);
             var spawnLoot = getLoot.GetSpawns();
-            var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
+            var spawnPos = pos.Offset(_random.NextVector2(0.3f));
             Spawn(spawnLoot[0], spawnPos);
         }
-        args.Handled = true;
     }
 }
 
