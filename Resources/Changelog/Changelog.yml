@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed PKA to have a consistent firerate of 1.5 seconds, type: Tweak}
-  id: 3212
-  time: '2023-03-23T04:22:01.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Hair, facial hair, markings, etc are now sorted alphabetically in the
@@ -2908,3 +2903,8 @@ Entries:
   - {message: Fixed not being able to link airlocks using network configurator, type: Fix}
   id: 3711
   time: '2023-05-09T22:50:35.0000000+00:00'
+- author: Lomcastar
+  changes:
+  - {message: Added Proximity Mine disguised as a wet floor sign., type: Add}
+  id: 3712
+  time: '2023-05-09T23:50:03.0000000+00:00'
