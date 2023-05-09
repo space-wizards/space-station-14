@@ -40,13 +40,13 @@
       state: "torso_m"
     - type: BodyPart
       partType: Torso
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fat
-        Quantity: 10
-      - ReagentId: Blood
-        Quantity: 20
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Fat
+          Quantity: 3
+        - ReagentId: Blood
+          Quantity: 10
 
 - type: entity
   id: HeadVox
@@ -68,13 +68,13 @@
     - type: Tag
       tags:
         - Head
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fat
-        Quantity: 5
-      - ReagentId: Blood
-        Quantity: 10
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Fat
+          Quantity: 5
+        - ReagentId: Blood
+          Quantity: 10
 
 - type: entity
   id: LeftArmVox
