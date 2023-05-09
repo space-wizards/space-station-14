@@ -22,6 +22,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitJacketMonkey
+  name: bartender's jacket monkey
+  description: A decent jacket, for a decent monkey.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitBartenderPurple
   name: purple bartender's uniform
   description: A special purple outfit to serve drinks.

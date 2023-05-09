@@ -23,8 +23,7 @@
     - type: Sprite
       netsync: false
     - type: Appearance
-      visuals:
-      - type: ThrusterVisualizer
+    - type: ThrusterVisuals
     - type: ApcPowerReceiver
       powerLoad: 1500
     - type: ExtensionCableReceiver
@@ -59,9 +58,11 @@
     - state: thrust
       map: ["enum.ThrusterVisualLayers.ThrustOn"]
       shader: unshaded
+      visible: false
     - state: thrust_burn_unshaded
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
+      visible: false
       offset: 0, 1
 
 - type: entity
@@ -82,9 +83,11 @@
     - state: thrust
       map: ["enum.ThrusterVisualLayers.ThrustOn"]
       shader: unshaded
+      visible: false
     - state: thrust_burn_unshaded
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
+      visible: false
       offset: 0, 1
 
 - type: entity
@@ -107,11 +110,14 @@
     - state: thrust
       map: ["enum.ThrusterVisualLayers.ThrustOn"]
       shader: unshaded
+      visible: false
     - state: thrust_burn
       map: [ "enum.ThrusterVisualLayers.Thrusting" ]
+      visible: false
     - state: thrust_burn_unshaded
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
+      visible: false
   - type: PointLight
     radius: 1.3
     energy: 0.8
@@ -150,7 +156,9 @@
     - state: thrust
       map: ["enum.ThrusterVisualLayers.ThrustOn"]
       shader: unshaded
+      visible: false
     - state: thrust_burn_unshaded
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
+      visible: false
       offset: 0, 1

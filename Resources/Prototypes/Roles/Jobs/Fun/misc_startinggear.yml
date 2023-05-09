@@ -183,3 +183,10 @@
   id: BoxingKangarooGear
   equipment:
     gloves: ClothingHandsGlovesBoxingBlue
+
+- type: startingGear
+  id: MobMonkeyGear
+  equipment:
+    head: ClothingHeadHatTophat
+    jumpsuit: ClothingUniformJumpsuitJacketMonkey
+    id: BartenderPDA

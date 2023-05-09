@@ -9,7 +9,7 @@
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
     size: 30
   - type: Gun
-    fireRate: 1
+    fireRate: 0.75
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -24,8 +24,7 @@
           True: { visible: False }
           False: { visible: True }
   - type: RechargeBasicEntityAmmo
-    minRechargeCooldown: 1.5
-    maxRechargeCooldown: 1.5
+    rechargeCooldown: 1
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider
