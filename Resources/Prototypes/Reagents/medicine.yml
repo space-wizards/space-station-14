@@ -896,8 +896,9 @@
           groups:
             Burn: -1
             Brute: -1
-          types:
-            Bloodloss: -1
+      - !type:ModifyBloodLevel
+        probability: 0.33
+        amount: 1
       - !type:ChemVomit
         probability: 0.15
         conditions:
@@ -962,14 +963,6 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
-        conditions:
-        - !type:TotalDamage
-          min: 0
-          max: 179
-        damage:
-          types:
-            Poison: 1.5
       - !type:ChemCleanBloodstream
         conditions:
         - !type:TotalDamage
@@ -987,11 +980,8 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Bloodloss: -6
-            Asphyxiation: -1
+      - !type:ModifyBloodLevel
+        amount: 8
 
 - type: reagent
   id: Fomepizole

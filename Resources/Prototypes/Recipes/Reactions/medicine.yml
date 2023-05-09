@@ -404,6 +404,8 @@
 
 - type: reaction
   id: Calomel
+  impact: Medium
+  minTemp: 375
   reactants:
     Mercury:
       amount: 1
