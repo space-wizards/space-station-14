@@ -316,29 +316,30 @@
   noSpawn: true
   description: Marks a target for additional damage.
   components:
-    - type: Sprite
-      netsync: false
-      noRot: false
-      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-      layers:
-        - state: omnilaser
-          shader: unshaded
-    - type: DamageMarkerOnCollide
-      whitelist:
-        components:
-          - MobState
-      damage:
-        types:
-          Blunt: 20
-          Slash: 5
-    - type: Projectile
-      impactEffect: BulletImpactEffectDisabler
-      damage:
-        types:
-          Blunt: 0
-    # Short lifespan
-    - type: TimedDespawn
-      lifetime: 0.4
+  - type: Sprite
+    netsync: false
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+      - state: omnilaser
+        shader: unshaded
+  - type: GatheringProjectile
+  - type: DamageMarkerOnCollide
+    whitelist:
+      components:
+        - MobState
+    damage:
+      types:
+        Blunt: 20
+        Slash: 5
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Blunt: 0
+  # Short lifespan
+  - type: TimedDespawn
+    lifetime: 0.4
 
 - type: entity
   parent: BaseBullet

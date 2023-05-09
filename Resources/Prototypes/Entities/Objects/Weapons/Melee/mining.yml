@@ -24,13 +24,11 @@
     attackRate: 0.75
     damage:
       types:
-        Blunt: 0
-  - type: Wieldable
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
         Blunt: 10
         Slash: 5
+  - type: Wieldable
+  - type: MeleeRequiresWield
+  - type: GunRequiresWield
   - type: Item
     size: 150
   - type: DisarmMalus
