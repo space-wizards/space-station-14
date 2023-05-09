@@ -44,7 +44,7 @@ namespace Content.Server.Stunnable
         {
             if (args.OurFixture.ID != component.FixtureID) return;
 
-            TryDoCollideStun(uid, component, args.OtherFixture.Body.Owner);
+            TryDoCollideStun(uid, component, args.OtherEntity);
         }
 
         private void HandleThrow(EntityUid uid, StunOnCollideComponent component, ThrowDoHitEvent args)
