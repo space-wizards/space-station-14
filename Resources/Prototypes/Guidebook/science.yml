@@ -1,4 +1,4 @@
-﻿- type: guideEntry
+- type: guideEntry
   id: Science
   name: guide-entry-science
   text: "/ServerInfo/Guidebook/Science/Science.xml"
@@ -47,3 +47,8 @@
   id: MachineUpgrading
   name: guide-entry-machine-upgrading
   text: "/ServerInfo/Guidebook/Science/MachineUpgrading.xml"
+
+- type: guideEntry
+  id: Robotics
+  name: guide-entry-robotics
+  text: "/ServerInfo/Guidebook/Science/Robotics.xml"
