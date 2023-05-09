@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix some shuttle console rotations flipping the viewport., type: Fix}
-  id: 3215
-  time: '2023-03-23T05:52:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix arrivals stranding you at terminal., type: Fix}
   id: 3216
   time: '2023-03-23T06:41:42.0000000+00:00'
@@ -2908,3 +2903,9 @@ Entries:
       properly., type: Fix}
   id: 3714
   time: '2023-05-09T23:54:43.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Fixed the recipes for radiation shutters and glass shutters not appearing
+      in the construction menu, type: Fix}
+  id: 3715
+  time: '2023-05-09T23:56:07.0000000+00:00'
