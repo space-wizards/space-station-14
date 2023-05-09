@@ -15,6 +15,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
@@ -357,37 +358,59 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         // Windup time checked elsewhere.
 
-        if (weapon.NextAttack < curTime)
+        // Maybe Raise an event for this? CanAttack doesn't seem appropriate.
+        if (TryComp<GunComponent>(weaponUid, out var gun) && gun.NextFire > curTime)
+            return;
+
+        var fireRate = TimeSpan.FromSeconds(1f / weapon.AttackRate);
+        var swings = 0;
+
+        if (weapon.NextAttack < curTime - fireRate)
             weapon.NextAttack = curTime;
 
-        weapon.NextAttack += TimeSpan.FromSeconds(1f / weapon.AttackRate);
-
-        // Attack confirmed
-        string animation;
-
-        switch (attack)
+        while (weapon.NextAttack < curTime)
         {
-            case LightAttackEvent light:
-                DoLightAttack(user, light, weaponUid, weapon, session);
-                animation = weapon.ClickAnimation;
-                break;
-            case DisarmAttackEvent disarm:
-                if (!DoDisarm(user, disarm, weaponUid, weapon, session))
-                    return;
-
-                animation = weapon.ClickAnimation;
-                break;
-            case HeavyAttackEvent heavy:
-                DoHeavyAttack(user, heavy, weaponUid, weapon, session);
-                animation = weapon.WideAnimation;
-                break;
-            default:
-                throw new NotImplementedException();
+            weapon.NextAttack += fireRate;
+            swings++;
         }
 
-        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager, TransformSystem), weapon.Range, animation);
-        weapon.Attacking = true;
+        if (gun != null && gun.NextFire < weapon.NextAttack)
+        {
+            gun.NextFire = weapon.NextAttack;
+            Dirty(gun);
+        }
+
         Dirty(weapon);
+
+        // Attack confirmed
+        for (var i = 0; i < swings; i++)
+        {
+            string animation;
+
+            switch (attack)
+            {
+                case LightAttackEvent light:
+                    DoLightAttack(user, light, weaponUid, weapon, session);
+                    animation = weapon.ClickAnimation;
+                    break;
+                case DisarmAttackEvent disarm:
+                    if (!DoDisarm(user, disarm, weaponUid, weapon, session))
+                        return;
+
+                    animation = weapon.ClickAnimation;
+                    break;
+                case HeavyAttackEvent heavy:
+                    DoHeavyAttack(user, heavy, weaponUid, weapon, session);
+                    animation = weapon.WideAnimation;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager, TransformSystem), weapon.Range, animation);
+        }
+
+        weapon.Attacking = true;
     }
 
     /// <summary>
@@ -469,9 +492,10 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         Interaction.DoContactInteraction(user, ev.Target);
 
         // For stuff that cares about it being attacked.
-        RaiseLocalEvent(ev.Target.Value, new AttackedEvent(meleeUid, user, targetXform.Coordinates));
+        var attackedEvent = new AttackedEvent(meleeUid, user, targetXform.Coordinates);
+        RaiseLocalEvent(ev.Target.Value, attackedEvent);
 
-        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
         var damageResult = Damageable.TryChangeDamage(ev.Target, modifiedDamage, origin:user);
 
         if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
@@ -596,16 +620,15 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             // If the user is using a long-range weapon, this probably shouldn't be happening? But I'll interpret melee as a
             // somewhat messy scuffle. See also, light attacks.
             Interaction.DoContactInteraction(user, target);
-
-            RaiseLocalEvent(target, new AttackedEvent(meleeUid, user, Transform(target).Coordinates));
         }
 
-        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
         var appliedDamage = new DamageSpecifier();
 
         foreach (var entity in targets)
         {
-            RaiseLocalEvent(entity, new AttackedEvent(meleeUid, user, ev.Coordinates));
+            var attackedEvent = new AttackedEvent(meleeUid, user, ev.Coordinates);
+            RaiseLocalEvent(entity, attackedEvent);
+            var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
 
             var damageResult = Damageable.TryChangeDamage(entity, modifiedDamage, origin:user);
 
@@ -631,7 +654,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             if (appliedDamage.Total > FixedPoint2.Zero)
             {
                 var target = entities.First();
-                PlayHitSound(target, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
+                PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
             }
             else
             {

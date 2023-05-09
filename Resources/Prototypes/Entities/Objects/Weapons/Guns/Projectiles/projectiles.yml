@@ -323,6 +323,14 @@
       layers:
         - state: omnilaser
           shader: unshaded
+    - type: DamageMarkerOnCollide
+      whitelist:
+        components:
+          - MobState
+      damage:
+        types:
+          Blunt: 20
+          Slash: 5
     - type: Projectile
       impactEffect: BulletImpactEffectDisabler
       damage:

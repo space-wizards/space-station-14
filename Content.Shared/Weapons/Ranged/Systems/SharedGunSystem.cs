@@ -13,11 +13,11 @@ using Content.Shared.Projectiles;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
@@ -223,6 +223,10 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var curTime = Timing.CurTime;
 
+        // Maybe Raise an event for this? CanAttack doesn't seem appropriate.
+        if (TryComp<MeleeWeaponComponent>(gunUid, out var melee) && melee.NextAttack > curTime)
+            return;
+
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.
         if (gun.NextFire > curTime)
@@ -242,6 +246,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         {
             gun.NextFire += fireRate;
             shots++;
+        }
+
+        if (melee != null && melee.NextAttack < gun.NextFire)
+        {
+            melee.NextAttack = gun.NextFire;
+            Dirty(melee);
         }
 
         // NextFire has been touched regardless so need to dirty the gun.

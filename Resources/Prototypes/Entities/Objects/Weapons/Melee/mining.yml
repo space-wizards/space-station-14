@@ -10,10 +10,10 @@
     state: icon
   - type: Gun
     soundGunshot: /Audio/Weapons/plasma_cutter.ogg
-    fireRate: 0.75
+    fireRate: 0.5
     useKey: false
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 1
+    rechargeCooldown: 1.5
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider
@@ -24,16 +24,13 @@
     attackRate: 0.75
     damage:
       types:
-        Blunt: 5
-        Slash: 5
-        Structural: 5
+        Blunt: 0
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
         Blunt: 10
-        Slash: 10
-        Structural: 5
+        Slash: 5
   - type: Item
     size: 150
   - type: DisarmMalus
