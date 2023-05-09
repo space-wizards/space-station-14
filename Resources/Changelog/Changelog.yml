@@ -1,22 +1,4 @@
 Entries:
-- author: MagnusCrowe
-  changes:
-  - {message: 'Fixed the caustic damage issue where caustic damage was actually heat
-      and poison damage and could be cured by things like dermaline and dylovene,
-      where also siderlac could cure heat and poison damage', type: Fix}
-  - {message: 'Fixed health analyzer counting heat and poison damage as caustic damage,
-      causing the damage group totals to not add up correctly to total damage', type: Fix}
-  - {message: Changed Caustic from a damage group to a damage type under the Burn
-      group, type: Tweak}
-  - {message: 'Added Sodium Carbonate, a neutral precursor chemical', type: Add}
-  - {message: 'Added Sigynate, a new synthetic caustic damage medicine that heals
-      6 caustic damage per unit', type: Add}
-  - {message: Changed Cryoxadone to cure +2 Burn per unit to account for the new damage
-      type in the Burn group, type: Tweak}
-  - {message: Changed harmful acid's damage types to caustic if they used to cause
-      poison, type: Tweak}
-  id: 3208
-  time: '2023-03-23T03:38:36.0000000+00:00'
 - author: Van
   changes:
   - {message: added janitoral maid uniform with miniskirt, type: Add}
@@ -2922,3 +2904,9 @@ Entries:
       the dead (again)., type: Tweak}
   id: 3707
   time: '2023-05-09T02:24:40.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'Miasma text now has a locale again (foul smell, rotting and bloat).',
+    type: Fix}
+  id: 3708
+  time: '2023-05-09T07:35:43.0000000+00:00'
