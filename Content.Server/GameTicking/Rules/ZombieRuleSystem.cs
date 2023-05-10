@@ -2,8 +2,6 @@ using System.Globalization;
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
@@ -38,7 +36,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-    [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -61,17 +58,17 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         foreach (var zombie in EntityQuery<ZombieRuleComponent>())
         {
-            //this is just the general condition thing used for determining the win/lose text
-            var percent = GetInfectedPercentage(out var livingHumans);
+            // This is just the general condition thing used for determining the win/lose text
+            var fraction = GetInfectedFraction();
 
-            if (percent <= 0)
+            if (fraction <= 0)
                 ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
-            else if (percent <= 0.25)
+            else if (fraction <= 0.25)
                 ev.AddLine(Loc.GetString("zombie-round-end-amount-low"));
-            else if (percent <= 0.5)
-                ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", Math.Round((percent * 100), 2).ToString(CultureInfo.InvariantCulture))));
-            else if (percent < 1)
-                ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", Math.Round((percent * 100), 2).ToString(CultureInfo.InvariantCulture))));
+            else if (fraction <= 0.5)
+                ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", Math.Round((fraction * 100), 2).ToString(CultureInfo.InvariantCulture))));
+            else if (fraction < 1)
+                ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", Math.Round((fraction * 100), 2).ToString(CultureInfo.InvariantCulture))));
             else
                 ev.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
@@ -83,13 +80,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                     ("username", player.Value)));
             }
 
-            //Gets a bunch of the living players and displays them if they're under a threshold.
-            //InitialInfected is used for the threshold because it scales with the player count well.
-            if (livingHumans.Count > 0 && livingHumans.Count <= zombie.InitialInfectedNames.Count)
+            var healthy = GetHealthyHumans();
+            // Gets a bunch of the living players and displays them if they're under a threshold.
+            // InitialInfected is used for the threshold because it scales with the player count well.
+            if (healthy.Count > 0 && healthy.Count <= 2 * zombie.InitialInfectedNames.Count)
             {
                 ev.AddLine("");
-                ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", livingHumans.Count)));
-                foreach (var survivor in livingHumans)
+                ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", healthy.Count)));
+                foreach (var survivor in healthy)
                 {
                     var meta = MetaData(survivor);
                     var username = string.Empty;
@@ -142,14 +140,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             if (GameTicker.IsGameRuleActive(uid, gameRule))
                 continue;
 
-            //we only care about players, not monkeys and such.
+            // We only care about players, not monkeys and such.
             if (!HasComp<HumanoidAppearanceComponent>(target))
                 continue;
 
-            var percent = GetInfectedPercentage(out var num);
-            if (num.Count == 1) //only one human left. spooky
-                _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], num[0]);
-            if (percent >= 1) //oops, all zombies
+            var fraction = GetInfectedFraction();
+            var healthy = GetHealthyHumans();
+            if (healthy.Count == 1) // Only one human left. spooky
+                _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
+            if (fraction >= 1) // Oops, all zombies
                 _roundEndSystem.EndRound();
         }
     }
@@ -192,29 +191,27 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         _action.RemoveAction(uid, action);
     }
 
-    private float GetInfectedPercentage(out List<EntityUid> livingHumans)
+    private float GetInfectedFraction()
     {
-        var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>(true);
-        var allZombers = GetEntityQuery<ZombieComponent>();
+        var players = EntityQuery<HumanoidAppearanceComponent>(true);
+        var zombers = EntityQuery<HumanoidAppearanceComponent, ZombieComponent>(true);
 
-        var totalPlayers = new List<EntityUid>();
-        var livingZombies = new List<EntityUid>();
+        return zombers.Count() / (float) players.Count();
+    }
 
-        livingHumans = new();
-
-        foreach (var (_, mob) in allPlayers)
+    private List<EntityUid> GetHealthyHumans()
+    {
+        var healthy = new List<EntityUid>();
+        var players = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
+        var zombers = GetEntityQuery<ZombieComponent>();
+        while (players.MoveNext(out var uid, out _, out var mob))
         {
-            if (_mobState.IsAlive(mob.Owner, mob))
+            if (_mobState.IsAlive(uid, mob) && !zombers.HasComponent(uid))
             {
-                totalPlayers.Add(mob.Owner);
-
-                if (allZombers.HasComponent(mob.Owner))
-                    livingZombies.Add(mob.Owner);
-                else
-                    livingHumans.Add(mob.Owner);
+                healthy.Add(uid);
             }
         }
-        return livingZombies.Count / (float) totalPlayers.Count;
+        return healthy;
     }
 
     /// <summary>
@@ -233,7 +230,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var prefList = new List<IPlayerSession>();
         foreach (var player in allPlayers)
         {
-            if (player.AttachedEntity != null && HasComp<DiseaseCarrierComponent>(player.AttachedEntity))
+            // TODO: A
+            if (player.AttachedEntity != null && HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
             {
                 playerList.Add(player);
 
@@ -287,7 +285,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             var inCharacterName = string.Empty;
             if (mind.OwnedEntity != null)
             {
-                _diseaseSystem.TryAddDisease(mind.OwnedEntity.Value, component.InitialZombieVirusPrototype);
+                EnsureComp<PendingZombieComponent>(mind.OwnedEntity.Value);
+                EnsureComp<ZombifyOnDeathComponent>(mind.OwnedEntity.Value);
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
 
                 var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombieRuleComponent.ZombifySelfActionPrototype));

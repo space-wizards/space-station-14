@@ -14,6 +14,7 @@ id-card-access-level-research = Научный
 id-card-access-level-chief-medical-officer = Главный врач
 id-card-access-level-medical = Медотсек
 id-card-access-level-chemistry = Химия
+id-card-access-level-paramedic = Paramedic
 id-card-access-level-quartermaster = Квартирмейстер
 id-card-access-level-cargo = Снабжение
 id-card-access-level-salvage = Утилизаторы

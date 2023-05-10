@@ -1,13 +1,7 @@
 ### UI
 
 # Shown when an RCD is examined in details range
-rcd-component-examine-detail-count =
-    Находится в режиме { $mode }, и { $ammoCount ->
-       *[zero] не содержит зарядов.
-        [one] содержит 1 заряд.
-        [few] содержит { $ammoCount } заряда.
-        [other] содержит { $ammoCount } зарядов.
-    }
+rcd-component-examine-detail = It's currently on { $mode } mode.
 
 ### Interaction Messages
 

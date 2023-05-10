@@ -62,14 +62,18 @@
                                        Text="{Loc 'crew-manifest-button-label'}"
                                        Description="{Loc 'crew-manifest-button-description'}"
                                        Visible="False" />
-                <pda:PDASettingsButton Name="ActivateUplinkButton"
-                                       Access="Public"
-                                       Text="{Loc 'pda-bound-user-interface-uplink-tab-title'}"
-                                       Description="{Loc 'pda-bound-user-interface-uplink-tab-description'}"/>
                 <pda:PDASettingsButton Name="ActivateMusicButton"
                                        Access="Public"
                                        Text="{Loc 'pda-bound-user-interface-music-button'}"
                                        Description="{Loc 'pda-bound-user-interface-music-button-description'}"/>
+                <pda:PDASettingsButton Name="ShowUplinkButton"
+                                       Access="Public"
+                                       Text="{Loc 'pda-bound-user-interface-show-uplink-title'}"
+                                       Description="{Loc 'pda-bound-user-interface-show-uplink-description'}"/>
+                <pda:PDASettingsButton Name="LockUplinkButton"
+                                       Access="Public"
+                                       Text="{Loc 'pda-bound-user-interface-lock-uplink-title'}"
+                                       Description="{Loc 'pda-bound-user-interface-lock-uplink-description'}"/>
             </BoxContainer>
         </ScrollContainer>
         <BoxContainer Orientation="Vertical"

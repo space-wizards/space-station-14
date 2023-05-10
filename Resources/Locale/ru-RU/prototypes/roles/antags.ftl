@@ -10,5 +10,7 @@ roles-antag-suspicion-suspect-name = Подозреваемый
 roles-antag-suspicion-suspect-objective = Убейте невиновных.
 roles-antag-nuclear-operative-commander-name = Командир ядерных оперативников
 roles-antag-nuclear-operative-commander-objective = Приведите свой отряд к уничтожению станции.
+roles-antag-nuclear-operative-agent-name = Nuclear operative agent
+roles-antag-nuclear-operative-agent-objective = Like default operative, the team's treatment will have priority.
 roles-antag-nuclear-operative-name = Ядерный оперативник
 roles-antag-nuclear-operative-objective = Найдите ядерный диск и взорвите станцию.

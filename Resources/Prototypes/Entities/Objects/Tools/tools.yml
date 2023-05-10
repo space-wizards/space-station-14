@@ -196,21 +196,9 @@
   - type: Tool
     qualities:
       - Pulsing
-  - type: SignalLinker
-  - type: NetworkConfigurator
-  - type: ActivatableUI
-    key: enum.NetworkConfiguratorUiKey.List
-    inHandsOnly: true
-  - type: UserInterface
-    interfaces:
-    - key: enum.SignalLinkerUiKey.Key
-      type: SignalPortSelectorBoundUserInterface
-    - key: enum.NetworkConfiguratorUiKey.List
-      type: NetworkConfiguratorBoundUserInterface
-    - key: enum.NetworkConfiguratorUiKey.Configure
-      type: NetworkConfiguratorBoundUserInterface
   - type: Tag
     tags:
+      - Multitool
       - DroneUsable
   - type: PhysicalComposition
     materialComposition:
@@ -218,6 +206,54 @@
       Plastic: 100
   - type: StaticPrice
     price: 60
+
+- type: entity
+  name: network configurator
+  parent: BaseItem
+  id: NetworkConfigurator
+  description: A tool for linking devices together. Has two modes, a list mode for mass linking devices and a linking mode for advanced device linking.
+  components:
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Items/multitool_drop.ogg
+    - type: Sprite
+      sprite: Objects/Tools/network_configurator.rsi
+      layers:
+        - state: icon
+        - state: mode-list
+          map: ["enum.NetworkConfiguratorLayers.ModeLight"]
+          shader: unshaded
+    - type: Item
+      size: 5
+    - type: Clothing
+      sprite: Objects/Tools/network_configurator.rsi
+      quickEquip: false
+      slots:
+        - Belt
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.NetworkConfiguratorVisuals.Mode:
+          enum.NetworkConfiguratorLayers.ModeLight:
+            True: { state: mode-link }
+            False: { state: mode-list }
+    - type: NetworkConfigurator
+    - type: ActivatableUI
+      key: enum.NetworkConfiguratorUiKey.List
+      inHandsOnly: true
+    - type: UserInterface
+      interfaces:
+        - key: enum.NetworkConfiguratorUiKey.List
+          type: NetworkConfiguratorBoundUserInterface
+        - key: enum.NetworkConfiguratorUiKey.Configure
+          type: NetworkConfiguratorBoundUserInterface
+        - key: enum.NetworkConfiguratorUiKey.Link
+          type: NetworkConfiguratorBoundUserInterface
+    - type: Tag
+      tags:
+        - DroneUsable
+    - type: StaticPrice
+      price: 60
 
 - type: entity
   name: power drill
@@ -272,6 +308,9 @@
   description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
+  - type: LimitedCharges
+    maxCharges: 5
+    charges: 5
   - type: UseDelay
     delay: 1.0
   - type: Sprite
@@ -296,8 +335,19 @@
   parent: RCD
   suffix: Empty
   components:
-  - type: RCD
-    ammo: 0
+  - type: LimitedCharges
+    maxCharges: 5
+    charges: 0
+
+- type: entity
+  id: RCDExperimental
+  parent: RCD
+  suffix: Admeme
+  name: experimental rcd
+  description: A bluespace-enhanced RCD that regenerates charges passively.
+  components:
+  - type: AutoRecharge
+    rechargeDuration: 5
 
 - type: entity
   name: RCD Ammo
@@ -357,13 +407,10 @@
   - type: Item
     sprite: Objects/Tools/omnitool.rsi
     size: 20
+  - type: Tag
+    tags:
+    - Multitool
   - type: TilePrying
-  - type: SignalLinker
-    requiredQuality: Pulsing
-  - type: UserInterface
-    interfaces:
-      - key: enum.SignalLinkerUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
   - type: Tool
     qualities:
       - Screwing

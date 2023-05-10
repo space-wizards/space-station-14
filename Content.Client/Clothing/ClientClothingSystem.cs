@@ -11,8 +11,8 @@ using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using static Robust.Client.GameObjects.SpriteComponent;
-using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Clothing;
 
@@ -131,7 +131,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         RSI? rsi = null;
 
         if (clothing.RsiPath != null)
-            rsi = _cache.GetResource<RSIResource>(TextureRoot / clothing.RsiPath).RSI;
+            rsi = _cache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / clothing.RsiPath).RSI;
         else if (TryComp(uid, out SpriteComponent? sprite))
             rsi = sprite.BaseRSI;
 

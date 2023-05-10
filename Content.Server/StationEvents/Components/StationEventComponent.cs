@@ -82,7 +82,7 @@ public sealed class StationEventComponent : Component
     public TimeSpan StartTime;
 
     /// <summary>
-    /// When the station event starts.
+    /// When the station event ends.
     /// </summary>
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? EndTime;

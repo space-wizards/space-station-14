@@ -260,5 +260,5 @@ ent-DrinkRamen = чашка рамэна
     .desc = Просто добавьте 10 мл кипятка! Вкус, напоминающий школьные годы.
 ent-DrinkHellRamen = чашка адского рамэна
     .desc = Просто добавьте 10 мл кипятка! Супер острый вкус.
-ent-DrinkKvassGlass = кружка кваса
-    .desc = Прохладный освежающий напиток с привкусом социализма.
+ent-DrinkTheMartinez = The Martinez glass
+    .desc = The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.

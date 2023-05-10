@@ -62,3 +62,9 @@ accent-words-kangaroo-1 = Грр!
 accent-words-kangaroo-2 = Ххссс!
 accent-words-kangaroo-3 = Шррр!
 accent-words-kangaroo-4 = Чууу!
+# Slimes
+accent-words-slimes-1 = Blyump.
+accent-words-slimes-2 = Blimpuf?
+accent-words-slimes-3 = Blump!
+accent-words-slimes-4 = Bluuump...
+accent-words-slimes-5 = Blabl blump!

@@ -74,6 +74,8 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepWater
+        params:
+          volume: 6
     - type: Slippery
       launchForwardsMultiplier: 2.0
     - type: Transform
@@ -90,7 +92,7 @@
       bodyType: Static
     - type: Fixtures
       fixtures:
-        - id: slipFixture
+        slipFixture:
           shape:
             !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"

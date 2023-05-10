@@ -8,3 +8,5 @@ ent-LeftLegBorg = left borg leg
     .desc = { ent-PartSilicon.desc }
 ent-RightLegBorg = right borg leg
     .desc = { ent-PartSilicon.desc }
+ent-LightHeadBorg = borg head
+    .desc = { ent-PartSilicon.desc }

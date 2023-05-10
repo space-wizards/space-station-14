@@ -3,14 +3,12 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
@@ -20,29 +18,41 @@ namespace Content.Server.Database
     /// </summary>
     public sealed class ServerDbSqlite : ServerDbBase
     {
-        // For SQLite we use a single DB context via SQLite.
+        private readonly Func<DbContextOptions<SqliteServerDbContext>> _options;
+
         // This doesn't allow concurrent access so that's what the semaphore is for.
         // That said, this is bloody SQLite, I don't even think EFCore bothers to truly async it.
-        private readonly SemaphoreSlim _prefsSemaphore = new(1, 1);
+        private readonly SemaphoreSlim _prefsSemaphore;
 
         private readonly Task _dbReadyTask;
-        private readonly SqliteServerDbContext _prefsCtx;
 
         private int _msDelay;
 
-        public ServerDbSqlite(DbContextOptions<SqliteServerDbContext> options)
+        public ServerDbSqlite(Func<DbContextOptions<SqliteServerDbContext>> options, bool inMemory)
         {
-            _prefsCtx = new SqliteServerDbContext(options);
+            _options = options;
+
+            var prefsCtx = new SqliteServerDbContext(options());
 
             var cfg = IoCManager.Resolve<IConfigurationManager>();
+
+            // When inMemory we re-use the same connection, so we can't have any concurrency.
+            var concurrency = inMemory ? 1 : cfg.GetCVar(CCVars.DatabaseSqliteConcurrency);
+            _prefsSemaphore = new SemaphoreSlim(concurrency, concurrency);
+
             if (cfg.GetCVar(CCVars.DatabaseSynchronous))
             {
-                _prefsCtx.Database.Migrate();
+                prefsCtx.Database.Migrate();
                 _dbReadyTask = Task.CompletedTask;
+                prefsCtx.Dispose();
             }
             else
             {
-                _dbReadyTask = Task.Run(() => _prefsCtx.Database.Migrate());
+                _dbReadyTask = Task.Run(() =>
+                {
+                    prefsCtx.Database.Migrate();
+                    prefsCtx.Dispose();
+                });
             }
 
             cfg.OnValueChanged(CCVars.DatabaseSqliteDelay, v => _msDelay = v, true);
@@ -463,42 +473,6 @@ namespace Content.Server.Database
             return round.Id;
         }
 
-        public override async Task AddAdminLogs(List<QueuedLog> logs)
-        {
-            await using var db = await GetDb();
-
-            var nextId = 1;
-            if (await db.DbContext.AdminLog.AnyAsync())
-            {
-                nextId = db.DbContext.AdminLog.Max(round => round.Id) + 1;
-            }
-
-            var entities = new Dictionary<int, AdminLogEntity>();
-
-            foreach (var (log, entityData) in logs)
-            {
-                log.Id = nextId++;
-
-                var logEntities = new List<AdminLogEntity>(entityData.Count);
-                foreach (var (id, name) in entityData)
-                {
-                    var entity = entities.GetOrNew(id);
-                    entity.Name = name;
-                    logEntities.Add(entity);
-                }
-
-                foreach (var player in log.Players)
-                {
-                    player.LogId = log.Id;
-                }
-
-                log.Entities = logEntities;
-                db.DbContext.AdminLog.Add(log);
-            }
-
-            await db.DbContext.SaveChangesAsync();
-        }
-
         public override async Task<int> AddAdminNote(AdminNote note)
         {
             await using (var db = await GetDb())
@@ -523,30 +497,34 @@ namespace Content.Server.Database
 
             await _prefsSemaphore.WaitAsync();
 
-            return new DbGuardImpl(this);
+            var dbContext = new SqliteServerDbContext(_options());
+
+            return new DbGuardImpl(this, dbContext);
         }
 
         protected override async Task<DbGuard> GetDb()
         {
-            return await GetDbImpl();
+            return await GetDbImpl().ConfigureAwait(false);
         }
 
         private sealed class DbGuardImpl : DbGuard
         {
             private readonly ServerDbSqlite _db;
+            private readonly SqliteServerDbContext _ctx;
 
-            public DbGuardImpl(ServerDbSqlite db)
+            public DbGuardImpl(ServerDbSqlite db, SqliteServerDbContext dbContext)
             {
                 _db = db;
+                _ctx = dbContext;
             }
 
-            public override ServerDbContext DbContext => _db._prefsCtx;
-            public SqliteServerDbContext SqliteDbContext => _db._prefsCtx;
+            public override ServerDbContext DbContext => _ctx;
+            public SqliteServerDbContext SqliteDbContext => _ctx;
 
-            public override ValueTask DisposeAsync()
+            public override async ValueTask DisposeAsync()
             {
+                await _ctx.DisposeAsync();
                 _db._prefsSemaphore.Release();
-                return default;
             }
         }
     }

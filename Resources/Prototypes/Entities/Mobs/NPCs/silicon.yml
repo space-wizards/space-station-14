@@ -23,14 +23,15 @@
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 4
@@ -121,26 +122,27 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      id: "slips"
-      hard: false
-      layer:
-        - SlipLayer
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 20
-      mask:
-      - MobMask
+      slips:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        hard: false
+        layer:
+          - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
   - type: Construction
     graph: HonkBot
     node: bot
   - type: GhostRole
     makeSentient: true
-    name: honkbot
-    description: An artificial being of pure evil.
+    name: ghost-role-information-honkbot-name
+    description: ghost-role-information-honkbot-description
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-honkbot
@@ -168,8 +170,8 @@
     node: bot
   - type: GhostRole
     makeSentient: true
-    name: jonkbot
-    description: An artificial being of pure evil.
+    name: ghost-role-information-jonkbot-name
+    description: ghost-role-information-jonkbot-description
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Items/brokenbikehorn.ogg
@@ -194,18 +196,30 @@
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
-  - type: Drain
-    range: 1
-    unitsDestroyedPerSecond: 6
   - type: Construction
     graph: CleanBot
     node: bot
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-mechanical
+  - type: Absorbent
+    pickupAmount: 10
+  - type: UseDelay
+    delay: 2
+  - type: SolutionRegeneration
+    solution: absorbed
+    generated:
+      reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: SolutionPurge
+    solution: absorbed
+    preserve:
+      - Water
+    quantity: 10
   - type: SolutionContainerManager
     solutions:
-      drainBuffer:
-        maxVol: 30
+      absorbed:
+        maxVol: 50
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3
@@ -227,6 +241,13 @@
   description: No substitute for a doctor, but better than nothing.
   components:
   - type: Medibot
+  - type: EmaggableMedibot
+    # when you are fine, medibot will help you go sleep
+    standardMed: ChloralHydrate
+    standardMedAmount: 5
+    # when you are crit, medibot will help you have fun
+    emergencyMed: SpaceDrugs
+    emergencyMedAmount: 25
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/medibot.rsi
@@ -242,3 +263,37 @@
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobMimeBot
+  name: mimebot
+  description: Why not give mimebot a friendly wave.
+  components:
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mimebot
+      sprite: Mobs/Silicon/Bots/mimebot.rsi
+  - type: MimePowers
+  - type: Appearance
+  - type: Construction
+    graph: MimeBot
+    node: bot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-mimebot-name
+    description: ghost-role-information-mimebot-description
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-mimebot
+    interactFailureString: petting-failure-mimebot
+  - type: Inventory
+    templateId: head

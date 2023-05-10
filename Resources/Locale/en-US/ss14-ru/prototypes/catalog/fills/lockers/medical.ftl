@@ -14,3 +14,6 @@ ent-LockerWallMedicalDoctorFilled = medical doctor's wall locker
 ent-LockerChemistryFilled = { ent-LockerChemistry }
     .suffix = Filled
     .desc = { ent-LockerChemistry.desc }
+ent-LockerParamedicFilled = { ent-LockerParamedic }
+    .suffix = Filled
+    .desc = { ent-LockerParamedic.desc }

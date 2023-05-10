@@ -32,14 +32,15 @@
     fixedRotation: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.25,0.25,0.25"
-      density: 20
-      mask:
-      - ItemMask
-      restitution: 0.3  # fite me
-      friction: 0.2
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3  # fite me
+        friction: 0.2
   - type: Sprite
     drawdepth: Items
     noRot: false
