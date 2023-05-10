@@ -56,8 +56,8 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         var oldTether = _tether;
         _tether = ev.Entity;
-        _physics.UpateIsPredicted(oldTether);
-        _physics.UpateIsPredicted(_tether);
+        _physics.UpdateIsPredicted(oldTether);
+        _physics.UpdateIsPredicted(_tether);
     }
 
     public override void Update(float frameTime)
@@ -122,8 +122,8 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         _lastMousePosition = null;
         _tether = null;
 
-        _physics.UpateIsPredicted(oldDrag);
-        _physics.UpateIsPredicted(oldTether);
+        _physics.UpdateIsPredicted(oldDrag);
+        _physics.UpdateIsPredicted(oldTether);
     }
 
     private void StartDragging(EntityUid uid, MapCoordinates coordinates)
@@ -136,7 +136,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             Coordinates = coordinates,
         });
 
-        _physics.UpateIsPredicted(uid);
+        _physics.UpdateIsPredicted(uid);
 
     }
 }
