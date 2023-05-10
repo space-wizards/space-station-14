@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: you can now place floor tiles under directional windows (or any other
-      non-full wall)., type: Fix}
-  id: 3218
-  time: '2023-03-23T06:55:51.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix some instances of NPCs getting stuck., type: Fix}
@@ -2909,3 +2903,10 @@ Entries:
   - {message: Wielding is now predicted., type: Tweak}
   id: 3717
   time: '2023-05-10T00:01:23.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Frezon is slightly harder to make. The reaction always consumes Tritium
+      and Oxygen at a 1:50 ratio. But the reaction is easier to initiate, requiring
+      only Nitrogen, Oxygen, Tritium and <73.15K.', type: Tweak}
+  id: 3718
+  time: '2023-05-10T03:27:23.0000000+00:00'
