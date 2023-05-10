@@ -1098,6 +1098,7 @@ entities:
             0: 4095
           -7,-7:
             0: 53247
+            3: 8192
           -6,-7:
             0: 65535
           -6,-8:
@@ -1136,6 +1137,7 @@ entities:
             0: 65311
           -7,-6:
             0: 64716
+            3: 546
           -12,0:
             0: 34952
           -12,1:
@@ -29762,7 +29764,6 @@ entities:
     - pos: -24.138485,-21.92873
       parent: 31
       type: Transform
-    - type: EmitSoundOnCollide
 - proto: ClothingUnderSocksCoder
   entities:
   - uid: 80
@@ -59186,6 +59187,13 @@ entities:
   - uid: 37
     components:
     - pos: -1.5,8.5
+      parent: 31
+      type: Transform
+- proto: SpawnMobMonkeyPunpun
+  entities:
+  - uid: 10044
+    components:
+    - pos: -5.5,-5.5
       parent: 31
       type: Transform
 - proto: SpawnMobMouse
