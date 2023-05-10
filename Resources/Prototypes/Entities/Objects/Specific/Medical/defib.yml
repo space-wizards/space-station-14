@@ -51,3 +51,36 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  id: CombatDefibrillator
+  name: Combat defibrillator
+  parent: BaseItem
+  description: A more compact defibrillator for use by nuclear agents. Does not require batteries, but recharges very slowly.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Medical/combat_defib.rsi
+      layers:
+        - state: icon
+        - state: ready
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+          shader: unshaded
+    - type: GenericVisualizer
+      visuals:
+        enum.DefibrillatorVisuals.Ready:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { visible: true }
+            False: { visible: false }
+    - type: Item
+      size: 15
+    - type: ItemCooldown
+    - type: Speech
+    - type: CombatDefibrillator
+      zapHeal:
+        types:
+          Asphyxiation: -40
+    - type: Appearance
+    - type: DoAfter
+    - type: UseDelay
+    - type: StaticPrice
+      price: 0
