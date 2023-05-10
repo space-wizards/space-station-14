@@ -23,25 +23,25 @@ public sealed partial class ShuttleSystem
 
     private void OnShuttleCollide(EntityUid uid, ShuttleComponent component, ref StartCollideEvent args)
     {
-        var ourBody = args.OurFixture.Body;
-        var otherBody = args.OtherFixture.Body;
-
-        if (!HasComp<ShuttleComponent>(otherBody.Owner))
+        if (!HasComp<ShuttleComponent>(args.OtherEntity))
             return;
 
+        var ourBody = args.OurBody;
+        var otherBody = args.OtherBody;
+
         // TODO: Would also be nice to have a continuous sound for scraping.
-        var ourXform = Transform(ourBody.Owner);
+        var ourXform = Transform(uid);
 
         if (ourXform.MapUid == null)
             return;
 
-        var otherXform = Transform(otherBody.Owner);
+        var otherXform = Transform(args.OtherEntity);
 
         var ourPoint = ourXform.InvWorldMatrix.Transform(args.WorldPoint);
         var otherPoint = otherXform.InvWorldMatrix.Transform(args.WorldPoint);
 
-        var ourVelocity = _physics.GetLinearVelocity(ourBody.Owner, ourPoint, ourBody, ourXform);
-        var otherVelocity = _physics.GetLinearVelocity(otherBody.Owner, otherPoint, otherBody, otherXform);
+        var ourVelocity = _physics.GetLinearVelocity(uid, ourPoint, ourBody, ourXform);
+        var otherVelocity = _physics.GetLinearVelocity(args.OtherEntity, otherPoint, otherBody, otherXform);
         var jungleDiff = (ourVelocity - otherVelocity).Length;
 
         if (jungleDiff < MinimumImpactVelocity)

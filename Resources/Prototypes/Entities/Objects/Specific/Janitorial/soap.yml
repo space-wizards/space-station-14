@@ -27,9 +27,9 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.3,0.4,0.3"
-        hard: false
         layer:
         - SlipLayer
+        hard: false
       fix1:
         shape:
           !type:PhysShapeAabb

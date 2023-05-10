@@ -254,6 +254,9 @@
         - DroneUsable
     - type: StaticPrice
       price: 60
+    - type: GuideHelp
+      guides:
+        - NetworkConfigurator
 
 - type: entity
   name: power drill
