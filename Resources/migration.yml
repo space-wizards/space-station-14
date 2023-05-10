@@ -47,3 +47,6 @@ WeaponSubMachineGunVectorRubber: WeaponSubMachineGunDrozdRubber
 MagazineBoxAntiMaterial: MagazineBoxAntiMateriel
 CartridgeAntiMaterial: CartridgeAntiMateriel
 BulletAntiMaterial: BulletAntiMateriel
+
+# 2023--05-10
+FoodCondimentBottleSmallHotsauce: FoodCondimentBottleHotsauce
