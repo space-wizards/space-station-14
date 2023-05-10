@@ -30,7 +30,7 @@
     zeroVisible: false
   - type: Appearance
   - type: StaticPrice
-    price: 550
+    price: 350
 
 - type: entity
   id: BaseWeaponBatterySmall
