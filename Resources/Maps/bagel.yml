@@ -87827,7 +87827,7 @@ entities:
     - pos: 23.395727,-39.40821
       parent: 60
       type: Transform
-- proto: FoodSnackCookieFortune
+- proto: FoodBakedCookieFortune
   entities:
   - uid: 8390
     components:
