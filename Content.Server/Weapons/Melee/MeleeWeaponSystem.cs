@@ -25,7 +25,6 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
