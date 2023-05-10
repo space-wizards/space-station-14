@@ -56,12 +56,16 @@ namespace Content.Client.Physics.Controllers
 
         private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, PlayerAttachedEvent args)
         {
+            Physics.UpateIsPredicted(uid);
+            Physics.UpateIsPredicted(component.RelayEntity);
             if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
         private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, PlayerDetachedEvent args)
         {
+            Physics.UpateIsPredicted(uid);
+            Physics.UpateIsPredicted(component.RelayEntity);
             if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
                 SetMoveInput(inputMover, MoveButtons.None);
         }

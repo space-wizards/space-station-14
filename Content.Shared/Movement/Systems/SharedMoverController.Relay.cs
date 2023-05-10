@@ -1,14 +1,9 @@
 using Content.Shared.Movement.Components;
-using Robust.Shared.Physics.Systems;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems;
 
 public abstract partial class SharedMoverController
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-
     private void InitializeRelay()
     {
         SubscribeLocalEvent<RelayInputMoverComponent, ComponentShutdown>(OnRelayShutdown);
@@ -19,12 +14,12 @@ public abstract partial class SharedMoverController
 
     private void OnAfterRelayTargetState(EntityUid uid, MovementRelayTargetComponent component, ref AfterAutoHandleStateEvent args)
     {
-        _physics.UpateIsPredicted(uid);
+        Physics.UpateIsPredicted(uid);
     }
 
     private void OnAfterRelayState(EntityUid uid, RelayInputMoverComponent component, ref AfterAutoHandleStateEvent args)
     {
-        _physics.UpateIsPredicted(uid);
+        Physics.UpateIsPredicted(uid);
     }
 
     /// <summary>
@@ -47,7 +42,7 @@ public abstract partial class SharedMoverController
         {
             oldTarget.Source = EntityUid.Invalid;
             RemComp(component.RelayEntity, oldTarget);
-            _physics.UpateIsPredicted(component.RelayEntity);
+            Physics.UpateIsPredicted(component.RelayEntity);
         }
 
         var targetComp = EnsureComp<MovementRelayTargetComponent>(relayEntity);
@@ -55,11 +50,11 @@ public abstract partial class SharedMoverController
         {
             oldRelay.RelayEntity = EntityUid.Invalid;
             RemComp(targetComp.Source, oldRelay);
-            _physics.UpateIsPredicted(targetComp.Source);
+            Physics.UpateIsPredicted(targetComp.Source);
         }
 
-        _physics.UpateIsPredicted(uid);
-        _physics.UpateIsPredicted(relayEntity);
+        Physics.UpateIsPredicted(uid);
+        Physics.UpateIsPredicted(relayEntity);
         component.RelayEntity = relayEntity;
         targetComp.Source = uid;
         Dirty(component);
@@ -68,13 +63,13 @@ public abstract partial class SharedMoverController
 
     private void OnRelayShutdown(EntityUid uid, RelayInputMoverComponent component, ComponentShutdown args)
     {
-        _physics.UpateIsPredicted(uid);
-        _physics.UpateIsPredicted(component.RelayEntity);
+        Physics.UpateIsPredicted(uid);
+        Physics.UpateIsPredicted(component.RelayEntity);
 
         if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
             SetMoveInput(inputMover, MoveButtons.None);
 
-        if (_timing.ApplyingState)
+        if (Timing.ApplyingState)
             return;
 
         if (TryComp(component.RelayEntity, out MovementRelayTargetComponent? target) && target.LifeStage <= ComponentLifeStage.Running)
@@ -83,10 +78,10 @@ public abstract partial class SharedMoverController
 
     private void OnTargetRelayShutdown(EntityUid uid, MovementRelayTargetComponent component, ComponentShutdown args)
     {
-        _physics.UpateIsPredicted(uid);
-        _physics.UpateIsPredicted(component.Source);
+        Physics.UpateIsPredicted(uid);
+        Physics.UpateIsPredicted(component.Source);
 
-        if (_timing.ApplyingState)
+        if (Timing.ApplyingState)
             return;
 
         if (TryComp(component.Source, out RelayInputMoverComponent? relay) && relay.LifeStage <= ComponentLifeStage.Running)

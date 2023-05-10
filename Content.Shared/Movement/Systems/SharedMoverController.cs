@@ -30,6 +30,7 @@ namespace Content.Shared.Movement.Systems
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] protected readonly IGameTiming Timing = default!;
+        [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
