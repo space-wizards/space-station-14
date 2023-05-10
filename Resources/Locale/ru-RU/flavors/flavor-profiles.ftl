@@ -17,6 +17,7 @@ flavor-base-spicy = остро
 flavor-base-metallic = металлически
 flavor-base-meaty = мясисто
 flavor-base-fishy = рыбно
+flavor-base-crabby = crabby
 flavor-base-cheesy = сырно
 flavor-base-funny = забавно
 flavor-base-tingly = покалывающе
@@ -40,6 +41,7 @@ flavor-base-shocking = шокирующе
 flavor-base-cheap = дёшево
 flavor-base-piquant = пикантно
 flavor-base-sharp = резко
+flavor-base-syrupy = syrupy
 # lmao
 flavor-base-terrible = ужасно
 
@@ -71,6 +73,8 @@ flavor-complex-batter = как тесто для торта
 flavor-complex-butter = как масло
 flavor-complex-egg = как яйца
 flavor-complex-bacon = как бекон
+flavor-complex-chicken = like chicken
+flavor-complex-duck = like duck
 flavor-complex-chocolate = как шоколад
 flavor-complex-pasta = как паста
 flavor-complex-rice = как рис
@@ -81,6 +85,7 @@ flavor-complex-ice-cream = как мороженое
 flavor-complex-dough = как тесто
 flavor-complex-sweet-dough = как сладкое тесто
 flavor-complex-tofu = как тофу
+flavor-complex-miso = like miso
 flavor-complex-muffin = как маффин
 flavor-complex-peas = как горох
 flavor-complex-pineapple = как ананас
@@ -100,6 +105,10 @@ flavor-complex-orange = как апельсины
 flavor-complex-watermelon = как арбуз
 flavor-complex-garlic = как чеснок
 flavor-complex-grape = как виноград
+flavor-complex-meatballs = like meatballs
+flavor-complex-nettles = like nettles
+flavor-complex-jungle = like jungle
+flavor-complex-vegetables = like vegetables
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
@@ -121,11 +130,24 @@ flavor-complex-nachos = как начос
 flavor-complex-donk = как дешёвая пицца
 flavor-complex-copypasta = как повторяющаяся шутка
 flavor-complex-memory-leek = как форк-бомба
+flavor-complex-bad-joke = like a bad joke
 flavor-complex-gunpowder = как порох
 flavor-complex-validhunting = как валидхантинг
 
 # Drink-specific flavors.
 
+flavor-complex-people = like people
+flavor-complex-cat = like cat
+flavor-complex-homerun = like a home run
+flavor-complex-grass = like grass
+flavor-complex-flare = like a smoking flare
+flavor-complex-cobwebs = like cobwebs
+flavor-complex-sadness = like sadness
+flavor-complex-hope = like hope
+flavor-complex-chaos = like chaos
+flavor-complex-squirming = like squirming
+flavor-complex-electrons = like electrons
+flavor-complex-parents = like someone's parents
 
 ## Generic alcohol/soda taste. This should be replaced with an actual flavor profile.
 
@@ -172,6 +194,7 @@ flavor-complex-cuba-libre = как крепкая кола
 flavor-complex-gin-tonic = как крепкая газировка с лимоном и лаймом
 flavor-complex-screwdriver = как крепкий апельсиновый сок
 flavor-complex-cogchamp = как латунь
+flavor-complex-themartinez = like violets and lemon vodka
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 

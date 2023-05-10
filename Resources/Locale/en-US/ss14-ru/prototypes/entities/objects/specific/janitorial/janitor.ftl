@@ -13,3 +13,5 @@ ent-JanitorialTrolley = janitorial trolley
     .desc = This is the alpha and omega of sanitation.
 ent-FloorDrain = drain
     .desc = Drains puddles around it. Useful for dumping mop buckets or keeping certain rooms clean.
+ent-RagItem = damp rag
+    .desc = For cleaning up messes, you suppose.

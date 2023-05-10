@@ -14,3 +14,5 @@ ent-BulletInstakillMagic = magical lead cylinder
     .desc = This looks familiar.
 ent-ProjectilePolyboltCluwne = cluwne polybolt
     .desc = knoH KnoH!
+ent-ProjectileIcicle = Icicle
+    .desc = Brrrrr.

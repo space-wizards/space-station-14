@@ -1,0 +1,14 @@
+ent-BaseArachnidOrgan = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-OrganArachnidStomach = Stomach
+    .desc = Gross. This is hard to stomach.
+ent-OrganArachnidHeart = heart
+    .desc = I feel bad for the heartless bastard who lost this.
+ent-OrganArachnidLiver = liver
+    .desc = Pairing suggestion: chianti and fava beans.
+ent-OrganArachnidKidneys = kidneys
+    .desc = Filters toxins from the bloodstream.
+ent-OrganArachnidEyes = eyes
+    .desc = Eyes see you!
+ent-OrganArachnidTongue = tongue
+    .desc = A fleshy muscle mostly used for lying.

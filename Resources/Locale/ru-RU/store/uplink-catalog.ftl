@@ -114,6 +114,8 @@ uplink-banana-peel-explosive-name = Взрывная банановая кожу
 uplink-banana-peel-explosive-desc = Они взорвутся от смеха, когда поскользнутся на ней!
 uplink-hot-potato-name = Горячая картошка
 uplink-hot-potato-desc = После активации эту бомбу замедленного действия нельзя бросить - только передать кому-то другому!
+uplink-chimp-ammo-name = Box of 10 Omega Cartridges.
+uplink-chimp-ammo-desc = A box of 10 omega particle cartridges for the CHIMP. Omega particles inflict severe burns and cause anomalies to go supercritical.
 # Armor
 uplink-chameleon-name = набор "Хамелеон"
 uplink-chameleon-desc = Рюкзак, полный вещей, оснащенных технологией хамелеона, позволяющих вам маскироваться под кого угодно на станции, и даже больше!

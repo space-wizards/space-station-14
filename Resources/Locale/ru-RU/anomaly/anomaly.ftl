@@ -33,6 +33,8 @@ anomaly-generator-charges =
        *[other] { $charges } зарядов
     }
 anomaly-generator-announcement = Аномалия была создана!
+anomaly-command-pulse = Pulses a target anomaly
+anomaly-command-supercritical = Makes a target anomaly go supercritical
 # Flavor text on the footer
 anomaly-generator-flavor-left = Аномалия может возникнуть внутри оператора.
 anomaly-generator-flavor-right = v1.1
