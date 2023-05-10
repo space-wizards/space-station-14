@@ -1,14 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix arrivals stranding you at terminal., type: Fix}
-  id: 3216
-  time: '2023-03-23T06:41:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix docking, type: Fix}
-  id: 3217
-  time: '2023-03-23T06:50:52.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: you can now place floor tiles under directional windows (or any other
@@ -2909,3 +2899,13 @@ Entries:
       in the construction menu, type: Fix}
   id: 3715
   time: '2023-05-09T23:56:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix popup spam in some instances., type: Fix}
+  id: 3716
+  time: '2023-05-10T00:00:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Wielding is now predicted., type: Tweak}
+  id: 3717
+  time: '2023-05-10T00:01:23.0000000+00:00'
