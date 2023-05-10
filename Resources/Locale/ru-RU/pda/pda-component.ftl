@@ -12,8 +12,6 @@ pda-bound-user-interface-show-uplink-title = Open Uplink
 pda-bound-user-interface-show-uplink-description = Access your uplink
 pda-bound-user-interface-lock-uplink-title = Lock Uplink
 pda-bound-user-interface-lock-uplink-description = Prevent anyone from accessing your uplink without the code
-pda-bound-user-interface-uplink-tab-description = Получите доступ к аплинку
-pda-bound-user-interface-uplink-tab-title = Аплинк
 comp-pda-ui-menu-title = КПК
 comp-pda-ui-station = Станция: [color=white]{ $Station }[/color]
 comp-pda-ui-eject-id-button = Извлечь ID

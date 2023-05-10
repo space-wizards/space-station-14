@@ -52,5 +52,3 @@ reagent-name-posca = поска
 reagent-desc-posca = Напиток бедных воинов из забытой эпохи.
 reagent-name-the-martinez = The Martinez
 reagent-desc-the-martinez = The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
-reagent-name-kvass = квас
-reagent-desc-kvass = Прохладный освежающий напиток с привкусом социализма.

@@ -1,4 +1,4 @@
-miasma-smell = Что-то дурно попахивает!
-miasma-rotting = [color=orange]Это гниёт![/color]
-miasma-bloated = [color=orangered]Оно вздулось![/color]
-miasma-extremely-bloated = [color=red]Оно сильно вздулось![/color]
+miasma-smell = Something smells foul!
+miasma-rotting = [color=orange]It's rotting![/color]
+miasma-bloated = [color=orangered]It's bloated![/color]
+miasma-extremely-bloated = [color=red]It's extremely bloated![/color]
