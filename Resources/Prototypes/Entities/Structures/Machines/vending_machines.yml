@@ -55,6 +55,8 @@
   - type: Anchorable
   - type: TypingIndicator
     proto: robot
+  - type: TTS # Corvax-TTS
+    voice: TrainingRobot
   - type: Speech
     speechSounds: Vending
   - type: DoAfter
