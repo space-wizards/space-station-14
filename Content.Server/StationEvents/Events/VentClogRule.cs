@@ -46,26 +46,10 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
             if (!RobustRandom.Prob(Math.Min(0.33f * mod, 1.0f)))
                 continue;
 
-            string reagent;
-            if (RobustRandom.Prob(Math.Min(0.05f * mod, 1.0f)))
-            {
-                reagent = RobustRandom.Pick(allReagents);
-            }
-            else
-            {
-                reagent = RobustRandom.Pick(component.SafeishVentChemicals);
-            }
+            var pickAny = RobustRandom.Prob(Math.Min(0.05f * mod, 1.0f));
+            var reagent = RobustRandom.Pick(pickAny ? allReagents : component.SafeishVentChemicals);
 
-            var weak = false;
-            foreach (var id in component.WeakReagents)
-            {
-                if (reagent == id)
-                {
-                    weak = true;
-                    break;
-                }
-            }
-
+            var weak = component.WeakReagents.Contains(reagent);
             var quantity = (weak ? component.WeakReagentQuantity : component.ReagentQuantity) * mod;
             solution.AddReagent(reagent, quantity);
 
