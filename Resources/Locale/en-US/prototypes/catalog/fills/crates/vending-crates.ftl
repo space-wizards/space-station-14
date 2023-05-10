@@ -41,7 +41,7 @@ ent-CrateVendingMachineRestockSmokesFilled = ShadyCigs restock crate
     .desc = Contains two restock boxes for the ShadyCigs vending machine.
 
 ent-CrateVendingMachineRestockSnacksFilled = Snack restock crate
-    .desc = Contains four restock boxes, each covering a different snack vendor. Mr. Chang's, Discount Dans, Robust Donuts, and Getmore Chocolate are featured on the advertisement.
+    .desc = Contains four restock boxes, each covering a different snack vendor. Mr. Chang's, Discount Dans, and Robust Donuts are featured on the advertisement.
 
 ent-CrateVendingMachineRestockVendomatFilled = Vendomat restock crate
     .desc = Contains a restock box for a Vendomat vending machine.
@@ -55,3 +55,5 @@ ent-CrateVendingMachineRestockTankDispenserFilled = Tank dispenser restock crate
 ent-CrateVendingMachineRestockHappyHonkFilled = Happy honk restock crate
     .desc = Contains a restock box for a happy honk dispenser.
 
+ent-CrateVendingMachineRestockGetmoreChocolateCorpFilled = Getmore Chocolate Corp restock crate
+    .desc = Contains a restock box for a Getmore Chocolate Corp dispenser.

@@ -195,3 +195,13 @@
   cost: 2100
   category: Service
   group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockGetmoreChocolateCorp
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockGetmoreChocolateCorpFilled
+  cost: 1200
+  category: Service
+  group: market
