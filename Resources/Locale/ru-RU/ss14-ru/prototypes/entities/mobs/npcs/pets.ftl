@@ -34,5 +34,5 @@ ent-MobSpiderShiva = Шива
     .desc = Первый защитник станции.
 ent-MobKangarooWillow = Уиллоу
     .desc = Уиллоу, кенгуру-боксёр.
-ent-MobMonkeyPunpun = Pun Pun
-    .desc = A prominent representative of monkeys with unlimited access to alcohol.
+ent-MobMonkeyPunpun = Пун Пун
+    .desc = Видный представитель обезьян с неограниченным доступом к алкоголю.

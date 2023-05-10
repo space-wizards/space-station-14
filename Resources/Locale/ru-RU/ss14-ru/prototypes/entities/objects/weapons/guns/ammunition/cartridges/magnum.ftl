@@ -16,5 +16,5 @@ ent-CartridgeAnomalousParticleEpsilon = патрон (эпсилон-части�
     .desc = { ent-BaseAnomalousCartridge.desc }
 ent-CartridgeAnomalousParticleZeta = патрон (зета-частицы)
     .desc = { ent-BaseAnomalousCartridge.desc }
-ent-CartridgeAnomalousParticleOmega = cartridge (omega particle)
-    .desc = An experimental and often dangerous particle.
+ent-CartridgeAnomalousParticleOmega = патрон (омега-частицы)
+    .desc = Экспериментальные и зачастую опасные частицы.

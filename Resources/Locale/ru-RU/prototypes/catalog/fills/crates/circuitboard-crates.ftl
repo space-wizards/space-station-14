@@ -1,2 +1,2 @@
-ent-CrateCrewMonitoringBoards = Crew Monitoring Boards
-    .desc = Has two crew monitoring console and server replacements. Requires engineering access to open.
+ent-CrateCrewMonitoringBoards = платы мониторинга экипажа
+    .desc = Содержит две машинные платы мониторинга экипажа, для сервера и консоли. Чтобы открыть необходим уровень доступа Инженерный.

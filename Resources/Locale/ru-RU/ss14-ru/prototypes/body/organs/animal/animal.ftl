@@ -1,12 +1,12 @@
 ent-BaseAnimalOrgan = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
-ent-OrganAnimalLungs = lungs
+ent-OrganAnimalLungs = лёгкие
     .desc = { ent-BaseAnimalOrgan.desc }
-ent-OrganAnimalStomach = stomach
+ent-OrganAnimalStomach = желудок
     .desc = { ent-BaseAnimalOrgan.desc }
-ent-OrganAnimalLiver = liver
+ent-OrganAnimalLiver = печень
     .desc = { ent-BaseAnimalOrgan.desc }
-ent-OrganAnimalHeart = heart
+ent-OrganAnimalHeart = сердце
     .desc = { ent-BaseAnimalOrgan.desc }
-ent-OrganAnimalKidneys = kidneys
+ent-OrganAnimalKidneys = почки
     .desc = { ent-BaseAnimalOrgan.desc }

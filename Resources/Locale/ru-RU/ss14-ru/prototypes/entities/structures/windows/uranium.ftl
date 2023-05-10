@@ -1,2 +1,2 @@
-ent-UraniumWindow = uranium window
+ent-UraniumWindow = урановое окно
     .desc = { ent-Window.desc }

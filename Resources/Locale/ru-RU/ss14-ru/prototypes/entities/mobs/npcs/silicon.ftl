@@ -8,5 +8,5 @@ ent-MobCleanBot = чистобот
     .desc = Ужас автоматизации теперь угрожает и космическим уборщикам.
 ent-MobMedibot = медибот
     .desc = Не заменит врача, но лучше, чем ничего.
-ent-MobMimeBot = mimebot
-    .desc = Why not give mimebot a friendly wave.
+ent-MobMimeBot = мимбот
+    .desc = Почему бы не помахать мимботу?

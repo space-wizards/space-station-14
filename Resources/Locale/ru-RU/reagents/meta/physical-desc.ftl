@@ -87,4 +87,4 @@ reagent-physical-desc-enigmatic = загадочное
 reagent-physical-desc-exotic-smelling = экзотично пахнущее
 reagent-physical-desc-energizing = заряжающее энергией
 reagent-physical-desc-exhilarating = бодрящее
-reagent-physical-desc-vibrant = vibrant
+reagent-physical-desc-vibrant = вибрирующее

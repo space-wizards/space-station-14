@@ -1,2 +1,2 @@
-ent-CrateCrewMonitoringBoards = { ent-CrateEngineeringSecure }
-    .desc = { ent-CrateEngineeringSecure.desc }
+ent-CrateCrewMonitoringBoards = платы мониторинга экипажа
+    .desc = Содержит две машинные платы мониторинга экипажа, для сервера и консоли. Чтобы открыть необходим уровень доступа Инженерный.
