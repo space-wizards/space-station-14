@@ -8,7 +8,7 @@ using Content.Server.CombatMode.Disarm;
 using Content.Server.Contests;
 using Content.Server.Examine;
 using Content.Server.Movement.Systems;
-using Content.Shared.Actions.Events;
+using Content.Server.Popups;
 using Content.Shared.Administration.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
