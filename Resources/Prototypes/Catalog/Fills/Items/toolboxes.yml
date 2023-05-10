@@ -34,6 +34,8 @@
       - id: CableMVStack
       - id: trayScanner
         prob: 0.9
+      - id: NetworkConfigurator
+        prob: 0.6
       - id: ClothingHandsGlovesColorYellow
         prob: 0.05
         orGroup: GlovesOrWires
