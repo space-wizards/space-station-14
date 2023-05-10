@@ -100,6 +100,9 @@
   - type: MobMover
   - type: Body
     prototype: Bot
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   parent: MobSiliconBase

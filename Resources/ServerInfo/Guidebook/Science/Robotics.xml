@@ -1,43 +1,35 @@
-<<<<<<< Updated upstream
-  <Document>
-=======
 <Document>
->>>>>>> Stashed changes
-  # Robotics
-  The science team has the ability to create several unique types of robots to suit the station's needs.
+# Robotics
+The science team has the ability to create several unique types of robots to suit the station's needs.
 
-  ## Exosuit Forge
-  <Box>
-    <GuideEntityEmbed Entity="ExosuitFabricator" Caption="Exosuit Fabricator"/>
-  </Box>
-  The metallic womb from which all robotic children rise, bit by bit. The [color=#a4885c]Exosuit Forge[/color] is where you'll be printing out most of the parts for your creations, such as:
-  - Borg limbs
-  - Mech parts and equipment
-  - Proximity sensors
+## Exosuit Forge
+<Box>
+<GuideEntityEmbed Entity="ExosuitFabricator" Caption="Exosuit Fabricator"/>
+</Box>
+The metallic womb from which all robotic children rise, bit by bit. The [color=#a4885c]Exosuit Forge[/color] is where you'll be printing out most of the parts for your creations, such as:
+- Borg limbs
+- Mech parts and equipment
+- Proximity sensors
 
-  ## Bots
-  <Box>
-    <GuideEntityEmbed Entity="MobCleanBot" Caption="Cleanbot"/>
-  </Box>
-  [color=#a4885c]Bots[/color] are small, simple automata which can perform simple tasks, such as cleaning. They don't use power cells, but are quite fragile.
+## Bots
+<Box>
+<GuideEntityEmbed Entity="MobCleanBot" Caption="Cleanbot"/>
+</Box>
+[color=#a4885c]Bots[/color] are small, simple automata which can perform simple tasks, such as cleaning. They don't use power cells, but are quite fragile.
 
-  ## Mechs
-  <Box>
-    <GuideEntityEmbed Entity="MechRipley" Caption="Ripley APLU"/>
-  </Box>
-  [color=#a4885c]Mechs[/color] are giant behemoths of metal designed to carry out a variety of functions respective to their model. They are piloted by players and requre power cells to function.
+## Mechs
+<Box>
+<GuideEntityEmbed Entity="MechRipley" Caption="Ripley APLU"/>
+</Box>
+[color=#a4885c]Mechs[/color] are giant behemoths of metal designed to carry out a variety of functions respective to their model. They are piloted by players and requre power cells to function.
 
-  All mechs require assembly before usage; after slotting each part into the chassis, [color=#a4885c]Examine[/color] it to see how to proceed with construction.
+All mechs require assembly before usage; after slotting each part into the chassis, [color=#a4885c]Examine[/color] it to see how to proceed with construction.
 
-  ## Equipment
-  <Box>
-    <GuideEntityEmbed Entity="MechEquipmentGrabber" Caption="Hydraulic Clamp"/>
-  </Box>
-  A mech is useless without any equipment. [color=#a4885c]Equipment[/color] are tools which can only be used by a mech.
-<<<<<<< Updated upstream
-  - To install equipment,just click the mech with the equipment you want to add in your hands to insert it.
-=======
-  - To install equipment, just click the mech with the equipment you want to add in your hands to insert it.
->>>>>>> Stashed changes
-  - To use equipment, perform the "Cycle Equipment" action until the tool you desire is equipped.
+## Equipment
+<Box>
+<GuideEntityEmbed Entity="MechEquipmentGrabber" Caption="Hydraulic Clamp"/>
+</Box>
+A mech is useless without any equipment. [color=#a4885c]Equipment[/color] are tools which can only be used by a mech.
+- To install equipment, just click the mech with the equipment in hand.
+- To use equipment, perform the "Cycle Equipment" action until the tool you desire is equipped.
 </Document>

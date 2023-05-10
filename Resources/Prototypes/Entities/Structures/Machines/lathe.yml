@@ -395,8 +395,8 @@
       - RawMaterial
       - Ingot
   - type: GuideHelp
-  guides:
-  - Robotics
+    guides:
+    - Robotics
 
 
 - type: entity

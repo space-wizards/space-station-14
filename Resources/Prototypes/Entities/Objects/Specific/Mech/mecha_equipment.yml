@@ -10,8 +10,8 @@
     size: 50
   - type: MechEquipment
   - type: GuideHelp
-  guides:
-  - Robotics
+    guides:
+    - Robotics
 
 - type: entity
   id: MechEquipmentGrabber
