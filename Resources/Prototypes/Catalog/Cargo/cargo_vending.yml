@@ -22,7 +22,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockClothesFilled
-  cost: 4200
+  cost: 4350
   category: Service
   group: market
 
@@ -42,7 +42,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockEngineeringFilled
-  cost: 3000
+  cost: 3200
   category: Engineering
   group: market
 

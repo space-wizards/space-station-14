@@ -1,3 +1,4 @@
+# Ripley
 - type: latheRecipe
   id: RipleyHarness
   result: RipleyHarness
@@ -45,3 +46,57 @@
   materials:
     Steel: 500
     Plastic: 200
+
+# H.O.N.K.
+- type: latheRecipe
+  id: HonkerHarness
+  result: HonkerHarness
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerLArm
+  result: HonkerLArm
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerLLeg
+  result: HonkerLLeg
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerRLeg
+  result: HonkerRLeg
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerRArm
+  result: HonkerRArm
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: MechEquipmentHorn
+  result: MechEquipmentHorn
+  completetime: 10
+  materials:
+    Steel: 500
+    Bananium: 200

@@ -19,8 +19,6 @@
   suffix: Unfinished
   description: Formally known as the EM Acceleration Chamber. This is where the Alpha particles are accelerated to radical speeds. It looks unfinished.
   components:
-    - type: Physics
-      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/fuel_chamber.rsi
     - type: Construction

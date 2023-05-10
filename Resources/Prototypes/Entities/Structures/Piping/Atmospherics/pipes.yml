@@ -42,6 +42,7 @@
     - Pipe
   - type: Physics
     canCollide: false
+    bodyType: static
   - type: AmbientSound
     enabled: false
     volume: -15

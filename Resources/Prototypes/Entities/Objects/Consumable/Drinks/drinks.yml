@@ -526,23 +526,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkCafeLatte
-  name: cafe latte
-  description: A nice, strong and tasty beverage while you are reading.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: CafeLatte
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkCoffee
   name: coffee
   description: Don't drop it, or you'll send scalding liquid and glass shards everywhere.
@@ -2201,3 +2184,19 @@
           Quantity: 30
         - ReagentId: CapsaicinOil
           Quantity: 5
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkTheMartinez
+  name: The Martinez glass
+  description: The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: TheMartinez
+              Quantity: 30
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/the_martinez.rsi

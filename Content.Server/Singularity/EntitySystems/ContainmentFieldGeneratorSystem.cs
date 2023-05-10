@@ -60,7 +60,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// </summary>
     private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, ref StartCollideEvent args)
     {
-        if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
+        if (_tags.HasTag(args.OtherEntity, component.IDTag))
         {
             ReceivePower(component.PowerReceived, component);
             component.Accumulator = 0f;

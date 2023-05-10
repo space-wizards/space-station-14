@@ -23,6 +23,17 @@
   - type: StorageFill
     contents:
       - id: MobCat
+        prob: 1
+        orGroup: MobCat
+      - id: MobCatCalico
+        prob: 1
+        orGroup: MobCat
+      - id: MobCatCaracal
+        prob: 0.5
+        orGroup: MobCat
+      - id: MobBingus
+        prob: 0.005
+        orGroup: MobCat
 
 - type: entity
   id: CrateNPCChicken
@@ -32,6 +43,15 @@
     contents:
       - id: MobChicken
         amount: 4
+
+- type: entity
+  id: CrateNPCCrab
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobCrab
+        amount: 3
 
 - type: entity
   id: CrateNPCDuck

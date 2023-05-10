@@ -99,3 +99,16 @@
     sprite: Clothing/Head/Misc/flower-crown.rsi
     state: icon
   objectType: Item
+
+- type: construction
+  name: damp rag
+  id: rag
+  graph: Rag
+  startNode: start
+  targetNode: rag
+  category: construction-category-tools
+  objectType: Item
+  description: A damp rag to clean up the ground. Better than slipping around all day.
+  icon:
+    sprite: Objects/Specific/Janitorial/rag.rsi
+    state: rag
