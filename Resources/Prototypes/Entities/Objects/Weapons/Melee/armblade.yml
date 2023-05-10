@@ -1,9 +1,9 @@
 - type: entity
-  name: arm blade
-  parent: BaseItem
   noSpawn: true
+  parent: BaseItem
   id: ArmBlade
-  description: A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter.
+  name: arm blade
+  description: A grotesque blade made out of bone and flesh that cleaves through people like a hot knife through butter.
   components:
   - type: Sharp
   - type: Sprite

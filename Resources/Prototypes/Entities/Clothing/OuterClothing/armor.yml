@@ -190,9 +190,9 @@
   - type: GroupExamine
 
 - type: entity
+  noSpawn: true
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorChangeling
-  noSpawn: true
   name: chitinous armor
   description: Inflates the changeling's body into an all-consuming chitinous mass of armor.
   components:

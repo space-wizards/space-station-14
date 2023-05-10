@@ -479,9 +479,9 @@
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
 
 - type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitLing
   noSpawn: true
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterHardsuitLing
   name: organic space suit
   description: A spaceworthy biomass of pressure and temperature resistant tissue.
   components:

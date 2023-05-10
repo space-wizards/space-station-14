@@ -8,3 +8,7 @@ store-currency-display-debugdollar = {$amount ->
 }
 store-currency-display-telecrystal = TC
 store-currency-display-stolen-essence = Stolen Essence
+store-currency-display-evolution-points = {$amount ->
+    [one] Evolution Point
+    *[other] Evolution Points
+}
