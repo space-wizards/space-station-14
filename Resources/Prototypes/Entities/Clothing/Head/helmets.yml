@@ -266,6 +266,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetLing
+  noSpawn: true
   name: chitinous helmet
   description: Inflates the changeling's body into an all-consuming chitinous mass of armor.
   components:
@@ -281,6 +282,7 @@
         Piercing: 0.5
         Heat: 0.9
   - type: IdentityBlocker
+  - type: Unremoveable
 
 - type: entity
   parent: ClothingHeadEVAHelmetBase

@@ -334,6 +334,10 @@
   - type: PressureProtection
     highPressureMultiplier: 0.225
     lowPressureMultiplier: 10000
+  - type: Unremoveable
+  # it's just skin, so nettles can penetrate
+  - type: Tag
+    tags: [ ]
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase

@@ -481,6 +481,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitLing
+  noSpawn: true
   name: organic space suit
   description: A spaceworthy biomass of pressure and temperature resistant tissue.
   components:
@@ -504,8 +505,7 @@
         Radiation: 0.3
   - type: ExplosionResistance
     damageCoefficient: 0.2
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitLing
+  - type: Unremoveable
 
 - type: entity
   parent: ClothingOuterHardsuitBase

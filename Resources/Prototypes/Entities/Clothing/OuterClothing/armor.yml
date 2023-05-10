@@ -192,6 +192,7 @@
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorChangeling
+  noSpawn: true
   name: chitinous armor
   description: Inflates the changeling's body into an all-consuming chitinous mass of armor.
   components:
@@ -209,7 +210,8 @@
         Radiation: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.7
-    sprintModifier: 0.65 
+    sprintModifier: 0.65
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine
+  - type: Unremoveable
