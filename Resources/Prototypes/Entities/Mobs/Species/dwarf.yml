@@ -53,6 +53,7 @@
   - type: Speech
     speechSounds: Bass
   - type: Perishable
+  - type: Absorbable
 
 - type: entity
   save: false

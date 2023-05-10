@@ -13,6 +13,7 @@
     spawned:
     - id: FoodMeatHuman
       amount: 5
+  - type: Absorbable
 
 - type: entity
   name: Urist McHands
