@@ -62,9 +62,9 @@
     - type: Tag
       tags:
       - HonkerPeripheralsControlModule
-      - type: GuideHelp
-        guides:
-        - Robotics
+    - type: GuideHelp
+      guides:
+      - Robotics
 
 - type: entity
   id: HonkerTargetingElectronics
