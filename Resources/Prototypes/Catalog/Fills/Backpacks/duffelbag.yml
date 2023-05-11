@@ -279,3 +279,4 @@
       - id: WeaponPistolViper
       - id: PinpointerNuclear
       - id: HandheldHealthAnalyzer
+      - id: CombatDefibrillator

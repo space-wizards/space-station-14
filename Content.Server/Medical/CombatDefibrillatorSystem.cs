@@ -6,6 +6,8 @@ using Content.Server.EUI;
 using Content.Server.Ghost;
 using Content.Server.Mind.Components;
 using Content.Server.Popups;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -27,6 +29,7 @@ public sealed class CombatDefibrillatorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly ChatSystem _chatManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -92,6 +95,10 @@ public sealed class CombatDefibrillatorSystem : EntitySystem
         if (_mobState.IsAlive(target, mobState))
             return false;
 
+        TryComp<LimitedChargesComponent>(uid, out var charges);
+        if (_charges.IsEmpty(uid, charges))
+            return false;
+
         return true;
     }
 
@@ -126,6 +133,10 @@ public sealed class CombatDefibrillatorSystem : EntitySystem
             Zap(uid, user, user, component, mob, thresholds);
             return;
         }
+
+        if (!TryComp<LimitedChargesComponent>(uid, out var charges))
+            return;
+        _charges.UseCharge(uid, charges);
 
         _mobThreshold.SetAllowRevives(target, true, thresholds);
         _audio.PlayPvs(component.ZapSound, uid);
@@ -172,12 +183,14 @@ public sealed class CombatDefibrillatorSystem : EntitySystem
         var query = EntityQueryEnumerator<CombatDefibrillatorComponent>();
         while (query.MoveNext(out var uid, out var defib))
         {
-            if (defib.NextZapTime == null || _timing.CurTime < defib.NextZapTime)
+            if (!TryComp<LimitedChargesComponent>(uid, out var charges))
+                continue;
+            if (defib.NextZapTime == null || _timing.CurTime < defib.NextZapTime || _charges.IsEmpty(uid, charges))
                 continue;
 
+            defib.NextZapTime = null;
             _audio.PlayPvs(defib.ReadySound, uid);
             _appearance.SetData(uid, DefibrillatorVisuals.Ready, true);
-            defib.NextZapTime = null;
         }
     }
 }
