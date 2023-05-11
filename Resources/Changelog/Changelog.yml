@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: 'added explosive banana peel to clown uplink (2 TC, 30 total damage)',
-    type: Add}
-  id: 3222
-  time: '2023-03-23T15:54:15.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Tweaked baseball bats and spears damage and weight values., type: Tweak}
@@ -2907,3 +2901,8 @@ Entries:
   - {message: 'Monkeys are now clumsy, like clowns', type: Tweak}
   id: 3721
   time: '2023-05-11T00:27:48.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Dermaline now heals 3 Heat/Shock/Cold per unit instead of 2., type: Tweak}
+  id: 3722
+  time: '2023-05-11T08:29:23.0000000+00:00'
