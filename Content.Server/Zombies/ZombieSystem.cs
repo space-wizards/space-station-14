@@ -14,6 +14,7 @@ using Content.Shared.Damage;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -35,6 +36,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -62,6 +64,7 @@ namespace Content.Server.Zombies
             base.Update(frameTime);
             var query = EntityQueryEnumerator<PendingZombieComponent>();
             var curTime = _timing.CurTime;
+            var state_query = GetEntityQuery<MobStateComponent>();
 
             // Hurt the living infected
             while (query.MoveNext(out var uid, out var comp))
@@ -70,6 +73,29 @@ namespace Content.Server.Zombies
                     continue;
 
                 comp.InfectedSecs += 1;
+                if (comp.InfectedSecs == -30)
+                {
+                    _popup.PopupEntity(Loc.GetString("zombie-infection-warning"), uid, uid);
+                }
+                else if (comp.InfectedSecs == 10 || comp.InfectedSecs == 30)
+                {
+                    _popup.PopupEntity(Loc.GetString("zombie-infection-underway"), uid, uid);
+                }
+
+                if (comp.InfectedSecs < 0)
+                {
+                    // This zombie has a latent virus, probably set up by ZombieRuleSystem
+                    continue;
+                }
+                else if (comp.InfectedSecs < 120)
+                {
+                    // Once the zombie is in crit, ensure they are taking damage at a reasonable rate (so they are not crit too long)
+                    if (state_query.TryGetComponent(uid, out var mobstate) && mobstate.CurrentState == MobState.Critical)
+                    {
+                        comp.InfectedSecs = 120;
+                    }
+                }
+
                 // Pain of becoming a zombie grows over time
                 // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s.
                 var pain_multiple = 0.1 + 0.02 * comp.InfectedSecs + 0.0005 * comp.InfectedSecs * comp.InfectedSecs;

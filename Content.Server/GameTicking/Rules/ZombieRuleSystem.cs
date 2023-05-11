@@ -251,6 +251,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             (int) Math.Min(
                 Math.Floor((double) playerList.Count / playersPerInfected), maxInfected));
 
+        var secs_delay = _random.NextFloat(20.0f * 60.0f, 30.0f * 60.0f);
         for (var i = 0; i < numInfected; i++)
         {
             IPlayerSession zombie;
@@ -283,9 +284,13 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(component.PatientZeroPrototypeID)));
 
             var inCharacterName = string.Empty;
+            // 2 minutes variation between zombies.
+            var personal_delay = _random.NextFloat(0.0f, 2.0f * 60.0f);
             if (mind.OwnedEntity != null)
             {
-                EnsureComp<PendingZombieComponent>(mind.OwnedEntity.Value);
+                var pending = EnsureComp<PendingZombieComponent>(mind.OwnedEntity.Value);
+                // Only take damage after this many seconds
+                pending.InfectedSecs = (int)-(secs_delay + personal_delay);
                 EnsureComp<ZombifyOnDeathComponent>(mind.OwnedEntity.Value);
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
 

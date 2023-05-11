@@ -14,8 +14,7 @@ public sealed class PendingZombieComponent : Component
     {
         DamageDict = new ()
         {
-            { "Blunt", 0.5 },
-            { "Cellular", 0.2 },
+            { "Blunt", 0.8 },
             { "Toxin", 0.2 },
         }
     };
