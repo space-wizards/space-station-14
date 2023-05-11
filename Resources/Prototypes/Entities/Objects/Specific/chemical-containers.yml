@@ -299,3 +299,59 @@
           reagents:
             - ReagentId: Silver
               Quantity: 200
+
+- type: entity
+  parent: Jug
+  id: JugEthanol
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: Ethanol
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Ethanol
+              Quantity: 200
+
+- type: entity
+  parent: Jug
+  id: JugSugar
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: Sugar
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Sugar
+              Quantity: 200
+
+- type: entity
+  parent: Jug
+  id: JugNitrogen
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: Nitrogen
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Nitrogen
+              Quantity: 200
+
+- type: entity
+  parent: Jug
+  id: JugOxygen
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: Oxygen
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Oxygen
+              Quantity: 200

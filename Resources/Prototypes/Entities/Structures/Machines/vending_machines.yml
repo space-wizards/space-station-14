@@ -1829,3 +1829,25 @@
     - state: dispenser
     - state: dispensereng
 
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineChemicals
+  name: ChemVend
+  description: Probably not the coffee machine.
+  components:
+  - type: VendingMachine
+    pack: ChemVendInventory
+    offState: off
+    brokenState: broken
+    normalState: normal
+    denyState: deny
+    ejectDelay: 0.5
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/chemvend.rsi
+    layers:
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Advertise
+    pack: ChemVendAds
+  - type: AccessReader
+    access: [["Chemistry"]]
