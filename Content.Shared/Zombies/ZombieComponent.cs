@@ -92,13 +92,15 @@ namespace Content.Shared.Zombies
         // Heal on tick
         [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
         public TimeSpan NextTick;
+        public int SecondsCrit;
 
         [DataField("damage")] public DamageSpecifier Damage = new()
         {
             DamageDict = new ()
             {
                 { "Blunt", -0.3 },
-                { "Slash", -0.2 },
+                { "Slash", -0.1 },
+                { "Piercing", -0.1 },
                 { "Heat", -0.2 },
                 { "Cold", -0.2 },
                 { "Shock", -0.2 },

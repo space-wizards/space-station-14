@@ -66,6 +66,7 @@ namespace Content.Server.Zombies
             // Hurt the living infected
             while (query.MoveNext(out var uid, out var comp))
             {
+                // Process only once per second
                 if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
                     continue;
 
@@ -78,14 +79,30 @@ namespace Content.Server.Zombies
             }
 
             var zomb_query = EntityQueryEnumerator<ZombieComponent>();
+            var state_query = GetEntityQuery<MobStateComponent>();
             // Heal the zombified
             while (zomb_query.MoveNext(out var uid, out var comp))
             {
+                // Process only once per second
                 if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
                     continue;
 
                 comp.NextTick = curTime;
-                _damageable.TryChangeDamage(uid, comp.Damage, true, false);
+
+                // Healing increases over time for zombies currently in crit
+                if (state_query.TryGetComponent(uid, out var mobstate) && mobstate.CurrentState == MobState.Critical)
+                {
+                    comp.SecondsCrit += 1;
+                }
+                else
+                {
+                    comp.SecondsCrit = 0;
+                }
+
+                // Healing increases over 50 seconds to a maximum of 10x rate. They will be half healed by then at least.
+                //   At that rate most zombies will revive from the remaining 50 (of 100) damage after a further 25sec
+                float healMultiple = 1.0f + Math.Min(comp.SecondsCrit * 0.2f, 10.0f);
+                _damageable.TryChangeDamage(uid, comp.Damage * healMultiple, true, false);
             }
         }
 
