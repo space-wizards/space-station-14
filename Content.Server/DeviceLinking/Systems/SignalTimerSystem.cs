@@ -1,7 +1,5 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.Interaction;
-using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.System;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.MachineLinking;
@@ -15,7 +13,7 @@ public sealed class SignalTimerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
