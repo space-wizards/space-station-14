@@ -1,13 +1,15 @@
-using Robust.Shared.Timing;
+using Content.Server.DeviceLinking.Components;
+using Content.Server.Interaction;
 using Content.Server.MachineLinking.Components;
-using Content.Shared.TextScreen;
-using Robust.Server.GameObjects;
-using Content.Shared.MachineLinking;
+using Content.Server.MachineLinking.System;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
-using Content.Server.Interaction;
+using Content.Shared.MachineLinking;
+using Content.Shared.TextScreen;
+using Robust.Server.GameObjects;
+using Robust.Shared.Timing;
 
-namespace Content.Server.MachineLinking.System;
+namespace Content.Server.DeviceLinking.Systems;
 
 public sealed class SignalTimerSystem : EntitySystem
 {
