@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Tweaked baseball bats and spears damage and weight values., type: Tweak}
-  id: 3223
-  time: '2023-03-23T16:06:09.0000000+00:00'
 - author: Nekomancer
   changes:
   - {message: Added small light post state sprites, type: Add}
@@ -2906,3 +2901,8 @@ Entries:
   - {message: Dermaline now heals 3 Heat/Shock/Cold per unit instead of 2., type: Tweak}
   id: 3722
   time: '2023-05-11T08:29:23.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added sigh sound, type: Add}
+  id: 3723
+  time: '2023-05-11T09:17:25.0000000+00:00'
