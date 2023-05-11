@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Round end screen now lists traitor codewords., type: Tweak}
-  id: 3226
-  time: '2023-03-23T16:29:40.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed dame dane guy set to be less blue. That was a baka mistake.,
@@ -2904,3 +2899,9 @@ Entries:
   - {message: Mob sprites no longer rotate on death, type: Fix}
   id: 3725
   time: '2023-05-11T11:20:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: PKA bullets can now destroy gatherable materials such as rocks or trees.,
+    type: Add}
+  id: 3726
+  time: '2023-05-11T13:19:09.0000000+00:00'
