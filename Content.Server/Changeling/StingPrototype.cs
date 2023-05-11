@@ -38,7 +38,6 @@ public sealed class StingPrototype : IPrototype
 /// <summary>
 /// Event raised on the changeling to attempt to use a sting.
 /// </summary>
-[ByRefEvent]
 public abstract class StingEvent : CancellableEntityEventArgs
 {
     /// <summary>
@@ -51,5 +50,4 @@ public abstract class StingEvent : CancellableEntityEventArgs
 /// Extracts dna from a mob.
 /// The mob must have AbsorbableComponent for it to work.
 /// </summary>
-[ByRefEvent]
 public sealed class ExtractionStingEvent : StingEvent { }

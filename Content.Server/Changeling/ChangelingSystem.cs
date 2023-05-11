@@ -18,14 +18,12 @@ public sealed class ChangelingSystem : EntitySystem
     {
         base.Initialize();
 
-        // TODO: figure out abstract events
-        SubscribeLocalEvent<ChangelingComponent, StingEvent>(OnExtractionSting);
+        SubscribeLocalEvent<ChangelingComponent, ExtractionStingEvent>(OnExtractionSting);
 
         SubscribeLocalEvent<BodyComponent, GetVerbsEvent<AlternativeVerb>>(AddStingVerb);
     }
 
-    // TODO: figure out abstract events
-    private void OnExtractionSting(EntityUid uid, ChangelingComponent ling, ref StingEvent args)
+    private void OnExtractionSting(EntityUid uid, ChangelingComponent ling, ExtractionStingEvent args)
     {
         // slime/vox have incompatible genomes so cant sting
         // target must also have all the required bits to transform
@@ -119,8 +117,8 @@ public sealed class ChangelingSystem : EntitySystem
         ev.Uncancel();
         ev.Target = target;
 
-        Logger.Debug($"Raising event {ev}");
-        RaiseLocalEvent(uid, ref ev);
+        // casting to object first so it can be handled as inheriting classes not just StingEvent
+        RaiseLocalEvent(uid, (object) ev);
 
         // only use chemicals and start cooldown if stinging succeeded
         if (!ev.Cancelled)
