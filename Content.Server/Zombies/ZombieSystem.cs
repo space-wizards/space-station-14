@@ -64,7 +64,7 @@ namespace Content.Server.Zombies
             base.Update(frameTime);
             var query = EntityQueryEnumerator<PendingZombieComponent>();
             var curTime = _timing.CurTime;
-            var state_query = GetEntityQuery<MobStateComponent>();
+            var stateQuery = GetEntityQuery<MobStateComponent>();
 
             // Hurt the living infected
             while (query.MoveNext(out var uid, out var comp))
@@ -90,7 +90,7 @@ namespace Content.Server.Zombies
                 else if (comp.InfectedSecs < 120)
                 {
                     // Once the zombie is in crit, ensure they are taking damage at a reasonable rate (so they are not crit too long)
-                    if (state_query.TryGetComponent(uid, out var mobstate) && mobstate.CurrentState == MobState.Critical)
+                    if (stateQuery.TryGetComponent(uid, out var mobstate) && mobstate.CurrentState == MobState.Critical)
                     {
                         comp.InfectedSecs = 120;
                     }
