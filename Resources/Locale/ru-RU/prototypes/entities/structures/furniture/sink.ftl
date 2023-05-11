@@ -1,0 +1,15 @@
+ent-SinkEmpty = раковина
+    .desc = Краны были затянуты с максимальной силой, но, как видно, с них все равно капает.
+    .suffix = Пустой
+ent-Sink = раковина
+    .suffix = Вода
+    .desc = { ent-SinkEmpty.desc }
+ent-SinkWide = широкая раковина
+    .desc = { ent-Sink.desc }
+    .suffix = { "" }
+ent-SinkStemless = раковина
+    .desc = { ent-SinkEmpty.desc }
+    .suffix = { "" }
+ent-SinkStemlessWater = раковина
+    .suffix = Вода
+    .desc = { ent-SinkStemless.desc }
