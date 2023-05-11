@@ -1,10 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed dame dane guy set to be less blue. That was a baka mistake.,
-    type: Tweak}
-  id: 3227
-  time: '2023-03-23T16:51:50.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Paperwork now looks the same as he did before, type: Tweak}
@@ -2905,3 +2899,8 @@ Entries:
     type: Add}
   id: 3726
   time: '2023-05-11T13:19:09.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Fixed not being able to link blast doors and shutters, type: Fix}
+  id: 3727
+  time: '2023-05-11T22:16:02.0000000+00:00'
