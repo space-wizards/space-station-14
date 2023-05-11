@@ -1,6 +1,24 @@
 - type: entity
   name: crusher
   parent: BaseItem
+  id: BaseWeaponCrusher # Crusher? But I...
+  abstract: true
+  description: An early design of the proto-kinetic accelerator.
+  components:
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+  - type: PointLight
+    enabled: false
+    radius: 4
+
+- type: entity
+  name: crusher
+  parent: BaseWeaponCrusher
   id: WeaponCrusher
   description: An early design of the proto-kinetic accelerator.
   components:
@@ -39,7 +57,7 @@
 
 - type: entity
   name: crusher dagger
-  parent: BaseItem
+  parent: BaseWeaponCrusher
   id: WeaponCrusherDagger
   description: A scaled down version of a proto-kinetic crusher, usually used in a last ditch scenario.
   components:

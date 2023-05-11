@@ -23,6 +23,10 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
+        // TODO: Ideally you'd be able to subscribe to power stuff to get events at certain percentages.. or something?
+        // But for now this will be better anyway.
+        private readonly HashSet<HandheldLightComponent> _activeLights = new();
+
         public override void Initialize()
         {
             base.Initialize();
