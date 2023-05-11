@@ -1,0 +1,11 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+        Title="{Loc 'changeling-transformations-interface-title'}"
+        MinSize="350 200"
+        SetSize="350 500">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <ItemList Name="Names"
+                  VerticalExpand="True"
+                  HorizontalExpand="True"
+                  SelectMode="Button"/>
+    </BoxContainer>
+</DefaultWindow>

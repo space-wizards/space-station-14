@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/807e11b30be892e14854a9a87f0bfc4886cf0a71/icons/mob/actions/actions_changeling.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "adrenaline"
+    },
+    {
+      "name": "anatomic_panacea"
+    },
+    {
+      "name": "asborb"
+    },
+    {
+      "name": "augmented_eyesight"
+    },
+    {
+      "name": "biodegrade"
+    },
+    {
+      "name": "blind_sting"
+    },
+    {
+      "name": "chameleon_skin"
+    },
+    {
+      "name": "chitinous_armor"
+    },
+    {
+      "name": "cryogenic_sting"
+    },
+    {
+      "name": "digital_camo"
+    },
+    {
+      "name": "dissonant_shriek"
+    },
+    {
+      "name": "extract_sting"
+    },
+    {
+      "name": "false_armblade_sting"
+    },
+    {
+      "name": "files"
+    },
+    {
+      "name": "fleshmend"
+    },
+    {
+      "name": "hallucination_sting"
+    },
+    {
+      "name": "human_form"
+    },
+    {
+      "name": "last_resort"
+    },
+    {
+      "name": "lesser_form"
+    },
+    {
+      "name": "meta.json"
+    },
+    {
+      "name": "mimic_voice"
+    },
+    {
+      "name": "organic_shield"
+    },
+    {
+      "name": "organic_space_suit"
+    },
+    {
+      "name": "regenerate"
+    },
+    {
+      "name": "resonant_shriek"
+    },
+    {
+      "name": "spread_infestation"
+    },
+    {
+      "name": "stasis"
+    },
+    {
+      "name": "stasis_revive"
+    },
+    {
+      "name": "strained_muscles"
+    },
+    {
+      "name": "tentacle"
+    },
+    {
+      "name": "transformation_sting"
+    },
+    {
+      "name": "transform"
+    }
+  ]
+}

@@ -1,8 +1,12 @@
+using Content.Server.Actions;
 using Content.Server.Forensics;
 using Content.Shared.Body.Components;
+using Content.Shared.Changeling;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
@@ -10,17 +14,34 @@ namespace Content.Server.Changeling;
 
 public sealed class ChangelingSystem : EntitySystem
 {
+    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ChangelingComponent, ComponentStartup>(OnChangelingStartup);
         SubscribeLocalEvent<ChangelingComponent, ExtractionStingEvent>(OnExtractionSting);
+        SubscribeLocalEvent<ChangelingComponent, SelectStingEvent>(OnSelectSting);
+        SubscribeLocalEvent<ChangelingComponent, ChangelingTransformEvent>(OnTransform);
 
         SubscribeLocalEvent<BodyComponent, GetVerbsEvent<AlternativeVerb>>(AddStingVerb);
+    }
+
+    private void OnChangelingStartup(EntityUid uid, ChangelingComponent ling, ComponentStartup args)
+    {
+        // TODO: add initial transformation
+
+        foreach (var action in ling.InnateAbilities)
+        {
+            _actions.AddAction(uid, action, uid);
+        }
+
+        // TODO: set up store here?
     }
 
     private void OnExtractionSting(EntityUid uid, ChangelingComponent ling, ExtractionStingEvent args)
@@ -68,6 +89,34 @@ public sealed class ChangelingSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("changeling-extraction-success", ("target", name)), uid, uid, PopupType.Large);
         // TODO: extraction chemical boost
+        // TODO: store dna count in a permanent place incase of gibbing, for partial greentext
+    }
+
+    private void OnSelectSting(EntityUid uid, ChangelingComponent ling, SelectStingEvent args)
+    {
+        // TODO: check if its unlocked first
+        if (!_proto.HasIndex<StingPrototype>(args.Sting))
+            return;
+
+        ling.ActiveSting = args.Sting;
+        // TODO: transformation sting requires you to select a transformation first
+    }
+
+    private void OnTransform(EntityUid uid, ChangelingComponent ling, ChangelingTransformEvent args)
+    {
+        if (!TryComp<ActorComponent>(uid, out var actor))
+            return;
+
+        if (!_ui.TryToggleUi(uid, ChangelingUiKey.Transform, actor.PlayerSession))
+            return;
+
+        // absorbed transformations are listed first since they will never be removed
+        var names = ling.AbsorbedTransformations
+            .Concat(ling.ExtractedTransformations)
+            .Select(t => t.Name)
+            .ToList();
+        var state = new TransformationsBoundUserInterfaceState(names);
+        _ui.TrySetUiState(uid, ChangelingUiKey.Transform, state);
     }
 
     private void AddStingVerb(EntityUid uid, BodyComponent body, GetVerbsEvent<AlternativeVerb> args)

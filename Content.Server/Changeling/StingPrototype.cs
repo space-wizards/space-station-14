@@ -34,20 +34,3 @@ public sealed class StingPrototype : IPrototype
     [DataField("event", required: true)]
     public StingEvent? Event;
 }
-
-/// <summary>
-/// Event raised on the changeling to attempt to use a sting.
-/// </summary>
-public abstract class StingEvent : CancellableEntityEventArgs
-{
-    /// <summary>
-    /// The mob that was alt clicked.
-    /// </summary>
-    public EntityUid Target;
-}
-
-/// <summary>
-/// Extracts dna from a mob.
-/// The mob must have AbsorbableComponent for it to work.
-/// </summary>
-public sealed class ExtractionStingEvent : StingEvent { }
