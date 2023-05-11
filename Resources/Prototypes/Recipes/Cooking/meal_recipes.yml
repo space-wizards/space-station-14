@@ -1221,9 +1221,9 @@
   time: 15
   reagents:
     Water: 10
+    AnimalProtein: 6
   solids:
     FoodDough: 3
-    AnimalProtein: 6
     
 #Donks i guess
 - type: microwaveMealRecipe
