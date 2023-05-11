@@ -32,13 +32,13 @@ namespace Content.Server.Glue
             if (!HasComp<ItemComponent>(target))
                 return;
 
-            if (!HasComp<GluedComponent>(target) || !HasComp<GluedComponent>(target))
+            if (!HasComp<GluedComponent>(target) || !HasComp<UnremoveableComponent>(target))
             {
 
-                AddComp<UnremoveableComponent>(target);
+                EnsureComp<UnremoveableComponent>(target);
                 _popup.PopupEntity(Loc.GetString("glue-success", ("target", Identity.Entity(target, EntityManager))), args.User,
                 args.User, PopupType.Medium);
-                AddComp<GluedComponent>(target);
+                EnsureComp<GluedComponent>(target);
             }
 
             args.Handled = true;
