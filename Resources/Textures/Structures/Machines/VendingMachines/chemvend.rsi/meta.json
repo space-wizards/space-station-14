@@ -8,6 +8,18 @@
   },
   "states": [
     {
+      "name": "broken"
+    },
+    {
+        "name": "deny",
+        "delays": [
+          [
+            0.1,
+            0.1
+          ]
+        ]
+    },
+    {
       "name": "normal",
       "delays": [
         [
@@ -17,19 +29,7 @@
       ]
     },
     {
-      "name": "broken"
-    },
-    {
       "name": "off"
-    },
-    {
-      "name": "deny",
-      "delays": [
-        [
-          0.1,
-          0.1
-        ]
-      ]
     },
     {
      "name": "panel"

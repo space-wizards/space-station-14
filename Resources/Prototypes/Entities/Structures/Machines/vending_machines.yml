@@ -1841,13 +1841,15 @@
     brokenState: broken
     normalState: normal
     denyState: deny
-    ejectDelay: 0.5
+    ejectDelay: 3
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chemvend.rsi
     layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Advertise
-    pack: ChemVendAds
   - type: AccessReader
     access: [["Chemistry"]]
