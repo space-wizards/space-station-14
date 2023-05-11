@@ -16,6 +16,7 @@ public sealed partial class ResearchSystem
             return;
 
         primaryDb.MainDiscipline = otherDb.MainDiscipline;
+        primaryDb.CurrentTechnologyCards = otherDb.CurrentTechnologyCards;
         primaryDb.SupportedDisciplines = otherDb.SupportedDisciplines;
         primaryDb.UnlockedTechnologies = otherDb.UnlockedTechnologies;
         primaryDb.UnlockedRecipes = otherDb.UnlockedRecipes;
@@ -91,15 +92,20 @@ public sealed partial class ResearchSystem
     /// <summary>
     ///     Adds a technology to the database without checking if it could be unlocked.
     /// </summary>
-    public void AddTechnology(EntityUid uid, TechnologyPrototype oldTechnology, TechnologyDatabaseComponent? component = null)
+    public void AddTechnology(EntityUid uid, TechnologyPrototype technology, TechnologyDatabaseComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         //todo this needs to support some other stuff, too
+        foreach (var generic in technology.GenericUnlocks)
+        {
+            if (generic.PurchaseEvent != null)
+                RaiseLocalEvent(generic.PurchaseEvent);
+        }
 
-        component.UnlockedTechnologies.Add(oldTechnology.ID);
-        foreach (var unlock in oldTechnology.RecipeUnlocks)
+        component.UnlockedTechnologies.Add(technology.ID);
+        foreach (var unlock in technology.RecipeUnlocks)
         {
             if (component.UnlockedRecipes.Contains(unlock))
                 continue;

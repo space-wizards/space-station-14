@@ -9,20 +9,13 @@ namespace Content.Client.Research.UI;
 [UsedImplicitly]
 public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 {
-    private readonly IEntityManager _entityManager;
-
-    public int Points { get; private set; }
 
     private ResearchConsoleMenu? _consoleMenu;
-    private TechnologyDatabaseComponent? _technologyDatabase;
 
-    private readonly SharedResearchSystem _research;
 
     public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
         SendMessage(new ConsoleServerSyncMessage());
-        _entityManager = IoCManager.Resolve<IEntityManager>();
-        _research = _entityManager.System<SharedResearchSystem>();
     }
 
     protected override void Open()
@@ -31,10 +24,7 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 
         var owner = Owner.Owner;
 
-        if (!_entityManager.TryGetComponent(owner, out _technologyDatabase))
-            return;
-
-        _consoleMenu = new ResearchConsoleMenu(owner, this);
+        _consoleMenu = new ResearchConsoleMenu(owner);
 
         _consoleMenu.OnClose += Close;
 
@@ -46,7 +36,7 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
 
         var castState = (ResearchConsoleBoundInterfaceState)state;
-        Points = castState.Points;
+        _consoleMenu?.UpdatePanels();
     }
 
     protected override void Dispose(bool disposing)

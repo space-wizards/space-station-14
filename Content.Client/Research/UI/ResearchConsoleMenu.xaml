@@ -1,8 +1,9 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       Title="{Loc 'research-console-menu-title'}"
-                      MinSize="550 450"
+                      MinSize="630 400"
                       SetSize="650 550">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
@@ -13,6 +14,7 @@
                       SizeFlagsStretchRatio="1"
                       MinSize="75 75"
                       Margin="10">
+            <Label Text="OH FUCK"></Label>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal"
                       HorizontalExpand="True"
@@ -22,12 +24,43 @@
                           VerticalExpand="True"
                           HorizontalExpand="True"
                           SizeFlagsStretchRatio="1"
-                          Margin="10"
-                          MinWidth="150">
-                <Label Text="Available Technologies"></Label>
-                <Control MinHeight="10"></Control>
-                <!-- TODO this has to be a custom ui element so it supports tooltips + colors -->
-                <ItemList Name="AvailableList" VerticalExpand="True"></ItemList>
+                          Margin="10 0 10 10"
+                          MinWidth="175">
+                <Label Text="{Loc 'research-console-available-text'}" HorizontalAlignment="Center"/>
+                <customControls:HSeparator StyleClasses="LowDivider" Margin="0 5 0 5"/>
+                <PanelContainer VerticalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    </PanelContainer.PanelOverride>
+                    <ScrollContainer
+                        HScrollEnabled="False"
+                        HorizontalExpand="True"
+                        VerticalExpand="True">
+                        <BoxContainer
+                            Name="AvailableCardsContainer"
+                            Orientation="Vertical"
+                            VerticalExpand="True">
+                        </BoxContainer>
+                    </ScrollContainer>
+                </PanelContainer>
+                <Control MinHeight="10"/>
+                <Label Text="{Loc 'research-console-unlocked-text'}" HorizontalAlignment="Center"/>
+                <customControls:HSeparator StyleClasses="LowDivider" Margin="0 5 0 5"/>
+                <PanelContainer VerticalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    </PanelContainer.PanelOverride>
+                    <ScrollContainer
+                        HScrollEnabled="False"
+                        HorizontalExpand="True"
+                        VerticalExpand="True">
+                        <BoxContainer
+                            Name="UnlockedCardsContainer"
+                            Orientation="Vertical"
+                            VerticalExpand="True">
+                        </BoxContainer>
+                    </ScrollContainer>
+                </PanelContainer>
             </BoxContainer>
             <BoxContainer Orientation="Vertical"
                           VerticalExpand="True"

@@ -120,8 +120,13 @@ public abstract class SharedResearchSystem : EntitySystem
             var allTier = allTech.Where(p => p.Tier == tier).ToList();
             var unlockedTier = allUnlocked.Where(p => p.Tier == tier).ToList();
 
-            if ((float) unlockedTier.Count / allTier.Count < threshold)
+            if (allTier.Count == 0 ||
+                (float) unlockedTier.Count / allTier.Count < threshold)
+            {
+                //there's a cleaner way to do this but i'm being lazy rn
+                tier--;
                 break;
+            }
 
             if (tier >= discipline.LockoutTier &&
                 component.MainDiscipline != null &&

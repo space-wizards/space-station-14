@@ -12,6 +12,9 @@ research-console-menu-server-unlock-button = Unlock
 research-console-tech-requirements-none = No technology requirements.
 research-console-tech-requirements-prototype-name = Requires: {$prototypeName}
 
+research-console-available-text = Available Technologies
+research-console-unlocked-text = Unlocked Technologies
+
 research-console-tier-discipline-info = Tier {$tier}, [color={$color}]{$discipline}[/color]
 
 research-console-cost = Cost: [color=orchid]{$amount}[/color]

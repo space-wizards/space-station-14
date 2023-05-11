@@ -60,7 +60,7 @@
     sprite: Objects/Specific/Mech/mecha.rsi
     state: honker
   discipline: CivilianServices
-  tier: 1
+  tier: 2
   cost: 10000
   recipeUnlocks:
   - HonkerHarness

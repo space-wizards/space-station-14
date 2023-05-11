@@ -12,7 +12,7 @@ namespace Content.Client.Research.UI;
 [GenerateTypedNameReferences]
 public sealed partial class TechnologyCardControl : Control
 {
-    public TechnologyCardControl(TechnologyPrototype technology, IPrototypeManager prototypeManager, SpriteSystem spriteSys)
+    public TechnologyCardControl(TechnologyPrototype technology, IPrototypeManager prototypeManager, SpriteSystem spriteSys, FormattedMessage description)
     {
         RobustXamlLoader.Load(this);
 
@@ -25,25 +25,7 @@ public sealed partial class TechnologyCardControl : Control
         message.AddMarkup($"{Loc.GetString("research-console-tier-discipline-info",
             ("tier", technology.Tier), ("color", discipline.Color), ("discipline", Loc.GetString(discipline.Name)))}");
         TierLabel.SetMessage(message);
-
-        var unlockLabel = new FormattedMessage();
-        unlockLabel.AddMarkup(Loc.GetString("research-console-cost", ("amount", technology.Cost)));
-        unlockLabel.PushNewline();
-        unlockLabel.AddMarkup(Loc.GetString("research-console-unlocks-list-start"));
-        foreach (var recipe in technology.RecipeUnlocks)
-        {
-            var recipeProto = prototypeManager.Index<LatheRecipePrototype>(recipe);
-            unlockLabel.PushNewline();
-            unlockLabel.AddMarkup(Loc.GetString("research-console-unlocks-list-entry",
-                ("name",recipeProto.Name)));
-        }
-        foreach (var generic in technology.GenericUnlocks)
-        {
-            unlockLabel.PushNewline();
-            unlockLabel.AddMarkup(Loc.GetString("research-console-unlocks-list-entry-generic",
-                ("name", Loc.GetString(generic.UnlockDescription))));
-        }
-        UnlocksLabel.SetMessage(unlockLabel);
+        UnlocksLabel.SetMessage(description);
 
         TechnologyTexture.Texture = spriteSys.Frame0(technology.Icon);
     }

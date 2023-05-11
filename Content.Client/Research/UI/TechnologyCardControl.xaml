@@ -1,12 +1,13 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls">
-    <BoxContainer Orientation="Horizontal" Margin="10 10 10 0">
+    <BoxContainer Orientation="Vertical" Margin="10 0 10 10">
         <PanelContainer Name="Background"
                         Access="Public"
                         StyleClasses="PDABackground"
-                        MinWidth="20"
-                        VerticalExpand="True"
-                        Margin="0 0 -5 0"/>
+                        MinHeight="15"
+                        VerticalExpand="False"
+                        HorizontalExpand="True"
+                        Margin="0 0 0 -5"/>
         <Button Disabled="True"
                 HorizontalExpand="True"
                 VerticalExpand="True"
@@ -20,11 +21,13 @@
                                  TextureScale="2 2"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Center">
-                        <TextureRect Name="DisciplineTexture" TextureScale="2 2" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                     </TextureRect>
-                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center" Margin="10 0 10 0">
-                        <Label Name="TechnologyNameLabel" StyleClasses="LabelKeyText" HorizontalExpand="True"/>
-                        <customControls:HSeparator StyleClasses="LowDivider" Margin="0 10 0 0"/>
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center" Margin="10 0 0 0">
+                        <BoxContainer Orientation="Horizontal">
+                            <Label Name="TechnologyNameLabel" StyleClasses="LabelKeyText" HorizontalExpand="True"/>
+                            <TextureRect Name="DisciplineTexture" TextureScale="2 2" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                        </BoxContainer>
+                        <customControls:HSeparator StyleClasses="LowDivider" Margin="0 5 0 5"/>
                         <RichTextLabel Name="TierLabel" HorizontalAlignment="Right" StyleClasses="LabelSubText"/>
                     </BoxContainer>
                 </BoxContainer>
