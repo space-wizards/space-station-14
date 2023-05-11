@@ -40,9 +40,6 @@ ent-CrateVendingMachineRestockSeedsFilled = MegaSeed restock crate
 ent-CrateVendingMachineRestockSmokesFilled = ShadyCigs restock crate
     .desc = Contains two restock boxes for the ShadyCigs vending machine.
 
-ent-CrateVendingMachineRestockSnacksFilled = Snack restock crate
-    .desc = Contains four restock boxes, each covering a different snack vendor. Mr. Chang's, Discount Dans, and Robust Donuts are featured on the advertisement.
-
 ent-CrateVendingMachineRestockVendomatFilled = Vendomat restock crate
     .desc = Contains a restock box for a Vendomat vending machine.
 
