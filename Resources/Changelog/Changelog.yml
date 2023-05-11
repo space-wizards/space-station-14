@@ -1,11 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: 'Changed sprites of the seed extractor, hydroponics bags and hydroponics
-      leather gloves.', type: Tweak}
-  - {message: Fixed inconsistent hydroponics bag naming., type: Fix}
-  id: 3221
-  time: '2023-03-23T15:10:18.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: 'added explosive banana peel to clown uplink (2 TC, 30 total damage)',
@@ -2909,3 +2902,8 @@ Entries:
   - {message: Survival gamemode has been temporarily disabled pending a rework, type: Tweak}
   id: 3720
   time: '2023-05-11T00:08:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Monkeys are now clumsy, like clowns', type: Tweak}
+  id: 3721
+  time: '2023-05-11T00:27:48.0000000+00:00'
