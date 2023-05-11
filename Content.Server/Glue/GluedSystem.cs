@@ -2,10 +2,11 @@ using Content.Server.Popups;
 using Content.Shared.Popups;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Actions;
-using Content.Shared.Glue;
 using Content.Server.Chat.Systems;
 using Robust.Shared.Timing;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Interaction;
+using Content.Shared.Medical;
 
 namespace Content.Server.Glue;
 
@@ -18,48 +19,41 @@ public sealed class GluedSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GluedComponent, ComponentStartup>(OnGlued);
+        SubscribeLocalEvent<GluedComponent, ComponentInit>(OnGlued);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
+
         var query = EntityQueryEnumerator<GluedComponent>();
-        while (query.MoveNext(out var uid, out var glued))
+        while (query.MoveNext(out var uid, out var glue))
+        {
+            if (!glue.GlueBroken || glue.Glued)
+                continue;
 
-            foreach (var glue in EntityQuery<GluedComponent>())
-            {
-                if (glue.Glued)
-                    continue;
+            if (_timing.CurTime < glue.GlueTime)
+                continue;
 
-                if (_timing.CurTime < glue.GlueCooldown)
-                    continue;
-
-                glue.Glued = true;
-
-                RemoveGlue(uid, glued);
-            }
+            glue.Enabled = true;
+            glue.Glued = false;
+            glue.GlueBroken = false;
+            MetaData(uid).EntityName = glue.BeforeGluedEntityName;
+            RemComp<UnremoveableComponent>(uid);
+            RemComp<GluedComponent>(uid);
+        }
     }
 
-    private void OnGlued(EntityUid uid, GluedComponent component, ComponentStartup args)
+    private void OnGlued(EntityUid uid, GluedComponent component, ComponentInit args)
     {
         var meta = MetaData(uid);
         var name = meta.EntityName;
         component.BeforeGluedEntityName = meta.EntityName;
         _audio.PlayPvs(component.Squeeze, uid);
         meta.EntityName = Loc.GetString("glued-name-prefix", ("target", name));
-        component.Glued = false;
-    }
-
-    private void RemoveGlue(EntityUid uid, GluedComponent component)
-    {
-        if (component.Glued == true)
-        {
-            MetaData(uid).EntityName = component.BeforeGluedEntityName;
-            RemComp<UnremoveableComponent>(uid);
-            RemComp<GluedComponent>(uid);
-            component.GlueCooldown = TimeSpan.FromSeconds(30);
-        }
+        component.Enabled = false;
+        component.GlueBroken = true;
+        component.GlueTime = _timing.CurTime + component.GlueCooldown;
     }
 }
