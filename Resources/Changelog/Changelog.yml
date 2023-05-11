@@ -1,131 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Add additional rules around arrivals., type: Add}
-  - {message: Fix some instances of being able to return to the arrivals station.,
-    type: Fix}
-  id: 3206
-  time: '2023-03-23T01:37:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Monkeys spawned by artifacts no longer suffocate., type: Fix}
-  id: 3207
-  time: '2023-03-23T01:44:37.0000000+00:00'
-- author: MagnusCrowe
-  changes:
-  - {message: 'Fixed the caustic damage issue where caustic damage was actually heat
-      and poison damage and could be cured by things like dermaline and dylovene,
-      where also siderlac could cure heat and poison damage', type: Fix}
-  - {message: 'Fixed health analyzer counting heat and poison damage as caustic damage,
-      causing the damage group totals to not add up correctly to total damage', type: Fix}
-  - {message: Changed Caustic from a damage group to a damage type under the Burn
-      group, type: Tweak}
-  - {message: 'Added Sodium Carbonate, a neutral precursor chemical', type: Add}
-  - {message: 'Added Sigynate, a new synthetic caustic damage medicine that heals
-      6 caustic damage per unit', type: Add}
-  - {message: Changed Cryoxadone to cure +2 Burn per unit to account for the new damage
-      type in the Burn group, type: Tweak}
-  - {message: Changed harmful acid's damage types to caustic if they used to cause
-      poison, type: Tweak}
-  id: 3208
-  time: '2023-03-23T03:38:36.0000000+00:00'
-- author: Van
-  changes:
-  - {message: added janitoral maid uniform with miniskirt, type: Add}
-  id: 3209
-  time: '2023-03-23T03:39:12.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: The guidebook can now be accessed from new buttons in the lobby and
-      the ingame topbar buttons., type: Tweak}
-  id: 3210
-  time: '2023-03-23T03:41:43.0000000+00:00'
-- author: adamsogm
-  changes:
-  - {message: Changed how full solution containers appear based on their actual fill
-      level., type: Tweak}
-  - {message: Fixed water cup being perpetually empty., type: Fix}
-  id: 3211
-  time: '2023-03-23T03:49:42.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed PKA to have a consistent firerate of 1.5 seconds, type: Tweak}
-  id: 3212
-  time: '2023-03-23T04:22:01.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Hair, facial hair, markings, etc are now sorted alphabetically in the
-      character creator menu.', type: Tweak}
-  id: 3213
-  time: '2023-03-23T05:03:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Cargo shuttles now use FTL and not their own system. They have to FTL
-      back and forth to sell / purchase goods., type: Tweak}
-  id: 3214
-  time: '2023-03-23T05:10:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some shuttle console rotations flipping the viewport., type: Fix}
-  id: 3215
-  time: '2023-03-23T05:52:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix arrivals stranding you at terminal., type: Fix}
-  id: 3216
-  time: '2023-03-23T06:41:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix docking, type: Fix}
-  id: 3217
-  time: '2023-03-23T06:50:52.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: you can now place floor tiles under directional windows (or any other
-      non-full wall)., type: Fix}
-  id: 3218
-  time: '2023-03-23T06:55:51.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some instances of NPCs getting stuck., type: Fix}
-  id: 3219
-  time: '2023-03-23T12:53:17.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Emag has received an update for disabling safety overrides on disposal
-      units., type: Tweak}
-  id: 3220
-  time: '2023-03-23T14:55:50.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: 'Changed sprites of the seed extractor, hydroponics bags and hydroponics
-      leather gloves.', type: Tweak}
-  - {message: Fixed inconsistent hydroponics bag naming., type: Fix}
-  id: 3221
-  time: '2023-03-23T15:10:18.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: 'added explosive banana peel to clown uplink (2 TC, 30 total damage)',
-    type: Add}
-  id: 3222
-  time: '2023-03-23T15:54:15.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Tweaked baseball bats and spears damage and weight values., type: Tweak}
-  id: 3223
-  time: '2023-03-23T16:06:09.0000000+00:00'
-- author: Nekomancer
-  changes:
-  - {message: Added small light post state sprites, type: Add}
-  - {message: Tweaked small light post empty sprite, type: Tweak}
-  id: 3224
-  time: '2023-03-23T16:12:33.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: 'Zombies drop their headsets, preventing them from hearing comms.',
-    type: Tweak}
-  id: 3225
-  time: '2023-03-23T16:17:33.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Round end screen now lists traitor codewords., type: Tweak}
@@ -2914,3 +2787,120 @@ Entries:
   - {message: Added hand labeler to the medical techfab. It costs 100 plastic., type: Add}
   id: 3705
   time: '2023-05-08T12:32:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix a shooting mispredict if you held left-click with a semi-auto gun
+      and then tried to fire afterwards., type: Fix}
+  - {message: Fix ammo counter for recharge weapons (mainly the PKA)., type: Fix}
+  - {message: Make the PKA feel nicer to shoot., type: Tweak}
+  id: 3706
+  time: '2023-05-08T12:37:40.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Zombification happens post death, rather than just crit. So you lie
+      on the floor a bit before beginning your new life.', type: Tweak}
+  - {message: 'Zombies are more likely (10-40% depending on clothes) to inflict a
+      zombifying Damage over Time.  This was 5% - 50% before. A typical outfit without
+      outer suit, mask or helmet has a 17.5% chance of being infected each hit.',
+    type: Tweak}
+  - {message: Zombies have some heal over time. This might also bring them back from
+      the dead (again)., type: Tweak}
+  id: 3707
+  time: '2023-05-09T02:24:40.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'Miasma text now has a locale again (foul smell, rotting and bloat).',
+    type: Fix}
+  id: 3708
+  time: '2023-05-09T07:35:43.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Mice can no longer lift thousands times their weight (they can't drag
+      people onto tables anymore), type: Fix}
+  id: 3709
+  time: '2023-05-09T07:37:56.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds a pet Pun Pun for bartenders ghost role., type: Add}
+  id: 3710
+  time: '2023-05-09T07:39:43.0000000+00:00'
+- author: Tyzemol
+  changes:
+  - {message: Fixed not being able to link airlocks using network configurator, type: Fix}
+  id: 3711
+  time: '2023-05-09T22:50:35.0000000+00:00'
+- author: Lomcastar
+  changes:
+  - {message: Added Proximity Mine disguised as a wet floor sign., type: Add}
+  id: 3712
+  time: '2023-05-09T23:50:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Due to a recent economic boom, NT is now able to supply ERT cleanup
+      crews with mops.', type: Add}
+  id: 3713
+  time: '2023-05-09T23:51:48.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Airlocks are no longer scared of puddles and soap. They should now close
+      properly., type: Fix}
+  id: 3714
+  time: '2023-05-09T23:54:43.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Fixed the recipes for radiation shutters and glass shutters not appearing
+      in the construction menu, type: Fix}
+  id: 3715
+  time: '2023-05-09T23:56:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix popup spam in some instances., type: Fix}
+  id: 3716
+  time: '2023-05-10T00:00:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Wielding is now predicted., type: Tweak}
+  id: 3717
+  time: '2023-05-10T00:01:23.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Frezon is slightly harder to make. The reaction always consumes Tritium
+      and Oxygen at a 1:50 ratio. But the reaction is easier to initiate, requiring
+      only Nitrogen, Oxygen, Tritium and <73.15K.', type: Tweak}
+  id: 3718
+  time: '2023-05-10T03:27:23.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Chef's vinegar bottles now hold 30u instead of 15u., type: Tweak}
+  id: 3719
+  time: '2023-05-10T11:36:47.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Survival gamemode has been temporarily disabled pending a rework, type: Tweak}
+  id: 3720
+  time: '2023-05-11T00:08:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Monkeys are now clumsy, like clowns', type: Tweak}
+  id: 3721
+  time: '2023-05-11T00:27:48.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Dermaline now heals 3 Heat/Shock/Cold per unit instead of 2., type: Tweak}
+  id: 3722
+  time: '2023-05-11T08:29:23.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added sigh sound, type: Add}
+  id: 3723
+  time: '2023-05-11T09:17:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Botany's produce is now larger on average., type: Tweak}
+  id: 3724
+  time: '2023-05-11T11:15:21.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Mob sprites no longer rotate on death, type: Fix}
+  id: 3725
+  time: '2023-05-11T11:20:42.0000000+00:00'
