@@ -1,0 +1,49 @@
+- type: gameMap
+  id: Frontier
+  mapName: 'Frontier Station'
+  mapPath: /Maps/Frontier.yml
+  minPlayers: 20
+  stations:
+    Front:
+      mapNameTemplate: '{0} Frontier Station {1}'
+      emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml      
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: '14'
+      overflowJobs:
+        - Passenger
+      availableJobs:
+        CargoTechnician: [ 4, 4 ]
+        Passenger: [ -1, -1 ]
+        Bartender: [ 2, 2 ]
+        Botanist: [ 3, 3 ]
+        Chef: [ 2, 2 ]
+        Clown: [ 1, 1 ]
+        Janitor: [ 2, 2 ]
+        Mime: [ 1, 1 ]
+        Captain: [ 1, 1 ]
+        HeadOfPersonnel: [ 1, 1 ]
+        ChiefEngineer: [ 1, 1 ]
+        StationEngineer: [ 3, 3 ]
+        ChiefMedicalOfficer: [ 1, 1 ]
+        MedicalDoctor: [ 4, 4 ]
+        Chemist: [ 2, 2 ]
+        ResearchDirector: [ 1, 1 ]
+        Scientist: [ 4, 4 ]
+        HeadOfSecurity: [ 1, 1 ]
+        SecurityOfficer: [ 3, 3 ]
+        Chaplain: [ 1, 1 ]
+        Warden: [ 1, 1 ]
+        Librarian: [ 1, 1 ]
+        Quartermaster: [ 1, 1 ]
+        SalvageSpecialist: [ 4, 4 ]
+        Musician: [ 1, 1 ]
+        AtmosphericTechnician: [ 1, 1 ]
+        TechnicalAssistant: [ 2, 2 ]
+        MedicalIntern: [ 2, 2 ]
+        ServiceWorker: [ 2, 2 ]
+        SecurityCadet: [ 2, 2 ]
+        Detective: [ 1, 1 ]
+        ResearchAssistant: [ 3, 3 ]
+        Brigmedic: [ 1, 1 ]
+        Paramedic: [1, 1]

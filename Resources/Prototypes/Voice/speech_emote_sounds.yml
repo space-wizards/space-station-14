@@ -24,8 +24,6 @@
       collection: MaleYawn
     Snore:
       collection: Snores
-    Honk:
-      collection: BikeHorn
 
 - type: emoteSounds
   id: FemaleHuman
@@ -52,8 +50,6 @@
       collection: FemaleYawn
     Snore:
       collection: Snores
-    Honk:
-      collection: CluwneHorn
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -64,8 +60,6 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
-    Honk:
-      collection: BikeHorn
 
 - type: emoteSounds
   id: UnisexVox
@@ -81,20 +75,8 @@
       path: /Audio/Voice/Diona/diona_scream.ogg
     Laugh:
       collection: DionaLaugh
-    Honk:
-      collection: BikeHorn
   params:
     variation: 0.125
-
-- type: emoteSounds
-  id: UnisexArachnid
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
-    Laugh:
-      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
 
 - type: emoteSounds
   id: UnisexDwarf
@@ -103,8 +85,6 @@
       collection: MaleScreams
     Laugh:
       collection: MaleLaugh
-    Honk:
-      collection: BikeHorn
   params:
     variation: 0.125
     pitchscale: 0.75
@@ -170,12 +150,5 @@
   id: Cerberus
   sound:
     path: /Audio/Animals/cerberus.ogg
-    params:
-      variation: 0.125
-
-- type: emoteSounds
-  id: Kangaroo
-  sound:
-    path: /Audio/Animals/kangaroo_grunt.ogg
     params:
       variation: 0.125

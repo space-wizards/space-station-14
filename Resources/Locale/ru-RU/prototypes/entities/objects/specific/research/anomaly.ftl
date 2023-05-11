@@ -1,0 +1,9 @@
+ent-AnomalyScanner = сканер аномалий
+    .desc = Ручной сканер, предназначенный для получения информации о различных аномальных объектах.
+    .suffix = { "" }
+ent-AnomalyLocator = локатор аномалий
+    .desc = Устройство, предназначенное для помощи в обнаружении аномалий. Вы проверяли шахты?
+    .suffix = { "" }
+ent-AnomalyLocatorEmpty = { ent-AnomalyLocator }
+    .desc = { ent-AnomalyLocator.desc }
+    .suffix = Пустой

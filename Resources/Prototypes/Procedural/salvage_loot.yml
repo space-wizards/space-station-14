@@ -41,7 +41,7 @@
 
 - type: salvageLoot
   id: HighValue
-  desc: High-value commodities
+  desc: Дорогие товары
   blacklist:
     - Mining
   loots:
@@ -54,7 +54,7 @@
 # - Low value
 - type: salvageLoot
   id: OreTin
-  desc: Veins of steel
+  desc: Залежи стали
   loots:
     - !type:BiomeTemplateLoot
       proto: OreTin
@@ -62,14 +62,14 @@
 # - Medium value
 - type: salvageLoot
   id: OreGold
-  desc: Veins of gold ore
+  desc: Залежи золота
   loots:
     - !type:BiomeTemplateLoot
       proto: OreGold
 
 - type: salvageLoot
   id: OreSilver
-  desc: Veins of silver ore
+  desc: Залежи серебра
   loots:
     - !type:BiomeTemplateLoot
       proto: OreSilver
@@ -77,14 +77,14 @@
 # - High value
 - type: salvageLoot
   id: OrePlasma
-  desc: Veins of plasma ore
+  desc: Залежи плазмы
   loots:
     - !type:BiomeTemplateLoot
       proto: OrePlasma
 
 - type: salvageLoot
   id: OreUranium
-  desc: Veins of uranium ore
+  desc: Залежи плазмы
   loots:
     - !type:BiomeTemplateLoot
       proto: OreUranium
