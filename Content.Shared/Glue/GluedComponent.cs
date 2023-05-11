@@ -8,6 +8,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Roles;
 using Content.Shared.Humanoid;
+using System.Xml.Linq;
 
 
 namespace Content.Shared.Glue;
