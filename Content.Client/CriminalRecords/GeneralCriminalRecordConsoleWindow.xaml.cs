@@ -15,10 +15,10 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 {
     public Action<StationRecordKey?>? OnKeySelected;
     public Action<GeneralStationRecordFilterType, string>? OnFiltersChanged;
-    public Action<BaseButton.ButtonEventArgs, string?, string?>? OnArrestButtonPressed;
-    public Action<OptionButton.ItemSelectedEventArgs, SecurityStatus, string?, string?>? OnStatusOptionButtonSelected;
+    public Action<BaseButton.ButtonEventArgs, string?, string>? OnArrestButtonPressed;
+    public Action<OptionButton.ItemSelectedEventArgs, SecurityStatus, string?, string>? OnStatusOptionButtonSelected;
     private bool _isPopulating;
-    private string? _recordName;
+    private string _recordName = String.Empty;
     private GeneralStationRecordFilterType _currentFilterType;
 
     public GeneralCriminalRecordConsoleWindow()
@@ -158,7 +158,7 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
             RecordContainerStatus.Text = state.SelectedKey != null
                 ? Loc.GetString("general-criminal-record-console-no-record-found")
                 : Loc.GetString("general-criminal-record-console-select-record-info");
-            _recordName = state.StationRecord?.Name;
+            _recordName = state.StationRecord?.Name!;
             PopulateRecordContainer(state.StationRecord!, state.CriminalRecord!);
         }
         else

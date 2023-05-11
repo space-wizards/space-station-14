@@ -4,7 +4,7 @@ general-criminal-record-console-empty-state = No records found!
 general-criminal-record-console-no-record-found = No record was found for the selected person.
 
 general-criminal-record-arrest-button = Arrest
-general-criminal-record-release-button = release
+general-criminal-record-release-button = Release
 
 general-criminal-record-reason-placeholder = Reason
 

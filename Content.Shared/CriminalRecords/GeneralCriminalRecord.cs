@@ -13,7 +13,7 @@ public sealed class GeneralCriminalRecord
     ///     Status of the person (None, Wanted, Detained).
     /// </summary>
     [ViewVariables]
-    public SecurityStatus? Status = SecurityStatus.None;
+    public SecurityStatus Status = SecurityStatus.None;
 
     /// <summary>
     ///     Reason of the current status.

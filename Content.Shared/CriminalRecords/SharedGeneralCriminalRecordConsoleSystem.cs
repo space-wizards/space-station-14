@@ -67,9 +67,9 @@ public sealed class SelectGeneralCriminalRecord : BoundUserInterfaceMessage
 public sealed class CriminalRecordArrestButtonPressed : BoundUserInterfaceMessage
 {
     public string? Reason;
-    public string? Name;
+    public string Name;
 
-    public CriminalRecordArrestButtonPressed(string? reason, string? name)
+    public CriminalRecordArrestButtonPressed(string? reason, string name)
     {
         Reason = reason;
         Name = name;
@@ -81,9 +81,9 @@ public sealed class CriminalStatusOptionButtonSelected : BoundUserInterfaceMessa
 {
     public SecurityStatus Status;
     public string? Reason;
-    public string? Name;
+    public string Name;
 
-    public CriminalStatusOptionButtonSelected(SecurityStatus status, string? reason, string? name)
+    public CriminalStatusOptionButtonSelected(SecurityStatus status, string? reason, string name)
     {
         Status = status;
         Reason = reason;
