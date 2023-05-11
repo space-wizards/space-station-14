@@ -107,6 +107,7 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainerVisuals
+    maxFillLevels: 6
     fillBaseName: bottle-2-
 
 - type: entity
@@ -121,6 +122,7 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainerVisuals
+    maxFillLevels: 6
     fillBaseName: bottle-3-
 
 - type: entity
@@ -135,6 +137,7 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainerVisuals
+    maxFillLevels: 6
     fillBaseName: bottle-4-
 
 - type: entity
