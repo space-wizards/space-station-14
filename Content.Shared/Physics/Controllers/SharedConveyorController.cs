@@ -49,9 +49,9 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
 
-        if (args.OtherFixture.Body.BodyType == BodyType.Static || component.State == ConveyorState.Off)
+        if (args.OtherBody.BodyType == BodyType.Static || component.State == ConveyorState.Off)
             return;
 
         component.Intersecting.Add(otherUid);
@@ -60,7 +60,7 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyorEndCollide(EntityUid uid, ConveyorComponent component, ref EndCollideEvent args)
     {
-        component.Intersecting.Remove(args.OtherFixture.Body.Owner);
+        component.Intersecting.Remove(args.OtherEntity);
 
         if (component.Intersecting.Count == 0)
             RemComp<ActiveConveyorComponent>(uid);
