@@ -1,10 +1,4 @@
 Entries:
-- author: Nekomancer
-  changes:
-  - {message: Added small light post state sprites, type: Add}
-  - {message: Tweaked small light post empty sprite, type: Tweak}
-  id: 3224
-  time: '2023-03-23T16:12:33.0000000+00:00'
 - author: Whisper
   changes:
   - {message: 'Zombies drop their headsets, preventing them from hearing comms.',
@@ -2906,3 +2900,8 @@ Entries:
   - {message: Added sigh sound, type: Add}
   id: 3723
   time: '2023-05-11T09:17:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Botany's produce is now larger on average., type: Tweak}
+  id: 3724
+  time: '2023-05-11T11:15:21.0000000+00:00'
