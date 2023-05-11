@@ -364,7 +364,7 @@
       state_open: shotguncase_open
       state_closed: shotguncase_door
   - type: AccessReader
-    access: [["Security"]]
+    access: [["Armory"]]
 
 # Detective
 - type: entity
