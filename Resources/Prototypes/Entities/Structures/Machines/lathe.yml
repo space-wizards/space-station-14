@@ -246,6 +246,7 @@
       - NodeScanner
       - HolofanProjector
       - Vape
+      - HandheldHealthAnalyzer
 
 - type: entity
   parent: Protolathe

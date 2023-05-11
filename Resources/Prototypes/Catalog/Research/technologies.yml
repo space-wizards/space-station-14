@@ -187,6 +187,7 @@
   - ChemDispenserMachineCircuitboard
   - HandheldCrewMonitor
   - BiomassReclaimerMachineCircuitboard
+  - HandheldHealthAnalyzer
 
 - type: technology
   name: technologies-advanced-life-support
