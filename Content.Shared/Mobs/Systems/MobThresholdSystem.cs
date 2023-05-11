@@ -4,7 +4,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
-using Robust.Shared.GameStates;
+
 namespace Content.Shared.Mobs.Systems;
 
 public sealed class MobThresholdSystem : EntitySystem
@@ -17,8 +17,6 @@ public sealed class MobThresholdSystem : EntitySystem
         SubscribeLocalEvent<MobThresholdsComponent, ComponentShutdown>(MobThresholdShutdown);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentStartup>(MobThresholdStartup);
         SubscribeLocalEvent<MobThresholdsComponent, DamageChangedEvent>(OnDamaged);
-        SubscribeLocalEvent<MobThresholdsComponent, ComponentGetState>(OnGetComponentState);
-        SubscribeLocalEvent<MobThresholdsComponent, ComponentHandleState>(OnHandleComponentState);
         SubscribeLocalEvent<MobThresholdsComponent, UpdateMobStateEvent>(OnUpdateMobState);
     }
 
@@ -249,6 +247,14 @@ public sealed class MobThresholdSystem : EntitySystem
         UpdateAlerts(target, mobState.CurrentState, threshold, damageable);
     }
 
+    public void SetAllowRevives(EntityUid uid, bool val, MobThresholdsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+        component.AllowRevives = val;
+        Dirty(component);
+    }
+
     #endregion
 
     #region Private Implementation
@@ -278,7 +284,8 @@ public sealed class MobThresholdSystem : EntitySystem
             return;
         }
 
-        thresholds.CurrentThresholdState = newState;
+        if (mobState.CurrentState != MobState.Dead || thresholds.AllowRevives)
+            thresholds.CurrentThresholdState = newState;
         _mobStateSystem.UpdateMobState(target, mobState);
 
         Dirty(target);
@@ -334,32 +341,6 @@ public sealed class MobThresholdSystem : EntitySystem
         UpdateAlerts(target, mobState.CurrentState, thresholds, args.Damageable);
     }
 
-    private void OnHandleComponentState(EntityUid target, MobThresholdsComponent component,
-        ref ComponentHandleState args)
-    {
-        if (args.Current is not MobThresholdComponentState state)
-            return;
-
-        if (component.Thresholds.Count != state.Thresholds.Count ||
-            !component.Thresholds.SequenceEqual(state.Thresholds))
-        {
-            component.Thresholds.Clear();
-
-            foreach (var threshold in state.Thresholds)
-            {
-                component.Thresholds.Add(threshold.Key, threshold.Value);
-            }
-        }
-
-        component.CurrentThresholdState = state.CurrentThresholdState;
-    }
-
-    private void OnGetComponentState(EntityUid target, MobThresholdsComponent component, ref ComponentGetState args)
-    {
-        args.State = new MobThresholdComponentState(component.CurrentThresholdState,
-            new Dictionary<FixedPoint2, MobState>(component.Thresholds));
-    }
-
     private void MobThresholdStartup(EntityUid target, MobThresholdsComponent thresholds, ComponentStartup args)
     {
         if (!TryComp<MobStateComponent>(target, out var mobState) || !TryComp<DamageableComponent>(target, out var damageable))
@@ -378,8 +359,14 @@ public sealed class MobThresholdSystem : EntitySystem
 
     private void OnUpdateMobState(EntityUid target, MobThresholdsComponent component, ref UpdateMobStateEvent args)
     {
-        if (component.CurrentThresholdState != MobState.Invalid)
+        if (!component.AllowRevives && component.CurrentThresholdState == MobState.Dead)
+        {
+            args.State = MobState.Dead;
+        }
+        else if (component.CurrentThresholdState != MobState.Invalid)
+        {
             args.State = component.CurrentThresholdState;
+        }
     }
 
     #endregion
@@ -394,6 +381,4 @@ public sealed class MobThresholdSystem : EntitySystem
 /// <param name="Damageable">Damageable Component owned by the Target</param>
 [ByRefEvent]
 public readonly record struct MobThresholdChecked(EntityUid Target, MobStateComponent MobState,
-    MobThresholdsComponent Threshold, DamageableComponent Damageable)
-{
-}
+    MobThresholdsComponent Threshold, DamageableComponent Damageable);

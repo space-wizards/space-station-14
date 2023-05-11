@@ -407,6 +407,11 @@
     Telecrystal: 4
   categories:
   - UplinkImplants
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
 
 # Bundles
 
@@ -663,6 +668,34 @@
     - Botanist
     - Clown
     - Mime
+
+- type: listing
+  id: UplinkChimpAmmo
+  name: uplink-chimp-ammo-name
+  description: uplink-chimp-ammo-desc
+  productEntity: BoxMagazineChimpOmega
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - Scientist
+
+- type: listing
+  id: uplinkProximityMine
+  name: uplink-proximity-mine-name
+  description: uplink-proximity-mine-desc
+  productEntity: WetFloorSignMineExplosive
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Janitor
 
 # Armor
 

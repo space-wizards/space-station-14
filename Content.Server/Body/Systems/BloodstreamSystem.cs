@@ -21,6 +21,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Body.Systems;
 
@@ -35,6 +36,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
 
     public override void Initialize()
     {
@@ -117,21 +119,21 @@ public sealed class BloodstreamSystem : EntitySystem
                 // The effect is applied in a way that it will never be cleared without being healthy.
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
                 _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval*2, false);
+                _stutteringSystem.DoStutter(uid, TimeSpan.FromSeconds(bloodstream.UpdateInterval*2), false);
 
-                // storing the drunk time so we can remove it independently from other effects additions
-                bloodstream.DrunkTime += bloodstream.UpdateInterval * 2;
-
+                // storing the drunk and stutter time so we can remove it independently from other effects additions
+                bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
             }
             else if (_mobStateSystem.IsAlive(uid))
             {
                 // If they're healthy, we'll try and heal some bloodloss instead.
                 _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage, true, false);
 
-                // Remove the drunk effect when healthy. Should only remove the amount of drunk added by low blood level
-                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.DrunkTime);
-                // Reset the drunk time to zero
-                bloodstream.DrunkTime = 0;
-
+                // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
+                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime);
+                _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StatusTime);
+                // Reset the drunk and stutter time to zero
+                bloodstream.StatusTime = 0;
             }
         }
     }

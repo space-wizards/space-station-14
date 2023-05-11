@@ -22,7 +22,8 @@
       canCollide: false
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.25,-0.25,0.25,0.25"
           density: 20

@@ -12,14 +12,15 @@
     fixedRotation: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.25,0.25,0.25"
-      density: 100
-      mask:
-      - ItemMask
-      restitution: 0.3  # fite me
-      friction: 0.2
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 100
+        mask:
+        - ItemMask
+        restitution: 0.3  # fite me
+        friction: 0.2
   - type: Pullable
 
 # Ripley APLU
@@ -150,3 +151,132 @@
     graph: Ripley
     node: start
     defaultTarget: ripley
+
+# H.O.N.K.
+
+- type: entity
+  id: BaseHonkerPart
+  parent: BaseMechPart
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Items
+    noRot: false
+    netsync: false
+    sprite: Objects/Specific/Mech/honker_construction.rsi
+
+- type: entity
+  id: BaseHonkerPartItem
+  parent: BaseHonkerPart
+  abstract: true
+  components:
+  - type: Item
+    size: 50
+
+- type: entity
+  parent: BaseHonkerPart
+  id: HonkerHarness
+  name: H.O.N.K. harness
+  description: The core of the H.O.N.K. mech
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      honker_l_arm+o:
+        whitelist:
+          tags:
+          - HonkerLArm
+      honker_r_arm+o:
+        whitelist:
+          tags:
+          - HonkerRArm
+      honker_l_leg+o:
+        whitelist:
+          tags:
+          - HonkerLLeg
+      honker_r_leg+o:
+        whitelist:
+          tags:
+          - HonkerRLeg
+    sprite: Objects/Specific/Mech/honker_construction.rsi
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+  - type: MechAssembly
+    finishedPrototype: HonkerChassis
+    requiredParts:
+      HonkerLArm: false
+      HonkerRArm: false
+      HonkerLLeg: false
+      HonkerRLeg: false
+  - type: Sprite
+    state: honker_harness+o
+    noRot: true
+
+- type: entity
+  parent: BaseHonkerPartItem
+  id: HonkerLArm
+  name: H.O.N.K. left arm
+  description: A H.O.N.K. left arm, with unique sockets that accept odd weaponry designed by clown scientists.
+  components:
+  - type: Sprite
+    state: honker_l_arm
+  - type: Tag
+    tags:
+    - HonkerLArm
+
+- type: entity
+  parent: BaseHonkerPartItem
+  id: HonkerLLeg
+  name: H.O.N.K. left leg
+  description: A H.O.N.K. left leg. The foot appears just large enough to fully accommodate a clown shoe.
+  components:
+  - type: Sprite
+    state: honker_l_leg
+  - type: Tag
+    tags:
+    - HonkerLLeg
+
+- type: entity
+  parent: BaseHonkerPartItem
+  id: HonkerRLeg
+  name: H.O.N.K. right leg
+  description: A H.O.N.K. right leg. The foot appears just large enough to fully accommodate a clown shoe.
+  components:
+  - type: Sprite
+    state: honker_r_leg
+  - type: Tag
+    tags:
+    - HonkerRLeg
+
+- type: entity
+  parent: BaseHonkerPartItem
+  id: HonkerRArm
+  name: H.O.N.K. right arm
+  description: A H.O.N.K. right arm, with unique sockets that accept odd weaponry designed by clown scientists.
+  components:
+  - type: Sprite
+    state: honker_r_arm
+  - type: Tag
+    tags:
+    - HonkerRArm
+
+- type: entity
+  id: HonkerChassis
+  parent: BaseHonkerPart
+  name: H.O.N.K. chassis
+  description: An in-progress construction of a H.O.N.K. mech. Contains chuckle unit, bananium core and honk support systems.
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: honker
+  - type: Sprite
+    noRot: true
+    state: honker0
+  - type: Construction
+    graph: Honker
+    node: start
+    defaultTarget: honker

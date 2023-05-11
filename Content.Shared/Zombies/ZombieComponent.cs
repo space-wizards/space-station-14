@@ -1,8 +1,10 @@
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Damage;
 using Content.Shared.Roles;
 using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
@@ -22,14 +24,14 @@ namespace Content.Shared.Zombies
         /// The baseline infection chance you have if you are completely nude
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MaxZombieInfectionChance = 0.50f;
+        public float MaxZombieInfectionChance = 0.40f;
 
         /// <summary>
         /// The minimum infection chance possible. This is simply to prevent
         /// being invincible by bundling up.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MinZombieInfectionChance = 0.05f;
+        public float MinZombieInfectionChance = 0.10f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ZombieMovementSpeedDebuff = 0.75f;
@@ -86,5 +88,21 @@ namespace Content.Shared.Zombies
         public string? EmoteSoundsId = "Zombie";
 
         public EmoteSoundsPrototype? EmoteSounds;
+
+        // Heal on tick
+        [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
+        public TimeSpan NextTick;
+
+        [DataField("damage")] public DamageSpecifier Damage = new()
+        {
+            DamageDict = new ()
+            {
+                { "Blunt", -0.3 },
+                { "Slash", -0.2 },
+                { "Heat", -0.2 },
+                { "Cold", -0.2 },
+                { "Shock", -0.2 },
+            }
+        };
     }
 }
