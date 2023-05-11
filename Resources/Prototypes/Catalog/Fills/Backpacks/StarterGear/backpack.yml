@@ -17,6 +17,9 @@
       - id: BoxHug
       - id: RubberStampClown
       - id: CrayonRainbow
+      - id: ClothingMaskSexyClown
+        amount: 1
+        prob: 0.1
 
 - type: entity
   noSpawn: true
@@ -149,6 +152,15 @@
     contents:
       - id: BoxSurvival
       - id: RubberStampMime
+      - id: ClothingMaskSadMime
+        amount: 1
+        prob: 0.3
+      - id: ClothingMaskScaredMime
+        amount: 1
+        prob: 0.2
+      - id: ClothingMaskSexyMime
+        amount: 1
+        prob: 0.1
 
 - type: entity
   noSpawn: true
