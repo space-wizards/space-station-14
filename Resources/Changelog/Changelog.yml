@@ -1,39 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: you can now place floor tiles under directional windows (or any other
-      non-full wall)., type: Fix}
-  id: 3218
-  time: '2023-03-23T06:55:51.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some instances of NPCs getting stuck., type: Fix}
-  id: 3219
-  time: '2023-03-23T12:53:17.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Emag has received an update for disabling safety overrides on disposal
-      units., type: Tweak}
-  id: 3220
-  time: '2023-03-23T14:55:50.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: 'Changed sprites of the seed extractor, hydroponics bags and hydroponics
-      leather gloves.', type: Tweak}
-  - {message: Fixed inconsistent hydroponics bag naming., type: Fix}
-  id: 3221
-  time: '2023-03-23T15:10:18.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: 'added explosive banana peel to clown uplink (2 TC, 30 total damage)',
-    type: Add}
-  id: 3222
-  time: '2023-03-23T15:54:15.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Tweaked baseball bats and spears damage and weight values., type: Tweak}
-  id: 3223
-  time: '2023-03-23T16:06:09.0000000+00:00'
 - author: Nekomancer
   changes:
   - {message: Added small light post state sprites, type: Add}
@@ -2909,3 +2874,35 @@ Entries:
   - {message: Wielding is now predicted., type: Tweak}
   id: 3717
   time: '2023-05-10T00:01:23.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Frezon is slightly harder to make. The reaction always consumes Tritium
+      and Oxygen at a 1:50 ratio. But the reaction is easier to initiate, requiring
+      only Nitrogen, Oxygen, Tritium and <73.15K.', type: Tweak}
+  id: 3718
+  time: '2023-05-10T03:27:23.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Chef's vinegar bottles now hold 30u instead of 15u., type: Tweak}
+  id: 3719
+  time: '2023-05-10T11:36:47.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Survival gamemode has been temporarily disabled pending a rework, type: Tweak}
+  id: 3720
+  time: '2023-05-11T00:08:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Monkeys are now clumsy, like clowns', type: Tweak}
+  id: 3721
+  time: '2023-05-11T00:27:48.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Dermaline now heals 3 Heat/Shock/Cold per unit instead of 2., type: Tweak}
+  id: 3722
+  time: '2023-05-11T08:29:23.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added sigh sound, type: Add}
+  id: 3723
+  time: '2023-05-11T09:17:25.0000000+00:00'

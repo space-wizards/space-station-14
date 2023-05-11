@@ -22,7 +22,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         SubscribeLocalEvent<HeadsetComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
 
         SubscribeLocalEvent<WearingHeadsetComponent, EntitySpokeEvent>(OnSpeak);
-        
+
         SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
@@ -33,7 +33,8 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
     private void UpdateRadioChannels(EntityUid uid, HeadsetComponent headset, EncryptionKeyHolderComponent? keyHolder = null)
     {
-        if (!headset.Enabled)
+        // make sure to not add ActiveRadioComponent when headset is being deleted
+        if (!headset.Enabled || MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
         if (!Resolve(uid, ref keyHolder))

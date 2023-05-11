@@ -254,7 +254,7 @@ namespace Content.Server.GameTicking
                     return;
                 }
 
-                _sawmill.Warning($"Exception caught while trying to start the round! Restarting round...");
+                _sawmill.Error($"Exception caught while trying to start the round! Restarting round...");
                 _runtimeLog.LogException(e, nameof(GameTicker));
                 _startingRound = false;
                 RestartRound();
