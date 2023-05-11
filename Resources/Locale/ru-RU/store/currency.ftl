@@ -1,4 +1,4 @@
-store-currency-inserted = {CAPITALIZE(($used))} внесены в {$target}.
+store-currency-inserted = {CAPITALIZE($used)} внесены в {$target}.
 store-currency-inserted-implant = {CAPITALIZE($used)} вставляется в ваш имплантат.
 
 store-currency-free = Бесплатно
