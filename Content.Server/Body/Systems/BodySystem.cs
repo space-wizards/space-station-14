@@ -79,7 +79,7 @@ public sealed class BodySystem : SharedBodySystem
         BodyPartSlot slot,
         [NotNullWhen(true)] BodyPartComponent? part = null)
     {
-        if (!base.AttachPart(partId, slot, part))
+        if (partId == null || !Resolve(partId.Value, ref part, false) || !base.AttachPart(partId, slot, part))
             return false;
 
         if (part.Body is { } body &&
@@ -101,7 +101,7 @@ public sealed class BodySystem : SharedBodySystem
         if (partId == null || !Resolve(partId.Value, ref part))
             return false;
 
-        if (!base.DropPart(partId, part))
+        if (partId == null || !Resolve(partId.Value, ref part, false) || !base.DropPart(partId, part))
             return false;
 
         var oldBody = part.Body;
