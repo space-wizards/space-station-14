@@ -92,6 +92,11 @@ namespace Content.Shared.Zombies
         // Heal on tick
         [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
         public TimeSpan NextTick;
+
+        /// <summary>
+        /// Number of seconds that this zombie has been in crit, which scales healing over time. Updated by ZombieSystem
+        /// </summary>
+        [DataField("secondsCrit")]
         public int SecondsCrit;
 
         [DataField("damage")] public DamageSpecifier Damage = new()

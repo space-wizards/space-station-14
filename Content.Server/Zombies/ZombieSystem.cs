@@ -63,6 +63,9 @@ namespace Content.Server.Zombies
             var query = EntityQueryEnumerator<PendingZombieComponent>();
             var curTime = _timing.CurTime;
 
+            var zombQuery = EntityQueryEnumerator<ZombieComponent>();
+            var stateQuery = GetEntityQuery<MobStateComponent>();
+
             // Hurt the living infected
             while (query.MoveNext(out var uid, out var comp))
             {
@@ -78,10 +81,8 @@ namespace Content.Server.Zombies
                 _damageable.TryChangeDamage(uid, comp.Damage * pain_multiple, true, false);
             }
 
-            var zomb_query = EntityQueryEnumerator<ZombieComponent>();
-            var state_query = GetEntityQuery<MobStateComponent>();
             // Heal the zombified
-            while (zomb_query.MoveNext(out var uid, out var comp))
+            while (zombQuery.MoveNext(out var uid, out var comp))
             {
                 // Process only once per second
                 if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
@@ -90,7 +91,7 @@ namespace Content.Server.Zombies
                 comp.NextTick = curTime;
 
                 // Healing increases over time for zombies currently in crit
-                if (state_query.TryGetComponent(uid, out var mobstate) && mobstate.CurrentState == MobState.Critical)
+                if (stateQuery.TryGetComponent(uid, out var mobstate) && mobstate.CurrentState == MobState.Critical)
                 {
                     comp.SecondsCrit += 1;
                 }
