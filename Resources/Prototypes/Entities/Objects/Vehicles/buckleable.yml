@@ -422,3 +422,11 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  parent: VehicleUnicycle
+  id: VehicleUnicycleFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true

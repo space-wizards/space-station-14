@@ -1055,6 +1055,7 @@
     sprite: Objects/Fun/glue.rsi
     state: icon-0
   - type: Appearance
+  - type: Glue
   - type: Item
     sprite: Objects/Fun/glue.rsi
   - type: SolutionContainerManager
@@ -1062,7 +1063,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: CrazyGlue
+        - ReagentId: CrazyGlueReagent
           Quantity: 6
 
 - type: entity

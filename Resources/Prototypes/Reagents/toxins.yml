@@ -477,7 +477,7 @@
             Poison: 0.06
 
 - type: reagent
-  id: CrazyGlue
+  id: CrazyGlueReagent
   name: reagent-name-glue
   desc: reagent-desc-glue
   physicalDesc: reagent-physical-desc-pungent
