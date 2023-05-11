@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: 'Zombies drop their headsets, preventing them from hearing comms.',
-    type: Tweak}
-  id: 3225
-  time: '2023-03-23T16:17:33.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Round end screen now lists traitor codewords., type: Tweak}
@@ -2905,3 +2899,8 @@ Entries:
   - {message: Botany's produce is now larger on average., type: Tweak}
   id: 3724
   time: '2023-05-11T11:15:21.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Mob sprites no longer rotate on death, type: Fix}
+  id: 3725
+  time: '2023-05-11T11:20:42.0000000+00:00'
