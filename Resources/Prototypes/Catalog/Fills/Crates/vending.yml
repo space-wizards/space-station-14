@@ -165,3 +165,30 @@
     contents:
       - id: VendingMachineRestockGetmoreChocolateCorp
         amount: 2
+        
+- type: entity
+  id: CrateVendingMachineRestockChangFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockChang
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockDiscountDansFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockDiscountDans
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockDonutFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockDonut
+        amount: 2
