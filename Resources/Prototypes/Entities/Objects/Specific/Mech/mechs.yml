@@ -41,14 +41,15 @@
     LayoutId: Mech
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      density: 1000
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 1000
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: ContainerContainer
     containers:
@@ -97,6 +98,40 @@
 - type: entity
   id: MechRipleyBattery
   parent: MechRipley
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
+
+# TODO: have a whitelist for honker equipment
+- type: entity
+  id: MechHonker
+  parent: BaseMech
+  name: H.O.N.K.
+  description: "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. Used to spread the fun and joy of life. HONK!"
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: honker
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+  - type: Mech
+    baseState: honker
+    openState: honker-open
+    brokenState: honker-broken
+    mechToPilotDamageMultiplier: 0.5
+
+- type: entity
+  id: MechHonkerBattery
+  parent: MechHonker
   suffix: Battery
   components:
   - type: ContainerFill

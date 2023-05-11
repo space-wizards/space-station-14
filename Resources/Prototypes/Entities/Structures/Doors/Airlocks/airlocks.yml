@@ -107,14 +107,15 @@
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
-      density: 100
-      mask:
-      - FullTileMask
-      layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
-      - GlassAirlockLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        density: 100
+        mask:
+        - FullTileMask
+        layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
+        - GlassAirlockLayer
   - type: LayerChangeOnWeld
     unWeldedLayer: GlassAirlockLayer
     weldedLayer: GlassLayer
@@ -122,7 +123,7 @@
     graph: Airlock
     node: glassAirlock
   - type: PaintableAirlock
-    group: Windoor
+    group: Glass
   - type: RadiationBlocker
     resistance: 2
 

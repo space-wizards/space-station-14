@@ -115,14 +115,15 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.15,-0.3,0.15,0.3"
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
-        density: 380
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.15,-0.3,0.15,0.3"
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
+          density: 380
     - type: Appearance
     - type: AnimationPlayer
     - type: PointLight

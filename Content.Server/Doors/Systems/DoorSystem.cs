@@ -1,8 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
+using Content.Server.MachineLinking.System;
 using Content.Server.Tools.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -30,9 +30,7 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly AirlockSystem _airlock = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
-    [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -185,7 +183,7 @@ public sealed class DoorSystem : SharedDoorSystem
             var canEv = new BeforeDoorPryEvent(user, tool);
             RaiseLocalEvent(target, canEv, false);
 
-            if (canEv.Cancelled)
+            if (!door.CanPry || canEv.Cancelled)
                 // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
                 // under a windoor.
                 return true;
@@ -253,7 +251,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.State != DoorState.Closed)
             return;
 
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
 
         if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
@@ -292,12 +290,13 @@ public sealed class DoorSystem : SharedDoorSystem
 
     protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
     {
+        var uid = body.Owner;
         if (component.BumpOpen)
         {
-            foreach (var other in PhysicsSystem.GetContactingEntities(body, approximate: true))
+            foreach (var other in PhysicsSystem.GetContactingEntities(uid, body, approximate: true))
             {
-                if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
-                    TryOpen(component.Owner, component, other.Owner, false, quiet: true)) break;
+                if (Tags.HasTag(other, "DoorBumpOpener") && TryOpen(uid, component, other, false, quiet: true))
+                    break;
             }
         }
     }

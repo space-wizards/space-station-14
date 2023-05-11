@@ -169,6 +169,7 @@ public abstract partial class SharedBuckleSystem
     /// <param name="strapComp"> strap component of the thing we are strapping to </param>
     private void UpdateBuckleStatus(EntityUid uid, BuckleComponent buckleComp, StrapComponent? strapComp = null)
     {
+        AppearanceSystem.SetData(uid, StrapVisuals.State, buckleComp.Buckled);
         if (buckleComp.BuckledTo != null)
         {
             if (!Resolve(buckleComp.BuckledTo.Value, ref strapComp))
@@ -353,7 +354,8 @@ public abstract partial class SharedBuckleSystem
 
        ReAttach(buckleUid, strapUid, buckleComp, strapComp);
        SetBuckledTo(buckleUid,strapUid, strapComp, buckleComp);
-       _audioSystem.PlayPredicted(strapComp.BuckleSound, strapUid, buckleUid);
+       // TODO user is currently set to null because if it isn't the sound fails to play in some situations, fix that
+       _audioSystem.PlayPredicted(strapComp.BuckleSound, strapUid, null);
 
        var ev = new BuckleChangeEvent(strapUid, buckleUid, true);
        RaiseLocalEvent(ev.BuckledEntity, ref ev);
@@ -471,8 +473,6 @@ public abstract partial class SharedBuckleSystem
         {
             _standingSystem.Down(buckleUid);
         }
-        // Sync StrapComponent data
-        AppearanceSystem.SetData(strapUid, StrapVisuals.State, false);
         if (strapComp.BuckledEntities.Remove(buckleUid))
         {
             strapComp.OccupiedSize -= buckleComp.Size;
@@ -480,7 +480,8 @@ public abstract partial class SharedBuckleSystem
             Dirty(strapComp);
         }
 
-        _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, buckleUid);
+        AppearanceSystem.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
+        _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, null);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, false);
         RaiseLocalEvent(buckleUid, ref ev);
