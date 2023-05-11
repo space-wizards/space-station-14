@@ -85,7 +85,6 @@
       layers:
         - sprite: Fluids/puddle.rsi
           state: splat0
-      netsync: false
       drawdepth: FloorObjects
       color: "#FFFFFF80"
     - type: Physics
