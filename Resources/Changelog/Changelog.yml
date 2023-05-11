@@ -1,32 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: 'added explosive banana peel to clown uplink (2 TC, 30 total damage)',
-    type: Add}
-  id: 3222
-  time: '2023-03-23T15:54:15.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Tweaked baseball bats and spears damage and weight values., type: Tweak}
-  id: 3223
-  time: '2023-03-23T16:06:09.0000000+00:00'
-- author: Nekomancer
-  changes:
-  - {message: Added small light post state sprites, type: Add}
-  - {message: Tweaked small light post empty sprite, type: Tweak}
-  id: 3224
-  time: '2023-03-23T16:12:33.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: 'Zombies drop their headsets, preventing them from hearing comms.',
-    type: Tweak}
-  id: 3225
-  time: '2023-03-23T16:17:33.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Round end screen now lists traitor codewords., type: Tweak}
-  id: 3226
-  time: '2023-03-23T16:29:40.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed dame dane guy set to be less blue. That was a baka mistake.,
@@ -2907,3 +2879,29 @@ Entries:
   - {message: 'Monkeys are now clumsy, like clowns', type: Tweak}
   id: 3721
   time: '2023-05-11T00:27:48.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Dermaline now heals 3 Heat/Shock/Cold per unit instead of 2., type: Tweak}
+  id: 3722
+  time: '2023-05-11T08:29:23.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added sigh sound, type: Add}
+  id: 3723
+  time: '2023-05-11T09:17:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Botany's produce is now larger on average., type: Tweak}
+  id: 3724
+  time: '2023-05-11T11:15:21.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Mob sprites no longer rotate on death, type: Fix}
+  id: 3725
+  time: '2023-05-11T11:20:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: PKA bullets can now destroy gatherable materials such as rocks or trees.,
+    type: Add}
+  id: 3726
+  time: '2023-05-11T13:19:09.0000000+00:00'
