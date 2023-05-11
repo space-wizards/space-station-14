@@ -1064,6 +1064,18 @@
             Poison: 1
 
 - type: reagent
+  id: OilyOaf
+  name: reagent-name-oily-oaf
+  parent: BaseAlcohol
+  desc: reagent-desc-oily-oaf
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: rocksandstones
+  color: "#f5dfa0"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/oilyoafglass.rsi
+    state: icon
+
+- type: reagent
   id: Patron
   name: reagent-name-patron
   parent: BaseAlcohol

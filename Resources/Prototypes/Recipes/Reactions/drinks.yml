@@ -534,8 +534,8 @@
       amount: 1
   products:
     ManlyDorf: 3
-- type: reaction
 
+- type: reaction
   id: Margarita
   reactants:
     Tequila:
@@ -612,6 +612,16 @@
       amount: 1
   products:
     NuclearCola: 5
+
+- type: reaction
+  id: OilyOaf
+  reactants:
+    ManlyDorf:
+      amount: 2
+    SodaWater:
+      amount: 1
+  products:
+    OilyOaf: 3
 
 - type: reaction
   id: Patron

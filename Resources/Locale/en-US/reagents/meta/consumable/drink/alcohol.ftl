@@ -190,6 +190,9 @@ reagent-desc-moonshine = Artisanal homemade liquor. What could go wrong?
 reagent-name-neurotoxin = neurotoxin
 reagent-desc-neurotoxin = A strong neurotoxin that puts the subject into a death-like state.
 
+reagent-name-oily-oaf = oily oaf
+reagent-desc-oily-oaf = A classic drink loved by hard-working dwarves. Rock and stone!
+
 reagent-name-patron = patron
 reagent-desc-patron = Tequila with silver in it, a favorite of alcoholic women in the club scene.
 
