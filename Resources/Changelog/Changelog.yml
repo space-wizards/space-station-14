@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The Emag has received an update for disabling safety overrides on disposal
-      units., type: Tweak}
-  id: 3220
-  time: '2023-03-23T14:55:50.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: 'Changed sprites of the seed extractor, hydroponics bags and hydroponics
@@ -2910,3 +2904,8 @@ Entries:
   - {message: Chef's vinegar bottles now hold 30u instead of 15u., type: Tweak}
   id: 3719
   time: '2023-05-10T11:36:47.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Survival gamemode has been temporarily disabled pending a rework, type: Tweak}
+  id: 3720
+  time: '2023-05-11T00:08:45.0000000+00:00'

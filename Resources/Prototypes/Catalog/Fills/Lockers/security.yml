@@ -109,101 +109,94 @@
       - id: ClothingMaskGas
 
 - type: entity
+  parent: GunSafe
   id: GunSafeDisabler
-  suffix: Disabler
-  parent: GunSafe
-  name: gun safe disabler
+  name: disabler safe
   components:
   - type: StorageFill
     contents:
-      - id: WeaponDisabler
-        amount: 5
+    - id: WeaponDisabler
+      amount: 5
 
 - type: entity
+  parent: GunSafe
   id: GunSafePistolMk58
-  suffix: MK58
-  parent: GunSafe
-  name: gun safe Mk58
+  name: mk58 safe
   components:
   - type: StorageFill
     contents:
-      - id: WeaponPistolMk58
-        amount: 4
-      - id: MagazinePistol
-        amount: 8
+    - id: WeaponPistolMk58
+      amount: 4
+    - id: MagazinePistol
+      amount: 8
 
 - type: entity
+  parent: GunSafe
   id: GunSafeRifleLecter
-  suffix: Lecter
-  parent: GunSafe
-  name: gun safe lecter
+  name: lecter safe
   components:
   - type: StorageFill
     contents:
-      - id: WeaponRifleLecter
-        amount: 2
-      - id: MagazineRifle
-        amount: 4
+    - id: WeaponRifleLecter
+      amount: 2
+    - id: MagazineRifle
+      amount: 4
 
 - type: entity
-  id: GunSafeSubMachineGunVector
-  suffix: Vector
   parent: GunSafe
-  name: gun safe vector
+  id: GunSafeSubMachineGunDrozd
+  name: drozd safe
   components:
   - type: StorageFill
     contents:
-      - id: WeaponSubMachineGunVector
-        amount: 2
-      - id: MagazineMagnumSubMachineGun
-        amount: 4
+    - id: WeaponSubMachineGunDrozd
+      amount: 2
+    - id: MagazinePistolSubMachineGun
+      amount: 4
 
 - type: entity
+  parent: GunSafe
   id: GunSafeShotgunEnforcer
-  suffix: Enforcer
-  parent: GunSafe
-  name: gun safe enforcer
+  name: enforcer safe
   components:
   - type: StorageFill
     contents:
-      - id: WeaponShotgunEnforcer
-        amount: 2
-      - id: MagazineShotgun
-        amount: 4
+    - id: WeaponShotgunEnforcer
+      amount: 2
+    - id: MagazineShotgun
+      amount: 4
 
 - type: entity
-  id: GunSafeShotgunKammerer
-  suffix: Kammerer
   parent: GunSafe
-  name: gun safe kammerer
+  id: GunSafeShotgunKammerer
+  name: kammerer safe
   components:
   - type: StorageFill
     contents:
-      - id: WeaponShotgunKammerer
-        amount: 2
-      - id: MagazineShotgun
-        amount: 4
+    - id: WeaponShotgunKammerer
+      amount: 2
+    - id: MagazineShotgun
+      amount: 4
 
 - type: entity
   id: GunSafeSubMachineGunWt550
   suffix: Wt550
   parent: GunSafe
-  name: gun safe Wt550
+  name: wt550 safe
   components:
   - type: StorageFill
     contents:
-      - id: WeaponSubMachineGunWt550
-        amount: 2
-      - id: MagazinePistolSubMachineGun
-        amount: 4
+    - id: WeaponSubMachineGunWt550
+      amount: 2
+    - id: MagazinePistolSubMachineGun
+      amount: 4
 
 - type: entity
-  id: GunSafeLaserCarbine
-  suffix: Laser Carbine
   parent: GunSafe
-  name: gun safe laser carbine
+  id: GunSafeLaserCarbine
+  name: laser safe
   components:
   - type: StorageFill
     contents:
-      - id: WeaponLaserCarbine
-        amount: 3
+    - id: WeaponLaserCarbine
+      amount: 3
