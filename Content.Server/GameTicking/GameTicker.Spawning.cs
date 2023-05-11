@@ -12,6 +12,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Humanoid;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Map;
@@ -197,7 +198,8 @@ namespace Content.Server.GameTicking
                     Loc.GetString(
                         "latejoin-arrival-announcement",
                     ("character", MetaData(mob).EntityName),
-                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
+                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name)),
+                    ("gender", EntityManager.GetComponent<HumanoidAppearanceComponent>(mob).Gender)
                     ), Loc.GetString("latejoin-arrival-sender"),
                     playDefaultSound: false);
             }

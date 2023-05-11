@@ -1,5 +1,5 @@
 ﻿- type: dataset
-  id: names_last_female
+  id: names_last
   values:
   - Смирнова
   - Иванова
@@ -251,10 +251,6 @@
   - Меркушева
   - Лыткина
   - Турова
-
-- type: dataset
-  id: names_last_male
-  values:
   - Смирнов
   - Иванов
   - Кузнецов
