@@ -447,6 +447,7 @@
     damageCoefficient: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
+  - type: BiocodedClothing
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -591,6 +592,7 @@
     damageCoefficient: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
+  - type: BiocodedClothing
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -621,6 +623,7 @@
     damageCoefficient: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
+  - type: BiocodedClothing
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -653,6 +656,7 @@
     damageCoefficient: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
+  - type: BiocodedClothing
 
 - type: entity
   parent: ClothingOuterHardsuitBase
