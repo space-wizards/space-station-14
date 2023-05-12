@@ -18,7 +18,7 @@ action-name-em-burst = Электромагнитный взрыв
 action-desc-em-burst = Отключить любую близлежащую технику с помощью электромагнитного импульса.
 
 ninja-full-power = Батарея костюма уже заряжена
-ninja-drain-empty = У {CAPITALIZE(($battery))} не хватает мощности для высасывания
+ninja-drain-empty = У {CAPITALIZE($battery)} не хватает мощности для высасывания
 ninja-drain-success = Вы высасываете энергию из ($battery)!
 
 ninja-download-fail = Никаких новых исследовательских узлов не скопировалось...
