@@ -806,6 +806,7 @@
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
   - type: GhostTakeoverAvailable
+  - type: IdExaminable
 
 - type: entity
   name: guidebook monkey
