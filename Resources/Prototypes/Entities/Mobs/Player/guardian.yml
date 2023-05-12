@@ -11,8 +11,8 @@
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Guardian
-      description: Listen to your owner. Don't tank damage. Punch people hard.
+      name: ghost-role-information-guardian-name
+      description: ghost-role-information-guardian-description
     - type: GhostTakeoverAvailable
     - type: Input
       context: "human"
@@ -59,7 +59,8 @@
       bodyType: KinematicController
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.35
           density: 25
@@ -109,8 +110,8 @@
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Holoparasite
-      description: Listen to your owner. Don't tank damage. Punch people hard.
+      name: ghost-role-information-holoparasite-name
+      description: ghost-role-information-holoparasite-description
     - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite
@@ -136,8 +137,8 @@
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Ifrit
-      description: Listen to your owner. Don't tank damage. Punch people hard.
+      name: ghost-role-information-ifrit-name
+      description: ghost-role-information-ifrit-description
     - type: GhostTakeoverAvailable
     - type: RandomSprite
       available:

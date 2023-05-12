@@ -57,22 +57,22 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGasThermoRefreshParts(EntityUid uid, GasThermoMachineComponent thermoMachine, RefreshPartsEvent args)
         {
-            var matterBinRating = args.PartRatings[thermoMachine.MachinePartHeatCapacity];
-            var laserRating = args.PartRatings[thermoMachine.MachinePartTemperature];
+            var heatCapacityPartRating = args.PartRatings[thermoMachine.MachinePartHeatCapacity];
+            var temperatureRangePartRating = args.PartRatings[thermoMachine.MachinePartTemperature];
 
-            thermoMachine.HeatCapacity = thermoMachine.BaseHeatCapacity * MathF.Pow(matterBinRating, 2);
+            thermoMachine.HeatCapacity = thermoMachine.BaseHeatCapacity * MathF.Pow(heatCapacityPartRating, 2);
 
             switch (thermoMachine.Mode)
             {
                 // 593.15K with stock parts.
                 case ThermoMachineMode.Heater:
-                    thermoMachine.MaxTemperature = thermoMachine.BaseMaxTemperature + thermoMachine.MaxTemperatureDelta * laserRating;
+                    thermoMachine.MaxTemperature = thermoMachine.BaseMaxTemperature + thermoMachine.MaxTemperatureDelta * temperatureRangePartRating;
                     thermoMachine.MinTemperature = Atmospherics.T20C;
                     break;
                 // 73.15K with stock parts.
                 case ThermoMachineMode.Freezer:
                     thermoMachine.MinTemperature = MathF.Max(
-                        thermoMachine.BaseMinTemperature - thermoMachine.MinTemperatureDelta * laserRating, Atmospherics.TCMB);
+                        thermoMachine.BaseMinTemperature - thermoMachine.MinTemperatureDelta * temperatureRangePartRating, Atmospherics.TCMB);
                     thermoMachine.MaxTemperature = Atmospherics.T20C;
                     break;
             }

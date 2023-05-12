@@ -106,8 +106,9 @@ namespace Content.Client.PDA
 
             EjectIdButton.IsActive = state.PDAOwnerInfo.IdOwner != null || state.PDAOwnerInfo.JobTitle != null;
             EjectPenButton.IsActive = state.HasPen;
-            ActivateUplinkButton.Visible = state.HasUplink;
             ActivateMusicButton.Visible = state.CanPlayMusic;
+            ShowUplinkButton.Visible = state.HasUplink;
+            LockUplinkButton.Visible = state.HasUplink;
         }
 
         public void UpdateAvailablePrograms(List<(EntityUid, CartridgeComponent)> programs)

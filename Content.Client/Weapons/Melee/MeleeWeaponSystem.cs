@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Gameplay;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
@@ -100,11 +101,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, _transform, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
                 }
                 else
                 {
-                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, _transform, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
                 }
 
                 if (_stateManager.CurrentState is GameplayStateBase screen)
@@ -135,14 +136,14 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, _transform, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
                 }
                 else
                 {
-                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, _transform, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
                 }
 
-                EntityManager.RaisePredictiveEvent(new HeavyAttackEvent(weaponUid, coordinates));
+                ClientHeavyAttack(entity, coordinates, weaponUid, weapon);
             }
 
             return;
@@ -176,11 +177,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (MapManager.TryFindGridAt(mousePos, out var grid))
             {
-                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, _transform, EntityManager);
+                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
             }
             else
             {
-                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, _transform, EntityManager);
+                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
             }
 
             EntityUid? target = null;
@@ -242,6 +243,34 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Raises a heavy attack event with the relevant attacked entities.
+    /// This is to avoid lag effecting the client's perspective too much.
+    /// </summary>
+    private void ClientHeavyAttack(EntityUid user, EntityCoordinates coordinates, EntityUid meleeUid, MeleeWeaponComponent component)
+    {
+        // Only run on first prediction to avoid the potential raycast entities changing.
+        if (!TryComp<TransformComponent>(user, out var userXform) ||
+            !Timing.IsFirstTimePredicted)
+        {
+            return;
+        }
+
+        var targetMap = coordinates.ToMap(EntityManager, TransformSystem);
+
+        if (targetMap.MapId != userXform.MapID)
+            return;
+
+        var userPos = TransformSystem.GetWorldPosition(userXform);
+        var direction = targetMap.Position - userPos;
+        var distance = Math.Min(component.Range, direction.Length);
+
+        // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
+        // Server will validate it with InRangeUnobstructed.
+        var entities = ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList();
+        RaisePredictiveEvent(new HeavyAttackEvent(meleeUid, entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), coordinates));
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

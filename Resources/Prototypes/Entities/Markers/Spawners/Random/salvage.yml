@@ -62,9 +62,7 @@
     - type: RandomSpawner
       prototypes:
         - AdvancedCapacitorStockPart
-        - AdvancedScanningModuleStockPart
         - NanoManipulatorStockPart
-        - HighPowerMicroLaserStockPart
         - AdvancedMatterBinStockPart
       offset: 0.0
 
@@ -81,16 +79,12 @@
     - type: RandomSpawner
       rarePrototypes:
         - QuadraticCapacitorStockPart
-        - TriphasicScanningModuleStockPart
         - FemtoManipulatorStockPart
-        - QuadUltraMicroLaserStockPart
         - BluespaceMatterBinStockPart
       rareChance: 0.05
       prototypes:
         - SuperCapacitorStockPart
-        - PhasicScanningModuleStockPart
         - PicoManipulatorStockPart
-        - UltraHighPowerMicroLaserStockPart
         - SuperMatterBinStockPart
       chance: 0.95
       offset: 0.0

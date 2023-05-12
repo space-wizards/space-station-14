@@ -104,6 +104,13 @@
     Steel: 500
 
 - type: latheRecipe
+  id: Defibrillator
+  result: DefibrillatorEmpty
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
   id: Medkit
   result: Medkit
   name: first aid kit (empty)
@@ -166,3 +173,11 @@
   completetime: 2
   materials:
     Plastic: 300
+
+- type: latheRecipe
+  id: HandLabeler
+  result: HandLabeler
+  name: hand labeler
+  completetime: 2
+  materials:
+    Plastic: 100

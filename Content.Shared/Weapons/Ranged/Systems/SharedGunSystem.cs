@@ -41,6 +41,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] protected readonly ExamineSystemShared Examine = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private   readonly RechargeBasicEntityAmmoSystem _recharge = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
@@ -52,7 +53,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
     [Dependency] protected readonly SharedProjectileSystem Projectiles = default!;
-    [Dependency] protected readonly SharedTransformSystem Transform = default!;
+    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -79,13 +80,15 @@ public abstract partial class SharedGunSystem : EntitySystem
         InitializeMagazine();
         InitializeRevolver();
         InitializeBasicEntity();
+        InitializeClothing();
         InitializeContainer();
+        InitializeSolution();
 
         // Interactions
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
         SubscribeLocalEvent<GunComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
-        SubscribeLocalEvent<GunComponent, ComponentInit>(OnGunInit);
+        SubscribeLocalEvent<GunComponent, EntityUnpausedEvent>(OnGunUnpaused);
 
 #if DEBUG
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
@@ -93,14 +96,16 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, GunComponent component, MapInitEvent args)
     {
-        if (component.NextFire > TimeSpan.Zero)
+        if (component.NextFire > Timing.CurTime)
             Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
+
+        DebugTools.Assert((component.AvailableModes & component.SelectedMode) != 0x0);
 #endif
     }
 
-    private void OnGunInit(EntityUid uid, GunComponent component, ComponentInit args)
+    private void OnGunUnpaused(EntityUid uid, GunComponent component, ref EntityUnpausedEvent args)
     {
-        DebugTools.Assert((component.AvailableModes & component.SelectedMode) != 0x0);
+        component.NextFire += args.PausedTime;
     }
 
     private void OnGunMeleeAttempt(EntityUid uid, GunComponent component, ref MeleeAttackAttemptEvent args)
@@ -223,19 +228,24 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (gun.NextFire > curTime)
             return;
 
+        var fireRate = TimeSpan.FromSeconds(1f / gun.FireRate);
+
         // First shot
-        if (gun.ShotCounter == 0 && gun.NextFire < curTime)
+        // Previously we checked shotcounter but in some cases all the bullets got dumped at once
+        if (gun.NextFire < curTime - fireRate)
             gun.NextFire = curTime;
 
         var shots = 0;
         var lastFire = gun.NextFire;
-        var fireRate = TimeSpan.FromSeconds(1f / gun.FireRate);
 
         while (gun.NextFire <= curTime)
         {
             gun.NextFire += fireRate;
             shots++;
         }
+
+        // NextFire has been touched regardless so need to dirty the gun.
+        Dirty(gun);
 
         // Get how many shots we're actually allowed to make, due to clip size or otherwise.
         // Don't do this in the loop so we still reset NextFire.
@@ -282,7 +292,6 @@ public abstract partial class SharedGunSystem : EntitySystem
                 // May cause prediction issues? Needs more tweaking
                 gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
                 Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
-                Dirty(gun);
                 return;
             }
 
@@ -376,8 +385,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid user, PhysicsComponent userPhysics)
     {
-        var fromMap = fromCoordinates.ToMapPos(EntityManager, Transform);
-        var toMap = toCoordinates.ToMapPos(EntityManager, Transform);
+        var fromMap = fromCoordinates.ToMapPos(EntityManager, TransformSystem);
+        var toMap = toCoordinates.ToMapPos(EntityManager, TransformSystem);
         var shotDirection = (toMap - fromMap).Normalized;
 
         const float impulseStrength = 25.0f;

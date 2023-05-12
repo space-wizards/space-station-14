@@ -37,33 +37,3 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default 
-
-- type: entity
-  parent: HandheldHealthAnalyzer
-  id: HandheldHealthAnalyzerGigacancer
-  suffix: gigacancer
-  components:
-  - type: HealthAnalyzer
-    fake: true
-    disease: Ultragigacancer
-
-## I know admins will want this
-- type: entity
-  parent: HandheldHealthAnalyzer
-  id: HandheldHealthAnalyzerOwOnavirus
-  name: OwOnavirus analyzer
-  suffix: admin abuse
-  components:
-  - type: HealthAnalyzer
-    fake: true
-    disease: OwOnavirus
-
-- type: entity
-  parent: HandheldHealthAnalyzer
-  id: HandheldHealthAnalyzerZombie
-  name: Zombie Infector
-  suffix: Active
-  components:
-  - type: HealthAnalyzer
-    fake: true
-    disease: ActiveZombieVirus

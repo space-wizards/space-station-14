@@ -13,18 +13,20 @@
     state: plasticflaps
     drawdepth: Mobs
   - type: Physics
+    bodyType: Static
   - type: Transform
     anchored: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,0.49"
-      density: 100
-      mask:
-      - TabletopMachineMask
-      layer:
-      - MidImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - TabletopMachineMask
+        layer:
+        - MidImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -54,15 +56,16 @@
   components:
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,0.49"
-      density: 100
-      mask:
-      - TabletopMachineMask
-      layer:
-      - Opaque
-      - MidImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - TabletopMachineMask
+        layer:
+        - Opaque
+        - MidImpassable
   - type: Occluder
 
 - type: entity

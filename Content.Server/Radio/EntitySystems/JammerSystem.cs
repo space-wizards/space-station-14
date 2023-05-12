@@ -69,9 +69,6 @@ public sealed class JammerSystem : EntitySystem
                 ? Loc.GetString("radio-jammer-component-examine-on-state")
                 : Loc.GetString("radio-jammer-component-examine-off-state");
             args.PushMarkup(msg);
-            if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
-                args.PushMarkup(Loc.GetString("radio-jammer-component-charge",
-                    ("charge", (int) ((battery.CurrentCharge / battery.MaxCharge) * 100))));
         }
     }
 

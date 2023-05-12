@@ -1,22 +1,11 @@
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorPowerBox
   name: PA power box
   description: Formally known as the Particle Focusing EM Lens. This uses electromagnetic waves to focus the Alpha-Particles.
   components:
     - type: Sprite
       sprite: Structures/Power/Generation/PA/power_box.rsi
-      layers:
-        - state: boxc
-          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: unlitp
-          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
-          shader: unshaded
-          visible: false
-    - type: Appearance
-    - type: ParticleAcceleratorPartVisuals
-      stateBase: unlit
-    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorPowerBox
     - type: PowerConsumer
       voltage: High
@@ -28,25 +17,16 @@
           nodeGroupID: HVPower
     - type: Construction
       graph: ParticleAcceleratorPowerBox
-      node: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
 
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorPowerBoxUnfinished
   name: PA power box
   suffix: Unfinished
   description: Formally known as the Particle Focusing EM Lens. This uses electromagnetic waves to focus the Alpha-Particles. It looks unfinished.
   components:
-    - type: Physics
-      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/power_box.rsi
-      state: box
     - type: Construction
       graph: ParticleAcceleratorPowerBox
-      node: start
-      defaultTarget: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
+

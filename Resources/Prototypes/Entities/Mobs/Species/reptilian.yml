@@ -15,6 +15,11 @@
   - type: Body
     prototype: Reptilian
     requiredLegs: 2
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatLizard
+      amount: 5
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
@@ -23,8 +28,6 @@
       Male: UnisexReptilian
       Female: UnisexReptilian
       Unsexed: UnisexReptilian
-  - type: DiseaseCarrier
-    diseaseResist: 0.1
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale

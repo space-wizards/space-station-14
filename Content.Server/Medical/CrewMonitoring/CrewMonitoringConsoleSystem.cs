@@ -7,6 +7,7 @@ using Content.Shared.Medical.CrewMonitoring;
 using Robust.Shared.Map;
 using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Timing;
+using Content.Server.PowerCell;
 
 namespace Content.Server.Medical.CrewMonitoring
 {
@@ -16,6 +17,7 @@ namespace Content.Server.Medical.CrewMonitoring
         [Dependency] private readonly SharedTransformSystem _xform = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly PowerCellSystem _cell = default!;
 
         public override void Initialize()
         {
@@ -47,6 +49,9 @@ namespace Content.Server.Medical.CrewMonitoring
 
         private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)
         {
+            if (!_cell.TryUseActivatableCharge(uid))
+                return;
+
             UpdateUserInterface(uid, component);
         }
 

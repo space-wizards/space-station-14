@@ -5,11 +5,11 @@ using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Physics;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -129,6 +129,10 @@ public abstract class SharedDoorSystem : EntitySystem
     protected void SetState(EntityUid uid, DoorState state, DoorComponent? door = null)
     {
         if (!Resolve(uid, ref door))
+            return;
+
+        // If no change, return to avoid firing a new DoorStateChangedEvent.
+        if (state == door.State)
             return;
 
         switch (state)
@@ -442,8 +446,11 @@ public abstract class SharedDoorSystem : EntitySystem
             if (!otherPhysics.CanCollide)
                 continue;
 
-            if (otherPhysics.BodyType == BodyType.Static || (physics.CollisionMask & otherPhysics.CollisionLayer) == 0
-                && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
+            //If the colliding entity is a slippable item ignore it by the airlock
+            if (otherPhysics.CollisionLayer == (int) CollisionGroup.SlipLayer && otherPhysics.CollisionMask == (int) CollisionGroup.ItemMask)
+                continue;
+
+            if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
 
             if (_entityLookup.GetWorldAABB(otherPhysics.Owner).IntersectPercentage(doorAABB) < IntersectPercentage)

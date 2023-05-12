@@ -77,12 +77,12 @@
       - Electrocution
       - Drunk
       - SlurredSpeech
+      - RatvarianLanguage
       - PressureImmunity
       - Muted
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
-  - type: DiseaseCarrier
   - type: Blindable
   # Other
   - type: Inventory
@@ -151,7 +151,8 @@
     bodyType: KinematicController
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeCircle
           radius: 0.35
         density: 185
@@ -369,15 +370,16 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
-        density: 185
-        restitution: 0.0
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.35,-0.35,0.35,0.35"
+          density: 185
+          restitution: 0.0
+          mask:
+          - MobMask
+          layer:
+          - MobLayer
     - type: HumanoidAppearance
       species: Human
     - type: Body
