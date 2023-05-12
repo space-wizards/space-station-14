@@ -90,7 +90,7 @@ public sealed class BiocodedClothingSystem : EntitySystem
         var isValid = IsValidOwner(args.EquipTarget, uid, component);
         if (!isValid)
         {
-            args.Reason = "biocoded-clothing-component-equip-failed ";
+            args.Reason = "biocoded-clothing-component-equip-failed";
             args.Cancel();
         }
     }
