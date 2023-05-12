@@ -3,8 +3,10 @@ using Content.Shared.Popups;
 using Content.Shared.Item;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Glue;
-
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Server.Nutrition.Components;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Glue
 {
@@ -12,6 +14,7 @@ namespace Content.Server.Glue
     {
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly FoodSystem _food = default!;
 
 
         public override void Initialize()
@@ -34,14 +37,20 @@ namespace Content.Server.Glue
 
             if (!HasComp<GluedComponent>(target) || !HasComp<UnremoveableComponent>(target))
             {
-
+                _audio.PlayPvs(component.Squeeze, uid);
                 EnsureComp<UnremoveableComponent>(target);
                 _popup.PopupEntity(Loc.GetString("glue-success", ("target", Identity.Entity(target, EntityManager))), args.User,
                 args.User, PopupType.Medium);
                 EnsureComp<GluedComponent>(target);
             }
 
+            if (TryComp<FoodComponent>(uid, out var food))
+            {
+                _food.DeleteAndSpawnTrash(food, uid, args.User);
+            }
+
             args.Handled = true;
         }
+
     }
 }

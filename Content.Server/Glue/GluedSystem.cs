@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Medical;
+using Content.Shared.Hands.Components;
 
 namespace Content.Server.Glue;
 
@@ -20,6 +21,7 @@ public sealed class GluedSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GluedComponent, ComponentInit>(OnGlued);
+        SubscribeLocalEvent<GluedComponent, InteractHandEvent>(OnPickUp);
     }
 
     public override void Update(float frameTime)
@@ -50,10 +52,17 @@ public sealed class GluedSystem : EntitySystem
         var meta = MetaData(uid);
         var name = meta.EntityName;
         component.BeforeGluedEntityName = meta.EntityName;
-        _audio.PlayPvs(component.Squeeze, uid);
         meta.EntityName = Loc.GetString("glued-name-prefix", ("target", name));
-        component.Enabled = false;
-        component.GlueBroken = true;
-        component.GlueTime = _timing.CurTime + component.GlueCooldown;
+    }
+
+    private void OnPickUp(EntityUid uid, GluedComponent component, InteractHandEvent args)
+    {
+        var userHands = Comp<HandsComponent>(args.User);
+        if (userHands.ActiveHandEntity == uid)
+        {
+            component.Enabled = false;
+            component.GlueBroken = true;
+            component.GlueTime = _timing.CurTime + component.GlueCooldown;
+        }
     }
 }
