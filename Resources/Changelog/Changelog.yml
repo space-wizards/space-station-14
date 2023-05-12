@@ -1,15 +1,6 @@
 Entries:
 - author: Slava0135
   changes:
-  - {message: 'added Telecom System. Sending messages through headsets (but handheld
-      radios / intercoms and etc.) now requires powered telecom server with channel
-      encryption key inserted. Source, receiver and server should be on the same map.
-      Centcom and syndicate channels are available without server and their messages
-      not limited to map.', type: Add}
-  id: 3233
-  time: '2023-03-24T00:02:41.0000000+00:00'
-- author: Slava0135
-  changes:
   - {message: maintenance panel needs to be opened to insert/remove keys in telecom
       server, type: Tweak}
   - {message: telecom server now can be deconstructed with crowbar, type: Fix}
@@ -2903,3 +2894,9 @@ Entries:
       fill your scrubbers with quite as much foam.', type: Tweak}
   id: 3732
   time: '2023-05-12T18:37:09.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'The Captain''s ID card can now be thrown against an airlock to open
+      it, just like any other ID.', type: Fix}
+  id: 3733
+  time: '2023-05-12T20:07:57.0000000+00:00'
