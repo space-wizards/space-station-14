@@ -66,6 +66,7 @@
     fuel: 3
     time: 3
   - type: Airlock
+  - type: DoorBolt
   - type: Appearance
   - type: WiresVisuals
   - type: ApcPowerReceiver

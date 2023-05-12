@@ -20,9 +20,9 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AirlockSystem _airlock = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
     [Dependency] private readonly DoorSystem _doors = default!;
+    [Dependency] private readonly DoorBoltSystem _bolts = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;

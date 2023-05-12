@@ -379,7 +379,7 @@ public sealed partial class ShuttleSystem
 
     private void SetDockBolts(EntityUid uid, bool enabled)
     {
-        var query = AllEntityQuery<DockingComponent, AirlockComponent, TransformComponent>();
+        var query = AllEntityQuery<DockingComponent, DoorBoltComponent, TransformComponent>();
 
         while (query.MoveNext(out var doorUid, out _, out var door, out var xform))
         {
@@ -387,7 +387,7 @@ public sealed partial class ShuttleSystem
                 continue;
 
             _doors.TryClose(doorUid);
-            _airlock.SetBoltsWithAudio(doorUid, door, enabled);
+            _bolts.SetBoltsWithAudio(doorUid, door, enabled);
         }
     }
 

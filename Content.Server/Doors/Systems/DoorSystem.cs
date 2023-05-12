@@ -28,7 +28,7 @@ namespace Content.Server.Doors.Systems;
 public sealed class DoorSystem : SharedDoorSystem
 {
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly AirlockSystem _airlock = default!;
+    [Dependency] private readonly DoorBoltSystem _bolts = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
@@ -260,7 +260,10 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         if(TryComp<AirlockComponent>(uid, out var airlockComponent))
         {
-            if (airlockComponent.BoltsDown || !this.IsPowered(uid, EntityManager))
+            bool bolts_block =
+                (EntityManager.TryGetComponent<DoorBoltComponent>(uid, out var bolts) && bolts.BoltsDown);
+
+            if (bolts_block || !this.IsPowered(uid, EntityManager))
                 return;
 
             if (door.State == DoorState.Closed)
@@ -284,8 +287,8 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.OpenSound != null)
             PlaySound(uid, door.OpenSound, AudioParams.Default.WithVolume(-5), user, predicted);
 
-        if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(uid, out var airlockComponent))
-            _airlock.SetBoltsWithAudio(uid, airlockComponent, !airlockComponent.BoltsDown);
+        if(lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
+            _bolts.SetBoltsWithAudio(uid, doorBoltComponent, !doorBoltComponent.BoltsDown);
     }
 
     protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
