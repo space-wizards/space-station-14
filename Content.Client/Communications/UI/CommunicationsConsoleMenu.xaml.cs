@@ -40,7 +40,7 @@ namespace Content.Client.Communications.UI
 
             // This feels really leaky; can't see how to set this from xml
             string placeHolder = Loc.GetString("comms-console-menu-announcement-placeholder");
-            _messageInput.Placeholder = new Rope.Leaf(placeHolder);
+            MessageInput.Placeholder = new Rope.Leaf(placeHolder);
 
             AnnounceButton.OnPressed += (_) =>
             {
@@ -53,7 +53,7 @@ namespace Content.Client.Communications.UI
                 if (trimmed.Length > 0)
                 {
                     Owner.AnnounceButtonPressed(trimmed);
-                    _messageInput.TextRope = new Rope.Leaf("");
+                    MessageInput.TextRope = new Rope.Leaf("");
                 }
             };
 
@@ -188,11 +188,11 @@ namespace Content.Client.Communications.UI
                 var lightEnableBlend = SmoothStep(0.1f, 0.3f, subSecondsRemaining);
                 var lightDisableBlend = SmoothStep(0.9f, 0.95f, subSecondsRemaining);
                 var alpha = lightEnableBlend - lightDisableBlend;
-                _countdownLabel.ModulateSelfOverride = new Color(1.0f, 1.0f, 1.0f, alpha);
+                CountdownLabel.ModulateSelfOverride = new Color(1.0f, 1.0f, 1.0f, alpha);
             }
             else
             {
-                _countdownLabel.ModulateSelfOverride = Color.White;
+                CountdownLabel.ModulateSelfOverride = Color.White;
             }
         }
 
