@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Syndicate shoulder holsters can no longer hold melee weapons., type: Tweak}
-  - {message: Suspicious toolbox now comes with a utility belt in place of a holster.,
-    type: Tweak}
-  id: 3232
-  time: '2023-03-23T18:14:55.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: 'added Telecom System. Sending messages through headsets (but handheld
@@ -2904,3 +2897,9 @@ Entries:
     type: Fix}
   id: 3731
   time: '2023-05-12T15:29:39.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Due to a recession on the clown planet, NT can no longer afford to
+      fill your scrubbers with quite as much foam.', type: Tweak}
+  id: 3732
+  time: '2023-05-12T18:37:09.0000000+00:00'
