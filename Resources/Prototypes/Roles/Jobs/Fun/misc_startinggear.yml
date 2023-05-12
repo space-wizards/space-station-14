@@ -189,3 +189,4 @@
   equipment:
     head: ClothingHeadHatTophat
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
+    id: BartenderIDCard
