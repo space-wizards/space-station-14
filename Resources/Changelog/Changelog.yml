@@ -1,9 +1,4 @@
 Entries:
-- author: MisterMecky
-  changes:
-  - {message: modified and added stack sprites for wood, type: Tweak}
-  id: 3239
-  time: '2023-03-24T02:26:20.0000000+00:00'
 - author: Mr0maks
   changes:
   - {message: Fix freedom implant charges not being used., type: Fix}
@@ -2900,3 +2895,8 @@ Entries:
   - {message: minimum of 20 people for nukeops., type: Tweak}
   id: 3738
   time: '2023-05-12T22:55:47.0000000+00:00'
+- author: DEATHB4DEFEAT
+  changes:
+  - {message: Changed the portal sprite., type: Tweak}
+  id: 3739
+  time: '2023-05-12T23:36:43.0000000+00:00'
