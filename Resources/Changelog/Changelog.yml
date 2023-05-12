@@ -1,9 +1,4 @@
 Entries:
-- author: TimmyTwoHands
-  changes:
-  - {message: Removed combat bonuses from Boxers., type: Tweak}
-  id: 3237
-  time: '2023-03-24T01:50:29.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix static melee offsets not showing the correct position., type: Fix}
@@ -2898,3 +2893,9 @@ Entries:
   - {message: Space tunes should now only be heard in space, type: Fix}
   id: 3736
   time: '2023-05-12T22:07:04.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: New safety standards have made bicaridine overdoses less fatal than
+      before., type: Tweak}
+  id: 3737
+  time: '2023-05-12T22:40:55.0000000+00:00'
