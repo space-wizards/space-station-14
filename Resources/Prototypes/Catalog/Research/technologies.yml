@@ -428,6 +428,8 @@
   - IndustrialEngineering
   unlockedRecipes:
   - PowerDrill
+  - CellRechargerCircuitboard
+  - WeaponCapacitorRechargerCircuitboard
   - SMESMachineCircuitboard
   - PowerComputerCircuitboard
   - GeneratorPlasmaMachineCircuitboard
