@@ -82,6 +82,8 @@
       - GasAnalyzer
       - UtilityBelt
       - Pickaxe
+      - CellRechargerCircuitboard
+      - WeaponCapacitorRechargerCircuitboard
   - type: StaticPrice
     price: 800
 
@@ -215,7 +217,6 @@
       - FireAlarmElectronics
       - IntercomElectronics
       - MailingUnitElectronics
-      - CellRechargerCircuitboard
       - SignalTimerElectronics
       - Bucket
       - MopItem
@@ -278,7 +279,6 @@
       - AirAlarmElectronics
       - FireAlarmElectronics
       - MailingUnitElectronics
-      - CellRechargerCircuitboard
       - IntercomElectronics
       - SignalTimerElectronics
       - SMESMachineCircuitboard
@@ -453,7 +453,6 @@
       - MagazineBoxRifleRubber
       - MagazineBoxLightRifle
       - MagazineBoxLightRifleRubber
-      - WeaponCapacitorRechargerCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
