@@ -347,7 +347,7 @@
   - type: BreathMask
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskClown
   id: ClothingMaskSexyClown
   name: sexy clown mask
   description: Some naughty clowns think that's what Honcomater looks like.
@@ -356,14 +356,9 @@
     sprite: Clothing/Mask/sexyclown.rsi
   - type: Clothing
     sprite: Clothing/Mask/sexyclown.rsi
-  - type: BreathMask
-  - type: IdentityBlocker
-  - type: Tag
-    tags:
-    - ClownMask
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskMime
   id: ClothingMaskSexyMime
   name: sexy mime mask
   description: Those ruddy cheeks just want to be rubbed.
@@ -372,11 +367,9 @@
     sprite: Clothing/Mask/sexymime.rsi
   - type: Clothing
     sprite: Clothing/Mask/sexymime.rsi
-  - type: BreathMask
-  - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskMime
   id: ClothingMaskSadMime
   name: sad mime mask
   description: Many people think that this is a real mime mask.
@@ -385,11 +378,9 @@
     sprite: Clothing/Mask/sadmime.rsi
   - type: Clothing
     sprite: Clothing/Mask/sadmime.rsi
-  - type: BreathMask
-  - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskMime
   id: ClothingMaskScaredMime
   name: scared mime mask
   description: Not the most used mask by mimes.
@@ -398,5 +389,3 @@
     sprite: Clothing/Mask/scaredmime.rsi
   - type: Clothing
     sprite: Clothing/Mask/scaredmime.rsi
-  - type: BreathMask
-  - type: IdentityBlocker
