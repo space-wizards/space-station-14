@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Shells and cartridges now appear over tables, type: Fix}
-  id: 3235
-  time: '2023-03-24T01:05:55.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Biosuit crates now can be ordered from cargo, type: Add}
@@ -2898,3 +2893,8 @@ Entries:
   - {message: hop now has detective acces, type: Fix}
   id: 3734
   time: '2023-05-12T20:16:29.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Syringes are now size 3, down from 5.', type: Tweak}
+  id: 3735
+  time: '2023-05-12T21:10:45.0000000+00:00'
