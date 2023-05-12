@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Biosuit crates now can be ordered from cargo, type: Add}
-  id: 3236
-  time: '2023-03-24T01:40:27.0000000+00:00'
 - author: TimmyTwoHands
   changes:
   - {message: Removed combat bonuses from Boxers., type: Tweak}
@@ -2898,3 +2893,8 @@ Entries:
   - {message: 'Syringes are now size 3, down from 5.', type: Tweak}
   id: 3735
   time: '2023-05-12T21:10:45.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Space tunes should now only be heard in space, type: Fix}
+  id: 3736
+  time: '2023-05-12T22:07:04.0000000+00:00'
