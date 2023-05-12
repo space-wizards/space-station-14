@@ -4,6 +4,7 @@ using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Remotes;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
@@ -133,7 +134,10 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
         {
-            if (!this.IsPowered(uid, EntityManager) || IsHoldingPressureOrFire(uid, component))
+            // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
+            bool usedRemote = args.User != null && TryComp<DoorRemoteComponent>(args.User, out var _remoteComponent);
+
+            if (!this.IsPowered(uid, EntityManager) || (!usedRemote && IsHoldingPressureOrFire(uid, component)))
                 args.Cancel();
         }
 

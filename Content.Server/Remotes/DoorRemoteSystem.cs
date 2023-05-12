@@ -36,13 +36,25 @@ namespace Content.Server.Remotes
             switch (component.Mode)
             {
                 case OperatingMode.OpenClose:
-                    component.Mode = OperatingMode.ToggleBolts;
-                    switchMessageId = "door-remote-switch-state-toggle-bolts";
-                    break;
+                    if (component.AllowBolt)
+                    {
+                        component.Mode = OperatingMode.ToggleBolts;
+                        switchMessageId = "door-remote-switch-state-toggle-bolts";
+                        break;
+                    }
+
+                    // Skip toggle bolts mode and move on from there (to emergency access)
+                    goto case OperatingMode.ToggleBolts;
                 case OperatingMode.ToggleBolts:
-                    component.Mode = OperatingMode.ToggleEmergencyAccess;
-                    switchMessageId = "door-remote-switch-state-toggle-emergency-access";
-                    break;
+                    if (component.AllowEmergencyAccess)
+                    {
+                        component.Mode = OperatingMode.ToggleEmergencyAccess;
+                        switchMessageId = "door-remote-switch-state-toggle-emergency-access";
+                        break;
+                    }
+
+                    // Skip ToggleEmergencyAccess mode and move on from there (to door toggle)
+                    goto case OperatingMode.ToggleEmergencyAccess;
                 case OperatingMode.ToggleEmergencyAccess:
                     component.Mode = OperatingMode.OpenClose;
                     switchMessageId = "door-remote-switch-state-open-close";
@@ -56,14 +68,15 @@ namespace Content.Server.Remotes
 
         private void OnBeforeInteract(EntityUid uid, DoorRemoteComponent component, BeforeRangedInteractEvent args)
         {
+            bool isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
+
             if (args.Handled
                 || args.Target == null
                 || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
-                || !TryComp<AirlockComponent>(args.Target, out var airlockComp) // Remotes only work on airlocks
-                // The remote can be used anywhere the user can see the door.
-                // This doesn't work that well, but I don't know of an alternative
-                || !_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value,
-                    SharedInteractionSystem.MaxRaycastRange, CollisionGroup.Opaque))
+                     // The remote can be used anywhere the user can see the door.
+                     // This doesn't work that well, but I don't know of an alternative
+                     || !_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value,
+                         SharedInteractionSystem.MaxRaycastRange, CollisionGroup.Opaque))
                 return;
 
             args.Handled = true;
@@ -74,8 +87,13 @@ namespace Content.Server.Remotes
                 return;
             }
 
-            if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent) &&
-                !_doorSystem.HasAccess(args.Target.Value, args.Used, accessComponent))
+            bool doorAccessBlocking = (TryComp<AccessReaderComponent>(args.Target, out var accessComponent) &&
+                                         !_doorSystem.HasAccess(args.Target.Value, args.Used, accessComponent));
+            bool firelockOnlyBlocking = (component.FirelockOnly &&
+                                           !TryComp<FirelockComponent>(args.Target, out var _firelockComponent));
+            bool airlockOnlyBlocking = (component.AirlockOnly && !isAirlock); // Most Remotes only work on airlocks
+
+            if (doorAccessBlocking || firelockOnlyBlocking || airlockOnlyBlocking)
             {
                 _doorSystem.Deny(args.Target.Value, doorComp, args.User);
                 ShowPopupToUser("door-remote-denied", args.User);
@@ -99,8 +117,12 @@ namespace Content.Server.Remotes
                     }
                     break;
                 case OperatingMode.ToggleEmergencyAccess:
-                    _airlock.ToggleEmergencyAccess(args.Target.Value, airlockComp);
-                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
+                    if (airlockComp != null)
+                    {
+                        _airlock.ToggleEmergencyAccess(args.Target.Value, airlockComp);
+                        _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                            $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
+                    }
                     break;
                 default:
                     throw new InvalidOperationException(
