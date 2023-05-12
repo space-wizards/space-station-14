@@ -526,7 +526,6 @@
     - state: syndie
   - type: Access
     tags:
-    - DoorBumpOpener
     - NuclearOperative
 
 - type: entity
