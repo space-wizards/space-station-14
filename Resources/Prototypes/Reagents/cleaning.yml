@@ -61,3 +61,12 @@
   viscosity: 0.5
   tileReactions:
     - !type:SpillTileReaction
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
