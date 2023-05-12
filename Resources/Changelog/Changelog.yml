@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Fixed exploits that would let you continue controlling a cardboard box
-      after exiting it., type: Fix}
-  id: 3241
-  time: '2023-03-24T05:09:58.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Remove range check for FTL., type: Tweak}
@@ -2901,3 +2895,8 @@ Entries:
       \ jumpsuit", type: Tweak}
   id: 3740
   time: '2023-05-12T23:43:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Scale throwing pushback by mass., type: Tweak}
+  id: 3741
+  time: '2023-05-12T23:54:38.0000000+00:00'
