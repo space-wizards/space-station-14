@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Paperwork now looks the same as he did before, type: Tweak}
-  id: 3228
-  time: '2023-03-23T16:53:27.0000000+00:00'
 - author: 08A
   changes:
   - {message: Fixed welder interaction when it has a fuel shortage problem, type: Fix}
@@ -2904,3 +2899,9 @@ Entries:
   - {message: Fixed not being able to link blast doors and shutters, type: Fix}
   id: 3727
   time: '2023-05-11T22:16:02.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: Added ChemVends for (limited) bulk chemical storage and dispensing.,
+    type: Add}
+  id: 3728
+  time: '2023-05-12T09:31:20.0000000+00:00'
