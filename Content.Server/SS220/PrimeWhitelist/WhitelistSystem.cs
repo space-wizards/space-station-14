@@ -35,6 +35,7 @@ internal sealed class PrimelistDb
         }
         catch (Exception e)
         {
+            Logger.DebugS("prime", $"Exception occured: ${e}");
             return null;
         }
     }
