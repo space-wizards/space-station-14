@@ -1,11 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: Dehydrated carp will fit in lockers now., type: Fix}
-  id: 3231
-  time: '2023-03-23T17:44:36.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: Syndicate shoulder holsters can no longer hold melee weapons., type: Tweak}
   - {message: Suspicious toolbox now comes with a utility belt in place of a holster.,
     type: Tweak}
@@ -2903,3 +2898,9 @@ Entries:
       no longer cause the screen to stutter/flicker., type: Fix}
   id: 3730
   time: '2023-05-12T14:02:51.0000000+00:00'
+- author: MisterMecky
+  changes:
+  - {message: Fixed several bottles not correctly displaying contained solutions.,
+    type: Fix}
+  id: 3731
+  time: '2023-05-12T15:29:39.0000000+00:00'
