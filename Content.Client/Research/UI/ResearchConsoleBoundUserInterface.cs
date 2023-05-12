@@ -35,8 +35,10 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
-        var castState = (ResearchConsoleBoundInterfaceState)state;
-        _consoleMenu?.UpdatePanels();
+        if (state is not ResearchConsoleBoundInterfaceState castState)
+            return;
+        _consoleMenu?.UpdatePanels(castState);
+        _consoleMenu?.UpdateInformationPanel(castState);
     }
 
     protected override void Dispose(bool disposing)

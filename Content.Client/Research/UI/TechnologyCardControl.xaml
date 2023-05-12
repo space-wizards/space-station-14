@@ -8,7 +8,8 @@
                         VerticalExpand="False"
                         HorizontalExpand="True"
                         Margin="0 0 0 -5"/>
-        <Button Disabled="True"
+        <Button Name="MainButton"
+                Disabled="True"
                 HorizontalExpand="True"
                 VerticalExpand="True"
                 StyleClasses="ButtonSquare"

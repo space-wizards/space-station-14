@@ -12,6 +12,8 @@ namespace Content.Client.Research.UI;
 [GenerateTypedNameReferences]
 public sealed partial class TechnologyCardControl : Control
 {
+    public Action? OnPressed;
+
     public TechnologyCardControl(TechnologyPrototype technology, IPrototypeManager prototypeManager, SpriteSystem spriteSys, FormattedMessage description)
     {
         RobustXamlLoader.Load(this);
@@ -28,5 +30,7 @@ public sealed partial class TechnologyCardControl : Control
         UnlocksLabel.SetMessage(description);
 
         TechnologyTexture.Texture = spriteSys.Frame0(technology.Icon);
+
+        MainButton.OnPressed += _ => OnPressed?.Invoke();
     }
 }

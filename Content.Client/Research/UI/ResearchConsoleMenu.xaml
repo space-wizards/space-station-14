@@ -12,9 +12,21 @@
                       HorizontalExpand="True"
                       VerticalExpand="False"
                       SizeFlagsStretchRatio="1"
-                      MinSize="75 75"
+                      MinHeight="85"
                       Margin="10">
-            <Label Text="OH FUCK"></Label>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                <RichTextLabel Name="ResearchAmountLabel"/>
+                <RichTextLabel Name="MainDisciplineLabel"/>
+                <Control VerticalExpand="True"/>
+                <BoxContainer Name="TierDisplayContainer" Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Bottom"/>
+                <!-- This is where we put all of the little graphics that display discipline tiers!-->
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalAlignment="Right">
+                <Button Name="ServerButton" Text="{Loc 'research-console-menu-server-selection-button'}" VerticalExpand="True"/>
+                <Control MinHeight="5"/>
+                <!--todo is this button even necessary?!-->
+                <Button Name="SyncButton" Text="{Loc 'research-console-menu-server-sync-button'}" VerticalExpand="True"/>
+            </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal"
                       HorizontalExpand="True"
@@ -27,7 +39,7 @@
                           Margin="10 0 10 10"
                           MinWidth="175">
                 <Label Text="{Loc 'research-console-available-text'}" HorizontalAlignment="Center"/>
-                <customControls:HSeparator StyleClasses="LowDivider" Margin="0 5 0 5"/>
+                <customControls:HSeparator StyleClasses="LowDivider" Margin="0 0 0 10"/>
                 <PanelContainer VerticalExpand="True">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
@@ -45,7 +57,7 @@
                 </PanelContainer>
                 <Control MinHeight="10"/>
                 <Label Text="{Loc 'research-console-unlocked-text'}" HorizontalAlignment="Center"/>
-                <customControls:HSeparator StyleClasses="LowDivider" Margin="0 5 0 5"/>
+                <customControls:HSeparator StyleClasses="LowDivider" Margin="0 0 0 10"/>
                 <PanelContainer VerticalExpand="True">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
