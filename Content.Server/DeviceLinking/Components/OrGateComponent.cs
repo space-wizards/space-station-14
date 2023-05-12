@@ -1,8 +1,6 @@
 using Content.Server.MachineLinking.Events;
-using Content.Shared.MachineLinking;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.MachineLinking.Components;
+namespace Content.Server.DeviceLinking.Components;
 
 [RegisterComponent]
 public sealed class OrGateComponent : Component
@@ -26,3 +24,11 @@ public sealed class OrGateComponent : Component
     [ViewVariables]
     public SignalState LastO2 = SignalState.Low;
 }
+
+public enum SignalState
+{
+    Momentary, // Instantaneous pulse high, compatibility behavior
+    Low,
+    High
+}
+

@@ -169,12 +169,11 @@ public abstract class SharedMechSystem : EntitySystem
             return;
 
         var rider = EnsureComp<MechPilotComponent>(pilot);
-        var relay = EnsureComp<RelayInputMoverComponent>(pilot);
 
         // Warning: this bypasses most normal interaction blocking components on the user, like drone laws and the like.
         var irelay = EnsureComp<InteractionRelayComponent>(pilot);
 
-        _mover.SetRelay(pilot, mech, relay);
+        _mover.SetRelay(pilot, mech);
         _interaction.SetRelay(pilot, mech, irelay);
         rider.Mech = mech;
         Dirty(rider);

@@ -1,7 +1,7 @@
 
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.MachineLinking.Components
+namespace Content.Server.DeviceLinking.Components
 {
     [RegisterComponent]
     public sealed class ActiveSignalTimerComponent : Component
