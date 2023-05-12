@@ -21,15 +21,15 @@ The metallic womb from which all robotic children rise, bit by bit. The [color=#
 <Box>
 <GuideEntityEmbed Entity="MechRipley" Caption="Ripley APLU"/>
 </Box>
-[color=#a4885c]Mechs[/color] are giant behemoths of metal designed to carry out a variety of functions respective to their model. They are piloted by players and requre power cells to function.
+  [color=#a4885c]Mechs[/color] are giant behemoths of metal designed to carry out a variety of functions respective to their model. They are piloted by players and requre power cells to function.
 
-All mechs require assembly before usage; after slotting each part into the chassis, [color=#a4885c]Examine[/color] it to see how to proceed with construction.
+  All mechs require assembly before usage; after slotting each part into the chassis, [color=#a4885c]Examine[/color] it to see how to proceed with construction.
 
-## Equipment
+  ## Equipment
+  A mech is useless without any equipment. [color=#a4885c]Equipment[/color] are tools which can only be used by a mech.
 <Box>
-<GuideEntityEmbed Entity="MechEquipmentGrabber" Caption="Hydraulic Clamp"/>
+<GuideEntityEmbed Entity="MechEquipmentGrabber" Caption="The Hydraulic Clamp, as an example."/>
 </Box>
-A mech is useless without any equipment. [color=#a4885c]Equipment[/color] are tools which can only be used by a mech.
-- To install equipment, just click the mech with the equipment in hand.
-- To use equipment, perform the "Cycle Equipment" action until the tool you desire is equipped.
+  - To install equipment, just click the mech with the equipment in hand.
+  - To use equipment, perform the "Cycle Equipment" action until the tool you desire is equipped.
 </Document>
