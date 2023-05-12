@@ -1,12 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: The energy sword now does 30 damage per hit and swings slower., type: Tweak}
-  - {message: The energy sword can now break structures., type: Tweak}
-  - {message: 'The energy sword has received its iconic hitsound back, making it much
-      more obvious and threatening.', type: Tweak}
-  id: 3230
-  time: '2023-03-23T17:17:07.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Dehydrated carp will fit in lockers now., type: Fix}
@@ -2905,3 +2897,9 @@ Entries:
   - {message: You can now examine the ID cards worn by monkeys., type: Fix}
   id: 3729
   time: '2023-05-12T13:52:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Entering and leaving kudzu or other slowdown causing entities should
+      no longer cause the screen to stutter/flicker., type: Fix}
+  id: 3730
+  time: '2023-05-12T14:02:51.0000000+00:00'
