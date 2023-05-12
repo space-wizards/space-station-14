@@ -563,7 +563,6 @@
     flavors:
       - sweet
   - type: Sprite
-    netsync: false
     sprite: Mobs/Aliens/slimes.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -581,7 +580,7 @@
   - type: Item
     size: 5
   - type: StaticPrice
-    price: 1500 #It has so much Omnizin in it
+    price: 3000 #It has so much Omnizin in it
 
 - type: entity
   name: steak

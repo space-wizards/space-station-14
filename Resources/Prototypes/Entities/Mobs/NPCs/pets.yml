@@ -597,24 +597,10 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: aslime-_3
       shader: unshaded
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.25
-        density: 70
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
       200: Dead
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2.8
-    baseSprintSpeed: 3.5
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/slime1.ogg
@@ -653,10 +639,6 @@
       types:
         Bloodloss:
           -0.8
-  - type: Barotrauma
-    damage:
-      types:
-        Blunt: 0.30
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -692,6 +674,8 @@
       types:
         Blunt: 1
         Caustic: 1
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-slime
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
