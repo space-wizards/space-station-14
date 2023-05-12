@@ -815,6 +815,7 @@
         Burn: 3
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
+  - type: IdExaminable
 
 - type: entity
   name: guidebook monkey
