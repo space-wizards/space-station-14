@@ -1,11 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: maintenance panel needs to be opened to insert/remove keys in telecom
-      server, type: Tweak}
-  - {message: telecom server now can be deconstructed with crowbar, type: Fix}
-  id: 3234
-  time: '2023-03-24T00:09:46.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Shells and cartridges now appear over tables, type: Fix}
@@ -2900,3 +2893,8 @@ Entries:
       it, just like any other ID.', type: Fix}
   id: 3733
   time: '2023-05-12T20:07:57.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: hop now has detective acces, type: Fix}
+  id: 3734
+  time: '2023-05-12T20:16:29.0000000+00:00'
