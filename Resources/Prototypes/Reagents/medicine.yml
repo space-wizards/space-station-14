@@ -151,9 +151,8 @@
           min: 15
         damage:
           types:
-            Asphyxiation: 1
-            Poison: 3
-            Brute: 1
+            Asphyxiation: 0.5
+            Poison: 1.5
       - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
