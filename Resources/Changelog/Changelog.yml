@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix static melee offsets not showing the correct position., type: Fix}
-  id: 3238
-  time: '2023-03-24T02:13:16.0000000+00:00'
 - author: MisterMecky
   changes:
   - {message: modified and added stack sprites for wood, type: Tweak}
@@ -2899,3 +2894,9 @@ Entries:
       before., type: Tweak}
   id: 3737
   time: '2023-05-12T22:40:55.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: 1 nukeop per 10 people instead of per 5., type: Tweak}
+  - {message: minimum of 20 people for nukeops., type: Tweak}
+  id: 3738
+  time: '2023-05-12T22:55:47.0000000+00:00'
