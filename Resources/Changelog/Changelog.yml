@@ -1,9 +1,4 @@
 Entries:
-- author: 08A
-  changes:
-  - {message: Fixed welder interaction when it has a fuel shortage problem, type: Fix}
-  id: 3229
-  time: '2023-03-23T17:08:46.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: The energy sword now does 30 damage per hit and swings slower., type: Tweak}
@@ -2905,3 +2900,8 @@ Entries:
     type: Add}
   id: 3728
   time: '2023-05-12T09:31:20.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: You can now examine the ID cards worn by monkeys., type: Fix}
+  id: 3729
+  time: '2023-05-12T13:52:09.0000000+00:00'
