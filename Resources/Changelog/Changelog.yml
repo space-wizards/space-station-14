@@ -1,9 +1,4 @@
 Entries:
-- author: Mr0maks
-  changes:
-  - {message: Fix freedom implant charges not being used., type: Fix}
-  id: 3240
-  time: '2023-03-24T03:07:21.0000000+00:00'
 - author: Rane
   changes:
   - {message: Fixed exploits that would let you continue controlling a cardboard box
@@ -2900,3 +2895,9 @@ Entries:
   - {message: Changed the portal sprite., type: Tweak}
   id: 3739
   time: '2023-05-12T23:36:43.0000000+00:00'
+- author: KEEYNy
+  changes:
+  - {message: "Equal values \u200B\u200Bfor ERT Leader jumpsuit  and ERT Security\
+      \ jumpsuit", type: Tweak}
+  id: 3740
+  time: '2023-05-12T23:43:27.0000000+00:00'
