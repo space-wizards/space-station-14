@@ -14,6 +14,7 @@ using Content.Shared.Damage;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -35,6 +36,8 @@ namespace Content.Server.Zombies
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         public override void Initialize()
         {
@@ -60,14 +63,14 @@ namespace Content.Server.Zombies
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            var query = EntityQueryEnumerator<PendingZombieComponent>();
+            var query = EntityQueryEnumerator<PendingZombieComponent, DamageableComponent>();
             var curTime = _timing.CurTime;
 
-            var zombQuery = EntityQueryEnumerator<ZombieComponent>();
+            var zombQuery = EntityQueryEnumerator<ZombieComponent, DamageableComponent, MobStateComponent>();
             var stateQuery = GetEntityQuery<MobStateComponent>();
 
             // Hurt the living infected
-            while (query.MoveNext(out var uid, out var comp))
+            while (query.MoveNext(out var uid, out var comp, out var damage))
             {
                 // Process only once per second
                 if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
@@ -78,11 +81,11 @@ namespace Content.Server.Zombies
                 // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s.
                 var pain_multiple = 0.1 + 0.02 * comp.InfectedSecs + 0.0005 * comp.InfectedSecs * comp.InfectedSecs;
                 comp.NextTick = curTime;
-                _damageable.TryChangeDamage(uid, comp.Damage * pain_multiple, true, false);
+                _damageable.TryChangeDamage(uid, comp.Damage * pain_multiple, true, false, damage);
             }
 
             // Heal the zombified
-            while (zombQuery.MoveNext(out var uid, out var comp))
+            while (zombQuery.MoveNext(out var uid, out var comp, out var damage, out var mobState))
             {
                 // Process only once per second
                 if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
@@ -91,9 +94,24 @@ namespace Content.Server.Zombies
                 comp.NextTick = curTime;
 
                 // Healing increases over time for zombies currently in crit
-                if (stateQuery.TryGetComponent(uid, out var mobstate) && mobstate.CurrentState == MobState.Critical)
+                if (mobState.CurrentState == MobState.Critical)
                 {
                     comp.SecondsCrit += 1;
+
+                    // Roll to see if this zombie is not coming back.
+                    //   Note that due to damage reductions it takes a lot of hits to gib a zombie without this.
+                    if (damage.TotalDamage > _random.NextFloat(130.0f, 200.0f))
+                    {
+                        // You're dead! No reviving for you.
+                        _mobThreshold.SetAllowRevives(uid, false);
+                        _damageable.TryChangeDamage(uid, comp.ForceDeathDamage, true, false, damage);
+                        continue;
+                    }
+                }
+                else if (mobState.CurrentState == MobState.Dead)
+                {
+                    // No healing
+                    continue;
                 }
                 else
                 {
@@ -103,7 +121,7 @@ namespace Content.Server.Zombies
                 // Healing increases over 50 seconds to a maximum of 10x rate. They will be half healed by then at least.
                 //   At that rate most zombies will revive from the remaining 50 (of 100) damage after a further 25sec
                 float healMultiple = 1.0f + Math.Min(comp.SecondsCrit * 0.2f, 10.0f);
-                _damageable.TryChangeDamage(uid, comp.Damage * healMultiple, true, false);
+                _damageable.TryChangeDamage(uid, comp.Damage * healMultiple, true, false, damage);
             }
         }
 
