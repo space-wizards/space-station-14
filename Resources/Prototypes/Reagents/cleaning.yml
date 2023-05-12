@@ -48,3 +48,16 @@
       paralyzeTime: 3
       launchForwardsMultiplier: 4
       requiredSlipSpeed: 1
+
+- type: reagent
+  id: SpaceGlue
+  name: reagent-name-space-glue
+  desc: reagent-desc-space-glue
+  physicalDesc: reagent-physical-desc-sticky
+  flavor: funny
+  color: "#ffffff"
+  boilingPoint: 250.0
+  meltingPoint: 380.0
+  viscosity: 0.5
+  tileReactions:
+    - !type:SpillTileReaction

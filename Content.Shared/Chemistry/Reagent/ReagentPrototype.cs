@@ -80,6 +80,9 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("slippery")]
         public bool Slippery = false;
 
+        [DataField("viscosity")]
+        public float Viscosity = 0;
+
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
 
