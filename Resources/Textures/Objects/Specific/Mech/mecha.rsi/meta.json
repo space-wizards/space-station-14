@@ -250,17 +250,17 @@
       "name": "odysseus-broken"
     },
     {
-      "name": "HAMTR",
+      "name": "hamtr",
       "directions": 4
     },
     {
-      "name": "HAMTR-open"
+      "name": "hamtr-open"
     },
     {
-      "name": "HAMTR-broken"
+      "name": "hamtr-broken"
     },
     {
-      "name": "HAMTR-empty"
+      "name": "hamtr-empty"
     },
     {
       "name": "firefighter",
