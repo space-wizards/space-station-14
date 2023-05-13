@@ -29,7 +29,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-  - type: TimerTriggerVisualizer
+  - type: AnimationPlayer
+  - type: TimerTriggerVisuals
 
 - type: entity
   name: explosive grenade
@@ -69,8 +70,8 @@
   - type: SpawnOnTrigger
     proto: GrenadeFlashEffect
   - type: Appearance
-  - type: TimerTriggerVisualizer
-    countdown_sound:
+  - type: TimerTriggerVisuals
+    primingSound:
       path: /Audio/Effects/countdown.ogg
 
 - type: entity
@@ -104,8 +105,8 @@
     intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
     maxIntensity: 60
   - type: Appearance
-  - type: TimerTriggerVisualizer
-    countdown_sound:
+  - type: TimerTriggerVisuals
+    primingSound:
       path: /Audio/Effects/minibombcountdown.ogg
 
 - type: entity
@@ -134,8 +135,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-  - type: TimerTriggerVisualizer
-    countdown_sound:
+  - type: TimerTriggerVisuals
+    primingSound:
       path: /Audio/Effects/countdown.ogg
 
 - type: entity
@@ -197,7 +198,6 @@
     energyConsumption: 50000
   - type: DeleteOnTrigger
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/countdown.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
