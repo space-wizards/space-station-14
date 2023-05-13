@@ -93,7 +93,7 @@ public sealed class ChangelingSystem : EntitySystem
         if (!component.ArmBladeActivated)
         {
             var targetTransformComp = Transform(args.Performer);
-            var armbladeEntity = Spawn("ArmBlade", targetTransformComp.Coordinates);
+            var armbladeEntity = Spawn("TrueArmBlade", targetTransformComp.Coordinates);
 
             if (handContainer.ContainedEntity != null)
             {
@@ -110,7 +110,7 @@ public sealed class ChangelingSystem : EntitySystem
             {
                 if (TryPrototype(handContainer.ContainedEntity.Value, out var protoInHand))
                 {
-                    var result = _proto.HasIndex<EntityPrototype>("ArmBlade");
+                    var result = _proto.HasIndex<EntityPrototype>("TrueArmBlade");
                     if (result)
                     {
                         EntityManager.DeleteEntity(handContainer.ContainedEntity.Value);
