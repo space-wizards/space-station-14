@@ -46,7 +46,7 @@ public sealed class WeatherOverlay : Overlay
             return false;
 
         if (!_entManager.TryGetComponent<WeatherComponent>(_mapManager.GetMapEntityId(args.MapId), out var weather) ||
-            weather.Weather == null)
+            weather.Weather.Count == 0)
         {
             return false;
         }
@@ -58,15 +58,19 @@ public sealed class WeatherOverlay : Overlay
     {
         var mapUid = _mapManager.GetMapEntityId(args.MapId);
 
-        if (!_entManager.TryGetComponent<WeatherComponent>(mapUid, out var weather) ||
-            weather.Weather == null ||
-            !_protoManager.TryIndex<WeatherPrototype>(weather.Weather, out var weatherProto))
+        if (!_entManager.TryGetComponent<WeatherComponent>(mapUid, out var comp))
         {
             return;
         }
 
-        var alpha = _weather.GetPercent(weather, mapUid, weatherProto);
-        DrawWorld(args, weatherProto, alpha);
+        foreach (var (proto, weather) in comp.Weather)
+        {
+            if (!_protoManager.TryIndex<WeatherPrototype>(proto, out var weatherProto))
+                continue;
+
+            var alpha = _weather.GetPercent(weather, mapUid);
+            DrawWorld(args, weatherProto, alpha);
+        }
     }
 
     private void DrawWorld(in OverlayDrawArgs args, WeatherPrototype weatherProto, float alpha)
@@ -91,6 +95,7 @@ public sealed class WeatherOverlay : Overlay
         {
             var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+            var weatherIgnoreQuery = _entManager.GetEntityQuery<IgnoreWeatherComponent>();
 
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldAABB))
             {
@@ -101,7 +106,7 @@ public sealed class WeatherOverlay : Overlay
                 foreach (var tile in grid.GetTilesIntersecting(worldAABB))
                 {
                     // Ignored tiles for stencil
-                    if (_weather.CanWeatherAffect(grid, tile, bodyQuery))
+                    if (_weather.CanWeatherAffect(grid, tile, weatherIgnoreQuery, bodyQuery))
                     {
                         continue;
                     }

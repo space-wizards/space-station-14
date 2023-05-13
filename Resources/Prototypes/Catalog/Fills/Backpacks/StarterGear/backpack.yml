@@ -45,8 +45,73 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
+      - id: Flash
       #- name: StationCharter
       #- name: TelescopicBaton
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackEngineering
+  id: ClothingBackpackChiefEngineerFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalEngineering
+      - id: Flash
+      #- id: TelescopicBaton
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackScience
+  id: ClothingBackpackResearchDirectorFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: Flash
+      #- id: TelescopicBaton
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackHOPFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: Flash
+      #- id: TelescopicBaton
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackMedical
+  id: ClothingBackpackCMOFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalMedical
+      - id: Flash
+      #- id: TelescopicBaton
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackQuartermasterFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: Flash
+      #- id: TelescopicBaton
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSecurity
+  id: ClothingBackpackHOSFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSecurity
+      - id: Flash
 
 - type: entity
   noSpawn: true
@@ -92,7 +157,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalMedical
 
 - type: entity
   noSpawn: true
@@ -154,7 +219,7 @@
         - id: MagazinePistolHighCapacityRubber
         - id: MagazinePistol
         - id: Handcuffs
-
+        - id: CrowbarRed
 
 - type: entity
   noSpawn: true
@@ -169,6 +234,7 @@
         - id: WeaponPulseCarbine
         - id: BoxHandcuff
         - id: Handcuffs
+        - id: CrowbarRed
 
 - type: entity
   noSpawn: true
@@ -181,7 +247,7 @@
         - id: WeaponPulseCarbine
         - id: Hypospray
         - id: MedkitAdvancedFilled
-
+        - id: CrowbarRed
 
 - type: entity
   noSpawn: true
@@ -211,6 +277,8 @@
         - id: BoxLightMixed
         - id: BoxLightMixed
         - id: Soap
+        - id: CrowbarRed
+        - id: AdvMopItem
 
 - type: entity
   noSpawn: true
@@ -221,3 +289,14 @@
       contents:
         - id: BoxSurvival
 
+- type: entity
+  parent: ClothingBackpackSatchelLeather
+  id: ClothingBackpackPirateFilled
+  suffix: Filled, Pirate
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: Cutlass
+        - id: WeaponRevolverPirate
+        - id: ClothingEyesEyepatch

@@ -5,7 +5,6 @@
   id: MobHuman
   components:
   - type: CombatMode
-    disarm: null
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: hugging-success-generic
@@ -58,3 +57,23 @@
   components:
     - type: NukeOperative
     - type: RandomHumanoidAppearance
+
+- type: entity
+  noSpawn: true
+  parent: MobHuman
+  id: MobHumanLoneNuclearOperative
+  name: Lone Operative
+  components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
+    - type: NukeOperative
+    - type: Loadout
+      prototype: SyndicateOperativeGearFull
+      prototypes: [SyndicateOperativeGearFull]
+    - type: RandomMetadata
+      nameSegments:
+      - SyndicateNamesPrefix
+      - SyndicateNamesNormal
+    - type: Faction
+      factions:
+      - Syndicate

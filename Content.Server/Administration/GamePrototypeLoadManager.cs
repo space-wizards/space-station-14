@@ -27,7 +27,7 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
     {
         _netManager.RegisterNetMessage<GamePrototypeLoadMessage>(ClientLoadsPrototype);
         _netManager.Connected += NetManagerOnConnected;
-        //_replay.OnRecordingStarted += OnStartReplayRecording;
+        _replay.OnRecordingStarted += OnStartReplayRecording;
     }
 
     private void OnStartReplayRecording((MappingDataNode, List<object>) initReplayData)

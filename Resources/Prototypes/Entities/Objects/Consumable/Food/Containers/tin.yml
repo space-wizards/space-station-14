@@ -28,6 +28,9 @@
         Blunt: 3
   - type: Damageable
     damageContainer: Inorganic
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   abstract: true
@@ -46,6 +49,9 @@
   - type: Tag
     tags:
       - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 # Tins
 
 # Need something that you can open these tins with. I suggest a prying or cutting tool.
@@ -247,8 +253,6 @@
       - id: FoodTinMREOpen
     sound:
       path: /Audio/Items/can_open3.ogg
-  - type: StaticPrice
-    price: 50
 
 
 - type: entity

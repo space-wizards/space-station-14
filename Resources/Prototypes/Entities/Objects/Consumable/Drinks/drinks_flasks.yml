@@ -7,6 +7,9 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shinyflask.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
 
 - type: entity
   parent: DrinkBase
@@ -45,6 +48,16 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask.rsi
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkFlaskBar
+  name: bar flask
+  description: A metal flask often given out by the bartender on loan. Don't forget to return it!
+  components:
+    - type: Drink
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/barflask.rsi
 
 - type: entity
   parent: DrinkBase

@@ -47,3 +47,23 @@
   cost: 500
   category: Emergency
   group: market
+
+- type: cargoProduct
+  id: EmergencyNitrogenTanks
+  icon:
+    sprite: Objects/Tanks/red.rsi
+    state: icon
+  product: CrateSlimepersonLifeSupport
+  cost: 300
+  category: Emergency
+  group: market
+
+- type: cargoProduct
+  id: EmergencyBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/general.rsi
+    state: icon
+  product: CrateGenericBiosuit
+  cost: 800
+  category: Emergency
+  group: market

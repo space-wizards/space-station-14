@@ -49,15 +49,16 @@
     bodyType: KinematicController # Same for all inheritors
   - type: Fixtures
     fixtures:
-    - shape:
-        # Circles, cuz rotation of rectangles looks very bad
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          # Circles, cuz rotation of rectangles looks very bad
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: SolutionContainerManager
   - type: Bloodstream
     bloodlossDamage:
@@ -67,7 +68,7 @@
     bloodlossHealDamage:
       types:
         Bloodloss:
-          -0.25
+          -1
   - type: Damageable
     damageContainer: Biological
   - type: RadiationReceiver
@@ -129,6 +130,8 @@
         Brute: 5
   - type: Appearance
   - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 0
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
@@ -139,8 +142,6 @@
   - type: Polymorphable
   - type: Pullable
   - type: Buckle
-  - type: Recyclable
-    safe: false
   - type: StandingState
   - type: Alerts
   - type: NameIdentifier
@@ -224,4 +225,6 @@
     price: 150
   - type: Appearance
   - type: FloatingVisuals
+  - type: Puller
+    needsHands: false
 

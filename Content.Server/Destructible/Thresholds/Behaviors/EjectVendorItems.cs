@@ -23,7 +23,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("max")]
         public int Max = 3;
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             if (!system.EntityManager.TryGetComponent<VendingMachineComponent>(owner, out var vendingcomp) ||
                 !system.EntityManager.TryGetComponent<TransformComponent>(owner, out var xform))

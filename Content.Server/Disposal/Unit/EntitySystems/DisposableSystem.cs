@@ -1,14 +1,12 @@
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Tube;
+using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
@@ -39,13 +37,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // *This ejection also makes the target not collide with the unit.*
             // *This is on purpose.*
 
+            EntityUid? disposalId = null;
             DisposalUnitComponent? duc = null;
             if (_mapManager.TryGetGrid(holderTransform.GridUid, out var grid))
             {
                 foreach (var contentUid in grid.GetLocal(holderTransform.Coordinates))
                 {
                     if (EntityManager.TryGetComponent(contentUid, out duc))
+                    {
+                        disposalId = contentUid;
                         break;
+                    }
                 }
             }
 
@@ -71,9 +73,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
             }
 
-            if (duc != null)
+            if (disposalId != null && duc != null)
             {
-                _disposalUnitSystem.TryEjectContents(duc);
+                _disposalUnitSystem.TryEjectContents(disposalId.Value, duc);
             }
 
             if (_atmosphereSystem.GetContainingMixture(uid, false, true) is {} environment)
@@ -86,7 +88,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         }
 
         // Note: This function will cause an ExitDisposals on any failure that does not make an ExitDisposals impossible.
-        public bool EnterTube(EntityUid holderUid, EntityUid toUid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null, IDisposalTubeComponent? to = null, TransformComponent? toTransform = null)
+        public bool EnterTube(EntityUid holderUid, EntityUid toUid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null, DisposalTubeComponent? to = null, TransformComponent? toTransform = null)
         {
             if (!Resolve(holderUid, ref holder, ref holderTransform))
                 return false;
@@ -120,7 +122,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 holder.PreviousDirection = holder.CurrentDirection;
             }
             holder.CurrentTube = to;
-            holder.CurrentDirection = to.NextDirection(holder);
+            var ev = new GetDisposalsNextDirectionEvent(holder);
+            RaiseLocalEvent(toUid, ref ev);
+            holder.CurrentDirection = ev.Next;
             holder.StartingTime = 0.1f;
             holder.TimeLeft = 0.1f;
             // Logger.InfoS("c.s.disposal.holder", $"Disposals dir {holder.CurrentDirection}");
@@ -188,7 +192,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
 
                 // Perform remainder of entry process
-                if (!EnterTube((holder).Owner, nextTube.Owner, holder, null, nextTube, null))
+                if (!EnterTube((holder).Owner, nextTube.Owner, holder))
                 {
                     break;
                 }

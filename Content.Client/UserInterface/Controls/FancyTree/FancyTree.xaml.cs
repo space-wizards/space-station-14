@@ -176,20 +176,30 @@ public sealed partial class FancyTree : Control
         OnSelectedItemChanged?.Invoke(newSelection);
     }
 
-    public void SetAllExpanded(bool value)
+    /// <summary>
+    ///     Recursively expands or collapse all entries, optionally up to some depth.
+    /// </summary>
+    /// <param name="value">Whether to expand or collapse the entries</param>
+    /// <param name="depth">The recursion depth. If negative, implies no limit. Zero will expand only the top-level entries.</param>
+    public void SetAllExpanded(bool value, int depth = -1)
     {
         foreach (var item in Body.Children)
         {
-            RecursiveSetExpanded((TreeItem) item, value);
+            RecursiveSetExpanded((TreeItem) item, value, depth);
         }
     }
 
-    public void RecursiveSetExpanded(TreeItem item, bool value)
+    public void RecursiveSetExpanded(TreeItem item, bool value, int depth)
     {
         item.SetExpanded(value);
+
+        if (depth == 0)
+            return;
+        depth--;
+        
         foreach (var child in item.Body.Children)
         {
-            RecursiveSetExpanded((TreeItem) child, value);
+            RecursiveSetExpanded((TreeItem) child, value, depth);
         }
     }
 

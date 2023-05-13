@@ -1,4 +1,5 @@
-﻿using Content.Shared.Anomaly;
+﻿using Content.Client.Gravity;
+using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
@@ -8,6 +9,7 @@ namespace Content.Client.Anomaly;
 public sealed class AnomalySystem : SharedAnomalySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly FloatingVisualizerSystem _floating = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -15,6 +17,20 @@ public sealed class AnomalySystem : SharedAnomalySystem
         base.Initialize();
 
         SubscribeLocalEvent<AnomalyComponent, AppearanceChangeEvent>(OnAppearanceChanged);
+        SubscribeLocalEvent<AnomalyComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<AnomalyComponent, AnimationCompletedEvent>(OnAnimationComplete);
+    }
+
+    private void OnStartup(EntityUid uid, AnomalyComponent component, ComponentStartup args)
+    {
+        _floating.FloatAnimation(uid, component.FloatingOffset, component.AnimationKey, component.AnimationTime);
+    }
+
+    private void OnAnimationComplete(EntityUid uid, AnomalyComponent component, AnimationCompletedEvent args)
+    {
+        if (args.Key != component.AnimationKey)
+            return;
+        _floating.FloatAnimation(uid, component.FloatingOffset, component.AnimationKey, component.AnimationTime);
     }
 
     private void OnAppearanceChanged(EntityUid uid, AnomalyComponent component, ref AppearanceChangeEvent args)

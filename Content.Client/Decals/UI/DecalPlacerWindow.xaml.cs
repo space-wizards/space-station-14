@@ -93,8 +93,11 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
             _cleanable = args.Pressed;
             UpdateDecalPlacementInfo();
         };
-        // i have to make this a member method for some reason and i have no idea why its only for spinboxes
-        ZIndexSpinBox.ValueChanged += ZIndexSpinboxChanged;
+        ZIndexSpinBox.ValueChanged += args =>
+        {
+            _zIndex = args.Value;
+            UpdateDecalPlacementInfo();
+        };
     }
 
     private void OnColorPicked(Color color)
@@ -117,7 +120,8 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
     {
         // Clear
         Grid.RemoveAllChildren();
-        if (_decals == null) return;
+        if (_decals == null)
+            return;
 
         var filter = Search.Text;
         foreach (var (decal, tex) in _decals)
@@ -151,12 +155,6 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
             else
                 Grid.AddChild(button);
         }
-    }
-
-    private void ZIndexSpinboxChanged(object? sender, ValueChangedEventArgs e)
-    {
-        _zIndex = e.Value;
-        UpdateDecalPlacementInfo();
     }
 
     private void ButtonOnPressed(ButtonEventArgs obj)

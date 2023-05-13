@@ -16,12 +16,18 @@ namespace Content.Shared.Humanoid.Markings
 
         [DataField("markingCategory", required: true)]
         public MarkingCategories MarkingCategory { get; } = default!;
-
+        
         [DataField("speciesRestriction")]
         public List<string>? SpeciesRestrictions { get; }
 
         [DataField("followSkinColor")]
         public bool FollowSkinColor { get; } = false;
+
+        [DataField("forcedColoring")]
+        public bool ForcedColoring { get; } = false;
+
+        [DataField("coloring")]
+        public MarkingColors Coloring { get; } = new();
 
         [DataField("sprites", required: true)]
         public List<SpriteSpecifier> Sprites { get; private set; } = default!;

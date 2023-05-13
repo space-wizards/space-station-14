@@ -4,21 +4,19 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Cargo.Systems;
-using Content.Server.Lock;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
-using Content.Server.Storage.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Lock;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -324,7 +322,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), component.Air} };
         }
 
-        private void OnLockToggled(EntityUid uid, GasCanisterComponent component, LockToggledEvent args)
+        private void OnLockToggled(EntityUid uid, GasCanisterComponent component, ref LockToggledEvent args)
         {
             _appearanceSystem.SetData(uid, GasCanisterVisuals.Locked, args.Locked);
         }

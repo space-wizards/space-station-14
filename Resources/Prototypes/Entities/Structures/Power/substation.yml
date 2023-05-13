@@ -53,6 +53,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -77,6 +83,12 @@
   - type: Machine
     board: SubstationMachineCircuitboard
   - type: StationInfiniteBatteryTarget
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -5
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
 
 # Compact Wall Substation Base
 - type: entity
@@ -89,10 +101,10 @@
   components:
   - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -15
+    volume: -5
     range: 2
     sound:
-      path: /Audio/Ambience/Objects/hdd_buzz.ogg
+      path: /Audio/Ambience/Objects/buzzing.ogg
   - type: PointLight
     netsync: false
     radius: 1.5
@@ -146,6 +158,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -170,7 +188,7 @@
 - type: entity
   parent: BaseSubstation
   id: SubstationBasic
-  suffix: Basic, 2.5MW
+  suffix: Basic, 2.5MJ
   components:
   - type: Battery
     maxCharge: 2500000
@@ -187,7 +205,7 @@
 - type: entity
   parent: BaseSubstationWall
   id: SubstationWallBasic
-  suffix: Basic, 2MW
+  suffix: Basic, 2MJ
   components:
   - type: Battery
     maxCharge: 2000000

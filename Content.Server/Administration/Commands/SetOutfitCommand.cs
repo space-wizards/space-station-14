@@ -1,9 +1,9 @@
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
-using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -12,7 +12,6 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
-using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Administration.Commands
 {
@@ -21,7 +20,7 @@ namespace Content.Server.Administration.Commands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPrototypeManager _prototypes = default!;
-        
+
         public string Command => "setoutfit";
 
         public string Description => Loc.GetString("set-outfit-command-description", ("requiredComponent", nameof(InventoryComponent)));
@@ -112,7 +111,7 @@ namespace Content.Server.Administration.Commands
                         pdaComponent.ContainedID.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
                     }
 
-                    invSystem.TryEquip(target, equipmentEntity, slot.Name, true, inventory: inventoryComponent);
+                    invSystem.TryEquip(target, equipmentEntity, slot.Name, silent: true, force: true, inventory: inventoryComponent);
 
                     onEquipped?.Invoke(target, equipmentEntity);
                 }

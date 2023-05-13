@@ -1,4 +1,6 @@
-﻿- type: guideEntry
+- type: guideEntry
   id: Controls
   name: guide-entry-controls
-  text: "/Server Info/Guidebook/Controls.xml"
+  text: "/ServerInfo/Guidebook/Controls/Controls.xml"
+  children:
+  - Radio  

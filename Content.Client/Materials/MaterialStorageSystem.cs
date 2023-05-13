@@ -40,11 +40,16 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         }
     }
 
-    public override bool TryInsertMaterialEntity(EntityUid user, EntityUid toInsert, EntityUid receiver, MaterialStorageComponent? component = null)
+    public override bool TryInsertMaterialEntity(EntityUid user,
+        EntityUid toInsert,
+        EntityUid receiver,
+        MaterialStorageComponent? storage = null,
+        MaterialComponent? material = null,
+        PhysicalCompositionComponent? composition = null)
     {
-        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
+        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition))
             return false;
-        _transform.DetachParentToNull(Transform(toInsert));
+        _transform.DetachParentToNull(toInsert, Transform(toInsert));
         return true;
     }
 }

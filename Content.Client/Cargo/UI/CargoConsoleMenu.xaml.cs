@@ -141,7 +141,7 @@ namespace Content.Client.Cargo.UI
                         Text = Loc.GetString(
                             "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
                             ("productName", productName),
-                            ("orderAmount", order.Amount),
+                            ("orderAmount", order.OrderQuantity),
                             ("orderRequester", order.Requester))
                     },
                     Description = {Text = Loc.GetString("cargo-console-menu-order-reason-description",

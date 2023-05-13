@@ -1,5 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Net;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 
 
@@ -52,19 +54,30 @@ namespace Content.Server.Database
             Unban = unban;
         }
 
-        public string DisconnectMessage
+        public string FormatBanMessage(IConfigurationManager cfg, ILocalizationManager loc)
         {
-            get {
-                var expires = Loc.GetString("ban-banned-permanent");
-                if (this.ExpirationTime is { } expireTime)
-                {
-                    var duration = expireTime - this.BanTime;
-                    var utc = expireTime.ToUniversalTime();
-                    expires = Loc.GetString("ban-expires", ("duration", duration.TotalMinutes.ToString("N0")), ("time", utc.ToString("f")));
-                }
-                var details = Loc.GetString("ban-banned-1") + "\n" + Loc.GetString("ban-banned-2", ("reason", this.Reason)) + "\n" + expires;
-                return details;
+            string expires;
+            if (ExpirationTime is { } expireTime)
+            {
+                var duration = expireTime - BanTime;
+                var utc = expireTime.ToUniversalTime();
+                expires = loc.GetString("ban-expires", ("duration", duration.TotalMinutes.ToString("N0")), ("time", utc.ToString("f")));
             }
+            else
+            {
+                var appeal = cfg.GetCVar(CCVars.InfoLinksAppeal);
+                if (!string.IsNullOrWhiteSpace(appeal))
+                    expires = loc.GetString("ban-banned-permanent-appeal", ("link", appeal));
+                else
+                    expires = loc.GetString("ban-banned-permanent");
+            }
+
+            return $"""
+                   {loc.GetString("ban-banned-1")}
+                   {loc.GetString("ban-banned-2", ("reason", Reason))}
+                   {expires}
+                   {loc.GetString("ban-banned-3")}
+                   """;
         }
     }
 }

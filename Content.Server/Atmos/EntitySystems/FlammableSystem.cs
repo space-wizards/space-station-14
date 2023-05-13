@@ -13,6 +13,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
+using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
@@ -58,7 +59,10 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, IsHotEvent>(OnIsHot);
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFire);
             SubscribeLocalEvent<FlammableComponent, RejuvenateEvent>(OnRejuvenate);
+
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
+            SubscribeLocalEvent<IgniteOnCollideComponent, LandEvent>(OnIgniteLand);
+
             SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
         }
 
@@ -74,15 +78,27 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
+        private void OnIgniteLand(EntityUid uid, IgniteOnCollideComponent component, ref LandEvent args)
+        {
+            RemCompDeferred<IgniteOnCollideComponent>(uid);
+        }
+
         private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, ref StartCollideEvent args)
         {
-            var otherFixture = args.OtherFixture.Body.Owner;
+            if (!args.OtherFixture.Hard || component.Count == 0)
+                return;
 
-            if (!EntityManager.TryGetComponent(otherFixture, out FlammableComponent? flammable))
+            var otherEnt = args.OtherEntity;
+
+            if (!EntityManager.TryGetComponent(otherEnt, out FlammableComponent? flammable))
                 return;
 
             flammable.FireStacks += component.FireStacks;
-            Ignite(otherFixture, flammable);
+            Ignite(otherEnt, flammable);
+            component.Count--;
+
+            if (component.Count == 0)
+                RemCompDeferred<IgniteOnCollideComponent>(uid);
         }
 
         private void OnMapInit(EntityUid uid, FlammableComponent component, MapInitEvent args)
@@ -115,7 +131,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnCollide(EntityUid uid, FlammableComponent flammable, ref StartCollideEvent args)
         {
-            var otherUid = args.OtherFixture.Body.Owner;
+            var otherUid = args.OtherEntity;
 
             // Normal hard collisions, though this isn't generally possible since most flammable things are mobs
             // which don't collide with one another, shouldn't work here.
@@ -321,7 +337,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
                         _transformSystem.GetGridOrMapTilePosition(uid, transform),
-                        700f, 50f, true);
+                        700f, 50f, uid, true);
 
                 }
 

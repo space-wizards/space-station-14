@@ -27,7 +27,6 @@
       - id: Stunbaton
         amount: 3
       - id: BoxFlashbang
-        amount: 1
       - id: Flash
         amount: 3
 #      - Pepperspray
@@ -57,9 +56,7 @@
   - type: StorageFill
     contents:
       - id: BoxHandcuff
-        amount: 1
       - id: BoxSechud
-        amount: 1
 #      - SecBelt
 #      - SecGasmask
 #      - SpacelawBook
@@ -75,5 +72,17 @@
       - id: BoxZiptie
         amount: 2
 
+- type: entity
+  id: CrateSecurityBiosuit
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterBioSecurity
+        amount: 2
+      - id: ClothingHeadHatHoodBioSecurity
+        amount: 2
+      - id: ClothingMaskSterile
+        amount: 2
 
 # Cosmetic Crates
