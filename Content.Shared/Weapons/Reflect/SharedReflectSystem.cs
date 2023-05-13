@@ -3,12 +3,8 @@ using Content.Shared.Audio;
 using Content.Shared.Hands.Components;
 using Robust.Shared.GameStates;
 using Content.Shared.Weapons.Ranged.Events;
-using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Popups;
-using Content.Shared.Projectiles;
-using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 

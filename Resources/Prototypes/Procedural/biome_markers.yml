@@ -1,10 +1,10 @@
-- type: biomeMarkerLayerRadius
+- type: biomeMarkerLayer
   id: Lizards
   proto: MobLizard
   groupCount: 5
 
 # TODO: Needs to be more robust
-- type: biomeMarkerLayerRadius
+- type: biomeMarkerLayer
   id: Xenos
   proto: MobXeno
 

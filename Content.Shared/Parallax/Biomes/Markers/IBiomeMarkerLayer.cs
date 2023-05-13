@@ -11,7 +11,7 @@ public interface IBiomeMarkerLayer : IPrototype
     /// <summary>
     /// Biome template to use as a mask for this layer.
     /// </summary>
-    public string? Mask { get; }
+    public string? EntityMask { get; }
 
     public string Prototype { get; }
 

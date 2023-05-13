@@ -146,7 +146,7 @@ public sealed partial class BiomeSystem
             return;
         }
 
-        if (!_proto.HasIndex<BiomeMarkerLayerRadiusPrototype>(args[1]))
+        if (!_proto.HasIndex<BiomeMarkerLayerPrototype>(args[1]))
         {
             return;
         }
@@ -164,7 +164,7 @@ public sealed partial class BiomeSystem
         if (args.Length == 2)
         {
             return CompletionResult.FromHintOptions(
-                CompletionHelper.PrototypeIDs<BiomeMarkerLayerRadiusPrototype>(proto: _proto), "Marker");
+                CompletionHelper.PrototypeIDs<BiomeMarkerLayerPrototype>(proto: _proto), "Marker");
         }
 
         return CompletionResult.Empty;
