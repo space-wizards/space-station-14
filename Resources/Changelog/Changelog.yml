@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: fluid can now spread through directional windows (through not occupied
-      sides)., type: Fix}
-  id: 3244
-  time: '2023-03-24T14:09:52.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The rumors of dylovene's overdose turned out to be true! Anything above
@@ -2898,3 +2892,8 @@ Entries:
   - {message: Chemical reactions should now conserve thermal energy., type: Tweak}
   id: 3743
   time: '2023-05-13T03:10:32.0000000+00:00'
+- author: Tristan Thomas
+  changes:
+  - {message: 'Added a white cane, which spawns on blind players.', type: Add}
+  id: 3744
+  time: '2023-05-13T03:11:35.0000000+00:00'
