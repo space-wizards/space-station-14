@@ -1,50 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The rumors of dylovene's overdose turned out to be true! Anything above
-      30u will now have unwanted side effects., type: Tweak}
-  id: 3245
-  time: '2023-03-24T18:13:23.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: Traitor codewords now get properly displayed in the round end summary,
-    type: Fix}
-  id: 3246
-  time: '2023-03-24T19:54:44.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed cerberus to be three good boys in one!, type: Tweak}
-  id: 3247
-  time: '2023-03-24T20:28:30.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: The changelog no longer gets squished in the lobby at 75% UI scale,
-    type: Fix}
-  id: 3248
-  time: '2023-03-24T21:08:50.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Emergency welders now take up 5 less space in your inventory space.,
-    type: Tweak}
-  id: 3249
-  time: '2023-03-24T21:30:40.0000000+00:00'
-- author: Menshin
-  changes:
-  - {message: Alert display lights on fire alarms properly reacts to power changes.,
-    type: Fix}
-  id: 3250
-  time: '2023-03-25T03:10:49.0000000+00:00'
-- author: 778b
-  changes:
-  - {message: Solar panels no longer block light from getting to other solar panels.,
-    type: Fix}
-  id: 3251
-  time: '2023-03-25T04:32:46.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: 'Added watermelon and grapes, and related recipes.', type: Add}
-  id: 3252
-  time: '2023-03-25T12:15:21.0000000+00:00'
 - author: DEATHB4DEFEAT
   changes:
   - {message: Edited comms console UI, type: Tweak}
@@ -2897,3 +2851,48 @@ Entries:
   - {message: 'Added a white cane, which spawns on blind players.', type: Add}
   id: 3744
   time: '2023-05-13T03:11:35.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Changed manly dorf appearance and flavor., type: Tweak}
+  id: 3745
+  time: '2023-05-13T12:14:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix vapors., type: Fix}
+  id: 3746
+  time: '2023-05-13T13:45:59.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds new masks for the clown and mime in the theater machine., type: Add}
+  id: 3747
+  time: '2023-05-13T14:41:35.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: 'Adds a new pet slime for RND, named Slime. Slime Smile.', type: Add}
+  - {message: The description of angry Slimes is now working., type: Fix}
+  id: 3748
+  time: '2023-05-13T14:51:03.0000000+00:00'
+- author: OttoMaticode
+  changes:
+  - {message: Robotics now has a guidebook entry, type: Add}
+  id: 3749
+  time: '2023-05-13T15:21:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Puddles slip you further and reduced slip multipliers across the board
+      as most were comically large., type: Tweak}
+  id: 3750
+  time: '2023-05-13T15:45:53.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Health Analyzer's that run out of power/don't have a power cell in them
+      will turn off and their screen will go black until a power cell with power is
+      inserted again, type: Tweak}
+  id: 3751
+  time: '2023-05-13T16:28:11.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: 'Kelotane can now cause an overdose above 30u, greatly decreasing the
+      body''s ability to retain water.', type: Tweak}
+  id: 3752
+  time: '2023-05-13T21:18:06.0000000+00:00'
