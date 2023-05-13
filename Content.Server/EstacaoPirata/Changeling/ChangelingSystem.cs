@@ -27,6 +27,8 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Roles;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
+using Content.Shared.Damage;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.EstacaoPirata.Changeling;
 public sealed class ChangelingSystem : EntitySystem
@@ -50,6 +52,8 @@ public sealed class ChangelingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ServerInventorySystem _inventory = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
 
     public override void Initialize()
     {
@@ -300,20 +304,20 @@ public sealed class ChangelingSystem : EntitySystem
         ChangeAppearance(uid, firstHumanoid, component);
     }
 
-    private void ChangeAppearance(EntityUid user, HumanoidData targetHumanoid, ChangelingComponent comp)
+    private void ChangeAppearance(EntityUid user, HumanoidData targetHumanoid, ChangelingComponent originalChangelingComponent)
     {
+        // TODO: fazer com que spawne e resgate os personagens em pause no pausedmap
+
         // HumanoidAppearanceComponent userAppearance, EntityUid target
 
         // passar o changelingcomponent
 
 
-        if(targetHumanoid.EntityPrototype == null)
-            return;
-        if(targetHumanoid.AppearanceComponent == null)
-            return;
-        if(targetHumanoid.MetaDataComponent == null)
-            return;
-        if(targetHumanoid.Dna == null)
+        if(targetHumanoid.EntityPrototype == null ||
+           targetHumanoid.AppearanceComponent == null ||
+           targetHumanoid.MetaDataComponent == null ||
+           targetHumanoid.Dna == null
+           )
             return;
 
         var targetTransformComp = Transform(user);
@@ -321,17 +325,23 @@ public sealed class ChangelingSystem : EntitySystem
         var transformChild = Transform(child);
         transformChild.LocalRotation = targetTransformComp.LocalRotation;
 
-        if (!TryComp<HumanoidAppearanceComponent>(child, out var childHumanoidAppearance))
-            return;
-        if (!TryComp<MetaDataComponent>(child, out var childMeta))
-            return;
-        if (!TryComp<DnaComponent>(child, out var childDna))
-            return;
+        var childHumanoidAppearance = EnsureComp<HumanoidAppearanceComponent>(child);
+        var childMeta = EnsureComp<MetaDataComponent>(child);
+        var childDna = EnsureComp<DnaComponent>(child);
+
+        // if (!TryComp<HumanoidAppearanceComponent>(child, out var childHumanoidAppearance))
+        //     return;
+        // if (!TryComp<MetaDataComponent>(child, out var childMeta))
+        //     return;
+        // if (!TryComp<DnaComponent>(child, out var childDna))
+        //     return;
 
         var targetAppearance = targetHumanoid.AppearanceComponent;
 
         //childHumanoidAppearance = targetHumanoid.AppearanceComponent;
         // usar o CloneAppearance
+        // por algum motivo n funfou o clone
+        //_humanoidSystem.CloneAppearance(child, user);
         childHumanoidAppearance.Age = targetAppearance.Age;
         childHumanoidAppearance.BaseLayers = targetAppearance.BaseLayers;
         childHumanoidAppearance.CachedFacialHairColor = targetAppearance.CachedFacialHairColor;
@@ -348,7 +358,6 @@ public sealed class ChangelingSystem : EntitySystem
         childHumanoidAppearance.Species = targetAppearance.Species;
 
 
-
         childMeta.EntityName = targetHumanoid.MetaDataComponent.EntityName;
         childDna.DNA = targetHumanoid.Dna;
 
@@ -359,8 +368,29 @@ public sealed class ChangelingSystem : EntitySystem
             _hands.TryPickupAnyHand(child, hand);
         }
 
+        var changelingComponent = EnsureComp<ChangelingComponent>(child);
+
+        //changelingComponent = comp;
+        changelingComponent.ArmBladeActivated = originalChangelingComponent.ArmBladeActivated;
+        changelingComponent.StoredHumanoids = originalChangelingComponent.StoredHumanoids;
+        changelingComponent.DNAStrandBalance = originalChangelingComponent.DNAStrandBalance;
+        changelingComponent.ChemicalBalance = originalChangelingComponent.ChemicalBalance;
+        changelingComponent.PointBalance = originalChangelingComponent.PointBalance;
+        changelingComponent.ArmBladeMaxHands = originalChangelingComponent.ArmBladeMaxHands;
+
+        if (TryComp<DamageableComponent>(child, out var damageParent) &&
+            _mobThreshold.GetScaledDamage(user, child, out var damage) &&
+            damage != null)
+        {
+            _damageable.SetDamage(child, damageParent, damage);
+        }
+
         if (TryComp<MindComponent>(user, out var mind) && mind.Mind != null)
             mind.Mind.TransferTo(child);
+
+        EntityManager.DeleteEntity(user);
+
+
 
         Dirty(child);
 
@@ -368,4 +398,16 @@ public sealed class ChangelingSystem : EntitySystem
 
         //_humanoidSystem.CloneAppearance(target, user, targetAppearance, userAppearance);
     }
+
+    // private void EnsurePausesdMap()
+    // {
+    //     if (PausedMap != null && Exists(PausedMap))
+    //         return;
+    //
+    //     var newmap = _mapManager.CreateMap();
+    //     _mapManager.SetMapPaused(newmap, true);
+    //     PausedMap = _mapManager.GetMapEntityId(newmap);
+    //
+    //     Dirty(PausedMap.Value);
+    // }
 }
