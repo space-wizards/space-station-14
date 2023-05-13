@@ -240,6 +240,13 @@ namespace Content.Server.Database
         Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt);
 
         #endregion
+
+        #region Discord
+
+        Task<(bool, DiscordPlayer?)> IsValidateDiscord(Guid playerId);
+        Task InsertDiscord(DiscordPlayer player);
+
+        #endregion
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -656,6 +663,18 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return _db.EditAdminNote(id, message, editedBy, editedAt);
+        }
+
+        public Task<(bool, DiscordPlayer?)> IsValidateDiscord(Guid playerId)
+        {
+            DbReadOpsMetric.Inc();
+            return _db.IsValidateDiscord(playerId);
+        }
+
+        public Task InsertDiscord(DiscordPlayer player)
+        {
+            DbWriteOpsMetric.Inc();
+            return _db.InsertDiscord(player);
         }
 
         private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()

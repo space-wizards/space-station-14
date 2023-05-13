@@ -413,6 +413,50 @@ namespace Content.Server.Database.Migrations.Postgres
                         });
                 });
 
+            modelBuilder.Entity("Content.Server.Database.DiscordPlayer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("discord_players_id");
+
+                    b.Property<string>("CKey")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("ckey");
+
+                    b.Property<string>("DiscordId")
+                        .HasColumnType("text")
+                        .HasColumnName("discord_id");
+
+                    b.Property<string>("DiscordName")
+                        .HasColumnType("text")
+                        .HasColumnName("discord_name");
+
+                    b.Property<string>("HashKey")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("hash_key");
+
+                    b.Property<Guid>("SS14Id")
+                        .IsUnicode(true)
+                        .HasColumnType("uuid")
+                        .HasColumnName("ss14_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_discord_players");
+
+                    b.HasAlternateKey("SS14Id")
+                        .HasName("ak_discord_players_ss14_id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("CKey", "DiscordId");
+
+                    b.ToTable("discord_players", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
                     b.Property<int>("Id")
@@ -662,12 +706,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("species");
 
-                    // Corvax-TTS-Start
                     b.Property<string>("Voice")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("voice");
-                    // Corvax-TTS-End
 
                     b.HasKey("Id")
                         .HasName("PK_profile");

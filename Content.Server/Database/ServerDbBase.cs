@@ -174,7 +174,7 @@ namespace Content.Server.Database
             var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
             if (Enum.TryParse<Gender>(profile.Gender, true, out var genderVal))
                 gender = genderVal;
-            
+
             // Corvax-TTS-Start
             var voice = profile.Voice;
             if (voice == String.Empty)
@@ -1026,6 +1026,35 @@ namespace Content.Server.Database
             note.LastEditedById = editedBy;
             note.LastEditedAt = editedAt;
 
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        #endregion
+
+        #region Discord_SS220
+
+        /// <summary>
+        /// Уже прошел проверку или нет
+        /// </summary>
+        /// <param name="playerId">Player GUID</param>
+        public async Task<(bool, DiscordPlayer?)> IsValidateDiscord(Guid playerId)
+        {
+            await using var db = await GetDb();
+
+            var discordPlayer = await db.DbContext.DiscordPlayers.AsNoTracking().SingleOrDefaultAsync(p => p.SS14Id == playerId);
+
+            if (discordPlayer == null)
+                return (false, null);
+            if (!string.IsNullOrEmpty(discordPlayer.DiscordId))
+                return (true, null);
+
+            return (false, discordPlayer);
+        }
+
+        public async Task InsertDiscord(DiscordPlayer discordPlayer)
+        {
+            await using var db = await GetDb();
+            db.DbContext.DiscordPlayers.Add(discordPlayer);
             await db.DbContext.SaveChangesAsync();
         }
 

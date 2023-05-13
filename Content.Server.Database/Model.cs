@@ -37,7 +37,7 @@ namespace Content.Server.Database
         public DbSet<PlayTime> PlayTime { get; set; } = default!;
         public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
-
+        public DbSet<DiscordPlayer> DiscordPlayers { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Preference>()
@@ -183,6 +183,15 @@ namespace Content.Server.Database
                 .WithMany(author => author.AdminNotesDeleted)
                 .HasForeignKey(note => note.DeletedById)
                 .HasPrincipalKey(author => author.UserId);
+
+            modelBuilder.Entity<DiscordPlayer>(entity =>
+            {
+                entity.HasIndex(p => p.Id).IsUnique();
+                entity.HasAlternateKey(p => p.SS14Id);
+                entity.Property(p => p.SS14Id).IsUnicode();
+                entity.HasIndex(p => new { p.CKey, p.DiscordId });
+                entity.Property(p => p.Id).ValueGeneratedOnAdd();
+            });
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -725,5 +734,15 @@ namespace Content.Server.Database
         public DateTime? DeletedAt { get; set; }
 
         public bool ShownToPlayer { get; set; }
+    }
+
+    public record DiscordPlayer
+    {
+        public Guid Id { get; set; }
+        public Guid SS14Id { get; set; }
+        public string HashKey { get; set; } = null!;
+        public string CKey { get; set; } = null!;
+        public string? DiscordId { get; set; }
+        public string? DiscordName { get; set; }
     }
 }
