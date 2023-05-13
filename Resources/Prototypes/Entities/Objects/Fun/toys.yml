@@ -363,6 +363,27 @@
   - type: Sprite
     state: plushie_atmosian
 
+- type: entity
+  parent: BasePlushie
+  id: PlushieXeno
+  name: xeno plushie
+  description: An adorable stuffed toy that resembles a scary xenomorf. You're lucky it's just a toy.
+  components:
+  - type: Sprite
+    state: plushie_xeno
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
 ## Figurines
 
 - type: entity
@@ -906,3 +927,4 @@
   - type: Tag
     tags:
     - ClownRecorder
+

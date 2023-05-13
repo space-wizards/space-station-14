@@ -286,7 +286,6 @@
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CryoPodMachineCircuitboard
-      - CrewMonitoringComputerCircuitboard
       - VaccinatorMachineCircuitboard
       - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
@@ -395,6 +394,10 @@
       - Sheet
       - RawMaterial
       - Ingot
+  - type: GuideHelp
+    guides:
+    - Robotics
+
 
 - type: entity
   parent: Protolathe
@@ -483,6 +486,7 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - HandLabeler
       - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex

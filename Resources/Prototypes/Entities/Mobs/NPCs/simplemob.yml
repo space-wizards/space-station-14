@@ -130,6 +130,8 @@
         Brute: 5
   - type: Appearance
   - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 0
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning

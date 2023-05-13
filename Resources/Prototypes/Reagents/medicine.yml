@@ -110,7 +110,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: -0.5        
+            Poison: -0.5
 
 - type: reagent
   id: Arithrazine
@@ -151,14 +151,13 @@
           min: 15
         damage:
           types:
-            Asphyxiation: 1
-            Poison: 3
-            Brute: 1
+            Asphyxiation: 0.5
+            Poison: 1.5
       - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
           min: 30
-        probability: 0.02           
+        probability: 0.02
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
@@ -211,9 +210,9 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: -1
-            Shock: -1
-            Cold: -1
+            Heat: -1.5
+            Shock: -1.5
+            Cold: -1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -253,7 +252,7 @@
           types:
             Asphyxiation: 3
             Cold: 1
-            
+
 - type: reagent
   id: DexalinPlus
   name: reagent-name-dexalin-plus
@@ -285,7 +284,7 @@
           types:
             Asphyxiation: 5
             Cold: 3
-            
+
 # this ones a doozy
 - type: reagent
   id: Epinephrine
@@ -430,6 +429,21 @@
             Heat: -0.33
             Shock: -0.33
             Cold: -0.33
+      - !type:SatiateThirst
+        factor: -10
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - generic-reagent-effect-nauseous
+        - generic-reagent-effect-thirsty
+        - generic-reagent-effect-parched
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
 
 - type: reagent
   id: Leporazine

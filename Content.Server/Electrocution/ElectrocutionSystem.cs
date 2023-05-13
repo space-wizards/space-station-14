@@ -153,7 +153,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
     {
         if (electrified.OnBump)
-            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, 1, electrified);
+            TryDoElectrifiedAct(uid, args.OtherEntity, 1, electrified);
     }
 
         private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
