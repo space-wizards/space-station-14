@@ -99,7 +99,7 @@
           Slash: 15
     - type: Devourer
       foodPreference: Humanoid
-      storeDevoured: true
+      shouldStoreDevoured: true
       chemical: Ichor
       healRate: 15.0
       whitelist:
