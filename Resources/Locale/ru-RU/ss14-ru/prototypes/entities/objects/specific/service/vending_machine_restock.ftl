@@ -46,3 +46,5 @@ ent-VendingMachineRestockRobotics = набор пополнения Роботе
     .desc = Коробка полная различных инструментов для создания боргов. Поместите в слот для пополнения Роботех Делюкс чтобы начать.
 ent-VendingMachineRestockHappyHonk = набор пополнения Хэппи Хонк
     .desc = Поместите эту коробку, полную веселья, в отсек для пополнения торгомата Хэппи Хонк.
+ent-VendingMachineRestockChemVend = ChemVend restock box
+    .desc = A box filled with chemicals and covered in dangerous-looking NFPA diamonds. Load it into a ChemVend to begin.
