@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
@@ -49,6 +50,8 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
 
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
+
+            SubscribeLocalEvent<LatheComponent, LatheEjectMaterialMessage>(OnLatherEjectMessage);
         }
 
         public override void Update(float frameTime)
@@ -60,6 +63,14 @@ namespace Content.Server.Lathe
 
                 if ( _timing.CurTime - comp.StartTime >= comp.ProductionLength)
                     FinishProducing(comp.Owner, lathe);
+            }
+        }
+
+        private void OnLatherEjectMessage(EntityUid uid, LatheComponent lathe, LatheEjectMaterialMessage message)
+        {
+            if (_materialStorage.TryChangeMaterialAmount(uid, message.Material, -message.Amount))
+            {
+                _materialStorage.SpawnMultipleFromMaterial(message.Amount, message.Material, Transform(uid).Coordinates);
             }
         }
 
@@ -184,6 +195,9 @@ namespace Content.Server.Lathe
 
             var ui = _uiSys.GetUi(uid, LatheUiKey.Key);
             var producing = component.CurrentRecipe ?? component.Queue.FirstOrDefault();
+
+            if (!TryComp<MaterialStorageComponent>(uid, out var storage))
+                return;
 
             var state = new LatheUpdateState(GetAvailableRecipes(uid, component), component.Queue, producing);
             _uiSys.SetUiState(ui, state);

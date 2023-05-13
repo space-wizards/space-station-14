@@ -14,7 +14,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction;
-using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Materials;
 using Content.Server.Jobs;
@@ -22,7 +21,6 @@ using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Zombies;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Containers;
@@ -32,11 +30,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Humanoid;
-using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
-using Robust.Shared.Audio;
-using System.Runtime.InteropServices;
 using Content.Server.Popups;
 
 namespace Content.Server.Cloning

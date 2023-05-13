@@ -1,4 +1,4 @@
-﻿<DefaultWindow
+<DefaultWindow
     xmlns="https://spacestation14.io"
     Title="{Loc 'lathe-menu-title'}"
     MinSize="300 450"
@@ -75,6 +75,16 @@
                 Text="1"
                 HorizontalExpand="True" />
         </BoxContainer>
+        <ScrollContainer MinHeight="70">
+            <BoxContainer
+                Name="Materials2"
+                Orientation="Vertical"
+                SizeFlagsStretchRatio="8"
+                HorizontalExpand="True"
+                VerticalExpand="True">
+                <!-- Materials populated in C# file -->
+            </BoxContainer>
+        </ScrollContainer>
         <ItemList
             Name="Materials"
             VerticalExpand="True"

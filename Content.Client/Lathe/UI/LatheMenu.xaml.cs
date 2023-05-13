@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -8,6 +8,10 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.GameObjects;
+using System.Linq;
+using static Robust.Client.UserInterface.Controls.BaseButton;
+using Content.Client.Cargo.UI;
 
 namespace Content.Client.Lathe.UI;
 
@@ -22,6 +26,7 @@ public sealed partial class LatheMenu : DefaultWindow
     public event Action<BaseButton.ButtonEventArgs>? OnQueueButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnServerSyncButtonPressed;
+    public event Action<ButtonEventArgs>? OnEjectPressed;
     public event Action<string, int>? RecipeQueueAction;
 
     public List<string> Recipes = new();
@@ -59,6 +64,44 @@ public sealed partial class LatheMenu : DefaultWindow
                 ServerSyncButton.Visible = false;
             }
         }
+    }
+
+    public void PopulateMaterials2(EntityUid lathe)
+    {
+        if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
+            return;
+        Materials2.DisposeAllChildren();
+
+        foreach (var (id, amount) in materials.Storage)
+        {
+            if (!_prototypeManager.TryIndex(id, out MaterialPrototype? material))
+                continue;
+            var name = Loc.GetString(material.Name);
+            var row = new MaterialRow(id, amount)
+            {
+                Icon = { Texture = _spriteSystem.Frame0(material.Icon) },
+                ProductName =
+                    {
+                        Text = Loc.GetString(
+                            "lathe-menu-material-display",
+                            ("material", name),
+                            ("amount", amount))
+                    }
+            };
+
+            row.Eject.OnPressed += (args) => {
+                if (args.Button.Parent?.Parent is not MaterialRow row || row == null)
+                    return;
+                OnEjectPressed?.Invoke(args);
+            };
+            Materials2.AddChild(row);
+        }
+
+        //if (Materials2.Children.Count() == 0)
+        //{
+        //    var noMaterialsMsg = Loc.GetString("lathe-menu-no-materials-message");
+        //    Materials2.AddChild(noMaterialsMsg);
+        //}
     }
 
     public void PopulateMaterials(EntityUid lathe)
@@ -132,7 +175,7 @@ public sealed partial class LatheMenu : DefaultWindow
                     sb.Append('\n');
 
                 var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
-                
+
                 sb.Append(adjustedAmount);
                 sb.Append(' ');
                 sb.Append(Loc.GetString(proto.Name));

@@ -1,10 +1,9 @@
-﻿using Content.Shared.Materials;
+using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System.Net.Mail;
 
 namespace Content.Shared.Lathe;
 
