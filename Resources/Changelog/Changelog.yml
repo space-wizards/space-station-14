@@ -1,10 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: Traitor codewords now get properly displayed in the round end summary,
-    type: Fix}
-  id: 3246
-  time: '2023-03-24T19:54:44.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed cerberus to be three good boys in one!, type: Tweak}
@@ -2896,3 +2890,8 @@ Entries:
   - {message: Changed manly dorf appearance and flavor., type: Tweak}
   id: 3745
   time: '2023-05-13T12:14:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix vapors., type: Fix}
+  id: 3746
+  time: '2023-05-13T13:45:59.0000000+00:00'
