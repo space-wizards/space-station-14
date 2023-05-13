@@ -29,14 +29,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.48,0.25,0.48"
-      density: 145
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        density: 145
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: EntityStorage
   - type: ContainerContainer
     containers:
@@ -50,6 +51,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 150
@@ -86,6 +93,8 @@
   - type: Weldable
   - type: WallMount
     arc: 180
+  - type: StaticPrice
+    price: 50
   - type: Transform
     noRot: false
   - type: Sprite
@@ -116,6 +125,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 150

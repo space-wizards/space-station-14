@@ -7,7 +7,6 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Access.Components;
 using Content.Server.Doors.Systems;
-using Content.Server.Doors.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
@@ -91,12 +90,12 @@ namespace Content.Server.Remotes
                 case OperatingMode.ToggleBolts:
                     if (!airlockComp.BoltWireCut)
                     {
-                        _airlock.SetBoltsWithAudio(uid, airlockComp, !airlockComp.BoltsDown);
+                        _airlock.SetBoltsWithAudio(args.Target.Value, airlockComp, !airlockComp.BoltsDown);
                         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(airlockComp.BoltsDown ? "" : "un")}bolt it");
                     }
                     break;
                 case OperatingMode.ToggleEmergencyAccess:
-                    _airlock.ToggleEmergencyAccess(uid, airlockComp);
+                    _airlock.ToggleEmergencyAccess(args.Target.Value, airlockComp);
                     _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
                     break;
                 default:

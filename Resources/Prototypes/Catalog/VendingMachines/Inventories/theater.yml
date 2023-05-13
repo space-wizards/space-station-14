@@ -5,7 +5,7 @@
     ClothingUniformJumpsuitJester: 1
     ClothingHeadHatJesterAlt: 1
     ClothingUniformJumpsuitJesterAlt: 1
-    ClothingShoesJester: 1
+    ClothingShoesJester: 2
     ClothingOuterWinterClown: 1
     ClothingOuterWinterMime: 1
     ClothingOuterWinterMusician: 1
@@ -32,5 +32,14 @@
     ClothingHeadPaperSackSmile: 2
     ClothingEyesBlindfold: 1
     ClothingHeadRastaHat: 2
+    ClothingUniformJumpsuitDameDane: 2
+    ClothingShoesDameDane: 2
+    ClothingOuterDameDane: 2
+    ClothingOuterClownPriest: 1
+    ClothingMaskSadMime: 1
+    ClothingMaskScaredMime: 1
   emaggedInventory:
     ClothingShoesBling: 1
+    ClothingOuterDogi: 1
+    ClothingMaskSexyClown: 1
+    ClothingMaskSexyMime: 1

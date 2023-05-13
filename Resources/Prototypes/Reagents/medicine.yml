@@ -6,6 +6,17 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
   color: "#081a80"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: ScrambledAccent
+    Alcohol:
+      effects:
+      - !type:Drunk
+        slurSpeech: false
+        boozePower: 20
 
 - type: reagent
   id: Dylovene
@@ -22,12 +33,41 @@
         damage:
           types:
             Poison: -1
-    # TODO overdose: vomit, dizzy effect (drunkenness?)
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        damage:
+          types:
+            Brute: 2
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.2
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        probability: 0.02
+    Alcohol:
+      effects:
+      - !type:Drunk
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: -10
-    - !type:PlantAdjustHealth
-      amount: 1
+  - !type:PlantAdjustToxins
+    amount: -10
+  - !type:PlantAdjustHealth
+    amount: 1
 
 - type: reagent
   id: Diphenhydramine
@@ -47,6 +87,10 @@
         key: Jitter
         time: 3.0
         type: Remove
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -3
 
 - type: reagent
   id: Ethylredoxrazine
@@ -63,6 +107,10 @@
         key: Drunk
         time: 2.0
         type: Remove
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.5
 
 - type: reagent
   id: Arithrazine
@@ -100,15 +148,20 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 15
         damage:
           types:
-            Asphyxiation: 1
-            Poison: 0.5
-      - !type:Jitter
+            Asphyxiation: 0.5
+            Poison: 1.5
+      - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
           min: 30
+        probability: 0.02
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
     Alcohol:
       effects:
       - !type:Drunk
@@ -140,7 +193,7 @@
             groups:
               Airloss: -6
               Brute: -4
-              Burn: -4
+              Burn: -6
               Toxin: -4
 
 - type: reagent
@@ -156,21 +209,24 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Burn: -3
+          types:
+            Heat: -1.5
+            Shock: -1.5
+            Cold: -1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 10
         damage:
           types:
             Asphyxiation: 1
+            Cold: 2
         groups:
             Brute: 0.5
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 10
 
 - type: reagent
   id: Dexalin
@@ -188,6 +244,14 @@
           types:
             Asphyxiation: -1
             Bloodloss: -0.5
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 20
+        damage:
+          types:
+            Asphyxiation: 3
+            Cold: 1
 
 - type: reagent
   id: DexalinPlus
@@ -212,6 +276,14 @@
           min: 1
         reagent: Lexorin
         amount: -3
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 25
+        damage:
+          types:
+            Asphyxiation: 5
+            Cold: 3
 
 # this ones a doozy
 - type: reagent
@@ -298,7 +370,7 @@
           min: 30
         damage:
           types:
-           Heat: 0.5
+           Heat: 2
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
@@ -331,9 +403,9 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
           # they gotta be in crit first
-          min: 100
+        - !type:MobStateCondition
+          mobstate: Critical
         damage:
           types:
             Asphyxiation: -5
@@ -353,8 +425,25 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Burn: -1
+          types:
+            Heat: -0.33
+            Shock: -0.33
+            Cold: -0.33
+      - !type:SatiateThirst
+        factor: -10
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - generic-reagent-effect-nauseous
+        - generic-reagent-effect-thirsty
+        - generic-reagent-effect-parched
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
 
 - type: reagent
   id: Leporazine
@@ -493,7 +582,7 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: -5
 
 - type: reagent
@@ -507,7 +596,6 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ChemCureDisease
       - !type:HealthChange
         damage:
           types:
@@ -559,6 +647,10 @@
         key: KnockedDown
         time: 3.0
         type: Remove
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        time: 15.0
+        type: Remove
 
 - type: reagent
   id: TranexamicAcid
@@ -600,10 +692,12 @@
           max: 50
         damage:
           groups:
-            Burn: -1
             Brute: -1
           types:
             Poison: -0.5 ##Should be about what it was when it healed the toxin group
+            Heat: -0.33
+            Shock: -0.33
+            Cold: -0.33
 
 - type: reagent
   id: Lipozine
@@ -757,3 +851,43 @@
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
         probability: 0.1
+
+- type: reagent
+  id: Sigynate
+  name: reagent-name-sigynate
+  group: Medicine
+  desc: reagent-desc-sigynate
+  physicalDesc: reagent-physical-desc-thick
+  flavor: sweet
+  color: "#e0a5b9"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 16
+        damage:
+          types:
+            Heat: 2
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.2
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        probability: 0.02

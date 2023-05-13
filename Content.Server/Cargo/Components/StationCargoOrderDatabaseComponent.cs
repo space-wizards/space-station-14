@@ -17,12 +17,12 @@ public sealed class StationCargoOrderDatabaseComponent : Component
     public int Capacity = 20;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("orders")]
-    public Dictionary<int, CargoOrderData> Orders = new();
+    public List<CargoOrderData> Orders = new();
 
     /// <summary>
-    /// Tracks the next order index available.
+    /// Used to determine unique order IDs
     /// </summary>
-    public int Index;
+    public int NumOrdersCreated;
 
     [DataField("cargoShuttleProto", customTypeSerializer:typeof(PrototypeIdSerializer<CargoShuttlePrototype>))]
     public string? CargoShuttleProto = "CargoShuttle";

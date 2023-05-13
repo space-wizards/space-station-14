@@ -84,17 +84,16 @@ namespace Content.Shared.Humanoid
             return new(HairStyleId, HairColor, FacialHairStyleId, FacialHairColor, EyeColor, SkinColor, newMarkings);
         }
 
-        public static HumanoidCharacterAppearance Default()
+        public HumanoidCharacterAppearance() : this(
+            HairStyles.DefaultHairStyle,
+            Color.Black,
+            HairStyles.DefaultFacialHairStyle,
+            Color.Black,
+            Color.Black,
+            Humanoid.SkinColor.ValidHumanSkinTone,
+            new ()
+        )
         {
-            return new(
-                HairStyles.DefaultHairStyle,
-                Color.Black,
-                HairStyles.DefaultFacialHairStyle,
-                Color.Black,
-                Color.Black,
-                Humanoid.SkinColor.ValidHumanSkinTone,
-                new ()
-            );
         }
 
         public static HumanoidCharacterAppearance DefaultWithSpecies(string species)
@@ -217,25 +216,13 @@ namespace Content.Shared.Humanoid
             {
                 markingSet = new MarkingSet(appearance.Markings, speciesProto.MarkingPoints, markingManager, proto);
                 markingSet.EnsureValid(markingManager);
-                markingSet.FilterSpecies(species, markingManager);
 
-                switch (speciesProto.SkinColoration)
+                if (!Humanoid.SkinColor.VerifySkinColor(speciesProto.SkinColoration, skinColor))
                 {
-                    case HumanoidSkinColor.HumanToned:
-                        if (!Humanoid.SkinColor.VerifyHumanSkinTone(skinColor))
-                        {
-                            skinColor = Humanoid.SkinColor.ValidHumanSkinTone;
-                        }
-
-                        break;
-                    case HumanoidSkinColor.TintedHues:
-                        if (!Humanoid.SkinColor.VerifyTintedHues(skinColor))
-                        {
-                            skinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(skinColor);
-                        }
-
-                        break;
+                    skinColor = Humanoid.SkinColor.ValidSkinTone(speciesProto.SkinColoration, skinColor);
                 }
+
+                markingSet.EnsureSpecies(species, skinColor, markingManager);
             }
 
             return new HumanoidCharacterAppearance(

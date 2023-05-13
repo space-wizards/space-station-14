@@ -50,7 +50,7 @@
 
 - type: latheRecipe
   id: HandheldCrewMonitor
-  result: HandheldCrewMonitor
+  result: HandheldCrewMonitorEmpty
   completetime: 2
   materials:
     Glass: 1200
@@ -59,7 +59,7 @@
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer
-  result: HandheldHealthAnalyzer
+  result: HandheldHealthAnalyzerEmpty
   completetime: 4
   materials:
     Glass: 500
@@ -102,6 +102,13 @@
   materials:
     Glass: 500
     Steel: 500
+
+- type: latheRecipe
+  id: Defibrillator
+  result: DefibrillatorEmpty
+  completetime: 2
+  materials:
+    Steel: 300
 
 - type: latheRecipe
   id: Medkit
@@ -166,3 +173,11 @@
   completetime: 2
   materials:
     Plastic: 300
+
+- type: latheRecipe
+  id: HandLabeler
+  result: HandLabeler
+  name: hand labeler
+  completetime: 2
+  materials:
+    Plastic: 100

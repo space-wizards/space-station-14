@@ -114,6 +114,10 @@ namespace Content.Shared.Chemistry.Components
             return _heatCapacity;
         }
 
+        public float GetThermalEnergy(IPrototypeManager? protoMan)
+        {
+            return GetHeatCapacity(protoMan) * Temperature;
+        }
 
         /// <summary>
         ///     Constructs an empty solution (ex. an empty beaker).
@@ -432,6 +436,26 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacity = 0;
         }
 
+        /// <summary>
+        /// Splits a solution without the specified reagent.
+        /// </summary>
+        public Solution SplitSolutionWithout(FixedPoint2 toTake, params string[] without)
+        {
+            var existing = new FixedPoint2[without.Length];
+            for (var i = 0; i < without.Length; i++)
+            {
+                TryGetReagent(without[i], out existing[i]);
+                RemoveReagent(without[i], existing[i]);
+            }
+
+            var sol = SplitSolution(toTake);
+
+            for (var i = 0; i < without.Length; i++)
+                AddReagent(without[i], existing[i]);
+
+            return sol;
+        }
+
         public Solution SplitSolution(FixedPoint2 toTake)
         {
             if (toTake <= FixedPoint2.Zero)
@@ -599,7 +623,7 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
-        public Color GetColor(IPrototypeManager? protoMan)
+        public Color GetColorWithout(IPrototypeManager? protoMan, params string[] without)
         {
             if (Volume == FixedPoint2.Zero)
             {
@@ -614,6 +638,9 @@ namespace Content.Shared.Chemistry.Components
 
             foreach (var reagent in Contents)
             {
+                if (without.Contains(reagent.ReagentId))
+                    continue;
+
                 runningTotalQuantity += reagent.Quantity;
 
                 if (!protoMan.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
@@ -632,6 +659,11 @@ namespace Content.Shared.Chemistry.Components
                 mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
             }
             return mixColor;
+        }
+
+        public Color GetColor(IPrototypeManager? protoMan)
+        {
+            return GetColorWithout(protoMan);
         }
 
         [Obsolete("Use ReactiveSystem.DoEntityReaction")]

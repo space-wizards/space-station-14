@@ -17,10 +17,10 @@ namespace Content.Server.Entry
             "ClientEntitySpawner",
             "HandheldGPS",
             "CableVisualizer",
-            "PuddleVisualizer",
             "UIFragment",
             "PDABorderColor",
-            "GenericEnumVisualizer",
+            "InventorySlots",
+            "LightFade",
         };
     }
 }

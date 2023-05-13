@@ -1,0 +1,108 @@
+# Allowed
+#allowedTiles:
+#- FloorPlanetGrass
+#- FloorPlanetDirt
+#- FloorSnow
+#- FloorBasalt
+#- FloorAsteroidSand
+
+- type: biomeTemplate
+  id: OreTin
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.90
+      allowedTiles:
+        - FloorPlanetGrass
+        - FloorPlanetDirt
+        - FloorSnow
+        - FloorBasalt
+        - FloorAsteroidSand
+      noise:
+        seed: 100
+        noiseType: OpenSimplex2
+        frequency: 0.04
+        fractalType: None
+      entities:
+        - WallRockTin
+
+# Medium value
+# Gold
+- type: biomeTemplate
+  id: OreGold
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.95
+      allowedTiles:
+        - FloorPlanetGrass
+        - FloorPlanetDirt
+        - FloorSnow
+        - FloorBasalt
+        - FloorAsteroidSand
+      noise:
+        seed: 100
+        noiseType: OpenSimplex2
+        frequency: 0.04
+        fractalType: None
+      entities:
+        - WallRockGold
+
+# Silver
+- type: biomeTemplate
+  id: OreSilver
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.95
+      allowedTiles:
+        - FloorPlanetGrass
+        - FloorPlanetDirt
+        - FloorSnow
+        - FloorBasalt
+        - FloorAsteroidSand
+      noise:
+        seed: 100
+        noiseType: OpenSimplex2
+        frequency: 0.05
+        fractalType: None
+      entities:
+        - WallRockSilver
+
+# High value
+# Plasma
+- type: biomeTemplate
+  id: OrePlasma
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.99
+      allowedTiles:
+        - FloorPlanetGrass
+        - FloorPlanetDirt
+        - FloorSnow
+        - FloorBasalt
+        - FloorAsteroidSand
+      noise:
+        seed: 100
+        noiseType: OpenSimplex2
+        frequency: 0.04
+        fractalType: None
+      entities:
+        - WallRockPlasma
+
+# Uranium
+- type: biomeTemplate
+  id: OreUranium
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.99
+      allowedTiles:
+        - FloorPlanetGrass
+        - FloorPlanetDirt
+        - FloorSnow
+        - FloorBasalt
+        - FloorAsteroidSand
+      noise:
+        seed: 100
+        noiseType: OpenSimplex2
+        frequency: 0.04
+        fractalType: None
+      entities:
+        - WallRockUranium

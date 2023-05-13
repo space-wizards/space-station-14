@@ -1,17 +1,25 @@
+using Content.Server.Store.Components;
+using Content.Server.Store.Systems;
 using Content.Server.UserInterface;
-using Content.Shared.PDA.Ringer;
-using Robust.Shared.Audio;
-using Robust.Server.Player;
-using Robust.Shared.Player;
 using Content.Shared.PDA;
+using Content.Shared.PDA.Ringer;
+using Content.Shared.Store;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.PDA.Ringer
 {
     public sealed class RingerSystem : SharedRingerSystem
     {
+        [Dependency] private readonly PDASystem _pda = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly StoreSystem _store = default!;
+        [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
         public override void Initialize()
         {
@@ -19,10 +27,13 @@ namespace Content.Server.PDA.Ringer
 
             // General Event Subscriptions
             SubscribeLocalEvent<RingerComponent, MapInitEvent>(RandomizeRingtone);
+            SubscribeLocalEvent<RingerUplinkComponent, ComponentInit>(RandomizeUplinkCode);
             // RingerBoundUserInterface Subscriptions
             SubscribeLocalEvent<RingerComponent, RingerSetRingtoneMessage>(OnSetRingtone);
+            SubscribeLocalEvent<RingerUplinkComponent, BeforeRingtoneSetEvent>(OnSetUplinkRingtone);
             SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(RingerPlayRingtone);
             SubscribeLocalEvent<RingerComponent, RingerRequestUpdateInterfaceMessage>(UpdateRingerUserInterfaceDriver);
+
         }
 
         //Event Functions
@@ -43,10 +54,59 @@ namespace Content.Server.PDA.Ringer
             // Client sent us an updated ringtone so set it to that.
             if (args.Ringtone.Length != RingtoneLength) return;
 
+            var ev = new BeforeRingtoneSetEvent(args.Ringtone);
+            RaiseLocalEvent(uid, ref ev);
+            if (ev.Handled)
+                return;
+
             UpdateRingerRingtone(ringer, args.Ringtone);
         }
 
+        private void OnSetUplinkRingtone(EntityUid uid, RingerUplinkComponent uplink, ref BeforeRingtoneSetEvent args)
+        {
+            if (uplink.Code.SequenceEqual(args.Ringtone) && TryComp<StoreComponent>(uid, out var store))
+            {
+                uplink.Unlocked = !uplink.Unlocked;
+                if (TryComp<PDAComponent>(uid, out var pda))
+                    _pda.UpdatePdaUi(uid, pda);
+
+                // can't keep store open after locking it
+                if (!uplink.Unlocked)
+                    _ui.TryCloseAll(uid, StoreUiKey.Key);
+
+                // no saving the code to prevent meta click set on sus guys pda -> wewlad
+                args.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Locks the uplink and closes the window, if its open
+        /// </summary>
+        /// <remarks>
+        /// Will not update the PDA ui so you must do that yourself if needed
+        /// </remarks>
+        public void LockUplink(EntityUid uid, RingerUplinkComponent? uplink)
+        {
+            if (!Resolve(uid, ref uplink, true))
+                return;
+
+            uplink.Unlocked = false;
+            _ui.TryCloseAll(uid, StoreUiKey.Key);
+        }
+
         public void RandomizeRingtone(EntityUid uid, RingerComponent ringer, MapInitEvent args)
+        {
+            UpdateRingerRingtone(ringer, GenerateRingtone());
+        }
+
+        public void RandomizeUplinkCode(EntityUid uid, RingerUplinkComponent uplink, ComponentInit args)
+        {
+            uplink.Code = GenerateRingtone();
+        }
+
+        //Non Event Functions
+
+        private Note[] GenerateRingtone()
         {
             // Default to using C pentatonic so it at least sounds not terrible.
             var notes = new[]
@@ -65,11 +125,8 @@ namespace Content.Server.PDA.Ringer
                 ringtone[i] = _random.Pick(notes);
             }
 
-            UpdateRingerRingtone(ringer, ringtone);
-
+            return ringtone;
         }
-
-        //Non Event Functions
 
         private bool UpdateRingerRingtone(RingerComponent ringer, Note[] ringtone)
         {
@@ -130,7 +187,10 @@ namespace Content.Server.PDA.Ringer
 
         private string GetSound(Note note)
         {
-            return new ResourcePath("/Audio/Effects/RingtoneNotes/" + note.ToString().ToLower()) + ".ogg";
+            return new ResPath("/Audio/Effects/RingtoneNotes/" + note.ToString().ToLower()) + ".ogg";
         }
     }
 }
+
+[ByRefEvent]
+public record struct BeforeRingtoneSetEvent(Note[] Ringtone, bool Handled = false);

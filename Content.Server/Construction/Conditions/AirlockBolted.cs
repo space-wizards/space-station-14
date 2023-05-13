@@ -1,6 +1,5 @@
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Content.Server.Doors.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
 

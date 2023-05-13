@@ -2,6 +2,7 @@
   id: Curdling
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Milk:
       amount: 40
@@ -16,6 +17,7 @@
   id: CreateDough
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -26,9 +28,26 @@
       entity: FoodDough
 
 - type: reaction
+  id: CreateCornmealDough
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Cornmeal:
+      amount: 15
+    Milk: #replace with yoghurt when added
+      amount: 10
+    Egg:
+      amount: 6
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodDoughCornmeal
+
+- type: reaction
   id: CreateCakeBatter
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -44,6 +63,7 @@
   id: CreateButter
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Milk:
       amount: 30
@@ -58,6 +78,7 @@
   id: CreatePieDough
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -70,12 +91,13 @@
       entity: FoodDoughPie
 
 # TG has a cake recipe that uses soy milk instead of eggs.
-# but afaik it spawns the exact same cake batter entity. 
+# but afaik it spawns the exact same cake batter entity.
 # Maybe change this if you want to do allergies or something
 - type: reaction
   id: CreateVeganCakeBatter
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -86,6 +108,20 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: FoodCakeBatter
+
+- type: reaction
+  id: CreateTofu
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    MilkSoy:
+      amount: 30
+    Enzyme:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodTofu
 
 # Condiments
 
@@ -132,7 +168,7 @@
       amount: 5
   products:
     Ketchunaise: 10
-    
+
 - type: reaction
   id: CookingBbqSauce
   reactants:
@@ -141,10 +177,10 @@
     Vinegar:
       amount: 5
     Sugar:
-      amount: 5   
+      amount: 5
   products:
     BbqSauce: 15
-    
+
 - type: reaction
   id: CookingHotsauce
   reactants:
@@ -168,9 +204,32 @@
     Vinegar: 10
 
 - type: reaction
+  id: CookingSoysauce
+  reactants:
+    MilkSoy:
+      amount: 10
+    SulfuricAcid:
+      amount: 5
+  products:
+    Soysauce: 15
+
+- type: reaction
+  id: CookingVinaigrette
+  reactants:
+    Vinegar:
+      amount: 5
+    OilOlive:
+      amount: 5
+    Blackpepper:
+      amount: 5
+  products:
+    Vinaigrette: 15
+
+- type: reaction
   id: CreateMeatball
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     UncookedAnimalProteins:
       amount: 5

@@ -15,7 +15,6 @@ namespace Content.MapRenderer.Painters
 {
     public sealed class TilePainter
     {
-        private const string TilesPath = "/Textures/Tiles/";
         public const int TileImageSize = EyeManager.PixelsPerMeter;
 
         private readonly ITileDefinitionManager _sTileDefinitionManager;
@@ -42,14 +41,13 @@ namespace Content.MapRenderer.Painters
 
             grid.GetAllTiles().AsParallel().ForAll(tile =>
             {
-                var sprite = _sTileDefinitionManager[tile.Tile.TypeId].Sprite;
+                var path = _sTileDefinitionManager[tile.Tile.TypeId].Sprite.ToString();
 
-                if (sprite == null)
+                if (string.IsNullOrWhiteSpace(path))
                     return;
 
                 var x = (int) (tile.X + xOffset);
                 var y = (int) (tile.Y + yOffset);
-                var path = sprite.ToString();
                 var image = images[path][tile.Tile.Variant];
 
                 gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
@@ -72,12 +70,11 @@ namespace Content.MapRenderer.Painters
 
             foreach (var definition in tileDefinitionManager)
             {
-                var sprite = definition.Sprite;
+                var path = definition.Sprite.ToString();
 
-                if (sprite == null)
+                if (string.IsNullOrWhiteSpace(path))
                     continue;
 
-                var path = sprite.ToString();
                 images[path] = new List<Image>(definition.Variants);
 
                 using var stream = resourceCache.ContentFileRead(path);

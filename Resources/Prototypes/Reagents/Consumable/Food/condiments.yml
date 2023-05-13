@@ -80,6 +80,15 @@
   color: "#f9f5e5"
 
 - type: reagent
+  id: Vinaigrette
+  name: reagent-name-vinaigrette
+  group: Foods
+  desc: reagent-desc-vinaigrette
+  physicalDesc: reagent-physical-desc-sour
+  flavor: sour
+  color: "#efdaae"
+
+- type: reagent
   id: Soysauce
   name: reagent-name-soysauce
   group: Foods

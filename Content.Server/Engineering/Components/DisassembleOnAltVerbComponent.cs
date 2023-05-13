@@ -12,7 +12,5 @@ namespace Content.Server.Engineering.Components
 
         [DataField("doAfter")]
         public float DoAfterTime = 0;
-
-        public CancellationTokenSource TokenSource { get; } = new();
     }
 }

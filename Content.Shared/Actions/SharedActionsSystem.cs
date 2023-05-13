@@ -5,12 +5,9 @@ using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Popups;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
@@ -25,8 +22,8 @@ public abstract class SharedActionsSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public override void Initialize()
     {
@@ -98,7 +95,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// </summary>
     private void OnActionRequest(RequestPerformActionEvent ev, EntitySessionEventArgs args)
     {
-        if (args.SenderSession.AttachedEntity is not EntityUid user)
+        if (args.SenderSession.AttachedEntity is not { } user)
             return;
 
         if (!TryComp(user, out ActionsComponent? component))
@@ -134,7 +131,8 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
                 }
 
-                _rotateToFaceSystem.TryFaceCoordinates(user, Transform(entityTarget).WorldPosition);
+                var targetWorldPos = _transformSystem.GetWorldPosition(entityTarget);
+                _rotateToFaceSystem.TryFaceCoordinates(user, targetWorldPos);
 
                 if (!ValidateEntityTarget(user, entityTarget, entityAction))
                     return;
@@ -156,7 +154,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
             case WorldTargetAction worldAction:
 
-                if (ev.EntityCoordinatesTarget is not EntityCoordinates entityCoordinatesTarget)
+                if (ev.EntityCoordinatesTarget is not { } entityCoordinatesTarget)
                 {
                     Logger.Error($"Attempted to perform a world-targeted action without a target! Action: {worldAction.DisplayName}");
                     return;
@@ -231,7 +229,8 @@ public abstract class SharedActionsSystem : EntitySystem
             if (action.Range <= 0)
                 return true;
 
-            return (xform.WorldPosition - targetXform.WorldPosition).Length <= action.Range;
+            var distance = (_transformSystem.GetWorldPosition(xform) - _transformSystem.GetWorldPosition(targetXform)).Length;
+            return distance <= action.Range;
         }
 
         if (_interactionSystem.InRangeUnobstructed(user, target, range: action.Range)
@@ -259,7 +258,7 @@ public abstract class SharedActionsSystem : EntitySystem
             if (action.Range <= 0)
                 return true;
 
-            return coords.InRange(EntityManager, Transform(user).Coordinates, action.Range);
+            return coords.InRange(EntityManager, _transformSystem, Transform(user).Coordinates, action.Range);
         }
 
         return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
@@ -284,8 +283,8 @@ public abstract class SharedActionsSystem : EntitySystem
             handled = actionEvent.Handled;
         }
 
-        // Execute convenience functionality (pop-ups, sound, speech)
-        handled |= PerformBasicActions(performer, action, predicted);
+        _audio.PlayPredicted(action.Sound, performer,predicted ? performer : null);
+        handled |= action.Sound != null;
 
         if (!handled)
             return; // no interaction occurred.
@@ -312,30 +311,6 @@ public abstract class SharedActionsSystem : EntitySystem
         if (dirty && component != null)
             Dirty(component);
     }
-
-    /// <summary>
-    ///     Execute convenience functionality for actions (pop-ups, sound, speech)
-    /// </summary>
-    protected virtual bool PerformBasicActions(EntityUid performer, ActionType action, bool predicted)
-    {
-        if (action.Sound == null && string.IsNullOrWhiteSpace(action.Popup))
-            return false;
-
-        var filter = predicted ? Filter.PvsExcept(performer) : Filter.Pvs(performer);
-
-        _audio.Play(action.Sound, filter, performer, true, action.AudioParams);
-
-        if (string.IsNullOrWhiteSpace(action.Popup))
-            return true;
-
-        var msg = (!action.Toggled || string.IsNullOrWhiteSpace(action.PopupToggleSuffix))
-            ? Loc.GetString(action.Popup)
-            : Loc.GetString(action.Popup + action.PopupToggleSuffix);
-
-        _popupSystem.PopupEntity(msg, performer, filter, true);
-
-        return true;
-    }
     #endregion
 
     #region AddRemoveActions
@@ -356,11 +331,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         comp ??= EnsureComp<ActionsComponent>(uid);
         action.Provider = provider;
-        action.AttachedEntity = comp.Owner;
+        action.AttachedEntity = uid;
         AddActionInternal(comp, action);
 
-        // for client-exclusive actions, the client shouldn't mark the comp as dirty. Otherwise that just leads to
-        // unnecessary prediction resetting and state handling.
         if (dirty)
             Dirty(comp);
     }
@@ -380,12 +353,15 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         comp ??= EnsureComp<ActionsComponent>(uid);
 
+        var allClientExclusive = true;
+
         foreach (var action in actions)
         {
             AddAction(uid, action, provider, comp, false);
+            allClientExclusive = allClientExclusive && action.ClientExclusive;
         }
 
-        if (dirty)
+        if (dirty && !allClientExclusive)
             Dirty(comp);
     }
 
@@ -397,36 +373,33 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!Resolve(uid, ref comp, false))
             return;
 
-        var provided = comp.Actions.Where(act => act.Provider == provider).ToList();
-
-        if (provided.Count > 0)
-            RemoveActions(uid, provided, comp);
+        foreach (var act in comp.Actions.ToArray())
+        {
+            if (act.Provider == provider)
+                RemoveAction(uid, act, comp, dirty: false);
+        }
+        Dirty(comp);
     }
 
-    public virtual void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)
+    public virtual void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null, bool dirty = true)
     {
         if (!Resolve(uid, ref comp, false))
             return;
 
-        foreach (var action in actions)
-        {
-            comp.Actions.Remove(action);
-            action.AttachedEntity = null;
-        }
+        comp.Actions.Remove(action);
+        action.AttachedEntity = null;
 
         if (dirty)
             Dirty(comp);
     }
 
-    public void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null)
-        => RemoveActions(uid, new[] { action }, comp);
     #endregion
 
     #region EquipHandlers
     private void OnDidEquip(EntityUid uid, ActionsComponent component, DidEquipEvent args)
     {
         var ev = new GetItemActionsEvent(args.SlotFlags);
-        RaiseLocalEvent(args.Equipment, ev, false);
+        RaiseLocalEvent(args.Equipment, ev);
 
         if (ev.Actions.Count == 0)
             return;
@@ -437,7 +410,7 @@ public abstract class SharedActionsSystem : EntitySystem
     private void OnHandEquipped(EntityUid uid, ActionsComponent component, DidEquipHandEvent args)
     {
         var ev = new GetItemActionsEvent();
-        RaiseLocalEvent(args.Equipped, ev, false);
+        RaiseLocalEvent(args.Equipped, ev);
 
         if (ev.Actions.Count == 0)
             return;

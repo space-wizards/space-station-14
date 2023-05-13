@@ -27,6 +27,7 @@
   name: open-storage-implant-action-name
   description: open-storage-implant-action-description
   itemIconStyle: BigAction
+  priority: -20
   icon:
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
@@ -38,6 +39,7 @@
   description: activate-micro-bomb-action-description
   checkCanInteract: false
   itemIconStyle: BigAction
+  priority: -20
   icon:
     sprite: Actions/Implants/implants.rsi
     state: explosive
@@ -50,10 +52,22 @@
   charges: 3
   checkCanInteract: false
   itemIconStyle: BigAction
+  priority: -20
   icon:
     sprite: Actions/Implants/implants.rsi
     state: freedom
   event: !type:UseFreedomImplantEvent
+
+- type: instantAction
+  id: OpenUplinkImplant
+  name: open-uplink-implant-action-name
+  description: open-uplink-implant-action-description
+  itemIconStyle: BigAction
+  priority: -20
+  icon:
+    sprite: Objects/Devices/communication.rsi
+    state: old-radio
+  event: !type:OpenUplinkImplantEvent
 
 - type: instantAction
   id: ToggleSuitHelmet
@@ -70,8 +84,6 @@
   checkCanInteract: false
   icon: Interface/Actions/harmOff.png
   iconOn: Interface/Actions/harm.png
-  userPopup: action-popup-combat
-  popupToggleSuffix: -enabled
   event: !type:ToggleCombatActionEvent
 
 - type: instantAction
@@ -126,13 +138,13 @@
   name: action-name-sleep
   description: action-desc-sleep
   checkCanInteract: false
-  icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
+  icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
   event: !type:SleepActionEvent
 
 - type: instantAction
   id: Wake
   name: action-name-wake
   description: action-desc-wake
-  icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
+  icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
   checkCanInteract: false
   event: !type:WakeActionEvent

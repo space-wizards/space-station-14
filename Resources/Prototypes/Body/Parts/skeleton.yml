@@ -14,6 +14,9 @@
         ents: []
   - type: StaticPrice
     price: 20
+  - type: Tag
+    tags:
+      - Trash
 
 - type: entity
   id: TorsoSkeleton
@@ -47,9 +50,6 @@
       partType: Head
     - type: Input
       context: "human"
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 0
-      baseSprintSpeed: 0
     - type: Speech
     - type: SkeletonAccent
     - type: Actions
@@ -151,7 +151,7 @@
     - type: BodyPart
       partType: Leg
       symmetry: Left
-    - type: MovementSpeedModifier
+    - type: MovementBodyPart
 
 - type: entity
   id: RightLegSkeleton
@@ -168,7 +168,7 @@
     - type: BodyPart
       partType: Leg
       symmetry: Right
-    - type: MovementSpeedModifier
+    - type: MovementBodyPart
 
 - type: entity
   id: LeftFootSkeleton

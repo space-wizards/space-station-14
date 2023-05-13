@@ -13,19 +13,28 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.HTN;
 
 public sealed class HTNSystem : EntitySystem
 {
     [Dependency] private readonly IAdminManager _admin = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
+    [Dependency] private readonly NPCUtilitySystem _utility = default!;
 
     private ISawmill _sawmill = default!;
-    private readonly JobQueue _planQueue = new();
+    private readonly JobQueue _planQueue = new(0.004);
 
     private readonly HashSet<ICommonSession> _subscribers = new();
+
+    // hngngghghgh
+    public IReadOnlyDictionary<HTNCompoundTask, List<HTNTask>[]> CompoundBranches => _compoundBranches;
+    private Dictionary<HTNCompoundTask, List<HTNTask>[]> _compoundBranches = new();
 
     // Hierarchical Task Network
     public override void Initialize()
@@ -33,10 +42,20 @@ public sealed class HTNSystem : EntitySystem
         base.Initialize();
         _sawmill = Logger.GetSawmill("npc.htn");
         SubscribeLocalEvent<HTNComponent, ComponentShutdown>(OnHTNShutdown);
+        SubscribeLocalEvent<HTNComponent, EntityUnpausedEvent>(OnHTNUnpaused);
         SubscribeNetworkEvent<RequestHTNMessage>(OnHTNMessage);
 
         _prototypeManager.PrototypesReloaded += OnPrototypeLoad;
         OnLoad();
+    }
+
+    private void OnHTNUnpaused(EntityUid uid, HTNComponent component, ref EntityUnpausedEvent args)
+    {
+        foreach (var (service, cooldown) in component.ServiceCooldowns)
+        {
+            var newCooldown = cooldown + args.PausedTime;
+            component.ServiceCooldowns[service] = newCooldown;
+        }
     }
 
     private void OnHTNMessage(RequestHTNMessage msg, EntitySessionEventArgs args)
@@ -75,6 +94,8 @@ public sealed class HTNSystem : EntitySystem
             }
         }
 
+        _compoundBranches.Clear();
+
         // Add dependencies for all operators.
         // We put code on operators as I couldn't think of a clean way to put it on systems.
         foreach (var compound in _prototypeManager.EnumeratePrototypes<HTNCompoundTask>())
@@ -105,21 +126,25 @@ public sealed class HTNSystem : EntitySystem
 
     private void UpdateCompound(HTNCompoundTask compound)
     {
-        foreach (var branch in compound.Branches)
+        var branchies = new List<HTNTask>[compound.Branches.Count];
+        _compoundBranches.Add(compound, branchies);
+
+        for (var i = 0; i < compound.Branches.Count; i++)
         {
-            branch.Tasks.Clear();
-            branch.Tasks.EnsureCapacity(branch.TaskPrototypes.Count);
+            var branch = compound.Branches[i];
+            var brancho = new List<HTNTask>(branch.TaskPrototypes.Count);
+            branchies[i] = brancho;
 
             // Didn't do this in a typeserializer because we can't recursively grab our own prototype during it, woohoo!
             foreach (var proto in branch.TaskPrototypes)
             {
                 if (_prototypeManager.TryIndex<HTNCompoundTask>(proto, out var compTask))
                 {
-                    branch.Tasks.Add(compTask);
+                    brancho.Add(compTask);
                 }
                 else if (_prototypeManager.TryIndex<HTNPrimitiveTask>(proto, out var primTask))
                 {
-                    branch.Tasks.Add(primTask);
+                    brancho.Add(primTask);
                 }
                 else
                 {
@@ -152,8 +177,9 @@ public sealed class HTNSystem : EntitySystem
     public void UpdateNPC(ref int count, int maxUpdates, float frameTime)
     {
         _planQueue.Process();
+        var query = EntityQueryEnumerator<ActiveNPCComponent, HTNComponent>();
 
-        foreach (var (_, comp) in EntityQuery<ActiveNPCComponent, HTNComponent>())
+        while(query.MoveNext(out var uid, out _, out var comp))
         {
             // If we're over our max count or it's not MapInit then ignore the NPC.
             if (count >= maxUpdates)
@@ -163,10 +189,10 @@ public sealed class HTNSystem : EntitySystem
             {
                 if (comp.PlanningJob.Exception != null)
                 {
-                    _sawmill.Fatal($"Received exception on planning job for {comp.Owner}!");
-                    _npc.SleepNPC(comp.Owner);
+                    _sawmill.Fatal($"Received exception on planning job for {uid}!");
+                    _npc.SleepNPC(uid);
                     var exc = comp.PlanningJob.Exception;
-                    RemComp<HTNComponent>(comp.Owner);
+                    RemComp<HTNComponent>(uid);
                     throw exc;
                 }
 
@@ -212,16 +238,15 @@ public sealed class HTNSystem : EntitySystem
                         {
                             text.AppendLine($"BTR: {string.Join(", ", comp.Plan.BranchTraversalRecord)}");
                             text.AppendLine($"tasks:");
-
-                            foreach (var task in comp.Plan.Tasks)
-                            {
-                                text.AppendLine($"- {task.ID}");
-                            }
+                            var root = _prototypeManager.Index<HTNCompoundTask>(comp.RootTask);
+                            var btr = new List<int>();
+                            var level = -1;
+                            AppendDebugText(root, text, comp.Plan.BranchTraversalRecord, btr, ref level);
                         }
 
                         RaiseNetworkEvent(new HTNMessage()
                         {
-                            Uid = comp.Owner,
+                            Uid = uid,
                             Text = text.ToString(),
                         }, session.ConnectedClient);
                     }
@@ -234,6 +259,49 @@ public sealed class HTNSystem : EntitySystem
             Update(comp, frameTime);
             count++;
         }
+    }
+
+    private void AppendDebugText(HTNTask task, StringBuilder text, List<int> planBtr, List<int> btr, ref int level)
+    {
+        // If it's the selected BTR then highlight.
+        for (var i = 0; i < btr.Count; i++)
+        {
+            text.Append("--");
+        }
+
+        text.Append(' ');
+
+        if (task is HTNPrimitiveTask primitive)
+        {
+            text.AppendLine(primitive.ID);
+            return;
+        }
+
+        if (task is HTNCompoundTask compound)
+        {
+            level++;
+            text.AppendLine(compound.ID);
+            var branches = _compoundBranches[compound];
+
+            for (var i = 0; i < branches.Length; i++)
+            {
+                var branch = branches[i];
+                btr.Add(i);
+                text.AppendLine($" branch {string.Join(", ", btr)}:");
+
+                foreach (var sub in branch)
+                {
+                    AppendDebugText(sub, text, planBtr, btr, ref level);
+                }
+
+                btr.RemoveAt(btr.Count - 1);
+            }
+
+            level--;
+            return;
+        }
+
+        throw new NotImplementedException();
     }
 
     private void Update(HTNComponent component, float frameTime)
@@ -260,7 +328,25 @@ public sealed class HTNSystem : EntitySystem
         {
             // Run the existing operator
             var currentOperator = component.Plan.CurrentOperator;
+            var currentTask = component.Plan.CurrentTask;
             var blackboard = component.Blackboard;
+
+            foreach (var service in currentTask.Services)
+            {
+                // Service still on cooldown.
+                if (component.ServiceCooldowns.TryGetValue(service.ID, out var lastService) &&
+                    _timing.CurTime < lastService)
+                {
+                    continue;
+                }
+
+                var serviceResult = _utility.GetEntities(blackboard, service.Prototype);
+                blackboard.SetValue(service.Key, serviceResult.GetHighest());
+
+                var cooldown = TimeSpan.FromSeconds(_random.NextFloat(service.MinCooldown, service.MaxCooldown));
+                component.ServiceCooldowns[service.ID] = _timing.CurTime + cooldown;
+            }
+
             status = currentOperator.Update(blackboard, frameTime);
 
             switch (status)
@@ -269,6 +355,7 @@ public sealed class HTNSystem : EntitySystem
                     break;
                 case HTNOperatorStatus.Failed:
                     currentOperator.Shutdown(blackboard, status);
+                    component.ServiceCooldowns.Clear();
                     component.Plan = null;
                     break;
                 // Operator completed so go to the next one.
@@ -279,6 +366,7 @@ public sealed class HTNSystem : EntitySystem
                     // Plan finished!
                     if (component.Plan.Tasks.Count <= component.Plan.Index)
                     {
+                        component.ServiceCooldowns.Clear();
                         component.Plan = null;
                         break;
                     }
@@ -324,6 +412,7 @@ public sealed class HTNSystem : EntitySystem
 
         var job = new HTNPlanJob(
             0.02,
+            this,
             _prototypeManager.Index<HTNCompoundTask>(component.RootTask),
             component.Blackboard.ShallowClone(), branchTraversal, cancelToken.Token);
 
@@ -354,13 +443,17 @@ public sealed class HTNSystem : EntitySystem
         else if (task is HTNCompoundTask compound)
         {
             builder.AppendLine(buffer + $"Compound: {task.ID}");
+            var compoundBranches = CompoundBranches[compound];
 
-            foreach (var branch in compound.Branches)
+            for (var i = 0; i < compound.Branches.Count; i++)
             {
+                var branch = compound.Branches[i];
+
                 builder.AppendLine(buffer + "  branch:");
                 indent++;
+                var branchTasks = compoundBranches[i];
 
-                foreach (var branchTask in branch.Tasks)
+                foreach (var branchTask in branchTasks)
                 {
                     AppendDomain(builder, branchTask, ref indent);
                 }

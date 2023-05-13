@@ -14,6 +14,7 @@
       rareChance: 0.03
       prototypes:
         - PlushieBee
+        - PlushieAtmosian
         - PlushieNuke
         - PlushieLizard
         - PlushieNar
@@ -30,6 +31,7 @@
         - PlushieSharkGrey
         - ToyAmongPequeno
         - ToyMouse
+        - PlushieDiona
       chance: 0.5
       offset: 0.2
 

@@ -45,12 +45,12 @@ public sealed class PrayerSystem : EntitySystem
         var prayerVerb = new ActivationVerb
         {
             Text = Loc.GetString(comp.Verb),
-            IconTexture = comp.VerbImage == "" ? null : comp.VerbImage,
+            Icon = comp.VerbImage,
             Act = () =>
             {
                 if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-locked"), uid, actor.PlayerSession, PopupType.Large);
+                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-pray-locked"), uid, actor.PlayerSession, PopupType.Large);
                     return;
                 }
 

@@ -1,12 +1,9 @@
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Temperature.Systems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.Containers;
-using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Inventory
 {
@@ -44,31 +41,31 @@ namespace Content.Server.Inventory
 
         public void TransferEntityInventories(EntityUid uid, EntityUid target)
         {
-            if (TryGetContainerSlotEnumerator(uid, out var enumerator))
+            if (!TryGetContainerSlotEnumerator(uid, out var enumerator))
+                return;
+
+            Dictionary<string, EntityUid> inventoryEntities = new();
+            var slots = GetSlots(uid);
+            while (enumerator.MoveNext(out var containerSlot))
             {
-                Dictionary<string, EntityUid?> inventoryEntities = new();
-                var slots = GetSlots(uid);
-                while (enumerator.MoveNext(out var containerSlot))
+                //records all the entities stored in each of the target's slots
+                foreach (var slot in slots)
                 {
-                    //records all the entities stored in each of the target's slots
-                    foreach (var slot in slots)
+                    if (TryGetSlotContainer(target, slot.Name, out var conslot, out _) &&
+                        conslot.ID == containerSlot.ID &&
+                        containerSlot.ContainedEntity is { } containedEntity)
                     {
-                        if (TryGetSlotContainer(target, slot.Name, out var conslot, out var _) &&
-                            conslot.ID == containerSlot.ID)
-                        {
-                            inventoryEntities.Add(slot.Name, containerSlot.ContainedEntity);
-                        }
+                        inventoryEntities.Add(slot.Name, containedEntity);
                     }
-                    //drops everything in the target's inventory on the ground
-                    containerSlot.EmptyContainer();
                 }
-                // This takes the objects we removed and stored earlier
-                // and actually equips all of it to the new entity
-                foreach (var item in inventoryEntities)
-                {
-                    if (item.Value != null)
-                        TryEquip(target, item.Value.Value, item.Key, true);
-                }
+                //drops everything in the target's inventory on the ground
+                TryUnequip(uid, containerSlot.ID, true, true);
+            }
+            // This takes the objects we removed and stored earlier
+            // and actually equips all of it to the new entity
+            foreach (var (slot, item) in inventoryEntities)
+            {
+                TryEquip(target, item, slot , true, true);
             }
         }
     }

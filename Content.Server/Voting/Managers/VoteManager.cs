@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
@@ -10,6 +11,7 @@ using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -35,6 +37,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private int _nextVoteId = 1;
 
@@ -50,6 +53,7 @@ namespace Content.Server.Voting.Managers
         {
             _netManager.RegisterNetMessage<MsgVoteData>();
             _netManager.RegisterNetMessage<MsgVoteCanCall>();
+            _netManager.RegisterNetMessage<MsgVoteMenu>(ReceiveVoteMenu);
 
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
             _adminMgr.OnPermsChanged += AdminPermsChanged;
@@ -64,6 +68,14 @@ namespace Content.Server.Voting.Managers
                     DirtyCanCallVoteAll();
                 });
             }
+        }
+
+        private void ReceiveVoteMenu(MsgVoteMenu message)
+        {
+            var sender = message.MsgChannel;
+            var session = _playerManager.GetSessionByChannel(sender);
+
+            _adminLogger.Add(LogType.Vote, LogImpact.Low, $"{session} opened vote menu");
         }
 
         private void AdminPermsChanged(AdminPermsChangedEventArgs obj)
