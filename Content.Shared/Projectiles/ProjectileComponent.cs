@@ -21,7 +21,7 @@ public sealed class ProjectileComponent : Component
     /// Weapon used to shoot.
     /// </summary>
     [DataField("weapon")]
-    public EntityUid Weapon;
+    public EntityUid? Weapon;
 
     public bool IgnoreShooter = true;
 

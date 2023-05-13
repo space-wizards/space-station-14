@@ -54,7 +54,8 @@ public sealed class DamageMarkerSystem : EntitySystem
         if (!args.OtherFixture.Hard ||
             args.OurFixture.ID != SharedProjectileSystem.ProjectileFixture ||
             component.Whitelist?.IsValid(args.OtherEntity, EntityManager) == false ||
-            !TryComp<ProjectileComponent>(uid, out var projectile))
+            !TryComp<ProjectileComponent>(uid, out var projectile) ||
+            projectile.Weapon == null)
         {
             return;
         }
@@ -62,7 +63,7 @@ public sealed class DamageMarkerSystem : EntitySystem
         // Markers are exclusive, deal with it.
         var marker = EnsureComp<DamageMarkerComponent>(args.OtherEntity);
         marker.Damage = new DamageSpecifier(component.Damage);
-        marker.Marker = projectile.Weapon;
+        marker.Marker = projectile.Weapon.Value;
         marker.EndTime = _timing.CurTime + component.Duration;
         Dirty(marker);
     }
