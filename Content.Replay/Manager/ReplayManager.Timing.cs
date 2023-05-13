@@ -36,12 +36,12 @@ public sealed partial class ReplayManager
             skipEffectEvents = true;
             ResetToNearestCheckpoint(value, false);
         }
-        else if (value > CurrentReplay.CurrentIndex + _visualEventThreshold)
+        else if (value > CurrentReplay.CurrentIndex + _checkpointInterval)
         {
             // If we are skipping many ticks into the future, we try to skip directly to a checkpoint instead of
             // applying every tick.
             var nextCheckpoint = GetNextCheckpoint(CurrentReplay, CurrentReplay.CurrentIndex);
-            if (nextCheckpoint.Index >= value)
+            if (nextCheckpoint.Index < value)
                 ResetToNearestCheckpoint(value, false);
         }
 
@@ -84,6 +84,11 @@ public sealed partial class ReplayManager
 
         var checkpoint = GetLastCheckpoint(CurrentReplay, index);
         var state = checkpoint.State;
+
+        _sawmill.Info($"Resetting to checkpoint. From {CurrentReplay.CurrentIndex} to {checkpoint.Index}");
+        var st = new Stopwatch();
+        st.Start();
+
         CurrentReplay.CurrentIndex = checkpoint.Index;
         DebugTools.Assert(state.ToSequence == new GameTick(CurrentReplay.TickOffset.Value + (uint) CurrentReplay.CurrentIndex));
 
@@ -108,17 +113,17 @@ public sealed partial class ReplayManager
         _gameState.UpdateFullRep(state, cloneDelta: true);
         _gameState.ApplyGameState(state, CurrentReplay.NextState);
 
-#if DEBUG
         // TODO REPLAYS add asserts
         // foreach entity
         //  if networked
         //    check last applied/modified tick
         //    foreach component
         //      check creation, modified ticks
-#endif
-        _timing.CurTick += 1;
 
+        _timing.CurTick += 1;
         StopAudio();
+
+        _sawmill.Info($"Resetting to checkpoint took {st.Elapsed}");
     }
 
     public void StopAudio()
