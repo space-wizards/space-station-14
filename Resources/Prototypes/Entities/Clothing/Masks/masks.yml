@@ -383,7 +383,7 @@
   parent: ClothingMaskMime
   id: ClothingMaskScaredMime
   name: scared mime mask
-  description: Not the most used mask by mimes.
+  description: Looks like it would scream if it wasn't a mask
   components:
   - type: Sprite
     sprite: Clothing/Mask/scaredmime.rsi
