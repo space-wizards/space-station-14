@@ -11,9 +11,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands;
 
-/// <summary>
-/// Proxy to server-side <c>playglobalsound</c> command. Implements completions.
-/// </summary>
 [AdminCommand(AdminFlags.Fun)]
 public sealed class PlayGlobalSoundCommand : IConsoleCommand
 {
