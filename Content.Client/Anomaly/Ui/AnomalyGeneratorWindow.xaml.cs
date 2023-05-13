@@ -25,6 +25,7 @@ public sealed partial class AnomalyGeneratorWindow : FancyWindow
         IoCManager.InjectDependencies(this);
 
         EntityView.Sprite = _entityManager.GetComponent<SpriteComponent>(gen);
+        EntityView.SpriteOffset = false;
 
         GenerateButton.OnPressed += _ => OnGenerateButtonPressed?.Invoke();
     }
@@ -37,7 +38,9 @@ public sealed partial class AnomalyGeneratorWindow : FancyWindow
         var fuelCompletion = Math.Clamp((float) state.FuelAmount / state.FuelCost, 0f, 1f);
 
         FuelBar.Value = fuelCompletion;
-        FuelText.Text = $"{fuelCompletion:P}";
+
+        var charges = state.FuelAmount / state.FuelCost;
+        FuelText.Text = Loc.GetString("anomaly-generator-charges", ("charges", charges));
 
         UpdateTimer();
         UpdateReady(); // yes this can trigger twice. no i don't care

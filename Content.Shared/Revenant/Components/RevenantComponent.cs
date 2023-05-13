@@ -1,5 +1,3 @@
-using System.Threading;
-using Content.Shared.Disease;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.GameStates;
@@ -67,9 +65,6 @@ public sealed class RevenantComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("maxEssenceUpgradeAmount")]
     public float MaxEssenceUpgradeAmount = 10;
-
-    public CancellationTokenSource? SoulSearchCancelToken;
-    public CancellationTokenSource? HarvestCancelToken;
     #endregion
 
     //In the nearby radius, causes various objects to be thrown, messed with, and containers opened
@@ -157,12 +152,6 @@ public sealed class RevenantComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("blightRadius")]
     public float BlightRadius = 3.5f;
-
-    /// <summary>
-    /// The disease that is given to the victims of the ability.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("blightDiseasePrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
-    public string BlightDiseasePrototypeId = "SpectralTiredness";
     #endregion
 
     #region Malfunction Ability

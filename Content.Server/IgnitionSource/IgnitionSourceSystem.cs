@@ -23,7 +23,6 @@ public sealed class IgnitionSourceSystem : EntitySystem
 
     private void OnIsHot(EntityUid uid, IgnitionSourceComponent component, IsHotEvent args)
     {
-        Logger.Debug(args.IsHot.ToString());
         SetIgnited(uid,component,args.IsHot);
     }
 
@@ -45,7 +44,7 @@ public sealed class IgnitionSourceSystem : EntitySystem
             if (transform.GridUid is { } gridUid)
             {
                 var position = _transformSystem.GetGridOrMapTilePosition(source, transform);
-                _atmosphereSystem.HotspotExpose(gridUid, position, component.Temperature, 50, true);
+                _atmosphereSystem.HotspotExpose(gridUid, position, component.Temperature, 50, source, true);
             }
         }
 

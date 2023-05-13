@@ -13,7 +13,6 @@
        - id: ClothingShoesColorBlack
          amount: 2
        - id: ClothingMaskMuzzle
-         amount: 1
 
 #- type: entity
 #  id: WardrobePajamaFilled
@@ -21,10 +20,22 @@
 #  parent: WardrobeWhite
 #  name: pajama wardrobe
 
-# - type: entity
-#   id: WardrobeRoboticsFilled
-#   suffix: Filled
-#   parent: WardrobeRobotics
+ - type: entity
+   id: WardrobeRoboticsFilled
+   suffix: Filled
+   parent: WardrobeRobotics
+   description: "You can build a robot out of this locker."
+   components:
+   - type: StorageFill
+     contents:
+     - id: ClothingOuterCoatRobo
+       amount: 2
+     - id: ClothingUniformJumpsuitRoboticist
+     - id: ClothingUniformJumpskirtRoboticist
+     - id: ClothingShoesColorBlack
+       amount: 2
+     - id: ClothingHandsGlovesFingerless
+       amount: 2
 
  - type: entity
    id: WardrobeChemistryFilled
@@ -35,25 +46,38 @@
    - type: StorageFill
      contents:
        - id: ClothingUniformJumpsuitChemistry
-         amount: 1
        - id: ClothingBackpackChemistry
-         amount: 1
        - id: ClothingShoesColorWhite
-         amount: 1
        - id: ClothingOuterCoatLabChem
-         amount: 1
        - id: ClothingUniformJumpskirtChemistry
-         amount: 1
 
-# - type: entity
-#   id: WardrobeGeneticsFilled
-#   suffix: Filled
-#   parent: WardrobeGenetics
+ - type: entity
+   id: WardrobeGeneticsFilled
+   suffix: Filled
+   parent: WardrobeGenetics
+   description: "The sleek blue threads contained within make you much less likely to be thrown out of the genetics lab."
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingUniformJumpsuitGenetics
+       - id: ClothingBackpackGenetics
+       - id: ClothingShoesColorWhite
+       - id: ClothingOuterCoatLabGene
+       - id: ClothingUniformJumpskirtGenetics
 
-# - type: entity
-#   id: WardrobeVirologyFilled
-#   suffix: Filled
-#   parent: WardrobeVirology
+ - type: entity
+   id: WardrobeVirologyFilled
+   suffix: Filled
+   parent: WardrobeVirology
+   description: "The sleek green threads contained within make you much less likely to be thrown out of the virology lab."
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingUniformJumpsuitVirology
+       - id: ClothingBackpackVirology
+       - id: ClothingShoesColorWhite
+       - id: ClothingOuterCoatLabViro
+       - id: ClothingUniformJumpskirtVirology
 
  - type: entity
    id: WardrobeScienceFilled
@@ -64,15 +88,10 @@
    - type: StorageFill
      contents:
        - id: ClothingUniformJumpsuitScientist
-         amount: 1
        - id: ClothingBackpackScience
-         amount: 1
        - id: ClothingShoesColorWhite
-         amount: 1
-       - id: ClothingOuterCoatLab
-         amount: 1
+       - id: ClothingOuterCoatRnd
        - id: ClothingUniformJumpskirtScientist
-         amount: 1
        - id: ClothingEyesGlasses
          prob: 0.5
        - id: CrowbarRed #The jojoke - hit video game Half-Life
@@ -88,17 +107,11 @@
    - type: StorageFill
      contents:
        - id: ClothingUniformJumpsuitHydroponics
-         amount: 1
        - id: ClothingBackpackHydroponics
-         amount: 1
        - id: ClothingShoesColorBrown
-         amount: 1
        - id: ClothingOuterApronBotanist
-         amount: 1
        - id: ClothingUniformJumpskirtHydroponics
-         amount: 1
        - id: ClothingUniformOveralls
-         amount: 1
        - id: ClothingHeadHatTrucker #the hat itself is a subtle joke
          prob: 0.15
        - id: ClothingHandsGlovesLeather
@@ -113,15 +126,10 @@
    - type: StorageFill
      contents:
        - id: ClothingUniformJumpsuitMedicalDoctor
-         amount: 1
        - id: ClothingBackpackMedical
-         amount: 1
        - id: ClothingShoesColorWhite
-         amount: 1
        - id: ClothingOuterCoatLab
-         amount: 1
        - id: ClothingUniformJumpskirtMedicalDoctor
-         amount: 1
        - id: ClothingHandsGlovesLatex
          prob: 0.4
        - id: ClothingEyesGlasses
@@ -136,12 +144,8 @@
    - type: StorageFill
      contents: # todo chaplain backpack
        - id: ClothingUniformJumpsuitChaplain
-         amount: 1
        - id: ClothingShoesColorBlack
-         amount: 1
        - id: ClothingUniformJumpskirtChaplain
-         amount: 1
-
 
  - type: entity
    id: WardrobeSecurityFilled
@@ -152,19 +156,12 @@
    - type: StorageFill
      contents:
        - id: ClothingUniformJumpsuitSec
-         amount: 1
        - id: ClothingBackpackSecurity
-         amount: 1
        - id: ClothingShoesBootsJack
-         amount: 1
        - id: ClothingEyesGlassesSecurity
-         amount: 1
        - id: ClothingHeadHelmetHelmetOld
-         amount: 1
        - id: ClothingOuterVestKevlar
-         amount: 1
        - id: ClothingUniformJumpskirtSec
-         amount: 1
 
  - type: entity
    id: WardrobeCargoFilled
@@ -175,17 +172,12 @@
    - type: StorageFill
      contents:
        - id: ClothingHeadHatCargosoft
-         amount: 1
        - id: ClothingUniformJumpsuitCargo
-         amount: 1
        - id: ClothingBackpack
-         amount: 1
        - id: ClothingShoesColorBlack
-         amount: 1
        - id: ClothingUniformJumpskirtCargo
-         amount: 1
        - id: ClothingHandsGlovesFingerless
-         amount: 1
+       - id: AppraisalTool
 
  - type: entity
    id: WardrobeSalvageFilled
@@ -195,16 +187,23 @@
    - type: StorageFill
      contents:
        - id: ClothingBackpack
-         amount: 1
        - id: ClothingShoesBootsSalvage
          amount: 2
        - id: ClothingUniformJumpsuitSalvageSpecialist
          amount: 2
 
-# - type: entity
-#   id: WardrobeAtmosphericsFilled
-#   suffix: Filled
-#   parent: WardrobeAtmospherics
+ - type: entity
+   id: WardrobeAtmosphericsFilled
+   suffix: Filled
+   parent: WardrobeAtmospherics
+   description: "This locker contains a uniform for atmospheric technicians."
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingUniformJumpsuitAtmos
+       - id: ClothingBackpackEngineering
+       - id: ClothingShoesColorWhite
+       - id: ClothingUniformJumpskirtAtmos
 
  - type: entity
    id: WardrobeEngineeringFilled
@@ -215,14 +214,8 @@
    - type: StorageFill
      contents:
        - id: ClothingHeadHatHardhatYellow
-         amount: 1
        - id: ClothingUniformJumpsuitEngineering
-         amount: 1
        - id: ClothingBackpackEngineering
-         amount: 1
        - id: ClothingShoesBootsWork
-         amount: 1
        - id: ClothingOuterVestHazard
-         amount: 1
        - id: ClothingUniformJumpskirtEngineering
-         amount: 1

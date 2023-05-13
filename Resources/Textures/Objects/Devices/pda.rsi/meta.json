@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d, pda-cluwne made by brainfood1183 (github) ss14 | pda-brigmedic and pda-centcom made by PuroSlavKing (Github) | pda-brigemdic resprited by Hülle#2562 (Discord)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,14 @@
     },
     {
       "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
       "directions": 4
     },
     {
@@ -98,6 +106,9 @@
       "name": "pda-medical"
     },
     {
+      "name": "pda-paramedic"
+    },
+    {
       "name": "pda-mime"
     },
     {
@@ -137,7 +148,29 @@
       "name": "pda-security"
     },
     {
+      "name": "pda-brigmedic",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
       "name": "pda-syndi"
+    },
+    {
+      "name": "pda-centcom",
+      "delays": [
+        [
+          1.2,
+          1.2,
+          1.2,
+          1.2
+        ]
+      ]
     },
     {
       "name": "pda-virology"
@@ -171,6 +204,9 @@
     },
     {
       "name": "pda-ert"
+    },
+	{
+      "name": "pda-cluwne"
     }
   ]
 }

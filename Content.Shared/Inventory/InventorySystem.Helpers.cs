@@ -1,11 +1,32 @@
-﻿using Content.Shared.Clothing.Components;
-using Content.Shared.Item;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
+    /// <summary>
+    ///     Returns the definition of the inventory slot that the given entity is currently in..
+    /// </summary>
+    public bool TryGetContainingSlot(EntityUid uid, [NotNullWhen(true)] out SlotDefinition? slot)
+    {
+        if (!_containerSystem.TryGetContainingContainer(uid, out var container))
+        {
+            slot = null;
+            return false;
+        }
+
+        return TryGetSlot(container.Owner, container.ID, out slot);
+    }
+
+    /// <summary>
+    ///     Returns true if the given entity is equipped to an inventory slot with the given inventory slot flags.
+    /// </summary>
+    public bool InSlotWithFlags(EntityUid uid, SlotFlags flags)
+    {
+        return TryGetContainingSlot(uid, out var slot) && ((slot.SlotFlags & flags) == flags);
+    }
+
     public bool SpawnItemInSlot(EntityUid uid, string slot, string prototype, bool silent = false, bool force = false, InventoryComponent? inventory = null)
     {
         if (!Resolve(uid, ref inventory, false))

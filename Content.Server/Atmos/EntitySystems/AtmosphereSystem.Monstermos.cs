@@ -1,6 +1,6 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
+using Content.Shared.Doors.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Database;

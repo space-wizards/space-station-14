@@ -172,7 +172,7 @@
   targetDepth: 3
   effectHint: artifact-effect-hint-sentience
   permanentComponents:
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     allowMovement: true
     allowSpeech: true
     makeSentient: true
@@ -180,6 +180,7 @@
     description: |
       Enact your eldritch whims.
       Forcibly activate your nodes for good or for evil.
+  - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.25
     baseSprintSpeed: 0.5
@@ -193,8 +194,6 @@
     - Item
   permanentComponents:
   - type: TilePrying
-  - type: SignalLinker
-    requiredQuality: Pulsing
   - type: UserInterface
     interfaces:
       - key: enum.SignalLinkerUiKey.Key
@@ -205,6 +204,9 @@
     - Screwing
     speed: 2 # Very powerful multitool to balance out the desire to sell or scrap for points
     useSound: /Audio/Items/drill_use.ogg
+  - type: Tag
+    tags:
+      - Multitool
   - type: MultipleTool
     statusShowBehavior: true
     entries:

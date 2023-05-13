@@ -5,7 +5,6 @@ using Content.Client.Gameplay;
 using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
 using Content.Shared.CCVar;
-using Content.Shared.CombatMode;
 using Content.Shared.Examine;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
@@ -216,16 +215,7 @@ namespace Content.Client.ContextMenu.UI
             // If there is only a single group. We will just directly list individual entities
             if (entityGroups.Count == 1)
             {
-                foreach (var entity in entityGroups[0])
-                {
-                    var element = new EntityMenuElement(entity);
-                    element.SubMenu = new ContextMenuPopup(_context, element);
-                    element.SubMenu.OnPopupOpen += () => _verb.OpenVerbMenu(entity, popup: element.SubMenu);
-                    element.SubMenu.OnPopupHide += element.SubMenu.MenuBody.DisposeAllChildren;
-
-                    _context.AddElement(_context.RootMenu, element);
-                    Elements.TryAdd(entity, element);
-                }
+                AddGroupToMenu(entityGroups[0], _context.RootMenu);
                 return;
             }
 
@@ -234,16 +224,12 @@ namespace Content.Client.ContextMenu.UI
                 if (group.Count > 1)
                 {
                     AddGroupToUI(group);
-                    continue;
                 }
-
-                // this group only has a single entity, add a simple menu element
-                var element = new EntityMenuElement(group[0]);
-                element.SubMenu = new ContextMenuPopup(_context, element);
-                element.SubMenu.OnPopupOpen += () => _verb.OpenVerbMenu(group[0], popup: element.SubMenu);
-                element.SubMenu.OnPopupHide += element.SubMenu.MenuBody.DisposeAllChildren;
-                _context.AddElement(_context.RootMenu, element);
-                Elements.TryAdd(group[0], element);
+                else
+                {
+                    // this group only has a single entity, add a simple menu element
+                    AddEntityToMenu(group[0], _context.RootMenu);
+                }
             }
 
         }
@@ -256,18 +242,34 @@ namespace Content.Client.ContextMenu.UI
             EntityMenuElement element = new();
             ContextMenuPopup subMenu = new(_context, element);
 
-            foreach (var entity in group)
-            {
-                var subElement = new EntityMenuElement(entity);
-                subElement.SubMenu = new ContextMenuPopup(_context, subElement);
-                subElement.SubMenu.OnPopupOpen += () => _verb.OpenVerbMenu(group[0], popup: subElement.SubMenu);
-                subElement.SubMenu.OnPopupHide += subElement.SubMenu.MenuBody.DisposeAllChildren;
-                _context.AddElement(subMenu, subElement);
-                Elements.TryAdd(entity, subElement);
-            }
+            AddGroupToMenu(group, subMenu);
 
             UpdateElement(element);
             _context.AddElement(_context.RootMenu, element);
+        }
+
+        /// <summary>
+        ///     Add the group of entities to the menu
+        /// </summary>
+        private void AddGroupToMenu(List<EntityUid> group, ContextMenuPopup menu)
+        {
+            foreach (var entity in group)
+            {
+                AddEntityToMenu(entity, menu);
+            }
+        }
+
+        /// <summary>
+        ///     Add the entity to the menu
+        /// </summary>
+        private void AddEntityToMenu(EntityUid entity, ContextMenuPopup menu)
+        {
+            var element = new EntityMenuElement(entity);
+            element.SubMenu = new ContextMenuPopup(_context, element);
+            element.SubMenu.OnPopupOpen += () => _verb.OpenVerbMenu(entity, popup: element.SubMenu);
+            element.SubMenu.OnPopupHide += element.SubMenu.MenuBody.DisposeAllChildren;
+            _context.AddElement(menu, element);
+            Elements.TryAdd(entity, element);
         }
 
         /// <summary>
@@ -317,15 +319,7 @@ namespace Content.Client.ContextMenu.UI
             }
 
             element.UpdateEntity(entity);
-
-            // Update the entity count & count label
-            element.Count = 0;
-            foreach (var subElement in element.SubMenu.MenuBody.Children)
-            {
-                if (subElement is EntityMenuElement entityElement)
-                    element.Count += entityElement.Count;
-            }
-            element.CountLabel.Text = element.Count.ToString();
+            element.UpdateCount();
 
             if (element.Count == 1)
             {
@@ -334,7 +328,6 @@ namespace Content.Client.ContextMenu.UI
                 element.Entity = entity;
                 element.SubMenu.Dispose();
                 element.SubMenu = null;
-                element.CountLabel.Visible = false;
                 Elements[entity.Value] = element;
             }
 

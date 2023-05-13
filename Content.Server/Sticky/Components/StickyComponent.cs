@@ -80,4 +80,9 @@ public sealed class StickyComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? StuckTo;
+
+    /// <summary>
+    /// For the DoAfter event to tell if it should stick or unstick
+    /// </summary>
+    public bool Stick;
 }

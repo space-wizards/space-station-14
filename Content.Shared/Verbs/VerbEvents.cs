@@ -22,7 +22,7 @@ namespace Content.Shared.Verbs
 
         public readonly bool AdminRequest;
 
-        public RequestServerVerbsEvent(EntityUid entityUid, List<Type> verbTypes, EntityUid? slotOwner = null, bool adminRequest = false)
+        public RequestServerVerbsEvent(EntityUid entityUid, IEnumerable<Type> verbTypes, EntityUid? slotOwner = null, bool adminRequest = false)
         {
             EntityUid = entityUid;
             SlotOwner = slotOwner;
@@ -112,7 +112,7 @@ namespace Content.Shared.Verbs
         /// <remarks>
         ///     This may be null if the user has no hands.
         /// </remarks>
-        public readonly SharedHandsComponent? Hands;
+        public readonly HandsComponent? Hands;
 
         /// <summary>
         ///     The entity currently being held by the active hand.
@@ -123,7 +123,7 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public readonly EntityUid? Using;
 
-        public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands, bool canInteract, bool canAccess)
+        public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, HandsComponent? hands, bool canInteract, bool canAccess)
         {
             User = user;
             Target = target;

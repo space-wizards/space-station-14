@@ -1,9 +1,11 @@
 ﻿using Content.Server.Body.Systems;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Access(typeof(StomachSystem))]
+    [RegisterComponent, Access(typeof(StomachSystem), typeof(FoodSystem))]
     public sealed class StomachComponent : Component
     {
         public float AccumulatedFrameTime;
@@ -21,17 +23,17 @@ namespace Content.Server.Body.Components
         public string BodySolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
-        ///     Initial internal solution storage volume
-        /// </summary>
-        [DataField("initialMaxVolume", readOnly: true)]
-        public readonly FixedPoint2 InitialMaxVolume = FixedPoint2.New(50);
-
-        /// <summary>
         ///     Time in seconds between reagents being ingested and them being
         ///     transferred to <see cref="BloodstreamComponent"/>
         /// </summary>
         [DataField("digestionDelay")]
         public float DigestionDelay = 20;
+
+        /// <summary>
+        ///     A whitelist for what special-digestible-required foods this stomach is capable of eating.
+        /// </summary>
+        [DataField("specialDigestible")]
+        public EntityWhitelist? SpecialDigestible = null;
 
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach

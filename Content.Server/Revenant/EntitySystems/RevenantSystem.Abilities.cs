@@ -1,6 +1,5 @@
 using Content.Shared.Popups;
 using Content.Shared.Damage;
-using Content.Server.DoAfter;
 using Content.Shared.Revenant;
 using Robust.Shared.Random;
 using Robust.Shared.Map;
@@ -12,14 +11,12 @@ using Robust.Shared.Physics;
 using Content.Shared.Throwing;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
 using System.Linq;
 using Content.Server.Maps;
 using Content.Server.Revenant.Components;
-using Content.Server.Store.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
@@ -29,7 +26,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
-using Content.Shared.Humanoid;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -38,7 +34,6 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly DiseaseSystem _disease = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
@@ -48,10 +43,8 @@ public sealed partial class RevenantSystem
     private void InitializeAbilities()
     {
         SubscribeLocalEvent<RevenantComponent, InteractNoHandEvent>(OnInteract);
-        SubscribeLocalEvent<RevenantComponent, SoulSearchDoAfterComplete>(OnSoulSearchComplete);
-        SubscribeLocalEvent<RevenantComponent, SoulSearchDoAfterCancelled>(OnSoulSearchCancelled);
-        SubscribeLocalEvent<RevenantComponent, HarvestDoAfterComplete>(OnHarvestComplete);
-        SubscribeLocalEvent<RevenantComponent, HarvestDoAfterCancelled>(OnHarvestCancelled);
+        SubscribeLocalEvent<RevenantComponent, SoulEvent>(OnSoulSearch);
+        SubscribeLocalEvent<RevenantComponent, HarvestEvent>(OnHarvest);
 
         SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
@@ -88,26 +81,26 @@ public sealed partial class RevenantSystem
 
     private void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant)
     {
-        if (revenant.SoulSearchCancelToken != null)
+        var searchDoAfter = new DoAfterArgs(uid, revenant.SoulSearchDuration, new SoulEvent(), uid, target: target)
+        {
+            BreakOnUserMove = true,
+            BreakOnDamage = true,
+            DistanceThreshold = 2
+        };
+
+        if (!_doAfter.TryStartDoAfter(searchDoAfter))
             return;
 
         _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, uid, PopupType.Medium);
-        revenant.SoulSearchCancelToken = new();
-        var searchDoAfter = new DoAfterEventArgs(uid, revenant.SoulSearchDuration, revenant.SoulSearchCancelToken.Token, target)
-        {
-            BreakOnUserMove = true,
-            DistanceThreshold = 2,
-            UserFinishedEvent = new SoulSearchDoAfterComplete(target),
-            UserCancelledEvent = new SoulSearchDoAfterCancelled(),
-        };
-        _doAfter.DoAfter(searchDoAfter);
     }
 
-    private void OnSoulSearchComplete(EntityUid uid, RevenantComponent component, SoulSearchDoAfterComplete args)
+    private void OnSoulSearch(EntityUid uid, RevenantComponent component, SoulEvent args)
     {
-        if (!TryComp<EssenceComponent>(args.Target, out var essence))
+        if (args.Handled || args.Cancelled)
             return;
-        component.SoulSearchCancelToken = null;
+
+        if (!TryComp<EssenceComponent>(args.Args.Target, out var essence))
+            return;
         essence.SearchComplete = true;
 
         string message;
@@ -123,19 +116,13 @@ public sealed partial class RevenantSystem
                 message = "revenant-soul-yield-average";
                 break;
         }
-        _popup.PopupEntity(Loc.GetString(message, ("target", args.Target)), args.Target, uid, PopupType.Medium);
-    }
+        _popup.PopupEntity(Loc.GetString(message, ("target", args.Args.Target)), args.Args.Target.Value, uid, PopupType.Medium);
 
-    private void OnSoulSearchCancelled(EntityUid uid, RevenantComponent component, SoulSearchDoAfterCancelled args)
-    {
-        component.SoulSearchCancelToken = null;
+        args.Handled = true;
     }
 
     private void BeginHarvestDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant, EssenceComponent essence)
     {
-        if (revenant.HarvestCancelToken != null)
-            return;
-
         if (essence.Harvested)
         {
             _popup.PopupEntity(Loc.GetString("revenant-soul-harvested"), target, uid, PopupType.SmallCaution);
@@ -148,15 +135,16 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        revenant.HarvestCancelToken = new();
-        var doAfter = new DoAfterEventArgs(uid, revenant.HarvestDebuffs.X, revenant.HarvestCancelToken.Token, target)
+        var doAfter = new DoAfterArgs(uid, revenant.HarvestDebuffs.X, new HarvestEvent(), uid, target: target)
         {
             DistanceThreshold = 2,
             BreakOnUserMove = true,
-            NeedHand = false,
-            UserFinishedEvent = new HarvestDoAfterComplete(target),
-            UserCancelledEvent = new HarvestDoAfterCancelled(),
+            BreakOnDamage = true,
+            RequireCanInteract = false, // stuns itself
         };
+
+        if (!_doAfter.TryStartDoAfter(doAfter))
+            return;
 
         _appearance.SetData(uid, RevenantVisuals.Harvesting, true);
 
@@ -164,32 +152,36 @@ public sealed partial class RevenantSystem
             target, PopupType.Large);
 
         TryUseAbility(uid, revenant, 0, revenant.HarvestDebuffs);
-        _doAfter.DoAfter(doAfter);
     }
 
-    private void OnHarvestComplete(EntityUid uid, RevenantComponent component, HarvestDoAfterComplete args)
+    private void OnHarvest(EntityUid uid, RevenantComponent component, HarvestEvent args)
     {
-        component.HarvestCancelToken = null;
-        _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
+        if (args.Cancelled)
+        {
+            _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
+            return;
+        }
 
-        if (!TryComp<EssenceComponent>(args.Target, out var essence))
+        if (args.Handled || args.Args.Target == null)
             return;
 
-        _popup.PopupEntity(Loc.GetString("revenant-soul-finish-harvest", ("target", args.Target)),
-            args.Target, PopupType.LargeCaution);
+        _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
+
+        if (!TryComp<EssenceComponent>(args.Args.Target, out var essence))
+            return;
+
+        _popup.PopupEntity(Loc.GetString("revenant-soul-finish-harvest", ("target", args.Args.Target)),
+            args.Args.Target.Value, PopupType.LargeCaution);
 
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
-        if (TryComp<StoreComponent>(uid, out var store))
-        {
-            _store.TryAddCurrency(new Dictionary<string, FixedPoint2>()
-                { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, store);
-        }
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>
+            { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, uid);
 
-        if (!TryComp<MobStateComponent>(args.Target, out var mobstate))
+        if (!HasComp<MobStateComponent>(args.Args.Target))
             return;
 
-        if (_mobState.IsAlive(args.Target) || _mobState.IsCritical(args.Target))
+        if (_mobState.IsAlive(args.Args.Target.Value) || _mobState.IsCritical(args.Args.Target.Value))
         {
             _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, uid);
             component.EssenceRegenCap += component.MaxEssenceUpgradeAmount;
@@ -197,17 +189,13 @@ public sealed partial class RevenantSystem
 
         //KILL THEMMMM
 
-        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Dead, out var damage))
+        if (!_mobThresholdSystem.TryGetThresholdForState(args.Args.Target.Value, MobState.Dead, out var damage))
             return;
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Poison", damage.Value);
-        _damage.TryChangeDamage(args.Target, dspec, true, origin: uid);
-    }
+        _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: uid);
 
-    private void OnHarvestCancelled(EntityUid uid, RevenantComponent component, HarvestDoAfterCancelled args)
-    {
-        component.HarvestCancelToken = null;
-        _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
+        args.Handled = true;
     }
 
     private void OnDefileAction(EntityUid uid, RevenantComponent component, RevenantDefileActionEvent args)
@@ -316,13 +304,7 @@ public sealed partial class RevenantSystem
             return;
 
         args.Handled = true;
-
-        var emo = GetEntityQuery<DiseaseCarrierComponent>();
-        foreach (var ent in _lookup.GetEntitiesInRange(uid, component.BlightRadius))
-        {
-            if (emo.TryGetComponent(ent, out var comp))
-                _disease.TryAddDisease(ent, component.BlightDiseasePrototypeId, comp);
-        }
+        // TODO: When disease refactor is in.
     }
 
     private void OnMalfunctionAction(EntityUid uid, RevenantComponent component, RevenantMalfunctionActionEvent args)

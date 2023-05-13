@@ -1,6 +1,10 @@
 using Content.Server.Atmos.Components;
+using Content.Server.Damage.Components;
 using Content.Shared.Damage;
-using Content.Shared.GameTicking;
+using Content.Shared.Damage.Systems;
+using Content.Shared.FixedPoint;
+using Content.Shared.Rejuvenate;
+using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
 
 namespace Content.Server.Damage.Systems
@@ -8,108 +12,87 @@ namespace Content.Server.Damage.Systems
     [UsedImplicitly]
     public sealed class GodmodeSystem : EntitySystem
     {
-        private readonly Dictionary<EntityUid, OldEntityInformation> _entities = new();
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            SubscribeLocalEvent<GodmodeComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
+            SubscribeLocalEvent<GodmodeComponent, BeforeStatusEffectAddedEvent>(OnBeforeStatusEffect);
+            SubscribeLocalEvent<GodmodeComponent, BeforeStaminaDamageEvent>(OnBeforeStaminaDamage);
         }
 
-        public void Reset(RoundRestartCleanupEvent ev)
+        private void OnBeforeDamageChanged(EntityUid uid, GodmodeComponent component, ref BeforeDamageChangedEvent args)
         {
-            _entities.Clear();
+            args.Cancelled = true;
         }
 
-        public bool EnableGodmode(EntityUid entity)
+        private void OnBeforeStatusEffect(EntityUid uid, GodmodeComponent component, ref BeforeStatusEffectAddedEvent args)
         {
-            if (_entities.ContainsKey(entity))
-            {
-                return false;
-            }
+            args.Cancelled = true;
+        }
 
-            _entities[entity] = new OldEntityInformation(entity, EntityManager);
+        private void OnBeforeStaminaDamage(EntityUid uid, GodmodeComponent component, ref BeforeStaminaDamageEvent args)
+        {
+            args.Cancelled = true;
+        }
 
-            if (EntityManager.TryGetComponent(entity, out MovedByPressureComponent? moved))
+        public void EnableGodmode(EntityUid uid)
+        {
+            var godmode = EnsureComp<GodmodeComponent>(uid);
+
+            if (TryComp<MovedByPressureComponent>(uid, out var moved))
             {
+                godmode.WasMovedByPressure = moved.Enabled;
                 moved.Enabled = false;
             }
 
-            if (EntityManager.TryGetComponent(entity, out DamageableComponent? damageable))
+            if (TryComp<DamageableComponent>(uid, out var damageable))
             {
-                _damageableSystem.SetDamage(damageable, new DamageSpecifier());
+                godmode.OldDamage = new(damageable.Damage);
             }
 
-            return true;
+            // Rejuv to cover other stuff
+            RaiseLocalEvent(uid, new RejuvenateEvent());
         }
 
-        public bool HasGodmode(EntityUid entity)
+        public void DisableGodmode(EntityUid uid)
         {
-            return _entities.ContainsKey(entity);
-        }
+            if (!TryComp<GodmodeComponent>(uid, out var godmode))
+                return;
 
-        public bool DisableGodmode(EntityUid entity)
-        {
-            if (!_entities.Remove(entity, out var old))
+            if (TryComp<MovedByPressureComponent>(uid, out var moved))
             {
-                return false;
+                moved.Enabled = godmode.WasMovedByPressure;
             }
 
-            if (EntityManager.TryGetComponent(entity, out MovedByPressureComponent? moved))
+            if (!TryComp<DamageableComponent>(uid, out var damageable))
+                return;
+
+            if (godmode.OldDamage != null)
             {
-                moved.Enabled = old.MovedByPressure;
+                _damageable.SetDamage(uid, damageable, godmode.OldDamage);
             }
 
-            if (EntityManager.TryGetComponent(entity, out DamageableComponent? damageable))
-            {
-                if (old.Damage != null)
-                {
-                    _damageableSystem.SetDamage(damageable, old.Damage);
-                }
-            }
-
-            return true;
+            RemComp<GodmodeComponent>(uid);
         }
 
         /// <summary>
         ///     Toggles godmode for a given entity.
         /// </summary>
-        /// <param name="entity">The entity to toggle godmode for.</param>
+        /// <param name="uid">The entity to toggle godmode for.</param>
         /// <returns>true if enabled, false if disabled.</returns>
-        public bool ToggleGodmode(EntityUid entity)
+        public bool ToggleGodmode(EntityUid uid)
         {
-            if (HasGodmode(entity))
+            if (HasComp<GodmodeComponent>(uid))
             {
-                DisableGodmode(entity);
+                DisableGodmode(uid);
                 return false;
             }
-            else
-            {
-                EnableGodmode(entity);
-                return true;
-            }
-        }
 
-        public sealed class OldEntityInformation
-        {
-            public OldEntityInformation(EntityUid entity, IEntityManager entityManager)
-            {
-                Entity = entity;
-                MovedByPressure = entityManager.HasComponent<MovedByPressureComponent>(entity);
-
-                if (entityManager.TryGetComponent(entity, out DamageableComponent? damageable))
-                {
-                    Damage = damageable.Damage;
-                }
-            }
-
-            public EntityUid Entity { get; }
-
-            public bool MovedByPressure { get; }
-
-            public DamageSpecifier? Damage { get; }
+            EnableGodmode(uid);
+            return true;
         }
     }
 }

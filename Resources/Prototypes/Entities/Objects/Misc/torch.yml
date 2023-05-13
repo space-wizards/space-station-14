@@ -15,12 +15,13 @@
       # Sounds legit nuff
       litSound:
         path: /Audio/Items/Flare/flare_on.ogg
-      loopedSound: /Audio/Items/Flare/flare_burn.ogg
     - type: Sprite
       sprite: Objects/Misc/torch.rsi
       layers:
-        - state: torch_unlit
-        - state: lit_overlay
+        - map: [ enum.ExpendableLightVisualLayers.Base ]
+          state: torch_unlit
+        - map: [ enum.ExpendableLightVisualLayers.Glow ]
+          state: lit_overlay
           color: "#FFFFFF"
           visible: false
           shader: unshaded
@@ -34,8 +35,6 @@
       graph: LightTorch
       node: torch
     - type: Appearance
-      visuals:
-        - type: ExpendableLightVisualizer
     - type: PointLight
       enabled: false
       color: "#E25822"

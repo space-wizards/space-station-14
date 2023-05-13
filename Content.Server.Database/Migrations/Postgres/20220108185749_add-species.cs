@@ -4,7 +4,7 @@
 
 namespace Content.Server.Database.Migrations.Postgres
 {
-    public partial class addspecies : Migration
+    public partial class AddSpecies : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

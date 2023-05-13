@@ -20,11 +20,12 @@
     canCollide: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.25,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
   - type: Transform
     anchored: true
   - type: Anchorable
@@ -96,6 +97,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-s
+  - type: DisposalTube
+    containerId: DisposalTransit
   - type: DisposalTransit
   - type: ContainerContainer
     containers:
@@ -122,6 +125,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-tagger
+  - type: DisposalTube
+    containerId: DisposalTagger
   - type: DisposalTagger
   - type: ContainerContainer
     containers:
@@ -154,6 +159,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-t
+  - type: DisposalTube
+    containerId: DisposalEntry
   - type: DisposalEntry
   - type: ContainerContainer
     containers:
@@ -166,11 +173,12 @@
           Anchored: { state: pipe-t }
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.25,0.4"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.4"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: trunk
@@ -187,6 +195,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j1s
+  - type: DisposalTube
+    containerId: DisposalRouter
   - type: DisposalRouter
     degrees:
     - 0
@@ -211,11 +221,12 @@
       type: DisposalRouterBoundUserInterface
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: router
@@ -232,6 +243,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j2s
+  - type: DisposalTube
+    containerId: DisposalRouter
   - type: DisposalRouter
     degrees:
     - 0
@@ -250,11 +263,12 @@
     mirrorEntity: DisposalRouter
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.5,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.5,0.5"
+        mask:
+        - SubfloorMask
 
 - type: entity
   id: DisposalJunction
@@ -269,6 +283,8 @@
     - map: [ "pipe" ]
       state: conpipe-j1
     visible: true
+  - type: DisposalTube
+    containerId: DisposalJunction
   - type: DisposalJunction
     degrees:
     - 0
@@ -287,11 +303,12 @@
     mirrorEntity: DisposalJunctionFlipped
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: junction
@@ -308,6 +325,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-j2
+  - type: DisposalTube
+    containerId: DisposalJunction
   - type: DisposalJunction
     degrees:
     - 0
@@ -326,11 +345,12 @@
     mirrorEntity: DisposalJunction
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.5,0.5"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.5,0.5"
+        mask:
+        - SubfloorMask
 
 - type: entity
   id: DisposalYJunction
@@ -344,6 +364,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-y
+  - type: DisposalTube
+    containerId: DisposalJunction
   - type: DisposalJunction
     degrees:
     - 0
@@ -360,11 +382,12 @@
           Anchored: { state: pipe-y }
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.25"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.25"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: yJunction
@@ -381,6 +404,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-c
+  - type: DisposalTube
+    containerId: DisposalBend
   - type: DisposalBend
   - type: ContainerContainer
     containers:
@@ -393,11 +418,12 @@
           Anchored: { state: pipe-c }
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.25,0.25"
-      mask:
-      - SubfloorMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.25"
+        mask:
+        - SubfloorMask
   - type: Construction
     graph: DisposalPipe
     node: bend

@@ -17,15 +17,9 @@ namespace Content.Server.Medical.Components
         public float CloningFailChanceMultiplier = 1f;
 
         [DataField("machinePartCloningFailChance", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartCloningFailChance = "ScanningModule";
+        public string MachinePartCloningFailChance = "Capacitor";
 
         [DataField("partRatingCloningFailChanceMultiplier")]
         public float PartRatingFailMultiplier = 0.75f;
-
-        // ECS this out!, when DragDropSystem and InteractionSystem refactored
-        public override bool DragDropOn(DragDropEvent eventArgs)
-        {
-            return true;
-        }
     }
 }

@@ -11,10 +11,10 @@ namespace Content.Server.Salvage
         public string ID { get; } = default!;
 
         /// <summary>
-        /// Relative directory path to the given map, i.e. `Maps/Salvage/test.yml`
+        /// Relative directory path to the given map, i.e. `Maps/Salvage/template.yml`
         /// </summary>
         [DataField("mapPath", required: true)]
-        public ResourcePath MapPath { get; } = default!;
+        public ResPath MapPath { get; } = default!;
 
         /// <summary>
         /// Map rectangle in world coordinates (to check if it fits)

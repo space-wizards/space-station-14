@@ -1,6 +1,8 @@
 using Content.Shared.StepTrigger.Components;
+using Content.Shared.Tag;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -37,20 +39,38 @@ public sealed class StepTriggerSystem : EntitySystem
         var query = GetEntityQuery<PhysicsComponent>();
         var enumerator = EntityQueryEnumerator<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>();
 
-        while (enumerator.MoveNext(out var active, out var trigger, out var transform))
+        while (enumerator.MoveNext(out var uid, out var active, out var trigger, out var transform))
         {
-            if (!Update(trigger, transform, query))
+            if (!Update(uid, trigger, transform, query))
                 continue;
 
-            RemCompDeferred(trigger.Owner, active);
+            RemCompDeferred(uid, active);
         }
     }
 
-    private bool Update(StepTriggerComponent component, TransformComponent transform, EntityQuery<PhysicsComponent> query)
+    private bool Update(EntityUid uid, StepTriggerComponent component, TransformComponent transform, EntityQuery<PhysicsComponent> query)
     {
         if (!component.Active ||
             component.Colliding.Count == 0)
+        {
             return true;
+        }
+
+        if (component.Blacklist != null && TryComp<MapGridComponent>(transform.GridUid, out var grid))
+        {
+            var anch = grid.GetAnchoredEntitiesEnumerator(grid.LocalToTile(transform.Coordinates));
+
+            while (anch.MoveNext(out var ent))
+            {
+                if (ent == uid)
+                    continue;
+
+                if (component.Blacklist.IsValid(ent.Value, EntityManager) == true)
+                {
+                    return false;
+                }
+            }
+        }
 
         foreach (var otherUid in component.Colliding)
         {
@@ -108,7 +128,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
     private void OnStartCollide(EntityUid uid, StepTriggerComponent component, ref StartCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
 
         if (!args.OtherFixture.Hard)
             return;
@@ -126,7 +146,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, StepTriggerComponent component, ref EndCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
 
         if (!component.Colliding.Remove(otherUid))
             return;
@@ -150,11 +170,17 @@ public sealed class StepTriggerSystem : EntitySystem
         component.IntersectRatio = state.IntersectRatio;
         component.Active = state.Active;
 
-        component.CurrentlySteppedOn.Clear();
-        component.Colliding.Clear();
+        if (!component.CurrentlySteppedOn.SetEquals(state.CurrentlySteppedOn))
+        {
+            component.CurrentlySteppedOn.Clear();
+            component.CurrentlySteppedOn.UnionWith(state.CurrentlySteppedOn);
+        }
 
-        component.CurrentlySteppedOn.UnionWith(state.CurrentlySteppedOn);
-        component.Colliding.UnionWith(state.Colliding);
+        if (!component.Colliding.SetEquals(state.Colliding))
+        {
+            component.Colliding.Clear();
+            component.Colliding.UnionWith(state.Colliding);
+        }
 
         if (component.Colliding.Count > 0)
         {

@@ -12,7 +12,6 @@
     tags:
       - Cigarette
       - Trash
-  - type: Recyclable
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
@@ -47,9 +46,9 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 20
+        maxVol: 40
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Omnizine
-            Quantity: 10
+            Quantity: 30
