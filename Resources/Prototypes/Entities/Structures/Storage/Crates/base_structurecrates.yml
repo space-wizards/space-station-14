@@ -16,6 +16,7 @@
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
     - state: base
+      map: ["enum.StorageVisualLayers.Base"]
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded

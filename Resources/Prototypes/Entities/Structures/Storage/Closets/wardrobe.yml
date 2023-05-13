@@ -16,7 +16,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: blue_door
 
@@ -29,7 +29,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: pink_door
 
@@ -42,7 +42,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: black_door
 
@@ -55,7 +55,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: green_door
 
@@ -67,7 +67,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: orange_door
 
@@ -80,7 +80,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: yellow_door
 
@@ -93,7 +93,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: white_door
 
@@ -106,7 +106,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: grey_door
 
@@ -119,7 +119,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: mixed_door
 
@@ -132,7 +132,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: red_door
 
@@ -143,7 +143,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: atmos_wardrobe_door
 

@@ -359,6 +359,7 @@
     sprite: Structures/Storage/Crates/piratechest.rsi
     layers:
     - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded

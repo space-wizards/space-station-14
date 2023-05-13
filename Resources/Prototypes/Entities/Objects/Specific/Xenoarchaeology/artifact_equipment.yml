@@ -12,15 +12,16 @@
       netsync: false
       sprite: Structures/Storage/Crates/artifact.rsi
       layers:
-        - state: artifact_container
-        - state: artifact_container_door
-          map: ["enum.StorageVisualLayers.Door"]
-        - state: welded
-          visible: false
-          map: ["enum.WeldableLayers.BaseWelded"]
-        - state: locked
-          map: ["enum.StorageVisualLayers.Lock"]
-          shader: unshaded
+      - state: artifact_container
+        map: ["enum.StorageVisualLayers.Base"]
+      - state: artifact_container_door
+        map: ["enum.StorageVisualLayers.Door"]
+      - state: welded
+        visible: false
+        map: ["enum.WeldableLayers.BaseWelded"]
+      - state: locked
+        map: ["enum.StorageVisualLayers.Lock"]
+        shader: unshaded
     - type: InteractionOutline
     - type: Physics
     - type: Fixtures

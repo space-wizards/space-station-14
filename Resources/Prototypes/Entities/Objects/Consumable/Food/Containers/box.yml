@@ -147,6 +147,7 @@
     drawdepth: SmallObjects
     layers:
     - state: box
+      map: ["enum.StorageVisualLayers.Base"]
     - state: box-open
       map: ["enum.StorageVisualLayers.Door"]
     netsync: false

@@ -6,7 +6,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: cabinet
+    stateBase: cabinet
     stateOpen: cabinet_open
     stateClosed: cabinet_door
 
@@ -26,7 +26,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: qm
+    stateBase: qm
     stateOpen: qm_open
     stateClosed: qm_door
   - type: AccessReader
@@ -40,7 +40,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: mining
+    stateBase: mining
     stateOpen: mining_open
     stateClosed: mining_door
   - type: AccessReader
@@ -54,7 +54,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: cap
+    stateBase: cap
     stateOpen: cap_open
     stateClosed: cap_door
   - type: AccessReader
@@ -67,7 +67,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: hop
+    stateBase: hop
     stateOpen: hop_open
     stateClosed: hop_door
   - type: AccessReader
@@ -81,7 +81,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: ce
+    stateBase: ce
     stateOpen: ce_open
     stateClosed: ce_door
   - type: AccessReader
@@ -95,7 +95,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: eng
+    stateBase: eng
     stateOpen: eng_open
     stateClosed: eng_elec_door
   - type: AccessReader
@@ -109,7 +109,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: eng
+    stateBase: eng
     stateOpen: eng_open
     stateClosed: eng_weld_door
   - type: AccessReader
@@ -123,7 +123,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: atmos
+    stateBase: atmos
     stateOpen: atmos_open
     stateClosed: atmos_door
   - type: AccessReader
@@ -137,7 +137,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: eng_secure
+    stateBase: eng_secure
     stateOpen: eng_secure_open
     stateClosed: eng_secure_door
   - type: AccessReader
@@ -151,7 +151,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: freezer
+    stateBase: freezer
     stateOpen: freezer_open
     stateClosed: freezer_door
   - type: AccessReader
@@ -168,7 +168,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: hydro
+    stateBase: hydro
     stateOpen: hydro_open
     stateClosed: hydro_door
   - type: AccessReader
@@ -183,7 +183,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: med
+    stateBase: med
     stateOpen: med_open
     stateClosed: med_door
   - type: AccessReader
@@ -197,7 +197,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: med_secure
+    stateBase: med_secure
     stateOpen: med_secure_open
     stateClosed: med_secure_door
   - type: AccessReader
@@ -211,7 +211,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: paramed
+    stateBase: paramed
     stateOpen: paramed_open
     stateClosed: paramed_door
   - type: AccessReader
@@ -226,7 +226,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: med
+    stateBase: med
     stateOpen: med_open
     stateClosed: chemical_door
   - type: AccessReader
@@ -240,7 +240,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: cmo
+    stateBase: cmo
     stateOpen: cmo_open
     stateClosed: cmo_door
   - type: AccessReader
@@ -254,7 +254,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: rd
+    stateBase: rd
     stateOpen: rd_open
     stateClosed: rd_door
   - type: AccessReader
@@ -267,7 +267,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: science
+    stateBase: science
     stateOpen: science_open
     stateClosed: science_door
   - type: AccessReader
@@ -281,7 +281,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: hos
+    stateBase: hos
     stateOpen: hos_open
     stateClosed: hos_door
   - type: AccessReader
@@ -295,7 +295,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: warden
+    stateBase: warden
     stateOpen: warden_open
     stateClosed: warden_door
   - type: AccessReader
@@ -309,7 +309,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: brigmedic
+    stateBase: brigmedic
     stateOpen: armory_open
     stateClosed: brigmedic_door
   - type: AccessReader
@@ -323,7 +323,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: sec
+    stateBase: sec
     stateOpen: sec_open
     stateClosed: sec_door
   - type: AccessReader
@@ -336,7 +336,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: shotguncase
+    stateBase: shotguncase
     stateOpen: shotguncase_open
     stateClosed: shotguncase_door
   - type: AccessReader
@@ -370,7 +370,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: syndicate
+    stateBase: syndicate
     stateOpen: syndicate_open
     stateClosed: syndicate_door
 

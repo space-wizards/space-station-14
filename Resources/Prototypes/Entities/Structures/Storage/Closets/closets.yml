@@ -7,7 +7,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: eng
+    stateBase: eng
     stateOpen: eng_open
     stateClosed: eng_tool_door
 
@@ -20,7 +20,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: eng
+    stateBase: eng
     stateOpen: eng_open
     stateClosed: eng_rad_door
 
@@ -33,7 +33,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: emergency
+    stateBase: emergency
     stateOpen: emergency_open
     stateClosed: emergency_door
 
@@ -46,7 +46,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: fire
+    stateBase: fire
     stateOpen: fire_open
     stateClosed: fire_door
 
@@ -59,7 +59,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: bomb
+    stateBase: bomb
     stateOpen: bomb_open
     stateClosed: bomb_door
 
@@ -74,7 +74,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: bio
+    stateBase: bio
     stateOpen: bio_open
     stateClosed: bio_door
 
@@ -85,7 +85,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: bio_viro
+    stateBase: bio_viro
     stateOpen: bio_viro_open
     stateClosed: bio_viro_door
 
@@ -96,7 +96,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: bio_sec
+    stateBase: bio_sec
     stateOpen: bio_sec_open
     stateClosed: bio_sec_door
 
@@ -107,7 +107,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: bio_jan
+    stateBase: bio_jan
     stateOpen: bio_jan_open
     stateClosed: bio_jan_door
 

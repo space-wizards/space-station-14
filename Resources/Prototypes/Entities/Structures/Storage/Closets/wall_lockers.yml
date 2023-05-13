@@ -6,7 +6,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: generic_door
 
@@ -18,7 +18,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: emergency
+    stateBase: emergency
     stateOpen: emergency_open
     stateClosed: emergency_door
 
@@ -30,7 +30,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: fire
+    stateBase: fire
     stateOpen: fire_open
     stateClosed: fire_door
 
@@ -42,7 +42,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: blue_door
 
@@ -54,7 +54,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: pink_door
 
@@ -66,7 +66,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: black_door
 
@@ -78,7 +78,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: green_door
 
@@ -89,7 +89,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: orange_door
 
@@ -101,7 +101,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: yellow_door
 
@@ -113,7 +113,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: white_door
 
@@ -125,7 +125,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: gray_door
 
@@ -137,7 +137,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: mixed_door
 
@@ -148,7 +148,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: generic
+    stateBase: generic
     stateOpen: generic_open
     stateClosed: atmos_door
 
@@ -159,7 +159,7 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    state: med
+    stateBase: med
     stateOpen: med_open
     stateClosed: med_door
   - type: AccessReader

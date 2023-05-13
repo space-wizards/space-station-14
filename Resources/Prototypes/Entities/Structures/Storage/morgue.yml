@@ -85,7 +85,7 @@
     sprite: Structures/Storage/morgue.rsi
     layers:
     - state: crema_closed
-      map: ["enum.CrematoriumVisualLayers.Base"]
+      map: ["enum.CrematoriumVisualLayers.Base", "enum.StorageVisualLayers.Base"]
     - state: crema_tray
       offset: 0, -1
       map: ["enum.StorageVisualLayers.Door"]
@@ -128,8 +128,8 @@
       entity_storage: !type:Container
   - type: Appearance
   - type: EntityStorageVisuals
-    state: crema_closed
-    stateAlt: crema_open
+    stateBase: crema_closed
+    stateBaseOpen: crema_open
     stateOpen: crema_tray
   - type: GenericVisualizer
     visuals:
