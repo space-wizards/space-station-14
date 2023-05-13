@@ -89,9 +89,8 @@
     brokenState: ripley-broken
     mechToPilotDamageMultiplier: 0.75
     pilotWhitelist:
-      whitelist:
       components:
-      - HumanoidAppearance
+        - HumanoidAppearance
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
@@ -136,7 +135,6 @@
     brokenState: honker-broken
     mechToPilotDamageMultiplier: 0.5
     pilotWhitelist:
-      whitelist:
       components:
       - HumanoidAppearance
 
@@ -179,7 +177,6 @@
       tags:
       - SmallMech
     pilotWhitelist:
-      whitelist:
       tags:
       - Hamster
   - type: MeleeWeapon
