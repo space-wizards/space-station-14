@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Visualizers;
 
-public sealed class StorageVisualizerSystem : VisualizerSystem<EntityStorageVisualsComponent>
+public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStorageVisualsComponent>
 {
     public override void Initialize()
     {

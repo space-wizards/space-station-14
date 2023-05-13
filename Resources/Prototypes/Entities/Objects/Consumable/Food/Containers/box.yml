@@ -161,8 +161,8 @@
     heldPrefix: box
   - type: Appearance
   - type: EntityEntityStorageVisuals
-    state_open: box-open
-    state_closed: box
+    stateOpen: box-open
+    stateClosed: box
   - type: StaticPrice
     price: 0
 

@@ -45,7 +45,7 @@
     - type: Appearance
     - type: EntityStorageVisuals
       state: cardboard
-      state_open: cardboard_open
+      stateOpen: cardboard_open
     - type: Tag
       tags:
         - DoorBumpOpener
@@ -79,7 +79,7 @@
     - type: Appearance
     - type: EntityStorageVisuals
       state: agentbox
-      state_open: cardboard_open
+      stateOpen: cardboard_open
     - type: Stealth
     - type: StealthOnMove
       passiveVisibilityRate: -0.37

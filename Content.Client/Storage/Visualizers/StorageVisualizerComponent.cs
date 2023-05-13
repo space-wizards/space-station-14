@@ -1,15 +1,30 @@
 namespace Content.Client.Storage.Visualizers;
 
 [RegisterComponent]
-[Access(typeof(StorageVisualizerSystem))]
+[Access(typeof(EntityStorageVisualizerSystem))]
 public sealed class EntityStorageVisualsComponent : Component
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [DataField("state")]
     public string? StateBase;
-    [DataField("state_alt")]
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    [DataField("stateAlt")]
     public string? StateBaseAlt;
-    [DataField("state_open")]
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    [DataField("stateOpen")]
     public string? StateOpen;
-    [DataField("state_closed")]
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    [DataField("stateClosed")]
     public string? StateClosed;
 }

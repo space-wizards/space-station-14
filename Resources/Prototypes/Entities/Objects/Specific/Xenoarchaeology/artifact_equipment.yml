@@ -66,8 +66,8 @@
             - Paper
     - type: Appearance
     - type: EntityStorageVisuals
-      state_open: artifact_container_open
-      state_closed: artifact_container_door
+      stateOpen: artifact_container_open
+      stateClosed: artifact_container_door
     - type: ItemSlots
     - type: ContainerContainer
       containers:

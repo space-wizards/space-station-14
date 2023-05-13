@@ -17,8 +17,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: blue_door
+    stateOpen: generic_open
+    stateClosed: blue_door
 
 # Pink wardrobe
 - type: entity
@@ -30,8 +30,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: pink_door
+    stateOpen: generic_open
+    stateClosed: pink_door
 
 # Black wardrobe
 - type: entity
@@ -43,8 +43,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: black_door
+    stateOpen: generic_open
+    stateClosed: black_door
 
 # Green wardrobe
 - type: entity
@@ -56,8 +56,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: green_door
+    stateOpen: generic_open
+    stateClosed: green_door
 
 # Prison wardrobe
 - type: entity
@@ -68,8 +68,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: orange_door
+    stateOpen: generic_open
+    stateClosed: orange_door
 
 # Yellow wardrobe
 - type: entity
@@ -81,8 +81,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: yellow_door
+    stateOpen: generic_open
+    stateClosed: yellow_door
 
 # White wardrobe
 - type: entity
@@ -94,8 +94,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: white_door
+    stateOpen: generic_open
+    stateClosed: white_door
 
 # Grey wardrobe
 - type: entity
@@ -107,8 +107,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: grey_door
+    stateOpen: generic_open
+    stateClosed: grey_door
 
 # Mixed wardrobe
 - type: entity
@@ -120,8 +120,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: mixed_door
+    stateOpen: generic_open
+    stateClosed: mixed_door
 
 # Jobs
 
@@ -133,8 +133,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: red_door
+    stateOpen: generic_open
+    stateClosed: red_door
 
 - type: entity
   id: WardrobeAtmospherics
@@ -144,8 +144,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     state: generic
-    state_open: generic_open
-    state_closed: atmos_wardrobe_door
+    stateOpen: generic_open
+    stateClosed: atmos_wardrobe_door
 
 - type: entity
   id: ClosetJanitor
