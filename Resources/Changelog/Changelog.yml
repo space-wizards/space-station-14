@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Remove range check for FTL., type: Tweak}
-  id: 3242
-  time: '2023-03-24T06:17:09.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Added 11 new food/drink vending machines., type: Add}
@@ -2900,3 +2895,8 @@ Entries:
   - {message: Scale throwing pushback by mass., type: Tweak}
   id: 3741
   time: '2023-05-12T23:54:38.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can now drinky puddles (inefficiently), type: Add}
+  id: 3742
+  time: '2023-05-13T01:32:57.0000000+00:00'
