@@ -149,8 +149,6 @@
     contents:
       - id: BoxSurvival
       - id: RubberStampMime
-      - id: ClothingMaskSadMime
-      - id: ClothingMaskScaredMime
 
 - type: entity
   noSpawn: true
