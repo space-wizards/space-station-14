@@ -5,7 +5,7 @@
   description: This is where the bartender keeps the booze.
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: cabinet
     state_open: cabinet_open
     state_closed: cabinet_door
@@ -25,7 +25,7 @@
   name: quartermaster's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: qm
     state_open: qm_open
     state_closed: qm_door
@@ -39,7 +39,7 @@
   description: Nevermind the pickaxe.
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: mining
     state_open: mining_open
     state_closed: mining_door
@@ -53,7 +53,7 @@
   name: captain's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: cap
     state_open: cap_open
     state_closed: cap_door
@@ -66,7 +66,7 @@
   name: head of personnel's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: hop
     state_open: hop_open
     state_closed: hop_door
@@ -80,7 +80,7 @@
   name: chief engineer's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: ce
     state_open: ce_open
     state_closed: ce_door
@@ -94,7 +94,7 @@
   name: electrical supplies locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: eng
     state_open: eng_open
     state_closed: eng_elec_door
@@ -108,7 +108,7 @@
   name: welding supplies locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: eng
     state_open: eng_open
     state_closed: eng_weld_door
@@ -122,7 +122,7 @@
   name: atmospheric technician's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: atmos
     state_open: atmos_open
     state_closed: atmos_door
@@ -136,7 +136,7 @@
   name: engineer's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: eng_secure
     state_open: eng_secure_open
     state_closed: eng_secure_door
@@ -150,7 +150,7 @@
   name: freezer
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: freezer
     state_open: freezer_open
     state_closed: freezer_door
@@ -167,7 +167,7 @@
   name: botanist's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: hydro
     state_open: hydro_open
     state_closed: hydro_door
@@ -182,7 +182,7 @@
   description: Filled to the brim with medical junk.
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: med
     state_open: med_open
     state_closed: med_door
@@ -196,7 +196,7 @@
   name: medical doctor's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: med_secure
     state_open: med_secure_open
     state_closed: med_secure_door
@@ -210,7 +210,7 @@
   name: paramedic's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: paramed
     state_open: paramed_open
     state_closed: paramed_door
@@ -225,7 +225,7 @@
   name: chemical locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: med
     state_open: med_open
     state_closed: chemical_door
@@ -239,7 +239,7 @@
   name: chief medical officer's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: cmo
     state_open: cmo_open
     state_closed: cmo_door
@@ -253,7 +253,7 @@
   name: research director's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: rd
     state_open: rd_open
     state_closed: rd_door
@@ -266,7 +266,7 @@
   name: scientist's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: science
     state_open: science_open
     state_closed: science_door
@@ -280,7 +280,7 @@
   name: head of security's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: hos
     state_open: hos_open
     state_closed: hos_door
@@ -294,7 +294,7 @@
   name: warden's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: warden
     state_open: warden_open
     state_closed: warden_door
@@ -308,7 +308,7 @@
   name: brigmedic locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: brigmedic
     state_open: armory_open
     state_closed: brigmedic_door
@@ -322,7 +322,7 @@
   name: security officer's locker
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: sec
     state_open: sec_open
     state_closed: sec_door
@@ -335,7 +335,7 @@
   name: gun safe
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: shotguncase
     state_open: shotguncase_open
     state_closed: shotguncase_door
@@ -369,7 +369,7 @@
   description: It's a personal storage unit for operative gear.
   components:
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: syndicate
     state_open: syndicate_open
     state_closed: syndicate_door

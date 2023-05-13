@@ -127,7 +127,7 @@
     containers:
       entity_storage: !type:Container
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state: crema_closed
     state_alt: crema_open
     state_open: crema_tray

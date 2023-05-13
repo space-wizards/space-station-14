@@ -2,7 +2,7 @@ namespace Content.Client.Storage.Visualizers;
 
 [RegisterComponent]
 [Access(typeof(StorageVisualizerSystem))]
-public sealed class StorageVisualsComponent : Component
+public sealed class EntityStorageVisualsComponent : Component
 {
     [DataField("state")]
     public string? StateBase;

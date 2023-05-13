@@ -58,7 +58,7 @@
         components:
         - Paper
   - type: Appearance
-  - type: StorageVisuals
+  - type: EntityStorageVisuals
     state_open: open_overlay
   - type: GenericVisualizer
     visuals:

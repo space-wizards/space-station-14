@@ -3,18 +3,18 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Visualizers;
 
-public sealed class StorageVisualizerSystem : VisualizerSystem<StorageVisualsComponent>
+public sealed class StorageVisualizerSystem : VisualizerSystem<EntityStorageVisualsComponent>
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StorageVisualsComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<EntityStorageVisualsComponent, ComponentInit>(OnInit);
     }
 
     /// <summary>
     /// Sets the base sprite to this layer. Exists to make the inheritance tree less boilerplate-y.
     /// </summary>
-    private void OnInit(EntityUid uid, StorageVisualsComponent comp, ComponentInit args)
+    private void OnInit(EntityUid uid, EntityStorageVisualsComponent comp, ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
@@ -30,7 +30,7 @@ public sealed class StorageVisualizerSystem : VisualizerSystem<StorageVisualsCom
         }
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, StorageVisualsComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, EntityStorageVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
