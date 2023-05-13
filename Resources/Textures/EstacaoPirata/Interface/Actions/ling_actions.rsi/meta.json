@@ -12,6 +12,18 @@
         },
         {
             "name": "arm_blade"
+        },
+        {
+            "name": "dna_sting"
+        },
+        {
+            "name": "fleshmend"
+        },
+        {
+            "name": "reviving_stasis"
+        },
+        {
+            "name": "transform"
         }
     ]
 }

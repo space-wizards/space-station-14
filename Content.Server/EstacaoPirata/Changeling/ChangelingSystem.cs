@@ -19,18 +19,13 @@ using Content.Server.Preferences.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using System.Linq;
-using Content.Server.Chat.Systems;
-using Content.Server.Construction.Completions;
-using Content.Shared.Administration.Logs;
-using Content.Server.Speech.Components;
 using Content.Server.Traitor;
-using Content.Server.UserInterface;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Roles;
-using Content.Shared.Store;
 using Content.Shared.Hands.Components;
+using Content.Shared.Popups;
 
 namespace Content.Server.EstacaoPirata.Changeling;
 public sealed class ChangelingSystem : EntitySystem
@@ -51,6 +46,7 @@ public sealed class ChangelingSystem : EntitySystem
     [Dependency] private readonly SharedImplanterSystem _implanterSystem = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -68,9 +64,10 @@ public sealed class ChangelingSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingComponent, ChangelingArmBladeEvent>(OnArmBlade);
 
+        SubscribeLocalEvent<ChangelingComponent, ChangelingDnaStingEvent>(OnDnaSting);
+
         // Initialize abilities
     }
-
     private void OnArmBlade(EntityUid uid, ChangelingComponent component, ChangelingArmBladeEvent args)
     {
         if (!TryComp<HandsComponent>(args.Performer, out var handsComponent))
@@ -87,9 +84,8 @@ public sealed class ChangelingSystem : EntitySystem
         //component.ArmBladeActivated = !component.ArmBladeActivated;
 
 
-        // REFATORAR ISSO TUDO PRA USAR ArmBladeMaxHands, nao ficar spawnando e apagando entidade (usar o pause)
-        // e tambem fazer com que não se possa tirar o item da mão que está
-
+        // TODO: REFATORAR ISSO TUDO PRA USAR ArmBladeMaxHands, nao ficar spawnando e apagando entidade (usar o pause) e tambem fazer com que não se possa tirar o item da mão que está
+        // esse codigo ta muito feio
         if (!component.ArmBladeActivated)
         {
             var targetTransformComp = Transform(args.Performer);
@@ -135,8 +131,10 @@ public sealed class ChangelingSystem : EntitySystem
         //ChangeEssenceAmount(uid, 0, component);
 
         //AbsorbDNA
-        var absorbaction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("AbsorbDNA"));
-        absorbaction.CanTargetSelf = false;
+        var absorbaction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("AbsorbDNA"))
+            {
+                CanTargetSelf = false
+            };
         _action.AddAction(uid, absorbaction, null);
 
         // implante da loja
@@ -157,6 +155,13 @@ public sealed class ChangelingSystem : EntitySystem
 
         storeComponent.Balance.Add(component.StoreCurrencyName,component.StartingPoints);
 
+        // TODO: colocar cooldown?
+        var dnastingaction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("ChangelingDnaSting"))
+            {
+                CanTargetSelf = false
+            };
+        _action.AddAction(uid, dnastingaction, null);
+
         // Fazer isto em outro lugar
 
         // if (!TryComp<MindComponent>(uid, out var mindComp))
@@ -172,18 +177,10 @@ public sealed class ChangelingSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, ChangelingComponent component, AbsorbDNADoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Args.Target == null)
+        if (args.Handled || args.Cancelled || args.Target == null)
                 return;
 
-        if(!TryComp<HumanoidAppearanceComponent>(args.Target, out var targetHumAp))
-            return;
-
-        if(!TryComp<HumanoidAppearanceComponent>(args.User, out var userHumAp))
-            return;
-
-
-
-        AbsorbDNA(uid, userHumAp, (EntityUid) args.Target, targetHumAp, component);
+        TryRegisterHumanoidData(uid, (EntityUid) args.Target,  component);
     }
 
     // Acho que nao vou usar este
@@ -199,11 +196,15 @@ public sealed class ChangelingSystem : EntitySystem
     private void StartAbsorbing(EntityUid scope, EntityUid user, EntityUid target, ChangelingComponent comp)
     {
         // se nao tiver mente, nao absorver
-        if(!HasComp<MindComponent>(target))
-            return;
+        // if(!HasComp<MindComponent>(target))
+        //     return;
 
-        if(!HasComp<HumanoidAppearanceComponent>(target))
+        if (!HasComp<HumanoidAppearanceComponent>(target))
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-dna-failed-nonHumanoid"), user, user);
             return;
+        }
+
 
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, comp.AbsorbDNADelay, new AbsorbDNADoAfterEvent(), scope, target: target, used: scope)
@@ -213,37 +214,52 @@ public sealed class ChangelingSystem : EntitySystem
         });
     }
 
-    private void AbsorbDNA(EntityUid user,HumanoidAppearanceComponent userAppearance, EntityUid target, HumanoidAppearanceComponent targetAppearance, ChangelingComponent comp)
+    private void OnDnaSting(EntityUid uid, ChangelingComponent component, ChangelingDnaStingEvent args)
+    {
+        TryRegisterHumanoidData(uid, args.Target, component);
+    }
+
+    private void TryRegisterHumanoidData(EntityUid user, EntityUid target, ChangelingComponent comp)
     {
         HumanoidData tempNewHumanoid = new HumanoidData();
 
         if (!TryComp<MetaDataComponent>(target, out var targetMeta))
             return;
-        if (!TryComp<MetaDataComponent>(user, out var userMeta))
-            return;
         if (!TryPrototype(target, out var prototype, targetMeta))
             return;
         if (!TryComp<DnaComponent>(user, out var dnaComp))
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-dna-failed-noDna"), user, user);
             return;
+        }
+
+        if (!TryComp<HumanoidAppearanceComponent>(target, out var targetHumAp))
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-dna-failed-nonHumanoid"), user, user);
+            return;
+        }
+
 
         tempNewHumanoid.EntityPrototype = prototype;
         tempNewHumanoid.MetaDataComponent = targetMeta;
-        tempNewHumanoid.AppearanceComponent = targetAppearance;
+        tempNewHumanoid.AppearanceComponent = targetHumAp;
         tempNewHumanoid.Dna = dnaComp.DNA;
 
-        Dirty(user, userMeta); // TENTANDO FAZER FICAR DIRTY
+        //Dirty(user, userMeta); // TENTANDO FAZER FICAR DIRTY
 
         if (comp.DNAStrandBalance >= comp.DNAStrandCap)
         {
-            var tempHumanoidData = comp.storedHumanoids.Last();
-            comp.storedHumanoids.Remove(tempHumanoidData);
-            comp.storedHumanoids.Add(tempNewHumanoid);
+            var lastHumanoidData = comp.StoredHumanoids.Last();
+            comp.StoredHumanoids.Remove(lastHumanoidData);
+            comp.StoredHumanoids.Add(tempNewHumanoid);
         }
         else
         {
             comp.DNAStrandBalance += 1;
-            comp.storedHumanoids.Add(tempNewHumanoid);
+            comp.StoredHumanoids.Add(tempNewHumanoid);
         }
+
+        _popup.PopupEntity(Loc.GetString("changeling-dna-obtained", ("target", target)), user, user);
 
         // Coisas para mover para outro metodo
         //userMeta.EntityName = targetMeta.EntityName;

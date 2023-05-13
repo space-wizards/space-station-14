@@ -18,3 +18,17 @@
   name: action-arm-blade-name
   description: action-arm-blade-description
   serverEvent: !type:ChangelingArmBladeEvent
+
+- type: entityTargetAction
+  id: ChangelingDnaSting
+  icon: { sprite: EstacaoPirata/Interface/Actions/ling_actions.rsi, state: dna_sting }
+  name: action-dna-sting-name
+  description: action-dna-sting-description
+  serverEvent: !type:ChangelingDnaStingEvent
+
+- type: instantAction
+  id: ChangelingFleshmend
+  icon: { sprite: EstacaoPirata/Interface/Actions/ling_actions.rsi, state: fleshmend }
+  name: action-fleshmend-name
+  description: action-fleshmend-description
+  serverEvent: !type:ChangelingFleshmendEvent

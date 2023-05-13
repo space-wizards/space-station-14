@@ -41,6 +41,10 @@ public sealed class ChangelingArmBladeEvent : InstantActionEvent
 {
 }
 
-public sealed class ArmbladeActionEvent : InstantActionEvent
+public sealed class ChangelingDnaStingEvent : EntityTargetActionEvent
+{
+}
+
+public sealed class ChangelingFleshmendEvent : InstantActionEvent
 {
 }

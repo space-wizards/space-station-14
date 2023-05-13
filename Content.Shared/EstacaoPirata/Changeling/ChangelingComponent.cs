@@ -73,14 +73,16 @@ public sealed class ChangelingComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("pointBalance")]
     public int PointBalance = 0;
 
+
+    #endregion
+
+
     /// <summary>
     /// List of absorbed entities
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("entitiesAbsorbed")]
-    public List<HumanoidData> storedHumanoids = new List<HumanoidData>();
+    public List<HumanoidData> StoredHumanoids = new List<HumanoidData>();
 
-
-    #endregion
 
     #region Abilities
         #region Evolution Menu
@@ -132,6 +134,12 @@ public sealed class ChangelingComponent : Component
     public int ArmBladeMaxHands = 1;
 
     #endregion
+
+        #region Transform
+
+
+
+        #endregion
 
     #endregion
 
