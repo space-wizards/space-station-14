@@ -67,7 +67,9 @@
     netsync: false
     sprite: Objects/Tools/matches.rsi
     layers:
-      - state: matchbox
+    - state: matchbox
+    - state: matchbox-open
+      map: ["openLayer"]
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
@@ -81,16 +83,20 @@
   - type: ItemCounter
     count:
       tags: [Matchstick]
+  - type: GenericVisualizer
+    visuals:
+      enum.SharedBagOpenVisuals.BagState:
+        openLayer:
+          True: { visible: true }
+          False: { visible: false }
   - type: Appearance
     visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: matchbox-open
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - matchbox1
-          - matchbox2
-          - matchbox3
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+        - matchbox1
+        - matchbox2
+        - matchbox3
   - type: Tag
     tags:
     - Trash

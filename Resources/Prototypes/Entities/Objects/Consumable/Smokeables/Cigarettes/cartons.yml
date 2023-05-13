@@ -8,6 +8,8 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     layers:
       - state: closed
+      - state: open
+        map: ["openLayer"]
   - type: Storage
     capacity: 36
   - type: Item
@@ -17,10 +19,13 @@
     contents:
       - id: CigPackGreen
         amount: 6
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: open
+      enum.SharedBagOpenVisuals.BagState:
+        openLayer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Appearance
   - type: Tag
     tags:
     - Trash

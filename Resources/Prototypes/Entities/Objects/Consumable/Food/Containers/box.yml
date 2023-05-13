@@ -15,6 +15,10 @@
     netsync: false
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     state: box
+    layers:
+    - state: box
+    - state: box-open
+      map: ["openLayer"]
   - type: Storage
     capacity: 6
     whitelist:
@@ -33,10 +37,14 @@
   - type: ItemCounter
     count:
       tags: [Donut]
+  - type: GenericVisualizer
+    visuals:
+      enum.SharedBagOpenVisuals.BagState:
+        openLayer:
+          True: { visible: true }
+          False: { visible: false }
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
     - type: StackVisualizer
       composite: true
       stackLayers:
@@ -59,6 +67,10 @@
     netsync: false
     sprite: Objects/Consumable/Food/egg.rsi
     state: box-closed
+    layers:
+    - state: box-closed
+    - state: box-open
+      map: ["openLayer"]
   - type: Storage
     capacity: 12
     whitelist:
@@ -74,10 +86,14 @@
   - type: ItemCounter
     count:
       tags: [Egg]
+  - type: GenericVisualizer
+    visuals:
+      enum.SharedBagOpenVisuals.BagState:
+        openLayer:
+          True: { visible: true }
+          False: { visible: false }
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
     - type: StackVisualizer
       composite: true
       stackLayers:
@@ -220,6 +236,10 @@
     netsync: false
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     state: box
+    layers:
+    - state: box
+    - state: box-open
+      map: ["openLayer"]
   - type: Storage
     capacity: 6
   - type: Item
@@ -233,10 +253,14 @@
   - type: ItemCounter
     count:
       tags: [Nugget]
+  - type: GenericVisualizer
+    visuals:
+      enum.SharedBagOpenVisuals.BagState:
+        openLayer:
+          True: { visible: true }
+          False: { visible: false }
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
     - type: StackVisualizer
       composite: true
       stackLayers:
@@ -382,13 +406,20 @@
     netsync: false
     sprite: Objects/Storage/Happyhonk/clown.rsi
     state: box
+    layers:
+    - state: box
+    - state: box-open
+      map: ["openLayer"]
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
+      enum.SharedBagOpenVisuals.BagState:
+        openLayer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Appearance
   - type: Storage
     capacity: 30
   - type: Tag

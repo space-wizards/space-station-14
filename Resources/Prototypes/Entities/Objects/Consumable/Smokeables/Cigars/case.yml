@@ -9,6 +9,8 @@
     sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
     layers:
     - state: closed
+    - state: open
+      map: ["openLayer"]
   - type: Storage
     capacity: 8
   - type: Item
@@ -21,10 +23,14 @@
   - type: ItemCounter
     count:
       tags: [Cigar]
+  - type: GenericVisualizer
+    visuals:
+      enum.SharedBagOpenVisuals.BagState:
+        openLayer:
+          True: { visible: true }
+          False: { visible: false }
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: open
     - type: StackVisualizer
       composite: true
       stackLayers:

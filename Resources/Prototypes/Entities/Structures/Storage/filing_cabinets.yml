@@ -17,10 +17,17 @@
     sprite: Structures/Storage/cabinets.rsi
     state: filingcabinet
     noRot: true
-  - type: Appearance
+    layers:
+    - state: filingcabinet
+    - state: filingcabinet-open
+      map: ["openLayer"]
+  - type: GenericVisualizer
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: filingcabinet-open
+      enum.SharedBagOpenVisuals.BagState:
+        openLayer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Appearance
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
@@ -52,10 +59,11 @@
   - type: Sprite
     sprite: Structures/Storage/cabinets.rsi
     state: tallcabinet
+    layers:
+    - state: tallcabinet
+      state: tallcabinet-open
+      map: ["openLayer"]
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: tallcabinet-open
 
 - type: entity
   name: chest drawer
@@ -76,10 +84,11 @@
     sprite: Structures/Storage/cabinets.rsi
     state: chestdrawer
     noRot: true
+    layers:
+    - state: chestdrawer
+    - state: chestdrawer-open
+      map: ["openLayer"]
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: chestdrawer-open
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
