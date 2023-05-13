@@ -48,7 +48,7 @@ namespace Content.Server.GameTicking
                     SetGamePreset(fallbackPreset);
                 else if (startAttempt.Players.Length >= 5)
                 {
-                    SetGamePreset("secret");
+                    SetGamePreset("traitor");
                 }
                 else
                 {
