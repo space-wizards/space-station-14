@@ -12,7 +12,9 @@ namespace Content.Shared.Throwing;
 
 public sealed class ThrowingSystem : EntitySystem
 {
-    public const float ThrowAngularImpulse = 1.5f;
+    public const float ThrowAngularImpulse = 5f;
+
+    public const float PushbackDefault = 1f;
 
     /// <summary>
     /// The minimum amount of time an entity needs to be thrown before the timer can be run.
@@ -37,7 +39,7 @@ public sealed class ThrowingSystem : EntitySystem
         Vector2 direction,
         float strength = 1.0f,
         EntityUid? user = null,
-        float pushbackRatio = 5.0f)
+        float pushbackRatio = PushbackDefault)
     {
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
         if (!physicsQuery.TryGetComponent(uid, out var physics))
@@ -73,7 +75,7 @@ public sealed class ThrowingSystem : EntitySystem
         EntityQuery<TagComponent> tagQuery,
         float strength = 1.0f,
         EntityUid? user = null,
-        float pushbackRatio = 5.0f)
+        float pushbackRatio = PushbackDefault)
     {
         if (strength <= 0 || direction == Vector2.Infinity || direction == Vector2.NaN || direction == Vector2.Zero)
             return;
@@ -92,7 +94,7 @@ public sealed class ThrowingSystem : EntitySystem
 
         // Give it a l'il spin.
         if (!tagQuery.TryGetComponent(uid, out var tag) || !_tagSystem.HasTag(tag, "NoSpinOnThrow"))
-            _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse, body: physics);
+            _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse / physics.InvI, body: physics);
         else
             transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
 
@@ -124,7 +126,8 @@ public sealed class ThrowingSystem : EntitySystem
 
         // Give thrower an impulse in the other direction
         if (user != null &&
-            pushbackRatio > 0.0f &&
+            pushbackRatio != 0.0f &&
+            physics.Mass > 0f &&
             TryComp(user.Value, out PhysicsComponent? userPhysics) &&
             _gravity.IsWeightless(user.Value, userPhysics))
         {
@@ -132,7 +135,7 @@ public sealed class ThrowingSystem : EntitySystem
             RaiseLocalEvent(uid, msg);
 
             if (!msg.Cancelled)
-                _physics.ApplyLinearImpulse(user.Value, -impulseVector * pushbackRatio, body: userPhysics);
+                _physics.ApplyLinearImpulse(user.Value, -impulseVector * pushbackRatio * physics.Mass, body: userPhysics);
         }
     }
 }
