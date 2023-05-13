@@ -1,7 +1,8 @@
 ﻿- type: entity
   id: BaseBigBox
-  name: cardboard box
+  name: cardboard box #it's still just a box
   description: Huh? Just a box...
+  abstract: true
   components:
     - type: Transform
       noRot: true
@@ -61,31 +62,28 @@
   id: StealthBox
   suffix: stealth
   parent: BaseBigBox
-  name: cardboard box #it's still just a box
   description: Kept ya waiting, huh?
   components:
-    - type: CardboardBox
-      effectSound: /Audio/Effects/chime.ogg
     - type: Damageable
-      damageContainer: Box
       damageModifierSet: FlimsyMetallic #Syndicate boxes should have a bit of protection
-    - type: Sprite
-      noRot: true
-      netsync: false
-      sprite: Structures/Storage/closet.rsi
-      layers:
-        - state: agentbox
-        - state: cardboard_open
-          map: ["enum.StorageVisualLayers.Door"]
-    - type: Appearance
-      visuals:
-        - type: StorageVisualizer
-          state: agentbox
-          state_open: cardboard_open
     - type: Stealth
     - type: StealthOnMove
       passiveVisibilityRate: -0.37
       movementVisibilityRate: 0.20
+
+- type: entity
+  id: BigBox
+  parent: BaseBigBox
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
 
 #For admin spawning only
 - type: entity

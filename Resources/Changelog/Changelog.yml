@@ -1,34 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Remove range check for FTL., type: Tweak}
-  id: 3242
-  time: '2023-03-24T06:17:09.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Added 11 new food/drink vending machines., type: Add}
-  - {message: Added Robotech Deluxe filled with robotics equipment., type: Add}
-  - {message: Added CentDrobe filled with centcom drip., type: Add}
-  id: 3243
-  time: '2023-03-24T08:54:48.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: fluid can now spread through directional windows (through not occupied
-      sides)., type: Fix}
-  id: 3244
-  time: '2023-03-24T14:09:52.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The rumors of dylovene's overdose turned out to be true! Anything above
-      30u will now have unwanted side effects., type: Tweak}
-  id: 3245
-  time: '2023-03-24T18:13:23.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: Traitor codewords now get properly displayed in the round end summary,
-    type: Fix}
-  id: 3246
-  time: '2023-03-24T19:54:44.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed cerberus to be three good boys in one!, type: Tweak}
@@ -2900,3 +2870,28 @@ Entries:
   - {message: Scale throwing pushback by mass., type: Tweak}
   id: 3741
   time: '2023-05-12T23:54:38.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can now drinky puddles (inefficiently), type: Add}
+  id: 3742
+  time: '2023-05-13T01:32:57.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Chemical reactions should now conserve thermal energy., type: Tweak}
+  id: 3743
+  time: '2023-05-13T03:10:32.0000000+00:00'
+- author: Tristan Thomas
+  changes:
+  - {message: 'Added a white cane, which spawns on blind players.', type: Add}
+  id: 3744
+  time: '2023-05-13T03:11:35.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Changed manly dorf appearance and flavor., type: Tweak}
+  id: 3745
+  time: '2023-05-13T12:14:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix vapors., type: Fix}
+  id: 3746
+  time: '2023-05-13T13:45:59.0000000+00:00'
