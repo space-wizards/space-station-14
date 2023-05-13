@@ -36,6 +36,8 @@
     ClothingShoesDameDane: 2
     ClothingOuterDameDane: 2
     ClothingOuterClownPriest: 1
+    ClothingMaskSexyClown: 1
+    ClothingMaskSexyMime: 1
   emaggedInventory:
     ClothingShoesBling: 1
     ClothingOuterDogi: 1
