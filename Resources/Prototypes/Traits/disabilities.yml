@@ -2,6 +2,7 @@
   id: Blindness
   name: trait-blindness-name
   description: trait-blindness-desc
+  traitGear: WhiteCane
   whitelist:
     components:
       - Blindable
