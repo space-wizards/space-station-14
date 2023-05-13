@@ -2,7 +2,7 @@ using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.MachineLinking.Components;
+namespace Content.Server.DeviceLinking.Components;
 
 [RegisterComponent]
 public sealed class SignalTimerComponent : Component
