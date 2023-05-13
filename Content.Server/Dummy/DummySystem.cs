@@ -54,10 +54,14 @@ namespace Content.Server.Dummy
                 _popupSystem.PopupEntity(Loc.GetString("dummy-insert-hand"), uid, args.User);
                 _popupSystem.PopupEntity(Loc.GetString("dummy-inserted-hand"), uid, uid);
                 AddComp<CombatModeComponent>(uid);
-                EnsureComp<GhostTakeoverAvailableComponent>(uid);
-                var ghostRole = AddComp<GhostRoleComponent>(uid);
-                ghostRole.RoleName = Loc.GetString("dummy-role-name");
-                ghostRole.RoleDescription = Loc.GetString("dummy-role-description");
+
+                if (!HasComp<GhostTakeoverAvailableComponent>(uid))
+                {
+                    EnsureComp<GhostTakeoverAvailableComponent>(uid);
+                    var ghostRole = AddComp<GhostRoleComponent>(uid);
+                    ghostRole.RoleName = Loc.GetString("dummy-role-name");
+                    ghostRole.RoleDescription = Loc.GetString("dummy-role-description");
+                }
 
             }
 
