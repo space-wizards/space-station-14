@@ -63,7 +63,7 @@ public sealed class DamageMarkerSystem : EntitySystem
         // Markers are exclusive, deal with it.
         var marker = EnsureComp<DamageMarkerComponent>(args.OtherEntity);
         marker.Damage = new DamageSpecifier(component.Damage);
-        marker.Marker = projectile.Weapon.Value;
+        marker.Marker = projectile.Weapon;
         marker.EndTime = _timing.CurTime + component.Duration;
         Dirty(marker);
     }

@@ -6,8 +6,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Projectiles;
 
-[RegisterComponent, NetworkedComponent]
-public sealed class ProjectileComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class ProjectileComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("impactEffect", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ImpactEffect;
@@ -15,14 +15,15 @@ public sealed class ProjectileComponent : Component
     /// <summary>
     /// User that shot this projectile.
     /// </summary>
-    [DataField("shooter")] public EntityUid Shooter;
+    [DataField("shooter"), AutoNetworkedField] public EntityUid Shooter;
 
     /// <summary>
     /// Weapon used to shoot.
     /// </summary>
-    [DataField("weapon")]
-    public EntityUid? Weapon;
+    [DataField("weapon"), AutoNetworkedField]
+    public EntityUid Weapon;
 
+    [DataField("ignoreShooter"), AutoNetworkedField]
     public bool IgnoreShooter = true;
 
     [DataField("damage", required: true)]
