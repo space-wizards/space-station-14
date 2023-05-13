@@ -36,6 +36,9 @@ public sealed class ChangelingSystem : EntitySystem
     {
         // TODO: add initial transformation
 
+        var ui = EnsureComp<UserInterfaceComponent>(uid);
+        ui.Interfaces.Add();
+
         foreach (var action in ling.InnateAbilities)
         {
             _actions.AddAction(uid, action, uid);
@@ -104,12 +107,18 @@ public sealed class ChangelingSystem : EntitySystem
 
     private void OnTransform(EntityUid uid, ChangelingComponent ling, ChangelingTransformEvent args)
     {
+        Logger.DebugS("LING", "ling help!");
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
+        Logger.DebugS("LING", "ling in med help!");
         if (!_ui.TryToggleUi(uid, ChangelingUiKey.Transform, actor.PlayerSession))
+        {
+            Logger.Error("Failed to open changeling transform ui");
             return;
+        }
 
+        Logger.DebugS("LING", "ling absorbing help!");
         // absorbed transformations are listed first since they will never be removed
         var names = ling.AbsorbedTransformations
             .Concat(ling.ExtractedTransformations)

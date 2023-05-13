@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Utility;
 
@@ -36,7 +37,7 @@ public sealed partial class ChangelingComponent : Component
         //"ChangelingRegenerate",
         new InstantAction()
         {
-            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/changeling.rsi"), "transform"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Actions/changeling.rsi"), "transform"),
             ItemIconStyle = ItemActionIconStyle.NoItem,
             DisplayName = "changeling-transform",
             Description = "changeling-transform-desc",
@@ -44,7 +45,7 @@ public sealed partial class ChangelingComponent : Component
         },
         new InstantAction()
         {
-            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/changeling.rsi"), "extract_sting"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Actions/changeling.rsi"), "extract_sting"),
             ItemIconStyle = ItemActionIconStyle.NoItem,
             DisplayName = "changeling-extract-dna-sting",
             Description = "changeling-extract-dna-sting-desc",
