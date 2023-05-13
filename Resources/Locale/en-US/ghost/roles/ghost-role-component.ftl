@@ -21,9 +21,6 @@ ghost-role-information-slimes-name = Slime
 ghost-role-information-slimes-description = An ordinary slime with no special needs or interests. He just lives.
 ghost-role-information-angry-slimes-description = Everything around you irritates your instincts, destroy them!
 
-ghost-role-information-smile-name = Smile
-ghost-role-information-smile-description = Science's best lab slime. Survived so many experiments that it got promoted to pet.
-
 ghost-role-information-punpun-name = Pun Pun
 ghost-role-information-punpun-description = An honorable member of the monkey society in charge of the bar and helping the bartenders in any way he can.
 
