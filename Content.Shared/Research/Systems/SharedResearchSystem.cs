@@ -23,15 +23,19 @@ public abstract class SharedResearchSystem : EntitySystem
         UpdateTechnologyCards(uid, component);
     }
 
-    public void UpdateTechnologyCards(EntityUid uid, TechnologyDatabaseComponent component)
+    public void UpdateTechnologyCards(EntityUid uid, TechnologyDatabaseComponent? component = null)
     {
+        if (!Resolve(uid, ref component))
+            return;
+
         var availableTechnology = GetAvailableTechnologies(uid, component);
 
         component.CurrentTechnologyCards.Clear();
         foreach (var discipline in component.SupportedDisciplines)
         {
             var filtered = availableTechnology.
-                Where(p => p.Discipline == discipline).ToList();
+                Where(p => p.Discipline == discipline &&
+                           !component.UnlockedTechnologies.Contains(p.ID)).ToList();
 
             if (!filtered.Any())
                 continue;
@@ -103,7 +107,7 @@ public abstract class SharedResearchSystem : EntitySystem
         var allTech = PrototypeManager.EnumeratePrototypes<TechnologyPrototype>()
             .Where(p => p.Discipline == discipline.ID && !p.Hidden).ToList();
         var allUnlocked = new List<TechnologyPrototype>();
-        foreach (var recipe in component.UnlockedRecipes)
+        foreach (var recipe in component.UnlockedTechnologies)
         {
             var proto = PrototypeManager.Index<TechnologyPrototype>(recipe);
             if (proto.Discipline != discipline.ID)

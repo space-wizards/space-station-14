@@ -33,10 +33,9 @@ public sealed partial class ResearchSystem
 
         ResearchConsoleBoundInterfaceState state;
 
-        if (TryGetClientServer(uid, out var server, out var serverComponent, clientComponent))
+        if (TryGetClientServer(uid, out _, out var serverComponent, clientComponent))
         {
             var points = clientComponent.ConnectedToServer ? serverComponent.Points : 0;
-            var pointsPerSecond = clientComponent.ConnectedToServer ? GetPointsPerSecond(server.Value, serverComponent) : 0;
             state = new ResearchConsoleBoundInterfaceState(points);
         }
         else

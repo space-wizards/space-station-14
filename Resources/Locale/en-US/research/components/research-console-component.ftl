@@ -9,7 +9,7 @@ research-console-menu-main-discipline = Main Discipline: [color={$color}]{$name}
 research-console-menu-points-per-second-text = Points per Second {$pointsPerSecond}
 research-console-menu-server-selection-button = Server list
 research-console-menu-server-sync-button = Sync
-research-console-menu-server-unlock-button = Unlock
+research-console-menu-server-research-button = Research
 research-console-tech-requirements-none = No technology requirements.
 research-console-tech-requirements-prototype-name = Requires: {$prototypeName}
 

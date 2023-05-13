@@ -26,6 +26,21 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 
         _consoleMenu = new ResearchConsoleMenu(owner);
 
+        _consoleMenu.OnTechnologyCardPressed += id =>
+        {
+            SendMessage(new ConsoleUnlockTechnologyMessage(id));
+        };
+
+        _consoleMenu.OnServerButtonPressed += () =>
+        {
+            SendMessage(new ConsoleServerSelectionMessage());
+        };
+
+        _consoleMenu.OnSyncButtonPressed += () =>
+        {
+            SendMessage(new ConsoleServerSyncMessage());
+        };
+
         _consoleMenu.OnClose += Close;
 
         _consoleMenu.OpenCentered();

@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
@@ -49,29 +48,35 @@ public sealed partial class ResearchSystem
     /// </summary>
     /// <returns>If the technology was successfully added</returns>
     public bool UnlockTechnology(EntityUid client, string prototypeid, ResearchClientComponent? component = null,
-        TechnologyDatabaseComponent? database = null)
+        TechnologyDatabaseComponent? clientDatabase = null)
     {
         if (!PrototypeManager.TryIndex<TechnologyPrototype>(prototypeid, out var prototype))
             return false;
 
-        return UnlockTechnology(client, prototype, component, database);
+        return UnlockTechnology(client, prototype, component, clientDatabase);
     }
 
     /// <summary>
     /// Tries to add a technology to a database, checking if it is able to
     /// </summary>
     /// <returns>If the technology was successfully added</returns>
-    public bool UnlockTechnology(EntityUid client, TechnologyPrototype prototype, ResearchClientComponent? component = null,
-        TechnologyDatabaseComponent? database = null)
+    public bool UnlockTechnology(EntityUid client,
+        TechnologyPrototype prototype,
+        ResearchClientComponent? component = null,
+        TechnologyDatabaseComponent? clientDatabase = null)
     {
-        if (!Resolve(client, ref component, ref database, false))
+        if (!Resolve(client, ref component, ref clientDatabase, false))
             return false;
 
-        if (!CanServerUnlockTechnology(client, prototype, out var serverEnt, out _, database, component))
+        if (!TryGetClientServer(client, out var serverEnt, out _, component))
             return false;
 
-        AddTechnology(serverEnt.Value, prototype, database);
+        if (!CanServerUnlockTechnology(client, prototype, clientDatabase, component))
+            return false;
+
+        AddTechnology(serverEnt.Value, prototype);
         ModifyServerPoints(serverEnt.Value, -prototype.Cost);
+        UpdateTechnologyCards(serverEnt.Value);
         return true;
     }
 
@@ -143,18 +148,14 @@ public sealed partial class ResearchSystem
     /// <returns>Whether it could be unlocked or not</returns>
     public bool CanServerUnlockTechnology(EntityUid uid,
         TechnologyPrototype technology,
-        [NotNullWhen(true)] out EntityUid? serverEnt,
-        [NotNullWhen(true)] out ResearchServerComponent? serverComp,
         TechnologyDatabaseComponent? database = null,
         ResearchClientComponent? client = null)
     {
-        serverEnt = null;
-        serverComp = null;
 
         if (!Resolve(uid, ref client, ref database, false))
             return false;
 
-        if (!TryGetClientServer(uid, out serverEnt, out serverComp, client))
+        if (!TryGetClientServer(uid, out _, out var serverComp, client))
             return false;
 
         if (!IsTechnologyAvailable(database, technology))

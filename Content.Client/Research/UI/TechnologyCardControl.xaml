@@ -1,6 +1,6 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls">
-    <BoxContainer Orientation="Vertical" Margin="10 0 10 10">
+    <BoxContainer Name="MainContainer" Orientation="Vertical" Margin="10 0 10 10">
         <PanelContainer Name="Background"
                         Access="Public"
                         StyleClasses="PDABackground"
@@ -21,15 +21,17 @@
                     <TextureRect Name="TechnologyTexture"
                                  TextureScale="2 2"
                                  VerticalAlignment="Center"
-                                 HorizontalAlignment="Center">
-                    </TextureRect>
+                                 HorizontalAlignment="Center"/>
                     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center" Margin="10 0 0 0">
                         <BoxContainer Orientation="Horizontal">
                             <Label Name="TechnologyNameLabel" StyleClasses="LabelKeyText" HorizontalExpand="True"/>
                             <TextureRect Name="DisciplineTexture" TextureScale="2 2" VerticalAlignment="Top" HorizontalAlignment="Right"/>
                         </BoxContainer>
                         <customControls:HSeparator StyleClasses="LowDivider" Margin="0 5 0 5"/>
-                        <RichTextLabel Name="TierLabel" HorizontalAlignment="Right" StyleClasses="LabelSubText"/>
+                        <BoxContainer Orientation="Horizontal">
+                            <RichTextLabel Name="TierLabel" HorizontalAlignment="Left" StyleClasses="LabelSubText" HorizontalExpand="True"/>
+                            <Button Name="ResearchButton" Text="{Loc 'research-console-menu-server-research-button'}"/>
+                        </BoxContainer>
                     </BoxContainer>
                 </BoxContainer>
                 <Control MinHeight="5"></Control>
