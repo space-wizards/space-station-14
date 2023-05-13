@@ -1,27 +1,23 @@
 using System.Linq;
-using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction.Events;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry.Reaction
 {
-    public abstract class SharedChemicalReactionSystem : EntitySystem
+    public sealed class ChemicalReactionSystem : EntitySystem
     {
-
         /// <summary>
         ///     The maximum number of reactions that may occur when a solution is changed.
         /// </summary>
         private const int MaxReactionIterations = 20;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         /// <summary>
         ///     A cache of all existant chemical reactions indexed by one of their
@@ -170,13 +166,12 @@ namespace Content.Shared.Chemistry.Reaction
 
         /// <summary>
         ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
-        ///     Removes the reactants from the solution, then returns a solution with all products.
+        ///     Removes the reactants from the solution, adds products, and returns a list of products.
         /// </summary>
-        private Solution PerformReaction(Solution solution, EntityUid owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
+        private List<string> PerformReaction(Solution solution, EntityUid owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
-            // We do this so that ReagentEffect can have something to work with, even if it's
-            // a little meaningless.
-            var randomReagent = _prototypeManager.Index<ReagentPrototype>(_random.Pick(reaction.Reactants).Key);
+            var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(_prototypeManager) : 0;
+
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
             {
@@ -188,23 +183,34 @@ namespace Content.Shared.Chemistry.Reaction
             }
 
             //Create products
-            var products = new Solution();
+            var products = new List<string>();
             foreach (var product in reaction.Products)
             {
-                products.AddReagent(product.Key, product.Value * unitReactions);
+                products.Add(product.Key);
+                solution.AddReagent(product.Key, product.Value * unitReactions);
             }
 
-            // Trigger reaction effects
-            OnReaction(solution, reaction, randomReagent, owner, unitReactions);
+            if (reaction.ConserveEnergy)
+            {
+                var newCap = solution.GetHeatCapacity(_prototypeManager);
+                if (newCap > 0)
+                    solution.Temperature = energy / newCap;
+            }
+
+            OnReaction(solution, reaction, null, owner, unitReactions);
 
             return products;
         }
 
-        protected virtual void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid owner, FixedPoint2 unitReactions)
+        private void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype? reagent, EntityUid owner, FixedPoint2 unitReactions)
         {
             var args = new ReagentEffectArgs(owner, null, solution,
-                randomReagent,
+                reagent,
                 unitReactions, EntityManager, null, 1f);
+
+            var coordinates = Transform(owner).Coordinates;
+            _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
+                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(owner):metabolizer} at {coordinates}");
 
             foreach (var effect in reaction.Effects)
             {
@@ -214,12 +220,14 @@ namespace Content.Shared.Chemistry.Reaction
                 if (effect.ShouldLog)
                 {
                     var entity = args.SolutionEntity;
-                    AdminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
+                    _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
                         $"Reaction effect {effect.GetType().Name:effect} of reaction ${reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                 }
 
                 effect.Effect(args);
             }
+
+            _audio.PlayPvs(reaction.Sound, owner);
         }
 
         /// <summary>
@@ -230,7 +238,7 @@ namespace Content.Shared.Chemistry.Reaction
         private bool ProcessReactions(Solution solution, EntityUid owner, FixedPoint2 maxVolume, SortedSet<ReactionPrototype> reactions, ReactionMixerComponent? mixerComponent)
         {
             HashSet<ReactionPrototype> toRemove = new();
-            Solution? products = null;
+            List<string>? products = null;
 
             // attempt to perform any applicable reaction
             foreach (var reaction in reactions)
@@ -249,30 +257,23 @@ namespace Content.Shared.Chemistry.Reaction
             if (products == null)
                 return false;
 
-            // Remove any reactions that were not applicable. Avoids re-iterating over them in future.
-            foreach (var proto in toRemove)
-            {
-                reactions.Remove(proto);
-            }
-
-            if (products.Volume <= 0)
+            if (products.Count == 0)
                 return true;
 
             // remove excess product
             // TODO spill excess?
-            var excessVolume = solution.Volume + products.Volume - maxVolume;
+            var excessVolume = solution.Volume - maxVolume;
             if (excessVolume > 0)
-                products.RemoveSolution(excessVolume);
+                solution.RemoveSolution(excessVolume);
 
             // Add any reactions associated with the new products. This may re-add reactions that were already iterated
             // over previously. The new product may mean the reactions are applicable again and need to be processed.
-            foreach (var reactant in products.Contents)
+            foreach (var product in products)
             {
-                if (_reactions.TryGetValue(reactant.ReagentId, out var reactantReactions))
+                if (_reactions.TryGetValue(product, out var reactantReactions))
                     reactions.UnionWith(reactantReactions);
             }
 
-            solution.AddSolution(products, _prototypeManager);
             return true;
         }
 
