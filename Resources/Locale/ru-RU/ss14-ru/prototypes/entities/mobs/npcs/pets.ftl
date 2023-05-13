@@ -34,5 +34,7 @@ ent-MobSpiderShiva = Шива
     .desc = Первый защитник станции.
 ent-MobKangarooWillow = Уиллоу
     .desc = Уиллоу, кенгуру-боксёр.
+ent-MobSlimesPet = Smile
+    .desc = This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
 ent-MobMonkeyPunpun = Пун Пун
     .desc = Видный представитель обезьян с неограниченным доступом к алкоголю.
