@@ -1,10 +1,4 @@
 Entries:
-- author: Menshin
-  changes:
-  - {message: Alert display lights on fire alarms properly reacts to power changes.,
-    type: Fix}
-  id: 3250
-  time: '2023-03-25T03:10:49.0000000+00:00'
 - author: 778b
   changes:
   - {message: Solar panels no longer block light from getting to other solar panels.,
@@ -2894,3 +2888,9 @@ Entries:
   - {message: Robotics now has a guidebook entry, type: Add}
   id: 3749
   time: '2023-05-13T15:21:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Puddles slip you further and reduced slip multipliers across the board
+      as most were comically large., type: Tweak}
+  id: 3750
+  time: '2023-05-13T15:45:53.0000000+00:00'
