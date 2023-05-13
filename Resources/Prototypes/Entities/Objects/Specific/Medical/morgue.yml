@@ -58,7 +58,7 @@
         components:
         - Paper
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state_open: open_overlay
   - type: GenericVisualizer
     visuals:

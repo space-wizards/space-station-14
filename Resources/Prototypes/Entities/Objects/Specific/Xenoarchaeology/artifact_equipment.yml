@@ -65,7 +65,7 @@
           components:
             - Paper
     - type: Appearance
-    - type: StorageVisualizer
+    - type: StorageVisuals
       state_open: artifact_container_open
       state_closed: artifact_container_door
     - type: ItemSlots

@@ -3,20 +3,20 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Visualizers;
 
-public sealed class StorageVisualizerSystem : VisualizerSystem<StorageVisualizerComponent>
+public sealed class StorageVisualizerSystem : VisualizerSystem<StorageVisualsComponent>
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StorageVisualizerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<StorageVisualsComponent, ComponentInit>(OnInit);
     }
 
     /// <summary>
     /// Sets the base sprite to this layer. Exists to make the inheritance tree less boilerplate-y.
     /// </summary>
-    private void OnInit(EntityUid uid, StorageVisualizerComponent comp, ComponentInit args)
+    private void OnInit(EntityUid uid, StorageVisualsComponent comp, ComponentInit args)
     {
-        if(!TryComp<SpriteComponent>(uid, out var sprite))
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
         if (comp.StateBase != null)
@@ -26,15 +26,15 @@ public sealed class StorageVisualizerSystem : VisualizerSystem<StorageVisualizer
 
         if (comp.StateBaseAlt == null)
         {
-            comp.StateBaseAlt = comp.StateBase;
+            comp.StateBaseAlt ??= comp.StateBase;
         }
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, StorageVisualizerComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, StorageVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
-        if(!AppearanceSystem.TryGetData(uid, StorageVisuals.Open, out bool open, args.Component))
+        if (!AppearanceSystem.TryGetData(uid, StorageVisuals.Open, out bool open, args.Component))
             return;
 
         if (args.Sprite.LayerMapTryGet(StorageVisualLayers.Door, out _))

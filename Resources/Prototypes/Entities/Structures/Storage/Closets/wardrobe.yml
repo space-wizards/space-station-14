@@ -15,7 +15,7 @@
   description: "A wardrobe packed with stylish blue clothing."
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: blue_door
@@ -28,7 +28,7 @@
   description: "A wardrobe packed with fabulous pink clothing."
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: pink_door
@@ -41,7 +41,7 @@
   description: "A wardrobe packed with stylish black clothing."
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: black_door
@@ -54,7 +54,7 @@
   description: "A wardrobe packed with stylish green clothing."
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: green_door
@@ -66,7 +66,7 @@
   name: prison wardrobe
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: orange_door
@@ -79,7 +79,7 @@
   description: "A wardrobe packed with stylish yellow clothing."
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: yellow_door
@@ -92,7 +92,7 @@
   description: "A wardrobe packed with stylish white clothing."
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: white_door
@@ -105,7 +105,7 @@
   description: "A wardrobe packed with a tide of grey clothing."
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: grey_door
@@ -118,7 +118,7 @@
   description: "A wardrobe packed with a mix of colorful clothing."
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: mixed_door
@@ -131,7 +131,7 @@
   name: security wardrobe
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: red_door
@@ -142,7 +142,7 @@
   name: atmospherics wardrobe
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: generic
     state_open: generic_open
     state_closed: atmos_wardrobe_door

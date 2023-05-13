@@ -368,7 +368,6 @@
     sprite: Structures/Storage/Crates/piratechest.rsi
     state: crate_icon
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: crate_open
-      state_closed: crate_door
+  - type: StorageVisuals
+    state_open: crate_open
+    state_closed: crate_door

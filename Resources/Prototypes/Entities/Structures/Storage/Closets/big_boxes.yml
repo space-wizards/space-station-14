@@ -43,7 +43,7 @@
       - state: cardboard_open
         map: ["enum.StorageVisualLayers.Door"]
     - type: Appearance
-    - type: StorageVisualizer
+    - type: StorageVisuals
       state: cardboard
       state_open: cardboard_open
     - type: Tag
@@ -77,7 +77,7 @@
         - state: cardboard_open
           map: ["enum.StorageVisualLayers.Door"]
     - type: Appearance
-    - type: StorageVisualizer
+    - type: StorageVisuals
       state: agentbox
       state_open: cardboard_open
     - type: Stealth

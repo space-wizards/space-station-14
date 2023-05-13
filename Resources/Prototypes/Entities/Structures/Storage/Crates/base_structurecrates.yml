@@ -50,7 +50,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state_open: open
     state_closed: closed
   - type: PaperLabel

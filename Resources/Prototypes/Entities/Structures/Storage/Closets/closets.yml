@@ -6,7 +6,7 @@
   description: It's a storage unit for tools.
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: eng
     state_open: eng_open
     state_closed: eng_tool_door
@@ -19,7 +19,7 @@
   description: "More comfortable than radiation poisioning."
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: eng
     state_open: eng_open
     state_closed: eng_rad_door
@@ -32,7 +32,7 @@
   description: It's a storage unit for emergency breath masks and O2 tanks.
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: emergency
     state_open: emergency_open
     state_closed: emergency_door
@@ -45,7 +45,7 @@
   description: It's a storage unit for fire-fighting supplies.
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: fire
     state_open: fire_open
     state_closed: fire_door
@@ -58,7 +58,7 @@
   description: It's a storage unit for explosion-protective suits.
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: bomb
     state_open: bomb_open
     state_closed: bomb_door
@@ -73,7 +73,7 @@
   description: It's a storage unit for level 3 biohazard gear.
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: bio
     state_open: bio_open
     state_closed: bio_door
@@ -84,7 +84,7 @@
   parent: ClosetL3
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: bio_viro
     state_open: bio_viro_open
     state_closed: bio_viro_door
@@ -95,7 +95,7 @@
   parent: ClosetL3
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: bio_sec
     state_open: bio_sec_open
     state_closed: bio_sec_door
@@ -106,7 +106,7 @@
   parent: ClosetL3
   components:
   - type: Appearance
-  - type: StorageVisualizer
+  - type: StorageVisuals
     state: bio_jan
     state_open: bio_jan_open
     state_closed: bio_jan_door
@@ -118,10 +118,10 @@
   parent: ClosetBase
   description: It's a storage unit.
   components:
-    - type: Appearance
-    - type: StorageVisualizer
-      state_open: generic_open
-      state_closed: generic_door
+  - type: Appearance
+  - type: StorageVisuals
+    state_open: generic_open
+    state_closed: generic_door
 
 # Bluespace closet
 - type: entity
