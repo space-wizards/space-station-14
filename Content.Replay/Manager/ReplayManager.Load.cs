@@ -50,7 +50,7 @@ public sealed partial class ReplayManager
 
         while (directory.Exists(name))
         {
-            _sawmill.Info($"Reading file: {name}");
+            _sawmill.Debug($"Reading file: {name}");
             using var fileStream = directory.OpenRead(name);
             using var decompressStream = new ZStdDecompressStream(fileStream, false);
 
@@ -93,10 +93,7 @@ public sealed partial class ReplayManager
         var duration = TimeSpan.Parse(((ValueDataNode) data["duration"]).Value);
 
         if (!typeHash.SequenceEqual(_serializer.GetSerializableTypesHash()))
-        {
-            // TODO REPLAYS make this show an informative pop-up instead of just throwing an exception.
             throw new Exception($"{nameof(IRobustSerializer)} hashes do not match. Loading replays using a bad replay-client version?");
-        }
 
         using var stringFile = directory.OpenRead(new ResPath("strings.dat").ToRootedPath());
         var stringData = new byte[stringFile.Length];

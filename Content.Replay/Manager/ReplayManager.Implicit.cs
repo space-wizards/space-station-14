@@ -26,6 +26,8 @@ public sealed partial class ReplayManager
 
     private (List<ComponentChange>, HashSet<ushort>) GetImplicitData(string prototype)
     {
+        // TODO REPLAYS figure out what to do about prototype uploading.
+
         if (_implicitData.TryGetValue(prototype, out var result))
             return result;
 
