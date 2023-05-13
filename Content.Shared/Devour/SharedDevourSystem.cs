@@ -5,17 +5,25 @@ using Robust.Shared.Containers;
 using Content.Server.Devour.Components;
 using Content.Shared.Actions;
 using Content.Shared.Popups;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Devour;
 
-[Virtual]
-public class SharedDevourSystem : EntitySystem
+public abstract class SharedDevourSystem : EntitySystem
 {
+    [Dependency] protected readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<DevourerComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<DevourerComponent, DevourActionEvent>(OnDevourAction);
+    }
 
     protected void OnStartup(EntityUid uid, DevourerComponent component, ComponentStartup args)
     {
@@ -71,4 +79,16 @@ public class SharedDevourSystem : EntitySystem
             BreakOnUserMove = true,
         });
     }
+}
+
+public sealed class DevourActionEvent : EntityTargetActionEvent { }
+
+[Serializable, NetSerializable]
+public sealed class DevourDoAfterEvent : SimpleDoAfterEvent { }
+
+[Serializable, NetSerializable]
+public enum FoodPreference : byte
+{
+    Humanoid = 0,
+    All = 1
 }

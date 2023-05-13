@@ -3,20 +3,19 @@ using Content.Server.Body.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Devour.Components;
+using Content.Shared.DoAfter;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Devour;
 
 public sealed class DevourSystem : SharedDevourSystem
 {
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DevourerComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<DevourerComponent, DevourActionEvent>(OnDevourAction);
         SubscribeLocalEvent<DevourerComponent, DevourDoAfterEvent>(OnDoAfter);
     }
 
@@ -42,8 +41,11 @@ public sealed class DevourSystem : SharedDevourSystem
         //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
         //If it's not human, it must be a structure
         else if (args.Args.Target != null)
-            EntityManager.QueueDeleteEntity(args.Args.Target.Value);
+        {
+            QueueDel(args.Args.Target.Value);
+        }
 
         _audioSystem.PlayPvs(component.SoundDevour, uid);
     }
 }
+
