@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed cerberus to be three good boys in one!, type: Tweak}
-  id: 3247
-  time: '2023-03-24T20:28:30.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: The changelog no longer gets squished in the lobby at 75% UI scale,
@@ -2895,3 +2890,8 @@ Entries:
   - {message: Fix vapors., type: Fix}
   id: 3746
   time: '2023-05-13T13:45:59.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds new masks for the clown and mime in the theater machine., type: Add}
+  id: 3747
+  time: '2023-05-13T14:41:35.0000000+00:00'
