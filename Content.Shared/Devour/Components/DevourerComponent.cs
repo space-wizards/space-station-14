@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Devour.Components;
 
 [RegisterComponent]
-[Access(typeof(DevourSystem))]
+[Access(typeof(SharedDevourSystem))]
 public sealed class DevourerComponent : Component
 {
     [DataField("devourActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]
@@ -56,8 +56,8 @@ public sealed class DevourerComponent : Component
     {
         Components = new[]
         {
-                "MobState",
-            }
+            "MobState",
+        }
     };
 
     /// <summary>
@@ -79,4 +79,3 @@ public sealed class DevourerComponent : Component
     public FoodPreference FoodPreference = FoodPreference.All;
 }
 
-public sealed class DevourActionEvent : EntityTargetActionEvent { }
