@@ -1,11 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Added 11 new food/drink vending machines., type: Add}
-  - {message: Added Robotech Deluxe filled with robotics equipment., type: Add}
-  - {message: Added CentDrobe filled with centcom drip., type: Add}
-  id: 3243
-  time: '2023-03-24T08:54:48.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: fluid can now spread through directional windows (through not occupied
@@ -2900,3 +2893,8 @@ Entries:
   - {message: You can now drinky puddles (inefficiently), type: Add}
   id: 3742
   time: '2023-05-13T01:32:57.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Chemical reactions should now conserve thermal energy., type: Tweak}
+  id: 3743
+  time: '2023-05-13T03:10:32.0000000+00:00'
