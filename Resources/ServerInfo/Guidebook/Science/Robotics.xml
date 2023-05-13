@@ -25,13 +25,13 @@
 
   To make a bot, first open the [color=#a4885c]Build Menu[/color] (bound to the 'G' key by default). Open the "Robots" tab, and you'll have the whole list of Bot recipes.
 
-  In order to actually assemble a bot from this menu, you must have the parts outlined by the recipe somewhere in your inventory. They can be in your hands, pockets, or even your backpack. To build the bot, just click [color=#a4885c]Build Menu[/color], and your newly created silicon servant should appear at your feet!
+  In order to actually assemble a bot from this menu, you must have the parts outlined by the recipe somewhere in your inventory. They can be in your hands, pockets, or even your backpack. To build the bot, just click [color=#a4885c]Build[/color], and your newly created silicon servant should appear at your feet!
 
   ## Mechs
   <Box>
 <GuideEntityEmbed Entity="MechRipley" Caption="Ripley APLU"/>
 </Box>
-  [color=#a4885c]Mechs[/color] are giant behemoths of metal designed to carry out a variety of functions respective to their model. They are piloted by players and requre power cells to function.
+  [color=#a4885c]Mechs[/color] are giant behemoths of metal designed to carry out a variety of functions respective to their model. They are piloted by players and require power cells to function.
 
   Each mech requires its own unique set of limbs and parts to create. These can be fabricated at the Exosuit Fabricator, the same as any other part, save for the required [color=#a4885c]circuit boards[/color], which are made at a [color=#a4885c]Circuit Board Imprinter[/color], which can also be found in the science department.
 
