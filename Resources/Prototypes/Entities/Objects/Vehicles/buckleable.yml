@@ -380,6 +380,7 @@
   description: It only has one wheel!
   components:
   - type: Vehicle
+    useHand: false
     northOver: true
     southOver: true
     northOverride: -0.15

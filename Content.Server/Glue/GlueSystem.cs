@@ -6,7 +6,6 @@ using Content.Shared.Glue;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Server.Nutrition.Components;
-using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Glue
 {
@@ -24,6 +23,7 @@ namespace Content.Server.Glue
             SubscribeLocalEvent<GlueComponent, AfterInteractEvent>(OnInteract);
         }
 
+        // When glue bottle is used on item it will apply the glued and unremoveable components.
         private void OnInteract(EntityUid uid, GlueComponent component, AfterInteractEvent args)
         {
             if (args.Handled)

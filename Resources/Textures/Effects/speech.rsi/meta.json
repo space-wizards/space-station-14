@@ -126,23 +126,6 @@
             "name": "default2"
         },
         {
-            "name": "dummy0",
-            "delays": [
-                [
-                    0.2,
-                    0.3,
-                    0.3,
-                    0.5
-                ]
-            ]
-        },
-        {
-            "name": "dummy1"
-        },
-        {
-            "name": "dummy2"
-        },
-        {
             "name": "guardian0",
             "delays": [
                 [

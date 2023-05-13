@@ -1,12 +1,6 @@
-using Content.Server.Popups;
-using Content.Shared.Popups;
 using Content.Shared.Interaction.Components;
-using Content.Shared.Actions;
-using Content.Server.Chat.Systems;
 using Robust.Shared.Timing;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Medical;
 using Content.Shared.Hands.Components;
 
 namespace Content.Server.Glue;
@@ -24,6 +18,7 @@ public sealed class GluedSystem : EntitySystem
         SubscribeLocalEvent<GluedComponent, InteractHandEvent>(OnPickUp);
     }
 
+    // Timing to remove glued and unremoveable.
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -47,6 +42,7 @@ public sealed class GluedSystem : EntitySystem
         }
     }
 
+    //Adds the prefix on init.
     private void OnGlued(EntityUid uid, GluedComponent component, ComponentInit args)
     {
         var meta = MetaData(uid);
@@ -55,6 +51,7 @@ public sealed class GluedSystem : EntitySystem
         meta.EntityName = Loc.GetString("glued-name-prefix", ("target", name));
     }
 
+    // Timers start only when the glued item is picked up.
     private void OnPickUp(EntityUid uid, GluedComponent component, InteractHandEvent args)
     {
         var userHands = Comp<HandsComponent>(args.User);
