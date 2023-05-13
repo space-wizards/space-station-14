@@ -346,6 +346,26 @@
   - HonkerLLeg
   - HonkerRLeg
 
+- type: technology
+  name: technologies-hamtr-technology
+  id: HamtrTechnology
+  description: technologies-hamtr-technology-description
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: HAMTR
+  requiredPoints: 10000
+  requiredTechnologies:
+  - RipleyTechnology
+  unlockedRecipes:
+  - HamtrCentralElectronics
+  - HamtrPeripheralsElectronics
+  - MechEquipmentGrabberSmall
+  - HamtrHarness
+  - HamtrLArm
+  - HamtrRArm
+  - HamtrLLeg
+  - HamtrRLeg
+
 # Industrial Engineering Technology Tree
 
 - type: technology

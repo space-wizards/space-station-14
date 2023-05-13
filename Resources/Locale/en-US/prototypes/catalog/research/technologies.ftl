@@ -94,6 +94,9 @@ technologies-ripley-technology-description = The latest and greatest in mechaniz
 technologies-clown-technology = Exosuit: H.O.N.K.
 technologies-clown-technology-description = Honk?!
 
+technologies-hamtr-technology = Exosuit: HAMTR
+technologies-hamtr-technology-description = A mech designed to be piloted by a rodent.
+
 technologies-adv-parts-technology-description = Like the previous ones, but better!
 technologies-adv-parts-technology = Advanced parts technology
 

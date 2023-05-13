@@ -88,6 +88,10 @@
     openState: ripley-open
     brokenState: ripley-broken
     mechToPilotDamageMultiplier: 0.75
+    pilotWhitelist:
+      whitelist:
+      components:
+      - HumanoidAppearance
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
@@ -131,10 +135,67 @@
     openState: honker-open
     brokenState: honker-broken
     mechToPilotDamageMultiplier: 0.5
+    pilotWhitelist:
+      whitelist:
+      components:
+      - HumanoidAppearance
 
 - type: entity
   id: MechHonkerBattery
   parent: MechHonker
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
+
+- type: entity
+  id: MechHamtr
+  parent: BaseMech
+  name: HAMTR
+  description: "An experimental mech which uses a neuralink to interface directly to a hamsters brain."
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: HAMTR
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: Mech
+    baseState: HAMTR
+    openState: HAMTR-open
+    brokenState: HAMTR-broken
+    mechToPilotDamageMultiplier: 0.2
+    maxEquipmentAmount: 2
+    airtight: true
+    equipmentWhitelist:
+      whitelist:
+      tags:
+      - SmallMech
+    pilotWhitelist:
+      whitelist:
+      tags:
+      - Hamster
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 10 #thwack
+        Structural: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.4
+    baseSprintSpeed: 3.7
+
+- type: entity
+  id: MechHamtrBattery
+  parent: MechHamtr
   suffix: Battery
   components:
   - type: ContainerFill
