@@ -76,6 +76,7 @@ namespace Content.Client.Lobby.UI
             UpdateUI();
 
             _preferencesManager.OnServerDataLoaded += UpdateUI;
+            _entityManager.EntityDeleted += OnEntityDeleted;
         }
 
         public Button CharacterSetupButton { get; }
@@ -84,6 +85,7 @@ namespace Content.Client.Lobby.UI
         {
             base.Dispose(disposing);
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
+            _entityManager.EntityDeleted -= OnEntityDeleted;
 
             if (!disposing) return;
             if (_previewDummy != null) _entityManager.DeleteEntity(_previewDummy.Value);
@@ -163,6 +165,16 @@ namespace Content.Client.Lobby.UI
                         invSystem.TryEquip(dummy, item, slot.Name, true, true);
                     }
                 }
+            }
+        }
+
+        private void OnEntityDeleted(EntityUid ent)
+        {
+            if (ent == _previewDummy)
+            {
+                // Our preview entiy was deleted. This can happen on initial connect,
+                // when the server applies the game state. Update the UI to recreate it.
+                UpdateUI();
             }
         }
     }
