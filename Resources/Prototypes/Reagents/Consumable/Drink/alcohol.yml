@@ -957,8 +957,8 @@
   name: reagent-name-manly-dorf
   parent: BaseAlcohol
   desc: reagent-desc-manly-dorf
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: alcohol
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: rocksandstones
   color: "#664300"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
@@ -1062,18 +1062,6 @@
         damage:
           types:
             Poison: 1
-
-- type: reagent
-  id: OilyOaf
-  name: reagent-name-oily-oaf
-  parent: BaseAlcohol
-  desc: reagent-desc-oily-oaf
-  physicalDesc: reagent-physical-desc-fizzy-and-creamy
-  flavor: rocksandstones
-  color: "#f5dfa0"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/oilyoafglass.rsi
-    state: icon
 
 - type: reagent
   id: Patron

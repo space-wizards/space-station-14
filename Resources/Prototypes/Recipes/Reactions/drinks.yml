@@ -614,16 +614,6 @@
     NuclearCola: 5
 
 - type: reaction
-  id: OilyOaf
-  reactants:
-    ManlyDorf:
-      amount: 2
-    SodaWater:
-      amount: 1
-  products:
-    OilyOaf: 3
-
-- type: reaction
   id: Patron
   reactants:
     Tequila:
