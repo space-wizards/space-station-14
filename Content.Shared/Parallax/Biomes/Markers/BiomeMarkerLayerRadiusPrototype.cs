@@ -1,20 +1,27 @@
-using Content.Shared.Parallax.Biomes.Points;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Parallax.Biomes.Markers;
 
-[Prototype("biomeMarkerLayer")]
-public sealed class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
+/// <summary>
+/// Spawns entities inside of the specified area with the minimum specified radius.
+/// </summary>
+[Prototype("biomeMarkerLayerRadius")]
+public sealed class BiomeMarkerLayerRadiusPrototype : IBiomeMarkerLayer
 {
     [IdDataField] public string ID { get; } = default!;
 
     [DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype = string.Empty;
+    public string Prototype { get; } = string.Empty;
 
-    /// <inheritdoc />
+    [DataField("mask", customTypeSerializer:typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
+    public string? Mask { get; }
+
+    /// <summary>
+    /// Minimum radius between 2 points
+    /// </summary>
     [DataField("radius")]
-    public float Radius { get; } = 32f;
+    public float Radius = 32f;
 
     /// <summary>
     /// How many mobs to spawn in one group.

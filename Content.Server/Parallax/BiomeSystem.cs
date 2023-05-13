@@ -5,7 +5,6 @@ using Content.Shared.Decals;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
-using Content.Shared.Parallax.Biomes.Points;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -151,7 +150,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     public void AddMarkerLayer(BiomeComponent component, string marker)
     {
-        if (!_proto.HasIndex<BiomeMarkerLayerPrototype>(marker))
+        if (!_proto.HasIndex<BiomeMarkerLayerRadiusPrototype>(marker))
         {
             // TODO: Log when we get a sawmill
             return;
@@ -208,7 +207,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         foreach (var layer in markers)
         {
-            var proto = _proto.Index<BiomeMarkerLayerPrototype>(layer);
+            var proto = _proto.Index<BiomeMarkerLayerRadiusPrototype>(layer);
             var enumerator = new ChunkIndicesEnumerator(area, proto.Size);
 
             while (enumerator.MoveNext(out var chunk))
@@ -247,7 +246,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 foreach (var layer in biome.MarkerLayers)
                 {
-                    var layerProto = _proto.Index<BiomeMarkerLayerPrototype>(layer);
+                    var layerProto = _proto.Index<BiomeMarkerLayerRadiusPrototype>(layer);
                     AddMarkerChunksInRange(biome, worldPos, layerProto);
                 }
             }
@@ -266,7 +265,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 foreach (var layer in biome.MarkerLayers)
                 {
-                    var layerProto = _proto.Index<BiomeMarkerLayerPrototype>(layer);
+                    var layerProto = _proto.Index<BiomeMarkerLayerRadiusPrototype>(layer);
                     AddMarkerChunksInRange(biome, worldPos, layerProto);
                 }
             }
@@ -334,7 +333,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 if (loadedMarkers.TryGetValue(layer, out var mobChunks) && mobChunks.Contains(chunk))
                     continue;
 
-                var layerProto = _proto.Index<BiomeMarkerLayerPrototype>(layer);
+                var layerProto = _proto.Index<BiomeMarkerLayerRadiusPrototype>(layer);
                 var buffer = layerProto.Radius / 2f;
                 mobChunks ??= new HashSet<Vector2i>();
                 mobChunks.Add(chunk);

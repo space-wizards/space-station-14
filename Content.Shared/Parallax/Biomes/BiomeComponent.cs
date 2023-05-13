@@ -61,10 +61,10 @@ public sealed partial class BiomeComponent : Component
     /// <summary>
     /// Track what markers we've loaded already to avoid double-loading.
     /// </summary>
-    [DataField("loadedMarkers", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<Vector2i>, BiomeMarkerLayerPrototype>))]
+    [DataField("loadedMarkers", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<Vector2i>, BiomeMarkerLayerRadiusPrototype>))]
     public readonly Dictionary<string, HashSet<Vector2i>> LoadedMarkers = new();
 
-    [DataField("markerLayers", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeMarkerLayerPrototype>))]
+    [DataField("markerLayers", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeMarkerLayerRadiusPrototype>))]
     public List<string> MarkerLayers = new();
 
     #endregion
