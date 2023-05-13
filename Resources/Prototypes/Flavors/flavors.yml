@@ -798,3 +798,8 @@
   id: white-gilgamesh
   flavorType: Complex
   description: flavor-complex-white-gilgamesh
+ 
+ - type: flavor
+  id: rocksandstones
+  flavorType: Complex
+  description: flavor-complex-rocksandstones

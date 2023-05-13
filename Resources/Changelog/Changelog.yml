@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The rumors of dylovene's overdose turned out to be true! Anything above
-      30u will now have unwanted side effects., type: Tweak}
-  id: 3245
-  time: '2023-03-24T18:13:23.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: Traitor codewords now get properly displayed in the round end summary,
@@ -2897,3 +2891,8 @@ Entries:
   - {message: 'Added a white cane, which spawns on blind players.', type: Add}
   id: 3744
   time: '2023-05-13T03:11:35.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Changed manly dorf appearance and flavor., type: Tweak}
+  id: 3745
+  time: '2023-05-13T12:14:57.0000000+00:00'

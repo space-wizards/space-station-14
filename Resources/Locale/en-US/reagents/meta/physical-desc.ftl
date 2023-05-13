@@ -61,6 +61,7 @@ reagent-physical-desc-powdery = powdery
 reagent-physical-desc-creamy = creamy
 reagent-physical-desc-sticky = sticky
 reagent-physical-desc-bubbly = bubbly
+reagent-physical-desc-rocky = rocky
 reagent-physical-desc-lemony-fresh = lemony fresh
 reagent-physical-desc-crisp = crisp
 reagent-physical-desc-citric = citric
