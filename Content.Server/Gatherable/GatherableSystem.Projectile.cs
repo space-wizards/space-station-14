@@ -22,7 +22,7 @@ public sealed partial class GatherableSystem
             return;
         }
 
-        Gather(args.OtherEntity, gatherable);
+        Gather(args.OtherEntity, uid, gatherable);
         QueueDel(uid);
     }
 }

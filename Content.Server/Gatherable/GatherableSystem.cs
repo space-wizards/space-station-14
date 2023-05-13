@@ -56,37 +56,37 @@ public sealed partial class GatherableSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, GatherableComponent component, GatherableDoAfterEvent args)
     {
-        if(!TryComp<GatheringToolComponent>(args.Args.Used, out var tool) || args.Args.Target == null)
+        if(!TryComp<GatheringToolComponent>(args.Args.Used, out var tool))
             return;
 
-        tool.GatheringEntities.Remove(args.Args.Target.Value);
+        tool.GatheringEntities.Remove(uid);
         if (args.Handled || args.Cancelled)
             return;
 
-        Gather(args.Args.Target.Value, component, tool.GatheringSound);
+        Gather(uid, args.Args.Used, component, tool.GatheringSound);
         args.Handled = true;
     }
 
-    public void Gather(EntityUid uid, GatherableComponent? component = null, SoundSpecifier? sound = null)
+    public void Gather(EntityUid gatheredUid, EntityUid? gatherer = null, GatherableComponent? component = null, SoundSpecifier? sound = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(gatheredUid, ref component))
             return;
 
         // Complete the gathering process
-        _destructible.DestroyEntity(uid);
-        _audio.PlayPvs(sound, uid);
+        _destructible.DestroyEntity(gatheredUid);
+        _audio.PlayPvs(sound, gatheredUid);
 
         // Spawn the loot!
         if (component.MappedLoot == null)
             return;
 
-        var pos = Transform(uid).MapPosition;
+        var pos = Transform(gatheredUid).MapPosition;
 
         foreach (var (tag, table) in component.MappedLoot)
         {
             if (tag != "All")
             {
-                if (!_tagSystem.HasTag(uid, tag))
+                if (gatherer != null && !_tagSystem.HasTag(gatherer.Value, tag))
                     continue;
             }
             var getLoot = _prototypeManager.Index<EntityLootTablePrototype>(table);
