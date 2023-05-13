@@ -1,10 +1,4 @@
 Entries:
-- author: 778b
-  changes:
-  - {message: Solar panels no longer block light from getting to other solar panels.,
-    type: Fix}
-  id: 3251
-  time: '2023-03-25T04:32:46.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'Added watermelon and grapes, and related recipes.', type: Add}
@@ -2894,3 +2888,10 @@ Entries:
       as most were comically large., type: Tweak}
   id: 3750
   time: '2023-05-13T15:45:53.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Health Analyzer's that run out of power/don't have a power cell in them
+      will turn off and their screen will go black until a power cell with power is
+      inserted again, type: Tweak}
+  id: 3751
+  time: '2023-05-13T16:28:11.0000000+00:00'
