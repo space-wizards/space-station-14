@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Emergency welders now take up 5 less space in your inventory space.,
-    type: Tweak}
-  id: 3249
-  time: '2023-03-24T21:30:40.0000000+00:00'
 - author: Menshin
   changes:
   - {message: Alert display lights on fire alarms properly reacts to power changes.,
@@ -2895,3 +2889,8 @@ Entries:
   - {message: The description of angry Slimes is now working., type: Fix}
   id: 3748
   time: '2023-05-13T14:51:03.0000000+00:00'
+- author: OttoMaticode
+  changes:
+  - {message: Robotics now has a guidebook entry, type: Add}
+  id: 3749
+  time: '2023-05-13T15:21:38.0000000+00:00'
