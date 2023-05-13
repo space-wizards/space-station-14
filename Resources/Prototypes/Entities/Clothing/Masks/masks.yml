@@ -350,7 +350,7 @@
   parent: ClothingMaskClown
   id: ClothingMaskSexyClown
   name: sexy clown mask
-  description: Some naughty clowns think that's what Honcomater looks like.
+  description: Some naughty clowns think this is what the Honkmother looks like.
   components:
   - type: Sprite
     sprite: Clothing/Mask/sexyclown.rsi
