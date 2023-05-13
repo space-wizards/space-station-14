@@ -5,7 +5,6 @@ using Content.Client.Preferences;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
@@ -13,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
@@ -76,7 +76,6 @@ namespace Content.Client.Lobby.UI
             UpdateUI();
 
             _preferencesManager.OnServerDataLoaded += UpdateUI;
-            _entityManager.EntityDeleted += OnEntityDeleted;
         }
 
         public Button CharacterSetupButton { get; }
@@ -85,7 +84,6 @@ namespace Content.Client.Lobby.UI
         {
             base.Dispose(disposing);
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
-            _entityManager.EntityDeleted -= OnEntityDeleted;
 
             if (!disposing) return;
             if (_previewDummy != null) _entityManager.DeleteEntity(_previewDummy.Value);
@@ -168,9 +166,9 @@ namespace Content.Client.Lobby.UI
             }
         }
 
-        private void OnEntityDeleted(EntityUid ent)
+        protected override void FrameUpdate(FrameEventArgs args)
         {
-            if (ent == _previewDummy)
+            if (_entityManager.Deleted(_previewDummy))
             {
                 // Our preview entiy was deleted. This can happen on initial connect,
                 // when the server applies the game state. Update the UI to recreate it.
