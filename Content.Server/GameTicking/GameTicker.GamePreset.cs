@@ -43,7 +43,17 @@ namespace Content.Server.GameTicking
             if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
             {
                 ClearGameRules();
-                SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
+                var fallbackPreset = _configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset);
+                if (fallbackPreset != "")
+                    SetGamePreset(fallbackPreset);
+                else if (startAttempt.Players.Length >= 5)
+                {
+                    SetGamePreset("secret");
+                }
+                else
+                {
+                    SetGamePreset("extended");
+                }
                 AddGamePresetRules();
                 StartGamePresetRules();
 
