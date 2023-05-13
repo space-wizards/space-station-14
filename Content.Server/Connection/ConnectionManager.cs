@@ -70,7 +70,7 @@ namespace Content.Server.Connection
             {
                 var (reason, msg, banHits) = deny.Value;
 
-                var id = await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId, reason);
+                var id = await _db.AddConnectionLogAsync(userId, e.UserName, addr, ImmutableArray.Create(e.UserData.HWId.S1), reason);
                 if (banHits is { Count: > 0 })
                     await _db.AddServerBanHitsAsync(id, banHits);
 
@@ -78,12 +78,12 @@ namespace Content.Server.Connection
             }
             else
             {
-                await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId, null);
+                await _db.AddConnectionLogAsync(userId, e.UserName, addr, ImmutableArray.Create(e.UserData.HWId.S1), null);
 
                 if (!ServerPreferencesManager.ShouldStorePrefs(e.AuthType))
                     return;
 
-                await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, e.UserData.HWId);
+                await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, ImmutableArray.Create(e.UserData.HWId.S1));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Content.Server.Connection
             // Check if banned.
             var addr = e.IP.Address;
             var userId = e.UserId;
-            ImmutableArray<byte>? hwId = e.UserData.HWId;
+            ImmutableArray<byte>? hwId = ImmutableArray.Create(e.UserData.HWId.S1);
             if (hwId.Value.Length == 0 || !_cfg.GetCVar(CCVars.BanHardwareIds))
             {
                 // HWId not available for user's platform, don't look it up.

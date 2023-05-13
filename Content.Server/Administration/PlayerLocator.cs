@@ -68,7 +68,7 @@ namespace Content.Server.Administration
             {
                 var userId = session.UserId;
                 var address = session.ConnectedClient.RemoteEndPoint.Address;
-                var hwId = session.ConnectedClient.UserData.HWId;
+                var hwId = ImmutableArray.Create(session.ConnectedClient.UserData.HWId.S1);
                 return new LocatedPlayerData(userId, address, hwId, session.Name);
             }
 
@@ -108,7 +108,7 @@ namespace Content.Server.Administration
             if (_playerManager.TryGetSessionById(userId, out var session))
             {
                 var address = session.ConnectedClient.RemoteEndPoint.Address;
-                var hwId = session.ConnectedClient.UserData.HWId;
+                var hwId = ImmutableArray.Create(session.ConnectedClient.UserData.HWId.S1);
                 return new LocatedPlayerData(userId, address, hwId, session.Name);
             }
 

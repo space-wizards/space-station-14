@@ -37,7 +37,8 @@ public sealed class RoleBanManager
             return;
 
         var netChannel = e.Session.ConnectedClient;
-        await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, netChannel.UserData.HWId.Length == 0 ? null : netChannel.UserData.HWId);
+        var hwid = ImmutableArray.Create(netChannel.UserData.HWId.S1);
+        await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, hwid.Length == 0 ? null : hwid);
     }
 
     private async Task<bool> AddRoleBan(ServerRoleBanDef banDef)
