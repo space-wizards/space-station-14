@@ -803,3 +803,8 @@
   id: glue
   flavorType: Complex
   description: flavor-complex-glue
+  
+- type: flavor
+  id: rocksandstones
+  flavorType: Complex
+  description: flavor-complex-rocksandstones

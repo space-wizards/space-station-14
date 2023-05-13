@@ -1,19 +1,19 @@
-using Robust.Shared.Timing;
-using Content.Server.MachineLinking.Components;
-using Content.Shared.TextScreen;
-using Robust.Server.GameObjects;
-using Content.Shared.MachineLinking;
+using Content.Server.DeviceLinking.Components;
+using Content.Server.Interaction;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
-using Content.Server.Interaction;
+using Content.Shared.MachineLinking;
+using Content.Shared.TextScreen;
+using Robust.Server.GameObjects;
+using Robust.Shared.Timing;
 
-namespace Content.Server.MachineLinking.System;
+namespace Content.Server.DeviceLinking.Systems;
 
 public sealed class SignalTimerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;

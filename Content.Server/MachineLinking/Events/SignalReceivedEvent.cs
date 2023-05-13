@@ -1,12 +1,7 @@
+using Content.Server.DeviceLinking.Components;
+
 namespace Content.Server.MachineLinking.Events
 {
-    public enum SignalState
-    {
-        Momentary, // Instantaneous pulse high, compatibility behavior
-        Low,
-        High
-    }
-
     public sealed class SignalReceivedEvent : EntityEventArgs
     {
         public readonly string Port;
