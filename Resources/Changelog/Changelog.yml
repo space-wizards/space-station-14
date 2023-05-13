@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'Added watermelon and grapes, and related recipes.', type: Add}
-  id: 3252
-  time: '2023-03-25T12:15:21.0000000+00:00'
 - author: DEATHB4DEFEAT
   changes:
   - {message: Edited comms console UI, type: Tweak}
@@ -2895,3 +2890,9 @@ Entries:
       inserted again, type: Tweak}
   id: 3751
   time: '2023-05-13T16:28:11.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: 'Kelotane can now cause an overdose above 30u, greatly decreasing the
+      body''s ability to retain water.', type: Tweak}
+  id: 3752
+  time: '2023-05-13T21:18:06.0000000+00:00'
