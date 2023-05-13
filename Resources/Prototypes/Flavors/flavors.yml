@@ -793,3 +793,8 @@
   id: themartinez
   flavorType: Complex
   description: flavor-complex-themartinez
+
+- type: flavor
+  id: white-gilgamesh
+  flavorType: Complex
+  description: flavor-complex-white-gilgamesh
