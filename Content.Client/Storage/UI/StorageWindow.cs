@@ -6,6 +6,7 @@ using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Item;
+using Content.Shared.Stacks;
 using Robust.Client.UserInterface;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using static Content.Shared.Storage.SharedStorageComponent;
@@ -112,6 +113,8 @@ namespace Content.Client.Storage.UI
 
             _entityManager.TryGetComponent(entity, out SpriteComponent? sprite);
             _entityManager.TryGetComponent(entity, out ItemComponent? item);
+            _entityManager.TryGetComponent(entity, out StackComponent? stack);
+            var size = (stack?.Count ?? 1) * item?.Size;
 
             button.AddChild(new BoxContainer
             {
@@ -136,7 +139,7 @@ namespace Content.Client.Storage.UI
                         new Label
                         {
                             Align = Label.AlignMode.Right,
-                            Text = item?.Size.ToString() ?? Loc.GetString("comp-storage-no-item-size"),
+                            Text = size.ToString() ?? Loc.GetString("comp-storage-no-item-size"),
                         }
                     }
             });

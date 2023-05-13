@@ -105,7 +105,7 @@ namespace Content.Shared.Stacks
             if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
                 return false;
 
-            if (recipientStack.StackTypeId == null || !recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
+            if (string.IsNullOrEmpty(recipientStack.StackTypeId) || !recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
                 return false;
 
             transfered = Math.Min(donorStack.Count, GetAvailableSpace(recipientStack));
@@ -270,7 +270,7 @@ namespace Content.Shared.Stacks
             if (component.MaxCountOverride != null)
                 return component.MaxCountOverride.Value;
 
-            if (component.StackTypeId == null)
+            if (string.IsNullOrEmpty(component.StackTypeId))
                 return 1;
 
             var stackProto = _prototype.Index<StackPrototype>(component.StackTypeId);
