@@ -405,7 +405,10 @@
     acceleration: 1
     friction: 0.8
     baseWalkSpeed: 3.5
-    baseSprintSpeed: 4.5
+    baseSprintSpeed: 4.3
+  - type: Tag
+    tags:
+      - DoorBumpOpener
   - type: Destructible
     thresholds:
     - trigger:
