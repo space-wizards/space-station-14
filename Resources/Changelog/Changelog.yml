@@ -1,10 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: The changelog no longer gets squished in the lobby at 75% UI scale,
-    type: Fix}
-  id: 3248
-  time: '2023-03-24T21:08:50.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Emergency welders now take up 5 less space in your inventory space.,
@@ -2895,3 +2889,9 @@ Entries:
   - {message: Adds new masks for the clown and mime in the theater machine., type: Add}
   id: 3747
   time: '2023-05-13T14:41:35.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: 'Adds a new pet slime for RND, named Slime. Slime Smile.', type: Add}
+  - {message: The description of angry Slimes is now working., type: Fix}
+  id: 3748
+  time: '2023-05-13T14:51:03.0000000+00:00'
