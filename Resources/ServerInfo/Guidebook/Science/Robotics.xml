@@ -52,9 +52,7 @@
   - Mechs require large amounts of material to create - be sure to ask your fellow scientists and cargo personnel for any materials you're missing!
 
   ## Equipment
-  A Mech is useless without any equipment. [color=#a4885c]Equipment[/color] are tools which can only be used by a mech.
-
-  Equipment can be created at an exosuit lathe, the same as any other part.
+    A mech is nothing more than an expensive hunk of metal without their exclusive tools. Equipment can be created at the fabricator, the same as any other part.
 <Box>
 <GuideEntityEmbed Entity="MechEquipmentGrabber" Caption="The Hydraulic Clamp, as an example."/>
 </Box>
