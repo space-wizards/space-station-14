@@ -352,7 +352,7 @@
   description: technologies-hamtr-technology-description
   icon:
     sprite: Objects/Specific/Mech/mecha.rsi
-    state: HAMTR
+    state: hamtr
   requiredPoints: 10000
   requiredTechnologies:
   - RipleyTechnology

@@ -163,14 +163,14 @@
     sprite: Objects/Specific/Mech/mecha.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: HAMTR
+      state: hamtr
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
-    baseState: HAMTR
-    openState: HAMTR-open
-    brokenState: HAMTR-broken
+    baseState: hamtr
+    openState: hamtr-open
+    brokenState: hamtr-broken
     mechToPilotDamageMultiplier: 0.2
     maxEquipmentAmount: 2
     airtight: true
