@@ -41,6 +41,7 @@ namespace Content.Server.Chemistry.TileReactions
                 var speedModifier = 1 - reagent.Viscosity;
                 slow.WalkSpeedModifier = speedModifier;
                 slow.SprintSpeedModifier = speedModifier;
+                entityManager.Dirty(slow);
 
                 return reactVolume;
             }
