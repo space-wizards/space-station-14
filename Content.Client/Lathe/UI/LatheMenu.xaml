@@ -77,7 +77,7 @@
         </BoxContainer>
         <ScrollContainer MinHeight="70">
             <BoxContainer
-                Name="Materials2"
+                Name="Materials"
                 Orientation="Vertical"
                 SizeFlagsStretchRatio="8"
                 HorizontalExpand="True"
@@ -85,11 +85,6 @@
                 <!-- Materials populated in C# file -->
             </BoxContainer>
         </ScrollContainer>
-        <ItemList
-            Name="Materials"
-            VerticalExpand="True"
-            SizeFlagsStretchRatio="3">
-        </ItemList>
     </BoxContainer>
 </DefaultWindow>
 

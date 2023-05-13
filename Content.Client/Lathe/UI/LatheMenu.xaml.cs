@@ -66,11 +66,11 @@ public sealed partial class LatheMenu : DefaultWindow
         }
     }
 
-    public void PopulateMaterials2(EntityUid lathe)
+    public void PopulateMaterials(EntityUid lathe)
     {
         if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
             return;
-        Materials2.DisposeAllChildren();
+        Materials.DisposeAllChildren();
 
         foreach (var (id, amount) in materials.Storage)
         {
@@ -94,37 +94,7 @@ public sealed partial class LatheMenu : DefaultWindow
                     return;
                 OnEjectPressed?.Invoke(args);
             };
-            Materials2.AddChild(row);
-        }
-
-        //if (Materials2.Children.Count() == 0)
-        //{
-        //    var noMaterialsMsg = Loc.GetString("lathe-menu-no-materials-message");
-        //    Materials2.AddChild(noMaterialsMsg);
-        //}
-    }
-
-    public void PopulateMaterials(EntityUid lathe)
-    {
-        if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
-            return;
-
-        Materials.Clear();
-
-        foreach (var (id, amount) in materials.Storage)
-        {
-            if (!_prototypeManager.TryIndex(id, out MaterialPrototype? material))
-                continue;
-            var name = Loc.GetString(material.Name);
-            var mat = Loc.GetString("lathe-menu-material-display",
-                ("material", name), ("amount", amount));
-            Materials.AddItem(mat, _spriteSystem.Frame0(material.Icon), false);
-        }
-
-        if (Materials.Count == 0)
-        {
-            var noMaterialsMsg = Loc.GetString("lathe-menu-no-materials-message");
-            Materials.AddItem(noMaterialsMsg, null, false);
+            Materials.AddChild(row);
         }
 
         PopulateRecipes(lathe);

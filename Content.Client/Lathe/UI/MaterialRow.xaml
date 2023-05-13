@@ -19,9 +19,5 @@
                 Access="Public"
                 Text="{Loc 'lathe-menu-material-eject'}"
                 StyleClasses="LabelSubText" />
-        <!--<Button Name="Cancel"
-                Access="Public"
-                Text="{Loc 'cargo-console-menu-cargo-order-row-cancel-button'}"
-                StyleClasses="LabelSubText" />-->
     </BoxContainer>
 </PanelContainer>
