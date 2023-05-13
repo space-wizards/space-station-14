@@ -14,10 +14,10 @@ public sealed class DiscordCommand : IConsoleCommand
     public string Command => "discordlink";
 
     /// <inheritdoc />
-    public string Description => "Generate key for Link Discord";
+    public string Description => Loc.GetString("discord-command-description");
 
     /// <inheritdoc />
-    public string Help => "Usage: discordlink";
+    public string Help => Loc.GetString("discord-command-help");
 
     [Dependency] private readonly DiscordPlayerManager _discordPlayerManager = default!;
 
@@ -33,11 +33,11 @@ public sealed class DiscordCommand : IConsoleCommand
 
             if (!string.IsNullOrEmpty(key))
             {
-                sb.Append($"Проследуйте в дискорд и используйте команду ... {key}");
+                sb.Append(Loc.GetString("discord-command-key-link", ("key", key)));
             }
             else
             {
-                sb.Append($"Вы уже привязали свой дискорд к игре");
+                sb.Append(Loc.GetString("discord-command-already"));
             }
 
             var message = sb.ToString();
