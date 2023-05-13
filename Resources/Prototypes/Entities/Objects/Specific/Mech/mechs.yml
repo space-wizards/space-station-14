@@ -173,7 +173,6 @@
     maxEquipmentAmount: 2
     airtight: true
     equipmentWhitelist:
-      whitelist:
       tags:
       - SmallMech
     pilotWhitelist:
