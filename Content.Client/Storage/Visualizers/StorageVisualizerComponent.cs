@@ -38,7 +38,7 @@ public sealed class EntityStorageVisualsComponent : Component
     [DataField("stateLocked")]
     [ViewVariables(VVAccess.ReadWrite)]
     public string? StateLocked = "locked";
-    
+
     /// <summary>
     /// The RSI state used for the lock indicator while the storage is unlocked.
     /// </summary>
