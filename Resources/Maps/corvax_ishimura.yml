@@ -11743,13 +11743,6 @@ entities:
     - pos: -29.434896,-19.43375
       parent: 89
       type: Transform
-- proto: BaseBigBox
-  entities:
-  - uid: 14748
-    components:
-    - pos: 11.524094,-16.505432
-      parent: 89
-      type: Transform
 - proto: Beaker
   entities:
   - uid: 19587
