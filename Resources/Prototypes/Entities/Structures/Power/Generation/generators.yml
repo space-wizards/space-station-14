@@ -114,9 +114,6 @@
     - state: panel
     - state: on
       shader: unshaded
-#  - type: Appearance
-#    visuals:
-#    - type: ApcVisualizer
   - type: NodeContainer
     examinable: true
     nodes:

@@ -49,10 +49,11 @@
   - type: ArtifactAnalyzer
   - type: DeviceNetwork
     deviceNetId: Wired
+    receiveFrequencyId: BasicDevice
   - type: DeviceList
-  - type: SignalReceiver
-    inputs:
-      ArtifactAnalyzerReceiver: []
+  - type: DeviceLinkSink
+    ports:
+      - ArtifactAnalyzerReceiver
   - type: Machine
     board: ArtifactAnalyzerMachineCircuitboard
   - type: PointLight

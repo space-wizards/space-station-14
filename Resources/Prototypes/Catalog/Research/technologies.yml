@@ -185,7 +185,6 @@
   unlockedRecipes:
   - ChemMasterMachineCircuitboard
   - ChemDispenserMachineCircuitboard
-  - CrewMonitoringComputerCircuitboard
   - HandheldCrewMonitor
   - BiomassReclaimerMachineCircuitboard
 

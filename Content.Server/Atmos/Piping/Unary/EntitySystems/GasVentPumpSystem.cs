@@ -1,13 +1,12 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.MachineLinking.Events;
-using Content.Server.MachineLinking.System;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
@@ -28,7 +27,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -224,10 +223,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnInit(EntityUid uid, GasVentPumpComponent component, ComponentInit args)
         {
             if (component.CanLink)
-                _signalSystem.EnsureReceiverPorts(uid, component.PressurizePort, component.DepressurizePort);
+                _signalSystem.EnsureSinkPorts(uid, component.PressurizePort, component.DepressurizePort);
         }
 
-        private void OnSignalReceived(EntityUid uid, GasVentPumpComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, GasVentPumpComponent component, ref SignalReceivedEvent args)
         {
             if (!component.CanLink)
                 return;

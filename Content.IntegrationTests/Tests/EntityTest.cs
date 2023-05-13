@@ -82,7 +82,6 @@ namespace Content.IntegrationTests.Tests
             await server.WaitPost(() =>
             {
                 entityMan = IoCManager.Resolve<IEntityManager>();
-                var mapManager = IoCManager.Resolve<IMapManager>();
 
                 var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
                 var protoIds = prototypeMan

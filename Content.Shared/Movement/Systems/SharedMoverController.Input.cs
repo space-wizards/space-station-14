@@ -274,11 +274,8 @@ namespace Content.Shared.Movement.Systems
                 if (TryComp<InputMoverComponent>(entity, out var mover))
                     SetMoveInput(mover, MoveButtons.None);
 
-                DebugTools.Assert(TryComp(relayMover.RelayEntity, out MovementRelayTargetComponent? targetComp) && targetComp.Entities.Count == 1,
-                    "Multiple relayed movers are not supported at the moment");
-
-                if (relayMover.RelayEntity != null && !_mobState.IsIncapacitated(entity))
-                    HandleDirChange(relayMover.RelayEntity.Value, dir, subTick, state);
+                if (!_mobState.IsIncapacitated(entity))
+                    HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
 
                 return;
             }
@@ -328,9 +325,7 @@ namespace Content.Shared.Movement.Systems
                     SetMoveInput(moverComp, MoveButtons.None);
                 }
 
-                if (relayMover.RelayEntity == null) return;
-
-                HandleRunChange(relayMover.RelayEntity.Value, subTick, walking);
+                HandleRunChange(relayMover.RelayEntity, subTick, walking);
                 return;
             }
 
