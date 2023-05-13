@@ -32,3 +32,10 @@
   name: action-fleshmend-name
   description: action-fleshmend-description
   serverEvent: !type:ChangelingFleshmendEvent
+
+- type: instantAction
+  id: ChangelingTransform
+  icon: { sprite: EstacaoPirata/Interface/Actions/ling_actions.rsi, state: transform }
+  name: action-transform-name
+  description: action-transform-description
+  serverEvent: !type:ChangelingTransformEvent

@@ -10,6 +10,9 @@ action-dna-sting-description = Coleta o DNA do alvo.
 action-fleshmend-name = Cura de Carne
 action-fleshmend-description = Se cura com o tempo.
 
+action-transform-name = Transformar
+action-transform-description = Altera sua estrutura física para a de outra pessoa.
+
 changeling-dna-obtained = Você obtém o DNA d{THE($target)}.
 changeling-dna-failed-nonHumanoid = Esta criatura não é humanoide.
 changeling-dna-failed-noDna = Esta criatura não possui DNA.

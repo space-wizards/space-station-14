@@ -48,3 +48,7 @@ public sealed class ChangelingDnaStingEvent : EntityTargetActionEvent
 public sealed class ChangelingFleshmendEvent : InstantActionEvent
 {
 }
+
+public sealed class ChangelingTransformEvent : InstantActionEvent
+{
+}

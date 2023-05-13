@@ -19,6 +19,7 @@ using Content.Server.Preferences.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using System.Linq;
+using Content.Server.Inventory;
 using Content.Server.Traitor;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants;
@@ -47,6 +48,8 @@ public sealed class ChangelingSystem : EntitySystem
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ServerInventorySystem _inventory = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     public override void Initialize()
     {
@@ -66,8 +69,11 @@ public sealed class ChangelingSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingComponent, ChangelingDnaStingEvent>(OnDnaSting);
 
+        SubscribeLocalEvent<ChangelingComponent, ChangelingTransformEvent>(OnTransform);
+
         // Initialize abilities
     }
+
     private void OnArmBlade(EntityUid uid, ChangelingComponent component, ChangelingArmBladeEvent args)
     {
         if (!TryComp<HandsComponent>(args.Performer, out var handsComponent))
@@ -131,11 +137,11 @@ public sealed class ChangelingSystem : EntitySystem
         //ChangeEssenceAmount(uid, 0, component);
 
         //AbsorbDNA
-        var absorbaction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("AbsorbDNA"))
+        var absorbAction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("AbsorbDNA"))
             {
                 CanTargetSelf = false
             };
-        _action.AddAction(uid, absorbaction, null);
+        _action.AddAction(uid, absorbAction, null);
 
         // implante da loja
         var coords = Transform(uid).Coordinates;
@@ -156,11 +162,14 @@ public sealed class ChangelingSystem : EntitySystem
         storeComponent.Balance.Add(component.StoreCurrencyName,component.StartingPoints);
 
         // TODO: colocar cooldown?
-        var dnastingaction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("ChangelingDnaSting"))
+        var dnaStingAction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("ChangelingDnaSting"))
             {
                 CanTargetSelf = false
             };
-        _action.AddAction(uid, dnastingaction, null);
+        _action.AddAction(uid, dnaStingAction, null);
+
+        var transformAction = new InstantAction(_proto.Index<InstantActionPrototype>("ChangelingTransform"));
+        _action.AddAction(uid, transformAction, null);
 
         // Fazer isto em outro lugar
 
@@ -275,8 +284,86 @@ public sealed class ChangelingSystem : EntitySystem
         // }
     }
 
-    private void ChangeAppearance(EntityUid user, HumanoidAppearanceComponent userAppearance, EntityUid target, HumanoidAppearanceComponent targetAppearance, ChangelingComponent comp)
+    private void OnTransform(EntityUid uid, ChangelingComponent component, ChangelingTransformEvent args)
     {
+
+        var storedHumanoids = component.StoredHumanoids;
+
+        if (storedHumanoids.Count < 1)
+            return;
+
+        var firstHumanoid = storedHumanoids.First();
+        storedHumanoids.Remove(firstHumanoid);
+        //var targetAppearance = firstHumanoid.AppearanceComponent;
+
+
+        ChangeAppearance(uid, firstHumanoid, component);
+    }
+
+    private void ChangeAppearance(EntityUid user, HumanoidData targetHumanoid, ChangelingComponent comp)
+    {
+        // HumanoidAppearanceComponent userAppearance, EntityUid target
+
+        // passar o changelingcomponent
+
+
+        if(targetHumanoid.EntityPrototype == null)
+            return;
+        if(targetHumanoid.AppearanceComponent == null)
+            return;
+        if(targetHumanoid.MetaDataComponent == null)
+            return;
+        if(targetHumanoid.Dna == null)
+            return;
+
+        var targetTransformComp = Transform(user);
+        var child = Spawn(targetHumanoid.EntityPrototype.ID, targetTransformComp.Coordinates);
+        var transformChild = Transform(child);
+        transformChild.LocalRotation = targetTransformComp.LocalRotation;
+
+        if (!TryComp<HumanoidAppearanceComponent>(child, out var childHumanoidAppearance))
+            return;
+        if (!TryComp<MetaDataComponent>(child, out var childMeta))
+            return;
+        if (!TryComp<DnaComponent>(child, out var childDna))
+            return;
+
+        var targetAppearance = targetHumanoid.AppearanceComponent;
+
+        //childHumanoidAppearance = targetHumanoid.AppearanceComponent;
+        // usar o CloneAppearance
+        childHumanoidAppearance.Age = targetAppearance.Age;
+        childHumanoidAppearance.BaseLayers = targetAppearance.BaseLayers;
+        childHumanoidAppearance.CachedFacialHairColor = targetAppearance.CachedFacialHairColor;
+        childHumanoidAppearance.CachedHairColor = targetAppearance.CachedHairColor;
+        childHumanoidAppearance.CustomBaseLayers = targetAppearance.CustomBaseLayers;
+        childHumanoidAppearance.EyeColor = targetAppearance.EyeColor;
+        childHumanoidAppearance.Gender = targetAppearance.Gender;
+        childHumanoidAppearance.HiddenLayers = targetAppearance.HiddenLayers;
+        //childHumanoidAppearance.Initial = targetAppearance.Initial;
+        childHumanoidAppearance.MarkingSet = targetAppearance.MarkingSet;
+        childHumanoidAppearance.PermanentlyHidden = targetAppearance.PermanentlyHidden;
+        childHumanoidAppearance.Sex = targetAppearance.Sex;
+        childHumanoidAppearance.SkinColor = targetAppearance.SkinColor;
+        childHumanoidAppearance.Species = targetAppearance.Species;
+
+
+
+        childMeta.EntityName = targetHumanoid.MetaDataComponent.EntityName;
+        childDna.DNA = targetHumanoid.Dna;
+
+        _inventory.TransferEntityInventories(user, child);
+        foreach (var hand in _hands.EnumerateHeld(user))
+        {
+            _hands.TryDrop(user, hand, checkActionBlocker: false);
+            _hands.TryPickupAnyHand(child, hand);
+        }
+
+        if (TryComp<MindComponent>(user, out var mind) && mind.Mind != null)
+            mind.Mind.TransferTo(child);
+
+        Dirty(child);
+
         // criar gameobject com os atributos de HumanoidData
 
         //_humanoidSystem.CloneAppearance(target, user, targetAppearance, userAppearance);
