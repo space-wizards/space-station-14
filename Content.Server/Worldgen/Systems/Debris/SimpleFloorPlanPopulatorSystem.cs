@@ -25,10 +25,11 @@ public sealed class SimpleFloorPlanPopulatorSystem : BaseWorldSystem
     {
         var placeables = new List<string?>(4);
         var grid = Comp<MapGridComponent>(uid);
-        foreach (var tile in grid.GetAllTiles())
+        var enumerator = grid.GetAllTilesEnumerator();
+        while (enumerator.MoveNext(out var tile))
         {
-            var coords = grid.GridTileToLocal(tile.GridIndices);
-            var selector = tile.Tile.GetContentTileDefinition(_tileDefinition).ID;
+            var coords = grid.GridTileToLocal(tile.Value.GridIndices);
+            var selector = tile.Value.Tile.GetContentTileDefinition(_tileDefinition).ID;
             if (!component.Caches.TryGetValue(selector, out var cache))
                 continue;
 
