@@ -171,3 +171,15 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatDonJuan
+  name: Don Juan
+  description: 'Some things work out best when you don't try so hard.'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/DonJuan.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/DonJuan.rsi
+  - type: IngestionBlocker
