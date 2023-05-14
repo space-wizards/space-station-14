@@ -169,9 +169,11 @@
   description: "When you need to stand out in a room full of clowns!"
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/Specific/Largeclown/largeclown_equipped.rsi
+    state: "icon"
+    sprite: Clothing/Shoes/Specific/Largeclown/largeclown_hands.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/Largeclown/largeclown_equipped.rsi
+    state: "equipped-FEET"
   - type: Item
     size: 10
     sprite: Clothing/Shoes/Specific/Largeclown/largeclown_hands.rsi
