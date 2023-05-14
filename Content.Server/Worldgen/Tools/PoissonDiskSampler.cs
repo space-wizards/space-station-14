@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Worldgen.Tools;
 
@@ -15,7 +16,7 @@ public sealed class PoissonDiskSampler
     /// </summary>
     /// <param name="center">Center of the sample</param>
     /// <param name="radius">Radius of the sample</param>
-    /// <param name="minimumDistance">Minimum distance between points</param>
+    /// <param name="minimumDistance">Minimum distance between points. Must be above 0!</param>
     /// <param name="pointsPerIteration">The number of points placed per iteration of the algorithm</param>
     /// <returns>A list of points</returns>
     public List<Vector2> SampleCircle(Vector2 center, float radius, float minimumDistance,
@@ -30,7 +31,7 @@ public sealed class PoissonDiskSampler
     /// </summary>
     /// <param name="topLeft">The top left of the rectangle</param>
     /// <param name="lowerRight">The bottom right of the rectangle</param>
-    /// <param name="minimumDistance">Minimum distance between points</param>
+    /// <param name="minimumDistance">Minimum distance between points. Must be above 0!</param>
     /// <param name="pointsPerIteration">The number of points placed per iteration of the algorithm</param>
     /// <returns>A list of points</returns>
     public List<Vector2> SampleRectangle(Vector2 topLeft, Vector2 lowerRight, float minimumDistance,
@@ -45,12 +46,15 @@ public sealed class PoissonDiskSampler
     /// <param name="topLeft">The top left of the rectangle</param>
     /// <param name="lowerRight">The bottom right of the rectangle</param>
     /// <param name="rejectionDistance">The distance at which points will be discarded, if any</param>
-    /// <param name="minimumDistance">Minimum distance between points</param>
+    /// <param name="minimumDistance">Minimum distance between points. Must be above 0!</param>
     /// <param name="pointsPerIteration">The number of points placed per iteration of the algorithm</param>
     /// <returns>A list of points</returns>
     public List<Vector2> Sample(Vector2 topLeft, Vector2 lowerRight, float? rejectionDistance,
         float minimumDistance, int pointsPerIteration)
     {
+        // This still doesn't guard against dangerously low but non-zero distances, but this will do for now.
+        DebugTools.Assert(minimumDistance > 0, "Minimum distance must be above 0, or else an infinite number of points would be generated.");
+
         var settings = new SampleSettings
         {
             TopLeft = topLeft, LowerRight = lowerRight,
