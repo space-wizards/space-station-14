@@ -5,6 +5,7 @@
   abstract: true
   description: An early design of the proto-kinetic accelerator.
   components:
+  - type: Sharp
   - type: UnpoweredFlashlight
     toggleAction:
       name: action-name-toggle-light
@@ -20,9 +21,7 @@
   name: crusher
   parent: BaseWeaponCrusher
   id: WeaponCrusher
-  description: An early design of the proto-kinetic accelerator.
   components:
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher.rsi
     state: icon
@@ -61,7 +60,6 @@
   id: WeaponCrusherDagger
   description: A scaled down version of a proto-kinetic crusher, usually used in a last ditch scenario.
   components:
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_dagger.rsi
     state: icon
