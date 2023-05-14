@@ -48,3 +48,31 @@
       paralyzeTime: 3
       launchForwardsMultiplier: 2
       requiredSlipSpeed: 1
+
+- type: reagent
+  id: SpaceGlue
+  name: reagent-name-space-glue
+  desc: reagent-desc-space-glue
+  physicalDesc: reagent-physical-desc-sticky
+  flavor: funny
+  color: "#ffffff"
+  boilingPoint: 250.0
+  meltingPoint: 380.0
+  viscosity: 0.5
+  tileReactions:
+    - !type:SpillTileReaction
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+      - !type:GenericStatusEffect
+        key: Muted
+        component: Muted
+        type: Add
+        time: 5
+        refresh: false
