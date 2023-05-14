@@ -176,10 +176,10 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatDonJuan
   name: Don Juan
-  description: 'Some things work out best when you don't try so hard.'
+  description: 'Oh look, it's bojack!'
   components:
   - type: Sprite
-    sprite: Clothing/Head/Misc/DonJuan.rsi
+    sprite: Clothing/Head/Misc/Don_Juan.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/DonJuan.rsi
+    sprite: Clothing/Head/Misc/Don_Juan.rsi
   - type: IngestionBlocker
