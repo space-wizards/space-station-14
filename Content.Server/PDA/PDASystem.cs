@@ -1,3 +1,4 @@
+using Content.Server.AlertLevel;
 using Content.Server.CartridgeLoader;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
@@ -41,6 +42,7 @@ namespace Content.Server.PDA
 
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
             SubscribeLocalEvent<PDAComponent, GridModifiedEvent>(OnGridChanged);
+            SubscribeLocalEvent<PDAComponent, AlertLevelChangedEvent>(OnAlertLevelChanged);
         }
 
         protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
@@ -50,6 +52,7 @@ namespace Content.Server.PDA
             if (!TryComp(uid, out ServerUserInterfaceComponent? uiComponent))
                 return;
 
+            UpdateAlertLevel(uid, pda);
             UpdateStationName(uid, pda);
 
             if (_ui.TryGetUi(uid, PDAUiKey.Key, out var ui, uiComponent))
@@ -188,6 +191,32 @@ namespace Content.Server.PDA
         {
             var station = _station.GetOwningStation(uid);
             pda.StationName = station is null ? null : Name(station.Value);
+        }
+
+        private void OnAlertLevelChanged(EntityUid uid, PDAComponent pda, AlertLevelChangedEvent args)
+        {
+            UpdateAlertLevel(uid, pda);
+            UpdatePdaUi(uid, pda);
+        }
+
+        private void UpdateAlertLevel(EntityUid uid, PDAComponent pda)
+        {
+            var stationAlert = new StationAlert
+            {
+                Level = null,
+                Color = Color.White
+            };
+
+            var stationUid = _stationSystem.GetOwningStation(uid);
+            if (TryComp(stationUid, out AlertLevelComponent? alertComp) &&
+                alertComp.AlertLevels != null)
+            {
+                stationAlert.Level = alertComp.CurrentLevel;
+                if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
+                    stationAlert.Color = details.Color;
+            }
+
+            pda.StationAlert = stationAlert;
         }
 
         private string? GetDeviceNetAddress(EntityUid uid)
