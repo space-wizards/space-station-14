@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Nuclear Operatives now can start with either the codes to their own
-      nuke or the codes to the station's nuke., type: Add}
-  id: 3262
-  time: '2023-03-26T16:58:57.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fixed static pricing being used on some stackable entities., type: Fix}
@@ -2900,3 +2894,8 @@ Entries:
   - {message: Big cardboard boxes no longer choose their driver randomly, type: Tweak}
   id: 3761
   time: '2023-05-14T12:46:19.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Dame Dame coat side sprite fixes, type: Fix}
+  id: 3762
+  time: '2023-05-14T14:21:42.0000000+00:00'
