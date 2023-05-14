@@ -23,6 +23,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly AirlockSystem _airlock = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
     [Dependency] private readonly DoorSystem _doors = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;

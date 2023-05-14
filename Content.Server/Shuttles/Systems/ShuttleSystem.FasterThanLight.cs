@@ -1,4 +1,3 @@
-using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Parallax;
@@ -10,7 +9,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
@@ -348,6 +346,8 @@ public sealed partial class ShuttleSystem
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(uid);
                     _mapManager.SetMapPaused(mapId, false);
+                    Smimsh(uid);
+
                     var ftlEvent = new FTLCompletedEvent(uid, _mapManager.GetMapEntityId(mapId));
                     RaiseLocalEvent(uid, ref ftlEvent, true);
                     break;
@@ -625,5 +625,41 @@ public sealed partial class ShuttleSystem
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Flattens / deletes everything under the grid upon FTL.
+    /// </summary>
+    private void Smimsh(EntityUid uid, FixturesComponent? manager = null, MapGridComponent? grid = null, TransformComponent? xform = null)
+    {
+        if (!Resolve(uid, ref manager, ref grid, ref xform) || xform.MapUid == null)
+            return;
+
+        // Flatten anything not parented to a grid.
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var transform = _physics.GetPhysicsTransform(uid, xform, xformQuery);
+        var aabbs = new List<Box2>(manager.Fixtures.Count);
+
+        foreach (var fixture in manager.Fixtures.Values)
+        {
+            if (!fixture.Hard)
+                continue;
+
+            var aabb = fixture.Shape.ComputeAABB(transform, 0);
+            aabbs.Add(aabb);
+
+            foreach (var ent in _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, LookupFlags.Uncontained))
+            {
+                if (ent == uid)
+                {
+                    continue;
+                }
+
+                QueueDel(ent);
+            }
+        }
+
+        var ev = new ShuttleFlattenEvent(xform.MapUid.Value, aabbs);
+        RaiseLocalEvent(ref ev);
     }
 }

@@ -54,6 +54,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         SubscribeLocalEvent<BiomeComponent, ComponentStartup>(OnBiomeStartup);
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
+        SubscribeLocalEvent<ShuttleFlattenEvent>(OnShuttleFlatten);
         _configManager.OnValueChanged(CVars.NetMaxUpdateRange, SetLoadRange, true);
         InitializeCommands();
         _proto.PrototypesReloaded += ProtoReload;
@@ -196,6 +197,39 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         var targetArea = new Box2(targetMap.Position - 32f, targetMap.Position + 32f);
         Preload(targetMapUid, biome, targetArea);
+    }
+
+    private void OnShuttleFlatten(ref ShuttleFlattenEvent ev)
+    {
+        if (!TryComp<BiomeComponent>(ev.MapUid, out var biome) ||
+            !TryComp<MapGridComponent>(ev.MapUid, out var grid))
+        {
+            return;
+        }
+
+        var tiles = new List<(Vector2i Index, Tile Tile)>();
+
+        foreach (var aabb in ev.AABBs)
+        {
+            for (var x = Math.Floor(aabb.Left); x <= Math.Ceiling(aabb.Right); x++)
+            {
+                for (var y = Math.Floor(aabb.Bottom); y <= Math.Ceiling(aabb.Top); y++)
+                {
+                    var index = new Vector2i((int) x, (int) y);
+                    var chunk = SharedMapSystem.GetChunkIndices(index, ChunkSize);
+
+                    var mod = biome.ModifiedTiles.GetOrNew(chunk * ChunkSize);
+
+                    if (!mod.Add(index) || !TryGetBiomeTile(index, biome.Layers, biome.Noise, grid, out var tile))
+                        continue;
+
+                    // If we flag it as modified then the tile is never set so need to do it ourselves.
+                    tiles.Add((index, tile.Value));
+                }
+            }
+        }
+
+        grid.SetTiles(tiles);
     }
 
     /// <summary>
