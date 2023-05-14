@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Added the signal valve for advanced atmosians., type: Add}
-  id: 3257
-  time: '2023-03-25T23:16:28.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Bullet impulses in space increased from 5 -> 25, type: Tweak}
@@ -2897,3 +2892,10 @@ Entries:
   - {message: Fix docked grids failing to split., type: Fix}
   id: 3756
   time: '2023-05-14T03:29:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduced FTL time from 30s to 20s and FTL cooldown from 30s to 10s.,
+    type: Tweak}
+  - {message: Arrivals turnaround reduced from 90s to 50s., type: Tweak}
+  id: 3757
+  time: '2023-05-14T08:00:36.0000000+00:00'
