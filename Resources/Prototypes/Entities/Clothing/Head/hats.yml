@@ -586,3 +586,25 @@
     sprite: Clothing/Head/Hats/hetman_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hetman_hat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMagician
+  name: magician's top hat
+  description: .
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/Magician/magician_equipped.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/Magician/magician_equipped.rsi
+  - type: Item
+    sprite: Clothing/Head/Hats/Magician/magician_hand.rsi
+  - type: Storage
+    capacity: 40
+  - type: UserInterface
+    interfaces:
+      - key: enum.StorageUiKey.Key
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
