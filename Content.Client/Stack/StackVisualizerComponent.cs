@@ -68,5 +68,5 @@ public sealed class StackVisualizerComponent : Component
     /// </summary>
     [DataField("composite")] public bool IsComposite;
 
-    [DataField("sprite")] public ResourcePath? SpritePath;
+    [DataField("sprite")] public ResPath? SpritePath;
 }
