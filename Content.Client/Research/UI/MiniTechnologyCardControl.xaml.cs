@@ -18,7 +18,7 @@ public sealed partial class MiniTechnologyCardControl : Control
         var discipline = prototypeManager.Index<DisciplinePrototype>(technology.Discipline);
         Background.ModulateSelfOverride = discipline.Color;
         Texture.Texture = spriteSys.Frame0(technology.Icon);
-        NameLabel.Text = Loc.GetString(technology.Name);
+        NameLabel.SetMessage(Loc.GetString(technology.Name));
         Main.ToolTip = description.ToString();
     }
 }

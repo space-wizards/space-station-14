@@ -115,25 +115,32 @@ public abstract class SharedResearchSystem : EntitySystem
             allUnlocked.Add(proto);
         }
 
-        var tier = 1;
-        while (true)
+        var highestTier = discipline.TierPrerequisites.Keys.Max();
+        var tier = 2; //tier 1 is always given
+
+        // todo this might break if you have hidden technologies. i'm not sure
+
+        while (tier <= highestTier)
         {
-            if (!discipline.TierPrerequisites.TryGetValue(tier, out var threshold))
+            // we need to get the tech for the tier 1 below because that's
+            // what the percentage in TierPrerequisites is referring to.
+            var unlockedTierTech = allUnlocked.Where(p => p.Tier == tier - 1).ToList();
+            var allTierTech = allTech.Where(p => p.Discipline == discipline.ID && p.Tier == tier - 1).ToList();
+
+            if (allTierTech.Count == 0)
                 break;
 
-            var allTier = allTech.Where(p => p.Tier == tier).ToList();
-            var unlockedTier = allUnlocked.Where(p => p.Tier == tier).ToList();
-
-            if (allTier.Count == 0 || (float) unlockedTier.Count / allTier.Count < threshold)
+            var percent = (float) unlockedTierTech.Count / allTierTech.Count;
+            if (percent < discipline.TierPrerequisites[tier])
                 break;
 
             if (tier >= discipline.LockoutTier &&
                 component.MainDiscipline != null &&
                 discipline.ID != component.MainDiscipline)
                 break;
-
             tier++;
         }
+
         return tier - 1;
     }
 
@@ -153,5 +160,17 @@ public abstract class SharedResearchSystem : EntitySystem
     public bool IsTechnologyUnlocked(EntityUid uid, string technologyId, TechnologyDatabaseComponent? component = null)
     {
         return Resolve(uid, ref component, false) && component.UnlockedTechnologies.Contains(technologyId);
+    }
+
+    public void TrySetMainDiscipline(TechnologyPrototype prototype, EntityUid uid, TechnologyDatabaseComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var discipline = PrototypeManager.Index<DisciplinePrototype>(prototype.Discipline);
+        if (prototype.Tier < discipline.LockoutTier)
+            return;
+        component.MainDiscipline = prototype.Discipline;
+        Dirty(component);
     }
 }

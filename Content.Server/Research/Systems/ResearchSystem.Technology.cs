@@ -75,6 +75,7 @@ public sealed partial class ResearchSystem
             return false;
 
         AddTechnology(serverEnt.Value, prototype);
+        TrySetMainDiscipline(prototype, serverEnt.Value);
         ModifyServerPoints(serverEnt.Value, -prototype.Cost);
         UpdateTechnologyCards(serverEnt.Value);
         return true;
@@ -165,5 +166,17 @@ public sealed partial class ResearchSystem
             return false;
 
         return true;
+    }
+
+    private void OnDatabaseRegistrationChanged(EntityUid uid, TechnologyDatabaseComponent component, ref ResearchRegistrationChangedEvent args)
+    {
+        if (args.Server != null)
+            return;
+        component.MainDiscipline = null;
+        component.CurrentTechnologyCards = new List<string>();
+        component.SupportedDisciplines = new List<string>();
+        component.UnlockedTechnologies = new List<string>();
+        component.UnlockedRecipes = new List<string>();
+        Dirty(component);
     }
 }

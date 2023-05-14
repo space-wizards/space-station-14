@@ -50,7 +50,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
 
         foreach (var tech in allTech)
         {
-            var mini = new MiniTechnologyCardControl(tech, _prototype, _sprite, GetTechnologyDescription(tech));
+            var mini = new MiniTechnologyCardControl(tech, _prototype, _sprite, GetTechnologyDescription(tech, false));
             AvailableCardsContainer.AddChild(mini);
         }
 
@@ -73,16 +73,19 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         foreach (var unlocked in _technologyDatabase.UnlockedTechnologies)
         {
             var tech = _prototype.Index<TechnologyPrototype>(unlocked);
-            var cardControl = new MiniTechnologyCardControl(tech, _prototype, _sprite, GetTechnologyDescription(tech));
+            var cardControl = new MiniTechnologyCardControl(tech, _prototype, _sprite, GetTechnologyDescription(tech, false));
             UnlockedCardsContainer.AddChild(cardControl);
         }
     }
 
-    public FormattedMessage GetTechnologyDescription(TechnologyPrototype technology)
+    public FormattedMessage GetTechnologyDescription(TechnologyPrototype technology, bool includeCost = true)
     {
         var description = new FormattedMessage();
-        description.AddMarkup(Loc.GetString("research-console-cost", ("amount", technology.Cost)));
-        description.PushNewline();
+        if (includeCost)
+        {
+            description.AddMarkup(Loc.GetString("research-console-cost", ("amount", technology.Cost)));
+            description.PushNewline();
+        }
         description.AddMarkup(Loc.GetString("research-console-unlocks-list-start"));
         foreach (var recipe in technology.RecipeUnlocks)
         {
