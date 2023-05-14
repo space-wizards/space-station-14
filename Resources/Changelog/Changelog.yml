@@ -1,11 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added Moth Cloak., type: Add}
-  - {message: Added Moth Mask., type: Add}
-  - {message: Removed sadness!, type: Remove}
-  id: 3265
-  time: '2023-03-26T19:11:43.0000000+00:00'
 - author: Tyzemol
   changes:
   - {message: Smart equip to backpack/belt hotkeys can now be used to quickly take
@@ -2899,3 +2892,8 @@ Entries:
   - {message: Pun Pun has lost PDA privileges., type: Remove}
   id: 3764
   time: '2023-05-14T15:38:49.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Paper can be attached to closets and lockers, type: Tweak}
+  id: 3765
+  time: '2023-05-14T19:02:42.0000000+00:00'
