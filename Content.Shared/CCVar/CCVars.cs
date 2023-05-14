@@ -1082,6 +1082,15 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.arrivals", true, CVar.SERVERONLY);
 
         /// <summary>
+        /// Throw any entities that get dumped.
+        /// </summary>
+        /// <remarks>
+        /// Stops people using the shuttle as a free spacing.
+        /// </remarks>
+        public static readonly CVarDef<bool> ArrivalsDump =
+            CVarDef.Create("shuttle.arrivals_dump", true, CVar.SERVERONLY);
+
+        /// <summary>
         /// The map to use for the arrivals station.
         /// </summary>
         public static readonly CVarDef<string> ArrivalsMap =

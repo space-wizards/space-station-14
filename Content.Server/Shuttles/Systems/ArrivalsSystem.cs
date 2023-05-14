@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
@@ -14,7 +13,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
-using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
@@ -23,7 +21,6 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -46,17 +43,11 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throw = default!;
 
     /// <summary>
-    /// Throw any entities that get dumped.
-    /// </summary>
-    /// <remarks>
-    /// Stops people using the shuttle as a free spacing.
-    /// </remarks>
-    public const bool ThrowOnDump = true;
-
-    /// <summary>
     /// If enabled then spawns players on an alternate map so they can take a shuttle to the station.
     /// </summary>
     public bool Enabled { get; private set; }
+
+    private bool _throwOnDump;
 
     public override void Initialize()
     {
@@ -76,6 +67,7 @@ public sealed class ArrivalsSystem : EntitySystem
         // Don't invoke immediately as it will get set in the natural course of things.
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
         _cfgManager.OnValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
+        _cfgManager.OnValueChanged(CCVars.ArrivalsDump, SetArrivalsDump, true);
 
         // Command so admins can set these for funsies
         _console.RegisterCommand("arrivals", ArrivalsCommand, ArrivalsCompletion);
@@ -162,6 +154,7 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         base.Shutdown();
         _cfgManager.UnsubValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
+        _cfgManager.UnsubValueChanged(CCVars.ArrivalsDump, SetArrivalsDump);
     }
 
     private void OnArrivalsFTL(EntityUid uid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
@@ -207,7 +200,7 @@ public sealed class ArrivalsSystem : EntitySystem
             _transform.SetCoordinates(uid, new EntityCoordinates(args.FromMapUid!.Value, args.FTLFrom.Transform(xform.LocalPosition)));
             _transform.SetWorldRotation(uid, args.FromRotation + rotation);
 
-            if (ThrowOnDump)
+            if (_throwOnDump)
                 _throw.TryThrow(uid, _random.NextVector2(), 3f);
 
             return;
@@ -354,6 +347,11 @@ public sealed class ArrivalsSystem : EntitySystem
         {
             SetupShuttle(uid, comp);
         }
+    }
+
+    private void SetArrivalsDump(bool obj)
+    {
+        _throwOnDump = obj;
     }
 
     private void SetArrivals(bool obj)
