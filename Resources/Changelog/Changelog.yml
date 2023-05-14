@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added margins to the chatbox., type: Tweak}
-  id: 3261
-  time: '2023-03-26T14:57:29.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Nuclear Operatives now can start with either the codes to their own
@@ -2900,3 +2895,8 @@ Entries:
       more common, and nuclear emergency is twice as rare.', type: Tweak}
   id: 3760
   time: '2023-05-14T12:09:03.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Big cardboard boxes no longer choose their driver randomly, type: Tweak}
+  id: 3761
+  time: '2023-05-14T12:46:19.0000000+00:00'
