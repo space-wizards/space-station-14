@@ -95,7 +95,7 @@ namespace Content.Server.Construction
                 {
                     // Need to enforce the unstackable rules on anchoring also.
                     var condition = new NoUnstackableInTile();
-                    if (!condition.Condition(args.User, coordinates, Direction.Invalid))
+                    if (NoUnstackableInTile.AnyUnstackableTiles(coordinates, _tagSystem))
                     {
                         var message = condition.GenerateGuideEntry()?.Localization;
                         if (message != null)

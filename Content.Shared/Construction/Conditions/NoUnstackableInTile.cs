@@ -13,13 +13,24 @@ namespace Content.Shared.Construction.Conditions
         {
             var tagSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TagSystem>();
 
-            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static | LookupFlags.Sundries))
-            {
-                if (tagSystem.HasTag(entity, "Unstackable"))
-                    return false;
-            }
+            if (AnyUnstackableTiles(location, tagSystem))
+                return false;
 
             return true;
+        }
+
+        public static bool AnyUnstackableTiles(EntityCoordinates location, TagSystem tagSystem)
+        {
+            var lookup = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EntityLookupSystem>();
+
+            foreach (var entity in lookup.GetEntitiesIntersecting(location, LookupFlags.Approximate | LookupFlags.Static |
+                                                                            LookupFlags.Sundries))
+            {
+                if (tagSystem.HasTag(entity, "Unstackable"))
+                    return true;
+            }
+
+            return false;
         }
 
         public ConstructionGuideEntry GenerateGuideEntry()
