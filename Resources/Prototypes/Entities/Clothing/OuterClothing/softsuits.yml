@@ -24,8 +24,6 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/syndicate.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
   - type: Tag
     tags:
     - HardsuitEVA
