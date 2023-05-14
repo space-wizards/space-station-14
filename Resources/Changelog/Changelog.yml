@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Cardboard Boxes will now play their effect again, type: Fix}
-  id: 3259
-  time: '2023-03-26T02:26:39.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix alerts being off-screen when using default hud layout., type: Fix}
@@ -2899,3 +2894,8 @@ Entries:
   - {message: Caves now have crystals in them., type: Add}
   id: 3758
   time: '2023-05-14T11:38:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Arrivals will auto-orient your camera upon traversal., type: Add}
+  id: 3759
+  time: '2023-05-14T11:46:29.0000000+00:00'
