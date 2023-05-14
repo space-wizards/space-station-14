@@ -601,7 +601,6 @@
     sprite: Clothing/Head/Hats/Magician/magician_hand.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/Magician/magician_equipped.rsi
-    state: "equipped-HELMET"
   - type: Item
     size: 40
     sprite: Clothing/Head/Hats/Magician/magician_hand.rsi
