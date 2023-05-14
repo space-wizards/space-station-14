@@ -151,6 +151,22 @@
       soundInsert:
         path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
 
+- type: entity
+  name: tether gun
+  parent: BaseItem
+  id: WeaponTetherGun
+  description: Manipulates gravity around object to fling them at high velocities.
+  components:
+    - type: TetherGun
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+      layers:
+        - state: base
+          map: [ "enum.GunVisualLayers.Base" ]
+        - state: base-unshaded
+          map: [ "enum.GunVisualLayers.BaseUnshaded" ]
+          shader: unshaded
+
 # Admeme
 - type: entity
   name: meteor launcher
