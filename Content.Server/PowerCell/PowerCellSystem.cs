@@ -19,6 +19,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.PowerCell;
 
+/// <summary>
+/// Handles Power cells
+/// </summary>
 public sealed partial class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;

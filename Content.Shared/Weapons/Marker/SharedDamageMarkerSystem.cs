@@ -6,7 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Marker;
 
-public sealed class DamageMarkerSystem : EntitySystem
+public abstract class SharedDamageMarkerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -53,9 +53,10 @@ public sealed class DamageMarkerSystem : EntitySystem
     {
         if (!args.OtherFixture.Hard ||
             args.OurFixture.ID != SharedProjectileSystem.ProjectileFixture ||
+            component.Amount <= 0 ||
             component.Whitelist?.IsValid(args.OtherEntity, EntityManager) == false ||
             !TryComp<ProjectileComponent>(uid, out var projectile) ||
-            projectile.Weapon == null)
+            !projectile.Weapon.IsValid())
         {
             return;
         }
@@ -65,6 +66,16 @@ public sealed class DamageMarkerSystem : EntitySystem
         marker.Damage = new DamageSpecifier(component.Damage);
         marker.Marker = projectile.Weapon;
         marker.EndTime = _timing.CurTime + component.Duration;
+        component.Amount--;
         Dirty(marker);
+
+        if (component.Amount <= 0)
+        {
+            QueueDel(uid);
+        }
+        else
+        {
+            Dirty(component);
+        }
     }
 }

@@ -10,6 +10,8 @@ public sealed partial class PowerCellSystem
      * Handles PowerCellDraw
      */
 
+    private static readonly TimeSpan Delay = TimeSpan.FromSeconds(1);
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -22,7 +24,8 @@ public sealed partial class PowerCellSystem
 
             if (_timing.CurTime < comp.NextUpdateTime)
                 continue;
-            comp.NextUpdateTime += TimeSpan.FromSeconds(1);
+
+            comp.NextUpdateTime += Delay;
 
             if (!TryGetBatteryFromSlot(uid, out var batteryEnt, out var battery, slot))
                 continue;

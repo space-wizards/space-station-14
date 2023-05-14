@@ -14,13 +14,13 @@ public sealed partial class PowerCellDrawComponent : Component
     /// <summary>
     /// Whether there is any charge available to draw.
     /// </summary>
-    [DataField("canDraw"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("canDraw"), AutoNetworkedField]
     public bool CanDraw;
 
     /// <summary>
     /// Whether there is sufficient charge to use.
     /// </summary>
-    [DataField("canUse"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("canUse"), AutoNetworkedField]
     public bool CanUse;
 
     #endregion

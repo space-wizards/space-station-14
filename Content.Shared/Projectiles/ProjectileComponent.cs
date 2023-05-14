@@ -26,15 +26,14 @@ public sealed partial class ProjectileComponent : Component
     [DataField("ignoreShooter"), AutoNetworkedField]
     public bool IgnoreShooter = true;
 
-    [DataField("damage", required: true)]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public DamageSpecifier Damage = default!;
+    [DataField("damage", required: true)] [ViewVariables(VVAccess.ReadWrite)]
+    public DamageSpecifier Damage = new();
 
     [DataField("deleteOnCollide")]
-    public bool DeleteOnCollide { get; } = true;
+    public bool DeleteOnCollide = true;
 
     [DataField("ignoreResistances")]
-    public bool IgnoreResistances { get; } = false;
+    public bool IgnoreResistances = false;
 
     // Get that juicy FPS hit sound
     [DataField("soundHit")] public SoundSpecifier? SoundHit;
