@@ -93,7 +93,7 @@ public sealed class ThrowingSystem : EntitySystem
         comp.Thrower = user;
 
         // Give it a l'il spin.
-        if (!tagQuery.TryGetComponent(uid, out var tag) || !_tagSystem.HasTag(tag, "NoSpinOnThrow"))
+        if (physics.InvI > 0f && (!tagQuery.TryGetComponent(uid, out var tag) || !_tagSystem.HasTag(tag, "NoSpinOnThrow")))
             _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse / physics.InvI, body: physics);
         else
             transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
