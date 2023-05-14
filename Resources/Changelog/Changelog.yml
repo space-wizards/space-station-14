@@ -1,11 +1,6 @@
 Entries:
 - author: DEATHB4DEFEAT
   changes:
-  - {message: Changed crew monitoring console UI, type: Tweak}
-  id: 3254
-  time: '2023-03-25T14:51:29.0000000+00:00'
-- author: DEATHB4DEFEAT
-  changes:
   - {message: Fixed grinder UI being too small., type: Fix}
   id: 3255
   time: '2023-03-25T14:51:35.0000000+00:00'
@@ -2898,3 +2893,9 @@ Entries:
       storage units.', type: Tweak}
   id: 3753
   time: '2023-05-14T01:36:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The RPED can now quickly pick up machine parts on the ground like a
+      trashbag., type: Tweak}
+  id: 3754
+  time: '2023-05-14T02:14:38.0000000+00:00'
