@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Item;
 using Content.Shared.Stacks;
 using Robust.Client.UserInterface;
@@ -29,7 +30,7 @@ namespace Content.Client.Storage.UI
         public StorageWindow(IEntityManager entityManager)
         {
             _entityManager = entityManager;
-            SetSize = (200, 320);
+            SetSize = (240, 320);
             Title = Loc.GetString("comp-storage-window-title");
             RectClipContent = true;
 
@@ -114,7 +115,8 @@ namespace Content.Client.Storage.UI
             _entityManager.TryGetComponent(entity, out SpriteComponent? sprite);
             _entityManager.TryGetComponent(entity, out ItemComponent? item);
             _entityManager.TryGetComponent(entity, out StackComponent? stack);
-            var size = (stack?.Count ?? 1) * item?.Size;
+            var count = stack?.Count ?? 1;
+            var size = count * item?.Size ?? 0;
 
             button.AddChild(new BoxContainer
             {
@@ -134,7 +136,8 @@ namespace Content.Client.Storage.UI
                         {
                             HorizontalExpand = true,
                             ClipText = true,
-                            Text = _entityManager.GetComponent<MetaDataComponent>(entity).EntityName
+                            Text = _entityManager.GetComponent<MetaDataComponent>(Identity.Entity(entity, _entityManager)).EntityName +
+                                   (count > 1 ? $" x {count}" : string.Empty),
                         },
                         new Label
                         {

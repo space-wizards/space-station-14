@@ -289,6 +289,38 @@ namespace Content.Shared.Stacks
             return GetMaxCount(component) - component.Count;
         }
 
+        /// <summary>
+        /// Tries to add one stack to another. May have some leftover count in the inserted entity.
+        /// </summary>
+        public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, StackComponent? insertStack = null, StackComponent? targetStack = null)
+        {
+            if (!Resolve(insertEnt, ref insertStack) || !Resolve(targetEnt, ref targetStack))
+                return false;
+
+            var count = insertStack.Count;
+            return TryAdd(insertEnt, targetEnt, count, insertStack, targetStack);
+        }
+
+        /// <summary>
+        /// Tries to add one stack to another. May have some leftover count in the inserted entity.
+        /// </summary>
+        public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, int count, StackComponent? insertStack = null, StackComponent? targetStack = null)
+        {
+            if (!Resolve(insertEnt, ref insertStack) || !Resolve(targetEnt, ref targetStack))
+                return false;
+
+            var available = GetAvailableSpace(targetStack);
+
+            if (available <= 0)
+                return false;
+
+            var change = Math.Min(available, count);
+
+            SetCount(targetEnt, targetStack.Count + change, targetStack);
+            SetCount(insertEnt, insertStack.Count - change, insertStack);
+            return true;
+        }
+
         private void OnStackStarted(EntityUid uid, StackComponent component, ComponentStartup args)
         {
             if (!TryComp(uid, out AppearanceComponent? appearance))
