@@ -17,15 +17,15 @@
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitSyndicate
   name: syndicate EVA suit
-  description: A reverse-engineered version of Nanotrasen's engineering EVA suit, allowing for even more mobility than what it offers.
+  description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/syndicate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/syndicate.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: Tag
     tags:
     - HardsuitEVA
