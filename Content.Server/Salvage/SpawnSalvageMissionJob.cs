@@ -139,26 +139,19 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         _entManager.InitializeAndStartEntity(ftlUid);
 
         var landingPadRadius = 24;
-        var minDungeonOffset = landingPadRadius + 12;
+        var minDungeonOffset = landingPadRadius + 4;
 
+        // We'll use the dungeon rotation as the spawn angle
         var dungeonRotation = _dungeon.GetDungeonRotation(_missionParams.Seed);
-        var dungeonSpawnRotation = new Angle(random.NextDouble() * Math.Tau);
-
-        // If the dungeon were to spawn facing the landing pad then bump the offset a bit
-        // This isn't robust but fine for now.
-        if (Math.Abs((dungeonRotation - dungeonSpawnRotation).Theta) < Math.PI / 2)
-        {
-            minDungeonOffset += 16;
-        }
 
         Dungeon dungeon = default!;
 
         if (config != SalvageMissionType.Mining)
         {
-            var maxDungeonOffset = minDungeonOffset + 24;
+            var maxDungeonOffset = minDungeonOffset + 12;
             var dungeonOffsetDistance = minDungeonOffset + (maxDungeonOffset - minDungeonOffset) * random.NextFloat();
-            var dungeonOffset = new Vector2(dungeonOffsetDistance, 0f);
-            dungeonOffset = dungeonSpawnRotation.RotateVec(dungeonOffset);
+            var dungeonOffset = new Vector2(0f, dungeonOffsetDistance);
+            dungeonOffset = dungeonRotation.RotateVec(dungeonOffset);
             var dungeonMod = _prototypeManager.Index<SalvageDungeonMod>(mission.Dungeon);
             var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(dungeonMod.Proto);
             dungeon =

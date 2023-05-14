@@ -150,6 +150,7 @@ flavor-complex-parents = like someone's parents
 flavor-complex-alcohol = like alcohol
 flavor-complex-soda = like soda
 flavor-complex-juice = like juice
+flavor-complex-rocksandstones = like rocks and stones
 
 ## Basic drinks
 flavor-complex-water = like water

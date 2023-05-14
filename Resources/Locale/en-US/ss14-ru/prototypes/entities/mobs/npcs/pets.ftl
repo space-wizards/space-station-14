@@ -34,5 +34,7 @@ ent-MobSpiderShiva = Shiva
     .desc = The first defender of the station.
 ent-MobKangarooWillow = Willow
     .desc = Willow the boxing kangaroo.
+ent-MobSlimesPet = Smile
+    .desc = This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
 ent-MobMonkeyPunpun = Pun Pun
     .desc = A prominent representative of monkeys with unlimited access to alcohol.

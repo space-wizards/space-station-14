@@ -62,5 +62,7 @@ ent-SpawnMobAdultSlimesYellow = спавнер слайм жёлтый
     .desc = { ent-MarkerBase.desc }
 ent-SpawnMobAdultSlimesYellowAngry = спавнер слайм жёлтый злой
     .desc = { ent-MarkerBase.desc }
+ent-SpawnMobSmile = Smile Spawner
+    .desc = { ent-MarkerBase.desc }
 ent-SpawnMobMonkeyPunpun = спавнер обезьяна Пун Пун
     .desc = { ent-MarkerBase.desc }
