@@ -2,20 +2,15 @@ using Content.Server.AlertLevel;
 using Content.Server.CartridgeLoader;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
-using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
 using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
-using Content.Server.UserInterface;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
-using Content.Server.Mind.Components;
-using Content.Server.Traitor;
 using Content.Shared.Light.Component;
 
 namespace Content.Server.PDA
@@ -29,12 +24,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly StoreSystem _store = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
-        [Dependency] private readonly RingerSystem _ringerSystem = default!;
-        [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
-        [Dependency] private readonly StoreSystem _storeSystem = default!;
 
         public override void Initialize()
         {
@@ -108,30 +98,8 @@ namespace Content.Server.PDA
             var hasInstrument = HasComp<InstrumentComponent>(uid);
             var showUplink = HasComp<StoreComponent>(uid) && IsUnlocked(uid);
 
-            var currentTime = GameTicker.RoundDuration();
-            var stationTime = new StationTimeText
-            {
-                Hours = currentTime.Hours.ToString(),
-                Minutes = currentTime.Minutes.ToString(),
-            };
-
-            var stationAlert = new StationAlert
-            {
-                Level = null,
-                Color = Color.White
-            };
-
-            var stationUid = _stationSystem.GetOwningStation(pda.Owner);
-            if (TryComp(stationUid, out AlertLevelComponent? alertComp) &&
-                alertComp.AlertLevels != null)
-            {
-                stationAlert.Level = alertComp.CurrentLevel;
-                if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
-                    stationAlert.Color = details.Color;
-            }
-
             var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo,
-                stationTime, stationAlert, pda.StationName, showUplink, hasInstrument, address);
+                pda.StationAlert, pda.StationName, showUplink, hasInstrument, address);
 
             _cartridgeLoader?.UpdateUiState(uid, state);
         }
