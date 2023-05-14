@@ -432,21 +432,13 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             var itemQuery = GetEntityQuery<ItemComponent>();
-            var stackQuery = GetEntityQuery<StackComponent>();
 
             foreach (var entity in storageComp.Storage.ContainedEntities)
             {
                 if (!itemQuery.TryGetComponent(entity, out var itemComp))
                     continue;
 
-                var count = 1;
-
-                if (stackQuery.TryGetComponent(entity, out var stack))
-                {
-                    count = stack.Count;
-                }
-
-                var size = itemComp.Size * count;
+                var size = itemComp.Size;
                 storageComp.StorageUsed += size;
                 storageComp.SizeCache.Add(entity, size);
             }
@@ -525,7 +517,7 @@ namespace Content.Server.Storage.EntitySystems
                 return false;
             }
 
-            if (TryComp(insertEnt, out ItemComponent? itemComp) &&
+            if (!HasComp<StackComponent>(insertEnt) && TryComp(insertEnt, out ItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
             {
                 reason = "comp-storage-insufficient-capacity";
@@ -550,6 +542,8 @@ namespace Content.Server.Storage.EntitySystems
              * 2. If anything remains insert whatever is possible.
              * 3. If insertion is not possible then leave the stack as is.
              * At either rate still play the insertion sound
+             *
+             * For now we just treat items as always being the same size regardless of stack count.
              */
 
             // If it's stackable then prefer to stack it
@@ -557,33 +551,18 @@ namespace Content.Server.Storage.EntitySystems
 
             if (stackQuery.TryGetComponent(insertEnt, out var insertStack))
             {
-                var available = GetAvailableSpace(uid, storageComp);
-
-                TryComp<ItemComponent>(insertEnt, out var item);
-                var itemSize = item?.Size ?? 0;
-                var maxStackInsertAmount = (int) Math.Floor(available / (float) itemSize);
-
-                if (maxStackInsertAmount == 0)
-                    return false;
+                var toInsertCount = insertStack.Count;
 
                 foreach (var ent in storageComp.Storage.ContainedEntities)
                 {
                     if (!stackQuery.TryGetComponent(ent, out var containedStack) || !insertStack.StackTypeId.Equals(containedStack.StackTypeId))
                         continue;
 
-                    var containedCount = containedStack.Count;
-
-                    // TODO: Need to fix different stacks combining
-                    if (!_stack.TryAdd(insertEnt, ent, maxStackInsertAmount, insertStack, containedStack))
+                    if (!_stack.TryAdd(insertEnt, ent, insertStack, containedStack))
                         continue;
 
-                    maxStackInsertAmount -= containedStack.Count - containedCount;
-
-                    // No space left
-                    if (maxStackInsertAmount <= 0)
-                        break;
-
                     var remaining = insertStack.Count;
+                    toInsertCount -= toInsertCount - remaining;
 
                     if (remaining > 0)
                         continue;
@@ -594,20 +573,15 @@ namespace Content.Server.Storage.EntitySystems
                 // Still stackable remaining
                 if (insertStack.Count > 0)
                 {
-                    var overflow = Math.Max(0, insertStack.Count - maxStackInsertAmount);
-
-                    // Can't insert everything
-                    if (overflow > 0)
+                    // Try to insert it as a new stack.
+                    if (TryComp(insertEnt, out ItemComponent? itemComp) &&
+                        itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed ||
+                        !storageComp.Storage.Insert(insertEnt))
                     {
-                        // Split out what can go in and put it in.
-                        var split = _stack.Split(insertEnt, insertStack.Count - overflow, Transform(uid).Coordinates);
-
-                        if (split != null)
-                            storageComp.Storage.Insert(split.Value);
-                    }
-                    else
-                    {
-                        storageComp.Storage.Insert(insertEnt);
+                        // If we also didn't do any stack fills above then just end
+                        // otherwise play sound and update UI anyway.
+                        if (toInsertCount == insertStack.Count)
+                            return false;
                     }
                 }
             }
