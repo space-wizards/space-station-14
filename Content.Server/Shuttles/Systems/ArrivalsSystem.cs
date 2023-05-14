@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
@@ -12,9 +11,9 @@ using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
-using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -22,7 +21,6 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -138,6 +136,7 @@ public sealed class ArrivalsSystem : EntitySystem
                         break;
                     }
 
+                    RemCompDeferred<AutoOrientComponent>(uid);
                     RemCompDeferred<PendingClockInComponent>(uid);
                     shell.WriteLine(Loc.GetString("cmd-arrivals-forced", ("uid", ToPrettyString(uid))));
                 }
@@ -176,6 +175,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 continue;
 
             RemCompDeferred<PendingClockInComponent>(pUid);
+            RemCompDeferred<AutoOrientComponent>(uid);
         }
     }
 
@@ -238,6 +238,7 @@ public sealed class ArrivalsSystem : EntitySystem
                     ev.Station);
 
                 EnsureComp<PendingClockInComponent>(ev.SpawnResult.Value);
+                EnsureComp<AutoOrientComponent>(ev.SpawnResult.Value);
                 return;
             }
         }
