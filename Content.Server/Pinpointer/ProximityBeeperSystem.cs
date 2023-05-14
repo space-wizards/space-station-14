@@ -1,6 +1,7 @@
 ﻿using Content.Server.PowerCell;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Pinpointer;
+using Content.Shared.PowerCell;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 

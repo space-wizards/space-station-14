@@ -57481,8 +57481,6 @@ entities:
     - pos: -8.5,-23.5
       parent: 31
       type: Transform
-    - points: 136000
-      type: ResearchServer
 - proto: RevolverCapGun
   entities:
   - uid: 8527
