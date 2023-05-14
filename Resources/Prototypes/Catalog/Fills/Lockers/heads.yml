@@ -40,8 +40,6 @@
       - id: ClothingHeadHatCaptain
       - id: ClothingNeckCloakCap
       - id: ClothingHandsGlovesCaptain
-      - id: ClothingOuterHardsuitCap
-      - id: ClothingMaskGasCaptain
       - id: WeaponDisabler
       - id: CommsComputerCircuitboard
       - id: ClothingHeadsetAltCommand
@@ -98,21 +96,15 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterHardsuitEngineeringWhite
-      - id: ClothingMaskBreath
-      - id: OxygenTankFilled
-      - id: NitrogenTankFilled
       - id: ClothingNeckCloakCe
       - id: ClothingEyesGlassesMeson
       - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHeadHatBeretEngineering
-      - id: ClothingShoesBootsMagAdv
       - id: ClothingHandsGlovesColorYellow
       - id: CigarCase
         prob: 0.15
       - id: DoorRemoteEngineering
       - id: RubberStampCE
-      - id: JetpackVoidFilled
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
 
@@ -132,7 +124,6 @@
       - id: ClothingOuterCoatLabCmo
       - id: ClothingMaskSterile
       - id: ClothingHeadHatBeretCmo
-      - id: ClothingOuterHardsuitMedical
       - id: DiagnoserMachineCircuitboard
       - id: VaccinatorMachineCircuitboard
         prob: 0.25
@@ -157,7 +148,6 @@
       - id: CircuitImprinterMachineCircuitboard
       - id: ClothingNeckCloakRd
       - id: ClothingHeadsetMedicalScience
-      - id: ClothingOuterHardsuitRd
       - id: HandTeleporter
       - id: PlushieSlime
         prob: 0.1
@@ -190,8 +180,6 @@
         prob: 0.1
       - id: ClothingUniformJumpskirtHoSParadeMale
         prob: 0.1
-      - id: ClothingOuterHardsuitSecurityRed
-      - id: ClothingMaskGasSwat
       - id: ClothingShoeSlippersDuck
         prob: 0.2
       - id: DrinkVacuumFlask
@@ -209,6 +197,5 @@
       - id: ClothingUniformJumpsuitHosFormal
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
-      - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity

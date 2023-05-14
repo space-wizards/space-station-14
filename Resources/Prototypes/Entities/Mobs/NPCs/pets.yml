@@ -583,6 +583,81 @@
     prototypes: [ BoxingKangarooGear ]
 
 - type: entity
+  name: Smile
+  id: MobSlimesPet
+  parent: MobAdultSlimes
+  description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/slimes.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: rainbow_baby_slime
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: aslime-_3
+      shader: unshaded
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Effects/Footsteps/slime1.ogg
+      params:
+        volume: -6
+  - type: Tag
+    tags:
+    - FootstepSound
+    - DoorBumpOpener
+    - CannotSuicide
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: rainbow_baby_slime
+        BaseUnshaded: aslime-_3
+      Dead:
+        Base: rainbow_baby_slime_dead
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodMeatSlime
+      amount: 1
+    - id: MaterialSmileExtract
+      amount: 1
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: SlimePet
+  - type: Bloodstream
+    bloodMaxVolume: 150
+    bloodReagent: Slime
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.8
+  - type: Temperature
+    heatDamageThreshold: 800
+    coldDamageThreshold: 0
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Weapons/punch3.ogg
+    angle: 0
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 1
+        Caustic: 1
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-slime
+  - type: MobPrice
+    price: 3000 # it is a truly valuable creature
+
+- type: entity
   name: Pun Pun
   parent: MobMonkey
   id: MobMonkeyPunpun
