@@ -153,7 +153,7 @@ public sealed class ArrivalsSystem : EntitySystem
         _cfgManager.UnsubValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
     }
 
-    private void OnArrivalsFTL(EntityUid uid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
+    private void OnArrivalsFTL(EntityUid shuttleUid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
     {
         // Any mob then yeet them off the shuttle.
         if (!_cfgManager.GetCVar(CCVars.ArrivalsReturns) && args.FromMapUid != null)
@@ -162,7 +162,7 @@ public sealed class ArrivalsSystem : EntitySystem
             var arrivalsBlacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
             var mobQuery = GetEntityQuery<MobStateComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
-            DumpChildren(uid, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
+            DumpChildren(shuttleUid, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
 
         var pendingQuery = AllEntityQuery<PendingClockInComponent, TransformComponent>();
@@ -171,11 +171,11 @@ public sealed class ArrivalsSystem : EntitySystem
         while (pendingQuery.MoveNext(out var pUid, out _, out var xform))
         {
             // Cheaper to iterate pending arrivals than all children
-            if (xform.GridUid != uid)
+            if (xform.GridUid != shuttleUid)
                 continue;
 
             RemCompDeferred<PendingClockInComponent>(pUid);
-            RemCompDeferred<AutoOrientComponent>(uid);
+            RemCompDeferred<AutoOrientComponent>(pUid);
         }
     }
 
