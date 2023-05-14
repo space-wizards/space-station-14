@@ -252,10 +252,12 @@
       - id: PlasticBanana
       - id: WhoopieCushion
       - id: ToyHammer
-        amount: 2
+        amount: 1
       - id: MrChips
         orGroup: GiftPool
       - id: MrDips
         orGroup: Giftpool
       - id: RevolverCapGun
       - id: VehicleUnicycleFolded
+      - id: ClothingShoesClownLarge
+      - id: ClothingHeadHatMagician

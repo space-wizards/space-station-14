@@ -590,7 +590,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatMagician
-  name: magician's top hat
+  name: magician's top hat.
   description: .
   components:
   - type: Sprite
@@ -598,6 +598,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/Magician/magician_equipped.rsi
   - type: Item
+    size: 40
     sprite: Clothing/Head/Hats/Magician/magician_hand.rsi
   - type: Storage
     capacity: 40

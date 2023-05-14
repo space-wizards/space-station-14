@@ -161,3 +161,20 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/cluwne.rsi
   - type: Unremoveable
+
+- type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesClownLarge
+  name: large clown shoes
+  description: "When you need to stand out in a room full of clowns!"
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/Largeclown/largeclown_equipped.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/Largeclown/largeclown_equipped.rsi
+  - type: Item
+    size: 10
+    sprite: Clothing/Shoes/Specific/Largeclown/largeclown_hands.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.8
