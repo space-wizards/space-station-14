@@ -26,6 +26,9 @@
     sprite: Objects/Weapons/Melee/crusher.rsi
     state: icon
   - type: AmmoCounter
+  - type: UseDelayOnShoot
+  - type: UseDelay
+    delay: 1.9
   - type: Gun
     soundGunshot: /Audio/Weapons/plasma_cutter.ogg
     fireRate: 0.5
@@ -78,6 +81,9 @@
   id: WeaponCrusherGlaive
   description: An early design of the proto-kinetic accelerator, in glaive form.
   components:
+  - type: UseDelayOnShoot
+  - type: UseDelay
+    delay: 1.9
   - type: Gun
     fireRate: 1
   - type: RechargeBasicEntityAmmo
