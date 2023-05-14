@@ -233,13 +233,14 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
         var offs = (int) ((WorldGen.ChunkSize - WorldGen.ChunkSize / 8.0f) / 2.0f);
         var topLeft = (-offs, -offs);
         var lowerRight = (offs, offs);
-        var debrisPoints = _sampler.SampleRectangle(topLeft, lowerRight, density);
+        var enumerator = _sampler.SampleRectangle(topLeft, lowerRight, density);
+        var debrisPoints = new List<Vector2>();
 
         var realCenter = WorldGen.ChunkToWorldCoordsCentered(coords.Floored());
 
-        for (var i = 0; i < debrisPoints.Count; i++)
+        while (enumerator.MoveNext(out var debrisPoint))
         {
-            debrisPoints[i] = realCenter + debrisPoints[i];
+            debrisPoints.Add(realCenter + debrisPoint.Value);
         }
 
         return debrisPoints;

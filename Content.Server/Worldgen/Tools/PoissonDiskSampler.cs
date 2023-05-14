@@ -19,8 +19,8 @@ public sealed class PoissonDiskSampler
     /// <param name="radius">Radius of the sample</param>
     /// <param name="minimumDistance">Minimum distance between points. Must be above 0!</param>
     /// <param name="pointsPerIteration">The number of points placed per iteration of the algorithm</param>
-    /// <returns>A list of points</returns>
-    public List<Vector2> SampleCircle(Vector2 center, float radius, float minimumDistance,
+    /// <returns>An enumerator of points</returns>
+    public SampleEnumerator SampleCircle(Vector2 center, float radius, float minimumDistance,
         int pointsPerIteration = DefaultPointsPerIteration)
     {
         return Sample(center - new Vector2(radius, radius), center + new Vector2(radius, radius), radius,
@@ -34,8 +34,8 @@ public sealed class PoissonDiskSampler
     /// <param name="lowerRight">The bottom right of the rectangle</param>
     /// <param name="minimumDistance">Minimum distance between points. Must be above 0!</param>
     /// <param name="pointsPerIteration">The number of points placed per iteration of the algorithm</param>
-    /// <returns>A list of points</returns>
-    public List<Vector2> SampleRectangle(Vector2 topLeft, Vector2 lowerRight, float minimumDistance,
+    /// <returns>An enumerator of points</returns>
+    public SampleEnumerator SampleRectangle(Vector2 topLeft, Vector2 lowerRight, float minimumDistance,
         int pointsPerIteration = DefaultPointsPerIteration)
     {
         return Sample(topLeft, lowerRight, null, minimumDistance, pointsPerIteration);
@@ -49,8 +49,8 @@ public sealed class PoissonDiskSampler
     /// <param name="rejectionDistance">The distance at which points will be discarded, if any</param>
     /// <param name="minimumDistance">Minimum distance between points. Must be above 0!</param>
     /// <param name="pointsPerIteration">The number of points placed per iteration of the algorithm</param>
-    /// <returns>A list of points</returns>
-    public List<Vector2> Sample(Vector2 topLeft, Vector2 lowerRight, float? rejectionDistance,
+    /// <returns>An enumerator of points</returns>
+    public SampleEnumerator Sample(Vector2 topLeft, Vector2 lowerRight, float? rejectionDistance,
         float minimumDistance, int pointsPerIteration)
     {
         // This still doesn't guard against dangerously low but non-zero distances, but this will do for now.
@@ -75,16 +75,7 @@ public sealed class PoissonDiskSampler
             ActivePoints = new List<Vector2>()
         };
 
-        var enumerator = new SampleEnumerator(this, state, settings, pointsPerIteration);
-
-        var points = new List<Vector2>();
-
-        while (enumerator.MoveNext(out var point))
-        {
-            points.Add(point.Value);
-        }
-
-        return points;
+        return new SampleEnumerator(this, state, settings, pointsPerIteration);
     }
 
     private Vector2 AddFirstPoint(ref SampleSettings settings, ref State state)
