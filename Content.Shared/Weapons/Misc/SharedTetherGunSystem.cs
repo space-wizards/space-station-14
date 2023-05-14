@@ -99,9 +99,10 @@ public abstract class SharedTetherGunSystem : EntitySystem
         return true;
     }
 
-    private void StartTether(EntityUid gunUid, TetherGunComponent component, EntityUid target, PhysicsComponent? targetPhysics = null)
+    private void StartTether(EntityUid gunUid, TetherGunComponent component, EntityUid target,
+        PhysicsComponent? targetPhysics = null, TransformComponent? targetXform = null)
     {
-        if (!Resolve(target, ref targetPhysics))
+        if (!Resolve(target, ref targetPhysics, ref targetXform))
             return;
 
         if (component.Tethered != null)
@@ -109,11 +110,15 @@ public abstract class SharedTetherGunSystem : EntitySystem
             StopTether(component);
         }
 
+        TransformSystem.Unanchor(target, targetXform);
         component.Tethered = target;
         var tethered = EnsureComp<TetheredComponent>(target);
+        _physics.SetBodyStatus(targetPhysics, BodyStatus.InAir, false);
+        _physics.SetSleepingAllowed(target, targetPhysics, false);
         tethered.Tetherer = gunUid;
 
         var tether = Spawn("TetherEntity", Transform(target).MapPosition);
+        var tetherPhysics = Comp<PhysicsComponent>(tether); ;
         component.TetherEntity = tether;
 
         _physics.WakeBody(tether);
@@ -121,7 +126,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
 
         var joint = _joints.CreateMouseJoint(tether, target, id: TetherJoint);
 
-        SharedJointSystem.LinearStiffness(5f, 0.7f, Comp<PhysicsComponent>(tether).Mass, targetPhysics.Mass, out var stiffness, out var damping);
+        SharedJointSystem.LinearStiffness(5f, 2f, tetherPhysics.Mass, targetPhysics.Mass, out var stiffness, out var damping);
         joint.Stiffness = stiffness;
         joint.Damping = damping;
         joint.MaxForce = 10000f * targetPhysics.Mass;
@@ -140,6 +145,12 @@ public abstract class SharedTetherGunSystem : EntitySystem
             _joints.RemoveJoint(component.TetherEntity.Value, TetherJoint);
             QueueDel(component.TetherEntity.Value);
             component.TetherEntity = null;
+        }
+
+        if (TryComp<PhysicsComponent>(component.Tethered, out var targetPhysics))
+        {
+            _physics.SetBodyStatus(targetPhysics, BodyStatus.OnGround);
+            _physics.SetSleepingAllowed(component.Tethered.Value, targetPhysics, true);
         }
 
         RemCompDeferred<TetheredComponent>(component.Tethered.Value);
