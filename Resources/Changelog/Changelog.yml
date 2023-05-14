@@ -1,11 +1,6 @@
 Entries:
 - author: DEATHB4DEFEAT
   changes:
-  - {message: Edited comms console UI, type: Tweak}
-  id: 3253
-  time: '2023-03-25T14:51:16.0000000+00:00'
-- author: DEATHB4DEFEAT
-  changes:
   - {message: Changed crew monitoring console UI, type: Tweak}
   id: 3254
   time: '2023-03-25T14:51:29.0000000+00:00'
@@ -2896,3 +2891,10 @@ Entries:
       body''s ability to retain water.', type: Tweak}
   id: 3752
   time: '2023-05-13T21:18:06.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added suit storage units, for storing EVA-capable suits.', type: Add}
+  - {message: 'Most lockers with space suits no longer contain them, in lieu of suit
+      storage units.', type: Tweak}
+  id: 3753
+  time: '2023-05-14T01:36:47.0000000+00:00'
