@@ -1,9 +1,4 @@
 Entries:
-- author: DEATHB4DEFEAT
-  changes:
-  - {message: Fixed grinder UI being too small., type: Fix}
-  id: 3255
-  time: '2023-03-25T14:51:35.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Pneumatic cannon can no longer shoot bullets., type: Fix}
@@ -2899,3 +2894,8 @@ Entries:
       trashbag., type: Tweak}
   id: 3754
   time: '2023-05-14T02:14:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added the proto-kinetic crusher for salvagers., type: Add}
+  id: 3755
+  time: '2023-05-14T03:15:19.0000000+00:00'
