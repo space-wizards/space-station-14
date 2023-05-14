@@ -1,10 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: 'Changed space bears even more, like being able to pet them and they
-      can now pull!', type: Tweak}
-  id: 3264
-  time: '2023-03-26T17:50:17.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added Moth Cloak., type: Add}
@@ -2900,3 +2894,8 @@ Entries:
   - {message: space glue can now appear in vent clog events. Less lube for you!, type: Add}
   id: 3763
   time: '2023-05-14T15:35:11.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Pun Pun has lost PDA privileges., type: Remove}
+  id: 3764
+  time: '2023-05-14T15:38:49.0000000+00:00'
