@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Bullet impulses in space increased from 5 -> 25, type: Tweak}
-  id: 3258
-  time: '2023-03-26T01:55:24.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Cardboard Boxes will now play their effect again, type: Fix}
@@ -2899,3 +2894,8 @@ Entries:
   - {message: Arrivals turnaround reduced from 90s to 50s., type: Tweak}
   id: 3757
   time: '2023-05-14T08:00:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Caves now have crystals in them., type: Add}
+  id: 3758
+  time: '2023-05-14T11:38:54.0000000+00:00'
