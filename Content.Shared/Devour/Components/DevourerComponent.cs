@@ -49,7 +49,7 @@ public sealed class DevourerComponent : Component
     /// </summary>
     public Container Stomach = default!;
 
-    [DataField("shouldStoreDevoured")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("shouldStoreDevoured")]
     public bool ShouldStoreDevoured = true;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("whitelist")]
