@@ -42,37 +42,41 @@ namespace Content.Server.GameTicking
 
             if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
             {
-                ClearGameRules();
-                var fallbackPreset = _configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset);
-                if (fallbackPreset != "")
-                    SetGamePreset(fallbackPreset);
-                else if (startAttempt.Players.Length >= 5)
+                var fallbackPresets = _configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset);
+                var startFailed = true;
+
+                foreach (var preset in fallbackPresets)
                 {
-                    SetGamePreset("traitor");
+                    ClearGameRules();
+                    SetGamePreset(preset);
+                    AddGamePresetRules();
+                    StartGamePresetRules();
+
+                    startAttempt.Uncancel();
+                    RaiseLocalEvent(startAttempt);
+
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
+                            ("failedGameMode", presetTitle),
+                            ("fallbackMode", Loc.GetString(preset))));
+
+                    presetTitle = preset;
+
+                    if (!startAttempt.Cancelled)
+                    {
+                        RefreshLateJoinAllowed();
+                        startFailed = false;
+                        break;
+                    }
                 }
-                else
-                {
-                    SetGamePreset("extended");
-                }
-                AddGamePresetRules();
-                StartGamePresetRules();
 
-                startAttempt.Uncancel();
-                RaiseLocalEvent(startAttempt);
-
-                _chatManager.DispatchServerAnnouncement(
-                    Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
-                        ("failedGameMode", presetTitle),
-                        ("fallbackMode", Loc.GetString(Preset!.ModeTitle))));
-
-                if (startAttempt.Cancelled)
+                if (startFailed)
                 {
                     FailedPresetRestart();
                     return false;
                 }
-
-                RefreshLateJoinAllowed();
             }
+
             else
             {
                 FailedPresetRestart();
