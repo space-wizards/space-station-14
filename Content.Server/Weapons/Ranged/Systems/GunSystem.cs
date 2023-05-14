@@ -395,7 +395,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         if (xformQuery.TryGetComponent(gridUid, out var gridXform))
         {
-            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridUid.Value, xformQuery);
+            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
 
             fromCoordinates = new EntityCoordinates(gridUid.Value,
                 gridInvMatrix.Transform(fromCoordinates.ToMapPos(EntityManager, TransformSystem)));
