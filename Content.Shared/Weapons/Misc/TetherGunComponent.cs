@@ -6,6 +6,12 @@ namespace Content.Shared.Weapons.Misc;
 public sealed partial class TetherGunComponent : Component
 {
     /// <summary>
+    /// The entity the tethered target has a joint to.
+    /// </summary>
+    [DataField("tetherEntity"), AutoNetworkedField]
+    public EntityUid? TetherEntity;
+
+    /// <summary>
     /// The entity currently tethered.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("tethered"), AutoNetworkedField]
