@@ -1,13 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: Pneumatic cannon can no longer shoot bullets., type: Fix}
-  - {message: New admeme pneumatic cannon variants that can still shoot bullets.,
-    type: Add}
-  id: 3256
-  time: '2023-03-25T23:15:46.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: Added the signal valve for advanced atmosians., type: Add}
   id: 3257
   time: '2023-03-25T23:16:28.0000000+00:00'
@@ -2899,3 +2892,8 @@ Entries:
   - {message: Added the proto-kinetic crusher for salvagers., type: Add}
   id: 3755
   time: '2023-05-14T03:15:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix docked grids failing to split., type: Fix}
+  id: 3756
+  time: '2023-05-14T03:29:50.0000000+00:00'
