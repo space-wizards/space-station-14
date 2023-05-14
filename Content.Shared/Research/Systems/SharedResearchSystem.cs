@@ -148,9 +148,9 @@ public abstract class SharedResearchSystem : EntitySystem
     ///     Returns whether a technology is unlocked on this database or not.
     /// </summary>
     /// <returns>Whether it is unlocked or not</returns>
-    public bool IsTechnologyUnlocked(EntityUid uid, TechnologyPrototype oldTechnology, TechnologyDatabaseComponent? component = null)
+    public bool IsTechnologyUnlocked(EntityUid uid, TechnologyPrototype technology, TechnologyDatabaseComponent? component = null)
     {
-        return Resolve(uid, ref component) && IsTechnologyUnlocked(uid, oldTechnology.ID, component);
+        return Resolve(uid, ref component) && IsTechnologyUnlocked(uid, technology.ID, component);
     }
 
     /// <summary>
