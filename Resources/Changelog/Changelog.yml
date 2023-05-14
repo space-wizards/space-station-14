@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fixed static pricing being used on some stackable entities., type: Fix}
-  - {message: Removed the base $20 price for items., type: Tweak}
-  id: 3263
-  time: '2023-03-26T17:01:43.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: 'Changed space bears even more, like being able to pet them and they
@@ -2899,3 +2893,10 @@ Entries:
   - {message: Dame Dame coat side sprite fixes, type: Fix}
   id: 3762
   time: '2023-05-14T14:21:42.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added space glue - its sticky and funny! When consumed mutes you and
+      makes you see rainbows., type: Add}
+  - {message: space glue can now appear in vent clog events. Less lube for you!, type: Add}
+  id: 3763
+  time: '2023-05-14T15:35:11.0000000+00:00'
