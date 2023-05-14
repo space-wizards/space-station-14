@@ -40,12 +40,11 @@
   - type: Sprite
     state: cardboard_3
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - cardboard
-      - cardboard_2
-      - cardboard_3
+  - type: StackVisuals
+    stackLayers:
+    - cardboard
+    - cardboard_2
+    - cardboard_3
 
 - type: entity
   parent: MaterialCardboard
@@ -93,7 +92,7 @@
   - type: Sprite
     state: cloth_3
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - cloth
     - cloth_2
@@ -124,7 +123,7 @@
   - type: Sprite
     state: durathread_3
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - durathread
     - durathread_2
@@ -158,12 +157,11 @@
   - type: Sprite
     state: wood
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - wood
-      - wood_2
-      - wood_3
+  - type: StackVisuals
+    stackLayers:
+    - wood
+    - wood_2
+    - wood_3
   - type: Item
     heldPrefix: wood
 
@@ -263,7 +261,7 @@
   - type: Sprite
     state: cotton_3
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - cotton
     - cotton_2
@@ -320,11 +318,10 @@
       - ReagentId: Honk
         Quantity: 5
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - bananium
-          - bananium_1
+  - type: StackVisuals
+    stackLayers:
+      - bananium
+      - bananium_1
 
 - type: entity
   parent: MaterialBananium

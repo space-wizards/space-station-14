@@ -1,7 +1,7 @@
 # Donut
 
 # There is a newer, better version of the donutbox from tgstation included in the
-# donut.rsi. The reason it isn't implemented is it requires a StackVisualizer offsetting
+# donut.rsi. The reason it isn't implemented is it requires a StackVisuals offsetting
 # the layer sprite by a couple pixels everytime a new donut is added. It also requires
 # an alpha color which -Y- said he would implement.
 
@@ -37,7 +37,7 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: box-open
-  - type: StackVisualizer
+  - type: StackVisuals
     composite: true
     stackLayers:
     - box1
@@ -78,7 +78,7 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: box-open
-  - type: StackVisualizer
+  - type: StackVisuals
     composite: true
     stackLayers:
     - box1
@@ -237,7 +237,7 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: box-open
-  - type: StackVisualizer
+  - type: StackVisuals
     composite: true
     stackLayers:
     - box1

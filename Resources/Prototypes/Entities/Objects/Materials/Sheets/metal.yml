@@ -46,7 +46,7 @@
   - type: Item
     heldPrefix: steel
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - steel
     - steel_2
@@ -84,7 +84,7 @@
   - type: Item
     heldPrefix: plasteel
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - plasteel
     - plasteel_2

@@ -193,7 +193,7 @@
 
 # Waffles/Pancakes
 
-# Once StackVisualizer is updated you should be able to mix/match stacks of pancakes.
+# Once StackVisuals is updated you should be able to mix/match stacks of pancakes.
 
 - type: entity
   name: pancake
@@ -213,7 +213,7 @@
   #     - state: plate-small
   #     - state: pancakes1
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     composite: true
     stackLayers:
     - pancakes1
@@ -244,7 +244,7 @@
   #     - state: plate-small
   #     - state: pancakesbb1
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     composite: true
     stackLayers:
     - pancakesbb1
@@ -269,7 +269,7 @@
   #     - state: plate-small
   #     - state: pancakescc1
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     composite: true
     stackLayers:
     - pancakescc1

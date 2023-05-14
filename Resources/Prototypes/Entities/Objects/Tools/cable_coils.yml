@@ -45,7 +45,7 @@
     cablePrototypeID: CableHV
     blockingWireType: HighVoltage
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - coilhv-10
     - coilhv-20
@@ -81,7 +81,7 @@
     cablePrototypeID: CableMV
     blockingWireType: MediumVoltage
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - coilmv-10
     - coilmv-20
@@ -115,7 +115,7 @@
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - coillv-10
     - coillv-20

@@ -14,7 +14,7 @@ namespace Content.Client.Stack;
 /// </para>
 /// <code>
 /// - components:
-///   - type: StackVisualizer
+///   - type: StackVisuals
 ///     stackLayers:
 ///       - goldbar_10
 ///       - goldbar_20
@@ -25,7 +25,7 @@ namespace Content.Client.Stack;
 /// <para>Defining a stack visualizer with composable transparent layers</para>
 /// <code>
 /// - components:
-///   - type: StackVisualizer
+///   - type: StackVisuals
 ///     composite: true
 ///     stackLayers:
 ///       - cigarette_1
@@ -40,7 +40,7 @@ namespace Content.Client.Stack;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(StackVisualizerSystem))]
-public sealed class StackVisualizerComponent : Component
+public sealed class StackVisualsComponent : Component
 {
     /// <summary>
     /// Default IconLayer stack.

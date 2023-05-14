@@ -59,7 +59,7 @@
   - type: Item
     heldPrefix: glass
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - glass
     - glass_2
@@ -101,7 +101,7 @@
   - type: Item
     heldPrefix: rglass
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - rglass
     - rglass_2
@@ -143,7 +143,7 @@
   - type: Item
     heldPrefix: pglass
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - pglass
     - pglass_2
@@ -182,7 +182,7 @@
   - type: Item
     heldPrefix: rpglass
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - rpglass
     - rpglass_2
@@ -221,12 +221,11 @@
   - type: Item
     heldPrefix: uglass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - uglass
-      - uglass_2
-      - uglass_3
+  - type: StackVisuals
+    stackLayers:
+    - uglass
+    - uglass_2
+    - uglass_3
   - type: Construction
     graph: Glass
     node: SheetUGlass
@@ -261,12 +260,11 @@
   - type: Item
     heldPrefix: ruglass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - ruglass
-      - ruglass_2
-      - ruglass_3
+  - type: StackVisuals
+    stackLayers:
+    - ruglass
+    - ruglass_2
+    - ruglass_3
   - type: Construction
     graph: Glass
     node: SheetRUGlass

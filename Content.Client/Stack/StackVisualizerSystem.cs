@@ -5,15 +5,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Stack;
 
-public sealed class StackVisualizerSystem : VisualizerSystem<StackVisualizerComponent>
+public sealed class StackVisualizerSystem : VisualizerSystem<StackVisualsComponent>
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StackVisualizerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<StackVisualsComponent, ComponentInit>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, StackVisualizerComponent comp, ComponentInit args)
+    private void OnInit(EntityUid uid, StackVisualsComponent comp, ComponentInit args)
     {
         if (comp.IsComposite
             && comp.SpriteLayers.Count > 0
@@ -29,7 +29,7 @@ public sealed class StackVisualizerSystem : VisualizerSystem<StackVisualizerComp
         }
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, StackVisualizerComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, StackVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
@@ -44,21 +44,20 @@ public sealed class StackVisualizerSystem : VisualizerSystem<StackVisualizerComp
         }
     }
 
-    private void ProcessOpaqueSprites(EntityUid uid, StackVisualizerComponent comp, AppearanceComponent appearance, SpriteComponent spriteComponent)
+    private void ProcessOpaqueSprites(EntityUid uid, StackVisualsComponent comp, AppearanceComponent appearance, SpriteComponent spriteComponent)
     {
         // Skip processing if no actual
-        if(!AppearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual, appearance))
+        if (!AppearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual, appearance))
             return;
-        if(!AppearanceSystem.TryGetData<int>(uid, StackVisuals.MaxCount, out var maxCount, appearance))
-        {
+
+        if (!AppearanceSystem.TryGetData<int>(uid, StackVisuals.MaxCount, out var maxCount, appearance))
             maxCount = comp.SpriteLayers.Count;
-        }
 
         var activeLayer = ContentHelpers.RoundToEqualLevels(actual, maxCount, comp.SpriteLayers.Count);
-        spriteComponent.LayerSetState(StackVisualizerComponent.IconLayer, comp.SpriteLayers[activeLayer]);
+        spriteComponent.LayerSetState(StackVisualsComponent.IconLayer, comp.SpriteLayers[activeLayer]);
     }
 
-    private void ProcessCompositeSprites(EntityUid uid, StackVisualizerComponent comp, AppearanceComponent appearance, SpriteComponent spriteComponent)
+    private void ProcessCompositeSprites(EntityUid uid, StackVisualsComponent comp, AppearanceComponent appearance, SpriteComponent spriteComponent)
     {
         // If hidden, don't render any sprites
         if (AppearanceSystem.TryGetData<bool>(uid, StackVisuals.Hide, out var hide, appearance) && hide)
@@ -72,12 +71,11 @@ public sealed class StackVisualizerSystem : VisualizerSystem<StackVisualizerComp
         }
 
         // Skip processing if no actual/maxCount
-        if(!AppearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual, appearance))
+        if (!AppearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual, appearance))
             return;
-        if(!AppearanceSystem.TryGetData<int>(uid, StackVisuals.MaxCount, out var maxCount, appearance))
-        {
+
+        if (!AppearanceSystem.TryGetData<int>(uid, StackVisuals.MaxCount, out var maxCount, appearance))
             maxCount = comp.SpriteLayers.Count;
-        }
 
 
         var activeTill = ContentHelpers.RoundToNearestLevels(actual, maxCount, comp.SpriteLayers.Count);

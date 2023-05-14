@@ -27,7 +27,7 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: open
-  - type: StackVisualizer
+  - type: StackVisuals
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
     composite: true
     stackLayers:

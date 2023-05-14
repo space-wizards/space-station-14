@@ -25,7 +25,7 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: open
-  - type: StackVisualizer
+  - type: StackVisuals
     composite: true
     stackLayers:
     - cigar1

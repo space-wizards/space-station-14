@@ -41,7 +41,7 @@
     graph: MetalRod
     node: MetalRod
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     stackLayers:
     - rods
     - rods_2

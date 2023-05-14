@@ -365,7 +365,7 @@
     count:
       tags: [Cola]
   - type: Appearance
-  - type: StackVisualizer
+  - type: StackVisuals
     composite: true
     stackLayers:
     - 6pack1

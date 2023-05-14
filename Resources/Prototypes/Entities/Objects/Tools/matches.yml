@@ -85,7 +85,7 @@
     visuals:
       - type: BagOpenCloseVisualizer
         openIcon: matchbox-open
-  - type: StackVisualizer
+  - type: StackVisuals
     composite: true
     stackLayers:
     - matchbox1
