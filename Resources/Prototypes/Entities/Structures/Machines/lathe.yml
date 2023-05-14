@@ -394,6 +394,10 @@
       - Sheet
       - RawMaterial
       - Ingot
+  - type: GuideHelp
+    guides:
+    - Robotics
+
 
 - type: entity
   parent: Protolathe

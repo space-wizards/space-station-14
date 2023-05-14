@@ -41,7 +41,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             foreach (var value in contents.Solutions.Values)
             {
-                value.DoEntityReaction(args.OtherFixture.Body.Owner, ReactionMethod.Touch);
+                value.DoEntityReaction(args.OtherEntity, ReactionMethod.Touch);
             }
 
             // Check for collision with a impassable object (e.g. wall) and stop
@@ -63,7 +63,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 _physics.SetLinearDamping(physics, 0f);
                 _physics.SetAngularDamping(physics, 0f);
 
-                _throwing.TryThrow(vapor.Owner, dir, speed, user: user, pushbackRatio: 50f);
+                _throwing.TryThrow(vapor.Owner, dir, speed, user: user, pushbackRatio: ThrowingSystem.PushbackDefault * 10f);
 
                 var distance = (target.Position - vaporXform.WorldPosition).Length;
                 var time = (distance / physics.LinearVelocity.Length);

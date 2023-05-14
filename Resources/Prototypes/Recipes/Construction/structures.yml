@@ -467,6 +467,35 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
 
+- type: construction
+  name: glass shutter
+  id: ShuttersWindow
+  graph: Shutters
+  startNode: start
+  targetNode: ShuttersWindow
+  category: construction-category-structures
+  description: This is a shutter - connect it to a button to open and close it.
+  icon:
+    sprite: Structures/Doors/Shutters/shutters_window.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: radiation shutter
+  id: ShuttersRadiation
+  graph: Shutters
+  startNode: start
+  targetNode: ShuttersRadiation
+  category: construction-category-structures
+  description: This is a shutter - connect it to a button to open and close it.
+  icon:
+    sprite: Structures/Doors/Shutters/shutters_radiation.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
 
 - type: construction
   name: catwalk

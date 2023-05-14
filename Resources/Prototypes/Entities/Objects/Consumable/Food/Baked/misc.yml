@@ -105,17 +105,6 @@
     state: COOKIE!!!
 
 - type: entity
-  name: fortune cookie
-  parent: FoodBakedBase
-  id: FoodBakedCookieFortune
-  description: A true prophecy in each cookie!
-  components:
-  # - Food:
-  #   trash: PaperFortune
-  - type: Sprite
-    state: cookie-fortune
-
-- type: entity
   name: oatmeal cookie
   parent: FoodBakedBase
   id: FoodBakedCookieOatmeal
