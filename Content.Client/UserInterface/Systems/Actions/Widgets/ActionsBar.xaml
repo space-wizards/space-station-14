@@ -7,9 +7,7 @@
     Orientation="Horizontal"
     HorizontalExpand="False"
 >
-    <BoxContainer
-        Orientation="Vertical"
-        Margin="0 0 0 -9"> <!-- Margin is a big hack since for some mysterious reason, the container is getting 9px added to it.... somewhere. -->
+    <BoxContainer Orientation="Vertical">
         <controls:ActionButtonContainer
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
