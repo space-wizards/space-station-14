@@ -26,12 +26,6 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
-        SubscribeLocalEvent<ProjectileComponent, ComponentGetState>(OnGetState);
-    }
-
-    private void OnGetState(EntityUid uid, ProjectileComponent component, ref ComponentGetState args)
-    {
-        args.State = new ProjectileComponentState(component.Shooter, component.IgnoreShooter);
     }
 
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
