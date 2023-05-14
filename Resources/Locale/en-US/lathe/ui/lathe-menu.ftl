@@ -6,5 +6,6 @@ lathe-menu-search-designs = Search designs
 lathe-menu-search-filter = Filter
 lathe-menu-amount = Amount:
 lathe-menu-material-display = {$material} {$amount} cm³
-lathe-menu-material-eject = Eject
 lathe-menu-no-materials-message = No materials loaded
+lathe-menu-material-eject = All
+lathe-menu-material-eject-not-enough = Not enough materials

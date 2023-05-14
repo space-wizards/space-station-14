@@ -1,4 +1,5 @@
 using Content.Shared.Materials;
+using Content.Shared.Popups;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
@@ -14,6 +15,8 @@ public abstract class SharedLatheSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+
 
     public override void Initialize()
     {
@@ -62,6 +65,9 @@ public abstract class SharedLatheSystem : EntitySystem
         => reduce ? (int) MathF.Ceiling(original * multiplier) : original;
 
     protected abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
+
+    protected void ShowPopup(string messageId, EntityUid entity) =>
+        _popupSystem.PopupEntity(Loc.GetString(messageId), entity);
 }
 
 [Serializable, NetSerializable]

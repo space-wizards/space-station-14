@@ -9,10 +9,12 @@ namespace Content.Client.Lathe.UI
     {
         public string Material;
         public int Amount;
-        public MaterialRow(string material, int amount)
+        public int Multiplier;
+        public MaterialRow(string material, int amount, int multiplier)
         {
             Material = material;
             Amount = amount;
+            Multiplier = multiplier;
             RobustXamlLoader.Load(this);
         }
     }

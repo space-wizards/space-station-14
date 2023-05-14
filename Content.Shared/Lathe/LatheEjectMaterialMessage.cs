@@ -7,11 +7,14 @@ public sealed class LatheEjectMaterialMessage : BoundUserInterfaceMessage
 {
     public string Material;
 
-    public int Amount;
+    public int WholeVolume;
 
-    public LatheEjectMaterialMessage(string material, int amount)
+    public int? ExtractedAmount;
+
+    public LatheEjectMaterialMessage(string material, int volume, int? extractedAmount = null)
     {
         Material = material;
-        Amount = amount;
+        WholeVolume = volume;
+        ExtractedAmount = extractedAmount;
     }
 }

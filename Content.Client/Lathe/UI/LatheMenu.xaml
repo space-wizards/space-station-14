@@ -1,17 +1,17 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
     Title="{Loc 'lathe-menu-title'}"
-    MinSize="300 450"
-    SetSize="300 450">
+    MinSize="350 450"
+    SetSize="350 450">
     <BoxContainer
         Orientation="Vertical"
-        VerticalExpand="True"
+        VerticalExpand="False"
         SeparationOverride="5">
         <BoxContainer
             Orientation="Horizontal"
             Align="End"
             HorizontalExpand="True"
-            VerticalExpand="True"
+            VerticalExpand="False"
             SizeFlagsStretchRatio="1">
             <Button
                 Name="QueueButton"
@@ -38,7 +38,7 @@
         <BoxContainer
             Orientation="Horizontal"
             HorizontalExpand="True"
-            VerticalExpand="True"
+            VerticalExpand="False"
             SizeFlagsStretchRatio="1">
             <LineEdit
                 Name="SearchBar"
@@ -54,9 +54,10 @@
                 Disabled="True">
             </Button>
         </BoxContainer>
-        <ScrollContainer MinHeight="225">
+        <ScrollContainer MinHeight="225" VerticalExpand="True">
             <BoxContainer
                 Name="RecipeList"
+                MinHeight="225"
                 Orientation="Vertical"
                 SizeFlagsStretchRatio="8"
                 HorizontalExpand="True"
@@ -66,7 +67,7 @@
         <BoxContainer
             Orientation="Horizontal"
             HorizontalExpand="True"
-            VerticalExpand="True"
+            VerticalExpand="False"
             SizeFlagsStretchRatio="1">
             <Label Margin="8 0 8 0" Text="{Loc 'lathe-menu-amount'}"/>
             <LineEdit

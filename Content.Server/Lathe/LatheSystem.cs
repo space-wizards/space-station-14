@@ -16,6 +16,7 @@ using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -27,6 +28,7 @@ namespace Content.Server.Lathe
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
@@ -68,9 +70,36 @@ namespace Content.Server.Lathe
 
         private void OnLatherEjectMessage(EntityUid uid, LatheComponent lathe, LatheEjectMaterialMessage message)
         {
-            if (_materialStorage.TryChangeMaterialAmount(uid, message.Material, -message.Amount))
+            int volume = message.WholeVolume;
+            if (!_prototypeManager.TryIndex<MaterialPrototype>(message.Material, out var material))
             {
-                _materialStorage.SpawnMultipleFromMaterial(message.Amount, message.Material, Transform(uid).Coordinates);
+                Logger.Error("Failed to index material prototype " + message.Material);
+                return;
+            }
+
+            if (message.ExtractedAmount is not null)
+            {
+                var entProto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
+                if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
+                    return;
+                var multipler = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
+
+                volume = message.ExtractedAmount.Value * multipler;
+            }
+
+            if (_materialStorage.TryChangeMaterialAmount(uid, message.Material, -volume))
+            {
+                _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out var overflow);
+
+                if (overflow != 0)
+                {
+                    ShowPopup("lathe-menu-material-eject-not-enough", uid);
+                    _materialStorage.TryChangeMaterialAmount(uid, message.Material, overflow);
+                }
+            }
+            else
+            {
+                ShowPopup("lathe-menu-material-eject-not-enough", uid);
             }
         }
 

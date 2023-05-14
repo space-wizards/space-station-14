@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects;
 using System.Linq;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using Content.Client.Cargo.UI;
+using Content.Shared.Construction.Components;
 
 namespace Content.Client.Lathe.UI;
 
@@ -26,7 +27,7 @@ public sealed partial class LatheMenu : DefaultWindow
     public event Action<BaseButton.ButtonEventArgs>? OnQueueButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnServerSyncButtonPressed;
-    public event Action<ButtonEventArgs>? OnEjectPressed;
+    public event Action<string, int, int?>? OnEjectPressed;
     public event Action<string, int>? RecipeQueueAction;
 
     public List<string> Recipes = new();
@@ -77,7 +78,9 @@ public sealed partial class LatheMenu : DefaultWindow
             if (!_prototypeManager.TryIndex(id, out MaterialPrototype? material))
                 continue;
             var name = Loc.GetString(material.Name);
-            var row = new MaterialRow(id, amount)
+
+            var multiplier = MathF.Pow(LatheComponent.DefaultPartRatingMaterialUseMultiplier, MachinePartComponent.MaxRating - 1);
+            var row = new MaterialRow(id, amount, 1)
             {
                 Icon = { Texture = _spriteSystem.Frame0(material.Icon) },
                 ProductName =
@@ -92,7 +95,22 @@ public sealed partial class LatheMenu : DefaultWindow
             row.Eject.OnPressed += (args) => {
                 if (args.Button.Parent?.Parent is not MaterialRow row || row == null)
                     return;
-                OnEjectPressed?.Invoke(args);
+                OnEjectPressed?.Invoke(row.Material, row.Amount, null);
+            };
+            row.Eject5.OnPressed += (args) => {
+                if (args.Button.Parent?.Parent is not MaterialRow row || row == null)
+                    return;
+                OnEjectPressed?.Invoke(row.Material, row.Amount, 5);
+            };
+            row.Eject10.OnPressed += (args) => {
+                if (args.Button.Parent?.Parent is not MaterialRow row || row == null)
+                    return;
+                OnEjectPressed?.Invoke(row.Material, row.Amount, 10);
+            };
+            row.Eject30.OnPressed += (args) => {
+                if (args.Button.Parent?.Parent is not MaterialRow row || row == null)
+                    return;
+                OnEjectPressed?.Invoke(row.Material, row.Amount, 30);
             };
             Materials.AddChild(row);
         }

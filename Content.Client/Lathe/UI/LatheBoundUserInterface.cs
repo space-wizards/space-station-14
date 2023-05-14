@@ -44,11 +44,9 @@ namespace Content.Client.Lathe.UI
                 SendMessage(new LatheQueueRecipeMessage(recipe, amount));
             };
 
-            _menu.OnEjectPressed += (args) =>
+            _menu.OnEjectPressed += (material, wholeVolume, extractedAmount) =>
             {
-                if (args.Button.Parent?.Parent is not MaterialRow row)
-                    return;
-                SendMessage(new LatheEjectMaterialMessage(row.Material, row.Amount));
+                SendMessage(new LatheEjectMaterialMessage(material, wholeVolume, extractedAmount));
             };
 
             _menu.OpenCentered();
