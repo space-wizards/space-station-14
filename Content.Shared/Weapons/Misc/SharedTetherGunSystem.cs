@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -12,14 +13,15 @@ namespace Content.Shared.Weapons.Misc;
 
 public abstract class SharedTetherGunSystem : EntitySystem
 {
-    [Dependency] private readonly SharedJointSystem _joints = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private   readonly SharedJointSystem _joints = default!;
+    [Dependency] private readonly MobStateSystem _mob = default!;
+    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
-    [Dependency] private readonly ThrownItemSystem _thrown = default!;
+    [Dependency] private   readonly ThrownItemSystem _thrown = default!;
 
     private const string TetherJoint = "tether";
 
-    private const float SpinVelocity = 4f;
+    private const float SpinVelocity = MathF.PI;
     private const float AngularChange = 1f;
 
     public override void Initialize()
@@ -46,7 +48,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
                 sign = 1;
             }
 
-            var targetVelocity = SpinVelocity * sign;
+            var targetVelocity = MathF.PI * sign;
 
             var shortFall = Math.Clamp(targetVelocity - physics.AngularVelocity, -SpinVelocity, SpinVelocity);
             shortFall *= frameTime * AngularChange;
@@ -125,6 +127,9 @@ public abstract class SharedTetherGunSystem : EntitySystem
         if (physics.Mass > component.MassLimit)
             return false;
 
+        if (_mob.IsAlive(target))
+            return false;
+
         return true;
     }
 
@@ -165,7 +170,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         SharedJointSystem.LinearStiffness(5f, 2f, tetherPhysics.Mass, targetPhysics.Mass, out var stiffness, out var damping);
         joint.Stiffness = stiffness;
         joint.Damping = damping;
-        joint.MaxForce = 10000f * targetPhysics.Mass;
+        joint.MaxForce = 10000f;
 
         Dirty(tethered);
         Dirty(component);
