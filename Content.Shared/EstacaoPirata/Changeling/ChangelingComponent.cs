@@ -184,4 +184,6 @@ public struct HumanoidData
     public HumanoidAppearanceComponent? AppearanceComponent;
 
     public string? Dna;
+
+    public EntityUid? EntityUid;
 }
