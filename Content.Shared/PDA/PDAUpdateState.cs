@@ -9,7 +9,7 @@ namespace Content.Shared.PDA
     {
         public bool FlashlightEnabled;
         public bool HasPen;
-        public PDAIdInfoText PdaOwnerInfo;
+        public PDAIdInfoText PDAOwnerInfo;
         public StationAlert StationAlert;
         public string? StationName;
         public bool HasUplink;
@@ -22,7 +22,7 @@ namespace Content.Shared.PDA
         {
             FlashlightEnabled = flashlightEnabled;
             HasPen = hasPen;
-            PdaOwnerInfo = pdaOwnerInfo;
+            PDAOwnerInfo = pdaOwnerInfo;
             HasUplink = hasUplink;
             CanPlayMusic = canPlayMusic;
             StationName = stationName;

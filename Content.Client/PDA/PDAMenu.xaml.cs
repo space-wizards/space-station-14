@@ -92,18 +92,18 @@ namespace Content.Client.PDA
         {
             FlashLightToggleButton.IsActive = state.FlashlightEnabled;
 
-            if (state.PdaOwnerInfo.ActualOwnerName != null)
+            if (state.PDAOwnerInfo.ActualOwnerName != null)
             {
                 PdaOwnerLabel.SetMarkup(Loc.GetString("comp-pda-ui-owner",
-                    ("ActualOwnerName", state.PdaOwnerInfo.ActualOwnerName)));
+                    ("ActualOwnerName", state.PDAOwnerInfo.ActualOwnerName)));
             }
 
 
-            if (state.PdaOwnerInfo.IdOwner != null || state.PdaOwnerInfo.JobTitle != null)
+            if (state.PDAOwnerInfo.IdOwner != null || state.PDAOwnerInfo.JobTitle != null)
             {
                 IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
-                    ("Owner",state.PdaOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
-                    ("JobTitle",state.PdaOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
+                    ("Owner",state.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
+                    ("JobTitle",state.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
             }
             else
             {
@@ -137,7 +137,7 @@ namespace Content.Client.PDA
 
             AddressLabel.Text = state.Address?.ToUpper() ?? " - ";
 
-            EjectIdButton.IsActive = state.PdaOwnerInfo.IdOwner != null || state.PdaOwnerInfo.JobTitle != null;
+            EjectIdButton.IsActive = state.PDAOwnerInfo.IdOwner != null || state.PDAOwnerInfo.JobTitle != null;
             EjectPenButton.IsActive = state.HasPen;
             ActivateMusicButton.Visible = state.CanPlayMusic;
             ShowUplinkButton.Visible = state.HasUplink;
