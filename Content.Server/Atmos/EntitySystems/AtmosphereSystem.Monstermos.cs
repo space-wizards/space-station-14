@@ -454,7 +454,7 @@ namespace Content.Server.Atmos.EntitySystems
                 AddActiveTile(gridAtmosphere, otherTile);
                 var otherTile2 = otherTile.AdjacentTiles[otherTile.MonstermosInfo.CurrentTransferDirection.ToIndex()];
                 if (otherTile2?.Air == null) continue;
-                var sum = otherTile2.Air.TotalMoles * 0.2f;
+                var sum = otherTile2.Air.TotalMoles * Atmospherics.SpacingEscapeRatio;
                 totalMolesRemoved += sum;
                 otherTile.MonstermosInfo.CurrentTransferAmount += sum;
                 otherTile2.MonstermosInfo.CurrentTransferAmount += otherTile.MonstermosInfo.CurrentTransferAmount;
@@ -467,7 +467,7 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile2.PressureDirection = otherTile.MonstermosInfo.CurrentTransferDirection;
                 }
 
-                if (tile.Air != null && tile.Air.Pressure > 20.0)
+                if (tile.Air != null && tile.Air.Pressure > Atmospherics.SpacingMinGas)
                 {
                     // Transfer the air into the other tile (space wind :)
                     ReleaseGasTo(otherTile.Air!, otherTile2.Air!, sum);

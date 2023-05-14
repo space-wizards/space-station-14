@@ -300,6 +300,19 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float MaxTransferRate = 200;
 
+        /// <summary>
+        ///     What fraction of air from a spaced tile escapes every tick.
+        ///     1.0 for instant spacing, 0.2 means 20% of remaining air lost each time
+        /// </summary>
+        public const float SpacingEscapeRatio = 0.2f;
+
+        /// <summary>
+        ///     Minimum amount of air allowed on a spaced tile before it is reset to 0 immediately in kPa
+        ///     Since the decay due to SpacingEscapeRatio follows a curve, it would never reach 0.0 exactly
+        ///     unless we truncate it somewhere.
+        /// </summary>
+        public const float SpacingMinGas = 5.0f;
+
         #endregion
     }
 
