@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 ﻿using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -71,35 +72,24 @@ public sealed class PoissonDiskSampler
         var state = new State
         {
             Grid = new Vector2?[settings.GridWidth, settings.GridHeight],
-            ActivePoints = new List<Vector2>(),
-            Points = new List<Vector2>()
+            ActivePoints = new List<Vector2>()
         };
 
-        AddFirstPoint(ref settings, ref state);
+        var enumerator = new SampleEnumerator(this, state, settings, pointsPerIteration);
 
-        while (state.ActivePoints.Count != 0)
+        var points = new List<Vector2>();
+
+        while (enumerator.MoveNext(out var point))
         {
-            var listIndex = _random.Next(state.ActivePoints.Count);
-
-            var point = state.ActivePoints[listIndex];
-            var found = false;
-
-            for (var k = 0; k < pointsPerIteration; k++)
-            {
-                found |= AddNextPoint(point, ref settings, ref state);
-            }
-
-            if (!found)
-                state.ActivePoints.RemoveAt(listIndex);
+            points.Add(point.Value);
         }
 
-        return state.Points;
+        return points;
     }
 
-    private void AddFirstPoint(ref SampleSettings settings, ref State state)
+    private Vector2 AddFirstPoint(ref SampleSettings settings, ref State state)
     {
-        var added = false;
-        while (!added)
+        while (true)
         {
             var d = _random.NextDouble();
             var xr = settings.TopLeft.X + settings.Dimensions.X * d;
@@ -111,20 +101,18 @@ public sealed class PoissonDiskSampler
             if (settings.RejectionSqDistance != null &&
                 (settings.Center - p).LengthSquared > settings.RejectionSqDistance)
                 continue;
-            added = true;
 
             var index = Denormalize(p, settings.TopLeft, settings.CellSize);
 
             state.Grid[(int) index.X, (int) index.Y] = p;
 
             state.ActivePoints.Add(p);
-            state.Points.Add(p);
+            return p;
         }
     }
 
-    private bool AddNextPoint(Vector2 point, ref SampleSettings settings, ref State state)
+    private Vector2? AddNextPoint(Vector2 point, ref SampleSettings settings, ref State state)
     {
-        var found = false;
         var q = GenerateRandomAround(point, settings.MinimumDistance);
 
         if (q.X >= settings.TopLeft.X && q.X < settings.LowerRight.X &&
@@ -148,14 +136,13 @@ public sealed class PoissonDiskSampler
 
             if (!tooClose)
             {
-                found = true;
                 state.ActivePoints.Add(q);
-                state.Points.Add(q);
                 state.Grid[(int) qIndex.X, (int) qIndex.Y] = q;
+                return q;
             }
         }
 
-        return found;
+        return null;
     }
 
     private Vector2 GenerateRandomAround(Vector2 center, float minimumDistance)
@@ -177,13 +164,80 @@ public sealed class PoissonDiskSampler
         return new Vector2((int) ((point.X - origin.X) / cellSize), (int) ((point.Y - origin.Y) / cellSize));
     }
 
-    private struct State
+    public struct SampleEnumerator
     {
-        public Vector2?[,] Grid;
-        public List<Vector2> ActivePoints, Points;
+        private PoissonDiskSampler _pds;
+        private State _state;
+        private SampleSettings _settings;
+        // These variables make up the state machine.
+        private bool _returnedFirstPoint;
+        private int _pointsPerIteration;
+        private int _iterationListIndex;
+        private bool _iterationFound;
+        private int _iterationPosition;
+
+        // This has internal access because C# nested type access is being weird.
+        internal SampleEnumerator(PoissonDiskSampler pds, State state, SampleSettings settings, int ppi)
+        {
+            _pds = pds;
+            _state = state;
+            _settings = settings;
+            _pointsPerIteration = ppi;
+        }
+
+        public bool MoveNext([NotNullWhen(true)] out Vector2? point)
+        {
+            // First point is chosen via a very particular method.
+            if (!_returnedFirstPoint)
+            {
+                _returnedFirstPoint = true;
+                point = _pds.AddFirstPoint(ref _settings, ref _state);
+                return true;
+            }
+
+            // Remaining points have to be fed out carefully.
+            // We can be interrupted (by a successful point) mid-stream.
+            while (_state.ActivePoints.Count != 0)
+            {
+                if (_iterationPosition == 0)
+                {
+                    // First point of iteration.
+                    _iterationListIndex = _pds._random.Next(_state.ActivePoints.Count);
+                    _iterationFound = false;
+                }
+
+                var basePoint = _state.ActivePoints[_iterationListIndex];
+
+                point = _pds.AddNextPoint(basePoint, ref _settings, ref _state);
+
+                // Set this now, return later after processing is complete.
+                _iterationFound |= point != null;
+
+                // Iteration loop advance.
+                _iterationPosition++;
+                if (_iterationPosition == _pointsPerIteration)
+                {
+                    // Reached end of this iteration.
+                    _iterationPosition = 0;
+                    if (!_iterationFound)
+                        _state.ActivePoints.RemoveAt(_iterationListIndex);
+                }
+
+                if (point != null)
+                    return true;
+            }
+            point = null;
+            return false;
+        }
     }
 
-    private struct SampleSettings
+    internal struct State
+    {
+        public Vector2?[,] Grid;
+        public List<Vector2> ActivePoints;
+    }
+
+    internal struct SampleSettings
     {
         public Vector2 TopLeft, LowerRight, Center;
         public Vector2 Dimensions;
