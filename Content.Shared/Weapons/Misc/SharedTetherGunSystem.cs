@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Throwing;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -15,8 +15,12 @@ public abstract class SharedTetherGunSystem : EntitySystem
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] private readonly ThrownItemSystem _thrown = default!;
 
     private const string TetherJoint = "tether";
+
+    private const float SpinVelocity = 4f;
+    private const float AngularChange = 1f;
 
     public override void Initialize()
     {
@@ -24,6 +28,31 @@ public abstract class SharedTetherGunSystem : EntitySystem
         SubscribeLocalEvent<TetherGunComponent, ActivateInWorldEvent>(OnTetherActivate);
         SubscribeLocalEvent<TetherGunComponent, AfterInteractEvent>(OnTetherRanged);
         SubscribeAllEvent<RequestTetherMoveEvent>(OnTetherMove);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        // Just to set the angular velocity due to joint funnies
+        var tetheredQuery = EntityQueryEnumerator<TetheredComponent, PhysicsComponent>();
+
+        while (tetheredQuery.MoveNext(out var uid, out _, out var physics))
+        {
+            var sign = Math.Sign(physics.AngularVelocity);
+
+            if (sign == 0)
+            {
+                sign = 1;
+            }
+
+            var targetVelocity = SpinVelocity * sign;
+
+            var shortFall = Math.Clamp(targetVelocity - physics.AngularVelocity, -SpinVelocity, SpinVelocity);
+            shortFall *= frameTime * AngularChange;
+
+            _physics.ApplyAngularImpulse(uid, shortFall, body: physics);
+        }
     }
 
     private void OnTetherMove(RequestTetherMoveEvent msg, EntitySessionEventArgs args)
@@ -110,19 +139,26 @@ public abstract class SharedTetherGunSystem : EntitySystem
             StopTether(component);
         }
 
+        // Target updates
         TransformSystem.Unanchor(target, targetXform);
         component.Tethered = target;
         var tethered = EnsureComp<TetheredComponent>(target);
         _physics.SetBodyStatus(targetPhysics, BodyStatus.InAir, false);
         _physics.SetSleepingAllowed(target, targetPhysics, false);
         tethered.Tetherer = gunUid;
-
-        var tether = Spawn("TetherEntity", Transform(target).MapPosition);
-        var tetherPhysics = Comp<PhysicsComponent>(tether); ;
-        component.TetherEntity = tether;
-
-        _physics.WakeBody(tether);
+        tethered.OriginalAngularDamping = targetPhysics.AngularDamping;
+        _physics.SetAngularDamping(targetPhysics, 0f);
+        _physics.SetLinearDamping(targetPhysics, 0f);
+        _physics.SetAngularVelocity(target, SpinVelocity, body: targetPhysics);
         _physics.WakeBody(target, body: targetPhysics);
+        var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
+        thrown.Thrower = gunUid;
+
+        // Invisible tether entity
+        var tether = Spawn("TetherEntity", Transform(target).MapPosition);
+        var tetherPhysics = Comp<PhysicsComponent>(tether);
+        component.TetherEntity = tether;
+        _physics.WakeBody(tether);
 
         var joint = _joints.CreateMouseJoint(tether, target, id: TetherJoint);
 
@@ -149,8 +185,12 @@ public abstract class SharedTetherGunSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(component.Tethered, out var targetPhysics))
         {
+            var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
+            _thrown.LandComponent(component.Tethered.Value, thrown, targetPhysics);
+
             _physics.SetBodyStatus(targetPhysics, BodyStatus.OnGround);
             _physics.SetSleepingAllowed(component.Tethered.Value, targetPhysics, true);
+            _physics.SetAngularDamping(targetPhysics, Comp<TetheredComponent>(component.Tethered.Value).OriginalAngularDamping);
         }
 
         RemCompDeferred<TetheredComponent>(component.Tethered.Value);

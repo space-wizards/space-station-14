@@ -64,6 +64,15 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             coords = EntityCoordinates.FromMap(_mapManager.GetMapEntityId(mouseWorldPos.MapId), mouseWorldPos, TransformSystem);
         }
 
+        const float BufferDistance = 0.1f;
+
+        if (TryComp<TransformComponent>(gun.TetherEntity, out var tetherXform) &&
+            tetherXform.Coordinates.TryDistance(EntityManager, TransformSystem, coords, out var distance) &&
+            distance < BufferDistance)
+        {
+            return;
+        }
+
         RaisePredictiveEvent(new RequestTetherMoveEvent()
         {
             Coordinates = coords
