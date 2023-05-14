@@ -228,7 +228,7 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-      noRot: true
+      snapCardinals: true
     - type: Appearance
     - type: PipeColorVisuals
     - type: Rotatable
@@ -272,7 +272,7 @@
           map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
-          renderingStrategy: SnapToCardinals
+          renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
         enum.PowerDeviceVisuals.Powered:
@@ -313,7 +313,7 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
-          renderingStrategy: SnapToCardinals
+          renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
         enum.PowerDeviceVisuals.Powered:
