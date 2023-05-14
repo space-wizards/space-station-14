@@ -12,7 +12,7 @@
         - id: ClothingOuterHardsuitEVA
         - id: ClothingHeadHelmetEVA
         - id: ClothingMaskBreath
-        
+
 #Prisoner EVA
 - type: entity
   id: SuitStorageEVAPrisoner
