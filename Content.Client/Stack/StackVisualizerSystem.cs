@@ -10,10 +10,10 @@ public sealed class StackVisualizerSystem : VisualizerSystem<StackVisualsCompone
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StackVisualsComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<StackVisualsComponent, ComponentInit>(OnComponentInit);
     }
 
-    private void OnInit(EntityUid uid, StackVisualsComponent comp, ComponentInit args)
+    private void OnComponentInit(EntityUid uid, StackVisualsComponent comp, ComponentInit args)
     {
         if (comp.IsComposite
             && comp.SpriteLayers.Count > 0
