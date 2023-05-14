@@ -66,7 +66,6 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         RaisePredictiveEvent(new RequestTetherMoveEvent()
         {
-            Tethered = gun.TetherEntity.Value,
             Coordinates = coords
         });
     }

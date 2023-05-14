@@ -161,7 +161,6 @@ public abstract class SharedTetherGunSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class RequestTetherMoveEvent : EntityEventArgs
     {
-        public EntityUid Tethered;
         public EntityCoordinates Coordinates;
     }
 }
