@@ -41,12 +41,12 @@
   - type: Anchorable
   - type: Pullable
   - type: Appearance
-  - type: GenericEnumVisualizer
-    key: enum.KitchenSpikeVisuals.Status
-    layer: 0
-    states:
-      enum.KitchenSpikeStatus.Empty: spike
-      enum.KitchenSpikeStatus.Bloody: spikebloody
+  - type: GenericVisualizer
+    visuals:
+      enum.KitchenSpikeVisuals.Status:
+        base:
+          Empty: { state: spike }
+          Bloody: { state: spikebloody }
   - type: Construction
     graph: MeatSpike
     node: MeatSpike
