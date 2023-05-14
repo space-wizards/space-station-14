@@ -423,7 +423,7 @@ namespace Content.Server.Storage.EntitySystems
                 _appearance.SetData(uid, StackVisuals.Hide, !storageComp.IsOpen);
         }
 
-        private void RecalculateStorageUsed(ServerStorageComponent storageComp)
+        public void RecalculateStorageUsed(ServerStorageComponent storageComp)
         {
             storageComp.StorageUsed = 0;
             storageComp.SizeCache.Clear();
@@ -706,7 +706,7 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
-        private void UpdateStorageUI(EntityUid uid, ServerStorageComponent storageComp)
+        public void UpdateStorageUI(EntityUid uid, ServerStorageComponent storageComp)
         {
             if (storageComp.Storage == null)
                 return;
