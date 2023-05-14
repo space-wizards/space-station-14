@@ -449,12 +449,29 @@ namespace Content.Server.Atmos.EntitySystems
             for (var i = progressionCount - 1; i >= 0; i--)
             {
                 var otherTile = _depressurizeProgressionOrder[i];
+                if (otherTile?.Air == null) { continue;}
                 if (otherTile.MonstermosInfo.CurrentTransferDirection == AtmosDirection.Invalid) continue;
                 gridAtmosphere.HighPressureDelta.Add(otherTile);
                 AddActiveTile(gridAtmosphere, otherTile);
                 var otherTile2 = otherTile.AdjacentTiles[otherTile.MonstermosInfo.CurrentTransferDirection.ToIndex()];
-                if (otherTile2?.Air == null) continue;
-                var sum = otherTile2.Air.TotalMoles * Atmospherics.SpacingEscapeRatio;
+                if (otherTile2?.Air == null)
+                {
+                    // The tile connecting us to space is spaced already. So just space this tile now.
+                    otherTile.Air!.Clear();
+                    otherTile.Air.Temperature = Atmospherics.TCMB;
+                    continue;
+                }
+                var sum = otherTile.Air.TotalMoles * Atmospherics.SpacingEscapeRatio;
+                if (sum < Atmospherics.SpacingMinGas)
+                {
+                    // Boost the last bit of air draining from the tile.
+                    sum = Math.Min(Atmospherics.SpacingMinGas, otherTile.Air.TotalMoles);
+                }
+                if (sum + otherTile.MonstermosInfo.CurrentTransferAmount > 1000.0f /*Atmospherics.SpacingMaxWind*/)
+                {
+                    // Limit the flow of air out of tiles which have air flowing into them from elsewhere.
+                    sum = Math.Max(0.0f, 1000.0f /*Atmospherics.SpacingMaxWind*/ - otherTile.MonstermosInfo.CurrentTransferAmount);
+                }
                 totalMolesRemoved += sum;
                 otherTile.MonstermosInfo.CurrentTransferAmount += sum;
                 otherTile2.MonstermosInfo.CurrentTransferAmount += otherTile.MonstermosInfo.CurrentTransferAmount;
@@ -467,7 +484,7 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile2.PressureDirection = otherTile.MonstermosInfo.CurrentTransferDirection;
                 }
 
-                if (tile.Air != null && tile.Air.Pressure > Atmospherics.SpacingMinGas)
+                if (otherTile.Air != null && otherTile.Air.Pressure - sum > Atmospherics.SpacingMinGas)
                 {
                     // Transfer the air into the other tile (space wind :)
                     ReleaseGasTo(otherTile.Air!, otherTile2.Air!, sum);
@@ -485,7 +502,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices, visuals);
-                HandleDecompressionFloorRip(mapGrid, otherTile, sum);
+                HandleDecompressionFloorRip(mapGrid, otherTile, otherTile.MonstermosInfo.CurrentTransferAmount);
             }
 
             if (GridImpulse && tileCount > 0)
@@ -618,7 +635,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!MonstermosRipTiles)
                 return;
 
-            var chance = MathHelper.Clamp(sum / 500, 0.005f, 0.5f);
+            var chance = MathHelper.Clamp(0.02f + (sum / Atmospherics.SpacingMaxWind) * 0.3f, 0.005f, 0.3f);
 
             if (sum > 20 && _robustRandom.Prob(chance))
                 PryTile(mapGrid, tile.GridIndices);
