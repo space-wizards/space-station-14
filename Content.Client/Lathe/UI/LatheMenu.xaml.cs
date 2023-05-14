@@ -67,10 +67,13 @@ public sealed partial class LatheMenu : DefaultWindow
         }
     }
 
-    public void PopulateMaterials(EntityUid lathe)
+    public void PopulateMaterials(EntityUid latheUid)
     {
-        if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
+        if (!_entityManager.TryGetComponent<MaterialStorageComponent>(latheUid, out var materials))
             return;
+        if (!_entityManager.TryGetComponent<LatheComponent>(latheUid, out var lathe))
+            return;
+
         Materials.DisposeAllChildren();
 
         foreach (var (id, amount) in materials.Storage)
@@ -79,8 +82,7 @@ public sealed partial class LatheMenu : DefaultWindow
                 continue;
             var name = Loc.GetString(material.Name);
 
-            var multiplier = MathF.Pow(LatheComponent.DefaultPartRatingMaterialUseMultiplier, MachinePartComponent.MaxRating - 1);
-            var row = new MaterialRow(id, amount, 1)
+            var row = new MaterialRow(id, amount, lathe.CanEject, 1, OnEjectPressed)
             {
                 Icon = { Texture = _spriteSystem.Frame0(material.Icon) },
                 ProductName =
@@ -91,31 +93,10 @@ public sealed partial class LatheMenu : DefaultWindow
                             ("amount", amount))
                     }
             };
-
-            row.Eject.OnPressed += (args) => {
-                if (args.Button.Parent?.Parent is not MaterialRow row || row == null)
-                    return;
-                OnEjectPressed?.Invoke(row.Material, row.Amount, null);
-            };
-            row.Eject5.OnPressed += (args) => {
-                if (args.Button.Parent?.Parent is not MaterialRow row || row == null)
-                    return;
-                OnEjectPressed?.Invoke(row.Material, row.Amount, 5);
-            };
-            row.Eject10.OnPressed += (args) => {
-                if (args.Button.Parent?.Parent is not MaterialRow row || row == null)
-                    return;
-                OnEjectPressed?.Invoke(row.Material, row.Amount, 10);
-            };
-            row.Eject30.OnPressed += (args) => {
-                if (args.Button.Parent?.Parent is not MaterialRow row || row == null)
-                    return;
-                OnEjectPressed?.Invoke(row.Material, row.Amount, 30);
-            };
             Materials.AddChild(row);
         }
 
-        PopulateRecipes(lathe);
+        PopulateRecipes(latheUid);
     }
 
     /// <summary>

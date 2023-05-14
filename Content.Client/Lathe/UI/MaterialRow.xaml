@@ -1,6 +1,7 @@
 <PanelContainer xmlns="https://spacestation14.io"
                 HorizontalExpand="True">
-    <BoxContainer Orientation="Horizontal"
+    <BoxContainer Name="Content"
+                  Orientation="Horizontal"
                   HorizontalExpand="True">
         <TextureRect Name="Icon"
                      Access="Public"
@@ -15,21 +16,6 @@
                    StyleClasses="LabelSubText"
                    ClipText="True" />
         </BoxContainer>
-        <Button Name="Eject5"
-                Access="Public"
-                Text="5"
-                StyleClasses="LabelSubText" />
-        <Button Name="Eject10"
-                Access="Public"
-                Text="10"
-                StyleClasses="LabelSubText" />
-        <Button Name="Eject30"
-                Access="Public"
-                Text="30"
-                StyleClasses="LabelSubText" />
-        <Button Name="Eject"
-                Access="Public"
-                Text="{Loc 'lathe-menu-material-eject'}"
-                StyleClasses="LabelSubText" />
+        <!--Here go buttons which added in c#-->
     </BoxContainer>
 </PanelContainer>

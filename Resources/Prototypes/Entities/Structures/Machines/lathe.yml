@@ -665,6 +665,7 @@
         tags:
           - Ore
     - type: Lathe
+      canEject: false
       staticRecipes:
         - SheetSteel30
         - SheetGlass30

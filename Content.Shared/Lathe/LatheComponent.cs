@@ -86,6 +86,12 @@ namespace Content.Shared.Lathe
         public float PartRatingMaterialUseMultiplier = DefaultPartRatingMaterialUseMultiplier;
 
         public const float DefaultPartRatingMaterialUseMultiplier = 0.85f;
+
+        /// <summary>
+        /// Checks if the lather can eject materials from it
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("canEject")]
+        public bool CanEject = true;
         #endregion
     }
 
