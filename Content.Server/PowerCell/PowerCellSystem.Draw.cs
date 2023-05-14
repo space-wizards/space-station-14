@@ -75,18 +75,8 @@ public sealed partial class PowerCellSystem
 
     private void OnDrawCellChanged(EntityUid uid, PowerCellDrawComponent component, PowerCellChangedEvent args)
     {
-        bool canDraw;
-        bool canUse;
-
-        if (args.Ejected)
-        {
-            canDraw = false;
-            canUse = false;
-        }
-        else
-        {
-            canUse = HasActivatableCharge(uid, component);
-            canDraw = HasCharge(uid, float.MinValue);
+        bool canDraw = args.Ejected ?  false : HasCharge(uid, float.MinValue);
+        bool canUse = args.Ejected ?  false : HasActivatableCharge(uid, component);
         }
 
         if (canUse != component.CanUse || canDraw != component.CanDraw)
