@@ -15,6 +15,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Tag;
+using Content.Shared.Throwing;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -42,6 +43,15 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly ThrowingSystem _throw = default!;
+
+    /// <summary>
+    /// Throw any entities that get dumped.
+    /// </summary>
+    /// <remarks>
+    /// Stops people using the shuttle as a free spacing.
+    /// </remarks>
+    public const bool ThrowOnDump = true;
 
     /// <summary>
     /// If enabled then spawns players on an alternate map so they can take a shuttle to the station.
@@ -196,6 +206,10 @@ public sealed class ArrivalsSystem : EntitySystem
             var rotation = xform.LocalRotation;
             _transform.SetCoordinates(uid, new EntityCoordinates(args.FromMapUid!.Value, args.FTLFrom.Transform(xform.LocalPosition)));
             _transform.SetWorldRotation(uid, args.FromRotation + rotation);
+
+            if (ThrowOnDump)
+                _throw.TryThrow(uid, _random.NextVector2(), 3f);
+
             return;
         }
 
