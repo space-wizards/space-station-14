@@ -3,12 +3,11 @@
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             Title="NPC debug"
             MinSize="200 200">
-    <BoxContainer Name="Options" Orientation="Vertical">
+    <BoxContainer Name="Options" Orientation="Vertical" Margin="8 8">
         <controls:StripeBack>
             <Label Text="NPC" HorizontalAlignment="Center"/>
         </controls:StripeBack>
         <BoxContainer Name="NPCBox" Orientation="Vertical">
-            <CheckBox Name="NPCPath" Text="Path"/>
             <CheckBox Name="NPCThonk" Text="Thonk"/>
         </BoxContainer>
         <controls:StripeBack>

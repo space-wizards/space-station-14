@@ -91,6 +91,17 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: SalvageExpeditionsComputerCircuitboard
+  name: salvage expeditions computer board
+  description: A computer printed circuit board for a salvage expeditions computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerSalvageExpedition
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: CargoShuttleConsoleCircuitboard
   name: supply shuttle console board
   description: A computer printed circuit board for a cargo shuttle console.

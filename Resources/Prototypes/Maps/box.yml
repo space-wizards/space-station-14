@@ -6,7 +6,7 @@
   stations:
     Boxstation:
       mapNameTemplate: '{0} Box Station {1}'
-      emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml      
+      emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: 'TG'
@@ -46,4 +46,4 @@
         SecurityCadet: [ 4, 4 ]
         Detective: [ 1, 1 ]
         ResearchAssistant: [ 4, 4 ]
-        Brigmedic: [ 1, 1 ]
+        Paramedic: [ 1, 1 ]

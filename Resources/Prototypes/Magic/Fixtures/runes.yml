@@ -21,11 +21,11 @@
   components:
     - type: Fixtures
       fixtures:
-        - shape:
+        rune:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"
           hard: false
-          id: rune
           mask:
             - ItemMask
           layer:

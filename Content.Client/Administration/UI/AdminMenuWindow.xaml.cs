@@ -7,12 +7,13 @@ namespace Content.Client.Administration.UI
     [GenerateTypedNameReferences]
     public sealed partial class AdminMenuWindow : DefaultWindow
     {
+        public event Action? OnDisposed;
+
         public AdminMenuWindow()
         {
             MinSize = (500, 250);
             Title = Loc.GetString("admin-menu-title");
             RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
             MasterTabContainer.SetTabTitle(0, Loc.GetString("admin-menu-admin-tab"));
             MasterTabContainer.SetTabTitle(1, Loc.GetString("admin-menu-adminbus-tab"));
             MasterTabContainer.SetTabTitle(2, Loc.GetString("admin-menu-atmos-tab"));
@@ -21,5 +22,13 @@ namespace Content.Client.Administration.UI
             MasterTabContainer.SetTabTitle(5, Loc.GetString("admin-menu-players-tab"));
             MasterTabContainer.SetTabTitle(6, Loc.GetString("admin-menu-objects-tab"));
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            OnDisposed?.Invoke();
+            base.Dispose(disposing);
+            OnDisposed = null;
+        }
     }
 }
+

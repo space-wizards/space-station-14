@@ -10,6 +10,25 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
+    private void InitializePickup()
+    {
+        SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleEntityInserted);
+    }
+
+    protected virtual void HandleEntityInserted(EntityUid uid, HandsComponent hands, EntInsertedIntoContainerMessage args)
+    {
+        if (!TryGetHand(uid, args.Container.ID, out var hand))
+        {
+            return;
+        }
+
+        var didEquip = new DidEquipHandEvent(uid, args.Entity, hand);
+        RaiseLocalEvent(uid, didEquip, false);
+
+        var gotEquipped = new GotEquippedHandEvent(uid, args.Entity, hand);
+        RaiseLocalEvent(args.Entity, gotEquipped, false);
+    }
+
     /// <summary>
     ///     Maximum pickup distance for which the pickup animation plays.
     /// </summary>
@@ -104,6 +123,29 @@ public abstract partial class SharedHandsSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///     Tries to pick up an entity into any hand, forcing to drop an item if there are no free hands
+    ///     By default it does check if it's possible to drop items
+    /// </summary>
+    public bool TryForcePickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
+    {
+        if (!Resolve(uid, ref handsComp, false))
+            return false;
+
+        if (TryPickupAnyHand(uid, entity, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
+            return true;
+
+        foreach (var hand in handsComp.Hands.Values)
+        {
+            if (TryDrop(uid, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp) &&
+                TryPickup(uid, entity, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public bool CanPickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
@@ -184,17 +226,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
         _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):user} picked up {ToPrettyString(entity):entity}");
 
         Dirty(hands);
-
-        var didEquip = new DidEquipHandEvent(uid, entity, hand);
-        RaiseLocalEvent(uid, didEquip, false);
-
-        var gotEquipped = new GotEquippedHandEvent(uid, entity, hand);
-        RaiseLocalEvent(entity, gotEquipped, true);
-
-        // TODO this should REALLY be a cancellable thing, not a handled event.
-        // If one of the interactions resulted in the item being dropped, return early.
-        if (gotEquipped.Handled)
-            return;
 
         if (hand == hands.ActiveHand)
             RaiseLocalEvent(entity, new HandSelectedEvent(uid), false);

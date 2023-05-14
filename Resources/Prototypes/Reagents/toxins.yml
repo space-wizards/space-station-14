@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Toxin
   name: reagent-name-toxin
   group: Toxins
@@ -17,7 +17,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 4
 
 - type: reagent
   id: CarpoToxin
@@ -44,7 +44,6 @@
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
-
 
 - type: reagent
   id: ChloralHydrate
@@ -93,19 +92,6 @@
         damage:
           types:
             Poison: 1
-      - !type:ChemCauseRandomDisease
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Mold
-          min: 1
-        diseases:
-          - VentCough
-          - SpaceCold
-          - SpaceFlu
-          - BirdFlew
-          - Plague
-          - TongueTwister
-          - MemeticAmirmir
 
 - type: reagent
   id: PolytrinicAcid
@@ -393,9 +379,6 @@
           damage:
             types:
               Poison: 2
-        - !type:ChemCauseDisease ##Since this mostly just comes from the event you won't ingest that much
-          causeChance: 0.6
-          disease: VentCough
 
 - type: reagent
   id: Corpium
@@ -411,9 +394,6 @@
           damage:
             types:
               Cellular: 1
-        - !type:ChemCauseDisease
-          causeChance: 1
-          disease: ActiveZombieVirus
 
 - type: reagent
   id: UncookedAnimalProteins
@@ -474,3 +454,24 @@
         component: Pacified
         refresh: false
         type: Add
+
+- type: reagent
+  id: Honk
+  name: reagent-name-honk
+  desc: reagent-desc-honk
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal
+        damage:
+          types:
+            Poison: 0.06

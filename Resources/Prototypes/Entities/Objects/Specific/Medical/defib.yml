@@ -1,0 +1,53 @@
+- type: entity
+  id: Defibrillator
+  parent: [ BaseItem, PowerCellSlotMediumItem ]
+  name: defibrillator
+  description: CLEAR! Zzzzat!
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/defib.rsi
+    layers:
+    - state: icon
+    - state: screen
+      map: [ "enum.ToggleVisuals.Layer" ]
+      visible: false
+      shader: unshaded
+    - state: ready
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DefibrillatorVisuals.Ready:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Item
+    size: 50
+  - type: ItemCooldown
+  - type: MultiHandedItem
+  - type: Speech
+  - type: Defibrillator
+    zapHeal:
+      types:
+        Asphyxiation: -40
+  - type: PowerCellDraw
+    useRate: 100
+  - type: Appearance
+  - type: DoAfter
+  - type: UseDelay
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  id: DefibrillatorEmpty
+  parent: Defibrillator
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

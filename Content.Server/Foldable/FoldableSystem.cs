@@ -1,6 +1,6 @@
 using System.Linq;
-using Content.Server.Buckle.Systems;
 using Content.Server.Storage.Components;
+using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Verbs;
@@ -13,7 +13,6 @@ namespace Content.Server.Foldable
     [UsedImplicitly]
     public sealed class FoldableSystem : SharedFoldableSystem
     {
-        [Dependency] private readonly BuckleSystem _buckle = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
@@ -65,20 +64,6 @@ namespace Content.Server.Foldable
             return true;
         }
 
-        /// <summary>
-        /// Set the folded state of the given <see cref="FoldableComponent"/>
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="folded">If true, the component will become folded, else unfolded</param>
-        public override void SetFolded(EntityUid uid, FoldableComponent component, bool folded)
-        {
-            base.SetFolded(uid, component, folded);
-
-            // You can't buckle an entity to a folded object
-            _buckle.StrapSetEnabled(uid, !component.IsFolded);
-        }
-
         #region Verb
 
         private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -90,7 +75,7 @@ namespace Content.Server.Foldable
             {
                 Act = () => TryToggleFold(uid, component),
                 Text = component.IsFolded ? Loc.GetString("unfold-verb") : Loc.GetString("fold-verb"),
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
 
                 // If the object is unfolded and they click it, they want to fold it, if it's folded, they want to pick it up
                 Priority = component.IsFolded ? 0 : 2,

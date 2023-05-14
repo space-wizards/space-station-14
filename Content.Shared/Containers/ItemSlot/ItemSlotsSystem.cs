@@ -433,7 +433,7 @@ namespace Content.Shared.Containers.ItemSlots
                     {
                         verb.Text = Loc.GetString(slot.InsertVerbText);
                         verb.Icon = new SpriteSpecifier.Texture(
-                            new ResourcePath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
+                            new("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
                     }
                     else if (slot.EjectOnInteract)
                     {
@@ -441,7 +441,7 @@ namespace Content.Shared.Containers.ItemSlots
                         // category, we will use a single "Place <item>" verb.
                         verb.Text = Loc.GetString("place-item-verb-text", ("subject", verbSubject));
                         verb.Icon = new SpriteSpecifier.Texture(
-                            new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
+                            new("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
                     }
                     else
                     {
@@ -533,7 +533,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(uid, args.Using.Value, slot))
+                if (!slot.InsertOnInteract || !CanInsert(uid, args.Using.Value, slot))
                     continue;
 
                 var verbSubject = slot.Name != string.Empty
@@ -549,7 +549,7 @@ namespace Content.Shared.Containers.ItemSlots
                     insertVerb.Text = Loc.GetString(slot.InsertVerbText);
                     insertVerb.Icon =
                         new SpriteSpecifier.Texture(
-                            new ResourcePath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
+                            new("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
                 }
                 else if(slot.EjectOnInteract)
                 {
@@ -558,7 +558,7 @@ namespace Content.Shared.Containers.ItemSlots
                     insertVerb.Text = Loc.GetString("place-item-verb-text", ("subject", verbSubject));
                     insertVerb.Icon =
                         new SpriteSpecifier.Texture(
-                            new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
+                            new("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
                 }
                 else
                 {

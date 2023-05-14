@@ -76,6 +76,15 @@ binds:
 - function: CameraReset
   type: State
   key: NumpadNum8
+- function: ZoomOut
+  type: State
+  key: NumpadNum4
+- function: ZoomIn
+  type: State
+  key: NumpadNum6
+- function: ResetZoom
+  type: State
+  key: NumpadNum5
 # Misc
 - function: ShowEscapeMenu
   type: State
@@ -94,12 +103,20 @@ binds:
 - function: FocusLocalChatWindow
   type: State
   key: Period
+- function: FocusEmote
+  type: State
+  mod1: Shift
+  key: Apostrophe
 - function: FocusWhisperChatWindow
   type: State
   key: Comma
 - function: FocusRadioWindow
   type: State
   key: SemiColon
+- function: FocusLOOCWindow
+  type: State
+  mod1: Shift
+  key: Num9
 - function: FocusOOCWindow
   type: State
   key: LBracket
@@ -311,14 +328,32 @@ binds:
   type: State
   key: BackSpace
   canRepeat: true
+- function: TextDelete
+  type: State
+  key: Delete
+  canRepeat: true
+- function: TextWordBackspace
+  type: State
+  key: BackSpace
+  mod1: Control
+  canRepeat: true
+  allowSubCombs: true
+- function: TextWordDelete
+  type: State
+  key: Delete
+  mod1: Control
+  canRepeat: true
+  allowSubCombs: true
 - function: TextNewline
   type: State
   key: Return
   canRepeat: true
+  mod1: Shift
 - function: TextNewline
   type: State
   key: NumpadEnter
   canRepeat: true
+  mod1: Shift
 - function: TextSubmit
   type: State
   key: Return
@@ -368,10 +403,6 @@ binds:
 - function: TextScrollToBottom
   type: State
   key: PageDown
-- function: TextDelete
-  type: State
-  key: Delete
-  canRepeat: true
 - function: TextTabComplete
   type: State
   key: Tab
@@ -404,7 +435,7 @@ binds:
   type: State
   key: Tab
   mod1: Shift
-- function: WindowCloseRecent
+- function: EscapeContext
   type: State
   key: Escape
 - function: WindowCloseAll

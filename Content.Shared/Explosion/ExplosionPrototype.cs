@@ -66,7 +66,7 @@ public sealed class ExplosionPrototype : IPrototype
     public readonly SoundSpecifier Sound = new SoundCollectionSpecifier("explosion");
 
     [DataField("texturePath")]
-    public readonly ResourcePath TexturePath = new("/Textures/Effects/fire.rsi");
+    public readonly ResPath TexturePath = new("/Textures/Effects/fire.rsi");
 
     /// <summary>
     ///     How intense does the explosion have to be at a tile to advance to the next fire texture state?

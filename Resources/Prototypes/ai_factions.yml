@@ -4,6 +4,7 @@
     - NanoTrasen
     - Syndicate
     - Xeno
+    - PetsNT
 
 - type: faction
   id: NanoTrasen
@@ -13,8 +14,17 @@
   - Xeno
 
 - type: faction
+  id: Mouse
+  hostile:
+    - PetsNT
+
+- type: faction
+  id: Passive
+
+- type: faction
   id: PetsNT
   hostile:
+  - Mouse
   - SimpleHostile
   - Xeno
 
@@ -23,6 +33,8 @@
   hostile:
   - NanoTrasen
   - Syndicate
+  - Passive
+  - PetsNT
 
 - type: faction
   id: SimpleNeutral
@@ -33,9 +45,12 @@
   - NanoTrasen
   - SimpleHostile
   - Xeno
+  - PetsNT
 
 - type: faction
   id: Xeno
   hostile:
   - NanoTrasen
   - Syndicate
+  - Passive
+  - PetsNT

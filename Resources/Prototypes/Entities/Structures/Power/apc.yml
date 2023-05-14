@@ -28,10 +28,31 @@
     drawdepth: WallMountedItems
     netsync: false
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    layers:
+    - state: base
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
+    - state: display-charging
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.ChargeState"]
+    - state: lock0-unlocked
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.InterfaceLock"]
+    - state: lock1-unlocked
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.PanelLock"]
+    - state: channel0-auto_on
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Equipment"]
+    - state: channel1-auto_on
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Lighting"]
+    - state: channel2-auto_on
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Environment"]
   - type: Appearance
-    visuals:
-    - type: ApcVisualizer
+  - type: ApcVisuals
   - type: Battery
     maxCharge: 50000
     startingCharge: 0
@@ -69,6 +90,10 @@
     supplyRampTolerance: 1000
     supplyRampRate: 500
   - type: WallMount
+  - type: Wires
+    BoardName: "APC"
+    LayoutId: APC
+  - type: WiresVisuals
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
@@ -112,7 +137,7 @@
     drawdepth: WallMountedItems
     netsync: false
     sprite: Structures/Power/apc.rsi
-    state: apcframe
+    state: frame
   - type: Construction
     graph: APC
     node: apcFrame
@@ -146,8 +171,7 @@
   id: APCConstructed
   suffix: Open
   components:
-  - type: Apc
-    voltage: Apc
+  - type: WiresPanel
     open: true
 
 # APCs in use

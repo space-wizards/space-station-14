@@ -10,7 +10,7 @@
     sprite: Clothing/Head/Helmets/bombsuit.rsi
   - type: IngestionBlocker
   - type: ExplosionResistance
-    resistance: 0.25 # +0.65 from body -> 90%
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
@@ -293,8 +293,6 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/paramedhelm.rsi
   - type: IngestionBlocker
-  - type: DiseaseProtection
-    protection: 0.15
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
