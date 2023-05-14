@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix alerts being off-screen when using default hud layout., type: Fix}
-  id: 3260
-  time: '2023-03-26T13:16:28.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Added margins to the chatbox., type: Tweak}
   id: 3261
   time: '2023-03-26T14:57:29.0000000+00:00'
@@ -2899,3 +2894,9 @@ Entries:
   - {message: Arrivals will auto-orient your camera upon traversal., type: Add}
   id: 3759
   time: '2023-05-14T11:46:29.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Secret''s gamemode weights have been tweaked. Zombies are now much
+      more common, and nuclear emergency is twice as rare.', type: Tweak}
+  id: 3760
+  time: '2023-05-14T12:09:03.0000000+00:00'
