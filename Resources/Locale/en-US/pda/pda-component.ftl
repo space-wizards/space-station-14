@@ -32,18 +32,7 @@ comp-pda-ui-station-acceses-levels = Access: [color=white]{ $AccessLevels }[/col
 
 comp-pda-ui-station-alert-level-instructions = Instructions: [color=white]{ $AlertLevelInstructions }[/color]
 
-comp-pda-ui-station-time =
-    Shift duration: [color=white]{ $hours } { $hours ->
-    [one] hour
-    [few] hours
-    *[other] hours
-                } and { $minutes } { $minutes ->
-    [one] minute
-    [few] minutes
-    *[other] minutes
-                }[/color]
-
-comp-pda-ui-station-time-unknown = Shift duration: Unknown
+comp-pda-ui-station-time = Shift duration: [color=white]{ $time }[/color]
 
 comp-pda-ui-eject-id-button = Eject ID
 
