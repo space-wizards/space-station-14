@@ -34,6 +34,7 @@ public sealed class CardboardBoxComponent : Component
 	/// <summary>
 	/// Whether to prevent the box from making the sound and effect
 	/// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
 	[DataField("quiet")]
 	public bool Quiet = false;
 
