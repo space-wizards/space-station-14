@@ -11,6 +11,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Throwing;
@@ -140,6 +141,7 @@ public sealed class ArrivalsSystem : EntitySystem
                         break;
                     }
 
+                    RemCompDeferred<AutoOrientComponent>(uid);
                     RemCompDeferred<PendingClockInComponent>(uid);
                     shell.WriteLine(Loc.GetString("cmd-arrivals-forced", ("uid", ToPrettyString(uid))));
                 }
@@ -157,7 +159,7 @@ public sealed class ArrivalsSystem : EntitySystem
         _cfgManager.UnsubValueChanged(CCVars.ArrivalsDump, SetArrivalsDump);
     }
 
-    private void OnArrivalsFTL(EntityUid uid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
+    private void OnArrivalsFTL(EntityUid shuttleUid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
     {
         // Any mob then yeet them off the shuttle.
         if (!_cfgManager.GetCVar(CCVars.ArrivalsReturns) && args.FromMapUid != null)
@@ -166,7 +168,7 @@ public sealed class ArrivalsSystem : EntitySystem
             var arrivalsBlacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
             var mobQuery = GetEntityQuery<MobStateComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
-            DumpChildren(uid, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
+            DumpChildren(shuttleUid, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
 
         var pendingQuery = AllEntityQuery<PendingClockInComponent, TransformComponent>();
@@ -175,10 +177,11 @@ public sealed class ArrivalsSystem : EntitySystem
         while (pendingQuery.MoveNext(out var pUid, out _, out var xform))
         {
             // Cheaper to iterate pending arrivals than all children
-            if (xform.GridUid != uid)
+            if (xform.GridUid != shuttleUid)
                 continue;
 
             RemCompDeferred<PendingClockInComponent>(pUid);
+            RemCompDeferred<AutoOrientComponent>(pUid);
         }
     }
 
@@ -245,6 +248,7 @@ public sealed class ArrivalsSystem : EntitySystem
                     ev.Station);
 
                 EnsureComp<PendingClockInComponent>(ev.SpawnResult.Value);
+                EnsureComp<AutoOrientComponent>(ev.SpawnResult.Value);
                 return;
             }
         }
