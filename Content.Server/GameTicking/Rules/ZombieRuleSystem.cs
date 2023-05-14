@@ -251,7 +251,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             (int) Math.Min(
                 Math.Floor((double) playerList.Count / playersPerInfected), maxInfected));
 
-        var secs_delay = _random.NextFloat(20.0f * 60.0f, 30.0f * 60.0f);
+        // How long the zombies have as a group to decide to begin their attack.
+        //   Varies randomly from 20 to 30 minutes. After this the virus begins and they start
+        //   taking zombie virus damage.
+        var groupTimelimit = _random.NextFloat(20.0f * 60.0f, 30.0f * 60.0f);
         for (var i = 0; i < numInfected; i++)
         {
             IPlayerSession zombie;
@@ -284,13 +287,13 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(component.PatientZeroPrototypeID)));
 
             var inCharacterName = string.Empty;
-            // 2 minutes variation between zombies.
-            var personal_delay = _random.NextFloat(0.0f, 2.0f * 60.0f);
+            // Create some variation between the times of each zombie, relative to the time of the group as a whole.
+            var personalDelay = _random.NextFloat(0.0f, 2.0f * 60.0f);
             if (mind.OwnedEntity != null)
             {
                 var pending = EnsureComp<PendingZombieComponent>(mind.OwnedEntity.Value);
                 // Only take damage after this many seconds
-                pending.InfectedSecs = (int)-(secs_delay + personal_delay);
+                pending.InfectedSecs = (int)-(groupTimelimit + personalDelay);
                 EnsureComp<ZombifyOnDeathComponent>(mind.OwnedEntity.Value);
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
 

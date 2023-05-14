@@ -52,6 +52,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
+            SubscribeLocalEvent<PendingZombieComponent, MobStateChangedEvent>(OnPendingMobState);
         }
 
         private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
@@ -72,34 +73,24 @@ namespace Content.Server.Zombies
                 if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
                     continue;
 
+                comp.NextTick = curTime;
+
                 comp.InfectedSecs += 1;
-                if (comp.InfectedSecs == -30)
+                // See if there should be a warning popup for the player.
+                if (comp.InfectionWarnings.TryGetValue(comp.InfectedSecs, out var popupStr))
                 {
-                    _popup.PopupEntity(Loc.GetString("zombie-infection-warning"), uid, uid);
-                }
-                else if (comp.InfectedSecs == 10 || comp.InfectedSecs == 30)
-                {
-                    _popup.PopupEntity(Loc.GetString("zombie-infection-underway"), uid, uid);
+                    _popup.PopupEntity(Loc.GetString(popupStr), uid, uid);
                 }
 
                 if (comp.InfectedSecs < 0)
                 {
-                    // This zombie has a latent virus, probably set up by ZombieRuleSystem
+                    // This zombie has a latent virus, probably set up by ZombieRuleSystem. No damage yet.
                     continue;
-                }
-                else if (comp.InfectedSecs < 120)
-                {
-                    // Once the zombie is in crit, ensure they are taking damage at a reasonable rate (so they are not crit too long)
-                    if (stateQuery.TryGetComponent(uid, out var mobstate) && mobstate.CurrentState == MobState.Critical)
-                    {
-                        comp.InfectedSecs = 120;
-                    }
                 }
 
                 // Pain of becoming a zombie grows over time
                 // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s.
                 var pain_multiple = 0.1 + 0.02 * comp.InfectedSecs + 0.0005 * comp.InfectedSecs * comp.InfectedSecs;
-                comp.NextTick = curTime;
                 _damageable.TryChangeDamage(uid, comp.Damage * pain_multiple, true, false);
             }
 
@@ -154,6 +145,16 @@ namespace Content.Server.Zombies
 
                 // Stop random groaning
                 _autoEmote.RemoveEmote(uid, "ZombieGroan");
+
+            }
+        }
+
+        private void OnPendingMobState(EntityUid uid, PendingZombieComponent pending, MobStateChangedEvent args)
+        {
+            if (args.NewMobState == MobState.Critical)
+            {
+                // Accelerate the process of taking damage to turn into a zombie.
+                pending.InfectedSecs = Math.Max(120, pending.InfectedSecs);
             }
         }
 
