@@ -58,8 +58,22 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
     private void OnBiomeMapInit(EntityUid uid, BiomeComponent component, MapInitEvent args)
     {
-        component.Seed = _random.Next();
-        component.Noise.SetSeed(component.Seed);
+        SetSeed(component, _random.Next());
+    }
+
+    public void SetPrototype(BiomeComponent component, string proto)
+    {
+        if (component.BiomePrototype == proto)
+            return;
+
+        component.BiomePrototype = proto;
+        Dirty(component);
+    }
+
+    public void SetSeed(BiomeComponent component, int seed)
+    {
+        component.Seed = seed;
+        component.Noise.SetSeed(seed);
         Dirty(component);
     }
 

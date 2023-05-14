@@ -34,7 +34,7 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<ConstructionComponent, ConstructionInteractDoAfterEvent>(EnqueueEvent);
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
-            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem), typeof(EncryptionKeySystem)});
+            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem)},  new []{typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
         }
 

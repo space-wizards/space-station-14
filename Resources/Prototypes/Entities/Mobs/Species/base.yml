@@ -86,6 +86,7 @@
   - type: Blindable
   # Other
   - type: Inventory
+  - type: InventorySlots
   - type: Clickable
   - type: InteractionOutline
   - type: Icon
@@ -309,6 +310,7 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: InventorySlots
     - type: ContainerContainer
     - type: Icon
       sprite: Mobs/Species/Human/parts.rsi

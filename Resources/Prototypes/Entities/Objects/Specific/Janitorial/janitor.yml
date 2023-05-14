@@ -327,7 +327,7 @@
     - type: SolutionContainerManager
       solutions:
         drainBuffer:
-          maxVol: 500
+          maxVol: 1000
     - type: DrainableSolution
       solution: drainBuffer
     - type: Damageable

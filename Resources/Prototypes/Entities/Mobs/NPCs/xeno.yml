@@ -89,13 +89,14 @@
     spawned:
     - id: FoodMeatXeno
       amount: 5
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     allowMovement: true
     allowSpeech: true
     makeSentient: true
     name: xeno
     description: You are a xeno, co-operate with your hive to kill all crewmembers!
     rules: You are an antagonist, smack, slash, and wack!
+  - type: GhostTakeoverAvailable
   - type: TypingIndicator
     proto: alien
   - type: Temperature

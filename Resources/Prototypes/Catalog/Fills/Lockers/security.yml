@@ -45,6 +45,35 @@
       - id: ClothingShoesBootsJack
 
 - type: entity
+  id: LockerBrigmedicFilled
+  suffix: Brigmedic, Filled
+  parent: LockerSecurity
+  components:
+  - type: StorageFill
+    contents:
+      - id: Flash
+      - id: WeaponDisabler
+      - id: BrigmedicHypo
+      - id: ClothingOuterHardsuitBrigmed
+      - id: EncryptionKeyMedical
+      - id: BoxSterileMask
+      - id: MedkitFilled
+      - id: MedkitCombatFilled
+        prob: 0.6
+      - id: MedkitAdvancedFilled
+        prob: 0.3
+      - id: MedkitOxygenFilled
+        prob: 0.3
+      - id: MedkitBruteFilled
+        prob: 0.3
+      - id: MedkitToxinFilled
+        prob: 0.3
+      - id: MedkitBurnFilled
+        prob: 0.7
+      - id: OmnizineChemistryBottle
+        prob: 0.1
+
+- type: entity
   id: LockerDetectiveFilled
   suffix: Filled
   parent: LockerDetective

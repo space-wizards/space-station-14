@@ -469,13 +469,6 @@
   name: body scanner computer
   description: A body scanner.
   components:
-  - type: BodyScanner
-  - type: ActivatableUI
-    key: enum.BodyScannerUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.BodyScannerUiKey.Key
-      type: BodyScannerBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 500
   - type: Computer

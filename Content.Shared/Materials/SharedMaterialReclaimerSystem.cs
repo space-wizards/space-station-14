@@ -34,6 +34,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     {
         SubscribeLocalEvent<MaterialReclaimerComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MaterialReclaimerComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MaterialReclaimerComponent, GotEmaggedEvent>(OnEmagged);
@@ -58,6 +59,11 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         component.Enabled = state.Enabled;
         component.MaterialProcessRate = state.MaterialProcessRate;
         component.ItemsProcessed = state.ItemsProcessed;
+    }
+
+    private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
+    {
+        component.Stream?.Stop();
     }
 
     private void OnUnpaused(EntityUid uid, MaterialReclaimerComponent component, ref EntityUnpausedEvent args)

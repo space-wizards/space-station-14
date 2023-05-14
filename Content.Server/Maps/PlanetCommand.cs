@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
+using Content.Server.Parallax;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
@@ -62,8 +63,8 @@ public sealed class PlanetCommand : IConsoleCommand
         MetaDataComponent? metadata = null;
 
         var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
-        biome.BiomePrototype = args[1];
-        biome.Seed = _random.Next();
+        _entManager.System<BiomeSystem>().SetPrototype(biome, args[1]);
+        _entManager.System<BiomeSystem>().SetSeed(biome, _random.Next());
         _entManager.Dirty(biome);
 
         var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);

@@ -160,6 +160,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (!Resolve(uid, ref component))
             return;
 
+        base.Reclaim(uid, item, completion, component);
+
         var xform = Transform(uid);
 
         SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);

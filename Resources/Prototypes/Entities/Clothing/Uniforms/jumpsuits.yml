@@ -387,6 +387,19 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBrigmedic
+  name: brigmedic jumpsuit
+  description: The uniform is issued to qualified persons who have been trained, but no one cares that the training took place half a day.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
+  - type: DiseaseProtection
+    protection: 0.1
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitPrisoner
   name: prisoner jumpsuit
   description: Busted.

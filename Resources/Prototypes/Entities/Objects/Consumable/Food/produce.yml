@@ -133,6 +133,7 @@
   - type: MeleeChemicalInjector
     transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
     solution: food
+    pierceArmor: false
   - type: Extractable
     grindableSolutionName: food
 

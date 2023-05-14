@@ -23,7 +23,6 @@
   - type: StorageFill
     contents:
       - id: MobCat
-        amount: 1
 
 - type: entity
   id: CrateNPCChicken
@@ -54,7 +53,6 @@
   - type: StorageFill
     contents:
       - id: MobCorgi
-        amount: 1
 
 - type: entity
   id: CrateNPCCow
@@ -63,7 +61,6 @@
   - type: StorageFill
     contents:
       - id: MobCow
-        amount: 1
 
 - type: entity
   id: CrateNPCGoat
@@ -72,7 +69,6 @@
   - type: StorageFill
     contents:
       - id: MobGoat
-        amount: 1
 
 - type: entity
   id: CrateNPCGoose
@@ -90,7 +86,6 @@
   - type: StorageFill
     contents:
       - id: MobGorilla
-        amount: 1
 
 - type: entity
   id: CrateNPCMonkeyCube
@@ -99,7 +94,6 @@
   - type: StorageFill
     contents:
       - id: MonkeyCubeBox
-        amount: 1
 
 - type: entity
   id: CrateNPCMouse
@@ -135,7 +129,6 @@
   - type: StorageFill
     contents:
       - id: MobPig
-        amount: 1
 
 - type: entity
   id: CrateNPCSnake
