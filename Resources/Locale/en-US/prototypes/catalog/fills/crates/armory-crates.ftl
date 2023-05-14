@@ -14,4 +14,4 @@ ent-CrateArmoryPistols = pistols crate
     .desc = Contains two standard NT pistols with four mags. Requires Armory access to open.
 
 ent-CrateRevolver = revolver crate
-    .desc = Crate with one reliable Rex revolver, a revolver in case there is a threat for which a regular pistol will not be enough. Requires Armory access to open.
+    .desc = Crate with one reliable Rex revolver, a weapon in case there is a threat for which a regular pistol will not be enough. Requires Armory access to open.

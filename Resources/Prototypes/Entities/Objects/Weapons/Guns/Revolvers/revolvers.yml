@@ -85,7 +85,7 @@
   name: Rex
   parent: BaseWeaponRevolver
   id: WeaponRevolverRex
-  description: Robust revolver with rubberized grip and stainless steel finish, a good argument in dangerous situations. Uses .45 magnum ammo.
+  description: Robust revolver with a rubberized grip and stainless steel finish, a good argument in dangerous situations. Uses .45 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/rex.rsi
