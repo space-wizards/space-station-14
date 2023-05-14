@@ -64,8 +64,6 @@
   parent: BaseBigBox
   description: Kept ya waiting, huh?
   components:
-    - type: CardboardBox
-      quiet: true
     - type: Damageable
       damageModifierSet: FlimsyMetallic #Syndicate boxes should have a bit of protection
     - type: Stealth
