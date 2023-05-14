@@ -568,7 +568,7 @@ namespace Content.Server.Storage.EntitySystems
 
                 foreach (var ent in storageComp.Storage.ContainedEntities)
                 {
-                    if (!stackQuery.TryGetComponent(ent, out var containedStack))
+                    if (!stackQuery.TryGetComponent(ent, out var containedStack) || !insertStack.StackTypeId.Equals(containedStack.StackTypeId))
                         continue;
 
                     var containedCount = containedStack.Count;

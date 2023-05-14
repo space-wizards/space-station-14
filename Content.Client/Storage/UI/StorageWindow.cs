@@ -116,7 +116,7 @@ namespace Content.Client.Storage.UI
             _entityManager.TryGetComponent(entity, out ItemComponent? item);
             _entityManager.TryGetComponent(entity, out StackComponent? stack);
             var count = stack?.Count ?? 1;
-            var size = count * item?.Size ?? 0;
+            var size = count * item?.Size;
 
             button.AddChild(new BoxContainer
             {
