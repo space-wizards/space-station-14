@@ -55,15 +55,12 @@ namespace Content.Server.GameTicking
                     startAttempt.Uncancel();
                     RaiseLocalEvent(startAttempt);
 
-                    _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
-                            ("failedGameMode", presetTitle),
-                            ("fallbackMode", Loc.GetString(preset))));
-
-                    presetTitle = preset;
-
                     if (!startAttempt.Cancelled)
                     {
+                        _chatManager.DispatchServerAnnouncement(
+                            Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
+                                ("failedGameMode", presetTitle),
+                                ("fallbackMode", Loc.GetString(preset))));
                         RefreshLateJoinAllowed();
                         startFailed = false;
                         break;
