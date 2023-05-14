@@ -59,7 +59,7 @@
         - Paper
   - type: Appearance
   - type: EntityStorageVisuals
-    stateOpen: open_overlay
+    stateDoorOpen: open_overlay
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:

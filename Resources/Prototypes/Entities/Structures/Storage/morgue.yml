@@ -128,9 +128,9 @@
       entity_storage: !type:Container
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: crema_closed
+    stateBaseClosed: crema_closed
     stateBaseOpen: crema_open
-    stateOpen: crema_tray
+    stateDoorOpen: crema_tray
   - type: GenericVisualizer
     visuals:
       enum.CrematoriumVisuals.Burning:

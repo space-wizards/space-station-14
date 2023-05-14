@@ -370,5 +370,5 @@
     state: crate_icon
   - type: Appearance
   - type: EntityStorageVisuals
-    stateOpen: crate_open
-    stateClosed: crate_door
+    stateDoorOpen: crate_open
+    stateDoorClosed: crate_door

@@ -16,14 +16,14 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
     /// </summary>
     private void OnComponentInit(EntityUid uid, EntityStorageVisualsComponent comp, ComponentInit args)
     {
-        if (comp.StateBase == null)
+        if (comp.StateBaseClosed == null)
             return;
 
-        comp.StateBaseOpen ??= comp.StateBase;
+        comp.StateBaseOpen ??= comp.StateBaseClosed;
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBase);
+        sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseClosed);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, EntityStorageVisualsComponent comp, ref AppearanceChangeEvent args)
@@ -38,24 +38,24 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
             if (open)
             {
                 args.Sprite.LayerSetVisible(StorageVisualLayers.Door, true);
-                if (comp.StateOpen != null)
-                    args.Sprite.LayerSetState(StorageVisualLayers.Door, comp.StateOpen);
+                if (comp.StateDoorOpen != null)
+                    args.Sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorOpen);
 
                 if (comp.StateBaseOpen != null)
                     args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseOpen);
             }
             else
             {
-                if (comp.StateClosed != null)
+                if (comp.StateDoorClosed != null)
                 {
-                    args.Sprite.LayerSetState(StorageVisualLayers.Door, comp.StateClosed);
+                    args.Sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorClosed);
                     args.Sprite.LayerSetVisible(StorageVisualLayers.Door, true);
                 }
                 else
                     args.Sprite.LayerSetVisible(StorageVisualLayers.Door, false);
 
-                if (comp.StateBase != null)
-                    args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBase);
+                if (comp.StateBaseClosed != null)
+                    args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseClosed);
             }
         }
 

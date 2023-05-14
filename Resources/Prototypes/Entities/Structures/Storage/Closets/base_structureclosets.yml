@@ -74,9 +74,9 @@
             max: 1
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: generic_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: generic_door
 
 #Wall Closet
 - type: entity

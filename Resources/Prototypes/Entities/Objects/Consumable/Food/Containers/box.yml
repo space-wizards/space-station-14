@@ -161,9 +161,9 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     heldPrefix: box
   - type: Appearance
-  - type: EntityEntityStorageVisuals
-    stateOpen: box-open
-    stateClosed: box
+  - type: EntityStorageVisuals
+    stateDoorOpen: box-open
+    stateDoorClosed: box
   - type: StaticPrice
     price: 0
 

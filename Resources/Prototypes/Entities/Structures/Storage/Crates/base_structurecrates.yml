@@ -52,8 +52,8 @@
         acts: ["Destruction"]
   - type: Appearance
   - type: EntityStorageVisuals
-    stateOpen: open
-    stateClosed: closed
+    stateDoorOpen: open
+    stateDoorClosed: closed
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label

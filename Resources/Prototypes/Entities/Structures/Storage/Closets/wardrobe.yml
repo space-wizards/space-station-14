@@ -16,9 +16,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: blue_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: blue_door
 
 # Pink wardrobe
 - type: entity
@@ -29,9 +29,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: pink_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: pink_door
 
 # Black wardrobe
 - type: entity
@@ -42,9 +42,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: black_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: black_door
 
 # Green wardrobe
 - type: entity
@@ -55,9 +55,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: green_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: green_door
 
 # Prison wardrobe
 - type: entity
@@ -67,9 +67,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: orange_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: orange_door
 
 # Yellow wardrobe
 - type: entity
@@ -80,9 +80,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: yellow_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: yellow_door
 
 # White wardrobe
 - type: entity
@@ -93,9 +93,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: white_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: white_door
 
 # Grey wardrobe
 - type: entity
@@ -106,9 +106,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: grey_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: grey_door
 
 # Mixed wardrobe
 - type: entity
@@ -119,9 +119,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: mixed_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: mixed_door
 
 # Jobs
 
@@ -132,9 +132,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: red_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: red_door
 
 - type: entity
   id: WardrobeAtmospherics
@@ -143,9 +143,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: atmos_wardrobe_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: atmos_wardrobe_door
 
 - type: entity
   id: ClosetJanitor

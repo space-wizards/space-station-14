@@ -6,9 +6,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: generic_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: generic_door
 
 - type: entity
   id: ClosetWallEmergency
@@ -18,9 +18,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: emergency
-    stateOpen: emergency_open
-    stateClosed: emergency_door
+    stateBaseClosed: emergency
+    stateDoorOpen: emergency_open
+    stateDoorClosed: emergency_door
 
 - type: entity
   id: ClosetWallFire
@@ -30,9 +30,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: fire
-    stateOpen: fire_open
-    stateClosed: fire_door
+    stateBaseClosed: fire
+    stateDoorOpen: fire_open
+    stateDoorClosed: fire_door
 
 - type: entity
   id: ClosetWallBlue
@@ -42,9 +42,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: blue_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: blue_door
 
 - type: entity
   id: ClosetWallPink
@@ -54,9 +54,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: pink_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: pink_door
 
 - type: entity
   id: ClosetWallBlack
@@ -66,9 +66,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: black_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: black_door
 
 - type: entity
   id: ClosetWallGreen
@@ -78,9 +78,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: green_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: green_door
 
 - type: entity
   id: ClosetWallOrange
@@ -89,9 +89,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: orange_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: orange_door
 
 - type: entity
   id: ClosetWallYellow
@@ -101,9 +101,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: yellow_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: yellow_door
 
 - type: entity
   id: ClosetWallWhite
@@ -113,9 +113,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: white_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: white_door
 
 - type: entity
   id: ClosetWallGrey
@@ -125,9 +125,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: gray_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: gray_door
 
 - type: entity
   id: ClosetWallMixed
@@ -137,9 +137,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: mixed_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: mixed_door
 
 - type: entity
   id: ClosetWallAtmospherics
@@ -148,9 +148,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: generic
-    stateOpen: generic_open
-    stateClosed: atmos_door
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: atmos_door
 
 - type: entity
   id: LockerWallMedical
@@ -159,8 +159,8 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: med
-    stateOpen: med_open
-    stateClosed: med_door
+    stateBaseClosed: med
+    stateDoorOpen: med_open
+    stateDoorClosed: med_door
   - type: AccessReader
     access: [["Medical"]]

@@ -46,8 +46,8 @@
         map: ["enum.StorageVisualLayers.Door"]
     - type: Appearance
     - type: EntityStorageVisuals
-      stateBase: cardboard
-      stateOpen: cardboard_open
+      stateBaseClosed: cardboard
+      stateDoorOpen: cardboard_open
     - type: Tag
       tags:
         - DoorBumpOpener

@@ -7,9 +7,9 @@ public sealed class EntityStorageVisualsComponent : Component
     /// <summary>
     /// The RSI state used for the base layer of the storage entity sprite while the storage is closed.
     /// </summary>
-    [DataField("stateBase")]
+    [DataField("stateBaseClosed")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string? StateBase;
+    public string? StateBaseClosed;
 
     /// <summary>
     /// The RSI state used for the base layer of the storage entity sprite while the storage is open.
@@ -21,16 +21,16 @@ public sealed class EntityStorageVisualsComponent : Component
     /// <summary>
     /// The RSI state used for the door/lid while the storage is open.
     /// </summary>
-    [DataField("stateOpen")]
+    [DataField("stateDoorOpen")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string? StateOpen;
+    public string? StateDoorOpen;
 
     /// <summary>
     /// The RSI state used for the door/lid while the storage is closed.
     /// </summary>
-    [DataField("stateClosed")]
+    [DataField("stateDoorClosed")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string? StateClosed;
+    public string? StateDoorClosed;
 
     /// <summary>
     /// The RSI state used for the lock indicator while the storage is locked.

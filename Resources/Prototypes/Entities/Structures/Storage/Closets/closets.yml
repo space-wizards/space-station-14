@@ -7,9 +7,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: eng
-    stateOpen: eng_open
-    stateClosed: eng_tool_door
+    stateBaseClosed: eng
+    stateDoorOpen: eng_open
+    stateDoorClosed: eng_tool_door
 
 # Radiation suit closet
 - type: entity
@@ -20,9 +20,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: eng
-    stateOpen: eng_open
-    stateClosed: eng_rad_door
+    stateBaseClosed: eng
+    stateDoorOpen: eng_open
+    stateDoorClosed: eng_rad_door
 
 # Emergency closet
 - type: entity
@@ -33,9 +33,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: emergency
-    stateOpen: emergency_open
-    stateClosed: emergency_door
+    stateBaseClosed: emergency
+    stateDoorOpen: emergency_open
+    stateDoorClosed: emergency_door
 
 # Fire safety closet
 - type: entity
@@ -46,9 +46,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: fire
-    stateOpen: fire_open
-    stateClosed: fire_door
+    stateBaseClosed: fire
+    stateDoorOpen: fire_open
+    stateDoorClosed: fire_door
 
 # EOD closet
 - type: entity
@@ -59,9 +59,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: bomb
-    stateOpen: bomb_open
-    stateClosed: bomb_door
+    stateBaseClosed: bomb
+    stateDoorOpen: bomb_open
+    stateDoorClosed: bomb_door
 
 # Biohazard
 
@@ -74,9 +74,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: bio
-    stateOpen: bio_open
-    stateClosed: bio_door
+    stateBaseClosed: bio
+    stateDoorOpen: bio_open
+    stateDoorClosed: bio_door
 
 # Virology variant
 - type: entity
@@ -85,9 +85,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: bio_viro
-    stateOpen: bio_viro_open
-    stateClosed: bio_viro_door
+    stateBaseClosed: bio_viro
+    stateDoorOpen: bio_viro_open
+    stateDoorClosed: bio_viro_door
 
 # Security variant
 - type: entity
@@ -96,9 +96,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: bio_sec
-    stateOpen: bio_sec_open
-    stateClosed: bio_sec_door
+    stateBaseClosed: bio_sec
+    stateDoorOpen: bio_sec_open
+    stateDoorClosed: bio_sec_door
 
 # Janitor variant
 - type: entity
@@ -107,9 +107,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: bio_jan
-    stateOpen: bio_jan_open
-    stateClosed: bio_jan_door
+    stateBaseClosed: bio_jan
+    stateDoorOpen: bio_jan_open
+    stateDoorClosed: bio_jan_door
 
 # Maintenance closet
 - type: entity
@@ -120,8 +120,8 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateOpen: generic_open
-    stateClosed: generic_door
+    stateDoorOpen: generic_open
+    stateDoorClosed: generic_door
 
 # Bluespace closet
 - type: entity

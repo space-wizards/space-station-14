@@ -6,9 +6,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: cabinet
-    stateOpen: cabinet_open
-    stateClosed: cabinet_door
+    stateBaseClosed: cabinet
+    stateDoorOpen: cabinet_open
+    stateDoorClosed: cabinet_door
 
   - type: AccessReader
     access: [["Bar"]]
@@ -26,9 +26,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: qm
-    stateOpen: qm_open
-    stateClosed: qm_door
+    stateBaseClosed: qm
+    stateDoorOpen: qm_open
+    stateDoorClosed: qm_door
   - type: AccessReader
     access: [["Quartermaster"]]
 
@@ -40,9 +40,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: mining
-    stateOpen: mining_open
-    stateClosed: mining_door
+    stateBaseClosed: mining
+    stateDoorOpen: mining_open
+    stateDoorClosed: mining_door
   - type: AccessReader
     access: [["Salvage"]]
 
@@ -54,9 +54,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: cap
-    stateOpen: cap_open
-    stateClosed: cap_door
+    stateBaseClosed: cap
+    stateDoorOpen: cap_open
+    stateDoorClosed: cap_door
   - type: AccessReader
     access: [["Captain"]]
 
@@ -67,9 +67,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: hop
-    stateOpen: hop_open
-    stateClosed: hop_door
+    stateBaseClosed: hop
+    stateDoorOpen: hop_open
+    stateDoorClosed: hop_door
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
 
@@ -81,9 +81,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: ce
-    stateOpen: ce_open
-    stateClosed: ce_door
+    stateBaseClosed: ce
+    stateDoorOpen: ce_open
+    stateDoorClosed: ce_door
   - type: AccessReader
     access: [ [ "ChiefEngineer" ] ]
 
@@ -95,9 +95,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: eng
-    stateOpen: eng_open
-    stateClosed: eng_elec_door
+    stateBaseClosed: eng
+    stateDoorOpen: eng_open
+    stateDoorClosed: eng_elec_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
 
@@ -109,9 +109,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: eng
-    stateOpen: eng_open
-    stateClosed: eng_weld_door
+    stateBaseClosed: eng
+    stateDoorOpen: eng_open
+    stateDoorClosed: eng_weld_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
 
@@ -123,9 +123,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: atmos
-    stateOpen: atmos_open
-    stateClosed: atmos_door
+    stateBaseClosed: atmos
+    stateDoorOpen: atmos_open
+    stateDoorClosed: atmos_door
   - type: AccessReader
     access: [ [ "Atmospherics" ] ]
 
@@ -137,9 +137,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: eng_secure
-    stateOpen: eng_secure_open
-    stateClosed: eng_secure_door
+    stateBaseClosed: eng_secure
+    stateDoorOpen: eng_secure_open
+    stateDoorClosed: eng_secure_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
 
@@ -151,9 +151,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: freezer
-    stateOpen: freezer_open
-    stateClosed: freezer_door
+    stateBaseClosed: freezer
+    stateDoorOpen: freezer_open
+    stateDoorClosed: freezer_door
   - type: AccessReader
     access: [ [ "Kitchen" ] ]
   - type: ExplosionResistance
@@ -168,9 +168,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: hydro
-    stateOpen: hydro_open
-    stateClosed: hydro_door
+    stateBaseClosed: hydro
+    stateDoorOpen: hydro_open
+    stateDoorClosed: hydro_door
   - type: AccessReader
     access: [ [ "Hydroponics" ] ]
 
@@ -183,9 +183,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: med
-    stateOpen: med_open
-    stateClosed: med_door
+    stateBaseClosed: med
+    stateDoorOpen: med_open
+    stateDoorClosed: med_door
   - type: AccessReader
     access: [ [ "Medical" ] ]
 
@@ -197,9 +197,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: med_secure
-    stateOpen: med_secure_open
-    stateClosed: med_secure_door
+    stateBaseClosed: med_secure
+    stateDoorOpen: med_secure_open
+    stateDoorClosed: med_secure_door
   - type: AccessReader
     access: [ [ "Medical" ] ]
 
@@ -211,9 +211,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: paramed
-    stateOpen: paramed_open
-    stateClosed: paramed_door
+    stateBaseClosed: paramed
+    stateDoorOpen: paramed_open
+    stateDoorClosed: paramed_door
   - type: AccessReader
     access: [ [ "Medical" ] ]
 
@@ -226,9 +226,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: med
-    stateOpen: med_open
-    stateClosed: chemical_door
+    stateBaseClosed: med
+    stateDoorOpen: med_open
+    stateDoorClosed: chemical_door
   - type: AccessReader
     access: [ [ "Chemistry" ] ]
 
@@ -240,9 +240,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: cmo
-    stateOpen: cmo_open
-    stateClosed: cmo_door
+    stateBaseClosed: cmo
+    stateDoorOpen: cmo_open
+    stateDoorClosed: cmo_door
   - type: AccessReader
     access: [ [ "ChiefMedicalOfficer" ] ]
 
@@ -254,9 +254,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: rd
-    stateOpen: rd_open
-    stateClosed: rd_door
+    stateBaseClosed: rd
+    stateDoorOpen: rd_open
+    stateDoorClosed: rd_door
   - type: AccessReader
     access: [ [ "ResearchDirector" ] ]
 
@@ -267,9 +267,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: science
-    stateOpen: science_open
-    stateClosed: science_door
+    stateBaseClosed: science
+    stateDoorOpen: science_open
+    stateDoorClosed: science_door
   - type: AccessReader
     access: [ [ "Research" ] ]
 
@@ -281,9 +281,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: hos
-    stateOpen: hos_open
-    stateClosed: hos_door
+    stateBaseClosed: hos
+    stateDoorOpen: hos_open
+    stateDoorClosed: hos_door
   - type: AccessReader
     access: [["HeadOfSecurity"]]
 
@@ -295,9 +295,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: warden
-    stateOpen: warden_open
-    stateClosed: warden_door
+    stateBaseClosed: warden
+    stateDoorOpen: warden_open
+    stateDoorClosed: warden_door
   - type: AccessReader
     access: [["Armory"]]
 
@@ -309,9 +309,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: brigmedic
-    stateOpen: armory_open
-    stateClosed: brigmedic_door
+    stateBaseClosed: brigmedic
+    stateDoorOpen: armory_open
+    stateDoorClosed: brigmedic_door
   - type: AccessReader
     access: [["Medical"]]
 
@@ -323,9 +323,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: sec
-    stateOpen: sec_open
-    stateClosed: sec_door
+    stateBaseClosed: sec
+    stateDoorOpen: sec_open
+    stateDoorClosed: sec_door
   - type: AccessReader
     access: [["Security"]]
 
@@ -336,9 +336,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: shotguncase
-    stateOpen: shotguncase_open
-    stateClosed: shotguncase_door
+    stateBaseClosed: shotguncase
+    stateDoorOpen: shotguncase_open
+    stateDoorClosed: shotguncase_door
   - type: AccessReader
     access: [["Armory"]]
 
@@ -370,9 +370,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: syndicate
-    stateOpen: syndicate_open
-    stateClosed: syndicate_door
+    stateBaseClosed: syndicate
+    stateDoorOpen: syndicate_open
+    stateDoorClosed: syndicate_door
 
 # Bluespace
 - type: entity
