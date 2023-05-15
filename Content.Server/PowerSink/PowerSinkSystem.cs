@@ -5,6 +5,7 @@ using Robust.Shared.Utility;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Robust.Shared.Timing;
+using Robust.Shared.Audio;
 
 namespace Content.Server.PowerSink
 {
@@ -88,7 +89,9 @@ namespace Content.Server.PowerSink
                     {
                         component.HighestWarningSoundThreshold = currentBatteryThreshold; // Don't re-play in future until next threshold hit
                         _audio.PlayPvs(component.ElectricSound, entity,
-                            new Robust.Shared.Audio.AudioParams(1f, 1f, "Master", SharedAudioSystem.DefaultSoundRange * 5, 1, 25, false, 0f) // audible from farther than usual
+                            AudioParams.Default
+                                .WithVolume(15f) // audible even behind walls
+                                .WithRolloffFactor(10)
                         ); // Play SFX
                         break;
                     }

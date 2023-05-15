@@ -27,6 +27,7 @@ namespace Content.Server.PowerSink
         /// The highest sound warning threshold that has been hit (plays sfx occasionally as explosion nears)
         /// </summary>
         [DataField("highestWarningSoundThreshold")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float HighestWarningSoundThreshold = 0f;
 
         [DataField("chargeFireSound")]
