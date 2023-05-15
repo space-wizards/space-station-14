@@ -1,10 +1,4 @@
 Entries:
-- author: 25203
-  changes:
-  - {message: Fixed a bug where airlock lights would not update when using a door
-      remote., type: Fix}
-  id: 3275
-  time: '2023-03-28T05:05:58.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Body bags no longer mispredict when folded while full., type: Fix}
@@ -2892,3 +2886,10 @@ Entries:
       a discipline to unlock higher tiered tech., type: Tweak}
   id: 3774
   time: '2023-05-15T20:17:31.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'After a terrible accident involving an unfortunately rotated circuit
+      board revision, the crew monitoring devices now should show the correct directions
+      again and shouldn''t be too harmful to look at for long periods of time.', type: Fix}
+  id: 3775
+  time: '2023-05-15T20:38:41.0000000+00:00'
