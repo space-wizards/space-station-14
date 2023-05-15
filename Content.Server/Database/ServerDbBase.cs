@@ -1107,7 +1107,7 @@ namespace Content.Server.Database
             return new ServerRoleBanNote(ban.Id, ban.RoundId, ban.Round, ban.PlayerUserId,
                 player, ban.PlaytimeAtNote, ban.Reason, ban.Severity, ban.CreatedBy,
                 ban.BanTime, ban.LastEditedBy, ban.LastEditedAt, ban.ExpirationTime,
-                ban.Hidden, new [] { ban.RoleId[RoleBanManager.JobPrefix.Length..] },
+                ban.Hidden, new [] { ban.RoleId.Replace(BanManager.JobPrefix, null) },
                 unbanningAdmin, ban.Unban?.UnbanTime);
         }
 
@@ -1378,7 +1378,7 @@ namespace Content.Server.Database
                 bans.Add(new ServerRoleBanNote(firstBan.Id, firstBan.RoundId, firstBan.Round, firstBan.PlayerUserId,
                     player, firstBan.PlaytimeAtNote, firstBan.Reason, firstBan.Severity, firstBan.CreatedBy,
                     firstBan.BanTime, firstBan.LastEditedBy, firstBan.LastEditedAt, firstBan.ExpirationTime,
-                    firstBan.Hidden, await banGroup.Select(ban => ban.RoleId[RoleBanManager.JobPrefix.Length..]).ToArrayAsync(),
+                    firstBan.Hidden, await banGroup.Select(ban => ban.RoleId.Replace(BanManager.JobPrefix, null)).ToArrayAsync(),
                     unbanningAdmin, firstBan.Unban?.UnbanTime));
             }
 

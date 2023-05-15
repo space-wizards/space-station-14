@@ -60,7 +60,7 @@ namespace Content.Server.Database
             await using var db = await GetDbImpl();
 
             var exempt = await GetBanExemptionCore(db, userId);
-            var query = MakeBanLookupQuery(address, userId, hwId, (DbGuardImpl)db, includeUnbanned: false, exempt)
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false, exempt)
                 .OrderByDescending(b => b.BanTime);
 
             var ban = await query.FirstOrDefaultAsync();
