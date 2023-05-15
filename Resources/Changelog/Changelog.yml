@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Changed the ahelp relay message to always be displayed at the bottom
-      of the window when the relay is enabled., type: Tweak}
-  id: 3278
-  time: '2023-03-28T21:27:22.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: 'It is and always has been "Gorlex". (What is "Gorlax"?)', type: Fix}
@@ -2894,3 +2888,9 @@ Entries:
       it up., type: Fix}
   id: 3777
   time: '2023-05-15T22:14:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Cargo trade stations now offer better prices for artifacts that have
+      been explored thoroughly., type: Tweak}
+  id: 3778
+  time: '2023-05-15T22:44:18.0000000+00:00'
