@@ -170,10 +170,10 @@ public abstract class SharedTetherGunSystem : EntitySystem
 
         var joint = _joints.CreateMouseJoint(tether, target, id: TetherJoint);
 
-        SharedJointSystem.LinearStiffness(5f, 2f, tetherPhysics.Mass, targetPhysics.Mass, out var stiffness, out var damping);
+        SharedJointSystem.LinearStiffness(component.Frequency, component.DampingRatio, tetherPhysics.Mass, targetPhysics.Mass, out var stiffness, out var damping);
         joint.Stiffness = stiffness;
         joint.Damping = damping;
-        joint.MaxForce = 10000f;
+        joint.MaxForce = component.MaxForce;
 
         // Sad...
         if (_netManager.IsServer && component.Stream == null)

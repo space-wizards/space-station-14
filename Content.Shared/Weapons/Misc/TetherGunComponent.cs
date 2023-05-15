@@ -25,10 +25,22 @@ public sealed partial class TetherGunComponent : Component
     public bool CanUnanchor = false;
 
     /// <summary>
+    /// Max force between the tether entity and the tethered target.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("force"), AutoNetworkedField]
+    public float MaxForce = 200f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("frequency"), AutoNetworkedField]
+    public float Frequency = 5f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("dampingRatio"), AutoNetworkedField]
+    public float DampingRatio = 2f;
+
+    /// <summary>
     /// Maximum amount of mass a tethered entity can have.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("massLimit"), AutoNetworkedField]
-    public float MassLimit = 30f;
+    public float MassLimit = 50f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound"), AutoNetworkedField]
     public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Weapons/weoweo.ogg")
