@@ -17,7 +17,6 @@ public sealed class AdminNotesEuiState : EuiStateBase
     }
 
     public string NotedPlayerName { get; }
-    //public Dictionary<(int noteId, NoteType noteType), SharedAdminNote> Notes { get; }
     public Dictionary<(int noteId, NoteType noteType), SharedAdminNote> Notes { get; }
     public bool CanCreate { get; }
     public bool CanDelete { get; }
