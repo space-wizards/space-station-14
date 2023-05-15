@@ -1,35 +1,4 @@
 Entries:
-- author: Tyzemol
-  changes:
-  - {message: Smart equip to backpack/belt hotkeys can now be used to quickly take
-      or insert an item into corresponding slots (such as some tools and weapons),
-    type: Tweak}
-  id: 3266
-  time: '2023-03-26T23:01:09.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'RD, CMO, and QM can no longer be traitors.', type: Remove}
-  id: 3267
-  time: '2023-03-27T00:38:32.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: Nanotrasen has cut budget towards Cryptobiolin inhibitors. Cryptobiolin
-      will now cause confusion and dizziness., type: Tweak}
-  id: 3268
-  time: '2023-03-27T01:03:06.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen is no longer allowing sensitive information, or nuclear
-      material to be transported through its crew arrivals shuttles. How? The same
-      system we use to kick people off the shuttle when it docks. The power of science!',
-    type: Fix}
-  id: 3269
-  time: '2023-03-27T01:53:27.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: rat servants can now be butchered for 1 rat meat., type: Tweak}
-  id: 3270
-  time: '2023-03-27T05:27:10.0000000+00:00'
 - author: MisterMecky
   changes:
   - {message: 'Added cardboard material, which can be used to craft big and small
@@ -2897,3 +2866,30 @@ Entries:
   - {message: Paper can be attached to closets and lockers, type: Tweak}
   id: 3765
   time: '2023-05-14T19:02:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Salvage ore will only spawn on existing walls., type: Tweak}
+  id: 3766
+  time: '2023-05-15T02:01:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Stackable items will now show a count in the storage window and will
+      also natively stack when you try to insert them into storage., type: Add}
+  id: 3767
+  time: '2023-05-15T02:24:46.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: Returned the action hotkey numbers to their UI holding cells after mime
+      let them out., type: Fix}
+  id: 3768
+  time: '2023-05-15T03:45:56.0000000+00:00'
+- author: 08A
+  changes:
+  - {message: Added a shortcut to flip prototype in the construction menu, type: Add}
+  id: 3769
+  time: '2023-05-15T04:13:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Crystals can now deflect guns., type: Add}
+  id: 3770
+  time: '2023-05-15T05:21:06.0000000+00:00'
