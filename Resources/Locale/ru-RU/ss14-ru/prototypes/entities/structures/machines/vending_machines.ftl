@@ -138,5 +138,5 @@ ent-VendingMachineTankDispenserEVA = раздатчик газовых балл�
 ent-VendingMachineTankDispenserEngineering = раздатчик газовых баллонов
     .desc = Автомат по выдаче газовых баллонов. Этот имеет инженерную окраску.
     .suffix = ИНЖ [O2, Плазма]
-ent-VendingMachineChemicals = ChemVend
-    .desc = Probably not the coffee machine.
+ent-VendingMachineChemicals = ХимкоМат
+    .desc = Вероятно, не кофемашина.

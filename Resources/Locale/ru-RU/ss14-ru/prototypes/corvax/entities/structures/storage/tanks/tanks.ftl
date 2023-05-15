@@ -1,6 +1,6 @@
 ent-KvassTank = { ent-StorageTank }
-    .suffix = Empty
+    .suffix = Пустой
     .desc = { ent-StorageTank.desc }
 ent-KvassTankFull = { ent-KvassTank }
-    .suffix = Full
+    .suffix = Полный
     .desc = { ent-KvassTank.desc }

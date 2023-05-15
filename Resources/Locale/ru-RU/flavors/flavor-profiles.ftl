@@ -157,7 +157,7 @@ flavor-complex-juice = как сок
 
 ## Basic drinks
 
-flavor-complex-rocksandstones = like rocks and stones
+flavor-complex-rocksandstones = как скалы и камни
 flavor-complex-water = как вода
 flavor-complex-beer = как моча
 flavor-complex-ale = как хлеб
