@@ -379,3 +379,40 @@
         acts: ["Destruction"]
   - type: Machine
     board: GasRecyclerMachineCircuitboard
+
+- type: entity
+  parent: GasBinaryBase
+  id: HeatExchanger
+  name: radiator
+  description: Transfers heat between the pipe and its surroundings.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: heStraight
+  - type: Appearance
+  - type: PipeColorVisuals
+  - type: AtmosDevice
+  - type: HeatExchanger
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: Construction
+    graph: GasBinary
+    node: radiator
