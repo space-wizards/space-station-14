@@ -93,34 +93,25 @@ namespace Content.Server.Zombies
 
                 comp.NextTick = curTime;
 
-                // Healing increases over time for zombies currently in crit
-                if (mobState.CurrentState == MobState.Critical)
-                {
-                    comp.SecondsCrit += 1;
-
-                    // Roll to see if this zombie is not coming back.
-                    //   Note that due to damage reductions it takes a lot of hits to gib a zombie without this.
-                    if (damage.TotalDamage > _random.NextFloat(130.0f, 200.0f))
-                    {
-                        // You're dead! No reviving for you.
-                        _mobThreshold.SetAllowRevives(uid, false);
-                        _damageable.TryChangeDamage(uid, comp.ForceDeathDamage, true, false, damage);
-                        continue;
-                    }
-                }
-                else if (mobState.CurrentState == MobState.Dead)
+                if (comp.Permadeath)
                 {
                     // No healing
                     continue;
                 }
-                else
+
+                // Healing increases over time for zombies currently in crit
+                if (mobState.CurrentState == MobState.Alive)
                 {
                     comp.SecondsCrit = 0;
+                }
+                else
+                {
+                    comp.SecondsCrit += 1;
                 }
 
                 // Healing increases over 50 seconds to a maximum of 10x rate. They will be half healed by then at least.
                 //   At that rate most zombies will revive from the remaining 50 (of 100) damage after a further 25sec
-                float healMultiple = 1.0f + Math.Min(comp.SecondsCrit * 0.2f, 10.0f);
+                float healMultiple = 1.0f + Math.Min(comp.SecondsCrit * 0.2f, 20.0f);
                 _damageable.TryChangeDamage(uid, comp.Damage * healMultiple, true, false, damage);
             }
         }
@@ -156,6 +147,9 @@ namespace Content.Server.Zombies
                 // Random groaning
                 EnsureComp<AutoEmoteComponent>(uid);
                 _autoEmote.AddEmote(uid, "ZombieGroan");
+
+                // A burst of healing on respawn
+                _damageable.TryChangeDamage(uid, component.Damage * component.ZombieRevivalHealingMult, true, false);
             }
             else
             {
@@ -164,6 +158,18 @@ namespace Content.Server.Zombies
 
                 // Stop random groaning
                 _autoEmote.RemoveEmote(uid, "ZombieGroan");
+
+                if (args.NewMobState == MobState.Dead)
+                {
+                    // Roll to see if this zombie is not coming back.
+                    //   Note that due to damage reductions it takes a lot of hits to gib a zombie without this.
+                    if (!_random.Prob(component.ZombieReviveChance))
+                    {
+                        // You're dead! No reviving for you.
+                        _mobThreshold.SetAllowRevives(uid, false);
+                        component.Permadeath = true;
+                    }
+                }
             }
         }
 

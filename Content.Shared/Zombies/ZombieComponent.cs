@@ -27,6 +27,24 @@ namespace Content.Shared.Zombies
         public float MaxZombieInfectionChance = 0.40f;
 
         /// <summary>
+        /// Chance that this zombie will survive getting killed
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ZombieReviveChance = 0.30f;
+
+        /// <summary>
+        /// Heal multiplier for one big heal on coming back to life.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ZombieRevivalHealingMult = 80.0f;
+
+        /// <summary>
+        /// Has this zombie stopped healing now that it's died for real?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Permadeath = false;
+
+        /// <summary>
         /// The minimum infection chance possible. This is simply to prevent
         /// being invincible by bundling up.
         /// </summary>
