@@ -63,9 +63,7 @@
         ents: []
 
 - type: entity
-  name: ""
   id: BaseBagOpenClose
-  parent: BaseItem
   abstract: true
   components:
   - type: Appearance
