@@ -55,7 +55,7 @@
 
 - type: entity
   name: match box
-  parent: SmallboxItem
+  parent: [ SmallboxItem, BaseBagOpenClose ]
   id: Matchbox
   description: A small box of Almost But Not Quite Plasma Premium Matches.
   components:
@@ -83,12 +83,6 @@
   - type: ItemCounter
     count:
       tags: [Matchstick]
-  - type: GenericVisualizer
-    visuals:
-      enum.SharedBagOpenVisuals.BagState:
-        openLayer:
-          True: { visible: true }
-          False: { visible: false }
   - type: Appearance
     visuals:
     - type: StackVisualizer

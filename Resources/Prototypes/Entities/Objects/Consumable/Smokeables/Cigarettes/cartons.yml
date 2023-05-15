@@ -1,6 +1,6 @@
 - type: entity
   id: CigCartonGreen
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   name: Spessman's Smokes carton
   description: "A carton containing 6 packets of Spessman's Smokes."
   components:
@@ -19,13 +19,6 @@
     contents:
       - id: CigPackGreen
         amount: 6
-  - type: GenericVisualizer
-    visuals:
-      enum.SharedBagOpenVisuals.BagState:
-        openLayer:
-          True: { visible: true }
-          False: { visible: false }
-  - type: Appearance
   - type: Tag
     tags:
     - Trash

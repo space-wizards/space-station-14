@@ -1,6 +1,6 @@
 - type: entity
   id: CigPackBase
-  parent: BaseStorageItem
+  parent: [ BaseStorageItem, BaseBagOpenClose ]
   name: cigarette pack
   abstract: true
   components:
@@ -29,12 +29,6 @@
   - type: ItemCounter
     count:
       tags: [Cigarette]
-  - type: GenericVisualizer
-    visuals:
-      enum.SharedBagOpenVisuals.BagState:
-        openLayer:
-          True: { visible: true }
-          False: { visible: false }
   - type: Appearance
     visuals:
     - type: StackVisualizer

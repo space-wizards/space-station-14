@@ -6,7 +6,7 @@
 # an alpha color which -Y- said he would implement.
 
 - type: entity
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   id: FoodBoxDonut
   name: donut box
   description: Mmm, Donuts.
@@ -37,12 +37,6 @@
   - type: ItemCounter
     count:
       tags: [Donut]
-  - type: GenericVisualizer
-    visuals:
-      enum.SharedBagOpenVisuals.BagState:
-        openLayer:
-          True: { visible: true }
-          False: { visible: false }
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -58,7 +52,7 @@
 # Egg
 
 - type: entity
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   id: FoodContainerEgg
   name: egg carton
   description: Don't drop 'em!
@@ -86,12 +80,6 @@
   - type: ItemCounter
     count:
       tags: [Egg]
-  - type: GenericVisualizer
-    visuals:
-      enum.SharedBagOpenVisuals.BagState:
-        openLayer:
-          True: { visible: true }
-          False: { visible: false }
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -227,7 +215,7 @@
 # Nugget
 
 - type: entity
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   id: FoodBoxNugget
   name: chicken nuggets
   description: You suddenly have an urge to trade on the intergalactic stock market.
@@ -253,12 +241,6 @@
   - type: ItemCounter
     count:
       tags: [Nugget]
-  - type: GenericVisualizer
-    visuals:
-      enum.SharedBagOpenVisuals.BagState:
-        openLayer:
-          True: { visible: true }
-          False: { visible: false }
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -397,7 +379,7 @@
 
 - type: entity
   id: HappyHonk
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   name: happy honk meal
   suffix: Toy Safe
   description: The toy is more edible than the food.
@@ -413,13 +395,6 @@
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
-  - type: GenericVisualizer
-    visuals:
-      enum.SharedBagOpenVisuals.BagState:
-        openLayer:
-          True: { visible: true }
-          False: { visible: false }
-  - type: Appearance
   - type: Storage
     capacity: 30
   - type: Tag
