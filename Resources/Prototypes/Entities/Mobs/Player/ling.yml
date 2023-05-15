@@ -1,0 +1,29 @@
+- type: entity
+  parent: MobHuman
+  id: MobChangeling
+  name: Urist McLing
+  components:
+  - type: Changeling
+  - type: UserInterface
+    interfaces:
+    - key: enum.ChangelingUiKey.Transform
+      type: TransformationsBoundUserInterface
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
+  - type: Store
+    categories:
+    - ChangelingAbilities
+    currencyWhitelist:
+    - EvolutionPoints
+  - type: IntrinsicUI
+    uis:
+    - key: enum.ChangelingUiKey.Transform
+      toggleAction:
+        name: action-name-transform
+        description: action-description-transform
+        icon:
+          sprite: Interface/changeling.rsi
+          state: transform
+        keywords: [ "changeling", "interface" ]
+        priority: -10
+        event: !type:ToggleIntrinsicUIEvent

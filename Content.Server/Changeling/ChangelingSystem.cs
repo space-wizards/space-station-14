@@ -1,5 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Forensics;
+using Content.Server.IdentityManagement;
 using Content.Shared.Body.Components;
 using Content.Shared.Changeling;
 using Content.Shared.Popups;
@@ -15,6 +16,7 @@ namespace Content.Server.Changeling;
 public sealed class ChangelingSystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -25,31 +27,62 @@ public sealed class ChangelingSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ChangelingComponent, ComponentStartup>(OnChangelingStartup);
+        SubscribeLocalEvent<ChangelingComponent, BoundUIOpenedEvent>(OnUIOpened);
+        SubscribeLocalEvent<ChangelingComponent, ChangelingTransformMessage>(OnTransform);
         SubscribeLocalEvent<ChangelingComponent, ExtractionStingEvent>(OnExtractionSting);
         SubscribeLocalEvent<ChangelingComponent, SelectStingEvent>(OnSelectSting);
-        SubscribeLocalEvent<ChangelingComponent, ChangelingTransformEvent>(OnTransform);
 
         SubscribeLocalEvent<BodyComponent, GetVerbsEvent<AlternativeVerb>>(AddStingVerb);
     }
 
     private void OnChangelingStartup(EntityUid uid, ChangelingComponent ling, ComponentStartup args)
     {
-        // TODO: add initial transformation
+        // TODO: in MakeChangeling, add initial transformation of old appearance using public api
 
-        var ui = EnsureComp<UserInterfaceComponent>(uid);
-        ui.Interfaces.Add();
+        // TODO: remove
+        _actions.AddAction(uid, ling.ExtractStingAction, uid);
+    }
 
-        foreach (var action in ling.InnateAbilities)
+    private void OnUIOpened(EntityUid uid, ChangelingComponent ling, BoundUIOpenedEvent args)
+    {
+        if (args.UiKey is ChangelingUiKey.Transform)
+            UpdateTransformState(uid, ling);
+    }
+
+    private void UpdateTransformState(EntityUid uid, ChangelingComponent ling)
+    {
+        // absorbed transformations are listed first since they will never be removed
+        var names = ling.AbsorbedTransformations
+            .Concat(ling.ExtractedTransformations)
+            .Select(t => t.Name)
+            .ToList();
+        var state = new TransformationsBoundUserInterfaceState(names);
+        _ui.TrySetUiState(uid, ChangelingUiKey.Transform, state);
+    }
+
+    private void OnTransform(EntityUid uid, ChangelingComponent ling, ChangelingTransformMessage args)
+    {
+        var found = ling.AbsorbedTransformations
+            .Concat(ling.ExtractedTransformations)
+            .Where(t => t.Name == args.Name);
+        if (!found.Any())
         {
-            _actions.AddAction(uid, action, uid);
+            Logger.WarningS("changeling", $"Client of {ToPrettyString(uid):player} tried to transform into unknown transformation");
+            return;
         }
 
-        // TODO: set up store here?
+        // TODO: physical appearance somehow
+        var transformation = found.First();
+        MetaData(uid).EntityName = transformation.Name;
+        Comp<FingerprintComponent>(uid).Fingerprint = transformation.Fingerprint;
+        Comp<DnaComponent>(uid).DNA = transformation.Dna;
+
+        _identity.QueueIdentityUpdate(uid);
     }
 
     private void OnExtractionSting(EntityUid uid, ChangelingComponent ling, ExtractionStingEvent args)
     {
-        // slime/vox have incompatible genomes so cant sting
+        // some species have incompatible genomes so cant sting
         // target must also have all the required bits to transform
         // TODO: physical appearance
         if (!HasComp<AbsorbableComponent>(args.Target) || !TryComp<DnaComponent>(args.Target, out var dna) ||
@@ -75,6 +108,7 @@ public sealed class ChangelingSystem : EntitySystem
             return;
         }
 
+        // TODO: from here,
         // TODO: physical appearance
         var name = MetaData(args.Target).EntityName;
         var transformation = new Transformation()
@@ -89,6 +123,8 @@ public sealed class ChangelingSystem : EntitySystem
             ling.ExtractedTransformations.RemoveLast();
 
         ling.ExtractedTransformations.AddFirst(transformation);
+        UpdateTransformState(uid, ling);
+        // TODO: to here, move into a public api
 
         _popup.PopupEntity(Loc.GetString("changeling-extraction-success", ("target", name)), uid, uid, PopupType.Large);
         // TODO: extraction chemical boost
@@ -103,29 +139,6 @@ public sealed class ChangelingSystem : EntitySystem
 
         ling.ActiveSting = args.Sting;
         // TODO: transformation sting requires you to select a transformation first
-    }
-
-    private void OnTransform(EntityUid uid, ChangelingComponent ling, ChangelingTransformEvent args)
-    {
-        Logger.DebugS("LING", "ling help!");
-        if (!TryComp<ActorComponent>(uid, out var actor))
-            return;
-
-        Logger.DebugS("LING", "ling in med help!");
-        if (!_ui.TryToggleUi(uid, ChangelingUiKey.Transform, actor.PlayerSession))
-        {
-            Logger.Error("Failed to open changeling transform ui");
-            return;
-        }
-
-        Logger.DebugS("LING", "ling absorbing help!");
-        // absorbed transformations are listed first since they will never be removed
-        var names = ling.AbsorbedTransformations
-            .Concat(ling.ExtractedTransformations)
-            .Select(t => t.Name)
-            .ToList();
-        var state = new TransformationsBoundUserInterfaceState(names);
-        _ui.TrySetUiState(uid, ChangelingUiKey.Transform, state);
     }
 
     private void AddStingVerb(EntityUid uid, BodyComponent body, GetVerbsEvent<AlternativeVerb> args)

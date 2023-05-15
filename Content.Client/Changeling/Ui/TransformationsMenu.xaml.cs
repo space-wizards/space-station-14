@@ -18,6 +18,7 @@ public sealed partial class TransformationsMenu : DefaultWindow
 
     public void UpdateState(TransformationsBoundUserInterfaceState state)
     {
+        Names.Clear();
         foreach (var name in state.Names)
         {
             Names.AddItem(name).OnSelected += _ => {

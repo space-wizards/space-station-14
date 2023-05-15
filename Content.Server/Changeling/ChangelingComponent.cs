@@ -26,31 +26,13 @@ public sealed partial class ChangelingComponent : Component
     [DataField("canResetAbilities"), ViewVariables(VVAccess.ReadWrite)]
     public bool CanResetAbilities;
 
-    /// <summary>
-    /// Actions for innate abilities that cannot be removed.
-    /// </summary>
-    [DataField("innateAbilities")]
-    public IReadOnlyList<ActionType> InnateAbilities = new[]
+    // TODO: put in intrinsic UI + have a popup saying sting selected
+    public InstantAction ExtractStingAction = new()
     {
-        //"ChangelingStore",
-        //"ChangelingStasis",
-        //"ChangelingRegenerate",
-        new InstantAction()
-        {
-            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Actions/changeling.rsi"), "transform"),
-            ItemIconStyle = ItemActionIconStyle.NoItem,
-            DisplayName = "changeling-transform",
-            Description = "changeling-transform-desc",
-            Event = new ChangelingTransformEvent()
-        },
-        new InstantAction()
-        {
-            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Actions/changeling.rsi"), "extract_sting"),
-            ItemIconStyle = ItemActionIconStyle.NoItem,
-            DisplayName = "changeling-extract-dna-sting",
-            Description = "changeling-extract-dna-sting-desc",
-            Event = new SelectStingEvent("ExtractionSting")
-        }
-        //"ChangelingAbsorb"
+        Icon = new SpriteSpecifier.Rsi(new ("/Textures/Interface/changeling.rsi"), "extract_sting"),
+        ItemIconStyle = ItemActionIconStyle.NoItem,
+        DisplayName = "changeling-extract-dna-sting",
+        Description = "changeling-extract-dna-sting-desc",
+        Event = new SelectStingEvent("ExtractionSting")
     };
 }

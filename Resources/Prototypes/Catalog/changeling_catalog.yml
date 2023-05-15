@@ -1,0 +1,13 @@
+- type: listing
+  id: ChangelingArmBlade
+  name: ArmBlade
+  # shamelessly stolen from tg wiki
+  description: Reforms one of the changeling's arms into a grotesque blade made out of bone and flesh. The arm blade does 25 damage per hit and can be retracted by using the ability again; however, it is visible on your body and a dead giveaway to onlookers and silicons that you are a changeling. It can also be used to pry open doors when not in combat mode.
+  productAction: ChangelingArmBlade
+  cost:
+    EvolutionPoints: 2
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

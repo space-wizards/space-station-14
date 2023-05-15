@@ -1,3 +1,4 @@
 - type: sting
   id: ExtractionSting
   event: !type:ExtractionStingEvent
+  cost: 25

@@ -11,3 +11,6 @@ changeling-extraction-incompatible = You can't extract from an incompatible geno
 changeling-extraction-already-extracted = You already extracted that person's DNA!
 changeling-extraction-already-absorbed = You already absorbed that person... wait a minute!
 changeling-extraction-success = You extracted {$target}'s precious DNA...
+
+# UI
+changeling-transformations-interface-title = Transformations

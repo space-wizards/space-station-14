@@ -1,0 +1,17 @@
+- type: instantAction
+  id: ChangelingShop
+  icon: Interface/Actions/shop.png
+  name: Cellular Emporium
+  description: Evolve unique changeling abilities
+  serverEvent: !type:ChangelingShopActionEvent
+
+- type: instantAction
+  id: ChangelingArmBlade
+  icon:
+    sprite: Interface/changeling.rsi
+    state: armblade
+  name: Arm Blade
+  description: Turns your current hand into a grotesque blade made out of bone and flesh. Costs 20 Chemicals.
+  # TODO: use same event for toggling any of the 3 equipments
+  serverEvent: !type:ChangelingArmbladeActionEvent
+  useDelay: 1

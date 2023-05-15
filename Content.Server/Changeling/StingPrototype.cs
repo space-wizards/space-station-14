@@ -9,7 +9,6 @@ namespace Content.Server.Changeling;
 /// May use some of your chemicals.
 /// </summary>
 [Prototype("sting")]
-[DataDefinition, Serializable]
 public sealed class StingPrototype : IPrototype
 {
     [ViewVariables, IdDataField]
