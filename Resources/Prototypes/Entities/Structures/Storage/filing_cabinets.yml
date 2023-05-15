@@ -54,7 +54,7 @@
     state: tallcabinet
     layers:
     - state: tallcabinet
-      state: tallcabinet-open
+    - state: tallcabinet-open
       map: ["openLayer"]
   - type: Appearance
 
