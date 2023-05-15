@@ -1,11 +1,4 @@
 Entries:
-- author: MisterMecky
-  changes:
-  - {message: 'Added cardboard material, which can be used to craft big and small
-      boxes', type: Add}
-  - {message: Cardboard crates can now be ordered from cargo, type: Add}
-  id: 3271
-  time: '2023-03-27T23:04:25.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Power Drills can now fit in utility belts, type: Tweak}
@@ -2893,3 +2886,8 @@ Entries:
   - {message: Crystals can now deflect guns., type: Add}
   id: 3770
   time: '2023-05-15T05:21:06.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: The orb rolls., type: Tweak}
+  id: 3771
+  time: '2023-05-15T05:32:17.0000000+00:00'
