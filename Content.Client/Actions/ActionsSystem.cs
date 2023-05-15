@@ -59,7 +59,8 @@ namespace Content.Client.Actions
             if (args.Current is not ActionsComponentState state)
                 return;
 
-            var serverActions = new SortedSet<ActionType>(state.Actions);
+            state.SortedActions ??= new SortedSet<ActionType>(state.Actions);
+            var serverActions = state.SortedActions;
             var removed = new List<ActionType>();
 
             foreach (var act in component.Actions.ToList())
