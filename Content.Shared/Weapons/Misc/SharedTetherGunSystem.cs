@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -13,8 +14,10 @@ namespace Content.Shared.Weapons.Misc;
 
 public abstract class SharedTetherGunSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private   readonly MobStateSystem _mob = default!;
+    [Dependency] private   readonly SharedAudioSystem _audio = default!;
     [Dependency] private   readonly SharedJointSystem _joints = default!;
-    [Dependency] private readonly MobStateSystem _mob = default!;
     [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly ThrownItemSystem _thrown = default!;
@@ -82,7 +85,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         if (args.Target == null || args.Handled)
             return;
 
-        TryTether(uid, args.Target.Value, component);
+        TryTether(uid, args.Target.Value, args.User, component);
     }
 
     protected bool TryGetTetherGun(EntityUid user, [NotNullWhen(true)] out EntityUid? gunUid, [NotNullWhen(true)] out TetherGunComponent? gun)
@@ -105,7 +108,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         StopTether(component);
     }
 
-    public void TryTether(EntityUid gun, EntityUid target, TetherGunComponent? component = null)
+    public void TryTether(EntityUid gun, EntityUid target, EntityUid? user, TetherGunComponent? component = null)
     {
         if (!Resolve(gun, ref component))
             return;
@@ -113,7 +116,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         if (!CanTether(component, target))
             return;
 
-        StartTether(gun, component, target);
+        StartTether(gun, component, target, user);
     }
 
     private bool CanTether(TetherGunComponent component, EntityUid target)
@@ -133,7 +136,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         return true;
     }
 
-    private void StartTether(EntityUid gunUid, TetherGunComponent component, EntityUid target,
+    private void StartTether(EntityUid gunUid, TetherGunComponent component, EntityUid target, EntityUid? user,
         PhysicsComponent? targetPhysics = null, TransformComponent? targetXform = null)
     {
         if (!Resolve(target, ref targetPhysics, ref targetXform))
@@ -141,7 +144,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
 
         if (component.Tethered != null)
         {
-            StopTether(component);
+            StopTether(component, true);
         }
 
         // Target updates
@@ -172,11 +175,15 @@ public abstract class SharedTetherGunSystem : EntitySystem
         joint.Damping = damping;
         joint.MaxForce = 10000f;
 
+        // Sad...
+        if (_netManager.IsServer && component.Stream == null)
+            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null);
+
         Dirty(tethered);
         Dirty(component);
     }
 
-    private void StopTether(TetherGunComponent component)
+    private void StopTether(TetherGunComponent component, bool transfer = false)
     {
         if (component.Tethered == null)
             return;
@@ -196,6 +203,12 @@ public abstract class SharedTetherGunSystem : EntitySystem
             _physics.SetBodyStatus(targetPhysics, BodyStatus.OnGround);
             _physics.SetSleepingAllowed(component.Tethered.Value, targetPhysics, true);
             _physics.SetAngularDamping(targetPhysics, Comp<TetheredComponent>(component.Tethered.Value).OriginalAngularDamping);
+        }
+
+        if (!transfer)
+        {
+            component.Stream?.Stop();
+            component.Stream = null;
         }
 
         RemCompDeferred<TetheredComponent>(component.Tethered.Value);

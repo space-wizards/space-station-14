@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Weapons.Misc;
@@ -28,4 +29,12 @@ public sealed partial class TetherGunComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("massLimit"), AutoNetworkedField]
     public float MassLimit = 30f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("sound"), AutoNetworkedField]
+    public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Weapons/weoweo.ogg")
+    {
+        Params = AudioParams.Default.WithLoop(true).WithVolume(-8f),
+    };
+
+    public IPlayingAudioStream? Stream;
 }
