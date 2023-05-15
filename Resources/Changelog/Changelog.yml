@@ -1,10 +1,4 @@
 Entries:
-- author: jjtParadox
-  changes:
-  - {message: Fixed the bureaucratic error event affecting fewer jobs than intended,
-    type: Fix}
-  id: 3277
-  time: '2023-03-28T11:58:14.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Changed the ahelp relay message to always be displayed at the bottom
@@ -2894,3 +2888,9 @@ Entries:
   - {message: Fix out of range exception on `RoleUnbanCommand`, type: Fix}
   id: 3776
   time: '2023-05-15T21:24:03.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Cloner console now tells you to use the network configurator to link
+      it up., type: Fix}
+  id: 3777
+  time: '2023-05-15T22:14:03.0000000+00:00'
