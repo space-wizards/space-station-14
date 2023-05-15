@@ -16,6 +16,18 @@
       "directions": 4
     },
     {
+      "name": "stingers",
+      "directions": 4
+    },
+    {
+      "name": "curled",
+      "directions": 4
+    },
+    {
+      "name": "zigzag",
+      "directions": 4
+    },
+    {
       "name": "web",
       "directions": 4
     },
