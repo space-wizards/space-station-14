@@ -185,8 +185,11 @@ uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and increas
 uplink-clothing-outer-vest-web-name = Web West
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
 
-uplink-hardsuit-syndie-name = Syndicate Hardsuit
-uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
+uplink-hardsuit-syndie-name = Blood-red Hardsuit
+uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hardsuit, capable of space walks and reducing the impact of many types of damage.
+
+uplink-hardsuit-syndie-elite-name = Syndicate Elite Hardsuit
+uplink-hardsuit-syndie-elite-desc = An upgraded version of the blood-red hardsuit that features enhanced fireproofing, pressure resist, and superior armor.
 
 uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
 uplink-clothing-shoes-boots-mag-syndie-desc = A pair of magnetic boots that will keep you on the ground if the gravity fails or is sabotaged, giving you a mobility advantage. If activated with gravity they will protect from slips, but they will slow you down.
