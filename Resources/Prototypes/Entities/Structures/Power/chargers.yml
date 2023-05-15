@@ -1,6 +1,7 @@
 - type: entity
   name: cell recharger
   id: PowerCellRecharger
+  parent: ConstructibleMachine
   placement:
     mode: SnapgridCenter
   components:
@@ -21,6 +22,8 @@
     slotId: charger_slot
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+  - type: Machine
+    board: CellRechargerCircuitboard
   - type: Appearance
   - type: PowerChargerVisuals
   - type: Anchorable
@@ -78,6 +81,8 @@
   components:
   - type: Sprite
     sprite: Structures/Power/recharger.rsi
+  - type: Machine
+    board: WeaponCapacitorRechargerCircuitboard
   - type: Charger
     slotId: charger_slot
   - type: ItemSlots
