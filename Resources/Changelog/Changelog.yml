@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Power Drills can now fit in utility belts, type: Tweak}
-  id: 3272
-  time: '2023-03-27T23:35:00.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: The top menu in separated hud will now stretch with chat size., type: Tweak}
@@ -2891,3 +2886,8 @@ Entries:
   - {message: The orb rolls., type: Tweak}
   id: 3771
   time: '2023-05-15T05:32:17.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: 'Rotting takes 10 minutes, up from 5.', type: Tweak}
+  id: 3772
+  time: '2023-05-15T15:52:31.0000000+00:00'
