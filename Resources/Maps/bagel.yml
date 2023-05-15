@@ -9449,7 +9449,6 @@ entities:
       parent: 60
       type: Transform
     - devices:
-      - invalid
       - 13106
       - 13107
       - 13148
@@ -84431,7 +84430,6 @@ entities:
       type: Transform
     - devices:
       - 19529
-      - invalid
       - 11131
       - 19522
       type: DeviceList
@@ -84618,7 +84616,6 @@ entities:
       parent: 60
       type: Transform
     - devices:
-      - invalid
       - 13106
       - 13107
       - 13148
