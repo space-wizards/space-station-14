@@ -35,14 +35,14 @@ public static class AdminNotesExtensions
                 type = NoteType.ServerBan;
                 severity = ban.Severity;
                 unbannedTime = ban.UnbanTime;
-                unbannedByName = ban.UnbanningAdmin?.LastSeenUserName ?? "[System]";
+                unbannedByName = ban.UnbanningAdmin?.LastSeenUserName ?? Loc.GetString("system-user");
                 break;
             case ServerRoleBanNote roleBan:
                 type = NoteType.RoleBan;
                 severity = roleBan.Severity;
                 bannedRoles = roleBan.Roles;
                 unbannedTime = roleBan.UnbanTime;
-                unbannedByName = roleBan.UnbanningAdmin?.LastSeenUserName ?? "[System]";
+                unbannedByName = roleBan.UnbanningAdmin?.LastSeenUserName ?? Loc.GetString("system-user");
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), note.GetType(), "Unknown note type");
@@ -61,7 +61,7 @@ public static class AdminNotesExtensions
             note.Message,
             severity,
             secret,
-            note.CreatedBy?.LastSeenUserName ?? "[System]",
+            note.CreatedBy?.LastSeenUserName ?? Loc.GetString("system-user"),
             note.LastEditedBy?.LastSeenUserName ?? string.Empty,
             note.CreatedAt,
             note.LastEditedAt,

@@ -32,7 +32,7 @@ admin-notes-message-seen = Seen
 admin-notes-banned-from = Banned from
 admin-notes-the-server = the server
 admin-notes-permanently = permanently
-admin-notes-for = for
+admin-notes-for = for {$player}
 admin-notes-days = {$days} days
 admin-notes-hours = {$hours} hours
 admin-notes-minutes = {$minutes} minutes
@@ -72,3 +72,6 @@ admin-notes-new-message = You've received an admin message from {$admin}: {$mess
 admin-remarks-command-description = Opens the admin remarks page
 admin-remarks-command-error = Admin remarks have been disabled
 admin-remarks-title = Admin remarks
+
+# Misc
+system-user = [System]
