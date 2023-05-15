@@ -1,13 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Multiple uplink items have been re-priced, all around cheaper.', type: Tweak}
-  - {message: 'Syndicate jaws of life are faster, but bulkier, thanks to a redesign.',
-    type: Tweak}
-  - {message: 'The syndicate now includes innovative silencing technology with their
-      Cobra pistol, making it much quieter.', type: Tweak}
-  id: 3274
-  time: '2023-03-28T03:46:07.0000000+00:00'
 - author: 25203
   changes:
   - {message: Fixed a bug where airlock lights would not update when using a door
@@ -2891,3 +2882,13 @@ Entries:
   - {message: slime puddles now slow you down by 25%, type: Add}
   id: 3773
   time: '2023-05-15T18:49:49.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The autolathe catalog has been expanded., type: Add}
+  - {message: You can now see what recipes a technology unlocks., type: Add}
+  - {message: The research console can now only select technologies from the specific
+      options given to the player., type: Tweak}
+  - {message: Technologies are now sorted into disciplines. Unlock all the techs in
+      a discipline to unlock higher tiered tech., type: Tweak}
+  id: 3774
+  time: '2023-05-15T20:17:31.0000000+00:00'
