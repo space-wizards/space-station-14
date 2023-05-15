@@ -7,4 +7,21 @@ replay-loading-spawning = Spawning Entities
 replay-loading-initializing = Initializing Entities
 replay-loading-starting= Starting Entities
 replay-loading-failed = Failed to load replay:
-                              {$reason}
+                        {$reason}
+
+# Main Menu
+replay-menu-subtext = Replay Client
+replay-menu-load = Load Replay
+replay-menu-refresh = Refresh Replays
+replay-menu-none = No replays found.
+
+# Main Menu info box
+replay-info-title = Replay Information
+replay-info-none = [color=red]No replay selected[/color] 
+replay-info-info = {"["}color=gray]Selected:[/color]   {$file}
+                   {"["}color=gray]Time:[/color]   {$time}
+                   {"["}color=gray]Duration:[/color]   {$duration}
+                   {"["}color=gray]ForkId:[/color]   {$forkId}
+                   {"["}color=gray]Version:[/color]   {$version}
+                   {"["}color=gray]Engine Version:[/color]   {$engVersion}
+                   {"["}color=gray]Hash:[/color]   {$hash}

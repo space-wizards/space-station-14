@@ -95,11 +95,23 @@ public sealed partial class ReplayManager
         return new(states, messages, states[0].ToSequence, metaData.StartTime, metaData.Duration, checkpoints);
     }
 
-    private (HashSet<string> CVars, TimeSpan Duration, TimeSpan StartTime) LoadMetadata(IWritableDirProvider directory)
+    public MappingDataNode? LoadYamlMetadata(IWritableDirProvider directory)
+    {
+        var path = new ResPath(YamlFilename).ToRootedPath();
+        if (!directory.Exists(path))
+            return null;
+
+        using var file = directory.OpenRead(path);
+        var parsed = DataNodeParser.ParseYamlStream(new StreamReader(file));
+        return parsed.FirstOrDefault()?.Root as MappingDataNode;
+    }
+
+    public (HashSet<string> CVars, TimeSpan Duration, TimeSpan StartTime) LoadMetadata(IWritableDirProvider directory)
     {
         _sawmill.Info($"Reading replay metadata");
-        using var file = directory.OpenRead(new ResPath(YamlFilename).ToRootedPath());
-        var data = (MappingDataNode) DataNodeParser.ParseYamlStream(new StreamReader(file)).First().Root!;
+        var data = LoadYamlMetadata(directory);
+        if (data == null)
+            throw new Exception("Failed to parse yaml metadata");
 
         var typeHash = Convert.FromHexString(((ValueDataNode) data["typeHash"]).Value);
         var stringHash = Convert.FromHexString(((ValueDataNode) data["stringHash"]).Value);
