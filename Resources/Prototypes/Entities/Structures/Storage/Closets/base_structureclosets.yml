@@ -19,6 +19,14 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: MovedByPressure
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper
+  - type: ItemSlots
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -42,6 +50,7 @@
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
   - type: Weldable
   - type: PlaceableSurface
     placeCentered: true

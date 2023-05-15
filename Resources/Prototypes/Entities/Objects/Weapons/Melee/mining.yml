@@ -72,7 +72,7 @@
       types:
         Slash: 6.5
   - type: Item
-    size: 30
+    size: 10
 
 # Like a crusher... but better
 - type: entity
