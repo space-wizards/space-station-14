@@ -22,13 +22,30 @@ public sealed class PendingZombieComponent : Component
     [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
 
-    // Scales damage over time.
-    [DataField("infectedSecs")]
+    /// <summary>
+    /// Scales damage over time.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("infectedSecs")]
     public int InfectedSecs;
 
-    // Infection warnings are shown as popups, times are in seconds.
-    //   -ve times shown to initial zombies (once timer counts from -ve to 0 the infection starts)
-    //   +ve warnings are in seconds after being bitten
+    /// <summary>
+    /// Number of seconds that a typical infection will last before the player is totally overwhelmed with damage and
+    ///   dies.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("infectionLength")]
+    public float InfectionLength = 120f;
+
+    /// <summary>
+    /// Once the player enters crit, we ramp up the damage to ensure they don't suffer too long.
+    /// </summary>
+    [DataField("inCrit")]
+    public bool InCrit;
+
+    /// <summary>
+    /// Infection warnings are shown as popups, times are in seconds.
+    ///   -ve times shown to initial zombies (once timer counts from -ve to 0 the infection starts)
+    ///   +ve warnings are in seconds after being bitten
+    /// </summary>
     [DataField("infectionWarnings")]
     public Dictionary<int, string> InfectionWarnings = new()
     {
@@ -38,4 +55,10 @@ public sealed class PendingZombieComponent : Component
         {25, "zombie-infection-underway"},
     };
 
+    /// <summary>
+    /// A minumum multiplier applied to Damage once you are in crit to get you dead and ready for your next life
+    ///   as fast as possible.
+    /// </summary>
+    [DataField("minimumCritMultiplier")]
+    public float MinimumCritMultiplier = 10;
 }

@@ -65,7 +65,6 @@ namespace Content.Server.Zombies
             base.Update(frameTime);
             var query = EntityQueryEnumerator<PendingZombieComponent>();
             var curTime = _timing.CurTime;
-            var stateQuery = GetEntityQuery<MobStateComponent>();
 
             // Hurt the living infected
             while (query.MoveNext(out var uid, out var comp))
@@ -85,13 +84,30 @@ namespace Content.Server.Zombies
                 if (comp.InfectedSecs < 0)
                 {
                     // This zombie has a latent virus, probably set up by ZombieRuleSystem. No damage yet.
-                    continue;
+                    if (comp.InCrit)
+                    {
+                        // Immediately jump to an active virus when you crit
+                        comp.InfectedSecs = 0;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
                 // Pain of becoming a zombie grows over time
-                // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s.
-                var pain_multiple = 0.1 + 0.02 * comp.InfectedSecs + 0.0005 * comp.InfectedSecs * comp.InfectedSecs;
-                _damageable.TryChangeDamage(uid, comp.Damage * pain_multiple, true, false);
+                // By scaling the number of seconds we have an accessible way to scale this exponential function.
+                //   The function was hand tuned to 120 seconds, hence the 120 constant here.
+                var scaledSeconds = (120.0f / comp.InfectionLength) * comp.InfectedSecs;
+                // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s. Limit at 20x so we don't gib you.
+                var painMultiple = Math.Min(20f, 0.1f + 0.02f * scaledSeconds + 0.0005f * scaledSeconds * scaledSeconds);
+                if (comp.InCrit)
+                {
+                    // Speed up their transformation when they are (or have been) in crit by ensuring their damage
+                    //   multiplier is at least 10x
+                    painMultiple = Math.Max(comp.MinimumCritMultiplier, painMultiple);
+                }
+                _damageable.TryChangeDamage(uid, comp.Damage * painMultiple, true, false);
             }
 
             var zomb_query = EntityQueryEnumerator<ZombieComponent>();
@@ -154,7 +170,7 @@ namespace Content.Server.Zombies
             if (args.NewMobState == MobState.Critical)
             {
                 // Accelerate the process of taking damage to turn into a zombie.
-                pending.InfectedSecs = Math.Max(120, pending.InfectedSecs);
+                pending.InCrit = true;
             }
         }
 
