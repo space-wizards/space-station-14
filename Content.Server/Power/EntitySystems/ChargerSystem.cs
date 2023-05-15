@@ -1,4 +1,3 @@
-using Content.Server.Anomaly.Components;
 using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
