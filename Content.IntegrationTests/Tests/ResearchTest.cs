@@ -23,7 +23,7 @@ public sealed class ResearchTest
         {
             var allTechs = protoManager.EnumeratePrototypes<TechnologyPrototype>().ToList();
 
-            foreach (var discipline in protoManager.EnumeratePrototypes<DisciplinePrototype>())
+            foreach (var discipline in protoManager.EnumeratePrototypes<TechDisciplinePrototype>())
             {
                 foreach (var tech in allTechs)
                 {

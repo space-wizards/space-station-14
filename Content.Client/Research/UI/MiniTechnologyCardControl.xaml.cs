@@ -15,7 +15,7 @@ public sealed partial class MiniTechnologyCardControl : Control
     {
         RobustXamlLoader.Load(this);
 
-        var discipline = prototypeManager.Index<DisciplinePrototype>(technology.Discipline);
+        var discipline = prototypeManager.Index<TechDisciplinePrototype>(technology.Discipline);
         Background.ModulateSelfOverride = discipline.Color;
         Texture.Texture = spriteSys.Frame0(technology.Icon);
         NameLabel.SetMessage(Loc.GetString(technology.Name));

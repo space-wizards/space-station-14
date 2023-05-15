@@ -13,7 +13,7 @@ public sealed partial class TechnologyDatabaseComponent : Component
     /// A main discipline that locks out other discipline technology past a certain tier.
     /// </summary>
     [AutoNetworkedField]
-    [DataField("mainDiscipline", customTypeSerializer: typeof(PrototypeIdSerializer<DisciplinePrototype>))]
+    [DataField("mainDiscipline", customTypeSerializer: typeof(PrototypeIdSerializer<TechDisciplinePrototype>))]
     public string? MainDiscipline;
 
     [AutoNetworkedField(true)]
@@ -24,7 +24,7 @@ public sealed partial class TechnologyDatabaseComponent : Component
     /// Which research disciplines are able to be unlocked
     /// </summary>
     [AutoNetworkedField(true)]
-    [DataField("supportedDisciplines", customTypeSerializer: typeof(PrototypeIdListSerializer<DisciplinePrototype>))]
+    [DataField("supportedDisciplines", customTypeSerializer: typeof(PrototypeIdListSerializer<TechDisciplinePrototype>))]
     public List<string> SupportedDisciplines = new();
 
     /// <summary>

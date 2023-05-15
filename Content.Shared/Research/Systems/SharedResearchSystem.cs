@@ -29,18 +29,16 @@ public abstract class SharedResearchSystem : EntitySystem
             return;
 
         var availableTechnology = GetAvailableTechnologies(uid, component);
+        _random.Shuffle(availableTechnology);
 
         component.CurrentTechnologyCards.Clear();
         foreach (var discipline in component.SupportedDisciplines)
         {
-            var filtered = availableTechnology.
-                Where(p => p.Discipline == discipline &&
-                           !component.UnlockedTechnologies.Contains(p.ID)).ToList();
-
-            if (!filtered.Any())
+            var selected = availableTechnology.FirstOrDefault(p => p.Discipline == discipline);
+            if (selected == null)
                 continue;
 
-            component.CurrentTechnologyCards.Add(_random.Pick(filtered).ID);
+            component.CurrentTechnologyCards.Add(selected.ID);
         }
         Dirty(component);
     }
@@ -99,23 +97,23 @@ public abstract class SharedResearchSystem : EntitySystem
 
     public int GetHighestDisciplineTier(TechnologyDatabaseComponent component, string disciplineId)
     {
-        return GetHighestDisciplineTier(component, PrototypeManager.Index<DisciplinePrototype>(disciplineId));
+        return GetHighestDisciplineTier(component, PrototypeManager.Index<TechDisciplinePrototype>(disciplineId));
     }
 
-    public int GetHighestDisciplineTier(TechnologyDatabaseComponent component, DisciplinePrototype discipline)
+    public int GetHighestDisciplineTier(TechnologyDatabaseComponent component, TechDisciplinePrototype techDiscipline)
     {
         var allTech = PrototypeManager.EnumeratePrototypes<TechnologyPrototype>()
-            .Where(p => p.Discipline == discipline.ID && !p.Hidden).ToList();
+            .Where(p => p.Discipline == techDiscipline.ID && !p.Hidden).ToList();
         var allUnlocked = new List<TechnologyPrototype>();
         foreach (var recipe in component.UnlockedTechnologies)
         {
             var proto = PrototypeManager.Index<TechnologyPrototype>(recipe);
-            if (proto.Discipline != discipline.ID)
+            if (proto.Discipline != techDiscipline.ID)
                 continue;
             allUnlocked.Add(proto);
         }
 
-        var highestTier = discipline.TierPrerequisites.Keys.Max();
+        var highestTier = techDiscipline.TierPrerequisites.Keys.Max();
         var tier = 2; //tier 1 is always given
 
         // todo this might break if you have hidden technologies. i'm not sure
@@ -125,18 +123,18 @@ public abstract class SharedResearchSystem : EntitySystem
             // we need to get the tech for the tier 1 below because that's
             // what the percentage in TierPrerequisites is referring to.
             var unlockedTierTech = allUnlocked.Where(p => p.Tier == tier - 1).ToList();
-            var allTierTech = allTech.Where(p => p.Discipline == discipline.ID && p.Tier == tier - 1).ToList();
+            var allTierTech = allTech.Where(p => p.Discipline == techDiscipline.ID && p.Tier == tier - 1).ToList();
 
             if (allTierTech.Count == 0)
                 break;
 
             var percent = (float) unlockedTierTech.Count / allTierTech.Count;
-            if (percent < discipline.TierPrerequisites[tier])
+            if (percent < techDiscipline.TierPrerequisites[tier])
                 break;
 
-            if (tier >= discipline.LockoutTier &&
+            if (tier >= techDiscipline.LockoutTier &&
                 component.MainDiscipline != null &&
-                discipline.ID != component.MainDiscipline)
+                techDiscipline.ID != component.MainDiscipline)
                 break;
             tier++;
         }
@@ -167,7 +165,7 @@ public abstract class SharedResearchSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var discipline = PrototypeManager.Index<DisciplinePrototype>(prototype.Discipline);
+        var discipline = PrototypeManager.Index<TechDisciplinePrototype>(prototype.Discipline);
         if (prototype.Tier < discipline.LockoutTier)
             return;
         component.MainDiscipline = prototype.Discipline;

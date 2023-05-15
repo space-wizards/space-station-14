@@ -31,7 +31,7 @@ public sealed class TechnologyPrototype : IPrototype
     /// <summary>
     /// What research discipline this technology belongs to.
     /// </summary>
-    [DataField("discipline", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<DisciplinePrototype>))]
+    [DataField("discipline", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<TechDisciplinePrototype>))]
     public readonly string Discipline = default!;
 
     /// <summary>

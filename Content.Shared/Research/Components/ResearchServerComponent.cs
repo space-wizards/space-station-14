@@ -11,7 +11,7 @@ public sealed partial class ResearchServerComponent : Component
     /// The name of the server
     /// </summary>
     [AutoNetworkedField]
-    [DataField("servername"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("serverName"), ViewVariables(VVAccess.ReadWrite)]
     public string ServerName = "RDSERVER";
 
     /// <summary>

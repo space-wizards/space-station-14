@@ -118,7 +118,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         var disciplineColor = Color.Gray;
         if (_technologyDatabase.MainDiscipline != null)
         {
-            var discipline = _prototype.Index<DisciplinePrototype>(_technologyDatabase.MainDiscipline);
+            var discipline = _prototype.Index<TechDisciplinePrototype>(_technologyDatabase.MainDiscipline);
             disciplineText = Loc.GetString(discipline.Name);
             disciplineColor = discipline.Color;
         }
@@ -131,7 +131,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         TierDisplayContainer.Children.Clear();
         foreach (var disciplineId in _technologyDatabase.SupportedDisciplines)
         {
-            var discipline = _prototype.Index<DisciplinePrototype>(disciplineId);
+            var discipline = _prototype.Index<TechDisciplinePrototype>(disciplineId);
             var tier = _research.GetHighestDisciplineTier(_technologyDatabase, discipline);
 
             // don't show tiers with no available tech

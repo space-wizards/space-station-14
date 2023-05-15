@@ -1,4 +1,4 @@
-- type: discipline
+- type: techDiscipline
   id: Industrial
   name: research-discipline-industrial
   color: "#eeac34"
@@ -10,7 +10,7 @@
     2: 0.75
     3: 0.75
 
-- type: discipline
+- type: techDiscipline
   id: Biochemical
   name: research-discipline-biochemical
   color: "#449ae6"
@@ -22,7 +22,7 @@
     2: 0.75
     3: 0.75
 
-- type: discipline
+- type: techDiscipline
   id: Experimental
   name: research-discipline-experimental
   color: "#9a6ef0"
@@ -34,7 +34,7 @@
     2: 0.75
     3: 0.75
 
-- type: discipline
+- type: techDiscipline
   id: CivilianServices
   name: research-discipline-civilian-services
   color: "#7ecd48"

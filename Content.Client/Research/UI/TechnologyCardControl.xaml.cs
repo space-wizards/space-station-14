@@ -17,14 +17,14 @@ public sealed partial class TechnologyCardControl : Control
     {
         RobustXamlLoader.Load(this);
 
-        var discipline = prototypeManager.Index<DisciplinePrototype>(technology.Discipline);
+        var discipline = prototypeManager.Index<TechDisciplinePrototype>(technology.Discipline);
         Background.ModulateSelfOverride = discipline.Color;
 
         DisciplineTexture.Texture = spriteSys.Frame0(discipline.Icon);
         TechnologyNameLabel.Text = Loc.GetString(technology.Name);
         var message = new FormattedMessage();
-        message.AddMarkup($"{Loc.GetString("research-console-tier-discipline-info",
-            ("tier", technology.Tier), ("color", discipline.Color), ("discipline", Loc.GetString(discipline.Name)))}");
+        message.AddMarkup(Loc.GetString("research-console-tier-discipline-info",
+            ("tier", technology.Tier), ("color", discipline.Color), ("discipline", Loc.GetString(discipline.Name))));
         TierLabel.SetMessage(message);
         UnlocksLabel.SetMessage(description);
 
