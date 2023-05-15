@@ -2,6 +2,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -22,14 +23,7 @@ namespace Content.Server.Administration.Commands
 
         public override async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            var plyMgr = IoCManager.Resolve<IPlayerManager>();
             var locator = IoCManager.Resolve<IPlayerLocator>();
-            var dbMan = IoCManager.Resolve<IServerDbManager>();
-            var cfg = IoCManager.Resolve<IConfigurationManager>();
-            var systems = IoCManager.Resolve<IEntitySystemManager>();
-            var db = IoCManager.Resolve<IServerDbManager>();
-
             string target;
             string reason;
             uint minutes;
@@ -80,65 +74,18 @@ namespace Content.Server.Administration.Commands
             }
 
             var located = await locator.LookupIdByNameOrIdAsync(target);
+            var player = shell.Player as IPlayerSession;
+
             if (located == null)
             {
-                shell.WriteError(LocalizationManager.GetString("cmd-ban-player"));
+                shell.WriteError(Loc.GetString("cmd-ban-player"));
                 return;
             }
 
             var targetUid = located.UserId;
             var targetHWid = located.LastHWId;
-            var targetAddr = located.LastAddress;
 
-            DateTimeOffset? expires = null;
-            if (minutes > 0)
-            {
-                expires = DateTimeOffset.Now + TimeSpan.FromMinutes(minutes);
-            }
-
-            (IPAddress, int)? addrRange = null;
-            if (targetAddr != null)
-            {
-                if (targetAddr.IsIPv4MappedToIPv6)
-                    targetAddr = targetAddr.MapToIPv4();
-
-                // Ban /64 for IPv4, /32 for IPv4.
-                var cidr = targetAddr.AddressFamily == AddressFamily.InterNetworkV6 ? 64 : 32;
-                addrRange = (targetAddr, cidr);
-            }
-
-            systems.TryGetEntitySystem<GameTicker>(out var ticker);
-            int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
-            var playtime = (await db.GetPlayTimes(targetUid)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall)?.TimeSpent ?? TimeSpan.Zero;
-
-            var banDef = new ServerBanDef(
-                null,
-                targetUid,
-                addrRange,
-                targetHWid,
-                DateTimeOffset.Now,
-                expires,
-                roundId,
-                playtime,
-                reason,
-                severity,
-                player?.UserId,
-                null);
-
-            await dbMan.AddServerBanAsync(banDef);
-
-            var response = new StringBuilder($"Banned {target} with reason \"{reason}\"");
-
-            response.Append(expires == null ? " permanently." : $" until {expires}");
-
-            shell.WriteLine(response.ToString());
-
-            // Is the player connected?
-            if (!plyMgr.TryGetSessionById(targetUid, out var targetPlayer))
-                return;
-            // If they are, kick them
-            var message = banDef.FormatBanMessage(cfg, LocalizationManager);
-            targetPlayer.ConnectedClient.Disconnect(message);
+            IoCManager.Resolve<IBanManager>().CreateServerBan(targetUid, target, player?.UserId, null, targetHWid, minutes, severity, reason);
         }
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

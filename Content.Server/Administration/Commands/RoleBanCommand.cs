@@ -71,7 +71,17 @@ public sealed class RoleBanCommand : IConsoleCommand
                 return;
         }
 
-        IoCManager.Resolve<RoleBanManager>().CreateJobBan(shell, target, job, reason, minutes, severity, DateTimeOffset.UtcNow);
+        var located = await IoCManager.Resolve<IPlayerLocator>().LookupIdByNameOrIdAsync(target);
+        if (located == null)
+        {
+            shell.WriteError(Loc.GetString("cmd-roleban-name-parse"));
+            return;
+        }
+
+        var targetUid = located.UserId;
+        var targetHWid = located.LastHWId;
+
+        IoCManager.Resolve<IBanManager>().CreateRoleBan(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, job, minutes, severity, reason, DateTimeOffset.UtcNow);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

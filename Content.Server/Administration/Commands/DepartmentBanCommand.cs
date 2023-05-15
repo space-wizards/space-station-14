@@ -76,11 +76,24 @@ public sealed class DepartmentBanCommand : IConsoleCommand
             return;
         }
 
-        var banManager = IoCManager.Resolve<RoleBanManager>();
+        var located = await IoCManager.Resolve<IPlayerLocator>().LookupIdByNameOrIdAsync(target);
+        if (located == null)
+        {
+            shell.WriteError(Loc.GetString("cmd-roleban-name-parse"));
+            return;
+        }
 
+        var targetUid = located.UserId;
+        var targetHWid = located.LastHWId;
+
+        var banManager = IoCManager.Resolve<BanManager>();
+
+        // If you are trying to remove the following variable, please don't. It's there because the note system groups role bans by time, reason and banning admin.
+        // Without it the note list will get needlessly cluttered.
+        var now = DateTimeOffset.UtcNow;
         foreach (var job in departmentProto.Roles)
         {
-            banManager.CreateJobBan(shell, target, job, reason, minutes, severity, DateTimeOffset.UtcNow);
+            banManager.CreateRoleBan(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, job, minutes, severity, reason, now);
         }
     }
 
