@@ -74,7 +74,7 @@ public sealed class BanPanelEui : BaseEui
         if (ipAddressString is not null)
         {
             var hid = "0";
-            var split = ipAddressString.Split('/', 1);
+            var split = ipAddressString.Split('/', 2);
             ipAddressString = split[0];
             if (split.Length > 1)
                 hid = split[1];
@@ -91,27 +91,27 @@ public sealed class BanPanelEui : BaseEui
             addressRange = (ipAddress, (int) hidInt);
         }
 
-        var targetUid = PlayerId;
-        addressRange = useLastIp && LastAddress is not null ? (LastAddress, LastAddress.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32) : null;
+        var targetUid = target is not null ? PlayerId : null;
+        addressRange = useLastIp && LastAddress is not null ? (LastAddress, LastAddress.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32) : addressRange;
         var targetHWid = useLastHwid ? LastHwid : hwid;
-        if (target != null || target != PlayerName || !Guid.TryParse(target, out var parsed) || parsed != PlayerId)
+        if (target != null && target != PlayerName || Guid.TryParse(target, out var parsed) && parsed != PlayerId)
         {
-            var located = await _playerLocator.LookupIdByNameOrIdAsync(target!);
+            var located = await _playerLocator.LookupIdByNameOrIdAsync(target);
             if (located == null)
             {
                 _chat.DispatchServerMessage(Player, Loc.GetString("cmd-ban-player"));
                 return;
             }
             targetUid = located.UserId;
-            var targetAddr = located.LastAddress;
-            if (useLastIp && targetAddr != null)
+            var targetAddress = located.LastAddress;
+            if (useLastIp && targetAddress != null)
             {
-                if (targetAddr.IsIPv4MappedToIPv6)
-                    targetAddr = targetAddr.MapToIPv4();
+                if (targetAddress.IsIPv4MappedToIPv6)
+                    targetAddress = targetAddress.MapToIPv4();
 
-                // Ban /128 for IPv4, /32 for IPv4.
-                var hid = targetAddr.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32;
-                addressRange = (targetAddr, hid);
+                // Ban /128 for IPv6, /32 for IPv4.
+                var hid = targetAddress.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32;
+                addressRange = (targetAddress, hid);
             }
             targetHWid = useLastHwid ? located.LastHWId : hwid;
         }

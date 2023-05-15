@@ -143,16 +143,17 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         var adminName = banningAdmin == null
             ? Loc.GetString("system-user")
             : (await _db.GetPlayerRecordByUserId(banningAdmin.Value))?.LastSeenUserName ?? Loc.GetString("system-user");
+        var targetName = target is null ? "null" : $"{targetUsername} ({target})";
         var addressRangeString = addressRange != null
             ? $"{addressRange.Value.Item1}/{addressRange.Value.Item2}"
             : "null";
         var hwidString = hwid != null
             ? string.Concat(hwid.Value.Select(x => x.ToString("x2")))
             : "null";
-        var expiresString = expires == null ? Loc.GetString("server-ban-string-never") : $"until {expires} ";
+        var expiresString = expires == null ? Loc.GetString("server-ban-string-never") : $"{expires}";
 
         var logMessage = Loc.GetString("server-ban-string", ("admin", adminName), ("severity", severity),
-            ("expires", expiresString), ("name", target.ToString() ?? "null"), ("ip", addressRangeString),
+            ("expires", expiresString), ("name", targetName), ("ip", addressRangeString),
             ("hwid", hwidString), ("reason", reason));
         _sawmill.Info(logMessage);
         _chat.SendAdminAlert(logMessage);

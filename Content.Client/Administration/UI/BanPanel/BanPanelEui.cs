@@ -21,7 +21,7 @@ public sealed class BanPanelEui : BaseEui
         BanPanel.OnClose += () => SendMessage(new CloseEuiMessage());
         BanPanel.BanSubmitted += (player, ip, useLastIp, hwid, useLastHwid, minutes, reason, severity, roles)
             => SendMessage(new BanPanelEuiStateMsg.CreateBanRequest(player, ip, useLastIp, hwid, useLastHwid, minutes, reason, severity, roles));
-        BanPanel.PlayerChanged += (player) => SendMessage(new BanPanelEuiStateMsg.GetPlayerInfoRequest(player));
+        BanPanel.PlayerChanged += player => SendMessage(new BanPanelEuiStateMsg.GetPlayerInfoRequest(player));
     }
 
     public override void HandleState(EuiStateBase state)
@@ -38,5 +38,11 @@ public sealed class BanPanelEui : BaseEui
     public override void Opened()
     {
         BanPanel.OpenCentered();
+    }
+
+    public override void Closed()
+    {
+        BanPanel.Close();
+        BanPanel.Dispose();
     }
 }

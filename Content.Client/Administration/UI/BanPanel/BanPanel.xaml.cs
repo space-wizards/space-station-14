@@ -88,18 +88,25 @@ public sealed partial class BanPanel : DefaultWindow
         IpCheckbox.OnPressed += _ =>
         {
             IpLine.Editable = IpCheckbox.Pressed;
-            IpLine.ModulateSelfOverride = null;
+            OnIpChanged();
         };
         HwidLine.OnFocusExit += _ => OnHwidChanged();
         HwidCheckbox.OnPressed += _ =>
         {
             HwidLine.Editable = HwidCheckbox.Pressed;
-            HwidLine.ModulateSelfOverride = null;
+            OnHwidChanged();
         };
         TypeOption.OnItemSelected += args =>
         {
             TypeOption.SelectId(args.Id);
             OnTypeChanged();
+        };
+        LastConnCheckbox.OnPressed += args =>
+        {
+            IpLine.ModulateSelfOverride = null;
+            HwidLine.ModulateSelfOverride = null;
+            OnIpChanged();
+            OnHwidChanged();
         };
         SubmitButton.OnPressed += SubmitButtonOnOnPressed;
 
@@ -291,11 +298,12 @@ public sealed partial class BanPanel : DefaultWindow
     private void OnIpChanged()
     {
         IpAddress = IpLine.Text;
-        if (!IpCheckbox.Pressed)
-            return;
-        if (LastConnCheckbox.Pressed && string.IsNullOrEmpty(IpAddress))
+        if (LastConnCheckbox.Pressed && string.IsNullOrEmpty(IpAddress) || !IpCheckbox.Pressed)
         {
             IpAddress = null;
+            ErrorLevel &= ~ErrorLevelEnum.IpAddress;
+            IpLine.ModulateSelfOverride = null;
+            UpdateSubmitEnabled();
             return;
         }
         var ip = IpLine.Text;
@@ -324,10 +332,8 @@ public sealed partial class BanPanel : DefaultWindow
     private void OnHwidChanged()
     {
         var hwidString = HwidLine.Text;
-        if (!(string.IsNullOrEmpty(hwidString) && LastConnCheckbox.Pressed) && !HwidRegex.IsMatch(hwidString))
+        if (HwidCheckbox.Pressed && !(string.IsNullOrEmpty(hwidString) && LastConnCheckbox.Pressed) && !HwidRegex.IsMatch(hwidString) )
         {
-            if (!HwidCheckbox.Pressed)
-                return;
             ErrorLevel |= ErrorLevelEnum.Hwid;
             HwidLine.ModulateSelfOverride = Color.Red;
             UpdateSubmitEnabled();
@@ -338,7 +344,7 @@ public sealed partial class BanPanel : DefaultWindow
         HwidLine.ModulateSelfOverride = null;
         UpdateSubmitEnabled();
 
-        if (LastConnCheckbox.Pressed)
+        if (LastConnCheckbox.Pressed || !HwidCheckbox.Pressed)
         {
             Hwid = null;
             return;
@@ -434,11 +440,10 @@ public sealed partial class BanPanel : DefaultWindow
         }
 
         var player = PlayerCheckbox.Pressed ? PlayerUsername : null;
-        var ipAddress = IpCheckbox.Pressed ? IpAddress : null;
-        var hwid = HwidCheckbox.Pressed ? Hwid : null;
+        var useLastIp = IpCheckbox.Pressed && LastConnCheckbox.Pressed && IpAddress is null;
+        var useLastHwid = HwidCheckbox.Pressed && LastConnCheckbox.Pressed && Hwid is null;
         var severity = (NoteSeverity) SeverityOption.SelectedId;
-        BanSubmitted?.Invoke(player, ipAddress, !IpCheckbox.Pressed && LastConnCheckbox.Pressed, hwid, !HwidCheckbox.Pressed && LastConnCheckbox.Pressed, (uint) (TimeEntered * Multiplier), reason, severity, roles);
-        Close();
+        BanSubmitted?.Invoke(player, IpAddress, useLastIp, Hwid, useLastHwid, (uint) (TimeEntered * Multiplier), reason, severity, roles);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
