@@ -15,7 +15,7 @@ public sealed class VentClogRuleComponent : Component
     [DataField("safeishVentChemicals", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
     public readonly IReadOnlyList<string> SafeishVentChemicals = new[]
     {
-        "Water", "Blood", "Slime", "SpaceDrugs", "SpaceCleaner", "Nutriment", "Sugar", "SpaceLube", "Ephedrine", "Ale", "Beer"
+        "Water", "Blood", "Slime", "SpaceDrugs", "SpaceCleaner", "Nutriment", "Sugar", "SpaceLube", "Ephedrine", "Ale", "Beer", "SpaceGlue"
     };
 
     /// <summary>

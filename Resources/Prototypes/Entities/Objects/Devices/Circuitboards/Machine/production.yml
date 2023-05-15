@@ -99,6 +99,9 @@
       Manipulator: 3
     materialRequirements:
       Glass: 5
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: UniformPrinterMachineCircuitboard

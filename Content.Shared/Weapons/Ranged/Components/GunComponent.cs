@@ -80,6 +80,12 @@ public partial class GunComponent : Component
     #endregion
 
     /// <summary>
+    /// Whether this gun is shot via the use key or the alt-use key.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("useKey"), AutoNetworkedField]
+    public bool UseKey = true;
+
+    /// <summary>
     /// Where the gun is being requested to shoot.
     /// </summary>
     [ViewVariables]

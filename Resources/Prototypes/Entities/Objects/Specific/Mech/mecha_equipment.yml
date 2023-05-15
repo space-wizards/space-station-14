@@ -9,6 +9,9 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     size: 50
   - type: MechEquipment
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: MechEquipmentGrabber

@@ -1,240 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: 'added Telecom System. Sending messages through headsets (but handheld
-      radios / intercoms and etc.) now requires powered telecom server with channel
-      encryption key inserted. Source, receiver and server should be on the same map.
-      Centcom and syndicate channels are available without server and their messages
-      not limited to map.', type: Add}
-  id: 3233
-  time: '2023-03-24T00:02:41.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: maintenance panel needs to be opened to insert/remove keys in telecom
-      server, type: Tweak}
-  - {message: telecom server now can be deconstructed with crowbar, type: Fix}
-  id: 3234
-  time: '2023-03-24T00:09:46.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Shells and cartridges now appear over tables, type: Fix}
-  id: 3235
-  time: '2023-03-24T01:05:55.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Biosuit crates now can be ordered from cargo, type: Add}
-  id: 3236
-  time: '2023-03-24T01:40:27.0000000+00:00'
-- author: TimmyTwoHands
-  changes:
-  - {message: Removed combat bonuses from Boxers., type: Tweak}
-  id: 3237
-  time: '2023-03-24T01:50:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix static melee offsets not showing the correct position., type: Fix}
-  id: 3238
-  time: '2023-03-24T02:13:16.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: modified and added stack sprites for wood, type: Tweak}
-  id: 3239
-  time: '2023-03-24T02:26:20.0000000+00:00'
-- author: Mr0maks
-  changes:
-  - {message: Fix freedom implant charges not being used., type: Fix}
-  id: 3240
-  time: '2023-03-24T03:07:21.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Fixed exploits that would let you continue controlling a cardboard box
-      after exiting it., type: Fix}
-  id: 3241
-  time: '2023-03-24T05:09:58.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Remove range check for FTL., type: Tweak}
-  id: 3242
-  time: '2023-03-24T06:17:09.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Added 11 new food/drink vending machines., type: Add}
-  - {message: Added Robotech Deluxe filled with robotics equipment., type: Add}
-  - {message: Added CentDrobe filled with centcom drip., type: Add}
-  id: 3243
-  time: '2023-03-24T08:54:48.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: fluid can now spread through directional windows (through not occupied
-      sides)., type: Fix}
-  id: 3244
-  time: '2023-03-24T14:09:52.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The rumors of dylovene's overdose turned out to be true! Anything above
-      30u will now have unwanted side effects., type: Tweak}
-  id: 3245
-  time: '2023-03-24T18:13:23.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: Traitor codewords now get properly displayed in the round end summary,
-    type: Fix}
-  id: 3246
-  time: '2023-03-24T19:54:44.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed cerberus to be three good boys in one!, type: Tweak}
-  id: 3247
-  time: '2023-03-24T20:28:30.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: The changelog no longer gets squished in the lobby at 75% UI scale,
-    type: Fix}
-  id: 3248
-  time: '2023-03-24T21:08:50.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Emergency welders now take up 5 less space in your inventory space.,
-    type: Tweak}
-  id: 3249
-  time: '2023-03-24T21:30:40.0000000+00:00'
-- author: Menshin
-  changes:
-  - {message: Alert display lights on fire alarms properly reacts to power changes.,
-    type: Fix}
-  id: 3250
-  time: '2023-03-25T03:10:49.0000000+00:00'
-- author: 778b
-  changes:
-  - {message: Solar panels no longer block light from getting to other solar panels.,
-    type: Fix}
-  id: 3251
-  time: '2023-03-25T04:32:46.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: 'Added watermelon and grapes, and related recipes.', type: Add}
-  id: 3252
-  time: '2023-03-25T12:15:21.0000000+00:00'
-- author: DEATHB4DEFEAT
-  changes:
-  - {message: Edited comms console UI, type: Tweak}
-  id: 3253
-  time: '2023-03-25T14:51:16.0000000+00:00'
-- author: DEATHB4DEFEAT
-  changes:
-  - {message: Changed crew monitoring console UI, type: Tweak}
-  id: 3254
-  time: '2023-03-25T14:51:29.0000000+00:00'
-- author: DEATHB4DEFEAT
-  changes:
-  - {message: Fixed grinder UI being too small., type: Fix}
-  id: 3255
-  time: '2023-03-25T14:51:35.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Pneumatic cannon can no longer shoot bullets., type: Fix}
-  - {message: New admeme pneumatic cannon variants that can still shoot bullets.,
-    type: Add}
-  id: 3256
-  time: '2023-03-25T23:15:46.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Added the signal valve for advanced atmosians., type: Add}
-  id: 3257
-  time: '2023-03-25T23:16:28.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Bullet impulses in space increased from 5 -> 25, type: Tweak}
-  id: 3258
-  time: '2023-03-26T01:55:24.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Cardboard Boxes will now play their effect again, type: Fix}
-  id: 3259
-  time: '2023-03-26T02:26:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix alerts being off-screen when using default hud layout., type: Fix}
-  id: 3260
-  time: '2023-03-26T13:16:28.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added margins to the chatbox., type: Tweak}
-  id: 3261
-  time: '2023-03-26T14:57:29.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Nuclear Operatives now can start with either the codes to their own
-      nuke or the codes to the station's nuke., type: Add}
-  id: 3262
-  time: '2023-03-26T16:58:57.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fixed static pricing being used on some stackable entities., type: Fix}
-  - {message: Removed the base $20 price for items., type: Tweak}
-  id: 3263
-  time: '2023-03-26T17:01:43.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: 'Changed space bears even more, like being able to pet them and they
-      can now pull!', type: Tweak}
-  id: 3264
-  time: '2023-03-26T17:50:17.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added Moth Cloak., type: Add}
-  - {message: Added Moth Mask., type: Add}
-  - {message: Removed sadness!, type: Remove}
-  id: 3265
-  time: '2023-03-26T19:11:43.0000000+00:00'
-- author: Tyzemol
-  changes:
-  - {message: Smart equip to backpack/belt hotkeys can now be used to quickly take
-      or insert an item into corresponding slots (such as some tools and weapons),
-    type: Tweak}
-  id: 3266
-  time: '2023-03-26T23:01:09.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'RD, CMO, and QM can no longer be traitors.', type: Remove}
-  id: 3267
-  time: '2023-03-27T00:38:32.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: Nanotrasen has cut budget towards Cryptobiolin inhibitors. Cryptobiolin
-      will now cause confusion and dizziness., type: Tweak}
-  id: 3268
-  time: '2023-03-27T01:03:06.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen is no longer allowing sensitive information, or nuclear
-      material to be transported through its crew arrivals shuttles. How? The same
-      system we use to kick people off the shuttle when it docks. The power of science!',
-    type: Fix}
-  id: 3269
-  time: '2023-03-27T01:53:27.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: rat servants can now be butchered for 1 rat meat., type: Tweak}
-  id: 3270
-  time: '2023-03-27T05:27:10.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: 'Added cardboard material, which can be used to craft big and small
-      boxes', type: Add}
-  - {message: Cardboard crates can now be ordered from cargo, type: Add}
-  id: 3271
-  time: '2023-03-27T23:04:25.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Power Drills can now fit in utility belts, type: Tweak}
-  id: 3272
-  time: '2023-03-27T23:35:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: The top menu in separated hud will now stretch with chat size., type: Tweak}
-  id: 3273
-  time: '2023-03-28T02:51:40.0000000+00:00'
 - author: moony
   changes:
   - {message: 'Multiple uplink items have been re-priced, all around cheaper.', type: Tweak}
@@ -2903,3 +2667,227 @@ Entries:
       fill your scrubbers with quite as much foam.', type: Tweak}
   id: 3732
   time: '2023-05-12T18:37:09.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'The Captain''s ID card can now be thrown against an airlock to open
+      it, just like any other ID.', type: Fix}
+  id: 3733
+  time: '2023-05-12T20:07:57.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: hop now has detective acces, type: Fix}
+  id: 3734
+  time: '2023-05-12T20:16:29.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Syringes are now size 3, down from 5.', type: Tweak}
+  id: 3735
+  time: '2023-05-12T21:10:45.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Space tunes should now only be heard in space, type: Fix}
+  id: 3736
+  time: '2023-05-12T22:07:04.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: New safety standards have made bicaridine overdoses less fatal than
+      before., type: Tweak}
+  id: 3737
+  time: '2023-05-12T22:40:55.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: 1 nukeop per 10 people instead of per 5., type: Tweak}
+  - {message: minimum of 20 people for nukeops., type: Tweak}
+  id: 3738
+  time: '2023-05-12T22:55:47.0000000+00:00'
+- author: DEATHB4DEFEAT
+  changes:
+  - {message: Changed the portal sprite., type: Tweak}
+  id: 3739
+  time: '2023-05-12T23:36:43.0000000+00:00'
+- author: KEEYNy
+  changes:
+  - {message: "Equal values \u200B\u200Bfor ERT Leader jumpsuit  and ERT Security\
+      \ jumpsuit", type: Tweak}
+  id: 3740
+  time: '2023-05-12T23:43:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Scale throwing pushback by mass., type: Tweak}
+  id: 3741
+  time: '2023-05-12T23:54:38.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can now drinky puddles (inefficiently), type: Add}
+  id: 3742
+  time: '2023-05-13T01:32:57.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Chemical reactions should now conserve thermal energy., type: Tweak}
+  id: 3743
+  time: '2023-05-13T03:10:32.0000000+00:00'
+- author: Tristan Thomas
+  changes:
+  - {message: 'Added a white cane, which spawns on blind players.', type: Add}
+  id: 3744
+  time: '2023-05-13T03:11:35.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Changed manly dorf appearance and flavor., type: Tweak}
+  id: 3745
+  time: '2023-05-13T12:14:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix vapors., type: Fix}
+  id: 3746
+  time: '2023-05-13T13:45:59.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds new masks for the clown and mime in the theater machine., type: Add}
+  id: 3747
+  time: '2023-05-13T14:41:35.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: 'Adds a new pet slime for RND, named Slime. Slime Smile.', type: Add}
+  - {message: The description of angry Slimes is now working., type: Fix}
+  id: 3748
+  time: '2023-05-13T14:51:03.0000000+00:00'
+- author: OttoMaticode
+  changes:
+  - {message: Robotics now has a guidebook entry, type: Add}
+  id: 3749
+  time: '2023-05-13T15:21:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Puddles slip you further and reduced slip multipliers across the board
+      as most were comically large., type: Tweak}
+  id: 3750
+  time: '2023-05-13T15:45:53.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Health Analyzer's that run out of power/don't have a power cell in them
+      will turn off and their screen will go black until a power cell with power is
+      inserted again, type: Tweak}
+  id: 3751
+  time: '2023-05-13T16:28:11.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: 'Kelotane can now cause an overdose above 30u, greatly decreasing the
+      body''s ability to retain water.', type: Tweak}
+  id: 3752
+  time: '2023-05-13T21:18:06.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added suit storage units, for storing EVA-capable suits.', type: Add}
+  - {message: 'Most lockers with space suits no longer contain them, in lieu of suit
+      storage units.', type: Tweak}
+  id: 3753
+  time: '2023-05-14T01:36:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The RPED can now quickly pick up machine parts on the ground like a
+      trashbag., type: Tweak}
+  id: 3754
+  time: '2023-05-14T02:14:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added the proto-kinetic crusher for salvagers., type: Add}
+  id: 3755
+  time: '2023-05-14T03:15:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix docked grids failing to split., type: Fix}
+  id: 3756
+  time: '2023-05-14T03:29:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduced FTL time from 30s to 20s and FTL cooldown from 30s to 10s.,
+    type: Tweak}
+  - {message: Arrivals turnaround reduced from 90s to 50s., type: Tweak}
+  id: 3757
+  time: '2023-05-14T08:00:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Caves now have crystals in them., type: Add}
+  id: 3758
+  time: '2023-05-14T11:38:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Arrivals will auto-orient your camera upon traversal., type: Add}
+  id: 3759
+  time: '2023-05-14T11:46:29.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Secret''s gamemode weights have been tweaked. Zombies are now much
+      more common, and nuclear emergency is twice as rare.', type: Tweak}
+  id: 3760
+  time: '2023-05-14T12:09:03.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Big cardboard boxes no longer choose their driver randomly, type: Tweak}
+  id: 3761
+  time: '2023-05-14T12:46:19.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Dame Dame coat side sprite fixes, type: Fix}
+  id: 3762
+  time: '2023-05-14T14:21:42.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added space glue - its sticky and funny! When consumed mutes you and
+      makes you see rainbows., type: Add}
+  - {message: space glue can now appear in vent clog events. Less lube for you!, type: Add}
+  id: 3763
+  time: '2023-05-14T15:35:11.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Pun Pun has lost PDA privileges., type: Remove}
+  id: 3764
+  time: '2023-05-14T15:38:49.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Paper can be attached to closets and lockers, type: Tweak}
+  id: 3765
+  time: '2023-05-14T19:02:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Salvage ore will only spawn on existing walls., type: Tweak}
+  id: 3766
+  time: '2023-05-15T02:01:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Stackable items will now show a count in the storage window and will
+      also natively stack when you try to insert them into storage., type: Add}
+  id: 3767
+  time: '2023-05-15T02:24:46.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: Returned the action hotkey numbers to their UI holding cells after mime
+      let them out., type: Fix}
+  id: 3768
+  time: '2023-05-15T03:45:56.0000000+00:00'
+- author: 08A
+  changes:
+  - {message: Added a shortcut to flip prototype in the construction menu, type: Add}
+  id: 3769
+  time: '2023-05-15T04:13:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Crystals can now deflect guns., type: Add}
+  id: 3770
+  time: '2023-05-15T05:21:06.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: The orb rolls., type: Tweak}
+  id: 3771
+  time: '2023-05-15T05:32:17.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: 'Rotting takes 10 minutes, up from 5.', type: Tweak}
+  id: 3772
+  time: '2023-05-15T15:52:31.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: slime puddles now slow you down by 25%, type: Add}
+  id: 3773
+  time: '2023-05-15T18:49:49.0000000+00:00'
