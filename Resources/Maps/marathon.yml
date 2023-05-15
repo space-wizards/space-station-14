@@ -16349,7 +16349,7 @@ entities:
   entities:
   - uid: 6730
     components:
-    - pos: -4.4905396,-8.277424
+    - pos: -4.259937,-10.014734
       parent: 30
       type: Transform
 - proto: BoxShotgunIncendiary
@@ -66899,6 +66899,12 @@ entities:
       pos: -5.5,-39.5
       parent: 30
       type: Transform
+  - uid: 9047
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -17.5,-36.5
+      parent: 30
+      type: Transform
   - uid: 9126
     components:
     - rot: -1.5707963267948966 rad
@@ -66914,12 +66920,6 @@ entities:
   - uid: 9446
     components:
     - pos: -23.5,-40.5
-      parent: 30
-      type: Transform
-  - uid: 9591
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -19.5,-36.5
       parent: 30
       type: Transform
   - uid: 11304
@@ -67831,6 +67831,10 @@ entities:
           occludes: True
           ents:
           - 11365
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
       type: ContainerContainer
   - uid: 15236
     components:
@@ -67903,29 +67907,6 @@ entities:
       type: EntityStorage
 - proto: ClosetBombFilled
   entities:
-  - uid: 1983
-    components:
-    - pos: -40.5,56.5
-      parent: 30
-      type: Transform
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
   - uid: 2072
     components:
     - pos: -30.5,56.5
@@ -70429,28 +70410,6 @@ entities:
     - pos: -17.446564,-106.45651
       parent: 30
       type: Transform
-- proto: ClothingHeadHelmetEVA
-  entities:
-  - uid: 785
-    components:
-    - pos: -3.7148914,20.472134
-      parent: 30
-      type: Transform
-  - uid: 786
-    components:
-    - pos: -3.6992664,21.472134
-      parent: 30
-      type: Transform
-  - uid: 787
-    components:
-    - pos: 0.34760857,21.519009
-      parent: 30
-      type: Transform
-  - uid: 788
-    components:
-    - pos: 0.31635857,20.409634
-      parent: 30
-      type: Transform
 - proto: ClothingHeadHelmetHelmet
   entities:
   - uid: 1986
@@ -70805,28 +70764,6 @@ entities:
     - pos: 19.488726,8.340895
       parent: 30
       type: Transform
-- proto: ClothingOuterHardsuitEVA
-  entities:
-  - uid: 781
-    components:
-    - pos: -3.4805164,20.597134
-      parent: 30
-      type: Transform
-  - uid: 782
-    components:
-    - pos: -3.4648914,21.597134
-      parent: 30
-      type: Transform
-  - uid: 783
-    components:
-    - pos: 0.53510857,20.565884
-      parent: 30
-      type: Transform
-  - uid: 784
-    components:
-    - pos: 0.58198357,21.581509
-      parent: 30
-      type: Transform
 - proto: ClothingOuterHardsuitEVAPrisoner
   entities:
   - uid: 2381
@@ -70839,32 +70776,6 @@ entities:
     - pos: -44.368538,58.54459
       parent: 30
       type: Transform
-- proto: ClothingOuterHardsuitSecurity
-  entities:
-  - uid: 1929
-    components:
-    - flags: InContainer
-      type: MetaData
-    - parent: 1928
-      type: Transform
-    - canCollide: False
-      type: Physics
-  - uid: 1930
-    components:
-    - flags: InContainer
-      type: MetaData
-    - parent: 1928
-      type: Transform
-    - canCollide: False
-      type: Physics
-  - uid: 1931
-    components:
-    - flags: InContainer
-      type: MetaData
-    - parent: 1928
-      type: Transform
-    - canCollide: False
-      type: Physics
 - proto: ClothingOuterNunRobe
   entities:
   - uid: 17657
@@ -71992,11 +71903,6 @@ entities:
     - pos: -42.5,31.5
       parent: 30
       type: Transform
-  - uid: 5052
-    components:
-    - pos: -19.5,32.5
-      parent: 30
-      type: Transform
 - proto: ContainmentFieldGenerator
   entities:
   - uid: 9413
@@ -73027,33 +72933,11 @@ entities:
       type: Transform
 - proto: CratePrivateSecure
   entities:
-  - uid: 12131
+  - uid: 9045
     components:
     - pos: 34.5,-9.5
       parent: 30
       type: Transform
-    - containers:
-      - EntityStorageComponent
-      - entity_storage
-      type: Construction
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
 - proto: CrateServiceJanitorialSupplies
   entities:
   - uid: 541
@@ -107115,16 +106999,6 @@ entities:
     - pos: -39.5,-5.5
       parent: 30
       type: Transform
-  - uid: 9045
-    components:
-    - pos: 9.5,-27.5
-      parent: 30
-      type: Transform
-  - uid: 9047
-    components:
-    - pos: 9.5,-28.5
-      parent: 30
-      type: Transform
   - uid: 9864
     components:
     - pos: 0.5,-52.5
@@ -107139,6 +107013,18 @@ entities:
       type: Transform
     - color: '#34E5EBFF'
       type: AtmosPipeColor
+  - uid: 12038
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 17.5,-33.5
+      parent: 30
+      type: Transform
+  - uid: 12084
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 17.5,-34.5
+      parent: 30
+      type: Transform
   - uid: 12749
     components:
     - pos: 31.5,12.5
@@ -107151,9 +107037,10 @@ entities:
       type: Transform
 - proto: GasThermoMachineHeater
   entities:
-  - uid: 9048
+  - uid: 12085
     components:
-    - pos: 9.5,-29.5
+    - rot: -1.5707963267948966 rad
+      pos: 17.5,-35.5
       parent: 30
       type: Transform
 - proto: GasValve
@@ -117889,12 +117776,12 @@ entities:
       type: Transform
   - uid: 6709
     components:
-    - pos: -4.524357,-8.44442
+    - pos: -4.432647,-10.264734
       parent: 30
       type: Transform
   - uid: 6710
     components:
-    - pos: -4.383732,-8.53817
+    - pos: -4.432647,-10.264734
       parent: 30
       type: Transform
   - uid: 11734
@@ -119300,6 +119187,10 @@ entities:
           occludes: True
           ents:
           - 9329
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
       type: ContainerContainer
 - proto: LockerChiefMedicalOfficerFilled
   entities:
@@ -119332,6 +119223,10 @@ entities:
           occludes: True
           ents:
           - 21256
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
       type: ContainerContainer
 - proto: LockerDetectiveFilled
   entities:
@@ -119408,6 +119303,11 @@ entities:
       type: EntityStorage
 - proto: LockerEngineerFilled
   entities:
+  - uid: 9048
+    components:
+    - pos: 3.5,-42.5
+      parent: 30
+      type: Transform
   - uid: 9429
     components:
     - pos: -25.5,-43.5
@@ -119456,50 +119356,9 @@ entities:
       type: EntityStorage
   - uid: 9435
     components:
-    - pos: -22.5,-39.5
+    - pos: 3.5,-41.5
       parent: 30
       type: Transform
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
-  - uid: 9436
-    components:
-    - pos: -21.5,-39.5
-      parent: 30
-      type: Transform
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
   - uid: 11004
     components:
     - pos: -25.5,-42.5
@@ -119767,6 +119626,10 @@ entities:
           - 763
           - 762
           - 761
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
       type: ContainerContainer
   - uid: 759
     components:
@@ -119797,6 +119660,10 @@ entities:
           occludes: True
           ents:
           - 760
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
       type: ContainerContainer
   - uid: 5608
     components:
@@ -119830,6 +119697,10 @@ entities:
           - 6975
           - 5615
           - 5616
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
       type: ContainerContainer
   - uid: 11412
     components:
@@ -120144,32 +120015,14 @@ entities:
       type: EntityStorage
 - proto: LockerSalvageSpecialistFilled
   entities:
+  - uid: 784
+    components:
+    - pos: 30.5,-9.5
+      parent: 30
+      type: Transform
   - uid: 11194
     components:
     - pos: 28.5,-9.5
-      parent: 30
-      type: Transform
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
-  - uid: 12038
-    components:
-    - pos: 27.5,-9.5
       parent: 30
       type: Transform
     - air:
@@ -120472,40 +120325,6 @@ entities:
         - 0
         - 0
       type: EntityStorage
-- proto: LockerSyndicatePersonal
-  entities:
-  - uid: 1928
-    components:
-    - pos: -38.5,56.5
-      parent: 30
-      type: Transform
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
-    - containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1929
-          - 1931
-          - 1930
-      type: ContainerContainer
 - proto: LockerWardenFilled
   entities:
   - uid: 2010
@@ -121070,7 +120889,7 @@ entities:
   entities:
   - uid: 6997
     components:
-    - pos: -13.882326,-16.429274
+    - pos: -13.735303,-16.220837
       parent: 30
       type: Transform
 - proto: MedkitBruteFilled
@@ -121111,7 +120930,7 @@ entities:
   entities:
   - uid: 6995
     components:
-    - pos: -14.458165,-16.433685
+    - pos: -13.575727,-16.368786
       parent: 30
       type: Transform
 - proto: MedkitFilled
@@ -121737,6 +121556,11 @@ entities:
     - pos: 0.5,23.5
       parent: 30
       type: Transform
+  - uid: 1983
+    components:
+    - pos: 33.5,-14.5
+      parent: 30
+      type: Transform
   - uid: 5661
     components:
     - pos: -24.5,45.5
@@ -121805,11 +121629,6 @@ entities:
   - uid: 15968
     components:
     - pos: 51.5,29.5
-      parent: 30
-      type: Transform
-  - uid: 15969
-    components:
-    - pos: 25.5,-9.5
       parent: 30
       type: Transform
   - uid: 16983
@@ -122558,21 +122377,6 @@ entities:
   - uid: 5664
     components:
     - pos: 38.494118,-52.57902
-      parent: 30
-      type: Transform
-  - uid: 12084
-    components:
-    - pos: 30.531298,-9.487532
-      parent: 30
-      type: Transform
-  - uid: 12085
-    components:
-    - pos: 30.390673,-9.331282
-      parent: 30
-      type: Transform
-  - uid: 12091
-    components:
-    - pos: 30.505148,-9.264412
       parent: 30
       type: Transform
 - proto: PinpointerNuclear
@@ -128293,26 +128097,6 @@ entities:
     - pos: -16.5,20.5
       parent: 30
       type: Transform
-  - uid: 773
-    components:
-    - pos: -3.5,20.5
-      parent: 30
-      type: Transform
-  - uid: 774
-    components:
-    - pos: -3.5,21.5
-      parent: 30
-      type: Transform
-  - uid: 775
-    components:
-    - pos: 0.5,20.5
-      parent: 30
-      type: Transform
-  - uid: 776
-    components:
-    - pos: 0.5,21.5
-      parent: 30
-      type: Transform
   - uid: 789
     components:
     - pos: -3.5,22.5
@@ -128348,11 +128132,6 @@ entities:
     - pos: -37.5,53.5
       parent: 30
       type: Transform
-  - uid: 2026
-    components:
-    - pos: -38.5,46.5
-      parent: 30
-      type: Transform
   - uid: 6276
     components:
     - pos: 40.5,19.5
@@ -128361,11 +128140,6 @@ entities:
   - uid: 6444
     components:
     - pos: 16.5,29.5
-      parent: 30
-      type: Transform
-  - uid: 6708
-    components:
-    - pos: -4.5,-8.5
       parent: 30
       type: Transform
   - uid: 8263
@@ -128436,11 +128210,6 @@ entities:
   - uid: 11748
     components:
     - pos: 23.5,-11.5
-      parent: 30
-      type: Transform
-  - uid: 12086
-    components:
-    - pos: 30.5,-9.5
       parent: 30
       type: Transform
   - uid: 12234
@@ -139448,6 +139217,138 @@ entities:
     - pos: -58.5,-53.5
       parent: 30
       type: Transform
+- proto: SuitStorageAtmos
+  entities:
+  - uid: 785
+    components:
+    - pos: 9.5,-29.5
+      parent: 30
+      type: Transform
+  - uid: 786
+    components:
+    - pos: 9.5,-28.5
+      parent: 30
+      type: Transform
+  - uid: 787
+    components:
+    - pos: 9.5,-27.5
+      parent: 30
+      type: Transform
+- proto: SuitStorageCaptain
+  entities:
+  - uid: 783
+    components:
+    - pos: -19.5,32.5
+      parent: 30
+      type: Transform
+- proto: SuitStorageCE
+  entities:
+  - uid: 773
+    components:
+    - pos: -19.5,-36.5
+      parent: 30
+      type: Transform
+- proto: SuitStorageCMO
+  entities:
+  - uid: 6838
+    components:
+    - pos: -14.5,-16.5
+      parent: 30
+      type: Transform
+- proto: SuitStorageEngi
+  entities:
+  - uid: 788
+    components:
+    - pos: -21.5,-39.5
+      parent: 30
+      type: Transform
+  - uid: 1928
+    components:
+    - pos: -22.5,-39.5
+      parent: 30
+      type: Transform
+  - uid: 9436
+    components:
+    - pos: -8.5,-38.5
+      parent: 30
+      type: Transform
+  - uid: 9591
+    components:
+    - pos: -6.5,-38.5
+      parent: 30
+      type: Transform
+- proto: SuitStorageEVA
+  entities:
+  - uid: 775
+    components:
+    - pos: 0.5,20.5
+      parent: 30
+      type: Transform
+  - uid: 781
+    components:
+    - pos: -3.5,21.5
+      parent: 30
+      type: Transform
+  - uid: 2026
+    components:
+    - pos: 0.5,21.5
+      parent: 30
+      type: Transform
+  - uid: 2027
+    components:
+    - pos: -3.5,20.5
+      parent: 30
+      type: Transform
+- proto: SuitStorageHOS
+  entities:
+  - uid: 776
+    components:
+    - pos: -26.5,52.5
+      parent: 30
+      type: Transform
+- proto: SuitStorageRD
+  entities:
+  - uid: 12089
+    components:
+    - pos: 29.5,14.5
+      parent: 30
+      type: Transform
+- proto: SuitStorageSalv
+  entities:
+  - uid: 1929
+    components:
+    - pos: 27.5,-9.5
+      parent: 30
+      type: Transform
+  - uid: 1930
+    components:
+    - pos: 25.5,-9.5
+      parent: 30
+      type: Transform
+  - uid: 1931
+    components:
+    - pos: 26.5,-9.5
+      parent: 30
+      type: Transform
+- proto: SuitStorageSec
+  entities:
+  - uid: 774
+    components:
+    - pos: -38.5,56.5
+      parent: 30
+      type: Transform
+  - uid: 782
+    components:
+    - pos: -40.5,56.5
+      parent: 30
+      type: Transform
+- proto: SuitStorageWarden
+  entities:
+  - uid: 5052
+    components:
+    - pos: -38.5,46.5
+      parent: 30
+      type: Transform
 - proto: SurveillanceCameraCommand
   entities:
   - uid: 21172
@@ -141063,11 +140964,6 @@ entities:
   - uid: 6837
     components:
     - pos: -13.5,-16.5
-      parent: 30
-      type: Transform
-  - uid: 6838
-    components:
-    - pos: -14.5,-16.5
       parent: 30
       type: Transform
   - uid: 6845
@@ -143617,11 +143513,6 @@ entities:
     - pos: 0.47260857,19.565884
       parent: 30
       type: Transform
-  - uid: 2027
-    components:
-    - pos: -38.478073,46.599056
-      parent: 30
-      type: Transform
   - uid: 4885
     components:
     - pos: -28.4642,56.587437
@@ -143694,11 +143585,6 @@ entities:
   - uid: 16909
     components:
     - pos: -57.478386,27.672016
-      parent: 30
-      type: Transform
-  - uid: 18058
-    components:
-    - pos: 30.507761,-9.498787
       parent: 30
       type: Transform
   - uid: 18793
@@ -144357,6 +144243,17 @@ entities:
     - pos: -9.5,-12.5
       parent: 30
       type: Transform
+- proto: VendingMachineChemicals
+  entities:
+  - uid: 6708
+    components:
+    - flags: SessionSpecific
+      type: MetaData
+    - pos: -4.5,-8.5
+      parent: 30
+      type: Transform
+    - nextEmpEject: 142.7225791
+      type: VendingMachine
 - proto: VendingMachineCigs
   entities:
   - uid: 77
@@ -144747,6 +144644,17 @@ entities:
     - pos: 16.5,20.5
       parent: 30
       type: Transform
+- proto: VendingMachineRobotics
+  entities:
+  - uid: 12086
+    components:
+    - flags: SessionSpecific
+      type: MetaData
+    - pos: 17.5,20.5
+      parent: 30
+      type: Transform
+    - nextEmpEject: 152.6817604
+      type: VendingMachine
 - proto: VendingMachineSalvage
   entities:
   - uid: 4772
@@ -144888,14 +144796,6 @@ entities:
       name: tank dispenser
       type: MetaData
     - pos: 7.5,-27.5
-      parent: 30
-      type: Transform
-  - uid: 12089
-    components:
-    - flags: SessionSpecific
-      name: tank dispenser
-      type: MetaData
-    - pos: 26.5,-9.5
       parent: 30
       type: Transform
 - proto: VendingMachineTheater
@@ -159746,6 +159646,10 @@ entities:
           - 19620
           - 19619
           - 19621
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
       type: ContainerContainer
 - proto: WardrobeMixedFilled
   entities:
