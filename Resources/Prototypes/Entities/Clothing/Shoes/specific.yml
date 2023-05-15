@@ -170,12 +170,16 @@
   components:
   - type: Sprite
     state: "icon"
-    sprite: Clothing/Shoes/Specific/Largeclown/largeclown_hands.rsi
+    sprite: Clothing/Shoes/Specific/large_clown.rsi
   - type: Clothing
-    sprite: Clothing/Shoes/Specific/Largeclown/largeclown_equipped.rsi
+    sprite: Clothing/Shoes/Specific/large_clown.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+        offset: "0, -0.12"
   - type: Item
     size: 10
-    sprite: Clothing/Shoes/Specific/Largeclown/largeclown_hands.rsi
+    sprite: Clothing/Shoes/Specific/large_clown.rsi
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.8

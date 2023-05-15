@@ -594,18 +594,22 @@
   description: "A magician's top hat."
   components:
   - type: Icon
-    sprite: Clothing/Head/Hats/Magician/magician_hand.rsi
+    sprite: Clothing/Head/Hats/magician.rsi
     state: "icon"
   - type: Sprite
     state: "icon"
-    sprite: Clothing/Head/Hats/Magician/magician_hand.rsi
+    sprite: Clothing/Head/Hats/magician.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/Magician/magician_equipped.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.12"
+    sprite: Clothing/Head/Hats/magician.rsi
   - type: Item
-    size: 40
-    sprite: Clothing/Head/Hats/Magician/magician_hand.rsi
+    size: 10
+    sprite: Clothing/Head/Hats/magician.rsi
   - type: Storage
-    capacity: 40
+    capacity: 10
   - type: UserInterface
     interfaces:
       - key: enum.StorageUiKey.Key
