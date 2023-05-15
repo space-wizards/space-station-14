@@ -34,10 +34,15 @@ namespace Content.Server.Lathe
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
         [Dependency] private readonly StackSystem _stack = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        private ISawmill _sawmill = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _sawmill = _logManager.GetSawmill("Lathe");
+
             SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
@@ -73,7 +78,7 @@ namespace Content.Server.Lathe
             int volume = message.WholeVolume;
             if (!_prototypeManager.TryIndex<MaterialPrototype>(message.Material, out var material))
             {
-                Logger.Error("Failed to index material prototype " + message.Material);
+                _sawmill.Error($"Failed to index material prototype {message.Material}");
                 return;
             }
 
