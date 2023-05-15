@@ -175,11 +175,11 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatDonJuan
-  name: Don Juan
-  description: 'Oh look, it's bojack!'
+  name: long-haired horse mask
+  description: 'Depicts a feminine looking horse with long hair, what does it remind you of...'
   components:
   - type: Sprite
-    sprite: Clothing/Head/Misc/Don_Juan.rsi
+    sprite: Clothing/Head/Misc/don_juan.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/Don_Juan.rsi
+    sprite: Clothing/Head/Misc/don_juan.rsi
   - type: IngestionBlocker
