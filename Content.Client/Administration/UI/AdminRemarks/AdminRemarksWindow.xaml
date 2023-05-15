@@ -8,7 +8,7 @@
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxFlat BackgroundColor="#25252A" />
         </PanelContainer.PanelOverride>
-        <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" Margin="4">
             <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
                 <BoxContainer Orientation="Vertical" Name="NotesContainer" Access="Public" VerticalExpand="True" />
             </ScrollContainer>

@@ -8,7 +8,7 @@
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxFlat BackgroundColor="#25252A" />
         </PanelContainer.PanelOverride>
-        <ScrollContainer HScrollEnabled="False" VerticalExpand="True" HorizontalExpand="True">
+        <ScrollContainer HScrollEnabled="False" VerticalExpand="True" HorizontalExpand="True" Margin="4">
             <BoxContainer Orientation="Vertical" SeparationOverride="10" VerticalAlignment="Bottom">
                 <Label Name="AdminLabel" Text="Loading..." />
                 <RichTextLabel Name="MessageLabel" />
