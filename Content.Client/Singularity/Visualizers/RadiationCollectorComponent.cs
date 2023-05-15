@@ -1,3 +1,4 @@
+using Content.Shared.Singularity.Components;
 using Robust.Client.Animations;
 
 namespace Content.Client.Singularity.Visualizers;
@@ -14,6 +15,12 @@ public sealed class RadiationCollectorComponent : Component
     /// </summary>
     [ViewVariables]
     public const string AnimationKey = "radiationcollector_animation";
+
+    /// <summary>
+    /// The current visual state of the radiation collector.
+    /// </summary>
+    [ViewVariables]
+    public RadiationCollectorVisualState CurrentState = RadiationCollectorVisualState.Deactive;
 
     /// <summary>
     /// The RSI state used for the main sprite layer (<see cref="RadiationCollectorVisualLayers.Main"/>) when the radiation collector is active.

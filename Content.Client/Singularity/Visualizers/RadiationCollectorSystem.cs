@@ -37,51 +37,65 @@ public sealed class RadiationCollectorSystem : VisualizerSystem<RadiationCollect
         };
     }
 
-    private void OnAnimationCompleted(EntityUid uid, RadiationCollectorComponent comp, AnimationCompletedEvent args)
+    private void UpdateRadiationCollectorSpriteOrAnimation(EntityUid uid, RadiationCollectorVisualState state, RadiationCollectorComponent comp, SpriteComponent sprite, AnimationPlayerComponent? animPlayer = null)
     {
-        if (args.Key != RadiationCollectorComponent.AnimationKey
-        ||  !AppearanceSystem.TryGetData<RadiationCollectorVisualState>(uid, RadiationCollectorVisuals.VisualState, out var state))
+        if (state == comp.CurrentState)
             return;
 
-        switch(state)
+        if ((RadiationCollectorVisualState) ((state ^ comp.CurrentState) & RadiationCollectorVisualState.Active) == RadiationCollectorVisualState.Active)
+            state = (RadiationCollectorVisualState) (state | RadiationCollectorVisualState.Deactivating); // Convert to transition state.
+
+        comp.CurrentState = state;
+
+        switch (state)
         {
             case RadiationCollectorVisualState.Activating:
-                AppearanceSystem.SetData(uid, RadiationCollectorVisuals.VisualState, RadiationCollectorVisualState.Active);
+                if (!Resolve(uid, ref animPlayer, logMissing: false))
+                    goto case RadiationCollectorVisualState.Active;
+                AnimationSystem.Play(uid, animPlayer, comp.ActivateAnimation, RadiationCollectorComponent.AnimationKey);
                 break;
             case RadiationCollectorVisualState.Deactivating:
-                AppearanceSystem.SetData(uid, RadiationCollectorVisuals.VisualState, RadiationCollectorVisualState.Deactive);
+                if (!Resolve(uid, ref animPlayer, logMissing: false))
+                    goto case RadiationCollectorVisualState.Deactive;
+                AnimationSystem.Play(uid, animPlayer, comp.DeactiveAnimation, RadiationCollectorComponent.AnimationKey);
+                break;
+
+            case RadiationCollectorVisualState.Active:
+                sprite.LayerSetState(RadiationCollectorVisualLayers.Main, comp.ActiveState);
+                break;
+            case RadiationCollectorVisualState.Deactive:
+                sprite.LayerSetState(RadiationCollectorVisualLayers.Main, comp.InactiveState);
                 break;
         }
+    }
+
+    private void OnAnimationCompleted(EntityUid uid, RadiationCollectorComponent comp, AnimationCompletedEvent args)
+    {
+        SpriteComponent? sprite = null;
+        if (args.Key != RadiationCollectorComponent.AnimationKey
+        ||  !Resolve(uid, ref sprite))
+            return;
+
+        if (!AppearanceSystem.TryGetData<RadiationCollectorVisualState>(uid, RadiationCollectorVisuals.VisualState, out var state))
+            state = comp.CurrentState;
+
+        // Convert to terminal state.
+        state = (RadiationCollectorVisualState) (state & RadiationCollectorVisualState.Active);
+
+        UpdateRadiationCollectorSpriteOrAnimation(uid, state, comp, sprite);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, RadiationCollectorComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null
-        ||  !TryComp<AnimationPlayerComponent>(uid, out var animPlayer))
+        ||  !TryComp<AnimationPlayerComponent>(uid, out var animPlayer)
+        ||  AnimationSystem.HasRunningAnimation(uid, animPlayer, RadiationCollectorComponent.AnimationKey))
             return;
 
         if (!AppearanceSystem.TryGetData<RadiationCollectorVisualState>(uid, RadiationCollectorVisuals.VisualState, out var state, args.Component))
             state = RadiationCollectorVisualState.Deactive;
 
-        switch (state)
-        {
-            case RadiationCollectorVisualState.Active:
-                args.Sprite.LayerSetState(RadiationCollectorVisualLayers.Main, comp.ActiveState);
-                break;
-            case RadiationCollectorVisualState.Deactive:
-                args.Sprite.LayerSetState(RadiationCollectorVisualLayers.Main, comp.InactiveState);
-                break;
-            
-            // Neither of these animation actually work at the moment. The backend sets Active or Deactive without passing through these.
-            case RadiationCollectorVisualState.Activating:
-                if(!AnimationSystem.HasRunningAnimation(uid, animPlayer, RadiationCollectorComponent.AnimationKey))
-                    AnimationSystem.Play(uid, animPlayer, comp.ActivateAnimation, RadiationCollectorComponent.AnimationKey);
-                break;
-            case RadiationCollectorVisualState.Deactivating:
-                if(!AnimationSystem.HasRunningAnimation(uid, animPlayer, RadiationCollectorComponent.AnimationKey))
-                    AnimationSystem.Play(uid, animPlayer, comp.DeactiveAnimation, RadiationCollectorComponent.AnimationKey);
-                break;
-        }
+        UpdateRadiationCollectorSpriteOrAnimation(uid, state, comp, args.Sprite, animPlayer);
     }
 }
 
