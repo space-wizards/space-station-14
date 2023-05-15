@@ -5,6 +5,7 @@ using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
@@ -36,9 +37,11 @@ public abstract class SharedReflectSystem : EntitySystem
     private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileCollideEvent args)
     {
         if (args.Cancelled)
+        {
             return;
+        }
 
-        if (TryReflectProjectile(uid, args.OtherEntity))
+        if (TryReflectProjectile(uid, args.OtherEntity, reflect: component))
             args.Cancelled = true;
     }
 
@@ -51,10 +54,12 @@ public abstract class SharedReflectSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    private bool TryReflectProjectile(EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null)
+    private bool TryReflectProjectile(EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
     {
-        if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
+        if (!Resolve(reflector, ref reflect, false) ||
             !reflect.Enabled ||
+            !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
+            (reflect.Reflects & reflective.Reflective) == 0x0 ||
             !_random.Prob(reflect.ReflectProb) ||
             !TryComp<PhysicsComponent>(projectile, out var physics))
         {
@@ -105,8 +110,11 @@ public abstract class SharedReflectSystem : EntitySystem
 
     private void OnReflectHitscan(EntityUid uid, ReflectComponent component, ref HitScanReflectAttemptEvent args)
     {
-        if (args.Reflected)
+        if (args.Reflected ||
+            (component.Reflects & args.Reflective) == 0x0)
+        {
             return;
+        }
 
         if (TryReflectHitscan(uid, args.Direction, out var dir))
         {
