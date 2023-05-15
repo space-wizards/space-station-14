@@ -71,7 +71,7 @@ public sealed class AdminNotesSystem : EntitySystem, IPostInjectInit
         var username = playerData?.UserName ?? e.Session.UserId.ToString();
         foreach (var watchlist in watchlists)
         {
-            _chat.SendAdminAnnouncement(Loc.GetString("admin-notes-watchlist", ("player", username), ("message", watchlist.Message)));
+            _chat.SendAdminAlert(Loc.GetString("admin-notes-watchlist", ("player", username), ("message", watchlist.Message)));
         }
 
         foreach (var message in messages)
