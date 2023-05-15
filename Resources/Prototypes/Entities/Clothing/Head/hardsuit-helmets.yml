@@ -141,8 +141,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 5500
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -256,8 +254,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 5500
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -440,8 +436,6 @@
         Piercing: 0.8
         Heat: 0.2
         Radiation: 0.5
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -484,8 +478,6 @@
         Shock: 0.1
         Cold: 0.2
         Radiation: 0.2
-  - type: DiseaseProtection
-    protection: 0.25
 
 - type: entity
   parent: ClothingHeadHardsuitBase
@@ -521,7 +513,7 @@
 
 #ERT
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: ClothingHeadHelmetHardsuitSyndieCommander
   id: ClothingHeadHelmetHardsuitERTLeader
   noSpawn: true
   name: ERT leader hardsuit helmet
@@ -535,7 +527,7 @@
     color: "#addbff"
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTEngineer
   noSpawn: true
   name: ERT engineer hardsuit helmet
@@ -548,7 +540,7 @@
     color: "#f4ffad"
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndieElite
   id: ClothingHeadHelmetHardsuitERTMedical
   noSpawn: true
   name: ERT medic hardsuit helmet
@@ -559,11 +551,9 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: PointLight
     color: "#adffec"
-  - type: DiseaseProtection
-    protection: 0.20
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTSecurity
   noSpawn: true
   name: ERT security hardsuit helmet
@@ -576,7 +566,7 @@
     color: "#ffadc6"
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTJanitor
   noSpawn: true
   name: ERT janitor hardsuit helmet

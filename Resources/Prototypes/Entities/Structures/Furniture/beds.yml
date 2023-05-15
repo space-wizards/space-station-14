@@ -15,12 +15,13 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.05"
-      density: 190
-      mask:
-      - TableMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05"
+        density: 190
+        mask:
+        - TableMask
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: bed
@@ -111,3 +112,14 @@
           MaterialWoodPlank:
             min: 1
             max: 5
+
+- type: entity
+  parent: Bed
+  id: Mattress
+  name: mattress
+  description: Better sleep in that then on the floor i guess.
+  components:
+  - type: Sprite
+    state: mattress
+  - type: Damageable
+    damageModifierSet: Inflatable

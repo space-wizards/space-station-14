@@ -354,6 +354,18 @@
     layers:
       - state: green
       - state: doctor
+      
+- type: entity
+  id: SpawnPointParamedic
+  parent: SpawnPointJobBase
+  name: paramedic
+  components:
+  - type: SpawnPoint
+    job_id: Paramedic
+  - type: Sprite
+    layers:
+      - state: green
+      - state: paramedic
 
 - type: entity
   id: SpawnPointChemist
@@ -448,8 +460,6 @@
   parent: SpawnPointJobBase
   name: brigmedic
   components:
-  - type: SpawnPoint
-    job_id: Brigmedic
   - type: Sprite
     layers:
       - state: green

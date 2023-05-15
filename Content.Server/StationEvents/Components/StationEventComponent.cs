@@ -52,7 +52,7 @@ public sealed class StationEventComponent : Component
     ///     How long the event lasts.
     /// </summary>
     [DataField("duration")]
-    public TimeSpan Duration = TimeSpan.FromSeconds(1);
+    public TimeSpan? Duration = TimeSpan.FromSeconds(1);
 
     /// <summary>
     ///     The max amount of time the event lasts.
@@ -82,8 +82,8 @@ public sealed class StationEventComponent : Component
     public TimeSpan StartTime;
 
     /// <summary>
-    /// When the station event starts.
+    /// When the station event ends.
     /// </summary>
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan EndTime;
+    public TimeSpan? EndTime;
 }

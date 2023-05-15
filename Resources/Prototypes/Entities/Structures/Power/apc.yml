@@ -30,26 +30,29 @@
     sprite: Structures/Power/apc.rsi
     layers:
     - state: base
-    - state: powered-1
-      shader: unshaded
-      map: ["enum.ApcVisualLayers.ChargeState"]
-    - state: apcox-0
-      shader: unshaded
-      map: ["enum.ApcVisualLayers.Lock"]
-    - state: apco0-3
-      shader: unshaded
-      map: ["enum.ApcVisualLayers.Equipment"]
-    - state: apco1-3
-      shader: unshaded
-      map: ["enum.ApcVisualLayers.Lighting"]
-    - state: apco2-3
-      shader: unshaded
-      map: ["enum.ApcVisualLayers.Environment"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
+    - state: display-charging
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.ChargeState"]
+    - state: lock0-unlocked
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.InterfaceLock"]
+    - state: lock1-unlocked
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.PanelLock"]
+    - state: channel0-auto_on
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Equipment"]
+    - state: channel1-auto_on
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Lighting"]
+    - state: channel2-auto_on
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Environment"]
   - type: Appearance
-    visuals:
-    - type: ApcVisualizer
+  - type: ApcVisuals
   - type: Battery
     maxCharge: 50000
     startingCharge: 0
@@ -91,14 +94,6 @@
     BoardName: "APC"
     LayoutId: APC
   - type: WiresVisuals
-  - type: GenericVisualizer
-    visuals:
-      enum.ApcVisuals.ChargeState:
-        enum.ApcVisualLayers.ChargeState:
-          Lack: { state: powered-1 }
-          Charging: { state: powered-2 }
-          Full: { state: powered-3 }
-          Emag: { state: emag-unlit }
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
@@ -142,7 +137,7 @@
     drawdepth: WallMountedItems
     netsync: false
     sprite: Structures/Power/apc.rsi
-    state: apcframe
+    state: frame
   - type: Construction
     graph: APC
     node: apcFrame

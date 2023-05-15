@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by PuroSlavKing (github) for SS14 | Resprited by Hülle#2562 (Discord)",
+  "copyright": "Made by PuroSlavKing (github) for SS14 | Resprited by Hülle#2562 (Discord), monkey made by brainfood1183 (github) for ss14",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-monkey",
       "directions": 4
     },
     {

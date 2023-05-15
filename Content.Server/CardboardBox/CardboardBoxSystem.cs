@@ -31,11 +31,27 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterOpenEvent>(AfterStorageOpen);
         SubscribeLocalEvent<CardboardBoxComponent, StorageBeforeOpenEvent>(BeforeStorageOpen);
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterCloseEvent>(AfterStorageClosed);
+		SubscribeLocalEvent<CardboardBoxComponent, ActivateInWorldEvent>(OnInteracted);
         SubscribeLocalEvent<CardboardBoxComponent, InteractedNoHandEvent>(OnNoHandInteracted);
         SubscribeLocalEvent<CardboardBoxComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<CardboardBoxComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
         SubscribeLocalEvent<CardboardBoxComponent, DamageChangedEvent>(OnDamage);
+    }
+	
+	private void OnInteracted(EntityUid uid, CardboardBoxComponent component, ActivateInWorldEvent args)
+    {
+		if (!TryComp<EntityStorageComponent>(uid, out var box))
+            return;
+
+        args.Handled = true;
+        _storage.ToggleOpen(args.User, uid, box);
+
+		if (box.Contents.Contains(args.User) && !box.Open)
+		{
+			_mover.SetRelay(args.User, uid);
+			component.Mover = args.User;
+		}
     }
 
     private void OnNoHandInteracted(EntityUid uid, CardboardBoxComponent component, InteractedNoHandEvent args)
@@ -49,6 +65,9 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 
     private void BeforeStorageOpen(EntityUid uid, CardboardBoxComponent component, ref StorageBeforeOpenEvent args)
     {
+		if (component.Quiet)
+			return;
+
         //Play effect & sound
         if (component.Mover != null)
         {
@@ -91,18 +110,11 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         if (!TryComp(args.Entity, out MobMoverComponent? mover))
             return;
 
-        if (component.Mover != null)
+        if (component.Mover == null)
         {
-            // player movers take priority
-            if (HasComp<ActorComponent>(component.Mover) || !HasComp<ActorComponent>(args.Entity))
-                return;
-
-            RemComp<RelayInputMoverComponent>(component.Mover.Value);
+            _mover.SetRelay(args.Entity, uid);
+			component.Mover = args.Entity;
         }
-
-        var relay = EnsureComp<RelayInputMoverComponent>(args.Entity);
-        _mover.SetRelay(args.Entity, uid, relay);
-        component.Mover = args.Entity;
     }
 
     /// <summary>

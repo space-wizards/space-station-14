@@ -26,12 +26,6 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
-        SubscribeLocalEvent<ProjectileComponent, ComponentGetState>(OnGetState);
-    }
-
-    private void OnGetState(EntityUid uid, ProjectileComponent component, ref ComponentGetState args)
-    {
-        args.State = new ProjectileComponentState(component.Shooter, component.IgnoreShooter);
     }
 
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
@@ -40,7 +34,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         if (args.OurFixture.ID != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)
             return;
 
-        var otherEntity = args.OtherFixture.Body.Owner;
+        var otherEntity = args.OtherEntity;
         // it's here so this check is only done once before possible hit
         var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);
         RaiseLocalEvent(otherEntity, ref attemptEv);
@@ -51,7 +45,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         }
 
         var otherName = ToPrettyString(otherEntity);
-        var direction = args.OurFixture.Body.LinearVelocity.Normalized;
+        var direction = args.OurBody.LinearVelocity.Normalized;
         var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, origin: component.Shooter);
         component.DamagedEntity = true;
         var deleted = Deleted(otherEntity);

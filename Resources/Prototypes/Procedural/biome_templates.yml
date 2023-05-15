@@ -374,6 +374,20 @@
   id: Caves
   layers:
     - !type:BiomeEntityLayer
+      threshold: 0.8
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        fractalType: PingPong
+      allowedTiles:
+        - FloorAsteroidSand
+      entities:
+        - CrystalGreen
+        - CrystalPink
+        - CrystalOrange
+        - CrystalBlue
+        - CrystalCyan
+    - !type:BiomeEntityLayer
       threshold: -0.5
       invert: true
       noise:

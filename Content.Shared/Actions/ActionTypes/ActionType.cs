@@ -38,6 +38,13 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     public string DisplayName = string.Empty;
 
     /// <summary>
+    /// This is just <see cref="DisplayName"/> with localized strings resolved and markup removed. If null, will be
+    /// inferred from <see cref="DisplayName"/>. This is cached to speed up game state handling.
+    /// </summary>
+    [NonSerialized]
+    public string? RawName;
+
+    /// <summary>
     ///     Description to show in UI. Accepts formatting.
     /// </summary>
     [DataField("description")]
@@ -179,10 +186,11 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         if (Priority != otherAction.Priority)
             return otherAction.Priority - Priority;
 
-        var name = FormattedMessage.RemoveMarkup(Loc.GetString(DisplayName));
-        var otherName = FormattedMessage.RemoveMarkup(Loc.GetString(otherAction.DisplayName));
-        if (name != otherName)
-            return string.Compare(name, otherName, StringComparison.CurrentCulture);
+        RawName ??= FormattedMessage.RemoveMarkup(Loc.GetString(DisplayName));
+        otherAction.RawName ??= FormattedMessage.RemoveMarkup(Loc.GetString(otherAction.DisplayName));
+        var cmp = string.Compare(RawName, otherAction.RawName, StringComparison.CurrentCulture);
+        if (cmp != 0)
+            return cmp;
 
         if (Provider != otherAction.Provider)
         {
@@ -217,6 +225,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         Icon = toClone.Icon;
         IconOn = toClone.IconOn;
         DisplayName = toClone.DisplayName;
+        RawName = null;
         Description = toClone.Description;
         Provider = toClone.Provider;
         AttachedEntity = toClone.AttachedEntity;

@@ -15,14 +15,15 @@
   - type: PlaceableSurface
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.45"
-      density: 55
-      mask: #mouse can pass under, but I think this is can understandable by logic
-      - TableMask
-      layer:
-      - TableLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask: #mouse can pass under, but I think this is can understandable by logic
+        - TableMask
+        layer:
+        - TableLayer
   - type: Sprite
     netsync: false
     snapCardinals: true
@@ -403,3 +404,17 @@
     sprite: Structures/Furniture/Altars/Cults/fangs.rsi
   - type: Icon
     sprite: Structures/Furniture/Altars/Cults/fangs.rsi
+
+
+- type: entity
+  id: AltarBananium
+  parent: AltarBase
+  name: honkmother altar
+  description: A bananium altar dedicated to the honkmother.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Cults/bananium.rsi
+    state: full
+  - type: Construction
+    graph: BananiumAltarGraph
+    node: bananiumAltar
