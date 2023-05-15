@@ -15,14 +15,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.45"
-      density: 190
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -82,6 +83,8 @@
   id: AMEControllerUnanchored
   suffix: Unanchored
   components:
+  - type: Transform
+    anchored: false
   - type: Physics
     bodyType: Dynamic
 
@@ -102,14 +105,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-      density: 190
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 190
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

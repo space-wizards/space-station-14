@@ -164,7 +164,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             ? profile.Appearance.SkinColor.WithAlpha(hairAlpha) : profile.Appearance.HairColor;
         var hair = new Marking(profile.Appearance.HairStyleId,
             new[] { hairColor });
-    
+
         var facialHairColor = _markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.FacialHair, out var facialHairAlpha, _prototypeManager)
             ? profile.Appearance.SkinColor.WithAlpha(facialHairAlpha) : profile.Appearance.FacialHairColor;
         var facialHair = new Marking(profile.Appearance.FacialHairStyleId,
@@ -178,7 +178,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         {
             markings.AddBack(MarkingCategories.FacialHair, facialHair);
         }
-        
+
         // Finally adding marking with forced colors
         foreach (var (marking, prototype) in markingFColored)
         {
@@ -190,10 +190,10 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             );
             markings.AddBack(prototype.MarkingCategory, new Marking(marking.MarkingId, markingColors));
         }
-        
+
         markings.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _prototypeManager);
         markings.EnsureDefault(
-            profile.Appearance.SkinColor, 
+            profile.Appearance.SkinColor,
             profile.Appearance.EyeColor,
             _markingManager);
 
@@ -318,13 +318,13 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             }
 
             sprite.LayerSetVisible(layerId, visible);
-            
+
             if (!visible || setting == null) // this is kinda implied
             {
                 continue;
             }
 
-            if (colors != null) 
+            if (colors != null)
             {
                 sprite.LayerSetColor(layerId, colors[j]);
             }
@@ -335,15 +335,12 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         }
     }
 
-    public override void SetSkinColor(EntityUid uid, Color skinColor, bool sync = true, HumanoidAppearanceComponent? humanoid = null)
+    public override void SetSkinColor(EntityUid uid, Color skinColor, bool sync = true, bool verify = true, HumanoidAppearanceComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid) || humanoid.SkinColor == skinColor)
             return;
 
-        humanoid.SkinColor = skinColor;
-
-        if (sync)
-            Dirty(humanoid);
+        base.SetSkinColor(uid, skinColor, false, verify, humanoid);
 
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;

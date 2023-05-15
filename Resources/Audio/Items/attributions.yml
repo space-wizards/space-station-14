@@ -3,6 +3,11 @@
   copyright: "Created by Pól, converted to OGG and Mono by EmoGarbage"
   source: "https://freesound.org/people/P%C3%B3l/sounds/385927/"
 
+- files: ["locator_beep.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by MATRIXXX_, converted to OGG, shortened, sped up, and pitched up by EmoGarbage404 (github)"
+  source: "https://freesound.org/people/MATRIXXX_/sounds/657947/"
+
 - files: ["trayhit1.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Time immemorial"

@@ -217,6 +217,22 @@
   - type: AccessReader
     access: [ [ "Medical" ] ]
 
+# Paramedic
+- type: entity
+  id: LockerParamedic
+  parent: LockerBase
+  name: paramedic's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: paramed
+      state_open: paramed_open
+      state_closed: paramed_door
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
+
+
 # Chemical
 - type: entity
   id: LockerChemistry
@@ -306,6 +322,21 @@
   - type: AccessReader
     access: [["Armory"]]
 
+# Brigmedic
+- type: entity
+  id: LockerBrigmedic
+  parent: LockerBaseSecure
+  name: brigmedic locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: brigmedic
+      state_open: armory_open
+      state_closed: brigmedic_door
+  - type: AccessReader
+    access: [["Medical"]]
+
 # Security Officer
 - type: entity
   id: LockerSecurity
@@ -333,7 +364,7 @@
       state_open: shotguncase_open
       state_closed: shotguncase_door
   - type: AccessReader
-    access: [["Security"]]
+    access: [["Armory"]]
 
 # Detective
 - type: entity

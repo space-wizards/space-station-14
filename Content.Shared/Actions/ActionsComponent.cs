@@ -10,7 +10,8 @@ namespace Content.Shared.Actions;
 public sealed class ActionsComponent : Component
 {
     [ViewVariables]
-    [Access(typeof(SharedActionsSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
+    [Access(typeof(SharedActionsSystem), Other = AccessPermissions.ReadExecute)]
+    // FIXME Friends
     public SortedSet<ActionType> Actions = new();
 
     public override bool SendOnlyToOwner => true;
@@ -20,6 +21,9 @@ public sealed class ActionsComponent : Component
 public sealed class ActionsComponentState : ComponentState
 {
     public readonly List<ActionType> Actions;
+
+    [NonSerialized]
+    public SortedSet<ActionType>? SortedActions;
 
     public ActionsComponentState(List<ActionType> actions)
     {

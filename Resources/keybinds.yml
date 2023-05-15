@@ -76,6 +76,15 @@ binds:
 - function: CameraReset
   type: State
   key: NumpadNum8
+- function: ZoomOut
+  type: State
+  key: NumpadNum4
+- function: ZoomIn
+  type: State
+  key: NumpadNum6
+- function: ResetZoom
+  type: State
+  key: NumpadNum5
 # Misc
 - function: ShowEscapeMenu
   type: State
@@ -94,12 +103,20 @@ binds:
 - function: FocusLocalChatWindow
   type: State
   key: Period
+- function: FocusEmote
+  type: State
+  mod1: Shift
+  key: Apostrophe
 - function: FocusWhisperChatWindow
   type: State
   key: Comma
 - function: FocusRadioWindow
   type: State
   key: SemiColon
+- function: FocusLOOCWindow
+  type: State
+  mod1: Shift
+  key: Num9
 - function: FocusOOCWindow
   type: State
   key: LBracket

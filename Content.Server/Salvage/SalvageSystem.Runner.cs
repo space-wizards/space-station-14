@@ -6,6 +6,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Shared.Chat;
 using Content.Shared.Salvage;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
@@ -73,6 +74,8 @@ public sealed partial class SalvageSystem
             Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-dungeon", ("direction", component.DungeonLocation.GetDir())));
 
         component.Stage = ExpeditionStage.Running;
+        // At least for now stop them FTLing back until the mission is over.
+        EnsureComp<PreventPilotComponent>(args.Entity);
     }
 
     private void OnFTLStarted(ref FTLStartedEvent ev)
@@ -93,6 +96,9 @@ public sealed partial class SalvageSystem
         {
             return;
         }
+
+        // Let them pilot again when they get back.
+        RemCompDeferred<PreventPilotComponent>(ev.Entity);
 
         // Check if any shuttles remain.
         var query = EntityQueryEnumerator<ShuttleComponent, TransformComponent>();
@@ -126,18 +132,18 @@ public sealed partial class SalvageSystem
                 comp.Stage = ExpeditionStage.FinalCountdown;
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", TimeSpan.FromSeconds(30).Seconds)));
             }
+            else if (comp.Stage < ExpeditionStage.MusicCountdown && remaining < TimeSpan.FromMinutes(2))
+            {
+                // TODO: Some way to play audio attached to a map for players.
+               comp.Stream = _audio.PlayGlobal(comp.Sound,
+                    Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true);
+                comp.Stage = ExpeditionStage.MusicCountdown;
+                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
+            }
             else if (comp.Stage < ExpeditionStage.Countdown && remaining < TimeSpan.FromMinutes(5))
             {
                 comp.Stage = ExpeditionStage.Countdown;
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(5).Minutes)));
-            }
-            else if (comp.Stage < ExpeditionStage.MusicCountdown && remaining < TimeSpan.FromMinutes(2))
-            {
-                // TODO: Some way to play audio attached to a map for players.
-               comp.Stream = _audio.PlayGlobal(new SoundPathSpecifier("/Audio/Misc/salvage.ogg"),
-                    Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true, AudioParams.Default.WithVolume(-7));
-                comp.Stage = ExpeditionStage.MusicCountdown;
-                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
             }
             // Auto-FTL out any shuttles
             else if (remaining < TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime) + TimeSpan.FromSeconds(0.5))

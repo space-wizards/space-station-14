@@ -67,14 +67,15 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          density: 190
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
     - type: AtmosDevice
       requireAnchored: false
       joinSystem: true
@@ -600,14 +601,15 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.3,0.4,0.3"
+          density: 190
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
     - type: PhysicalComposition
       materialComposition:
         Steel: 500

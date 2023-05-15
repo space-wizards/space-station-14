@@ -132,12 +132,14 @@ namespace Content.Client.UserInterface.Controls
             AddChild(SpriteView = new SpriteView
             {
                 Scale = (2, 2),
+                SetSize = (DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
             AddChild(HoverSpriteView = new SpriteView
             {
                 Scale = (2, 2),
+                SetSize = (DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
@@ -230,6 +232,7 @@ namespace Content.Client.UserInterface.Controls
 
         protected override void OnThemeUpdated()
         {
+            base.OnThemeUpdated();
             StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
             ButtonRect.Texture = Theme.ResolveTexture(_buttonTexturePath);
             HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
