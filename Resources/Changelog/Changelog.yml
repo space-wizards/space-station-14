@@ -1,10 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Nanotrasen has cut budget towards Cryptobiolin inhibitors. Cryptobiolin
-      will now cause confusion and dizziness., type: Tweak}
-  id: 3268
-  time: '2023-03-27T01:03:06.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'NanoTrasen is no longer allowing sensitive information, or nuclear
@@ -2896,3 +2890,9 @@ Entries:
       also natively stack when you try to insert them into storage., type: Add}
   id: 3767
   time: '2023-05-15T02:24:46.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: Returned the action hotkey numbers to their UI holding cells after mime
+      let them out., type: Fix}
+  id: 3768
+  time: '2023-05-15T03:45:56.0000000+00:00'
