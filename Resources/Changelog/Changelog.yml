@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Body bags no longer mispredict when folded while full., type: Fix}
-  id: 3276
-  time: '2023-03-28T05:43:36.0000000+00:00'
 - author: jjtParadox
   changes:
   - {message: Fixed the bureaucratic error event affecting fewer jobs than intended,
@@ -2893,3 +2888,9 @@ Entries:
       again and shouldn''t be too harmful to look at for long periods of time.', type: Fix}
   id: 3775
   time: '2023-05-15T20:38:41.0000000+00:00'
+- author: SijyKijy
+  changes:
+  - {message: Fix out of range exception on `AddBodyPartCommand`, type: Fix}
+  - {message: Fix out of range exception on `RoleUnbanCommand`, type: Fix}
+  id: 3776
+  time: '2023-05-15T21:24:03.0000000+00:00'
