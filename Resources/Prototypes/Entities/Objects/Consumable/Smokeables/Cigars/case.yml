@@ -1,6 +1,6 @@
 - type: entity
   id: CigarCase
-  parent: BaseStorageItem
+  parent: [ BaseStorageItem, BaseBagOpenClose ]
   name: cigar case
   description: A case for holding your cigars when you are not smoking them.
   components:
@@ -9,6 +9,8 @@
     sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
     layers:
     - state: closed
+    - state: open
+      map: ["openLayer"]
   - type: Storage
     capacity: 8
   - type: Item
@@ -23,8 +25,6 @@
       tags: [Cigar]
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: open
     - type: StackVisualizer
       composite: true
       stackLayers:
