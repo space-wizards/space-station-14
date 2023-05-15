@@ -10,6 +10,9 @@
     # temp to make clickmask work
     sprite: Structures/meat_spike.rsi
     state: spike
+    layers:
+    - state: spike
+      map: ["base"]
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

@@ -20,7 +20,6 @@
     sprite: Objects/Fun/pai.rsi
     layers:
     - state: pai-base
-      map: ["base"]
     - state: pai-off-overlay
       shader: unshaded
       map: ["screen"]
