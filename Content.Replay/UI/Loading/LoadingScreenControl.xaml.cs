@@ -5,42 +5,35 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Replay.UI.Loading;
 
 [GenerateTypedNameReferences]
 public sealed partial class LoadingScreenControl : Control
 {
-    public const string Prototype = "MommiWiggle";
-    public readonly EntityUid Entity;
+    public static SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Silicon/Bots/mommi.rsi"), "wiggle");
 
-    private readonly IEntityManager _entMan;
-
-    public LoadingScreenControl(IResourceCache resCache, IEntityManager entMan)
+    public LoadingScreenControl(IResourceCache resCache)
     {
         RobustXamlLoader.Load(this);
-        _entMan = entMan;
 
         LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
         Header.FontOverride = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 24);
         Subtext.FontOverride = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 12);
 
-        // This wouldn't be necessary if we had some way of just drawing animated RSIs directly
-        Entity = entMan.SpawnEntity(Prototype, MapCoordinates.Nullspace);
-        SpriteLeft.SetEntity(Entity);
-        SpriteRight.SetEntity(Entity);
+        SpriteLeft.SetFromSpriteSpecifier(Sprite);
+        SpriteRight.SetFromSpriteSpecifier(Sprite);
+        SpriteLeft.HorizontalAlignment = HAlignment.Stretch;
+        SpriteLeft.VerticalAlignment = VAlignment.Stretch;
+        SpriteLeft.DisplayRect.Stretch = TextureRect.StretchMode.KeepAspectCentered;
+        SpriteRight.DisplayRect.Stretch = TextureRect.StretchMode.KeepAspectCentered;
+
         Background.PanelOverride = new StyleBoxFlat()
         {
             BackgroundColor = Color.FromHex("#303033"),
             BorderColor = Color.FromHex("#5a5a5a"),
             BorderThickness = new Thickness(4)
         };
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        _entMan.DeleteEntity(Entity);
     }
 }

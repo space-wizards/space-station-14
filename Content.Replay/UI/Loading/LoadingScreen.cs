@@ -10,7 +10,6 @@ namespace Content.Replay.UI.Loading;
 [Virtual]
 public class LoadingScreen<TResult> : State
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
@@ -34,7 +33,7 @@ public class LoadingScreen<TResult> : State
 
     protected override void Startup()
     {
-        _screen = new(_resourceCache, _entMan);
+        _screen = new(_resourceCache);
         _userInterfaceManager.StateRoot.AddChild(_screen);
     }
 

@@ -10,19 +10,15 @@
                 Orientation="Horizontal"
                 Align="Center"
                 Margin="12">
-                <SpriteView Name="SpriteLeft"
-                            SetSize="64 64"
-                            Scale="2 2"
-                            Margin="16 0"
-                            OverrideDirection="South"/>
+                <AnimatedTextureRect Name="SpriteLeft"
+                                     SetSize="64 64"
+                                     Margin="16 0"/>
                 <Label Name="Header"
                        Margin="5"
                        Access="Public"/>
-                <SpriteView Name="SpriteRight"
-                            SetSize="64 64"
-                            Scale="2 2"
-                            Margin="16 0"
-                            OverrideDirection="South"/>
+                <AnimatedTextureRect Name="SpriteRight"
+                                     SetSize="64 64"
+                                     Margin="16 0"/>
             </BoxContainer>
             <ProgressBar Name="Bar"
                          MaxValue="1.0"
