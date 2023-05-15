@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading;
-using Content.Server.CPUJob.JobQueues;
-using Content.Server.CPUJob.JobQueues.Queues;
+using Robust.Shared.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
