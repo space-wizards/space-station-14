@@ -89,7 +89,7 @@
 - type: emote
   id: Sigh
   category: Vocal
-  chatMessages: [sighs]
+  chatMessages: [вздыхает] # Corvax-Localization
   chatTriggers:
     - sigh
     - sighs
@@ -97,6 +97,16 @@
     - sigh.
     - sighs.
     - sighed.
+    # Corvax-Localization-Start
+    - вздох
+    - вздох.
+    - вздыхает
+    - вздыхает.
+    - вздохнул
+    - вздохнула
+    - вздохнул.
+    - вздохнула.
+    # Corvax-Localization-End
 
 # hand emotes
 - type: emote
@@ -165,4 +175,4 @@
     - щёлкает пальцами!
     - щёлкнул пальцами
     - щёлкнула пальцами
-    # Corvax-Localization-End    
+    # Corvax-Localization-End
