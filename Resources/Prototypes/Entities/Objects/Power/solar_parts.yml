@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: BaseItem
   id: SolarAssemblyPart
   name: solar assembly part
@@ -11,4 +11,3 @@
   - type: Tag
     tags:
       - SolarAssemblyPart
-      - DroneUsable

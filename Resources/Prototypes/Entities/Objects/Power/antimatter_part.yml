@@ -15,6 +15,3 @@
     price: 500
   - type: GuideHelp
     guides: [ AME, Power ]
-  - type: Tag
-    tags:
-      - DroneUsable
