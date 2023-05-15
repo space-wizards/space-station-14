@@ -1,3 +1,4 @@
+using Content.Replay.UI.Menu;
 using Robust.Shared.Console;
 
 namespace Content.Replay.Manager;
@@ -70,5 +71,7 @@ public sealed partial class ReplayManager
         CurrentReplay = null;
         _controller.ContentEntityTickUpdate -= TickUpdate;
         UnregisterCommands();
+        _stateMan.RequestStateChange<ReplayMainScreen>();
+        _entMan.FlushEntities();
     }
 }

@@ -1,5 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Replay.Observer;
-using DiscordRPC.Message;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Replays;
@@ -11,13 +11,14 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using Content.Replay.UI.Loading;
 
 namespace Content.Replay.Manager;
 
 // This partial class contains code to read the replay files.
 public sealed partial class ReplayManager
 {
-
     public static readonly string YamlFilename = "replay.yml";
 
     public void LoadReplay(IWritableDirProvider dir)
@@ -25,37 +26,45 @@ public sealed partial class ReplayManager
         if (CurrentReplay != null)
             StopReplay();
 
-        CurrentReplay = InternalLoadReplay(dir);
-        if (CurrentReplay == null)
+        var screen = _stateMan.RequestStateChange<LoadingScreen<bool>>();
+        screen.Job = new LoadReplayJob(1/60f, dir, this, screen);
+        screen.OnJobFinished += OnFinishedLoading;
+    }
+
+    private void OnFinishedLoading(bool success)
+    {
+        if (!success)
             return;
 
-        ResetToNearestCheckpoint(0, true);
         _entMan.EntitySysManager.GetEntitySystem<ReplayObserverSystem>().SetObserverPosition(default);
-        _controller.ContentEntityTickUpdate += TickUpdate;
         RegisterCommands();
     }
 
-    private ReplayData InternalLoadReplay(IWritableDirProvider directory)
+    [SuppressMessage("ReSharper", "UseAwaitUsing")]
+    internal async Task<ReplayData> InternalLoadReplay(IWritableDirProvider dir,
+        Func<float, float, LoadReplayJob.LoadingState, bool, Task> callback)
     {
         List<GameState> states = new();
         List<ReplayMessage> messages = new();
 
         var compressionContext = new ZStdCompressionContext();
-        var metaData = LoadMetadata(directory);
+        var metaData = LoadMetadata(dir);
 
-        int i = 0;
-        var name = new ResPath("0.dat").ToRootedPath();
+        var total = dir.Find("*.dat").files.Count();
+        total--; // Exclude strings.dat
+
+        var i = 0;
         var intBuf = new byte[4];
-        int uncompressedSize;
-
-        while (directory.Exists(name))
+        var name = new ResPath($"{i++}.dat").ToRootedPath();
+        while (dir.Exists(name))
         {
-            _sawmill.Debug($"Reading file: {name}");
-            using var fileStream = directory.OpenRead(name);
+            await callback(i+1, total, LoadReplayJob.LoadingState.LoadingFiles, false);
+
+            using var fileStream = dir.OpenRead(name);
             using var decompressStream = new ZStdDecompressStream(fileStream, false);
 
             fileStream.Read(intBuf);
-            uncompressedSize = BitConverter.ToInt32(intBuf);
+            var uncompressedSize = BitConverter.ToInt32(intBuf);
 
             var decompressedStream = new MemoryStream(uncompressedSize);
             decompressStream.CopyTo(decompressedStream, uncompressedSize);
@@ -69,13 +78,13 @@ public sealed partial class ReplayManager
                 messages.Add(msg);
             }
 
-            i++;
-            name = new ResPath($"{i}.dat").ToRootedPath();
+            name = new ResPath($"{i++}.dat").ToRootedPath();
         }
-
+        DebugTools.Assert(i - 1 == total);
         compressionContext.Dispose();
-        var checkpoints = GenerateCheckpoints(metaData.CVars, states, messages);
 
+        await callback(total, total, LoadReplayJob.LoadingState.LoadingFiles, false);
+        var checkpoints = await GenerateCheckpoints(metaData.CVars, states, messages, callback);
         return new(states, messages, states[0].ToSequence, metaData.StartTime, metaData.Duration, checkpoints);
     }
 

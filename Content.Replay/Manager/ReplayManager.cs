@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
 using Robust.Client.Graphics;
 using Robust.Client.Serialization;
+using Robust.Client.State;
 using Robust.Client.Timing;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
@@ -17,6 +18,7 @@ public sealed partial class ReplayManager
 {
     [Dependency] private readonly IMidiManager _midi = default!;
     [Dependency] private readonly IClydeAudio _clydeAudio = default!;
+    [Dependency] private readonly IStateManager _stateMan = default!;
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IClientGameTiming _timing = default!;
     [Dependency] private readonly IClientNetManager _netMan = default!;
@@ -29,7 +31,7 @@ public sealed partial class ReplayManager
     [Dependency] private readonly IClientRobustSerializer _serializer = default!;
     [Dependency] private readonly IClientNetConfigurationManager _netConf = default!;
 
-    public ReplayData? CurrentReplay { get; private set; }
+    public ReplayData? CurrentReplay;
 
     private int _visualEventThreshold;
     private int _checkpointInterval;
@@ -58,6 +60,7 @@ public sealed partial class ReplayManager
 
     private bool _initialized;
     private ISawmill _sawmill = default!;
+    private ushort _metaCompNetId;
 
     public void Initialize()
     {
@@ -71,5 +74,9 @@ public sealed partial class ReplayManager
         _confMan.OnValueChanged(GameConfigVars.CheckpointEntityStateThreshold, (value) => _checkpointEntityStateThreshold = value, true);
         _metaId = _factory.GetRegistration(typeof(MetaDataComponent)).NetID!.Value;
         _sawmill = Logger.GetSawmill("replay");
+        _controller.ContentEntityTickUpdate += TickUpdate;
+
+        var metaId = _factory.GetRegistration(typeof(MetaDataComponent)).NetID;
+        _metaCompNetId = metaId!.Value;
     }
 }

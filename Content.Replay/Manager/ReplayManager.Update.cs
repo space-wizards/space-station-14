@@ -21,16 +21,13 @@ using static Robust.Shared.Replays.ReplayMessage;
 
 namespace Content.Replay.Manager;
 
-// This partial class has code foar performing tick updates (effectively the actual playback part of replays).
+// This partial class has code for performing tick updates (effectively the actual playback part of replays).
 public sealed partial class ReplayManager
 {
     private void TickUpdate(FrameEventArgs args)
     {
         if (CurrentReplay == null)
-        {
-            StopReplay();
             return;
-        }
 
         if (ActivelyScrubbing)
             SetIndex(ScrubbingIndex, false);

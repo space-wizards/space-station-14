@@ -5,6 +5,7 @@ using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
+using System.Threading.Tasks;
 using static Robust.Shared.Replays.ReplayMessage;
 
 namespace Content.Replay.Manager;
@@ -43,7 +44,11 @@ public sealed partial class ReplayManager
         return checkpoint;
     }
 
-    private CheckpointState[] GenerateCheckpoints(HashSet<string> initialCvars, List<GameState> states, List<ReplayMessage> messages)
+    private async Task<CheckpointState[]> GenerateCheckpoints(
+        HashSet<string> initialCvars,
+        List<GameState> states,
+        List<ReplayMessage> messages,
+        Func<float, float, LoadReplayJob.LoadingState, bool, Task> callback)
     {
         // Profiling with a 10 minute, 80-player replay, this function is about 50% entity spawning and 50% MergeState() & array copying.
         // It only takes ~3 seconds on my machine, so optimising it might not be necessary? But it might still be worth caching, so:
@@ -75,7 +80,7 @@ public sealed partial class ReplayManager
         _sawmill.Info($"Begin checkpoint generation");
         var st = new Stopwatch();
         st.Start();
-        
+
         Dictionary<string, object> cvars = new();
         foreach (var cvar in initialCvars)
         {
@@ -86,16 +91,17 @@ public sealed partial class ReplayManager
         var checkPoints = new List<CheckpointState>(1 + states.Count / _checkpointInterval);
         var state0 = states[0];
 
-        var entSpan = state0.EntityStates.Span;
-        Dictionary<EntityUid, EntityState> entStates = new(entSpan.Length);
+        var entSpan = state0.EntityStates.Value;
+        Dictionary<EntityUid, EntityState> entStates = new(entSpan.Count);
         foreach (var entState in entSpan)
         {
             var modifiedState = AddImplicitData(entState);
             entStates.Add(entState.Uid, modifiedState);
         }
 
-        var playerSpan = state0.PlayerStates.Span;
-        Dictionary<NetUserId, PlayerState> playerStates = new(playerSpan.Length);
+        await callback(0, states.Count, LoadReplayJob.LoadingState.ProcessingFiles, true);
+        var playerSpan = state0.PlayerStates.Value;
+        Dictionary<NetUserId, PlayerState> playerStates = new(playerSpan.Count);
         foreach (var player in playerSpan)
         {
             playerStates.Add(player.UserId, player);
@@ -111,11 +117,14 @@ public sealed partial class ReplayManager
 
         HashSet<EntityUid> deletions = new();
 
-        int ticksSinceLastCheckpoint = 0;
-        int spawnedTracker = 0;
-        int stateTracker = 0;
-        for (int i = 1; i < states.Count; i++)
+        var ticksSinceLastCheckpoint = 0;
+        var spawnedTracker = 0;
+        var stateTracker = 0;
+        for (var i = 1; i < states.Count; i++)
         {
+            if (i % 10 == 0)
+                await callback(i, states.Count, LoadReplayJob.LoadingState.ProcessingFiles, false);
+
             var curState = states[i];
             UpdatePlayerStates(curState.PlayerStates.Span, playerStates);
             UpdateDeletions(curState.EntityDeletions, entStates, deletions);
@@ -125,9 +134,6 @@ public sealed partial class ReplayManager
 
             if (ticksSinceLastCheckpoint < _checkpointInterval && spawnedTracker < _checkpointEntitySpawnThreshold && stateTracker < _checkpointEntityStateThreshold)
                 continue;
-
-            if ( i % 5 == 0)
-                _sawmill.Info($"Generating new checkpoint. Progress: {i/(float)states.Count:P}");
 
             ticksSinceLastCheckpoint = 0;
             spawnedTracker = 0;
@@ -142,6 +148,7 @@ public sealed partial class ReplayManager
         }
 
         _sawmill.Info($"Finished generating checkpoints. Elapsed time: {st.Elapsed}");
+        await callback(states.Count, states.Count, LoadReplayJob.LoadingState.ProcessingFiles, false);
         return checkPoints.ToArray();
     }
 
