@@ -1,11 +1,4 @@
 Entries:
-- author: Tyzemol
-  changes:
-  - {message: Smart equip to backpack/belt hotkeys can now be used to quickly take
-      or insert an item into corresponding slots (such as some tools and weapons),
-    type: Tweak}
-  id: 3266
-  time: '2023-03-26T23:01:09.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'RD, CMO, and QM can no longer be traitors.', type: Remove}
@@ -2897,3 +2890,8 @@ Entries:
   - {message: Paper can be attached to closets and lockers, type: Tweak}
   id: 3765
   time: '2023-05-14T19:02:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Salvage ore will only spawn on existing walls., type: Tweak}
+  id: 3766
+  time: '2023-05-15T02:01:30.0000000+00:00'
