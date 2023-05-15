@@ -176,7 +176,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatDonJuan
   name: long-haired horse mask
-  description: 'Depicts a feminine looking horse with long hair, what does it remind you of...'
+  description: "Depicts a feminine looking horse with long hair, what does it remind you of..."
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/don_juan.rsi
