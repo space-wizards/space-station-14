@@ -21,7 +21,7 @@ public abstract class SharedPowerCellSystem : EntitySystem
 
     private void OnRejuventate(EntityUid uid, PowerCellSlotComponent component, RejuvenateEvent args)
     {
-        if (!_itemSlots.TryGetSlot(uid, component.CellSlotId, out ItemSlot? itemSlot) || !itemSlot.Item.HasValue)
+        if (!_itemSlots.TryGetSlot(uid, component.CellSlotId, out var itemSlot) || !itemSlot.Item.HasValue)
             return;
 
         // charge entity batteries and remove booby traps.

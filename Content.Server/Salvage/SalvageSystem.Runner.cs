@@ -6,6 +6,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Shared.Chat;
 using Content.Shared.Salvage;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
@@ -73,6 +74,8 @@ public sealed partial class SalvageSystem
             Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-dungeon", ("direction", component.DungeonLocation.GetDir())));
 
         component.Stage = ExpeditionStage.Running;
+        // At least for now stop them FTLing back until the mission is over.
+        EnsureComp<PreventPilotComponent>(args.Entity);
     }
 
     private void OnFTLStarted(ref FTLStartedEvent ev)
@@ -93,6 +96,9 @@ public sealed partial class SalvageSystem
         {
             return;
         }
+
+        // Let them pilot again when they get back.
+        RemCompDeferred<PreventPilotComponent>(ev.Entity);
 
         // Check if any shuttles remain.
         var query = EntityQueryEnumerator<ShuttleComponent, TransformComponent>();
