@@ -56,7 +56,7 @@
   id: OreTin
   desc: Veins of steel
   loots:
-    - !type:BiomeTemplateLoot
+    - !type:BiomeMarkerLoot
       proto: OreTin
 
 # - Medium value
@@ -64,14 +64,14 @@
   id: OreGold
   desc: Veins of gold ore
   loots:
-    - !type:BiomeTemplateLoot
+    - !type:BiomeMarkerLoot
       proto: OreGold
 
 - type: salvageLoot
   id: OreSilver
   desc: Veins of silver ore
   loots:
-    - !type:BiomeTemplateLoot
+    - !type:BiomeMarkerLoot
       proto: OreSilver
 
 # - High value
@@ -79,12 +79,12 @@
   id: OrePlasma
   desc: Veins of plasma ore
   loots:
-    - !type:BiomeTemplateLoot
+    - !type:BiomeMarkerLoot
       proto: OrePlasma
 
 - type: salvageLoot
   id: OreUranium
   desc: Veins of uranium ore
   loots:
-    - !type:BiomeTemplateLoot
+    - !type:BiomeMarkerLoot
       proto: OreUranium
