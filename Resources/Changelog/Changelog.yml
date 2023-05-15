@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: The top menu in separated hud will now stretch with chat size., type: Tweak}
-  id: 3273
-  time: '2023-03-28T02:51:40.0000000+00:00'
 - author: moony
   changes:
   - {message: 'Multiple uplink items have been re-priced, all around cheaper.', type: Tweak}
@@ -2891,3 +2886,8 @@ Entries:
   - {message: 'Rotting takes 10 minutes, up from 5.', type: Tweak}
   id: 3772
   time: '2023-05-15T15:52:31.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: slime puddles now slow you down by 25%, type: Add}
+  id: 3773
+  time: '2023-05-15T18:49:49.0000000+00:00'
