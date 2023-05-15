@@ -14,9 +14,9 @@ namespace Content.Server.PowerSink
         /// <summary>
         /// Percentage of battery full to trigger the announcement warning at.
         /// </summary>
-        private const float WarningMessageThreshold = 0.85f;
+        private const float WarningMessageThreshold = 0.70f;
 
-        private readonly float[] WarningSoundThresholds = new float[] { .90f, .95f, .98f };
+        private readonly float[] WarningSoundThresholds = new float[] { .80f, .90f, .95f, .98f };
 
         /// <summary>
         /// Length of time to delay explosion from battery full state -- this is used to play
