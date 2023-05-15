@@ -4,15 +4,12 @@ using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.State;
-using Robust.Client.UserInterface;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using System.Linq;
 using Content.Shared.Movement.Systems;
 using Robust.Client;
-using Robust.Client.Graphics;
-using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 
 namespace Content.Replay.Observer;

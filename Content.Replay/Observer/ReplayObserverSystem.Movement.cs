@@ -1,11 +1,8 @@
-using Content.Client.Eye;
-using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
-using TerraFX.Interop.Windows;
 
 namespace Content.Replay.Observer;
 
@@ -74,10 +71,17 @@ public sealed partial class ReplayObserverSystem
         var xform = query.GetComponent(player);
         var pos = _transform.GetWorldPosition(xform, query);
 
+        if (!xform.ParentUid.IsValid())
+        {
+            // Were they sitting on a grid as it was getting deleted?
+            SetObserverPosition(default);
+            return;
+        }
+
         // A poor mans grid-traversal system.
         // Should also handle interrupting following.
         // TODO do this properly.
-        _transform.SetCoordinates(player, new EntityCoordinates(xform.MapUid ?? default, pos));
+        _transform.SetGridId(player, xform, null);
         _transform.AttachToGridOrMap(player);
 
         var parentRotation = _mover.GetParentGridAngle(mover, query);
