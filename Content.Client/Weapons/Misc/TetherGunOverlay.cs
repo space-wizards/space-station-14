@@ -6,7 +6,7 @@ namespace Content.Client.Weapons.Misc;
 
 public sealed class TetherGunOverlay : Overlay
 {
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     private IEntityManager _entManager;
 
