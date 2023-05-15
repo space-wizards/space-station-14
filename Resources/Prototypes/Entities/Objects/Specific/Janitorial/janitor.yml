@@ -1,8 +1,8 @@
 # TODO: Add description (1)
 - type: entity
   parent: BaseItem
-  name: mop
   id: MopItem
+  name: mop
   description: A mop that can't be stopped, viscera cleanup detail awaits.
   components:
   - type: Sprite
@@ -35,27 +35,19 @@
       - Mop
 
 - type: entity
-  parent: BaseItem
-  name: advanced mop
+  parent: MopItem
   id: AdvMopItem
+  name: advanced mop
   description: Motorized mop that has a bigger reservoir and quickly replaces reagents inside with water. Automatic Clown Countermeasure not included.
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/advmop.rsi
       state: advmop
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 10
-    - type: Spillable
-      solution: absorbed
     - type: Item
       size: 15
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       pickupAmount: 100
-    - type: UseDelay
-      delay: 1.0
     - type: SolutionRegeneration
       solution: absorbed
       generated:
@@ -67,18 +59,10 @@
       preserve:
       - Water
       quantity: 10
-    - type: SolutionContainerManager
-      solutions:
-        absorbed:
-          maxVol: 100
-    - type: Tag
-      tags:
-        - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
-        - Mop
 
 - type: entity
-  name: mop bucket
   id: MopBucket
+  name: mop bucket
   description: Holds water and the tears of the janitor.
   components:
   - type: Clickable
@@ -133,9 +117,9 @@
     fillBaseName: mopbucket_water-
 
 - type: entity
-  name: mop bucket
-  id: MopBucketFull
   parent: MopBucket
+  id: MopBucketFull
+  name: mop bucket
   suffix: full
   components:
     - type: Sprite
@@ -152,9 +136,9 @@
               Quantity: 600
 
 - type: entity
-  name: wet floor sign
-  id: WetFloorSign
   parent: BaseItem
+  id: WetFloorSign
+  name: wet floor sign
   description: Caution! Wet Floor!
   components:
   - type: Sprite
@@ -169,18 +153,12 @@
 
 
 - type: entity
+  parent: WetFloorSign
+  id: WetFloorSignMineExplosive
   name: wet floor sign
   suffix: Explosive
   description: Caution! Wet Floor!
-  parent: BaseItem
-  id: WetFloorSignMineExplosive
   components:
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: caution
-  - type: Item
-    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    size: 15
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 0
@@ -214,9 +192,9 @@
   - type: DeleteOnTrigger
 
 - type: entity
-  name: janitorial trolley
-  id: JanitorialTrolley
   parent: BaseStructureDynamic
+  id: JanitorialTrolley
+  name: janitorial trolley
   description: This is the alpha and omega of sanitation.
   components:
     - type: Sprite
