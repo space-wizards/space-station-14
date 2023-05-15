@@ -50,8 +50,6 @@
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
   - type: Appearance
-  - type: StaticPrice
-    price: 500
   - type: Item
     size: 40
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi

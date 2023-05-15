@@ -43,8 +43,6 @@
     - type: Artifact
     - type: RandomArtifactSprite
     - type: Appearance
-    - type: StaticPrice
-      price: 500
     - type: Actions
     - type: GuideHelp
       guides:
