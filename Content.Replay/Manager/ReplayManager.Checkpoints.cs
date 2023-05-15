@@ -115,7 +115,8 @@ public sealed partial class ReplayManager
             Array.Empty<EntityUid>());
         checkPoints.Add(new CheckpointState(state0, timeBase, cvars, 0));
 
-        HashSet<EntityUid> deletions = new();
+        DebugTools.Assert(state0.EntityDeletions.Value.Count == 0);
+        var empty = Array.Empty<EntityUid>();
 
         var ticksSinceLastCheckpoint = 0;
         var spawnedTracker = 0;
@@ -127,7 +128,7 @@ public sealed partial class ReplayManager
 
             var curState = states[i];
             UpdatePlayerStates(curState.PlayerStates.Span, playerStates);
-            UpdateDeletions(curState.EntityDeletions, entStates, deletions);
+            UpdateDeletions(curState.EntityDeletions, entStates);
             UpdateEntityStates(curState.EntityStates.Span, entStates, ref spawnedTracker, ref stateTracker);
             UpdateCvars(messages[i], cvars, ref timeBase);
             ticksSinceLastCheckpoint++;
@@ -143,7 +144,7 @@ public sealed partial class ReplayManager
                 default,
                 entStates.Values.ToArray(),
                 playerStates.Values.ToArray(),
-                Array.Empty<EntityUid>()); // for full states, deletions are implicit by simply not being in the state
+                empty); // for full states, deletions are implicit by simply not being in the state
             checkPoints.Add(new CheckpointState(newState, timeBase, cvars, i));
         }
 
@@ -152,12 +153,11 @@ public sealed partial class ReplayManager
         return checkPoints.ToArray();
     }
 
-    private void UpdateDeletions(NetListAsArray<EntityUid> entityDeletions, Dictionary<EntityUid, EntityState> entStates, HashSet<EntityUid> deletions)
+    private void UpdateDeletions(NetListAsArray<EntityUid> entityDeletions, Dictionary<EntityUid, EntityState> entStates)
     {
         foreach (var ent in entityDeletions.Span)
         {
             entStates.Remove(ent);
-            deletions.Add(ent);
         }
     }
 
