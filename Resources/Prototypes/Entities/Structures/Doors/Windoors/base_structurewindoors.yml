@@ -46,12 +46,20 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DoorSignalControl
-  - type: SignalReceiver
-    inputs:
-      Open: []
-      Close: []
-      Toggle: []
-      AutoClose: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Open
+      - Close
+      - Toggle
+      - AutoClose
+  - type: DeviceLinkSource
+    ports:
+    - DoorStatus
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass

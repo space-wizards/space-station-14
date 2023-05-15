@@ -1,30 +1,28 @@
 using Content.Server.Climbing;
 using Content.Server.Cloning;
 using Content.Server.Medical.Components;
-using Content.Server.Power.Components;
 using Content.Shared.Destructible;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Content.Server.MachineLinking.System;
-using Content.Server.MachineLinking.Events;
 using Content.Server.Cloning.Components;
 using Content.Server.Construction;
+using Content.Server.DeviceLinking.Systems;
+using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
-using Robust.Server.GameObjects;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; // Hmm...
 
 namespace Content.Server.Medical
 {
     public sealed class MedicalScannerSystem : EntitySystem
     {
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly ClimbSystem _climbSystem = default!;
         [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
@@ -70,7 +68,7 @@ namespace Content.Server.Medical
         {
             base.Initialize();
             scannerComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"scanner-bodyContainer");
-            _signalSystem.EnsureReceiverPorts(uid, MedicalScannerComponent.ScannerPort);
+            _signalSystem.EnsureSinkPorts(uid, MedicalScannerComponent.ScannerPort);
         }
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, ref ContainerRelayMovementEntityEvent args)

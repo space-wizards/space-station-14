@@ -40,6 +40,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitJacketMonkey
+  name: bartender's jacket monkey
+  description: A decent jacket, for a decent monkey.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitBartenderPurple
   name: purple bartender's uniform
   description: A special purple outfit to serve drinks.
@@ -221,8 +232,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingUniformBase
@@ -376,8 +385,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/medical.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/medical.rsi
-  - type: DiseaseProtection
-    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -400,8 +407,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
-  - type: DiseaseProtection
-    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -413,8 +418,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/brigmedic.rsi
-  - type: DiseaseProtection
-    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -1008,8 +1011,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
-  - type: DiseaseProtection
-    protection: 0.1
 
 - type: entity
   parent: ClothingUniformBase
@@ -1024,8 +1025,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
-        Slash: 0.9
+        Blunt: 0.8
+        Slash: 0.8
         Piercing: 0.8
 
 - type: entity
@@ -1038,8 +1039,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingUniformBase

@@ -1,3 +1,4 @@
+using Content.Server.DeviceLinking.Events;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Tools.Components;
@@ -8,7 +9,6 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Content.Shared.Wires;
-using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
 
 namespace Content.Server.Doors.Systems
@@ -44,7 +44,7 @@ namespace Content.Server.Doors.Systems
             }
         }
 
-        private void OnSignalReceived(EntityUid uid, AirlockComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, AirlockComponent component, ref SignalReceivedEvent args)
         {
             if (args.Port == component.AutoClosePort)
             {

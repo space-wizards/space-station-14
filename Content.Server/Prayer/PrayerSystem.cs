@@ -50,7 +50,7 @@ public sealed class PrayerSystem : EntitySystem
             {
                 if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-locked"), uid, actor.PlayerSession, PopupType.Large);
+                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-pray-locked"), uid, actor.PlayerSession, PopupType.Large);
                     return;
                 }
 

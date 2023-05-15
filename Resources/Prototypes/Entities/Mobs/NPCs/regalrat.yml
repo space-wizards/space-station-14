@@ -85,9 +85,9 @@
         Base: dead
   - type: GhostRole
     makeSentient: true
-    name: Rat King
-    description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
-    rules: You are an antagonist, scavenge, attack, and grow your hoard!
+    name: ghost-role-information-rat-king-name
+    description: ghost-role-information-rat-king-description
+    rules: ghost-role-information-rat-king-rules
   - type: GhostTakeoverAvailable
   - type: Tag
     tags:
@@ -117,19 +117,6 @@
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
-  - type: DiseaseCarrier
-    naturalImmunities:
-    - ActiveHonkVirus
-    carrierDiseases:
-    - VentCough
-    - AMIV
-    - SpaceCold
-    - SpaceFlu
-    - BirdFlew
-    - VanAusdallsRobovirus
-    - BleedersBite
-    - Plague
-    - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
   - type: RandomMetadata
@@ -271,19 +258,6 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
-  - type: DiseaseCarrier
-    naturalImmunities:
-      - ActiveHonkVirus
-    carrierDiseases:
-    - VentCough
-    - AMIV
-    - SpaceCold
-    - SpaceFlu
-    - BirdFlew
-    - VanAusdallsRobovirus
-    - BleedersBite
-    - Plague
-    - TongueTwister
   - type: Vocal
     sounds:
       Male: Mouse
@@ -292,9 +266,9 @@
     wilhelmProbability: 0.001
   - type: GhostRole
     makeSentient: true
-    name: Rat Servant
-    description: You are a Rat Servant. You must follow your king's orders.
-    rules: You are an antagonist, scavenge, attack, and serve your king!
+    name: ghost-role-information-rat-servant-name
+    description: ghost-role-information-rat-servant-description
+    rules: ghost-role-information-rat-servant-rules
   - type: GhostTakeoverAvailable
   - type: Tag
     tags:

@@ -435,3 +435,30 @@
   - type: ConditionalSpawner
     prototypes:
       - MobAdultSlimesYellowAngry
+
+- type: entity
+  name: Smile Spawner
+  id: SpawnMobSmile
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobSlimesPet
+  
+- type: entity
+  name: Pun Pun Spawner
+  id: SpawnMobMonkeyPunpun
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: monkey
+      sprite: Mobs/Animals/monkey.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobMonkeyPunpun

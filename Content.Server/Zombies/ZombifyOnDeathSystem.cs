@@ -1,10 +1,10 @@
+using Content.Server.Administration.Commands;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
-using Content.Server.Disease.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
@@ -23,6 +23,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
@@ -55,6 +56,8 @@ namespace Content.Server.Zombies
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
 
         public override void Initialize()
         {
@@ -68,8 +71,7 @@ namespace Content.Server.Zombies
         /// </summary>
         private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
         {
-            if (args.NewMobState == MobState.Dead ||
-                args.NewMobState == MobState.Critical)
+            if (args.NewMobState == MobState.Dead)
             {
                 ZombifyEntity(uid, args.Component);
             }
@@ -101,7 +103,6 @@ namespace Content.Server.Zombies
 
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, or die in space
-            RemComp<DiseaseCarrierComponent>(target);
             RemComp<RespiratorComponent>(target);
             RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
@@ -183,9 +184,16 @@ namespace Content.Server.Zombies
             if (TryComp<TemperatureComponent>(target, out var tempComp))
                 tempComp.ColdDamage.ClampMax(0);
 
+            // Zombies can revive themselves
+            _mobThreshold.SetAllowRevives(target, true);
+
             //Heals the zombie from all the damage it took while human
             if (TryComp<DamageableComponent>(target, out var damageablecomp))
                 _damageable.SetAllDamage(target, damageablecomp, 0);
+
+            // Revive them now
+            if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState==MobState.Dead)
+                _mobState.ChangeMobState(target, MobState.Alive, mobstate);
 
             //gives it the funny "Zombie ___" name.
             var meta = MetaData(target);
@@ -223,6 +231,8 @@ namespace Content.Server.Zombies
                 _sharedHands.RemoveHand(target, hand.Name);
             }
             RemComp<HandsComponent>(target);
+            // No longer waiting to become a zombie:
+            RemComp<PendingZombieComponent>(target);
 
             //zombie gamemode stuff
             RaiseLocalEvent(new EntityZombifiedEvent(target));
