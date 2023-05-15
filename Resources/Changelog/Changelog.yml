@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'RD, CMO, and QM can no longer be traitors.', type: Remove}
-  id: 3267
-  time: '2023-03-27T00:38:32.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Nanotrasen has cut budget towards Cryptobiolin inhibitors. Cryptobiolin
@@ -2895,3 +2890,9 @@ Entries:
   - {message: Salvage ore will only spawn on existing walls., type: Tweak}
   id: 3766
   time: '2023-05-15T02:01:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Stackable items will now show a count in the storage window and will
+      also natively stack when you try to insert them into storage., type: Add}
+  id: 3767
+  time: '2023-05-15T02:24:46.0000000+00:00'
