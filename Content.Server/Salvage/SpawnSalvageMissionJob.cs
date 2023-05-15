@@ -13,6 +13,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Dataset;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
 using Content.Shared.Random;
@@ -220,10 +221,20 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
             switch (rule)
             {
-                case BiomeTemplateLoot biomeLoot:
-                    if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                case BiomeMarkerLoot biomeLoot:
                     {
-                        _biome.AddTemplate(biome, "Loot", _prototypeManager.Index<BiomeTemplatePrototype>(biomeLoot.Prototype), i);
+                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                        {
+                            _biome.AddMarkerLayer(biome, biomeLoot.Prototype);
+                        }
+                    }
+                    break;
+                case BiomeTemplateLoot biomeLoot:
+                    {
+                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                        {
+                            _biome.AddTemplate(biome, "Loot", _prototypeManager.Index<BiomeTemplatePrototype>(biomeLoot.Prototype), i);
+                        }
                     }
                     break;
                 // Spawns a cluster (like an ore vein) nearby.
