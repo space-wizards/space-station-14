@@ -148,9 +148,8 @@ namespace Content.Client.Construction.UI
 
             foreach (var recipe in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
-                if (recipe.Hide) {
-                        continue;
-                }
+                if (recipe.Hide)
+                    continue;
 
                 if (!string.IsNullOrEmpty(search))
                 {
