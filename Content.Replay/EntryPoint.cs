@@ -14,11 +14,6 @@ public sealed class EntryPoint : GameClient
     [Dependency] private readonly IStateManager _stateMan = default!;
     [Dependency] private readonly IClientConGroupController _conGrp = default!;
 
-    public override void PreInit()
-    {
-        base.PreInit();
-    }
-
     public override void Init()
     {
         base.Init();

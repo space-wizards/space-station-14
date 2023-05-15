@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Replay.UI.Loading;
+using Content.Replay.UI.Menu;
 
 namespace Content.Replay.Manager;
 
@@ -26,16 +27,22 @@ public sealed partial class ReplayManager
         if (CurrentReplay != null)
             StopReplay();
 
-        var screen = _stateMan.RequestStateChange<LoadingScreen<bool>>();
+        var screen = _stateMan.RequestStateChange<LoadingScreen<ReplayData>>();
         screen.Job = new LoadReplayJob(1/60f, dir, this, screen);
         screen.OnJobFinished += OnFinishedLoading;
     }
 
-    private void OnFinishedLoading(bool success)
+    private void OnFinishedLoading(ReplayData? data, Exception? ex)
     {
-        if (!success)
+        if (data == null)
+        {
+            _stateMan.RequestStateChange<ReplayMainScreen>();
+            if (ex != null)
+                _uiMan.Popup(Loc.GetString("main-menu-failed-to-connect", ("reason", ex)));
             return;
+        }
 
+        CurrentReplay = data;
         _entMan.EntitySysManager.GetEntitySystem<ReplayObserverSystem>().SetObserverPosition(default);
         RegisterCommands();
     }

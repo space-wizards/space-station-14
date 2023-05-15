@@ -13,7 +13,7 @@ public class LoadingScreen<TResult> : State
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
-    public event Action<TResult?>? OnJobFinished;
+    public event Action<TResult?, Exception?>? OnJobFinished;
     private LoadingScreenControl _screen = default!;
     public Job<TResult>? Job;
 
@@ -27,7 +27,7 @@ public class LoadingScreen<TResult> : State
         if (Job.Status != JobStatus.Finished)
             return;
 
-        OnJobFinished?.Invoke(Job.Result);
+        OnJobFinished?.Invoke(Job.Result, Job.Exception);
         Job = null;
     }
 

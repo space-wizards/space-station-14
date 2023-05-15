@@ -5,15 +5,15 @@ using Robust.Shared.CPUJob.JobQueues;
 
 namespace Content.Replay.Manager;
 
-public sealed class LoadReplayJob : Job<bool>
+public sealed class LoadReplayJob : Job<ReplayData>
 {
     private ReplayManager _manager;
     private readonly IWritableDirProvider _dir;
-    private readonly LoadingScreen<bool> _screen;
+    private readonly LoadingScreen<ReplayData> _screen;
 
     public LoadReplayJob(float time, IWritableDirProvider dir,
         ReplayManager manager,
-        LoadingScreen<bool> screen)
+        LoadingScreen<ReplayData> screen)
         : base(time, default)
     {
         _manager = manager;
@@ -21,12 +21,11 @@ public sealed class LoadReplayJob : Job<bool>
         _screen = screen;
     }
 
-    protected override async Task<bool> Process()
+    protected override async Task<ReplayData?> Process()
     {
         var data = await _manager.InternalLoadReplay(_dir, Yield);
         await _manager.StartReplayAsync(data, Yield);
-        _manager.CurrentReplay = data;
-        return true;
+        return data;
     }
 
     private async Task Yield(float value, float maxValue, LoadingState state, bool force)
