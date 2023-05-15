@@ -1,13 +1,13 @@
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitDeadSquad
-  name: Dead Squad uniform
+  id: ClothingUniformJumpsuitDeathSquad
+  name: Death squad uniform
   description: Advanced armored jumpsuit used by special forces in special operations.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/deadsquad.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/deathsquad.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/deadsquad.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/deathsquad.rsi
   - type: Armor
     modifiers:
       coefficients:
