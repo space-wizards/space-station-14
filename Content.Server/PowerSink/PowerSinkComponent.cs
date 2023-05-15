@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.PowerSink
 {
@@ -19,7 +20,7 @@ namespace Content.Server.PowerSink
         /// <summary>
         /// If explosion has been triggered, time at which to explode.
         /// </summary>
-        [DataField("explosionTime")]
+        [DataField("explosionTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
         public System.TimeSpan? ExplosionTime = null;
 
         /// <summary>

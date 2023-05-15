@@ -34,6 +34,7 @@ namespace Content.Server.PowerSink
             base.Initialize();
 
             SubscribeLocalEvent<PowerSinkComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<PowerSinkComponent, EntityUnpausedEvent>(OnUnpaused);
         }
 
         private void OnExamine(EntityUid uid, PowerSinkComponent component, ExaminedEvent args)
@@ -48,6 +49,14 @@ namespace Content.Server.PowerSink
                     ("amount", drainAmount),
                     ("markupDrainColor", "orange"))
             );
+        }
+
+        private void OnUnpaused(EntityUid uid, PowerSinkComponent component, ref EntityUnpausedEvent args)
+        {
+            if (component.ExplosionTime == null)
+                return;
+
+            component.ExplosionTime = component.ExplosionTime + args.PausedTime;
         }
 
         public override void Update(float frameTime)
@@ -95,7 +104,7 @@ namespace Content.Server.PowerSink
 
                     // Wind-up SFX
                     _audio.PlayPvs(component.ChargeFireSound, entity); // Play SFX
-                } 
+                }
                 else if (_gameTiming.CurTime >= component.ExplosionTime)
                 {
                     // Explode!
