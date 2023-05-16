@@ -47,7 +47,7 @@ public sealed class WorldgenConfigSystem : EntitySystem
             return;
         }
 
-        if (int.TryParse(args[0], out var mapInt) || !_map.MapExists(new MapId(mapInt)))
+        if (!int.TryParse(args[0], out var mapInt) || !_map.MapExists(new MapId(mapInt)))
         {
             shell.WriteError(Loc.GetString("shell-invalid-map-id"));
             return;
