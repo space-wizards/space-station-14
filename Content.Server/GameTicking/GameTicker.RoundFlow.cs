@@ -21,6 +21,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
+using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Serialization.Markdown.Value;
 
 namespace Content.Server.GameTicking
 {
@@ -68,6 +70,16 @@ namespace Content.Server.GameTicking
 
         [ViewVariables]
         public int RoundId { get; private set; }
+
+        private void InitializeRoundFlow()
+        {
+            _replay.OnRecordingStarted += OnRecordingStart;
+        }
+
+        private void OnRecordingStart((MappingDataNode, List<object>) data)
+        {
+            data.Item1["roundId"] = new ValueDataNode(RoundId.ToString());
+        }
 
         /// <summary>
         /// Returns true if the round's map is eligible to be updated.

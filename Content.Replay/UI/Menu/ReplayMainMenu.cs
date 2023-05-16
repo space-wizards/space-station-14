@@ -8,7 +8,6 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
 
@@ -35,6 +34,9 @@ public sealed class ReplayMainScreen : State
 
     // TODO cvar (or add a open-file dialog?).
     public static readonly ResPath DefaultReplayDirectory = new("/replays");
+
+    // Should probably be localized, but should never happen, so...
+    public const string Error = "Error";
 
     private IWritableDirProvider? _directory;
 
@@ -77,11 +79,16 @@ public sealed class ReplayMainScreen : State
         }
 
         var file = path.ToRelativePath().ToString();
-        var time = DateTime.Parse(((ValueDataNode) data["time"]).Value);
-        var duration = TimeSpan.Parse(((ValueDataNode) data["duration"]).Value);
-        var engVersion = ((ValueDataNode) data["engineVersion"]).Value;
-        var forkId = ((ValueDataNode) data["buildForkId"]).Value;
-        var forkVersion = ((ValueDataNode) data["buildVersion"]).Value;
+        data.TryGet<ValueDataNode>("time", out var timeNode);
+        data.TryGet<ValueDataNode>("duration", out var durationNode);
+        data.TryGet<ValueDataNode>("roundId", out var roundIdNode);
+        data.TryGet<ValueDataNode>("engineVersion", out var engineNode);
+        data.TryGet<ValueDataNode>("buildForkId", out var forkNode);
+        data.TryGet<ValueDataNode>("buildVersion", out var versionNode);
+        data.TryGet<ValueDataNode>("typeHash", out var hashNode);
+        var forkVersion = versionNode?.Value ?? Error;
+        DateTime.TryParse(timeNode?.Value, out var time);
+        TimeSpan.TryParse(durationNode?.Value, out var duration);
 
         // Why does this not have a try-convert function???
         try
@@ -95,11 +102,17 @@ public sealed class ReplayMainScreen : State
             // ignored
         }
 
-        var typeHash = ((ValueDataNode) data["typeHash"]).Value;
+        var typeHash = hashNode?.Value ?? Error;
         if (Convert.FromHexString(typeHash).SequenceEqual(_serializer.GetSerializableTypesHash()))
+        {
             typeHash = $"[color=green]{typeHash[..16]}[/color]";
+            _mainMenuControl.LoadButton.Disabled = false;
+        }
         else
+        {
             typeHash = $"[color=red]{typeHash[..16]}[/color]";
+            _mainMenuControl.LoadButton.Disabled = true;
+        }
 
         // TODO REPLAYS
         // Include engine, forkId, & forkVersion data with the client.
@@ -112,13 +125,12 @@ public sealed class ReplayMainScreen : State
             "replay-info-info",
             ("file", file),
             ("time", time),
+            ("roundId", roundIdNode?.Value ?? Error),
             ("duration", duration),
-            ("forkId", forkId),
+            ("forkId", forkNode?.Value ?? Error),
             ("version", forkVersion),
-            ("engVersion", engVersion),
+            ("engVersion", engineNode?.Value ?? Error),
             ("hash", typeHash)));
-
-        _mainMenuControl.LoadButton.Disabled = false;
     }
 
     private void OnRefreshPressed(BaseButton.ButtonEventArgs obj)

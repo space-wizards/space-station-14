@@ -20,8 +20,9 @@ replay-info-title = Replay Information
 replay-info-none = [color=red]No replay selected[/color] 
 replay-info-info = {"["}color=gray]Selected:[/color]   {$file}
                    {"["}color=gray]Time:[/color]   {$time}
+                   {"["}color=gray]Round ID:[/color]   {$roundId}
                    {"["}color=gray]Duration:[/color]   {$duration}
                    {"["}color=gray]ForkId:[/color]   {$forkId}
                    {"["}color=gray]Version:[/color]   {$version}
-                   {"["}color=gray]Engine Version:[/color]   {$engVersion}
+                   {"["}color=gray]Engine:[/color]   {$engVersion}
                    {"["}color=gray]Hash:[/color]   {$hash}
