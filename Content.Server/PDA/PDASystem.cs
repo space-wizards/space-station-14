@@ -24,7 +24,6 @@ namespace Content.Server.PDA
         [Dependency] private readonly StoreSystem _store = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public override void Initialize()
         {
@@ -105,8 +104,14 @@ namespace Content.Server.PDA
             // TODO: Update the level and name of the station with each call to UpdatePdaUi is only needed for latejoin players.
             // TODO: If someone can implement changing the level and name of the station when changing the PDA grid, this can be removed.
 
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo,
-                pda.StationName, showUplink, hasInstrument, address);
+            var state = new PDAUpdateState(
+                pda.FlashlightOn,
+                pda.PenSlot.HasItem,
+                ownerInfo,
+                pda.StationName,
+                showUplink,
+                hasInstrument,
+                address);
 
             _cartridgeLoader?.UpdateUiState(uid, state);
         }
