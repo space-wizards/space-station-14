@@ -24,12 +24,14 @@ namespace Content.Server.PDA
         [Dependency] private readonly StoreSystem _store = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
+            SubscribeLocalEvent<PDAComponent, GridModifiedEvent>(OnGridChanged);
             SubscribeLocalEvent<PDAComponent, AlertLevelChangedEvent>(OnAlertLevelChanged);
         }
 
@@ -68,6 +70,12 @@ namespace Content.Server.PDA
         public void SetOwner(EntityUid uid, PDAComponent pda, string ownerName)
         {
             pda.OwnerName = ownerName;
+            UpdatePdaUi(uid, pda);
+        }
+
+        private void OnGridChanged(EntityUid uid, PDAComponent pda, GridModifiedEvent args)
+        {
+            UpdateStationName(uid, pda);
             UpdatePdaUi(uid, pda);
         }
 
