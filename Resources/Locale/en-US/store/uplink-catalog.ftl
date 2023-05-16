@@ -183,10 +183,10 @@ uplink-clothing-thieving-gloves-name = Thieving Gloves
 uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and increase your thieving technique with these fancy new gloves, all while looking like normal gloves!
 
 uplink-clothing-outer-vest-web-name = Web West
-uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
+uplink-clothing-outer-vest-web-desc = A synthetic armor vest that provides excellent protection against brute-force damage, and even better protection against bullets.
 
 uplink-hardsuit-syndie-name = Blood-red Hardsuit
-uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hardsuit, capable of space walks and reducing the impact of many types of damage.
+uplink-hardsuit-syndie-desc = The Syndicate's infamous blood-red hardsuit, capable of space walks and reducing the impact of many types of damage.
 
 uplink-hardsuit-syndie-elite-name = Syndicate Elite Hardsuit
 uplink-hardsuit-syndie-elite-desc = An upgraded version of the blood-red hardsuit that features enhanced fireproofing, pressure resist, and superior armor.
@@ -210,8 +210,8 @@ uplink-decoy-disk-desc = A piece of plastic with a lenticular printing, made to 
 uplink-cigarettes-name = Syndicate Smokes Packet
 uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
 
-uplink-soap-name = Soap
-uplink-soap-desc = An untrustworthy bar of soap. Smells of fear.
+uplink-soap-name = Syndicate Brand Soap
+uplink-soap-desc = An untrustworthy bar of soap. Slips people for an extra-long amount of time!.
 
 uplink-ultrabright-lantern-name = Extra-Bright Lantern
 uplink-ultrabright-lantern-desc = Blinding.
@@ -226,7 +226,7 @@ uplink-stimkit-name = Stimkit
 uplink-stimkit-desc = A medkit containing 6 stimulant microinjectors, which each inject you with enough stimulants to last for a minute.
 
 uplink-experimental-stimpack-name = Experimental Stimpack
-uplink-experimental-stimpack-desc = A prototype version of the Stimpack pulled from the market due to extreme side effects. Effects include virtual immunity to stuns, massively increased movement speed, and rapid tissue regeneration, but the chemical will constantly poison you while in your bloodstream.
+uplink-experimental-stimpack-desc = A prototype version of the Stimpack pulled from the market due to extreme side effects. Effects include virtual immunity to stuns, massively increased movement speed, and rapid tissue regeneration, but the chemical will severely poison you while in your bloodstream.
 
 uplink-syndicate-segway-crate-name = Syndicate Segway
 uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
