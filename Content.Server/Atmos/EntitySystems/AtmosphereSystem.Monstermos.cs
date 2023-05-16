@@ -635,7 +635,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!MonstermosRipTiles)
                 return;
 
-            var chance = MathHelper.Clamp(0.02f + (sum / Atmospherics.SpacingMaxWind) * 0.3f, 0.005f, 0.3f);
+            var chance = MathHelper.Clamp(0.01f + (sum / Atmospherics.SpacingMaxWind) * 0.3f, 0.003f, 0.3f);
 
             if (sum > 20 && _robustRandom.Prob(chance))
                 PryTile(mapGrid, tile.GridIndices);

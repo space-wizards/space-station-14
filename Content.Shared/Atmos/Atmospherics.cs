@@ -304,7 +304,7 @@ namespace Content.Shared.Atmos
         ///     What fraction of air from a spaced tile escapes every tick.
         ///     1.0 for instant spacing, 0.2 means 20% of remaining air lost each time
         /// </summary>
-        public const float SpacingEscapeRatio = 0.2f;
+        public const float SpacingEscapeRatio = 0.15f;
 
         /// <summary>
         ///     Minimum amount of air allowed on a spaced tile before it is reset to 0 immediately in kPa
@@ -317,7 +317,7 @@ namespace Content.Shared.Atmos
         ///     How much wind can go through a single tile before that tile doesn't depressurize itself
         ///     (I.e spacing is limited in large rooms heading into smaller spaces)
         /// </summary>
-        public const float SpacingMaxWind = 1000.0f;
+        public const float SpacingMaxWind = 500.0f;
 
         #endregion
     }
