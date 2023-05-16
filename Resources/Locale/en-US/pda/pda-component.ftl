@@ -6,7 +6,7 @@ comp-pda-ui = ID: [color=white]{$owner}[/color], [color=yellow]{$jobTitle}[/colo
 
 comp-pda-ui-blank = ID:
 
-comp-pda-ui-owner = Owner: [color=white]{$cctualOwnerName}[/color]
+comp-pda-ui-owner = Owner: [color=white]{$actualOwnerName}[/color]
 
 comp-pda-io-program-list-button = Programs
 
