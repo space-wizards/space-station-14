@@ -10,7 +10,6 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - PowerDrill #todo remove this once we have advanced tools
   - MiningDrill
   - OreProcessorMachineCircuitboard
 
@@ -145,6 +144,20 @@
   recipeUnlocks:
   - HolofanProjector
   - PortableScrubberMachineCircuitBoard
+
+- type: technology
+  id: AdvancedToolsTechnology
+  name: research-technology-advanced-tools
+  icon:
+    sprite: Objects/Tools/drill.rsi
+    state: drill_bolt
+  discipline: Industrial
+  tier: 2
+  cost: 15000
+  unlockedRecipes:
+    - WelderIndustrialAdvanced
+    - PowerDrill
+    - JawsOfLife
 
 - type: technology
   id: SuperPowercells
