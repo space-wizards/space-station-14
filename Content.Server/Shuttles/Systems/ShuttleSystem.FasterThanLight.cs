@@ -96,6 +96,18 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
+        if (uid != null)
+        {
+            var ev = new ConsoleFTLAttemptEvent(uid.Value, false, string.Empty);
+            RaiseLocalEvent(uid.Value, ref ev, true);
+
+            if (ev.Cancelled)
+            {
+                reason = ev.Reason;
+                return false;
+            }
+        }
+
         reason = null;
         return true;
     }
