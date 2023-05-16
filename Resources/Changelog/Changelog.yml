@@ -1,9 +1,4 @@
 Entries:
-- author: dontbetank
-  changes:
-  - {message: Added diona plushie, type: Add}
-  id: 3286
-  time: '2023-03-29T22:36:54.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed high-pressure protection not actually providing any protection.,
@@ -2906,3 +2901,8 @@ Entries:
   - {message: Fix potential server crash upon reconnection., type: Fix}
   id: 3785
   time: '2023-05-16T11:23:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix salvage expeditions mercilessly deleting people., type: Fix}
+  id: 3786
+  time: '2023-05-16T12:55:49.0000000+00:00'
