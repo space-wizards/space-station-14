@@ -31,7 +31,6 @@ namespace Content.Server.PDA
             base.Initialize();
 
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
-            SubscribeLocalEvent<PDAComponent, GridModifiedEvent>(OnGridChanged);
             SubscribeLocalEvent<PDAComponent, AlertLevelChangedEvent>(OnAlertLevelChanged);
         }
 
@@ -73,12 +72,6 @@ namespace Content.Server.PDA
             UpdatePdaUi(uid, pda);
         }
 
-        private void OnGridChanged(EntityUid uid, PDAComponent pda, GridModifiedEvent args)
-        {
-            UpdateStationName(uid, pda);
-            UpdatePdaUi(uid, pda);
-        }
-
         /// <summary>
         /// Send new UI state to clients, call if you modify something like uplink.
         /// </summary>
@@ -99,6 +92,8 @@ namespace Content.Server.PDA
             var address = GetDeviceNetAddress(uid);
             var hasInstrument = HasComp<InstrumentComponent>(uid);
             var showUplink = HasComp<StoreComponent>(uid) && IsUnlocked(uid);
+
+            UpdateStationName(uid, pda);
 
             var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo,
                 pda.StationName, showUplink, hasInstrument, address);
