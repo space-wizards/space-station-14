@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: TRays are now clientside with a higher range., type: Tweak}
-  id: 3290
-  time: '2023-03-31T03:40:38.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Emergency shuttle FTL time is now randomised from 60 to 180 seconds.,
     type: Tweak}
   id: 3291
@@ -2905,3 +2900,8 @@ Entries:
   - {message: Changed sexyclown mask icon, type: Tweak}
   id: 3789
   time: '2023-05-16T22:16:50.0000000+00:00'
+- author: EEASAS
+  changes:
+  - {message: Nanotrasen has allocated more budget towards Saltern., type: Tweak}
+  id: 3790
+  time: '2023-05-16T22:53:47.0000000+00:00'
