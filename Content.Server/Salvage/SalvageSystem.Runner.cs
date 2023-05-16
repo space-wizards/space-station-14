@@ -5,6 +5,8 @@ using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Shared.Chat;
+using Content.Shared.Humanoid;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Audio;
@@ -25,6 +27,33 @@ public sealed partial class SalvageSystem
         SubscribeLocalEvent<FTLRequestEvent>(OnFTLRequest);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
         SubscribeLocalEvent<FTLCompletedEvent>(OnFTLCompleted);
+        SubscribeLocalEvent<ConsoleFTLAttemptEvent>(OnConsoleFTLAttempt);
+    }
+
+    private void OnConsoleFTLAttempt(ref ConsoleFTLAttemptEvent ev)
+    {
+        if (!TryComp<TransformComponent>(ev.Uid, out var xform) ||
+            !TryComp<SalvageExpeditionComponent>(xform.MapUid, out var salvage))
+        {
+            return;
+        }
+
+        // TODO: This is terrible but need bluespace harnesses or something.
+        var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
+
+        while (query.MoveNext(out var _, out var _, out var mobXform))
+        {
+            if (mobXform.MapUid != xform.MapUid)
+                continue;
+
+            // Okay they're on salvage, so are they on the shuttle.
+            if (mobXform.GridUid != ev.Uid)
+            {
+                ev.Cancelled = true;
+                ev.Reason = Loc.GetString("salvage-expedition-not-all-present");
+                return;
+            }
+        }
     }
 
     /// <summary>
@@ -74,8 +103,6 @@ public sealed partial class SalvageSystem
             Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-dungeon", ("direction", component.DungeonLocation.GetDir())));
 
         component.Stage = ExpeditionStage.Running;
-        // At least for now stop them FTLing back until the mission is over.
-        EnsureComp<PreventPilotComponent>(args.Entity);
     }
 
     private void OnFTLStarted(ref FTLStartedEvent ev)
@@ -96,9 +123,6 @@ public sealed partial class SalvageSystem
         {
             return;
         }
-
-        // Let them pilot again when they get back.
-        RemCompDeferred<PreventPilotComponent>(ev.Entity);
 
         // Check if any shuttles remain.
         var query = EntityQueryEnumerator<ShuttleComponent, TransformComponent>();
