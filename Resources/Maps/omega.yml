@@ -9193,13 +9193,6 @@ entities:
       type: Transform
     - current: TheAleNath
       type: BarSign
-- proto: BaseResearchAndDevelopmentPointSource
-  entities:
-  - uid: 6253
-    components:
-    - pos: 14.5,-18.5
-      parent: 4812
-      type: Transform
 - proto: Beaker
   entities:
   - uid: 9030
