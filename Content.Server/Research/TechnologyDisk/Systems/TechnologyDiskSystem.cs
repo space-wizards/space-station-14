@@ -38,12 +38,11 @@ public sealed class TechnologyDiskSystem : EntitySystem
         {
             foreach (var recipe in component.Recipes)
             {
-                _research.AddLatheRecipe(target, recipe, database, false);
+                _research.AddLatheRecipe(target, recipe, database);
             }
-            Dirty(database);
         }
         _popup.PopupEntity(Loc.GetString("tech-disk-inserted"), target, args.User);
-        EntityManager.DeleteEntity(uid);
+        Del(uid);
         args.Handled = true;
     }
 
@@ -71,7 +70,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         var allTechs = new List<string>();
         foreach (var tech in _prototype.EnumeratePrototypes<TechnologyPrototype>())
         {
-            allTechs.AddRange(tech.UnlockedRecipes);
+            allTechs.AddRange(tech.RecipeUnlocks);
         }
         allTechs = allTechs.Distinct().ToList();
 
@@ -79,7 +78,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         var allUnlocked = new List<string>();
         foreach (var database in EntityQuery<TechnologyDatabaseComponent>())
         {
-            allUnlocked.AddRange(database.RecipeIds);
+            allUnlocked.AddRange(database.UnlockedRecipes);
         }
         allUnlocked = allUnlocked.Distinct().ToList();
 

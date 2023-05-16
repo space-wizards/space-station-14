@@ -62,6 +62,18 @@
       storagebase: !type:Container
         ents: []
 
+- type: entity
+  id: BaseBagOpenClose
+  abstract: true
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SharedBagOpenVisuals.BagState:
+        openLayer:
+          True: { visible: true }
+          False: { visible: false }
+
 
 # PowerCellSlot parents
 - type: entity

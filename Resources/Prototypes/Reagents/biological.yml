@@ -26,6 +26,9 @@
   color: "#2cf274"
   physicalDesc: reagent-physical-desc-viscous
   slippery: false
+  viscosity: 0.25
+  tileReactions:
+    - !type:SpillTileReaction
   metabolisms:
     Food:
       # Delicious!

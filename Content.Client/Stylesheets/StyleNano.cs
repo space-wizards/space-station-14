@@ -1351,6 +1351,10 @@ namespace Content.Client.Stylesheets
                     .Prop(Label.StylePropertyFont, notoSans12)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#111111")),
 
+                Element<RichTextLabel>().Class("LabelSubText")
+                    .Prop(Label.StylePropertyFont, notoSans10)
+                    .Prop(Label.StylePropertyFontColor, Color.DarkGray),
+
                 Element<LineEdit>().Class("PaperLineEdit")
                     .Prop(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
 
