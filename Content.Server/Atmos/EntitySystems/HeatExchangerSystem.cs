@@ -60,11 +60,12 @@ public sealed class HeatExchangerSystem : EntitySystem
             var dT = xfer.Temperature - environment.Temperature;
             var dE = comp.K * dT * dt;
             var envLim = Math.Abs(_atmosphereSystem.GetHeatCapacity(environment) * dT * dt);
-            var dEactual = Math.Sign(dE) * Math.Min(Math.Abs(dE), envLim);
+            var xferLim = Math.Abs(_atmosphereSystem.GetHeatCapacity(xfer) * dT * dt);
+            var dEactual = Math.Sign(dE) * Math.Min(Math.Abs(dE), Math.Min(envLim, xferLim));
             _atmosphereSystem.AddHeat(xfer, -dEactual);
             _atmosphereSystem.AddHeat(environment, dEactual);
             if (comp.Debug)
-                Logger.InfoS("exchanger", $"({uid}) convect dN={dN} dT={dT} dE={dEactual} (of {envLim})");
+                Logger.InfoS("exchanger", $"({uid}) convect dN={dN} dT={dT} dE={dEactual} ({xferLim}, {envLim})");
         }
 
         // Radiation
