@@ -1,9 +1,15 @@
 - type: entity
   id: CigPackBase
-  parent: BaseStorageItem
+  parent: [ BaseStorageItem, BaseBagOpenClose ]
   name: cigarette pack
   abstract: true
   components:
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: closed
+    - state: open
+      map: ["openLayer"]
   - type: Tag
     tags:
     - CigPack
@@ -25,8 +31,6 @@
       tags: [Cigarette]
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: open
     - type: StackVisualizer
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       composite: true
@@ -45,10 +49,7 @@
   description: A label on the packaging reads, Wouldn't a slow death make a change?
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
-    layers:
-    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
 
@@ -59,10 +60,7 @@
   description: The most popular brand of Space Cigarettes, sponsors of the Space Olympics.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
-    layers:
-    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
 
@@ -73,10 +71,7 @@
   description: For those who somehow want to obtain the record for the most amount of cancerous tumors.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
-    layers:
-    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
 
@@ -87,10 +82,7 @@
   description: Nomads's extra strong, for when your life is more extra hard.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
-    layers:
-    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
 
@@ -100,14 +92,11 @@
   name: Syndicate Smokes packet
   description: Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
   components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
   - type: StorageFill
     contents:
     - id: CigaretteSyndicate
       amount: 5
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
-    layers:
-    - state: closed
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
