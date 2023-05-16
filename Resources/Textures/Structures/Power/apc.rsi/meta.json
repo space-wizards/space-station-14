@@ -8,101 +8,76 @@
   },
   "states": [
     {
-      "name": "broken"
-    },
-    {
-      "name": "apcframe"
-    },
-    {
-      "name": "sparks-unlit",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.05,
-          0.05,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
       "name": "base"
     },
     {
-      "name": "emag-unlit",
-      "delays": [
-        [
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5
-        ]
-      ]
+      "name": "broken"
+    },
+    {
+      "name": "frame"
     },
     {
       "name": "panel"
     },
     {
-      "name": "apco0-0"
+      "name": "lock0-unlocked"
     },
     {
-      "name": "apco0-1"
+      "name": "lock0-locked"
     },
     {
-      "name": "apco0-2"
+      "name": "lock1-unlocked"
     },
     {
-      "name": "apco0-3"
+      "name": "lock1-locked"
     },
     {
-      "name": "apco1-0"
+      "name": "channel0-auto_off"
     },
     {
-      "name": "apco1-1"
+      "name": "channel0-manual_off"
     },
     {
-      "name": "apco1-2"
+      "name": "channel0-auto_on"
     },
     {
-      "name": "apco1-3"
+      "name": "channel0-manual_on"
     },
     {
-      "name": "apco2-0"
+      "name": "channel1-auto_off"
     },
     {
-      "name": "apco2-1"
+      "name": "channel1-manual_off"
     },
     {
-      "name": "apco2-2"
+      "name": "channel1-auto_on"
     },
     {
-      "name": "apco2-3"
+      "name": "channel1-manual_on"
     },
     {
-      "name": "powered-1",
+      "name": "channel2-auto_off"
+    },
+    {
+      "name": "channel2-manual_off"
+    },
+    {
+      "name": "channel2-auto_on"
+    },
+    {
+      "name": "channel2-manual_on"
+    },
+    {
+      "name": "display-lack",
       "delays": [
         [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
+          1,
           2
         ]
       ]
     },
     {
-      "name": "powered-2",
+      "name": "display-charging",
       "delays": [
         [
           0.1,
@@ -110,14 +85,12 @@
           0.1,
           0.1,
           0.1,
-          0.1,
-          0.1,
-          0.1
+          0.2
         ]
       ]
     },
     {
-      "name": "powered-3",
+      "name": "display-full",
       "delays": [
         [
           1,
@@ -126,30 +99,38 @@
       ]
     },
     {
-      "name": "apco3-3",
+      "name": "display-remote",
       "delays": [
         [
           0.1,
           0.1,
           0.1,
           0.1,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          0.5,
-          2
+          0.1
         ]
       ]
     },
     {
-      "name": "apcox-0"
+      "name": "emag-unlit",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
     },
     {
-      "name": "apcox-1"
+      "name": "sparks-unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }

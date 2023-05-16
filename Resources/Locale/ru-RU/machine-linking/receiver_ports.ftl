@@ -1,3 +1,5 @@
+signal-port-name-autoclose = Автозакрытие
+signal-port-description-autoclose = Переключает, должно ли устройство автоматически закрываться.
 signal-port-name-toggle = Переключить
 signal-port-description-toggle = Переключает состояние устройства.
 signal-port-name-on-receiver = Вкл
@@ -12,6 +14,8 @@ signal-port-name-open = Открыть
 signal-port-description-open = Открывает устройство.
 signal-port-name-close = Закрыть
 signal-port-description-close = Закрывает устройство.
+signal-port-name-doorbolt = Болты шлюза
+signal-port-description-doorbolt = Переключает болты шлюза.
 signal-port-name-trigger = Триггер
 signal-port-description-trigger = Запускает определенный механизм на устройстве.
 signal-port-name-order-sender = Отправитель заказа

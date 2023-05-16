@@ -24,6 +24,7 @@ petting-success-holo = Вы гладите { $target } по { POSS-ADJ($target) 
 petting-success-dragon = Уворачиваясь от клыков, когтей, и пламени, вы гладите { $target } по { POSS-ADJ($target) } огромной чешуйчатой голове.
 petting-success-hamster = Вы гладите { $target } по { POSS-ADJ($target) } маленькой пушистой голове.
 petting-success-bear = Вы нерешительно гладите { $target } по { POSS-ADJ($target) } таинственной голове.
+petting-success-slimes = Вы гладите { $target } по { POSS-ADJ($target) } студенистой поверхности.
 petting-failure-generic = Вы тянетесь погладить { $target }, но { $target } настороженно уклоняется от вас.
 petting-failure-bat = Вы тянетесь погладить { $target }, но { $target } очень трудно поймать!
 petting-failure-corrupted-corgi = Вы тянетесь погладить { $target }, но решаете, что лучше не надо.
@@ -41,10 +42,12 @@ petting-failure-bear = Вы думаете погладить { $target }, но 
 ## Knocking on windows
 
 petting-success-honkbot = Вы гладите { $target } по его скользкой металлической голове.
+petting-success-mimebot = Вы гладите { $target } по { POSS-ADJ($target) } холодной металлической голове..
 petting-success-cleanbot = Вы гладите { $target } по его влажной металлической голове.
 petting-success-medibot = Вы гладите { $target } по его стерильной металлической голове.
 petting-failure-honkbot = Вы тянетесь погладить { $target }, но { $target } хонкает и уворачивается!
 petting-failure-cleanbot = Вы тянетесь погладить { $target }, но { $target } занят уборкой!
+petting-failure-mimebot = Вы тянетесь погладить { $target }, но { $target } занят мимированием!
 petting-failure-medibot = Вы тянетесь погладить { $target }, но { $target } едва не пронзает вашу руку шприцом!
 # Shown when knocking on a window
 comp-window-knock = *тук-тук*

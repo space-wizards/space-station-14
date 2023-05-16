@@ -1,0 +1,11 @@
+- type: reagent
+  id: Kvass
+  name: reagent-name-kvass
+  parent: BaseDrink
+  desc: reagent-desc-kvass
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: bread
+  color: "#381600"
+  metamorphicSprite:
+    sprite: Corvax/Objects/Consumable/Drinks/kvass.rsi
+    state: icon

@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from TG station at: https://github.com/tgstation/tgstation/commit/c7dde066687a52e2aad598d19ee01cc0fbaa7d43#diff-4bf8ea7edf380bc679abdb6816b5742859caa8e87532315850772b843c083a26",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        }
+    ]
+}

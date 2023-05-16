@@ -33,10 +33,6 @@ public sealed class CrewManifestEuiState : EuiStateBase
 }
 
 [Serializable, NetSerializable]
-public sealed class CrewManifestEuiClosed : EuiMessageBase
-{}
-
-[Serializable, NetSerializable]
 public sealed class CrewManifestEntries
 {
     /// <summary>

@@ -1,0 +1,6 @@
+﻿- type: soundCollection
+  id: NukeMusic
+  files:
+    - /Audio/StationEvents/running_out.ogg
+    - /Audio/StationEvents/countdown.ogg
+    - /Audio/Corvax/StationEvents/level.ogg # Corvax-NukeMusic

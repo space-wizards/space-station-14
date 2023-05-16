@@ -8,3 +8,7 @@ ent-ClothingOuterCoatSecurityOvercoat = security overcoat
     .desc = Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security.
 ent-ClothingOuterCoatLabSecurityMedic = security medic labcoat
     .desc = A suit that protects against minor chemical spills.
+ent-ClothingOuterCoatCaptain = captain's jacket
+    .desc = Captain's formal jacket, inlaid with gold.
+ent-ClothingOuterCoatHOP = head of personnel's jacket
+    .desc = Business jacket of the HOP for a professional look.

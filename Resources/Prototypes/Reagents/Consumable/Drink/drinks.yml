@@ -383,13 +383,13 @@
     state: icon
 
 - type: reagent
-  id: Kvass
-  name: reagent-name-kvass
+  id: TheMartinez
+  name: reagent-name-the-martinez
   parent: BaseDrink
-  desc: reagent-desc-kvass
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: bread
-  color: "#381600"
+  desc: reagent-desc-the-martinez
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: themartinez
+  color: "#75b1f0"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/kvass.rsi
+    sprite: Objects/Consumable/Drinks/the_martinez.rsi
     state: icon

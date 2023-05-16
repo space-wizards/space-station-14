@@ -6,3 +6,5 @@ ent-ShardGlassReinforced = reinforced glass shard
     .desc = A small piece of reinforced glass.
 ent-ShardGlassPlasma = plasma glass shard
     .desc = A small piece of plasma glass.
+ent-ShardGlassUranium = uranium glass shard
+    .desc = A small piece of uranium glass.

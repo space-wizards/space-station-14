@@ -59,6 +59,9 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: ClothingHeadCaptainHat
+      - id: ClothingHeadCaptainCap
+      - id: ClothingOuterCoatCaptain
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -90,6 +93,7 @@
       - id: BoxEncryptionKeyService
       - id: ClothingBackpackIan
         prob: 0.5
+      - id: ClothingOuterCoatHOP
 
 - type: entity
   id: LockerChiefEngineerFilled

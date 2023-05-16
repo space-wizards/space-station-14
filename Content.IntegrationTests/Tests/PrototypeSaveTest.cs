@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Coordinates;
+using Content.Shared.Sound.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -18,6 +19,7 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -26,7 +28,7 @@ namespace Content.IntegrationTests.Tests;
 ///     modified during init. I.e., when the entity is saved to the map, its data is simply the default prototype data (ignoring transform component).
 /// </summary>
 /// <remarks>
-///     If you are here becaus your test is failing, one easy way of figuring out how to fix the prototype is to just
+///     If you are here because this test is failing on your PR, then one easy way of figuring out how to fix the prototype is to just
 ///     spawn it into a new empty map and seeing what the map yml looks like.
 /// </remarks>
 [TestFixture]
@@ -36,6 +38,8 @@ public sealed class PrototypeSaveTest
     {
         "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
         "constructionghost",
+        // Don't add to this list unless you have a good reason
+        // Or it is just temporary because tests stopped working and now master has too many broken entities.
     };
 
     [Test]
@@ -67,7 +71,7 @@ public sealed class PrototypeSaveTest
 
             grid = mapManager.CreateGrid(mapId);
 
-            var tileDefinition = tileDefinitionManager["UnderPlating"];
+            var tileDefinition = tileDefinitionManager["FloorSteel"]; // Wires n such disable ambiance while under the floor
             var tile = new Tile(tileDefinition.TileId);
             var coordinates = grid.ToCoordinates();
 
@@ -108,16 +112,22 @@ public sealed class PrototypeSaveTest
                 foreach (var prototype in prototypes)
                 {
                     uid = entityMan.SpawnEntity(prototype.ID, testLocation);
-                    server.RunTicks(1);
+                    context.Prototype = prototype;
 
                     // get default prototype data
                     Dictionary<string, MappingDataNode> protoData = new();
                     try
                     {
+                        context.WritingReadingPrototypes = true;
+
                         foreach (var (compType, comp) in prototype.Components)
                         {
-                            protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, context: context));
+                            context.WritingComponent = compType;
+                            protoData.Add(compType, seriMan.WriteValueAs<MappingDataNode>(comp.Component.GetType(), comp.Component, alwaysWrite: true, context: context));
                         }
+
+                        context.WritingComponent = string.Empty;
+                        context.WritingReadingPrototypes = false;
                     }
                     catch (Exception e)
                     {
@@ -139,7 +149,8 @@ public sealed class PrototypeSaveTest
                         MappingDataNode compMapping;
                         try
                         {
-                            compMapping = seriMan.WriteValueAs<MappingDataNode>(compType, component, context: context);
+                            context.WritingComponent = compName;
+                            compMapping = seriMan.WriteValueAs<MappingDataNode>(compType, component, alwaysWrite: true, context: context);
                         }
                         catch (Exception e)
                         {
@@ -181,6 +192,10 @@ public sealed class PrototypeSaveTest
         ITypeSerializer<EntityUid, ValueDataNode>
     {
         public SerializationManager.SerializerProvider SerializerProvider { get; }
+        public bool WritingReadingPrototypes { get; set; }
+
+        public string WritingComponent = string.Empty;
+        public EntityPrototype Prototype = default!;
 
         public TestEntityUidContext()
         {
@@ -198,15 +213,22 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            // EntityUids should be nullable and have no initial value.
-            throw new InvalidOperationException("Serializing prototypes should not attempt to write entity Uids");
+            if (WritingComponent != "Transform" && !Prototype.NoSpawn)
+            {
+                // Maybe this will be necessary in the future, but at the moment it just indicates that there is some
+                // issue, like a non-nullable entityUid data-field. If a component MUST have an entity uid to work with,
+                // then the prototype very likely has to be a no-spawn entity that is never meant to be directly spawned.
+                Assert.Fail($"Uninitialized entities should not be saving entity Uids. Component: {WritingComponent}. Prototype: {Prototype.ID}");
+            }
+
+            return new ValueDataNode(value.ToString());
         }
 
         EntityUid ITypeReader<EntityUid, ValueDataNode>.Read(ISerializationManager serializationManager,
             ValueDataNode node,
             IDependencyCollection dependencies,
             SerializationHookContext hookCtx,
-            ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider = null)
+            ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider)
         {
             return EntityUid.Invalid;
         }

@@ -152,18 +152,15 @@ public sealed partial class BlockingSystem : EntitySystem
                 return false;
             }
 
-            //Don't allow someone to block if someone else is on the same tile or if they're inside of a doorway
+            //Don't allow someone to block if someone else is on the same tile
             var playerTileRef = xform.Coordinates.GetTileRef();
             if (playerTileRef != null)
             {
                 var intersecting = _lookup.GetEntitiesIntersecting(playerTileRef.Value);
                 var mobQuery = GetEntityQuery<MobStateComponent>();
-                var doorQuery = GetEntityQuery<DoorComponent>();
-                var xformQuery = GetEntityQuery<TransformComponent>();
-
                 foreach (var uid in intersecting)
                 {
-                    if (uid != user && mobQuery.HasComponent(uid) || xformQuery.GetComponent(uid).Anchored && doorQuery.HasComponent(uid))
+                    if (uid != user && mobQuery.HasComponent(uid))
                     {
                         TooCloseError(user);
                         return false;

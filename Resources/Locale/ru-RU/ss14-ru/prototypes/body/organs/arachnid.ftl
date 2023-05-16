@@ -1,0 +1,14 @@
+ent-BaseArachnidOrgan = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-OrganArachnidStomach = желудок
+    .desc = Мерзость. Не перевариваю его.
+ent-OrganArachnidHeart = сердце
+    .desc = Мне жаль того бессердечного ублюдка, который его потерял.
+ent-OrganArachnidLiver = печень
+    .desc = Рекомендуется подавать с бобами, под кьянти.
+ent-OrganArachnidKidneys = почки
+    .desc = Выводят токсины из кровеносной системы.
+ent-OrganArachnidEyes = глаза
+    .desc = Я тебя вижу!
+ent-OrganArachnidTongue = язык
+    .desc = Мясистая мышца, используемая в основном для обмана.

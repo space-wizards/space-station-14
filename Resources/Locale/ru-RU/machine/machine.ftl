@@ -6,6 +6,9 @@ machine-upgrade-decreased-by-percentage = Параметр [color=yellow]{ $upgr
 machine-upgrade-increased-by-amount = Параметр [color=yellow]{ $upgraded }[/color] увеличен на { $difference }.
 machine-upgrade-decreased-by-amount = Параметр [color=yellow]{ $upgraded }[/color] уменьшен на { $difference }.
 machine-upgrade-not-upgraded = Параметр [color=yellow]{ $upgraded }[/color] не улучшался.
+machine-part-name-capacitor = Конденсатор
+machine-part-name-manipulator = Манипулятор
+machine-part-name-matter-bin = Ёмкость материи
 upgrade-power-draw = потребление энергии
 upgrade-max-charge = максимальный запас энергии
 upgrade-power-supply = производство энергии

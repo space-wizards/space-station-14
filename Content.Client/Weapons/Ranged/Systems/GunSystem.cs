@@ -158,7 +158,7 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         // Define target coordinates relative to gun entity, so that network latency on moving grids doesn't fuck up the target location.
-        var coordinates = EntityCoordinates.FromMap(entity, mousePos, Transform, EntityManager);
+        var coordinates = EntityCoordinates.FromMap(entity, mousePos, TransformSystem, EntityManager);
 
         Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
@@ -175,13 +175,13 @@ public sealed partial class GunSystem : SharedGunSystem
         // Rather than splitting client / server for every ammo provider it's easier
         // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
         // This also means any ammo specific stuff can be grabbed as necessary.
-        var direction = fromCoordinates.ToMapPos(EntityManager, Transform) - toCoordinates.ToMapPos(EntityManager, Transform);
+        var direction = fromCoordinates.ToMapPos(EntityManager, TransformSystem) - toCoordinates.ToMapPos(EntityManager, TransformSystem);
 
         foreach (var (ent, shootable) in ammo)
         {
             if (throwItems)
             {
-                Recoil(user, direction);
+                Recoil(user, direction, gun.CameraRecoilScalar);
                 if (ent!.Value.IsClientSide())
                     Del(ent.Value);
                 else
@@ -197,7 +197,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         SetCartridgeSpent(ent!.Value, cartridge, true);
                         MuzzleFlash(gunUid, cartridge, user);
                         Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
-                        Recoil(user, direction);
+                        Recoil(user, direction, gun.CameraRecoilScalar);
                         // TODO: Can't predict entity deletions.
                         //if (cartridge.DeleteOnSpawn)
                         //    Del(cartridge.Owner);
@@ -214,7 +214,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 case AmmoComponent newAmmo:
                     MuzzleFlash(gunUid, newAmmo, user);
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
-                    Recoil(user, direction);
+                    Recoil(user, direction, gun.CameraRecoilScalar);
                     if (ent!.Value.IsClientSide())
                         Del(ent.Value);
                     else
@@ -222,18 +222,18 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case HitscanPrototype:
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
-                    Recoil(user, direction);
+                    Recoil(user, direction, gun.CameraRecoilScalar);
                     break;
             }
         }
     }
 
-    private void Recoil(EntityUid? user, Vector2 recoil)
+    private void Recoil(EntityUid? user, Vector2 recoil, float recoilScalar)
     {
-        if (!Timing.IsFirstTimePredicted || user == null || recoil == Vector2.Zero)
+        if (!Timing.IsFirstTimePredicted || user == null || recoil == Vector2.Zero || recoilScalar == 0)
             return;
 
-        _recoil.KickCamera(user.Value, recoil.Normalized * 0.5f);
+        _recoil.KickCamera(user.Value, recoil.Normalized * 0.5f * recoilScalar);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

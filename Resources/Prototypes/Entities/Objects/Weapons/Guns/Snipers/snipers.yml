@@ -52,7 +52,7 @@
   name: Hristov
   parent: BaseWeaponSniper
   id: WeaponSniperHristov
-  description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-material ammo.
+  description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
@@ -61,15 +61,15 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-      - CartridgeAntiMaterial
+      - CartridgeAntiMateriel
     capacity: 5
-    proto: CartridgeAntiMaterial
+    proto: CartridgeAntiMateriel
 
 - type: entity
   name: musket
   parent: BaseWeaponSniper
   id: Musket
-  description: This should've been in a museum long before you were born. Uses .60 anti-material ammo.
+  description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
@@ -82,15 +82,15 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-      - CartridgeAntiMaterial
+      - CartridgeAntiMateriel
     capacity: 1
-    proto: CartridgeAntiMaterial
+    proto: CartridgeAntiMateriel
 
 - type: entity
   name: flintlock pistol
   parent: BaseWeaponSniper
   id: WeaponPistolFlintlock
-  description: A pirate's companion. Yarrr! Uses .60 anti-material ammo.
+  description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
@@ -99,6 +99,6 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeAntiMaterial
+        - CartridgeAntiMateriel
     capacity: 1
-    proto: CartridgeAntiMaterial
+    proto: CartridgeAntiMateriel
