@@ -164,7 +164,7 @@
   name: research-technology-advanced-tools
   icon:
     sprite: Objects/Tools/welder_experimental.rsi
-    state: drill_bolt
+    state: icon
   discipline: Industrial
   tier: 2
   cost: 10000
