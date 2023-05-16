@@ -78,7 +78,6 @@ namespace Content.Client.Actions
                 }
 
                 act.CopyFrom(serverAct);
-                serverActions.Remove(serverAct);
             }
 
             var added = new List<ActionType>();
@@ -86,6 +85,9 @@ namespace Content.Client.Actions
             // Anything that remains is a new action
             foreach (var newAct in serverActions)
             {
+                if (component.Actions.Contains(newAct))
+                    continue;
+
                 // We create a new action, not just sorting a reference to the state's action.
                 var action = (ActionType) newAct.Clone();
                 component.Actions.Add(action);
