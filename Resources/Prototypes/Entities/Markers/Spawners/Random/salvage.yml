@@ -189,3 +189,15 @@
   - type: ConditionalSpawner
     prototypes:
     - MobSpiderSpaceSalvage
+
+- type: entity
+  name: Salvage Space Cobra Spawner
+  id: SpawnMobCobraSalvage
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCobraSpaceSalvage
