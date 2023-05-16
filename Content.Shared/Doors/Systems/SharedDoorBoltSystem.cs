@@ -8,7 +8,7 @@ public abstract class SharedDoorBoltSystem : EntitySystem
 
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly SharedPopupSystem Popup = default!;
     public override void Initialize()
     {
         base.Initialize();

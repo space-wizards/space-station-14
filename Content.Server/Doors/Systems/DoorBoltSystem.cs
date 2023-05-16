@@ -76,4 +76,15 @@ public sealed class DoorBoltSystem : SharedDoorBoltSystem
         Audio.PlayPvs(newBolts ? component.BoltDownSound : component.BoltUpSound, uid);
         UpdateBoltLightStatus(uid, component);
     }
+
+    public bool IsBolted(EntityUid uid, DoorBoltComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+        {
+            return false;
+        }
+
+        return component.BoltsDown;
+    }
 }
+

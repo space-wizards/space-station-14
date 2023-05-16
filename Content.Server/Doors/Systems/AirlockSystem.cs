@@ -18,6 +18,7 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly WiresSystem _wiresSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DoorBoltSystem _bolts = default!;
 
         public override void Initialize()
         {
@@ -184,10 +185,7 @@ namespace Content.Server.Doors.Systems
 
         public bool CanChangeState(EntityUid uid, AirlockComponent component)
         {
-            bool bolts_block =
-                (EntityManager.TryGetComponent<DoorBoltComponent>(uid, out var bolts) && bolts.BoltsDown);
-
-            return this.IsPowered(uid, EntityManager) && !bolts_block;
+            return this.IsPowered(uid, EntityManager) && !_bolts.IsBolted(uid);
         }
     }
 }

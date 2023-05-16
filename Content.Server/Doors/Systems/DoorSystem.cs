@@ -260,10 +260,7 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         if(TryComp<AirlockComponent>(uid, out var airlockComponent))
         {
-            bool boltsBlock =
-                (EntityManager.TryGetComponent<DoorBoltComponent>(uid, out var bolts) && bolts.BoltsDown);
-
-            if (boltsBlock || !this.IsPowered(uid, EntityManager))
+            if (_bolts.IsBolted(uid) || !this.IsPowered(uid, EntityManager))
                 return;
 
             if (door.State == DoorState.Closed)
