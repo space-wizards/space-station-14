@@ -82,6 +82,12 @@ namespace Content.Server.Lathe
                 return;
             }
 
+            if (!lathe.CanEject)
+            {
+                _sawmill.Error($"Eject message was fired on lathe that couldn't eject resources.");
+                return;
+            }
+
             if (message.ExtractedAmount is not null)
             {
                 var entProto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
