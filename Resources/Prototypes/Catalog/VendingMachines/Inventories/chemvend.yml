@@ -1,0 +1,23 @@
+- type: vendingMachineInventory
+  id: ChemVendInventory
+  startingInventory:
+    JugAluminium: 2
+    JugCarbon: 2
+    JugChlorine: 2
+    JugCopper: 2
+    JugEthanol: 2
+    JugFluorine: 2
+    JugHydrogen: 2
+    JugIodine: 2
+    JugIron: 2
+    JugLithium: 2
+    JugMercury: 2
+    JugNitrogen: 2
+    JugOxygen: 2
+    JugPhosphorus: 2
+    JugPotassium: 2
+    JugRadium: 2
+    JugSilicon: 2
+    JugSodium: 2
+    JugSugar: 2
+    JugSulfur: 2

@@ -112,10 +112,6 @@
     interactFailureString: petting-failure-generic
   - type: ReplacementAccent
     accent: slimes
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-slimes-name
-    description: ghost-role-information-slimes-description
   - type: GhostTakeoverAvailable
 
 - type: entity
@@ -131,6 +127,7 @@
         Base: blue_adult_slime_dead
   - type: GhostRole
     makeSentient: true
+    name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
 
 - type: entity
@@ -148,6 +145,10 @@
           Base: blue_adult_slime
         Dead:
           Base: blue_adult_slime_dead
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-slimes-name
+      description: ghost-role-information-angry-slimes-description
 
 - type: entity
   name: green slime
@@ -173,6 +174,7 @@
           Poison: 4
     - type: GhostRole
       makeSentient: true
+      name: ghost-role-information-slimes-name
       description: ghost-role-information-slimes-description
 
 - type: entity
@@ -201,6 +203,10 @@
           Structural: 4
           Caustic: 1
           Poison: 4
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-slimes-name
+      description: ghost-role-information-angry-slimes-description
 
 - type: entity
   name: yellow slime
@@ -226,6 +232,7 @@
           Cellular: 3
     - type: GhostRole
       makeSentient: true
+      name: ghost-role-information-slimes-name
       description: ghost-role-information-slimes-description
 
 - type: entity
@@ -254,3 +261,7 @@
           Structural: 4
           Caustic: 1
           Cellular: 3
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-slimes-name
+      description: ghost-role-information-angry-slimes-description

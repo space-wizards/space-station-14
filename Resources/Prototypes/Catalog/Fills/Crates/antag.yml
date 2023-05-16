@@ -6,7 +6,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterHardsuitPirateCap
       - id: ClothingNeckCloakPirateCap
       - id: EnergyCutlass
       - id: MicroBombImplanter

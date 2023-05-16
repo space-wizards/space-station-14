@@ -158,7 +158,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("admin-verbs-teleport-here"),
                     Category = VerbCategory.Admin,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
-                    Act = () => _console.ExecuteCommand(player, $"tpto {args.Target} {args.User}"),
+                    Act = () => _console.ExecuteCommand(player, $"tpto {args.User} {args.Target}"),
                     Impact = LogImpact.Low
                 });
 

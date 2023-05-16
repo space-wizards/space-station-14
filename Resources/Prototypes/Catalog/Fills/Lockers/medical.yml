@@ -72,10 +72,40 @@
       - id: ClothingMaskSterile
 
 - type: entity
+  parent: LockerWallMedical
   id: LockerWallMedicalDoctorFilled
   name: medical doctor's wall locker
   suffix: Filled
-  parent: ["LockerWallMedical", "LockerMedicalFilled"]
+  components:
+  - type: StorageFill
+    contents:
+      - id: HandheldHealthAnalyzer
+        prob: 0.6
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingHeadsetMedical
+     # - id: ClothingEyesHudMedical #Removed until working properly
+      - id: ClothingBeltMedical
+      - id: ClothingHeadHatSurgcapGreen
+        prob: 0.1
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapPurple
+        prob: 0.05
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapBlue
+        prob: 0.90
+        orGroup: Surgcaps
+      - id: UniformScrubsColorBlue
+        prob: 0.5
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorGreen
+        prob: 0.1
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorPurple
+        prob: 0.05
+        orGroup: Surgshrubs
+      - id: NitrousOxideTankFilled
+        prob: 0.3
+      - id: ClothingMaskSterile
 
 - type: entity
   id: LockerChemistryFilled
