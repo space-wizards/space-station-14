@@ -146,16 +146,6 @@ public sealed partial class SalvageSystem
             GenerateMissions(comp);
             UpdateConsoles(comp);
         }
-
-        var query = EntityQueryEnumerator<SalvageExpeditionComponent>();
-
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (comp.EndTime < currentTime)
-            {
-                QueueDel(uid);
-            }
-        }
     }
 
     private void FinishExpedition(SalvageExpeditionDataComponent component, SalvageExpeditionComponent expedition, EntityUid? shuttle)

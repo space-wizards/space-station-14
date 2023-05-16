@@ -122,9 +122,6 @@ public sealed partial class SalvageSystem
         // Run the basic mission timers (e.g. announcements, auto-FTL, completion, etc)
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.Completed)
-                continue;
-
             var remaining = comp.EndTime - _timing.CurTime;
 
             if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(30))
@@ -173,6 +170,11 @@ public sealed partial class SalvageSystem
                         break;
                     }
                 }
+            }
+
+            if (remaining < TimeSpan.Zero)
+            {
+                QueueDel(uid);
             }
         }
 
