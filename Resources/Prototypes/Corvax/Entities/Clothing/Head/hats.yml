@@ -74,3 +74,25 @@
       sprite: Corvax/Clothing/Head/Hats/beret_security_medic.rsi
     - type: Clothing
       sprite: Corvax/Clothing/Head/Hats/beret_security_medic.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCaptainHat
+  name: captain's hat
+  description: A special hat made to order for the captain.
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Head/Hats/caphat.rsi
+  - type: Clothing
+    sprite: Corvax/Clothing/Head/Hats/caphat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCaptainCap
+  name: captain's cap
+  description: Cap emphasizing the bureaucracy and the status of the captain at the station.
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Head/Hats/capcap.rsi
+  - type: Clothing
+    sprite: Corvax/Clothing/Head/Hats/capcap.rsi

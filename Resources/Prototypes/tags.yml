@@ -35,6 +35,18 @@
   id: BorgArm
 
 - type: Tag
+  id: BorgHead
+
+- type: Tag
+  id: BorgLeg
+
+- type: Tag
+  id: BorgLeftLeg
+
+- type: Tag
+  id: BorgRightLeg
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -86,7 +98,7 @@
   id: Cartridge
 
 - type: Tag
-  id: CartridgeAntiMaterial
+  id: CartridgeAntiMateriel
 
 - type: Tag
   id: CartridgeCap
@@ -129,16 +141,16 @@
   id: CigPack
 
 - type: Tag
-  id: HardsuitEVA
-
-- type: Tag
-  id: HelmetEVA
+  id: ClownMask
 
 - type: Tag
   id: ClownRecorder
 
 - type: Tag
   id: ClownRubberStamp
+
+- type: Tag
+  id: ClownShoes
 
 - type: Tag
   id: CluwneHorn
@@ -316,7 +328,13 @@
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
 - type: Tag
+  id: HardsuitEVA
+
+- type: Tag
   id: Head
+
+- type: Tag
+  id: HelmetEVA
 
 - type: Tag
   id: HideContextMenu
@@ -335,6 +353,27 @@
 
 - type: Tag
   id: HolosignProjector
+
+- type: Tag
+  id: HonkerCentralControlModule
+
+- type: Tag
+  id: HonkerPeripheralsControlModule
+
+- type: Tag
+  id: HonkerTargetingControlModule
+
+- type: Tag
+  id: HonkerLArm
+
+- type: Tag
+  id: HonkerLLeg
+
+- type: Tag
+  id: HonkerRLeg
+
+- type: Tag
+  id: HonkerRArm
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -375,6 +414,12 @@
 
 - type: Tag
   id: MicroBomb
+
+- type: Tag
+  id: MimeBelt
+
+- type: Tag
+  id: MimeHappyHonk
 
 # Magazines ordered by slot then caliber
 
@@ -454,10 +499,16 @@
   id: Mop
 
 - type: Tag
+  id: Multitool
+
+- type: Tag
   id: NoSpinOnThrow
 
 - type: Tag
   id: NoBlockAnchoring
+
+- type: Tag
+  id: NozzleBackTank
 
 - type: Tag
   id: NukeOpsUplink
@@ -482,9 +533,6 @@
 
 - type: Tag
   id: Pickaxe
-
-- type: Tag
-  id: Pill
 
 - type: Tag
   id: PillCanister
@@ -629,7 +677,19 @@
   id: Syringe
 
 - type: Tag
+  id: Spellbook
+
+- type: Tag
   id: Taser
+
+- type: Tag
+  id: TimerBrigElectronics
+
+- type: Tag
+  id: TimerScreenElectronics
+
+- type: Tag
+  id: TimerSignalElectronics
 
 - type: Tag
   id: Trash

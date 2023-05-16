@@ -1,0 +1,21 @@
+# Kvass
+- type: entity
+  id: KvassTank
+  parent: StorageTank
+  suffix: Empty
+  components:
+    - type: Sprite
+      sprite: Corvax/Structures/Storage/kvass.rsi
+      state: kvass
+
+- type: entity
+  parent: KvassTank
+  id: KvassTankFull
+  suffix: Full
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Kvass
+              Quantity: 1500

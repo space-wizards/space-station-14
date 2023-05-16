@@ -1,4 +1,4 @@
-ent-MobHuman = Урист МакХэндс
+ent-MobHuman = Урист МакЧеловек
     .desc = { ent-BaseMobHuman.desc }
 ent-MobHumanSyndicateAgent = Агент Синдиката
     .desc = { ent-MobHuman.desc }

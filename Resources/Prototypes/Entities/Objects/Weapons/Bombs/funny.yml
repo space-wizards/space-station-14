@@ -1,6 +1,6 @@
 - type: entity
   name: hot potato
-  description: Once activated, this time bomb can't be dropped - only passed to someone else!
+  description: Once activated, you can't drop this time bomb - hit someone else with it to save yourself! Don't burn your hands!
   parent: BaseItem
   id: HotPotato
   components:
@@ -11,6 +11,11 @@
     - type: Item
       sprite: Objects/Weapons/Bombs/hot_potato.rsi
       size: 5
+    - type: AmbientSound
+      enabled: false
+      range: 8
+      sound:
+        path: /Audio/Effects/lightburn.ogg
     - type: MeleeWeapon
       damage:
         types:
@@ -18,6 +23,8 @@
     - type: OnUseTimerTrigger
       delay: 180
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
+      params:
+        volume: -2
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Default
@@ -27,6 +34,11 @@
       canCreateVacuum: false
     - type: DeleteOnTrigger
     - type: HotPotato
+    - type: DamageOnHolding
+      enabled: false
+      damage:
+        types:
+          Heat: 1
     - type: Appearance
       visuals:
         - type: GenericEnumVisualizer

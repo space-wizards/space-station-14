@@ -14,3 +14,5 @@ ent-BulletInstakillMagic = волшебный свинцовый цилиндр
     .desc = Выглядит знакомо.
 ent-ProjectilePolyboltCluwne = полизаряд клувеня
     .desc = кноХ кноХ!
+ent-ProjectileIcicle = сосулька
+    .desc = Бррррр.

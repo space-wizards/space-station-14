@@ -16,6 +16,7 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -41,13 +42,18 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
     [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-    [Dependency] protected   readonly SharedTransformSystem _transform = default!;
+    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly StaminaSystem _stamina = default!;
 
     protected ISawmill Sawmill = default!;
 
     public const float DamagePitchVariation = 0.05f;
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
+
+    /// <summary>
+    /// Maximum amount of targets allowed for a wide-attack.
+    /// </summary>
+    public const int MaxTargets = 5;
 
     /// <summary>
     /// If an attack is released within this buffer it's assumed to be full damage.
@@ -59,15 +65,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         base.Initialize();
         Sawmill = Logger.GetSawmill("melee");
 
+        SubscribeLocalEvent<MeleeWeaponComponent, EntityUnpausedEvent>(OnMeleeUnpaused);
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MeleeWeaponComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MeleeWeaponComponent, HandDeselectedEvent>(OnMeleeDropped);
         SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnMeleeSelected);
 
+        SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
         SubscribeAllEvent<StartHeavyAttackEvent>(OnStartHeavyAttack);
         SubscribeAllEvent<StopHeavyAttackEvent>(OnStopHeavyAttack);
-        SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<DisarmAttackEvent>(OnDisarmAttack);
         SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
 
@@ -77,9 +84,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, MeleeWeaponComponent component, MapInitEvent args)
     {
-        if (component.NextAttack > TimeSpan.Zero)
+        if (component.NextAttack > Timing.CurTime)
             Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
 #endif
+    }
+
+    private void OnMeleeUnpaused(EntityUid uid, MeleeWeaponComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextAttack += args.PausedTime;
     }
 
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
@@ -373,7 +385,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 throw new NotImplementedException();
         }
 
-        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager, _transform), weapon.Range, animation);
+        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager, TransformSystem), weapon.Range, animation);
         weapon.Attacking = true;
         Dirty(weapon);
     }
@@ -507,29 +519,23 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
 
-    protected virtual void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
+    private void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
         // TODO: This is copy-paste as fuck with DoPreciseAttack
         if (!TryComp<TransformComponent>(user, out var userXform))
-        {
             return;
-        }
 
-        var targetMap = ev.Coordinates.ToMap(EntityManager, _transform);
+        var targetMap = ev.Coordinates.ToMap(EntityManager, TransformSystem);
 
         if (targetMap.MapId != userXform.MapID)
-        {
             return;
-        }
 
-        var userPos = _transform.GetWorldPosition(userXform);
+        var userPos = TransformSystem.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
         var distance = Math.Min(component.Range, direction.Length);
 
         var damage = component.Damage * GetModifier(component, false);
-
-        // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
-        var entities = ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user);
+        var entities = ev.Entities;
 
         if (entities.Count == 0)
         {
@@ -538,6 +544,25 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
             Audio.PlayPredicted(component.SwingSound, meleeUid, user);
             return;
+        }
+
+        // Naughty input
+        if (entities.Count > MaxTargets)
+        {
+            entities.RemoveRange(MaxTargets, entities.Count - MaxTargets);
+        }
+
+        // Validate client
+        for (var i = entities.Count - 1; i >= 0; i--)
+        {
+            if (ArcRaySuccessful(entities[i], userPos, direction.ToWorldAngle(), component.Angle, distance,
+                    userXform.MapID, user, session))
+            {
+                continue;
+            }
+
+            // Bad input
+            entities.RemoveAt(i);
         }
 
         var targets = new List<EntityUid>();
@@ -627,7 +652,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
     }
 
-    private HashSet<EntityUid> ArcRayCast(Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId, EntityUid ignore)
+    protected HashSet<EntityUid> ArcRayCast(Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId, EntityUid ignore)
     {
         // TODO: This is pretty sucky.
         var widthRad = arcWidth;
@@ -651,6 +676,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         return resSet;
+    }
+
+    protected virtual bool ArcRaySuccessful(EntityUid targetUid, Vector2 position, Angle angle, Angle arcWidth, float range,
+        MapId mapId, EntityUid ignore, ICommonSession? session)
+    {
+        // Only matters for server.
+        return true;
     }
 
     private void PlayHitSound(EntityUid target, EntityUid? user, string? type, SoundSpecifier? hitSoundOverride, SoundSpecifier? hitSound)
@@ -755,7 +787,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!TryComp<TransformComponent>(user, out var userXform))
             return;
 
-        var invMatrix = _transform.GetInvWorldMatrix(userXform);
+        var invMatrix = TransformSystem.GetInvWorldMatrix(userXform);
         var localPos = invMatrix.Transform(coordinates.Position);
 
         if (localPos.LengthSquared <= 0f)

@@ -18,14 +18,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.1,0.45,0.1"
-      density: 550
-      mask:
-      - MachineMask 
-      layer:
-      - MidImpassable, LowImpassable, BulletImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.1,0.45,0.1"
+        density: 550
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable, LowImpassable, BulletImpassable
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: normal
@@ -114,14 +115,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.25
-      density: 375
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 375
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_assembly
@@ -158,13 +160,14 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      density: 100
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_tracker

@@ -72,6 +72,7 @@
         map: [ "light" ]
   - type: Item
     sprite: Objects/Misc/Lights/lamp.rsi
+  - type: Rotatable
 
 - type: entity
   name: banana lamp
@@ -86,6 +87,7 @@
         shader: unshaded
         visible: false
         map: [ "light" ]
+  - type: Rotatable
 
 - type: entity
   name: desk lamp
@@ -103,6 +105,7 @@
         map: [ "light" ]
   - type: Item
     sprite: Objects/Misc/Lights/lampgreen.rsi
+  - type: Rotatable
 
 - type: entity
   name: floodlight
@@ -123,14 +126,15 @@
     canCollide: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2, -0.5, 0.2, 0.5"
-      density: 50
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2, -0.5, 0.2, 0.5"
+        density: 50
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: PointLight
     enabled: false
     radius: 8
@@ -194,11 +198,12 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2, -0.5, 0.2, 0.5"
-      density: 50
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2, -0.5, 0.2, 0.5"
+        density: 50
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer

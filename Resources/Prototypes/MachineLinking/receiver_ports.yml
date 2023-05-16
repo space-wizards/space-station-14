@@ -72,3 +72,28 @@
   id: ArtifactAnalyzerReceiver
   name: signal-port-name-artifact-analyzer-receiver
   description: signal-port-description-artifact-analyzer-receiver
+
+- type: receiverPort
+  id: DoorBolt
+  name: "Bolt"
+  description: "Bolt door when HIGH."
+
+- type: receiverPort
+  id: A1
+  name: "Input A1"
+  description: "Input A1"
+
+- type: receiverPort
+  id: B1
+  name: "Input B1"
+  description: "Input B1"
+
+- type: receiverPort
+  id: A2
+  name: "Input A2"
+  description: "Input A2"
+
+- type: receiverPort
+  id: B2
+  name: "Input B2"
+  description: "Input B2"

@@ -27,7 +27,6 @@
     canChangeTransferAmount: true
   - type: ItemCooldown
   - type: Spray
-    transferAmount: 10
     sprayVelocity: 2
     spraySound:
       path: /Audio/Effects/spray2.ogg
@@ -51,9 +50,7 @@
         maxVol: 250
   - type: Spray
     sprayedPrototype: BigVapor
-    transferAmount: 10
     sprayVelocity: 5
-    sprayAliveTime: 1.5
     spraySound:
       path: /Audio/Effects/spray2.ogg
 
@@ -117,13 +114,14 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.25,0.25,0.25"
-      hard: false
-      mask:
-      - FullTileMask
-      - Opaque
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        hard: false
+        mask:
+        - FullTileMask
+        - Opaque
   - type: Appearance
   - type: VaporVisuals
 
@@ -142,10 +140,11 @@
       map: ["enum.VaporVisualLayers.Base"]
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.6,-0.6,0.6,0.6"
-      hard: false
-      mask:
-      - FullTileMask
-      - Opaque
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.6,-0.6,0.6,0.6"
+        hard: false
+        mask:
+        - FullTileMask
+        - Opaque

@@ -97,6 +97,8 @@ namespace Content.Client.Entry
             _componentFactory.RegisterClass<SharedAMEControllerComponent>();
             // Do not add to the above, they are legacy
 
+            _prototypeManager.RegisterIgnore("utilityQuery");
+            _prototypeManager.RegisterIgnore("utilityCurvePreset");
             _prototypeManager.RegisterIgnore("accent");
             _prototypeManager.RegisterIgnore("material");
             _prototypeManager.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
@@ -132,7 +134,6 @@ namespace Content.Client.Entry
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
-            _stylesheetManager.Initialize();
             _screenshotHook.Initialize();
             _changelogManager.Initialize();
             _rulesManager.Initialize();
@@ -152,6 +153,9 @@ namespace Content.Client.Entry
         public override void PostInit()
         {
             base.PostInit();
+
+            _stylesheetManager.Initialize();
+
             // Setup key contexts
             ContentContexts.SetupContexts(_inputManager.Contexts);
 

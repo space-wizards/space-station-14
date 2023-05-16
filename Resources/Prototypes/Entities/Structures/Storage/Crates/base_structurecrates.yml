@@ -25,14 +25,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.29"
-      density: 190
-      mask:
-      - SmallMobMask #this is so they can go under plastic flaps
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 190
+        mask:
+        - SmallMobMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
   - type: EntityStorage
     capacity: 500
   - type: PlaceableSurface
@@ -65,6 +66,8 @@
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
   - type: ItemSlots
+  - type: StaticPrice
+    price: 50
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel

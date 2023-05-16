@@ -8,9 +8,11 @@ food-system-remove-mask = Сначала вам нужно снять { $entity 
 ## System
 
 food-system-you-cannot-eat-any-more = В вас больше не лезет!
-food-system-you-cannot-eat-any-more-other = В него больше не лезет!
-food-system-try-use-food-is-empty = { $entity } пустая!
-food-system-wrong-utensil = вы не можете есть { $food } с помощью { $utensil }.
+food-system-you-cannot-eat-any-more-other = В них больше не лезет!
+food-system-try-use-food-is-empty = В { $entity } пусто!
+food-system-wrong-utensil = Вы не можете есть { $food } с помощью { $utensil }.
+food-system-cant-digest = Вы не можете переварить { $entity }!
+food-system-cant-digest-other = Они не могут переварить { $entity }!
 food-system-verb-eat = Съесть
 
 ## Force feeding

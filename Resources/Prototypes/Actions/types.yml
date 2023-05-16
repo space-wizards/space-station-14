@@ -59,6 +59,17 @@
   event: !type:UseFreedomImplantEvent
 
 - type: instantAction
+  id: OpenUplinkImplant
+  name: open-uplink-implant-action-name
+  description: open-uplink-implant-action-description
+  itemIconStyle: BigAction
+  priority: -20
+  icon:
+    sprite: Objects/Devices/communication.rsi
+    state: old-radio
+  event: !type:OpenUplinkImplantEvent
+
+- type: instantAction
   id: ToggleSuitHelmet
   name: action-name-hardsuit
   description: action-description-hardsuit

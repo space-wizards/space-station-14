@@ -99,7 +99,16 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
-    state: alarm_b1
+    layers:
+    - state: alarm_b1
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: alarm_b1 }
+          electronics: { state: alarm_b1 }
   - type: Construction
     graph: AirAlarm
     node: assembly

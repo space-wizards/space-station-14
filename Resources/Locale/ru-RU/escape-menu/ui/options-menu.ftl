@@ -28,6 +28,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 ## Graphics menu
 
 ui-options-show-held-item = Показать удерживаемый элемент рядом с курсором?
+ui-options-show-combat-mode-indicators = Показать индикатор боевого режима рядом с курсором?
 ui-options-vsync = Вертикальная синхронизация
 ui-options-fullscreen = Полный экран
 ui-options-lighting-label = Качество освещения:
@@ -92,7 +93,7 @@ ui-options-function-zoom-in = Приблизить
 ui-options-function-zoom-out = Отдалить
 ui-options-function-reset-zoom = Сбросить
 ui-options-function-use = Использовать
-ui-options-function-use-secondary = Use secondary
+ui-options-function-use-secondary = Использовать вторично
 ui-options-function-alt-use = Альтернативное использование
 ui-options-function-wide-attack = Размашистая атака
 ui-options-function-activate-item-in-hand = Использовать предмет в руке
@@ -111,8 +112,10 @@ ui-options-function-release-pulled-object = Перестать тянуть об
 ui-options-function-point = Указать на что-либо
 ui-options-function-focus-chat-input-window = Писать в чат
 ui-options-function-focus-local-chat-window = Писать в чат (IC)
+ui-options-function-focus-emote = Писать в чат (Emote)
 ui-options-function-focus-whisper-chat-window = Писать в чат (Шёпот)
 ui-options-function-focus-radio-window = Писать в чат (Радио)
+ui-options-function-focus-looc-window = Писать в чат (LOOC)
 ui-options-function-focus-ooc-window = Писать в чат (OOC)
 ui-options-function-focus-admin-chat-window = Писать в чат (Админ)
 ui-options-function-focus-dead-chat-window = Писать в чат (Мертвые)

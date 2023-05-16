@@ -40,3 +40,5 @@ reagent-name-sodium = натрий
 reagent-desc-sodium = Серебристо-белый щелочной металл. Высоко реактивный в чистом виде.
 reagent-name-uranium = уран
 reagent-desc-uranium = Серый металлический химический элемент из серии актинидов, слабо радиоактивный.
+reagent-name-bananium = бананиум
+reagent-desc-bananium = Жёлтое радиоактивное органическое твёрдое вещество.

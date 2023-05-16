@@ -12,7 +12,7 @@ public sealed partial class TTSSystem
         if (!_isEnabled) return;
         args.Message = args.Message.Replace("+", "");
     }
-    
+
     private string Sanitize(string text)
     {
         text = text.Trim();
@@ -45,7 +45,7 @@ public sealed partial class TTSSystem
             return word.Value;
         return NumberConverter.NumberToText(number);
     }
-    
+
     private static readonly IReadOnlyDictionary<string, string> WordReplacement =
         new Dictionary<string, string>()
         {
@@ -95,6 +95,7 @@ public sealed partial class TTSSystem
             {"авд", "А Вэ Дэ"},
             {"пнв", "Пэ Эн Вэ"},
             {"ссд", "Эс Эс Дэ"},
+            {"крс", "Ка Эр Эс"},
             {"кпб", "Кэ Пэ Бэ"},
             {"сссп", "Эс Эс Эс Пэ"},
             {"крб", "Ка Эр Бэ"},
@@ -111,7 +112,6 @@ public sealed partial class TTSSystem
             {"gps", "Джи Пи Эс"},
             {"ннксс", "Эн Эн Ка Эс Эс"},
             {"ss", "Эс Эс"},
-            {"сс", "Эс Эс"},
             {"тесла", "тэсла"},
             {"трейзен", "трэйзэн"},
             {"нанотрейзен", "нанотрэйзэн"},
@@ -268,7 +268,7 @@ public static class NumberConverter
 			+ " "
 			+ GetDeclension((int)(value % 10), valueDeclensionFor1, valueDeclensionFor2, valueDeclensionFor5);
 	}
-	
+
 	private static string GetDeclension(int val, string one, string two, string five)
 	{
 		var t = (val % 100 > 20) ? val % 10 : val % 20;

@@ -16,3 +16,5 @@ ent-CartridgeAnomalousParticleEpsilon = cartridge (epsilon particle)
     .desc = { ent-BaseAnomalousCartridge.desc }
 ent-CartridgeAnomalousParticleZeta = cartridge (zeta particle)
     .desc = { ent-BaseAnomalousCartridge.desc }
+ent-CartridgeAnomalousParticleOmega = cartridge (omega particle)
+    .desc = An experimental and often dangerous particle.
