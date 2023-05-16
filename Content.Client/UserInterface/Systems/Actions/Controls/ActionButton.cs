@@ -158,6 +158,7 @@ public sealed class ActionButton : Control
 
     protected override void OnThemeUpdated()
     {
+        base.OnThemeUpdated();
         Button.Texture = Theme.ResolveTexture("SlotBackground");
         Label.FontColorOverride = Theme.ResolveColorOrSpecified("whiteText");
     }

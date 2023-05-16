@@ -9,7 +9,6 @@
     - type: Lock
     - type: Sprite
       drawdepth: Objects
-      netsync: false
       sprite: Structures/Storage/Crates/artifact.rsi
       layers:
         - state: artifact_container

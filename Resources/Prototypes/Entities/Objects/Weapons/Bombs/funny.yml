@@ -8,6 +8,9 @@
       sprite: Objects/Weapons/Bombs/hot_potato.rsi
       state: icon
       netsync: false
+      layers:
+      - state: icon
+        map: ["base"]
     - type: Item
       sprite: Objects/Weapons/Bombs/hot_potato.rsi
       size: 5
@@ -40,12 +43,12 @@
         types:
           Heat: 1
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: GenericEnumVisualizer
-          key: enum.Trigger.TriggerVisuals.VisualState
-          states:
-            enum.Trigger.TriggerVisualState.Primed: activated
-            enum.Trigger.TriggerVisualState.Unprimed: complete
+        enum.Trigger.TriggerVisuals.VisualState:
+          base:
+            Primed: { state: activated }
+            Unprimed: { state: complete }
 
 - type: entity
   id: HotPotatoEffect
