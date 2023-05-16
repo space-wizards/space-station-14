@@ -124,13 +124,5 @@ namespace Content.Shared.Zombies
                 { "Shock", -0.2 },
             }
         };
-
-        [DataField("forceDeathDamage")] public DamageSpecifier ForceDeathDamage = new()
-        {
-            DamageDict = new ()
-            {
-                { "Blunt", 100.0 },
-            }
-        };
     }
 }
