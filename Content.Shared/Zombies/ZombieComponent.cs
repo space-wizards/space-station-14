@@ -27,16 +27,17 @@ namespace Content.Shared.Zombies
         public float MaxZombieInfectionChance = 0.40f;
 
         /// <summary>
-        /// Chance that this zombie will survive getting killed
+        /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ZombieReviveChance = 0.30f;
+        public float ZombiePermadeathChance = 0.70f;
 
         /// <summary>
-        /// Heal multiplier for one big heal on coming back to life.
+        /// Chance that this zombie will be healed (rolled each second when in crit or dead)
+        ///   3% means you have a 60% chance after 30 secs and a 84% chance after 60.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ZombieRevivalHealingMult = 200.0f;
+        public float ZombieReviveChance = 0.03f;
 
         /// <summary>
         /// Has this zombie stopped healing now that it's died for real?
@@ -110,12 +111,6 @@ namespace Content.Shared.Zombies
         // Heal on tick
         [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
         public TimeSpan NextTick;
-
-        /// <summary>
-        /// Number of seconds that this zombie has been in crit, which scales healing over time. Updated by ZombieSystem
-        /// </summary>
-        [DataField("secondsCrit")]
-        public int SecondsCrit;
 
         [DataField("damage")] public DamageSpecifier Damage = new()
         {
