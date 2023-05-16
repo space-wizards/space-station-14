@@ -5,6 +5,11 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingOuterHardsuitSpatio
+      - id: YellowOxygenTankFilled
+      - id: NitrogenTankFilled
+      - id: ClothingShoesBootsMag
+      - id: ClothingMaskGasExplorer
 # Currently do not function as 'true' mesons, so they're useless for salvagers.
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled
