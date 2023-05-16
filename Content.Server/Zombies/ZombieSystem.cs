@@ -15,6 +15,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -38,6 +39,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -109,6 +111,10 @@ namespace Content.Server.Zombies
                     comp.SecondsCrit += 1;
                 }
 
+                if (comp.SecondsCrit > 5 && comp.SecondsCrit % 15 == 0)
+                {
+                    _popup.PopupEntity(Loc.GetString("zombie-healing"), uid, uid);
+                }
                 // Healing increases over 50 seconds to a maximum of 10x rate. They will be half healed by then at least.
                 //   At that rate most zombies will revive from the remaining 50 (of 100) damage after a further 25sec
                 float healMultiple = 1.0f + Math.Min(comp.SecondsCrit * 0.2f, 20.0f);

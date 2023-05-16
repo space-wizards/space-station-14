@@ -36,7 +36,7 @@ namespace Content.Shared.Zombies
         /// Heal multiplier for one big heal on coming back to life.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ZombieRevivalHealingMult = 80.0f;
+        public float ZombieRevivalHealingMult = 200.0f;
 
         /// <summary>
         /// Has this zombie stopped healing now that it's died for real?
@@ -121,9 +121,9 @@ namespace Content.Shared.Zombies
         {
             DamageDict = new ()
             {
-                { "Blunt", -0.3 },
-                { "Slash", -0.1 },
-                { "Piercing", -0.1 },
+                { "Blunt", -0.4 },
+                { "Slash", -0.2 },
+                { "Piercing", -0.2 },
                 { "Heat", -0.2 },
                 { "Cold", -0.2 },
                 { "Shock", -0.2 },
