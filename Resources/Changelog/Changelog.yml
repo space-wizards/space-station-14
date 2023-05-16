@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix muzzle flash exceptions., type: Fix}
-  id: 3283
-  time: '2023-03-29T08:50:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix vote stacking., type: Fix}
   id: 3284
   time: '2023-03-29T09:18:56.0000000+00:00'
@@ -2899,3 +2894,10 @@ Entries:
   - {message: Fix vomit causing duplicate puddles., type: Fix}
   id: 3782
   time: '2023-05-16T03:26:12.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: '"Dead" zombies have a chance to spring back to life at any moment,
+      they also passively heal most damage types slowly while alive. If you crit or
+      kill them you have a chance to perma-kill.', type: Tweak}
+  id: 3783
+  time: '2023-05-16T03:58:36.0000000+00:00'
