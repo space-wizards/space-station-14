@@ -14,4 +14,7 @@ public sealed class EmpArtifactComponent : Component
 
     [DataField("energyConsumption"), ViewVariables(VVAccess.ReadWrite)]
     public float EnergyConsumption = 1000000;
+
+    [DataField("disableDuration"), ViewVariables(VVAccess.ReadWrite)]
+    public float DisableDuration = 60f;
 }

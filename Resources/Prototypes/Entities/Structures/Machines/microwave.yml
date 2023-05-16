@@ -30,14 +30,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.3,-0.16,0.3,0.16"
-      density: 190
-      mask:
-      - TabletopMachineMask
-      layer:
-      - TabletopMachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.16"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/microwave.rsi
@@ -59,9 +60,6 @@
         acts: ["Breakage"]
   - type: ApcPowerReceiver
     powerLoad: 400
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
   - type: Machine
     board: MicrowaveMachineCircuitboard
   - type: ContainerContainer

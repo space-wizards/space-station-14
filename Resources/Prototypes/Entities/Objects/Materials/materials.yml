@@ -32,7 +32,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Cardboard: 100
   - type: Stack
     stackType: Cardboard
@@ -62,6 +63,11 @@
   name: cloth
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - RawMaterial
+    - DroneUsable
+    - Gauze
   - type: Healing
     damageContainer: Biological
     damage:
@@ -76,7 +82,8 @@
   - type: Stack
     stackType: Cloth
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Cloth: 100
   - type: Extractable
     juiceSolution:
@@ -112,7 +119,8 @@
   - type: Stack
     stackType: Durathread
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Durathread: 100
   - type: Sprite
     state: durathread_3
@@ -144,7 +152,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Wood: 100
   - type: Stack
     stackType: WoodPlank
@@ -175,7 +184,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Biomass: 1
   - type: Stack
     stackType: Biomass
@@ -269,5 +279,62 @@
   components:
   - type: Sprite
     state: cotton
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBananium
+  name: bananium
+  suffix: Full
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Bananium: 150
+  - type: Sprite
+    state: bananium_1
+  - type: Stack
+    stackType: Bananium
+    count: 10
+  - type: RadiationSource
+    intensity: 0.3
+  - type: FlavorProfile
+    flavors:
+      - banana
+  - type: Food
+    trash: TrashBananiumPeel
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Honk
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBanana
+        Quantity: 5
+      - ReagentId: Honk
+        Quantity: 5
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - bananium
+          - bananium_1
+
+- type: entity
+  parent: MaterialBananium
+  id: MaterialBananium1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: bananium
   - type: Stack
     count: 1

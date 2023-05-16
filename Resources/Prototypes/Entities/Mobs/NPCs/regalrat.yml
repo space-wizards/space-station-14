@@ -29,14 +29,15 @@
     bodyType: KinematicController
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.3
-      density: 230
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 230
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -84,9 +85,9 @@
         Base: dead
   - type: GhostRole
     makeSentient: true
-    name: Rat King
-    description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
-    rules: You are an antagonist, scavenge, attack, and grow your hoard!
+    name: ghost-role-information-rat-king-name
+    description: ghost-role-information-rat-king-description
+    rules: ghost-role-information-rat-king-rules
   - type: GhostTakeoverAvailable
   - type: Tag
     tags:
@@ -116,17 +117,6 @@
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
-  - type: DiseaseCarrier
-    carrierDiseases:
-    - VentCough
-    - AMIV
-    - SpaceCold
-    - SpaceFlu
-    - BirdFlew
-    - VanAusdallsRobovirus
-    - BleedersBite
-    - Plague
-    - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
   - type: RandomMetadata
@@ -164,14 +154,15 @@
         Blunt: 66 #oof ouch owie my bones
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 400
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 400
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7
@@ -208,14 +199,15 @@
     bodyType: KinematicController
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 30 #Bulky by mouse standards...
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 30 #Bulky by mouse standards...
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -266,17 +258,6 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
-  - type: DiseaseCarrier
-    carrierDiseases:
-    - VentCough
-    - AMIV
-    - SpaceCold
-    - SpaceFlu
-    - BirdFlew
-    - VanAusdallsRobovirus
-    - BleedersBite
-    - Plague
-    - TongueTwister
   - type: Vocal
     sounds:
       Male: Mouse
@@ -285,9 +266,9 @@
     wilhelmProbability: 0.001
   - type: GhostRole
     makeSentient: true
-    name: Rat Servant
-    description: You are a Rat Servant. You must follow your king's orders.
-    rules: You are an antagonist, scavenge, attack, and serve your king!
+    name: ghost-role-information-rat-servant-name
+    description: ghost-role-information-rat-servant-description
+    rules: ghost-role-information-rat-servant-rules
   - type: GhostTakeoverAvailable
   - type: Tag
     tags:

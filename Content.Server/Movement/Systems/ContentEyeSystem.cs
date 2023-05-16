@@ -9,19 +9,12 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
     {
         base.Update(frameTime);
 
-        var eyeQuery = GetEntityQuery<SharedEyeComponent>();
+        var query = AllEntityQuery<ContentEyeComponent, SharedEyeComponent>();
 
-        foreach (var (_, comp) in EntityQuery<ActiveContentEyeComponent, ContentEyeComponent>(true))
+        while (query.MoveNext(out var uid, out var comp, out var eyeComp))
         {
-            var uid = comp.Owner;
-
-            // Use a separate query jjuussstt in case any actives mistakenly hang around.
-            if (!eyeQuery.TryGetComponent(comp.Owner, out var eyeComp) ||
-                eyeComp.Zoom.Equals(comp.TargetZoom))
-            {
-                RemComp<ActiveContentEyeComponent>(comp.Owner);
+            if (eyeComp.Zoom.Equals(comp.TargetZoom))
                 continue;
-            }
 
             UpdateEye(uid, comp, eyeComp, frameTime);
         }

@@ -5,6 +5,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Shuttles.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -31,6 +32,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly StunSystem _stuns = default!;
     [Dependency] private readonly ThrusterSystem _thruster = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -56,7 +58,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
-        SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
+        SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
     }
 
     public override void Update(float frameTime)
@@ -79,22 +81,13 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         }
     }
 
-    private void OnGridFixtureChange(GridFixtureChangeEvent args)
+    private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)
     {
-        // Look this is jank but it's a placeholder until we design it.
-        if (args.NewFixtures.Count == 0)
-            return;
-
-        var uid = args.NewFixtures[0].Body.Owner;
-        var manager = Comp<FixturesComponent>(uid);
-
         foreach (var fixture in args.NewFixtures)
         {
             _physics.SetDensity(uid, fixture, TileMassMultiplier, false, manager);
             _fixtures.SetRestitution(uid, fixture, 0.1f, false, manager);
         }
-
-        _fixtures.FixtureUpdate(uid, manager: manager);
     }
 
     private void OnGridInit(GridInitializeEvent ev)

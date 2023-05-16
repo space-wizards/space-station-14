@@ -1,37 +1,28 @@
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEndCap
   name: PA end-cap
   description: Formally known as the Alpha Particle Generation Array. This is where Alpha particles are generated from [REDACTED].
   components:
     - type: Sprite
       sprite: Structures/Power/Generation/PA/end_cap.rsi
-      state: capc
-    - type: ParticleAcceleratorPart
+      layers:
+      - state: completed
+        map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
     - type: ParticleAcceleratorEndCap
     - type: Construction
       graph: ParticleAcceleratorEndCap
-      node: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
 
 # Unfinished
 
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEndCapUnfinished
   name: PA end-cap
   suffix: Unfinished
   description: Formally known as the Alpha Particle Generation Array. This is where Alpha particles are generated from [REDACTED]. It looks unfinished.
   components:
-    - type: Physics
-      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/end_cap.rsi
-      state: cap
     - type: Construction
       graph: ParticleAcceleratorEndCap
-      node: start
-      defaultTarget: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]

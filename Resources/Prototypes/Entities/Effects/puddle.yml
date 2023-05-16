@@ -74,6 +74,8 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepWater
+        params:
+          volume: 6
     - type: Slippery
       launchForwardsMultiplier: 2.0
     - type: Transform
@@ -83,14 +85,13 @@
       layers:
         - sprite: Fluids/puddle.rsi
           state: splat0
-      netsync: false
       drawdepth: FloorObjects
       color: "#FFFFFF80"
     - type: Physics
       bodyType: Static
     - type: Fixtures
       fixtures:
-        - id: slipFixture
+        slipFixture:
           shape:
             !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"
@@ -115,3 +116,8 @@
         puddle:
           !type:SpreaderNode
           nodeGroupID: Spreader
+    - type: Drink
+      isOpen: true
+      delay: 3
+      transferAmount: 1
+      solution: puddle
