@@ -9,7 +9,6 @@ using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Robust.Shared.Prototypes;
 using Content.Server.Actions;
-using Content.Server.Changeling.EntitySystems;
 using Content.Server.Forensics;
 using Content.Shared.DoAfter;
 using Content.Server.Mind.Components;
@@ -36,8 +35,6 @@ using Robust.Server.Containers;
 namespace Content.Server.Changeling;
 public sealed partial class ChangelingSystem : EntitySystem
 {
-    [Dependency] private readonly ChangelingShopSystem _changShopSystem = default!;
-    [Dependency] private readonly AbsorbSystem _absorbSystem = default!;
     //[Dependency] private readonly SharedActionsSystem _actionSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
