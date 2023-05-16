@@ -8,6 +8,10 @@
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired
+    receiveFrequencyId: BasicDevice
+  - type: DeviceLinkSink
+    ports:
+      - CloningPodReceiver
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/cloning.rsi
@@ -34,9 +38,6 @@
      - machine_board
      - machine_parts
      - clonepod-bodyContainer
-  - type: SignalReceiver
-    inputs:
-      CloningPodReceiver: []
   - type: EmptyOnMachineDeconstruct
     containers:
       - clonepod-bodyContainer

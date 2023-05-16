@@ -16,6 +16,7 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -41,13 +42,18 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
     [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-    [Dependency] protected readonly SharedTransformSystem _transform = default!;
+    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly StaminaSystem _stamina = default!;
 
     protected ISawmill Sawmill = default!;
 
     public const float DamagePitchVariation = 0.05f;
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
+
+    /// <summary>
+    /// Maximum amount of targets allowed for a wide-attack.
+    /// </summary>
+    public const int MaxTargets = 5;
 
     /// <summary>
     /// If an attack is released within this buffer it's assumed to be full damage.
@@ -379,7 +385,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 throw new NotImplementedException();
         }
 
-        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager, _transform), weapon.Range, animation);
+        DoLungeAnimation(user, weapon.Angle, attack.Coordinates.ToMap(EntityManager, TransformSystem), weapon.Range, animation);
         weapon.Attacking = true;
         Dirty(weapon);
     }
@@ -519,12 +525,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!TryComp<TransformComponent>(user, out var userXform))
             return;
 
-        var targetMap = ev.Coordinates.ToMap(EntityManager, _transform);
+        var targetMap = ev.Coordinates.ToMap(EntityManager, TransformSystem);
 
         if (targetMap.MapId != userXform.MapID)
             return;
 
-        var userPos = _transform.GetWorldPosition(userXform);
+        var userPos = TransformSystem.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
         var distance = Math.Min(component.Range, direction.Length);
 
@@ -538,6 +544,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
             Audio.PlayPredicted(component.SwingSound, meleeUid, user);
             return;
+        }
+
+        // Naughty input
+        if (entities.Count > MaxTargets)
+        {
+            entities.RemoveRange(MaxTargets, entities.Count - MaxTargets);
         }
 
         // Validate client
@@ -775,7 +787,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!TryComp<TransformComponent>(user, out var userXform))
             return;
 
-        var invMatrix = _transform.GetInvWorldMatrix(userXform);
+        var invMatrix = TransformSystem.GetInvWorldMatrix(userXform);
         var localPos = invMatrix.Transform(coordinates.Position);
 
         if (localPos.LengthSquared <= 0f)

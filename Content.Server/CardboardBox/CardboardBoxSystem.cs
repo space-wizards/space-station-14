@@ -100,8 +100,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
             RemComp<RelayInputMoverComponent>(component.Mover.Value);
         }
 
-        var relay = EnsureComp<RelayInputMoverComponent>(args.Entity);
-        _mover.SetRelay(args.Entity, uid, relay);
+        _mover.SetRelay(args.Entity, uid);
         component.Mover = args.Entity;
     }
 

@@ -30,3 +30,13 @@
     - /Audio/Voice/Diona/diona_rustle1.ogg
     - /Audio/Voice/Diona/diona_rustle2.ogg
     - /Audio/Voice/Diona/diona_rustle3.ogg
+
+- type: soundCollection
+  id: MaleSigh
+  files:
+    - /Audio/Voice/Human/male_sigh.ogg
+
+- type: soundCollection
+  id: FemaleSigh
+  files:
+    - /Audio/Voice/Human/female_sigh.ogg

@@ -576,9 +576,35 @@
     - FootstepSound
   - type: GhostRole
     prob: 0.25
-    name: Willow the kangaroo
-    description: |
-      You're a kangaroo named willow! willow likes to box.
+    name: ghost-role-information-willow-name
+    description: ghost-role-information-willow-description
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
+
+- type: entity
+  name: Pun Pun
+  parent: MobMonkey
+  id: MobMonkeyPunpun
+  description: A prominent representative of monkeys with unlimited access to alcohol.
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-punpun-name
+    description: ghost-role-information-punpun-description
+  - type: GhostTakeoverAvailable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    - id: DrinkTequilaBottleFull
+      amount: 1
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+  - type: Loadout
+    prototypes: [ MobMonkeyGear ]

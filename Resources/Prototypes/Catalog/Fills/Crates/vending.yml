@@ -57,6 +57,14 @@
       - id: VendingMachineRestockMedical
 
 - type: entity
+  id: CrateVendingMachineRestockChemVendFilled
+  parent: CrateMedicalSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockChemVend
+
+- type: entity
   id: CrateVendingMachineRestockNutriMaxFilled
   parent: CrateHydroSecure
   components:

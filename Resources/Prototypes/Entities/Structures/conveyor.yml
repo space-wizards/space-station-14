@@ -35,11 +35,11 @@
         - LowImpassable
         hard: False
   - type: Conveyor
-  - type: SignalReceiver
-    inputs:
-      Reverse: []
-      Forward: []
-      Off: []
+  - type: DeviceLinkSink
+    ports:
+      - Reverse
+      - Forward
+      - Off
   - type: Appearance
   - type: GenericVisualizer
     visuals:

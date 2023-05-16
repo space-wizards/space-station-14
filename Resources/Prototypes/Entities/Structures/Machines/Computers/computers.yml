@@ -378,10 +378,10 @@
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired
-  - type: SignalTransmitter
-    transmissionRange: 5
-    outputs:
-      ArtifactAnalyzerSender: []
+  - type: DeviceLinkSource
+    range: 5
+    ports:
+      - ArtifactAnalyzerSender
   - type: ActivatableUI
     key: enum.ArtifactAnalzyerUiKey.Key
   - type: UserInterface
@@ -698,11 +698,11 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
-  - type: SignalTransmitter
-    transmissionRange: 4
-    outputs:
-      MedicalScannerSender: []
-      CloningPodSender: []
+  - type: DeviceLinkSource
+    range: 4
+    ports:
+      - MedicalScannerSender
+      - CloningPodSender
   - type: ActivatableUI
     key: enum.CloningConsoleUiKey.Key
   - type: UserInterface

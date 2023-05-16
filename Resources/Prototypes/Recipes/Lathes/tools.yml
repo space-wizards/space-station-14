@@ -87,6 +87,14 @@
     Plastic: 200
 
 - type: latheRecipe
+  id: NetworkConfigurator
+  result: NetworkConfigurator
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 200
+
+- type: latheRecipe
   id: PowerDrill
   result: PowerDrill
   completetime: 2

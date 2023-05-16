@@ -499,6 +499,9 @@
   id: Mop
 
 - type: Tag
+  id: Multitool
+
+- type: Tag
   id: NoSpinOnThrow
 
 - type: Tag
@@ -678,6 +681,15 @@
 
 - type: Tag
   id: Taser
+
+- type: Tag
+  id: TimerBrigElectronics
+
+- type: Tag
+  id: TimerScreenElectronics
+
+- type: Tag
+  id: TimerSignalElectronics
 
 - type: Tag
   id: Trash
