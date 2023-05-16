@@ -1,5 +1,6 @@
 alert-level-announcement = Attention! Station alert level is now {$name}! {$announcement}
 
+alert-level-unknown = Unknown.
 alert-level-unknown-instructions = Unknown.
 
 alert-level-green = Green

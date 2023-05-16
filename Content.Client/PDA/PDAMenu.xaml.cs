@@ -120,7 +120,7 @@ namespace Content.Client.PDA
 
             var alertLevel = state.PDAOwnerInfo.StationAlertLevel;
             var alertColor = state.PDAOwnerInfo.StationAlertColor;
-            var alertLevelKey = alertLevel != null ? $"alert-level-{alertLevel}" : "comp-pda-ui-unknown";
+            var alertLevelKey = alertLevel != null ? $"alert-level-{alertLevel}" : "alert-level-unknown";
 
             StationAlertLevelLabel.SetMarkup(Loc.GetString(
                 "comp-pda-ui-station-alert-level",
