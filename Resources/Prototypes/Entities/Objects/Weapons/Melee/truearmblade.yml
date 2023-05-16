@@ -1,8 +1,8 @@
 - type: entity
-  name: arm-blade-name
+  name: true-arm-blade-name
   parent: BaseItem
   id: TrueArmBlade
-  description: arm-blade-description
+  description: true-arm-blade-description
   components:
   - type: Sharp
   - type: Sprite
