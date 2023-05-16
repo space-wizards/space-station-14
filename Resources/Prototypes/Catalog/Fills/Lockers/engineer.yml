@@ -89,7 +89,7 @@
       - id: GasAnalyzer
       - id: MedkitOxygenFilled
       - id: HolofanProjector
-      
+
 - type: entity
   id: LockerAtmosphericsFilled
   suffix: Filled
@@ -128,7 +128,6 @@
       - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskGas
       - id: trayScanner
-
 
 - type: entity
   id: ClosetRadiationSuitFilled
