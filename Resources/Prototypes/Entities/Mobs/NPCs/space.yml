@@ -340,7 +340,7 @@
     spawned:
     - id: FoodMeatSnake
       amount: 2
-    - id: OreUranium
+    - id: UraniumOre1
       amount: 1
     - id: ClothingShoesSnakeskinBoots
       amount: 1
