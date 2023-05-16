@@ -82,12 +82,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (handContainer == null)
             return;
 
-        // checar se esta ativado
-        //component.ArmBladeActivated = !component.ArmBladeActivated;
-
-
-        // TODO: REFATORAR ISSO TUDO PRA USAR ArmBladeMaxHands, nao ficar spawnando e apagando entidade (usar o pause) e tambem fazer com que não se possa tirar o item da mão que está
-        // esse codigo ta muito feio
+        // TODO: refactor this to use ArmBladeMaxHands
         if (!component.ArmBladeActivated)
         {
             var targetTransformComp = Transform(args.Performer);
@@ -129,17 +124,13 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, ChangelingComponent component, ComponentStartup args)
     {
-        //update the icon
-        //ChangeEssenceAmount(uid, 0, component);
-
-        //AbsorbDNA
         var absorbAction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("AbsorbDNA"))
             {
                 CanTargetSelf = false
             };
         _action.AddAction(uid, absorbAction, null);
 
-        // implante da loja
+        // store implant
         var coords = Transform(uid).Coordinates;
 
         var implant = Spawn("ChangelingShopImplant", coords);
@@ -157,7 +148,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         storeComponent.Balance.Add(component.StoreCurrencyName,component.StartingPoints);
 
-        // TODO: colocar cooldown?
+        // TODO: put a cooldown on this ability
         var dnaStingAction = new EntityTargetAction(_proto.Index<EntityTargetActionPrototype>("ChangelingDnaSting"))
             {
                 CanTargetSelf = false
@@ -393,7 +384,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         var userTransform = Transform(user);
 
         _transform.SetParent(child, childTransform, user);
-        childTransform.Coordinates = userTransform.Coordinates; // ver esse negocio de obsoleto dps
+        childTransform.Coordinates = userTransform.Coordinates; // see about this obsolete accessor
         childTransform.LocalRotation = userTransform.LocalRotation;
 
         if (_container.TryGetContainingContainer(user, out var cont))
