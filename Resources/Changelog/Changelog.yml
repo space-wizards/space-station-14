@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix HandVirtualItem exceptions., type: Fix}
-  id: 3285
-  time: '2023-03-29T11:04:22.0000000+00:00'
 - author: dontbetank
   changes:
   - {message: Added diona plushie, type: Add}
@@ -2906,3 +2901,8 @@ Entries:
     type: Tweak}
   id: 3784
   time: '2023-05-16T05:59:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix potential server crash upon reconnection., type: Fix}
+  id: 3785
+  time: '2023-05-16T11:23:44.0000000+00:00'
