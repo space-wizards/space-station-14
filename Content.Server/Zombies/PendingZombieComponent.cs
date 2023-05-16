@@ -32,14 +32,8 @@ public sealed class PendingZombieComponent : Component
     /// Number of seconds that a typical infection will last before the player is totally overwhelmed with damage and
     ///   dies.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("infectionLength")]
-    public float InfectionLength = 120f;
-
-    /// <summary>
-    /// Once the player enters crit, we ramp up the damage to ensure they don't suffer too long.
-    /// </summary>
-    [DataField("inCrit")]
-    public bool InCrit;
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxInfectionLength")]
+    public float MaxInfectionLength = 120f;
 
     /// <summary>
     /// Infection warnings are shown as popups, times are in seconds.
@@ -56,7 +50,7 @@ public sealed class PendingZombieComponent : Component
     };
 
     /// <summary>
-    /// A minumum multiplier applied to Damage once you are in crit to get you dead and ready for your next life
+    /// A minimum multiplier applied to Damage once you are in crit to get you dead and ready for your next life
     ///   as fast as possible.
     /// </summary>
     [DataField("minimumCritMultiplier")]

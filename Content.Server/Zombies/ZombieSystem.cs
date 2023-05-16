@@ -63,11 +63,11 @@ namespace Content.Server.Zombies
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            var query = EntityQueryEnumerator<PendingZombieComponent>();
+            var query = EntityQueryEnumerator<PendingZombieComponent, MobStateComponent>();
             var curTime = _timing.CurTime;
 
             // Hurt the living infected
-            while (query.MoveNext(out var uid, out var comp))
+            while (query.MoveNext(out var uid, out var comp, out var mobState))
             {
                 if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
                     continue;
@@ -84,24 +84,17 @@ namespace Content.Server.Zombies
                 if (comp.InfectedSecs < 0)
                 {
                     // This zombie has a latent virus, probably set up by ZombieRuleSystem. No damage yet.
-                    if (comp.InCrit)
-                    {
-                        // Immediately jump to an active virus when you crit
-                        comp.InfectedSecs = 0;
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                    continue;
                 }
 
                 // Pain of becoming a zombie grows over time
                 // By scaling the number of seconds we have an accessible way to scale this exponential function.
                 //   The function was hand tuned to 120 seconds, hence the 120 constant here.
-                var scaledSeconds = (120.0f / comp.InfectionLength) * comp.InfectedSecs;
+                var scaledSeconds = (120.0f / comp.MaxInfectionLength) * comp.InfectedSecs;
+
                 // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s. Limit at 20x so we don't gib you.
                 var painMultiple = Math.Min(20f, 0.1f + 0.02f * scaledSeconds + 0.0005f * scaledSeconds * scaledSeconds);
-                if (comp.InCrit)
+                if (mobState.CurrentState == MobState.Critical)
                 {
                     // Speed up their transformation when they are (or have been) in crit by ensuring their damage
                     //   multiplier is at least 10x
@@ -169,8 +162,8 @@ namespace Content.Server.Zombies
         {
             if (args.NewMobState == MobState.Critical)
             {
-                // Accelerate the process of taking damage to turn into a zombie.
-                pending.InCrit = true;
+                // Immediately jump to an active virus when you crit
+                pending.InfectedSecs = Math.Max(0, pending.InfectedSecs);
             }
         }
 
@@ -233,7 +226,8 @@ namespace Content.Server.Zombies
                 {
                     if (_random.Prob(GetZombieInfectionChance(entity, component)))
                     {
-                        EnsureComp<PendingZombieComponent>(entity);
+                        var pending = EnsureComp<PendingZombieComponent>(entity);
+                        pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.ZombieInfectionTurnTime;
                         EnsureComp<ZombifyOnDeathComponent>(entity);
                     }
                 }
