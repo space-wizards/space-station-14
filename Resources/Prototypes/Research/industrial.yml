@@ -10,7 +10,6 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - PowerDrill #todo remove this once we have advanced tools
   - MiningDrill
   - OreProcessorMachineCircuitboard
 
