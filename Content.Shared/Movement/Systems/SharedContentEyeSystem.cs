@@ -30,7 +30,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GhostEyeComponent, ComponentStartup>(OnContentEyeStartup);
+        SubscribeLocalEvent<ContentEyeComponent, ComponentStartup>(OnContentEyeStartup);
         SubscribeAllEvent<RequestTargetZoomEvent>(OnContentZoomRequest);
         SubscribeAllEvent<RequestFovEvent>(OnRequestFov);
         SubscribeAllEvent<RequestPlayeChangeZoomEvent>(OnChangeZoomRquest);
@@ -41,7 +41,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
     {
-        if (HasGhostZoom(args.SenderSession) is not GhostEyeComponent content)
+        if (HasGhostZoom(args.SenderSession) is not ContentEyeComponent content)
         {
             return;
         }
@@ -67,7 +67,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void OnChangeZoomRquest(RequestPlayeChangeZoomEvent msg, EntitySessionEventArgs args)
     {
-        if (HasGhostZoom(args.SenderSession) is GhostEyeComponent ghostComponent)
+        if (HasGhostZoom(args.SenderSession) is ContentEyeComponent ghostComponent)
         {
             switch (msg.TypeZoom)
             {
@@ -106,7 +106,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         CommandBinds.Unregister<SharedContentEyeSystem>();
     }
 
-    private void OnContentEyeStartup(EntityUid uid, GhostEyeComponent component, ComponentStartup args)
+    private void OnContentEyeStartup(EntityUid uid, ContentEyeComponent component, ComponentStartup args)
     {
         if (!TryComp<SharedEyeComponent>(uid, out var eyeComp))
             return;
@@ -115,7 +115,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(component);
     }
 
-    protected void UpdateEye(EntityUid uid, GhostEyeComponent content, SharedEyeComponent eye, float frameTime)
+    protected void UpdateEye(EntityUid uid, ContentEyeComponent content, SharedEyeComponent eye, float frameTime)
     {
         var diff = content.TargetZoom - eye.Zoom;
 
@@ -132,7 +132,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(eye);
     }
 
-    private void ResetGhostZoom(GhostEyeComponent component)
+    private void ResetGhostZoom(ContentEyeComponent component)
     {
         if (component.TargetZoom.Equals(DefaultZoom))
             return;
@@ -167,7 +167,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         return current;
     }
 
-    private void GhostZoom(GhostEyeComponent component, bool zoomIn)
+    private void GhostZoom(ContentEyeComponent component, bool zoomIn)
     {
         var actual = CalcZoom(zoomIn, component.TargetZoom, component.MaxZoom);
 
@@ -191,10 +191,10 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Sawmill.Debug($"Set target for user zoom to {actual}");
     }
 
-    private GhostEyeComponent? HasGhostZoom(ICommonSession? session)
+    private ContentEyeComponent? HasGhostZoom(ICommonSession? session)
     {
         if (session?.AttachedEntity is EntityUid entityUid
-            && TryComp<GhostEyeComponent>(entityUid, out var ghostComp))
+            && TryComp<ContentEyeComponent>(entityUid, out var ghostComp))
             return ghostComp;
         else
             return null;
