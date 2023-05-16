@@ -78,7 +78,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
     private void OnKeyBindZoomChange(KeyBindsTypes type)
     {
         if (_userZoomChangeRequestTimeOut != null
-            && _userZoomChangeRequestTimeOut + TimeSpan.FromMicroseconds(500) > _gameTiming.CurTime)
+            && _userZoomChangeRequestTimeOut + TimeSpan.FromSeconds(0.2f) > _gameTiming.CurTime)
         {
             return;
         }
@@ -86,7 +86,8 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         RaisePredictiveEvent(new RequestPlayeChangeZoomEvent()
         {
             TypeZoom = type,
-            PlayerUid = _player.LocalPlayer?.ControlledEntity
+            PlayerUid = _player.LocalPlayer?.ControlledEntity,
+            EventTimeTag = _gameTiming.CurTime
         });
 
         _userZoomChangeRequestTimeOut = _gameTiming.CurTime;

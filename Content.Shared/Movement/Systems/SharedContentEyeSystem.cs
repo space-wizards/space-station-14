@@ -8,22 +8,20 @@ using Robust.Shared.Players;
 namespace Content.Shared.Movement.Systems;
 
 /// <summary>
-/// Lets specific sessions scroll and set their zoom directly.
+/// Lets set zoom directly.
 /// </summary>
 public abstract class SharedContentEyeSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminManager _admin = default!;
 
-    private const float ZoomMod = 1.2f;
-    private const byte ZoomMultiple = 10;
-
-    private Vector2 MaxUserZoom { get; } = new Vector2(1.1f, 1.1f);
+    private const float ZoomMod = 1.6f;
     private Vector2 DefaultZoom { get; } = Vector2.One;
-
-    protected static readonly Vector2 MinZoom = new(
-        MathF.Pow(ZoomMod, -ZoomMultiple),
-        MathF.Pow(ZoomMod, -ZoomMultiple)
+    private static readonly Vector2 MinGhostZoom = new(
+        MathF.Pow(ZoomMod, -3),
+        MathF.Pow(ZoomMod, -3)
     );
+
+    private TimeSpan _lastTimeTagKeyZoomRequest;
 
     protected ISawmill Sawmill = Logger.GetSawmill("ceye");
 
@@ -67,19 +65,24 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void OnChangeZoomRquest(RequestPlayeChangeZoomEvent msg, EntitySessionEventArgs args)
     {
+        if (_lastTimeTagKeyZoomRequest >= msg.EventTimeTag)
+            return;
+
+        _lastTimeTagKeyZoomRequest = msg.EventTimeTag;
+
         if (HasGhostZoom(args.SenderSession) is ContentEyeComponent ghostComponent)
         {
             switch (msg.TypeZoom)
             {
                 case KeyBindsTypes.ZoomIn:
                     GhostZoom(ghostComponent, true);
-                    break;
+                    return;
                 case KeyBindsTypes.ZoomOut:
                     GhostZoom(ghostComponent, false);
-                    break;
+                    return;
                 default:
                     ResetGhostZoom(ghostComponent);
-                    break;
+                    return;
             }
         }
         else if (msg.PlayerUid is EntityUid player &&
@@ -89,13 +92,13 @@ public abstract class SharedContentEyeSystem : EntitySystem
             {
                 case KeyBindsTypes.ZoomIn:
                     UserZoom(eyeComponent, true);
-                    break;
+                    return;
                 case KeyBindsTypes.ZoomOut:
                     UserZoom(eyeComponent, false);
-                    break;
+                    return;
                 default:
                     ResetUserZoom(eyeComponent);
-                    break;
+                    return;
             }
         }
     }
@@ -150,7 +153,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(component);
     }
 
-    private static Vector2 CalcZoom(bool zoomIn, Vector2 current, Vector2 maxZoom)
+    private static Vector2 CalcZoom(bool zoomIn, Vector2 current, Vector2 maxZoom, Vector2 minZoom)
     {
         if (zoomIn)
         {
@@ -161,7 +164,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             current *= ZoomMod;
         }
 
-        current = Vector2.ComponentMax(MinZoom, current);
+        current = Vector2.ComponentMax(minZoom, current);
         current = Vector2.ComponentMin(maxZoom, current);
 
         return current;
@@ -169,7 +172,8 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void GhostZoom(ContentEyeComponent component, bool zoomIn)
     {
-        var actual = CalcZoom(zoomIn, component.TargetZoom, component.MaxZoom);
+        var actual = CalcZoom(
+            zoomIn, component.TargetZoom, component.MaxZoom, MinGhostZoom);
 
         if (actual.Equals(component.TargetZoom))
             return;
@@ -181,14 +185,15 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void UserZoom(SharedEyeComponent component, bool zoomIn)
     {
-        var actual = CalcZoom(zoomIn, component.Zoom, MaxUserZoom);
+        var actual = CalcZoom(
+            zoomIn, component.Zoom, component.MaxUserZoom, component.MinUserZoom);
 
         if (actual.Equals(component.Zoom))
             return;
 
         component.Zoom = actual;
         Dirty(component);
-        Sawmill.Debug($"Set target for user zoom to {actual}");
+        Sawmill.Debug($"Set user zoom to {actual}");
     }
 
     private ContentEyeComponent? HasGhostZoom(ICommonSession? session)
@@ -226,12 +231,13 @@ public abstract class SharedContentEyeSystem : EntitySystem
     }
 
     /// <summary>
-    /// user key bindings for request change zoom on server
+    /// uses for send user zoom keys events
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class RequestPlayeChangeZoomEvent : EntityEventArgs
     {
         public EntityUid? PlayerUid;
         public KeyBindsTypes TypeZoom;
+        public TimeSpan EventTimeTag;
     }
 }
