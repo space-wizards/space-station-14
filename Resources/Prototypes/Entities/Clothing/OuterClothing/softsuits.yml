@@ -1,4 +1,6 @@
 #base EVA suit movespeed is 0.8
+
+#Basic EVA
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitEVA
@@ -9,10 +11,8 @@
     sprite: Clothing/OuterClothing/Suits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva.rsi
-  - type: Tag
-    tags:
-    - HardsuitEVA
 
+#Syndicate EVA
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitSyndicate
@@ -24,10 +24,42 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/syndicate.rsi
   - type: ClothingSpeedModifier
-  - type: Tag
-    tags:
-    - HardsuitEVA
 
+#Emergency EVA
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterSuitEmergency
+  name: emergency EVA suit
+  description: An emergency EVA suit. It does not provide any temperature protection, but it will protect you from the harsh vacuum of space for long enough to bide you time.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/emergency.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/emergency.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: TemperatureProtection
+    coefficient: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetEVA
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+
+#Prisoner EVA
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id:  ClothingOuterHardsuitEVAPrisoner
+  name: prisoner EVA suit
+  description: A lightweight space suit for prisoners to protect them from the vacuum of space during emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
+
+#Engineering EVA
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitEVAEngineering #i hate to name it like this, but it's consistent with all of the other ids so Oh Well.
@@ -41,21 +73,3 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
-  - type: Tag
-    tags:
-    - HardsuitEVA
-
-- type: entity
-  parent: ClothingOuterEVASuitBase
-  id:  ClothingOuterHardsuitEVAPrisoner
-  name: prisoner EVA suit
-  description: A lightweight space suit for prisoners to protect them from the vacuum of space during emergencies.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
-  - type: Tag
-    tags:
-    - HardsuitEVA
-
