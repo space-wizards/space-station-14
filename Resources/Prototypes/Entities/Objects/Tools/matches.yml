@@ -55,7 +55,7 @@
 
 - type: entity
   name: match box
-  parent: SmallboxItem
+  parent: [ SmallboxItem, BaseBagOpenClose ]
   id: Matchbox
   description: A small box of Almost But Not Quite Plasma Premium Matches.
   components:
@@ -67,7 +67,9 @@
     netsync: false
     sprite: Objects/Tools/matches.rsi
     layers:
-      - state: matchbox
+    - state: matchbox
+    - state: matchbox-open
+      map: ["openLayer"]
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
@@ -83,14 +85,12 @@
       tags: [Matchstick]
   - type: Appearance
     visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: matchbox-open
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - matchbox1
-          - matchbox2
-          - matchbox3
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+        - matchbox1
+        - matchbox2
+        - matchbox3
   - type: Tag
     tags:
     - Trash

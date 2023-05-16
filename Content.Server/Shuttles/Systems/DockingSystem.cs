@@ -236,10 +236,11 @@ namespace Content.Server.Shuttles.Systems
             if (!component.Docked)
                 return;
 
-            var other = Comp<DockingComponent>(component.DockedWith!.Value);
+            var otherDock = component.DockedWith;
+            var other = Comp<DockingComponent>(otherDock!.Value);
 
             Undock(uid, component);
-            Dock(uid, component, component.DockedWith.Value, other);
+            Dock(uid, component, otherDock.Value, other);
             _console.RefreshShuttleConsoles();
         }
 

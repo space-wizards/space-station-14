@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -36,6 +37,8 @@ namespace Content.Shared.Weapons.Melee.Events
         ///     The original location that was clicked by the user.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
+
+        public DamageSpecifier BonusDamage = new();
 
         public AttackedEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation)
         {
