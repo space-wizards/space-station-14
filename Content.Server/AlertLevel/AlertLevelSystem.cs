@@ -192,7 +192,7 @@ public sealed class AlertLevelSystem : EntitySystem
         var pdas = EntityQueryEnumerator<PDAComponent>();
         while (pdas.MoveNext(out var ent, out var comp))
         {
-            RaiseLocalEvent(ent,new AlertLevelChangedEvent(station, level), true);
+            RaiseLocalEvent(ent,new AlertLevelChangedEvent(station, level));
         }
     }
 }
