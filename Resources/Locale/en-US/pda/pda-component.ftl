@@ -6,7 +6,7 @@ comp-pda-ui = ID: [color=white]{$owner}[/color], [color=yellow]{$jobTitle}[/colo
 
 comp-pda-ui-blank = ID:
 
-comp-pda-ui-owner = Owner: [color=white]{$actualOwnerName}[/color]
+comp-pda-ui-owner = Owner: [color=white]{$cctualOwnerName}[/color]
 
 comp-pda-io-program-list-button = Programs
 
@@ -26,11 +26,9 @@ comp-pda-ui-menu-title = PDA
 
 comp-pda-ui-station = Station: [color=white]{$station}[/color]
 
-comp-pda-ui-station-alert-level = Alert Level: [color={ $colorLevel }]{ $alertLevel }[/color]
+comp-pda-ui-station-alert-level = Alert Level: [color={ $color }]{ $level }[/color]
 
-comp-pda-ui-station-acceses-levels = Access: [color=white]{ $accessLevels }[/color]
-
-comp-pda-ui-station-alert-level-instructions = Instructions: [color=white]{ $alertLevelInstructions }[/color]
+comp-pda-ui-station-alert-level-instructions = Instructions: [color=white]{ $instructions }[/color]
 
 comp-pda-ui-station-time = Shift duration: [color=white]{ $time }[/color]
 
