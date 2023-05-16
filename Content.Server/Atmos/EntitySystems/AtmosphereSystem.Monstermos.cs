@@ -425,27 +425,32 @@ namespace Content.Server.Atmos.EntitySystems
                 otherTile.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
             }
 
+            // Moving into the room from the breach or airlock
             for (var i = 0; i < progressionCount; i++)
             {
+                // From a tile exposed to space
                 var otherTile = _depressurizeProgressionOrder[i];
                 for (var j = 0; j < Atmospherics.Directions; j++)
                 {
+                    // Flood fill into this new direction
                     var direction = (AtmosDirection) (1 << j);
                     // Tiles in _depressurizeProgressionOrder cannot have null air.
                     if (!otherTile.AdjacentBits.IsFlagSet(direction) && !otherTile.Space) continue;
                     var tile2 = otherTile.AdjacentTiles[j];
                     if (tile2?.MonstermosInfo.LastQueueCycle != queueCycle) continue;
                     DebugTools.Assert(tile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
+                    // If flood fill has already reached this tile, continue.
                     if (tile2.MonstermosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                     if(tile2.Space) continue;
                     tile2.MonstermosInfo.CurrentTransferDirection = direction.GetOpposite();
-                    tile2.MonstermosInfo.CurrentTransferAmount = 0;
+                    tile2.MonstermosInfo.CurrentTransferAmount = 0.0f;
                     tile2.PressureSpecificTarget = otherTile.PressureSpecificTarget;
                     tile2.MonstermosInfo.LastSlowQueueCycle = queueCycleSlow;
                     _depressurizeProgressionOrder[progressionCount++] = tile2;
                 }
             }
 
+            // Moving towards the breach from the edges of the flood filled region
             for (var i = progressionCount - 1; i >= 0; i--)
             {
                 var otherTile = _depressurizeProgressionOrder[i];
@@ -467,10 +472,10 @@ namespace Content.Server.Atmos.EntitySystems
                     // Boost the last bit of air draining from the tile.
                     sum = Math.Min(Atmospherics.SpacingMinGas, otherTile.Air.TotalMoles);
                 }
-                if (sum + otherTile.MonstermosInfo.CurrentTransferAmount > 1000.0f /*Atmospherics.SpacingMaxWind*/)
+                if (sum + otherTile.MonstermosInfo.CurrentTransferAmount > Atmospherics.SpacingMaxWind)
                 {
                     // Limit the flow of air out of tiles which have air flowing into them from elsewhere.
-                    sum = Math.Max(0.0f, 1000.0f /*Atmospherics.SpacingMaxWind*/ - otherTile.MonstermosInfo.CurrentTransferAmount);
+                    sum = Math.Max(0.0f, Atmospherics.SpacingMaxWind - otherTile.MonstermosInfo.CurrentTransferAmount);
                 }
                 totalMolesRemoved += sum;
                 otherTile.MonstermosInfo.CurrentTransferAmount += sum;

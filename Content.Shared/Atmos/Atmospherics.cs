@@ -317,7 +317,7 @@ namespace Content.Shared.Atmos
         ///     How much wind can go through a single tile before that tile doesn't depressurize itself
         ///     (I.e spacing is limited in large rooms heading into smaller spaces)
         /// </summary>
-        public const float SpacingMaxWind = 500.0f;
+        public const float SpacingMaxWind = 250.0f;
 
         #endregion
     }
