@@ -1,9 +1,4 @@
 Entries:
-- author: Skyedra
-  changes:
-  - {message: 'New game mode:  Oops, All Captains!', type: Add}
-  id: 3289
-  time: '2023-03-30T23:54:39.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: TRays are now clientside with a higher range., type: Tweak}
@@ -2905,3 +2900,8 @@ Entries:
   - {message: 3 new markings for arachnids. Have fun!, type: Add}
   id: 3788
   time: '2023-05-16T15:26:29.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Changed sexyclown mask icon, type: Tweak}
+  id: 3789
+  time: '2023-05-16T22:16:50.0000000+00:00'
