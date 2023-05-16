@@ -154,7 +154,7 @@
   discipline: Industrial
   tier: 2
   cost: 15000
-  unlockedRecipes:
+  recipeUnlocks:
     - WelderIndustrialAdvanced
     - PowerDrill
     - JawsOfLife
