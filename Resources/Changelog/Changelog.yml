@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed high-pressure protection not actually providing any protection.,
-    type: Fix}
-  id: 3287
-  time: '2023-03-29T23:45:56.0000000+00:00'
 - author: QuietlyWhisper
   changes:
   - {message: CentCom has changed clothing suppliers. CentCom clothing will no longer
@@ -2906,3 +2900,9 @@ Entries:
   - {message: Fix salvage expeditions mercilessly deleting people., type: Fix}
   id: 3786
   time: '2023-05-16T12:55:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Salvage expedition early launches now allowed if everyone is onboard.,
+    type: Tweak}
+  id: 3787
+  time: '2023-05-16T13:18:37.0000000+00:00'
