@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading;
-using Content.Server.CPUJob.JobQueues;
-using Content.Server.CPUJob.JobQueues.Queues;
+using Robust.Shared.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
@@ -231,6 +231,9 @@ public sealed partial class SalvageSystem
 
         if (configs.Count == 0)
             return;
+
+        // Temporarily removed coz it SUCKS
+        configs.Remove(SalvageMissionType.Mining);
 
         for (var i = 0; i < MissionLimit; i++)
         {

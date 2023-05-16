@@ -14,13 +14,18 @@
     state: or
   - type: Rotatable
   - type: OrGate
-  - type: SignalReceiver
-    inputs:
-      A1: []
-      B1: []
-      A2: []
-      B2: []
-  - type: SignalTransmitter
-    outputs:
-      O1: []
-      O2: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - A1
+      - B1
+      - A2
+      - B2
+  - type: DeviceLinkSource
+    ports:
+      - O1
+      - O2
