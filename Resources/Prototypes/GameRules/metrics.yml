@@ -1,0 +1,28 @@
+- type: entity
+  id: BaseMetric
+  abstract: true
+  noSpawn: true
+  components:
+    - type: ChaosMetric
+
+- type: entity
+  id: JaniMetric
+  parent: BaseMetric
+  noSpawn: true
+  components:
+  - type: JaniMetric
+    weight: 10
+    startDelay: 30
+    duration: 35
+    puddles:
+      Water: 2.0
+      SpaceCleaner: 2.0
+      Slime: 10.0
+      Nutriment: 10.0
+      Sugar: 10.0
+      Ephedrine: 10.0
+      Ale: 10.0
+      Beer: 10.0
+      Blood: 20.0
+      SpaceDrugs: 30.0
+      SpaceLube: 30.0

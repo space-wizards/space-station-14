@@ -116,6 +116,12 @@ namespace Content.Server.Mind
         public IEnumerable<Objective> AllObjectives => _objectives;
 
         /// <summary>
+        ///     An enumerable over all the roles this mind has.
+        /// </summary>
+        [ViewVariables]
+        public bool HasAntag => AllRoles.Any((role)=> role.Antagonist);
+
+        /// <summary>
         ///     Prevents user from ghosting out
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
