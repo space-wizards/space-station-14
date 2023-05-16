@@ -17,7 +17,7 @@
   id: AdvancedPowercells
   name: research-technology-advanced-powercells
   icon:
-    sprite: Objects/Tools/welder_industrialadv.rsi/
+    sprite: Objects/Tools/welder_industrialadv.rsi
     state: icon
   discipline: Industrial
   tier: 1
