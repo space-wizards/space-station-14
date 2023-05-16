@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix vote stacking., type: Fix}
-  id: 3284
-  time: '2023-03-29T09:18:56.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix HandVirtualItem exceptions., type: Fix}
   id: 3285
   time: '2023-03-29T11:04:22.0000000+00:00'
@@ -2901,3 +2896,13 @@ Entries:
       kill them you have a chance to perma-kill.', type: Tweak}
   id: 3783
   time: '2023-05-16T03:58:36.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: Zombie Patient 0 will get 20-30 minutes before they are forced to be
+      a zombie. As before they have a zombify self action on the left., type: Tweak}
+  - {message: 'Players zombifiying will spend less time in Crit, generally 10s at
+      most. A lot less if they fought the initial infection.', type: Tweak}
+  - {message: How long you have to live as a zombie victim now varies from 1-4 minutes.,
+    type: Tweak}
+  id: 3784
+  time: '2023-05-16T05:59:39.0000000+00:00'
