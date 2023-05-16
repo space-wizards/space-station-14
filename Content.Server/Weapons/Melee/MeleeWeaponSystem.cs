@@ -10,6 +10,7 @@ using Content.Server.Examine;
 using Content.Server.Movement.Systems;
 using Content.Server.Popups;
 using Content.Shared.Administration.Components;
+using Content.Shared.Actions.Events;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -273,7 +274,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     private void OnSpeechHit(EntityUid owner, MeleeSpeechComponent comp, MeleeHitEvent args)
     {
-        if(!args.IsHit ||
+        if (!args.IsHit ||
         !args.HitEntities.Any())
         {
             return;
