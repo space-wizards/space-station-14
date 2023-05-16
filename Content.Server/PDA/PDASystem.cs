@@ -24,7 +24,6 @@ namespace Content.Server.PDA
         [Dependency] private readonly StoreSystem _store = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public override void Initialize()
         {
@@ -94,6 +93,9 @@ namespace Content.Server.PDA
             var showUplink = HasComp<StoreComponent>(uid) && IsUnlocked(uid);
 
             UpdateStationName(uid, pda);
+            UpdateAlertLevel(uid, pda);
+            // TODO: Update the level and name of the station with each call to UpdatePdaUi is only needed for latejoin players.
+            // TODO: If someone can implement changing the level and name of the station when changing the PDA grid, this can be removed.
 
             var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo,
                 pda.StationName, showUplink, hasInstrument, address);
@@ -166,14 +168,13 @@ namespace Content.Server.PDA
 
         private void UpdateAlertLevel(EntityUid uid, PDAComponent pda)
         {
-            var stationUid = _stationSystem.GetOwningStation(uid);
-            if (TryComp(stationUid, out AlertLevelComponent? alertComp) &&
-                alertComp.AlertLevels != null)
-            {
-                pda.StationAlertLevel = alertComp.CurrentLevel;
-                if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
-                    pda.StationAlertColor = details.Color;
-            }
+            var station = _station.GetOwningStation(uid);
+            if (!TryComp(station, out AlertLevelComponent? alertComp) ||
+                alertComp.AlertLevels == null)
+                return;
+            pda.StationAlertLevel = alertComp.CurrentLevel;
+            if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
+                pda.StationAlertColor = details.Color;
         }
 
         private string? GetDeviceNetAddress(EntityUid uid)
