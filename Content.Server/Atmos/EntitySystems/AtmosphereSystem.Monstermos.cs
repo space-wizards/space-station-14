@@ -466,16 +466,19 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile.Air.Temperature = Atmospherics.TCMB;
                     continue;
                 }
-                var sum = otherTile.Air.TotalMoles * Atmospherics.SpacingEscapeRatio;
+
+                // Pressure as a multiple of normal air pressure (takes temperature into account)
+                float pressureMultiple = (otherTile.Air.Pressure / 110.0f);
+                var sum = otherTile.Air.TotalMoles * Atmospherics.SpacingEscapeRatio * pressureMultiple;
                 if (sum < Atmospherics.SpacingMinGas)
                 {
                     // Boost the last bit of air draining from the tile.
                     sum = Math.Min(Atmospherics.SpacingMinGas, otherTile.Air.TotalMoles);
                 }
-                if (sum + otherTile.MonstermosInfo.CurrentTransferAmount > Atmospherics.SpacingMaxWind)
+                if (sum + otherTile.MonstermosInfo.CurrentTransferAmount > Atmospherics.SpacingMaxWind * pressureMultiple)
                 {
                     // Limit the flow of air out of tiles which have air flowing into them from elsewhere.
-                    sum = Math.Max(0.0f, Atmospherics.SpacingMaxWind - otherTile.MonstermosInfo.CurrentTransferAmount);
+                    sum = Math.Max(Atmospherics.SpacingMinGas, Atmospherics.SpacingMaxWind * pressureMultiple - otherTile.MonstermosInfo.CurrentTransferAmount);
                 }
                 totalMolesRemoved += sum;
                 otherTile.MonstermosInfo.CurrentTransferAmount += sum;
@@ -489,12 +492,21 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile2.PressureDirection = otherTile.MonstermosInfo.CurrentTransferDirection;
                 }
 
-                if (otherTile.Air != null && otherTile.Air.Pressure - sum > Atmospherics.SpacingMinGas)
+                if (otherTile.Air != null && otherTile.Air.Pressure - sum > Atmospherics.SpacingMinGas * 0.1f)
                 {
                     // Transfer the air into the other tile (space wind :)
                     ReleaseGasTo(otherTile.Air!, otherTile2.Air!, sum);
                     // And then some magically into space
-                    ReleaseGasTo(otherTile2.Air!, null, sum * 0.5f);
+                    ReleaseGasTo(otherTile2.Air!, null, sum * 0.3f);
+
+                    // Temperature reduces as air drains. But nerf the real temperature reduction a bit
+                    float realtemploss = (otherTile.Air.TotalMoles - sum) / otherTile.Air.TotalMoles;
+                    otherTile.Air.Temperature *= 0.9f + 0.1f * realtemploss;
+                    if (otherTile.Air.Temperature < 310.0f && otherTile.Air.Temperature > 270.0f)
+                    {
+                        // Make some water vapor between 0 and 30 deg. c
+                        otherTile.Air.AdjustMoles(Gas.WaterVapor, sum * 0.01f);
+                    }
                 }
                 else
                 {
