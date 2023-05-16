@@ -15,11 +15,14 @@ namespace Content.Shared.PDA
         /// <summary>
         /// The base PDA sprite state, eg. "pda", "pda-clown"
         /// </summary>
-        [DataField("state")] public string? State;
+        [DataField("state")]
+        public string? State;
 
-        [DataField("idSlot")] public ItemSlot IdSlot = new();
+        [DataField("idSlot")]
+        public ItemSlot IdSlot = new();
 
-        [DataField("penSlot")] public ItemSlot PenSlot = new();
+        [DataField("penSlot")]
+        public ItemSlot PenSlot = new();
 
         // Really this should just be using ItemSlot.StartingItem. However, seeing as we have so many different starting
         // PDA's and no nice way to inherit the other fields from the ItemSlot data definition, this makes the yaml much
@@ -32,6 +35,7 @@ namespace Content.Shared.PDA
 
         [ViewVariables] public string? OwnerName;
         [ViewVariables] public string? StationName;
-        [ViewVariables] public StationAlert StationAlert;
+        [ViewVariables] public string? StationAlertLevel;
+        [ViewVariables] public Color StationAlertColor = Color.White;
     }
 }
