@@ -56,7 +56,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
         if (!component.Enabled)
         {
-            component.NextBeepTime += component.MinBeepInterval;
+            component.NextBeepTime += component.MaxBeepInterval;
             return;
         }
 
@@ -124,7 +124,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
         component.Enabled = false;
         _appearance.SetData(uid, ProximityBeeperVisuals.Enabled, false);
-        _powerCell.SetPowerCellDrawEnabled(uid, true);
+        _powerCell.SetPowerCellDrawEnabled(uid, false);
         UpdateBeep(uid, component);
         return true;
     }

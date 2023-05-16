@@ -76,12 +76,37 @@
       - Multitool
       - NetworkConfigurator
       - AirlockPainter
+      - FlashlightLantern
       - CableStack
+      - CableMVStack
+      - CableHVStack
       - HandheldGPSBasic
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
       - Pickaxe
+      - AppraisalTool
+      - SheetRGlass
+      - Beaker
+      - Syringe
+      - LightTube
+      - LightBulb
+      - Bucket
+      - SprayBottle
+      - PowerCellSmall
+      - MicroManipulatorStockPart
+      - MatterBinStockPart
+      - CapacitorStockPart
+      - ConveyorBeltAssembly
+      - IntercomElectronics
+      - FirelockElectronics
+      - DoorElectronics
+      - AirAlarmElectronics
+      - FireAlarmElectronics
+      - MailingUnitElectronics
+      - APCElectronics
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
   - type: StaticPrice
     price: 800
 
@@ -159,29 +184,12 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
-      - LightTube
-      - LightBulb
-      - SheetSteel #these sheet recipe costs don't scale with upgrades
-      - SheetGlass1
-      - SheetRGlass
-      - SheetPlastic
-      - CableStack
-      - CableMVStack
-      - CableHVStack
       - PowerDrill
       - MiningDrill
-      - ConveyorBeltAssembly
-      - AppraisalTool
       - AnomalyScanner
       - AnomalyLocator
       - RCD
       - RCDAmmo
-      - HydroponicsToolScythe
-      - HydroponicsToolHatchet
-      - Clippers
-      - MiniHoe
-      - Shovel
-      - Spade
       - HandheldCrewMonitor
       - Scalpel
       - Retractor
@@ -198,42 +206,28 @@
       - PillCanister
       - ChemistryEmptyBottle01
       - Drone
-      - Flash
-      - MicroManipulatorStockPart
-      - MatterBinStockPart
-      - CapacitorStockPart
       - AdvancedCapacitorStockPart
       - AdvancedMatterBinStockPart
       - NanoManipulatorStockPart
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
       - PicoManipulatorStockPart
-      - FirelockElectronics
-      - DoorElectronics
-      - APCElectronics
-      - AirAlarmElectronics
-      - FireAlarmElectronics
-      - IntercomElectronics
-      - MailingUnitElectronics
       - SignalTimerElectronics
-      - Bucket
       - MopItem
+      - Holoprojector
+      - Mousetrap
+      - LightReplacer
+      - TrashBag
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
-      - SprayBottle
       - MegaSprayBottle
-      - FireExtinguisher
-      - KitchenKnife
-      - ButchCleaver
-      - FlashlightLantern
       - TimerTrigger
       - ChemicalPayload
       - FlashPayload
       - Signaller
       - SignalTrigger
       - VoiceTrigger
-      - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
       - WeaponPistolCHIMP
@@ -245,7 +239,9 @@
       - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
-      - Vape
+      - ClothingBackpackHolding
+      - ClothingBackpackSatchelHolding
+      - ClothingBackpackDuffelHolding
 
 - type: entity
   parent: Protolathe
@@ -271,16 +267,7 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
-      - FirelockElectronics
-      - DoorElectronics
-      - APCElectronics
-      - AirAlarmElectronics
-      - FireAlarmElectronics
-      - MailingUnitElectronics
-      - IntercomElectronics
       - SignalTimerElectronics
-      - SMESMachineCircuitboard
-      - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
@@ -492,16 +479,7 @@
       - ClothingHandsGlovesLatex
       - ClothingMaskSterile
       - DiseaseSwab
-      - Scalpel
-      - Retractor
-      - Cautery
-      - Drill
-      - Saw
-      - Hemostat
       - Beaker
-      - LargeBeaker
-      - CryostasisBeaker
-      - Dropper
       - Syringe
       - Implanter
       - PillCanister
@@ -518,6 +496,15 @@
     dynamicRecipes:
       - HandheldCrewMonitor
       - ClothingHandsGlovesNitrile
+      - CryostasisBeaker
+      - LargeBeaker
+      - Dropper
+      - Scalpel
+      - Retractor
+      - Cautery
+      - Drill
+      - Saw
+      - Hemostat
   - type: Machine
     board: MedicalTechFabCircuitboard
 

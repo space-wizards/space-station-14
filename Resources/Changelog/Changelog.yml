@@ -1,92 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Nanotrasen has cut budget towards Cryptobiolin inhibitors. Cryptobiolin
-      will now cause confusion and dizziness., type: Tweak}
-  id: 3268
-  time: '2023-03-27T01:03:06.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen is no longer allowing sensitive information, or nuclear
-      material to be transported through its crew arrivals shuttles. How? The same
-      system we use to kick people off the shuttle when it docks. The power of science!',
-    type: Fix}
-  id: 3269
-  time: '2023-03-27T01:53:27.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: rat servants can now be butchered for 1 rat meat., type: Tweak}
-  id: 3270
-  time: '2023-03-27T05:27:10.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: 'Added cardboard material, which can be used to craft big and small
-      boxes', type: Add}
-  - {message: Cardboard crates can now be ordered from cargo, type: Add}
-  id: 3271
-  time: '2023-03-27T23:04:25.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Power Drills can now fit in utility belts, type: Tweak}
-  id: 3272
-  time: '2023-03-27T23:35:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: The top menu in separated hud will now stretch with chat size., type: Tweak}
-  id: 3273
-  time: '2023-03-28T02:51:40.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Multiple uplink items have been re-priced, all around cheaper.', type: Tweak}
-  - {message: 'Syndicate jaws of life are faster, but bulkier, thanks to a redesign.',
-    type: Tweak}
-  - {message: 'The syndicate now includes innovative silencing technology with their
-      Cobra pistol, making it much quieter.', type: Tweak}
-  id: 3274
-  time: '2023-03-28T03:46:07.0000000+00:00'
-- author: 25203
-  changes:
-  - {message: Fixed a bug where airlock lights would not update when using a door
-      remote., type: Fix}
-  id: 3275
-  time: '2023-03-28T05:05:58.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Body bags no longer mispredict when folded while full., type: Fix}
-  id: 3276
-  time: '2023-03-28T05:43:36.0000000+00:00'
-- author: jjtParadox
-  changes:
-  - {message: Fixed the bureaucratic error event affecting fewer jobs than intended,
-    type: Fix}
-  id: 3277
-  time: '2023-03-28T11:58:14.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Changed the ahelp relay message to always be displayed at the bottom
-      of the window when the relay is enabled., type: Tweak}
-  id: 3278
-  time: '2023-03-28T21:27:22.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: 'It is and always has been "Gorlex". (What is "Gorlax"?)', type: Fix}
-  id: 3279
-  time: '2023-03-29T00:46:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Mugs are now named correctly., type: Fix}
-  id: 3280
-  time: '2023-03-29T02:28:41.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fixed skub sound existing., type: Fix}
-  id: 3281
-  time: '2023-03-29T07:24:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix votes overlapping the menu bar for the default game screen., type: Fix}
-  id: 3282
-  time: '2023-03-29T08:36:31.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix muzzle flash exceptions., type: Fix}
@@ -2896,3 +2808,94 @@ Entries:
       also natively stack when you try to insert them into storage., type: Add}
   id: 3767
   time: '2023-05-15T02:24:46.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: Returned the action hotkey numbers to their UI holding cells after mime
+      let them out., type: Fix}
+  id: 3768
+  time: '2023-05-15T03:45:56.0000000+00:00'
+- author: 08A
+  changes:
+  - {message: Added a shortcut to flip prototype in the construction menu, type: Add}
+  id: 3769
+  time: '2023-05-15T04:13:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Crystals can now deflect guns., type: Add}
+  id: 3770
+  time: '2023-05-15T05:21:06.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: The orb rolls., type: Tweak}
+  id: 3771
+  time: '2023-05-15T05:32:17.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: 'Rotting takes 10 minutes, up from 5.', type: Tweak}
+  id: 3772
+  time: '2023-05-15T15:52:31.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: slime puddles now slow you down by 25%, type: Add}
+  id: 3773
+  time: '2023-05-15T18:49:49.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The autolathe catalog has been expanded., type: Add}
+  - {message: You can now see what recipes a technology unlocks., type: Add}
+  - {message: The research console can now only select technologies from the specific
+      options given to the player., type: Tweak}
+  - {message: Technologies are now sorted into disciplines. Unlock all the techs in
+      a discipline to unlock higher tiered tech., type: Tweak}
+  id: 3774
+  time: '2023-05-15T20:17:31.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'After a terrible accident involving an unfortunately rotated circuit
+      board revision, the crew monitoring devices now should show the correct directions
+      again and shouldn''t be too harmful to look at for long periods of time.', type: Fix}
+  id: 3775
+  time: '2023-05-15T20:38:41.0000000+00:00'
+- author: SijyKijy
+  changes:
+  - {message: Fix out of range exception on `AddBodyPartCommand`, type: Fix}
+  - {message: Fix out of range exception on `RoleUnbanCommand`, type: Fix}
+  id: 3776
+  time: '2023-05-15T21:24:03.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Cloner console now tells you to use the network configurator to link
+      it up., type: Fix}
+  id: 3777
+  time: '2023-05-15T22:14:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Cargo trade stations now offer better prices for artifacts that have
+      been explored thoroughly., type: Tweak}
+  id: 3778
+  time: '2023-05-15T22:44:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Fixed a bug where anomaly locators would constantly drain power, even
+      when turned off.', type: Fix}
+  - {message: Fixed a bug where anomaly locators would beep strangely quickly when
+      nearing anomalies or being turned on., type: Fix}
+  id: 3779
+  time: '2023-05-16T00:19:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug causing actions (toggle light, combat mode, etc) to not
+      update properly.', type: Fix}
+  id: 3780
+  time: '2023-05-16T03:00:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed toggle-light actions for flashlights and hardsuits not appearing.,
+    type: Fix}
+  id: 3781
+  time: '2023-05-16T03:26:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix vomit causing duplicate puddles., type: Fix}
+  id: 3782
+  time: '2023-05-16T03:26:12.0000000+00:00'
