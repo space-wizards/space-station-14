@@ -88,7 +88,9 @@ namespace Content.Server.PDA
             {
                 ActualOwnerName = pda.OwnerName,
                 IdOwner = pda.ContainedID?.FullName,
-                JobTitle = pda.ContainedID?.JobTitle
+                JobTitle = pda.ContainedID?.JobTitle,
+                StationAlertLevel = pda.StationAlertLevel,
+                StationAlertColor = pda.StationAlertColor
             };
 
             if (!_ui.TryGetUi(uid, PDAUiKey.Key, out var ui))
@@ -99,7 +101,7 @@ namespace Content.Server.PDA
             var showUplink = HasComp<StoreComponent>(uid) && IsUnlocked(uid);
 
             var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo,
-                pda.StationAlert, pda.StationName, showUplink, hasInstrument, address);
+                pda.StationName, showUplink, hasInstrument, address);
 
             _cartridgeLoader?.UpdateUiState(uid, state);
         }
@@ -169,22 +171,14 @@ namespace Content.Server.PDA
 
         private void UpdateAlertLevel(EntityUid uid, PDAComponent pda)
         {
-            var stationAlert = new StationAlert
-            {
-                Level = null,
-                Color = Color.White
-            };
-
             var stationUid = _stationSystem.GetOwningStation(uid);
             if (TryComp(stationUid, out AlertLevelComponent? alertComp) &&
                 alertComp.AlertLevels != null)
             {
-                stationAlert.Level = alertComp.CurrentLevel;
+                pda.StationAlertLevel = alertComp.CurrentLevel;
                 if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
-                    stationAlert.Color = details.Color;
+                    pda.StationAlertColor = details.Color;
             }
-
-            pda.StationAlert = stationAlert;
         }
 
         private string? GetDeviceNetAddress(EntityUid uid)
