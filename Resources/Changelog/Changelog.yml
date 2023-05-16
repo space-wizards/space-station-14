@@ -1,16 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fixed skub sound existing., type: Fix}
-  id: 3281
-  time: '2023-03-29T07:24:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix votes overlapping the menu bar for the default game screen., type: Fix}
-  id: 3282
-  time: '2023-03-29T08:36:31.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix muzzle flash exceptions., type: Fix}
   id: 3283
   time: '2023-03-29T08:50:54.0000000+00:00'
@@ -2898,3 +2888,14 @@ Entries:
       update properly.', type: Fix}
   id: 3780
   time: '2023-05-16T03:00:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed toggle-light actions for flashlights and hardsuits not appearing.,
+    type: Fix}
+  id: 3781
+  time: '2023-05-16T03:26:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix vomit causing duplicate puddles., type: Fix}
+  id: 3782
+  time: '2023-05-16T03:26:12.0000000+00:00'
