@@ -10,15 +10,16 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
+  - PowerDrill #todo remove this once we have advanced tools
   - MiningDrill
   - OreProcessorMachineCircuitboard
 
 - type: technology
   id: AdvancedPowercells
+  name: research-technology-advanced-powercells
+  icon:
     sprite: Objects/Power/power_cells.rsi
     state: medium
-    sprite: 
-    state: icon
   discipline: Industrial
   tier: 1
   cost: 5000
@@ -146,20 +147,6 @@
   - PortableScrubberMachineCircuitBoard
 
 - type: technology
-  id: AdvancedToolsTechnology
-  name: research-technology-advanced-tools
-  icon:
-    sprite: Objects/Tools/welder_experimental.rsi
-    state: drill_bolt
-  discipline: Industrial
-  tier: 2
-  cost: 10000
-  recipeUnlocks:
-    - WelderIndustrialAdvanced
-    - PowerDrill
-    - JawsOfLife
-
-- type: technology
   id: SuperPowercells
   name: research-technology-super-powercells
   icon:
@@ -173,6 +160,20 @@
   technologyPrerequisites:
   - AdvancedPowercells
 
+- type: technology
+  id: AdvancedToolsTechnology
+  name: research-technology-advanced-tools
+  icon:
+    sprite: Objects/Tools/welder_experimental.rsi
+    state: drill_bolt
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+    - WelderIndustrialAdvanced
+    - PowerDrill
+    - JawsOfLife
+    
 # Tier 3
 
 - type: technology
