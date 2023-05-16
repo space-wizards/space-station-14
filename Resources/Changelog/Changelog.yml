@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Mugs are now named correctly., type: Fix}
-  id: 3280
-  time: '2023-03-29T02:28:41.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fixed skub sound existing., type: Fix}
@@ -2897,3 +2892,9 @@ Entries:
       nearing anomalies or being turned on., type: Fix}
   id: 3779
   time: '2023-05-16T00:19:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug causing actions (toggle light, combat mode, etc) to not
+      update properly.', type: Fix}
+  id: 3780
+  time: '2023-05-16T03:00:14.0000000+00:00'
