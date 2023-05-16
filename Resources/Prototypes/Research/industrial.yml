@@ -15,9 +15,9 @@
 
 - type: technology
   id: AdvancedPowercells
-  name: research-technology-advanced-powercells
-  icon:
-    sprite: Objects/Tools/welder_industrialadv.rsi
+    sprite: Objects/Power/power_cells.rsi
+    state: medium
+    sprite: 
     state: icon
   discipline: Industrial
   tier: 1
@@ -149,7 +149,7 @@
   id: AdvancedToolsTechnology
   name: research-technology-advanced-tools
   icon:
-    sprite: Objects/Tools/drill.rsi
+    sprite: Objects/Tools/welder_experimental.rsi
     state: drill_bolt
   discipline: Industrial
   tier: 2
