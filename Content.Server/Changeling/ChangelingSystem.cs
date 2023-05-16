@@ -34,18 +34,10 @@ using Robust.Server.Containers;
 namespace Content.Server.Changeling;
 public sealed partial class ChangelingSystem : EntitySystem
 {
-    //[Dependency] private readonly SharedActionsSystem _actionSystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
-    [Dependency] private readonly EntityManager _entMana = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly SharedImplanterSystem _implanterSystem = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -63,8 +55,6 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingComponent, ComponentStartup>(OnStartup);
 
-        SubscribeLocalEvent<ChangelingComponent, InstantActionEvent>(OnActionPerformed); // pra quando usar acao
-
         SubscribeLocalEvent<ChangelingComponent, AbsorbDNAActionEvent>(OnAbsorbAction);
 
         SubscribeLocalEvent<ChangelingComponent, AbsorbDNADoAfterEvent>(OnDoAfter);
@@ -77,7 +67,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingComponent, ChangelingTransformEvent>(OnTransform);
 
-        // Initialize abilities
+
     }
 
     private void OnArmBlade(EntityUid uid, ChangelingComponent component, ChangelingArmBladeEvent args)
@@ -179,17 +169,6 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         TryRegisterHumanoidData(uid, component);
 
-        // Fazer isto em outro lugar
-
-        // if (!TryComp<MindComponent>(uid, out var mindComp))
-        //     return;
-        // var themind = mindComp.Mind;
-        // if (themind is null)
-        //     return;
-        // var role = new TraitorRole(themind, _proto.Index<AntagPrototype>("Changeling"));
-        // themind.AddRole(role);
-
-
     }
 
     private void OnDoAfter(EntityUid uid, ChangelingComponent component, AbsorbDNADoAfterEvent args)
@@ -200,11 +179,6 @@ public sealed partial class ChangelingSystem : EntitySystem
         TryRegisterHumanoidData(uid, (EntityUid) args.Target,  component);
     }
 
-    // Acho que nao vou usar este
-    private void OnActionPerformed(EntityUid uid, ChangelingComponent component, InstantActionEvent args)
-    {
-    }
-
     private void OnAbsorbAction(EntityUid uid, ChangelingComponent component, AbsorbDNAActionEvent args)
     {
         StartAbsorbing(uid, args.Performer, args.Target, component);
@@ -212,9 +186,6 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     private void StartAbsorbing(EntityUid scope, EntityUid user, EntityUid target, ChangelingComponent comp)
     {
-        // se nao tiver mente, nao absorver
-        // if(!HasComp<MindComponent>(target))
-        //     return;
 
         if (!HasComp<HumanoidAppearanceComponent>(target))
         {
@@ -307,10 +278,6 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         tempNewHumanoid.EntityUid = childUid;
 
-        //tempNewHumanoid.EntityUid = target; // erradissimo, n e pra eu pegar uid do target, mas sim do novo spawn
-
-        //Dirty(user, userMeta); // TENTANDO FAZER FICAR DIRTY
-
         if (comp.DNAStrandBalance >= comp.DNAStrandCap)
         {
             var lastHumanoidData = comp.StoredHumanoids.Last();
@@ -326,21 +293,9 @@ public sealed partial class ChangelingSystem : EntitySystem
 
 
         _popup.PopupEntity(Loc.GetString("changeling-dna-obtained", ("target", target)), user, user);
-
-        // Coisas para mover para outro metodo
-        //userMeta.EntityName = targetMeta.EntityName;
-        //_humanoidSystem.CloneAppearance(target, user, targetAppearance, userAppearance);
-
-        // MELHOR: refatorar o MobChangeling, ao inves de fazer um mob especifico para ele, fazer um componente que diz se é ou não apenas
-        // isso facilitaria a troca de corpo, pq ai só precisaria criar um novo mob identico ao alvo e passar o componente de changeling pra ele com os valores
-        // if (TryPrototype(target, out var prototipo, targetMeta))
-        // {
-        //     var targetTransformComp = Transform(user);
-        //     var child = Spawn(prototipo.ID, targetTransformComp.Coordinates);
-        //
-        // }
     }
 
+    // TODO: refactor this to use a UI to choose who to transform to
     private void OnTransform(EntityUid uid, ChangelingComponent component, ChangelingTransformEvent args)
     {
 
@@ -362,7 +317,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         RetrievePausedEntity(uid, firstHumanoid, component);
     }
 
-    // TODO: passar as actions compradas, quantia de dinheiro, itens na mao como o armblade
+    // TODO: passar as actions compradas, quantia de dinheiro, itens na mao como o armblade, passar tambem o implante
     private EntityUid? SpawnPauseEntity(EntityUid user, HumanoidData targetHumanoid, ChangelingComponent originalChangelingComponent)
     {
         if(targetHumanoid.EntityPrototype == null ||
@@ -394,7 +349,6 @@ public sealed partial class ChangelingSystem : EntitySystem
         childHumanoidAppearance.EyeColor = targetAppearance.EyeColor;
         childHumanoidAppearance.Gender = targetAppearance.Gender;
         childHumanoidAppearance.HiddenLayers = targetAppearance.HiddenLayers;
-        //childHumanoidAppearance.Initial = targetAppearance.Initial;
         childHumanoidAppearance.MarkingSet = targetAppearance.MarkingSet;
         childHumanoidAppearance.PermanentlyHidden = targetAppearance.PermanentlyHidden;
         childHumanoidAppearance.Sex = targetAppearance.Sex;
@@ -405,13 +359,6 @@ public sealed partial class ChangelingSystem : EntitySystem
         childMeta.EntityName = targetHumanoid.MetaDataComponent.EntityName;
         childDna.DNA = targetHumanoid.Dna;
 
-        // _inventory.TransferEntityInventories(user, child);
-        // foreach (var hand in _hands.EnumerateHeld(user))
-        // {
-        //     _hands.TryDrop(user, hand, checkActionBlocker: false);
-        //     _hands.TryPickupAnyHand(child, hand);
-        // }
-
         var changelingComponent = EnsureComp<ChangelingComponent>(child);
 
         changelingComponent.ArmBladeActivated = originalChangelingComponent.ArmBladeActivated;
@@ -420,13 +367,6 @@ public sealed partial class ChangelingSystem : EntitySystem
         changelingComponent.ChemicalBalance = originalChangelingComponent.ChemicalBalance;
         changelingComponent.PointBalance = originalChangelingComponent.PointBalance;
         changelingComponent.ArmBladeMaxHands = originalChangelingComponent.ArmBladeMaxHands;
-
-        // EnsurePausesdMap();
-        // if (PausedMap != null)
-        // {
-        //     _transform.SetParent(child, transformChild, PausedMap.Value);
-        //     Logger.Info($"Entidade {child} spawnada e enviada para o mapa de pause {PausedMap.Value}");
-        // }
 
         SendToPausesMap(child, transformChild);
 
@@ -486,16 +426,9 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (TryComp<MindComponent>(user, out var mind) && mind.Mind != null)
             mind.Mind.TransferTo(child);
 
-
-        //EntityManager.DeleteEntity(user);
-
         SendToPausesMap(user, userTransform);
 
         Dirty(child);
-
-        // criar gameobject com os atributos de HumanoidData
-
-        //_humanoidSystem.CloneAppearance(target, user, targetAppearance, userAppearance);
     }
 
     private void SendToPausesMap(EntityUid uid, TransformComponent transform)
@@ -506,6 +439,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             return;
 
         _transform.SetParent(uid, transform, PausedMap.Value);
-        Logger.Info($"Entidade {uid} spawnada e enviada para o mapa de pause {PausedMap.Value}");
+        Logger.Info($"Entity {uid} spawned and sent to pauses map {PausedMap.Value}");
     }
 }
