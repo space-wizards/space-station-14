@@ -95,15 +95,15 @@ namespace Content.Client.PDA
             if (state.PDAOwnerInfo.ActualOwnerName != null)
             {
                 PdaOwnerLabel.SetMarkup(Loc.GetString("comp-pda-ui-owner",
-                    ("ActualOwnerName", state.PDAOwnerInfo.ActualOwnerName)));
+                    ("actualOwnerName", state.PDAOwnerInfo.ActualOwnerName)));
             }
 
 
             if (state.PDAOwnerInfo.IdOwner != null || state.PDAOwnerInfo.JobTitle != null)
             {
                 IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
-                    ("Owner",state.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
-                    ("JobTitle",state.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
+                    ("owner",state.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
+                    ("jobTitle",state.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
             }
             else
             {
@@ -111,29 +111,27 @@ namespace Content.Client.PDA
             }
 
             StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station",
-                ("Station",state.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
+                ("station",state.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
 
             var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
 
             StationTimeLabel.SetMarkup(Loc.GetString("comp-pda-ui-station-time",
                 ("time", stationTime.ToString("hh\\:mm\\:ss"))));
 
-            if (state.StationAlert.Level != null)
-            {
-                StationAlertLevelInstructions.SetMarkup(Loc.GetString("comp-pda-ui-station-alert-level-instructions",
-                        ("AlertLevelInstructions", Loc.GetString($"alert-level-{state.StationAlert.Level}-instructions"))));
-                StationAlertLevelLabel.SetMarkup(Loc.GetString("comp-pda-ui-station-alert-level",
-                    ("ColorLevel", state.StationAlert.Color),
-                    ("AlertLevel", Loc.GetString($"alert-level-{state.StationAlert.Level}"))));
-            }
-            else
-            {
-                StationAlertLevelLabel.SetMarkup(Loc.GetString("comp-pda-ui-station-alert-level",
-                    ("ColorLevel", "white"), ("AlertLevel", Loc.GetString("comp-pda-ui-unknown"))));
-                StationAlertLevelInstructions.SetMarkup(
-                    Loc.GetString("comp-pda-ui-station-alert-level-instructions",
-                    ("AlertLevelInstructions", Loc.GetString("comp-pda-ui-unknown"))));
-            }
+            var alertLevel = state.PDAOwnerInfo.StationAlertLevel;
+            var alertColor = state.PDAOwnerInfo.StationAlertColor;
+            var alertLevelKey = alertLevel != null ? $"alert-level-{alertLevel}" : "comp-pda-ui-unknown";
+
+            StationAlertLevelLabel.SetMarkup(Loc.GetString(
+                "comp-pda-ui-station-alert-level",
+                ("color", alertColor),
+                ("level", Loc.GetString(alertLevelKey))
+            ));
+
+            StationAlertLevelInstructions.SetMarkup(Loc.GetString(
+                "comp-pda-ui-station-alert-level-instructions",
+                ("instructions", Loc.GetString($"{alertLevelKey}-instructions")))
+            );
 
             AddressLabel.Text = state.Address?.ToUpper() ?? " - ";
 
