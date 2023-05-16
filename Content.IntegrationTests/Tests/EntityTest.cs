@@ -39,6 +39,7 @@ namespace Content.IntegrationTests.Tests
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p=>!p.Abstract)
+                    .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
                 foreach (var protoId in protoIds)
@@ -87,6 +88,7 @@ namespace Content.IntegrationTests.Tests
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p=>!p.Abstract)
+                    .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
                 foreach (var protoId in protoIds)
@@ -142,6 +144,15 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
+                var entityMan = IoCManager.Resolve<IEntityManager>();
+
+                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
+                var protoIds = prototypeMan
+                    .EnumeratePrototypes<EntityPrototype>()
+                    .Where(p => !p.Abstract)
+                    .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
+                    .Select(p => p.ID)
+                    .ToList();
                 foreach (var protoId in protoIds)
                 {
                     if (ignored.Contains(protoId))
@@ -193,6 +204,10 @@ namespace Content.IntegrationTests.Tests
                 "MapGrid",
                 "StationData", // errors when removed mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
+                "BlobFloorPlanBuilder", // Implodes if unconfigured.
+                "DebrisFeaturePlacerController", // Above.
+                "LoadedChunk", // Worldgen chunk loading malding.
+                "BiomeSelection", // Whaddya know, requires config.
             };
 
             var testEntity = @"
@@ -289,6 +304,10 @@ namespace Content.IntegrationTests.Tests
                 "MapGrid",
                 "StationData", // errors when deleted mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
+                "BlobFloorPlanBuilder", // Implodes if unconfigured.
+                "DebrisFeaturePlacerController", // Above.
+                "LoadedChunk", // Worldgen chunk loading malding.
+                "BiomeSelection", // Whaddya know, requires config.
             };
 
             var testEntity = @"
