@@ -37,3 +37,8 @@ anomaly-generator-charges = {$charges ->
    *[other] {$charges} заряды
 }
 anomaly-generator-announcement = Аномалия была создана!
+
+
+# Flavor text on the footer
+anomaly-generator-flavor-left = Аномалия может появиться внутри оператора
+anomaly-generator-flavor-right = v1.1
