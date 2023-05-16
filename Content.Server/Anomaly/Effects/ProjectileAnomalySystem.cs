@@ -86,6 +86,6 @@ public sealed class ProjectileAnomalySystem : EntitySystem
 
         comp.Damage *= severity;
 
-        _gunSystem.ShootProjectile(ent, direction, Vector2.Zero, uid, component.MaxProjectileSpeed * severity);
+        _gunSystem.ShootProjectile(ent, direction, Vector2.Zero, uid, uid, component.MaxProjectileSpeed * severity);
     }
 }

@@ -1,9 +1,9 @@
-using Content.Client.Clickable;
 using Content.Client.Gameplay;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.Physics;
 using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
@@ -18,6 +18,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
 
     public bool Enabled { get; set; }
 
@@ -34,6 +35,13 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         base.Initialize();
         SubscribeNetworkEvent<PredictTetherEvent>(OnPredictTether);
         SubscribeNetworkEvent<TetherGunToggleMessage>(OnTetherGun);
+        SubscribeLocalEvent<UpdateIsPredictedEvent>(OnUpdatePrediction);
+    }
+
+    private void OnUpdatePrediction(ref UpdateIsPredictedEvent ev)
+    {
+        if (ev.Uid == _dragging || ev.Uid == _tether)
+            ev.IsPredicted = true;
     }
 
     private void OnTetherGun(TetherGunToggleMessage ev)
@@ -43,22 +51,13 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
     private void OnPredictTether(PredictTetherEvent ev)
     {
-        if (_dragging != ev.Entity) return;
+        if (_dragging != ev.Entity || _tether == ev.Entity)
+            return;
 
+        var oldTether = _tether;
         _tether = ev.Entity;
-    }
-
-    public override void FrameUpdate(float frameTime)
-    {
-        base.FrameUpdate(frameTime);
-        if (!TryComp<PhysicsComponent>(_dragging, out var body)) return;
-
-        body.Predict = true;
-
-        if (TryComp<PhysicsComponent>(_tether, out var tetherBody))
-        {
-            tetherBody.Predict = true;
-        }
+        _physics.UpdateIsPredicted(oldTether);
+        _physics.UpdateIsPredicted(_tether);
     }
 
     public override void Update(float frameTime)
@@ -102,13 +101,6 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             return;
         }
 
-        body.Predict = true;
-
-        if (TryComp<PhysicsComponent>(_tether, out var tetherBody))
-        {
-            tetherBody.Predict = true;
-        }
-
         if (_lastMousePosition.Value.Position.EqualsApprox(mousePos.Position)) return;
 
         _lastMousePosition = mousePos;
@@ -123,10 +115,15 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     {
         if (_dragging == null) return;
 
+        var oldDrag = _dragging;
+        var oldTether = _tether;
         RaiseNetworkEvent(new StopTetherEvent());
         _dragging = null;
         _lastMousePosition = null;
         _tether = null;
+
+        _physics.UpdateIsPredicted(oldDrag);
+        _physics.UpdateIsPredicted(oldTether);
     }
 
     private void StartDragging(EntityUid uid, MapCoordinates coordinates)
@@ -138,5 +135,8 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             Entity = _dragging!.Value,
             Coordinates = coordinates,
         });
+
+        _physics.UpdateIsPredicted(uid);
+
     }
 }

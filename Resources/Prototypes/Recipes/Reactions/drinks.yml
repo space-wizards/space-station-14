@@ -534,8 +534,8 @@
       amount: 1
   products:
     ManlyDorf: 3
-- type: reaction
 
+- type: reaction
   id: Margarita
   reactants:
     Tequila:

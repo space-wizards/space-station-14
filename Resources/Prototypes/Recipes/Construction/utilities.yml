@@ -211,6 +211,23 @@
   icon:
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j1s
+  mirror: DisposalRouterFlipped
+
+- type: construction
+  hide: true
+  name: disposal router
+  description: A three-way router. Entities with matching tags get routed to the side.
+  id: DisposalRouterFlipped
+  graph: DisposalPipe
+  startNode: start
+  targetNode: routerflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j2s
+  mirror: DisposalRouter
 
 - type: construction
   name: disposal junction
@@ -225,6 +242,23 @@
   icon:
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j1
+  mirror: DisposalJunctionFlipped
+
+- type: construction
+  hide: true
+  name: disposal junction
+  description: A three-way junction. The arrow indicates where items exit.
+  id: DisposalJunctionFlipped
+  graph: DisposalPipe
+  startNode: start
+  targetNode: junctionflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j2
+  mirror: DisposalJunction
 
 - type: construction
   name: disposal Y junction
@@ -624,6 +658,25 @@
   icon:
     sprite: Structures/Piping/Atmospherics/gasfilter.rsi
     state: gasFilter
+  mirror: GasFilterFlipped
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  id: GasFilterFlipped
+  hide: true
+  name: gas filter
+  description: Very useful for filtering gases.
+  graph: GasTrinary
+  startNode: start
+  targetNode: filterflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+    state: gasFilterF
+  mirror: GasFilter
   conditions:
     - !type:TileNotBlocked {}
 
@@ -640,6 +693,25 @@
   icon:
     sprite: Structures/Piping/Atmospherics/gasmixer.rsi
     state: gasMixer
+  mirror: GasMixerFlipped
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  id: GasMixerFlipped
+  hide: true
+  name: gas mixer
+  description: Very useful for mixing gases.
+  graph: GasTrinary
+  startNode: start
+  targetNode: mixerflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gasmixer.rsi
+    state: gasMixerF
+  mirror: GasMixer
   conditions:
     - !type:TileNotBlocked {}
 
