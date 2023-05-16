@@ -6,3 +6,6 @@ store-ui-traitor-flavor = Copyright (C) NT -30643
 store-ui-traitor-warning = Operatives must lock their uplinks after use to avoid detection.
 
 store-withdraw-button-ui = Withdraw {$currency}
+
+activate-changeling-shop-action-name = Evolution Menu
+activate-changeling-shop-action-description = Choose the abilities that you will have.

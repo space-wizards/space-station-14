@@ -194,3 +194,27 @@
         - SubdermalImplant
         - HideContextMenu
         - MacroBomb
+
+#Changeling implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: ChangelingShopImplant
+  name: changeling shop implant
+  description: opens the changeling shop
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      permanent: true
+      implantAction: ActivateChangelingShop
+    - type: UserInterface
+      interfaces:
+      - key: enum.StoreUiKey.Key
+        type: StoreBoundUserInterface
+    - type: ActivatableUI
+      key: enum.StoreUiKey.Key
+    - type: Store
+      categories:
+      - ChangelingAbilities
+      currencyWhitelist:
+      - Points
