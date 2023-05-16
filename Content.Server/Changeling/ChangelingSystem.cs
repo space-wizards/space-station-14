@@ -3,7 +3,6 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Changeling;
 using Content.Shared.Interaction;
 using Robust.Shared.Player;
-using Content.Server.Changeling.Shop;
 using Content.Server.Humanoid;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
