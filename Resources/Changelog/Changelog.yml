@@ -1,10 +1,4 @@
 Entries:
-- author: QuietlyWhisper
-  changes:
-  - {message: CentCom has changed clothing suppliers. CentCom clothing will no longer
-      appear in wardrobe restock boxes from cargo., type: Fix}
-  id: 3288
-  time: '2023-03-30T16:15:10.0000000+00:00'
 - author: Skyedra
   changes:
   - {message: 'New game mode:  Oops, All Captains!', type: Add}
@@ -2906,3 +2900,8 @@ Entries:
     type: Tweak}
   id: 3787
   time: '2023-05-16T13:18:37.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 3 new markings for arachnids. Have fun!, type: Add}
+  id: 3788
+  time: '2023-05-16T15:26:29.0000000+00:00'
