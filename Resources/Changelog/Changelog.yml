@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Emergency shuttle FTL time is now randomised from 60 to 180 seconds.,
-    type: Tweak}
-  id: 3291
-  time: '2023-03-31T04:20:43.0000000+00:00'
 - author: furontier
   changes:
   - {message: NT brand advanced mops can now be researched., type: Add}
@@ -2905,3 +2899,9 @@ Entries:
   - {message: Nanotrasen has allocated more budget towards Saltern., type: Tweak}
   id: 3790
   time: '2023-05-16T22:53:47.0000000+00:00'
+- author: cath
+  changes:
+  - {message: 'Due to a rare budget increase, CBURN teams now have incendiary shells
+      instead of flares.', type: Fix}
+  id: 3791
+  time: '2023-05-17T00:36:24.0000000+00:00'
