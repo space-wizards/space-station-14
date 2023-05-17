@@ -18,7 +18,7 @@ namespace Content.Shared.Weapons.Misc;
 public abstract class SharedTetherGunSystem : EntitySystem
 {
     [Dependency] private   readonly INetManager _netManager = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private   readonly MobStateSystem _mob = default!;
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
     [Dependency] private   readonly SharedJointSystem _joints = default!;
@@ -124,7 +124,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
 
     private void OnTetherActivate(EntityUid uid, TetherGunComponent component, ActivateInWorldEvent args)
     {
-        StopTether(component);
+        StopTether(uid, component);
     }
 
     public void TryTether(EntityUid gun, EntityUid target, EntityUid? user, TetherGunComponent? component = null)
@@ -132,13 +132,13 @@ public abstract class SharedTetherGunSystem : EntitySystem
         if (!Resolve(gun, ref component))
             return;
 
-        if (!CanTether(component, target))
+        if (!CanTether(gun, component, target, user))
             return;
 
         StartTether(gun, component, target, user);
     }
 
-    private bool CanTether(TetherGunComponent component, EntityUid target)
+    protected virtual bool CanTether(EntityUid uid, TetherGunComponent component, EntityUid target, EntityUid? user)
     {
         if (HasComp<TetheredComponent>(target) || !TryComp<PhysicsComponent>(target, out var physics))
             return false;
@@ -158,7 +158,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         return true;
     }
 
-    private void StartTether(EntityUid gunUid, TetherGunComponent component, EntityUid target, EntityUid? user,
+    protected virtual void StartTether(EntityUid gunUid, TetherGunComponent component, EntityUid target, EntityUid? user,
         PhysicsComponent? targetPhysics = null, TransformComponent? targetXform = null)
     {
         if (!Resolve(target, ref targetPhysics, ref targetXform))
@@ -166,7 +166,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
 
         if (component.Tethered != null)
         {
-            StopTether(component, true);
+            StopTether(gunUid, component, true);
         }
 
         // Target updates
@@ -206,7 +206,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         Dirty(component);
     }
 
-    private void StopTether(TetherGunComponent component, bool transfer = false)
+    protected virtual void StopTether(EntityUid gunUid, TetherGunComponent component, bool transfer = false)
     {
         if (component.Tethered == null)
             return;

@@ -31,6 +31,12 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         _overlay.RemoveOverlay<TetherGunOverlay>();
     }
 
+    protected override bool CanTether(EntityUid uid, TetherGunComponent component, EntityUid target, EntityUid? user)
+    {
+        // Need powercells predicted sadly :<
+        return false;
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

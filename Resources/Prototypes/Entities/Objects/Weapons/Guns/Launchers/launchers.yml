@@ -153,11 +153,14 @@
 
 - type: entity
   name: tether gun
-  parent: BaseItem
+  parent:
+  - BaseItem
+  - PowerCellSlotMediumItem
   id: WeaponTetherGun
   description: Manipulates gravity around object to fling them at high velocities.
   components:
     - type: TetherGun
+    - type: PowerCellDraw
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
       layers:
