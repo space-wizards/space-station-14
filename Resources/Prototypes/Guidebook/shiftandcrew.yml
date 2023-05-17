@@ -1,4 +1,4 @@
-﻿- type: guideEntry
+- type: guideEntry
   id: Jobs
   name: guide-entry-jobs
   text: "/ServerInfo/Guidebook/Jobs.xml"
@@ -12,3 +12,8 @@
   id: Survival
   name: guide-entry-survival
   text: "/ServerInfo/Guidebook/Survival.xml"
+
+- type: guideEntry
+  id: Slang
+  name: guide-entry-slang
+  text: "/ServerInfo/Guidebook/Slang.xml"
