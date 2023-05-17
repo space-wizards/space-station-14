@@ -2669,7 +2669,6 @@ entities:
       type: Transform
     - devices:
       - 8954
-      - invalid
       - 8956
       - 852
       - 1027
@@ -2736,7 +2735,6 @@ entities:
       - 7456
       - 4783
       - 5698
-      - invalid
       type: DeviceList
   - uid: 9991
     components:
@@ -34163,7 +34161,6 @@ entities:
       type: Transform
     - devices:
       - 8954
-      - invalid
       - 8956
       - 852
       - 1027
