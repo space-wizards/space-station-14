@@ -1,53 +1,4 @@
 Entries:
-- author: QuietlyWhisper
-  changes:
-  - {message: CentCom has changed clothing suppliers. CentCom clothing will no longer
-      appear in wardrobe restock boxes from cargo., type: Fix}
-  id: 3288
-  time: '2023-03-30T16:15:10.0000000+00:00'
-- author: Skyedra
-  changes:
-  - {message: 'New game mode:  Oops, All Captains!', type: Add}
-  id: 3289
-  time: '2023-03-30T23:54:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: TRays are now clientside with a higher range., type: Tweak}
-  id: 3290
-  time: '2023-03-31T03:40:38.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Emergency shuttle FTL time is now randomised from 60 to 180 seconds.,
-    type: Tweak}
-  id: 3291
-  time: '2023-03-31T04:20:43.0000000+00:00'
-- author: furontier
-  changes:
-  - {message: NT brand advanced mops can now be researched., type: Add}
-  id: 3292
-  time: '2023-03-31T04:21:55.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Skub noise has been re-added., type: Add}
-  id: 3293
-  time: '2023-03-31T04:25:46.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added Plush Dion to spawn pools, type: Add}
-  id: 3294
-  time: '2023-03-31T04:30:06.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Added virology uniforms, type: Add}
-  - {message: Added clothes to the GeneDrobe, type: Add}
-  id: 3295
-  time: '2023-03-31T04:31:51.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Shuttle hyperspace start and end no longer cause early onset tinnitus,
-    type: Tweak}
-  id: 3296
-  time: '2023-03-31T04:32:19.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Bandanas and caps can now be butchered., type: Tweak}
@@ -2906,3 +2857,53 @@ Entries:
     type: Tweak}
   id: 3787
   time: '2023-05-16T13:18:37.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 3 new markings for arachnids. Have fun!, type: Add}
+  id: 3788
+  time: '2023-05-16T15:26:29.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Changed sexyclown mask icon, type: Tweak}
+  id: 3789
+  time: '2023-05-16T22:16:50.0000000+00:00'
+- author: EEASAS
+  changes:
+  - {message: Nanotrasen has allocated more budget towards Saltern., type: Tweak}
+  id: 3790
+  time: '2023-05-16T22:53:47.0000000+00:00'
+- author: cath
+  changes:
+  - {message: 'Due to a rare budget increase, CBURN teams now have incendiary shells
+      instead of flares.', type: Fix}
+  id: 3791
+  time: '2023-05-17T00:36:24.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed an error causing some textures/icons to not appear., type: Fix}
+  - {message: Fixed a bug that was causing some UI slowdown/lag over time., type: Fix}
+  id: 3792
+  time: '2023-05-17T00:38:28.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: No more shutting firelocks on your friends and family., type: Tweak}
+  id: 3793
+  time: '2023-05-17T06:37:38.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed admin logs next button not working for rounds older than the last
+      three., type: Fix}
+  - {message: Added a round's total log count to the admin logs UI., type: Add}
+  id: 3794
+  time: '2023-05-17T11:04:28.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: You can now make glue by heating a mixture of lube and slime., type: Tweak}
+  id: 3795
+  time: '2023-05-17T13:39:44.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: Syndicate R&D has greatly improved the explosion of the power sink.,
+    type: Tweak}
+  id: 3796
+  time: '2023-05-17T13:55:42.0000000+00:00'
