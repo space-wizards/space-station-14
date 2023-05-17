@@ -11,7 +11,7 @@ namespace Content.Server.Power.Components
         public CellChargerStatus Status;
 
         /// <summary>
-        /// The charge rate of the charger
+        /// The charge rate of the charger, in watts
         /// </summary>
 
         [DataField("chargeRate")]
