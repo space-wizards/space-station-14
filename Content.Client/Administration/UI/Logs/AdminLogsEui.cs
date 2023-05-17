@@ -70,6 +70,7 @@ public sealed class AdminLogsEui : BaseEui
 
     private void NextLogs()
     {
+        LogsControl.NextButton.Disabled = true;
         var request = new NextLogsRequest();
         SendMessage(request);
     }
