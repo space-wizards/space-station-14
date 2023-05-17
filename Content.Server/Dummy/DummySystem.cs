@@ -1,26 +1,12 @@
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Instruments;
-using Content.Server.Mind.Components;
 using Content.Server.Popups;
-using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Dummy;
-using Content.Shared.Popups;
-using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Content.Shared.Hands.Components;
 using Content.Server.Speech.Muting;
-using Content.Shared.Item;
-using Content.Shared.Interaction.Components;
-using Content.Shared.Hands;
 using Content.Shared.CombatMode;
 using Content.Shared.Actions;
-using Content.Server.Abilities.Mime;
-using Robust.Shared.Audio;
-using Content.Server.Magic.Events;
-using Content.Server.Chat.Systems;
 using Content.Shared.Stealth.Components;
-using Content.Shared.Ghost.Roles;
 
 namespace Content.Server.Dummy
 {
@@ -28,9 +14,6 @@ namespace Content.Server.Dummy
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
 
         public override void Initialize()
         {
@@ -38,7 +21,6 @@ namespace Content.Server.Dummy
 
             SubscribeLocalEvent<DummyComponent, DroppedEvent>(OnDropped);
             SubscribeLocalEvent<DummyComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<DummyComponent, TeleportDummyActionEvent>(OnTeleport);
         }
 
         private void OnUseInHand(EntityUid uid, DummyComponent component, UseInHandEvent args)
@@ -90,19 +72,6 @@ namespace Content.Server.Dummy
 
             AddComp<MutedComponent>(uid);
             RemComp<CombatModeComponent>(uid);
-            _actionsSystem.AddAction(uid, component.TeleportDummyAction, uid);
-
-
-            args.Handled = true;
-        }
-
-        private void OnTeleport(EntityUid uid, DummyComponent component, TeleportDummyActionEvent args)
-        {
-            if (!component.Enabled)
-                return;
-
-            AddComp<StealthComponent>(uid);
-            AddComp<StealthOnMoveComponent>(uid);
 
             args.Handled = true;
         }
