@@ -1,10 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Added virology uniforms, type: Add}
-  - {message: Added clothes to the GeneDrobe, type: Add}
-  id: 3295
-  time: '2023-03-31T04:31:51.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Shuttle hyperspace start and end no longer cause early onset tinnitus,
@@ -2908,3 +2902,8 @@ Entries:
   - {message: Added a round's total log count to the admin logs UI., type: Add}
   id: 3794
   time: '2023-05-17T11:04:28.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: You can now make glue by heating a mixture of lube and slime., type: Tweak}
+  id: 3795
+  time: '2023-05-17T13:39:44.0000000+00:00'
