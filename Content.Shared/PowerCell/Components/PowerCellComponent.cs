@@ -24,3 +24,8 @@ public enum PowerCellVisuals : byte
 {
     ChargeLevel
 }
+[Serializable, NetSerializable]
+public enum PowerCellSlotVisuals : byte
+{
+    Enabled
+}

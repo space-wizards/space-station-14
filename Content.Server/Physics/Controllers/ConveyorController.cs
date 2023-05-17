@@ -123,11 +123,11 @@ public sealed class ConveyorController : SharedConveyorController
         if (!xformQuery.TryGetComponent(uid, out var xform))
             return;
 
-        var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
+        var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, MapManager);
 
         if (beltTileRef != null)
         {
-            var intersecting = _lookup.GetEntitiesIntersecting(beltTileRef.Value);
+            var intersecting = Lookup.GetEntitiesIntersecting(beltTileRef.Value);
 
             foreach (var entity in intersecting)
             {
@@ -135,7 +135,7 @@ public sealed class ConveyorController : SharedConveyorController
                     continue;
 
                 if (physics.BodyType != BodyType.Static)
-                    _physics.WakeBody(entity, body: physics);
+                    Physics.WakeBody(entity, body: physics);
             }
         }
     }

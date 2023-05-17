@@ -5,7 +5,10 @@ using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Shared.Chat;
+using Content.Shared.Humanoid;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Salvage;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
@@ -24,6 +27,33 @@ public sealed partial class SalvageSystem
         SubscribeLocalEvent<FTLRequestEvent>(OnFTLRequest);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
         SubscribeLocalEvent<FTLCompletedEvent>(OnFTLCompleted);
+        SubscribeLocalEvent<ConsoleFTLAttemptEvent>(OnConsoleFTLAttempt);
+    }
+
+    private void OnConsoleFTLAttempt(ref ConsoleFTLAttemptEvent ev)
+    {
+        if (!TryComp<TransformComponent>(ev.Uid, out var xform) ||
+            !TryComp<SalvageExpeditionComponent>(xform.MapUid, out var salvage))
+        {
+            return;
+        }
+
+        // TODO: This is terrible but need bluespace harnesses or something.
+        var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
+
+        while (query.MoveNext(out var _, out var _, out var mobXform))
+        {
+            if (mobXform.MapUid != xform.MapUid)
+                continue;
+
+            // Okay they're on salvage, so are they on the shuttle.
+            if (mobXform.GridUid != ev.Uid)
+            {
+                ev.Cancelled = true;
+                ev.Reason = Loc.GetString("salvage-expedition-not-all-present");
+                return;
+            }
+        }
     }
 
     /// <summary>
@@ -116,9 +146,6 @@ public sealed partial class SalvageSystem
         // Run the basic mission timers (e.g. announcements, auto-FTL, completion, etc)
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.Completed)
-                continue;
-
             var remaining = comp.EndTime - _timing.CurTime;
 
             if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(30))
@@ -167,6 +194,11 @@ public sealed partial class SalvageSystem
                         break;
                     }
                 }
+            }
+
+            if (remaining < TimeSpan.Zero)
+            {
+                QueueDel(uid);
             }
         }
 
