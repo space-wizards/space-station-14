@@ -21,7 +21,7 @@ let
 in pkgs.mkShell {
   name = "space-station-14-devshell";
   buildInputs = [ pkgs.gtk3 ];
-  inputsFrom = dependencies;
+  packages = dependencies;
   shellHook = ''
     export GLIBC_TUNABLES=glibc.rtld.dynamic_sort=1
     export ROBUST_SOUNDFONT_OVERRIDE=${pkgs.soundfont-fluid}/share/soundfonts/FluidR3_GM2-2.sf2
