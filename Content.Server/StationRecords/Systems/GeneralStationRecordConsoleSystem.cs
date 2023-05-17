@@ -67,8 +67,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         foreach (var pair in consoleRecords)
         {
-            if (console != null && console.Filter != null
-                && IsSkippedRecord(console.Filter, pair.Item2))
+            if (console.Filter != null && IsSkippedRecord(console.Filter, pair.Item2))
             {
                 continue;
             }

@@ -957,8 +957,8 @@
   name: reagent-name-manly-dorf
   parent: BaseAlcohol
   desc: reagent-desc-manly-dorf
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: alcohol
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: rocksandstones
   color: "#664300"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/manlydorfglass.rsi

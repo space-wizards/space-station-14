@@ -53,6 +53,18 @@
     - giggling
     - giggled
 
+- type: emote
+  id: Sigh
+  category: Vocal
+  chatMessages: [sighs]
+  chatTriggers:
+    - sigh
+    - sighs
+    - sighed
+    - sigh.
+    - sighs.
+    - sighed.
+
 # hand emotes
 - type: emote
   id: Clap
