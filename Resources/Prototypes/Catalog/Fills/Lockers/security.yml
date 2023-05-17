@@ -1,4 +1,29 @@
 - type: entity
+  id: LockerWardenFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerWarden
+  components:
+  - type: StorageFill
+    contents:
+      - id: FlashlightSeclite
+      - id: WeaponDisabler
+        prob: 0.3
+      - id: ClothingHeadHatWarden
+      - id: ClothingHeadHatBeretWarden
+      - id: ClothingBeltSecurityFilled
+      - id: Flash
+      - id: ClothingEyesGlassesSecurity
+      - id: ClothingHeadsetAltSecurity
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingShoesBootsJack
+      - id: ClothingOuterCoatWarden
+      - id: ClothingOuterWinterWarden
+      - id: RubberStampWarden
+      - id: DoorRemoteArmory
+      - id: ClothingOuterHardsuitWarden
+      - id: HoloprojectorSecurity
+
+- type: entity
   id: LockerWardenFilled
   suffix: Filled
   parent: LockerWarden
@@ -20,7 +45,6 @@
       - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
       - id: DoorRemoteArmory
-      - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
 
 - type: entity
