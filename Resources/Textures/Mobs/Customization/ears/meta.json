@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ears_wolf",
+      "directions": 4
+    },
+    {
+      "name": "ears_big",
+      "directions": 4
+    }
+  ]
+}

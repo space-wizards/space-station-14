@@ -1,0 +1,89 @@
+- type: marking
+  id: WolfEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Canine]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+    layers:
+      ears_cat_inner:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/canine.rsi
+    state: ears_wolf
+  - sprite: Mobs/Customization/canine.rsi
+    state: ears_wolf_inner
+
+- type: marking
+  id: BigEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Canine]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+    layers:
+      ears_cat_inner:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/canine.rsi
+    state: ears_big
+  - sprite: Mobs/Customization/canine.rsi
+    state: ears_big_inner
+
+- type: marking
+  id: CanineTailHusky
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Canine]
+  sprites:
+  - sprite: Mobs/Customization/canine.rsi
+    state: tail_husky
+
+- type: marking
+  id: CanineTailFox
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Canine]
+  sprites:
+  - sprite: Mobs/Customization/canine.rsi
+    state: tail_fox
+
+- type: marking
+  id: CanineSnoutHusky
+  bodyPart: Snout
+  markingCategory: Snout
+  forcedColoring: true
+  speciesRestriction: [Canine]
+  sprites:
+  - sprite: Mobs/Customization/canine.rsi
+    state: snout_husky
+
+- type: marking
+  id: CanineSnoutWolf
+  bodyPart: Snout
+  markingCategory: Snout
+  forcedColoring: true
+  speciesRestriction: [Canine]
+  sprites:
+  - sprite: Mobs/Customization/canine.rsi
+    state: snout_wolf
+
+- type: marking
+  id: CanineChestHusky
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Canine]
+  sprites:
+  - sprite: Mobs/Customization/canine.rsi
+    state: body_husky
+
