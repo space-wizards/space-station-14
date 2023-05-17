@@ -51,7 +51,7 @@ public sealed class AdminLogsEui : BaseEui
         };
     }
 
-    public int CurrentRoundId => EntitySystem.Get<GameTicker>().RoundId;
+    private int CurrentRoundId => EntitySystem.Get<GameTicker>().RoundId;
 
     public override async void Opened()
     {
@@ -59,7 +59,7 @@ public sealed class AdminLogsEui : BaseEui
 
         _adminManager.OnPermsChanged += OnPermsChanged;
 
-        var roundId = _filter.Round ?? EntitySystem.Get<GameTicker>().RoundId;
+        var roundId = _filter.Round ?? CurrentRoundId;
         await LoadFromDb(roundId);
     }
 
@@ -125,7 +125,7 @@ public sealed class AdminLogsEui : BaseEui
                     Limit = _clientBatchSize
                 };
 
-                var roundId = _filter.Round ??= EntitySystem.Get<GameTicker>().RoundId;
+                var roundId = _filter.Round ??= CurrentRoundId;
                 await LoadFromDb(roundId);
 
                 SendLogs(true);
