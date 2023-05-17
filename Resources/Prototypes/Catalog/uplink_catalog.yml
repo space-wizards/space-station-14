@@ -12,7 +12,7 @@
   - UplinkWeapons
 
 - type: listing
-  id: WeaponRifleAk
+  id: UplinkRifleAk
   name: uplink-rifle-ak-name
   description: uplink-rifle-ak-desc
   productEntity: WeaponRifleAk
