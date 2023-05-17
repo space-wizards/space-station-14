@@ -1,10 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Changed foam dart box sprite., type: Tweak}
-  - {message: Fixed some boxes not having icons., type: Fix}
-  id: 3299
-  time: '2023-03-31T04:46:07.0000000+00:00'
 - author: ficcialfaint
   changes:
   - {message: 'Added DNA for people. You can scan a blood puddle, vomit, glasses,
@@ -2906,3 +2900,8 @@ Entries:
   - {message: Adjust salvage crusher colour to be slightly more muted., type: Tweak}
   id: 3798
   time: '2023-05-17T15:11:17.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed visuals for cigarette packs and donut boxes, type: Fix}
+  id: 3799
+  time: '2023-05-17T19:19:24.0000000+00:00'
