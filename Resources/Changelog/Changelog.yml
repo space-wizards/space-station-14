@@ -1,11 +1,4 @@
 Entries:
-- author: ficcialfaint
-  changes:
-  - {message: 'Added DNA for people. You can scan a blood puddle, vomit, glasses,
-      glass shards and other liquid containers using forensic scanner to get DNA.
-      Drinking leaves DNA on items.', type: Add}
-  id: 3300
-  time: '2023-03-31T04:49:25.0000000+00:00'
 - author: MilenVolf
   changes:
   - {message: Wall recharges now work as intended, type: Fix}
@@ -2905,3 +2898,9 @@ Entries:
   - {message: Fixed visuals for cigarette packs and donut boxes, type: Fix}
   id: 3799
   time: '2023-05-17T19:19:24.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'The laws of physics smile on you! Tritium (thus Frezon) is easier to
+      make, at up to a 3:96 Plasma:Oxy ratio you''ll get some Tritium.', type: Tweak}
+  id: 3800
+  time: '2023-05-17T19:22:56.0000000+00:00'
