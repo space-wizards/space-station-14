@@ -33,7 +33,12 @@ namespace Content.Server.PowerSink
         [DataField("chargeFireSound")]
         public SoundSpecifier ChargeFireSound = new SoundPathSpecifier("/Audio/Effects/PowerSink/charge_fire.ogg");
 
-        [DataField("electricSound")]
-        public SoundSpecifier ElectricSound = new SoundPathSpecifier("/Audio/Effects/PowerSink/electric.ogg");
+        [DataField("electricSound")] public SoundSpecifier ElectricSound =
+            new SoundPathSpecifier("/Audio/Effects/PowerSink/electric.ogg")
+            {
+                Params = AudioParams.Default
+                    .WithVolume(15f) // audible even behind walls
+                    .WithRolloffFactor(10)
+            };
     }
 }
