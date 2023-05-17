@@ -50,9 +50,52 @@
     Glass: 100
 
 - type: latheRecipe
+  id: AnomalyLocator
+  result: AnomalyLocatorEmpty
+  completetime: 3
+  materials:
+    Steel: 400
+    Glass: 100
+
+- type: latheRecipe
   id: AnomalyScanner
   result: AnomalyScanner
   completetime: 2
   materials:
     Plastic: 200
     Glass: 150
+
+- type: latheRecipe
+  id: WeaponPistolCHIMP
+  result: WeaponPistolCHIMP
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 400
+
+- type: latheRecipe
+  id: ClothingBackpackHolding
+  result: ClothingBackpackHolding
+  completetime: 5
+  materials:
+    Steel: 1500
+    Plastic: 750
+    Plasma: 1000
+
+- type: latheRecipe
+  id: ClothingBackpackSatchelHolding
+  result: ClothingBackpackSatchelHolding
+  completetime: 5
+  materials:
+    Steel: 1500
+    Plastic: 750
+    Plasma: 1000
+
+- type: latheRecipe
+  id: ClothingBackpackDuffelHolding
+  result: ClothingBackpackDuffelHolding
+  completetime: 5
+  materials:
+    Steel: 1500
+    Plastic: 750
+    Plasma: 1000

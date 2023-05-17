@@ -1,47 +1,14 @@
 - type: machinePart
   id: Capacitor
+  name: machine-part-name-capacitor
   stockPartPrototype: CapacitorStockPart
 
 - type: machinePart
-  id: ScanningModule
-  stockPartPrototype: ScanningModuleStockPart
-
-- type: machinePart
   id: Manipulator
+  name: machine-part-name-manipulator
   stockPartPrototype: MicroManipulatorStockPart
 
 - type: machinePart
-  id: Laser
-  stockPartPrototype: MicroLaserStockPart
-
-- type: machinePart
   id: MatterBin
+  name: machine-part-name-matter-bin
   stockPartPrototype: MatterBinStockPart
-
-- type: machinePart
-  id: Ansible
-  stockPartPrototype: AnsibleSubspaceStockPart
-
-- type: machinePart
-  id: Filter
-  stockPartPrototype: FilterSubspaceStockPart
-
-- type: machinePart
-  id: Amplifier
-  stockPartPrototype: AmplifierSubspaceStockPart
-
-- type: machinePart
-  id: Treatment
-  stockPartPrototype: TreatmentSubspaceStockPart
-
-- type: machinePart
-  id: Analyzer
-  stockPartPrototype: AnalyzerSubspaceStockPart
-
-- type: machinePart
-  id: Crystal
-  stockPartPrototype: CrystalSubspaceStockPart
-
-- type: machinePart
-  id: Transmitter
-  stockPartPrototype: TransmitterSubspaceStockPart

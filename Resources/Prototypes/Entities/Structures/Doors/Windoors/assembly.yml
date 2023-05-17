@@ -13,13 +13,14 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,-0.2"
-      density: 40
-      mask:
-      - Impassable
-      - HighImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,-0.2"
+        density: 40
+        mask:
+        - Impassable
+        - HighImpassable
   - type: Anchorable
   - type: Pullable
   - type: Rotatable

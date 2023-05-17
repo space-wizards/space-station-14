@@ -13,7 +13,9 @@ namespace Content.Server.Objectives.Conditions
 
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
+            //todo shit of a fuck
             var entityMgr = IoCManager.Resolve<IEntityManager>();
+
             var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
             List<Traitor.TraitorRole> removeList = new();
 
@@ -23,7 +25,7 @@ namespace Content.Server.Objectives.Conditions
                 {
                     foreach (var condition in objective.Conditions)
                     {
-                        if (condition.GetType() == typeof(RandomTraitorProgressCondition))
+                        if (condition is RandomTraitorProgressCondition)
                         {
                             removeList.Add(traitor);
                         }

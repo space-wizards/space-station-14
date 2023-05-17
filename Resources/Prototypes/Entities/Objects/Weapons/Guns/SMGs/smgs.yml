@@ -102,9 +102,56 @@
   - type: Appearance
 
 - type: entity
+  name: Drozd
+  parent: BaseWeaponSubMachineGun
+  id: WeaponSubMachineGunDrozd
+  description: An excellent fully automatic Heavy SMG.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-0
+          map: ["enum.GunVisualLayers.Mag"]
+    - type: Clothing
+      sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+    - type: Gun
+      fireRate: 6
+      selectedMode: FullAuto
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+      availableModes:
+        - FullAuto
+    - type: ItemSlots
+      slots:
+        gun_magazine:
+          name: Magazine
+          startingItem: MagazinePistolSubMachineGun
+          insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+          ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+          priority: 2
+          whitelist:
+            tags:
+              - MagazinePistolSubMachineGun
+        gun_chamber:
+          name: Chamber
+          startingItem: CartridgePistol
+          priority: 1
+          whitelist:
+            tags:
+              - CartridgePistol
+    - type: MagazineVisuals
+      magState: mag
+      steps: 1
+      zeroVisible: true
+    - type: Appearance
+
+- type: entity
   name: Vector
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunVector
+  suffix: Deprecated use Drozd
   description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
   components:
   - type: Sprite
@@ -141,10 +188,6 @@
         whitelist:
           tags:
             - CartridgeMagnum
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -201,6 +244,32 @@
     zeroVisible: true
   - type: Appearance
 
+# Rubber
+- type: entity
+  name: Drozd
+  parent: WeaponSubMachineGunDrozd
+  id: WeaponSubMachineGunDrozdRubber
+  suffix: Non-Lethal
+  components:
+    - type: ItemSlots
+      slots:
+        gun_magazine:
+          name: Magazine
+          startingItem: MagazinePistolSubMachineGunRubber
+          insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+          ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+          priority: 2
+          whitelist:
+            tags:
+              - MagazinePistolSubMachineGun
+        gun_chamber:
+          name: Chamber
+          startingItem: CartridgePistolRubber
+          priority: 1
+          whitelist:
+            tags:
+              - CartridgePistol
+
 - type: entity
   name: Vector
   parent: WeaponSubMachineGunVector
@@ -226,7 +295,3 @@
         whitelist:
           tags:
             - CartridgeMagnum
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot

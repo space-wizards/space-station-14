@@ -5,7 +5,8 @@
   description: You gotta have money.
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Credit: 1
   - type: StaticPrice
     price: 0
@@ -20,12 +21,13 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - density: 30
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.35,-0.2,0.25,0.1"
-      mask:
-      - ItemMask
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
   - type: Appearance
     visuals:
     - type: StackVisualizer

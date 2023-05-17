@@ -1,108 +1,54 @@
-# Allowed
-#allowedTiles:
-#- FloorPlanetGrass
-#- FloorPlanetDirt
-#- FloorSnow
-#- FloorBasalt
-#- FloorAsteroidSand
-
-- type: biomeTemplate
+# Low value
+- type: biomeMarkerLayer
   id: OreTin
-  layers:
-    - !type:BiomeEntityLayer
-      threshold: 0.90
-      allowedTiles:
-        - FloorPlanetGrass
-        - FloorPlanetDirt
-        - FloorSnow
-        - FloorBasalt
-        - FloorAsteroidSand
-      noise:
-        seed: 100
-        noiseType: OpenSimplex2
-        frequency: 0.04
-        fractalType: None
-      entities:
-        - WallRockTin
+  proto: WallRockTin
+  entityMask: WallRock
+  maxCount: 5
+  groupCount: 10
+  radius: 4
 
 # Medium value
 # Gold
-- type: biomeTemplate
+- type: biomeMarkerLayer
   id: OreGold
-  layers:
-    - !type:BiomeEntityLayer
-      threshold: 0.95
-      allowedTiles:
-        - FloorPlanetGrass
-        - FloorPlanetDirt
-        - FloorSnow
-        - FloorBasalt
-        - FloorAsteroidSand
-      noise:
-        seed: 100
-        noiseType: OpenSimplex2
-        frequency: 0.04
-        fractalType: None
-      entities:
-        - WallRockGold
+  proto: WallRockGold
+  entityMask: WallRock
+  maxCount: 5
+  groupCount: 5
+  radius: 4
 
 # Silver
-- type: biomeTemplate
+- type: biomeMarkerLayer
   id: OreSilver
-  layers:
-    - !type:BiomeEntityLayer
-      threshold: 0.95
-      allowedTiles:
-        - FloorPlanetGrass
-        - FloorPlanetDirt
-        - FloorSnow
-        - FloorBasalt
-        - FloorAsteroidSand
-      noise:
-        seed: 100
-        noiseType: OpenSimplex2
-        frequency: 0.05
-        fractalType: None
-      entities:
-        - WallRockSilver
+  proto: WallRockSilver
+  entityMask: WallRock
+  maxCount: 5
+  groupCount: 5
+  radius: 4
 
 # High value
 # Plasma
-- type: biomeTemplate
+- type: biomeMarkerLayer
   id: OrePlasma
-  layers:
-    - !type:BiomeEntityLayer
-      threshold: 0.99
-      allowedTiles:
-        - FloorPlanetGrass
-        - FloorPlanetDirt
-        - FloorSnow
-        - FloorBasalt
-        - FloorAsteroidSand
-      noise:
-        seed: 100
-        noiseType: OpenSimplex2
-        frequency: 0.04
-        fractalType: None
-      entities:
-        - WallRockPlasma
+  proto: WallRockPlasma
+  entityMask: WallRock
+  maxCount: 2
+  groupCount: 5
+  radius: 4
 
 # Uranium
-- type: biomeTemplate
+- type: biomeMarkerLayer
   id: OreUranium
-  layers:
-    - !type:BiomeEntityLayer
-      threshold: 0.99
-      allowedTiles:
-        - FloorPlanetGrass
-        - FloorPlanetDirt
-        - FloorSnow
-        - FloorBasalt
-        - FloorAsteroidSand
-      noise:
-        seed: 100
-        noiseType: OpenSimplex2
-        frequency: 0.04
-        fractalType: None
-      entities:
-        - WallRockUranium
+  proto: WallRockUranium
+  entityMask: WallRock
+  maxCount: 2
+  groupCount: 5
+  radius: 4
+
+- type: biomeMarkerLayer
+  id: OreBananium
+  proto: WallRockBananium
+  entityMask: WallRock
+  maxCount: 2
+  groupCount: 5
+  radius: 4

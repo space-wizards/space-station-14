@@ -20,15 +20,11 @@
     CrateMaterialGlass: 1.0
     # Uncommon
     SuperCapacitorStockPart: 0.25
-    PhasicScanningModuleStockPart: 0.25
     PicoManipulatorStockPart: 0.25
-    UltraHighPowerMicroLaserStockPart: 0.25
     SuperMatterBinStockPart: 0.25
     # Rare
     QuadraticCapacitorStockPart: 0.10
-    TriphasicScanningModuleStockPart: 0.10
     FemtoManipulatorStockPart: 0.10
-    QuadUltraMicroLaserStockPart: 0.10
     BluespaceMatterBinStockPart: 0.10
 
 # Crates
@@ -60,7 +56,7 @@
   id: OreTin
   desc: Veins of steel
   loots:
-    - !type:BiomeTemplateLoot
+    - !type:BiomeMarkerLoot
       proto: OreTin
 
 # - Medium value
@@ -68,14 +64,14 @@
   id: OreGold
   desc: Veins of gold ore
   loots:
-    - !type:BiomeTemplateLoot
+    - !type:BiomeMarkerLoot
       proto: OreGold
 
 - type: salvageLoot
   id: OreSilver
   desc: Veins of silver ore
   loots:
-    - !type:BiomeTemplateLoot
+    - !type:BiomeMarkerLoot
       proto: OreSilver
 
 # - High value
@@ -83,12 +79,12 @@
   id: OrePlasma
   desc: Veins of plasma ore
   loots:
-    - !type:BiomeTemplateLoot
+    - !type:BiomeMarkerLoot
       proto: OrePlasma
 
 - type: salvageLoot
   id: OreUranium
   desc: Veins of uranium ore
   loots:
-    - !type:BiomeTemplateLoot
+    - !type:BiomeMarkerLoot
       proto: OreUranium

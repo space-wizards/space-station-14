@@ -19,13 +19,21 @@
       snapCardinals: true
       layers:
         - state: smes
+        - map: ["enum.SmesVisualLayers.Charge"]
+          state: "smes-og1" # -og0 does not exist
+          shader: unshaded
+          visible: false
+        - map: ["enum.SmesVisualLayers.Input"]
+          state: "smes-oc0"
+          shader: unshaded
+        - map: ["enum.SmesVisualLayers.Output"]
+          state: "smes-op1"
+          shader: unshaded
     - type: Smes
     - type: UpgradeBattery
       maxChargeMultiplier: 2
       baseMaxCharge: 8000000
     - type: Appearance
-      visuals:
-        - type: SmesVisualizer
     - type: Battery
       startingCharge: 0
     - type: ExaminableBattery

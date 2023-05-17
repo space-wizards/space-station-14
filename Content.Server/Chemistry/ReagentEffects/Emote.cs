@@ -25,7 +25,7 @@ public sealed class Emote : ReagentEffect
 
         var chatSys = args.EntityManager.System<ChatSystem>();
         if (ShowInChat)
-            chatSys.TryEmoteWithChat(args.SolutionEntity, EmoteId, hideGlobalGhostChat: true);
+            chatSys.TryEmoteWithChat(args.SolutionEntity, EmoteId, ChatTransmitRange.GhostRangeLimit);
         else
             chatSys.TryEmoteWithoutChat(args.SolutionEntity, EmoteId);
 

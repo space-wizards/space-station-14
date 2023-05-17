@@ -43,9 +43,11 @@ namespace Content.Client.Medical.CrewMonitoring
             }
         }
 
-        public void ShowSensors(List<SuitSensorStatus> stSensors, Vector2 localPosition, bool snap, float precision)
+        public void ShowSensors(List<SuitSensorStatus> stSensors, EntityCoordinates? monitorCoords, bool snap, float precision)
         {
             ClearAllSensors();
+
+            var monitorCoordsInStationSpace = _stationUid != null ? monitorCoords?.WithEntityId(_stationUid.Value, _entManager).Position : null;
 
             // TODO scroll container
             // TODO filter by name & occupation
@@ -103,7 +105,7 @@ namespace Content.Client.Medical.CrewMonitoring
 
                 // add users positions
                 // format: (x, y)
-                var box = GetPositionBox(sensor.Coordinates, localPosition, snap, precision);
+                var box = GetPositionBox(sensor.Coordinates, monitorCoordsInStationSpace ?? Vector2.Zero, snap, precision);
 
                 SensorsTable.AddChild(box);
                 _rowsContent.Add(box);
@@ -134,13 +136,16 @@ namespace Content.Client.Medical.CrewMonitoring
                     };
                 }
             }
+            // For debugging.
+            //if (monitorCoords != null)
+            //    NavMap.TrackedCoordinates.Add(monitorCoords.Value, (true, Color.FromHex("#FF00FF")));
         }
 
-        private BoxContainer GetPositionBox(EntityCoordinates? coordinates, Vector2 sensorPosition, bool snap, float precision)
+        private BoxContainer GetPositionBox(EntityCoordinates? coordinates, Vector2 monitorCoordsInStationSpace, bool snap, float precision)
         {
             var box = new BoxContainer() { Orientation = LayoutOrientation.Horizontal };
 
-            if (coordinates == null || !_entManager.TryGetComponent<TransformComponent>(_stationUid, out var xform))
+            if (coordinates == null || _stationUid == null)
             {
                 var dirIcon = new DirectionIcon()
                 {
@@ -152,8 +157,7 @@ namespace Content.Client.Medical.CrewMonitoring
             }
             else
             {
-                var position = coordinates.Value.ToMapPos(_entManager);
-                var local = xform.InvWorldMatrix.Transform(position);
+                var local = coordinates.Value.WithEntityId(_stationUid.Value, _entManager).Position;
 
                 var displayPos = local.Floored();
                 var dirIcon = new DirectionIcon(snap, precision)
@@ -163,7 +167,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 };
                 box.AddChild(dirIcon);
                 box.AddChild(new Label() { Text = displayPos.ToString() });
-                _directionIcons.Add((dirIcon, local - sensorPosition));
+                _directionIcons.Add((dirIcon, local - monitorCoordsInStationSpace));
             }
 
             return box;
@@ -173,10 +177,23 @@ namespace Content.Client.Medical.CrewMonitoring
         {
             // the window is separate from any specific viewport, so there is no real way to get an eye-rotation without
             // using IEyeManager. Eventually this will have to be reworked for a station AI with multi-viewports.
+            // (From the future: Or alternatively, just disable the angular offset for station AIs?)
+
+            // An offsetAngle of zero here perfectly aligns directions to the station map.
+            // Note that the "relative angle" does this weird inverse-inverse thing.
+            // Could recalculate it all in world coordinates and then pass in eye directly... or do this.
+            var offsetAngle = Angle.Zero;
+            if (_entManager.TryGetComponent<TransformComponent>(_stationUid, out var xform))
+            {
+                // Apply the offset relative to the eye.
+                // For a station at 45 degrees rotation, the current eye rotation is -45 degrees.
+                // TODO: This feels sketchy. Is there something underlying wrong with eye rotation?
+                offsetAngle = -(_eye.CurrentEye.Rotation + xform.WorldRotation);
+            }
 
             foreach (var (icon, pos) in _directionIcons)
             {
-                icon.UpdateDirection(pos, -_eye.CurrentEye.Rotation);
+                icon.UpdateDirection(pos, offsetAngle);
             }
         }
 
@@ -188,6 +205,7 @@ namespace Content.Client.Medical.CrewMonitoring
             }
 
             _rowsContent.Clear();
+            _directionIcons.Clear();
             NavMap.TrackedCoordinates.Clear();
         }
     }
