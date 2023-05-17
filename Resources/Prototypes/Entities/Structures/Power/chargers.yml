@@ -118,14 +118,6 @@
     slotId: charger_slot
   - type: Transform
     anchored: true
-    drawdepth: SmallObjects
-    snapCardinals: true
-    layers:
-    - map: ["enum.PowerChargerVisualLayers.Base"]
-      state: "empty"
-    - map: ["enum.PowerChargerVisualLayers.Light"]
-      state: "light-off"
-      shader: "unshaded"
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Appearance
