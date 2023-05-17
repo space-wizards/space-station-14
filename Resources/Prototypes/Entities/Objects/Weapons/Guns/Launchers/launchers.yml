@@ -169,6 +169,29 @@
 
 # Admeme
 - type: entity
+  name: tether gun
+  parent: BaseItem
+  id: WeaponTetherGunAdmin
+  suffix: admin
+  description: Manipulates gravity around object to fling them at high velocities.
+  components:
+    - type: TetherGun
+      canTetherAlive: true
+      canUnanchor: true
+      maxForce: 10000
+      massLimit: 10000
+      dampingRatio: 4
+      frequency: 20
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+      layers:
+        - state: base
+          map: [ "enum.GunVisualLayers.Base" ]
+        - state: base-unshaded
+          map: [ "enum.GunVisualLayers.BaseUnshaded" ]
+          shader: unshaded
+
+- type: entity
   name: meteor launcher
   parent: WeaponLauncherMultipleRocket
   id: WeaponLauncherAdmemeMeteorLarge

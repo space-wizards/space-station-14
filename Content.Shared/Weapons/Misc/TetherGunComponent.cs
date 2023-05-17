@@ -6,6 +6,9 @@ namespace Content.Shared.Weapons.Misc;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TetherGunComponent : Component
 {
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxDistance"), AutoNetworkedField]
+    public float MaxDistance = 10f;
+
     /// <summary>
     /// The entity the tethered target has a joint to.
     /// </summary>
@@ -24,14 +27,17 @@ public sealed partial class TetherGunComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("canUnanchor"), AutoNetworkedField]
     public bool CanUnanchor = false;
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("canTetherAlive"), AutoNetworkedField]
+    public bool CanTetherAlive = false;
+
     /// <summary>
     /// Max force between the tether entity and the tethered target.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("force"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxForce"), AutoNetworkedField]
     public float MaxForce = 200f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("frequency"), AutoNetworkedField]
-    public float Frequency = 5f;
+    public float Frequency = 10f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("dampingRatio"), AutoNetworkedField]
     public float DampingRatio = 2f;
@@ -40,7 +46,7 @@ public sealed partial class TetherGunComponent : Component
     /// Maximum amount of mass a tethered entity can have.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("massLimit"), AutoNetworkedField]
-    public float MassLimit = 50f;
+    public float MassLimit = 100f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound"), AutoNetworkedField]
     public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Weapons/weoweo.ogg")

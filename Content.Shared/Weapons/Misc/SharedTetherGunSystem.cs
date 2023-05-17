@@ -1,7 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Events;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -14,7 +17,8 @@ namespace Content.Shared.Weapons.Misc;
 
 public abstract class SharedTetherGunSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private   readonly INetManager _netManager = default!;
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private   readonly MobStateSystem _mob = default!;
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
     [Dependency] private   readonly SharedJointSystem _joints = default!;
@@ -33,6 +37,19 @@ public abstract class SharedTetherGunSystem : EntitySystem
         SubscribeLocalEvent<TetherGunComponent, ActivateInWorldEvent>(OnTetherActivate);
         SubscribeLocalEvent<TetherGunComponent, AfterInteractEvent>(OnTetherRanged);
         SubscribeAllEvent<RequestTetherMoveEvent>(OnTetherMove);
+
+        SubscribeLocalEvent<TetheredComponent, BuckleAttemptEvent>(OnTetheredBuckleAttempt);
+        SubscribeLocalEvent<TetheredComponent, UpdateCanMoveEvent>(OnTetheredUpdateCanMove);
+    }
+
+    private void OnTetheredBuckleAttempt(EntityUid uid, TetheredComponent component, ref BuckleAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
+    private void OnTetheredUpdateCanMove(EntityUid uid, TetheredComponent component, UpdateCanMoveEvent args)
+    {
+        args.Cancel();
     }
 
     public override void Update(float frameTime)
@@ -72,10 +89,12 @@ public abstract class SharedTetherGunSystem : EntitySystem
             return;
         }
 
-        var mapCoords = msg.Coordinates.ToMap(EntityManager, TransformSystem);
-
-        if (mapCoords.MapId != Transform(gunUid.Value).MapID)
+        if (!msg.Coordinates.TryDistance(EntityManager, TransformSystem, Transform(gunUid.Value).Coordinates,
+                out var distance) ||
+            distance > gun.MaxDistance)
+        {
             return;
+        }
 
         TransformSystem.SetCoordinates(gun.TetherEntity.Value, msg.Coordinates);
     }
@@ -130,7 +149,10 @@ public abstract class SharedTetherGunSystem : EntitySystem
         if (physics.Mass > component.MassLimit)
             return false;
 
-        if (_mob.IsAlive(target))
+        if (!component.CanTetherAlive && _mob.IsAlive(target))
+            return false;
+
+        if (TryComp<StrapComponent>(target, out var strap) && strap.BuckledEntities.Count > 0)
             return false;
 
         return true;
@@ -161,6 +183,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         _physics.WakeBody(target, body: targetPhysics);
         var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
         thrown.Thrower = gunUid;
+        _blocker.UpdateCanMove(target);
 
         // Invisible tether entity
         var tether = Spawn("TetherEntity", Transform(target).MapPosition);
@@ -191,7 +214,10 @@ public abstract class SharedTetherGunSystem : EntitySystem
         if (component.TetherEntity != null)
         {
             _joints.RemoveJoint(component.TetherEntity.Value, TetherJoint);
-            QueueDel(component.TetherEntity.Value);
+
+            if (_netManager.IsServer)
+                QueueDel(component.TetherEntity.Value);
+
             component.TetherEntity = null;
         }
 
@@ -212,6 +238,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         }
 
         RemCompDeferred<TetheredComponent>(component.Tethered.Value);
+        _blocker.UpdateCanMove(component.Tethered.Value);
         component.Tethered = null;
         Dirty(component);
     }
