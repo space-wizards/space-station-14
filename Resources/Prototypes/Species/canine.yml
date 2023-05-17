@@ -4,13 +4,10 @@
   roundStart: true
   prototype: MobCanine
   sprites: MobCanineSprites
-  defaultSkinTone: "#34a223"
+  defaultSkinTone: "#Afafaf"
   markingLimits: MobCanineMarkingLimits
   dollPrototype: MobCanineDummy
   skinColoration: Hues
-  maleFirstNames: names_husky_male
-  femaleFirstNames: names_husky_female
-  naming: FirstDashFirst
 
 - type: speciesBaseSprites
   id: MobCanineSprites
@@ -44,11 +41,9 @@
     Tail:
       points: 1
       required: true
-      defaultMarkings: [ LizardTailSmooth ]
     Snout:
       points: 1
       required: true
-      defaultMarkings: [ LizardSnoutRound ]
     HeadTop:
       points: 1
       required: false

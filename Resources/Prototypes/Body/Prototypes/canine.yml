@@ -1,5 +1,5 @@
 - type: body
-  name: "canine"
+  name: "Canine"
   id: Canine
   root: torso
   slots:
