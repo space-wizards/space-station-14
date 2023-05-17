@@ -1,9 +1,4 @@
 Entries:
-- author: MilenVolf
-  changes:
-  - {message: Wall recharges now work as intended, type: Fix}
-  id: 3301
-  time: '2023-03-31T05:53:07.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Update engine to 0.96.0.3, type: Tweak}
@@ -2904,3 +2899,9 @@ Entries:
       make, at up to a 3:96 Plasma:Oxy ratio you''ll get some Tritium.', type: Tweak}
   id: 3800
   time: '2023-05-17T19:22:56.0000000+00:00'
+- author: VigersRay
+  changes:
+  - {message: 'Added alert level, instruction and shift duration in PDA!', type: Add}
+  - {message: Fix uknown station name in PDA for latejoin!, type: Fix}
+  id: 3801
+  time: '2023-05-17T20:35:41.0000000+00:00'
