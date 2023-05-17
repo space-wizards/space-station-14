@@ -1,43 +1,97 @@
 ﻿using Content.Server.Chemistry.EntitySystems;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind.Components;
 using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.chaos;
+using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
+using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Zombies;
 
 namespace Content.Server.StationEvents.Metric;
 
 public sealed class CombatMetric : StationMetric<CombatMetricComponent>
 {
-    // public override void Initialize()
-    // {
-    //     base.Initialize();
-    // }
-
-    public override ChaosMetrics CalculateChaos(EntityUid uid, CombatMetricComponent component, ChaosMetricComponent metric,
+    public override ChaosMetrics CalculateChaos(EntityUid metric_uid, CombatMetricComponent component, ChaosMetricComponent metric,
         CalculateChaosEvent args)
     {
-        var chaos = new ChaosMetrics(new Dictionary<string, FixedPoint2>(){{"Jani", 0.0f}});
-
         // Add up the pain of all the puddles
-        var query = EntityQueryEnumerator<MindComponent>();
-        while (query.MoveNext(out var entity, out var mind))
+        var query = EntityQueryEnumerator<MindComponent, MobStateComponent, DamageableComponent>();
+        FixedPoint2 hostiles = 0.0f;
+        FixedPoint2 friendlies = 0.0f;
+
+        FixedPoint2 medical = 0.0f;
+        FixedPoint2 death = 0.0f;
+
+        var nukie_q = GetEntityQuery<NukeOperativeComponent>();
+        var zombie_q = GetEntityQuery<ZombieComponent>();
+
+        var humanoid_q = GetEntityQuery<HumanoidAppearanceComponent>();
+
+        while (query.MoveNext(out var uid, out var mind, out var mobState, out var damage))
         {
+            // Don't count anything that is mindless
             if (mind.Mind == null)
-            {
-                // Don't count anything that is mindless
                 continue;
+
+            if (mobState.CurrentState != MobState.Alive)
+                continue;
+
+            if (mind.Mind.HasAntag)
+            {
+                // This is an antag
+                if (nukie_q.TryGetComponent(uid, out var nukie))
+                {
+                    hostiles += component.HostileScore + component.NukieScore;
+                }
+                else if (zombie_q.TryGetComponent(uid, out var zombie))
+                {
+                    hostiles += component.HostileScore + component.ZombieScore;
+                }
+                else
+                {
+                    hostiles += component.HostileScore;
+                }
             }
+            else
+            {
+                // This is a friendly
+                // Quick filter for non-pets
+                if (!humanoid_q.TryGetComponent(uid, out var humanoid))
+                {
+                    continue;
+                }
 
-            bool antag = mind.Mind.HasAntag;
+                // Friendlies are good, so make a negative chaos score
+                friendlies -= component.FriendlyScore;
 
-
-            // See PricingSystem?
-            // Add a threat component for each mob?
-
-            chaos.ChaosDict["Jani"] += puddleChaos / component.baselineQty;
+                if (mobState.CurrentState == MobState.Dead)
+                {
+                    death += component.DeadScore;
+                }
+                else
+                {
+                    medical += damage.Damage.Total * component.MedicalMultiplier;
+                    if (mobState.CurrentState == MobState.Critical)
+                    {
+                        medical += component.CritScore;
+                    }
+                }
+            }
         }
 
+        var chaos = new ChaosMetrics(new Dictionary<string, FixedPoint2>()
+        {
+            {"CombatFriends", friendlies},
+            {"CombatHostiles", hostiles},
+            {"Combat", friendlies + hostiles},
+
+            {"Death", death},
+            {"Medical", medical},
+        });
         return chaos;
     }
 }

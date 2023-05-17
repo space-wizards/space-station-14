@@ -10,7 +10,7 @@ public sealed class JaniMetricComponent : Component
     ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
     ///     cref="ItemSlotsSystem"/>.
     /// </summary>
-    [DataField("puddles", readOnly: true)]
+    [DataField("puddles"), ViewVariables(VVAccess.ReadWrite)]
     public readonly Dictionary<string, FixedPoint2> Puddles =
         new()
         {
@@ -29,13 +29,13 @@ public sealed class JaniMetricComponent : Component
             { "SpaceLube", 30.0f },
         };
 
-    [DataField("puddleDefault", readOnly: true)]
+    [DataField("puddleDefault"), ViewVariables(VVAccess.ReadWrite)]
     public readonly FixedPoint2 PuddleDefault = 4.0f;
 
     /// <summary>
     ///     How many ml of the substance qualify as the point values described above
     /// </summary>
-    [DataField("baselineQty", readOnly: true)]
+    [DataField("baselineQty"), ViewVariables(VVAccess.ReadWrite)]
     public readonly float baselineQty = 100.0f;
 
 }

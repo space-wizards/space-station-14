@@ -6,36 +6,37 @@ namespace Content.Server.StationEvents.Metric.Components;
 [RegisterComponent, Access(typeof(CombatMetric))]
 public sealed class CombatMetricComponent : Component
 {
-    /// <summary>
-    ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
-    ///     cref="ItemSlotsSystem"/>.
-    /// </summary>
-    [DataField("puddles", readOnly: true)]
-    public readonly Dictionary<string, FixedPoint2> Puddles =
-        new()
-        {
-            { "Water", 2 },
-            { "SpaceCleaner", 2.0f },
+    [DataField("hostileScore"), ViewVariables(VVAccess.ReadWrite)]
+    public readonly FixedPoint2 HostileScore = 10.0f;
 
-            { "Slime", 10.0f },
-            { "Nutriment", 10.0f },
-            { "Sugar", 10.0f },
-            { "Ephedrine", 10.0f },
-            { "Ale", 10.0f },
-            { "Beer", 10.0f },
+    [DataField("nukieScore"), ViewVariables(VVAccess.ReadWrite)]
+    public readonly FixedPoint2 NukieScore = 30.0f;
 
-            { "Blood", 20.0f },
-            { "SpaceDrugs", 30.0f },
-            { "SpaceLube", 30.0f },
-        };
+    [DataField("zombieScore"), ViewVariables(VVAccess.ReadWrite)]
+    public readonly FixedPoint2 ZombieScore = 10.0f;
 
-    [DataField("puddleDefault", readOnly: true)]
-    public readonly FixedPoint2 PuddleDefault = 4.0f;
+    [DataField("friendlyScore"), ViewVariables(VVAccess.ReadWrite)]
+    public readonly FixedPoint2 FriendlyScore = 10.0f;
 
     /// <summary>
-    ///     How many ml of the substance qualify as the point values described above
+    ///     Cost per point of medical damage for friendly entities
     /// </summary>
-    [DataField("baselineQty", readOnly: true)]
-    public readonly float baselineQty = 100.0f;
+    [DataField("medicalMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    public readonly FixedPoint2 MedicalMultiplier = 0.2f;
+
+    /// <summary>
+    ///     Cost for friendlies who are in crit
+    /// </summary>
+    [DataField("critScore"), ViewVariables(VVAccess.ReadWrite)]
+    public readonly FixedPoint2 CritScore = 50.0f;
+
+    /// <summary>
+    ///     Cost for friendlies who are dead
+    /// </summary>
+    [DataField("deadScore"), ViewVariables(VVAccess.ReadWrite)]
+    public readonly FixedPoint2 DeadScore = 100.0f;
+
+    // [DataField("secScore), ViewVariables(VVAccess.ReadWrite)]
+    // public readonly FixedPoint2 SecScore = 10.0f;
 
 }

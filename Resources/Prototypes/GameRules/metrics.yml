@@ -11,9 +11,6 @@
   noSpawn: true
   components:
   - type: JaniMetric
-    weight: 10
-    startDelay: 30
-    duration: 35
     puddles:
       Water: 2.0
       SpaceCleaner: 2.0
@@ -26,3 +23,26 @@
       Blood: 20.0
       SpaceDrugs: 30.0
       SpaceLube: 30.0
+
+- type: entity
+  id: CombatMetric
+  parent: BaseMetric
+  noSpawn: true
+  components:
+    - type: CombatMetric
+      hostileScore: 10
+      nukieScore: 30
+      zombieScore: 10
+      FriendlyScore: 10
+
+- type: entity
+  id: DoorMetric
+  parent: BaseMetric
+  noSpawn: true
+  components:
+    - type: DoorMetric
+      EmagCost: 100
+      PowerCost: 10
+      PressureCost: 20
+      FireCost: 50
+

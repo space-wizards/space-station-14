@@ -39,5 +39,18 @@ namespace Content.Shared.Doors.Components
         /// </summary>
         [DataField("alarmAutoClose"), ViewVariables(VVAccess.ReadWrite)]
         public bool AlarmAutoClose = true;
+
+        /// <summary>
+        /// Dangerous Fire was detected behind this door on the last check
+        /// </summary>
+        [DataField("dangerFire")]
+        public bool DangerFire = false;
+
+        /// <summary>
+        /// Dangerous Pressure was detected behind this door on the last check
+        /// </summary>
+        [DataField("dangerPressure")]
+        public bool DangerPressure = false;
+
     }
 }

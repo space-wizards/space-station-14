@@ -15,13 +15,13 @@ public sealed class JaniMetric : StationMetric<JaniMetricComponent>
     //     base.Initialize();
     // }
 
-    public override ChaosMetrics CalculateChaos(EntityUid uid, JaniMetricComponent component, ChaosMetricComponent metric,
+    public override ChaosMetrics CalculateChaos(EntityUid metric_uid, JaniMetricComponent component, ChaosMetricComponent metric,
         CalculateChaosEvent args)
     {
-        var chaos = new ChaosMetrics(new Dictionary<string, FixedPoint2>(){{"Jani", 0.0f}});
 
         // Add up the pain of all the puddles
         var query = EntityQueryEnumerator<PuddleComponent, SolutionContainerManagerComponent>();
+        FixedPoint2 janiChaos = 0.0f;
         while (query.MoveNext(out var puddleUid, out var puddle, out var solutionMgr))
         {
             if (!_solutionContainerSystem.TryGetSolution(puddleUid, puddle.SolutionName, out var puddleSolution, solutionMgr))
@@ -34,9 +34,10 @@ public sealed class JaniMetric : StationMetric<JaniMetricComponent>
                 puddleChaos += substanceChaos * substance.Quantity;
             }
 
-            chaos.ChaosDict["Jani"] += puddleChaos / component.baselineQty;
+            janiChaos += puddleChaos / component.baselineQty;
         }
 
+        var chaos = new ChaosMetrics(new Dictionary<string, FixedPoint2>(){{"Jani", janiChaos}});
         return chaos;
     }
 }

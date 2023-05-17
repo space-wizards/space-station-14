@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.chaos;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.StationEvents.Components;
@@ -86,4 +87,11 @@ public sealed class StationEventComponent : Component
     /// </summary>
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? EndTime;
+
+    /// <summary>
+    /// Expected Chaos changes when this event occurs
+    /// </summary>
+    [DataField("chaos")]
+    public ChaosMetrics Chaos = new ChaosMetrics();
+
 }

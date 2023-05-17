@@ -84,6 +84,8 @@ namespace Content.Server.Doors.Systems
                 {
                     var (fire, pressure) = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery);
                     _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
+                    firelock.DangerFire = fire;
+                    firelock.DangerPressure = pressure;
                 }
             }
         }
