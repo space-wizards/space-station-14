@@ -8,7 +8,7 @@ using Robust.Shared.Players;
 namespace Content.Shared.Movement.Systems;
 
 /// <summary>
-/// Lets set zoom directly.
+/// Lets set zoom directly(with console and keys)
 /// </summary>
 public abstract class SharedContentEyeSystem : EntitySystem
 {
@@ -16,10 +16,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private const float ZoomMod = 1.6f;
     private Vector2 DefaultZoom { get; } = Vector2.One;
-    private static readonly Vector2 MinGhostZoom = new(
-        MathF.Pow(ZoomMod, -3),
-        MathF.Pow(ZoomMod, -3)
-    );
+    private static readonly Vector2 MinZoom = Vector2.One * MathF.Pow(ZoomMod, -3);
 
     private TimeSpan _lastTimeTagKeyZoomRequest;
 
@@ -40,9 +37,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
     {
         if (HasGhostZoom(args.SenderSession) is not ContentEyeComponent content)
-        {
             return;
-        }
 
         content.TargetZoom = msg.TargetZoom;
         Dirty(content);
@@ -173,7 +168,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     private void GhostZoom(ContentEyeComponent component, bool zoomIn)
     {
         var actual = CalcZoom(
-            zoomIn, component.TargetZoom, component.MaxZoom, MinGhostZoom);
+            zoomIn, component.TargetZoom, component.MaxZoom, MinZoom);
 
         if (actual.Equals(component.TargetZoom))
             return;
@@ -186,7 +181,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     private void UserZoom(SharedEyeComponent component, bool zoomIn)
     {
         var actual = CalcZoom(
-            zoomIn, component.Zoom, component.MaxUserZoom, component.MinUserZoom);
+            zoomIn, component.Zoom, DefaultZoom, MinZoom);
 
         if (actual.Equals(component.Zoom))
             return;
@@ -196,9 +191,11 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Sawmill.Debug($"Set user zoom to {actual}");
     }
 
-    private ContentEyeComponent? HasGhostZoom(ICommonSession? session)
+    public ContentEyeComponent? HasGhostZoom(ICommonSession? session, EntityUid? someUid = null)
     {
-        if (session?.AttachedEntity is EntityUid entityUid
+        var uid = session?.AttachedEntity ?? someUid;
+
+        if (uid is EntityUid entityUid
             && TryComp<ContentEyeComponent>(entityUid, out var ghostComp))
             return ghostComp;
         else

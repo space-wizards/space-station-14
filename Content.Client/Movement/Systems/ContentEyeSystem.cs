@@ -72,13 +72,16 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
             return;
         }
 
+        Logger.Debug("requst client client function!!!!!!!!!!!");
         UpdateEye(localPlayer.Value, content, eye, frameTime);
     }
 
     private void OnKeyBindZoomChange(KeyBindsTypes type)
     {
+        var delay = TimeSpan.FromSeconds(0.2f);
+
         if (_userZoomChangeRequestTimeOut != null
-            && _userZoomChangeRequestTimeOut + TimeSpan.FromSeconds(0.2f) > _gameTiming.CurTime)
+            && _userZoomChangeRequestTimeOut + delay > _gameTiming.CurTime)
         {
             return;
         }
