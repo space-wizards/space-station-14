@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Skub noise has been re-added., type: Add}
-  id: 3293
-  time: '2023-03-31T04:25:46.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added Plush Dion to spawn pools, type: Add}
@@ -2906,3 +2901,8 @@ Entries:
   - {message: Fixed a bug that was causing some UI slowdown/lag over time., type: Fix}
   id: 3792
   time: '2023-05-17T00:38:28.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: No more shutting firelocks on your friends and family., type: Tweak}
+  id: 3793
+  time: '2023-05-17T06:37:38.0000000+00:00'
