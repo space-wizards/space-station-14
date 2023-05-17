@@ -34,9 +34,7 @@ public sealed partial class ReplayObserverSystem
 
     private void OnUpdateCanMove(EntityUid uid, ReplayObserverComponent component, CancellableEntityEventArgs args)
     {
-        // TODO REPLAYS fix replay movement shit-code.
-        if (!uid.IsClientSide())
-            args.Cancel();
+        args.Cancel();
     }
 
     private void OnPullAttempt(EntityUid uid, ReplayObserverComponent component, PullAttemptEvent args)

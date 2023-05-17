@@ -45,6 +45,7 @@ public sealed partial class ReplayManager
         CurrentReplay = data;
         _entMan.EntitySysManager.GetEntitySystem<ReplayObserverSystem>().SetObserverPosition(default);
         RegisterCommands();
+        _controller.ContentEntityTickUpdate += TickUpdate;
     }
 
     [SuppressMessage("ReSharper", "UseAwaitUsing")]

@@ -13,13 +13,8 @@ using Robust.Shared.Utility;
 
 namespace Content.Replay.UI.Menu;
 
-// TODO REPLAYS maybe just remove this?
-// The necessity for this screen depends entirely on how replays end up being launched.
-// If its via an un-sandboxed standalone exe, this should just use a file selection dialog
-// If its a sandboxed exe, I guess the current %appdata% dropdown is fine?
-// If its via the launcher somehow.. uhhh.... I guess this isn't needed outside of debug?
 /// <summary>
-///     Main menu screen that is the first screen to be displayed when the game starts.
+///     Main menu screen for selecting and loading replays.
 /// </summary>
 public sealed class ReplayMainScreen : State
 {
@@ -114,7 +109,7 @@ public sealed class ReplayMainScreen : State
             _mainMenuControl.LoadButton.Disabled = true;
         }
 
-        // TODO REPLAYS
+        // TODO REPLAYS version information
         // Include engine, forkId, & forkVersion data with the client.
         // Currently these are server-exclusive CVARS.
         // If they differ from the current file, highlight the text in yellow (file may be loadable, but may cause issues).

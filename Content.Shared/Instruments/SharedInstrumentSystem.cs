@@ -38,11 +38,6 @@ public abstract class SharedInstrumentSystem : EntitySystem
         if (args.Current is not InstrumentState state)
             return;
 
-        // TODO REPLAYS REMOVE
-        // temporary to stop midi error spam while debugging replays.
-        return;
-
-
         if (state.Playing)
         {
             SetupRenderer(uid, true, instrument);

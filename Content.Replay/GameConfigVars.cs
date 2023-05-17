@@ -14,7 +14,6 @@ public sealed class GameConfigVars: CVars
     /// </remarks>
     public static readonly CVarDef<int> VisualEventThreshold = CVarDef.Create("replay.visual_event_threshold", 20);
 
-    // TODO REPLAYS scale with replay tickrate?
     /// <summary>
     ///     Maximum number of ticks before a new checkpoint tick is generated.
     /// </summary>

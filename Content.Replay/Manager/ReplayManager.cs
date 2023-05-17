@@ -74,7 +74,6 @@ public sealed partial class ReplayManager
         _confMan.OnValueChanged(GameConfigVars.CheckpointEntityStateThreshold, (value) => _checkpointEntityStateThreshold = value, true);
         _metaId = _factory.GetRegistration(typeof(MetaDataComponent)).NetID!.Value;
         _sawmill = Logger.GetSawmill("replay");
-        _controller.ContentEntityTickUpdate += TickUpdate;
 
         var metaId = _factory.GetRegistration(typeof(MetaDataComponent)).NetID;
         _metaCompNetId = metaId!.Value;

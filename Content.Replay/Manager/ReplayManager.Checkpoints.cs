@@ -50,20 +50,20 @@ public sealed partial class ReplayManager
         List<ReplayMessage> messages,
         Func<float, float, LoadReplayJob.LoadingState, bool, Task> callback)
     {
-        // Profiling with a 10 minute, 80-player replay, this function is about 50% entity spawning and 50% MergeState() & array copying.
-        // It only takes ~3 seconds on my machine, so optimising it might not be necessary? But it might still be worth caching, so:
-        // TODO REPLAYS serialize checkpoints after first loading a replay so they only need to be generated once?
-        //
-        // As to what this function actually does:
-        // given a set of states [0 to X], [X to X+1], [X+1 to X+2] ... we want to generate additional states like [0
-        // to x+60 ], [0 to x+120], etc. This will make scrubbing/jumping to a state much faster, but requires some
-        // pre-processing all of the states.
+        // Given a set of states [0 to X], [X to X+1], [X+1 to X+2]..., this method  will generate additional states
+        // like [0 to x+60 ], [0 to x+120], etc. This will make scrubbing/jumping to a state much faster, but requires
+        // some pre-processing all of the states.
         //
         // This whole mess of a function uses a painful amount of LINQ conversion. but sadly the networked data is
         // generally sent as a list of values, which makes sense if the list contains simple state delta data that all
         // needs to be applied. But here we need to inspect existing states and combine/merge them, so things generally
-        // need to be converted into a dictionary.But even with that requirement there are a bunch of performance
+        // need to be converted into a dictionary. But even with that requirement there are a bunch of performance
         // improvements to be made even without just de-LINQuifing or changing the networked data.
+        //
+        // Profiling with a 10 minute, 80-player replay, this function is about 50% entity spawning and 50% MergeState()
+        // & array copying. It only takes ~3 seconds on my machine, so optimising it might not be necessary, but there
+        // is still some low-hanging fruit, like:
+        // TODO REPLAYS serialize checkpoints after first loading a replay so they only need to be generated once.
         //
         // TODO REPLAYS Add dynamic checkpoints.
         // If we end up using long (e.g., 5 minute) checkpoint intervals, that might still mean that scrubbing/rewinding
@@ -214,7 +214,6 @@ public sealed partial class ReplayManager
         IReadOnlyCollection<ComponentChange> oldState,
         HashSet<ushort>? oldNetComps)
     {
-        // TODO REPLAYS De-linquify
         var combined = oldState.ToList();
         var newCompStates = newState.ComponentChanges.Value.ToDictionary(x => x.NetID);
 

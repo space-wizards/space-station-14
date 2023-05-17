@@ -35,6 +35,8 @@ public sealed partial class ReplayManager
         if (CurrentReplay.CurrentIndex + 1 >= CurrentReplay.States.Count)
             Playing = false;
 
+        // TODO REPLAYS do we actually need to do this?
+        // if not, we can probably remove all of the UpdateFullRep() calls
         _gameState.ResetPredictedEntities();
 
         if (Playing)

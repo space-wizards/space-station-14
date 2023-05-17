@@ -59,7 +59,8 @@ public sealed partial class ReplayManager
             _gameState.ApplyGameState(state, CurrentReplay.NextState);
             ProcessMessages(CurrentReplay.CurMessages, skipEffectEvents);
 
-            // TODO REPLAYS find a way to just block audio/midi from starting, instead of stopping it after every state application.
+            // TODO REPLAYS block audio
+            // Find a way to just block audio/midi from starting, instead of stopping it after every state application.
             StopAudio();
 
             DebugTools.Assert(CurrentReplay.LastApplied + 1 == state.ToSequence);
@@ -107,7 +108,7 @@ public sealed partial class ReplayManager
         _entMan.EntitySysManager.GetEntitySystem<ClientDirtySystem>().Reset();
         _entMan.EntitySysManager.GetEntitySystem<TransformSystem>().Reset();
 
-        // TODO REPLAYS add a proper custom chat control?
+        // TODO REPLAYS custom chat control
         // Maybe one that allows players to skip directly to players via their names?
         // I don't like having to just manipulate ChatUiController like this.
         _uiMan.GetUIController<ChatUIController>().History.RemoveAll(x => x.Item1 > _timing.CurTick);

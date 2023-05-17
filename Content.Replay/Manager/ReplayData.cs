@@ -22,7 +22,6 @@ public sealed class ReplayData
     public GameState? NextState => CurrentIndex + 1 < States.Count ? States[CurrentIndex + 1] : null;
     public ReplayMessage CurMessages => Messages[CurrentIndex];
 
-    // TODO REPLAYS figure out a way to undo prototype and resource uploading. Currently uploading disables time rewinding.
     /// <summary>
     ///     If true, blocks this rewinding time, probably due to resource/prototype uploads
     /// </summary>
