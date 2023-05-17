@@ -1,9 +1,4 @@
 Entries:
-- author: furontier
-  changes:
-  - {message: NT brand advanced mops can now be researched., type: Add}
-  id: 3292
-  time: '2023-03-31T04:21:55.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Skub noise has been re-added., type: Add}
@@ -2905,3 +2900,9 @@ Entries:
       instead of flares.', type: Fix}
   id: 3791
   time: '2023-05-17T00:36:24.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed an error causing some textures/icons to not appear., type: Fix}
+  - {message: Fixed a bug that was causing some UI slowdown/lag over time., type: Fix}
+  id: 3792
+  time: '2023-05-17T00:38:28.0000000+00:00'
