@@ -37,7 +37,7 @@ ent-CrateFunLightImplants = Ящик имплантов света
 ent-CrateFunParty = Ящик для вечеринок
     .desc = Все участники вечеринки ждут когда вы его откроете. Включает в себя подарки, напитки и даже торт.
 
-ent-CrateFunSyndicateSegway = Ящик с сегвеем синдиката
+ent-CrateFunSyndicateSegway = Ящик с сегвеем
     .desc = Ящик с двухколесным транспортным средством, которое поможет вам сбежать от сотрудников службы безопасности. Или нет.
 
 ent-CrateFunPirate = { ent-CratePirate }
