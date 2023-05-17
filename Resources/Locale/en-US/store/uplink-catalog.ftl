@@ -1,7 +1,4 @@
 # Weapons
-uplink-rifle-akms-name = AKMS
-uplink-rifle-akms-desc = A high-risk high-reward rifle, you shouldn't let the crew know you have this.
-
 uplink-pistol-viper-name = Viper
 uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Use pistol magazines (.35 auto).
 
