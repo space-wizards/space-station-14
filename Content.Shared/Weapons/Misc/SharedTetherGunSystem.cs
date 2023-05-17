@@ -6,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Throwing;
+using Content.Shared.Toggleable;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
@@ -20,6 +21,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
     [Dependency] private   readonly INetManager _netManager = default!;
     [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private   readonly MobStateSystem _mob = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
     [Dependency] private   readonly SharedJointSystem _joints = default!;
     [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
@@ -169,6 +171,10 @@ public abstract class SharedTetherGunSystem : EntitySystem
             StopTether(gunUid, component, true);
         }
 
+        TryComp<AppearanceComponent>(gunUid, out var appearance);
+        _appearance.SetData(gunUid, TetherVisualsStatus.Key, true, appearance);
+        _appearance.SetData(gunUid, ToggleableLightVisuals.Enabled, true, appearance);
+
         // Target updates
         TransformSystem.Unanchor(target, targetXform);
         component.Tethered = target;
@@ -237,6 +243,10 @@ public abstract class SharedTetherGunSystem : EntitySystem
             component.Stream = null;
         }
 
+        TryComp<AppearanceComponent>(gunUid, out var appearance);
+        _appearance.SetData(gunUid, TetherVisualsStatus.Key, false, appearance);
+        _appearance.SetData(gunUid, ToggleableLightVisuals.Enabled, false, appearance);
+
         RemCompDeferred<TetheredComponent>(component.Tethered.Value);
         _blocker.UpdateCanMove(component.Tethered.Value);
         component.Tethered = null;
@@ -247,5 +257,11 @@ public abstract class SharedTetherGunSystem : EntitySystem
     protected sealed class RequestTetherMoveEvent : EntityEventArgs
     {
         public EntityCoordinates Coordinates;
+    }
+
+    [Serializable, NetSerializable]
+    public enum TetherVisualsStatus : byte
+    {
+        Key,
     }
 }

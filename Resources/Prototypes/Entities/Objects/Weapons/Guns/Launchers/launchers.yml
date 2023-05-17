@@ -165,10 +165,26 @@
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
       layers:
         - state: base
-          map: [ "enum.GunVisualLayers.Base" ]
         - state: base-unshaded
-          map: [ "enum.GunVisualLayers.BaseUnshaded" ]
+          map: [ "unshaded" ]
           shader: unshaded
+          visible: false
+    - type: ToggleableLightVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
 
 # Admeme
 - type: entity
@@ -189,10 +205,26 @@
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
       layers:
         - state: base
-          map: [ "enum.GunVisualLayers.Base" ]
         - state: base-unshaded
-          map: [ "enum.GunVisualLayers.BaseUnshaded" ]
+          map: [ "unshaded" ]
           shader: unshaded
+          visible: false
+    - type: ToggleableLightVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
 
 - type: entity
   name: meteor launcher
