@@ -89,7 +89,7 @@ public sealed class AdminLogsEui : BaseEui
             Maximized = false,
             Title = "Admin Logs",
             Monitor = monitor,
-            Width = 1000,
+            Width = 1100,
             Height = 400
         });
 
