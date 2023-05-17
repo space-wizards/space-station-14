@@ -157,7 +157,7 @@
   - BaseItem
   - PowerCellSlotMediumItem
   id: WeaponTetherGun
-  description: Manipulates gravity around object to fling them at high velocities.
+  description: Manipulates gravity around objects to fling them at high velocities.
   components:
     - type: TetherGun
     - type: PowerCellDraw
@@ -192,7 +192,7 @@
   parent: BaseItem
   id: WeaponTetherGunAdmin
   suffix: admin
-  description: Manipulates gravity around object to fling them at high velocities.
+  description: Manipulates gravity around objects to fling them at high velocities.
   components:
     - type: TetherGun
       canTetherAlive: true
