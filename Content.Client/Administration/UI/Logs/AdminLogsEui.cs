@@ -117,6 +117,7 @@ public sealed class AdminLogsEui : BaseEui
 
         LogsControl.SetCurrentRound(s.RoundId);
         LogsControl.SetPlayers(s.Players);
+        LogsControl.UpdateCount(round: s.RoundLogs);
 
         if (!FirstState)
         {

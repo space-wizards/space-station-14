@@ -862,6 +862,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             }
         }
 
+        public async Task<int> CountAdminLogs(int round)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.AdminLog.CountAsync(log => log.RoundId == round);
+        }
+
         #endregion
 
         #region Whitelist
