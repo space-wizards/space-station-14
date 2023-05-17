@@ -1,5 +1,4 @@
 # Weapons
-
 uplink-rifle-ak-name = AKMS
 uplink-rifle-ak-desc = A high-risk high-reward rifle. Very conspicuous.
 
