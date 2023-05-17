@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added Plush Dion to spawn pools, type: Add}
-  id: 3294
-  time: '2023-03-31T04:30:06.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Added virology uniforms, type: Add}
@@ -2906,3 +2901,10 @@ Entries:
   - {message: No more shutting firelocks on your friends and family., type: Tweak}
   id: 3793
   time: '2023-05-17T06:37:38.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed admin logs next button not working for rounds older than the last
+      three., type: Fix}
+  - {message: Added a round's total log count to the admin logs UI., type: Add}
+  id: 3794
+  time: '2023-05-17T11:04:28.0000000+00:00'
