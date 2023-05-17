@@ -62,7 +62,7 @@ internal sealed class ChargerSystem : EntitySystem
 
     private void OnUpgradeExamine(EntityUid uid, ChargerComponent component, UpgradeExamineEvent args)
     {
-        args.AddPercentageUpgrade("charger-component-charge-rate", component.ChargeRate / component.BaseChargeRate); // AAAAAA MAKE FLUENT TEXT
+        args.AddPercentageUpgrade("charger-component-charge-rate", component.ChargeRate / component.BaseChargeRate);
     }
 
     private void OnPowerChanged(EntityUid uid, ChargerComponent component, ref PowerChangedEvent args)
