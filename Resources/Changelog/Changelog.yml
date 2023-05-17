@@ -1,18 +1,6 @@
 Entries:
 - author: Potato1234_x
   changes:
-  - {message: Bandanas and caps can now be butchered., type: Tweak}
-  id: 3297
-  time: '2023-03-31T04:33:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix docking config in some instances. This mainly affected Aspid with
-      the shuttle blocking the 4-port docking configuration for the emergency shuttle.,
-    type: Fix}
-  id: 3298
-  time: '2023-03-31T04:45:15.0000000+00:00'
-- author: Potato1234_x
-  changes:
   - {message: Changed foam dart box sprite., type: Tweak}
   - {message: Fixed some boxes not having icons., type: Fix}
   id: 3299
@@ -2907,3 +2895,14 @@ Entries:
     type: Tweak}
   id: 3796
   time: '2023-05-17T13:55:42.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'Too many people were drinking space glue puddles, so rationing has
+      been put in to effect (less space glue from scrubbers event).', type: Tweak}
+  id: 3797
+  time: '2023-05-17T15:10:41.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Adjust salvage crusher colour to be slightly more muted., type: Tweak}
+  id: 3798
+  time: '2023-05-17T15:11:17.0000000+00:00'
