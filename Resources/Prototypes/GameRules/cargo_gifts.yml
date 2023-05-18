@@ -47,7 +47,7 @@
     - type: CargoGiftsRule
       description: cargo-gift-eng
       sender: cargo-gift-default-sender
-      dest: cargo-gift-dest-engineering
+      dest: cargo-gift-dest-eng
       gifts:
         EngineeringCableBulk: 1
         AirlockKit: 1

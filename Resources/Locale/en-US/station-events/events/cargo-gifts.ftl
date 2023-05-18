@@ -11,6 +11,6 @@ cargo-gift-dest-janitor = Service Dept
 cargo-gift-pizza-small = A small pizza party
 cargo-gift-pizza-large = A large pizza party
 
-cargo-gift-engineering = Repair Materials
+cargo-gift-eng = Repair Materials
 cargo-gift-vending = Vending machines refills
 cargo-gift-cleaning = Cleaning equipment

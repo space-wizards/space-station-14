@@ -125,7 +125,7 @@
         amount: 2
 
 - type: entity
-  id: FoodSoftdrinksLarge
+  id: CrateFoodSoftdrinksLarge
   parent: CratePlastic
   components:
     - type: StorageFill
