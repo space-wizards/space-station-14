@@ -359,6 +359,7 @@
     sprite: Structures/Storage/Crates/piratechest.rsi
     layers:
     - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
@@ -368,13 +369,12 @@
     sprite: Structures/Storage/Crates/piratechest.rsi
     state: crate_icon
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: crate_open
-      state_closed: crate_door
+  - type: EntityStorageVisuals
+    stateDoorOpen: crate_open
+    stateDoorClosed: crate_door
 
 - type: entity
-  parent: CrateGeneric
+  parent: CratePirate
   id: CrateToyBox
   name: toy box
   suffix: Empty
@@ -384,6 +384,7 @@
     sprite: Structures/Storage/Crates/toybox.rsi
     layers:
     - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
@@ -392,8 +393,3 @@
   - type: Icon
     sprite: Structures/Storage/Crates/toybox.rsi
     state: crate_icon
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: crate_open
-      state_closed: crate_door
