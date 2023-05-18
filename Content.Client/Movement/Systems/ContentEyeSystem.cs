@@ -66,14 +66,20 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
         var localPlayer = _player.LocalPlayer?.ControlledEntity;
 
-        if (!TryComp<ContentEyeComponent>(localPlayer, out var content) ||
-            !TryComp<EyeComponent>(localPlayer, out var eye))
-        {
+        if (!TryComp<SharedEyeComponent>(localPlayer, out var content))
             return;
+
+        Vector2 targetZoom;
+        if (HasGhostZoom(null, localPlayer) is ContentEyeComponent ghostContent)
+        {
+            targetZoom = ghostContent.TargetZoom;
+        }
+        else
+        {
+            targetZoom = content.TargetZoom;
         }
 
-        Logger.Debug("requst client client function!!!!!!!!!!!");
-        UpdateEye(localPlayer.Value, content, eye, frameTime);
+        UpdateEye(content, targetZoom, frameTime);
     }
 
     private void OnKeyBindZoomChange(KeyBindsTypes type)

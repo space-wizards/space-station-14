@@ -38,7 +38,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
     {
         if (HasGhostZoom(args.SenderSession) is not ContentEyeComponent content)
             return;
-
         content.TargetZoom = msg.TargetZoom;
         Dirty(content);
     }
@@ -113,13 +112,13 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(component);
     }
 
-    protected void UpdateEye(EntityUid uid, ContentEyeComponent content, SharedEyeComponent eye, float frameTime)
+    protected void UpdateEye(SharedEyeComponent eye, Vector2 targetZoom, float frameTime)
     {
-        var diff = content.TargetZoom - eye.Zoom;
+        var diff = targetZoom - eye.Zoom;
 
         if (diff.LengthSquared < 0.0000001f)
         {
-            eye.Zoom = content.TargetZoom;
+            eye.Zoom = targetZoom;
             Dirty(eye);
             return;
         }
@@ -144,7 +143,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (component.Zoom.Equals(DefaultZoom))
             return;
 
-        component.Zoom = DefaultZoom;
+        component.TargetZoom = DefaultZoom;
         Dirty(component);
     }
 
@@ -167,12 +166,14 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void GhostZoom(ContentEyeComponent component, bool zoomIn)
     {
+        Logger.Debug($"current is {component.TargetZoom} +++++++++++");
         var actual = CalcZoom(
             zoomIn, component.TargetZoom, component.MaxZoom, MinZoom);
 
         if (actual.Equals(component.TargetZoom))
             return;
 
+        Logger.Debug($"actual is {actual}");
         component.TargetZoom = actual;
         Dirty(component);
         Sawmill.Debug($"Set target zoom to {actual}");
@@ -181,12 +182,12 @@ public abstract class SharedContentEyeSystem : EntitySystem
     private void UserZoom(SharedEyeComponent component, bool zoomIn)
     {
         var actual = CalcZoom(
-            zoomIn, component.Zoom, DefaultZoom, MinZoom);
+            zoomIn, component.TargetZoom, component.MaxZoom, MinZoom);
 
-        if (actual.Equals(component.Zoom))
+        if (actual.Equals(component.TargetZoom))
             return;
 
-        component.Zoom = actual;
+        component.TargetZoom = actual;
         Dirty(component);
         Sawmill.Debug($"Set user zoom to {actual}");
     }
