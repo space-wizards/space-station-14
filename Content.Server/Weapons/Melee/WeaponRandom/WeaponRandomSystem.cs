@@ -1,7 +1,6 @@
-using Content.Shared.Item;
-using Content.Shared.Light;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
+using Content.Shared.Cluwne;
 
 namespace Content.Server.Weapons.Melee.WeaponRandom;
 
@@ -19,10 +18,19 @@ public sealed class WeaponRandomSystem : EntitySystem
 
     private void OnMeleeHit(EntityUid uid, WeaponRandomComponent component, MeleeHitEvent args)
     {
-        if (_random.Prob(component.RandomDamageChance) && component.RandomDamage)
+        foreach (var entity in args.HitEntities)
         {
-            _audio.PlayPvs(component.DamageSound, uid);
-            args.BonusDamage = component.DamageBonus;
+            if (HasComp<CluwneComponent>(entity) && component.AntiCluwne)
+            {
+                _audio.PlayPvs(component.DamageSound, uid);
+                args.BonusDamage = component.DamageBonus;
+            }
+
+            if (_random.Prob(component.RandomDamageChance) && component.RandomDamage)
+            {
+                _audio.PlayPvs(component.DamageSound, uid);
+                args.BonusDamage = component.DamageBonus;
+            }
         }
     }
 }

@@ -26,6 +26,12 @@ internal sealed class WeaponRandomComponent : Component
     public bool RandomDamage = true;
 
     /// <summary>
+    /// If this is true then the weapon will have a unique interaction with cluwnes.
+    /// </summary>
+    [DataField("antiCluwne")]
+    public bool AntiCluwne = true;
+
+    /// <summary>
     /// Noise to play when the damage bonus occurs.
     /// </summary>
     [DataField("damageSound")]
