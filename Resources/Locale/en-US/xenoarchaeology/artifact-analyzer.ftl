@@ -7,7 +7,7 @@ analysis-console-print-tooltip-info = Print out the current information about th
 analysis-console-destroy-button = Extract
 analysis-console-destroy-button-info = Extract points from an artifact based on the explored nodes.
 
-analysis-console-info-no-scanner = No analyzer connected! Please connect one using a multitool.
+analysis-console-info-no-scanner = No analyzer connected! Please connect one using a network configurator.
 analysis-console-info-no-artifact = No artifact present! Place one on the pad then scan for information.
 analysis-console-info-ready = Systems operational. Ready to scan.
 

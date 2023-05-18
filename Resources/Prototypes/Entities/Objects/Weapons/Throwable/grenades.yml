@@ -168,12 +168,6 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Appearance
-    visuals:
-    - type: GenericEnumVisualizer
-      key: enum.Trigger.TriggerVisuals.VisualState
-      states:
-        enum.Trigger.TriggerVisualState.Primed: primed
-        enum.Trigger.TriggerVisualState.Unprimed: complete
   - type: GenericVisualizer
     visuals:
       enum.ConstructionVisuals.Key:
@@ -182,6 +176,10 @@
           wiredCase: { state: wired }
           caseWithTrigger: { state: no-payload }
           grenade: { state: complete }
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: complete }
   - type: StaticPrice
     price: 25
 
