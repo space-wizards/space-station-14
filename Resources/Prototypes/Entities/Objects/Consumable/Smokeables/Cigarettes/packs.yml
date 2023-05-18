@@ -122,7 +122,3 @@
     contents:
     - id: CigaretteSyndicate
       amount: 5
-  - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi

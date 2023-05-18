@@ -63,7 +63,7 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
 
     protected override int? GetCount(ContainerModifiedMessage msg, ItemCounterComponent itemCounter)
     {
-        if (_appearanceSystem.TryGetData<int>(msg.Entity, StackVisuals.Actual, out var actual))
+        if (_appearanceSystem.TryGetData<int>(msg.Container.Owner, StackVisuals.Actual, out var actual))
             return actual;
         return null;
     }
