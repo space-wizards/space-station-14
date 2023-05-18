@@ -242,6 +242,7 @@
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
       - ClothingBackpackDuffelHolding
+      - WeaponTetherGun
 
 - type: entity
   parent: Protolathe
