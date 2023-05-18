@@ -1,0 +1,84 @@
+- type: entity
+  id: FTLFire
+  name: fire
+  description: A rapidly growing, chemical combustion. WHY ARE YOU STOPPING TO LOOK AT IT?!
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      sprite: _FTL/fire.rsi
+      state: heat
+      drawdepth: Overdoors
+      netsync: false
+    - type: Appearance
+    #- type: KudzuVisuals
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+            - MidImpassable
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: IgniteOnCollide
+      fireStacks: 3
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+      reactions:
+        - reagents: [Water]
+          methods: [Touch]
+          effects:
+            - !type:HealthChange
+              scaled: true
+              damage:
+                types:
+                  Heat: 10
+    - type: PointLight
+      enabled: true
+      color: "#E25822"
+      radius: 15.0
+      energy: 1.0
+    - type: AtmosExposed
+    - type: Kudzu
+      growthTickChance: 0.3
+    - type: GrowingKudzu
+    - type: SlowContacts
+      walkSpeedModifier: 0.75
+      sprintSpeedModifier: 0.5
+    - type: EdgeSpreader
+    - type: NodeContainer
+      nodes:
+        kudzu:
+          !type:SpreaderNode
+          nodeGroupID: Spreader
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 2
