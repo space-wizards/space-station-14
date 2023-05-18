@@ -1,0 +1,86 @@
+- type: entity
+  parent: BaseStructure
+  id: FTLComputerPowerControl
+  name: power control computer
+  description: A computer with the ability to remotely toggle APCs.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Physics
+      bodyType: Static
+    - type: InteractionOutline
+    - type: Rotatable
+    - type: Anchorable
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 1000
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:ChangeConstructionNodeBehavior
+              node: monitorBroken
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Effects/glass_hit.ogg"
+    - type: ApcPowerReceiver
+      powerLoad: 200
+    - type: ExtensionCableReceiver
+    - type: ActivatableUIRequiresPower
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.ComputerVisuals.Powered:
+          computerLayerScreen:
+            True: { visible: true, shader: unshaded }
+            False: { visible: false }
+          computerLayerKeys:
+            True: { visible: true, shader: unshaded }
+            False: { visible: true, shader: shaded }
+    - type: LitOnPowered
+    - type: EmitSoundOnUIOpen
+      sound:
+        collection: Keyboard
+    - type: ContainerContainer
+      containers:
+        board: !type:Container
+          ents: [ ]
+    - type: StaticPrice
+      price: 400
+    - type: Sprite
+      sprite: Structures/Machines/computers.rsi
+      netsync: false
+      layers:
+        - map: ["computerLayerBody"]
+          state: computer
+        - map: ["computerLayerKeyboard"]
+          state: generic_keyboard
+        - map: ["computerLayerScreen"]
+          state: shuttle
+        - map: ["computerLayerKeys"]
+          state: generic_keys
+    - type: ActivatableUI
+      key: enum.PowerControlUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.PowerControlUiKey.Key
+          type: PowerControlBoundUserInterface
+    - type: PointLight
+      enabled: false
+      mask: /Textures/Effects/LightMasks/cone.png
+      autoRot: true
+      offset: "0, 0.4" # shine from the top, not bottom of the computer
+      castShadows: false
+      radius: 1.5
+      energy: 1.6
+      color: "#c94242"
+    - type: PowerControl
