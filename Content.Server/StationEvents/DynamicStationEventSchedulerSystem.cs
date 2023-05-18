@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Components;
@@ -7,6 +8,7 @@ using Content.Server.StationEvents.Components;
 using Content.Server.StationEvents.Metric;
 using Content.Shared.chaos;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Content.Shared.Prototypes;
@@ -20,14 +22,15 @@ namespace Content.Server.StationEvents;
 
 public sealed class RankedEvent
 {
-    public EntityPrototype Prototype;
-    public ChaosMetrics Chaos = new();
-    public ChaosMetrics Result = new();
-    public float Score = 0.0f;
+    public PossibleEvent PossibleEvent;
+    public ChaosMetrics Result;
+    public FixedPoint2 Score;
 
-    public RankedEvent(EntityPrototype prototype)
+    public RankedEvent(PossibleEvent possibleEvent, ChaosMetrics result, FixedPoint2 score)
     {
-        Prototype = prototype;
+        PossibleEvent = possibleEvent;
+        Result = result;
+        Score = score;
     }
 }
 
@@ -51,6 +54,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
+    [Dependency] public readonly GameTicker _gameTicker = default!;
 
     protected override void Added(EntityUid uid, DynamicStationEventSchedulerComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -69,6 +73,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
 
             if (!proto.HasComponent<GameRuleComponent>(_factory))
                 continue;
+
             if (!proto.TryGetComponent<StationEventComponent>(out var stationEvent, _factory))
                 continue;
 
@@ -87,6 +92,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
 
     protected override void ActiveTick(EntityUid uid, DynamicStationEventSchedulerComponent scheduler, GameRuleComponent gameRule, float frameTime)
     {
+        scheduler.BeatTime += frameTime;
         if (scheduler.TimeUntilNextEvent > 0)
         {
             scheduler.TimeUntilNextEvent -= frameTime;
@@ -96,11 +102,26 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
         var chaos = _metrics.CalculateChaos();
         _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"Station chaos is now {chaos.ToString()}");
 
-        var beat = DetermineNextBeat(scheduler, chaos);
-        var bestEvents = ChooseEvents(scheduler, beat, chaos);
+        var count = CountActivePlayers();
+        var beat = DetermineNextBeat(scheduler, chaos, count);
+        var bestEvents = ChooseEvents(scheduler, beat, chaos, count);
         // Run the best event here
+        if (bestEvents.Count > 0)
+        {
+            var chosenEvent = SelectBest(bestEvents, beat.RandomEventLimit);
+            _event.RunNamedEvent(chosenEvent.PossibleEvent.PrototypeId);
 
-        ResetTimer(scheduler);
+            // Don't select this event again for the current story (when SetupEvents is called again)
+            scheduler.PossibleEvents.Remove(chosenEvent.PossibleEvent);
+
+            // 3 - 6 minutes until the next event is considered.
+            scheduler.TimeUntilNextEvent = _random.NextFloat(120f, 360f);
+        }
+        else
+        {
+            // No events were run. Consider again in 30 seconds.
+            scheduler.TimeUntilNextEvent = 30f;
+        }
     }
 
     private PlayerCount CountActivePlayers()
@@ -126,8 +147,28 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
         return count;
     }
 
+    protected RankedEvent SelectBest(List<RankedEvent> bestEvents, int maxRandom)
+    {
+        var ranked =bestEvents.OrderBy(ev => ev.Score).Take(maxRandom).ToList();
 
-    private StoryBeat DetermineNextBeat(DynamicStationEventSchedulerComponent scheduler, ChaosMetrics chaos)
+        var events = String.Join(", ", ranked.Select(r => r.PossibleEvent.PrototypeId));
+        _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"Picked best events (in sequence) {events}");
+
+        foreach (var rankedEvent in ranked)
+        {
+            // I'd like a nice weighted random here but I'm lazy
+            if (_random.Prob(0.7f))
+            {
+                // Pick this event
+                return rankedEvent;
+            }
+        }
+
+        // Random dropped through all, just take best.
+        return ranked[0];
+    }
+
+    private StoryBeat DetermineNextBeat(DynamicStationEventSchedulerComponent scheduler, ChaosMetrics chaos, PlayerCount count)
     {
         // Potentially Complete CurrBeat
         if (scheduler.CurrStory.Count > 0)
@@ -138,6 +179,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
             if (scheduler.BeatTime > beat.MaxSecs)
             {
                 // Done with this beat (it's lasted too long)
+                _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"StoryBeat {beatName} complete. It's lasted {scheduler.BeatTime} out of a maximum of {beat.MaxSecs} seconds.");
             }
             else if (scheduler.BeatTime > beat.MinSecs)
             {
@@ -145,10 +187,12 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
                 if (!beat.EndIfAnyWorse.Empty && chaos.AnyWorseThan(beat.EndIfAnyWorse))
                 {
                     // Done with this beat (chaos exceeded set bad level)
+                    _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"StoryBeat {beatName} complete. Chaos exceeds {beat.EndIfAnyWorse} (EndIfAnyWorse).");
                 }
                 else if(!beat.EndIfAllBetter.Empty && chaos.AllBetterThan(beat.EndIfAllBetter))
                 {
                     // Done with this beat (chaos reached set good level)
+                    _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"StoryBeat {beatName} complete. Chaos better than {beat.EndIfAllBetter} (EndIfAllBetter).");
                 }
                 else
                 {
@@ -164,32 +208,39 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
             scheduler.CurrStory.RemoveAt(0);
         }
 
+        scheduler.BeatTime = 0.0f;
         if (scheduler.CurrStory.Count > 0)
         {
             // Return the next beat in the current story.
             var beatName = scheduler.CurrStory[0];
-            return scheduler.StoryBeats[beatName];
+            var beat = scheduler.StoryBeats[beatName];
+
+            _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"New StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
+            return beat;
         }
 
         // Need to find a new story
-        var players = CountActivePlayers();
         var stories = scheduler.Stories.Keys.ToList();
         _random.Shuffle(stories);
 
         foreach (var storyName in stories)
         {
             var story = scheduler.Stories[storyName];
-            if (story.MinPlayers > players.Players || story.MaxPlayers < players.Players)
+            if (story.MinPlayers > count.Players || story.MaxPlayers < count.Players)
             {
                 continue;
             }
 
             scheduler.CurrStory = story.Beats.ShallowClone();
             scheduler.CurrStoryName = storyName;
-            SetupEvents(scheduler, players);
+            SetupEvents(scheduler, count);
+            _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
 
             var beatName = scheduler.CurrStory[0];
-            return scheduler.StoryBeats[beatName];
+            var beat = scheduler.StoryBeats[beatName];
+
+            _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"First StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
+            return beat;
         }
 
         // Just use the fallback beat (that does exist, right!?)
@@ -197,20 +248,65 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
         return scheduler.StoryBeats[scheduler.FallbackBeatName];
     }
 
-    private List<RankedEvent> ChooseEvents(DynamicStationEventSchedulerComponent scheduler, StoryBeat beat, ChaosMetrics chaos)
+    private FixedPoint2 RankChaosDelta(ChaosMetrics chaos)
     {
-        throw new NotImplementedException();
+        // Just a sum of squares (trying to get close to 0 on every score)
+        //   Lower is better
+        return chaos.ChaosDict.Values.Sum(v => (float)(v * v));
     }
 
-    /// <summary>
-    /// Reset the event timer once the event is done.
-    /// </summary>
-    private void ResetTimer(DynamicStationEventSchedulerComponent scheduler)
+    private List<RankedEvent> ChooseEvents(DynamicStationEventSchedulerComponent scheduler, StoryBeat beat, ChaosMetrics chaos, PlayerCount count)
     {
-        // For testing, 30 secs.
-        scheduler.TimeUntilNextEvent = 30f;
+        // TODO : Potentially filter Chaos here using CriticalLevels & DangerLevels which force us to focus on
+        //        big problems (lots of hostiles, spacing) prior to smaller ones (food & drink)
+        var desiredChange = beat.Goal.ExclusiveSubtract(chaos);
+        var result = FilterAndScore(scheduler, chaos, desiredChange, count);
 
-        // // 4 - 12 minutes.
-        // scheduler.TimeUntilNextEvent = _random.NextFloat(240f, 720f);
+        if (result.Count > 0)
+        {
+            return result;
+        }
+
+        // Fall back to improving all scores (not just the ones the beat is focused on)
+        //   Generally this means reducing chaos (unspecified scores are desired to be 0).
+        var allDesiredChange = beat.Goal - chaos;
+        result = FilterAndScore(scheduler, chaos, allDesiredChange, count);
+
+        return result;
+    }
+
+    // Filter only to events which improve the chaos score in alignment with desiredChange.
+    //   Score them (lower is better) in how well they do this.
+    private List<RankedEvent> FilterAndScore(DynamicStationEventSchedulerComponent scheduler, ChaosMetrics chaos,
+        ChaosMetrics desiredChange, PlayerCount count)
+    {
+        var noEvent = RankChaosDelta(desiredChange);
+        var result = new List<RankedEvent>();
+
+        // Choose an event that specifically achieves chaos goals, focusing only on them.
+        foreach (var possibleEvent in scheduler.PossibleEvents)
+        {
+            // How much of the relevant chaos will be left after this event has occurred
+            var relevantChaosDelta = desiredChange.ExclusiveSubtract(possibleEvent.Chaos);
+            var rank = RankChaosDelta(relevantChaosDelta);
+
+            var allChaosAfter = chaos + possibleEvent.Chaos;
+
+            if (rank < noEvent)
+            {
+                // Look up this event's prototype and check it is ready to run.
+                var proto = _prototypeManager.Index<EntityPrototype>(possibleEvent.PrototypeId);
+
+                if (!proto.TryGetComponent<StationEventComponent>(out var stationEvent, _factory))
+                    continue;
+
+                if (!_event.CanRun(proto, stationEvent, count.Players, _gameTicker.RoundDuration()))
+                    continue;
+
+                result.Add(new RankedEvent(possibleEvent, allChaosAfter, rank));
+            }
+        }
+
+        return result;
     }
 }

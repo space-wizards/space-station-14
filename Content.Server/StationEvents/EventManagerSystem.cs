@@ -67,6 +67,17 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
+    /// Randomly runs a valid event.
+    /// </summary>
+    public string RunNamedEvent(string EventId)
+    {
+        var ent = GameTicker.AddGameRule(EventId);
+        var str = Loc.GetString("station-event-system-run-event",("eventName", ToPrettyString(ent)));
+        _sawmill.Info(str);
+        return str;
+    }
+
+    /// <summary>
     /// Randomly picks a valid event.
     /// </summary>
     public string? PickRandomEvent()

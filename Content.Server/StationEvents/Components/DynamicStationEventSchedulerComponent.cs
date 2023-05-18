@@ -26,17 +26,18 @@ public sealed class DynamicStationEventSchedulerComponent : Component
     [DataField("currChaos"), ViewVariables(VVAccess.ReadWrite)]
     public ChaosMetrics CurrChaos = new();
 
-    /// <summary>
-    /// The level of various chaos values that then dominate all other readings
-    /// </summary>
-    [DataField("criticalLevels"), ViewVariables(VVAccess.ReadWrite)]
-    public ChaosMetrics CriticalLevels = new();
-
-    /// <summary>
-    /// The level of various chaos values that then dominate somewhat
-    /// </summary>
-    [DataField("dangerLevels"), ViewVariables(VVAccess.ReadWrite)]
-    public ChaosMetrics DangerLevels = new();
+    // Todo: A basic version of Maslow's heirachy. Focus on Extreme needs first.
+    // /// <summary>
+    // /// The level of various chaos values that then dominate all other readings
+    // /// </summary>
+    // [DataField("criticalLevels"), ViewVariables(VVAccess.ReadWrite)]
+    // public ChaosMetrics CriticalLevels = new();
+    //
+    // /// <summary>
+    // /// The level of various chaos values that then dominate somewhat
+    // /// </summary>
+    // [DataField("dangerLevels"), ViewVariables(VVAccess.ReadWrite)]
+    // public ChaosMetrics DangerLevels = new();
 
     /// <summary>
     /// The story we are currently executing from stories
@@ -70,19 +71,17 @@ public sealed class DynamicStationEventSchedulerComponent : Component
     public string FallbackBeatName = "Peaceful";
 
     /// <summary>
-    /// A beat name we always use when we cannot find any stories to use.
-    /// </summary>
-    [DataField("fallbackBeatName"), ViewVariables(VVAccess.ReadWrite)]
-    public string FallbackBeatName = "Peaceful";
-
-    /// <summary>
     /// All the events that are allowed to run in the current story.
     /// </summary>
     [DataField("possibleEvents"), ViewVariables(VVAccess.ReadWrite)]
-    public List<PossibleEvent> PossibleEvents;
+    public List<PossibleEvent> PossibleEvents = new();
     // Could have Chaos multipliers here, or multipliers per player (so stories are harder with more players).
 }
 
+/// <summary>
+/// A series of named StoryBeats which we want to take the station through in the given sequence.
+/// Gated by various settings such as the number of players
+/// </summary>
 public sealed class Story
 {
     /// <summary>
@@ -110,6 +109,18 @@ public sealed class Story
     public List<String> Beats = new();
 }
 
+/// <summary>
+/// A point in the story of the station where the dynamic system tries to achieve a certian level of chaos
+/// for instance you want a battle (goal has lots of hostiles)
+/// then the next beat you might want a restoration of peace (goal has a balanced combat score)
+/// then you might want to have the station heal up (goal has low medical, atmos and power scores)
+///
+/// In each case you create a beat and string them together into a story.
+///
+/// EndIfAnyWorse might be used for a battle to trigger when the chaos has become high enough.
+/// endIfAllBetter is suitable for when you want the station to reach a given level of peace before you subject them to
+/// the next round of chaos.
+/// </summary>
 public sealed class StoryBeat
 {
     /// <summary>
@@ -147,6 +158,12 @@ public sealed class StoryBeat
     /// The number of seconds that we will remain in this state at maximum
     /// </summary>
     public float MaxSecs = 1200.0f;
+
+    /// <summary>
+    /// How many different events we choose from (at random) when performing this StoryBeat
+    /// </summary>
+    [DataField("randomEventLimit"), ViewVariables(VVAccess.ReadWrite)]
+    public int RandomEventLimit = 3;
 }
 
 public sealed class PossibleEvent

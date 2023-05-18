@@ -136,22 +136,41 @@ namespace Content.Shared.chaos
         }
 
         /// <summary>
-        ///     This adds the chaos values of some other <see cref="ChaosMetrics"/> to the current one without
+        ///     This adds the chaos values of some other <see cref="ChaosMetrics"/> without
         ///     adding any new chaos types.
         /// </summary>
-        /// <remarks>
-        ///     This is used for <see cref="DamageableComponent"/>s, such that only "supported" chaos types are
-        ///     actually added to the component. In most other instances, you can just use the addition operator.
-        /// </remarks>
-        public void ExclusiveAdd(ChaosMetrics other)
+        public ChaosMetrics ExclusiveAdd(ChaosMetrics other)
         {
+            ChaosMetrics newDamage = new(ChaosDict.ShallowClone());
+
             foreach (var (type, value) in other.ChaosDict)
             {
-                if (ChaosDict.ContainsKey(type))
+                if (newDamage.ChaosDict.ContainsKey(type))
                 {
-                    ChaosDict[type] += value;
+                    newDamage.ChaosDict[type] += value;
                 }
             }
+
+            return newDamage;
+        }
+
+        /// <summary>
+        ///     This subtracts the chaos values of some other <see cref="ChaosMetrics"/> without
+        ///     adding any new chaos types.
+        /// </summary>
+        public ChaosMetrics ExclusiveSubtract(ChaosMetrics other)
+        {
+            ChaosMetrics newDamage = new(ChaosDict.ShallowClone());
+
+            foreach (var (type, value) in other.ChaosDict)
+            {
+                if (newDamage.ChaosDict.ContainsKey(type))
+                {
+                    newDamage.ChaosDict[type] -= value;
+                }
+            }
+
+            return newDamage;
         }
 
         #region Operators
