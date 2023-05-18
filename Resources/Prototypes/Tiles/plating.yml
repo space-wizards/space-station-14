@@ -26,7 +26,3 @@
   itemDrop: PartRodMetal1
   heatCapacity: 10000
 
-# The final step in underplating's deprecation before it gets completely wiped from the codebase.
-- type: tileAlias
-  id: UnderPlating
-  target: Plating
