@@ -9,6 +9,30 @@
     sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
     layers:
     - state: closed
+    - state: cigar1
+      map: ["cigar1"]
+      visible: false
+    - state: cigar2
+      map: ["cigar2"]
+      visible: false
+    - state: cigar3
+      map: ["cigar3"]
+      visible: false
+    - state: cigar4
+      map: ["cigar4"]
+      visible: false
+    - state: cigar5
+      map: ["cigar5"]
+      visible: false
+    - state: cigar6
+      map: ["cigar6"]
+      visible: false
+    - state: cigar7
+      map: ["cigar7"]
+      visible: false
+    - state: cigar8
+      map: ["cigar8"]
+      visible: false
   - type: Storage
     capacity: 8
   - type: Item
@@ -21,13 +45,8 @@
   - type: ItemCounter
     count:
       tags: [Cigar]
-  - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: open
-  - type: StackVisuals
     composite: true
-    stackLayers:
+    layerStates:
     - cigar1
     - cigar2
     - cigar3
@@ -36,6 +55,10 @@
     - cigar6
     - cigar7
     - cigar8
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: open
 
 - type: entity
   id: CigarGoldCase

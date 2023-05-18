@@ -33,16 +33,19 @@
   components:
   - type: Stack
     stackType: Paper
-  - type: Sprite
-    state: paper_3
-  - type: Item
-    heldPrefix: paper
-  - type: Appearance
-  - type: StackVisuals
-    stackLayers:
+    baseLayer: base
+    layerStates:
     - paper
     - paper_2
     - paper_3
+  - type: Sprite
+    state: paper_3
+    layers:
+    - state: paper_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: paper
+  - type: Appearance
 
 - type: entity
   parent: SheetPaper
@@ -67,16 +70,19 @@
       Plasma: 100
   - type: Stack
     stackType: Plasma
-  - type: Sprite
-    state: plasma_3
-  - type: Item
-    heldPrefix: plasma
-  - type: Appearance
-  - type: StackVisuals
-    stackLayers:
+    baseLayer: base
+    layerStates:
     - plasma
     - plasma_2
     - plasma_3
+  - type: Sprite
+    state: plasma_3
+    layers:
+    - state: plasma_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: plasma
+  - type: Appearance
   - type: Extractable
     grindableSolutionName: plasma
   - type: SolutionContainerManager
@@ -117,16 +123,19 @@
       Plastic: 100
   - type: Stack
     stackType: Plastic
-  - type: Sprite
-    state: plastic_3
-  - type: Item
-    heldPrefix: plastic
-  - type: Appearance
-  - type: StackVisuals
-    stackLayers:
+    baseLayer: base
+    layerStates:
     - plastic
     - plastic_2
     - plastic_3
+  - type: Sprite
+    state: plastic_3
+    layers:
+    - state: plastic_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: plastic
+  - type: Appearance
 
 - type: entity
   parent: SheetPlastic
@@ -153,14 +162,17 @@
       Uranium: 100
   - type: Stack
     stackType: Uranium
-  - type: Sprite
-    state: uranium_3
-  - type: Appearance
-  - type: StackVisuals
-    stackLayers:
+    baseLayer: base
+    layerStates:
     - uranium
     - uranium_2
     - uranium_3
+  - type: Sprite
+    state: uranium_3
+    layers:
+    - state: uranium_3
+      map: ["base"]
+  - type: Appearance
   - type: Item
     heldPrefix: uranium
   - type: Extractable

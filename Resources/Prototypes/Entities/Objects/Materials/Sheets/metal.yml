@@ -41,16 +41,19 @@
       Steel: 100
   - type: Stack
     stackType: Steel
-  - type: Sprite
-    state: steel_3
-  - type: Item
-    heldPrefix: steel
-  - type: Appearance
-  - type: StackVisuals
-    stackLayers:
+    baseLayer: base
+    layerStates:
     - steel
     - steel_2
     - steel_3
+  - type: Sprite
+    state: steel_3
+    layers:
+    - state: plasteel_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: steel
+  - type: Appearance
   - type: FloorTile
     outputs:
     - Plating
@@ -79,16 +82,19 @@
       Plasteel: 100
   - type: Stack
     stackType: Plasteel
-  - type: Sprite
-    state: plasteel_3
-  - type: Item
-    heldPrefix: plasteel
-  - type: Appearance
-  - type: StackVisuals
-    stackLayers:
+    baseLayer: base
+    layerStates:
     - plasteel
     - plasteel_2
     - plasteel_3
+  - type: Sprite
+    state: plasteel_3
+    layers:
+    - state: plasteel_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: plasteel
+  - type: Appearance
 
 - type: entity
   parent: SheetPlasteel
