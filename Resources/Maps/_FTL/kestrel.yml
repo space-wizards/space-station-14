@@ -610,20 +610,18 @@ entities:
       pos: -3.5,-8.5
       parent: 2
       type: Transform
-  - uid: 481
-    components:
-    - name: 'Vacant Room #5 APC'
-      type: MetaData
-    - rot: 1.5707963267948966 rad
-      pos: -2.5,-3.5
-      parent: 2
-      type: Transform
   - uid: 482
     components:
     - name: Bridge APC
       type: MetaData
     - rot: 3.141592653589793 rad
       pos: 0.5,-2.5
+      parent: 2
+      type: Transform
+  - uid: 689
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -2.5,-4.5
       parent: 2
       type: Transform
 - proto: Bed
@@ -695,6 +693,22 @@ entities:
       type: EmitSoundOnCollide
 - proto: CableApcExtension
   entities:
+  - uid: 481
+    components:
+    - pos: -2.5,-4.5
+      parent: 2
+      type: Transform
+    - enabled: True
+      type: AmbientSound
+    - fixtures: {}
+      type: Fixtures
+  - uid: 605
+    components:
+    - pos: -1.5,-4.5
+      parent: 2
+      type: Transform
+    - fixtures: {}
+      type: Fixtures
   - uid: 606
     components:
     - pos: 1.5,-27.5
@@ -1350,29 +1364,6 @@ entities:
       type: Transform
     - fixtures: {}
       type: Fixtures
-  - uid: 689
-    components:
-    - pos: -2.5,-3.5
-      parent: 2
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 690
-    components:
-    - pos: -1.5,-3.5
-      parent: 2
-      type: Transform
-    - fixtures: {}
-      type: Fixtures
-  - uid: 691
-    components:
-    - pos: -0.5,-3.5
-      parent: 2
-      type: Transform
-    - fixtures: {}
-      type: Fixtures
   - uid: 692
     components:
     - pos: -0.5,-4.5
@@ -1603,6 +1594,15 @@ entities:
       type: Fixtures
 - proto: CableMV
   entities:
+  - uid: 27
+    components:
+    - pos: -2.5,-4.5
+      parent: 2
+      type: Transform
+    - enabled: True
+      type: AmbientSound
+    - fixtures: {}
+      type: Fixtures
   - uid: 486
     components:
     - pos: 0.5,-28.5
@@ -2495,22 +2495,6 @@ entities:
     - pos: -1.5,-4.5
       parent: 2
       type: Transform
-    - fixtures: {}
-      type: Fixtures
-  - uid: 604
-    components:
-    - pos: -1.5,-3.5
-      parent: 2
-      type: Transform
-    - fixtures: {}
-      type: Fixtures
-  - uid: 605
-    components:
-    - pos: -2.5,-3.5
-      parent: 2
-      type: Transform
-    - enabled: True
-      type: AmbientSound
     - fixtures: {}
       type: Fixtures
 - proto: Catwalk
@@ -4420,7 +4404,7 @@ entities:
     - pos: -1.5,-15.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -486.55023
+    - SecondsUntilStateChange: -708.93225
       state: Opening
       type: Door
   - uid: 431
@@ -5381,11 +5365,6 @@ entities:
     - pos: -2.5,-2.5
       parent: 2
       type: Transform
-  - uid: 27
-    components:
-    - pos: -2.5,-3.5
-      parent: 2
-      type: Transform
   - uid: 28
     components:
     - pos: -2.5,-4.5
@@ -6262,6 +6241,12 @@ entities:
   - uid: 277
     components:
     - pos: 4.5,-10.5
+      parent: 2
+      type: Transform
+  - uid: 604
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -2.5,-3.5
       parent: 2
       type: Transform
 - proto: WallShuttleDiagonal
