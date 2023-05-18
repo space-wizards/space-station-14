@@ -55,7 +55,7 @@ public sealed class AlertLevelSystem : EntitySystem
         if (!TryComp<AlertLevelComponent>(args.Station, out var alertLevelComponent))
             return;
 
-        if (!_prototypeManager.TryIndex(DefaultAlertLevelSet, out AlertLevelPrototype? alerts))
+        if (!_prototypeManager.TryIndex(alertLevelComponent.AlertLevelPrototype, out AlertLevelPrototype? alerts))
         {
             return;
         }

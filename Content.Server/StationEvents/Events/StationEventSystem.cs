@@ -152,7 +152,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : Compon
         return true;
     }
 
-    protected bool TryFindRandomTile(out Vector2i tile, out EntityUid? targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords)
+    protected bool TryFindRandomTile(out Vector2i tile, [NotNullWhen(true)] out EntityUid? targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords)
     {
         tile = default;
 

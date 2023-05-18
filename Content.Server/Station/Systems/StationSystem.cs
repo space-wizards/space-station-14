@@ -315,6 +315,8 @@ public sealed class StationSystem : EntitySystem
         // Use overrides for setup.
         var station = EntityManager.SpawnEntity(stationConfig.StationPrototype, MapCoordinates.Nullspace, stationConfig.StationComponentOverrides);
 
+        Logger.Debug(string.Join(", ", EntityManager.GetComponents(station).Select(x => x.GetType().ToString())));
+
         // TODO SERIALIZATION The station data needs to be saveable somehow, but when a map gets saved, this entity
         // won't be included because its in null-space. Also, what happens to shuttles on other maps?
 

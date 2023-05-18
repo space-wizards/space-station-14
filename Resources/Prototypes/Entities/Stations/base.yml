@@ -16,6 +16,7 @@
   abstract: true
   components:
     - type: StationJobs
+      availableJobs: {}
     - type: StationSpawning
 
 - type: entity
@@ -35,6 +36,7 @@
   abstract: true
   components:
     - type: AlertLevel
+      alertLevelPrototype: stationAlerts
 
 - type: entity
   id: BaseStationExpeditions

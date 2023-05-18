@@ -227,10 +227,9 @@ namespace Content.IntegrationTests.Tests
                 // Test shuttle can dock.
                 // This is done inside gamemap test because loading the map takes ages and we already have it.
                 var station = entManager.GetComponent<StationMemberComponent>(targetGrid!.Value).Station;
-                var stationConfig = entManager.GetComponent<StationDataComponent>(station).StationConfig;
-                Assert.IsNotNull(stationConfig, $"{entManager.ToPrettyString(station)} had null StationConfig.");
-                var shuttlePath = stationConfig.EmergencyShuttlePath.ToString();
-                var shuttle = mapLoader.LoadGrid(shuttleMap, shuttlePath);
+                var stationData = entManager.GetComponent<StationDataComponent>(station);
+                var shuttlePath = stationData.EmergencyShuttlePath;
+                var shuttle = mapLoader.LoadGrid(shuttleMap, shuttlePath.ToString());
                 Assert.That(shuttle != null && shuttleSystem.TryFTLDock(shuttle.Value, entManager.GetComponent<ShuttleComponent>(shuttle.Value), targetGrid.Value), $"Unable to dock {shuttlePath} to {mapProto}");
 
                 mapManager.DeleteMap(shuttleMap);

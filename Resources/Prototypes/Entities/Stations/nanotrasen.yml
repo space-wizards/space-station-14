@@ -7,7 +7,7 @@
 
 - type: entity
   id: StandardNanotrasenStation
-  parents:
+  parent:
     - BaseStation
     - BaseStationCargo
     - BaseStationJobsSpawning
@@ -17,13 +17,15 @@
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
   noSpawn: true
-  components: {}
+  components:
+    - type: Transform
 
 - type: entity
   id: NanotrasenCentralCommand
-  parents:
+  parent:
     - BaseStation
-    - BaseAlertLevels
+    - BaseStationAlertLevels
     - BaseStationNanotrasen
   noSpawn: true
-  components: {}
+  components:
+    - type: Transform
