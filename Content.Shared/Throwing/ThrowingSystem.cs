@@ -35,7 +35,8 @@ public sealed class ThrowingSystem : EntitySystem
         EntityCoordinates coordinates,
         float strength = 1.0f,
         EntityUid? user = null,
-        float pushbackRatio = PushbackDefault)
+        float pushbackRatio = PushbackDefault,
+        bool playSound = true)
     {
         var thrownPos = Transform(uid).MapPosition;
         var mapPos = coordinates.ToMap(EntityManager, _transform);
@@ -43,7 +44,7 @@ public sealed class ThrowingSystem : EntitySystem
         if (mapPos.MapId != thrownPos.MapId)
             return;
 
-        TryThrow(uid, mapPos.Position - thrownPos.Position, strength, user, pushbackRatio);
+        TryThrow(uid, mapPos.Position - thrownPos.Position, strength, user, pushbackRatio, playSound);
     }
 
     /// <summary>
@@ -57,7 +58,8 @@ public sealed class ThrowingSystem : EntitySystem
         Vector2 direction,
         float strength = 1.0f,
         EntityUid? user = null,
-        float pushbackRatio = PushbackDefault)
+        float pushbackRatio = PushbackDefault,
+        bool playSound = true)
     {
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
         if (!physicsQuery.TryGetComponent(uid, out var physics))
@@ -75,7 +77,8 @@ public sealed class ThrowingSystem : EntitySystem
             tagQuery,
             strength,
             user,
-            pushbackRatio);
+            pushbackRatio,
+            playSound);
     }
 
     /// <summary>
@@ -93,7 +96,8 @@ public sealed class ThrowingSystem : EntitySystem
         EntityQuery<TagComponent> tagQuery,
         float strength = 1.0f,
         EntityUid? user = null,
-        float pushbackRatio = PushbackDefault)
+        float pushbackRatio = PushbackDefault,
+        bool playSound = true)
     {
         if (strength <= 0 || direction == Vector2.Infinity || direction == Vector2.NaN || direction == Vector2.Zero)
             return;
@@ -127,7 +131,7 @@ public sealed class ThrowingSystem : EntitySystem
 
         if (time < FlyTime)
         {
-            _thrownSystem.LandComponent(uid, comp, physics);
+            _thrownSystem.LandComponent(uid, comp, physics, playSound);
         }
         else
         {
@@ -138,7 +142,7 @@ public sealed class ThrowingSystem : EntitySystem
                 if (physics.Deleted)
                     return;
 
-                _thrownSystem.LandComponent(uid, comp, physics);
+                _thrownSystem.LandComponent(uid, comp, physics, playSound);
             });
         }
 
