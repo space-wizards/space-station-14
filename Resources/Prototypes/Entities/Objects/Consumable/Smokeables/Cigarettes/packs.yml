@@ -1,11 +1,40 @@
 - type: entity
   id: CigPackBase
-  parent: BaseStorageItem
+  parent: [ BaseStorageItem, BaseBagOpenClose ]
   name: cigarette pack
   abstract: true
   components:
   - type: Sprite
     netsync: false
+    layers:
+    - state: closed
+    - state: open
+      map: ["openLayer"]
+      visible: false
+    - state: cig1
+      map: ["cig1"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig2
+      map: ["cig2"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig3
+      map: ["cig3"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig4
+      map: ["cig4"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig5
+      map: ["cig5"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig6
+      map: ["cig6"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
   - type: Tag
     tags:
     - CigPack
@@ -34,9 +63,6 @@
     - cig5
     - cig6
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: open
 
 - type: entity
   id: CigPackGreen
@@ -46,35 +72,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
-    layers:
-    - state: closed
-    - state: open
-      map: ["openIcon"]
-      visible: false
-    - state: cig1
-      map: ["cig1"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig2
-      map: ["cig2"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig3
-      map: ["cig3"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig4
-      map: ["cig4"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig5
-      map: ["cig5"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig6
-      map: ["cig6"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
 
@@ -86,35 +83,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
-    layers:
-    - state: closed
-    - state: open
-      map: ["openIcon"]
-      visible: false
-    - state: cig1
-      map: ["cig1"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig2
-      map: ["cig2"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig3
-      map: ["cig3"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig4
-      map: ["cig4"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig5
-      map: ["cig5"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig6
-      map: ["cig6"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
 
@@ -126,35 +94,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
-    layers:
-    - state: closed
-    - state: open
-      map: ["openIcon"]
-      visible: false
-    - state: cig1
-      map: ["cig1"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig2
-      map: ["cig2"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig3
-      map: ["cig3"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig4
-      map: ["cig4"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig5
-      map: ["cig5"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig6
-      map: ["cig6"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
 
@@ -166,35 +105,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
-    layers:
-    - state: closed
-    - state: open
-      map: ["openIcon"]
-      visible: false
-    - state: cig1
-      map: ["cig1"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig2
-      map: ["cig2"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig3
-      map: ["cig3"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig4
-      map: ["cig4"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig5
-      map: ["cig5"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig6
-      map: ["cig6"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
 
@@ -204,40 +114,15 @@
   name: Syndicate Smokes packet
   description: Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
   components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
   - type: StorageFill
     contents:
     - id: CigaretteSyndicate
       amount: 5
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
-    layers:
-    - state: closed
-    - state: open
-      map: ["openIcon"]
-      visible: false
-    - state: cig1
-      map: ["cig1"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig2
-      map: ["cig2"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig3
-      map: ["cig3"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig4
-      map: ["cig4"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig5
-      map: ["cig5"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
-    - state: cig6
-      map: ["cig6"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      visible: false
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi

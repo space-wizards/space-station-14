@@ -17,9 +17,9 @@
     stackType: Cable
   - type: Sprite
     sprite: Objects/Tools/cable-coils.rsi
-    netsync: false
   - type: Item
     sprite: Objects/Tools/cable-coils.rsi
+    size: 10
   - type: CablePlacer
   - type: Clickable
   - type: StaticPrice
@@ -47,7 +47,6 @@
     - state: coilhv-30
       map: ["base"]
   - type: Item
-    size: 10
     heldPrefix: coilhv
   - type: CablePlacer
     cablePrototypeID: CableHV
@@ -61,8 +60,6 @@
   components:
   - type: Sprite
     state: coilhv-10
-  - type: Item
-    size: 3
   - type: Stack
     count: 1
 
@@ -86,7 +83,6 @@
     - state: coilmv-30
       map: ["base"]
   - type: Item
-    size: 10
     heldPrefix: coilmv
   - type: CablePlacer
     cablePrototypeID: CableMV
@@ -100,8 +96,6 @@
   components:
   - type: Sprite
     state: coilmv-10
-  - type: Item
-    size: 3
   - type: Stack
     count: 1
 
@@ -118,7 +112,6 @@
     - state: coillv-30
       map: ["base"]
   - type: Item
-    size: 10
     heldPrefix: coillv
   - type: Stack
     baseLayer: base
@@ -138,7 +131,5 @@
   components:
   - type: Sprite
     state: coillv-10
-  - type: Item
-    size: 3
   - type: Stack
     count: 1

@@ -196,6 +196,18 @@
   - type: Tool
     qualities:
       - Pulsing
+  - type: NetworkConfigurator
+  - type: ActivatableUI
+    key: enum.NetworkConfiguratorUiKey.List
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.NetworkConfiguratorUiKey.List
+        type: NetworkConfiguratorBoundUserInterface
+      - key: enum.NetworkConfiguratorUiKey.Configure
+        type: NetworkConfiguratorBoundUserInterface
+      - key: enum.NetworkConfiguratorUiKey.Link
+        type: NetworkConfiguratorBoundUserInterface
   - type: Tag
     tags:
       - Multitool

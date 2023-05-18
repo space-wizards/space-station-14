@@ -6,7 +6,7 @@
 # an alpha color which -Y- said he would implement.
 
 - type: entity
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   id: FoodBoxDonut
   name: donut box
   description: Mmm, Donuts.
@@ -18,7 +18,7 @@
     layers:
     - state: box
     - state: box-open
-      map: ["openIcon"]
+      map: ["openLayer"]
       visible: false
     - state: box1
       map: ["box1"]
@@ -65,14 +65,11 @@
     - box5
     - pink-box6
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
 
 # Egg
 
 - type: entity
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   id: FoodContainerEgg
   name: egg carton
   description: Don't drop 'em!
@@ -84,7 +81,7 @@
     layers:
     - state: box-closed
     - state: box-open
-      map: ["openIcon"]
+      map: ["openLayer"]
       visible: false
     - state: box1
       map: ["box1"]
@@ -137,24 +134,7 @@
   - type: ItemCounter
     count:
       tags: [Egg]
-    composite: true
-    layerStates:
-    - box1
-    - box2
-    - box3
-    - box4
-    - box5
-    - box6
-    - box7
-    - box8
-    - box9
-    - box10
-    - box11
-    - box12
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
   # Someday...
   # - type: DamageOnLand
   # - type: DamageOtherOnHit
@@ -273,7 +253,7 @@
 # Nugget
 
 - type: entity
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   id: FoodBoxNugget
   name: chicken nuggets
   description: You suddenly have an urge to trade on the intergalactic stock market.
@@ -285,7 +265,7 @@
     layers:
     - state: box
     - state: box-open
-      map: ["openIcon"]
+      map: ["openLayer"]
       visible: false
     - state: box1
       map: ["box1"]
@@ -327,9 +307,6 @@
     - box5
     - box6
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
 
 # Donkpocket
 
@@ -457,7 +434,7 @@
 
 - type: entity
   id: HappyHonk
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   name: happy honk meal
   suffix: Toy Safe
   description: The toy is more edible than the food.
@@ -466,13 +443,13 @@
     netsync: false
     sprite: Objects/Storage/Happyhonk/clown.rsi
     state: box
+    layers:
+    - state: box
+    - state: box-open
+      map: ["openLayer"]
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
-  - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
   - type: Storage
     capacity: 30
   - type: Tag
