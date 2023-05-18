@@ -143,24 +143,24 @@ public sealed class StationSpawningSystem : EntitySystem
         if (job?.StartingGear != null)
         {
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
-            EquipStartingGear(entity, startingGear, profile);
+            EquipStartingGear(entity.Value, startingGear, profile);
             if (profile != null)
-                EquipIdCard(entity, profile.Name, job.Prototype, station);
+                EquipIdCard(entity.Value, profile.Name, job.Prototype, station);
         }
 
         if (profile != null)
         {
-            _humanoidSystem.LoadProfile(entity, profile);
-            MetaData(entity).EntityName = profile.Name;
+            _humanoidSystem.LoadProfile(entity.Value, profile);
+            MetaData(entity.Value).EntityName = profile.Name;
             if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
             {
                 AddComp<DetailExaminableComponent>(entity).Content = profile.FlavorText;
             }
         }
 
-        DoJobSpecials(job, entity);
-        _identity.QueueIdentityUpdate(entity);
-        return entity;
+        DoJobSpecials(job, entity.Value);
+        _identity.QueueIdentityUpdate(entity.Value);
+        return entity.Value;
     }
 
     private void DoJobSpecials(Job? job, EntityUid entity)
