@@ -90,14 +90,6 @@ ent-Swebit_3 = "Swebit_3"
     .desc = ""
     .suffix = { "COMMUNITY" }
 
-ent-vvedite_imya_1 = "vvedite_imya_1"
-    .desc = ""
-    .suffix = { "COMMUNITY" }
-
-ent-vvedite_imya_2 = "vvedite_imya_2"
-    .desc = ""
-    .suffix = { "COMMUNITY" }
-
 ent-Willy_Bown_1 = А вы знаете?..
     .desc = Помните ли вы что это за планета?.., Конечно!.. А что это за планета?..
     .suffix = { "COMMUNITY" }
