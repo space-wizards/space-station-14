@@ -561,6 +561,8 @@
           min: 10
         key: Unzombify
         component: Unzombify
+        type: Add
+        time: 10
 
 - type: reagent
   id: PulpedBananaPeel

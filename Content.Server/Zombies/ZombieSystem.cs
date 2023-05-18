@@ -135,22 +135,12 @@ namespace Content.Server.Zombies
                     // There's a small chance to reverse all the zombie's damage (damage.Damage) in one go
                     _damageable.TryChangeDamage(uid, -damage.Damage, true, false, damage);
                 }
-            }
-
-            //Unzombify the cured
-            while (zombQuery.MoveNext(out var uid, out var comp, out var damage, out var mobState))
-            {
-                // Process only once per second
-                if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
-                    continue;
-
-                comp.NextTick = curTime;
 
                 if (mobState.CurrentState == MobState.Alive || mobState.CurrentState == MobState.Critical)
                 {
-                    //Unzombify if at least 10u of Romerol is present in the bloodstream
-                    if (HasComp<UnzombifyComponent>(uid) && TryComp<ZombieComponent>(uid, out var zombieComp))
-                        UnZombify(uid, uid, zombieComp);
+                    // Unzombify if at least 10u of Romerol is present in the bloodstream
+                    if (HasComp<UnzombifyComponent>(uid))
+                        UnZombify(uid, uid, comp);
                 }
             }
         }
@@ -321,6 +311,8 @@ namespace Content.Server.Zombies
             _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
 
             MetaData(target).EntityName = zombiecomp.BeforeZombifiedEntityName;
+            RemComp<UnzombifyComponent>(target);
+            RemComp<ZombieComponent>(target);
             return true;
         }
 
