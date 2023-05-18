@@ -100,11 +100,13 @@ public sealed class StationSpawningSystem : EntitySystem
         EntityCoordinates coordinates,
         Job? job,
         HumanoidCharacterProfile? profile,
-        EntityUid? station)
+        EntityUid? station,
+        EntityUid? entity = null)
     {
         // If we're not spawning a humanoid, we're gonna exit early without doing all the humanoid stuff.
         if (job?.JobEntity != null)
         {
+            DebugTools.Assert(entity is null);
             var jobEntity = EntityManager.SpawnEntity(job.JobEntity, coordinates);
             MakeSentientCommand.MakeSentient(jobEntity, EntityManager);
             DoJobSpecials(job, jobEntity);
@@ -131,7 +133,7 @@ public sealed class StationSpawningSystem : EntitySystem
         if (!_prototypeManager.TryIndex<SpeciesPrototype>(speciesId, out var species))
             throw new ArgumentException($"Invalid species prototype was used: {speciesId}");
 
-        var entity = Spawn(species.Prototype, coordinates);
+        entity ??= Spawn(species.Prototype, coordinates);
 
         if (_randomizeCharacters)
         {
