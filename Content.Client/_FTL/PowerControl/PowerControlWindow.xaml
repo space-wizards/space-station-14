@@ -1,0 +1,42 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:style="clr-namespace:Content.Client.Stylesheets"
+                      Resizable="False"
+                      Name="PCComputer"
+                      SetSize="450 350"
+                      MinSize="450 350">
+    <BoxContainer Orientation="Vertical" Margin="5 0 5 0">
+        <BoxContainer Margin="0 5 10 10" Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <ScrollContainer
+                    Name="ApcContainer"
+                    HorizontalExpand="True"
+                    VerticalExpand="False"
+                    MinSize="400 250"
+                    Margin="5 5 5 5">
+                    <BoxContainer
+                        Name="Apcs"
+                        Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        MinSize="400 250"
+                        Margin="25 0 25 0">
+                    <!-- Products get added here by code -->
+                    </BoxContainer>
+                </ScrollContainer>
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'power-control-computer-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'power-control-computer-flavor-right'}" StyleClasses="WindowFooterText"
+                       HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                             VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
