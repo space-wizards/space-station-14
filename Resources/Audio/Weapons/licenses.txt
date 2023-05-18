@@ -17,3 +17,7 @@ pierce.ogg taken from: https://github.com/tgstation/tgstation/commit/106cd26fc00
 - files: ["weoweo.ogg"]
   license: "SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
   copyright: "Taken from Sonniss.com - GDC 2023 - Systematic Sound - TonalElements Obscurum - Dark Drones"
+
+- files: ["soup.ogg"]
+  license: "SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
+  copyright: "Taken from Sonniss.com - GDC 2023 - 344 AUdio - Epic Impacts Vol. 1"

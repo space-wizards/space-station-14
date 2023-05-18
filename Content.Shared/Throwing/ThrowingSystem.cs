@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -25,8 +26,25 @@ public sealed class ThrowingSystem : EntitySystem
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+
+    public void TryThrow(
+        EntityUid uid,
+        EntityCoordinates coordinates,
+        float strength = 1.0f,
+        EntityUid? user = null,
+        float pushbackRatio = PushbackDefault)
+    {
+        var thrownPos = Transform(uid).MapPosition;
+        var mapPos = coordinates.ToMap(EntityManager, _transform);
+
+        if (mapPos.MapId != thrownPos.MapId)
+            return;
+
+        TryThrow(uid, mapPos.Position - thrownPos.Position, strength, user, pushbackRatio);
+    }
 
     /// <summary>
     ///     Tries to throw the entity if it has a physics component, otherwise does nothing.
@@ -105,7 +123,7 @@ public sealed class ThrowingSystem : EntitySystem
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
 
         // Estimate time to arrival so we can apply OnGround status and slow it much faster.
-        var time = (direction / strength).Length;
+        var time = direction.Length / strength;
 
         if (time < FlyTime)
         {
