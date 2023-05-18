@@ -1,6 +1,7 @@
 using Content.Shared.Interaction.Components;
 using Robust.Shared.Timing;
 using Content.Shared.Interaction;
+using Content.Shared.Glue;
 using Content.Shared.Hands.Components;
 
 namespace Content.Server.Glue;

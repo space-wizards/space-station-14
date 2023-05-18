@@ -9,7 +9,7 @@ using Content.Server.Nutrition.Components;
 
 namespace Content.Server.Glue
 {
-    public sealed class GlueSystem : SharedGlueSystem
+    public sealed class GlueSystem : EntitySystem
     {
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
