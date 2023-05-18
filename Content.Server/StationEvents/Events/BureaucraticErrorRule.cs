@@ -22,6 +22,9 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
 
         var jobList = _stationJobs.GetJobs(chosenStation.Value).Keys.ToList();
 
+        if (jobList.Count == 0)
+            return;
+
         var mod = GetSeverityModifier();
 
         // Low chance to completely change up the late-join landscape by closing all positions except infinite slots.
