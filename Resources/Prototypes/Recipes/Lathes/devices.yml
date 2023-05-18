@@ -99,3 +99,12 @@
     Steel: 1500
     Plastic: 750
     Plasma: 1000
+
+- type: latheRecipe
+  id: WeaponTetherGun
+  result: WeaponTetherGun
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 400
+    Silver: 100

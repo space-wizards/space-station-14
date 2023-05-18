@@ -1,20 +1,16 @@
+using Content.Server.AlertLevel;
 using Content.Server.CartridgeLoader;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
-using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
 using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
-using Content.Server.UserInterface;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
-using Content.Server.Mind.Components;
-using Content.Server.Traitor;
 using Content.Shared.Light.Component;
 
 namespace Content.Server.PDA
@@ -35,6 +31,7 @@ namespace Content.Server.PDA
 
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
             SubscribeLocalEvent<PDAComponent, GridModifiedEvent>(OnGridChanged);
+            SubscribeLocalEvent<PDAComponent, AlertLevelChangedEvent>(OnAlertLevelChanged);
         }
 
         protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
@@ -44,6 +41,7 @@ namespace Content.Server.PDA
             if (!TryComp(uid, out ServerUserInterfaceComponent? uiComponent))
                 return;
 
+            UpdateAlertLevel(uid, pda);
             UpdateStationName(uid, pda);
 
             if (_ui.TryGetUi(uid, PDAUiKey.Key, out var ui, uiComponent))
@@ -89,7 +87,9 @@ namespace Content.Server.PDA
             {
                 ActualOwnerName = pda.OwnerName,
                 IdOwner = pda.ContainedID?.FullName,
-                JobTitle = pda.ContainedID?.JobTitle
+                JobTitle = pda.ContainedID?.JobTitle,
+                StationAlertLevel = pda.StationAlertLevel,
+                StationAlertColor = pda.StationAlertColor
             };
 
             if (!_ui.TryGetUi(uid, PDAUiKey.Key, out var ui))
@@ -99,7 +99,20 @@ namespace Content.Server.PDA
             var hasInstrument = HasComp<InstrumentComponent>(uid);
             var showUplink = HasComp<StoreComponent>(uid) && IsUnlocked(uid);
 
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, showUplink, hasInstrument, address);
+            UpdateStationName(uid, pda);
+            UpdateAlertLevel(uid, pda);
+            // TODO: Update the level and name of the station with each call to UpdatePdaUi is only needed for latejoin players.
+            // TODO: If someone can implement changing the level and name of the station when changing the PDA grid, this can be removed.
+
+            var state = new PDAUpdateState(
+                pda.FlashlightOn,
+                pda.PenSlot.HasItem,
+                ownerInfo,
+                pda.StationName,
+                showUplink,
+                hasInstrument,
+                address);
+
             _cartridgeLoader?.UpdateUiState(uid, state);
         }
 
@@ -158,6 +171,23 @@ namespace Content.Server.PDA
         {
             var station = _station.GetOwningStation(uid);
             pda.StationName = station is null ? null : Name(station.Value);
+        }
+
+        private void OnAlertLevelChanged(EntityUid uid, PDAComponent pda, AlertLevelChangedEvent args)
+        {
+            UpdateAlertLevel(uid, pda);
+            UpdatePdaUi(uid, pda);
+        }
+
+        private void UpdateAlertLevel(EntityUid uid, PDAComponent pda)
+        {
+            var station = _station.GetOwningStation(uid);
+            if (!TryComp(station, out AlertLevelComponent? alertComp) ||
+                alertComp.AlertLevels == null)
+                return;
+            pda.StationAlertLevel = alertComp.CurrentLevel;
+            if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
+                pda.StationAlertColor = details.Color;
         }
 
         private string? GetDeviceNetAddress(EntityUid uid)
