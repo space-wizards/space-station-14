@@ -38,7 +38,9 @@ public sealed class TwoStagedGrenadeSystem : EntitySystem
         while (enumerator.MoveNext(out var uid, out var component))
         {
             if (!component.IsSecondStageBegan)
+            {
                 continue;
+            }
             if (!component.IsSecondStageSoundBegan && component.AmbienceStartTime <= _timing.CurTime)
             {
                 component.IsSecondStageSoundBegan = true;
