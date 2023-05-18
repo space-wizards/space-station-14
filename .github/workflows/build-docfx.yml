@@ -1,8 +1,7 @@
 name: Build & Publish Docfx
 
 on:
-  schedule:
-    - cron: "0 0 * * 0"
+  workflow_dispatch:
 
 jobs:
   docfx:
