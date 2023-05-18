@@ -6,10 +6,13 @@
   stations:
     Empty:
       mapNameTemplate: "Empty"
-      overflowJobs:
-        - Passenger
-      availableJobs:
-        Passenger: [ -1, -1 ]
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            Passenger: [ -1, -1 ]
 
 - type: gameMap
   id: Dev
@@ -19,7 +22,10 @@
   stations:
     Dev:
       mapNameTemplate: "Dev"
-      overflowJobs:
-      - Captain
-      availableJobs:
-        Captain: [ -1, -1 ]
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationJobs
+          overflowJobs:
+          - Captain
+          availableJobs:
+            Captain: [ -1, -1 ]

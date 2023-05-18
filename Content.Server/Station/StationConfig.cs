@@ -8,10 +8,13 @@ namespace Content.Server.Station;
 /// A config for a station. Specifies name and component modifications.
 /// </summary>
 [DataDefinition, PublicAPI]
-public sealed partial class StationConfig
+public sealed class StationConfig
 {
     [DataField("stationProto", required: true)]
     public string StationPrototype = default!;
+
+    [DataField("components", required: true)]
+    public ComponentRegistry StationComponentOverrides = default!;
 
     /// <summary>
     /// The name template to use for the station.
@@ -25,8 +28,5 @@ public sealed partial class StationConfig
     /// </summary>
     [DataField("nameGenerator")]
     public StationNameGenerator? NameGenerator { get; }
-
-    [DataField("components", required: true)]
-    public ComponentRegistry StationComponentOverrides = default!;
 }
 

@@ -50,13 +50,7 @@ public sealed class StationSpawningSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialized);
         _configurationManager.OnValueChanged(CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
-    }
-
-    private void OnStationInitialized(StationInitializedEvent ev)
-    {
-        AddComp<StationSpawningComponent>(ev.Station);
     }
 
     /// <summary>
@@ -95,6 +89,7 @@ public sealed class StationSpawningSystem : EntitySystem
     /// <param name="job">Job to assign to the character, if any.</param>
     /// <param name="profile">Appearance profile to use for the character.</param>
     /// <param name="station">The station this player is being spawned on.</param>
+    /// <param name="entity">The entity to use, if one already exists.</param>
     /// <returns>The spawned entity</returns>
     public EntityUid SpawnPlayerMob(
         EntityCoordinates coordinates,

@@ -23,9 +23,8 @@ namespace Content.Server.StationEvents.Events
         {
             base.Started(uid, component, gameRule, args);
 
-            if (StationSystem.Stations.Count == 0)
+            if (!TryGetRandomStation(out var chosenStation))
                 return;
-            var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
 
             foreach (var (apc, transform) in EntityQuery<ApcComponent, TransformComponent>(true))
             {

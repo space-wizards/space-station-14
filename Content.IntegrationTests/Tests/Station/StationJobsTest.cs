@@ -32,13 +32,16 @@ public sealed class StationJobsTest
   stations:
     Station:
       mapNameTemplate: FooStation
-      overflowJobs:
-      - Assistant
-      availableJobs:
-        TMime: [0, -1]
-        TAssistant: [-1, -1]
-        TCaptain: [5, 5]
-        TClown: [5, 6]
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationJobs
+          overflowJobs:
+          - Assistant
+          availableJobs:
+            TMime: [0, -1]
+            TAssistant: [-1, -1]
+            TCaptain: [5, 5]
+            TClown: [5, 6]
 
 - type: job
   id: TAssistant

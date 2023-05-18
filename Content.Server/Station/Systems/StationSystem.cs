@@ -13,6 +13,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Systems;
 
@@ -34,16 +35,6 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private ISawmill _sawmill = default!;
-
-    private readonly HashSet<EntityUid> _stations = new();
-
-    /// <summary>
-    /// All stations that currently exist.
-    /// </summary>
-    /// <remarks>
-    /// I'd have this just invoke an entity query, but I want this to be a hashset for convenience and it allocating on use would be lame.
-    /// </remarks>
-    public IReadOnlySet<EntityUid> Stations => _stations;
 
     private bool _randomStationOffset;
     private bool _randomStationRotation;
@@ -89,19 +80,11 @@ public sealed class StationSystem : EntitySystem
         _player.PlayerStatusChanged -= OnPlayerStatusChanged;
     }
 
-    /// <summary>
-    ///     Called when the server shuts down or restarts to avoid uneccesarily logging mid-round station deletion errors.
-    /// </summary>
-    public void OnServerDispose()
-    {
-        _stations.Clear();
-    }
-
     private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), e.Session);
+            RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), e.Session);
         }
     }
 
@@ -109,28 +92,17 @@ public sealed class StationSystem : EntitySystem
 
     private void OnStationAdd(EntityUid uid, StationDataComponent component, ComponentAdd args)
     {
-        _stations.Add(uid);
-
-        RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), Filter.Broadcast());
     }
 
     private void OnStationDeleted(EntityUid uid, StationDataComponent component, ComponentShutdown args)
     {
-        if (_stations.Contains(uid) && // Was not deleted via DeleteStation()
-            _gameTicker.RunLevel == GameRunLevel.InRound && // And not due to a round restart
-            _gameTicker.LobbyEnabled) // If there isn't a lobby, this is probably sandbox, single player, or a test
-        {
-            // printing a stack trace, rather than throwing an exception so that entity deletion continues as normal.
-            Logger.Error($"Station entity {ToPrettyString(uid)} is getting deleted mid-round. Trace: {Environment.StackTrace}");
-        }
-
         foreach (var grid in component.Grids)
         {
             RemComp<StationMemberComponent>(grid);
         }
 
-        _stations.Remove(uid);
-        RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), Filter.Broadcast());
     }
 
     /// <summary>
@@ -199,23 +171,17 @@ public sealed class StationSystem : EntitySystem
             _sawmill.Error($"There were no station grids for {ev.GameMap.ID}!");
         }
 
-        // Iterate over all PartOfStation
-        // TODO: Remove this whenever pillar finally gets replaced. It's the sole user.
-        foreach (var grid in ev.Grids)
-        {
-            if (!TryComp<PartOfStationComponent>(grid, out var partOfStation))
-                continue;
-
-            AddGrid(partOfStation.Id, grid);
-        }
-
         foreach (var (id, gridIds) in dict)
         {
             StationConfig? stationConfig = null;
             if (ev.GameMap.Stations.ContainsKey(id))
                 stationConfig = ev.GameMap.Stations[id];
             else
+            {
                 _sawmill.Error($"The station {id} in map {ev.GameMap.ID} does not have an associated station config!");
+                continue;
+            }
+
             InitializeNewStation(stationConfig, gridIds, ev.StationName);
         }
     }
@@ -225,9 +191,10 @@ public sealed class StationSystem : EntitySystem
         if (eventArgs.New != GameRunLevel.PreRoundLobby)
             return;
 
-        foreach (var entity in _stations)
+        var query = EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var station, out _))
         {
-            DeleteStation(entity);
+            QueueDel(station);
         }
     }
 
@@ -343,25 +310,23 @@ public sealed class StationSystem : EntitySystem
     /// <param name="gridIds">All grids that should be added to the station.</param>
     /// <param name="name">Optional override for the station name.</param>
     /// <returns>The initialized station.</returns>
-    public EntityUid InitializeNewStation(StationConfig? stationConfig, IEnumerable<EntityUid>? gridIds, string? name = null)
+    public EntityUid InitializeNewStation(StationConfig stationConfig, IEnumerable<EntityUid>? gridIds, string? name = null)
     {
-        var station = Spawn(null, MapCoordinates.Nullspace);
+        // Use overrides for setup.
+        var station = EntityManager.SpawnEntity(stationConfig.StationPrototype, MapCoordinates.Nullspace, stationConfig.StationComponentOverrides);
 
         // TODO SERIALIZATION The station data needs to be saveable somehow, but when a map gets saved, this entity
         // won't be included because its in null-space. Also, what happens to shuttles on other maps?
 
-        var data = AddComp<StationDataComponent>(station);
+        DebugTools.Assert(HasComp<StationDataComponent>(station), "Stations should have StationData in their prototype.");
+
+        var data = Comp<StationDataComponent>(station);
         var metaData = MetaData(station);
         data.StationConfig = stationConfig;
 
-        if (stationConfig is not null && name is null)
+        if (name is null)
         {
             name = GenerateStationName(stationConfig);
-        }
-        else if (name is null)
-        {
-            _sawmill.Error($"When setting up station {station}, was unable to find a valid name in the config and no name was provided.");
-            name = "unnamed station";
         }
 
         metaData.EntityName = name;
@@ -462,9 +427,7 @@ public sealed class StationSystem : EntitySystem
         if (!Resolve(station, ref stationData))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        // component shutdown will error if the station was not removed from _stations prior to deletion.
-        _stations.Remove(station);
-        Del(station);
+        QueueDel(station);
     }
 
     /// <summary>
@@ -500,6 +463,16 @@ public sealed class StationSystem : EntitySystem
         }
 
         return CompOrNull<StationMemberComponent>(xform.GridUid)?.Station;
+    }
+
+    public List<EntityUid> GetStations()
+    {
+        return EntityQuery<StationDataComponent>().Select(x => x.Owner).ToList();
+    }
+
+    public HashSet<EntityUid> GetStationsSet()
+    {
+        return EntityQuery<StationDataComponent>().Select(x => x.Owner).ToHashSet();
     }
 }
 

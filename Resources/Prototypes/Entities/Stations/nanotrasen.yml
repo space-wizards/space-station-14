@@ -1,0 +1,29 @@
+﻿- type: entity
+  id: BaseStationNanotrasen
+  components:
+    - type: Faction
+      factions:
+        - NanoTrasen
+
+- type: entity
+  id: StandardNanotrasenStation
+  parents:
+    - BaseStation
+    - BaseStationCargo
+    - BaseStationJobsSpawning
+    - BaseStationArrivals
+    - BaseStationAlertLevels
+    - BaseStationExpeditions
+    - BaseStationAllEventsEligible
+    - BaseStationNanotrasen
+  noSpawn: true
+  components: {}
+
+- type: entity
+  id: NanotrasenCentralCommand
+  parents:
+    - BaseStation
+    - BaseAlertLevels
+    - BaseStationNanotrasen
+  noSpawn: true
+  components: {}

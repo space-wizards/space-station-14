@@ -50,7 +50,9 @@ namespace Content.Server.GameTicking
 
                 foreach (var (player, _) in profiles)
                 {
-                    if (playerNetIds.Contains(player)) continue;
+                    if (playerNetIds.Contains(player))
+                        continue;
+
                     toRemove.Add(player);
                 }
 
@@ -119,7 +121,7 @@ namespace Content.Server.GameTicking
 
             if (station == EntityUid.Invalid)
             {
-                var stations = _stationSystem.Stations.ToList();
+                var stations = EntityQuery<StationJobsComponent, StationSpawningComponent>().Select(x => x.Item1.Owner).ToList();
                 _robustRandom.Shuffle(stations);
                 if (stations.Count == 0)
                     station = EntityUid.Invalid;

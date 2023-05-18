@@ -43,8 +43,7 @@
     - type: SalvageExpeditionData
 
 - type: entity
-  id: StandardStation
-  parents: [BaseStation, BaseStationCargo, BaseStationJobsSpawning, BaseStationArrivals, BaseStationAlertLevels, BaseStationExpeditions]
-  noSpawn: true
-  components: {}
-
+  id: BaseStationAllEventsEligible
+  abstract: true
+  components:
+    - type: StationEventEligible # For when someone makes this more granular in the future.
