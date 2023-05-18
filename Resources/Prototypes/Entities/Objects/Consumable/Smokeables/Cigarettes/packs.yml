@@ -10,6 +10,31 @@
     - state: closed
     - state: open
       map: ["openLayer"]
+      visible: false
+    - state: cig1
+      map: ["cig1"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig2
+      map: ["cig2"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig3
+      map: ["cig3"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig4
+      map: ["cig4"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig5
+      map: ["cig5"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig6
+      map: ["cig6"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
   - type: Tag
     tags:
     - CigPack
@@ -29,18 +54,15 @@
   - type: ItemCounter
     count:
       tags: [Cigarette]
+    composite: true
+    layerStates:
+    - cig1
+    - cig2
+    - cig3
+    - cig4
+    - cig5
+    - cig6
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      composite: true
-      stackLayers:
-      - cig1
-      - cig2
-      - cig3
-      - cig4
-      - cig5
-      - cig6
 
 - type: entity
   id: CigPackGreen

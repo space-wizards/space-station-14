@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: TRay scanner will work in any inventory slot or hand again., type: Fix}
-  id: 3303
-  time: '2023-04-01T01:53:25.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed certain chairs and potted plants to be wrench-able. Plants need
@@ -2905,3 +2900,8 @@ Entries:
   - {message: Add lathe recipe for tethergun., type: Add}
   id: 3802
   time: '2023-05-18T02:07:11.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed Next on the admin logs UI resending the same logs., type: Fix}
+  id: 3803
+  time: '2023-05-18T05:51:17.0000000+00:00'

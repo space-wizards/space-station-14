@@ -62,7 +62,6 @@ public sealed class AdminLogsEui : BaseEui
             LogsControl.SelectedPlayers.ToArray(),
             null,
             LogsControl.IncludeNonPlayerLogs,
-            null,
             DateOrder.Descending);
 
         SendMessage(request);
