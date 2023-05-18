@@ -167,10 +167,10 @@
 - type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorPlasma
-  suffix: Plasma, 5kW
+  suffix: Plasma, 10kW
   components:
   - type: PowerSupplier
-    supplyRate: 5000 # 260 sec / sheet
+    supplyRate: 10000
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen0_1
