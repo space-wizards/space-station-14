@@ -70,8 +70,8 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeVoice();
             InitializeMobstate();
 
-            SubscribeLocalEvent<TriggerOnCollideComponent,     StartCollideEvent>(OnTriggerCollide);
-            SubscribeLocalEvent<TriggerOnActivateComponent,    ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
+            SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
@@ -82,14 +82,14 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
             SubscribeLocalEvent<GibOnTriggerComponent, TriggerEvent>(HandleGibTrigger);
 
-            SubscribeLocalEvent<AnchorOnTriggerComponent,           TriggerEvent>(HandleAnchorTrigger);
-            SubscribeLocalEvent<SoundOnTriggerComponent,            TriggerEvent>(HandleSoundTrigger);
-            SubscribeLocalEvent<PointLightEnableOnTriggerComponent, TriggerEvent>(HandlePointLightTrigger);
-            SubscribeLocalEvent<GravityWellOnTriggerComponent,      TriggerEvent>(HandleGravityWellTrigger);
-            SubscribeLocalEvent<SingularityDistortionOnTriggerComponent, TriggerEvent>(HandleDistortionTrigger);
+            SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(OnAnchorTrigger);
+            SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(OnSoundTrigger);
+            SubscribeLocalEvent<PointLightEnableOnTriggerComponent, TriggerEvent>(OnPointLightTrigger);
+            SubscribeLocalEvent<GravityWellOnTriggerComponent, TriggerEvent>(OnGravityWellTrigger);
+            SubscribeLocalEvent<SingularityDistortionOnTriggerComponent, TriggerEvent>(OnDistortionTrigger);
         }
 
-        private void HandleDistortionTrigger(EntityUid uid, SingularityDistortionOnTriggerComponent component, TriggerEvent args)
+        private void OnDistortionTrigger(EntityUid uid, SingularityDistortionOnTriggerComponent component, TriggerEvent args)
         {
             var singulo = EnsureComp<SingularityDistortionComponent>(uid);
 
@@ -98,7 +98,7 @@ namespace Content.Server.Explosion.EntitySystems
                 RemCompDeferred<SingularityDistortionOnTriggerComponent>(uid);
         }
 
-        private void HandleGravityWellTrigger(EntityUid uid, GravityWellOnTriggerComponent component, TriggerEvent args)
+        private void OnGravityWellTrigger(EntityUid uid, GravityWellOnTriggerComponent component, TriggerEvent args)
         {
             var well = EnsureComp<GravityWellComponent>(uid);
             well.BaseRadialAcceleration = component.RadialAcceleration;
@@ -107,7 +107,7 @@ namespace Content.Server.Explosion.EntitySystems
                 RemCompDeferred<GravityWellOnTriggerComponent>(uid);
         }
 
-        private void HandlePointLightTrigger(EntityUid uid, PointLightEnableOnTriggerComponent component, TriggerEvent args)
+        private void OnPointLightTrigger(EntityUid uid, PointLightEnableOnTriggerComponent component, TriggerEvent args)
         {
             if (TryComp<PointLightComponent>(uid, out var comp))
                 _pointLightSystem.SetEnabled(uid, true, comp);
@@ -115,14 +115,14 @@ namespace Content.Server.Explosion.EntitySystems
                 RemCompDeferred<PointLightEnableOnTriggerComponent>(uid);
         }
 
-        private void HandleSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
+        private void OnSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
         {
             _audio.PlayPvs(component.Sound, uid);
             if (component.RemoveOnTrigger)
                 RemCompDeferred<SoundOnTriggerComponent>(uid);
         }
 
-        private void HandleAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
+        private void OnAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
         {
             _container.TryRemoveFromContainer(uid, true);
             _transformSystem.AnchorEntity(uid, Transform(uid));
