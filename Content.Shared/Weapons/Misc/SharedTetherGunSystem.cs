@@ -247,7 +247,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         _appearance.SetData(gunUid, TetherVisualsStatus.Key, false, appearance);
         _appearance.SetData(gunUid, ToggleableLightVisuals.Enabled, false, appearance);
 
-        RemCompDeferred<TetheredComponent>(component.Tethered.Value);
+        RemComp<TetheredComponent>(component.Tethered.Value);
         _blocker.UpdateCanMove(component.Tethered.Value);
         component.Tethered = null;
         Dirty(component);
