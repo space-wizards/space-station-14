@@ -133,7 +133,6 @@ namespace Content.Shared.Decals
                 }
             }
 
-            var lookupIndex = 0;
             var lookupNodes = lookup.Keys.ToList();
             lookupNodes.Sort();
 
@@ -226,6 +225,11 @@ namespace Content.Shared.Decals
                 var zIndexComparison = ZIndex.CompareTo(other.ZIndex);
                 if (zIndexComparison != 0)
                     return zIndexComparison;
+
+                var colorComparison = string.Compare(Color?.ToHex(), other.Color?.ToHex(), StringComparison.Ordinal);
+
+                if (colorComparison != 0)
+                    return colorComparison;
 
                 return Cleanable.CompareTo(other.Cleanable);
             }
