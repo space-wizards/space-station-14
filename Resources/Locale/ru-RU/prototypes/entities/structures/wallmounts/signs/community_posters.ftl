@@ -78,16 +78,16 @@ ent-KEEYN_4 = Never Gonna Give You Up!
     .desc = Yeah, rickrolled
     .suffix = { "COMMUNITY" }
 
-ent-Swebit_1 = "Swebit_1"
-    .desc = ""
+ent-Swebit_1 = MK58
+    .desc = Плакат, рекламирующий MK58
     .suffix = { "COMMUNITY" }
 
-ent-Swebit_2 = "Swebit_2"
-    .desc = ""
+ent-Swebit_2 = Слава инженерии
+    .desc = Плакат, в поддержку инженерного отдела.
     .suffix = { "COMMUNITY" }
 
-ent-Swebit_3 = "Swebit_3"
-    .desc = ""
+ent-Swebit_3 = Символ медицины
+    .desc = Часть краски успела стереться, еле заметные выцветшие буквы гласят о всеобщей пользе прививок.
     .suffix = { "COMMUNITY" }
 
 ent-Willy_Bown_1 = А вы знаете?..
