@@ -7,12 +7,13 @@
   fallback: true
   stations:
     Moose:
-      mapNameTemplate: '{0} Moose {1}'
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: '14'
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Moose {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
         - type: StationJobs
           overflowJobs:
             - Passenger

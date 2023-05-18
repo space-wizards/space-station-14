@@ -6,12 +6,13 @@
   maxPlayers: 35
   stations:
     Omega:
-      mapNameTemplate: '{0} Omega Station {1}'
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: 'TG'
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Omega Station {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'TG'
         - type: StationJobs
           overflowJobs:
             - Passenger

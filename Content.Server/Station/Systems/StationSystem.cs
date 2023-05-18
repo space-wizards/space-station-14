@@ -48,9 +48,8 @@ public sealed class StationSystem : EntitySystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
         SubscribeLocalEvent<PreGameMapLoad>(OnPreGameMapLoad);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
-        SubscribeLocalEvent<StationDataComponent, ComponentAdd>(OnStationAdd);
+        SubscribeLocalEvent<StationDataComponent, ComponentStartup>(OnStationAdd);
         SubscribeLocalEvent<StationDataComponent, ComponentShutdown>(OnStationDeleted);
-        SubscribeLocalEvent<StationDataComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<StationMemberComponent, ComponentShutdown>(OnStationGridDeleted);
         SubscribeLocalEvent<StationMemberComponent, PostGridSplitEvent>(OnStationSplitEvent);
 
@@ -90,9 +89,14 @@ public sealed class StationSystem : EntitySystem
 
     #region Event handlers
 
-    private void OnStationAdd(EntityUid uid, StationDataComponent component, ComponentAdd args)
+    private void OnStationAdd(EntityUid uid, StationDataComponent component, ComponentStartup args)
     {
         RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), Filter.Broadcast());
+
+        var metaData = MetaData(uid);
+        RaiseLocalEvent(new StationInitializedEvent(uid));
+        _sawmill.Info($"Set up station {metaData.EntityName} ({uid}).");
+
     }
 
     private void OnStationDeleted(EntityUid uid, StationDataComponent component, ComponentShutdown args)
@@ -103,26 +107,6 @@ public sealed class StationSystem : EntitySystem
         }
 
         RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), Filter.Broadcast());
-    }
-
-    /// <summary>
-    ///     If a station data entity is getting re-parented mid-round, this will log an error.
-    /// </summary>
-    /// <remarks>
-    ///     This doesn't really achieve anything, it just for debugging any future station data bugs.
-    /// </remarks>
-    private void OnParentChanged(EntityUid uid, StationDataComponent component, ref EntParentChangedMessage args)
-    {
-        if (_gameTicker.RunLevel != GameRunLevel.InRound ||
-            MetaData(uid).EntityLifeStage >= EntityLifeStage.MapInitialized ||
-            component.LifeStage <= ComponentLifeStage.Initializing)
-        {
-            return;
-        }
-
-        // Yeah this doesn't actually stop the parent change..... it just ineffectually yells about it.
-        // STOP RIGHT THERE CRIMINAL SCUM
-        _sawmill.Error($"Station entity {ToPrettyString(uid)} is getting reparented from {ToPrettyString(args.OldParent ?? EntityUid.Invalid)} to {ToPrettyString(args.Transform.ParentUid)}");
     }
 
     private void OnPreGameMapLoad(PreGameMapLoad ev)
@@ -173,7 +157,8 @@ public sealed class StationSystem : EntitySystem
 
         foreach (var (id, gridIds) in dict)
         {
-            StationConfig? stationConfig = null;
+            StationConfig stationConfig;
+
             if (ev.GameMap.Stations.ContainsKey(id))
                 stationConfig = ev.GameMap.Stations[id];
             else
@@ -294,46 +279,25 @@ public sealed class StationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Generates a station name from the given config.
-    /// </summary>
-    public static string GenerateStationName(StationConfig config)
-    {
-        return config.NameGenerator is not null
-            ? config.NameGenerator.FormatName(config.StationNameTemplate)
-            : config.StationNameTemplate;
-    }
-
-    /// <summary>
     /// Initializes a new station with the given information.
     /// </summary>
     /// <param name="stationConfig">The game map prototype used, if any.</param>
     /// <param name="gridIds">All grids that should be added to the station.</param>
     /// <param name="name">Optional override for the station name.</param>
+    /// <remarks>This is for ease of use, manually spawning the entity works just fine.</remarks>
     /// <returns>The initialized station.</returns>
     public EntityUid InitializeNewStation(StationConfig stationConfig, IEnumerable<EntityUid>? gridIds, string? name = null)
     {
         // Use overrides for setup.
         var station = EntityManager.SpawnEntity(stationConfig.StationPrototype, MapCoordinates.Nullspace, stationConfig.StationComponentOverrides);
 
-        Logger.Debug(string.Join(", ", EntityManager.GetComponents(station).Select(x => x.GetType().ToString())));
-
-        // TODO SERIALIZATION The station data needs to be saveable somehow, but when a map gets saved, this entity
-        // won't be included because its in null-space. Also, what happens to shuttles on other maps?
+        if (name is not null)
+            RenameStation(station, name, false);
 
         DebugTools.Assert(HasComp<StationDataComponent>(station), "Stations should have StationData in their prototype.");
 
         var data = Comp<StationDataComponent>(station);
-        var metaData = MetaData(station);
-        data.StationConfig = stationConfig;
-
-        if (name is null)
-        {
-            name = GenerateStationName(stationConfig);
-        }
-
-        metaData.EntityName = name;
-        RaiseLocalEvent(new StationInitializedEvent(station));
-        _sawmill.Info($"Set up station {metaData.EntityName} ({station}).");
+        name ??= MetaData(station).EntityName;
 
         foreach (var grid in gridIds ?? Array.Empty<EntityUid>())
         {
@@ -364,11 +328,11 @@ public sealed class StationSystem : EntitySystem
 
         var stationMember = AddComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
-        stationData.Grids.Add(gridComponent.Owner);
+        stationData.Grids.Add(mapGrid);
 
-        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false), true);
+        RaiseLocalEvent(station, new StationGridAddedEvent(mapGrid, false), true);
 
-        _sawmill.Info($"Adding grid {mapGrid}:{gridComponent.Owner} to station {Name(station)} ({station})");
+        _sawmill.Info($"Adding grid {mapGrid} to station {Name(station)} ({station})");
     }
 
     /// <summary>
@@ -387,10 +351,10 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         RemComp<StationMemberComponent>(mapGrid);
-        stationData.Grids.Remove(gridComponent.Owner);
+        stationData.Grids.Remove(mapGrid);
 
-        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner), true);
-        _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.Owner} from station {Name(station)} ({station})");
+        RaiseLocalEvent(station, new StationGridRemovedEvent(mapGrid), true);
+        _sawmill.Info($"Removing grid {mapGrid} from station {Name(station)} ({station})");
     }
 
     /// <summary>

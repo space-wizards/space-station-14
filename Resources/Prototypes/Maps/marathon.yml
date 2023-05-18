@@ -6,12 +6,13 @@
   maxPlayers: 70
   stations:
     Marathon:
-      mapNameTemplate: '{0} Marathon Station {1}'
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: '14'
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Marathon Station {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
         - type: StationData
           emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
         - type: StationJobs

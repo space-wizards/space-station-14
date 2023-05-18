@@ -6,12 +6,13 @@
   maxPlayers: 75
   stations:
     Bagel:
-      mapNameTemplate: '{0} Bagel Station {1}'
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: '14'
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Bagel Station {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
         - type: StationData
           emergencyShuttlePath: /Maps/Shuttles/emergency_lox.yml
         - type: StationJobs

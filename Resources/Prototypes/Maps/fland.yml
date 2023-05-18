@@ -5,13 +5,13 @@
   minPlayers: 70
   stations:
     Fland:
-      mapNameTemplate: '{0} Fland Installation {1}'
-
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: 'B'
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Fland Installation {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'B'
         - type: StationData
           emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
         - type: StationJobs

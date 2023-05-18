@@ -6,12 +6,13 @@
   maxPlayers: 35
   stations:
     Cluster:
-      mapNameTemplate: '{0} Cluster Station {1}'
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: '14'
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Cluster Station {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
         - type: StationJobs
           overflowJobs:
             - Passenger

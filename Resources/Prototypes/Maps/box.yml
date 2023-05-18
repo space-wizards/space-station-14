@@ -5,12 +5,13 @@
   minPlayers: 50
   stations:
     Boxstation:
-      mapNameTemplate: '{0} Box Station {1}'
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: 'TG'
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Box Station {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'TG'
         - type: StationData
           emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml
         - type: StationJobs

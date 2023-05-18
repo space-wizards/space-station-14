@@ -318,7 +318,6 @@ public sealed partial class StationJobsSystem
         foreach (var (station, count) in jobsCount)
         {
             var jobs = Comp<StationJobsComponent>(station);
-            var data = Comp<StationDataComponent>(station);
 
             var thresh = jobs.ExtendedAccessThreshold;
 

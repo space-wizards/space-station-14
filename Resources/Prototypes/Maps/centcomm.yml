@@ -5,10 +5,10 @@
   minPlayers: 10
   stations:
     centcomm:
-      mapNameTemplate: '{0} Central Command {1}'
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: 'TG'
       stationProto: NanotrasenCentralCommand
       components:
-        - type: Transform
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Central Command {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'TG'

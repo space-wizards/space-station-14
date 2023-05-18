@@ -5,9 +5,10 @@
   minPlayers: 0
   stations:
     Empty:
-      mapNameTemplate: "Empty"
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationNameSetup
+          mapNameTemplate: "Empty"
         - type: StationJobs
           overflowJobs:
             - Passenger
@@ -21,9 +22,10 @@
   minPlayers: 0
   stations:
     Dev:
-      mapNameTemplate: "Dev"
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationNameSetup
+          mapNameTemplate: "Dev"
         - type: StationJobs
           overflowJobs:
           - Captain

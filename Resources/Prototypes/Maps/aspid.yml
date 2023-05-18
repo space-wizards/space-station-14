@@ -6,12 +6,13 @@
   maxPlayers: 70
   stations:
     Aspid:
-      mapNameTemplate: '{0} NCS Aspid {1}'
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: '14'
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} NCS Aspid {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
         - type: StationData
           emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
         - type: StationJobs
