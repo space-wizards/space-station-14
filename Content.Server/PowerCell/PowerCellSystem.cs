@@ -157,6 +157,18 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         return false;
     }
 
+    /// <summary>
+    /// Whether the power cell has any power at all for the draw rate.
+    /// </summary>
+    public bool HasDrawCharge(EntityUid uid, PowerCellDrawComponent? battery = null,
+        PowerCellSlotComponent? cell = null, EntityUid? user = null)
+    {
+        if (!Resolve(uid, ref battery, ref cell, false))
+            return true;
+
+        return HasCharge(uid, float.MinValue, cell, user);
+    }
+
     #endregion
 
     public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
