@@ -23,16 +23,4 @@ public sealed class StationDataComponent : Component
     /// </summary>
     [DataField("grids")]
     public readonly HashSet<EntityUid> Grids = new();
-
-    /// <summary>
-    /// The emergency shuttle assigned to this station.
-    /// </summary>
-    [ViewVariables, Access(typeof(ShuttleSystem), typeof(EmergencyShuttleSystem), Friend = AccessPermissions.ReadWrite)]
-    public EntityUid? EmergencyShuttle;
-
-    /// <summary>
-    /// Emergency shuttle map path for this station.
-    /// </summary>
-    [DataField("emergencyShuttlePath", customTypeSerializer: typeof(ResPathSerializer))]
-    public ResPath EmergencyShuttlePath { get; set; } = new("/Maps/Shuttles/emergency.yml");
 }

@@ -13,6 +13,7 @@
     - BaseStationJobsSpawning
     - BaseStationRecords
     - BaseStationArrivals
+    - BaseStationEvacuation
     - BaseStationAlertLevels
     - BaseStationExpeditions
     - BaseStationAllEventsEligible

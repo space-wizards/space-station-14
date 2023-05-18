@@ -12,7 +12,7 @@
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'B'
-        - type: StationData
+        - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
         - type: StationJobs
           overflowJobs:

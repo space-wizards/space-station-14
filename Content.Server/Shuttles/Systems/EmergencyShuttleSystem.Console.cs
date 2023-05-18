@@ -156,7 +156,7 @@ public sealed partial class EmergencyShuttleSystem
 
             if (CentComMap != null)
             {
-                var dataQuery = AllEntityQuery<StationDataComponent>();
+                var dataQuery = AllEntityQuery<StationEmergencyShuttleComponent>();
 
                 while (dataQuery.MoveNext(out var comp))
                 {

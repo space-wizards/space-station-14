@@ -32,6 +32,12 @@
     - type: StationArrivals
 
 - type: entity
+  id: BaseStationEvacuation
+  abstract: true
+  components:
+    - type: StationEmergencyShuttle
+
+- type: entity
   id: BaseStationAlertLevels
   abstract: true
   components:
