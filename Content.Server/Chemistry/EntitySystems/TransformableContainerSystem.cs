@@ -15,7 +15,15 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<TransformableContainerComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<TransformableContainerComponent, SolutionChangedEvent>(OnSolutionChange);
+        }
+
+        private void OnMapInit(EntityUid uid, TransformableContainerComponent component, MapInitEvent args)
+        {
+            var meta = MetaData(uid);
+            component.InitialName = meta.EntityName;
+            component.InitialDescription = meta.EntityDescription;
         }
 
         private void OnSolutionChange(EntityUid owner, TransformableContainerComponent component,
