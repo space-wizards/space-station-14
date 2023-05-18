@@ -9,7 +9,6 @@
     - type: Lock
     - type: Sprite
       drawdepth: Objects
-      netsync: false
       sprite: Structures/Storage/Crates/artifact.rsi
       layers:
         - state: artifact_container
@@ -25,7 +24,8 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.45
           density: 75

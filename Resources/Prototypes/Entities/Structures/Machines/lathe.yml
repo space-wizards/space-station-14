@@ -24,14 +24,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -73,13 +74,39 @@
       - Wrench
       - Crowbar
       - Multitool
+      - NetworkConfigurator
       - AirlockPainter
+      - FlashlightLantern
       - CableStack
+      - CableMVStack
+      - CableHVStack
       - HandheldGPSBasic
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
       - Pickaxe
+      - AppraisalTool
+      - SheetRGlass
+      - Beaker
+      - Syringe
+      - LightTube
+      - LightBulb
+      - Bucket
+      - SprayBottle
+      - PowerCellSmall
+      - MicroManipulatorStockPart
+      - MatterBinStockPart
+      - CapacitorStockPart
+      - ConveyorBeltAssembly
+      - IntercomElectronics
+      - FirelockElectronics
+      - DoorElectronics
+      - AirAlarmElectronics
+      - FireAlarmElectronics
+      - MailingUnitElectronics
+      - APCElectronics
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
   - type: StaticPrice
     price: 800
 
@@ -109,14 +136,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: ResearchClient
   - type: Destructible
     thresholds:
@@ -156,29 +184,12 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
-      - LightTube
-      - LightBulb
-      - SheetSteel #these sheet recipe costs don't scale with upgrades
-      - SheetGlass1
-      - SheetRGlass
-      - SheetPlastic
-      - CableStack
-      - CableMVStack
-      - CableHVStack
       - PowerDrill
       - MiningDrill
-      - ConveyorBeltAssembly
-      - AppraisalTool
       - AnomalyScanner
       - AnomalyLocator
       - RCD
       - RCDAmmo
-      - HydroponicsToolScythe
-      - HydroponicsToolHatchet
-      - Clippers
-      - MiniHoe
-      - Shovel
-      - Spade
       - HandheldCrewMonitor
       - Scalpel
       - Retractor
@@ -195,39 +206,28 @@
       - PillCanister
       - ChemistryEmptyBottle01
       - Drone
-      - Flash
-      - MicroManipulatorStockPart
-      - MatterBinStockPart
-      - CapacitorStockPart
       - AdvancedCapacitorStockPart
       - AdvancedMatterBinStockPart
       - NanoManipulatorStockPart
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
       - PicoManipulatorStockPart
-      - FirelockElectronics
-      - DoorElectronics
-      - APCElectronics
-      - AirAlarmElectronics
-      - FireAlarmElectronics
-      - IntercomElectronics
-      - MailingUnitElectronics
-      - Bucket
+      - SignalTimerElectronics
       - MopItem
+      - Holoprojector
+      - Mousetrap
+      - LightReplacer
+      - TrashBag
       - AdvMopItem
-      - SprayBottle
+      - WeaponSprayNozzle
+      - ClothingBackpackWaterTank
       - MegaSprayBottle
-      - FireExtinguisher
-      - KitchenKnife
-      - ButchCleaver
-      - FlashlightLantern
       - TimerTrigger
       - ChemicalPayload
       - FlashPayload
       - Signaller
       - SignalTrigger
       - VoiceTrigger
-      - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
       - WeaponPistolCHIMP
@@ -239,6 +239,9 @@
       - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
+      - ClothingBackpackHolding
+      - ClothingBackpackSatchelHolding
+      - ClothingBackpackDuffelHolding
 
 - type: entity
   parent: Protolathe
@@ -264,21 +267,12 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
-      - FirelockElectronics
-      - DoorElectronics
-      - APCElectronics
-      - AirAlarmElectronics
-      - FireAlarmElectronics
-      - MailingUnitElectronics
-      - IntercomElectronics
-      - SMESMachineCircuitboard
-      - SubstationMachineCircuitboard
+      - SignalTimerElectronics
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CryoPodMachineCircuitboard
-      - CrewMonitoringComputerCircuitboard
       - VaccinatorMachineCircuitboard
       - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
@@ -312,6 +306,9 @@
       - OreProcessorMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
+      - HonkerCentralElectronics
+      - HonkerPeripheralsElectronics
+      - HonkerTargetingElectronics
       - GeneratorPlasmaMachineCircuitboard
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
@@ -365,18 +362,29 @@
     - RightArmBorg
     - LeftLegBorg
     - RightLegBorg
+    - LightHeadBorg
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm
     - RipleyLLeg
     - RipleyRLeg
     - MechEquipmentGrabber
+    - HonkerHarness
+    - HonkerLArm
+    - HonkerRArm
+    - HonkerLLeg
+    - HonkerRLeg
+    - MechEquipmentHorn
   - type: MaterialStorage
     whitelist:
       tags:
       - Sheet
       - RawMaterial
       - Ingot
+  - type: GuideHelp
+    guides:
+    - Robotics
+
 
 - type: entity
   parent: Protolathe
@@ -465,20 +473,13 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - HandLabeler
+      - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingMaskSterile
       - DiseaseSwab
-      - Scalpel
-      - Retractor
-      - Cautery
-      - Drill
-      - Saw
-      - Hemostat
       - Beaker
-      - LargeBeaker
-      - CryostasisBeaker
-      - Dropper
       - Syringe
       - Implanter
       - PillCanister
@@ -495,6 +496,15 @@
     dynamicRecipes:
       - HandheldCrewMonitor
       - ClothingHandsGlovesNitrile
+      - CryostasisBeaker
+      - LargeBeaker
+      - Dropper
+      - Scalpel
+      - Retractor
+      - Cautery
+      - Drill
+      - Saw
+      - Hemostat
   - type: Machine
     board: MedicalTechFabCircuitboard
 

@@ -31,6 +31,13 @@ public partial class GunComponent : Component
     // These values are very small for now until we get a debug overlay and fine tune it
 
     /// <summary>
+    /// A scalar value applied to the vector governing camera recoil.
+    /// If 0, there will be no camera recoil.
+    /// </summary>
+    [DataField("cameraRecoilScalar"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public float CameraRecoilScalar = 1f;
+
+    /// <summary>
     /// Last time the gun fired.
     /// Used for recoil purposes.
     /// </summary>
@@ -71,6 +78,12 @@ public partial class GunComponent : Component
     public Angle MinAngle = Angle.FromDegrees(1);
 
     #endregion
+
+    /// <summary>
+    /// Whether this gun is shot via the use key or the alt-use key.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("useKey"), AutoNetworkedField]
+    public bool UseKey = true;
 
     /// <summary>
     /// Where the gun is being requested to shoot.

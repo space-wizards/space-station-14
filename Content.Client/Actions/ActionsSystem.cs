@@ -1,16 +1,13 @@
 using System.IO;
 using System.Linq;
-using Content.Client.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -28,9 +25,6 @@ namespace Content.Client.Actions
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public event Action<ActionType>? ActionAdded;
         public event Action<ActionType>? ActionRemoved;
@@ -65,7 +59,8 @@ namespace Content.Client.Actions
             if (args.Current is not ActionsComponentState state)
                 return;
 
-            var serverActions = new SortedSet<ActionType>(state.Actions);
+            state.SortedActions ??= new SortedSet<ActionType>(state.Actions);
+            var serverActions = state.SortedActions;
             var removed = new List<ActionType>();
 
             foreach (var act in component.Actions.ToList())
@@ -83,7 +78,6 @@ namespace Content.Client.Actions
                 }
 
                 act.CopyFrom(serverAct);
-                serverActions.Remove(serverAct);
             }
 
             var added = new List<ActionType>();
@@ -91,6 +85,9 @@ namespace Content.Client.Actions
             // Anything that remains is a new action
             foreach (var newAct in serverActions)
             {
+                if (component.Actions.Contains(newAct))
+                    continue;
+
                 // We create a new action, not just sorting a reference to the state's action.
                 var action = (ActionType) newAct.Clone();
                 component.Actions.Add(action);

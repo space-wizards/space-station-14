@@ -52,12 +52,13 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.10,-0.10,0.10,0.10"
-      density: 500
-      mask:
-        - TabletopMachineMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.10,0.10,0.10"
+        density: 500
+        mask:
+          - TabletopMachineMask
   - type: ItemSlots
     slots:
       charger_slot:

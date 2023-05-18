@@ -79,6 +79,21 @@ namespace Content.Server.PDA.Ringer
             }
         }
 
+        /// <summary>
+        /// Locks the uplink and closes the window, if its open
+        /// </summary>
+        /// <remarks>
+        /// Will not update the PDA ui so you must do that yourself if needed
+        /// </remarks>
+        public void LockUplink(EntityUid uid, RingerUplinkComponent? uplink)
+        {
+            if (!Resolve(uid, ref uplink, true))
+                return;
+
+            uplink.Unlocked = false;
+            _ui.TryCloseAll(uid, StoreUiKey.Key);
+        }
+
         public void RandomizeRingtone(EntityUid uid, RingerComponent ringer, MapInitEvent args)
         {
             UpdateRingerRingtone(ringer, GenerateRingtone());

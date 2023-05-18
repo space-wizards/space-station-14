@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
-using Content.Server.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
@@ -13,6 +13,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Dataset;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
 using Content.Shared.Random;
@@ -139,26 +140,19 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         _entManager.InitializeAndStartEntity(ftlUid);
 
         var landingPadRadius = 24;
-        var minDungeonOffset = landingPadRadius + 12;
+        var minDungeonOffset = landingPadRadius + 4;
 
+        // We'll use the dungeon rotation as the spawn angle
         var dungeonRotation = _dungeon.GetDungeonRotation(_missionParams.Seed);
-        var dungeonSpawnRotation = new Angle(random.NextDouble() * Math.Tau);
-
-        // If the dungeon were to spawn facing the landing pad then bump the offset a bit
-        // This isn't robust but fine for now.
-        if (Math.Abs((dungeonRotation - dungeonSpawnRotation).Theta) < Math.PI / 2)
-        {
-            minDungeonOffset += 16;
-        }
 
         Dungeon dungeon = default!;
 
         if (config != SalvageMissionType.Mining)
         {
-            var maxDungeonOffset = minDungeonOffset + 24;
+            var maxDungeonOffset = minDungeonOffset + 12;
             var dungeonOffsetDistance = minDungeonOffset + (maxDungeonOffset - minDungeonOffset) * random.NextFloat();
-            var dungeonOffset = new Vector2(dungeonOffsetDistance, 0f);
-            dungeonOffset = dungeonSpawnRotation.RotateVec(dungeonOffset);
+            var dungeonOffset = new Vector2(0f, dungeonOffsetDistance);
+            dungeonOffset = dungeonRotation.RotateVec(dungeonOffset);
             var dungeonMod = _prototypeManager.Index<SalvageDungeonMod>(mission.Dungeon);
             var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(dungeonMod.Proto);
             dungeon =
@@ -227,10 +221,20 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
             switch (rule)
             {
-                case BiomeTemplateLoot biomeLoot:
-                    if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                case BiomeMarkerLoot biomeLoot:
                     {
-                        _biome.AddTemplate(biome, "Loot", _prototypeManager.Index<BiomeTemplatePrototype>(biomeLoot.Prototype), i);
+                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                        {
+                            _biome.AddMarkerLayer(biome, biomeLoot.Prototype);
+                        }
+                    }
+                    break;
+                case BiomeTemplateLoot biomeLoot:
+                    {
+                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                        {
+                            _biome.AddTemplate(biome, "Loot", _prototypeManager.Index<BiomeTemplatePrototype>(biomeLoot.Prototype), i);
+                        }
                     }
                     break;
                 // Spawns a cluster (like an ore vein) nearby.

@@ -22,14 +22,15 @@
       shader: unshaded
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.40
-      density: 100
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -111,9 +112,8 @@
       path: /Audio/Animals/sloth_squeak.ogg
   - type: GhostRole
     prob: 0.25
-    name: space bear
-    description: |
-      You're a bear! Do bear things.
+    name: ghost-role-information-space-bear-name
+    description: ghost-role-information-space-bear-description
 
 - type: entity
   id: MobBearSpaceSalvage
@@ -122,9 +122,8 @@
   components:
   - type: GhostRole
     prob: 0.25
-    name: space bear on salvage wreck
-    description: |
-      Defend the loot inside the salvage wreck!
+    name: ghost-role-information-salvage-bear-name
+    description: ghost-role-information-salvage-bear-description
   - type: SalvageMobRestrictions
 
 - type: entity
@@ -189,9 +188,8 @@
     color: "#4faffb"
   - type: GhostRole
     prob: 0.25
-    name: space kangaroo
-    description: |
-      You're a kangaroo! Do kangaroo things.
+    name: ghost-role-information-space-kangaroo-name
+    description: ghost-role-information-space-kangaroo-description
 
 - type: entity
   id: MobKangarooSpaceSalvage
@@ -200,9 +198,8 @@
   components:
   - type: GhostRole
     prob: 0.25
-    name: space kangaroo on salvage wreck
-    description: |
-      Defend the loot inside the salvage wreck!
+    name: ghost-role-information-salvage-kangaroo-name
+    description: ghost-role-information-salvage-kangaroo-description
   - type: SalvageMobRestrictions
 
 - type: entity
@@ -249,14 +246,15 @@
     bloodReagent: Cryoxadone
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 120
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MeleeWeapon
     hidden: true
     soundHit:
@@ -290,9 +288,8 @@
   - type: IgnoreSpiderWeb
   - type: GhostRole
     prob: 0.30
-    name: space spider
-    description: |
-      Space spiders are just as aggressive as regular spiders, feed.
+    name: ghost-role-information-space-spider-name
+    description: ghost-role-information-space-spider-description
 
 - type: entity
   id: MobSpiderSpaceSalvage
@@ -301,7 +298,6 @@
   components:
   - type: GhostRole
     prob: 0.30
-    name: space spider on salvage wreck
-    description: |
-      Space spiders are just as aggressive as regular spiders, feed.
+    name: ghost-role-information-salvage-spider-name
+    description: ghost-role-information-salvage-spider-description
   - type: SalvageMobRestrictions

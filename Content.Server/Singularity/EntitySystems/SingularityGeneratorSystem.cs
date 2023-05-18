@@ -123,7 +123,7 @@ public sealed class SingularityGeneratorSystem : EntitySystem
     /// <param name="args">The state of the beginning of the collision.</param>
     private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, ref StartCollideEvent args)
     {
-        if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
+        if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherEntity, out var singularityGeneratorComponent))
         {
             SetPower(
                 singularityGeneratorComponent,
