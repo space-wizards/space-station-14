@@ -78,11 +78,11 @@ ent-KEEYN_4 = Never Gonna Give You Up!
     .desc = Yeah, rickrolled
     .suffix = { "COMMUNITY" }
 
-ent-Swebit_1 = MK58
-    .desc = Плакат, рекламирующий MK58
+ent-Swebit_1 = MK58 - Оружие для настоящих мужчин!
+    .desc = На плакате изображен малокалиберный пистолет МК 58, который в основном используется Сотрудниками Службы Безопасности.
     .suffix = { "COMMUNITY" }
 
-ent-Swebit_2 = Слава инженерии
+ent-Swebit_2 = Слава инженерии!
     .desc = Плакат, в поддержку инженерного отдела.
     .suffix = { "COMMUNITY" }
 
