@@ -243,7 +243,7 @@ namespace Content.Server.Cargo.Systems
             return new CargoOrderData(id, args.ProductId, args.Amount, args.Requester, args.Reason);
         }
 
-        private int GetOutstandingOrderCount(StationCargoOrderDatabaseComponent component)
+        public int GetOutstandingOrderCount(StationCargoOrderDatabaseComponent component)
         {
             var amount = 0;
 
@@ -292,9 +292,9 @@ namespace Content.Server.Cargo.Systems
             return true;
         }
 
-        private int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
+        public int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
         {
-            // We need an arbitrary unique ID to idenitfy orders, since they may
+            // We need an arbitrary unique ID to identify orders, since they may
             // want to be cancelled later.
             return ++orderDB.NumOrdersCreated;
         }
