@@ -1,0 +1,110 @@
+- type: entity
+  id: PizzaPartySmall
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    startDelay: 10
+    duration: 120
+    chaos:
+      Hunger: -80
+      Thirst: -40
+  - type: CargoGiftsRule
+    descr: A small pizza party
+    sender: NanoTrasen
+    careof: The Bar
+    gifts:
+      FoodPizzaLarge: 1              # 16 pizzas
+      FoodBarSupply: 1
+      FoodSoftdrinks: 1
+      CrateVendingMachineRestockRobustSoftdrinks: 1
+
+- type: entity
+  id: PizzaPartyLarge
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 6
+      startDelay: 10
+      duration: 240
+      chaos:
+        Hunger: -300
+        Thirst: -120
+    - type: CargoGiftsRule
+      descr: A large pizza party
+      sender: NanoTrasen
+      careof: The Bar
+      gifts:
+        FoodPizzaLarge: 4              # 60 pizzas
+        FoodBarSupply: 1
+        FoodSoftdrinksLarge: 1
+
+- type: entity
+  id: EngineeringGifts
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 4
+      startDelay: 10
+      duration: 240
+      chaos:
+        Atmos: -300
+        Power: -100
+    - type: CargoGiftsRule
+      descr: Useful resources to fix the station
+      sender: NanoTrasen
+      careof: The Engineering Dept.
+      gifts:
+        EngineeringCableBulk: 1
+        AirlockKit: 1
+        MaterialSteel: 1
+        MaterialPlasteel: 1
+        MaterialGlass: 1
+        CrateVendingMachineRestockEngineering: 1
+
+- type: entity
+  id: VendingRestock
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 4
+      startDelay: 10
+      duration: 120
+      chaos:
+        Hunger: -100
+        Thirst: -100
+    - type: CargoGiftsRule
+      descr: Restock the vending machines
+      sender: NanoTrasen
+      careof: The Cargo Dept.
+      gifts:
+        CrateVendingMachineRestockHotDrinks: 3
+        CrateVendingMachineRestockBooze: 1
+        CrateVendingMachineRestockNutriMax: 1
+        CrateVendingMachineRestockRobustSoftdrinks: 2
+        CrateVendingMachineRestockVendomat: 1
+        CrateVendingMachineRestockGetmoreChocolateCorp: 1
+
+- type: entity
+  id: JanitorGifts
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 8
+      startDelay: 10
+      duration: 120
+      chaos:
+        Jani: -200
+    - type: CargoGiftsRule
+      descr: Useful resources to clean the station
+      sender: NanoTrasen
+      careof: Service Dept.
+      gifts:
+        CrateServiceJanitorialSupplies: 2
+        ServiceLightsReplacement: 2
+        ServiceJanitorBiosuit: 1

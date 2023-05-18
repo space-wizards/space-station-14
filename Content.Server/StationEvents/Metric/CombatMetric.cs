@@ -37,11 +37,11 @@ public sealed class CombatMetric : StationMetric<CombatMetricComponent>
             if (mind.Mind == null)
                 continue;
 
-            if (mobState.CurrentState != MobState.Alive)
-                continue;
-
             if (mind.Mind.HasAntag)
             {
+                if (mobState.CurrentState != MobState.Alive)
+                    continue;
+
                 // This is an antag
                 if (nukie_q.TryGetComponent(uid, out var nukie))
                 {
@@ -65,12 +65,10 @@ public sealed class CombatMetric : StationMetric<CombatMetricComponent>
                     continue;
                 }
 
-                // Friendlies are good, so make a negative chaos score
-                friendlies -= component.FriendlyScore;
-
                 if (mobState.CurrentState == MobState.Dead)
                 {
                     death += component.DeadScore;
+                    continue;
                 }
                 else
                 {
@@ -78,8 +76,13 @@ public sealed class CombatMetric : StationMetric<CombatMetricComponent>
                     if (mobState.CurrentState == MobState.Critical)
                     {
                         medical += component.CritScore;
+                        continue;
                     }
                 }
+
+                // Friendlies are good, so make a negative chaos score
+                friendlies -= component.FriendlyScore;
+
             }
         }
 

@@ -1,4 +1,6 @@
+using System.Linq;
 using System.Text.Json.Serialization;
+using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Utility;
 
@@ -53,6 +55,16 @@ namespace Content.Shared.chaos
             ChaosDict = new(chaos);
         }
         #endregion
+
+        public override string? ToString()
+        {
+            return String.Join(
+                ", ",
+                ChaosDict.Select(p => String.Format(
+                    "{0}: {1}",
+                    p.Key, p.Value)));
+        }
+
         /// <summary>
         ///     Remove any chaos entries with zero chaos.
         /// </summary>

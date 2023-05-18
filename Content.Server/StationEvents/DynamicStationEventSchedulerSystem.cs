@@ -42,7 +42,7 @@ namespace Content.Server.StationEvents
             }
 
             var chaos = _metrics.CalculateChaos();
-            _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"Station chaos is now {chaos.ChaosDict.ToString()}");
+            _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"Station chaos is now {chaos.ToString()}");
 
             ResetTimer(scheduler);
         }

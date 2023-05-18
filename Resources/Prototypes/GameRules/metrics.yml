@@ -46,3 +46,13 @@
       PressureCost: 20
       FireCost: 50
 
+- type: entity
+  id: FoodMetric
+  parent: BaseMetric
+  noSpawn: true
+  components:
+    - type: FoodMetric
+      thirstScore: 2
+      parchedScore: 5
+      peckishScore: 2
+      starvingScore: 5
