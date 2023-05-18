@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix context menu and storage range checks., type: Fix}
-  id: 3305
-  time: '2023-04-01T09:53:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fixed lobby votes. It also won't overlap the topleft menu anymore.,
     type: Fix}
   id: 3306
@@ -2904,3 +2899,8 @@ Entries:
   - {message: Updated the Suit Storage look., type: Tweak}
   id: 3804
   time: '2023-05-18T17:52:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Vending machines can now be completely destroyed., type: Fix}
+  id: 3805
+  time: '2023-05-18T23:48:14.0000000+00:00'
