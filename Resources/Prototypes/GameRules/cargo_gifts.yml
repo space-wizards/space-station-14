@@ -7,9 +7,6 @@
     weight: 10
     startDelay: 10
     duration: 120
-    chaos:
-      Hunger: -80
-      Thirst: -40
   - type: CargoGiftsRule
     descr: A small pizza party
     sender: NanoTrasen
@@ -29,9 +26,6 @@
       weight: 6
       startDelay: 10
       duration: 240
-      chaos:
-        Hunger: -300
-        Thirst: -120
     - type: CargoGiftsRule
       descr: A large pizza party
       sender: NanoTrasen
@@ -50,9 +44,6 @@
       weight: 4
       startDelay: 10
       duration: 240
-      chaos:
-        Atmos: -300
-        Power: -100
     - type: CargoGiftsRule
       descr: Useful resources to fix the station
       sender: NanoTrasen
@@ -74,9 +65,6 @@
       weight: 4
       startDelay: 10
       duration: 120
-      chaos:
-        Hunger: -100
-        Thirst: -100
     - type: CargoGiftsRule
       descr: Restock the vending machines
       sender: NanoTrasen
@@ -98,8 +86,6 @@
       weight: 8
       startDelay: 10
       duration: 120
-      chaos:
-        Jani: -200
     - type: CargoGiftsRule
       descr: Useful resources to clean the station
       sender: NanoTrasen
