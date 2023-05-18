@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fixed lobby votes. It also won't overlap the topleft menu anymore.,
-    type: Fix}
-  id: 3306
-  time: '2023-04-01T14:00:48.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed ghost lighting being disabled when any ghost is removed., type: Fix}
@@ -2904,3 +2898,9 @@ Entries:
   - {message: Vending machines can now be completely destroyed., type: Fix}
   id: 3805
   time: '2023-05-18T23:48:14.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Mobs that are in critical condition no longer appear as dead on the
+      crew monitor, type: Fix}
+  id: 3806
+  time: '2023-05-18T23:49:55.0000000+00:00'
