@@ -19,8 +19,6 @@
     color: "#3db83b"
     castShadows: false
   - type: Clickable
-  - type: AccessReader
-    access: [["Engineering"]]
   - type: InteractionOutline
   - type: Transform
     anchored: true

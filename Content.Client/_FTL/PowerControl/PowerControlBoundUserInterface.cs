@@ -32,7 +32,6 @@ namespace Content.Client._FTL.PowerControl
             base.UpdateState(state);
 
             var castState = (PowerControlState) state;
-            Logger.Debug(castState.Areas.Count.ToString());
             _window?.UpdateState(castState);
         }
 

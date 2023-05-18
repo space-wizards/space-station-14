@@ -5,14 +5,15 @@
   name: job-name-cmo
   description: job-description-cmo
   playTimeTracker: JobChiefMedicalOfficer
-  requirements:
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 18000
-    - !type:OverallPlaytimeRequirement
-      time: 108000
+#  requirements:
+#    - !type:DepartmentTimeRequirement
+#      department: Medical
+#      time: 18000
+#    - !type:OverallPlaytimeRequirement
+#      time: 108000
   weight: 10
   startingGear: CMOGear
+  setPreference: true
   icon: "ChiefMedicalOfficer"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
