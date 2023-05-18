@@ -4,7 +4,7 @@
   mapPath: /Maps/_FTL/kestrel.yml
   minPlayers: 0
   stations:
-    Omega:
+    Kestrel:
       mapNameTemplate: '{0} Kestrel {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
