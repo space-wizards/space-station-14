@@ -45,7 +45,7 @@
       startDelay: 10
       duration: 240
     - type: CargoGiftsRule
-      description: cargo-gift-engineering
+      description: cargo-gift-eng
       sender: cargo-gift-default-sender
       dest: cargo-gift-dest-engineering
       gifts:
@@ -89,8 +89,8 @@
     - type: CargoGiftsRule
       description: cargo-gift-cleaning
       sender: cargo-gift-default-sender
-      careof: cargo-gift-dest-janitor
+      dest: cargo-gift-dest-janitor
       gifts:
-        CrateServiceJanitorialSupplies: 2
+        ServiceJanitorial: 2
         ServiceLightsReplacement: 2
         ServiceJanitorBiosuit: 1

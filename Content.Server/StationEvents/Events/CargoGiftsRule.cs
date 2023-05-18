@@ -9,7 +9,9 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -20,6 +22,7 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
     [Dependency] private readonly CargoSystem _cargoSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     protected override void Added(EntityUid uid, CargoGiftsRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -45,6 +48,7 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
             component.TimeUntilNextGifts -= frameTime;
             return;
         }
+        component.TimeUntilNextGifts = 30f;
 
         var station = _stationSystem.Stations.FirstOrNull();
         if (station == null)
@@ -70,8 +74,6 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
                 break;
             }
         }
-
-        component.TimeUntilNextGifts = 30f;
     }
 
 }

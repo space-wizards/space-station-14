@@ -13,7 +13,7 @@ public sealed class CargoGiftsRuleComponent : Component
     /// <summary>
     /// What is being sent
     /// </summary>
-    [DataField("descr"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("description"), ViewVariables(VVAccess.ReadWrite)]
     public string Description = "cargo-gift-default-description";
 
     /// <summary>
@@ -25,7 +25,7 @@ public sealed class CargoGiftsRuleComponent : Component
     /// <summary>
     /// Destination of the gifts (who they get sent to on the station)
     /// </summary>
-    [DataField("careof"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("dest"), ViewVariables(VVAccess.ReadWrite)]
     public string Dest = "cargo-gift-default-dest";
 
     /// <summary>
@@ -42,7 +42,7 @@ public sealed class CargoGiftsRuleComponent : Component
     public int OrderSpaceToLeave = 5;
 
     /// <summary>
-    /// Time until we consider next lot of gifts
+    /// Time until we consider next lot of gifts (if supply is overflowing with orders)
     /// </summary>
     [DataField("timeUntilNextGifts"), ViewVariables(VVAccess.ReadWrite)]
     public float TimeUntilNextGifts = 10.0f;

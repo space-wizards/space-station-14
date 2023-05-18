@@ -288,6 +288,13 @@ namespace Content.Server.Cargo.Systems
 
         public bool AddAndApproveOrder(StationCargoOrderDatabaseComponent component, string productId, int qty, string sender, string description, string dest)
         {
+            if (!_prototypeManager.HasIndex<CargoProductPrototype>(productId))
+            {
+                _sawmill.Warning($"CargoSystem.Orders could not find CargoProductPrototype for '{productId}' in {description}.");
+                // Pretend that it worked OK, since we don't want the caller to try again.
+                return true;
+            }
+
             // Make an order
             var id = GenerateOrderId(component);
             var order = new CargoOrderData(-1, productId, qty, sender, description);
