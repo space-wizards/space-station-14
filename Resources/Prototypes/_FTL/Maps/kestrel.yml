@@ -1,0 +1,24 @@
+- type: gameMap
+  id: Kestrel
+  mapName: 'Kestrel'
+  mapPath: /Maps/_FTL/kestrel.yml
+  minPlayers: 0
+  stations:
+    Omega:
+      mapNameTemplate: '{0} Kestrel {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: 'FTL'
+      overflowJobs:
+        - Passenger
+      availableJobs:
+        CargoTechnician: [ 2, 2 ]
+        Passenger: [ -1, -1 ]
+        Captain: [ 1, 1 ]
+        StationEngineer: [ 3, 3 ]
+        ChiefMedicalOfficer: [ 1, 1 ]
+        MedicalDoctor: [ 3, 3 ]
+        HeadOfSecurity: [ 1, 1 ]
+        SecurityOfficer: [ 3, 3 ]
+        AtmosphericTechnician: [ 2, 2 ]
+        # SalvageSpecialist: [ 2, 2 ] One day
