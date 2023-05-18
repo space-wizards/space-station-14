@@ -34,6 +34,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Movement.Systems;
+using Content.Server.Traits.Assorted;
 
 namespace Content.Server.Zombies
 {
@@ -344,6 +345,10 @@ namespace Content.Server.Zombies
                 accentComp.Accent = zombiecomp.BeforeZombifiedAccent;
             else
                 RemComp<ReplacementAccentComponent>(target);
+
+            // Return the pacifist trait if applicable
+            if (zombiecomp.BeforeZombifiedPacifist)
+                AddComp<PacifistComponent>(target);
 
             // This is needed for stupid entities that fuck up combat mode component
             // in an attempt to make an entity not attack. This is the easiest way to do it.

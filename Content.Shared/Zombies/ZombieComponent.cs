@@ -184,6 +184,12 @@ namespace Content.Shared.Zombies
         public DamageSpecifier? BeforeZombifiedColdDamage;
 
         /// <summary>
+        /// The cold damage specifier of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedPacifist")]
+        public bool BeforeZombifiedPacifist = false;
+
+        /// <summary>
         /// The amount of hands of the zombie to restore in case of unzombification
         /// </summary>
         [DataField("beforeZombifiedHandCount")]

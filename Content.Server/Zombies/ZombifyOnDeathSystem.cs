@@ -16,7 +16,9 @@ using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Traitor;
+using Content.Server.Traits.Assorted;
 using Content.Shared.CombatMode;
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -127,6 +129,14 @@ namespace Content.Server.Zombies
             if (TryComp<ReplacementAccentComponent>(target, out var accentComp))
                 zombiecomp.BeforeZombifiedAccent = accentComp.Accent;
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
+
+            // Remove the pacifist trait so the zombie can have fun
+            if (HasComp<PacifistComponent>(target))
+            {
+                zombiecomp.BeforeZombifiedPacifist = true;
+                RemComp<PacifistComponent>(target);
+                RemComp<PacifiedComponent>(target);
+            }
 
             //This is needed for stupid entities that fuck up combat mode component
             //in an attempt to make an entity not attack. This is the easiest way to do it.
