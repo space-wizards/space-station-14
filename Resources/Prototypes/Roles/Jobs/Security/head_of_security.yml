@@ -3,17 +3,18 @@
   name: job-name-hos
   description: job-description-hos
   playTimeTracker: JobHeadOfSecurity
-  requirements:
-    - !type:RoleTimeRequirement
-      role: JobWarden
-      time: 3600
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 18000
-    - !type:OverallPlaytimeRequirement
-      time: 108000
+#  requirements:
+#    - !type:RoleTimeRequirement
+#      role: JobWarden
+#      time: 3600
+#    - !type:DepartmentTimeRequirement
+#      department: Security
+#      time: 18000
+#    - !type:OverallPlaytimeRequirement
+#      time: 108000
   weight: 10
   startingGear: HoSGear
+  setPreference: true
   icon: "HeadOfSecurity"
   requireAdminNotify: true
   supervisors: job-supervisors-captain

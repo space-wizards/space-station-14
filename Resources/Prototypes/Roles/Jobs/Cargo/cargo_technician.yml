@@ -6,6 +6,7 @@
   startingGear: CargoTechGear
   icon: "CargoTechnician"
   supervisors: job-supervisors-hop-qm
+  setPreference: true
   access:
   - Cargo
   - Maintenance

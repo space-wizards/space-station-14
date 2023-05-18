@@ -3,14 +3,15 @@
   name: job-name-security
   description: job-description-security
   playTimeTracker: JobSecurityOfficer
-  requirements:
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 3600 #1 hr
+#  requirements:
+#    - !type:DepartmentTimeRequirement
+#      department: Security
+#      time: 3600 #1 hr
   startingGear: SecurityOfficerGear
   icon: "SecurityOfficer"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  setPreference: true
   access:
   - Security
   - Brig

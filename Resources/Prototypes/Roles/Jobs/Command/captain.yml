@@ -3,23 +3,24 @@
   name: job-name-captain
   description: job-description-captain
   playTimeTracker: JobCaptain
-  requirements:
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 18000
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 18000
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 18000
-    - !type:OverallPlaytimeRequirement
-      time: 108000
+#  requirements:
+#    - !type:DepartmentTimeRequirement
+#      department: Engineering
+#      time: 18000
+#    - !type:DepartmentTimeRequirement
+#      department: Medical
+#      time: 18000
+#    - !type:DepartmentTimeRequirement
+#      department: Security
+#      time: 18000
+#    - !type:OverallPlaytimeRequirement
+#      time: 108000
   weight: 20
   startingGear: CaptainGear
   icon: "Captain"
   requireAdminNotify: true
   joinNotifyCrew: true
+  setPreference: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
