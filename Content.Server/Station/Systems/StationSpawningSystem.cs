@@ -154,7 +154,7 @@ public sealed class StationSpawningSystem : EntitySystem
             MetaData(entity.Value).EntityName = profile.Name;
             if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
             {
-                AddComp<DetailExaminableComponent>(entity).Content = profile.FlavorText;
+                AddComp<DetailExaminableComponent>(entity.Value).Content = profile.FlavorText;
             }
         }
 
