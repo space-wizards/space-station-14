@@ -554,6 +554,13 @@
         damage:
           types:
             Poison: 0.5
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Romerol
+          min: 10
+        key: Unzombify
+        component: Unzombify
 
 - type: reagent
   id: PulpedBananaPeel
