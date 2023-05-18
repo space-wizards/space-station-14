@@ -60,28 +60,6 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         });
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var localPlayer = _player.LocalPlayer?.ControlledEntity;
-
-        if (!TryComp<SharedEyeComponent>(localPlayer, out var content))
-            return;
-
-        Vector2 targetZoom;
-        if (HasGhostZoom(null, localPlayer) is ContentEyeComponent ghostContent)
-        {
-            targetZoom = ghostContent.TargetZoom;
-        }
-        else
-        {
-            targetZoom = content.TargetZoom;
-        }
-
-        UpdateEye(content, targetZoom, frameTime);
-    }
-
     private void OnKeyBindZoomChange(KeyBindsTypes type)
     {
         var delay = TimeSpan.FromSeconds(0.2f);

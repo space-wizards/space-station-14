@@ -112,21 +112,24 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(component);
     }
 
-    protected void UpdateEye(SharedEyeComponent eye, Vector2 targetZoom, float frameTime)
+    protected void UpdateEye(SharedEyeComponent eye, Vector2 targetZoom, float frameTime, bool isClient = false)
     {
         var diff = targetZoom - eye.Zoom;
 
-        if (diff.LengthSquared < 0.0000001f)
+        if (diff.LengthSquared < 0.00000001f)
         {
             eye.Zoom = targetZoom;
             Dirty(eye);
             return;
         }
 
-        var change = diff * 8f * frameTime;
+        var change = diff * 5f * frameTime;
 
-        eye.Zoom += change;
-        Dirty(eye);
+        if (!isClient)
+        {
+            eye.Zoom += change;
+            Dirty(eye);
+        }
     }
 
     private void ResetGhostZoom(ContentEyeComponent component)
@@ -166,14 +169,12 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void GhostZoom(ContentEyeComponent component, bool zoomIn)
     {
-        Logger.Debug($"current is {component.TargetZoom} +++++++++++");
         var actual = CalcZoom(
             zoomIn, component.TargetZoom, component.MaxZoom, MinZoom);
 
         if (actual.Equals(component.TargetZoom))
             return;
 
-        Logger.Debug($"actual is {actual}");
         component.TargetZoom = actual;
         Dirty(component);
         Sawmill.Debug($"Set target zoom to {actual}");
