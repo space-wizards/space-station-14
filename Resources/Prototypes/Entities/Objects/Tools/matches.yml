@@ -70,6 +70,15 @@
     - state: matchbox
     - state: matchbox-open
       map: ["openLayer"]
+    - state: matchbox1
+      map: ["matchbox1"]
+      visible: false
+    - state: matchbox2
+      map: ["matchbox2"]
+      visible: false
+    - state: matchbox3
+      map: ["matchbox3"]
+      visible: false
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
@@ -83,14 +92,12 @@
   - type: ItemCounter
     count:
       tags: [Matchstick]
+    composite: true
+    layerStates:
+    - matchbox1
+    - matchbox2
+    - matchbox3
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-        - matchbox1
-        - matchbox2
-        - matchbox3
   - type: Tag
     tags:
     - Trash

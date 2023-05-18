@@ -1,22 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Update engine to 0.96.0.3, type: Tweak}
-  id: 3302
-  time: '2023-03-31T06:28:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: TRay scanner will work in any inventory slot or hand again., type: Fix}
-  id: 3303
-  time: '2023-04-01T01:53:25.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed certain chairs and potted plants to be wrench-able. Plants need
-      to have something in them first to anchor them., type: Tweak}
-  id: 3304
-  time: '2023-04-01T08:29:34.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix context menu and storage range checks., type: Fix}
   id: 3305
   time: '2023-04-01T09:53:00.0000000+00:00'
@@ -2905,3 +2889,18 @@ Entries:
   - {message: Fix uknown station name in PDA for latejoin!, type: Fix}
   id: 3801
   time: '2023-05-17T20:35:41.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add lathe recipe for tethergun., type: Add}
+  id: 3802
+  time: '2023-05-18T02:07:11.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed Next on the admin logs UI resending the same logs., type: Fix}
+  id: 3803
+  time: '2023-05-18T05:51:17.0000000+00:00'
+- author: FluffiestFloof
+  changes:
+  - {message: Updated the Suit Storage look., type: Tweak}
+  id: 3804
+  time: '2023-05-18T17:52:05.0000000+00:00'
