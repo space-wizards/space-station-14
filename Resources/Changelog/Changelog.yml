@@ -1,51 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added Plush Dion to spawn pools, type: Add}
-  id: 3294
-  time: '2023-03-31T04:30:06.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Added virology uniforms, type: Add}
-  - {message: Added clothes to the GeneDrobe, type: Add}
-  id: 3295
-  time: '2023-03-31T04:31:51.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Shuttle hyperspace start and end no longer cause early onset tinnitus,
-    type: Tweak}
-  id: 3296
-  time: '2023-03-31T04:32:19.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Bandanas and caps can now be butchered., type: Tweak}
-  id: 3297
-  time: '2023-03-31T04:33:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix docking config in some instances. This mainly affected Aspid with
-      the shuttle blocking the 4-port docking configuration for the emergency shuttle.,
-    type: Fix}
-  id: 3298
-  time: '2023-03-31T04:45:15.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Changed foam dart box sprite., type: Tweak}
-  - {message: Fixed some boxes not having icons., type: Fix}
-  id: 3299
-  time: '2023-03-31T04:46:07.0000000+00:00'
-- author: ficcialfaint
-  changes:
-  - {message: 'Added DNA for people. You can scan a blood puddle, vomit, glasses,
-      glass shards and other liquid containers using forensic scanner to get DNA.
-      Drinking leaves DNA on items.', type: Add}
-  id: 3300
-  time: '2023-03-31T04:49:25.0000000+00:00'
-- author: MilenVolf
-  changes:
-  - {message: Wall recharges now work as intended, type: Fix}
-  id: 3301
-  time: '2023-03-31T05:53:07.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Update engine to 0.96.0.3, type: Tweak}
@@ -2906,3 +2859,49 @@ Entries:
   - {message: No more shutting firelocks on your friends and family., type: Tweak}
   id: 3793
   time: '2023-05-17T06:37:38.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed admin logs next button not working for rounds older than the last
+      three., type: Fix}
+  - {message: Added a round's total log count to the admin logs UI., type: Add}
+  id: 3794
+  time: '2023-05-17T11:04:28.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: You can now make glue by heating a mixture of lube and slime., type: Tweak}
+  id: 3795
+  time: '2023-05-17T13:39:44.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: Syndicate R&D has greatly improved the explosion of the power sink.,
+    type: Tweak}
+  id: 3796
+  time: '2023-05-17T13:55:42.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'Too many people were drinking space glue puddles, so rationing has
+      been put in to effect (less space glue from scrubbers event).', type: Tweak}
+  id: 3797
+  time: '2023-05-17T15:10:41.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Adjust salvage crusher colour to be slightly more muted., type: Tweak}
+  id: 3798
+  time: '2023-05-17T15:11:17.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed visuals for cigarette packs and donut boxes, type: Fix}
+  id: 3799
+  time: '2023-05-17T19:19:24.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'The laws of physics smile on you! Tritium (thus Frezon) is easier to
+      make, at up to a 3:96 Plasma:Oxy ratio you''ll get some Tritium.', type: Tweak}
+  id: 3800
+  time: '2023-05-17T19:22:56.0000000+00:00'
+- author: VigersRay
+  changes:
+  - {message: 'Added alert level, instruction and shift duration in PDA!', type: Add}
+  - {message: Fix uknown station name in PDA for latejoin!, type: Fix}
+  id: 3801
+  time: '2023-05-17T20:35:41.0000000+00:00'
