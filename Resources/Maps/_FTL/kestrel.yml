@@ -618,7 +618,7 @@ entities:
       pos: 0.5,-2.5
       parent: 2
       type: Transform
-  - uid: 689
+  - uid: 691
     components:
     - rot: 1.5707963267948966 rad
       pos: -2.5,-4.5
@@ -4404,7 +4404,7 @@ entities:
     - pos: -1.5,-15.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -708.93225
+    - SecondsUntilStateChange: -859.3729
       state: Opening
       type: Door
   - uid: 431
@@ -5035,6 +5035,18 @@ entities:
         Pressed:
         - 412
       type: DeviceLinkSource
+- proto: SpawnPointAssistant
+  entities:
+  - uid: 689
+    components:
+    - pos: -1.5,-19.5
+      parent: 2
+      type: Transform
+  - uid: 690
+    components:
+    - pos: -1.5,-18.5
+      parent: 2
+      type: Transform
 - proto: SpawnPointAtmos
   entities:
   - uid: 783
