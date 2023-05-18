@@ -499,13 +499,12 @@ namespace Content.Server.Atmos.EntitySystems
                     // And then some magically into space
                     ReleaseGasTo(otherTile2.Air!, null, sum * 0.3f);
 
-                    // Temperature reduces as air drains. But nerf the real temperature reduction a bit
-                    float realtemploss = (otherTile.Air.TotalMoles - sum) / otherTile.Air.TotalMoles;
-                    otherTile.Air.Temperature *= 0.9f + 0.1f * realtemploss;
-                    if (otherTile.Air.Temperature < 310.0f && otherTile.Air.Temperature > 270.0f)
+                    if (otherTile.Air.Temperature > 280.0f)
                     {
-                        // Make some water vapor between 0 and 30 deg. c
-                        otherTile.Air.AdjustMoles(Gas.WaterVapor, sum * 0.01f);
+                        // Temperature reduces as air drains. But nerf the real temperature reduction a bit
+                        //   Also, limit the temperature loss to remain > 10 Deg.C for convenience
+                        float realtemploss = (otherTile.Air.TotalMoles - sum) / otherTile.Air.TotalMoles;
+                        otherTile.Air.Temperature *= 0.9f + 0.1f * realtemploss;
                     }
                 }
                 else
