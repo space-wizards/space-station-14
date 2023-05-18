@@ -83,6 +83,7 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
+      - Unzombify
   - type: Blindable
   # Other
   - type: Inventory
