@@ -60,12 +60,14 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var assignedJobs = _stationJobs.AssignJobs(profiles, _stationSystem.Stations.ToList());
+            var spawnableStations = EntityQuery<StationJobsComponent, StationSpawningComponent>().Select(x => x.Item1.Owner).ToList();
 
-            _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, _stationSystem.Stations.ToList());
+            var assignedJobs = _stationJobs.AssignJobs(profiles, spawnableStations);
+
+            _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, spawnableStations);
 
             // Calculate extended access for stations.
-            var stationJobCounts = _stationSystem.Stations.ToDictionary(e => e, _ => 0);
+            var stationJobCounts = spawnableStations.ToDictionary(e => e, _ => 0);
             foreach (var (netUser, (job, station)) in assignedJobs)
             {
                 if (job == null)

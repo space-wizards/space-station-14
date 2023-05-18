@@ -1,0 +1,50 @@
+﻿- type: entity
+  id: BaseStation
+  abstract: true
+  components:
+    - type: StationData
+
+- type: entity
+  id: BaseStationCargo
+  abstract: true
+  components:
+    - type: StationBankAccount
+    - type: StationCargoOrderDatabase
+
+- type: entity
+  id: BaseStationJobsSpawning
+  abstract: true
+  components:
+    - type: StationJobs
+    - type: StationSpawning
+
+- type: entity
+  id: BaseStationRecords
+  abstract: true
+  components:
+    - type: StationRecords
+
+- type: entity
+  id: BaseStationArrivals
+  abstract: true
+  components:
+    - type: StationArrivals
+
+- type: entity
+  id: BaseStationAlertLevels
+  abstract: true
+  components:
+    - type: AlertLevel
+
+- type: entity
+  id: BaseStationExpeditions
+  abstract: true
+  components:
+    - type: SalvageExpeditionData
+
+- type: entity
+  id: StandardStation
+  parents: [BaseStation, BaseStationCargo, BaseStationJobsSpawning, BaseStationArrivals, BaseStationAlertLevels, BaseStationExpeditions]
+  noSpawn: true
+  components: {}
+

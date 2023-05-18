@@ -59,7 +59,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (stationData.StationConfig == null)
             return;
 
-        var mapJobList = stationData.StationConfig.AvailableJobs;
+        var mapJobList = stationJobs.SetupAvailableJobs;
 
         stationJobs.RoundStartTotalJobs = mapJobList.Values.Where(x => x[0] is not null && x[0] > 0).Sum(x => x[0]!.Value);
         stationJobs.MidRoundTotalJobs = mapJobList.Values.Where(x => x[1] is not null && x[1] > 0).Sum(x => x[1]!.Value);
@@ -76,7 +76,7 @@ public sealed partial class StationJobsSystem : EntitySystem
                 return null;
             return (uint?) x.Value[0];
         });
-        stationJobs.OverflowJobs = stationData.StationConfig.OverflowJobs.ToHashSet();
+        stationJobs.OverflowJobs = stationJobs.OverflowJobs.ToHashSet();
         UpdateJobsAvailable();
     }
 

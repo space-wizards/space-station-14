@@ -271,7 +271,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        }
 
        // Load escape shuttle
-       var shuttlePath = component.StationConfig.EmergencyShuttlePath;
+       var shuttlePath = component.EmergencyShuttlePath;
        var shuttle = _map.LoadGrid(CentComMap.Value, shuttlePath.ToString(), new MapLoadOptions()
        {
            // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
