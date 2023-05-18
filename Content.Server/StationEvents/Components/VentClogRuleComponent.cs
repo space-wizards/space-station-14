@@ -46,7 +46,10 @@ public sealed class VentClogRuleComponent : Component
     /// Reagents that gets the weak numbers used instead of regular ones.
     /// </summary>
     [DataField("weakReagents", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
-    public IReadOnlyList<string> WeakReagents = new[] { "SpaceLube" };
+    public IReadOnlyList<string> WeakReagents = new[]
+    {
+        "SpaceLube", "SpaceGlue"
+    };
 
     /// <summary>
     /// Quantity of weak reagents to put in the foam.

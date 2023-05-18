@@ -4,6 +4,7 @@
   components:
   - type: Physics
     bodyType: Dynamic
+    sleepingAllowed: false
   - type: Fixtures
     fixtures:
       tether:

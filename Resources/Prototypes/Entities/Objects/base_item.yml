@@ -71,8 +71,8 @@
     visuals:
       enum.SharedBagOpenVisuals.BagState:
         openLayer:
-          True: { visible: true }
-          False: { visible: false }
+          Open: { visible: true }
+          Closed: { visible: false }
 
 
 # PowerCellSlot parents
@@ -105,3 +105,18 @@
         cell_slot:
           name: power-cell-slot-component-slot-name-default
           startingItem: PowerCellMedium
+
+- type: entity
+  id: PowerCellSlotHighItem
+  abstract: true
+  components:
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot { }
+    - type: PowerCellSlot
+      cellSlotId: cell_slot
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
