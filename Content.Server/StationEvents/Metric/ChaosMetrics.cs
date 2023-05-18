@@ -33,6 +33,20 @@ namespace Content.Shared.chaos
         [JsonIgnore]
         public bool Empty => ChaosDict.Count == 0;
 
+        /// <summary>
+        ///     True if any of our values are greater than other, i.e worse.
+        /// </summary>
+        public bool AnyWorseThan(ChaosMetrics other) => ChaosDict.Any(kvp =>
+            other.ChaosDict.TryGetValue(kvp.Key, out var otherV)
+            && kvp.Value > otherV);
+
+        /// <summary>
+        ///     True if all of our values are less than other, i.e better.
+        /// </summary>
+        public bool AllBetterThan(ChaosMetrics other) => ChaosDict.All(kvp =>
+            !other.ChaosDict.TryGetValue(kvp.Key, out var otherV)
+            || kvp.Value < otherV);
+
         #region constructors
         /// <summary>
         ///     Constructor that just results in an empty dictionary.
