@@ -49,6 +49,9 @@ public sealed class StationRecordsSystem : EntitySystem
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
     {
+        if (!HasComp<StationRecordsComponent>(args.Station))
+            return;
+
         CreateGeneralRecord(args.Station, args.Mob, args.Profile, args.JobId);
     }
 
