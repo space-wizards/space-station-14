@@ -10,4 +10,5 @@
         !type:NanotrasenNameGenerator
         prefixCreator: 'TG'
       stationProto: NanotrasenCentralCommand
-      components: {}
+      components:
+        - type: Transform
