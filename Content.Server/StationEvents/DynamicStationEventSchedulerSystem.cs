@@ -77,6 +77,8 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
             if (!proto.TryGetComponent<StationEventComponent>(out var stationEvent, _factory))
                 continue;
 
+            // Gate here on players, but not on round runtime. The story will probably last long enough for the
+            // event to be ready to run again, we'll check CanRun again before we actually launch the event.
             if (!_event.CanRun(proto, stationEvent, count.Players, TimeSpan.MaxValue))
                 continue;
 
@@ -99,15 +101,24 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
             return;
         }
 
+        // Somewhat expensive process of invoking the metric systems which iterate through entities to determine
+        //   how bad things currently are on the station.
         var chaos = _metrics.CalculateChaos();
         _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"Station chaos is now {chaos.ToString()}");
 
+        // Decide what story beat to work with (which sets chaos goals)
         var count = CountActivePlayers();
         var beat = DetermineNextBeat(scheduler, chaos, count);
+
+        // Pick the best events (which move the station towards the chaos desired by the beat)
         var bestEvents = ChooseEvents(scheduler, beat, chaos, count);
-        // Run the best event here
+
+        // Run the best event here, if we have any to pick from.
         if (bestEvents.Count > 0)
         {
+            // Sorts the possible events and then picks semi-randomly.
+            // when beat.RandomEventLimit is 1 it's always the "best" event picked. Higher values
+            // allow more events to be randomly selected.
             var chosenEvent = SelectBest(bestEvents, beat.RandomEventLimit);
             _event.RunNamedEvent(chosenEvent.PossibleEvent.PrototypeId);
 
@@ -124,6 +135,9 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
         }
     }
 
+    // Count the active players and ghosts on the server.
+    //  Players gates which stories and events are available
+    //  Ghosts can be used to gate certain events (which require ghosts to occur)
     private PlayerCount CountActivePlayers()
     {
         var allPlayers = _playerManager.ServerSessions.ToList();
@@ -147,6 +161,8 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
         return count;
     }
 
+    // Sorts the possible events and then picks semi-randomly.
+    // when maxRandom is 1 it's always the "best" event picked. Higher values allow more events to be randomly selected.
     protected RankedEvent SelectBest(List<RankedEvent> bestEvents, int maxRandom)
     {
         var ranked =bestEvents.OrderBy(ev => ev.Score).Take(maxRandom).ToList();
@@ -168,9 +184,11 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
         return ranked[0];
     }
 
+    // Returns the StoryBeat that should be currently used to select events.
+    // Advances the current story and picks new stories when the current beat is complete.
     private StoryBeat DetermineNextBeat(DynamicStationEventSchedulerComponent scheduler, ChaosMetrics chaos, PlayerCount count)
     {
-        // Potentially Complete CurrBeat
+        // Potentially Complete CurrBeat, which is always scheduler.CurrStory[0]
         if (scheduler.CurrStory.Count > 0)
         {
             var beatName = scheduler.CurrStory[0];
@@ -207,8 +225,9 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
             // If we didn't return by here, we are done with this beat.
             scheduler.CurrStory.RemoveAt(0);
         }
-
         scheduler.BeatTime = 0.0f;
+
+        // Advance in the current story
         if (scheduler.CurrStory.Count > 0)
         {
             // Return the next beat in the current story.
@@ -219,7 +238,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
             return beat;
         }
 
-        // Need to find a new story
+        // Need to find a new story. Pick a random one which meets our needs.
         var stories = scheduler.Stories.Keys.ToList();
         _random.Shuffle(stories);
 
@@ -231,6 +250,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
                 continue;
             }
 
+            // A new story was picked. Copy the full list of beats (for us to pop beats from the front as we proceed)
             scheduler.CurrStory = story.Beats.ShallowClone();
             scheduler.CurrStoryName = storyName;
             SetupEvents(scheduler, count);
@@ -243,7 +263,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
             return beat;
         }
 
-        // Just use the fallback beat (that does exist, right!?)
+        // Just use the fallback beat when no stories were found. That beat does exist, right!?
         scheduler.CurrStory.Add(scheduler.FallbackBeatName);
         return scheduler.StoryBeats[scheduler.FallbackBeatName];
     }
