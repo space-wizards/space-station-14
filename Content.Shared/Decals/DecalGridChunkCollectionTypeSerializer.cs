@@ -222,14 +222,19 @@ namespace Content.Shared.Decals
                 if (idComparison != 0)
                     return idComparison;
 
-                var zIndexComparison = ZIndex.CompareTo(other.ZIndex);
-                if (zIndexComparison != 0)
-                    return zIndexComparison;
-
                 var colorComparison = string.Compare(Color?.ToHex(), other.Color?.ToHex(), StringComparison.Ordinal);
 
                 if (colorComparison != 0)
                     return colorComparison;
+
+                var angleComparison = Angle.Theta.CompareTo(other.Angle.Theta);
+
+                if (angleComparison != 0)
+                    return angleComparison;
+
+                var zIndexComparison = ZIndex.CompareTo(other.ZIndex);
+                if (zIndexComparison != 0)
+                    return zIndexComparison;
 
                 return Cleanable.CompareTo(other.Cleanable);
             }
