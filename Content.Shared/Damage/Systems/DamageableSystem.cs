@@ -238,6 +238,20 @@ namespace Content.Shared.Damage
             Dirty(comp);
         }
 
+        /// <summary>
+        ///     Returns DamageModifierSetId from specified <see cref="DamageableComponent"/>.
+        /// </summary>
+        /// <remarks>
+        ///     Returns null if the specified entity doesnt have a <see cref="DamageableComponent"/>.
+        /// </remarks>
+        public string? GetDamageModifierSetId(EntityUid uid, DamageableComponent? comp)
+        {
+            if (!Resolve(uid, ref comp))
+                return null;
+
+            return comp.DamageModifierSetId;
+        }
+
         private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
         {
             if (_netMan.IsServer)

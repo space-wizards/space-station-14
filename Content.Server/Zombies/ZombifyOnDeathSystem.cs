@@ -101,14 +101,31 @@ namespace Content.Server.Zombies
             //you're a real zombie now, son.
             var zombiecomp = AddComp<ZombieComponent>(target);
 
-            //we need to basically remove all of these because zombies shouldn't
-            //get diseases, breath, be thirst, be hungry, or die in space
-            RemComp<RespiratorComponent>(target);
-            RemComp<BarotraumaComponent>(target);
-            RemComp<HungerComponent>(target);
-            RemComp<ThirstComponent>(target);
+            // Zombies cannot suffocate, suffer from pressure damage, be hungry or thirsty
+            if (TryComp<RespiratorComponent>(target, out var respiratorComp))
+            {
+                zombiecomp.BeforeZombifiedSuffocationThreshold = respiratorComp.SuffocationThreshold;
+                respiratorComp.SuffocationThreshold = -3.0f;
+            }
+            if (TryComp<BarotraumaComponent>(target, out var barotraumaComp))
+            {
+                zombiecomp.BeforeZombifiedBarotraumaImmunity = barotraumaComp.HasImmunity;
+                barotraumaComp.HasImmunity = true;
+            }
+            if (TryComp<HungerComponent>(target, out var hungerComp))
+            {
+                zombiecomp.BeforeZombifiedHungerDecayRate = hungerComp.BaseDecayRate;
+                hungerComp.BaseDecayRate = 0f;
+            }
+            if (TryComp<ThirstComponent>(target, out var thirstComp))
+            {
+                zombiecomp.BeforeZombifiedThirstDecayRate = thirstComp.BaseDecayRate;
+                thirstComp.BaseDecayRate = 0f;
+            }
 
-            //funny voice
+            //Save the previous accent and add the funny zombie one
+            if (TryComp<ReplacementAccentComponent>(target, out var accentComp))
+                zombiecomp.BeforeZombifiedAccent = accentComp.Accent;
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
 
             //This is needed for stupid entities that fuck up combat mode component
@@ -119,11 +136,18 @@ namespace Content.Server.Zombies
 
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
+            if (TryComp<MeleeWeaponComponent>(target, out var meleeComp))
+            {
+                zombiecomp.BeforeZombifiedClickAnimation = meleeComp.ClickAnimation;
+                zombiecomp.BeforeZombifiedWideAnimation = meleeComp.WideAnimation;
+                zombiecomp.BeforeZombifiedRange = meleeComp.Range;
+            }
             var melee = EnsureComp<MeleeWeaponComponent>(target);
             melee.ClickAnimation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
             melee.Range = 1.5f;
             Dirty(melee);
+
 
             if (mobState.CurrentState == MobState.Alive)
             {
@@ -153,19 +177,26 @@ namespace Content.Server.Zombies
                 _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombiecomp.BaseLayerExternal, humanoid: huApComp);
 
                 //This is done here because non-humanoids shouldn't get baller damage
-                //lord forgive me for the hardcoded damage
                 DamageSpecifier dspec = new();
-                dspec.DamageDict.Add("Slash", 13);
-                dspec.DamageDict.Add("Piercing", 7);
-                dspec.DamageDict.Add("Structural", 10);
+                foreach (var kvp in zombiecomp.HumanoidZombieDamageValues)
+                {
+                    dspec.DamageDict.Add(kvp.Key, kvp.Value);
+                }
+                // Save the previous values
+                zombiecomp.BeforeZombifiedMeleeDamageSpecifier = melee.Damage;
                 melee.Damage = dspec;
             }
 
-            //The zombie gets the assigned damage weaknesses and strengths
+            //The zombie gets the assigned damage weaknesses and strengths and we save the previous ones
+            if (TryComp<DamageableComponent>(target, out var damageableComp))
+                zombiecomp.BeforeZombifiedDamageModifierSetId = _damageable.GetDamageModifierSetId(target, damageableComp);
+
             _damageable.SetDamageModifierSetId(target, "Zombie");
 
-            //This makes it so the zombie doesn't take bloodloss damage.
+            //This makes it so the zombie doesn't take bloodloss damage and saves the original threshold.
             //NOTE: they are supposed to bleed, just not take damage
+            if (TryComp<BloodstreamComponent>(target, out var bloodstreamComp))
+                zombiecomp.BeforeZombifiedBloodlossThreshold = _bloodstream.GetBloodLossThreshold(target, bloodstreamComp);
             _bloodstream.SetBloodLossThreshold(target, 0f);
 
             //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
@@ -180,9 +211,12 @@ namespace Content.Server.Zombies
             if (!HasComp<InputMoverComponent>(target)) //this component is cursed and fucks shit up
                 MakeSentientCommand.MakeSentient(target, EntityManager);
 
-            //Make the zombie not die in the cold. Good for space zombies
+            //Make the zombie not die in the cold. Good for space zombies. Also save previous value for unzombification
             if (TryComp<TemperatureComponent>(target, out var tempComp))
+            {
+                zombiecomp.BeforeZombifiedColdDamage = tempComp.ColdDamage;
                 tempComp.ColdDamage.ClampMax(0);
+            }
 
             // Zombies can revive themselves
             _mobThreshold.SetAllowRevives(target, true);
@@ -222,13 +256,14 @@ namespace Content.Server.Zombies
                 ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
 
-            //Goes through every hand, drops the items in it, then removes the hand
-            //may become the source of various bugs.
+            //Goes through every hand, drops the items in it, then removes the hand.
+            //may become the source of various bugs. Keeps track of the number of removed hands.
             foreach (var hand in _sharedHands.EnumerateHands(target))
             {
                 _sharedHands.SetActiveHand(target, hand);
                 _sharedHands.DoDrop(target, hand);
                 _sharedHands.RemoveHand(target, hand.Name);
+                zombiecomp.BeforeZombifiedHandCount++;
             }
             RemComp<HandsComponent>(target);
             // No longer waiting to become a zombie:

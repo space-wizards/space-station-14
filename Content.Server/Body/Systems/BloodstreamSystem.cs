@@ -295,6 +295,20 @@ public sealed class BloodstreamSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Returns bloodloss threshold from specified <see cref="BloodstreamComponent"/>.
+    /// </summary>
+    /// <remarks>
+    ///     Returns null if the specified entity doesnt have a <see cref="BloodstreamComponent"/>.
+    /// </remarks>
+    public float? GetBloodLossThreshold(EntityUid uid, BloodstreamComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return null;
+
+        return comp.BloodlossThreshold;
+    }
+
+    /// <summary>
     ///     Attempts to modify the blood level of this entity directly.
     /// </summary>
     public bool TryModifyBloodLevel(EntityUid uid, FixedPoint2 amount, BloodstreamComponent? component = null)

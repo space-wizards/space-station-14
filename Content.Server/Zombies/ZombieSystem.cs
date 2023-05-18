@@ -22,6 +22,18 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Server.Body.Components;
+using Content.Server.Atmos.Components;
+using Content.Server.Nutrition.Components;
+using Content.Shared.Nutrition.Components;
+using Content.Server.Speech.Components;
+using Content.Shared.CombatMode;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Humanoid;
+using Content.Server.Temperature.Components;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Server.Popups;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Zombies
 {
@@ -39,8 +51,11 @@ namespace Content.Server.Zombies
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly SharedCombatModeSystem _combat = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
 
         public override void Initialize()
         {
@@ -80,6 +95,17 @@ namespace Content.Server.Zombies
                     continue;
 
                 comp.NextTick = curTime;
+
+                if (mobState.CurrentState == MobState.Alive || mobState.CurrentState == MobState.Critical)
+                {
+                    // Romerol prevents zombification
+                    if (HasComp<UnzombifyComponent>(uid))
+                    {
+                        RemCompDeferred<PendingZombieComponent>(uid);
+                        continue;
+                    }
+
+                }
 
                 comp.InfectedSecs += 1;
                 // See if there should be a warning popup for the player.
@@ -303,16 +329,104 @@ namespace Content.Server.Zombies
             if (!Resolve(source, ref zombiecomp))
                 return false;
 
-            foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
-            {
-                _humanoidSystem.SetBaseLayerColor(target, layer, info.Color);
-                _humanoidSystem.SetBaseLayerId(target, layer, info.ID);
-            }
-            _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
+            // Remove pressure damage immunity, restore breathing, thirst and hunger
+            if (TryComp<RespiratorComponent>(target, out var respiratorComp) && zombiecomp.BeforeZombifiedSuffocationThreshold != null)
+                respiratorComp.SuffocationThreshold = (float) zombiecomp.BeforeZombifiedSuffocationThreshold;
+            if (TryComp<BarotraumaComponent>(target, out var barotraumaComp) && zombiecomp.BeforeZombifiedBarotraumaImmunity != null)
+                barotraumaComp.HasImmunity = (bool) zombiecomp.BeforeZombifiedBarotraumaImmunity;
+            if (TryComp<HungerComponent>(target, out var hungerComp) && zombiecomp.BeforeZombifiedHungerDecayRate != null)
+                hungerComp.BaseDecayRate = (float) zombiecomp.BeforeZombifiedHungerDecayRate;
+            if (TryComp<ThirstComponent>(target, out var thirstComp) && zombiecomp.BeforeZombifiedThirstDecayRate != null)
+                thirstComp.BaseDecayRate = (float) zombiecomp.BeforeZombifiedThirstDecayRate;
 
+            // Restore the accent if any
+            if (zombiecomp.BeforeZombifiedAccent != null && TryComp<ReplacementAccentComponent>(target, out var accentComp))
+                accentComp.Accent = zombiecomp.BeforeZombifiedAccent;
+            else
+                RemComp<ReplacementAccentComponent>(target);
+
+            // This is needed for stupid entities that fuck up combat mode component
+            // in an attempt to make an entity not attack. This is the easiest way to do it.
+            RemComp<CombatModeComponent>(target);
+            var combat = AddComp<CombatModeComponent>(target);
+            _combat.SetInCombatMode(target, false, combat);
+
+            // Restore the attack animations and range
+            if (zombiecomp.BeforeZombifiedClickAnimation != null && zombiecomp.BeforeZombifiedWideAnimation != null && zombiecomp.BeforeZombifiedRange != null)
+            {
+                var meleeComp = EnsureComp<MeleeWeaponComponent>(target);
+                meleeComp.ClickAnimation = zombiecomp.BeforeZombifiedClickAnimation;
+                meleeComp.WideAnimation = zombiecomp.BeforeZombifiedWideAnimation;
+                meleeComp.Range = (float) zombiecomp.BeforeZombifiedRange;
+                // Take away the baller damage if the zombie was a humanoid (sad)
+                if (zombiecomp.BeforeZombifiedMeleeDamageSpecifier != null)
+                    meleeComp.Damage = zombiecomp.BeforeZombifiedMeleeDamageSpecifier;
+                Dirty(meleeComp);
+            }
+            else
+                RemComp<MeleeWeaponComponent>(target);
+
+            // Stop groaning randomly and on taking damage
+            if (HasComp<EmoteOnDamageComponent>(target))
+                _emoteOnDamage.RemoveEmote(target, "Scream");
+            if (HasComp<AutoEmoteComponent>(target))
+                _autoEmote.RemoveEmote(target, "ZombieGroan");
+
+            // We have specific stuff for humanoid zombies because they matter more
+            if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
+            {
+                // Restore the looks
+                foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
+                {
+                    _humanoidSystem.SetBaseLayerColor(target, layer, info.Color);
+                    _humanoidSystem.SetBaseLayerId(target, layer, info.ID);
+                }
+                _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
+            }
+
+            // Restore the damage taken modifiers
+            if (zombiecomp.BeforeZombifiedDamageModifierSetId != null)
+                _damageable.SetDamageModifierSetId(target, zombiecomp.BeforeZombifiedDamageModifierSetId);
+
+            // Restore the bloodloss threshold
+            if (zombiecomp.BeforeZombifiedBloodlossThreshold != null)
+                _bloodstream.SetBloodLossThreshold(target, (float) zombiecomp.BeforeZombifiedBloodlossThreshold);
+
+            // Popup
+            _popupSystem.PopupEntity(Loc.GetString("zombie-cured", ("target", target)), target, PopupType.LargeCaution);
+
+            // Restore the vulnerability to cold
+            if (TryComp<TemperatureComponent>(target, out var temperatureComp) && zombiecomp.BeforeZombifiedColdDamage != null)
+                temperatureComp.ColdDamage = zombiecomp.BeforeZombifiedColdDamage;
+
+            // No longer can revive themselves
+            _mobThreshold.SetAllowRevives(target, false);
+
+            // Kindly return the lost hands
+            var handsComp = EnsureComp<HandsComponent>(target);
+            for (var i = 0; i < zombiecomp.BeforeZombifiedHandCount; i++)
+                switch (i)
+                {
+                    case 0:
+                        _sharedHands.AddHand(target, "hand", HandLocation.Left, handsComp);
+                        break;
+                    case 1:
+                        _sharedHands.AddHand(target, "hand", HandLocation.Right, handsComp);
+                        break;
+                    case 2:
+                        _sharedHands.AddHand(target, "hand", HandLocation.Middle, handsComp);
+                        break;
+                }
+
+            // Return the name
             MetaData(target).EntityName = zombiecomp.BeforeZombifiedEntityName;
-            RemComp<UnzombifyComponent>(target);
-            RemComp<ZombieComponent>(target);
+
+            // Remove the zombie components, deferred because these probably called Unzombify
+            RemCompDeferred<UnzombifyComponent>(target);
+            RemCompDeferred<ZombieComponent>(target);
+
+            // Restore the normal movement speed
+            _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
             return true;
         }
 

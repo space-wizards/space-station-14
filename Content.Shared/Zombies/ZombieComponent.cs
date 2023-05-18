@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using static Content.Shared.Humanoid.HumanoidAppearanceState;
+using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Zombies
 {
@@ -93,6 +94,54 @@ namespace Content.Shared.Zombies
         public readonly string ZombieRoleId = "Zombie";
 
         /// <summary>
+        /// The suffocation threshold of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedSuffocationThreshold"), ViewVariables(VVAccess.ReadOnly)]
+        public float? BeforeZombifiedSuffocationThreshold;
+
+        /// <summary>
+        /// The barotrauma immunity of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedBarotraumaImmunity"), ViewVariables(VVAccess.ReadOnly)]
+        public bool? BeforeZombifiedBarotraumaImmunity;
+
+        /// <summary>
+        /// The hunger decay rate of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedHungerDecayRate"), ViewVariables(VVAccess.ReadOnly)]
+        public float? BeforeZombifiedHungerDecayRate;
+
+        /// <summary>
+        /// The thirst decay rate of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedThirstDecayRate"), ViewVariables(VVAccess.ReadOnly)]
+        public float? BeforeZombifiedThirstDecayRate;
+
+        /// <summary>
+        /// The accent of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedAccent"), ViewVariables(VVAccess.ReadOnly)]
+        public string? BeforeZombifiedAccent;
+
+        /// <summary>
+        /// The click attack animation of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedClickAnimation"), ViewVariables(VVAccess.ReadOnly)]
+        public string? BeforeZombifiedClickAnimation;
+
+        /// <summary>
+        /// The wide attack animation of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedWideAnimation"), ViewVariables(VVAccess.ReadOnly)]
+        public string? BeforeZombifiedWideAnimation;
+
+        /// <summary>
+        /// The melee range of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedRange"), ViewVariables(VVAccess.ReadOnly)]
+        public float? BeforeZombifiedRange;
+
+        /// <summary>
         /// The EntityName of the humanoid to restore in case of cloning
         /// </summary>
         [DataField("beforeZombifiedEntityName"), ViewVariables(VVAccess.ReadOnly)]
@@ -109,6 +158,47 @@ namespace Content.Shared.Zombies
         /// </summary>
         [DataField("beforeZombifiedSkinColor")]
         public Color BeforeZombifiedSkinColor;
+
+        /// <summary>
+        /// The melee damage specifier of the humanoid to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedMeleeDamageSpecifier")]
+        public DamageSpecifier? BeforeZombifiedMeleeDamageSpecifier;
+
+        /// <summary>
+        /// The DamageModifierSetId of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedDamageModifierSetId")]
+        public string? BeforeZombifiedDamageModifierSetId;
+
+        /// <summary>
+        /// The bloodloss threshold of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedBloodlossThreshold")]
+        public float? BeforeZombifiedBloodlossThreshold;
+
+        /// <summary>
+        /// The cold damage specifier of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedColdDamage")]
+        public DamageSpecifier? BeforeZombifiedColdDamage;
+
+        /// <summary>
+        /// The amount of hands of the zombie to restore in case of unzombification
+        /// </summary>
+        [DataField("beforeZombifiedHandCount")]
+        public int BeforeZombifiedHandCount = 0;
+
+        /// <summary>
+        /// The dictionary with humanoid zombie damage values
+        /// </summary>
+        [DataField("humanoidZombieDamageValues")]
+        public Dictionary<string, FixedPoint2> HumanoidZombieDamageValues = new Dictionary<string, FixedPoint2>()
+        {
+            {"Slash", 13},
+            {"Piercing", 7},
+            {"Structural", 10}
+        };
 
         [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
         public string? EmoteSoundsId = "Zombie";
