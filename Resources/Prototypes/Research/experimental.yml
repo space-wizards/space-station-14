@@ -117,18 +117,6 @@
   - TraversalDistorterMachineCircuitboard
 
 - type: technology
-  id: GravityManipulation
-  name: research-technology-gravity-manipulation
-  icon:
-    sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
-    state: base
-  discipline: Experimental
-  tier: 2
-  cost: 7500
-  recipeUnlocks:
-    - WeaponTetherGun
-
-- type: technology
   id: MobileAnomalyTech
   name: research-technology-mobile-anomaly-tech
   icon:
@@ -172,3 +160,15 @@
   - SuperCapacitorStockPart
   - SuperMatterBinStockPart
   - PicoManipulatorStockPart
+
+- type: technology
+  id: GravityManipulation
+  name: research-technology-gravity-manipulation
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+    state: base
+  discipline: Experimental
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+    - WeaponTetherGun
