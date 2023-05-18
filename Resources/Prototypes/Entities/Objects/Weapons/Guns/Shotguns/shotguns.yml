@@ -208,3 +208,21 @@
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 1
+
+- type: entity
+  name: improvised shotgun
+  parent: BaseWeaponShotgun
+  id: WeaponShotgunImprovised
+  description: A shitty hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+  - type: Item
+    size: 75
+  - type: Gun
+    fireRate: 1 #No reason to stifle the firerate since you have to manually reload every time anyways.
+  - type: BallisticAmmoProvider
+    capacity: 1
+

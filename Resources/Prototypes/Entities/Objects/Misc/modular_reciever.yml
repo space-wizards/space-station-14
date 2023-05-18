@@ -1,0 +1,13 @@
+- type: entity
+  parent: BaseItem
+  id: ModularReciever
+  name: modular reciever
+  description: A vital part used in the creation of firearms.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+      state: reciever
+      netsync: false
+    - type: Item
+      sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+      state: reciever
