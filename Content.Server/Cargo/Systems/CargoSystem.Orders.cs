@@ -14,6 +14,7 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Server.Paper;
+using Content.Shared.Access.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -285,14 +286,31 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        public bool TryAddOrder(StationCargoOrderDatabaseComponent component, CargoOrderData data)
+        public bool AddAndApproveOrder(StationCargoOrderDatabaseComponent component, string productId, int qty, string sender, string description, string dest)
+        {
+            // Make an order
+            var id = GenerateOrderId(component);
+            var order = new CargoOrderData(-1, productId, qty, sender, description);
+
+            // Approve it now
+            order.SetApproverData(new IdCardComponent(){FullName = dest, JobTitle = sender});
+
+            // Log order addition
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"AddAndApproveOrder {description} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}]");
+
+            // Add it to the list
+            return TryAddOrder(component, order);
+        }
+
+        private bool TryAddOrder(StationCargoOrderDatabaseComponent component, CargoOrderData data)
         {
             component.Orders.Add(data);
             UpdateOrders(component);
             return true;
         }
 
-        public int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
+        private int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
         {
             // We need an arbitrary unique ID to identify orders, since they may
             // want to be cancelled later.

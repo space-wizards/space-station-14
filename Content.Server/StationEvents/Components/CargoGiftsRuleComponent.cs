@@ -14,19 +14,19 @@ public sealed class CargoGiftsRuleComponent : Component
     /// What is being sent
     /// </summary>
     [DataField("descr"), ViewVariables(VVAccess.ReadWrite)]
-    public string Descr = "A bundle of gifts";
+    public string Description = "cargo-gift-default-description";
 
     /// <summary>
     /// Sender of the gifts
     /// </summary>
     [DataField("sender"), ViewVariables(VVAccess.ReadWrite)]
-    public string Sender = "NanoTrasen";
+    public string Sender = "cargo-gift-default-sender";
 
     /// <summary>
     /// Destination of the gifts (who they get sent to on the station)
     /// </summary>
     [DataField("careof"), ViewVariables(VVAccess.ReadWrite)]
-    public string Careof = "The Cargo Dept.";
+    public string Dest = "cargo-gift-default-dest";
 
     /// <summary>
     /// Cargo that you would like gifted to the station, with the quantity for each

@@ -8,9 +8,9 @@
     startDelay: 10
     duration: 120
   - type: CargoGiftsRule
-    descr: A small pizza party
-    sender: NanoTrasen
-    careof: The Bar
+    description: cargo-gift-pizza-small
+    sender: cargo-gift-default-sender
+    dest: cargo-gift-dest-bar
     gifts:
       FoodPizzaLarge: 1              # 16 pizzas
       FoodBarSupply: 1
@@ -27,11 +27,11 @@
       startDelay: 10
       duration: 240
     - type: CargoGiftsRule
-      descr: A large pizza party
-      sender: NanoTrasen
-      careof: The Bar
+      description: cargo-gift-pizza-large
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-bar
       gifts:
-        FoodPizzaLarge: 4              # 60 pizzas
+        FoodPizzaLarge: 4              # 64 pizzas
         FoodBarSupply: 1
         FoodSoftdrinksLarge: 1
 
@@ -45,9 +45,9 @@
       startDelay: 10
       duration: 240
     - type: CargoGiftsRule
-      descr: Useful resources to fix the station
-      sender: NanoTrasen
-      careof: The Engineering Dept.
+      description: cargo-gift-engineering
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-engineering
       gifts:
         EngineeringCableBulk: 1
         AirlockKit: 1
@@ -66,9 +66,9 @@
       startDelay: 10
       duration: 120
     - type: CargoGiftsRule
-      descr: Restock the vending machines
-      sender: NanoTrasen
-      careof: The Cargo Dept.
+      description: cargo-gift-vending
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-supp
       gifts:
         CrateVendingMachineRestockHotDrinks: 3
         CrateVendingMachineRestockBooze: 1
@@ -87,9 +87,9 @@
       startDelay: 10
       duration: 120
     - type: CargoGiftsRule
-      descr: Useful resources to clean the station
-      sender: NanoTrasen
-      careof: Service Dept.
+      description: cargo-gift-cleaning
+      sender: cargo-gift-default-sender
+      careof: cargo-gift-dest-janitor
       gifts:
         CrateServiceJanitorialSupplies: 2
         ServiceLightsReplacement: 2
