@@ -1,4 +1,23 @@
 - type: entity
+  id: LockerSalvageSpecialistFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerSalvageSpecialist
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSpatio
+      - id: YellowOxygenTankFilled
+      - id: NitrogenTankFilled
+      - id: ClothingShoesBootsMag
+      - id: ClothingMaskGasExplorer
+# Currently do not function as 'true' mesons, so they're useless for salvagers.
+#      - id: ClothingEyesGlassesMeson
+      - id: ClothingBeltUtilityFilled
+        prob: 0.8
+      - id: SurvivalKnife
+      - id: WeaponProtoKineticAccelerator
+
+- type: entity
   id: LockerSalvageSpecialistFilled
   suffix: Filled
   parent: LockerSalvageSpecialist

@@ -15,7 +15,9 @@ namespace Content.Shared.PDA
         public bool CanPlayMusic;
         public string? Address;
 
-        public PDAUpdateState(bool flashlightEnabled, bool hasPen, PDAIdInfoText pdaOwnerInfo, string? stationName, bool hasUplink = false, bool canPlayMusic = false, string? address = null)
+        public PDAUpdateState(bool flashlightEnabled, bool hasPen, PDAIdInfoText pdaOwnerInfo,
+            string? stationName, bool hasUplink = false,
+            bool canPlayMusic = false, string? address = null)
         {
             FlashlightEnabled = flashlightEnabled;
             HasPen = hasPen;
@@ -33,5 +35,7 @@ namespace Content.Shared.PDA
         public string? ActualOwnerName;
         public string? IdOwner;
         public string? JobTitle;
+        public string? StationAlertLevel;
+        public Color StationAlertColor;
     }
 }
