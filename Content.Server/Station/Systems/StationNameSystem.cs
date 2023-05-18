@@ -17,6 +17,9 @@ public sealed class StationNameSystem : EntitySystem
 
     private void OnStationNameSetupInit(EntityUid uid, StationNameSetupComponent component, ComponentInit args)
     {
+        if (!HasComp<StationDataComponent>(uid))
+            return;
+
         _station.RenameStation(uid, GenerateStationName(component), false);
     }
 

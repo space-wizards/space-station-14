@@ -239,43 +239,49 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.DeleteMap(shuttleMap);
 
-                // Test that the map has valid latejoin spawn points
-                if (!NoSpawnMaps.Contains(mapProto))
+                if (entManager.HasComponent<StationJobsComponent>(station))
                 {
-                    var lateSpawns = 0;
-
-                    foreach (var comp in entManager.EntityQuery<SpawnPointComponent>(true))
+                    // Test that the map has valid latejoin spawn points
+                    if (!NoSpawnMaps.Contains(mapProto))
                     {
-                        if (comp.SpawnType != SpawnPointType.LateJoin ||
-                            !xformQuery.TryGetComponent(comp.Owner, out var xform) ||
-                            xform.GridUid == null ||
-                            !gridUids.Contains(xform.GridUid.Value))
+                        var lateSpawns = 0;
+
+                        foreach (var comp in entManager.EntityQuery<SpawnPointComponent>(true))
                         {
-                            continue;
+                            if (comp.SpawnType != SpawnPointType.LateJoin ||
+                                !xformQuery.TryGetComponent(comp.Owner, out var xform) ||
+                                xform.GridUid == null ||
+                                !gridUids.Contains(xform.GridUid.Value))
+                            {
+                                continue;
+                            }
+
+                            lateSpawns++;
+                            break;
                         }
 
-                        lateSpawns++;
-                        break;
+                        Assert.That(lateSpawns, Is.GreaterThan(0), $"Found no latejoin spawn points on {mapProto}");
                     }
 
-                    Assert.That(lateSpawns, Is.GreaterThan(0), $"Found no latejoin spawn points on {mapProto}");
+                    // Test all availableJobs have spawnPoints
+                    // This is done inside gamemap test because loading the map takes ages and we already have it.
+                    var jobList = entManager.GetComponent<StationJobsComponent>(station).RoundStartJobList
+                        .Where(x => x.Value != 0)
+                        .Select(x => x.Key);
+                    var spawnPoints = entManager.EntityQuery<SpawnPointComponent>()
+                        .Where(spawnpoint => spawnpoint.SpawnType == SpawnPointType.Job)
+                        .Select(spawnpoint => spawnpoint.Job.ID)
+                        .Distinct();
+                    List<string> missingSpawnPoints = new();
+                    foreach (var spawnpoint in jobList.Except(spawnPoints))
+                    {
+                        if (protoManager.Index<JobPrototype>(spawnpoint).SetPreference)
+                            missingSpawnPoints.Add(spawnpoint);
+                    }
+
+                    Assert.That(missingSpawnPoints.Count() == 0,
+                        $"There is no spawnpoint for {String.Join(", ", missingSpawnPoints)} on {mapProto}.");
                 }
-                // Test all availableJobs have spawnPoints
-                // This is done inside gamemap test because loading the map takes ages and we already have it.
-                var jobList = entManager.GetComponent<StationJobsComponent>(station).RoundStartJobList
-                    .Where(x => x.Value != 0)
-                    .Select(x => x.Key);
-                var spawnPoints = entManager.EntityQuery<SpawnPointComponent>()
-                    .Where(spawnpoint => spawnpoint.SpawnType == SpawnPointType.Job)
-                    .Select(spawnpoint => spawnpoint.Job.ID)
-                    .Distinct();
-                List<string> missingSpawnPoints = new();
-                foreach (var spawnpoint in jobList.Except(spawnPoints))
-                {
-                    if (protoManager.Index<JobPrototype>(spawnpoint).SetPreference)
-                        missingSpawnPoints.Add(spawnpoint);
-                }
-                Assert.That(missingSpawnPoints.Count() == 0, $"There is no spawnpoint for {String.Join(", ", missingSpawnPoints)} on {mapProto}.");
 
                 try
                 {
