@@ -1003,13 +1003,13 @@ namespace Content.Shared.CCVar
         ///     Username for the Prime database server
         /// </summary>
         public static readonly CVarDef<string> PrimelistDatabaseUsername =
-            CVarDef.Create("primelist.username", string.Empty, CVar.SERVERONLY);
+            CVarDef.Create("primelist.username", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
         /// <summary>
         ///     Password for the Prime database server
         /// </summary>
         public static readonly CVarDef<string> PrimelistDatabasePassword =
-            CVarDef.Create("primelist.password", string.Empty, CVar.SERVERONLY);
+            CVarDef.Create("primelist.password", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
         /*
          * VOTE
