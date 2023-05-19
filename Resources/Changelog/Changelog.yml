@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fix a DoAfter bug that was blocking crafting & some other construction
-      interactions., type: Fix}
-  id: 3315
-  time: '2023-04-03T04:53:25.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Dwarves now have minor changes, including a lower mass, new accent,
@@ -2904,3 +2898,14 @@ Entries:
       not to bite them either!', type: Tweak}
   id: 3814
   time: '2023-05-19T08:21:15.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'You cannot stack Gas Filters, Mixers or several other Atmos devices
+      like pumps and valves. Pipes can still be stacked.', type: Remove}
+  - {message: Gas filters can now filter 5x faster (up to 1000 L/S) to compensate
+      for no more filter stacks. This is their new default rate, type: Tweak}
+  - {message: 'Gas Filters and mixers now have a flipped version visible in the construction
+      menu. Hint: You can still right click on an un-anchored filter / mixer and choose
+      rotate -> Flip', type: Tweak}
+  id: 3815
+  time: '2023-05-19T08:59:20.0000000+00:00'
