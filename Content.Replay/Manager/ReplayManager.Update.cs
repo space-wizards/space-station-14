@@ -123,13 +123,6 @@ public sealed partial class ReplayManager
                     if (!skipEffectEvents)
                         _entMan.DispatchReceivedNetworkMsg((EntityEventArgs)message);
                     break;
-                case InstrumentStartMidiEvent:
-                case InstrumentMidiEventEvent:
-                case InstrumentStopMidiEvent:
-                    // TODO midi distance checks.
-                    // Or maybe just leave them disabled.
-                    // It seems to have a significant impact on performance.
-                    break;
                 case EntityEventArgs args:
                     // Just raise the event and let systems handle it.
                     _entMan.DispatchReceivedNetworkMsg(args);
