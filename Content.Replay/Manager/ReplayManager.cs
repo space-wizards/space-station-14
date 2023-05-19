@@ -1,3 +1,4 @@
+using Content.Shared.Administration;
 using Robust.Client;
 using Robust.Client.Audio.Midi;
 using Robust.Client.Configuration;
@@ -29,6 +30,7 @@ public sealed partial class ReplayManager
     [Dependency] private readonly IConfigurationManager _confMan = default!;
     [Dependency] private readonly IClientGameStateManager _gameState = default!;
     [Dependency] private readonly IClientRobustSerializer _serializer = default!;
+    [Dependency] private readonly SharedNetworkResourceManager _netResMan = default!;
     [Dependency] private readonly IClientNetConfigurationManager _netConf = default!;
 
     public ReplayData? CurrentReplay;
@@ -68,10 +70,10 @@ public sealed partial class ReplayManager
             return;
 
         _initialized = true;
-        _confMan.OnValueChanged(GameConfigVars.VisualEventThreshold, (value) => _visualEventThreshold = value, true);
-        _confMan.OnValueChanged(GameConfigVars.CheckpointInterval, (value) => _checkpointInterval = value, true);
-        _confMan.OnValueChanged(GameConfigVars.CheckpointEntitySpawnThreshold, (value) => _checkpointEntitySpawnThreshold = value, true);
-        _confMan.OnValueChanged(GameConfigVars.CheckpointEntityStateThreshold, (value) => _checkpointEntityStateThreshold = value, true);
+        _confMan.OnValueChanged(ReplayCvars.VisualEventThreshold, (value) => _visualEventThreshold = value, true);
+        _confMan.OnValueChanged(ReplayCvars.CheckpointInterval, (value) => _checkpointInterval = value, true);
+        _confMan.OnValueChanged(ReplayCvars.CheckpointEntitySpawnThreshold, (value) => _checkpointEntitySpawnThreshold = value, true);
+        _confMan.OnValueChanged(ReplayCvars.CheckpointEntityStateThreshold, (value) => _checkpointEntityStateThreshold = value, true);
         _metaId = _factory.GetRegistration(typeof(MetaDataComponent)).NetID!.Value;
         _sawmill = Logger.GetSawmill("replay");
 
