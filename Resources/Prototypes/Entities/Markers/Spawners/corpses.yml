@@ -1,0 +1,111 @@
+- type: entity
+  name: Human Corpse Spawner
+  id: SalvageHumanCorpseSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
+      - state: icon
+  - type: ConditionalSpawner
+    prototypes:
+      - SalvageHumanCorpse
+
+- type: entity
+  name: Random Service Corpse Spawner
+  id: RandomServiceCorpseSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/Head/Bandanas/botany.rsi
+      - state: icon
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomServiceCorpse
+
+- type: entity
+  name: Random Engineer Corpse Spawner
+  id: RandomEngineerCorpseSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/Head/Welding/welding.rsi
+      - state: icon
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomEngineerCorpse
+
+- type: entity
+  name: Random Cargo Corpse Spawner
+  id: RandomCargoCorpseSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/Head/Soft/cargosoft.rsi
+      - state: icon
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomCargoCorpse
+
+- type: entity
+  name: Random Medic Corpse Spawner
+  id: RandomMedicCorpseSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/Mask/sterile.rsi
+      - state: icon
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomMedicCorpse
+
+- type: entity
+  name: Random Science Corpse Spawner
+  id: RandomScienceCorpseSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/Head/Hoods/Bio/scientist.rsi
+      - state: icon
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomScienceCorpse
+
+- type: entity
+  name: Random Security Corpse Spawner
+  id: RandomSecurityCorpseSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/Head/Helmets/security.rsi
+      - state: icon
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomSecurityCorpse
+
+- type: entity
+  name: Random Command Corpse Spawner
+  id: RandomCommandCorpseSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/Head/Hardsuits/capspace.rsi
+      - state: icon
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomCommandCorpse
