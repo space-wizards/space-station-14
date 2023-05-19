@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix audio leak with bullet fly-bys., type: Fix}
-  id: 3309
-  time: '2023-04-02T14:08:16.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: 'The Syndicate has downscaled thieving glove nanotech, making it no
@@ -2903,3 +2898,9 @@ Entries:
     type: Tweak}
   id: 3808
   time: '2023-05-19T04:11:36.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Regular monkeys are now very rarely available for ghosts to control.,
+    type: Remove}
+  id: 3809
+  time: '2023-05-19T07:00:28.0000000+00:00'
