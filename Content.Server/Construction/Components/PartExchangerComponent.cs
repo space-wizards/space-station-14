@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Construction.Components;
@@ -11,6 +11,12 @@ public sealed class PartExchangerComponent : Component
     /// </summary>
     [DataField("exchangeDuration")]
     public float ExchangeDuration = 3;
+
+    /// <summary>
+    /// How long it takes to add the parts to an in-progress machine frame
+    /// </summary>
+    [DataField("constructDuration")]
+    public float ConstructDuration = 1;
 
     /// <summary>
     /// Whether or not the distance check is needed.
