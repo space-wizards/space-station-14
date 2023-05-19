@@ -220,26 +220,24 @@
   name: chief medical officer's hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
   components:
-    - type: Sprite
-      sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
-    - type: Clothing
-      sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
-    - type: PressureProtection
-      highPressureMultiplier: 0.3
-      lowPressureMultiplier: 5500
-    - type: DiseaseProtection
-      protection: 0.2
-    - type: ClothingSpeedModifier
-      walkModifier: 0.9
-      sprintModifier: 0.95
-    - type: Armor
-      modifiers:
-        coefficients:
-          Heat: 0.90
-          Radiation: 0.25
-          Caustic: 0.1
-    - type: ToggleableClothing
-      clothingPrototype: ClothingHeadHelmetHardsuitMedical
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 5500
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.95
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.90
+        Radiation: 0.25
+        Caustic: 0.1
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMedical
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -372,29 +370,27 @@
   name: brigmedic hardsuit
   description: Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit.
   components:
-    - type: Sprite
-      sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
-    - type: Clothing
-      sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
-    - type: PressureProtection
-      highPressureMultiplier: 0.3
-      lowPressureMultiplier: 5500
-    - type: DiseaseProtection
-      protection: 0.2
-    - type: ClothingSpeedModifier
-      walkModifier: 0.8
-      sprintModifier: 0.85
-    - type: Armor
-      modifiers:
-        coefficients:
-          Blunt: 0.8
-          Slash: 0.8
-          Piercing: 0.75
-          Heat: 0.9
-          Radiation: 0.30
-          Caustic: 0.2
-    - type: ToggleableClothing
-      clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 5500
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.85
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.75
+        Heat: 0.9
+        Radiation: 0.30
+        Caustic: 0.2
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -545,28 +541,26 @@
   name: Paramedic Void Suit
   description: A void suit made for paramedics.
   components:
-    - type: Sprite
-      sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
-    - type: Clothing
-      sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
-    - type: PressureProtection
-      highPressureMultiplier: 0.5
-      lowPressureMultiplier: 1000
-    - type: ClothingSpeedModifier
-      walkModifier: 0.9
-      sprintModifier: 0.9
-    - type: DiseaseProtection
-      protection: 0.15
-    - type: TemperatureProtection
-      coefficient: 0.1
-    - type: Armor
-      modifiers:
-        coefficients:
-          Slash: 0.95
-          Heat: 0.90
-          Radiation: 0.75
-          Caustic: 0.5
-    - type: GroupExamine
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+        Radiation: 0.75
+        Caustic: 0.5
+  - type: GroupExamine
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -634,33 +628,31 @@
   name: syndicate elite hardsuit
   description: An upgraded version of the blood red hardsuit that features enhanced fireproofing, pressure resist, and superior armor.
   components:
-    - type: Sprite
-      sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
-    - type: Clothing
-      sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
-    - type: PressureProtection
-      highPressureMultiplier: 0.02
-      lowPressureMultiplier: 1000
-    - type: ClothingSpeedModifier
-      walkModifier: 1.0
-      sprintModifier: 1.0
-    - type: TemperatureProtection
-      coefficient: 0.001
-    - type: Armor
-      modifiers:
-        coefficients:
-          Blunt: 0.5
-          Slash: 0.5
-          Piercing: 0.4
-          Heat: 0.2
-          Radiation: 0.20
-          Caustic: 0.5
-    - type: ExplosionResistance
-      damageCoefficient: 0.3
-    - type: ToggleableClothing
-      clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
-    - type: DiseaseProtection
-      protection: 0.2
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.2
+        Radiation: 0.20
+        Caustic: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -668,35 +660,33 @@
   name: CBURN exosuit
   description: A lightweight yet strong exosuit used for special cleanup operations.
   components:
-    - type: Sprite
-      sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
-    - type: Clothing
-      sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
-    - type: PressureProtection
-      highPressureMultiplier: 0.02
-      lowPressureMultiplier: 1000
-    - type: ClothingSpeedModifier
-      walkModifier: 1.0
-      sprintModifier: 1.0
-    - type: TemperatureProtection
-      coefficient: 0.001
-    - type: Armor
-      modifiers:
-        coefficients:
-          Blunt: 0.7
-          Slash: 0.7
-          Piercing: 0.6
-          Heat: 0.05
-          Cold: 0.1
-          Shock: 0.1
-          Radiation: 0.1
-          Caustic: 0.1
-    - type: ExplosionResistance
-      damageCoefficient: 0.7
-    - type: ToggleableClothing
-      clothingPrototype: ClothingHeadHelmetCBURN
-    - type: DiseaseProtection
-      protection: 0.4
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.6
+        Heat: 0.05
+        Cold: 0.1
+        Shock: 0.1
+        Radiation: 0.1
+        Caustic: 0.1
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetCBURN
 
 #ERT
 - type: entity
@@ -729,14 +719,13 @@
   id: ClothingOuterHardsuitERTMedical
   name: ERT medic's hardsuit
   components:
-    - type: Sprite
-      sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
-    - type: Clothing
-      sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
-    - type: ToggleableClothing
-      clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
-    - type: DiseaseProtection
-      protection: 0.25
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
+
 
 - type: entity
   parent: ClothingOuterHardsuitSyndie

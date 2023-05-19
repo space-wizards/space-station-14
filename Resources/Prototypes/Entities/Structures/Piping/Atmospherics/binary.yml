@@ -175,7 +175,7 @@
       graph: GasBinary
       node: valve
     - type: AmbientSound
-      enabled: false
+      enabled: true
       volume: -9
       range: 5
       sound:
@@ -208,11 +208,16 @@
   - type: PipeColorVisuals
   - type: GasValve
   - type: SignalControlledValve
-  - type: SignalReceiver
-    inputs:
-      Open: []
-      Close: []
-      Toggle: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Open
+      - Close
+      - Toggle
   - type: NodeContainer
     nodes:
       inlet:
@@ -229,7 +234,7 @@
     graph: GasBinary
     node: signalvalve
   - type: AmbientSound
-    enabled: false
+    enabled: true
     volume: -9
     range: 5
     sound:
@@ -296,10 +301,15 @@
       inlet: inlet
       outlet: outlet
       canLink: true
-    - type: SignalReceiver
-      inputs:
-        Pressurize: []
-        Depressurize: []
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: DeviceLinkSink
+      ports:
+        - Pressurize
+        - Depressurize
     - type: Construction
       graph: GasBinary
       node: dualportventpump
@@ -313,6 +323,8 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: AmbientSound
+      enabled: true
 
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]
@@ -355,7 +367,7 @@
   - type: AtmosDevice
   - type: AtmosPipeColor
   - type: AmbientSound
-    enabled: false
+    enabled: true
     volume: -9
     range: 5
     sound:

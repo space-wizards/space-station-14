@@ -155,7 +155,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (component.Pressurized &&
                 !component.Opened &&
                 _random.Prob(0.25f) &&
-                _solutionContainerSystem.TryGetDrainableSolution(uid, out var interactions))
+                _solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var interactions))
             {
                 component.Opened = true;
                 UpdateAppearance(component);
@@ -229,7 +229,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            if (!_solutionContainerSystem.TryGetDrainableSolution(item, out var drinkSolution) ||
+            if (!_solutionContainerSystem.TryGetSolution(item, drink.SolutionName, out var drinkSolution) ||
                 drinkSolution.Volume <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",

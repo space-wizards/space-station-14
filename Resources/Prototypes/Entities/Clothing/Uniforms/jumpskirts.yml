@@ -107,12 +107,10 @@
   name: chief medical officer's jumpskirt
   description: It's a jumpskirt worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
-    - type: DiseaseProtection
-      protection: 0.15
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -164,15 +162,15 @@
   name: head of security's jumpskirt
   description: It's bright red and rather crisp, much like security's victims tend to be. Its sturdy fabric provides minor protection from slash and pierce damage.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
-    - type: Armor
-      modifiers:
-        coefficients:
-          Slash: 0.9
-          Piercing: 0.9
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Piercing: 0.9
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -180,15 +178,15 @@
   name: head of security's turtleneck
   description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security. Its sturdy fabric provides minor protection from slash and pierce damage.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
-    - type: Armor
-      modifiers:
-        coefficients:
-          Slash: 0.9
-          Piercing: 0.9
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Piercing: 0.9
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -229,12 +227,10 @@
   name: medical doctor jumpskirt
   description: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
-    - type: DiseaseProtection
-      protection: 0.1
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -253,12 +249,10 @@
   name: paramedic jumpskirt
   description: It's got a plus on it, that's a good thing right?
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
-    - type: DiseaseProtection
-      protection: 0.1
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -266,12 +260,10 @@
   name: brigmedic jumpskirt
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
-    - type: DiseaseProtection
-      protection: 0.1
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -320,6 +312,17 @@
       sprite: Clothing/Uniforms/Jumpskirt/scientist.rsi
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpskirt/scientist.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtRoboticist
+  name: roboticist jumpskirt
+  description: It's a slimming black with reinforced seams; great for industrial work.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/roboticist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/roboticist.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase

@@ -1,7 +1,5 @@
 meta:
   format: 4
-  name: DemoStation
-  author: Space-Wizards
   postmapinit: false
 tilemap:
   0: Space
@@ -38,8 +36,7 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -117,8 +114,7 @@ entities:
       type: AmbientSound
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 29
     components:
     - pos: -0.5,0.5
@@ -126,8 +122,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 30
     components:
     - pos: -0.5,-0.5
@@ -135,8 +130,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 31
     components:
     - pos: -0.5,-1.5
@@ -144,8 +138,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 32
     components:
     - pos: 0.5,-1.5
@@ -153,8 +146,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 33
     components:
     - pos: -1.5,-1.5
@@ -162,8 +154,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 34
     components:
     - pos: 1.5,-1.5
@@ -171,8 +162,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 35
     components:
     - pos: 2.5,-1.5
@@ -180,8 +170,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 38
     components:
     - pos: -1.5,0.5
@@ -189,8 +178,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 39
     components:
     - pos: -2.5,0.5
@@ -198,8 +186,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 40
     components:
     - pos: 0.5,0.5
@@ -207,8 +194,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-    - fixtures: []
-      type: Fixtures
+
   - uid: 74
     components:
     - pos: -1.5,1.5
@@ -317,27 +303,6 @@ entities:
     - pos: 1.5,2.5
       parent: 55
       type: Transform
-    - fixtures:
-      - shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - 0.25,-0.48
-          - 0.25,0.48
-          - -0.25,0.48
-          - -0.25,-0.48
-        mask:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        layer:
-        - BulletImpassable
-        - Opaque
-        density: 145
-        hard: True
-        restitution: 0
-        friction: 0.4
-        id: null
-      type: Fixtures
     - open: True
       removedMasks: 20
       type: EntityStorage

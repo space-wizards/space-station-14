@@ -99,18 +99,19 @@
   id: CaptainIDCard
   name: captain ID card
   components:
-    - type: Sprite
-      layers:
-        - state: gold
-        - state: idcaptain
-    - type: Item
-      heldPrefix: gold
-    - type: PresetIdCard
-      job: Captain
-    - type: Tag
-      tags:
-        - WhitelistChameleon
-        - HighRiskItem
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: idcaptain
+  - type: Item
+    heldPrefix: gold
+  - type: PresetIdCard
+    job: Captain
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - HighRiskItem
 
 - type: entity
   parent: IDCardStandard

@@ -1,4 +1,4 @@
-using Content.Server.Anomaly.Components;
+﻿using Content.Server.Anomaly.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Audio;
 using Content.Server.Explosion.EntitySystems;
@@ -44,6 +44,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         InitializeGenerator();
         InitializeScanner();
         InitializeVessel();
+        InitializeCommands();
     }
 
     private void OnMapInit(EntityUid uid, AnomalyComponent component, MapInitEvent args)
@@ -66,7 +67,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
     private void OnStartCollide(EntityUid uid, AnomalyComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<AnomalousParticleComponent>(args.OtherFixture.Body.Owner, out var particle))
+        if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
             return;
 
         if (args.OtherFixture.ID != particle.FixtureId)

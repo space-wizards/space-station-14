@@ -284,14 +284,15 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.29"
-      density: 135
-      mask:
-      - LargeMobMask
-      layer:
-      - LargeMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 135
+        mask:
+        - LargeMobMask
+        layer:
+        - LargeMobLayer
   - type: Construction
     graph: CrateLivestock
     node: cratelivestock
@@ -336,14 +337,15 @@
     airtight: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.29"
-      density: 80
-      mask:
-      - LargeMobMask
-      layer:
-      - LargeMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 80
+        mask:
+        - LargeMobMask
+        layer:
+        - LargeMobLayer
   - type: StaticPrice
     price: 60
 
@@ -357,6 +359,7 @@
     sprite: Structures/Storage/Crates/piratechest.rsi
     layers:
     - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
@@ -366,7 +369,6 @@
     sprite: Structures/Storage/Crates/piratechest.rsi
     state: crate_icon
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: crate_open
-      state_closed: crate_door
+  - type: EntityStorageVisuals
+    stateDoorOpen: crate_open
+    stateDoorClosed: crate_door

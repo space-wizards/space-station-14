@@ -45,10 +45,10 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.05"
-      density: 190
-      mask:
-      - LowImpassable
-
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05"
+        density: 190
+        mask:
+        - LowImpassable
