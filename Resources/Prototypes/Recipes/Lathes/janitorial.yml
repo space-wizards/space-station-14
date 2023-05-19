@@ -57,6 +57,22 @@
     Glass: 500
 
 - type: latheRecipe
+  id: Mousetrap
+  result: Mousetrap
+  completetime: 1
+  materials:
+    Wood: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: Holoprojector
+  result: Holoprojector
+  completetime: 3
+  materials:
+    Plastic: 250
+    Glass: 150
+
+- type: latheRecipe
   id: AdvMopItem
   result: AdvMopItem
   completetime: 2

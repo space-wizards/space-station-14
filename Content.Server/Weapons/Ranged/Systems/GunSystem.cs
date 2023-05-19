@@ -16,6 +16,7 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Weapons.Reflect;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -39,7 +40,6 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
-
 
     public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
@@ -185,30 +185,34 @@ public sealed partial class GunSystem : SharedGunSystem
                     var fromEffect = fromCoordinates; // can't use map coords above because funny FireEffects
                     var dir = mapDirection.Normalized;
                     var lastUser = user;
-                    for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
+
+                    if (hitscan.Reflective != ReflectType.None)
                     {
-                        var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
-                        var rayCastResults =
-                            Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
-                        if (!rayCastResults.Any())
-                            break;
+                        for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
+                        {
+                            var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
+                            var rayCastResults =
+                                Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
+                            if (!rayCastResults.Any())
+                                break;
 
-                        var result = rayCastResults[0];
-                        var hit = result.HitEntity;
-                        lastHit = hit;
+                            var result = rayCastResults[0];
+                            var hit = result.HitEntity;
+                            lastHit = hit;
 
-                        FireEffects(fromEffect, result.Distance, dir.Normalized.ToAngle(), hitscan, hit);
+                            FireEffects(fromEffect, result.Distance, dir.Normalized.ToAngle(), hitscan, hit);
 
-                        var ev = new HitScanReflectAttemptEvent(dir, false);
-                        RaiseLocalEvent(hit, ref ev);
+                            var ev = new HitScanReflectAttemptEvent(hitscan.Reflective, dir, false);
+                            RaiseLocalEvent(hit, ref ev);
 
-                        if (!ev.Reflected)
-                            break;
+                            if (!ev.Reflected)
+                                break;
 
-                        fromEffect = Transform(hit).Coordinates;
-                        from = fromEffect.ToMap(EntityManager, _transform);
-                        dir = ev.Direction;
-                        lastUser = hit;
+                            fromEffect = Transform(hit).Coordinates;
+                            from = fromEffect.ToMap(EntityManager, _transform);
+                            dir = ev.Direction;
+                            lastUser = hit;
+                        }
                     }
 
                     if (lastHit != null)
@@ -395,7 +399,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         if (xformQuery.TryGetComponent(gridUid, out var gridXform))
         {
-            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridUid.Value, xformQuery);
+            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
 
             fromCoordinates = new EntityCoordinates(gridUid.Value,
                 gridInvMatrix.Transform(fromCoordinates.ToMapPos(EntityManager, TransformSystem)));

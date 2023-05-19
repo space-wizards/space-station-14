@@ -51,7 +51,7 @@ public sealed class DiskConsoleSystem : EntitySystem
         if (serverComp.Points < component.PricePerDisk)
             return;
 
-        _research.AddPointsToServer(server.Value, -component.PricePerDisk, serverComp);
+        _research.ModifyServerPoints(server.Value, -component.PricePerDisk, serverComp);
         _audio.PlayPvs(component.PrintSound, uid);
 
         var printing = EnsureComp<DiskConsolePrintingComponent>(uid);

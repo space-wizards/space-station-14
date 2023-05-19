@@ -51,9 +51,12 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
     private void OnEmitSoundOnLand(EntityUid uid, BaseEmitSoundComponent component, ref LandEvent args)
     {
-        if (!TryComp<TransformComponent>(uid, out var xform) ||
+        if (!args.PlaySound ||
+            !TryComp<TransformComponent>(uid, out var xform) ||
             !_mapManager.TryGetGrid(xform.GridUid, out var grid))
+        {
             return;
+        }
 
         var tile = grid.GetTileRef(xform.Coordinates);
 
