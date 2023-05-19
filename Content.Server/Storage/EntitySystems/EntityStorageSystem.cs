@@ -41,9 +41,9 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         }
     }
 
-    protected override void OnInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
+    protected override void OnComponentInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
     {
-        base.OnInit(uid, component, args);
+        base.OnComponentInit(uid, component, args);
 
         if (TryComp<ConstructionComponent>(uid, out var construction))
             _construction.AddContainer(uid, ContainerName, construction);

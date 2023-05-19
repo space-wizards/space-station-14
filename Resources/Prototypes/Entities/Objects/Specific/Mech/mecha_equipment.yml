@@ -44,7 +44,6 @@
     - collection: TrollAnimals
     - collection: TrollBeeping
     - collection: TrollEsword
-    - collection: TrollMeeting
   - type: UIFragment
     ui: !type:MechSoundboardUi
   - type: UseDelay

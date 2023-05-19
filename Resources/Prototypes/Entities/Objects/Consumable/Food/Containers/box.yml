@@ -203,6 +203,7 @@
     drawdepth: SmallObjects
     layers:
     - state: box
+      map: ["enum.StorageVisualLayers.Base"]
     - state: box-open
       map: ["enum.StorageVisualLayers.Door"]
     netsync: false
@@ -216,10 +217,9 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     heldPrefix: box
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: box-open
-      state_closed: box
+  - type: EntityStorageVisuals
+    stateDoorOpen: box-open
+    stateDoorClosed: box
   - type: StaticPrice
     price: 0
 

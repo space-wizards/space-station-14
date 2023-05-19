@@ -1,84 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed certain chairs and potted plants to be wrench-able. Plants need
-      to have something in them first to anchor them., type: Tweak}
-  id: 3304
-  time: '2023-04-01T08:29:34.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix context menu and storage range checks., type: Fix}
-  id: 3305
-  time: '2023-04-01T09:53:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fixed lobby votes. It also won't overlap the topleft menu anymore.,
-    type: Fix}
-  id: 3306
-  time: '2023-04-01T14:00:48.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed ghost lighting being disabled when any ghost is removed., type: Fix}
-  id: 3307
-  time: '2023-04-01T22:56:01.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Energy sword can now reflect kinetic projectiles (low chance) and energetic
-      shots like laser and disabler (50/50), type: Add}
-  - {message: Increased energy sword TC cost (6 => 8), type: Tweak}
-  id: 3308
-  time: '2023-04-02T13:48:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix audio leak with bullet fly-bys., type: Fix}
-  id: 3309
-  time: '2023-04-02T14:08:16.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: 'The Syndicate has downscaled thieving glove nanotech, making it no
-      longer identifiable on inspection.', type: Tweak}
-  id: 3310
-  time: '2023-04-02T19:34:56.0000000+00:00'
-- author: adamsong
-  changes:
-  - {message: Fixed ghosts being unable to hear radio cross-map, type: Fix}
-  id: 3311
-  time: '2023-04-02T23:56:07.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Dwarf real;, type: Add}
-  id: 3312
-  time: '2023-04-03T00:06:24.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added crate of theater supplies is now available for purchase through
-      Cargo., type: Add}
-  id: 3313
-  time: '2023-04-03T02:45:42.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Text boxes now allow you to remove a word at a time using Ctrl+Backspace
-      and Ctrl+Delete., type: Tweak}
-  id: 3314
-  time: '2023-04-03T02:58:53.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix a DoAfter bug that was blocking crafting & some other construction
-      interactions., type: Fix}
-  id: 3315
-  time: '2023-04-03T04:53:25.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Dwarves now have minor changes, including a lower mass, new accent,
-      and minor benefits from alcohol.', type: Tweak}
-  id: 3316
-  time: '2023-04-03T05:31:28.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Temporarily removed interior IFF drawing due to seams in rendering.,
-    type: Tweak}
-  id: 3317
-  time: '2023-04-03T05:46:29.0000000+00:00'
 - author: Whisper
   changes:
   - {message: The cautery now functions! It can be used to close bleeding wounds.
@@ -2905,3 +2825,87 @@ Entries:
   - {message: Fixed Next on the admin logs UI resending the same logs., type: Fix}
   id: 3803
   time: '2023-05-18T05:51:17.0000000+00:00'
+- author: FluffiestFloof
+  changes:
+  - {message: Updated the Suit Storage look., type: Tweak}
+  id: 3804
+  time: '2023-05-18T17:52:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Vending machines can now be completely destroyed., type: Fix}
+  id: 3805
+  time: '2023-05-18T23:48:14.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Mobs that are in critical condition no longer appear as dead on the
+      crew monitor, type: Fix}
+  id: 3806
+  time: '2023-05-18T23:49:55.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: 'Antifreeze tastes warm now, because it is antifreeze.', type: Tweak}
+  id: 3807
+  time: '2023-05-19T02:21:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disabled zombies preset temporarily until they have more work done.,
+    type: Tweak}
+  id: 3808
+  time: '2023-05-19T04:11:36.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Regular monkeys are now very rarely available for ghosts to control.,
+    type: Remove}
+  id: 3809
+  time: '2023-05-19T07:00:28.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: NT has granted stations access to research the new technology called
+      'Advanced Tools'., type: Add}
+  id: 3810
+  time: '2023-05-19T07:07:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add the force gun as a counterpart to the tether gun., type: Add}
+  id: 3811
+  time: '2023-05-19T07:10:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttles will delete anything they FTL on top of., type: Add}
+  id: 3812
+  time: '2023-05-19T07:26:28.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Updated the roboticist uniform sprites., type: Tweak}
+  id: 3813
+  time: '2023-05-19T07:35:03.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Due to safety cutbacks, electrical devices like substations are more
+      dangerous. Safety protocols demand you do not hit them. We strongly advise you
+      not to bite them either!', type: Tweak}
+  id: 3814
+  time: '2023-05-19T08:21:15.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'You cannot stack Gas Filters, Mixers or several other Atmos devices
+      like pumps and valves. Pipes can still be stacked.', type: Remove}
+  - {message: Gas filters can now filter 5x faster (up to 1000 L/S) to compensate
+      for no more filter stacks. This is their new default rate, type: Tweak}
+  - {message: 'Gas Filters and mixers now have a flipped version visible in the construction
+      menu. Hint: You can still right click on an un-anchored filter / mixer and choose
+      rotate -> Flip', type: Tweak}
+  id: 3815
+  time: '2023-05-19T08:59:20.0000000+00:00'
+- author: KEEYNy
+  changes:
+  - {message: Added Death Squad jumpsuit, type: Add}
+  - {message: Death Squad equipment now includes jumpsuit and Chef Engineer magboots,
+    type: Tweak}
+  id: 3816
+  time: '2023-05-19T10:21:36.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: updated sprites for changeling's sting drink, type: Tweak}
+  id: 3817
+  time: '2023-05-19T20:11:25.0000000+00:00'
