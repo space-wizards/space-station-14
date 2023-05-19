@@ -105,11 +105,15 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     /// </summary>
     protected void SetCloaked(EntityUid user, bool cloaked)
     {
-        if (!TryComp<StealthComponent>(user, out var stealth) || stealth.Deleted)
+        if (!TryComp<StealthComponent>(user, out var stealth))
+            return;
+
+        // prevent debug assert when ending round
+        if (MetaData(user).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
         // slightly visible, but doesn't change when moving so it's ok
-        var visibility = cloaked ? stealth.MinVisibility + 0.25f : stealth.MaxVisibility;
+        var visibility = cloaked ? stealth.MinVisibility + 0.3f : stealth.MaxVisibility;
         _stealth.SetVisibility(user, visibility, stealth);
         _stealth.SetEnabled(user, cloaked, stealth);
     }

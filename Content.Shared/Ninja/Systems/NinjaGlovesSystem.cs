@@ -89,8 +89,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
     private void OnToggleAction(EntityUid uid, NinjaGlovesComponent comp, ToggleActionEvent args)
     {
-        // client prediction desyncs it hard
-        if (args.Handled || !_timing.IsFirstTimePredicted)
+        if (args.Handled)
             return;
 
         args.Handled = true;
@@ -101,14 +100,14 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             || ninja.Suit == null
             || !HasComp<NinjaSuitComponent>(ninja.Suit.Value))
         {
-            Popup.PopupClient(Loc.GetString("ninja-gloves-not-wearing-suit"), user, user);
+            Popup.PopupEntity(Loc.GetString("ninja-gloves-not-wearing-suit"), user, user);
             return;
         }
 
         var enabling = comp.User == null;
         _appearance.SetData(uid, ToggleVisuals.Toggled, enabling);
         var message = Loc.GetString(enabling ? "ninja-gloves-on" : "ninja-gloves-off");
-        Popup.PopupClient(message, user, user);
+        Popup.PopupEntity(message, user, user);
 
         if (enabling)
         {
