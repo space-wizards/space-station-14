@@ -186,6 +186,49 @@
             True: { visible: true }
             False: { visible: false }
 
+- type: entity
+  name: force gun
+  parent:
+    - BaseItem
+    - PowerCellSlotMediumItem
+  id: WeaponForceGun
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+    - type: ForceGun
+      frequency: 15
+      dampingRatio: 4
+      massLimit: 50
+      lineColor: "#18a2d5"
+      soundLaunch:
+        path: /Audio/Weapons/soup.ogg
+        params:
+          volume: 2
+    - type: PowerCellDraw
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          shader: unshaded
+          visible: false
+    - type: ToggleableLightVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
+
 # Admeme
 - type: entity
   name: tether gun
@@ -203,6 +246,48 @@
       frequency: 20
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          shader: unshaded
+          visible: false
+    - type: ToggleableLightVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
+
+- type: entity
+  name: force gun
+  parent: BaseItem
+  id: WeaponForceGunAdmin
+  suffix: Admin
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+    - type: ForceGun
+      canTetherAlive: true
+      canUnanchor: true
+      maxForce: 10000
+      massLimit: 10000
+      frequency: 15
+      dampingRatio: 4
+      throwForce: 50
+      throwDistance: 100
+      lineColor: "#18a2d5"
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
       layers:
         - state: base
         - state: base-unshaded
