@@ -16,7 +16,7 @@ namespace Content.Shared.CCVar
         ///     Change this to have the changelog and rules "last seen" date stored separately.
         /// </summary>
         public static readonly CVarDef<string> ServerId =
-            CVarDef.Create("server.id", "unknown_server_id", CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("server.id", "ftl14", CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         ///     Name of the rules txt file in the "Resources/Server Info" dir. Include the extension.
@@ -158,7 +158,7 @@ namespace Content.Shared.CCVar
         ///     Controls the default game preset.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "secret", CVar.ARCHIVE);
+            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "extended", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if the game can force a different preset if the current preset's criteria are not met.
@@ -213,7 +213,7 @@ namespace Content.Shared.CCVar
         /// If roles should be restricted based on time.
         /// </summary>
         public static readonly CVarDef<bool>
-            GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
+            GameRoleTimers = CVarDef.Create("game.role_timers", false, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
@@ -244,7 +244,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.diagonalmovement", true, CVar.ARCHIVE);
 
         public static readonly CVarDef<int> SoftMaxPlayers =
-            CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
+            CVarDef.Create("game.soft_max_players", 12, CVar.SERVERONLY | CVar.ARCHIVE);
 
         /// <summary>
         /// Whether or not panic bunker is currently enabled.
@@ -787,7 +787,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
