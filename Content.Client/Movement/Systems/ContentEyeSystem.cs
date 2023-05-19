@@ -31,7 +31,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
     public void RequestZoom(EntityUid uid, Vector2 zoom, ContentEyeComponent? content = null)
     {
-        if (!Resolve(uid, ref content, false))
+        if (HasGhostZoom(null, uid) is not ContentEyeComponent ghostEye)
             return;
 
         RaisePredictiveEvent(new RequestTargetZoomEvent()

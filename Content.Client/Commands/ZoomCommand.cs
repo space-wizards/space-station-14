@@ -61,7 +61,6 @@ public sealed class ZoomCommand : IConsoleCommand
 
         var player = _playerManager.LocalPlayer?.ControlledEntity;
 
-        // TO DO rework it
         if (_entManager.TryGetComponent<ContentEyeComponent>(player, out var content))
         {
             _entManager.System<ContentEyeSystem>().RequestZoom(player.Value, zoom, content);
