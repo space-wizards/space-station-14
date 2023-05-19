@@ -4516,8 +4516,6 @@ entities:
       pos: -9.5,-29.5
       parent: 4812
       type: Transform
-    - devices:
-      type: DeviceList
   - uid: 12341
     components:
     - pos: -11.5,-13.5
