@@ -1,5 +1,4 @@
 using Content.Shared.Input;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -29,14 +28,12 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
             .Register<ContentEyeSystem>();
     }
 
-    public void RequestZoom(EntityUid uid, Vector2 zoom, ContentEyeComponent? content = null)
+    public void RequestZoom(EntityUid uid, Vector2 zoom)
     {
-        if (HasGhostZoom(null, uid) is not ContentEyeComponent ghostEye)
-            return;
-
         RaisePredictiveEvent(new RequestTargetZoomEvent()
         {
             TargetZoom = zoom,
+            PlayerUid = uid
         });
     }
 

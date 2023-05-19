@@ -63,7 +63,7 @@ public sealed class ZoomCommand : IConsoleCommand
 
         if (_entManager.TryGetComponent<ContentEyeComponent>(player, out var content))
         {
-            _entManager.System<ContentEyeSystem>().RequestZoom(player.Value, zoom, content);
+            _entManager.System<ContentEyeSystem>().RequestZoom(player.Value, zoom);
             return;
         }
 

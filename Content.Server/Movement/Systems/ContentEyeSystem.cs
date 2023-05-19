@@ -16,35 +16,25 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         base.Initialize();
         SubscribeAllEvent<RequestTargetZoomEvent>(OnContentZoomRequest);
         SubscribeAllEvent<RequestPlayeChangeZoomEvent>(OnChangeZoomRquest);
-
-        // DONT FORGET info
-        Sawmill.Level = LogLevel.Debug;
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var eyesSharedComponents = AllEntityQuery<SharedEyeComponent>();
+        var query = AllEntityQuery<ContentEyeComponent, SharedEyeComponent>();
 
-        while (eyesSharedComponents.MoveNext(out var uid, out var eyeComp))
+        while (query.MoveNext(out var uid, out var comp, out var eyeComp))
         {
-
-            Vector2 targetZoom;
-            if (HasGhostZoom(null, uid) is ContentEyeComponent ghostContent)
-                targetZoom = ghostContent.TargetZoom;
-            else
-                targetZoom = eyeComp.AnimatedZoom;
-
-            // set new value if they dont equals
-            if (eyeComp.Zoom.Equals(targetZoom))
+            if (!comp.IsProcessed || eyeComp.Zoom.Equals(comp.TargetZoom))
                 continue;
 
-            var diff = targetZoom - eyeComp.Zoom;
+            var diff = comp.TargetZoom - eyeComp.Zoom;
 
             if (diff.LengthSquared < 0.000001f)
             {
-                eyeComp.Zoom = targetZoom;
+                comp.IsProcessed = false;
+                eyeComp.Zoom = comp.TargetZoom;
                 Dirty(eyeComp);
                 return;
             }
@@ -58,10 +48,8 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
     {
-        if (HasGhostZoom(args.SenderSession) is not ContentEyeComponent content)
-            return;
-        content.TargetZoom = msg.TargetZoom;
-        Dirty(content);
+        if (HasGhostZoom(args.SenderSession, msg.PlayerUid) is ContentEyeComponent content)
+            SetDirtyTargetZoom(content, msg.TargetZoom);
     }
 
     private void OnChangeZoomRquest(RequestPlayeChangeZoomEvent msg, EntitySessionEventArgs args)
@@ -71,55 +59,41 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
         _lastTimeTagKeyZoomRequest = msg.EventTimeTag;
 
-        if (HasGhostZoom(args.SenderSession) is ContentEyeComponent ghostComponent)
+        if (HasGhostZoom(args.SenderSession, msg.PlayerUid) is ContentEyeComponent content)
         {
             switch (msg.TypeZoom)
             {
                 case KeyBindsTypes.ZoomIn:
-                    GhostZoom(ghostComponent, true);
+                    Zoom(content, true);
                     return;
                 case KeyBindsTypes.ZoomOut:
-                    GhostZoom(ghostComponent, false);
+                    Zoom(content, false);
                     return;
                 default:
-                    ResetGhostZoom(ghostComponent);
-                    return;
-            }
-        }
-        else if (msg.PlayerUid is EntityUid player &&
-            TryComp<SharedEyeComponent>(player, out var eyeComponent))
-        {
-            switch (msg.TypeZoom)
-            {
-                case KeyBindsTypes.ZoomIn:
-                    UserZoom(eyeComponent, true);
-                    return;
-                case KeyBindsTypes.ZoomOut:
-                    UserZoom(eyeComponent, false);
-                    return;
-                default:
-                    ResetUserZoom(eyeComponent);
+                    ResetZoom(content);
                     return;
             }
         }
     }
 
-    private void ResetGhostZoom(ContentEyeComponent component)
+    private void ResetZoom(ContentEyeComponent component)
     {
         if (component.TargetZoom.Equals(DefaultZoom))
             return;
 
-        component.TargetZoom = DefaultZoom;
-        Dirty(component);
+        SetDirtyTargetZoom(component, DefaultZoom);
     }
 
-    private void ResetUserZoom(SharedEyeComponent component)
+    private void Zoom(ContentEyeComponent component, bool zoomIn)
     {
-        if (component.Zoom.Equals(DefaultZoom))
+        var actual = CalcZoom(
+            zoomIn, component.TargetZoom, component.MaxZoom, MinZoom);
+
+        if (actual.Equals(component.TargetZoom))
             return;
 
-        component.AnimatedZoom = DefaultZoom;
-        Dirty(component);
+        SetDirtyTargetZoom(component, actual);
+        Sawmill.Debug($"Set target zoom to {actual}");
     }
 
     private static Vector2 CalcZoom(bool zoomIn, Vector2 current, Vector2 maxZoom, Vector2 minZoom)
@@ -137,31 +111,5 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         current = Vector2.ComponentMin(maxZoom, current);
 
         return current;
-    }
-
-    private void GhostZoom(ContentEyeComponent component, bool zoomIn)
-    {
-        var actual = CalcZoom(
-            zoomIn, component.TargetZoom, component.MaxZoom, MinZoom);
-
-        if (actual.Equals(component.TargetZoom))
-            return;
-
-        component.TargetZoom = actual;
-        Dirty(component);
-        Sawmill.Debug($"Set target zoom to {actual}");
-    }
-
-    private void UserZoom(SharedEyeComponent component, bool zoomIn)
-    {
-        var actual = CalcZoom(
-            zoomIn, component.Zoom, DefaultZoom, MinZoom);
-
-        if (actual.Equals(component.AnimatedZoom))
-            return;
-
-        component.AnimatedZoom = actual;
-        Dirty(component);
-        Sawmill.Debug($"Set user zoom to {actual}");
     }
 }

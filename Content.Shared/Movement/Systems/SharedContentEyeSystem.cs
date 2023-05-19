@@ -51,19 +51,29 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (!TryComp<SharedEyeComponent>(uid, out var eyeComp))
             return;
 
-        component.TargetZoom = eyeComp.Zoom;
-        Dirty(component);
+        SetDirtyTargetZoom(component, eyeComp.Zoom);
     }
 
-    public ContentEyeComponent? HasGhostZoom(ICommonSession? session, EntityUid? someUid = null)
+    public ContentEyeComponent? HasGhostZoom(ICommonSession? session, EntityUid? playerUid)
     {
-        var uid = session?.AttachedEntity ?? someUid;
+        var uid = session?.AttachedEntity ?? playerUid;
 
         if (uid is EntityUid entityUid
             && TryComp<ContentEyeComponent>(entityUid, out var ghostComp))
+        {
             return ghostComp;
+        }
         else
+        {
+            Sawmill.Debug($"don't find ContentEyeComponent for {uid}!");
             return null;
+        }
+    }
+
+    public void SetDirtyTargetZoom(ContentEyeComponent content, Vector2 zoom)
+    {
+        content.TargetZoom = zoom;
+        Dirty(content);
     }
 
     public enum KeyBindsTypes : byte
@@ -79,6 +89,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     [Serializable, NetSerializable]
     public sealed class RequestTargetZoomEvent : EntityEventArgs
     {
+        public EntityUid? PlayerUid;
         public Vector2 TargetZoom;
     }
 
