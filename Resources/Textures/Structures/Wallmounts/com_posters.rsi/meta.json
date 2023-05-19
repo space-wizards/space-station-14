@@ -1,0 +1,40 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Community of server Space Station 14 Imperial Space Discord ",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        { "name": "descente_1" },
+        { "name": "descente_2" },
+        { "name": "descente_3" },
+        { "name": "FrostyApple_1" },
+        { "name": "FrostyApple_2" },
+        { "name": "FrostyApple_3" },
+        { "name": "kamish_1" },
+        { "name": "kamish_2" },
+        { "name": "kamish_3" },
+        { "name": "kamish_4" },
+        { "name": "kamish_5" },
+        { "name": "kamish_6" },
+        { "name": "kamish_7" },
+        { "name": "kamish_8" },
+        { "name": "kamish_9" },
+        { "name": "kamish_10" },
+        { "name": "KEEYN_1" },
+        { "name": "KEEYN_2" },
+        { "name": "KEEYN_3" },
+        { "name": "KEEYN_4" },
+        { "name": "Swebit_1" },
+        { "name": "Swebit_2" },
+        { "name": "Swebit_3" },
+        { "name": "vvedite_imya_1" },
+        { "name": "vvedite_imya_2" },
+        { "name": "Willy_Bown_1" },
+        { "name": "community_poster_spawner" },
+        { "name": "community_painting_spawner" },
+        { "name": "community_poster_illegal_spawner" }
+    ]
+}
