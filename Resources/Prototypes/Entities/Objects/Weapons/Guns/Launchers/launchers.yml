@@ -160,6 +160,8 @@
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
     - type: TetherGun
+      frequency: 5
+      dampingRatio: 4
     - type: PowerCellDraw
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
