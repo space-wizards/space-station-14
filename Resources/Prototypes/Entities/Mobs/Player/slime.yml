@@ -19,7 +19,6 @@
     - type: Actions
     - type: Eye
     - type: ContentEye
-      maxZoom: 0.8, 0.8
     - type: CameraRecoil
     - type: Examiner
     - type: CanHostGuardian

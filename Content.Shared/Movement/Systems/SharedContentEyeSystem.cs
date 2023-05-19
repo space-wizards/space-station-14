@@ -20,8 +20,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         SubscribeLocalEvent<ContentEyeComponent, ComponentStartup>(OnContentEyeStartup);
         SubscribeAllEvent<RequestFovEvent>(OnRequestFov);
 
-        // DONT FORGET info
-        Sawmill.Level = LogLevel.Debug;
+        Sawmill.Level = LogLevel.Info;
     }
 
     private void OnRequestFov(RequestFovEvent msg, EntitySessionEventArgs args)
