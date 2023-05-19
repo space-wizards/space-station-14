@@ -6,6 +6,8 @@
   components:
   - type: Drink
     isOpen: false
+    openSounds:
+      collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glue-tube.rsi
     layers:
