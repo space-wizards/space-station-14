@@ -1,3 +1,4 @@
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -7,6 +8,9 @@ namespace Content.Server.Administration.Commands.Station;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class RenameStationCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entSysManager = default!;
+
     public string Command => "renamestation";
 
     public string Description => "Renames the given station";
@@ -21,14 +25,14 @@ public sealed class RenameStationCommand : IConsoleCommand
             return;
         }
 
-        var stationSystem = EntitySystem.Get<StationSystem>();
+        var stationSystem = _entSysManager.GetEntitySystem<StationSystem>();
 
-        if (!int.TryParse(args[0], out var station) || !stationSystem.Stations.Contains(new EntityUid(station)))
+        if (!EntityUid.TryParse(args[0], out var station) || _entityManager.HasComponent<StationDataComponent>(station))
         {
             shell.WriteError(Loc.GetString("shell-argument-station-id-invalid", ("index", 1)));
             return;
         }
 
-        stationSystem.RenameStation(new EntityUid(station), args[1]);
+        stationSystem.RenameStation(station, args[1]);
     }
 }
