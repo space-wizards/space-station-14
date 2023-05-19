@@ -133,7 +133,6 @@ namespace Content.Shared.Decals
                 }
             }
 
-            var lookupIndex = 0;
             var lookupNodes = lookup.Keys.ToList();
             lookupNodes.Sort();
 
@@ -222,6 +221,16 @@ namespace Content.Shared.Decals
                 var idComparison = string.Compare(Id, other.Id, StringComparison.Ordinal);
                 if (idComparison != 0)
                     return idComparison;
+
+                var colorComparison = string.Compare(Color?.ToHex(), other.Color?.ToHex(), StringComparison.Ordinal);
+
+                if (colorComparison != 0)
+                    return colorComparison;
+
+                var angleComparison = Angle.Theta.CompareTo(other.Angle.Theta);
+
+                if (angleComparison != 0)
+                    return angleComparison;
 
                 var zIndexComparison = ZIndex.CompareTo(other.ZIndex);
                 if (zIndexComparison != 0)

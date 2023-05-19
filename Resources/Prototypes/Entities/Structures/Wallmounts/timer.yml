@@ -21,10 +21,10 @@
   - type: Rotatable
   - type: SignalTimer
     canEditLabel: false
-  - type: SignalTransmitter
-    outputs:
-      Start: []
-      Timer: []
+  - type: DeviceLinkSource
+    ports:
+      - Start
+      - Timer
   - type: ActivatableUI
     key: enum.SignalTimerUiKey.Key
   - type: UserInterface
