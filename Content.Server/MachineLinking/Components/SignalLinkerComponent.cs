@@ -20,5 +20,16 @@ namespace Content.Server.MachineLinking.Components
         [DataField("requiredQuality", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         [ViewVariables(VVAccess.ReadWrite)]
         public string? RequiredQuality;
+
+        // Utility functions below to deal with linking entities with both Transmit and Receive components.
+        public bool LinkTX()
+        {
+            return SavedTransmitter == null;
+        }
+
+        public bool LinkRX()
+        {
+            return SavedTransmitter != null && SavedReceiver == null;
+        }
     }
 }

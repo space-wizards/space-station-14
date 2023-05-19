@@ -13,6 +13,7 @@ using Content.Shared.Fluids;
 using Content.Shared.Popups;
 using Content.Shared.Slippery;
 using Content.Shared.Fluids.Components;
+using Content.Shared.Friction;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.GameObjects;
@@ -45,6 +46,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly TileFrictionController _tile = default!;
 
     public static float PuddleVolume = 1000;
 
@@ -307,10 +309,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         {
             var comp = EnsureComp<StepTriggerComponent>(entityUid);
             _stepTrigger.SetActive(entityUid, true, comp);
+            var friction = EnsureComp<TileFrictionModifierComponent>(entityUid);
+            _tile.SetModifier(entityUid, TileFrictionController.DefaultFriction * 0.5f, friction);
         }
         else if (TryComp<StepTriggerComponent>(entityUid, out var comp))
         {
             _stepTrigger.SetActive(entityUid, false, comp);
+            RemCompDeferred<TileFrictionModifierComponent>(entityUid);
         }
     }
 

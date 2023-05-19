@@ -6,6 +6,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -85,6 +86,16 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Heavy attack.
         if (altDown == BoundKeyState.Down)
         {
+            // TODO: Need to make alt-fire melee its own component I guess?
+            // Melee and guns share a lot in the middle but share virtually nothing at the start and end so
+            // it's kinda tricky.
+            // I think as long as we make secondaries their own component it's probably fine
+            // as long as guncomp has an alt-use key then it shouldn't be too much of a PITA to deal with.
+            if (HasComp<GunComponent>(weaponUid))
+            {
+                return;
+            }
+
             // We did the click to end the attack but haven't pulled the key up.
             if (weapon.Attacking)
             {
@@ -101,11 +112,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, _transform, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
                 }
                 else
                 {
-                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, _transform, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
                 }
 
                 if (_stateManager.CurrentState is GameplayStateBase screen)
@@ -136,11 +147,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, _transform, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
                 }
                 else
                 {
-                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, _transform, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
                 }
 
                 ClientHeavyAttack(entity, coordinates, weaponUid, weapon);
@@ -177,11 +188,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (MapManager.TryFindGridAt(mousePos, out var grid))
             {
-                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, _transform, EntityManager);
+                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
             }
             else
             {
-                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, _transform, EntityManager);
+                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
             }
 
             EntityUid? target = null;
@@ -252,22 +263,25 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     private void ClientHeavyAttack(EntityUid user, EntityCoordinates coordinates, EntityUid meleeUid, MeleeWeaponComponent component)
     {
         // Only run on first prediction to avoid the potential raycast entities changing.
-        if (!TryComp<TransformComponent>(user, out var userXform) || !Timing.IsFirstTimePredicted)
+        if (!TryComp<TransformComponent>(user, out var userXform) ||
+            !Timing.IsFirstTimePredicted)
+        {
             return;
+        }
 
-        var targetMap = coordinates.ToMap(EntityManager, _transform);
+        var targetMap = coordinates.ToMap(EntityManager, TransformSystem);
 
         if (targetMap.MapId != userXform.MapID)
             return;
 
-        var userPos = _transform.GetWorldPosition(userXform);
+        var userPos = TransformSystem.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
         var distance = Math.Min(component.Range, direction.Length);
 
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         // Server will validate it with InRangeUnobstructed.
-        var entities = ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user);
-        RaisePredictiveEvent(new HeavyAttackEvent(meleeUid, entities.ToList(), coordinates));
+        var entities = ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList();
+        RaisePredictiveEvent(new HeavyAttackEvent(meleeUid, entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), coordinates));
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

@@ -86,18 +86,37 @@
   name: "right borg leg"
   parent: PartSilicon
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Silicon/borg.rsi
-      state: "r_leg"
-    - type: Icon
-      sprite: Mobs/Silicon/borg.rsi
-      state: "r_leg"
-    - type: BodyPart
-      partType: Leg
-      symmetry: Right
-    - type: Tag
-      tags:
-        - Trash
-        - BorgLeg
-        - BorgRightLeg
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Silicon/borg.rsi
+    state: "r_leg"
+  - type: Icon
+    sprite: Mobs/Silicon/borg.rsi
+    state: "r_leg"
+  - type: BodyPart
+    partType: Leg
+    symmetry: Right
+  - type: Tag
+    tags:
+    - Trash
+    - BorgLeg
+    - BorgRightLeg
+
+- type: entity
+  id: LightHeadBorg
+  name: "borg head"
+  parent: PartSilicon
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Borg/head.rsi
+    state: "light_borg_head"
+  - type: Icon
+    sprite: Objects/Specific/Borg/head.rsi
+    state: "light_borg_head"
+  - type: BodyPart
+    partType: Head
+  - type: Tag
+    tags:
+    - Trash
+    - BorgHead

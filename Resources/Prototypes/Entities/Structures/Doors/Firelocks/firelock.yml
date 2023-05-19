@@ -48,13 +48,15 @@
     - type: AnimationPlayer
     - type: Fixtures
       fixtures:
-        - shape: !type:PhysShapeAabb
-            bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.49,-0.49,0.49,0.49"  # don't want this colliding with walls or they won't close
           density: 100
           mask:
-            - FullTileMask
+          - FullTileMask
           layer:
-            - AirlockLayer
+          - AirlockLayer
     - type: Door
       openDrawDepth: WallTops
       closeTimeOne: 0.1
@@ -63,7 +65,7 @@
       openTimeTwo: 0.6
       state: Open
       bumpOpen: false
-      clickOpen: false
+      clickOpen: true
       crushDamage:
         types:
           Blunt: 15
@@ -130,13 +132,15 @@
       enabled: false
     - type: Fixtures
       fixtures:
-        - shape: !type:PhysShapeAabb
-            bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.49,-0.49,0.49,0.49"  # don't want this colliding with walls or they won't close
           mask:
-            - Impassable
-            - HighImpassable
+          - Impassable
+          - HighImpassable
           layer:
-            - GlassAirlockLayer
+          - GlassAirlockLayer
     - type: Door
       occludes: false
     - type: Construction
@@ -158,13 +162,15 @@
         - South
     - type: Fixtures
       fixtures:
-        - shape: !type:PhysShapeAabb
+        fix1:
+          shape:
+            !type:PhysShapeAabb
             bounds: "-0.49,-0.49,0.49,-0.2" # don't want this colliding with walls or they won't close
           mask:
-            - Impassable
-            - HighImpassable
+          - Impassable
+          - HighImpassable
           layer:
-            - GlassAirlockLayer
+          - GlassAirlockLayer
     - type: Occluder
       enabled: false
     - type: Door

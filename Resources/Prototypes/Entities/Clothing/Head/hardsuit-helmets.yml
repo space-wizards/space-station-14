@@ -134,17 +134,15 @@
   name: chief medical officer's hardsuit helmet
   description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
   components:
-    - type: Sprite
-      sprite: Clothing/Head/Hardsuits/medical.rsi
-    - type: Clothing
-      sprite: Clothing/Head/Hardsuits/medical.rsi
-    - type: PointLight
-      color: "#adf1ff"
-    - type: PressureProtection
-      highPressureMultiplier: 0.6
-      lowPressureMultiplier: 5500
-    - type: DiseaseProtection
-      protection: 0.15
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/medical.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/medical.rsi
+  - type: PointLight
+    color: "#adf1ff"
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 5500
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -240,26 +238,24 @@
   name: brigmedic hardsuit helmet
   description: The lightweight helmet of the brigmedic hardsuit. Protects against viruses, and clowns.
   components:
-    - type: Sprite
-      sprite: Clothing/Head/Hardsuits/brigmedic.rsi
-    - type: Clothing
-      sprite: Clothing/Head/Hardsuits/brigmedic.rsi
-    - type: PointLight
-      color: "#00FFFF"
-    - type: Armor
-      modifiers:
-        coefficients:
-          Blunt: 0.95
-          Slash: 0.95
-          Piercing: 0.95
-          Heat: 0.95
-          Radiation: 0.90
-          Caustic: 0.90
-    - type: PressureProtection
-      highPressureMultiplier: 0.6
-      lowPressureMultiplier: 5500
-    - type: DiseaseProtection
-      protection: 0.15
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
+  - type: PointLight
+    color: "#00FFFF"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+        Radiation: 0.90
+        Caustic: 0.90
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 5500
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -425,27 +421,25 @@
   name: syndicate elite helmet
   description: A variant of the blood red helmet designed by the Gorlex Marauders to be exceptionally fireproof and pressure proof.
   components:
-    - type: Sprite
-      sprite: Clothing/Head/Hardsuits/syndieelite.rsi
-    - type: Clothing
-      sprite: Clothing/Head/Hardsuits/syndieelite.rsi
-    - type: PointLight
-      color: red
-    - type: PressureProtection
-      highPressureMultiplier: 0.08
-      lowPressureMultiplier: 1000
-    - type: TemperatureProtection
-      coefficient: 0.005
-    - type: Armor
-      modifiers:
-        coefficients:
-          Blunt: 0.8
-          Slash: 0.8
-          Piercing: 0.8
-          Heat: 0.2
-          Radiation: 0.5
-    - type: DiseaseProtection
-      protection: 0.15
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
+  - type: PointLight
+    color: red
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.2
+        Radiation: 0.5
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -454,42 +448,40 @@
   name: CBURN exosuit helmet
   description: A pressure resistant and fireproof hood worn by special cleanup units.
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Clothing/Head/Hardsuits/cburn.rsi
-      layers:
-        - state: icon
-        - state: icon-unshaded
-          shader: unshaded
-        - state: light-overlay
-          visible: false
-          shader: unshaded
-          map: ["light"]
-    - type: Clothing
-      clothingVisuals:
-        head:
-          - state: equipped-head
-          - state: equipped-head-unshaded
-            shader: unshaded
-    - type: PointLight
-      color: orange
-    - type: PressureProtection
-      highPressureMultiplier: 0.08
-      lowPressureMultiplier: 1000
-    - type: TemperatureProtection
-      coefficient: 0.005
-    - type: Armor
-      modifiers:
-        coefficients:
-          Blunt: 0.9
-          Slash: 0.9
-          Piercing: 0.9
-          Heat: 0.1
-          Shock: 0.1
-          Cold: 0.2
-          Radiation: 0.2
-    - type: DiseaseProtection
-      protection: 0.25
+  - type: Sprite
+    netsync: false
+    sprite: Clothing/Head/Hardsuits/cburn.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+  - type: PointLight
+    color: orange
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.1
+        Shock: 0.1
+        Cold: 0.2
+        Radiation: 0.2
 
 - type: entity
   parent: ClothingHeadHardsuitBase
@@ -557,14 +549,12 @@
   noSpawn: true
   name: ERT medic hardsuit helmet
   components:
-    - type: Sprite
-      sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
-    - type: Clothing
-      sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
-    - type: PointLight
-      color: "#adffec"
-    - type: DiseaseProtection
-      protection: 0.20
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
+  - type: PointLight
+    color: "#adffec"
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
