@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Client.Popups;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
@@ -24,6 +25,7 @@ namespace Content.Client.Construction
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
@@ -188,11 +190,8 @@ namespace Content.Client.Construction
             if (!_interactionSystem.InRangeUnobstructed(user, loc, 20f, predicate: predicate))
                 return false;
 
-            foreach (var condition in prototype.Conditions)
-            {
-                if (!condition.Condition(user, loc, dir))
-                    return false;
-            }
+            if (!CheckConstructionConditions(prototype, loc, dir, user))
+                return false;
 
             ghost = EntityManager.SpawnEntity("constructionghost", loc);
             var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost.Value);
@@ -213,6 +212,27 @@ namespace Content.Client.Construction
 
             if (prototype.CanBuildInImpassable)
                 EnsureComp<WallMountComponent>(ghost.Value).Arc = new(Math.Tau);
+
+            return true;
+        }
+
+        private bool CheckConstructionConditions(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir,
+            EntityUid user)
+        {
+            foreach (var condition in prototype.Conditions)
+            {
+                if (!condition.Condition(user, loc, dir))
+                {
+                    var message = condition.GenerateGuideEntry()?.Localization;
+                    if (message != null)
+                    {
+                        // Show the reason to the user:
+                        _popupSystem.PopupCoordinates(Loc.GetString(message), loc);
+                    }
+
+                    return false;
+                }
+            }
 
             return true;
         }
