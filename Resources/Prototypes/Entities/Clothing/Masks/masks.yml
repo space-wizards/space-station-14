@@ -4,15 +4,13 @@
   name: gas mask
   description: A face-covering mask that can be connected to an air supply.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/gas.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/gas.rsi
-    - type: BreathMask
-    - type: IngestionBlocker
-    - type: DiseaseProtection
-      protection: 0.05
-    - type: IdentityBlocker
+  - type: Sprite
+    sprite: Clothing/Mask/gas.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gas.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskGas
@@ -60,14 +58,12 @@
   name: captain's gas mask
   description: Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/gascaptain.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/gascaptain.rsi
-    - type: BreathMask
-    - type: IngestionBlocker
-    - type: DiseaseProtection
-      protection: 0.05
+  - type: Sprite
+    sprite: Clothing/Mask/gascaptain.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gascaptain.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingMaskGasAtmos
@@ -75,14 +71,12 @@
   name: CentCom gas mask
   description: Oooh, gold and green. Fancy! This should help as you sit in your office.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/gascentcom.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/gascentcom.rsi
-    - type: BreathMask
-    - type: IngestionBlocker
-    - type: DiseaseProtection
-      protection: 0.05
+  - type: Sprite
+    sprite: Clothing/Mask/gascentcom.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gascentcom.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingMaskGas
@@ -108,18 +102,16 @@
   name: medical mask
   description: A close-fitting sterile mask that can be connected to an air supply.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/medical.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/medical.rsi
-    - type: BreathMask
-    - type: IngestionBlocker
-    - type: DiseaseProtection
-      protection: 0.10
-    - type: Tag
-      tags:
-        - PetWearable
-        - WhitelistChameleon
+  - type: Sprite
+    sprite: Clothing/Mask/medical.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/medical.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskBreathMedical
@@ -143,22 +135,20 @@
   name: breath mask
   description: Might as well keep this on 24/7.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/breath.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/breath.rsi
-    - type: BreathMask
-    - type: IngestionBlocker
-    - type: DiseaseProtection
-      protection: 0.05
-    - type: Tag
-      tags:
-        - PetWearable
-        - WhitelistChameleon
-    - type: PhysicalComposition
-      materialComposition:
-        Steel: 50
-        Plastic: 100
+  - type: Sprite
+    sprite: Clothing/Mask/breath.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/breath.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 100
 
 - type: entity
   parent: ClothingMaskBase
@@ -166,12 +156,16 @@
   name: clown wig and mask
   description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/clown.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/clown.rsi
-    - type: BreathMask
-    - type: IdentityBlocker
+  - type: Sprite
+    sprite: Clothing/Mask/clown.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/clown.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
+  # for H.O.N.K. construction
+  - type: Tag
+    tags:
+    - ClownMask
 
 - type: entity
   parent: ClothingMaskBase
@@ -204,13 +198,11 @@
   name: sterile mask
   description: A sterile mask designed to help prevent the spread of diseases.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/sterile.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/sterile.rsi
-    - type: IngestionBlocker
-    - type: DiseaseProtection
-      protection: 0.1
+  - type: Sprite
+    sprite: Clothing/Mask/sterile.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/sterile.rsi
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -236,15 +228,13 @@
   name: plague doctor mask
   description: A bad omen.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/plaguedoctormask.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/plaguedoctormask.rsi
-    - type: BreathMask
-    - type: IngestionBlocker
-    - type: DiseaseProtection
-      protection: 0.1
-    - type: IdentityBlocker
+  - type: Sprite
+    sprite: Clothing/Mask/plaguedoctormask.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/plaguedoctormask.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskClown
@@ -350,8 +340,52 @@
   name: bat mask
   description: A bloodsucker by night, and a cute, blinded beast by day.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/bat.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/bat.rsi
-    - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Mask/bat.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/bat.rsi
+  - type: BreathMask
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskSexyClown
+  name: sexy clown mask
+  description: Some naughty clowns think this is what the Honkmother looks like.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/sexyclown.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/sexyclown.rsi
+
+- type: entity
+  parent: ClothingMaskMime
+  id: ClothingMaskSexyMime
+  name: sexy mime mask
+  description: Those ruddy cheeks just want to be rubbed.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/sexymime.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/sexymime.rsi
+
+- type: entity
+  parent: ClothingMaskMime
+  id: ClothingMaskSadMime
+  name: sad mime mask
+  description: Many people think this is what a real mime mask looks like.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/sadmime.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/sadmime.rsi
+
+- type: entity
+  parent: ClothingMaskMime
+  id: ClothingMaskScaredMime
+  name: scared mime mask
+  description: Looks like it would scream if it wasn't a mask
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/scaredmime.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/scaredmime.rsi

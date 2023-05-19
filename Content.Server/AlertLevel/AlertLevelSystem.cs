@@ -1,9 +1,8 @@
 using System.Linq;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
+using Content.Shared.PDA;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.AlertLevel;
@@ -189,6 +188,12 @@ public sealed class AlertLevelSystem : EntitySystem
         }
 
         RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
+
+        var pdas = EntityQueryEnumerator<PDAComponent>();
+        while (pdas.MoveNext(out var ent, out var comp))
+        {
+            RaiseLocalEvent(ent,new AlertLevelChangedEvent(station, level));
+        }
     }
 }
 

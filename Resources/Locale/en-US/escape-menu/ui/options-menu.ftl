@@ -29,6 +29,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 ## Graphics menu
 
 ui-options-show-held-item = Show held item next to cursor?
+ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor?
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:
@@ -153,6 +154,7 @@ ui-options-function-editor-cancel-place = Cancel placement
 ui-options-function-editor-grid-place = Place in grid
 ui-options-function-editor-line-place = Place line
 ui-options-function-editor-rotate-object = Rotate
+ui-options-function-editor-flip-object = Flip
 ui-options-function-editor-copy-object = Copy
 
 ui-options-function-open-abilities-menu = Open action menu

@@ -262,13 +262,16 @@ public sealed class DoorComponent : Component
     }
     #endregion
 
+    [DataField("canPry"), ViewVariables(VVAccess.ReadWrite)]
+    public bool CanPry = true;
+
     [DataField("pryingQuality", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
     public string PryingQuality = "Prying";
 
     /// <summary>
     /// Default time that the door should take to pry open.
     /// </summary>
-    [DataField("pryTime")]
+    [DataField("pryTime"), ViewVariables(VVAccess.ReadWrite)]
     public float PryTime = 1.5f;
 
     [DataField("changeAirtight")]

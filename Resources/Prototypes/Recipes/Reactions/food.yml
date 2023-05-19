@@ -2,6 +2,7 @@
   id: Curdling
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Milk:
       amount: 40
@@ -16,6 +17,7 @@
   id: CreateDough
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -26,9 +28,26 @@
       entity: FoodDough
 
 - type: reaction
+  id: CreateCornmealDough
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Cornmeal:
+      amount: 15
+    Milk: #replace with yoghurt when added
+      amount: 10
+    Egg:
+      amount: 6
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodDoughCornmeal
+
+- type: reaction
   id: CreateCakeBatter
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -44,6 +63,7 @@
   id: CreateButter
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Milk:
       amount: 30
@@ -58,6 +78,7 @@
   id: CreatePieDough
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -76,6 +97,7 @@
   id: CreateVeganCakeBatter
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -91,6 +113,7 @@
   id: CreateTofu
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     MilkSoy:
       amount: 30
@@ -206,6 +229,7 @@
   id: CreateMeatball
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     UncookedAnimalProteins:
       amount: 5

@@ -3,22 +3,22 @@
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      weight: 10
-      startAfter: 30
-      duration: 35
-    - type: AnomalySpawnRule
+  - type: StationEvent
+    weight: 10
+    startDelay: 30
+    duration: 35
+  - type: AnomalySpawnRule
 
 - type: entity
   id: BluespaceArtifact
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      weight: 5
-      startAfter: 30
-      duration: 35
-    - type: BluespaceArtifactRule
+  - type: StationEvent
+    weight: 5
+    startDelay: 30
+    duration: 35
+  - type: BluespaceArtifactRule
 
 - type: entity
   id: BluespaceLocker
@@ -54,22 +54,6 @@
       weight: 5
       duration: 1
     - type: BureaucraticErrorRule
-
-- type: entity
-  id: DiseaseOutbreak
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-    - type: StationEvent
-      startAnnouncement: station-event-disease-outbreak-announcement
-      startAudio:
-        path: /Audio/Announcements/outbreak7.ogg
-        params:
-          volume: -4
-      weight: 5
-      duration: 1
-      earliestStart: 15
-    - type: DiseaseOutbreakRule
 
 - type: entity
   id: Dragon
@@ -110,48 +94,48 @@
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      startAnnouncement: station-event-gas-leak-start-announcement
-      startAudio:
-        path: /Audio/Announcements/attention.ogg
-      endAnnouncement: station-event-gas-leak-end-announcement
-      earliestStart: 10
-      minimumPlayers: 5
-      weight: 5
-      startAfter: 20
-    - type: GasLeakRule
+  - type: StationEvent
+    startAnnouncement: station-event-gas-leak-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    endAnnouncement: station-event-gas-leak-end-announcement
+    earliestStart: 10
+    minimumPlayers: 5
+    weight: 5
+    startDelay: 20
+  - type: GasLeakRule
 
 - type: entity
   id: KudzuGrowth
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      earliestStart: 15
-      minimumPlayers: 15
-      weight: 5
-      startAfter: 50
-      duration: 240
-    - type: KudzuGrowthRule
+  - type: StationEvent
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 5
+    startDelay: 50
+    duration: 240
+  - type: KudzuGrowthRule
 
 - type: entity
   id: MeteorSwarm
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      earliestStart: 30
-      weight: 5
-      minimumPlayers: 20
-      startAnnouncement: station-event-meteor-swarm-start-announcement
-      endAnnouncement: station-event-meteor-swarm-end-announcement
-      startAudio:
-        path: /Audio/Announcements/meteors.ogg
-        params:
-          volume: -4
-      duration: null #ending is handled by MeteorSwarmRule
-      startAfter: 30
-    - type: MeteorSwarmRule
+  - type: StationEvent
+    earliestStart: 30
+    weight: 5
+    minimumPlayers: 20
+    startAnnouncement: station-event-meteor-swarm-start-announcement
+    endAnnouncement: station-event-meteor-swarm-end-announcement
+    startAudio:
+      path: /Audio/Announcements/meteors.ogg
+      params:
+        volume: -4
+    duration: null #ending is handled by MeteorSwarmRule
+    startDelay: 30
+  - type: MeteorSwarmRule
 
 - type: entity
   id: MouseMigration
@@ -170,18 +154,18 @@
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      weight: 10
-      startAnnouncement: station-event-power-grid-check-start-announcement
-      endAnnouncement: station-event-power-grid-check-end-announcement
-      startAudio:
-        path: /Audio/Announcements/power_off.ogg
-        params:
-          volume: -4
-      startAfter: 12
-      duration: 60
-      maxDuration: 120
-    - type: PowerGridCheckRule
+  - type: StationEvent
+    weight: 10
+    startAnnouncement: station-event-power-grid-check-start-announcement
+    endAnnouncement: station-event-power-grid-check-end-announcement
+    startAudio:
+      path: /Audio/Announcements/power_off.ogg
+      params:
+       volume: -4
+    startDelay: 12
+    duration: 60
+    maxDuration: 120
+  - type: PowerGridCheckRule
 
 - type: entity
   id: RandomSentience
@@ -221,16 +205,16 @@
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      startAnnouncement: station-event-vent-clog-start-announcement
-      startAudio:
-        path: /Audio/Announcements/attention.ogg
-      earliestStart: 15
-      minimumPlayers: 15
-      weight: 5
-      startAfter: 50
-      duration: 60
-    - type: VentClogRule
+  - type: StationEvent
+    startAnnouncement: station-event-vent-clog-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 5
+    startDelay: 50
+    duration: 60
+  - type: VentClogRule
 
 - type: entity
   id: VentCritters

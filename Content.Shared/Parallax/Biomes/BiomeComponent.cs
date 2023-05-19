@@ -48,7 +48,7 @@ public sealed partial class BiomeComponent : Component
     public Dictionary<Vector2i, Dictionary<uint, Vector2i>> LoadedDecals = new();
 
     [DataField("entities")]
-    public Dictionary<Vector2i, List<EntityUid>> LoadedEntities = new();
+    public Dictionary<Vector2i, Dictionary<EntityUid, Vector2i>> LoadedEntities = new();
 
     /// <summary>
     /// Currently active chunks

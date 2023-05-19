@@ -39,17 +39,19 @@
       Gold: 100
   - type: Stack
     stackType: Gold
+    baseLayer: base
+    layerStates:
+    - gold
+    - gold_2
+    - gold_3
   - type: Sprite
     state: gold_3
+    layers:
+    - state: gold_3
+      map: ["base"]
   - type: Item
     heldPrefix: gold
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - gold
-      - gold_2
-      - gold_3
 
 - type: entity
   parent: IngotGold
@@ -74,17 +76,19 @@
       Silver: 100
   - type: Stack
     stackType: Silver
+    baseLayer: base
+    layerStates:
+    - silver
+    - silver_2
+    - silver_3
   - type: Sprite
     state: silver_3
+    layers:
+    - state: silver_3
+      map: ["base"]
   - type: Item
     heldPrefix: silver
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - silver
-      - silver_2
-      - silver_3
 
 - type: entity
   parent: IngotSilver
