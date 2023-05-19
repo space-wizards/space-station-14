@@ -58,5 +58,5 @@
   id: MeatSheets
   name: meat sheet
   icon: { sprite: /Textures/Objects/Materials/Sheets/meaterial.rsi, state: meat }
-  spawn: MaterialMeatSheet1
+  spawn: MaterialSheetMeat1
   maxCount: 30

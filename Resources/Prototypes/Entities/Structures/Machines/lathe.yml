@@ -307,6 +307,7 @@
       - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - FatExtractorMachineCircuitboard
+      - SheetifierMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
@@ -692,7 +693,7 @@
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Machine
-    board: OreProcessorMachineCircuitboard #todo: change
+    board: SheetifierMachineCircuitboard
   - type: MaterialStorage
     dropOnDeconstruct: false #should drop ores instead of ingots/sheets
     ignoreColor: true
