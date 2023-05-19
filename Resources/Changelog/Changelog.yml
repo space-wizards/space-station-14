@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Dwarf real;, type: Add}
-  id: 3312
-  time: '2023-04-03T00:06:24.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added crate of theater supplies is now available for purchase through
@@ -2904,3 +2899,8 @@ Entries:
   - {message: Add the force gun as a counterpart to the tether gun., type: Add}
   id: 3811
   time: '2023-05-19T07:10:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttles will delete anything they FTL on top of., type: Add}
+  id: 3812
+  time: '2023-05-19T07:26:28.0000000+00:00'
