@@ -1,10 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: 'The Syndicate has downscaled thieving glove nanotech, making it no
-      longer identifiable on inspection.', type: Tweak}
-  id: 3310
-  time: '2023-04-02T19:34:56.0000000+00:00'
 - author: adamsong
   changes:
   - {message: Fixed ghosts being unable to hear radio cross-map, type: Fix}
@@ -2904,3 +2898,9 @@ Entries:
     type: Remove}
   id: 3809
   time: '2023-05-19T07:00:28.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: NT has granted stations access to research the new technology called
+      'Advanced Tools'., type: Add}
+  id: 3810
+  time: '2023-05-19T07:07:59.0000000+00:00'
