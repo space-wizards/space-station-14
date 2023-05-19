@@ -2,8 +2,8 @@
 
 namespace Content.Server.StationEvents.Components;
 
-[RegisterComponent, Access(typeof(DynamicStationEventSchedulerSystem))]
-public sealed class DynamicStationEventSchedulerComponent : Component
+[RegisterComponent, Access(typeof(GameDirectorSystem))]
+public sealed class GameDirectorSystemComponent : Component
 {
     public const float MinimumTimeUntilFirstEvent = 300;
 

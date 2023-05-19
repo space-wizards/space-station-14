@@ -45,7 +45,7 @@ public sealed class PlayerCount
 ///        good or bad events to nudge it in the correct direction.
 /// </summary>
 [UsedImplicitly]
-public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicStationEventSchedulerComponent>
+public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
@@ -56,14 +56,15 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] public readonly GameTicker _gameTicker = default!;
 
-    protected override void Added(EntityUid uid, DynamicStationEventSchedulerComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Added(EntityUid uid, GameDirectorSystemComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         // This deletes all existing metrics and sets them up again.
         _metrics.SetupMetrics();
         SetupEvents(scheduler, CountActivePlayers());
+        CopyStories(uid, scheduler);
     }
 
-    private void SetupEvents(DynamicStationEventSchedulerComponent scheduler, PlayerCount count)
+    private void SetupEvents(GameDirectorSystemComponent scheduler, PlayerCount count)
     {
         scheduler.PossibleEvents.Clear();
         foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
@@ -86,13 +87,13 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
         }
     }
 
-    protected override void Ended(EntityUid uid, DynamicStationEventSchedulerComponent scheduler, GameRuleComponent gameRule,
+    protected override void Ended(EntityUid uid, GameDirectorSystemComponent scheduler, GameRuleComponent gameRule,
         GameRuleEndedEvent args)
     {
         scheduler.TimeUntilNextEvent = BasicStationEventSchedulerComponent.MinimumTimeUntilFirstEvent;
     }
 
-    protected override void ActiveTick(EntityUid uid, DynamicStationEventSchedulerComponent scheduler, GameRuleComponent gameRule, float frameTime)
+    protected override void ActiveTick(EntityUid uid, GameDirectorSystemComponent scheduler, GameRuleComponent gameRule, float frameTime)
     {
         scheduler.BeatTime += frameTime;
         if (scheduler.TimeUntilNextEvent > 0)
@@ -104,7 +105,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
         // Somewhat expensive process of invoking the metric systems which iterate through entities to determine
         //   how bad things currently are on the station.
         var chaos = _metrics.CalculateChaos();
-        _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"Station chaos is now {chaos.ToString()}");
+        _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"Station chaos is now {chaos.ToString()}");
 
         // Decide what story beat to work with (which sets chaos goals)
         var count = CountActivePlayers();
@@ -168,7 +169,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
         var ranked =bestEvents.OrderBy(ev => ev.Score).Take(maxRandom).ToList();
 
         var events = String.Join(", ", ranked.Select(r => r.PossibleEvent.PrototypeId));
-        _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"Picked best events (in sequence) {events}");
+        _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"Picked best events (in sequence) {events}");
 
         foreach (var rankedEvent in ranked)
         {
@@ -186,7 +187,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
 
     // Returns the StoryBeat that should be currently used to select events.
     // Advances the current story and picks new stories when the current beat is complete.
-    private StoryBeat DetermineNextBeat(DynamicStationEventSchedulerComponent scheduler, ChaosMetrics chaos, PlayerCount count)
+    private StoryBeat DetermineNextBeat(GameDirectorSystemComponent scheduler, ChaosMetrics chaos, PlayerCount count)
     {
         // Potentially Complete CurrBeat, which is always scheduler.CurrStory[0]
         if (scheduler.CurrStory.Count > 0)
@@ -197,7 +198,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
             if (scheduler.BeatTime > beat.MaxSecs)
             {
                 // Done with this beat (it's lasted too long)
-                _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"StoryBeat {beatName} complete. It's lasted {scheduler.BeatTime} out of a maximum of {beat.MaxSecs} seconds.");
+                _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"StoryBeat {beatName} complete. It's lasted {scheduler.BeatTime} out of a maximum of {beat.MaxSecs} seconds.");
             }
             else if (scheduler.BeatTime > beat.MinSecs)
             {
@@ -205,12 +206,12 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
                 if (!beat.EndIfAnyWorse.Empty && chaos.AnyWorseThan(beat.EndIfAnyWorse))
                 {
                     // Done with this beat (chaos exceeded set bad level)
-                    _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"StoryBeat {beatName} complete. Chaos exceeds {beat.EndIfAnyWorse} (EndIfAnyWorse).");
+                    _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"StoryBeat {beatName} complete. Chaos exceeds {beat.EndIfAnyWorse} (EndIfAnyWorse).");
                 }
                 else if(!beat.EndIfAllBetter.Empty && chaos.AllBetterThan(beat.EndIfAllBetter))
                 {
                     // Done with this beat (chaos reached set good level)
-                    _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"StoryBeat {beatName} complete. Chaos better than {beat.EndIfAllBetter} (EndIfAllBetter).");
+                    _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"StoryBeat {beatName} complete. Chaos better than {beat.EndIfAllBetter} (EndIfAllBetter).");
                 }
                 else
                 {
@@ -234,7 +235,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
             var beatName = scheduler.CurrStory[0];
             var beat = scheduler.StoryBeats[beatName];
 
-            _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"New StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
+            _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"New StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
             return beat;
         }
 
@@ -254,12 +255,12 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
             scheduler.CurrStory = story.Beats.ShallowClone();
             scheduler.CurrStoryName = storyName;
             SetupEvents(scheduler, count);
-            _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
+            _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
 
             var beatName = scheduler.CurrStory[0];
             var beat = scheduler.StoryBeats[beatName];
 
-            _adminLogger.Add(LogType.DynamicRule, LogImpact.Low, $"First StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
+            _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"First StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
             return beat;
         }
 
@@ -275,7 +276,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
         return chaos.ChaosDict.Values.Sum(v => (float)(v * v));
     }
 
-    private List<RankedEvent> ChooseEvents(DynamicStationEventSchedulerComponent scheduler, StoryBeat beat, ChaosMetrics chaos, PlayerCount count)
+    private List<RankedEvent> ChooseEvents(GameDirectorSystemComponent scheduler, StoryBeat beat, ChaosMetrics chaos, PlayerCount count)
     {
         // TODO : Potentially filter Chaos here using CriticalLevels & DangerLevels which force us to focus on
         //        big problems (lots of hostiles, spacing) prior to smaller ones (food & drink)
@@ -297,7 +298,7 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
 
     // Filter only to events which improve the chaos score in alignment with desiredChange.
     //   Score them (lower is better) in how well they do this.
-    private List<RankedEvent> FilterAndScore(DynamicStationEventSchedulerComponent scheduler, ChaosMetrics chaos,
+    private List<RankedEvent> FilterAndScore(GameDirectorSystemComponent scheduler, ChaosMetrics chaos,
         ChaosMetrics desiredChange, PlayerCount count)
     {
         var noEvent = RankChaosDelta(desiredChange);
@@ -329,4 +330,34 @@ public sealed class DynamicStationEventSchedulerSystem : GameRuleSystem<DynamicS
 
         return result;
     }
+
+    private void CopyStories(EntityUid uid, GameDirectorSystemComponent scheduler)
+    {
+        if (TryComp<GameDirectorStoriesComponent>(uid, out var stories))
+        {
+            // There are some stories (probably from a prototype subclass) to copy across
+            foreach (var storyBeat in stories.StoryBeats)
+            {
+                // Overwrite our values with those from the stories component
+                // TODO: Which of the two to favor when there are conflicts might need some thought.
+                scheduler.StoryBeats[storyBeat.Key] = storyBeat.Value;
+            }
+
+            if (stories.OverwriteStories)
+            {
+                // Overwrite the default stories with the provided ones.
+                scheduler.Stories = stories.Stories;
+            }
+            else
+            {
+                foreach (var story in stories.Stories)
+                {
+                    // Overwrite our values with those from the stories component
+                    // TODO: Which of the two to favor when there are conflicts might need some thought.
+                    scheduler.Stories[story.Key] = story.Value;
+                }
+            }
+        }
+    }
+
 }

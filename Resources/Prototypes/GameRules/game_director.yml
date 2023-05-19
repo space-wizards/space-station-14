@@ -1,0 +1,78 @@
+- type: entity
+  id: GameDirector
+  parent: BaseGameRule
+  noSpawn: true
+  abstract: true
+  components:
+    - type: GameDirectorSystem
+      storyBeats:
+        Traitors:
+          description: Traitors have infiltrated the station
+          goal:   # Some
+            Traitors: 40
+            Hostile: 60  # Some hostiles (includes traitors)
+          endIfAnyWorse:
+            Atmos: 400   # Severe atmos, power or medical issues should end this beat.
+            Power: 400
+            Medical: 400
+            Death: 200
+            Combat: -100 # Friendly forces should retain the upper hand
+        Peace:
+          description: Life returns to usual, but how usual?
+          goal:   # Try to achieve a wide range of different moderate values.
+            Combat: -200 # Friendly forces should have the upper hand
+            Anomaly: 100
+            Atmos: 200
+            Power: 100
+            Jani: 100
+            Hunger: 100
+            Thirst: 100
+            Medical: 100
+        Attackers:
+          description: Hostiles are attacking the station.
+          goal:
+            Hostile: 100  # Quite a few hostiles
+          endIfAnyWorse:
+            Atmos: 800   # Severe atmos, power or medical issues should end this beat.
+            Power: 800
+            Medical: 600
+            Death: 400
+            Combat: -50 # Friendly forces should just retain the upper hand
+        RestoreOrder:
+          description: Send help to quell disorder on the station
+          goal:
+            Traitors: 0  # Try to drive down hostiles and engineering issues
+            Hostile: 10
+            Atmos: 0
+            Medical: 0
+          EndIfAllBetter:
+            Atmos: 200
+            Hostile: 20
+            Medical: 200
+        RepairStation:
+          description: Repair that station
+          goal:
+            Atmos: 0
+            Power: 0
+            Medical: 0
+          EndIfAllBetter:
+            Atmos: 200
+            Power: 200
+
+- type: entity
+  id: CombatDynamic
+  parent: GameDirector
+  noSpawn: true
+  components:
+    - type: GameDirectorStories
+      stories:
+        Combat:
+          Description: After traitors invade, the station descends into combat and rises from the ashes.
+          MinPlayers: 40
+          Beats:
+            - Traitors
+            - Peace
+            - Attackers
+            - RestoreOrder
+            - RepairStation
+            - Peace
