@@ -1,7 +1,6 @@
 using Content.Shared.Administration.Managers;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.Components;
-using Robust.Shared.Input.Binding;
 using Robust.Shared.Serialization;
 using Robust.Shared.Players;
 
@@ -84,7 +83,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
     [Serializable, NetSerializable]
     public sealed class RequestTargetZoomEvent : EntityEventArgs
     {
-        public EntityUid? PlayerUid;
         public Vector2 TargetZoom;
     }
 

@@ -57,8 +57,11 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
     {
-        if (HasGhostZoom(args.SenderSession, msg.PlayerUid) is ContentEyeComponent content)
-            SetDirtyTargetZoom(content, msg.TargetZoom);
+        if (HasGhostZoom(args.SenderSession, null) is ContentEyeComponent content)
+        {
+            var current = Vector2.ComponentMin(msg.TargetZoom, content.MaxZoom);
+            SetDirtyTargetZoom(content, current);
+        }
     }
 
     private void OnChangeZoomRquest(RequestPlayeChangeZoomEvent msg, EntitySessionEventArgs args)

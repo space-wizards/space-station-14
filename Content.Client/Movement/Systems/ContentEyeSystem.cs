@@ -34,12 +34,11 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         CommandBinds.Unregister<SharedContentEyeSystem>();
     }
 
-    public void RequestZoom(EntityUid uid, Vector2 zoom)
+    public void RequestZoom(Vector2 zoom)
     {
         RaisePredictiveEvent(new RequestTargetZoomEvent()
         {
-            TargetZoom = zoom,
-            PlayerUid = uid
+            TargetZoom = zoom
         });
     }
 
