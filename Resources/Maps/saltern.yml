@@ -5734,6 +5734,13 @@ entities:
       type: Transform
     - fixtures: {}
       type: Fixtures
+  - uid: 8
+    components:
+    - pos: -5.5,-26.5
+      parent: 31
+      type: Transform
+    - fixtures: {}
+      type: Fixtures
   - uid: 18
     components:
     - pos: -13.5,10.5
@@ -12062,13 +12069,6 @@ entities:
       type: Transform
     - enabled: True
       type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 4027
-    components:
-    - pos: -5.5,-26.5
-      parent: 31
-      type: Transform
     - fixtures: {}
       type: Fixtures
   - uid: 4029
@@ -35281,9 +35281,9 @@ entities:
       type: Transform
 - proto: FoodBurgerRobot
   entities:
-  - uid: 9783
+  - uid: 9533
     components:
-    - pos: -4.459998,-26.471304
+    - pos: -8.477577,-30.378061
       parent: 31
       type: Transform
 - proto: FoodCondimentBottleEnzyme
@@ -51354,6 +51354,18 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
+- proto: MachineAnomalyVessel
+  entities:
+  - uid: 71
+    components:
+    - pos: -4.5,-26.5
+      parent: 31
+      type: Transform
+  - uid: 4027
+    components:
+    - pos: -5.5,-26.5
+      parent: 31
+      type: Transform
 - proto: MachineAPE
   entities:
   - uid: 3927
@@ -61203,6 +61215,11 @@ entities:
     - pos: -12.5,11.5
       parent: 31
       type: Transform
+  - uid: 5222
+    components:
+    - pos: -9.5,-30.5
+      parent: 31
+      type: Transform
   - uid: 6020
     components:
     - pos: -3.5,16.5
@@ -61369,14 +61386,9 @@ entities:
     - pos: 34.5,0.5
       parent: 31
       type: Transform
-  - uid: 9786
+  - uid: 9532
     components:
-    - pos: -4.5,-26.5
-      parent: 31
-      type: Transform
-  - uid: 9787
-    components:
-    - pos: -5.5,-26.5
+    - pos: -8.5,-30.5
       parent: 31
       type: Transform
 - proto: TableCarpet
@@ -70835,49 +70847,19 @@ entities:
       type: Transform
 - proto: Wrench
   entities:
-  - uid: 8
-    components:
-    - pos: -5.431781,-26.414207
-      parent: 31
-      type: Transform
-  - uid: 71
-    components:
-    - pos: -5.431781,-26.414207
-      parent: 31
-      type: Transform
   - uid: 2212
     components:
     - pos: 7.5431976,-17.433199
       parent: 31
       type: Transform
-  - uid: 5222
+  - uid: 9534
     components:
-    - pos: -5.431781,-26.414207
+    - pos: -9.680702,-30.440561
       parent: 31
       type: Transform
-  - uid: 9719
+  - uid: 9535
     components:
-    - pos: -5.431781,-26.414207
-      parent: 31
-      type: Transform
-  - uid: 9720
-    components:
-    - pos: -5.431781,-26.414207
-      parent: 31
-      type: Transform
-  - uid: 9776
-    components:
-    - pos: -5.431781,-26.414207
-      parent: 31
-      type: Transform
-  - uid: 9784
-    components:
-    - pos: -5.431781,-26.414207
-      parent: 31
-      type: Transform
-  - uid: 9785
-    components:
-    - pos: -5.431781,-26.414207
+    - pos: -9.305702,-30.424936
       parent: 31
       type: Transform
 - proto: YellowOxygenTankFilled
