@@ -40,18 +40,13 @@ public abstract class SharedContentEyeSystem : EntitySystem
         }
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        CommandBinds.Unregister<SharedContentEyeSystem>();
-    }
-
     private void OnContentEyeStartup(EntityUid uid, ContentEyeComponent component, ComponentStartup args)
     {
         if (!TryComp<SharedEyeComponent>(uid, out var eyeComp))
             return;
 
-        SetDirtyTargetZoom(component, eyeComp.Zoom);
+        var current = Vector2.ComponentMin(component.MaxZoom, eyeComp.Zoom);
+        SetDirtyTargetZoom(component, current);
     }
 
     public ContentEyeComponent? HasGhostZoom(ICommonSession? session, EntityUid? playerUid)

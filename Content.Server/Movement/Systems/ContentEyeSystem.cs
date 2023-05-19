@@ -26,14 +26,23 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
         while (query.MoveNext(out var uid, out var comp, out var eyeComp))
         {
-            if (!comp.IsProcessed || eyeComp.Zoom.Equals(comp.TargetZoom))
+            if (eyeComp.Zoom.Equals(comp.TargetZoom))
+            {
+                if (comp.IsProcessed)
+                {
+                    comp.IsProcessed = false;
+                    Dirty(comp);
+                }
+                continue;
+            }
+
+            if (!comp.IsProcessed)
                 continue;
 
             var diff = comp.TargetZoom - eyeComp.Zoom;
 
             if (diff.LengthSquared < 0.000001f)
             {
-                comp.IsProcessed = false;
                 eyeComp.Zoom = comp.TargetZoom;
                 Dirty(eyeComp);
                 return;
@@ -78,22 +87,12 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
     private void ResetZoom(ContentEyeComponent component)
     {
-        if (component.TargetZoom.Equals(DefaultZoom))
-            return;
+        var actual = Vector2.ComponentMin(component.MaxZoom, DefaultZoom);
 
-        SetDirtyTargetZoom(component, DefaultZoom);
-    }
-
-    private void Zoom(ContentEyeComponent component, bool zoomIn)
-    {
-        var actual = CalcZoom(
-            zoomIn, component.TargetZoom, component.MaxZoom, MinZoom);
-
-        if (actual.Equals(component.TargetZoom))
+        if (component.TargetZoom.Equals(actual))
             return;
 
         SetDirtyTargetZoom(component, actual);
-        Sawmill.Debug($"Set target zoom to {actual}");
     }
 
     private static Vector2 CalcZoom(bool zoomIn, Vector2 current, Vector2 maxZoom, Vector2 minZoom)
@@ -111,5 +110,17 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         current = Vector2.ComponentMin(maxZoom, current);
 
         return current;
+    }
+
+    private void Zoom(ContentEyeComponent component, bool zoomIn)
+    {
+        var actual = CalcZoom(
+            zoomIn, component.TargetZoom, component.MaxZoom, MinZoom);
+
+        if (actual.Equals(component.TargetZoom))
+            return;
+
+        SetDirtyTargetZoom(component, actual);
+        Sawmill.Debug($"Set target zoom to {actual}");
     }
 }

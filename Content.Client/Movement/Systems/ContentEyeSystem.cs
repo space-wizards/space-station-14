@@ -28,6 +28,12 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
             .Register<ContentEyeSystem>();
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        CommandBinds.Unregister<SharedContentEyeSystem>();
+    }
+
     public void RequestZoom(EntityUid uid, Vector2 zoom)
     {
         RaisePredictiveEvent(new RequestTargetZoomEvent()
