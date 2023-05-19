@@ -1,10 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added crate of theater supplies is now available for purchase through
-      Cargo., type: Add}
-  id: 3313
-  time: '2023-04-03T02:45:42.0000000+00:00'
 - author: Visne
   changes:
   - {message: Text boxes now allow you to remove a word at a time using Ctrl+Backspace
@@ -2904,3 +2898,8 @@ Entries:
   - {message: Shuttles will delete anything they FTL on top of., type: Add}
   id: 3812
   time: '2023-05-19T07:26:28.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Updated the roboticist uniform sprites., type: Tweak}
+  id: 3813
+  time: '2023-05-19T07:35:03.0000000+00:00'
