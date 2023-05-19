@@ -25,6 +25,7 @@ using Solution = Content.Shared.Chemistry.Components.Solution;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Movement.Components;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -242,6 +243,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         _deletionQueue.Remove(uid);
         UpdateSlip(uid, component, args.Solution);
+        UpdateSlow(uid, args.Solution);
         UpdateEvaporation(uid, args.Solution);
         UpdateAppearance(uid, component);
     }
@@ -316,6 +318,28 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         {
             _stepTrigger.SetActive(entityUid, false, comp);
             RemCompDeferred<TileFrictionModifierComponent>(entityUid);
+        }
+    }
+
+    private void UpdateSlow(EntityUid uid, Solution solution)
+    {
+        var totalViscosity = FixedPoint2.Zero;
+        foreach (var reagent in solution.Contents)
+        {
+            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.ReagentId);
+            totalViscosity += reagent.Quantity * FixedPoint2.New(reagentProto.Viscosity);
+        }
+        if (totalViscosity > 0)
+        {
+            var speed = 1 - (totalViscosity / solution.Volume).Float();
+            var contacts = EnsureComp<SlowContactsComponent>(uid);
+            contacts.WalkSpeedModifier = speed;
+            contacts.SprintSpeedModifier = speed;
+            Dirty(contacts);
+        }
+        else
+        {
+            RemComp<SlowContactsComponent>(uid);
         }
     }
 
