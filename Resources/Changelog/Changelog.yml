@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Temporarily removed interior IFF drawing due to seams in rendering.,
-    type: Tweak}
-  id: 3317
-  time: '2023-04-03T05:46:29.0000000+00:00'
 - author: Whisper
   changes:
   - {message: The cautery now functions! It can be used to close bleeding wounds.
@@ -2910,3 +2904,8 @@ Entries:
     type: Tweak}
   id: 3816
   time: '2023-05-19T10:21:36.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: updated sprites for changeling's sting drink, type: Tweak}
+  id: 3817
+  time: '2023-05-19T20:11:25.0000000+00:00'
