@@ -28,9 +28,4 @@ public sealed class ReplayCvars : CVars
     ///     Maximum number of entity states that can be applied before a new checkpoint tick is generated.
     /// </summary>
     public static readonly CVarDef<int> CheckpointEntityStateThreshold = CVarDef.Create("replay.checkpoint_entity_state_threshold", 50 * 600);
-
-    /// <summary>
-    ///     If true, allows replays to rewind in time despite potential issues introduced by prototype uploads.
-    /// </summary>
-    public static readonly CVarDef<bool> AllowUnsafeRewind = CVarDef.Create("replay.allow_unsafe_rewind", false);
 }

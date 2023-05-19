@@ -5,7 +5,6 @@ using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands;
-using Content.Shared.Instruments;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
@@ -78,10 +77,7 @@ public sealed partial class ReplayManager
             // TODO REPLAYS find a better/more extensible way of handling messages than this giant switch statement.
             switch (message)
             {
-                case ReplayPrototypeUploadMsg prototype:
-                    CurrentReplay.BlockRewind = true;
-                    _netMan.DispatchLocalNetMessage(new GamePrototypeLoadMessage { PrototypeData = prototype.PrototypeData });
-                    break;
+                case ReplayPrototypeUploadMsg:
                 case ReplayResourceUploadMsg:
                     break; // TODO REPLAYS record these in a separate list.
                 case ChatMessage chat:

@@ -58,9 +58,6 @@ public sealed class TimeController : UIController
         }
 
         tardis.PlayButton.Pressed = _replay.Playing;
-        tardis.ResetButton.Disabled = replay.RewindDisabled;
-        tardis.RewindButton.Disabled = replay.RewindDisabled;
-        tardis.RewindFiveButton.Disabled = replay.RewindDisabled;
         tardis.CheckpointLabel.Text = $"Nearest checkpoint: {_replay.GetLastCheckpoint(replay, index).Index}";
         _replay.ActivelyScrubbing = tardis.DynamicScrubbingCheckbox.Pressed && tardis.TickSlider.Grabbed;
     }

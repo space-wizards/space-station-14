@@ -32,9 +32,6 @@ public sealed partial class ReplayManager
         bool skipEffectEvents = value > CurrentReplay.CurrentIndex + _visualEventThreshold;
         if (value < CurrentReplay.CurrentIndex)
         {
-            if (CurrentReplay.RewindDisabled)
-                return;
-
             skipEffectEvents = true;
             ResetToNearestCheckpoint(value, false);
         }

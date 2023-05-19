@@ -1,4 +1,4 @@
-using Content.Shared.Administration;
+using Content.Client.Administration.Managers;
 using Robust.Client;
 using Robust.Client.Audio.Midi;
 using Robust.Client.Configuration;
@@ -12,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Replay.Manager;
 
@@ -25,12 +26,14 @@ public sealed partial class ReplayManager
     [Dependency] private readonly IClientNetManager _netMan = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IGameController _controller = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly ILocalizationManager _locMan = default!;
     [Dependency] private readonly IClientEntityManager _entMan = default!;
     [Dependency] private readonly IUserInterfaceManager _uiMan = default!;
     [Dependency] private readonly IConfigurationManager _confMan = default!;
     [Dependency] private readonly IClientGameStateManager _gameState = default!;
     [Dependency] private readonly IClientRobustSerializer _serializer = default!;
-    [Dependency] private readonly SharedNetworkResourceManager _netResMan = default!;
+    [Dependency] private readonly NetworkResourceManager _netResMan = default!;
     [Dependency] private readonly IClientNetConfigurationManager _netConf = default!;
 
     public ReplayData? CurrentReplay;

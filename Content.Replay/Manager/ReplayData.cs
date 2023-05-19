@@ -22,31 +22,15 @@ public sealed class ReplayData
     public GameState? NextState => CurrentIndex + 1 < States.Count ? States[CurrentIndex + 1] : null;
     public ReplayMessage CurMessages => Messages[CurrentIndex];
 
-    /// <summary>
-    ///     If true, blocks this rewinding time, probably due to resource/prototype uploads
-    /// </summary>
-    public bool BlockRewind
-    {
-        get => _blockRewind;
-        set => _blockRewind |= value;
-    }
+    public ReplayMessage? InitialMessages;
 
-    private bool _blockRewind = false;
-
-    /// <summary>
-    ///     If true, thhis will case <see cref="BlockRewind"/> to be ignored.
-    /// </summary>
-    public bool RewindOverride = false;
-
-    public bool RewindDisabled => _blockRewind && !RewindOverride;
-
-    public ReplayData(
-        List<GameState> states,
+    public ReplayData(List<GameState> states,
         List<ReplayMessage> messages,
         GameTick tickOffset,
         TimeSpan startTime,
         TimeSpan duration,
-        CheckpointState[] checkpointStates)
+        CheckpointState[] checkpointStates,
+        ReplayMessage? initData)
     {
         States = states;
         Messages = messages;
@@ -54,6 +38,7 @@ public sealed class ReplayData
         StartTime = startTime;
         Duration = duration;
         Checkpoints = checkpointStates;
+        InitialMessages = initData;
     }
 }
 

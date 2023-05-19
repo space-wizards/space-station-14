@@ -61,6 +61,9 @@ public sealed partial class ReplayManager
         var total = dir.Find("*.dat").files.Count();
         total--; // Exclude strings.dat
 
+        if (dir.Exists(new ResPath("init.dat")))
+            total--;
+
         var i = 0;
         var intBuf = new byte[4];
         var name = new ResPath($"{i++}.dat").ToRootedPath();
@@ -89,11 +92,25 @@ public sealed partial class ReplayManager
             name = new ResPath($"{i++}.dat").ToRootedPath();
         }
         DebugTools.Assert(i - 1 == total);
+        await callback(total, total, LoadReplayJob.LoadingState.LoadingFiles, false);
+
+        var initData = LoadInitFile(dir, compressionContext);
         compressionContext.Dispose();
 
-        await callback(total, total, LoadReplayJob.LoadingState.LoadingFiles, false);
-        var checkpoints = await GenerateCheckpoints(metaData.CVars, states, messages, callback);
-        return new(states, messages, states[0].ToSequence, metaData.StartTime, metaData.Duration, checkpoints);
+        var checkpoints = await GenerateCheckpoints(initData, metaData.CVars, states, messages, callback);
+        return new(states, messages, states[0].ToSequence, metaData.StartTime, metaData.Duration, checkpoints, initData);
+    }
+
+    private ReplayMessage? LoadInitFile(IWritableDirProvider dir, ZStdCompressionContext compressionContext)
+    {
+        var file = new ResPath("init.dat");
+        if (dir.Exists(file))
+            return null;
+
+        // TODO compress init messages, then decompress them here.
+        using var fileStream = dir.OpenRead(file);
+        _serializer.DeserializeDirect(fileStream, out ReplayMessage initData);
+        return initData;
     }
 
     public MappingDataNode? LoadYamlMetadata(IWritableDirProvider directory)

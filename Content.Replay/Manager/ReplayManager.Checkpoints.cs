@@ -46,6 +46,7 @@ public sealed partial class ReplayManager
     }
 
     private async Task<CheckpointState[]> GenerateCheckpoints(
+        ReplayMessage? initMessages,
         HashSet<string> initialCvars,
         List<GameState> states,
         List<ReplayMessage> messages,
@@ -92,6 +93,25 @@ public sealed partial class ReplayManager
         var checkPoints = new List<CheckpointState>(1 + states.Count / _checkpointInterval);
         var state0 = states[0];
 
+        // Get all initial prototypes
+        var prototypes = new Dictionary<Type, HashSet<string>>();
+        foreach (var kindName in _protoMan.GetPrototypeKinds())
+        {
+            var kind = _protoMan.GetKindType(kindName);
+            var set = new HashSet<string>();
+            prototypes[kind] = set;
+            foreach (var proto in _protoMan.EnumeratePrototypes(kind))
+            {
+                set.Add(proto.ID);
+            }
+        }
+
+        HashSet<ResPath> uploadedFiles = new();
+        if (initMessages != null)
+            UpdateMessages(initMessages, uploadedFiles, prototypes, cvars, ref timeBase);
+        UpdateMessages(messages[0], uploadedFiles, prototypes, cvars, ref timeBase);
+
+
         var entSpan = state0.EntityStates.Value;
         Dictionary<EntityUid, EntityState> entStates = new(entSpan.Count);
         foreach (var entState in entSpan)
@@ -119,9 +139,6 @@ public sealed partial class ReplayManager
         DebugTools.Assert(state0.EntityDeletions.Value.Count == 0);
         var empty = Array.Empty<EntityUid>();
 
-        HashSet<ResPath> uploadedFiles = new();
-        UpdateMessages(messages[0], uploadedFiles, cvars, ref timeBase);
-
         var ticksSinceLastCheckpoint = 0;
         var spawnedTracker = 0;
         var stateTracker = 0;
@@ -134,7 +151,7 @@ public sealed partial class ReplayManager
             UpdatePlayerStates(curState.PlayerStates.Span, playerStates);
             UpdateDeletions(curState.EntityDeletions, entStates);
             UpdateEntityStates(curState.EntityStates.Span, entStates, ref spawnedTracker, ref stateTracker);
-            UpdateMessages(messages[i], uploadedFiles, cvars, ref timeBase);
+            UpdateMessages(messages[i], uploadedFiles, prototypes, cvars, ref timeBase);
             ticksSinceLastCheckpoint++;
 
             if (ticksSinceLastCheckpoint < _checkpointInterval && spawnedTracker < _checkpointEntitySpawnThreshold && stateTracker < _checkpointEntityStateThreshold)
@@ -157,9 +174,9 @@ public sealed partial class ReplayManager
         return checkPoints.ToArray();
     }
 
-    private void UpdateMessages(
-        ReplayMessage message,
+    private void UpdateMessages(ReplayMessage message,
         HashSet<ResPath> uploadedFiles,
+        Dictionary<Type, HashSet<string>> prototypes,
         Dictionary<string, object> cvars,
         ref (TimeSpan, GameTick) timeBase)
     {
@@ -175,9 +192,10 @@ public sealed partial class ReplayManager
 
                     timeBase = cvar.TimeBase;
                     break;
-                case NetworkResourceUploadMessage upload:
 
-                    var path = upload.RelativePath.Clean().ToRelativePath();
+                case NetworkResourceUploadMessage resUpload:
+
+                    var path = resUpload.RelativePath.Clean().ToRelativePath();
                     if (!uploadedFiles.Add(path) || _netResMan.FileExists(path))
                     {
                         // Supporting this requires allowing files to track their last-modified time and making
@@ -186,7 +204,33 @@ public sealed partial class ReplayManager
                         // someone spawns an entity that relies on uploaded data.
                         throw new NotSupportedException("Overwriting an existing file is not yet supported by replays.");
                     }
-                    _netMan.DispatchLocalNetMessage(new NetworkResourceUploadMessage {RelativePath = path, Data = upload.Data});
+                    _netMan.DispatchLocalNetMessage(new NetworkResourceUploadMessage {RelativePath = path, Data = resUpload.Data});
+                    break;
+
+                case ReplayPrototypeUploadMsg protoUpload:
+
+                    var changed = new Dictionary<Type, HashSet<string>>();
+                    _protoMan.LoadString(protoUpload.PrototypeData, true, changed);
+
+                    foreach (var (kind, ids) in changed)
+                    {
+                        var protos = prototypes[kind];
+                        var count = protos.Count;
+                        protos.UnionWith(ids);
+                        if (ids.Count + count != protos.Count)
+                        {
+                            // An existing prototype was overwritten. Much like for resource uploading, supporting this
+                            // requires tracking the last-modified time of prototypes and either resetting or applying
+                            // prototype changes when jumping around in time. This also requires reworking how the initial
+                            // implicit state data is generated, because we can't simply cache it anymore.
+                            // Also, does reloading prototypes in release mode modify existing entities?
+                            throw new NotSupportedException("Overwriting an existing prototype is not yet supported by replays.");
+                        }
+                    }
+
+                    _protoMan.ResolveResults();
+                    _protoMan.ReloadPrototypes(changed);
+                    _locMan.ReloadLocalizations();
                     break;
             }
         }

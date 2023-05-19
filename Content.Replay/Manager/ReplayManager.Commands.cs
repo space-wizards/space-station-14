@@ -51,10 +51,7 @@ public sealed partial class ReplayManager
             return;
         }
 
-        if (CurrentReplay.RewindDisabled)
-            Logger.Warning("Cannot rewind time, blame admemes");
-        else
-            SetIndex(CurrentReplay.CurrentIndex + ticks, false);
+        SetIndex(CurrentReplay.CurrentIndex + ticks, false);
     }
 
     private void SetIndex(IConsoleShell shell, string argStr, string[] args)
