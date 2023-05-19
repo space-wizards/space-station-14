@@ -137,6 +137,8 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     layers:
       - state: beakernoreact
   - type: SolutionContainerManager
