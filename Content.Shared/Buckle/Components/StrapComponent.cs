@@ -14,7 +14,7 @@ public sealed class StrapComponent : Component
     /// <summary>
     /// The entities that are currently buckled
     /// </summary>
-    [ViewVariables]
+    [ViewVariables] // TODO serialization
     public readonly HashSet<EntityUid> BuckledEntities = new();
 
     /// <summary>

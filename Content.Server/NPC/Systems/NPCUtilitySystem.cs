@@ -5,6 +5,7 @@ using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Systems;
@@ -24,6 +25,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly FactionSystem _faction = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly FoodSystem _food = default!;
 
     /// <summary>
     /// Runs the UtilityQueryPrototype and returns the best-matching entities.
@@ -118,6 +120,11 @@ public sealed class NPCUtilitySystem : EntitySystem
             case FoodValueCon:
             {
                 if (!TryComp<FoodComponent>(targetUid, out var food))
+                    return 0f;
+
+                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+
+                if (!_food.IsDigestibleBy(owner, targetUid, food))
                     return 0f;
 
                 return 1f;
@@ -234,11 +241,14 @@ public sealed class NPCUtilitySystem : EntitySystem
         switch (query)
         {
             case ComponentQuery compQuery:
-                foreach (var ent in _lookup.GetEntitiesInRange(owner, vision))
+                var mapPos = Transform(owner).MapPosition;
+                foreach (var compReg in compQuery.Components.Values)
                 {
-                    foreach (var comp in compQuery.Components.Values)
+                    foreach (var comp in _lookup.GetComponentsInRange(compReg.Component.GetType(), mapPos, vision))
                     {
-                        if (!HasComp(ent, comp.Component.GetType()))
+                        var ent = comp.Owner;
+
+                        if (ent == owner)
                             continue;
 
                         entities.Add(ent);

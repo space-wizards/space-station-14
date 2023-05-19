@@ -109,8 +109,9 @@
     job: Captain
   - type: Tag
     tags:
-      - WhitelistChameleon
-      - HighRiskItem
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - HighRiskItem
 
 - type: entity
   parent: IDCardStandard
@@ -159,7 +160,7 @@
     - state: idmedicaldoctor
   - type: PresetIdCard
     job: MedicalDoctor
- 
+
 - type: entity
   parent: IDCardStandard
   id: ParamedicIDCard
@@ -419,8 +420,6 @@
     layers:
     - state: default
     - state: idbrigmedic
-  - type: PresetIdCard
-    job: Brigmedic
 
 - type: entity
   parent: IDCardStandard

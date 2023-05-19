@@ -103,6 +103,9 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (!_solutionSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
             return;
 
+        if (_useDelay.ActiveDelay(used))
+            return;
+
         // If it's a puddle try to grab from
         if (!TryPuddleInteract(user, used, target, component, absorberSoln))
         {

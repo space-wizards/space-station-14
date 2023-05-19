@@ -187,6 +187,7 @@ namespace Content.Shared.Atmos
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
+        public const float SuperSaturationEnds = SuperSaturationThreshold / 3;
 
         public const float OxygenBurnRateBase = 1.4f;
         public const float PlasmaMinimumBurnTemperature = (100f+T0C);
@@ -225,6 +226,14 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float FrezonProductionNitrogenRatio = 10f;
 
+        /// <summary>
+        ///     1 mol of Tritium is required per X mol of oxygen.
+        /// </summary>
+        public const float FrezonProductionTritRatio = 50.0f;
+
+        /// <summary>
+        ///     1 / X of the tritium is converted into Frezon each tick
+        /// </summary>
         public const float FrezonProductionConversionRate = 50f;
 
         /// <summary>

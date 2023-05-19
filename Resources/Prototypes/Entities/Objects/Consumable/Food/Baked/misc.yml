@@ -105,17 +105,6 @@
     state: COOKIE!!!
 
 - type: entity
-  name: fortune cookie
-  parent: FoodBakedBase
-  id: FoodBakedCookieFortune
-  description: A true prophecy in each cookie!
-  components:
-  # - Food:
-  #   trash: PaperFortune
-  - type: Sprite
-    state: cookie-fortune
-
-- type: entity
   name: oatmeal cookie
   parent: FoodBakedBase
   id: FoodBakedCookieOatmeal
@@ -204,7 +193,7 @@
 
 # Waffles/Pancakes
 
-# Once StackVisualizer is updated you should be able to mix/match stacks of pancakes.
+# Once StackVisuals is updated you should be able to mix/match stacks of pancakes.
 
 - type: entity
   name: pancake
@@ -217,26 +206,48 @@
   - type: Stack
     stackType: Pancake
     count: 1
+    composite: true
+    layerStates:
+    - pancakes1
+    - pancakes2
+    - pancakes3
+    - pancakes4
+    - pancakes5
+    - pancakes6
+    - pancakes7
+    - pancakes8
+    - pancakes9
   - type: Sprite
     state: pancakes1
-  # - type: Sprite
-  #   layers:
-  #     - state: plate-small
-  #     - state: pancakes1
+    layers:
+    - state: pancakes1
+      map: ["pancakes1"]
+      visible: false
+    - state: pancakes2
+      map: ["pancakes2"]
+      visible: false
+    - state: pancakes3
+      map: ["pancakes3"]
+      visible: false
+    - state: pancakes4
+      map: ["pancakes4"]
+      visible: false
+    - state: pancakes5
+      map: ["pancakes5"]
+      visible: false
+    - state: pancakes6
+      map: ["pancakes6"]
+      visible: false
+    - state: pancakes7
+      map: ["pancakes7"]
+      visible: false
+    - state: pancakes8
+      map: ["pancakes8"]
+      visible: false
+    - state: pancakes9
+      map: ["pancakes9"]
+      visible: false
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - pancakes1
-          - pancakes2
-          - pancakes3
-          - pancakes4
-          - pancakes5
-          - pancakes6
-          - pancakes7
-          - pancakes8
-          - pancakes9
 
 - type: entity
   name: blueberry pancake
@@ -249,20 +260,24 @@
   - type: Stack
     stackType: Pancake
     count: 1
+    composite: true
+    layerStates:
+    - pancakesbb1
+    - pancakesbb2
+    - pancakesbb3
   - type: Sprite
     state: pancakesbb1
-  # - type: Sprite
-  #   layers:
-  #     - state: plate-small
-  #     - state: pancakesbb1
+    layers:
+    - state: pancakesbb1
+      map: ["pancakesbb1"]
+      visible: false
+    - state: pancakesbb2
+      map: ["pancakesbb2"]
+      visible: false
+    - state: pancakesbb3
+      map: ["pancakesbb3"]
+      visible: false
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - pancakesbb1
-          - pancakesbb2
-          - pancakesbb3
 
 - type: entity
   name: chocolate chip pancake
@@ -275,20 +290,24 @@
   - type: Stack
     stackType: Pancake
     count: 1
+    composite: true
+    layerStates:
+    - pancakescc1
+    - pancakescc2
+    - pancakescc3
   - type: Sprite
     state: pancakescc1
-  # - type: Sprite
-  #   layers:
-  #     - state: plate-small
-  #     - state: pancakescc1
+    layers:
+    - state: pancakescc1
+      map: ["pancakescc1"]
+      visible: false
+    - state: pancakescc2
+      map: ["pancakescc2"]
+      visible: false
+    - state: pancakescc3
+      map: ["pancakescc3"]
+      visible: false
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - pancakescc1
-          - pancakescc2
-          - pancakescc3
   - type: SolutionContainerManager
     solutions:
       food:

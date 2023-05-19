@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
-using Content.Server.MachineLinking.System;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
@@ -34,7 +34,7 @@ namespace Content.Server.Cargo.Systems
 
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-        [Dependency] private readonly SignalLinkerSystem _linker = default!;
+        [Dependency] private readonly DeviceLinkSystem _linker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;

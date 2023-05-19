@@ -1,0 +1,11 @@
+﻿- type: palette
+  id: Emagged
+  name: Emagged
+  colors:
+    red: "#FF0000"
+    orange: "#FFA500"
+    yellow: "#FFFF00"
+    lime: "#32CD32"
+    bright_blue: "#0096FF"
+    cyan: "#00FFFF"
+    purple: "#A020F0"

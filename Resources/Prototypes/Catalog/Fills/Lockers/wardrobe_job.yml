@@ -20,10 +20,22 @@
 #  parent: WardrobeWhite
 #  name: pajama wardrobe
 
-# - type: entity
-#   id: WardrobeRoboticsFilled
-#   suffix: Filled
-#   parent: WardrobeRobotics
+ - type: entity
+   id: WardrobeRoboticsFilled
+   suffix: Filled
+   parent: WardrobeRobotics
+   description: "You can build a robot out of this locker."
+   components:
+   - type: StorageFill
+     contents:
+     - id: ClothingOuterCoatRobo
+       amount: 2
+     - id: ClothingUniformJumpsuitRoboticist
+     - id: ClothingUniformJumpskirtRoboticist
+     - id: ClothingShoesColorBlack
+       amount: 2
+     - id: ClothingHandsGlovesFingerless
+       amount: 2
 
  - type: entity
    id: WardrobeChemistryFilled
