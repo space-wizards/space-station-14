@@ -1,4 +1,3 @@
-using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ninja.Systems;
 using Content.Server.Station.Components;
@@ -6,7 +5,6 @@ using Content.Server.StationEvents.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 
@@ -17,10 +15,8 @@ namespace Content.Server.StationEvents.Events;
 /// </summary>
 public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
 {
-    [Dependency] private readonly NinjaSystem _ninja = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly NinjaSystem _ninja = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     protected override void Started(EntityUid uid, NinjaSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)

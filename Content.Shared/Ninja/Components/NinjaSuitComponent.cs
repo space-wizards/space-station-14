@@ -142,6 +142,12 @@ public sealed partial class NinjaSuitComponent : Component
     /// </summary>
     [DataField("empConsumption")]
     public float EmpConsumption = 100000f;
+
+    /// <summary>
+    /// How long the EMP effects last for, in seconds
+    /// </summary>
+    [DataField("empDuration")]
+    public float EmpDuration = 60f;
 }
 
 public sealed class TogglePhaseCloakEvent : InstantActionEvent { }

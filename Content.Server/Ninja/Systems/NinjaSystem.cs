@@ -145,7 +145,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
         if (rule != null)
             return rule;
 
-        // TODO: fuck me this shit is awful, see TraitorRuleSystem i copy pasted
         _gameTicker.StartGameRule("Ninja", out var ruleEntity);
         return Comp<NinjaRuleComponent>(ruleEntity);
     }
@@ -161,7 +160,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
             return;
         }
 
-        if (GetNinjaBattery(uid, out var battery))
+        if (GetNinjaBattery(uid, out var _, out var battery))
         {
              var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 7);
             _alerts.ShowAlert(uid, AlertType.SuitPower, (short) severity);
@@ -185,23 +184,23 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// <summary>
     /// Get the battery component in a ninja's suit, if it's worn.
     /// </summary>
-    // TODO: modify TryGetBatteryFromSlot, return uid as well
-    public bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out BatteryComponent? battery)
+    public bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out EntityUid? uid, [NotNullWhen(true)] out BatteryComponent? battery)
     {
         if (TryComp<NinjaComponent>(user, out var ninja)
             && ninja.Suit != null
-            && _powerCell.TryGetBatteryFromSlot(ninja.Suit.Value, out battery))
+            && _powerCell.TryGetBatteryFromSlot(ninja.Suit.Value, out uid, out battery))
         {
             return true;
         }
 
+        uid = null;
         battery = null;
         return false;
     }
 
     public override bool TryUseCharge(EntityUid user, float charge)
     {
-        return GetNinjaBattery(user, out var battery) && _battery.TryUseCharge(battery.Owner, charge, battery);
+        return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge(uid.Value, charge, battery);
     }
 
     /// <summary>
@@ -220,25 +219,25 @@ public sealed class NinjaSystem : SharedNinjaSystem
         _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
     }
 
-    public override void TryDrainPower(EntityUid user, NinjaDrainComponent drain, EntityUid target)
+    public override bool TryDrainPower(EntityUid user, NinjaDrainComponent drain, EntityUid target)
     {
-        if (!GetNinjaBattery(user, out var suitBattery))
+        if (!GetNinjaBattery(user, out var uid, out var suitBattery))
             // took suit off or something, ignore draining
-            return;
+            return false;
 
         if (!TryComp<BatteryComponent>(target, out var battery) || !TryComp<PowerNetworkBatteryComponent>(target, out var pnb))
-            return;
+            return false;
 
         if (suitBattery.IsFullyCharged)
         {
             _popup.PopupEntity(Loc.GetString("ninja-drain-full"), user, user, PopupType.Medium);
-            return;
+            return false;
         }
 
         if (MathHelper.CloseToPercent(battery.CurrentCharge, 0))
         {
             _popup.PopupEntity(Loc.GetString("ninja-drain-empty", ("battery", target)), user, user, PopupType.Medium);
-            return;
+            return false;
         }
 
         var available = battery.CurrentCharge;
@@ -249,11 +248,14 @@ public sealed class NinjaSystem : SharedNinjaSystem
         if (_battery.TryUseCharge(target, input, battery))
         {
             var output = input * drain.DrainEfficiency;
-            _battery.SetCharge(suitBattery.Owner, suitBattery.CurrentCharge + output, suitBattery);
+            _battery.SetCharge(uid.Value, suitBattery.CurrentCharge + output, suitBattery);
             _popup.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
-            // TODO: spark effects
+            Spawn("EffectSparks", Transform(target).Coordinates);
             _audio.PlayPvs(drain.SparkSound, target);
+            return true;
         }
+
+        return false;
     }
 
     private void OnNinjaStartup(EntityUid uid, NinjaComponent comp, ComponentStartup args)

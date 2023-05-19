@@ -9,7 +9,6 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
@@ -23,7 +22,6 @@ public sealed class EnergyKatanaSystem : EntitySystem
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedNinjaSystem _ninja = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;

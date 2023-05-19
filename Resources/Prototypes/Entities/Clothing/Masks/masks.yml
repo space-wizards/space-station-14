@@ -402,6 +402,4 @@
     sprite: Clothing/Mask/ninja.rsi
   - type: EyeProtection
   - type: BreathMask
-  - type: DiseaseProtection
-    protection: 0.05
   - type: IdentityBlocker

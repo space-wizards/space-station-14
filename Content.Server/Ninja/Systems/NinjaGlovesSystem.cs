@@ -46,7 +46,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
             || !TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
 
-        var gained = _ninja.Download(uid, database.TechnologyIds);
+        var gained = _ninja.Download(uid, database.UnlockedTechnologies);
         var str = gained == 0
             ? Loc.GetString("ninja-download-fail")
             : Loc.GetString("ninja-download-success", ("count", gained), ("server", target));

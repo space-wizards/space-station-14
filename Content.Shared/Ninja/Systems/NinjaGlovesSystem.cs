@@ -221,7 +221,8 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         if (args.Cancelled || args.Handled || args.Target == null)
             return;
 
-        _ninja.TryDrainPower(args.User, comp, args.Target.Value);
+        // repeat if there is still power to drain
+        args.Repeat = _ninja.TryDrainPower(args.User, comp, args.Target.Value);
     }
 
     private void OnDownload(EntityUid uid, NinjaDownloadComponent comp, InteractionAttemptEvent args)
@@ -234,7 +235,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             return;
 
         // fail fast if theres no tech right now
-        if (database.TechnologyIds.Count == 0)
+        if (database.UnlockedTechnologies.Count == 0)
         {
             Popup.PopupClient(Loc.GetString("ninja-download-fail"), user, user);
             return;

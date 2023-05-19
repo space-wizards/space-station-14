@@ -66,7 +66,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var user = args.Performer;
         // need 1 second of charge to turn on stealth
         var chargeNeeded = SuitWattage(comp);
-        if (!comp.Cloaked && (!_ninja.GetNinjaBattery(user, out var battery) || battery.CurrentCharge < chargeNeeded || _useDelay.ActiveDelay(uid)))
+        if (!comp.Cloaked && (!_ninja.GetNinjaBattery(user, out var _, out var battery) || battery.CurrentCharge < chargeNeeded || _useDelay.ActiveDelay(uid)))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
@@ -133,6 +133,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 
         // I don't think this affects the suit battery, but if it ever does in the future add a blacklist for it
         var coords = Transform(user).MapPosition;
-        _emp.EmpPulse(coords, comp.EmpRange, comp.EmpConsumption);
+        _emp.EmpPulse(coords, comp.EmpRange, comp.EmpConsumption, comp.EmpDuration);
     }
 }
