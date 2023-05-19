@@ -82,10 +82,8 @@ public sealed partial class ReplayManager
                     CurrentReplay.BlockRewind = true;
                     _netMan.DispatchLocalNetMessage(new GamePrototypeLoadMessage { PrototypeData = prototype.PrototypeData });
                     break;
-                case ReplayResourceUploadMsg resource:
-                    CurrentReplay.BlockRewind = true;
-                    _netMan.DispatchLocalNetMessage(new NetworkResourceUploadMessage { RelativePath = resource.RelativePath, Data = resource.Data });
-                    break;
+                case ReplayResourceUploadMsg:
+                    break; // TODO REPLAYS record these in a separate list.
                 case ChatMessage chat:
                     // Just pass on the chat message to the UI controller, but skip speech-bubbles if we are fast-forwarding.
                     _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: !skipEffectEvents);
@@ -102,7 +100,7 @@ public sealed partial class ReplayManager
                     // The round-end logic just needs to properly track the window. Clients should also be able to
                     // re-open the window after having closed it.
 
-                    if (!_uiMan.WindowRoot.Children.Any(x => x.GetType() == typeof(RoundEndSummaryWindow)))
+                    if (!_uiMan.WindowRoot.Children.Any(x => x is RoundEndSummaryWindow))
                         _entMan.DispatchReceivedNetworkMsg((EntityEventArgs) message);
                     break;
                 //

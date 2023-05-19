@@ -23,6 +23,9 @@ public abstract class SharedNetworkResourceManager : IDisposable
 
     protected readonly MemoryContentRoot ContentRoot = new();
 
+    public bool FileExists(ResPath path)
+        => ContentRoot.FileExists(path);
+
     public virtual void Initialize()
     {
         _netManager.RegisterNetMessage<NetworkResourceUploadMessage>(ResourceUploadMsg);

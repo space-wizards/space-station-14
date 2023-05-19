@@ -6,6 +6,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.Administration;
 using static Robust.Shared.Replays.ReplayMessage;
 
 namespace Content.Replay.Manager;
@@ -118,6 +119,9 @@ public sealed partial class ReplayManager
         DebugTools.Assert(state0.EntityDeletions.Value.Count == 0);
         var empty = Array.Empty<EntityUid>();
 
+        HashSet<ResPath> uploadedFiles = new();
+        UpdateMessages(messages[0], uploadedFiles, cvars, ref timeBase);
+
         var ticksSinceLastCheckpoint = 0;
         var spawnedTracker = 0;
         var stateTracker = 0;
@@ -130,7 +134,7 @@ public sealed partial class ReplayManager
             UpdatePlayerStates(curState.PlayerStates.Span, playerStates);
             UpdateDeletions(curState.EntityDeletions, entStates);
             UpdateEntityStates(curState.EntityStates.Span, entStates, ref spawnedTracker, ref stateTracker);
-            UpdateCvars(messages[i], cvars, ref timeBase);
+            UpdateMessages(messages[i], uploadedFiles, cvars, ref timeBase);
             ticksSinceLastCheckpoint++;
 
             if (ticksSinceLastCheckpoint < _checkpointInterval && spawnedTracker < _checkpointEntitySpawnThreshold && stateTracker < _checkpointEntityStateThreshold)
@@ -153,27 +157,46 @@ public sealed partial class ReplayManager
         return checkPoints.ToArray();
     }
 
+    private void UpdateMessages(
+        ReplayMessage message,
+        HashSet<ResPath> uploadedFiles,
+        Dictionary<string, object> cvars,
+        ref (TimeSpan, GameTick) timeBase)
+    {
+        foreach (var msg in message.Messages)
+        {
+            switch (msg)
+            {
+                case CvarChangeMsg cvar:
+                    foreach (var (name, value) in cvar.ReplicatedCvars)
+                    {
+                        cvars[name] = value;
+                    }
+
+                    timeBase = cvar.TimeBase;
+                    break;
+                case NetworkResourceUploadMessage upload:
+
+                    var path = upload.RelativePath.Clean().ToRelativePath();
+                    if (!uploadedFiles.Add(path) || _netResMan.FileExists(path))
+                    {
+                        // Supporting this requires allowing files to track their last-modified time and making
+                        // checkpoints reset files when jumping back, and applying all previous changes when jumping
+                        // forwards. Also, note that files HAVE to be uploaded while generating checkpoints, in case
+                        // someone spawns an entity that relies on uploaded data.
+                        throw new NotSupportedException("Overwriting an existing file is not yet supported by replays.");
+                    }
+                    _netMan.DispatchLocalNetMessage(new NetworkResourceUploadMessage {RelativePath = path, Data = upload.Data});
+                    break;
+            }
+        }
+    }
+
     private void UpdateDeletions(NetListAsArray<EntityUid> entityDeletions, Dictionary<EntityUid, EntityState> entStates)
     {
         foreach (var ent in entityDeletions.Span)
         {
             entStates.Remove(ent);
-        }
-    }
-
-    private void UpdateCvars(ReplayMessage replayMessage, Dictionary<string, object> cvars, ref (TimeSpan, GameTick) timeBase)
-    {
-        foreach (var message in replayMessage.Messages)
-        {
-            if (message is not CvarChangeMsg cvarMsg)
-                continue;
-
-            foreach (var (name, value) in cvarMsg.ReplicatedCvars)
-            {
-                cvars[name] = value;
-            }
-
-            timeBase = cvarMsg.TimeBase;
         }
     }
 
