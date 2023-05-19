@@ -165,8 +165,8 @@ public sealed class AdminLogsEui : BaseEui
 
             var largestId = _filter.DateOrder switch
             {
-                DateOrder.Ascending => ^1,
-                DateOrder.Descending => 0,
+                DateOrder.Ascending => 0,
+                DateOrder.Descending => ^1,
                 _ => throw new ArgumentOutOfRangeException(nameof(_filter.DateOrder), _filter.DateOrder, null)
             };
 

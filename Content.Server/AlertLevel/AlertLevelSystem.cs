@@ -32,13 +32,10 @@ public sealed class AlertLevelSystem : EntitySystem
 
     public override void Update(float time)
     {
-        foreach (var station in _stationSystem.Stations)
-        {
-            if (!TryComp(station, out AlertLevelComponent? alert))
-            {
-                continue;
-            }
+        var query = EntityQueryEnumerator<AlertLevelComponent>();
 
+        while (query.MoveNext(out var station, out var alert))
+        {
             if (alert.CurrentDelay <= 0)
             {
                 if (alert.ActiveDelay)
@@ -55,9 +52,10 @@ public sealed class AlertLevelSystem : EntitySystem
 
     private void OnStationInitialize(StationInitializedEvent args)
     {
-        var alertLevelComponent = AddComp<AlertLevelComponent>(args.Station);
+        if (!TryComp<AlertLevelComponent>(args.Station, out var alertLevelComponent))
+            return;
 
-        if (!_prototypeManager.TryIndex(DefaultAlertLevelSet, out AlertLevelPrototype? alerts))
+        if (!_prototypeManager.TryIndex(alertLevelComponent.AlertLevelPrototype, out AlertLevelPrototype? alerts))
         {
             return;
         }

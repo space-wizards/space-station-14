@@ -69,7 +69,6 @@ public static class AdminLogsEuiMsg
             Guid[]? anyPlayers,
             Guid[]? allPlayers,
             bool includeNonPlayers,
-            int? lastLogId,
             DateOrder dateOrder)
         {
             RoundId = roundId;
@@ -82,7 +81,6 @@ public static class AdminLogsEuiMsg
             AnyPlayers = anyPlayers is { Length: > 0 } ? anyPlayers : null;
             AllPlayers = allPlayers is { Length: > 0 } ? allPlayers : null;
             IncludeNonPlayers = includeNonPlayers;
-            LastLogId = lastLogId;
             DateOrder = dateOrder;
         }
 
@@ -96,7 +94,6 @@ public static class AdminLogsEuiMsg
         public Guid[]? AnyPlayers { get; set; }
         public Guid[]? AllPlayers { get; set; }
         public bool IncludeNonPlayers { get; set; }
-        public int? LastLogId { get; set; }
         public DateOrder DateOrder { get; set; }
     }
 

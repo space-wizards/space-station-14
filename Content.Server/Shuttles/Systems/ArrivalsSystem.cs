@@ -57,7 +57,6 @@ public sealed class ArrivalsSystem : EntitySystem
         SubscribeLocalEvent<ArrivalsShuttleComponent, EntityUnpausedEvent>(OnShuttleUnpaused);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLTagEvent>(OnShuttleTag);
 
-        SubscribeLocalEvent<StationInitializedEvent>(OnStationInit);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLStartedEvent>(OnArrivalsFTL);
 
@@ -207,15 +206,13 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    private void OnStationInit(StationInitializedEvent ev)
-    {
-        EnsureComp<StationArrivalsComponent>(ev.Station);
-    }
-
     private void OnPlayerSpawn(PlayerSpawningEvent ev)
     {
         // Only works on latejoin even if enabled.
         if (!Enabled || _ticker.RunLevel != GameRunLevel.InRound)
+            return;
+
+        if (!HasComp<StationArrivalsComponent>(ev.Station))
             return;
 
         var points = EntityQuery<SpawnPointComponent, TransformComponent>().ToList();

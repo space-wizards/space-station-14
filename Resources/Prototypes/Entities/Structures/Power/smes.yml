@@ -68,6 +68,13 @@
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
+    - type: Electrified
+      onHandInteract: false
+      onInteractUsing: false
+      onBump: false
+      requirePower: true
+      highVoltageNode: input
+      mediumVoltageNode: output
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: StrongMetallic
