@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed ghost lighting being disabled when any ghost is removed., type: Fix}
-  id: 3307
-  time: '2023-04-01T22:56:01.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: Energy sword can now reflect kinetic projectiles (low chance) and energetic
@@ -2904,3 +2899,8 @@ Entries:
       crew monitor, type: Fix}
   id: 3806
   time: '2023-05-18T23:49:55.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: 'Antifreeze tastes warm now, because it is antifreeze.', type: Tweak}
+  id: 3807
+  time: '2023-05-19T02:21:57.0000000+00:00'
