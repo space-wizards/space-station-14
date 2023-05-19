@@ -1,11 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Energy sword can now reflect kinetic projectiles (low chance) and energetic
-      shots like laser and disabler (50/50), type: Add}
-  - {message: Increased energy sword TC cost (6 => 8), type: Tweak}
-  id: 3308
-  time: '2023-04-02T13:48:33.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix audio leak with bullet fly-bys., type: Fix}
@@ -2904,3 +2897,9 @@ Entries:
   - {message: 'Antifreeze tastes warm now, because it is antifreeze.', type: Tweak}
   id: 3807
   time: '2023-05-19T02:21:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disabled zombies preset temporarily until they have more work done.,
+    type: Tweak}
+  id: 3808
+  time: '2023-05-19T04:11:36.0000000+00:00'
