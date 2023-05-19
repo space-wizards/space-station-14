@@ -1089,6 +1089,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitKontusz
+  name: Kontusz with żupan
+  description: That`s not a dress mom, that`s what nobillity wears!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/kontusz.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/kontusz.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHawaiBlack
   name: black hawaiian shirt
   description: Black as a starry night.
