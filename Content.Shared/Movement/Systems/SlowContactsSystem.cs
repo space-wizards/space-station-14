@@ -1,5 +1,4 @@
 using Content.Shared.Movement.Components;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -21,9 +20,6 @@ public sealed class SlowContactsSystem : EntitySystem
         SubscribeLocalEvent<SlowContactsComponent, EndCollideEvent>(OnEntityExit);
         SubscribeLocalEvent<SlowedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
 
-        SubscribeLocalEvent<SlowContactsComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<SlowContactsComponent, ComponentGetState>(OnGetState);
-
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }
 
@@ -44,20 +40,6 @@ public sealed class SlowContactsSystem : EntitySystem
         }
 
         _toUpdate.Clear();
-    }
-
-    private void OnGetState(EntityUid uid, SlowContactsComponent component, ref ComponentGetState args)
-    {
-        args.State = new SlowContactsComponentState(component.WalkSpeedModifier, component.SprintSpeedModifier);
-    }
-
-    private void OnHandleState(EntityUid uid, SlowContactsComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not SlowContactsComponentState state)
-            return;
-
-        component.WalkSpeedModifier = state.WalkSpeedModifier;
-        component.SprintSpeedModifier = state.SprintSpeedModifier;
     }
 
     private void MovementSpeedCheck(EntityUid uid, SlowedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
