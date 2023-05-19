@@ -61,12 +61,12 @@ public sealed partial class ReplayManager
         var total = dir.Find("*.dat").files.Count();
         total--; // Exclude strings.dat
 
-        if (dir.Exists(new ResPath("init.dat")))
+        if (dir.Exists(new ResPath("/init.dat")))
             total--;
 
         var i = 0;
         var intBuf = new byte[4];
-        var name = new ResPath($"{i++}.dat").ToRootedPath();
+        var name = new ResPath($"/{i++}.dat");
         while (dir.Exists(name))
         {
             await callback(i+1, total, LoadReplayJob.LoadingState.LoadingFiles, false);
@@ -89,7 +89,7 @@ public sealed partial class ReplayManager
                 messages.Add(msg);
             }
 
-            name = new ResPath($"{i++}.dat").ToRootedPath();
+            name = new ResPath($"/{i++}.dat");
         }
         DebugTools.Assert(i - 1 == total);
         await callback(total, total, LoadReplayJob.LoadingState.LoadingFiles, false);
@@ -103,8 +103,8 @@ public sealed partial class ReplayManager
 
     private ReplayMessage? LoadInitFile(IWritableDirProvider dir, ZStdCompressionContext compressionContext)
     {
-        var file = new ResPath("init.dat");
-        if (dir.Exists(file))
+        var file = new ResPath("/init.dat");
+        if (!dir.Exists(file))
             return null;
 
         // TODO compress init messages, then decompress them here.
@@ -152,14 +152,6 @@ public sealed partial class ReplayManager
 
         _timing.CurTick = new GameTick(uint.Parse(startTick));
         _timing.TimeBase = (new TimeSpan(long.Parse(timeBaseTimespan)), new GameTick(uint.Parse(timeBaseTick)));
-
-        var initFile = new ResPath("init_messages.dat").ToRootedPath();
-        if (directory.Exists(initFile))
-        {
-            using var initMessageFile = directory.OpenRead(initFile);
-            _serializer.DeserializeDirect(initMessageFile, out ReplayMessage initMessages);
-            ProcessMessages(initMessages, false);
-        }
 
         _sawmill.Info($"Successfully read metadata");
         return (cvars, duration, _timing.CurTime);
