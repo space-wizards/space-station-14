@@ -60,9 +60,9 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         });
     }
 
-    private void OnKeyBindZoomChange(KeyBindsTypes type)
+    private void OnZoomChangeKeyBind(KeyBindsTypes type)
     {
-        var delay = TimeSpan.FromSeconds(0.2f);
+        var delay = TimeSpan.FromSeconds(0.3f);
 
         if (_userZoomChangeRequestTimeOut != null
             && _userZoomChangeRequestTimeOut + delay > _gameTiming.CurTime)
@@ -96,7 +96,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
             if (message is not FullInputCmdMessage full || full.State != BoundKeyState.Down)
                 return false;
 
-            _system.OnKeyBindZoomChange(_typeBind);
+            _system.OnZoomChangeKeyBind(_typeBind);
 
             return false;
         }
