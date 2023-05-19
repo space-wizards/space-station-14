@@ -201,7 +201,9 @@
   components:
     - type: Sprite
       sprite: Objects/Materials/Sheets/meaterial.rsi
-      state: meat_3
+      layers:
+      - state: meat_3
+        map: [ "base" ]
     - type: Tag
       tags:
       - Sheet
@@ -212,16 +214,15 @@
         Meaterial: 100
     - type: Stack
       stackType: MeatSheets
+      baseLayer: base
+      layerStates:
+        - meat
+        - meat_2
+        - meat_3
     - type: Item
       sprite: Objects/Materials/Sheets/meaterial.rsi
       heldPrefix: meat
     - type: Appearance
-      visuals:
-        - type: StackVisualizer
-          stackLayers:
-          - meat
-          - meat_2
-          - meat_3
 
 - type: entity
   parent: MaterialSheetMeat
