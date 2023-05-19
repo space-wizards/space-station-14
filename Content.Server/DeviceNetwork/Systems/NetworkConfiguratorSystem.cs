@@ -204,6 +204,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         _uiSystem.TryCloseAll(uid, NetworkConfiguratorUiKey.Configure);
     }
 
+    /// <summary>
+    /// Toggles between linking and listing mode
+    /// </summary>
     private void SwitchMode(EntityUid? userUid, EntityUid configuratorUid, NetworkConfiguratorComponent configurator)
     {
         if (Delay(configurator))
@@ -217,15 +220,32 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!configurator.LinkModeActive)
             configurator.ActiveDeviceLink = null;
 
-        var locString = configurator.LinkModeActive ? "network-configurator-mode-link" : "network-configurator-mode-list";
-        _popupSystem.PopupEntity(Loc.GetString("network-configurator-switched-mode", ("mode", Loc.GetString(locString))),
-            configuratorUid, userUid.Value);
+        UpdateModeAppearance(userUid.Value, configuratorUid, configurator);
+    }
 
+    /// <summary>
+    /// Sets the mode to linking or list depending on the link mode parameter
+    /// </summary>>
+    private void SetMode(EntityUid configuratorUid, NetworkConfiguratorComponent configurator, EntityUid userUid, bool linkMode)
+    {
+        configurator.LinkModeActive = linkMode;
+
+        if (!linkMode)
+            configurator.ActiveDeviceLink = null;
+
+        UpdateModeAppearance(userUid, configuratorUid, configurator);
+    }
+
+    /// <summary>
+    /// Updates the configurators appearance and plays a sound indicating that the mode switched
+    /// </summary>
+    private void UpdateModeAppearance(EntityUid userUid, EntityUid configuratorUid, NetworkConfiguratorComponent configurator)
+    {
         Dirty(configurator);
         _appearanceSystem.SetData(configuratorUid, NetworkConfiguratorVisuals.Mode, configurator.LinkModeActive);
 
         var pitch = configurator.LinkModeActive ? 1 : 0.8f;
-        _audioSystem.PlayPvs(configurator.SoundSwitchMode, userUid.Value, AudioParams.Default.WithVolume(1.5f).WithPitchScale(pitch));
+        _audioSystem.PlayPvs(configurator.SoundSwitchMode, userUid, AudioParams.Default.WithVolume(1.5f).WithPitchScale(pitch));
     }
 
     /// <summary>
@@ -262,6 +282,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!canReach || !target.HasValue)
             return;
 
+        DetermineMode(uid, configurator, target, user);
+
         if (configurator.LinkModeActive)
         {
             TryLinkDevice(uid, configurator, target, user);
@@ -275,6 +297,23 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         }
 
         OpenDeviceListUi(target, user, configurator);
+    }
+
+    private void DetermineMode(EntityUid configuratorUid, NetworkConfiguratorComponent configurator, EntityUid? target, EntityUid userUid)
+    {
+        var hasLinking = HasComp<DeviceLinkSinkComponent>(target) || HasComp<DeviceLinkSourceComponent>(target);
+
+        if (hasLinking && HasComp<DeviceListComponent>(target) || hasLinking == configurator.LinkModeActive)
+            return;
+
+        if (hasLinking)
+        {
+            SetMode(configuratorUid, configurator, userUid, true);
+            return;
+        }
+
+        if (HasComp<DeviceNetworkComponent>(target))
+            SetMode(configuratorUid, configurator, userUid, false);
     }
 
     #endregion
