@@ -10,8 +10,10 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
@@ -651,6 +653,8 @@ public sealed partial class ShuttleSystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var transform = _physics.GetPhysicsTransform(uid, xform, xformQuery);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
+        var mobQuery = GetEntityQuery<BodyComponent>();
+        var immune = new HashSet<EntityUid>();
 
         foreach (var fixture in manager.Fixtures.Values)
         {
@@ -658,12 +662,21 @@ public sealed partial class ShuttleSystem
                 continue;
 
             var aabb = fixture.Shape.ComputeAABB(transform, 0);
+            // Double the polygon radius (at least while the radius exists).
+            aabb = aabb.Enlarged(0.02f);
             aabbs.Add(aabb);
 
             foreach (var ent in _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, LookupFlags.Uncontained))
             {
-                if (ent == uid)
+                if (ent == uid || immune.Contains(ent))
                 {
+                    continue;
+                }
+
+                if (mobQuery.TryGetComponent(ent, out var mob))
+                {
+                    var gibs = _bobby.GibBody(ent, body: mob);
+                    immune.UnionWith(gibs);
                     continue;
                 }
 
