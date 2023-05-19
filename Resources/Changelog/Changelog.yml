@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Dwarves now have minor changes, including a lower mass, new accent,
-      and minor benefits from alcohol.', type: Tweak}
-  id: 3316
-  time: '2023-04-03T05:31:28.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Temporarily removed interior IFF drawing due to seams in rendering.,
@@ -2909,3 +2903,10 @@ Entries:
       rotate -> Flip', type: Tweak}
   id: 3815
   time: '2023-05-19T08:59:20.0000000+00:00'
+- author: KEEYNy
+  changes:
+  - {message: Added Death Squad jumpsuit, type: Add}
+  - {message: Death Squad equipment now includes jumpsuit and Chef Engineer magboots,
+    type: Tweak}
+  id: 3816
+  time: '2023-05-19T10:21:36.0000000+00:00'
