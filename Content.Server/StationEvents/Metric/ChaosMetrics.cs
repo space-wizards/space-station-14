@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.chaos
@@ -18,7 +19,7 @@ namespace Content.Shared.chaos
         /// <summary>
         ///     Main chaos dictionary. Most ChaosMetrics functions exist to somehow modifying this.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<string, FixedPoint2>)), ViewVariables(VVAccess.ReadWrite)]
         public Dictionary<string, FixedPoint2> ChaosDict { get; set; } = new();
 
         /// <summary>

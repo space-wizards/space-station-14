@@ -87,9 +87,9 @@
   components:
   - type: RampingStationEventScheduler
 
-- type: entity
-  id: DynamicStationEventScheduler
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-    - type: DynamicStationEventScheduler
+#- type: entity
+#  id: DynamicStationEventScheduler
+#  parent: BaseGameRule
+#  noSpawn: true
+#  components:
+#    - type: DynamicStationEventScheduler

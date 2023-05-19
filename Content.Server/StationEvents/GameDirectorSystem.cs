@@ -24,9 +24,9 @@ public sealed class RankedEvent
 {
     public PossibleEvent PossibleEvent;
     public ChaosMetrics Result;
-    public FixedPoint2 Score;
+    public float Score;
 
-    public RankedEvent(PossibleEvent possibleEvent, ChaosMetrics result, FixedPoint2 score)
+    public RankedEvent(PossibleEvent possibleEvent, ChaosMetrics result, float score)
     {
         PossibleEvent = possibleEvent;
         Result = result;
@@ -95,6 +95,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
 
     protected override void ActiveTick(EntityUid uid, GameDirectorSystemComponent scheduler, GameRuleComponent gameRule, float frameTime)
     {
+        const bool testingMode = false;
         scheduler.BeatTime += frameTime;
         if (scheduler.TimeUntilNextEvent > 0)
         {
@@ -104,11 +105,21 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
 
         // Somewhat expensive process of invoking the metric systems which iterate through entities to determine
         //   how bad things currently are on the station.
-        var chaos = _metrics.CalculateChaos();
-        _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"Station chaos is now {chaos.ToString()}");
+        ChaosMetrics chaos;
+        var count = CountActivePlayers();
+        if (testingMode)
+        {
+            chaos = scheduler.CurrChaos;
+            count.Players = 60;
+        }
+        else
+        {
+            chaos = _metrics.CalculateChaos();
+            scheduler.CurrChaos = chaos;
+        }
+        _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"Chaos: {chaos.ToString()}");
 
         // Decide what story beat to work with (which sets chaos goals)
-        var count = CountActivePlayers();
         var beat = DetermineNextBeat(scheduler, chaos, count);
 
         // Pick the best events (which move the station towards the chaos desired by the beat)
@@ -121,7 +132,15 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             // when beat.RandomEventLimit is 1 it's always the "best" event picked. Higher values
             // allow more events to be randomly selected.
             var chosenEvent = SelectBest(bestEvents, beat.RandomEventLimit);
-            _event.RunNamedEvent(chosenEvent.PossibleEvent.PrototypeId);
+            if (testingMode)
+            {
+                // Event proceeds as planned!
+                scheduler.CurrChaos += chosenEvent.PossibleEvent.Chaos;
+            }
+            else
+            {
+                _event.RunNamedEvent(chosenEvent.PossibleEvent.PrototypeId);
+            }
 
             // Don't select this event again for the current story (when SetupEvents is called again)
             scheduler.PossibleEvents.Remove(chosenEvent.PossibleEvent);
@@ -133,6 +152,12 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         {
             // No events were run. Consider again in 30 seconds.
             scheduler.TimeUntilNextEvent = 30f;
+        }
+
+        if (testingMode)
+        {
+            scheduler.BeatTime += scheduler.TimeUntilNextEvent;
+            scheduler.TimeUntilNextEvent = 5f;
         }
     }
 
@@ -169,7 +194,6 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         var ranked =bestEvents.OrderBy(ev => ev.Score).Take(maxRandom).ToList();
 
         var events = String.Join(", ", ranked.Select(r => r.PossibleEvent.PrototypeId));
-        _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"Picked best events (in sequence) {events}");
 
         foreach (var rankedEvent in ranked)
         {
@@ -177,11 +201,13 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             if (_random.Prob(0.7f))
             {
                 // Pick this event
+                _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"Picked {rankedEvent.PossibleEvent.PrototypeId} from best events (in sequence) {events}");
                 return rankedEvent;
             }
         }
 
         // Random dropped through all, just take best.
+        _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"Picked {ranked[0].PossibleEvent.PrototypeId} from best events (in sequence) {events}");
         return ranked[0];
     }
 
@@ -269,11 +295,11 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         return scheduler.StoryBeats[scheduler.FallbackBeatName];
     }
 
-    private FixedPoint2 RankChaosDelta(ChaosMetrics chaos)
+    private float RankChaosDelta(ChaosMetrics chaos)
     {
         // Just a sum of squares (trying to get close to 0 on every score)
         //   Lower is better
-        return chaos.ChaosDict.Values.Sum(v => (float)(v * v));
+        return chaos.ChaosDict.Values.Sum(v => (float)(v) * (float)(v));
     }
 
     private List<RankedEvent> ChooseEvents(GameDirectorSystemComponent scheduler, StoryBeat beat, ChaosMetrics chaos, PlayerCount count)

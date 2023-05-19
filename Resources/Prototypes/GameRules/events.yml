@@ -74,8 +74,8 @@
     earliestStart: 45
     minimumPlayers: 20
     chaos:
-      CombatHostiles: 20
-      CombatFriends: 20
+      Hostile: 20
+      Friend: 20
       Combat: 40
       Death: 100
       Medical: 100
@@ -92,8 +92,8 @@
     earliestStart: 45
     minimumPlayers: 20
     chaos:
-      CombatHostiles: 20
-      CombatFriends: 20
+      Hostile: 20
+      Friend: 20
       Combat: 40
       Death: 100
       Medical: 100
@@ -140,8 +140,8 @@
     startDelay: 50
     duration: 240
     chaos:
-      CombatHostiles: 20
-      CombatFriends: 20
+      Hostile: 20
+      Friend: 20
       Medical: 100
   - type: KudzuGrowthRule
 
@@ -226,7 +226,7 @@
     duration: 120
     maxDuration: 240
     chaos:
-      CombatFriends: 20
+      Friend: 20
   - type: SolarFlareRule
     onlyJamHeadsets: true
     affectedChannels:
@@ -287,8 +287,8 @@
     weight: 5
     duration: 60
     chaos:
-      CombatHostiles: 10
-      CombatFriends: 10
+      Hostile: 10
+      Friend: 10
       Medical: 50
   - type: VentCrittersRule
     entries:
@@ -313,8 +313,8 @@
     weight: 5
     duration: 60
     chaos:
-      CombatHostiles: 40
-      CombatFriends: 20
+      Hostile: 40
+      Friend: 20
       Medical: 150
   - type: VentCrittersRule
     entries:
@@ -332,8 +332,8 @@
     weight: 2.5
     duration: 1
     chaos:
-      CombatHostiles: 40
-      CombatFriends: 60
+      Hostile: 40
+      Friend: 60
       Medical: 200
       Death: 200
   - type: ZombieRule
@@ -350,8 +350,8 @@
     reoccurrenceDelay: 25
     duration: 1
     chaos:
-      CombatHostiles: 20
-      CombatFriends: 40
+      Hostile: 20
+      Friend: 40
       Medical: 200
       Death: 100
   - type: LoneOpsSpawnRule

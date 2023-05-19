@@ -28,6 +28,25 @@
             Hunger: 100
             Thirst: 100
             Medical: 100
+        EngineeringIssues:
+          description: The station just cannot seem to function
+          goal:   # Annoying engineering issues
+            Atmos: 400
+            Power: 400
+            Medical: 100
+        MadScience:
+          description: Crazy experiments are taking place
+          goal:
+            Anomaly: 400
+            Power: 100
+            Atmos: 100
+            Medical: 100
+          endIfAnyWorse:
+            Anomaly: 500   # Severe atmos, power or medical issues should end this beat.
+            Power: 300
+            Medical: 300
+            Death: 400
+            Combat: -100 # Friendly forces should retain the upper hand
         Attackers:
           description: Hostiles are attacking the station.
           goal:
@@ -38,6 +57,16 @@
             Medical: 600
             Death: 400
             Combat: -50 # Friendly forces should just retain the upper hand
+        AttackMild:
+          description: Some Hostiles are attacking the station.
+          goal:
+            Hostile: 40  # Perhaps 4 hostiles
+          endIfAnyWorse:
+            Atmos: 400   # Severe atmos, power or medical issues should end this beat.
+            Power: 400
+            Medical: 300
+            Death: 300
+            Combat: -100 # Friendly forces should easily retain the upper hand
         RestoreOrder:
           description: Send help to quell disorder on the station
           goal:
@@ -45,7 +74,7 @@
             Hostile: 10
             Atmos: 0
             Medical: 0
-          EndIfAllBetter:
+          endIfAllBetter:
             Atmos: 200
             Hostile: 20
             Medical: 200
@@ -55,7 +84,7 @@
             Atmos: 0
             Power: 0
             Medical: 0
-          EndIfAllBetter:
+          endIfAllBetter:
             Atmos: 200
             Power: 200
 
@@ -66,13 +95,69 @@
   components:
     - type: GameDirectorStories
       stories:
-        Combat:
-          Description: After traitors invade, the station descends into combat and rises from the ashes.
-          MinPlayers: 40
-          Beats:
+        RelaxedAttack:
+          description: Mostly calm with a couple of minor problems.
+          beats:
+            - Peace
+            - AttackMild
+            - EngineeringIssues
+        Traitors:
+          description: Mostly calm with a couple of minor problems.
+          minPlayers: 20
+          beats:
+            - Peace
+            - Traitors
+            - EngineeringIssues
+        ScienceAttack:
+          description: Those scientists cannot keep things under control.
+          minPlayers: 30
+          beats:
+            - Peace
+            - MadScience
+            - AttackMild
+            - Peace
+            - EngineeringIssues
+            - RepairStation
+        MajorCombat:
+          description: After traitors invade, the station descends into combat and rises from the ashes.
+          minPlayers: 40
+          beats:
             - Traitors
             - Peace
             - Attackers
             - RestoreOrder
             - RepairStation
             - Peace
+
+- type: entity
+  id: CalmDynamic
+  parent: GameDirector
+  noSpawn: true
+  components:
+    - type: GameDirectorStories
+      stories:
+        Relaxed:
+          description: Mostly calm with a couple of minor problems.
+          beats:
+            - Peace
+            - AttackMild
+            - EngineeringIssues
+        Science:
+          description: Those scientists cannot keep things under control.
+          minPlayers: 30
+          beats:
+            - Peace
+            - MadScience
+            - Peace
+            - EngineeringIssues
+            - RepairStation
+        Traitors:
+          description: There are some traitors but everything works out fine.
+          minPlayers: 40
+          beats:
+            - Traitors
+            - Peace
+            - EngineeringIssues
+            - MadScience
+            - RestoreOrder
+            - RepairStation

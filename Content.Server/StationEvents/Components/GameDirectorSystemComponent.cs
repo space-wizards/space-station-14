@@ -1,4 +1,6 @@
-﻿using Content.Shared.chaos;
+﻿using System.Runtime.Serialization;
+using Content.Shared.chaos;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -82,6 +84,7 @@ public sealed class GameDirectorSystemComponent : Component
 /// A series of named StoryBeats which we want to take the station through in the given sequence.
 /// Gated by various settings such as the number of players
 /// </summary>
+[DataDefinition]
 public sealed class Story
 {
     /// <summary>
@@ -121,6 +124,7 @@ public sealed class Story
 /// endIfAllBetter is suitable for when you want the station to reach a given level of peace before you subject them to
 /// the next round of chaos.
 /// </summary>
+[DataDefinition]
 public sealed class StoryBeat
 {
     /// <summary>
@@ -166,6 +170,7 @@ public sealed class StoryBeat
     public int RandomEventLimit = 3;
 }
 
+[DataDefinition]
 public sealed class PossibleEvent
 {
     public string PrototypeId;

@@ -88,8 +88,8 @@ public sealed class CombatMetric : StationMetric<CombatMetricComponent>
 
         var chaos = new ChaosMetrics(new Dictionary<string, FixedPoint2>()
         {
-            {"CombatFriends", friendlies},
-            {"CombatHostiles", hostiles},
+            {"Friend", friendlies},
+            {"Hostile", hostiles},
             {"Combat", friendlies + hostiles},
 
             {"Death", death},
