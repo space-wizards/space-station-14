@@ -27,6 +27,7 @@ public sealed partial class ReplayManager
         if (CurrentReplay != null)
             StopReplay();
 
+        _controller.ContentEntityTickUpdate += TickUpdate;
         var screen = _stateMan.RequestStateChange<LoadingScreen<ReplayData>>();
         screen.Job = new LoadReplayJob(1/60f, dir, this, screen);
         screen.OnJobFinished += OnFinishedLoading;
@@ -36,6 +37,7 @@ public sealed partial class ReplayManager
     {
         if (data == null)
         {
+            _controller.ContentEntityTickUpdate -= TickUpdate;
             _stateMan.RequestStateChange<ReplayMainScreen>();
             if (ex != null)
                 _uiMan.Popup(Loc.GetString("main-menu-failed-to-connect", ("reason", ex)));
@@ -45,7 +47,6 @@ public sealed partial class ReplayManager
         CurrentReplay = data;
         _entMan.EntitySysManager.GetEntitySystem<ReplayObserverSystem>().SetObserverPosition(default);
         RegisterCommands();
-        _controller.ContentEntityTickUpdate += TickUpdate;
     }
 
     [SuppressMessage("ReSharper", "UseAwaitUsing")]

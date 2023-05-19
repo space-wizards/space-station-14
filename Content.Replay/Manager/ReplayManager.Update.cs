@@ -5,6 +5,7 @@ using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands;
+using Content.Shared.Instruments;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
@@ -114,6 +115,9 @@ public sealed partial class ReplayManager
                 case ImpactEffectEvent:
                 case MuzzleFlashEvent:
                 case DamageEffectEvent:
+                case InstrumentStartMidiEvent:
+                case InstrumentMidiEventEvent:
+                case InstrumentStopMidiEvent:
                     if (!skipEffectEvents)
                         _entMan.DispatchReceivedNetworkMsg((EntityEventArgs)message);
                     break;
