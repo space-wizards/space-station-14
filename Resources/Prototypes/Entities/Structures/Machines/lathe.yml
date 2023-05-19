@@ -239,9 +239,13 @@
       - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
+      - WeaponForceGun
+      - WeaponTetherGun
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
       - ClothingBackpackDuffelHolding
+      - WelderIndustrialAdvanced
+      - JawsOfLife
 
 - type: entity
   parent: Protolathe

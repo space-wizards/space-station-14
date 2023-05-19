@@ -1,5 +1,5 @@
 meta:
-  format: 4
+  format: 5
   postmapinit: false
 tilemap:
   0: Space
@@ -3718,11 +3718,6 @@ entities:
         - port: Pressed
           uid: 1804
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1607
     components:
     - pos: -16.5,24.5
@@ -3735,11 +3730,6 @@ entities:
         - port: Pressed
           uid: 1611
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1608
     components:
     - pos: -16.5,28.5
@@ -3752,11 +3742,6 @@ entities:
         - port: Pressed
           uid: 1612
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1609
     components:
     - pos: -14.5,28.5
@@ -3769,11 +3754,6 @@ entities:
         - port: Pressed
           uid: 1612
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1610
     components:
     - pos: -14.5,24.5
@@ -3786,11 +3766,6 @@ entities:
         - port: Pressed
           uid: 1611
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2790
     components:
     - pos: 11.5,31.5
@@ -3803,11 +3778,6 @@ entities:
         - port: Pressed
           uid: 2928
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2886
     components:
     - pos: 14.5,31.5
@@ -3820,11 +3790,6 @@ entities:
         - port: Pressed
           uid: 2928
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2925
     components:
     - pos: 7.5,31.5
@@ -3837,11 +3802,6 @@ entities:
         - port: Pressed
           uid: 2927
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2926
     components:
     - pos: 4.5,31.5
@@ -3854,11 +3814,6 @@ entities:
         - port: Pressed
           uid: 2927
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 3787
     components:
     - pos: -16.5,-7.5
@@ -3871,11 +3826,6 @@ entities:
         - port: Pressed
           uid: 3906
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 3788
     components:
     - pos: -16.5,-6.5
@@ -3888,11 +3838,6 @@ entities:
         - port: Pressed
           uid: 3906
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 3789
     components:
     - pos: -16.5,-5.5
@@ -3905,21 +3850,11 @@ entities:
         - port: Pressed
           uid: 3906
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 4762
     components:
     - pos: 18.5,-17.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: BlastDoorExterior1Open
   entities:
   - uid: 710
@@ -3927,51 +3862,26 @@ entities:
     - pos: 17.5,1.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 711
     components:
     - pos: 17.5,0.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 712
     components:
     - pos: 17.5,-0.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 713
     components:
     - pos: 17.5,-1.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 714
     components:
     - pos: 17.5,-2.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: BlastDoorExterior2Open
   entities:
   - uid: 716
@@ -3986,11 +3896,6 @@ entities:
         - port: Pressed
           uid: 1435
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 717
     components:
     - pos: 7.5,-1.5
@@ -4003,11 +3908,6 @@ entities:
         - port: Pressed
           uid: 1435
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 718
     components:
     - pos: 7.5,-0.5
@@ -4020,11 +3920,6 @@ entities:
         - port: Pressed
           uid: 1435
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 719
     components:
     - pos: 7.5,0.5
@@ -4037,11 +3932,6 @@ entities:
         - port: Pressed
           uid: 1435
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 720
     components:
     - pos: 7.5,1.5
@@ -4054,11 +3944,6 @@ entities:
         - port: Pressed
           uid: 1435
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: BlastDoorOpen
   entities:
   - uid: 786
@@ -4075,11 +3960,6 @@ entities:
         - port: Pressed
           uid: 1436
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 787
     components:
     - pos: -0.5,-7.5
@@ -4094,11 +3974,6 @@ entities:
         - port: Pressed
           uid: 1436
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 788
     components:
     - pos: 0.5,-7.5
@@ -4113,11 +3988,6 @@ entities:
         - port: Pressed
           uid: 1436
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1430
     components:
     - pos: -1.5,6.5
@@ -4130,11 +4000,6 @@ entities:
         - port: Pressed
           uid: 1434
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1431
     components:
     - pos: -0.5,6.5
@@ -4147,11 +4012,6 @@ entities:
         - port: Pressed
           uid: 1434
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1432
     components:
     - pos: 0.5,6.5
@@ -4164,11 +4024,6 @@ entities:
         - port: Pressed
           uid: 1434
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1437
     components:
     - pos: -8.5,-2.5
@@ -4181,11 +4036,6 @@ entities:
         - port: Pressed
           uid: 6602
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1438
     components:
     - pos: -8.5,-1.5
@@ -4198,11 +4048,6 @@ entities:
         - port: Pressed
           uid: 6602
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1439
     components:
     - pos: -8.5,-0.5
@@ -4215,11 +4060,6 @@ entities:
         - port: Pressed
           uid: 6602
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1440
     components:
     - pos: -8.5,0.5
@@ -4232,11 +4072,6 @@ entities:
         - port: Pressed
           uid: 6602
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1441
     components:
     - pos: -8.5,1.5
@@ -4249,11 +4084,6 @@ entities:
         - port: Pressed
           uid: 6602
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2146
     components:
     - pos: 4.5,10.5
@@ -4266,11 +4096,6 @@ entities:
         - port: Pressed
           uid: 2712
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2147
     components:
     - pos: 4.5,11.5
@@ -4283,11 +4108,6 @@ entities:
         - port: Pressed
           uid: 2712
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2148
     components:
     - pos: 4.5,12.5
@@ -4300,11 +4120,6 @@ entities:
         - port: Pressed
           uid: 2712
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2149
     components:
     - pos: 4.5,13.5
@@ -4317,11 +4132,6 @@ entities:
         - port: Pressed
           uid: 2712
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2150
     components:
     - pos: 4.5,14.5
@@ -4334,41 +4144,21 @@ entities:
         - port: Pressed
           uid: 2712
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 3864
     components:
     - pos: -27.5,-1.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 3865
     components:
     - pos: -27.5,-0.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 3866
     components:
     - pos: -27.5,0.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5234
     components:
     - pos: 28.5,-25.5
@@ -4381,11 +4171,6 @@ entities:
         - port: Pressed
           uid: 5242
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5235
     components:
     - pos: 28.5,-24.5
@@ -4398,11 +4183,6 @@ entities:
         - port: Pressed
           uid: 5242
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5236
     components:
     - pos: 28.5,-23.5
@@ -4415,11 +4195,6 @@ entities:
         - port: Pressed
           uid: 5242
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5237
     components:
     - pos: 28.5,-22.5
@@ -4432,11 +4207,6 @@ entities:
         - port: Pressed
           uid: 5242
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5238
     components:
     - pos: 28.5,-21.5
@@ -4449,11 +4219,6 @@ entities:
         - port: Pressed
           uid: 5242
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5239
     components:
     - pos: 31.5,-19.5
@@ -4466,11 +4231,6 @@ entities:
         - port: Pressed
           uid: 5242
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5240
     components:
     - pos: 33.5,-19.5
@@ -4483,11 +4243,6 @@ entities:
         - port: Pressed
           uid: 5242
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5241
     components:
     - pos: 32.5,-19.5
@@ -4500,61 +4255,31 @@ entities:
         - port: Pressed
           uid: 5242
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5951
     components:
     - pos: -16.5,-27.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5952
     components:
     - pos: -16.5,-26.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5953
     components:
     - pos: -16.5,-25.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5954
     components:
     - pos: -16.5,-24.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 5955
     components:
     - pos: -16.5,-23.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 6521
     components:
     - pos: -2.5,-39.5
@@ -4567,11 +4292,6 @@ entities:
         - port: Pressed
           uid: 6442
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 6522
     components:
     - pos: -1.5,-39.5
@@ -4584,11 +4304,6 @@ entities:
         - port: Pressed
           uid: 6442
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 6523
     components:
     - pos: -0.5,-39.5
@@ -4601,11 +4316,6 @@ entities:
         - port: Pressed
           uid: 6442
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 6524
     components:
     - pos: 0.5,-39.5
@@ -4618,11 +4328,6 @@ entities:
         - port: Pressed
           uid: 6442
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 6525
     components:
     - pos: 1.5,-39.5
@@ -4635,11 +4340,6 @@ entities:
         - port: Pressed
           uid: 6442
       type: SignalReceiver
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: BookBase
   entities:
   - uid: 1456
@@ -29478,6 +29178,18 @@ entities:
     - pos: 29.5,-24.5
       parent: 1668
       type: Transform
+- proto: GeneratorPlasma
+  entities:
+  - uid: 6594
+    components:
+    - pos: 32.5,-24.5
+      parent: 1668
+      type: Transform
+  - uid: 6595
+    components:
+    - pos: 32.5,-22.5
+      parent: 1668
+      type: Transform
 - proto: GeneratorRTG
   entities:
   - uid: 5182
@@ -29527,9 +29239,39 @@ entities:
     - pos: 34.5,-21.5
       parent: 1668
       type: Transform
+  - uid: 6596
+    components:
+    - pos: 33.5,-25.5
+      parent: 1668
+      type: Transform
+  - uid: 6597
+    components:
+    - pos: 31.5,-25.5
+      parent: 1668
+      type: Transform
+  - uid: 6598
+    components:
+    - pos: 33.5,-23.5
+      parent: 1668
+      type: Transform
+  - uid: 6599
+    components:
+    - pos: 31.5,-23.5
+      parent: 1668
+      type: Transform
   - uid: 6614
     components:
     - pos: 29.5,-23.5
+      parent: 1668
+      type: Transform
+  - uid: 6635
+    components:
+    - pos: 31.5,-21.5
+      parent: 1668
+      type: Transform
+  - uid: 6636
+    components:
+    - pos: 33.5,-21.5
       parent: 1668
       type: Transform
 - proto: GravityGenerator
@@ -31586,9 +31328,9 @@ entities:
     - pos: -18.379215,8.381029
       parent: 1668
       type: Transform
-- proto: LockerAtmosphericsFilled
+- proto: LockerAtmosphericsFilledHardsuit
   entities:
-  - uid: 5420
+  - uid: 3790
     components:
     - pos: 15.5,-29.5
       parent: 1668
@@ -31600,35 +31342,28 @@ entities:
     - pos: 10.5,-28.5
       parent: 1668
       type: Transform
-- proto: LockerCaptainFilled
+- proto: LockerChiefEngineerFilledHardsuit
   entities:
-  - uid: 3796
-    components:
-    - pos: -10.5,-3.5
-      parent: 1668
-      type: Transform
-- proto: LockerChiefEngineerFilled
-  entities:
-  - uid: 3790
+  - uid: 5253
     components:
     - pos: -15.5,-3.5
       parent: 1668
       type: Transform
-  - uid: 3791
+  - uid: 5420
     components:
     - pos: -14.5,-3.5
       parent: 1668
       type: Transform
-- proto: LockerChiefMedicalOfficerFilled
+- proto: LockerChiefMedicalOfficerFilledHardsuit
   entities:
-  - uid: 3792
-    components:
-    - pos: -15.5,-9.5
-      parent: 1668
-      type: Transform
-  - uid: 3793
+  - uid: 3794
     components:
     - pos: -14.5,-9.5
+      parent: 1668
+      type: Transform
+  - uid: 3795
+    components:
+    - pos: -15.5,-9.5
       parent: 1668
       type: Transform
 - proto: LockerElectricalSuppliesFilled
@@ -31648,16 +31383,16 @@ entities:
     - pos: 27.5,-13.5
       parent: 1668
       type: Transform
-- proto: LockerEngineerFilled
+- proto: LockerEngineerFilledHardsuit
   entities:
+  - uid: 3796
+    components:
+    - pos: 23.5,-23.5
+      parent: 1668
+      type: Transform
   - uid: 5252
     components:
     - pos: 23.5,-22.5
-      parent: 1668
-      type: Transform
-  - uid: 5253
-    components:
-    - pos: 23.5,-23.5
       parent: 1668
       type: Transform
 - proto: LockerEvidence
@@ -31681,16 +31416,16 @@ entities:
     - pos: -11.5,-3.5
       parent: 1668
       type: Transform
-- proto: LockerHeadOfSecurityFilled
+- proto: LockerHeadOfSecurityFilledHardsuit
   entities:
-  - uid: 3794
-    components:
-    - pos: -10.5,-9.5
-      parent: 1668
-      type: Transform
-  - uid: 3795
+  - uid: 3792
     components:
     - pos: -11.5,-9.5
+      parent: 1668
+      type: Transform
+  - uid: 3793
+    components:
+    - pos: -10.5,-9.5
       parent: 1668
       type: Transform
 - proto: LockerMedicineFilled
@@ -31705,6 +31440,13 @@ entities:
   - uid: 2235
     components:
     - pos: -8.5,19.5
+      parent: 1668
+      type: Transform
+- proto: LockerResearchDirectorFilledHardsuit
+  entities:
+  - uid: 3791
+    components:
+    - pos: -10.5,-3.5
       parent: 1668
       type: Transform
 - proto: LockerSecurityFilled
@@ -44199,6 +43941,15 @@ entities:
     - pos: 15.5,27.5
       parent: 1668
       type: Transform
+- proto: WarpPoint
+  entities:
+  - uid: 6637
+    components:
+    - pos: -0.5,3.5
+      parent: 1668
+      type: Transform
+    - location: Centcomm
+      type: WarpPoint
 - proto: WaterCooler
   entities:
   - uid: 5318
@@ -44521,51 +44272,26 @@ entities:
     - pos: 12.5,2.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 564
     components:
     - pos: 14.5,2.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2409
     components:
     - pos: 25.5,20.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2410
     components:
     - pos: 31.5,20.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2710
     components:
     - pos: 9.5,16.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: WindoorArmoryLocked
   entities:
   - uid: 2554
@@ -44574,11 +44300,6 @@ entities:
       pos: 9.5,16.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: WindoorBarLocked
   entities:
   - uid: 4410
@@ -44587,11 +44308,6 @@ entities:
       pos: 7.5,-28.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: WindoorBrigLocked
   entities:
   - uid: 2425
@@ -44599,11 +44315,6 @@ entities:
     - pos: 28.5,20.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: WindoorCommandLocked
   entities:
   - uid: 4230
@@ -44611,43 +44322,23 @@ entities:
     - pos: -12.5,-3.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 4231
     components:
     - pos: -13.5,-3.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 4232
     components:
     - rot: 3.141592653589793 rad
       pos: -13.5,-9.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 4233
     components:
     - rot: 3.141592653589793 rad
       pos: -12.5,-9.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: WindoorEngineeringLocked
   entities:
   - uid: 4757
@@ -44656,11 +44347,6 @@ entities:
       pos: 16.5,-22.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: WindoorMedicalLocked
   entities:
   - uid: 732
@@ -44669,33 +44355,18 @@ entities:
       pos: 2.5,-11.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 734
     components:
     - rot: -1.5707963267948966 rad
       pos: 2.5,-12.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1198
     components:
     - rot: 3.141592653589793 rad
       pos: 12.5,-15.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: WindoorSecure
   entities:
   - uid: 2345
@@ -44703,75 +44374,40 @@ entities:
     - pos: 34.5,14.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 3760
     components:
     - rot: -1.5707963267948966 rad
       pos: -20.5,11.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 3761
     components:
     - rot: -1.5707963267948966 rad
       pos: -20.5,9.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 4392
     components:
     - pos: -4.5,-17.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 4393
     components:
     - rot: 1.5707963267948966 rad
       pos: -3.5,-16.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 4394
     components:
     - rot: -1.5707963267948966 rad
       pos: 2.5,-16.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 4395
     components:
     - pos: 3.5,-17.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: WindoorSecureCargoLocked
   entities:
   - uid: 1621
@@ -44780,22 +44416,12 @@ entities:
       pos: -4.5,9.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 1622
     components:
     - rot: 1.5707963267948966 rad
       pos: -4.5,10.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: WindoorSecurityLocked
   entities:
   - uid: 497
@@ -44804,110 +44430,60 @@ entities:
       pos: 26.5,-7.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 561
     components:
     - rot: 3.141592653589793 rad
       pos: 12.5,2.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 562
     components:
     - rot: 3.141592653589793 rad
       pos: 14.5,2.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 790
     components:
     - rot: 1.5707963267948966 rad
       pos: -3.5,-11.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 791
     components:
     - rot: 1.5707963267948966 rad
       pos: -3.5,-12.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2558
     components:
     - rot: 1.5707963267948966 rad
       pos: 14.5,22.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2776
     components:
     - rot: 1.5707963267948966 rad
       pos: 14.5,25.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2832
     components:
     - rot: -1.5707963267948966 rad
       pos: 4.5,25.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2862
     components:
     - rot: -1.5707963267948966 rad
       pos: 4.5,28.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
   - uid: 2863
     components:
     - rot: 1.5707963267948966 rad
       pos: 14.5,28.5
       parent: 1668
       type: Transform
-    - linkedPorts: {}
-      registeredSinks: {}
-      ports:
-      - DoorStatus
-      type: DeviceLinkSource
 - proto: WindowReinforcedDirectional
   entities:
   - uid: 485
