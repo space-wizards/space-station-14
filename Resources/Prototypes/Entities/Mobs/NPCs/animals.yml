@@ -815,7 +815,7 @@
       groups:
         Burn: 3
     clumsySound:
-      path: /Audio/Animals/monkey_scream.ogg    
+      path: /Audio/Animals/monkey_scream.ogg
   - type: IdExaminable
 
 - type: entity
