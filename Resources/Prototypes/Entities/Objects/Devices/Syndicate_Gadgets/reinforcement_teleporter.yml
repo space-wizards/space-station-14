@@ -16,7 +16,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanSyndicateAgent
   - type: EmitSoundOnUse
-    sound: /Audio/Misc/emergency_meeting.ogg
+    sound: /Audio/Effects/RingtoneNotes/a.ogg
   - type: ItemCooldown
   - type: UseDelay
     delay: 300
