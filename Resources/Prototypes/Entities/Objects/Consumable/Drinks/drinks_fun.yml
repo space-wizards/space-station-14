@@ -1,6 +1,6 @@
 - type: entity
   parent: DrinkBase
-  id: TubeSpaceGlue
+  id: DrinkSpaceGlue
   name: space glue tube
   description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
   components:
