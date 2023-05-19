@@ -7,7 +7,24 @@
     - type: Sprite
       sprite: Structures/Decoration/crystal.rsi
       state: crystal_green
-      netsync: false
+    - type: Reflect
+      reflectProb: 0.5
+      reflects:
+      - Energy
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.45
+          density: 60
+          mask:
+            - MachineMask
+          layer:
+            - MidImpassable
+            - LowImpassable
+            - BulletImpassable
+            - Opaque
     - type: PointLight
       radius: 3
       energy: 3

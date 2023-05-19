@@ -45,6 +45,4 @@
         MedicalIntern: [ 2, 2 ]
         ServiceWorker: [ 2, 2 ]
         SecurityCadet: [ 2, 2 ]
-        Detective: [ 1, 1 ]
         Warden: [ 1, 1 ]
-        Zookeeper: [1, 1]

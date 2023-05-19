@@ -53,8 +53,6 @@
     malus: 0
   - type: Reflect
     enabled: false
-    reflectProb: 0.25
-    spread: 45
 
 - type: entity
   name: pen

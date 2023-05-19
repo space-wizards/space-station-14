@@ -36,6 +36,8 @@ salvage-expedition-difficulty-Hazardous = Hazardous
 salvage-expedition-difficulty-Extreme = Extreme
 
 # Runner
+salvage-expedition-not-all-present = Not all salvagers are aboard the shuttle!
+
 salvage-expedition-announcement-countdown-minutes = {$duration} minutes remaining to complete the expedition.
 salvage-expedition-announcement-countdown-seconds = {$duration} seconds remaining to complete the expedition.
 salvage-expedition-announcement-dungeon = Dungeon is located {$direction}.
