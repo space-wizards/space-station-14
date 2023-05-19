@@ -1,3 +1,4 @@
+using Content.Shared.Movement.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
@@ -5,6 +6,7 @@ namespace Content.Shared.Movement.Components;
 
 [NetworkedComponent, RegisterComponent]
 [AutoGenerateComponentState]
+[Access(typeof(SlowContactsSystem))]
 public sealed partial class SlowContactsComponent : Component
 {
     [DataField("walkSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]

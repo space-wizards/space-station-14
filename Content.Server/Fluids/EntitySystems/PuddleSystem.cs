@@ -26,6 +26,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -48,6 +49,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
+    [Dependency] private readonly SlowContactsSystem _slowContacts = default!;
 
     public static float PuddleVolume = 1000;
 
@@ -331,11 +333,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
         if (totalViscosity > 0)
         {
+            var comp = EnsureComp<SlowContactsComponent>(uid);
             var speed = 1 - (totalViscosity / solution.Volume).Float();
-            var contacts = EnsureComp<SlowContactsComponent>(uid);
-            contacts.WalkSpeedModifier = speed;
-            contacts.SprintSpeedModifier = speed;
-            Dirty(contacts);
+            _slowContacts.ChangeModifiers(uid, speed, comp);
         }
         else
         {

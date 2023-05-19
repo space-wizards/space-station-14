@@ -42,6 +42,22 @@ public sealed class SlowContactsSystem : EntitySystem
         _toUpdate.Clear();
     }
 
+    public void ChangeModifiers(EntityUid uid, float speed, SlowContactsComponent? component = null)
+    {
+        ChangeModifiers(uid, speed, speed, component);
+    }
+
+    public void ChangeModifiers(EntityUid uid, float walkSpeed, float sprintSpeed, SlowContactsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+        {
+            return;
+        }
+        component.WalkSpeedModifier = walkSpeed;
+        component.SprintSpeedModifier = sprintSpeed;
+        Dirty(component);
+    }
+
     private void MovementSpeedCheck(EntityUid uid, SlowedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
