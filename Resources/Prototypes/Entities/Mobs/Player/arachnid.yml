@@ -27,6 +27,7 @@
   - type: Alerts
   - type: Actions
   - type: Eye
+  - type: ContentEye
   - type: CameraRecoil
   - type: Examiner
   - type: CanHostGuardian

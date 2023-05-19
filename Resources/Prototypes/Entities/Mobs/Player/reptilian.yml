@@ -18,6 +18,7 @@
     - type: InputMover
     - type: Alerts
     - type: Eye
+    - type: ContentEye
     - type: CameraRecoil
     - type: Examiner
     - type: CanHostGuardian
