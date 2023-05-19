@@ -9,12 +9,11 @@
     stateBaseClosed: cabinet
     stateDoorOpen: cabinet_open
     stateDoorClosed: cabinet_door
-
-    - type: AccessReader
-      access: [["Bar"]]
-    - type: EntityStorage
-      closeSound:
-        path: /Audio/Effects/woodenclosetclose.ogg
+  - type: AccessReader
+    access: [["Bar"]]
+  - type: EntityStorage
+    closeSound:
+      path: /Audio/Effects/woodenclosetclose.ogg
       openSound:
         path: /Audio/Effects/woodenclosetopen.ogg
 

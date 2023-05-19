@@ -20,10 +20,15 @@
     bodyType: KinematicController
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.50
-      density: 400
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.50
+        density: 400
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive

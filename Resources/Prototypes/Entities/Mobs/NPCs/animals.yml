@@ -55,14 +55,14 @@
     hidden: true
     soundHit:
         path: /Audio/Effects/bite.ogg
-      angle: 0
-      animation: WeaponArcBite
-      damage:
+        angle: 0
+        animation: WeaponArcBite
+        damage:
         types:
           Piercing: 5
-    - type: NoSlip
-    - type: Puller
-      needsHands: true
+  - type: NoSlip
+  - type: Puller
+    needsHands: true
 
 - type: entity
   name: bee
@@ -2135,23 +2135,23 @@
     hidden: true
     soundHit:
         path: /Audio/Effects/bite.ogg
-      angle: 0
-      animation: WeaponArcBite
-      damage:
-        types:
-          Piercing: 2
-    - type: InteractionPopup
-      successChance: 0.4
-      interactSuccessString: petting-success-hamster
-      interactFailureString: petting-failure-hamster
-      interactSuccessSound:
-        path: /Audio/Animals/fox_squeak.ogg
-    - type: Bloodstream
-      bloodMaxVolume: 60
-    - type: CanEscapeInventory
-      BaseResistTime: 3
-    - type: MobPrice
-      price: 60
+        angle: 0
+        animation: WeaponArcBite
+        damage:
+          types:
+            Piercing: 2
+  - type: InteractionPopup
+    successChance: 0.4
+    interactSuccessString: petting-success-hamster
+    interactFailureString: petting-failure-hamster
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 60
+  - type: CanEscapeInventory
+    BaseResistTime: 3
+  - type: MobPrice
+    price: 60
 
 - type: entity
   name: pig
