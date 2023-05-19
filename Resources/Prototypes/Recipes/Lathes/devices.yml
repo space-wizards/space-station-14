@@ -101,6 +101,15 @@
     Plasma: 1000
 
 - type: latheRecipe
+  id: WeaponForceGun
+  result: WeaponForceGun
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 400
+    Silver: 200
+
+- type: latheRecipe
   id: WeaponTetherGun
   result: WeaponTetherGun
   completetime: 5
