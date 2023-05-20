@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added robust nukie drink to vending machine cola., type: Add}
-  id: 3324
-  time: '2023-04-03T06:42:37.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Added new blood pack sprite!, type: Add}
@@ -2896,3 +2891,9 @@ Entries:
   - {message: Fix fire stacks not spreading to other players., type: Fix}
   id: 3823
   time: '2023-05-20T03:34:41.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: the sprite of a doll with a skull bandana is now showing the skull,
+    type: Tweak}
+  id: 3824
+  time: '2023-05-20T19:46:10.0000000+00:00'
