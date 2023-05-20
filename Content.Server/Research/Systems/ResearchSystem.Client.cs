@@ -105,8 +105,10 @@ public sealed partial class ResearchSystem
     /// <param name="serverComponent">The server's ResearchServerComponent. Null if false</param>
     /// <param name="component">The client's Researchclient component</param>
     /// <returns>If the server was successfully retrieved.</returns>
-    public bool TryGetClientServer(EntityUid uid, [NotNullWhen(returnValue: true)] out EntityUid? server,
-        [NotNullWhen(returnValue: true)] out ResearchServerComponent? serverComponent, ResearchClientComponent? component = null)
+    public bool TryGetClientServer(EntityUid uid,
+        [NotNullWhen(returnValue: true)] out EntityUid? server,
+        [NotNullWhen(returnValue: true)] out ResearchServerComponent? serverComponent,
+        ResearchClientComponent? component = null)
     {
         server = null;
         serverComponent = null;
@@ -117,11 +119,10 @@ public sealed partial class ResearchSystem
         if (component.Server == null)
             return false;
 
-        if (!TryComp<ResearchServerComponent>(component.Server, out var sc))
+        if (!TryComp(component.Server, out serverComponent))
             return false;
 
         server = component.Server;
-        serverComponent = sc;
         return true;
     }
 }

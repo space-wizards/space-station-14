@@ -12,7 +12,7 @@
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     layers:
     - state: bag
-      map: ["unfoldedLayer"]
+      map: ["unfoldedLayer", "enum.StorageVisualLayers.Base"]
     - state: bag_folded
       map: ["foldedLayer"]
       visible: false
@@ -58,9 +58,8 @@
         components:
         - Paper
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: open_overlay
+  - type: EntityStorageVisuals
+    stateDoorOpen: open_overlay
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:

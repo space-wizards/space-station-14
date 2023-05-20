@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -12,7 +13,9 @@ namespace Content.Shared.Throwing;
 
 public sealed class ThrowingSystem : EntitySystem
 {
-    public const float ThrowAngularImpulse = 1.5f;
+    public const float ThrowAngularImpulse = 5f;
+
+    public const float PushbackDefault = 1f;
 
     /// <summary>
     /// The minimum amount of time an entity needs to be thrown before the timer can be run.
@@ -23,8 +26,26 @@ public sealed class ThrowingSystem : EntitySystem
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+
+    public void TryThrow(
+        EntityUid uid,
+        EntityCoordinates coordinates,
+        float strength = 1.0f,
+        EntityUid? user = null,
+        float pushbackRatio = PushbackDefault,
+        bool playSound = true)
+    {
+        var thrownPos = Transform(uid).MapPosition;
+        var mapPos = coordinates.ToMap(EntityManager, _transform);
+
+        if (mapPos.MapId != thrownPos.MapId)
+            return;
+
+        TryThrow(uid, mapPos.Position - thrownPos.Position, strength, user, pushbackRatio, playSound);
+    }
 
     /// <summary>
     ///     Tries to throw the entity if it has a physics component, otherwise does nothing.
@@ -37,7 +58,8 @@ public sealed class ThrowingSystem : EntitySystem
         Vector2 direction,
         float strength = 1.0f,
         EntityUid? user = null,
-        float pushbackRatio = 5.0f)
+        float pushbackRatio = PushbackDefault,
+        bool playSound = true)
     {
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
         if (!physicsQuery.TryGetComponent(uid, out var physics))
@@ -55,7 +77,8 @@ public sealed class ThrowingSystem : EntitySystem
             tagQuery,
             strength,
             user,
-            pushbackRatio);
+            pushbackRatio,
+            playSound);
     }
 
     /// <summary>
@@ -73,7 +96,8 @@ public sealed class ThrowingSystem : EntitySystem
         EntityQuery<TagComponent> tagQuery,
         float strength = 1.0f,
         EntityUid? user = null,
-        float pushbackRatio = 5.0f)
+        float pushbackRatio = PushbackDefault,
+        bool playSound = true)
     {
         if (strength <= 0 || direction == Vector2.Infinity || direction == Vector2.NaN || direction == Vector2.Zero)
             return;
@@ -91,8 +115,8 @@ public sealed class ThrowingSystem : EntitySystem
         comp.Thrower = user;
 
         // Give it a l'il spin.
-        if (!tagQuery.TryGetComponent(uid, out var tag) || !_tagSystem.HasTag(tag, "NoSpinOnThrow"))
-            _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse, body: physics);
+        if (physics.InvI > 0f && (!tagQuery.TryGetComponent(uid, out var tag) || !_tagSystem.HasTag(tag, "NoSpinOnThrow")))
+            _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse / physics.InvI, body: physics);
         else
             transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
 
@@ -103,11 +127,11 @@ public sealed class ThrowingSystem : EntitySystem
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
 
         // Estimate time to arrival so we can apply OnGround status and slow it much faster.
-        var time = (direction / strength).Length;
+        var time = direction.Length / strength;
 
         if (time < FlyTime)
         {
-            _thrownSystem.LandComponent(uid, comp, physics);
+            _thrownSystem.LandComponent(uid, comp, physics, playSound);
         }
         else
         {
@@ -118,13 +142,14 @@ public sealed class ThrowingSystem : EntitySystem
                 if (physics.Deleted)
                     return;
 
-                _thrownSystem.LandComponent(uid, comp, physics);
+                _thrownSystem.LandComponent(uid, comp, physics, playSound);
             });
         }
 
         // Give thrower an impulse in the other direction
         if (user != null &&
-            pushbackRatio > 0.0f &&
+            pushbackRatio != 0.0f &&
+            physics.Mass > 0f &&
             TryComp(user.Value, out PhysicsComponent? userPhysics) &&
             _gravity.IsWeightless(user.Value, userPhysics))
         {
@@ -132,7 +157,7 @@ public sealed class ThrowingSystem : EntitySystem
             RaiseLocalEvent(uid, msg);
 
             if (!msg.Cancelled)
-                _physics.ApplyLinearImpulse(user.Value, -impulseVector * pushbackRatio, body: userPhysics);
+                _physics.ApplyLinearImpulse(user.Value, -impulseVector * pushbackRatio * physics.Mass, body: userPhysics);
         }
     }
 }

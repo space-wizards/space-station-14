@@ -22,7 +22,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
         InitializeConsole();
         InitializeShuttle();
         InitializeTelepad();
-        SubscribeLocalEvent<StationInitializedEvent>(OnStationInit);
     }
 
     public override void Shutdown()
@@ -30,12 +29,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
         base.Shutdown();
         ShutdownShuttle();
         CleanupShuttle();
-    }
-
-    private void OnStationInit(StationInitializedEvent ev)
-    {
-        EnsureComp<StationBankAccountComponent>(ev.Station);
-        EnsureComp<StationCargoOrderDatabaseComponent>(ev.Station);
     }
 
     public override void Update(float frameTime)
