@@ -1,16 +1,4 @@
 Entries:
-- author: Naive817
-  changes:
-  - {message: Holobarrier projectors are now available to HoS and warden. It can make
-      soild but fragile holographic barriers to keep the crew from interfering with
-      the execution of the clown., type: Add}
-  id: 3319
-  time: '2023-04-03T06:20:15.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Added scientific beret, type: Add}
-  id: 3320
-  time: '2023-04-03T06:23:29.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added watermelon helmet., type: Add}
@@ -2898,3 +2886,14 @@ Entries:
   - {message: Bags of holding now are significantly more expensive to produce., type: Tweak}
   id: 3818
   time: '2023-05-20T00:59:07.0000000+00:00'
+- author: WlarusFromDaSpace
+  changes:
+  - {message: The sad trombone implant now correctly only triggers whenever a mob
+      dies, type: Fix}
+  id: 3819
+  time: '2023-05-20T01:15:18.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: Added tons more scarfs for you to enjoy at your departments!, type: Add}
+  id: 3820
+  time: '2023-05-20T01:15:32.0000000+00:00'
