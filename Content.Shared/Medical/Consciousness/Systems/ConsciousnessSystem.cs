@@ -14,10 +14,10 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<ConsciousnessComponent, ComponentInit>(OnConsciousnessInit);
+        SubscribeLocalEvent<ConsciousnessComponent, MapInitEvent>(OnConsciousnessMapInit);
     }
 
-    private void OnConsciousnessInit(EntityUid uid, ConsciousnessComponent consciousness, ComponentInit args)
+    private void OnConsciousnessMapInit(EntityUid uid, ConsciousnessComponent consciousness, MapInitEvent args)
     {
         //set the starting consciousness to the cap if it is set to auto
         if (consciousness.RawConsciousness < 0)

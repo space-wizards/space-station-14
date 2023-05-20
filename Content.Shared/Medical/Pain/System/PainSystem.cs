@@ -110,6 +110,7 @@ public sealed class PainSystem : EntitySystem
                                  previousConsciousnessEffect;
         if (consciousnessDelta == 0)
             return;
+
         _consciousnessSystem.AddToDamage(target, consciousnessDelta);
     }
 }
