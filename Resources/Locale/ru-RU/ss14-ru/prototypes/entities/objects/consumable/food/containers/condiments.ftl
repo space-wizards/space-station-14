@@ -1,3 +1,6 @@
+ent-BaseFoodCondiment = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+    .suffix = { "" }
 ent-BaseFoodCondimentPacket = пакетик приправы
     .desc = Небольшой пластиковый пакетик с приправами, которые можно добавить в еду.
     .suffix = { "" }
@@ -42,6 +45,9 @@ ent-BaseFoodCondimentBottle = бутылка приправы
     .suffix = { "" }
 ent-FoodCondimentBottle = { ent-BaseFoodCondimentBottle }
     .desc = { ent-BaseFoodCondimentBottle.desc }
+    .suffix = { "" }
+ent-FoodCondimentBottleVinegar = vinegar bottle
+    .desc = Used in cooking to enhance flavor.
     .suffix = { "" }
 ent-FoodCondimentBottleColdsauce = бутылка холодного соуса
     .desc = Заставляет язык онеметь.

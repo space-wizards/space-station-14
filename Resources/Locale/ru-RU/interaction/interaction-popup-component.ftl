@@ -42,10 +42,12 @@ petting-failure-bear = Вы протягиваете руку, чтобы пог
 ## Knocking on windows
 
 petting-success-honkbot = Вы гладите { $target } по его скользкой металлической голове.
+petting-success-mimebot = You pet { THE($target) } on { POSS-ADJ($target) } cold metal head.
 petting-success-cleanbot = Вы гладите { $target } по его влажной металлической голове.
 petting-success-medibot = Вы гладите { $target } по его стерильной металлической голове.
 petting-failure-honkbot = Вы тянетесь погладить { $target }, но { $target } хонкает и уворачивается!
 petting-failure-cleanbot = Вы тянетесь погладить { $target }, но { $target } занят уборкой!
+petting-failure-mimebot = You reach out to pet { THE($target) }, but { SUBJECT($target) } { CONJUGATE-BE($target) } busy miming!
 petting-failure-medibot = Вы тянетесь погладить { $target }, но { $target } едва не пронзает Вашу руку шприцом!
 # Shown when knocking on a window
 comp-window-knock = *тук-тук*

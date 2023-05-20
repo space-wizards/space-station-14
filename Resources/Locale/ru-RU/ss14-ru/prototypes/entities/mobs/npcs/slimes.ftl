@@ -7,7 +7,6 @@ ent-MobAdultSlimesBlue = синий слайм
 ent-MobAdultSlimesBlueGood = синий слайм
     .suffix = { "" }
     .desc = { ent-MobAdultSlimes.desc }
-
 ent-MobAdultSlimesBlueAngry = синий слайм
     .suffix = Злой
     .desc = { ent-MobAdultSlimes.desc }

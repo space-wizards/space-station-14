@@ -116,6 +116,8 @@ uplink-hot-potato-name = Горячая картошка
 uplink-hot-potato-desc = После активации эту бомбу замедленного действия нельзя сбросить - только передать кому-то другому!
 uplink-chimp-ammo-name = Коробка с 10 Омега картриджами.
 uplink-chimp-ammo-desc = Коробка с 10 картриджами с омега-частицами для Ш.И.М.П. Омега-частицы наносят сильные ожоги и вызывают сверхкритические аномалии.
+uplink-proximity-mine-name = Proximity Mine
+uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
 # Броня
 uplink-chameleon-name = Набор Хамелеона
 uplink-chameleon-desc = Рюкзак, полный предметов, содержащих технологию хамелеона, позволяющую Вам маскироваться практически под что угодно на станции, и многое другое!
@@ -175,3 +177,7 @@ uplink-operative-skirt-name = Юбка-комбинезон оперативни
 uplink-operative-skirt-desc = Юбка-комбинезон которую мы выдаём ядерным оперативникам, сшита из хорошей ткани. Чтобы убедиться что Вы выделяетесь! Никаких других преимуществ, кроме хорошего внешнего вида.
 uplink-balloon-name = Воздушный шарик Синдиката
 uplink-balloon-desc = Вручается самым храбрым душам, пережившим "Атомный Твистер" в Синдилэнде.
+uplink-scarf-syndie-red-name = striped syndicate red scarf
+uplink-scarf-syndie-red-desc = A stylish striped syndicate red scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
+uplink-scarf-syndie-green-name = striped syndicate green scarf
+uplink-scarf-syndie-green-desc = A stylish striped syndicate green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.

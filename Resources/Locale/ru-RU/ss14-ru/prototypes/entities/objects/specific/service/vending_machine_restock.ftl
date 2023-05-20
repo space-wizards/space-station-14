@@ -70,3 +70,6 @@ ent-VendingMachineRestockRobotics = коробка пополнения Робо
 ent-VendingMachineRestockHappyHonk = коробка для пополнения запасов счастливый хонк
     .desc = Поместите эту коробку, полную веселья, в слот для пополнения запасов на диспенсере Счастливый Хонк, чтобы начать.
     .suffix = { "" }
+ent-VendingMachineRestockChemVend = ChemVend restock box
+    .desc = A box filled with chemicals and covered in dangerous-looking NFPA diamonds. Load it into a ChemVend to begin.
+    .suffix = { "" }

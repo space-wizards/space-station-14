@@ -193,3 +193,6 @@ ent-VendingMachineTankDispenserEVA = Раздатчик Газовых Балл�
 ent-VendingMachineTankDispenserEngineering = Раздатчик Газовых Баллонов
     .desc = Автомат по выдаче газовых баллонов. Этот имеет инженерную окраску.
     .suffix = ИНЖ [O2, Плазма]
+ent-VendingMachineChemicals = ChemVend
+    .desc = Probably not the coffee machine.
+    .suffix = { "" }

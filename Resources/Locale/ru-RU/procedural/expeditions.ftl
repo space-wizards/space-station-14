@@ -33,6 +33,8 @@ salvage-expedition-difficulty-Moderate = Умеренная
 salvage-expedition-difficulty-Hazardous = Опасная
 salvage-expedition-difficulty-Extreme = Экстрим
 # Runner
+salvage-expedition-not-all-present = Not all salvagers are aboard the shuttle!
+# Runner
 salvage-expedition-announcement-countdown-minutes = { $duration } минут до завершения экспедиции.
 salvage-expedition-announcement-countdown-seconds = { $duration } секунд до завершения экспедиции.
 salvage-expedition-announcement-dungeon = Данж находится на { $direction }.

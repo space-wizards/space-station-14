@@ -1,3 +1,6 @@
+ent-LockerWardenFilledHardsuit = { ent-LockerWarden }
+    .suffix = Filled, Hardsuit
+    .desc = { ent-LockerWarden.desc }
 ent-LockerWardenFilled = { ent-LockerWarden }
     .suffix = Заполненный
     .desc = { ent-LockerWarden.desc }
@@ -22,6 +25,9 @@ ent-GunSafePistolMk58 = оружейный сейф Mk58
 ent-GunSafeRifleLecter = оружейный сейф лектер
     .suffix = Лектер
     .desc = { ent-GunSafe.desc }
+ent-GunSafeSubMachineGunDrozd = drozd safe
+    .desc = { ent-GunSafe.desc }
+    .suffix = { "" }
 ent-GunSafeSubMachineGunVector = оружейный сейф вектор
     .suffix = Вектор
     .desc = { ent-GunSafe.desc }
