@@ -1,6 +1,7 @@
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
+using Content.Shared.Input;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -137,7 +138,9 @@ public sealed partial class GunSystem : SharedGunSystem
             return;
         }
 
-        if (_inputSystem.CmdStates.GetState(EngineKeyFunctions.Use) != BoundKeyState.Down)
+        var useKey = gun.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
+
+        if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down)
         {
             if (gun.ShotCounter != 0)
                 EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = gunUid });
@@ -295,6 +298,9 @@ public sealed partial class GunSystem : SharedGunSystem
 
         _animPlayer.Play(ent, anim, "muzzle-flash");
         var light = EnsureComp<PointLightComponent>(uid);
+
+        if (light.Enabled)
+            return;
 
         light.NetSyncEnabled = false;
         light.Enabled = true;

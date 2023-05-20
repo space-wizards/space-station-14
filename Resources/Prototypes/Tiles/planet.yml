@@ -52,8 +52,7 @@
     East: /Textures/Tiles/Planet/Grass/double_edge.png
     North: /Textures/Tiles/Planet/Grass/double_edge.png
     West: /Textures/Tiles/Planet/Grass/double_edge.png
-  baseTurfs:
-  - FloorPlanetDirt
+  baseTurf: FloorPlanetDirt
   isSubfloor: true
   canCrowbar: false
   footstepSounds:

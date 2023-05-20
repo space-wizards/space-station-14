@@ -41,7 +41,7 @@
   id: OreBananium
   oreEntity: BananiumOre1
   minOreYield: 1
-  maxOreYield: 2
+  maxOreYield: 3
 
 - type: weightedRandom
   id: RandomOreDistributionStandard

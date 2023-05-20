@@ -17,10 +17,13 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
-            if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable)) return;
+            if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable))
+                return;
 
-            EntitySystem.Get<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Quantity.Float() * Multiplier, flammable);
-            args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
+            args.EntityManager.System<FlammableSystem>().AdjustFireStacks(args.SolutionEntity, args.Quantity.Float() * Multiplier, flammable);
+
+            if (args.Reagent != null)
+                args.Source?.RemoveReagent(args.Reagent.ID, args.Quantity);
         }
     }
 }

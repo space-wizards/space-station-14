@@ -1,0 +1,233 @@
+#SOFTSUITS
+#Basic EVA
+- type: entity
+  id: SuitStorageEVA
+  parent: SuitStorageBase
+  suffix: EVA
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitEVA
+        - id: ClothingHeadHelmetEVA
+        - id: ClothingMaskBreath
+        
+#Prisoner EVA
+- type: entity
+  id: SuitStorageEVAPrisoner
+  parent: SuitStorageBase
+  suffix: Prisoner EVA
+  components:
+  - type: StorageFill
+    contents:
+#        - id: NitrogenTankFilled #there's no emergency nitrogen tank to match yet so i have opted to remove it. call it cost cutting measures
+        - id: EmergencyOxygenTankFilled
+        - id: ClothingOuterHardsuitEVAPrisoner
+        - id: ClothingHeadHelmetEVA
+        - id: ClothingMaskBreath
+
+#Syndicate EVA
+- type: entity
+  id: SuitStorageEVASyndicate
+  parent: SuitStorageBase
+  suffix: Syndicate EVA
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitSyndicate
+        - id: ClothingHeadHelmetSyndicate
+        - id: ClothingMaskGasSyndicate
+
+#Pirate EVA
+- type: entity
+  id: SuitStorageEVAPirate
+  parent: SuitStorageBase
+  suffix: Pirate EVA
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitEVAPrisoner
+        - id: ClothingHeadHelmetEVA
+        - id: ClothingMaskGas
+
+#HARDSUITS
+#Engineering hardsuit
+- type: entity
+  id: SuitStorageEngi
+  parent: SuitStorageBase
+  suffix: Station Engineer
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingShoesBootsMag
+        - id: ClothingOuterHardsuitEngineering
+        - id: ClothingMaskBreath
+
+#Atmospherics hardsuit
+- type: entity
+  id: SuitStorageAtmos
+  parent: SuitStorageBase
+  suffix: Atmospheric Technician
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitAtmos
+        - id: ClothingMaskBreath
+
+#Security hardsuit
+- type: entity
+  id: SuitStorageSec
+  parent: SuitStorageBase
+  suffix: Security
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitSecurity
+        - id: ClothingMaskBreath
+
+#CE's hardsuit
+- type: entity
+  id: SuitStorageCE
+  parent: SuitStorageBase
+  suffix: Chief Engineer
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: JetpackVoidFilled
+        - id: ClothingShoesBootsMagAdv
+        - id: ClothingOuterHardsuitEngineeringWhite
+        - id: ClothingMaskBreath
+
+#CMO's hardsuit
+- type: entity
+  id: SuitStorageCMO
+  parent: SuitStorageBase
+  suffix: Chief Medical Officer
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitMedical
+        - id: ClothingMaskBreathMedical
+
+#RD's hardsuit
+- type: entity
+  id: SuitStorageRD
+  parent: SuitStorageBase
+  suffix: Research Director
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitRd
+        - id: ClothingMaskBreath
+
+#HOS's hardsuit
+- type: entity
+  id: SuitStorageHOS
+  parent: SuitStorageBase
+  suffix: Head of Security
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: JetpackSecurityFilled
+        - id: ClothingOuterHardsuitSecurityRed
+        - id: ClothingMaskGasSwat
+
+#Warden's hardsuit
+- type: entity
+  id: SuitStorageWarden
+  parent: SuitStorageBase
+  suffix: Warden
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitWarden
+        - id: ClothingMaskBreath
+
+#Captain's hardsuit
+- type: entity
+  id: SuitStorageCaptain
+  parent: SuitStorageBase
+  suffix: Captain
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitCap
+        - id: ClothingMaskGasCaptain
+
+#Salvage hardsuit
+- type: entity
+  id: SuitStorageSalv
+  parent: SuitStorageBase
+  suffix: Salvage
+  components:
+  - type: StorageFill
+    contents:
+      - id: NitrogenTankFilled
+      - id: YellowOxygenTankFilled
+      - id: ClothingShoesBootsMag
+      - id: ClothingOuterHardsuitSpatio
+      - id: ClothingMaskGasExplorer
+
+#Blood-red hardsuit
+- type: entity
+  id: SuitStorageSyndie
+  parent: SuitStorageBase
+  suffix: Syndicate Hardsuit
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitSyndie
+        - id: ClothingShoesBootsMagSyndie
+        - id: ClothingMaskGasSyndicate
+
+#Pirate Captain's hardsuit
+- type: entity
+  id: SuitStoragePirateCap
+  parent: SuitStorageBase
+  suffix: Pirate Captain
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitPirateCap
+        - id: ClothingMaskGas
+
+#Wizard
+- type: entity
+  id: SuitStorageWizard
+  parent: SuitStorageBase
+  suffix: Wizard
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitWizard
+        - id: ClothingMaskBreath
+        

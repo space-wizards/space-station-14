@@ -150,6 +150,7 @@ flavor-complex-parents = like someone's parents
 flavor-complex-alcohol = like alcohol
 flavor-complex-soda = like soda
 flavor-complex-juice = like juice
+flavor-complex-rocksandstones = like rocks and stones
 
 ## Basic drinks
 flavor-complex-water = like water
@@ -189,6 +190,7 @@ flavor-complex-gin-tonic = like spiked lemon-lime soda
 flavor-complex-screwdriver = like spiked orange juice
 flavor-complex-themartinez = like violets and lemon vodka
 flavor-complex-cogchamp = like brass
+flavor-complex-antifreeze = warm
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk

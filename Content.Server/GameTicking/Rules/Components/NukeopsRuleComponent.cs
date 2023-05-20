@@ -1,3 +1,4 @@
+using Content.Server.NPC.Components;
 using Content.Server.StationEvents.Events;
 using Content.Shared.Dataset;
 using Content.Shared.Humanoid.Prototypes;
@@ -7,6 +8,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -18,13 +20,13 @@ public sealed class NukeopsRuleComponent : Component
     /// The minimum needed amount of players
     /// </summary>
     [DataField("minPlayers")]
-    public int MinPlayers = 15;
+    public int MinPlayers = 20;
 
     /// <summary>
     ///     This INCLUDES the operatives. So a value of 3 is satisfied by 2 players & 1 operative
     /// </summary>
     [DataField("playersPerOperative")]
-    public int PlayersPerOperative = 5;
+    public int PlayersPerOperative = 10;
 
     [DataField("maxOps")]
     public int MaxOperatives = 5;
@@ -119,6 +121,9 @@ public sealed class NukeopsRuleComponent : Component
     /// todo: don't store sessions, dingus
     [DataField("operativePlayers")]
     public readonly Dictionary<string, IPlayerSession> OperativePlayers = new();
+
+    [DataField("faction", customTypeSerializer: typeof(PrototypeIdSerializer<FactionPrototype>), required: true)]
+    public string Faction = default!;
 }
 
 public enum WinType : byte

@@ -153,12 +153,45 @@ public sealed class FactionSystem : EntitySystem
         }
     }
 
-    public bool IsFriendly(EntityUid uidA, EntityUid uidB, FactionComponent? factionA = null, FactionComponent? factionB = null)
+    public bool IsEntityFriendly(EntityUid uidA, EntityUid uidB, FactionComponent? factionA = null, FactionComponent? factionB = null)
     {
         if (!Resolve(uidA, ref factionA, false) || !Resolve(uidB, ref factionB, false))
             return false;
 
         return factionA.Factions.Overlaps(factionB.Factions) || factionA.FriendlyFactions.Overlaps(factionB.Factions);
+    }
+
+    public bool IsFactionFriendly(string target, string with)
+    {
+        return _factions[target].Friendly.Contains(with) && _factions[with].Friendly.Contains(target);
+    }
+
+    public bool IsFactionFriendly(string target, EntityUid with, FactionComponent? factionWith = null)
+    {
+        if (!Resolve(with, ref factionWith, false))
+            return false;
+
+        return factionWith.Factions.All(x => IsFactionFriendly(target, x)) ||
+               factionWith.FriendlyFactions.Contains(target);
+    }
+
+    public bool IsFactionHostile(string target, string with)
+    {
+        return _factions[target].Hostile.Contains(with) && _factions[with].Hostile.Contains(target);
+    }
+
+    public bool IsFactionHostile(string target, EntityUid with, FactionComponent? factionWith = null)
+    {
+        if (!Resolve(with, ref factionWith, false))
+            return false;
+
+        return factionWith.Factions.All(x => IsFactionHostile(target, x)) ||
+               factionWith.HostileFactions.Contains(target);
+    }
+
+    public bool IsFactionNeutral(string target, string with)
+    {
+        return !IsFactionFriendly(target, with) && !IsFactionHostile(target, with);
     }
 
     /// <summary>
