@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Mind.Components;
 using Content.Server.Resist;
@@ -11,6 +10,7 @@ using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Storage.Components;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -23,7 +23,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
 
     public override void Initialize()
@@ -33,7 +33,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         SubscribeLocalEvent<BluespaceLockerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BluespaceLockerComponent, StorageBeforeOpenEvent>(PreOpen);
         SubscribeLocalEvent<BluespaceLockerComponent, StorageAfterCloseEvent>(PostClose);
-        SubscribeLocalEvent<BluespaceLockerComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<BluespaceLockerComponent, BluespaceLockerDoAfterEvent>(OnDoAfter);
     }
 
     private void OnStartup(EntityUid uid, BluespaceLockerComponent component, ComponentStartup args)
@@ -284,7 +284,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         {
             EnsureComp<DoAfterComponent>(uid);
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.BehaviorProperties.Delay));
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.BehaviorProperties.Delay, new BluespaceLockerDoAfterEvent(), uid));
             return;
         }
 

@@ -11,16 +11,58 @@
       bodyType: Static
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 190
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
     - type: Transform
       anchored: true
       noRot: false
     - type: Pullable
     - type: Clickable
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
+    - type: Appearance
+
+- type: entity
+  id: ParticleAcceleratorFinishedPart
+  parent: ParticleAcceleratorBase
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: completed
+      map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+    - state: unlitp
+      map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+      shader: unshaded
+      visible: false
+  - type: ParticleAcceleratorPart
+  - type: ParticleAcceleratorPartVisuals
+    stateBase: unlit
+  - type: Construction
+    node: completed
+
+- type: entity
+  id: ParticleAcceleratorUnfinishedBase
+  parent: ParticleAcceleratorBase
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: unwired
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          start: { state: unwired}
+          wired: { state: wired}
+  - type: Construction
+    node: start
+    defaultTarget: completed

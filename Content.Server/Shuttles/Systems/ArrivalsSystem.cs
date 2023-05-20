@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
@@ -12,6 +11,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Tiles;
@@ -21,7 +21,6 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -58,7 +57,6 @@ public sealed class ArrivalsSystem : EntitySystem
         SubscribeLocalEvent<ArrivalsShuttleComponent, EntityUnpausedEvent>(OnShuttleUnpaused);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLTagEvent>(OnShuttleTag);
 
-        SubscribeLocalEvent<StationInitializedEvent>(OnStationInit);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLStartedEvent>(OnArrivalsFTL);
 
@@ -137,6 +135,7 @@ public sealed class ArrivalsSystem : EntitySystem
                         break;
                     }
 
+                    RemCompDeferred<AutoOrientComponent>(uid);
                     RemCompDeferred<PendingClockInComponent>(uid);
                     shell.WriteLine(Loc.GetString("cmd-arrivals-forced", ("uid", ToPrettyString(uid))));
                 }
@@ -153,15 +152,16 @@ public sealed class ArrivalsSystem : EntitySystem
         _cfgManager.UnsubValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
     }
 
-    private void OnArrivalsFTL(EntityUid uid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
+    private void OnArrivalsFTL(EntityUid shuttleUid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
     {
         // Any mob then yeet them off the shuttle.
         if (!_cfgManager.GetCVar(CCVars.ArrivalsReturns) && args.FromMapUid != null)
         {
             var pendingEntQuery = GetEntityQuery<PendingClockInComponent>();
+            var arrivalsBlacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
             var mobQuery = GetEntityQuery<MobStateComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
-            DumpChildren(uid, ref args, pendingEntQuery, mobQuery, xformQuery);
+            DumpChildren(shuttleUid, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
 
         var pendingQuery = AllEntityQuery<PendingClockInComponent, TransformComponent>();
@@ -170,16 +170,18 @@ public sealed class ArrivalsSystem : EntitySystem
         while (pendingQuery.MoveNext(out var pUid, out _, out var xform))
         {
             // Cheaper to iterate pending arrivals than all children
-            if (xform.GridUid != uid)
+            if (xform.GridUid != shuttleUid)
                 continue;
 
             RemCompDeferred<PendingClockInComponent>(pUid);
+            RemCompDeferred<AutoOrientComponent>(pUid);
         }
     }
 
     private void DumpChildren(EntityUid uid,
         ref FTLStartedEvent args,
         EntityQuery<PendingClockInComponent> pendingEntQuery,
+        EntityQuery<ArrivalsBlacklistComponent> arrivalsBlacklistQuery,
         EntityQuery<MobStateComponent> mobQuery,
         EntityQuery<TransformComponent> xformQuery)
     {
@@ -188,7 +190,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         var xform = xformQuery.GetComponent(uid);
 
-        if (mobQuery.HasComponent(uid))
+        if (mobQuery.HasComponent(uid) || arrivalsBlacklistQuery.HasComponent(uid))
         {
             var rotation = xform.LocalRotation;
             _transform.SetCoordinates(uid, new EntityCoordinates(args.FromMapUid!.Value, args.FTLFrom.Transform(xform.LocalPosition)));
@@ -200,19 +202,17 @@ public sealed class ArrivalsSystem : EntitySystem
 
         while (children.MoveNext(out var child))
         {
-            DumpChildren(child.Value, ref args, pendingEntQuery, mobQuery, xformQuery);
+            DumpChildren(child.Value, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
-    }
-
-    private void OnStationInit(StationInitializedEvent ev)
-    {
-        EnsureComp<StationArrivalsComponent>(ev.Station);
     }
 
     private void OnPlayerSpawn(PlayerSpawningEvent ev)
     {
         // Only works on latejoin even if enabled.
         if (!Enabled || _ticker.RunLevel != GameRunLevel.InRound)
+            return;
+
+        if (!HasComp<StationArrivalsComponent>(ev.Station))
             return;
 
         var points = EntityQuery<SpawnPointComponent, TransformComponent>().ToList();
@@ -235,6 +235,7 @@ public sealed class ArrivalsSystem : EntitySystem
                     ev.Station);
 
                 EnsureComp<PendingClockInComponent>(ev.SpawnResult.Value);
+                EnsureComp<AutoOrientComponent>(ev.SpawnResult.Value);
                 return;
             }
         }
@@ -318,7 +319,7 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         var mapId = _mapManager.CreateMap();
 
-        if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap).ToString(), out var uids))
+        if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap), out var uids))
         {
             return;
         }
@@ -327,6 +328,7 @@ public sealed class ArrivalsSystem : EntitySystem
         {
             EnsureComp<ArrivalsSourceComponent>(id);
             EnsureComp<ProtectedGridComponent>(id);
+            EnsureComp<PreventPilotComponent>(id);
         }
 
         // Handle roundstart stations.

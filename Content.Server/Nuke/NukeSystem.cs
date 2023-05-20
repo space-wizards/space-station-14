@@ -2,7 +2,6 @@ using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
@@ -28,7 +27,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -67,7 +66,7 @@ namespace Content.Server.Nuke
             SubscribeLocalEvent<NukeComponent, NukeKeypadEnterMessage>(OnEnterButtonPressed);
 
             // Doafter events
-            SubscribeLocalEvent<NukeComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<NukeComponent, NukeDisarmDoAfterEvent>(OnDoAfter);
         }
 
         private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
@@ -559,16 +558,17 @@ namespace Content.Server.Nuke
 
         private void DisarmBombDoafter(EntityUid uid, EntityUid user, NukeComponent nuke)
         {
-            var doafter = new DoAfterEventArgs(user, nuke.DisarmDoafterLength, target: uid)
+            var doafter = new DoAfterArgs(user, nuke.DisarmDoafterLength, new NukeDisarmDoAfterEvent(), uid, target: uid)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = true
             };
 
-            _doAfterSystem.DoAfter(doafter);
+            if (!_doAfterSystem.TryStartDoAfter(doafter))
+                return;
+
             _popups.PopupEntity(Loc.GetString("nuke-component-doafter-warning"), user,
                 user, PopupType.LargeCaution);
         }

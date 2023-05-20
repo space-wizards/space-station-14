@@ -8,7 +8,7 @@
     <ScrollContainer>
         <BoxContainer Orientation="Vertical">
             <BoxContainer Orientation="Horizontal">
-                <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public"/>
+                <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public" SetSize="64 64"/>
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
                     <Label Name="NameLabel" Access="Public"/>
                     <Label Name="SubText" VerticalAlignment="Top" StyleClasses="LabelSubText" Access="Public"/>

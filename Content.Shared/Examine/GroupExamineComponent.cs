@@ -55,7 +55,7 @@ namespace Content.Shared.Examine
         ///     The icon path for the Examine Group.
         /// </summary>
         [DataField("icon")]
-        public SpriteSpecifier Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/examine-star.png"));
+        public SpriteSpecifier Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/examine-star.png"));
 
         /// <summary>
         ///     The text shown in the context verb menu.
@@ -73,14 +73,14 @@ namespace Content.Shared.Examine
     /// <summary>
     ///     An entry used when showing examine details
     /// </summary>
-    [Serializable, NetSerializable]
+    [Serializable, NetSerializable, DataDefinition]
     public sealed class ExamineEntry
     {
         /// <summary>
         ///     Which component does this entry relate to?
         /// </summary>
-        [DataField("component")]
-        public string ComponentName = string.Empty;
+        [DataField("component", required: true)]
+        public string ComponentName;
 
         /// <summary>
         ///     What priority has this entry - entries are sorted high to low.
@@ -91,8 +91,8 @@ namespace Content.Shared.Examine
         /// <summary>
         ///     The FormattedMessage of this entry.
         /// </summary>
-        [DataField("message")]
-        public FormattedMessage Message = new();
+        [DataField("message", required: true)]
+        public FormattedMessage Message;
 
         /// <param name="componentName">Should be set to _componentFactory.GetComponentName(component.GetType()) to properly function.</param>
         public ExamineEntry(string componentName, float priority, FormattedMessage message)
@@ -100,6 +100,13 @@ namespace Content.Shared.Examine
             ComponentName = componentName;
             Priority = priority;
             Message = message;
+        }
+
+        private ExamineEntry()
+        {
+            // parameterless ctor is required for data-definition serialization
+            Message = default!;
+            ComponentName = default!;
         }
     }
 

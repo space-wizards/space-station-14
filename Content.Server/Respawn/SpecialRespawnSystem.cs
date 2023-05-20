@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -19,6 +20,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
 
     public override void Initialize()
     {
@@ -84,7 +86,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
             return;
 
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
-            Respawn(component.Prototype, coords);
+            Respawn(uid, component.Prototype, coords);
 
         //If the above fails, spawn at the center of the grid on the station
         else
@@ -108,20 +110,21 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
                     break;
             }
 
-            Respawn(component.Prototype, pos);
+            Respawn(uid, component.Prototype, pos);
         }
     }
 
     /// <summary>
     /// Respawn the entity and log it.
     /// </summary>
+    /// <param name="oldEntity">The entity being deleted</param>
     /// <param name="prototype">The prototype being spawned</param>
     /// <param name="coords">The place where it will be spawned</param>
-    private void Respawn(string prototype, EntityCoordinates coords)
+    private void Respawn(EntityUid oldEntity, string prototype, EntityCoordinates coords)
     {
         var entity = Spawn(prototype, coords);
-        var name = MetaData(entity).EntityName;
-        _adminLog.Add(LogType.Respawn, LogImpact.High, $"{name} was deleted and was respawned at {coords.ToMap(EntityManager)}");
+        _adminLog.Add(LogType.Respawn, LogImpact.High, $"{ToPrettyString(oldEntity)} was deleted and was respawned at {coords.ToMap(EntityManager)} as {ToPrettyString(entity)}");
+        _chat.SendAdminAlert($"{MetaData(oldEntity).EntityName} was deleted and was respawned as {ToPrettyString(entity)}");
     }
 
         /// <summary>

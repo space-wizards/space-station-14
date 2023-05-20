@@ -36,21 +36,24 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Steel: 100
   - type: Stack
     stackType: Steel
+    baseLayer: base
+    layerStates:
+    - steel
+    - steel_2
+    - steel_3
   - type: Sprite
     state: steel_3
+    layers:
+    - state: plasteel_3
+      map: ["base"]
   - type: Item
     heldPrefix: steel
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - steel
-      - steel_2
-      - steel_3
   - type: FloorTile
     outputs:
     - Plating
@@ -74,21 +77,24 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Plasteel: 100
   - type: Stack
     stackType: Plasteel
+    baseLayer: base
+    layerStates:
+    - plasteel
+    - plasteel_2
+    - plasteel_3
   - type: Sprite
     state: plasteel_3
+    layers:
+    - state: plasteel_3
+      map: ["base"]
   - type: Item
     heldPrefix: plasteel
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plasteel
-      - plasteel_2
-      - plasteel_3
 
 - type: entity
   parent: SheetPlasteel

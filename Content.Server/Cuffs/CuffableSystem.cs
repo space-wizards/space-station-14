@@ -18,7 +18,7 @@ namespace Content.Server.Cuffs
 
         private void OnHandcuffGetState(EntityUid uid, HandcuffComponent component, ref ComponentGetState args)
         {
-            args.State = new HandcuffComponentState(component.OverlayIconState, component.Cuffing);
+            args.State = new HandcuffComponentState(component.OverlayIconState);
         }
 
         private void OnCuffableGetState(EntityUid uid, CuffableComponent component, ref ComponentGetState args)
@@ -33,7 +33,6 @@ namespace Content.Server.Cuffs
                 TryComp(component.LastAddedCuffs, out cuffs);
             args.State = new CuffableComponentState(component.CuffedHandCount,
                 component.CanStillInteract,
-                component.Uncuffing,
                 cuffs?.CuffedRSI,
                 $"{cuffs?.OverlayIconState}-{component.CuffedHandCount}",
                 cuffs?.Color);

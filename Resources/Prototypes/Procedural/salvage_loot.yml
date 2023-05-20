@@ -1,0 +1,90 @@
+# Loot tables
+#- type: weightedRandom
+#  id: SalvageLowValue
+#  weights:
+    # Common
+#    CrateSalvageAssortedGoodies: 1.0
+    # Uncommon
+    # TODO:
+    # Rare
+
+- type: weightedRandom
+  id: SalvageHighValue
+  weights:
+    # Common
+    CrateMaterialPlasteel: 1.0
+    CrateMaterialWood: 1.0
+    CrateMaterialPlastic: 1.0
+    CrateSalvageEquipment: 1.0
+    CrateMaterialSteel: 1.0
+    CrateMaterialGlass: 1.0
+    # Uncommon
+    SuperCapacitorStockPart: 0.25
+    PicoManipulatorStockPart: 0.25
+    SuperMatterBinStockPart: 0.25
+    # Rare
+    QuadraticCapacitorStockPart: 0.10
+    FemtoManipulatorStockPart: 0.10
+    BluespaceMatterBinStockPart: 0.10
+
+# Crates
+#- type: salvageLoot
+#  id: LowValue
+#  desc: Commodities
+#  blacklist:
+#    - Mining
+#  loots:
+#    - !type:DungeonClusterLoot
+#      lootTable: SalvageLowValue
+#      clusters: 3
+#      clusterAmount: 3
+
+- type: salvageLoot
+  id: HighValue
+  desc: High-value commodities
+  blacklist:
+    - Mining
+  loots:
+    - !type:DungeonClusterLoot
+      lootTable: SalvageHighValue
+      clusters: 5
+      clusterAmount: 1
+
+# Ores
+# - Low value
+- type: salvageLoot
+  id: OreTin
+  desc: Veins of steel
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreTin
+
+# - Medium value
+- type: salvageLoot
+  id: OreGold
+  desc: Veins of gold ore
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreGold
+
+- type: salvageLoot
+  id: OreSilver
+  desc: Veins of silver ore
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreSilver
+
+# - High value
+- type: salvageLoot
+  id: OrePlasma
+  desc: Veins of plasma ore
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OrePlasma
+
+- type: salvageLoot
+  id: OreUranium
+  desc: Veins of uranium ore
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreUranium

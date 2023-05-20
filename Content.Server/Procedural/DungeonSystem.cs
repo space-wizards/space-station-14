@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Construction;
-using Content.Server.CPUJob.JobQueues.Queues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
 using Content.Shared.CCVar;
@@ -40,6 +40,8 @@ public sealed partial class DungeonSystem : EntitySystem
         base.Initialize();
         _sawmill = Logger.GetSawmill("dungen");
         _console.RegisterCommand("dungen", Loc.GetString("cmd-dungen-desc"), Loc.GetString("cmd-dungen-help"), GenerateDungeon, CompletionCallback);
+        _console.RegisterCommand("dungen_preset_vis", Loc.GetString("cmd-dungen_preset_vis-desc"), Loc.GetString("cmd-dungen_preset_vis-help"), DungeonPresetVis, PresetCallback);
+        _console.RegisterCommand("dungen_pack_vis", Loc.GetString("cmd-dungen_pack_vis-desc"), Loc.GetString("cmd-dungen_pack_vis-help"), DungeonPackVis, PackCallback);
         _prototype.PrototypesReloaded += PrototypeReload;
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
@@ -143,7 +145,7 @@ public sealed partial class DungeonSystem : EntitySystem
         while (query.MoveNext(out var uid, out comp))
         {
             // Exists
-            if (comp.Path?.Equals(proto.AtlasPath) == true)
+            if (comp.Path.Equals(proto.AtlasPath))
                 return Transform(uid).MapID;
         }
 
@@ -159,7 +161,7 @@ public sealed partial class DungeonSystem : EntitySystem
     public void GenerateDungeon(DungeonConfigPrototype gen,
         EntityUid gridUid,
         MapGridComponent grid,
-        Vector2 position,
+        Vector2i position,
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
@@ -191,7 +193,7 @@ public sealed partial class DungeonSystem : EntitySystem
         DungeonConfigPrototype gen,
         EntityUid gridUid,
         MapGridComponent grid,
-        Vector2 position,
+        Vector2i position,
         int seed)
     {
         var cancelToken = new CancellationTokenSource();

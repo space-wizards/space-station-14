@@ -9,23 +9,24 @@
     - type: Lock
     - type: Sprite
       drawdepth: Objects
-      netsync: false
       sprite: Structures/Storage/Crates/artifact.rsi
       layers:
-        - state: artifact_container
-        - state: artifact_container_door
-          map: ["enum.StorageVisualLayers.Door"]
-        - state: welded
-          visible: false
-          map: ["enum.WeldableLayers.BaseWelded"]
-        - state: locked
-          map: ["enum.StorageVisualLayers.Lock"]
-          shader: unshaded
+      - state: artifact_container
+        map: ["enum.StorageVisualLayers.Base"]
+      - state: artifact_container_door
+        map: ["enum.StorageVisualLayers.Door"]
+      - state: welded
+        visible: false
+        map: ["enum.WeldableLayers.BaseWelded"]
+      - state: locked
+        map: ["enum.StorageVisualLayers.Lock"]
+        shader: unshaded
     - type: InteractionOutline
     - type: Physics
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.45
           density: 75
@@ -64,10 +65,9 @@
           components:
             - Paper
     - type: Appearance
-      visuals:
-        - type: StorageVisualizer
-          state_open: artifact_container_open
-          state_closed: artifact_container_door
+    - type: EntityStorageVisuals
+      stateDoorOpen: artifact_container_open
+      stateDoorClosed: artifact_container_door
     - type: ItemSlots
     - type: ContainerContainer
       containers:

@@ -43,46 +43,12 @@ namespace Content.Shared.Tools.Components
     [ByRefEvent]
     public struct ToolUserAttemptUseEvent
     {
-        public EntityUid User;
         public EntityUid? Target;
         public bool Cancelled = false;
 
-        public ToolUserAttemptUseEvent(EntityUid user, EntityUid? target)
+        public ToolUserAttemptUseEvent(EntityUid? target)
         {
-            User = user;
             Target = target;
-        }
-    }
-
-    /// <summary>
-    ///     Attempt event called *after* any do afters to see if the tool usage should succeed or not.
-    ///     You can use this event to consume any fuel needed.
-    /// </summary>
-    public sealed class ToolUseFinishAttemptEvent : CancellableEntityEventArgs
-    {
-        public float Fuel { get; }
-        public EntityUid User { get; }
-
-        public ToolUseFinishAttemptEvent(float fuel, EntityUid user)
-        {
-            User = user;
-            Fuel = fuel;
-        }
-    }
-
-    public sealed class ToolEventData
-    {
-        public readonly Object? Ev;
-        public readonly Object? CancelledEv;
-        public readonly float Fuel;
-        public readonly EntityUid? TargetEntity;
-
-        public ToolEventData(Object? ev, float fuel = 0f, Object? cancelledEv = null, EntityUid? targetEntity = null)
-        {
-            Ev = ev;
-            CancelledEv = cancelledEv;
-            Fuel = fuel;
-            TargetEntity = targetEntity;
         }
     }
 }

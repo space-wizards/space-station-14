@@ -59,10 +59,30 @@
   - type: StorageFill
     contents:
       - id: Brutepack
-        amount: 3
+        amount: 2
       - id: Ointment
-        amount: 3
+        amount: 2
+      - id: Bloodpack
+        amount: 2
+      - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
+
+- type: entity
+  id: ClothingBeltParamedicFilled
+  parent: ClothingBeltMedical
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 1
+      - id: Ointment
+        amount: 1
+      - id: Bloodpack
+        amount: 1
+      - id: Gauze
+      - id: EmergencyMedipen #You never know what people are going to latejoin into
+        amount: 6
 
 - type: entity
   id: ClothingBeltPlantFilled
@@ -97,7 +117,6 @@
       - id: EphedrineChemistryBottle
         amount: 2
       - id: OmnizineChemistryBottle
-        amount: 1
       - id: MedkitCombatFilled
 
 - type: entity

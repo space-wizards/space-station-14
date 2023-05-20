@@ -67,7 +67,7 @@ public sealed class FloorTileSystem : EntitySystem
             var results = _physics.IntersectRay(locationMap.MapId, ray, dir.Length, returnOnFirstHit: true);
             canAccessCenter = !results.Any();
         }
-        
+
         // if user can access tile center then they can place floor
         // otherwise check it isn't blocked by a wall
         if (!canAccessCenter)
@@ -117,12 +117,18 @@ public sealed class FloorTileSystem : EntitySystem
             }
             else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
             {
+                if (!_stackSystem.Use(uid, 1, stack))
+                    continue;
+
+                args.Handled = true;
+                if (_netManager.IsClient)
+                    return;
+
                 mapGrid = _mapManager.CreateGrid(locationMap.MapId);
                 var gridXform = Transform(mapGrid.Owner);
                 _transform.SetWorldPosition(gridXform, locationMap.Position);
                 location = new EntityCoordinates(mapGrid.Owner, Vector2.Zero);
                 PlaceAt(args.User, mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
-                args.Handled = true;
                 return;
             }
         }
@@ -130,13 +136,7 @@ public sealed class FloorTileSystem : EntitySystem
 
     public bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
     {
-        foreach (var tileBaseTurf in tileDef.BaseTurfs)
-        {
-            if (baseTurf == tileBaseTurf)
-                return true;
-        }
-
-        return false;
+        return tileDef.BaseTurf == baseTurf;
     }
 
     private void PlaceAt(EntityUid user, MapGridComponent mapGrid, EntityCoordinates location, ushort tileId, SoundSpecifier placeSound, float offset = 0)

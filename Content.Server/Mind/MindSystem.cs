@@ -75,12 +75,10 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     private void InternalEjectMind(EntityUid uid, MindContainerComponent? mind = null)
     {
-        if (!Resolve(uid, ref mind))
+        if (!Resolve(uid, ref mind, false))
             return;
 
-        if (!Deleted(uid))
-            RaiseLocalEvent(uid, new MindRemovedMessage(), true);
-
+        RaiseLocalEvent(uid, new MindRemovedMessage(), true);
         mind.Mind = null;
     }
 

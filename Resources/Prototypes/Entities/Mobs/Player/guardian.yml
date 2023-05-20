@@ -7,12 +7,13 @@
   save: false
   components:
     - type: LagCompensation
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Guardian
-      description: Listen to your owner. Don't tank damage. Punch people hard.
+      name: ghost-role-information-guardian-name
+      description: ghost-role-information-guardian-description
+    - type: GhostTakeoverAvailable
     - type: Input
       context: "human"
     - type: MobMover
@@ -58,7 +59,8 @@
       bodyType: KinematicController
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.35
           density: 25
@@ -104,12 +106,13 @@
   parent: MobGuardianBase
   description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Holoparasite
-      description: Listen to your owner. Don't tank damage. Punch people hard.
+      name: ghost-role-information-holoparasite-name
+      description: ghost-role-information-holoparasite-description
+    - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite
     - type: TypingIndicator
@@ -130,12 +133,13 @@
   id: MobIfritGuardian
   description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Ifrit
-      description: Listen to your owner. Don't tank damage. Punch people hard.
+      name: ghost-role-information-ifrit-name
+      description: ghost-role-information-ifrit-description
+    - type: GhostTakeoverAvailable
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.BaseUnshaded:

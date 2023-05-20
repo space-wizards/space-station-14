@@ -9,13 +9,14 @@
     layers:
     - state: old-radio
     netsync: false
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanSyndicateAgent
+  - type: GhostRole
     name: Syndicate Agent
     description: Someone needs reinforcements. You, the first person the syndicate could find, will help them.
     rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanSyndicateAgent
   - type: EmitSoundOnUse
-    sound: /Audio/Misc/emergency_meeting.ogg
+    sound: /Audio/Effects/Emotes/parp1.ogg
   - type: ItemCooldown
   - type: UseDelay
     delay: 300

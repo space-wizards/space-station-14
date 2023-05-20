@@ -261,6 +261,16 @@
 
 - type: entity
   parent: AirlockSecurity
+  id: AirlockDetectiveLocked
+  suffix: Detective, Locked
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
+  - type: Wires
+    LayoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockSecurity
   id: AirlockBrigLocked
   suffix: Brig, Locked
   components:
@@ -506,6 +516,14 @@
 
 - type: entity
   parent: AirlockSecurityGlass
+  id: AirlockDetectiveGlassLocked
+  suffix: Detective, Locked
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
+
+- type: entity
+  parent: AirlockSecurityGlass
   id: AirlockBrigGlassLocked
   suffix: Brig, Locked
   components:
@@ -688,6 +706,14 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintDetectiveLocked
+  suffix: Detective, Locked
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
 
 - type: entity
   parent: AirlockMaint

@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,6 +12,8 @@ namespace Content.Shared.Decals
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
 
+        protected bool PvsEnabled;
+
         // Note that this constant is effectively baked into all map files, because of how they save the grid decal component.
         // So if this ever needs changing, the maps need converting.
         public const int ChunkSize = 32;
@@ -22,13 +25,36 @@ namespace Content.Shared.Decals
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
             SubscribeLocalEvent<DecalGridComponent, ComponentStartup>(OnCompStartup);
+            SubscribeLocalEvent<DecalGridComponent, ComponentGetState>(OnGetState);
+        }
+
+        private void OnGetState(EntityUid uid, DecalGridComponent component, ref ComponentGetState args)
+        {
+            if (PvsEnabled && !args.ReplayState)
+                return;
+
+            // Should this be a full component state or a delta-state?
+            if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
+            {
+                args.State = new DecalGridState(component.ChunkCollection.ChunkCollection);
+                return;
+            }
+
+            var data = new Dictionary<Vector2i, DecalChunk>();
+            foreach (var (index, chunk) in component.ChunkCollection.ChunkCollection)
+            {
+                if (chunk.LastModified >= args.FromTick)
+                    data[index] = chunk;
+            }
+
+            args.State = new DecalGridState(data) { AllChunks = new(component.ChunkCollection.ChunkCollection.Keys) };
         }
 
         private void OnGridInitialize(GridInitializeEvent msg)
         {
             EnsureComp<DecalGridComponent>(msg.EntityUid);
         }
-        
+
         private void OnCompStartup(EntityUid uid, DecalGridComponent component, ComponentStartup args)
         {
             foreach (var (indices, decals) in component.ChunkCollection.ChunkCollection)
