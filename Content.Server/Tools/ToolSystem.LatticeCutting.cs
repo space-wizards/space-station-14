@@ -34,7 +34,7 @@ public sealed partial class ToolSystem
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
             || !tileDef.CanWirecutter
-            || tileDef.BaseTurfs.Count == 0
+            || string.IsNullOrEmpty(tileDef.BaseTurf)
             || tile.IsBlockedTurf(true))
             return;
 
@@ -66,8 +66,8 @@ public sealed partial class ToolSystem
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
             || !tileDef.CanWirecutter
-            || tileDef.BaseTurfs.Count == 0
-            || _tileDefinitionManager[tileDef.BaseTurfs[^1]] is not ContentTileDefinition newDef
+            || string.IsNullOrEmpty(tileDef.BaseTurf)
+            || _tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef
             || tile.IsBlockedTurf(true))
             return false;
 

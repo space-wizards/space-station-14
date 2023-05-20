@@ -2,8 +2,7 @@
   id: Plating
   name: tiles-plating
   sprite: /Textures/Tiles/plating.png
-  baseTurfs:
-  - Lattice
+  baseTurf: Lattice
   isSubfloor: true
   footstepSounds:
     collection: FootstepPlating
@@ -14,8 +13,7 @@
   id: Lattice
   name: tiles-lattice
   sprite: /Textures/Tiles/lattice.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canWirecutter: true
   weather: true
@@ -26,7 +24,3 @@
   itemDrop: PartRodMetal1
   heatCapacity: 10000
 
-# The final step in underplating's deprecation before it gets completely wiped from the codebase.
-- type: tileAlias
-  id: UnderPlating
-  target: Plating

@@ -794,8 +794,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             {
                 query = filter.DateOrder switch
                 {
-                    DateOrder.Ascending => query.Where(log => log.Id < filter.LastLogId),
-                    DateOrder.Descending => query.Where(log => log.Id > filter.LastLogId),
+                    DateOrder.Ascending => query.Where(log => log.Id > filter.LastLogId),
+                    DateOrder.Descending => query.Where(log => log.Id < filter.LastLogId),
                     _ => throw new ArgumentOutOfRangeException(nameof(filter),
                         $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
                 };
@@ -860,6 +860,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             {
                 yield return json;
             }
+        }
+
+        public async Task<int> CountAdminLogs(int round)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.AdminLog.CountAsync(log => log.RoundId == round);
         }
 
         #endregion

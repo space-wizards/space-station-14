@@ -56,6 +56,13 @@ namespace Content.Shared.Zombies
         public float ZombieMovementSpeedDebuff = 0.75f;
 
         /// <summary>
+        /// How long it takes our bite victims to turn in seconds (max).
+        ///   Will roll 25% - 100% of this on bite.
+        /// </summary>
+        [DataField("zombieInfectionTurnTime"), ViewVariables(VVAccess.ReadWrite)]
+        public float ZombieInfectionTurnTime = 240.0f;
+
+        /// <summary>
         /// The skin color of the zombie
         /// </summary>
         [DataField("skinColor")]
