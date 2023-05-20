@@ -83,7 +83,7 @@ public sealed class HealingSystem : EntitySystem
     //
     //     args.Handled = true;
     // }
-
+/*
     private void OnDoAfter(EntityUid uid, DamageableComponent component, HealingDoAfterEvent args)
     {
         var dontRepeat = false;
@@ -144,6 +144,7 @@ public sealed class HealingSystem : EntitySystem
             _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), uid);
         args.Handled = true;
     }
+
 
     private bool HasDamage(DamageableComponent component, HealingComponent healing)
     {
@@ -228,6 +229,7 @@ public sealed class HealingSystem : EntitySystem
         _doAfter.TryStartDoAfter(doAfterEventArgs);
         return true;
     }
+    */
 
     /// <summary>
     /// Scales the self-heal penalty based on the amount of damage taken

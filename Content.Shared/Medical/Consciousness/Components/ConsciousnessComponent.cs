@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Medical.Consciousness.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState()]
-public sealed class ConsciousnessComponent : Component
+public sealed partial class ConsciousnessComponent : Component
 {
     //Unconsciousness threshold, ie: when does this entity pass out
     [DataField("threshold", required: true), AutoNetworkedField()]
