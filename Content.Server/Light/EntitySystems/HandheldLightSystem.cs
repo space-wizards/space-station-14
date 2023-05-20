@@ -1,5 +1,8 @@
+using Content.Server.Actions;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
@@ -8,7 +11,10 @@ using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -31,6 +37,7 @@ namespace Content.Server.Light.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<HandheldLightComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
 
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
@@ -38,7 +45,41 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
 
+            SubscribeLocalEvent<HandheldLightComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<HandheldLightComponent, ToggleActionEvent>(OnToggleAction);
+
+            SubscribeLocalEvent<HandheldLightComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+            SubscribeLocalEvent<HandheldLightComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        }
+
+        private void OnEntInserted(
+            EntityUid uid,
+            HandheldLightComponent component,
+            EntInsertedIntoContainerMessage args)
+        {
+            // Not guaranteed to be the correct container for our slot, I don't care.
+            UpdateLevel(uid, component);
+        }
+
+        private void OnEntRemoved(
+            EntityUid uid,
+            HandheldLightComponent component,
+            EntRemovedFromContainerMessage args)
+        {
+            // Ditto above
+            UpdateLevel(uid, component);
+        }
+
+        private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetItemActionsEvent args)
+        {
+            if (component.ToggleAction == null
+                && _proto.TryIndex(component.ToggleActionId, out InstantActionPrototype? act))
+            {
+                component.ToggleAction = new(act);
+            }
+
+            if (component.ToggleAction != null)
+                args.Actions.Add(component.ToggleAction);
         }
 
         private void OnToggleAction(EntityUid uid, HandheldLightComponent component, ToggleActionEvent args)
@@ -73,6 +114,11 @@ namespace Content.Server.Light.EntitySystems
             return (byte?) ContentHelpers.RoundToNearestLevels(battery.CurrentCharge / battery.MaxCharge * 255, 255, HandheldLightComponent.StatusLevels);
         }
 
+        private void OnRemove(EntityUid uid, HandheldLightComponent component, ComponentRemove args)
+        {
+            _activeLights.Remove(component);
+        }
+
         private void OnActivate(EntityUid uid, HandheldLightComponent component, ActivateInWorldEvent args)
         {
             if (args.Handled)
@@ -96,6 +142,36 @@ namespace Content.Server.Light.EntitySystems
             args.PushMarkup(component.Activated
                 ? Loc.GetString("handheld-light-component-on-examine-is-on-message")
                 : Loc.GetString("handheld-light-component-on-examine-is-off-message"));
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _activeLights.Clear();
+        }
+
+        public override void Update(float frameTime)
+        {
+            var toRemove = new RemQueue<HandheldLightComponent>();
+
+            foreach (var handheld in _activeLights)
+            {
+                var uid = handheld.Owner;
+
+                if (handheld.Deleted)
+                {
+                    toRemove.Add(handheld);
+                    continue;
+                }
+
+                if (Paused(uid)) continue;
+                TryUpdate(uid, handheld, frameTime);
+            }
+
+            foreach (var light in toRemove)
+            {
+                _activeLights.Remove(light);
+            }
         }
 
         private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetVerbsEvent<ActivationVerb> args)

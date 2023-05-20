@@ -27,6 +27,25 @@ namespace Content.Shared.Zombies
         public float MaxZombieInfectionChance = 0.40f;
 
         /// <summary>
+        /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ZombiePermadeathChance = 0.70f;
+
+        /// <summary>
+        /// Chance that this zombie will be healed (rolled each second when in crit or dead)
+        ///   3% means you have a 60% chance after 30 secs and a 84% chance after 60.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ZombieReviveChance = 0.03f;
+
+        /// <summary>
+        /// Has this zombie stopped healing now that it's died for real?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Permadeath = false;
+
+        /// <summary>
         /// The minimum infection chance possible. This is simply to prevent
         /// being invincible by bundling up.
         /// </summary>
@@ -35,6 +54,13 @@ namespace Content.Shared.Zombies
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ZombieMovementSpeedDebuff = 0.75f;
+
+        /// <summary>
+        /// How long it takes our bite victims to turn in seconds (max).
+        ///   Will roll 25% - 100% of this on bite.
+        /// </summary>
+        [DataField("zombieInfectionTurnTime"), ViewVariables(VVAccess.ReadWrite)]
+        public float ZombieInfectionTurnTime = 240.0f;
 
         /// <summary>
         /// The skin color of the zombie
@@ -97,8 +123,9 @@ namespace Content.Shared.Zombies
         {
             DamageDict = new ()
             {
-                { "Blunt", -0.3 },
+                { "Blunt", -0.4 },
                 { "Slash", -0.2 },
+                { "Piercing", -0.2 },
                 { "Heat", -0.2 },
                 { "Cold", -0.2 },
                 { "Shock", -0.2 },

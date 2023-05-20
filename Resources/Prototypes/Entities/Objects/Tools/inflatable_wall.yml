@@ -23,13 +23,7 @@
     - type: Tag
       tags:
         - DroneUsable
-#    - type: Appearance # TODO: Add stack sprites
-#      visuals:
-#        - type: StackVisualizer
-#          stackLayers:
-#            - coillv-10
-#            - coillv-20
-#            - coillv-30
+# TODO: Add stack sprites + visuals.
 
 - type: entity
   id: InflatableDoorStack
@@ -56,6 +50,7 @@
     - type: Tag
       tags:
         - DroneUsable
+# TODO: Add stack sprites + visuals.
 
 - type: entity
   parent: InflatableWallStack
