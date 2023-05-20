@@ -8,6 +8,8 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
     size: 30
+  - type: GunRequiresWield
+  - type: Wieldable
   - type: Gun
     fireRate: 0.75
     selectedMode: SemiAuto
