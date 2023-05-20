@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Maps;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -32,13 +33,16 @@ public sealed class StationJobsTest
   stations:
     Station:
       mapNameTemplate: FooStation
-      overflowJobs:
-      - Assistant
-      availableJobs:
-        TMime: [0, -1]
-        TAssistant: [-1, -1]
-        TCaptain: [5, 5]
-        TClown: [5, 6]
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationJobs
+          overflowJobs:
+          - Assistant
+          availableJobs:
+            TMime: [0, -1]
+            TAssistant: [-1, -1]
+            TCaptain: [5, 5]
+            TClown: [5, 6]
 
 - type: job
   id: TAssistant
@@ -213,7 +217,10 @@ public sealed class StationJobsTest
             {
                 foreach (var (stationId, station) in gameMap.Stations)
                 {
-                    foreach (var job in station.AvailableJobs.Keys)
+                    if (!station.StationComponentOverrides.TryGetComponent("StationJobs", out var comp))
+                        continue;
+
+                    foreach (var (job, _) in ((StationJobsComponent)comp).SetupAvailableJobs)
                     {
                         Assert.That(invalidJobs.Contains(job), Is.False, $"Station {stationId} contains job prototype {job} which cannot be present roundstart.");
                     }

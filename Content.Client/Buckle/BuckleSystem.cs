@@ -70,7 +70,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             !buckled ||
             args.Sprite == null)
         {
-            _rotationVisualizerSystem.SetHorizontalAngle(uid, RotationVisualsComponent.DefaultRotation, rotVisuals);
+            _rotationVisualizerSystem.SetHorizontalAngle(uid, rotVisuals.DefaultRotation, rotVisuals);
             return;
         }
 

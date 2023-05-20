@@ -34,7 +34,7 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
     [Dependency]
-    private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
+    private readonly ChemicalReactionSystem _chemistrySystem = default!;
 
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -124,6 +124,14 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     public Solution SplitSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity)
     {
         var splitSol = solutionHolder.SplitSolution(quantity);
+        UpdateChemicals(targetUid, solutionHolder);
+        return splitSol;
+    }
+
+    public Solution SplitStackSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity, int stackCount)
+    {
+        var splitSol = solutionHolder.SplitSolution(quantity / stackCount);
+        solutionHolder.SplitSolution(quantity - splitSol.Volume);
         UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }

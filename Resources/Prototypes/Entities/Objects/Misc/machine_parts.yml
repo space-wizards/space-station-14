@@ -21,6 +21,7 @@
   name: capacitor
   parent: BaseStockPart
   description: A basic capacitor used in the construction of a variety of devices.
+  suffix: Rating 1
   components:
     - type: Sprite
       state: capacitor
@@ -33,6 +34,7 @@
   name: manipulator
   parent: BaseStockPart
   description: A basic manipulator used in the construction of a variety of devices.
+  suffix: Rating 1
   components:
     - type: Sprite
       state: micro_mani
@@ -45,6 +47,7 @@
   name: matter bin
   parent: BaseStockPart
   description: A basic matter bin used in the construction of a variety of devices.
+  suffix: Rating 1
   components:
     - type: Sprite
       state: matter_bin
@@ -59,6 +62,7 @@
   name: advanced capacitor
   parent: CapacitorStockPart
   description: An advanced capacitor used in the construction of a variety of devices.
+  suffix: Rating 2
   components:
     - type: Sprite
       state: adv_capacitor
@@ -70,6 +74,7 @@
   name: advanced manipulator
   parent: MicroManipulatorStockPart
   description: An advanced manipulator used in the construction of a variety of devices.
+  suffix: Rating 2
   components:
     - type: Sprite
       state: nano_mani
@@ -81,6 +86,7 @@
   name: advanced matter bin
   parent: MatterBinStockPart
   description: An advanced matter bin used in the construction of a variety of devices.
+  suffix: Rating 2
   components:
     - type: Sprite
       state: advanced_matter_bin
@@ -94,6 +100,7 @@
   name: super capacitor
   parent: CapacitorStockPart
   description: A super capacitor used in the construction of a variety of devices.
+  suffix: Rating 3
   components:
     - type: Sprite
       state: super_capacitor
@@ -105,6 +112,7 @@
   name: super manipulator
   parent: MicroManipulatorStockPart
   description: A super manipulator used in the construction of a variety of devices.
+  suffix: Rating 3
   components:
     - type: Sprite
       state: pico_mani
@@ -116,6 +124,7 @@
   name: super matter bin
   parent: MatterBinStockPart
   description: A super matter bin used in the construction of a variety of devices.
+  suffix: Rating 3
   components:
     - type: Sprite
       state: super_matter_bin
@@ -129,6 +138,7 @@
   name: bluespace capacitor
   parent: CapacitorStockPart
   description: A bluespace capacitor used in the construction of a variety of devices.
+  suffix: Rating 4
   components:
     - type: Sprite
       state: quadratic_capacitor
@@ -140,6 +150,7 @@
   name: bluespace manipulator
   parent: MicroManipulatorStockPart
   description: A bluespace manipulator used in the construction of a variety of devices.
+  suffix: Rating 4
   components:
     - type: Sprite
       state: femto_mani
@@ -151,6 +162,7 @@
   name: bluespace matter bin
   parent: MatterBinStockPart
   description: A bluespace matter bin used in the construction of a variety of devices.
+  suffix: Rating 4
   components:
     - type: Sprite
       state: bluespace_matter_bin

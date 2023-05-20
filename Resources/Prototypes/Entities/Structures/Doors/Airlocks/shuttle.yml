@@ -6,6 +6,23 @@
   description: Necessary for connecting two space craft together.
   components:
   - type: Docking
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        density: 100
+        mask:
+          - FullTileMask
+        layer:
+          - AirlockLayer
+      docking:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+          position: "0,-0.5"
+        hard: false
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi
