@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Construction;
-using Content.Server.CPUJob.JobQueues.Queues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
 using Content.Shared.CCVar;
@@ -145,7 +145,7 @@ public sealed partial class DungeonSystem : EntitySystem
         while (query.MoveNext(out var uid, out comp))
         {
             // Exists
-            if (comp.Path?.Equals(proto.AtlasPath) == true)
+            if (comp.Path.Equals(proto.AtlasPath))
                 return Transform(uid).MapID;
         }
 
@@ -161,7 +161,7 @@ public sealed partial class DungeonSystem : EntitySystem
     public void GenerateDungeon(DungeonConfigPrototype gen,
         EntityUid gridUid,
         MapGridComponent grid,
-        Vector2 position,
+        Vector2i position,
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
@@ -193,7 +193,7 @@ public sealed partial class DungeonSystem : EntitySystem
         DungeonConfigPrototype gen,
         EntityUid gridUid,
         MapGridComponent grid,
-        Vector2 position,
+        Vector2i position,
         int seed)
     {
         var cancelToken = new CancellationTokenSource();

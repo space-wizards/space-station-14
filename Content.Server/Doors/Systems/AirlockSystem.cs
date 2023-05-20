@@ -1,3 +1,4 @@
+using Content.Server.DeviceLinking.Events;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Tools.Components;
@@ -8,6 +9,7 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Content.Shared.Wires;
+using Content.Server.MachineLinking.System;
 
 namespace Content.Server.Doors.Systems
 {
@@ -15,12 +17,15 @@ namespace Content.Server.Doors.Systems
     {
         [Dependency] private readonly WiresSystem _wiresSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<AirlockComponent, ComponentInit>(OnAirlockInit);
+            SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
+
             SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<AirlockComponent, DoorStateChangedEvent>(OnStateChanged);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
@@ -28,6 +33,7 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
             SubscribeLocalEvent<AirlockComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
+
         }
 
         private void OnAirlockInit(EntityUid uid, AirlockComponent component, ComponentInit args)
@@ -35,6 +41,14 @@ namespace Content.Server.Doors.Systems
             if (TryComp<ApcPowerReceiverComponent>(uid, out var receiverComponent))
             {
                 Appearance.SetData(uid, DoorVisuals.Powered, receiverComponent.Powered);
+            }
+        }
+
+        private void OnSignalReceived(EntityUid uid, AirlockComponent component, ref SignalReceivedEvent args)
+        {
+            if (args.Port == component.AutoClosePort)
+            {
+                component.AutoClose = false;
             }
         }
 

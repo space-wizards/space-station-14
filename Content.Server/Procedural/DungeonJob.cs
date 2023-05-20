@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Construction;
-using Content.Server.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Decals;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
@@ -28,7 +28,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
     private readonly DungeonConfigPrototype _gen;
     private readonly int _seed;
-    private readonly Vector2 _position;
+    private readonly Vector2i _position;
 
     private readonly MapGridComponent _grid;
     private readonly EntityUid _gridUid;
@@ -51,7 +51,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
         MapGridComponent grid,
         EntityUid gridUid,
         int seed,
-        Vector2 position,
+        Vector2i position,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _sawmill = sawmill;

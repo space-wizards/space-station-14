@@ -43,8 +43,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<SharedEntityStorageComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<SharedEntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[]{typeof(LockSystem)});
+        SubscribeLocalEvent<SharedEntityStorageComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<SharedEntityStorageComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<SharedEntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[] { typeof(LockSystem) });
         SubscribeLocalEvent<SharedEntityStorageComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<SharedEntityStorageComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<SharedEntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
@@ -76,11 +77,16 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         component.IsWeldedShut = state.IsWeldedShut;
     }
 
-    protected virtual void OnInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
+    protected virtual void OnComponentInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
     {
         component.Contents = _container.EnsureContainer<Container>(uid, ContainerName);
         component.Contents.ShowContents = component.ShowContents;
         component.Contents.OccludesLight = component.OccludesLight;
+    }
+
+    protected virtual void OnComponentStartup(EntityUid uid, SharedEntityStorageComponent component, ComponentStartup args)
+    {
+        _appearance.SetData(uid, StorageVisuals.Open, component.Open);
     }
 
     private void OnInteract(EntityUid uid, SharedEntityStorageComponent component, ActivateInWorldEvent args)
@@ -146,13 +152,13 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (component.Open)
         {
             verb.Text = Loc.GetString("verb-common-close");
-            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
+            verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
         }
         else
         {
             verb.Text = Loc.GetString("verb-common-open");
             verb.Icon = new SpriteSpecifier.Texture(
-                new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
+                new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
         }
         verb.Act = () => ToggleOpen(args.User, args.Target, component);
         args.Verbs.Add(verb);

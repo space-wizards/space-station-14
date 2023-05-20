@@ -12,5 +12,5 @@ public sealed class StationArrivalsComponent : Component
     [DataField("shuttle")]
     public EntityUid Shuttle;
 
-    [DataField("shuttlePath")] public ResourcePath ShuttlePath = new("/Maps/Shuttles/arrivals.yml");
+    [DataField("shuttlePath")] public ResPath ShuttlePath = new("/Maps/Shuttles/arrivals.yml");
 }

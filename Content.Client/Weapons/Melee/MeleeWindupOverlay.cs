@@ -29,7 +29,7 @@ public sealed class MeleeWindupOverlay : Overlay
         _player = playerManager;
         _melee = _entManager.EntitySysManager.GetEntitySystem<SharedMeleeWeaponSystem>();
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
-        var sprite = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
+        var sprite = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _texture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
         _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }

@@ -24,6 +24,7 @@
     solution: spray
   - type: DrainableSolution
     solution: spray
+  - type: SolutionTransfer
   - type: ItemCooldown
   - type: Spray
     spraySound:
@@ -32,9 +33,6 @@
     vaporAmount: 3
     vaporSpread: 90
     sprayVelocity: 2.0
-    sprayTimeAlive: 1.5
-    transferAmount: 5
-    impulse: 50.0
   - type: FireExtinguisher
     hasSafety: true
   - type: MeleeWeapon

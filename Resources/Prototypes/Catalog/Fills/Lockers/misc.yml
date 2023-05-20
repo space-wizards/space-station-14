@@ -19,22 +19,20 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingOuterSuitEmergency
+      - id: ClothingMaskBreath
+      - id: EmergencyOxygenTankFilled
+        prob: 0.80
+        orGroup: EmergencyTankOrRegularTank
+      - id: OxygenTankFilled
+        prob: 0.20
+        orGroup: EmergencyTankOrRegularTank
       - id: ToolboxEmergencyFilled
         prob: 0.4
-      - id: ClothingMaskBreath
-        prob: 0.4
-      - id: ClothingMaskBreath
-        prob: 0.25
-      - id: EmergencyOxygenTankFilled
-        prob: 0.4
-      - id: OxygenTankFilled
-        prob: 0.2
       - id: MedkitOxygenFilled
         prob: 0.2
       - id: WeaponFlareGun
         prob: 0.05
-      - id: ClothingOuterSuitEmergency
-        prob: 0.5
       - id: BoxMRE
         prob: 0.1
 
@@ -45,25 +43,23 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingOuterSuitEmergency
+      - id: ClothingMaskBreath
+      - id: EmergencyOxygenTankFilled
+        prob: 0.80
+        orGroup: EmergencyTankOrRegularTank
+      - id: OxygenTankFilled
+        prob: 0.20
+        orGroup: EmergencyTankOrRegularTank
       - id: ToolboxEmergencyFilled
         prob: 0.4
-      - id: ClothingMaskBreath
-        prob: 0.4
-      - id: ClothingMaskBreath
-        prob: 0.25
-      - id: EmergencyOxygenTankFilled
-        prob: 0.4
-      - id: OxygenTankFilled
-        prob: 0.2
       - id: MedkitOxygenFilled
         prob: 0.2
       - id: WeaponFlareGun
         prob: 0.05
-      - id: ClothingOuterSuitEmergency
-        prob: 0.5
       - id: BoxMRE
         prob: 0.1
-        
+
 - type: entity
   id: ClosetFireFilled
   parent: ClosetFire
@@ -71,15 +67,12 @@
   components:
     - type: StorageFill
       contents:
-        - id: YellowOxygenTankFilled
-          prob: 0.6
         - id: ClothingOuterSuitFire
-          prob: 0.75
-        - id: ClothingMaskGas
-          prob: 0.75
         - id: ClothingHeadHelmetFire
-          prob: 0.75
-
+        - id: ClothingMaskGas
+        - id: YellowOxygenTankFilled
+        - id: FireExtinguisher
+          prob: 0.25
 - type: entity
   id: ClosetWallFireFilledRandom
   parent: ClosetWallFire
@@ -87,15 +80,12 @@
   components:
     - type: StorageFill
       contents:
-        - id: YellowOxygenTankFilled
-          prob: 0.6
         - id: ClothingOuterSuitFire
-          prob: 0.75
-        - id: ClothingMaskGas
-          prob: 0.75
         - id: ClothingHeadHelmetFire
-          prob: 0.75
-
+        - id: ClothingMaskGas
+        - id: YellowOxygenTankFilled
+        - id: FireExtinguisher
+          prob: 0.25
 - type: entity
   id: ClosetMaintenanceFilledRandom
   suffix: Filled, Random
@@ -135,6 +125,10 @@
           prob: 0.1
         - id: ClothingHandsGlovesColorYellowBudget
           prob: 0.25
+        - id: StrangePill
+          prob: 0.20
+        - id: DrinkSpaceGlue
+          prob: 0.20
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
@@ -143,21 +137,35 @@
   components:
   - type: StorageFill
     contents:
-      - id: ToolboxEmergencyFilled
-        prob: 0.4
-      - id: ClothingMaskBreath
-        prob: 0.4
-      - id: ClothingMaskBreath
-        prob: 0.25
-      - id: EmergencyOxygenTankFilled
-        prob: 0.4
-      - id: OxygenTankFilled
-        prob: 0.2
-      - id: MedkitOxygenFilled
-        prob: 0.2
-      - id: WeaponFlareGun
-        prob: 0.05
-      - id: ClothingOuterSuitEmergency
-        prob: 0.5
-      - id: BoxMRE
-        prob: 0.1
+        - id: lantern
+          prob: 0.50
+        - id: Wirecutter
+          prob: 0.33
+        - id: Screwdriver
+          prob: 0.33
+        - id: Wrench
+          prob: 0.33
+        - id: Crowbar
+          prob: 0.50
+        - id: Welder
+          prob: 0.33
+        - id: Multitool
+          prob: 0.10
+        - id: Soap
+          prob: 0.44
+        - id: PlushieCarp
+          prob: 0.2
+        - id: PlushieSlime
+          prob: 0.2
+        - id: PlushieSnake
+          prob: 0.2
+        - id: ClothingHandsGlovesColorYellow
+          prob: 0.05
+        - id: ClothingBeltUtility
+          prob: 0.10
+        - id: ClothingHeadHatCone
+          prob: 0.2
+        - id: WeaponFlareGun
+          prob: 0.1
+        - id: ClothingHandsGlovesColorYellowBudget
+          prob: 0.25

@@ -2,6 +2,7 @@ using Content.Server.Access;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
+using Content.Server.MachineLinking.System;
 using Content.Server.Tools.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -26,12 +27,9 @@ namespace Content.Server.Doors.Systems;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly AirlockSystem _airlock = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
-    [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -127,7 +125,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (tool.Qualities.Contains(door.PryingQuality))
         {
-            args.Handled = TryPryDoor(uid, args.Used, args.User, door);
+            args.Handled = TryPryDoor(uid, args.Used, args.User, door, out _);
         }
     }
 
@@ -164,7 +162,7 @@ public sealed class DoorSystem : SharedDoorSystem
         {
             Text = Loc.GetString("door-pry"),
             Impact = LogImpact.Low,
-            Act = () => TryPryDoor(uid, args.User, args.User, component, true),
+            Act = () => TryPryDoor(uid, args.User, args.User, component, out _, force: true),
         });
     }
 
@@ -172,8 +170,10 @@ public sealed class DoorSystem : SharedDoorSystem
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
-    public bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
+    public bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, out DoAfterId? id, bool force = false)
     {
+        id = null;
+
         if (door.State == DoorState.Welded)
             return false;
 
@@ -182,7 +182,7 @@ public sealed class DoorSystem : SharedDoorSystem
             var canEv = new BeforeDoorPryEvent(user, tool);
             RaiseLocalEvent(target, canEv, false);
 
-            if (canEv.Cancelled)
+            if (!door.CanPry || canEv.Cancelled)
                 // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
                 // under a windoor.
                 return true;
@@ -191,7 +191,7 @@ public sealed class DoorSystem : SharedDoorSystem
         var modEv = new DoorGetPryTimeModifierEvent(user);
         RaiseLocalEvent(target, modEv, false);
 
-        _toolSystem.UseTool(tool, user, target, modEv.PryTimeModifier * door.PryTime, door.PryingQuality, new DoorPryDoAfterEvent());
+        _toolSystem.UseTool(tool, user, target, TimeSpan.FromSeconds(modEv.PryTimeModifier * door.PryTime), new[] {door.PryingQuality}, new DoorPryDoAfterEvent(), out id);
         return true; // we might not actually succeeded, but a do-after has started
     }
 
@@ -207,34 +207,6 @@ public sealed class DoorSystem : SharedDoorSystem
     }
 #endregion
 
-    /// <summary>
-    ///     Does the user have the permissions required to open this door?
-    /// </summary>
-    public override bool HasAccess(EntityUid uid, EntityUid? user = null, AccessReaderComponent? access = null)
-    {
-        // TODO network AccessComponent for predicting doors
-
-        // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
-        if (user == null || AccessType == AccessTypes.AllowAll)
-            return true;
-
-        // If the door is on emergency access we skip the checks.
-        if (TryComp<AirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
-            return true;
-
-        if (!Resolve(uid, ref access, false))
-            return true;
-
-        var isExternal = access.AccessLists.Any(list => list.Contains("External"));
-
-        return AccessType switch
-        {
-            // Some game modes modify access rules.
-            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, access),
-            AccessTypes.AllowAllNoExternal => !isExternal,
-            _ => _accessReaderSystem.IsAllowed(user.Value, access)
-        };
-    }
 
     /// <summary>
     ///     Open a door if a player or door-bumper (PDA, ID-card) collide with the door. Sadly, bullets no longer
@@ -250,7 +222,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.State != DoorState.Closed)
             return;
 
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
 
         if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
@@ -289,12 +261,13 @@ public sealed class DoorSystem : SharedDoorSystem
 
     protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
     {
+        var uid = body.Owner;
         if (component.BumpOpen)
         {
-            foreach (var other in PhysicsSystem.GetContactingEntities(body, approximate: true))
+            foreach (var other in PhysicsSystem.GetContactingEntities(uid, body, approximate: true))
             {
-                if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
-                    TryOpen(component.Owner, component, other.Owner, false, quiet: true)) break;
+                if (Tags.HasTag(other, "DoorBumpOpener") && TryOpen(uid, component, other, false, quiet: true))
+                    break;
             }
         }
     }

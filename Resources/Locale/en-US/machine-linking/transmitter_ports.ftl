@@ -13,5 +13,14 @@ signal-port-description-left = This port is invoked whenever the lever is moved 
 signal-port-name-right = Right
 signal-port-description-right = This port is invoked whenever the lever is moved to the rightmost position.
 
+signal-port-name-doorstatus = Door status
+signal-port-description-doorstatus = This port is invoked whenever the door's status changes.
+
 signal-port-name-middle = Middle
 signal-port-description-middle = This port is invoked whenever the lever is moved to the neutral position.
+
+signal-port-name-timer-trigger = Timer Trigger
+signal-port-description-timer-trigger = This port is invoked whenever the timer triggers.
+
+signal-port-name-timer-start = Timer Start
+signal-port-description-timer-start = This port is invoked whenever the timer starts.

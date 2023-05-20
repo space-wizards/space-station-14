@@ -24,14 +24,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -73,13 +74,39 @@
       - Wrench
       - Crowbar
       - Multitool
+      - NetworkConfigurator
       - AirlockPainter
+      - FlashlightLantern
       - CableStack
+      - CableMVStack
+      - CableHVStack
       - HandheldGPSBasic
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
       - Pickaxe
+      - AppraisalTool
+      - SheetRGlass
+      - Beaker
+      - Syringe
+      - LightTube
+      - LightBulb
+      - Bucket
+      - SprayBottle
+      - PowerCellSmall
+      - MicroManipulatorStockPart
+      - MatterBinStockPart
+      - CapacitorStockPart
+      - ConveyorBeltAssembly
+      - IntercomElectronics
+      - FirelockElectronics
+      - DoorElectronics
+      - AirAlarmElectronics
+      - FireAlarmElectronics
+      - MailingUnitElectronics
+      - APCElectronics
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
   - type: StaticPrice
     price: 800
 
@@ -109,14 +136,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: ResearchClient
   - type: Destructible
     thresholds:
@@ -156,28 +184,12 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
-      - LightTube
-      - LightBulb
-      - SheetSteel #these sheet recipe costs don't scale with upgrades
-      - SheetGlass1
-      - SheetRGlass
-      - SheetPlastic
-      - CableStack
-      - CableMVStack
-      - CableHVStack
       - PowerDrill
       - MiningDrill
-      - ConveyorBeltAssembly
-      - AppraisalTool
       - AnomalyScanner
+      - AnomalyLocator
       - RCD
       - RCDAmmo
-      - HydroponicsToolScythe
-      - HydroponicsToolHatchet
-      - Clippers
-      - MiniHoe
-      - Shovel
-      - Spade
       - HandheldCrewMonitor
       - Scalpel
       - Retractor
@@ -194,50 +206,46 @@
       - PillCanister
       - ChemistryEmptyBottle01
       - Drone
-      - Flash
-      - MicroManipulatorStockPart
-      - ScanningModuleStockPart
-      - MicroLaserStockPart
-      - MatterBinStockPart
-      - CapacitorStockPart
       - AdvancedCapacitorStockPart
       - AdvancedMatterBinStockPart
-      - HighPowerMicroLaserStockPart
       - NanoManipulatorStockPart
-      - AdvancedScanningModuleStockPart
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
-      - UltraHighPowerMicroLaserStockPart
       - PicoManipulatorStockPart
-      - PhasicScanningModuleStockPart
-      - FirelockElectronics
-      - DoorElectronics
-      - APCElectronics
-      - AirAlarmElectronics
-      - FireAlarmElectronics
-      - IntercomElectronics
-      - MailingUnitElectronics
-      - Bucket
+      - SignalTimerElectronics
       - MopItem
+      - Holoprojector
+      - Mousetrap
+      - LightReplacer
+      - TrashBag
       - AdvMopItem
-      - SprayBottle
-      - FireExtinguisher
-      - KitchenKnife
-      - ButchCleaver
-      - FlashlightLantern
+      - WeaponSprayNozzle
+      - ClothingBackpackWaterTank
+      - MegaSprayBottle
       - TimerTrigger
       - ChemicalPayload
       - FlashPayload
       - Signaller
       - SignalTrigger
       - VoiceTrigger
-      - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
+      - WeaponPistolCHIMP
+      - CartridgeAnomalousParticleDelta
+      - CartridgeAnomalousParticleEpsilon
+      - CartridgeAnomalousParticleZeta
       - SynthesizerInstrument
       - RPED
+      - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
+      - WeaponForceGun
+      - WeaponTetherGun
+      - ClothingBackpackHolding
+      - ClothingBackpackSatchelHolding
+      - ClothingBackpackDuffelHolding
+      - WelderIndustrialAdvanced
+      - JawsOfLife
 
 - type: entity
   parent: Protolathe
@@ -263,21 +271,12 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
-      - FirelockElectronics
-      - DoorElectronics
-      - APCElectronics
-      - AirAlarmElectronics
-      - FireAlarmElectronics
-      - MailingUnitElectronics
-      - IntercomElectronics
-      - SMESMachineCircuitboard
-      - SubstationMachineCircuitboard
+      - SignalTimerElectronics
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CryoPodMachineCircuitboard
-      - CrewMonitoringComputerCircuitboard
       - VaccinatorMachineCircuitboard
       - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
@@ -298,6 +297,7 @@
       - ReagentGrinderMachineCircuitboard
       - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
+      - FatExtractorMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
@@ -310,6 +310,9 @@
       - OreProcessorMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
+      - HonkerCentralElectronics
+      - HonkerPeripheralsElectronics
+      - HonkerTargetingElectronics
       - GeneratorPlasmaMachineCircuitboard
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
@@ -361,18 +364,31 @@
     - ProximitySensor
     - LeftArmBorg
     - RightArmBorg
+    - LeftLegBorg
+    - RightLegBorg
+    - LightHeadBorg
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm
     - RipleyLLeg
     - RipleyRLeg
     - MechEquipmentGrabber
+    - HonkerHarness
+    - HonkerLArm
+    - HonkerRArm
+    - HonkerLLeg
+    - HonkerRLeg
+    - MechEquipmentHorn
   - type: MaterialStorage
     whitelist:
       tags:
       - Sheet
       - RawMaterial
       - Ingot
+  - type: GuideHelp
+    guides:
+    - Robotics
+
 
 - type: entity
   parent: Protolathe
@@ -460,24 +476,14 @@
   - type: Lathe
     idleState: icon
     runningState: icon
-    machinePartPrintSpeed: Laser
-    dynamicRecipes:
+    staticRecipes:
+      - HandLabeler
+      - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
-      - ClothingHandsGlovesNitrile
       - ClothingMaskSterile
       - DiseaseSwab
-      - HandheldCrewMonitor
-      - Scalpel
-      - Retractor
-      - Cautery
-      - Drill
-      - Saw
-      - Hemostat
       - Beaker
-      - LargeBeaker
-      - CryostasisBeaker
-      - Dropper
       - Syringe
       - Implanter
       - PillCanister
@@ -491,6 +497,18 @@
       - MedkitAdvanced
       - MedkitRadiation
       - MedkitCombat
+    dynamicRecipes:
+      - HandheldCrewMonitor
+      - ClothingHandsGlovesNitrile
+      - CryostasisBeaker
+      - LargeBeaker
+      - Dropper
+      - Scalpel
+      - Retractor
+      - Cautery
+      - Drill
+      - Saw
+      - Hemostat
   - type: Machine
     board: MedicalTechFabCircuitboard
 
@@ -544,6 +562,8 @@
       - ClothingUniformJumpskirtHoP
       - ClothingUniformJumpsuitHoS
       - ClothingUniformJumpskirtHoS
+      - ClothingUniformJumpsuitHoSAlt
+      - ClothingUniformJumpskirtHoSAlt
       - ClothingUniformJumpsuitHydroponics
       - ClothingUniformJumpskirtHydroponics
       - ClothingUniformJumpsuitJanitor
@@ -568,6 +588,8 @@
       - ClothingUniformJumpskirtScientist
       - ClothingUniformJumpsuitSec
       - ClothingUniformJumpskirtSec
+      - ClothingUniformJumpsuitBrigmedic
+      - ClothingUniformJumpskirtBrigmedic
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
       - ClothingOuterWinterCap
@@ -586,6 +608,23 @@
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime
+      - ClothingOuterWinterCoat
+      - ClothingOuterWinterJani
+      - ClothingOuterWinterBar
+      - ClothingOuterWinterChef
+      - ClothingOuterWinterHydro
+      - ClothingOuterWinterAtmos
+      - ClothingOuterWinterEngi
+      - ClothingOuterWinterCargo
+      - ClothingOuterWinterMiner
+      - ClothingOuterWinterMed
+      - ClothingOuterWinterPara
+      - ClothingOuterWinterChem
+      - ClothingOuterWinterGen
+      - ClothingOuterWinterViro
+      - ClothingOuterWinterSci
+      - ClothingOuterWinterRobo
+      - ClothingOuterWinterSec
   - type: MaterialStorage
     whitelist:
       tags:
@@ -631,3 +670,4 @@
         - SheetUranium1
         - IngotGold1
         - IngotSilver1
+        - MaterialBananium1

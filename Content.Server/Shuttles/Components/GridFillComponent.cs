@@ -9,5 +9,5 @@ namespace Content.Server.Shuttles.Components;
 [RegisterComponent, Access(typeof(ShuttleSystem))]
 public sealed class GridFillComponent : Component
 {
-    [DataField("path")] public ResourcePath Path = new("/Maps/Shuttles/escape_pod_small.yml");
+    [DataField("path")] public ResPath Path = new("/Maps/Shuttles/escape_pod_small.yml");
 }

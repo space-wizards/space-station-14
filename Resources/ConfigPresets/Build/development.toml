@@ -3,6 +3,7 @@
 lobbyenabled = false
 # Dev map for faster loading & convenience
 map = "Dev"
+role_timers = false
 
 [physics]
 # Makes mapping annoying
@@ -10,6 +11,10 @@ grid_splitting = false
 
 [procgen]
 preload = false
+
+[salvage]
+expedition_cooldown = 30.0
+expedition_failed_cooldown = 30.0
 
 [shuttle]
 # Wastes startup time

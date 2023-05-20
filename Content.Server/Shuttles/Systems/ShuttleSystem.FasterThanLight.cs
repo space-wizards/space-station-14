@@ -1,4 +1,3 @@
-using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Parallax;
@@ -10,10 +9,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
@@ -31,9 +31,9 @@ public sealed partial class ShuttleSystem
     private MapId? _hyperSpaceMap;
 
     public const float DefaultStartupTime = 5.5f;
-    public const float DefaultTravelTime = 30f;
+    public const float DefaultTravelTime = 20f;
     public const float DefaultArrivalTime = 5f;
-    private const float FTLCooldown = 30f;
+    private const float FTLCooldown = 10f;
     private const float ShuttleFTLRange = 100f;
 
     /// <summary>
@@ -96,6 +96,18 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
+        if (uid != null)
+        {
+            var ev = new ConsoleFTLAttemptEvent(uid.Value, false, string.Empty);
+            RaiseLocalEvent(uid.Value, ref ev, true);
+
+            if (ev.Cancelled)
+            {
+                reason = ev.Reason;
+                return false;
+            }
+        }
+
         reason = null;
         return true;
     }
@@ -150,6 +162,8 @@ public sealed partial class ShuttleSystem
         hyperspace.Dock = false;
         hyperspace.PriorityTag = priorityTag;
         _console.RefreshShuttleConsoles();
+        var ev = new FTLRequestEvent(_mapManager.GetMapEntityId(coordinates.ToMap(EntityManager, _transform).MapId));
+        RaiseLocalEvent(shuttleUid, ref ev, true);
     }
 
     /// <summary>
@@ -249,8 +263,10 @@ public sealed partial class ShuttleSystem
 
                     SetDockBolts(uid, true);
                     _console.RefreshShuttleConsoles(uid);
-                    var ev = new FTLStartedEvent(fromMapUid, fromMatrix, fromRotation);
-                    RaiseLocalEvent(uid, ref ev);
+                    var target = comp.TargetUid != null ? new EntityCoordinates(comp.TargetUid.Value, Vector2.Zero) : comp.TargetCoordinates;
+
+                    var ev = new FTLStartedEvent(uid, target, fromMapUid, fromMatrix, fromRotation);
+                    RaiseLocalEvent(uid, ref ev, true);
 
                     if (comp.TravelSound != null)
                     {
@@ -344,7 +360,9 @@ public sealed partial class ShuttleSystem
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(uid);
                     _mapManager.SetMapPaused(mapId, false);
-                    var ftlEvent = new FTLCompletedEvent();
+                    Smimsh(uid, xform: xform);
+
+                    var ftlEvent = new FTLCompletedEvent(uid, _mapManager.GetMapEntityId(mapId));
                     RaiseLocalEvent(uid, ref ftlEvent, true);
                     break;
                 case FTLState.Cooldown:
@@ -592,6 +610,23 @@ public sealed partial class ShuttleSystem
             spawnPos = _transform.GetWorldPosition(targetXform, xformQuery);
         }
 
+        // TODO: This is pretty crude for multiple landings.
+        if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid))
+        {
+            var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
+            spawnPos = targetAABB.Center + _random.NextVector2(minRadius, minRadius + 64f);
+        }
+        else if (shuttleBody != null)
+        {
+            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+            var transform = new Transform(targetPos, targetRot);
+            spawnPos = Robust.Shared.Physics.Transform.Mul(transform, -shuttleBody.LocalCenter);
+        }
+        else
+        {
+            spawnPos = _transform.GetWorldPosition(targetXform, xformQuery);
+        }
+
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);
 
         if (!HasComp<MapComponent>(targetXform.GridUid))
@@ -604,5 +639,52 @@ public sealed partial class ShuttleSystem
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Flattens / deletes everything under the grid upon FTL.
+    /// </summary>
+    private void Smimsh(EntityUid uid, FixturesComponent? manager = null, MapGridComponent? grid = null, TransformComponent? xform = null)
+    {
+        if (!Resolve(uid, ref manager, ref grid, ref xform) || xform.MapUid == null)
+            return;
+
+        // Flatten anything not parented to a grid.
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var transform = _physics.GetPhysicsTransform(uid, xform, xformQuery);
+        var aabbs = new List<Box2>(manager.Fixtures.Count);
+        var mobQuery = GetEntityQuery<BodyComponent>();
+        var immune = new HashSet<EntityUid>();
+
+        foreach (var fixture in manager.Fixtures.Values)
+        {
+            if (!fixture.Hard)
+                continue;
+
+            var aabb = fixture.Shape.ComputeAABB(transform, 0);
+            // Double the polygon radius (at least while the radius exists).
+            aabb = aabb.Enlarged(0.02f);
+            aabbs.Add(aabb);
+
+            foreach (var ent in _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, LookupFlags.Uncontained))
+            {
+                if (ent == uid || immune.Contains(ent))
+                {
+                    continue;
+                }
+
+                if (mobQuery.TryGetComponent(ent, out var mob))
+                {
+                    var gibs = _bobby.GibBody(ent, body: mob);
+                    immune.UnionWith(gibs);
+                    continue;
+                }
+
+                QueueDel(ent);
+            }
+        }
+
+        var ev = new ShuttleFlattenEvent(xform.MapUid.Value, aabbs);
+        RaiseLocalEvent(ref ev);
     }
 }

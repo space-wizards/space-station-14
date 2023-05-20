@@ -142,7 +142,7 @@ public sealed class FaxPrintout
     {
     }
 
-    public FaxPrintout(string content, string name, string? prototypeId, string? stampState = null, List<string>? stampedBy = null)
+    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<string>? stampedBy = null)
     {
         Content = content;
         Name = name;

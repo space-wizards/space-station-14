@@ -14,7 +14,7 @@ namespace Content.Server.Salvage
         /// Relative directory path to the given map, i.e. `Maps/Salvage/template.yml`
         /// </summary>
         [DataField("mapPath", required: true)]
-        public ResourcePath MapPath { get; } = default!;
+        public ResPath MapPath { get; } = default!;
 
         /// <summary>
         /// Map rectangle in world coordinates (to check if it fits)

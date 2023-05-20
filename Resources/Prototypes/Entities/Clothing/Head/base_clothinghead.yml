@@ -23,6 +23,9 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: Tag
+    tags:
+      - WhitelistChameleon
 
 - type: entity
   abstract: true
@@ -119,8 +122,6 @@
     tags:
     - HidesHair
     - WhitelistChameleon
-  - type: DiseaseProtection
-    protection: 0.05
   - type: IdentityBlocker
 
 - type: entity
@@ -159,8 +160,6 @@
     tags:
     - HidesHair
     - WhitelistChameleon
-  - type: DiseaseProtection
-    protection: 0.05
   - type: IdentityBlocker
 
 - type: entity

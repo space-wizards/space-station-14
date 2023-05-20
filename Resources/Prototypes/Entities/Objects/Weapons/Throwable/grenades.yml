@@ -29,8 +29,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
+  - type: AnimationPlayer
+  - type: TimerTriggerVisuals
 
 - type: entity
   name: explosive grenade
@@ -45,6 +45,13 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2 # 2 beeps total (at 0 and 2)
 
 - type: entity
   name: flashbang
@@ -60,14 +67,29 @@
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/countdown.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
 
 - type: entity
-  name: Syndicate minibomb
+  id: GrenadeFlashEffect
+  noSpawn: true
+  components:
+    - type: PointLight
+      enabled: true
+      netsync: false
+      radius: 5
+      energy: 8
+    - type: LightFade
+      duration: 0.5
+    - type: TimedDespawn
+      lifetime: 0.5
+
+- type: entity
+  name: syndicate minibomb
   description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
   parent: GrenadeBase
   id: SyndieMiniBomb
@@ -78,15 +100,14 @@
     delay: 10
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
+    explosionType: Minibomb
     totalIntensity: 200
     intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
     maxIntensity: 60
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/minibombcountdown.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/minibombcountdown.ogg
 
 - type: entity
   name: the nuclear option
@@ -114,10 +135,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/countdown.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: modular grenade
@@ -127,7 +147,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/modular.rsi
-    state: empty
+    layers:
+    - state: empty
+      map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Item
     size: 8
   - type: PayloadCase
@@ -146,12 +168,18 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: GenericEnumVisualizer
-      key: enum.Trigger.TriggerVisuals.VisualState
-      states:
-        enum.Trigger.TriggerVisualState.Primed: primed
-        enum.Trigger.TriggerVisualState.Unprimed: complete
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          emptyCase: { state: empty }
+          wiredCase: { state: wired }
+          caseWithTrigger: { state: no-payload }
+          grenade: { state: complete }
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: complete }
   - type: StaticPrice
     price: 25
 
@@ -168,7 +196,6 @@
     energyConsumption: 50000
   - type: DeleteOnTrigger
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/countdown.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg

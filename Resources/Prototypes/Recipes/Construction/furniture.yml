@@ -427,3 +427,37 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  id: Curtains
+  name: curtains
+  description: Contains less than 1% mercury.
+  graph: Curtains
+  startNode: start
+  targetNode: Curtains
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/curtains.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: Bookshelf
+  name: bookshelf
+  description: Mostly filled with books.
+  graph: Bookshelf
+  startNode: start
+  targetNode: bookshelf
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Furniture/bookshelf.rsi
+    state: base
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

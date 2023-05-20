@@ -11,7 +11,7 @@ public sealed class WiresPanelComponent : Component
     /// <summary>
     ///     Is the panel open for this entity's wires?
     /// </summary>
-    [ViewVariables]
+    [DataField("open")]
     public bool Open;
 
     /// <summary>

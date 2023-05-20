@@ -1,5 +1,5 @@
-﻿using Content.Shared.DeviceNetwork;
-using JetBrains.Annotations;
+﻿using Content.Client.NetworkConfigurator.Systems;
+using Content.Shared.DeviceNetwork;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 
@@ -8,17 +8,18 @@ namespace Content.Client.NetworkConfigurator;
 public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
+
     private NetworkConfiguratorListMenu? _listMenu;
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
+    private NetworkConfiguratorLinkMenu? _linkMenu;
 
     private NetworkConfiguratorSystem _netConfig;
-    private DeviceListSystem _deviceList;
 
     public NetworkConfiguratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
+
         _netConfig = _entityManager.System<NetworkConfiguratorSystem>();
-        _deviceList = _entityManager.System<DeviceListSystem>();
     }
 
     public void OnRemoveButtonPressed(string address)
@@ -36,7 +37,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 _listMenu = new NetworkConfiguratorListMenu(this);
                 _listMenu.OnClose += Close;
                 _listMenu.ClearButton.OnPressed += _ => OnClearButtonPressed();
-                _listMenu.OpenCentered();
+                _listMenu.OpenCenteredRight();
                 break;
             case NetworkConfiguratorUiKey.Configure:
                 _configurationMenu = new NetworkConfiguratorConfigurationMenu();
@@ -49,6 +50,11 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 _configurationMenu.Show.OnPressed += OnShowPressed;
                 _configurationMenu.Show.Pressed = _netConfig.ConfiguredListIsTracked(Owner.Owner);
                 _configurationMenu.OpenCentered();
+                break;
+            case NetworkConfiguratorUiKey.Link:
+                _linkMenu = new NetworkConfiguratorLinkMenu(this);
+                _linkMenu.OnClose += Close;
+                _linkMenu.OpenCentered();
                 break;
         }
     }
@@ -69,6 +75,9 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 break;
             case DeviceListUserInterfaceState listState:
                 _configurationMenu?.UpdateState(listState);
+                break;
+            case DeviceLinkUserInterfaceState linkState:
+                _linkMenu?.UpdateState(linkState);
                 break;
         }
     }
