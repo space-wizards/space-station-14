@@ -1,10 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Nanotrasen has supplied engineering departments with high capacity fuel
-      tanks., type: Add}
-  id: 3322
-  time: '2023-04-03T06:26:58.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: 'Changed access to fire axe cabinet, now not only an atmospheric technician
@@ -2898,3 +2892,8 @@ Entries:
   - {message: Printing tech disks now costs fewer points., type: Tweak}
   id: 3821
   time: '2023-05-20T02:10:29.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added space glue tube (can appear in maintenance lockers), type: Add}
+  id: 3822
+  time: '2023-05-20T02:42:38.0000000+00:00'
