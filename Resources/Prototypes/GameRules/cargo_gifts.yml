@@ -30,6 +30,7 @@
       weight: 6
       startDelay: 10
       duration: 240
+      minimumPlayers: 50
       chaos:
         Hunger: -300
         Thirst: -120
@@ -53,6 +54,7 @@
       startDelay: 10
       duration: 240
       earliestStart: 30
+      minimumPlayers: 10
       chaos:
         Atmos: -300
         Power: -100
@@ -77,6 +79,7 @@
       weight: 4
       startDelay: 10
       duration: 120
+      minimumPlayers: 40
       chaos:
         Hunger: -100
         Thirst: -100
@@ -102,6 +105,7 @@
       weight: 8
       startDelay: 10
       duration: 120
+      minimumPlayers: 30
       chaos:
         Jani: -200
       earliestStart: 20
@@ -124,6 +128,7 @@
       startDelay: 10
       duration: 120
       earliestStart: 10
+      minimumPlayers: 30
       chaos:
         Medical: -200
         Friend: 10
@@ -148,6 +153,7 @@
       startDelay: 10
       duration: 120
       earliestStart: 10
+      minimumPlayers: 40
       chaos:
         Atmos: -300
     - type: CargoGiftsRule
@@ -171,6 +177,7 @@
       startDelay: 10
       duration: 120
       earliestStart: 20
+      minimumPlayers: 40
       chaos:
         Atmos: -200
     - type: CargoGiftsRule
@@ -192,6 +199,7 @@
       startDelay: 10
       duration: 120
       earliestStart: 10
+      minimumPlayers: 50
       chaos:
         Hostile: -100
         Combat: -100
@@ -215,6 +223,7 @@
       startDelay: 10
       duration: 120
       earliestStart: 5
+      minimumPlayers: 50
       chaos:
         Hostile: -30
         Combat: -30
