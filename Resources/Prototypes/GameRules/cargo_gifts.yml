@@ -123,7 +123,10 @@
       weight: 8
       startDelay: 10
       duration: 120
-      earliestStart: 20
+      earliestStart: 10
+      chaos:
+        Medical: -200
+        Friend: 10
     - type: CargoGiftsRule
       description: cargo-gift-medical-supply
       sender: cargo-gift-default-sender
@@ -145,6 +148,8 @@
       startDelay: 10
       duration: 120
       earliestStart: 10
+      chaos:
+        Atmos: -300
     - type: CargoGiftsRule
       description: cargo-gift-space-protection
       sender: cargo-gift-default-sender
@@ -166,6 +171,8 @@
       startDelay: 10
       duration: 120
       earliestStart: 20
+      chaos:
+        Atmos: -200
     - type: CargoGiftsRule
       description: cargo-gift-fire-protection
       sender: cargo-gift-default-sender
@@ -184,7 +191,10 @@
       weight: 2
       startDelay: 10
       duration: 120
-      earliestStart: 20
+      earliestStart: 10
+      chaos:
+        Hostile: -100
+        Combat: -100
     - type: CargoGiftsRule
       description: cargo-gift-security-guns
       sender: cargo-gift-default-sender
@@ -204,7 +214,10 @@
       weight: 4
       startDelay: 10
       duration: 120
-      earliestStart: 20
+      earliestStart: 5
+      chaos:
+        Hostile: -30
+        Combat: -30
     - type: CargoGiftsRule
       description: cargo-gift-security-riot
       sender: cargo-gift-default-sender

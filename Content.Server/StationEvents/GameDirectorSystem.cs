@@ -108,7 +108,6 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
 
     protected override void ActiveTick(EntityUid uid, GameDirectorSystemComponent scheduler, GameRuleComponent gameRule, float frameTime)
     {
-        const bool testingMode = true;
         scheduler.BeatTime += frameTime;
         if (scheduler.TimeUntilNextEvent > 0)
         {
@@ -120,17 +119,9 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         //   how bad things currently are on the station.
         ChaosMetrics chaos;
         var count = CountActivePlayers();
-        if (testingMode)
-        {
-            chaos = _metrics.CalculateChaos();
-            // chaos = scheduler.CurrChaos;
-            count.Players = 60;
-        }
-        else
-        {
-            chaos = _metrics.CalculateChaos();
-            scheduler.CurrChaos = chaos;
-        }
+
+        chaos = _metrics.CalculateChaos();
+        scheduler.CurrChaos = chaos;
 
         // Decide what story beat to work with (which sets chaos goals)
         var beat = DetermineNextBeat(scheduler, chaos, count);
@@ -146,19 +137,12 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             // when beat.RandomEventLimit is 1 it's always the "best" event picked. Higher values
             // allow more events to be randomly selected.
             var chosenEvent = SelectBest(bestEvents, beat.RandomEventLimit);
-            if (testingMode)
-            {
-                // Event proceeds as planned!
-                // scheduler.CurrChaos += chosenEvent.PossibleEvent.Chaos;
-                _event.RunNamedEvent(chosenEvent.PossibleEvent.PrototypeId);
-            }
-            else
-            {
-                _event.RunNamedEvent(chosenEvent.PossibleEvent.PrototypeId);
-            }
+
+            _event.RunNamedEvent(chosenEvent.PossibleEvent.PrototypeId);
 
             // Don't select this event again for the current story (when SetupEvents is called again)
-            scheduler.PossibleEvents.Remove(chosenEvent.PossibleEvent);
+            //   Commented out this code as we don't have enough events for this strategy yet.
+            // scheduler.PossibleEvents.Remove(chosenEvent.PossibleEvent);
 
             // 2 - 6 minutes until the next event is considered.
             scheduler.TimeUntilNextEvent = _random.NextFloat(120f, 360f);
@@ -166,14 +150,9 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         else
         {
             // No events were run. Consider again in 30 seconds.
+            LogMessage($"Chaos is: {chaos} (No events ran)", false);
             scheduler.TimeUntilNextEvent = 30f;
         }
-
-        // if (testingMode)
-        // {
-        //     scheduler.BeatTime += scheduler.TimeUntilNextEvent;
-        //     scheduler.TimeUntilNextEvent = 5f;
-        // }
     }
 
     // Count the active players and ghosts on the server.

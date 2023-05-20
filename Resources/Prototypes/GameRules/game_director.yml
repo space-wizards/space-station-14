@@ -6,17 +6,6 @@
   components:
     - type: GameDirectorSystem
       storyBeats:
-        Traitors:
-          description: Traitors have infiltrated the station
-          goal:   # Some
-            Traitors: 40
-            Hostile: 60  # Some hostiles (includes traitors)
-          endIfAnyWorse:
-            Atmos: 400   # Severe atmos, power or medical issues should end this beat.
-            Power: 400
-            Medical: 400
-            Death: 200
-            Combat: -100 # Friendly forces should retain the upper hand
         Peace:
           description: Life returns to usual, but how usual?
           goal:   # Try to achieve a wide range of different moderate values.
@@ -101,13 +90,6 @@
             - Peace
             - AttackMild
             - EngineeringIssues
-        Traitors:
-          description: Mostly calm with a couple of minor problems.
-          minPlayers: 20
-          beats:
-            - Peace
-            - Traitors
-            - EngineeringIssues
         ScienceAttack:
           description: Those scientists cannot keep things under control.
           minPlayers: 30
@@ -119,11 +101,12 @@
             - EngineeringIssues
             - RepairStation
         MajorCombat:
-          description: After traitors invade, the station descends into combat and rises from the ashes.
+          description: Attackers swarm the station
           minPlayers: 40
           beats:
-            - Traitors
             - Peace
+            - AttackMild
+            - EngineeringIssues
             - Attackers
             - RestoreOrder
             - RepairStation
@@ -150,14 +133,4 @@
             - MadScience
             - Peace
             - EngineeringIssues
-            - RepairStation
-        Traitors:
-          description: There are some traitors but everything works out fine.
-          minPlayers: 40
-          beats:
-            - Traitors
-            - Peace
-            - EngineeringIssues
-            - MadScience
-            - RestoreOrder
             - RepairStation
