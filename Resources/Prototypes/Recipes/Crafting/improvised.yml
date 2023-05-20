@@ -112,3 +112,42 @@
   icon:
     sprite: Objects/Specific/Janitorial/rag.rsi
     state: rag
+
+- type: construction
+  name: improvised shotgun
+  id: improvisedshotgun
+  graph: ImprovisedShotgunGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: A shitty single-shot shotgun made from salvaged and hand-crafted gun parts.
+  icon:
+    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+    state: icon
+
+- type: construction
+  name: rifle stock
+  id: riflestock
+  graph: RifleStockGraph
+  startNode: start
+  targetNode: riflestock
+  category: construction-category-weapons
+  objectType: Item
+  description: A stock carved out of wood, vital for improvised firearms.
+  icon:
+    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+    state: riflestock
+
+- type: construction
+  name: improvised shotgun shell
+  id: improvisedshotgunshell
+  graph: ImprovisedShotgunShellGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: A surprisingly powerful shotgun shell... as long as you can get over the spread.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: improvised

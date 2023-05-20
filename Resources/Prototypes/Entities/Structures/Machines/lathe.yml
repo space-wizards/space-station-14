@@ -82,6 +82,7 @@
       - GasAnalyzer
       - UtilityBelt
       - Pickaxe
+      - ModularReceiver
   - type: StaticPrice
     price: 800
 

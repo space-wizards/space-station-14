@@ -1,13 +1,41 @@
+#The entire game fucking shits itself and dies if you uncomment the item size. I have no idea why.
 - type: entity
   parent: BaseItem
-  id: ModularReciever
-  name: modular reciever
+  id: ModularReceiver 
+  name: modular receiver 
   description: A vital part used in the creation of firearms.
   components:
+#    - type: Item
+#      size: 15
     - type: Sprite
       sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
-      state: reciever
+      state: receiver
       netsync: false
     - type: Item
       sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
-      state: reciever
+      state: receiver
+    - type: Tag
+      tags:
+      - ModularReceiver
+
+- type: entity
+  parent: BaseItem
+  id: RifleStock
+  name: rifle stock
+  description: A robust wooden stock that is used in the creation of firearms.
+  components:
+#    - type: Item
+#      size: 25
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+      state: riflestock
+      netsync: false
+    - type: Item
+      sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+      state: riflestock
+    - type: Construction
+      graph: RifleStockGraph
+      node: riflestock
+    - type: Tag
+      tags:
+      - RifleStock

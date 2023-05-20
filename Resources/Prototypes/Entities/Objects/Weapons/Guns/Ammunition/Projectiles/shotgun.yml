@@ -81,7 +81,7 @@
   id: PelletShotgunImprovised
   name: improvised pellet
   noSpawn: true
-  parent: BaseBullet
+  parent: BaseBullet 
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -89,8 +89,8 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 4
-        Slash: 2 #remember, it's metal shrapnel!
+        Piercing: 3
+        Slash: 3 #remember, it's metal shrapnel!
 
 - type: entity
   id: PelletShotgunTranquilizer

@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/ammo.dmi",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/ammo.dmi, improvised ammo from https://github.com/tgstation/tgstation/ at commit fb2d71495bfe81446159ef528534193d09dd8d34",
     "states": [
         {
             "name": "base"
@@ -30,6 +30,12 @@
         },
         {
             "name": "flare-spent"
+        },
+        {
+            "name": "improvised"
+        },
+        {
+            "name": "improvised-spent"
         },
         {
             "name": "incendiary"

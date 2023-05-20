@@ -144,7 +144,10 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     count: 10
-    spread: 30
+    spread: 45 #deadly if you can get up close... otherwise, good luck doing any kind of real damage
     proto: PelletShotgunImprovised
   - type: SpentAmmoVisuals
     state: "improvised"
+  - type: Construction
+    graph: ShellShotgunImprovisedGraph
+    node: shell
