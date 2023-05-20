@@ -18,7 +18,7 @@ public sealed class WorldgenConfigPrototype : IPrototype
     ///     The components that get added to the target map.
     /// </summary>
     [DataField("components", required: true)]
-    public EntityPrototype.ComponentRegistry Components { get; } = default!;
+    public ComponentRegistry Components { get; } = default!;
 
     //TODO: Get someone to make this a method on componentregistry that does it Correctly.
     /// <summary>

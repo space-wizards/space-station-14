@@ -39,6 +39,12 @@
         nodeGroupID: HVPower
   - type: Anchorable
   - type: Pullable
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
 
 - type: entity
   id: SolarPanel

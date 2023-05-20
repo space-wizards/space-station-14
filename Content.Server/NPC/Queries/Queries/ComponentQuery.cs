@@ -8,5 +8,5 @@ namespace Content.Server.NPC.Queries.Queries;
 public sealed class ComponentQuery : UtilityQuery
 {
     [DataField("components", required: true)]
-    public EntityPrototype.ComponentRegistry Components = default!;
+    public ComponentRegistry Components = default!;
 }

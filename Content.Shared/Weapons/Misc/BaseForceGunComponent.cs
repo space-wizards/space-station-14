@@ -11,7 +11,7 @@ public abstract class BaseForceGunComponent : Component
     /// The entity the tethered target has a joint to.
     /// </summary>
     [DataField("tetherEntity"), AutoNetworkedField]
-    public EntityUid? TetherEntity;
+    public virtual EntityUid? TetherEntity { get; set; }
 
     /// <summary>
     /// The entity currently tethered.

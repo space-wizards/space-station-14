@@ -58,7 +58,8 @@
     ClothingOuterCoatBomber: 3
     ClothingHeadFishCap: 2
     ClothingHeadRastaHat: 2
-    ClothingNeckScarfStripedRed: 3
-    ClothingNeckScarfStripedBlue: 3
-    ClothingNeckScarfStripedGreen: 3
     ClothingBeltStorageWaistbag: 3
+
+  emaggedInventory:
+    ClothingNeckScarfStripedSyndieGreen: 3
+    ClothingNeckScarfStripedSyndieRed: 3

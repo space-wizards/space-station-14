@@ -117,6 +117,13 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: StationInfiniteBatteryTarget
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    mediumVoltageNode: input
+    lowVoltageNode: output
   - type: StaticPrice
     price: 500
 
