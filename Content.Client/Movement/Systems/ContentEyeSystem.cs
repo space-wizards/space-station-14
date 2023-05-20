@@ -82,22 +82,6 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         _userZoomChangeRequestTimeOut = _gameTiming.CurTime;
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var localPlayer = _player.LocalPlayer?.ControlledEntity;
-
-        if (HasContentEyeComp(null, localPlayer) is not ContentEyeComponent content
-            || !TryComp<EyeComponent>(localPlayer, out var eye))
-        {
-            return;
-        }
-
-        Logger.Debug($"eye component zoom {eye.Zoom}");
-        // UpdateEye(content, eye, frameTime);
-    }
-
     private sealed class KeyBindsInputCmdHandler : InputCmdHandler
     {
         private readonly KeyBindsTypes _typeBind;
