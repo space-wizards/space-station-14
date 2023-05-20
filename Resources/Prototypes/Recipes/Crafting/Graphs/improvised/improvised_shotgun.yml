@@ -1,0 +1,65 @@
+#if someone ever adds more craftable ammo then the shells should go into its own file and category.
+#the same goes for the rifle stock if someone adds more guns that use it, minus the category part (it should remain in weapons.)
+- type: constructionGraph
+  id: ImprovisedShotgunGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shotgun
+      steps:
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: pipe
+      - tag: ModularReceiver
+        icon:
+          sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+          state: receiver
+        name: modular receiver
+      - tag: RifleStock
+        icon:
+          sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+          state: riflestock
+        name: rifle stock
+      - material: Cloth
+        amount: 3
+        doAfter: 10
+  - node: shotgun
+    entity: WeaponShotgunImprovised
+
+- type: constructionGraph
+  id: ShellShotgunImprovisedGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shell
+      steps:
+      - material: Cable
+        amount: 3
+      - tag: GlassShard #i would put welding fuel here, but i don't think we support reagents in crafting yet so this is the next best thing.
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        name: glass shard
+      - material: Steel
+        amount: 3
+        doAfter: 2
+  - node: shell
+    entity: ShellShotgunImprovised
+
+- type: constructionGraph
+  id: RifleStockGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: riflestock
+      steps:
+      - material: WoodPlank
+        amount: 5
+        doAfter: 4
+  - node: riflestock
+    entity: RifleStock
