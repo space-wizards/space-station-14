@@ -55,6 +55,14 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] public readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ILogManager _log = default!;
+    private ISawmill _sawmill = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _sawmill = _log.GetSawmill("game_rule");
+    }
 
     protected override void Added(EntityUid uid, GameDirectorSystemComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -62,6 +70,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         _metrics.SetupMetrics();
         SetupEvents(scheduler, CountActivePlayers());
         CopyStories(uid, scheduler);
+        ValidateStories(scheduler);
     }
 
     private void SetupEvents(GameDirectorSystemComponent scheduler, PlayerCount count)
@@ -95,7 +104,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
 
     protected override void ActiveTick(EntityUid uid, GameDirectorSystemComponent scheduler, GameRuleComponent gameRule, float frameTime)
     {
-        const bool testingMode = false;
+        const bool testingMode = true;
         scheduler.BeatTime += frameTime;
         if (scheduler.TimeUntilNextEvent > 0)
         {
@@ -109,7 +118,8 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         var count = CountActivePlayers();
         if (testingMode)
         {
-            chaos = scheduler.CurrChaos;
+            chaos = _metrics.CalculateChaos();
+            // chaos = scheduler.CurrChaos;
             count.Players = 60;
         }
         else
@@ -135,7 +145,8 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             if (testingMode)
             {
                 // Event proceeds as planned!
-                scheduler.CurrChaos += chosenEvent.PossibleEvent.Chaos;
+                // scheduler.CurrChaos += chosenEvent.PossibleEvent.Chaos;
+                _event.RunNamedEvent(chosenEvent.PossibleEvent.PrototypeId);
             }
             else
             {
@@ -145,7 +156,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             // Don't select this event again for the current story (when SetupEvents is called again)
             scheduler.PossibleEvents.Remove(chosenEvent.PossibleEvent);
 
-            // 3 - 6 minutes until the next event is considered.
+            // 2 - 6 minutes until the next event is considered.
             scheduler.TimeUntilNextEvent = _random.NextFloat(120f, 360f);
         }
         else
@@ -154,11 +165,11 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             scheduler.TimeUntilNextEvent = 30f;
         }
 
-        if (testingMode)
-        {
-            scheduler.BeatTime += scheduler.TimeUntilNextEvent;
-            scheduler.TimeUntilNextEvent = 5f;
-        }
+        // if (testingMode)
+        // {
+        //     scheduler.BeatTime += scheduler.TimeUntilNextEvent;
+        //     scheduler.TimeUntilNextEvent = 5f;
+        // }
     }
 
     // Count the active players and ghosts on the server.
@@ -317,7 +328,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         // Fall back to improving all scores (not just the ones the beat is focused on)
         //   Generally this means reducing chaos (unspecified scores are desired to be 0).
         var allDesiredChange = beat.Goal - chaos;
-        result = FilterAndScore(scheduler, chaos, allDesiredChange, count);
+        result = FilterAndScore(scheduler, chaos, allDesiredChange, count, inclNoChaos:true);
 
         return result;
     }
@@ -325,7 +336,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
     // Filter only to events which improve the chaos score in alignment with desiredChange.
     //   Score them (lower is better) in how well they do this.
     private List<RankedEvent> FilterAndScore(GameDirectorSystemComponent scheduler, ChaosMetrics chaos,
-        ChaosMetrics desiredChange, PlayerCount count)
+        ChaosMetrics desiredChange, PlayerCount count, bool inclNoChaos = false)
     {
         var noEvent = RankChaosDelta(desiredChange);
         var result = new List<RankedEvent>();
@@ -339,7 +350,10 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
 
             var allChaosAfter = chaos + possibleEvent.Chaos;
 
-            if (rank < noEvent)
+            // Some events have no chaos score assigned. Treat them as if they change nothing and mix them in for flavor.
+            var noChaosEvent = inclNoChaos && possibleEvent.Chaos.Empty;
+
+            if (rank < noEvent || noChaosEvent)
             {
                 // Look up this event's prototype and check it is ready to run.
                 var proto = _prototypeManager.Index<EntityPrototype>(possibleEvent.PrototypeId);
@@ -382,6 +396,41 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
                     // TODO: Which of the two to favor when there are conflicts might need some thought.
                     scheduler.Stories[story.Key] = story.Value;
                 }
+            }
+        }
+    }
+
+    // Check that the stories have a valid configuration.
+    private void ValidateStories(GameDirectorSystemComponent scheduler)
+    {
+        if (scheduler.Stories.Count == 0)
+        {
+            _sawmill.Warning($"No stories found in GameDirector");
+        }
+        if (scheduler.StoryBeats.Count == 0)
+        {
+            _sawmill.Warning($"No storyBeats found in GameDirector");
+        }
+        if (!scheduler.StoryBeats.ContainsKey(scheduler.FallbackBeatName))
+        {
+            _sawmill.Warning($"Fallback storyBeat {scheduler.FallbackBeatName} not found in GameDirector");
+        }
+        foreach (var story in scheduler.Stories)
+        {
+            foreach (var beat in story.Value.Beats)
+            {
+                if (!scheduler.StoryBeats.ContainsKey(beat))
+                {
+                    _sawmill.Warning($"Missing StoryBeat {beat} referenced in Story '{story.Key}'");
+                }
+            }
+        }
+
+        foreach (var beat in scheduler.StoryBeats)
+        {
+            if (beat.Value.Goal.Empty)
+            {
+                _sawmill.Warning($"StoryBeat {beat.Key} has no goal Chaos configured.");
             }
         }
     }

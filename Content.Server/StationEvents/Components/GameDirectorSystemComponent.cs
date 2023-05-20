@@ -70,7 +70,7 @@ public sealed class GameDirectorSystemComponent : Component
     /// A beat name we always use when we cannot find any stories to use.
     /// </summary>
     [DataField("fallbackBeatName"), ViewVariables(VVAccess.ReadWrite)]
-    public string FallbackBeatName = "Peaceful";
+    public string FallbackBeatName = "Peace";
 
     /// <summary>
     /// All the events that are allowed to run in the current story.
@@ -173,9 +173,13 @@ public sealed class StoryBeat
 [DataDefinition]
 public sealed class PossibleEvent
 {
-    public string PrototypeId;
+    public string PrototypeId = "";
 
-    public ChaosMetrics Chaos;
+    public ChaosMetrics Chaos = new();
+
+    public PossibleEvent()
+    {
+    }
 
     public PossibleEvent(string prototypeId, ChaosMetrics chaos)
     {

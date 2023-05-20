@@ -1,4 +1,5 @@
 - type: entity
+  id: GiftsPizzaPartySmall
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -68,6 +69,7 @@
         CrateVendingMachineRestockEngineering: 1
 
 - type: entity
+  id: GiftsVendingRestock
   parent: BaseGameRule
   noSpawn: true
   components:

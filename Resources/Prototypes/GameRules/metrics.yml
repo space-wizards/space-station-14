@@ -56,3 +56,13 @@
       parchedScore: 5
       peckishScore: 2
       starvingScore: 5
+
+- type: entity
+  id: AnomalyMetric
+  parent: BaseMetric
+  noSpawn: true
+  components:
+    - type: AnomalyMetric
+      growingCost: 100
+      severityCost: 50
+      dangerCost: 40
