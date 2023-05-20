@@ -1,12 +1,6 @@
 Entries:
 - author: PuroSlavKing
   changes:
-  - {message: 'Changed access to fire axe cabinet, now not only an atmospheric technician
-      can get a fire axe.', type: Tweak}
-  id: 3323
-  time: '2023-04-03T06:27:45.0000000+00:00'
-- author: PuroSlavKing
-  changes:
   - {message: Added robust nukie drink to vending machine cola., type: Add}
   id: 3324
   time: '2023-04-03T06:42:37.0000000+00:00'
@@ -2897,3 +2891,8 @@ Entries:
   - {message: added space glue tube (can appear in maintenance lockers), type: Add}
   id: 3822
   time: '2023-05-20T02:42:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix fire stacks not spreading to other players., type: Fix}
+  id: 3823
+  time: '2023-05-20T03:34:41.0000000+00:00'
