@@ -59,7 +59,8 @@ namespace Content.Client.Actions
             if (args.Current is not ActionsComponentState state)
                 return;
 
-            var serverActions = new SortedSet<ActionType>(state.Actions);
+            state.SortedActions ??= new SortedSet<ActionType>(state.Actions);
+            var serverActions = state.SortedActions;
             var removed = new List<ActionType>();
 
             foreach (var act in component.Actions.ToList())
@@ -77,7 +78,6 @@ namespace Content.Client.Actions
                 }
 
                 act.CopyFrom(serverAct);
-                serverActions.Remove(serverAct);
             }
 
             var added = new List<ActionType>();
@@ -85,6 +85,9 @@ namespace Content.Client.Actions
             // Anything that remains is a new action
             foreach (var newAct in serverActions)
             {
+                if (component.Actions.Contains(newAct))
+                    continue;
+
                 // We create a new action, not just sorting a reference to the state's action.
                 var action = (ActionType) newAct.Clone();
                 component.Actions.Add(action);

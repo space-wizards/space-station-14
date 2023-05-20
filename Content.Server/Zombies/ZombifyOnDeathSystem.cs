@@ -239,7 +239,8 @@ namespace Content.Server.Zombies
             }
             RemComp<HandsComponent>(target);
             // No longer waiting to become a zombie:
-            RemComp<PendingZombieComponent>(target);
+            // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
+            RemCompDeferred<PendingZombieComponent>(target);
 
             //zombie gamemode stuff
             RaiseLocalEvent(new EntityZombifiedEvent(target));

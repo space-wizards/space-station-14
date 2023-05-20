@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading;
-using Content.Server.CPUJob.JobQueues;
-using Content.Server.CPUJob.JobQueues.Queues;
+using Robust.Shared.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
@@ -28,8 +28,6 @@ public sealed partial class SalvageSystem
 
     private void InitializeExpeditions()
     {
-        SubscribeLocalEvent<StationInitializedEvent>(OnSalvageExpStationInit);
-
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ComponentInit>(OnSalvageConsoleInit);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, EntParentChangedMessage>(OnSalvageConsoleParent);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ClaimSalvageMessage>(OnSalvageClaimMessage);
@@ -115,11 +113,6 @@ public sealed partial class SalvageSystem
         component.EndTime += args.PausedTime;
     }
 
-    private void OnSalvageExpStationInit(StationInitializedEvent ev)
-    {
-        EnsureComp<SalvageExpeditionDataComponent>(ev.Station);
-    }
-
     private void UpdateExpeditions()
     {
         var currentTime = _timing.CurTime;
@@ -145,16 +138,6 @@ public sealed partial class SalvageSystem
             comp.NextOffer += TimeSpan.FromSeconds(_cooldown);
             GenerateMissions(comp);
             UpdateConsoles(comp);
-        }
-
-        var query = EntityQueryEnumerator<SalvageExpeditionComponent>();
-
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (comp.EndTime < currentTime)
-            {
-                QueueDel(uid);
-            }
         }
     }
 
