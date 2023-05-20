@@ -70,3 +70,6 @@ ent-VendingMachineRestockRobotics = Robotech Deluxe restock box
 ent-VendingMachineRestockHappyHonk = Happy Honk restock box
     .desc = place this box full of fun into the restock slot on the Happy Honk Dispenser to begin.
     .suffix = { "" }
+ent-VendingMachineRestockChemVend = ChemVend restock box
+    .desc = A box filled with chemicals and covered in dangerous-looking NFPA diamonds. Load it into a ChemVend to begin.
+    .suffix = { "" }

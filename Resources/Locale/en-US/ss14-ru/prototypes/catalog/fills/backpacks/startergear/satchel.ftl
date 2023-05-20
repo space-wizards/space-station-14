@@ -64,3 +64,6 @@ ent-ClothingBackpackSatchelSalvageFilled = { ent-ClothingBackpackSatchelSalvage 
 ent-ClothingBackpackSatchelDrone = { ent-ClothingBackpackSatchel }
     .desc = { ent-ClothingBackpackSatchel.desc }
     .suffix = { "" }
+ent-ClothingBackpackSatchelMimeFilled = { ent-ClothingBackpackSatchel }
+    .desc = { ent-ClothingBackpackSatchel.desc }
+    .suffix = { "" }

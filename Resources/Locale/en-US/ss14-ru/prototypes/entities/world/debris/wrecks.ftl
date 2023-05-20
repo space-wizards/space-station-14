@@ -1,0 +1,12 @@
+ent-BaseScrapDebris = Scrap Debris
+    .desc = { ent-BaseDebris.desc }
+    .suffix = { "" }
+ent-ScrapDebrisSmall = Scrap Debris Small
+    .desc = { ent-BaseScrapDebris.desc }
+    .suffix = { "" }
+ent-ScrapDebrisMedium = Scrap Debris Medium
+    .desc = { ent-BaseScrapDebris.desc }
+    .suffix = { "" }
+ent-ScrapDebrisLarge = Scrap Debris Large
+    .desc = { ent-BaseScrapDebris.desc }
+    .suffix = { "" }

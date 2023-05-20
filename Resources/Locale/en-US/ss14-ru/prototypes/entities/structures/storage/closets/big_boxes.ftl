@@ -1,9 +1,12 @@
 ent-BaseBigBox = cardboard box
     .desc = Huh? Just a box...
     .suffix = { "" }
-ent-StealthBox = cardboard box
+ent-StealthBox = { ent-BaseBigBox }
     .desc = Kept ya waiting, huh?
     .suffix = stealth
+ent-BigBox = { ent-BaseBigBox }
+    .desc = { ent-BaseBigBox.desc }
+    .suffix = { "" }
 ent-GhostBox = ghost box
     .desc = Beware!
     .suffix = { "" }

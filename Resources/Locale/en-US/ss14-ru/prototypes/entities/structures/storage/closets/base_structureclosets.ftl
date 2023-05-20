@@ -7,3 +7,6 @@ ent-BaseWallCloset = wall closet
 ent-BaseWallLocker = { ent-BaseWallCloset }
     .desc = { ent-BaseWallCloset.desc }
     .suffix = { "" }
+ent-SuitStorageBase = suit storage unit
+    .desc = A fancy hi-tech storage unit made for storing space suits.
+    .suffix = { "" }

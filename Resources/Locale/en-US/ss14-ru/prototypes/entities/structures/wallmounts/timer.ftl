@@ -7,3 +7,6 @@ ent-ScreenTimer = screen timer
 ent-BrigTimer = brig timer
     .desc = It's a timer for brig cells.
     .suffix = { "" }
+ent-TimerFrame = timer frame
+    .desc = A construction frame for a timer.
+    .suffix = { "" }

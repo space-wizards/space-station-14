@@ -1,5 +1,5 @@
 ent-HotPotato = hot potato
-    .desc = Once activated, this time bomb can't be dropped - only passed to someone else!
+    .desc = Once activated, you can't drop this time bomb - hit someone else with it to save yourself! Don't burn your hands!
     .suffix = { "" }
 ent-HotPotatoEffect = { "" }
     .desc = { "" }

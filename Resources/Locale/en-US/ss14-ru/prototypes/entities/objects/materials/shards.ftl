@@ -10,3 +10,6 @@ ent-ShardGlassReinforced = reinforced glass shard
 ent-ShardGlassPlasma = plasma glass shard
     .desc = A small piece of plasma glass.
     .suffix = { "" }
+ent-ShardGlassUranium = uranium glass shard
+    .desc = A small piece of uranium glass.
+    .suffix = { "" }

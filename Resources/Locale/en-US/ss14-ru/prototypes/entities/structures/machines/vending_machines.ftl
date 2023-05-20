@@ -193,3 +193,6 @@ ent-VendingMachineTankDispenserEVA = Gas Tank Dispenser
 ent-VendingMachineTankDispenserEngineering = Gas Tank Dispenser
     .desc = A vendor for dispensing gas tanks. This one has an engineering livery.
     .suffix = ENG [O2, Plasma]
+ent-VendingMachineChemicals = ChemVend
+    .desc = Probably not the coffee machine.
+    .suffix = { "" }

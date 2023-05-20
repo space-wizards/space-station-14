@@ -1,3 +1,3 @@
 ent-Bookshelf = bookshelf
-    .desc = Mostly filled with erotica.
+    .desc = Mostly filled with books.
     .suffix = { "" }

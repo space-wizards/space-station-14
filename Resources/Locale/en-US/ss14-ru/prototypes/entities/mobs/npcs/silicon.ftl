@@ -13,3 +13,6 @@ ent-MobCleanBot = cleanbot
 ent-MobMedibot = medibot
     .desc = No substitute for a doctor, but better than nothing.
     .suffix = { "" }
+ent-MobMimeBot = mimebot
+    .desc = Why not give mimebot a friendly wave.
+    .suffix = { "" }
