@@ -63,3 +63,7 @@ ent-SpawnMobAlexander = спавнер свинья Александр
     .suffix = { "" }
 ent-SpawnMobShiva = спавнер Шивы
     .desc = { ent-MarkerBase.desc }
+ent-SpawnMobMonkeyPunpun = спавнер Пун Пун
+    .desc = { ent-MarkerBase.desc }
+ent-SpawnMobSmile = спавнер Смайла
+    .desc = { ent-MarkerBase.desc }

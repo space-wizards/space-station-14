@@ -1,9 +1,12 @@
 ent-PartSilicon = часть тела синтетика
     .desc = { ent-BaseItem.desc }
-    .suffix = { "" }
 ent-LeftArmBorg = левая рука борга
     .desc = { ent-PartSilicon.desc }
-    .suffix = { "" }
 ent-RightArmBorg = правая рука борга
     .desc = { ent-PartSilicon.desc }
-    .suffix = { "" }
+ent-LeftLegBorg = левая нога борга
+    .desc = { ent-PartSilicon.desc }
+ent-RightLegBorg = правая нога борга
+    .desc = { ent-PartSilicon.desc }
+ent-LightHeadBorg = голова борга
+    .desc = { ent-PartSilicon.desc }

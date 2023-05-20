@@ -91,3 +91,5 @@ ent-FoodShakerPepper = перечница
 ent-FoodShakerEmpty = { ent-BaseFoodShaker }
     .desc = { ent-BaseFoodShaker.desc }
     .suffix = Пустой
+ent-FoodCondimentBottleVinegar = бутылка уксуса
+    .desc = Используется в кулинарии для усиления вкуса.
