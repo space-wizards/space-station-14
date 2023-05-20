@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added watermelon helmet., type: Add}
-  id: 3321
-  time: '2023-04-03T06:25:14.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Nanotrasen has supplied engineering departments with high capacity fuel
@@ -2897,3 +2892,9 @@ Entries:
   - {message: Added tons more scarfs for you to enjoy at your departments!, type: Add}
   id: 3820
   time: '2023-05-20T01:15:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Tech disks no longer contain exclusive discipline technology., type: Fix}
+  - {message: Printing tech disks now costs fewer points., type: Tweak}
+  id: 3821
+  time: '2023-05-20T02:10:29.0000000+00:00'
