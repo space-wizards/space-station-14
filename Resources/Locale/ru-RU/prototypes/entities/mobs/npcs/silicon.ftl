@@ -13,3 +13,5 @@ ent-MobMedibot = медибот
 ent-MobJonkBot = джонкбот
     .desc = Теперь нас ничего не спасёт.
     .suffix = { "" }
+ent-MobMimeBot = мимбот
+    .desc = Почему бы не помахать мимботу?

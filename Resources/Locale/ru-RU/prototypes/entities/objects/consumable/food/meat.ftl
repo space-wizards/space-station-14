@@ -163,3 +163,7 @@ ent-FoodMeatSpiderCutletCooked = паучья котлета
 ent-FoodMeatXenoCutletCooked = ксено котлета
     .desc = Котлета из ксеноса, сочащаяся... вкусом?
     .suffix = { "" }
+ent-FoodMeatHuman = сырое мясо человека
+    .desc = Мерзость.
+ent-MaterialSmileExtract = экстракт Смайла
+    .desc = Это настоящая панацея. Но какой ценой?

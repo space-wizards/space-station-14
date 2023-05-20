@@ -37,3 +37,6 @@ ent-WardrobeAtmosphericsFilled = { ent-WardrobeAtmospherics}
 ent-WardrobeVirologyFilled = { ent-WardrobeVirology }
     .desc = Гладкие зеленые нити, содержащиеся внутри, значительно снижают вероятность того, что вас вышвырнут из вирусологической лаборатории.
     .suffix = Заполненный
+ent-WardrobeRoboticsFilled = гардероб робототехника
+    .desc = { ent-WardrobeBlack.desc }
+    .suffix = Заполненный

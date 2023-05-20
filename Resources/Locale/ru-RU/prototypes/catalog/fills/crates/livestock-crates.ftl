@@ -59,3 +59,6 @@ ent-CrateNPCHamlet = { ent-CrateRodentCage }
 
 ent-CrateNPCKangaroo = Ящик с кенгуру
     .desc = Ящик, содержащий кенгуру
+
+ent-CrateNPCCrab = Ящик с крабами
+    .desc = Ящик с тремя огромными крабами.
