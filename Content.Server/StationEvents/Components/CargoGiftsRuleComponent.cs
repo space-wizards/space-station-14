@@ -11,6 +11,12 @@ namespace Content.Server.StationEvents.Components;
 public sealed class CargoGiftsRuleComponent : Component
 {
     /// <summary>
+    /// The base announcement string (which then incorporates the strings below)
+    /// </summary>
+    [DataField("announce"), ViewVariables(VVAccess.ReadWrite)]
+    public string Announce = "cargo-gifts-event-announcement";
+
+    /// <summary>
     /// What is being sent
     /// </summary>
     [DataField("description"), ViewVariables(VVAccess.ReadWrite)]

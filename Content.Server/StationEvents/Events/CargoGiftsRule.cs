@@ -2,6 +2,7 @@
 using Content.Server.Anomaly;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -23,12 +24,13 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
 
     protected override void Added(EntityUid uid, CargoGiftsRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         base.Added(uid, component, gameRule, args);
 
-        var str = Loc.GetString("cargo-gifts-event-announcement",
+        var str = Loc.GetString(component.Announce,
             ("sender", Loc.GetString(component.Sender)), ("description", Loc.GetString(component.Description)), ("dest", Loc.GetString(component.Dest)));
         ChatSystem.DispatchGlobalAnnouncement(str, colorOverride: Color.FromHex("#18abf5"));
     }
@@ -50,11 +52,8 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
         }
         component.TimeUntilNextGifts = 30f;
 
-        var station = _stationSystem.Stations.FirstOrNull();
-        if (station == null)
-        {
+        if (!TryGetRandomStation(out var station, HasComp<StationCargoOrderDatabaseComponent>))
             return;
-        }
 
         if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var cargoDb))
         {
@@ -73,6 +72,12 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
             {
                 break;
             }
+        }
+
+        if (component.Gifts.Count == 0)
+        {
+            // We're done here!
+            _ticker.EndGameRule(uid, gameRule);
         }
     }
 
