@@ -1,0 +1,41 @@
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelIAAFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: BriefcaseIAAFilled
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelIAAFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: BriefcaseIAAFilled
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpack
+  id: ClothingBackpackIAAFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: BriefcaseIAAFilled
+
+- type: entity
+  id: BriefcaseIAAFilled
+  parent: BriefcaseBrown
+  suffix: IAA
+  components:
+    - type: StorageFill
+      contents:
+        - id: Paper
+          amount: 3
+        - id: CyberPen
+        - id: RubberStampIAA
