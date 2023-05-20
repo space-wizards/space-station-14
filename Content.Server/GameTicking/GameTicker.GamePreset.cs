@@ -59,7 +59,7 @@ namespace Content.Server.GameTicking
 
                     if (!startAttempt.Cancelled)
                     {
-                        _chatManager.DispatchServerAnnouncement(
+                        _chatManager.SendAdminAnnouncement(
                             Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
                                 ("failedGameMode", presetTitle),
                                 ("fallbackMode", Loc.GetString(preset))));
