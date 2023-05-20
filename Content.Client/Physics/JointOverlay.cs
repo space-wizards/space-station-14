@@ -1,3 +1,5 @@
+using Content.Shared.Physics;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Physics;
@@ -26,9 +28,12 @@ public sealed class JointOverlay : Overlay
         _drawn.Clear();
         var worldHandle = args.WorldHandle;
 
-        var joints = _entManager.EntityQueryEnumerator<JointComponent, TransformComponent>();
+        var spriteSystem = _entManager.System<SpriteSystem>();
+        var xformSystem = _entManager.System<SharedTransformSystem>();
+        var joints = _entManager.EntityQueryEnumerator<JointVisualsComponent, JointComponent, TransformComponent>();
+        var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        while (joints.MoveNext(out var uid, out var jointComp, out var xform))
+        while (joints.MoveNext(out var uid, out var visuals, out var jointComp, out var xform))
         {
             if (xform.MapID != args.MapId)
                 continue;
@@ -41,6 +46,24 @@ public sealed class JointOverlay : Overlay
                 switch (joint)
                 {
                     case DistanceJoint distance:
+                        var other = joint.BodyAUid == uid ? joint.BodyBUid : joint.BodyAUid;
+                        var otherXform = xformQuery.GetComponent(joint.BodyBUid);
+
+                        if (xform.MapID != otherXform.MapID)
+                            continue;
+
+                        var texture = spriteSystem.Frame0(visuals.Sprite);
+                        var width = texture.Width / (float) EyeManager.PixelsPerMeter;
+                        var posA = xformSystem.GetWorldPosition(xform, xformQuery);
+                        var posB = xformSystem.GetWorldPosition(other, xformQuery);
+                        var diff = (posB - posA);
+                        var length = diff.Length;
+
+                        var midPoint = diff / 2f + posA;
+                        var angle = (posB - posA).ToAngle();
+                        var rotate = new Box2Rotated(new Box2(-width / 2f, -length / 2f, width / 2f, length / 2f), angle, midPoint);
+
+                        worldHandle.DrawTextureRect(texture, rotate);
 
                         break;
                     default:

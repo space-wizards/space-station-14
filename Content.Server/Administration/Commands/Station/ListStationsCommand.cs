@@ -1,3 +1,4 @@
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -17,7 +18,9 @@ public sealed class ListStationsCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        foreach (var station in EntitySystem.Get<StationSystem>().Stations)
+        var query = _entityManager.EntityQueryEnumerator<StationDataComponent>();
+
+        while (query.MoveNext(out var station, out _))
         {
             var name = _entityManager.GetComponent<MetaDataComponent>(station).EntityName;
             shell.WriteLine($"{station, -10} | {name}");

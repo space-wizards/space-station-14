@@ -1,7 +1,9 @@
+using Content.Shared.Physics;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Misc;
 
@@ -32,5 +34,8 @@ public sealed class GrapplingProjectileSystem : EntitySystem
         joint.MaxLength = joint.Length + 0.5f;
         joint.Stiffness = 1f;
         joint.MinLength = 0.1f;
+        var visuals = EnsureComp<JointVisualsComponent>(uid);
+        visuals.Sprite =
+            new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
     }
 }
