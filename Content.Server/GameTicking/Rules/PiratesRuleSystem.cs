@@ -144,8 +144,8 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             var map = "/Maps/Shuttles/pirate.yml";
             var xformQuery = GetEntityQuery<TransformComponent>();
 
-            var aabbs = _stationSystem.Stations.SelectMany(x =>
-                    Comp<StationDataComponent>(x).Grids.Select(x =>
+            var aabbs = EntityQuery<StationDataComponent>().SelectMany(x =>
+                    x.Grids.Select(x =>
                         xformQuery.GetComponent(x).WorldMatrix.TransformBox(_mapManager.GetGridComp(x).LocalAABB)))
                 .ToArray();
 

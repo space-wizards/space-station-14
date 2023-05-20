@@ -3,6 +3,9 @@ zombie-description = На станции появился вирус, спосо
 zombie-not-enough-ready-players = Недостаточно игроков готовы к игре! { $readyPlayersCount } игроков из необходимых { $minimumPlayers } готовы. Нельзя начать Зомби.
 zombie-no-one-ready = Нет готовых игроков! Нельзя начать Зомби.
 zombie-patientzero-role-greeting = Вы — нулевой пациент. Скрывайте свою инфекцию, добывайте припасы, и будьте готовы обратиться после смерти.
+zombie-healing = You feel a stirring in your flesh
+zombie-infection-warning = You feel the zombie virus take hold
+zombie-infection-underway = Your blood begins to thicken
 zombie-alone = Вы чувствуете себя совершенно одиноким.
 zombie-round-end-initial-count =
     { $initialCount ->

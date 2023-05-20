@@ -41,13 +41,13 @@
       sprite: Structures/Storage/closet.rsi
       layers:
       - state: cardboard
+        map: ["enum.StorageVisualLayers.Base"]
       - state: cardboard_open
         map: ["enum.StorageVisualLayers.Door"]
     - type: Appearance
-      visuals:
-      - type: StorageVisualizer
-        state: cardboard
-        state_open: cardboard_open
+    - type: EntityStorageVisuals
+      stateBaseClosed: cardboard
+      stateDoorOpen: cardboard_open
     - type: Tag
       tags:
         - DoorBumpOpener
@@ -124,7 +124,7 @@
       noRot: true
       netsync: false
       layers:
-        - state: "cardboard_special"
+      - state: "cardboard_special"
     - type: TimedDespawn
       lifetime: 1
     - type: Tag

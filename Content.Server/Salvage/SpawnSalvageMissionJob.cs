@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
-using Content.Server.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
@@ -13,6 +13,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Dataset;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
 using Content.Shared.Random;
@@ -220,10 +221,20 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
             switch (rule)
             {
-                case BiomeTemplateLoot biomeLoot:
-                    if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                case BiomeMarkerLoot biomeLoot:
                     {
-                        _biome.AddTemplate(biome, "Loot", _prototypeManager.Index<BiomeTemplatePrototype>(biomeLoot.Prototype), i);
+                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                        {
+                            _biome.AddMarkerLayer(biome, biomeLoot.Prototype);
+                        }
+                    }
+                    break;
+                case BiomeTemplateLoot biomeLoot:
+                    {
+                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                        {
+                            _biome.AddTemplate(biome, "Loot", _prototypeManager.Index<BiomeTemplatePrototype>(biomeLoot.Prototype), i);
+                        }
                     }
                     break;
                 // Spawns a cluster (like an ore vein) nearby.

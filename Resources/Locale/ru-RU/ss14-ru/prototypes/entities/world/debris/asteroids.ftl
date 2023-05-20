@@ -1,0 +1,10 @@
+ent-BaseAsteroidDebris = Asteroid Debris
+    .desc = { ent-BaseDebris.desc }
+ent-AsteroidDebrisSmall = Asteroid Debris Small
+    .desc = { ent-BaseAsteroidDebris.desc }
+ent-AsteroidDebrisMedium = Asteroid Debris Medium
+    .desc = { ent-BaseAsteroidDebris.desc }
+ent-AsteroidDebrisLarge = Asteroid Debris Large
+    .desc = { ent-BaseAsteroidDebris.desc }
+ent-AsteroidDebrisLarger = Asteroid Debris Larger
+    .desc = { ent-BaseAsteroidDebris.desc }

@@ -1,3 +1,5 @@
+ent-ClothingUniformJumpsuitDeathSquad = Death squad uniform
+    .desc = Advanced armored jumpsuit used by special forces in special operations.
 ent-ClothingUniformJumpsuitAncient = ancient jumpsuit
     .desc = A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade.
 ent-ClothingUniformJumpsuitBartender = bartender's uniform

@@ -315,9 +315,6 @@
   id: GuideEmbeded
 
 - type: Tag
-  id: GunsDisabled # Allow certain entities to not use guns without complicating the system with an event
-
-- type: Tag
   id: Handcuffs
 
 - type: Tag
