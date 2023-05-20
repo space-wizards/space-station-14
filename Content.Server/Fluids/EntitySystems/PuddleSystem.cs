@@ -325,16 +325,16 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     private void UpdateSlow(EntityUid uid, Solution solution)
     {
-        var totalViscosity = FixedPoint2.Zero;
+        var maxViscosity = 0f;
         foreach (var reagent in solution.Contents)
         {
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.ReagentId);
-            totalViscosity += reagent.Quantity * FixedPoint2.New(reagentProto.Viscosity);
+            maxViscosity = Math.Max(maxViscosity, reagentProto.Viscosity);
         }
-        if (totalViscosity > 0)
+        if (maxViscosity > 0)
         {
             var comp = EnsureComp<SlowContactsComponent>(uid);
-            var speed = 1 - (totalViscosity / solution.Volume).Float();
+            var speed = 1 - maxViscosity;
             _slowContacts.ChangeModifiers(uid, speed, comp);
         }
         else
