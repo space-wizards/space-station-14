@@ -6,7 +6,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
-using Content.Server.Popups;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
@@ -15,7 +14,6 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
@@ -49,8 +47,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -822,5 +818,15 @@ public sealed class AnnouncementSpokeEvent : EntityEventArgs
         Message = message;
         AnnouncementSound = announcementSound;
         AnnouncementSoundParams = announcementSoundParams;
+    }
+}
+
+public sealed class RadioSpokeEvent : EntityEventArgs
+{
+    public readonly string Message;
+
+    public RadioSpokeEvent(string message)
+    {
+        Message = message;
     }
 }
