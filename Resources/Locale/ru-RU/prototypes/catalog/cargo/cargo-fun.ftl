@@ -18,3 +18,6 @@ ent-FunATV = { ent-CrateFunATV }
 
 ent-FunParty = { ent-CrateFunParty }
     .desc = { ent-CrateFunParty.desc }
+
+ent-FunWaterGuns = { ent-CrateFunWaterGuns }
+    .desc = { ent-CrateFunWaterGuns.desc } 

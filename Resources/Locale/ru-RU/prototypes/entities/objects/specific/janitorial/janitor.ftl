@@ -20,3 +20,6 @@ ent-MopBucketFull = ведро для швабры
 ent-RagItem = влажная тряпка
     .desc = Для уборки беспорядка, вы полагаете.
     .suffix = { "" }
+ent-WetFloorSignMineExplosive = { ent-WetFloorSign }
+    .desc = { ent-WetFloorSign.desc }
+    .suffix = Мина

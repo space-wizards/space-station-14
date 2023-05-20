@@ -44,10 +44,12 @@ petting-failure-bear = Вы думаете погладить {$target}, но о
 ## Petting silicons
 
 petting-success-honkbot = Вы гладите {$target} по его скользкой металлической голове.
+petting-success-mimebot = Вы гладите {$target} по его холодной металлической голове.
 petting-success-cleanbot = Вы гладите {$target} по его влажной металлической голове.
 petting-success-medibot = Вы гладите {$target} по его стерильной металлической голове.
 
 petting-failure-honkbot = Вы тянетесь погладить {$target}, но он хонкает и уворачивается!
+petting-failure-mimebot = Вы тянетесь погладить {$target}, но он занят мимскими делами!
 petting-failure-cleanbot = Вы тянетесь погладить {$target}, но он занят уборкой!
 petting-failure-medibot = Вы тянетесь погладить {$target}, но едва не пронзает вашу руку шприцом!
 

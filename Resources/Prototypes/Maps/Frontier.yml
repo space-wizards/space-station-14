@@ -1,8 +1,9 @@
 - type: gameMap
   id: Frontier
   mapName: 'Frontier Station'
-  mapPath: /Maps/Frontier.yml
-  minPlayers: 0
+  mapPath: /Maps/frontier_imperial.yml
+  minPlayers: 35
+  maxPlayers: 70
   stations:
     Front:
       mapNameTemplate: '{0} Frontier Station {1}'
@@ -27,7 +28,7 @@
         StationEngineer: [ 3, 3 ]
         ChiefMedicalOfficer: [ 1, 1 ]
         MedicalDoctor: [ 4, 4 ]
-        Chemist: [ 2, 2 ]
+        Chemist: [ 1, 1 ]
         ResearchDirector: [ 1, 1 ]
         Scientist: [ 4, 4 ]
         HeadOfSecurity: [ 1, 1 ]

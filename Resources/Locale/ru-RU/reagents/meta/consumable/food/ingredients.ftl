@@ -1,6 +1,9 @@
 reagent-name-flour = мука
 reagent-desc-flour = Используется в выпечке.
 
+reagent-name-cornmeal = кукурузная мука
+reagent-desc-cornmeal = Используется для выпечки.
+
 reagent-name-oats = овёс
 reagent-desc-oats = Используется для различных вкусных целей.
 

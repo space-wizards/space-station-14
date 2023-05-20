@@ -16,7 +16,7 @@ reagent-desc-cognac = Сладкий и крепкий алкогольный н
 reagent-name-dead-rum = Мёртвый ром
 reagent-desc-dead-rum = Дистиллированный алкогольный напиток, изготовленный из морской воды.
 
-reagent-name-ethanol = Этанол
+reagent-name-ethanol = этанол
 reagent-desc-ethanol = Он же этиловый спирт. Простейший алкоголь, при употреблении пьянит, легко воспламеняется.
 
 reagent-name-gin = Джин

@@ -37,3 +37,10 @@ ent-GunSafeSubMachineGunWt550 = { ent-GunSafe }
 ent-GunSafeLaserCarbine = { ent-GunSafe }
     .suffix = Лазерный карабин
     .desc = { ent-GunSafe.desc }
+ent-GunSafeSubMachineGunDrozd = { ent-GunSafe }
+    .suffix = Дрозд
+    .desc = { ent-GunSafe.desc }
+
+ent-LockerWardenFilledHardsuit = { ent-LockerWarden }
+    .suffix = Заполненный, Скафандр
+    .desc = { ent-LockerWarden.desc }

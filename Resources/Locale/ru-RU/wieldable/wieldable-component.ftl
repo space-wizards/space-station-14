@@ -15,3 +15,4 @@ wieldable-component-not-enough-free-hands = {$number ->
 }
 wieldable-component-not-in-hands = { CAPITALIZE($item) } не в ваших руках!
 
+wieldable-component-requires = Возьми { CAPITALIZE($item) } в две руки!
