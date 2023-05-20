@@ -27,6 +27,7 @@
       weight: 6
       startDelay: 10
       duration: 240
+      minimumPlayers: 50
       earliestStart: 40
     - type: CargoGiftsRule
       description: cargo-gift-pizza-large
@@ -47,6 +48,7 @@
       startDelay: 10
       duration: 240
       earliestStart: 30
+      minimumPlayers: 10
     - type: CargoGiftsRule
       description: cargo-gift-eng
       sender: cargo-gift-default-sender
@@ -68,6 +70,7 @@
       weight: 4
       startDelay: 10
       duration: 120
+      minimumPlayers: 40
       earliestStart: 30
     - type: CargoGiftsRule
       description: cargo-gift-vending
@@ -90,6 +93,7 @@
       weight: 8
       startDelay: 10
       duration: 120
+      minimumPlayers: 30
       earliestStart: 20
     - type: CargoGiftsRule
       description: cargo-gift-cleaning
@@ -110,6 +114,7 @@
       startDelay: 10
       duration: 120
       earliestStart: 20
+      minimumPlayers: 30
     - type: CargoGiftsRule
       description: cargo-gift-medical-supply
       sender: cargo-gift-default-sender
@@ -131,6 +136,7 @@
       startDelay: 10
       duration: 120
       earliestStart: 10
+      minimumPlayers: 40
     - type: CargoGiftsRule
       description: cargo-gift-space-protection
       sender: cargo-gift-default-sender
@@ -152,6 +158,7 @@
       startDelay: 10
       duration: 120
       earliestStart: 20
+      minimumPlayers: 40
     - type: CargoGiftsRule
       description: cargo-gift-fire-protection
       sender: cargo-gift-default-sender
@@ -171,6 +178,7 @@
       startDelay: 10
       duration: 120
       earliestStart: 20
+      minimumPlayers: 50
     - type: CargoGiftsRule
       description: cargo-gift-security-guns
       sender: cargo-gift-default-sender
@@ -191,6 +199,7 @@
       startDelay: 10
       duration: 120
       earliestStart: 20
+      minimumPlayers: 50
     - type: CargoGiftsRule
       description: cargo-gift-security-riot
       sender: cargo-gift-default-sender
