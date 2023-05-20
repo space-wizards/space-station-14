@@ -11,22 +11,28 @@ namespace Content.Server.StationEvents.Components;
 public sealed class CargoGiftsRuleComponent : Component
 {
     /// <summary>
+    /// The base announcement string (which then incorporates the strings below)
+    /// </summary>
+    [DataField("announce"), ViewVariables(VVAccess.ReadWrite)]
+    public string Announce = "cargo-gifts-event-announcement";
+
+    /// <summary>
     /// What is being sent
     /// </summary>
-    [DataField("descr"), ViewVariables(VVAccess.ReadWrite)]
-    public string Descr = "A bundle of gifts";
+    [DataField("description"), ViewVariables(VVAccess.ReadWrite)]
+    public string Description = "cargo-gift-default-description";
 
     /// <summary>
     /// Sender of the gifts
     /// </summary>
     [DataField("sender"), ViewVariables(VVAccess.ReadWrite)]
-    public string Sender = "NanoTrasen";
+    public string Sender = "cargo-gift-default-sender";
 
     /// <summary>
     /// Destination of the gifts (who they get sent to on the station)
     /// </summary>
-    [DataField("careof"), ViewVariables(VVAccess.ReadWrite)]
-    public string Careof = "The Cargo Dept.";
+    [DataField("dest"), ViewVariables(VVAccess.ReadWrite)]
+    public string Dest = "cargo-gift-default-dest";
 
     /// <summary>
     /// Cargo that you would like gifted to the station, with the quantity for each

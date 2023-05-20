@@ -1,5 +1,4 @@
 - type: entity
-  id: PizzaPartySmall
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -10,10 +9,11 @@
     chaos:
       Hunger: -80
       Thirst: -40
+    earliestStart: 20
   - type: CargoGiftsRule
-    descr: A small pizza party
-    sender: NanoTrasen
-    careof: The Bar
+    description: cargo-gift-pizza-small
+    sender: cargo-gift-default-sender
+    dest: cargo-gift-dest-bar
     gifts:
       FoodPizzaLarge: 1              # 16 pizzas
       FoodBarSupply: 1
@@ -21,7 +21,7 @@
       CrateVendingMachineRestockRobustSoftdrinks: 1
 
 - type: entity
-  id: PizzaPartyLarge
+  id: GiftsPizzaPartyLarge
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -32,17 +32,18 @@
       chaos:
         Hunger: -300
         Thirst: -120
+      earliestStart: 40
     - type: CargoGiftsRule
-      descr: A large pizza party
-      sender: NanoTrasen
-      careof: The Bar
+      description: cargo-gift-pizza-large
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-bar
       gifts:
-        FoodPizzaLarge: 4              # 60 pizzas
+        FoodPizzaLarge: 4              # 64 pizzas
         FoodBarSupply: 1
         FoodSoftdrinksLarge: 1
 
 - type: entity
-  id: EngineeringGifts
+  id: GiftsEngineering
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -50,13 +51,14 @@
       weight: 4
       startDelay: 10
       duration: 240
+      earliestStart: 30
       chaos:
         Atmos: -300
         Power: -100
     - type: CargoGiftsRule
-      descr: Useful resources to fix the station
-      sender: NanoTrasen
-      careof: The Engineering Dept.
+      description: cargo-gift-eng
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-eng
       gifts:
         EngineeringCableBulk: 1
         AirlockKit: 1
@@ -66,7 +68,6 @@
         CrateVendingMachineRestockEngineering: 1
 
 - type: entity
-  id: VendingRestock
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -77,10 +78,11 @@
       chaos:
         Hunger: -100
         Thirst: -100
+      earliestStart: 30
     - type: CargoGiftsRule
-      descr: Restock the vending machines
-      sender: NanoTrasen
-      careof: The Cargo Dept.
+      description: cargo-gift-vending
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-supp
       gifts:
         CrateVendingMachineRestockHotDrinks: 3
         CrateVendingMachineRestockBooze: 1
@@ -90,7 +92,7 @@
         CrateVendingMachineRestockGetmoreChocolateCorp: 1
 
 - type: entity
-  id: JanitorGifts
+  id: GiftsJanitor
   parent: BaseGameRule
   noSpawn: true
   components:
@@ -100,11 +102,112 @@
       duration: 120
       chaos:
         Jani: -200
+      earliestStart: 20
     - type: CargoGiftsRule
-      descr: Useful resources to clean the station
-      sender: NanoTrasen
-      careof: Service Dept.
+      description: cargo-gift-cleaning
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-janitor
       gifts:
-        CrateServiceJanitorialSupplies: 2
+        ServiceJanitorial: 2
         ServiceLightsReplacement: 2
         ServiceJanitorBiosuit: 1
+
+- type: entity
+  id: GiftsMedical
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 8
+      startDelay: 10
+      duration: 120
+      earliestStart: 20
+    - type: CargoGiftsRule
+      description: cargo-gift-medical-supply
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-med
+      gifts:
+        MedicalSupplies: 1
+        MedicalChemistrySupplies: 1
+        EmergencyBruteKit: 1
+        EmergencyAdvancedKit: 1
+        MedicalBiosuit: 1
+
+- type: entity
+  id: GiftsSpacingSupplies
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 6
+      startDelay: 10
+      duration: 120
+      earliestStart: 10
+    - type: CargoGiftsRule
+      description: cargo-gift-space-protection
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-supp
+      gifts:
+        EmergencyInternalsLarge: 2
+        EmergencyInflatablewall: 1
+        EmergencyAdvancedKit: 1
+        MedicalBiosuit: 1
+        EmergencyO2Kit: 1
+
+- type: entity
+  id: GiftsFireProtection
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 3
+      startDelay: 10
+      duration: 120
+      earliestStart: 20
+    - type: CargoGiftsRule
+      description: cargo-gift-fire-protection
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-supp
+      gifts:
+        EmergencyFire: 2
+        EmergencyBurnKit: 1
+        EmergencyBruteKit: 1
+
+- type: entity
+  id: GiftsSecurityGuns
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 2
+      startDelay: 10
+      duration: 120
+      earliestStart: 20
+    - type: CargoGiftsRule
+      description: cargo-gift-security-guns
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-sec
+      gifts:
+        CrateSecurityArmor: 3
+        ArmorySmg: 1
+        ArmoryShotgun: 1
+        ArmoryLaser: 1
+
+- type: entity
+  id: GiftsSecurityRiot
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 4
+      startDelay: 10
+      duration: 120
+      earliestStart: 20
+    - type: CargoGiftsRule
+      description: cargo-gift-security-riot
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-sec
+      gifts:
+        SecurityRiot: 2
+        CrateRestraints: 2
+        CrateSecurityNonlethal: 2
