@@ -1,21 +1,20 @@
 using System.Linq;
 using Content.Client.RoundEnd;
 using Content.Client.UserInterface.Systems.Chat;
-using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands;
 using Content.Shared.Instruments;
 using Content.Shared.Popups;
+using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Network.Messages;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
+using Robust.Shared.Upload;
 using Robust.Shared.Utility;
-using static Content.Shared.Administration.SharedNetworkResourceManager;
-using static Content.Shared.Projectiles.SharedProjectileSystem;
 using static Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 using static Robust.Shared.Replays.ReplayMessage;
 
@@ -79,7 +78,7 @@ public sealed partial class ReplayManager
             switch (message)
             {
                 case ReplayPrototypeUploadMsg:
-                case ReplayResourceUploadMsg:
+                case SharedNetworkResourceManager.ReplayResourceUploadMsg:
                     break; // TODO REPLAYS record these in a separate list.
                 case ChatMessage chat:
                     // Just pass on the chat message to the UI controller, but skip speech-bubbles if we are fast-forwarding.

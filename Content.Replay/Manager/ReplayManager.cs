@@ -8,6 +8,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Serialization;
 using Robust.Client.State;
 using Robust.Client.Timing;
+using Robust.Client.Upload;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
