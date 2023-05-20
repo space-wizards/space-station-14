@@ -2,12 +2,14 @@ using System.Linq;
 using Content.Client.Message;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client;
+using Robust.Client.Replays.Loading;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Serialization;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Replays;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
 
@@ -21,6 +23,7 @@ public sealed class ReplayMainScreen : State
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IResourceManager _resourceMan = default!;
     [Dependency] private readonly Manager.ReplayManager _replayMan = default!;
+    [Dependency] private readonly IReplayLoadManager _loadMan = default!;
     [Dependency] private readonly IGameController _controllerProxy = default!;
     [Dependency] private readonly IClientRobustSerializer _serializer = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
@@ -51,6 +54,7 @@ public sealed class ReplayMainScreen : State
 
     private void OnItemSelected(OptionButton.ItemSelectedEventArgs obj)
     {
+        _mainMenuControl.ReplaySelect.SelectId(obj.Id);
         RefreshSelection();
     }
 
@@ -64,7 +68,7 @@ public sealed class ReplayMainScreen : State
         if (_directory == null
             || _mainMenuControl.ReplaySelect.SelectedMetadata is not ResPath path
             || !_directory.Exists(path)
-            || _replayMan.LoadYamlMetadata(_directory.OpenSubdirectory(path)) is not { } data)
+            || _loadMan.LoadYamlMetadata(_directory.OpenSubdirectory(path)) is not { } data)
         {
             info.SetMarkup(Loc.GetString("replay-info-none"));
             info.HorizontalAlignment = Control.HAlignment.Center;
@@ -82,8 +86,8 @@ public sealed class ReplayMainScreen : State
         data.TryGet<ValueDataNode>("buildVersion", out var versionNode);
         data.TryGet<ValueDataNode>("typeHash", out var hashNode);
         var forkVersion = versionNode?.Value ?? Error;
-        DateTime.TryParse(timeNode?.Value, out var time);
-        TimeSpan.TryParse(durationNode?.Value, out var duration);
+        DateTime.TryParse((string?) timeNode?.Value, out var time);
+        TimeSpan.TryParse((string?) durationNode?.Value, out var duration);
 
         // Why does this not have a try-convert function???
         try
@@ -155,7 +159,7 @@ public sealed class ReplayMainScreen : State
             foreach (var file in _directory.DirectoryEntries(ResPath.Root))
             {
                 var path = new ResPath(file).ToRootedPath();
-                if (!_directory.Exists(path / Manager.ReplayManager.YamlFilename))
+                if (!_directory.Exists(path / IReplayRecordingManager.MetaFile.ToRelativePath()))
                     continue;
 
                 _mainMenuControl.ReplaySelect.AddItem(file, i);

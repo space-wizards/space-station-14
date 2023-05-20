@@ -1,34 +1,26 @@
 using Robust.Shared.ContentPack;
 using System.Threading.Tasks;
 using Content.Replay.UI.Loading;
-using Robust.Shared.CPUJob.JobQueues;
+using Robust.Client.Replays.Loading;
+using Robust.Shared.Replays;
 
 namespace Content.Replay.Manager;
 
-public sealed class LoadReplayJob : Job<ReplayData>
+public sealed class ContentLoadReplayJob : LoadReplayJob
 {
-    private ReplayManager _manager;
-    private readonly IWritableDirProvider _dir;
     private readonly LoadingScreen<ReplayData> _screen;
 
-    public LoadReplayJob(float time, IWritableDirProvider dir,
-        ReplayManager manager,
+    public ContentLoadReplayJob(
+        float maxTime,
+        IWritableDirProvider dir,
+        IReplayLoadManager loadMan,
         LoadingScreen<ReplayData> screen)
-        : base(time, default)
+        : base(maxTime, dir, loadMan)
     {
-        _manager = manager;
-        _dir = dir;
         _screen = screen;
     }
 
-    protected override async Task<ReplayData?> Process()
-    {
-        var data = await _manager.InternalLoadReplay(_dir, Yield);
-        await _manager.StartReplayAsync(data, Yield);
-        return data;
-    }
-
-    private async Task Yield(float value, float maxValue, LoadingState state, bool force)
+    protected override async Task Yield(float value, float maxValue, LoadingState state, bool force)
     {
         var header = Loc.GetString("replay-loading", ("cur", (int)state + 1), ("total", 5));
         var subText = Loc.GetString(state switch
@@ -41,18 +33,6 @@ public sealed class LoadReplayJob : Job<ReplayData>
         });
         _screen.UpdateProgress(value, maxValue, header, subText);
 
-        if (force)
-            await SuspendNow();
-        else
-            await SuspendIfOutOfTime();
-    }
-
-    public enum LoadingState : byte
-    {
-        LoadingFiles,
-        ProcessingFiles,
-        Spawning,
-        Initializing,
-        Starting,
+        await base.Yield(value, maxValue, state, force);
     }
 }

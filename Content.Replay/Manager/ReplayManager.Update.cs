@@ -23,7 +23,7 @@ namespace Content.Replay.Manager;
 // This partial class has code for performing tick updates (effectively the actual playback part of replays).
 public sealed partial class ReplayManager
 {
-    private void TickUpdate(FrameEventArgs args)
+    private void TickUpdateOverride(FrameEventArgs args)
     {
         if (CurrentReplay == null)
             return;

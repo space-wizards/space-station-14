@@ -11,9 +11,11 @@ public sealed partial class ReplayManager
     public const string ToggleCommand = "replay_toggle";
     public const string SkipCommand = "replay_skip";
     public const string SetCommand = "replay_set";
+    public const string StopCommand = "replay_stop";
 
     private void RegisterCommands()
     {
+        _consoleHost.RegisterCommand(StopCommand, (_, _, _) => StopReplay());
         _consoleHost.RegisterCommand(PlayCommand, (_, _, _) => Playing = true);
         _consoleHost.RegisterCommand(PauseCommand, (_, _, _) => Playing = false);
         _consoleHost.RegisterCommand(ToggleCommand, (_, _, _) => Playing = !Playing);
@@ -28,6 +30,7 @@ public sealed partial class ReplayManager
         _consoleHost.UnregisterCommand(ToggleCommand);
         _consoleHost.UnregisterCommand(SkipCommand);
         _consoleHost.UnregisterCommand(SetCommand);
+        _consoleHost.UnregisterCommand(StopCommand);
     }
 
     private void SkipTicks(IConsoleShell shell, string argStr, string[] args)
@@ -66,9 +69,12 @@ public sealed partial class ReplayManager
     public void StopReplay()
     {
         CurrentReplay = null;
-        _controller.ContentEntityTickUpdate -= TickUpdate;
+        _controller.TickUpdateOverride -= TickUpdateOverride;
         UnregisterCommands();
-        _stateMan.RequestStateChange<ReplayMainScreen>();
         _entMan.FlushEntities();
+        _stateMan.RequestStateChange<ReplayMainScreen>();
+
+        // TODO REPLAYS unload extra prototypes
+        // TODO REPLAYS unload extra resources.
     }
 }
