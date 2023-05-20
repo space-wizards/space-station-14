@@ -33,7 +33,7 @@ network-configurator-tooltip-set = Sets targets device list
 network-configurator-tooltip-add = Adds to targets device list
 network-configurator-tooltip-edit = Edit targets device list
 network-configurator-tooltip-clear = Clear targets device list
-network-configurator-tooltip-copy = Copy targets device list to multitool
+network-configurator-tooltip-copy = Copy targets device list to held tool
 network-configurator-tooltip-show = Show a holographic visualization of targets device list
 
 # examine

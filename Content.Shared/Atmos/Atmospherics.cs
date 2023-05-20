@@ -187,6 +187,7 @@ namespace Content.Shared.Atmos
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
+        public const float SuperSaturationEnds = SuperSaturationThreshold / 3;
 
         public const float OxygenBurnRateBase = 1.4f;
         public const float PlasmaMinimumBurnTemperature = (100f+T0C);

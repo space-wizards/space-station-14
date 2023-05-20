@@ -221,7 +221,7 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         if (Terminating(uid) || _net.IsClient)
             return;
-        Del(uid);
+        QueueDel(uid);
     }
 
     /// <summary>
