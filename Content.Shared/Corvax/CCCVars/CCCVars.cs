@@ -85,6 +85,12 @@ public sealed class CCCVars
     public static readonly CVarDef<int> TTSMaxCache =
         CVarDef.Create("tts.max_cache", 250, CVar.SERVERONLY | CVar.ARCHIVE);
 
+    /// <summary>
+    /// VoiceId for Announcement TTS
+    /// </summary>
+    public static readonly CVarDef<string> TTSAnnounceVoiceId =
+        CVarDef.Create("tts.announce_voice", "Announcer", CVar.SERVERONLY | CVar.ARCHIVE);
+
     /*
      * Peaceful Round End
      */
