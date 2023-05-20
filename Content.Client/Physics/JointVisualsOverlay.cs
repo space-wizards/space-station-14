@@ -10,7 +10,7 @@ namespace Content.Client.Physics;
 /// <summary>
 /// Draws a texture on top of a joint.
 /// </summary>
-public sealed class JointOverlay : Overlay
+public sealed class JointVisualsOverlay : Overlay
 {
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
@@ -18,7 +18,7 @@ public sealed class JointOverlay : Overlay
 
     private HashSet<Joint> _drawn = new();
 
-    public JointOverlay(IEntityManager entManager)
+    public JointVisualsOverlay(IEntityManager entManager)
     {
         _entManager = entManager;
     }
@@ -54,14 +54,22 @@ public sealed class JointOverlay : Overlay
 
                         var texture = spriteSystem.Frame0(visuals.Sprite);
                         var width = texture.Width / (float) EyeManager.PixelsPerMeter;
-                        var posA = xformSystem.GetWorldPosition(xform, xformQuery);
-                        var posB = xformSystem.GetWorldPosition(other, xformQuery);
+
+                        var coordsA = xform.Coordinates;
+                        var coordsB = otherXform.Coordinates;
+
+                        coordsA = coordsA.Offset(visuals.OffsetA);
+                        coordsB = coordsB.Offset(visuals.OffsetB);
+
+                        var posA = coordsA.ToMapPos(_entManager, xformSystem);
+                        var posB = coordsB.ToMapPos(_entManager, xformSystem);
                         var diff = (posB - posA);
                         var length = diff.Length;
 
                         var midPoint = diff / 2f + posA;
-                        var angle = (posB - posA).ToAngle();
-                        var rotate = new Box2Rotated(new Box2(-width / 2f, -length / 2f, width / 2f, length / 2f), angle, midPoint);
+                        var angle = (posB - posA).ToWorldAngle();
+                        var box = new Box2(-width / 2f, -length / 2f, width / 2f, length / 2f);
+                        var rotate = new Box2Rotated(box.Translated(midPoint), angle, midPoint);
 
                         worldHandle.DrawTextureRect(texture, rotate);
 

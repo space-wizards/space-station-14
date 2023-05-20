@@ -37,5 +37,7 @@ public sealed class GrapplingProjectileSystem : EntitySystem
         var visuals = EnsureComp<JointVisualsComponent>(uid);
         visuals.Sprite =
             new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
+
+        visuals.OffsetA = new Vector2(0f, 0.5f);
     }
 }
