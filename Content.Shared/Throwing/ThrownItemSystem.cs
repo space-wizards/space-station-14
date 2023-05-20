@@ -116,7 +116,7 @@ namespace Content.Shared.Throwing
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
-        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics)
+        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics, bool playSound)
         {
             _physics.SetBodyStatus(physics, BodyStatus.OnGround);
 
@@ -138,7 +138,7 @@ namespace Content.Shared.Throwing
                 _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
             _broadphase.RegenerateContacts(physics);
-            var landEvent = new LandEvent(thrownItem.Thrower);
+            var landEvent = new LandEvent(thrownItem.Thrower, playSound);
             RaiseLocalEvent(landing, ref landEvent);
         }
 
