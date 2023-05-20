@@ -1,6 +1,8 @@
-﻿using Content.Server.Anomaly.Components;
+﻿using Content.Server.Administration.Logs;
+using Content.Server.Anomaly.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Audio;
+using Content.Server.Chat.Managers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Materials;
 using Content.Server.Radio.EntitySystems;
@@ -29,6 +31,8 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly MaterialStorageSystem _material = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
 
     public const float MinParticleVariation = 0.8f;
     public const float MaxParticleVariation = 1.2f;

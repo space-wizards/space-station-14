@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
@@ -56,6 +57,8 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] public readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
+
     private ISawmill _sawmill = default!;
 
     public override void Initialize()
@@ -71,6 +74,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         SetupEvents(scheduler, CountActivePlayers());
         CopyStories(uid, scheduler);
         ValidateStories(scheduler);
+        LogMessage($"Started, first event in {scheduler.TimeUntilNextEvent} seconds");
     }
 
     private void SetupEvents(GameDirectorSystemComponent scheduler, PlayerCount count)
@@ -127,7 +131,6 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             chaos = _metrics.CalculateChaos();
             scheduler.CurrChaos = chaos;
         }
-        _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"Chaos: {chaos.ToString()}");
 
         // Decide what story beat to work with (which sets chaos goals)
         var beat = DetermineNextBeat(scheduler, chaos, count);
@@ -138,6 +141,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         // Run the best event here, if we have any to pick from.
         if (bestEvents.Count > 0)
         {
+            LogMessage($"Chaos is: {chaos}");
             // Sorts the possible events and then picks semi-randomly.
             // when beat.RandomEventLimit is 1 it's always the "best" event picked. Higher values
             // allow more events to be randomly selected.
@@ -212,16 +216,25 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             if (_random.Prob(0.7f))
             {
                 // Pick this event
-                _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"Picked {rankedEvent.PossibleEvent.PrototypeId} from best events (in sequence) {events}");
+                LogMessage( $"Picked {rankedEvent.PossibleEvent.PrototypeId} from best events (in sequence) {events}");
                 return rankedEvent;
             }
         }
 
         // Random dropped through all, just take best.
-        _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"Picked {ranked[0].PossibleEvent.PrototypeId} from best events (in sequence) {events}");
+        LogMessage( $"Picked {ranked[0].PossibleEvent.PrototypeId} from best events (in sequence) {events}");
         return ranked[0];
     }
 
+    private void LogMessage(string message, bool showChat=true)
+    {
+        _adminLogger.Add(LogType.GameDirector, showChat?LogImpact.Medium:LogImpact.High, $"{message}");
+        if (showChat)
+        {
+            _chat.SendAdminAlert("GameDirector "+ message);
+        }
+
+    }
     // Returns the StoryBeat that should be currently used to select events.
     // Advances the current story and picks new stories when the current beat is complete.
     private StoryBeat DetermineNextBeat(GameDirectorSystemComponent scheduler, ChaosMetrics chaos, PlayerCount count)
@@ -235,7 +248,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             if (scheduler.BeatTime > beat.MaxSecs)
             {
                 // Done with this beat (it's lasted too long)
-                _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"StoryBeat {beatName} complete. It's lasted {scheduler.BeatTime} out of a maximum of {beat.MaxSecs} seconds.");
+                LogMessage($"StoryBeat {beatName} complete. It's lasted {scheduler.BeatTime} out of a maximum of {beat.MaxSecs} seconds.");
             }
             else if (scheduler.BeatTime > beat.MinSecs)
             {
@@ -243,12 +256,12 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
                 if (!beat.EndIfAnyWorse.Empty && chaos.AnyWorseThan(beat.EndIfAnyWorse))
                 {
                     // Done with this beat (chaos exceeded set bad level)
-                    _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"StoryBeat {beatName} complete. Chaos exceeds {beat.EndIfAnyWorse} (EndIfAnyWorse).");
+                    LogMessage($"StoryBeat {beatName} complete. Chaos exceeds {beat.EndIfAnyWorse} (EndIfAnyWorse).");
                 }
                 else if(!beat.EndIfAllBetter.Empty && chaos.AllBetterThan(beat.EndIfAllBetter))
                 {
                     // Done with this beat (chaos reached set good level)
-                    _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"StoryBeat {beatName} complete. Chaos better than {beat.EndIfAllBetter} (EndIfAllBetter).");
+                    LogMessage($"StoryBeat {beatName} complete. Chaos better than {beat.EndIfAllBetter} (EndIfAllBetter).");
                 }
                 else
                 {
@@ -272,7 +285,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             var beatName = scheduler.CurrStory[0];
             var beat = scheduler.StoryBeats[beatName];
 
-            _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"New StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
+            LogMessage($"New StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
             return beat;
         }
 
@@ -292,12 +305,12 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             scheduler.CurrStory = story.Beats.ShallowClone();
             scheduler.CurrStoryName = storyName;
             SetupEvents(scheduler, count);
-            _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
+            LogMessage($"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
 
             var beatName = scheduler.CurrStory[0];
             var beat = scheduler.StoryBeats[beatName];
 
-            _adminLogger.Add(LogType.GameDirector, LogImpact.Low, $"First StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
+            LogMessage($"First StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
             return beat;
         }
 

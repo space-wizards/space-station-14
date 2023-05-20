@@ -1,6 +1,9 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -11,6 +14,8 @@ namespace Content.Server.StationEvents.Events
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
 
         protected override void Started(EntityUid uid, GasLeakRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
@@ -34,6 +39,9 @@ namespace Content.Server.StationEvents.Events
                 component.MolesPerSecond = RobustRandom.Next(component.MinimumMolesPerSecond, component.MaximumMolesPerSecond);
 
                 stationEvent.EndTime = _timing.CurTime + TimeSpan.FromSeconds(totalGas / component.MolesPerSecond + startAfter.TotalSeconds);
+
+                _adminLogger.Add(LogType.EventRan, LogImpact.High, $"Gasleak placing {totalGas} moles of {component.LeakGas} at {component.TargetTile} in grid {component.TargetGrid}.");
+                _chat.SendAdminAlert(uid, $"Gasleak placing {totalGas} moles of {component.LeakGas} at {component.TargetTile} in grid {component.TargetGrid}.");
             }
 
             // Look technically if you wanted to guarantee a leak you'd do this in announcement but having the announcement
