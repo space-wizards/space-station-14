@@ -65,7 +65,6 @@
       targets:
         - Lattice
         - Plating
-        - UnderPlating
 
 - type: construction
   name: cable terminal

@@ -22,7 +22,17 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         base.Initialize();
         SubscribeLocalEvent<TetheredComponent, ComponentStartup>(OnTetheredStartup);
         SubscribeLocalEvent<TetheredComponent, ComponentShutdown>(OnTetheredShutdown);
+        SubscribeLocalEvent<TetherGunComponent, AfterAutoHandleStateEvent>(OnAfterState);
+        SubscribeLocalEvent<ForceGunComponent, AfterAutoHandleStateEvent>(OnAfterState);
         _overlay.AddOverlay(new TetherGunOverlay(EntityManager));
+    }
+
+    private void OnAfterState(EntityUid uid, BaseForceGunComponent component, ref AfterAutoHandleStateEvent args)
+    {
+        if (!TryComp<SpriteComponent>(component.Tethered, out var sprite))
+            return;
+
+        sprite.Color = component.LineColor;
     }
 
     public override void Shutdown()
@@ -31,7 +41,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         _overlay.RemoveOverlay<TetherGunOverlay>();
     }
 
-    protected override bool CanTether(EntityUid uid, TetherGunComponent component, EntityUid target, EntityUid? user)
+    protected override bool CanTether(EntityUid uid, BaseForceGunComponent component, EntityUid target, EntityUid? user)
     {
         // Need powercells predicted sadly :<
         return false;
@@ -88,9 +98,18 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     private void OnTetheredStartup(EntityUid uid, TetheredComponent component, ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
+        {
             return;
+        }
 
-        sprite.Color = Color.Orange;
+        if (TryComp<ForceGunComponent>(component.Tetherer, out var force))
+        {
+            sprite.Color = force.LineColor;
+        }
+        else if (TryComp<TetherGunComponent>(component.Tetherer, out var tether))
+        {
+            sprite.Color = tether.LineColor;
+        }
     }
 
     private void OnTetheredShutdown(EntityUid uid, TetheredComponent component, ComponentShutdown args)
