@@ -25,7 +25,7 @@ public abstract class SharedStealthSystem : EntitySystem
         SubscribeLocalEvent<StealthComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<StealthComponent, ExamineAttemptEvent>(OnExamineAttempt);
         SubscribeLocalEvent<StealthComponent, ExaminedEvent>(OnExamined);
-		SubscribeLocalEvent<StealthComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<StealthComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     private void OnExamineAttempt(EntityUid uid, StealthComponent component, ExamineAttemptEvent args)
