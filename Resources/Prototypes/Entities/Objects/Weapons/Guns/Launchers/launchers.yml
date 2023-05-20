@@ -208,19 +208,17 @@
     - type: PowerCellDraw
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
-  
+
 - type: entity
   name: grappling gun
   parent: BaseItem
-  id: WeaponGrappleGun
+  id: WeaponGrapplingGun
   components:
+    - type: GrapplingGun
     - type: Gun
       soundGunshot: /Audio/Weapons/plasma_cutter.ogg
       fireRate: 0.5
-    - type: RechargeBasicEntityAmmo
-      rechargeCooldown: 3
-      rechargeSound:
-        path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+    - type: RechargeCycleAmmo
     - type: BasicEntityAmmoProvider
       proto: GrapplingHook
       capacity: 1

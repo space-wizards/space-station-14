@@ -47,7 +47,7 @@ public sealed class JointVisualsOverlay : Overlay
                 {
                     case DistanceJoint distance:
                         var other = joint.BodyAUid == uid ? joint.BodyBUid : joint.BodyAUid;
-                        var otherXform = xformQuery.GetComponent(joint.BodyBUid);
+                        var otherXform = xformQuery.GetComponent(other);
 
                         if (xform.MapID != otherXform.MapID)
                             continue;
@@ -58,8 +58,11 @@ public sealed class JointVisualsOverlay : Overlay
                         var coordsA = xform.Coordinates;
                         var coordsB = otherXform.Coordinates;
 
-                        coordsA = coordsA.Offset(visuals.OffsetA);
-                        coordsB = coordsB.Offset(visuals.OffsetB);
+                        var rotA = xform.LocalRotation;
+                        var rotB = otherXform.LocalRotation;
+
+                        coordsA = coordsA.Offset(rotA.RotateVec(visuals.OffsetA));
+                        coordsB = coordsB.Offset(rotB.RotateVec(visuals.OffsetB));
 
                         var posA = coordsA.ToMapPos(_entManager, xformSystem);
                         var posB = coordsB.ToMapPos(_entManager, xformSystem);

@@ -675,6 +675,7 @@
   id: GrapplingHook
   name: grappling hook
   components:
+    - type: EmbeddableProjectile
     - type: Clickable
     - type: Sprite
       noRot: false
