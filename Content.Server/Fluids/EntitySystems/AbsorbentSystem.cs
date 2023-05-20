@@ -117,13 +117,6 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (!_solutionSystem.TryGetRefillableSolution(target, out var refillableSolution, refillable: refillable))
             return false;
 
-        if (refillableSolution.Volume < 0)
-        {
-            var msg = Loc.GetString("mopping-system-target-container-empty", ("target", target));
-            _popups.PopupEntity(msg, user, user);
-            return false;
-        }
-
         var transferAmount = component.PickupAmount / PuddleSystem.EvaporationReagentRatio -
             absorberSoln.GetReagentQuantity(PuddleSystem.EvaporationReagent);
 
