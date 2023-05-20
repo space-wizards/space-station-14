@@ -512,7 +512,6 @@
       targets:
         - Lattice
         - Plating
-        - UnderPlating
   icon:
     sprite: Structures/catwalk.rsi
     state: catwalk_preview
@@ -534,7 +533,6 @@
     - !type:TileType
       targets:
         - Plating
-        - UnderPlating
   icon:
     sprite: Tiles/Misc/bananium.rsi
     state: bananium

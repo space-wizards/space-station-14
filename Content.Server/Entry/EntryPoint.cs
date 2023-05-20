@@ -174,7 +174,6 @@ namespace Content.Server.Entry
         protected override void Dispose(bool disposing)
         {
             _playTimeTracking?.Shutdown();
-            _sysMan?.GetEntitySystemOrNull<StationSystem>()?.OnServerDispose();
             _dbManager?.Shutdown();
         }
 

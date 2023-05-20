@@ -5,9 +5,9 @@ using Content.Shared.Decals;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
-using Content.Shared.Parallax.Biomes.Points;
 using Robust.Server.Player;
 using Robust.Shared;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -54,6 +54,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         SubscribeLocalEvent<BiomeComponent, ComponentStartup>(OnBiomeStartup);
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
+        SubscribeLocalEvent<ShuttleFlattenEvent>(OnShuttleFlatten);
         _configManager.OnValueChanged(CVars.NetMaxUpdateRange, SetLoadRange, true);
         InitializeCommands();
         _proto.PrototypesReloaded += ProtoReload;
@@ -198,6 +199,39 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         Preload(targetMapUid, biome, targetArea);
     }
 
+    private void OnShuttleFlatten(ref ShuttleFlattenEvent ev)
+    {
+        if (!TryComp<BiomeComponent>(ev.MapUid, out var biome) ||
+            !TryComp<MapGridComponent>(ev.MapUid, out var grid))
+        {
+            return;
+        }
+
+        var tiles = new List<(Vector2i Index, Tile Tile)>();
+
+        foreach (var aabb in ev.AABBs)
+        {
+            for (var x = Math.Floor(aabb.Left); x <= Math.Ceiling(aabb.Right); x++)
+            {
+                for (var y = Math.Floor(aabb.Bottom); y <= Math.Ceiling(aabb.Top); y++)
+                {
+                    var index = new Vector2i((int) x, (int) y);
+                    var chunk = SharedMapSystem.GetChunkIndices(index, ChunkSize);
+
+                    var mod = biome.ModifiedTiles.GetOrNew(chunk * ChunkSize);
+
+                    if (!mod.Add(index) || !TryGetBiomeTile(index, biome.Layers, biome.Noise, grid, out var tile))
+                        continue;
+
+                    // If we flag it as modified then the tile is never set so need to do it ourselves.
+                    tiles.Add((index, tile.Value));
+                }
+            }
+        }
+
+        grid.SetTiles(tiles);
+    }
+
     /// <summary>
     /// Preloads biome for the specified area.
     /// </summary>
@@ -326,6 +360,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         var markers = _markerChunks[component];
         var loadedMarkers = component.LoadedMarkers;
+        var spawnSet = new HashSet<Vector2i>();
+        var spawns = new List<Vector2i>();
+        var frontier = new Queue<Vector2i>();
 
         foreach (var (layer, chunks) in markers)
         {
@@ -334,45 +371,112 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 if (loadedMarkers.TryGetValue(layer, out var mobChunks) && mobChunks.Contains(chunk))
                     continue;
 
+                spawns.Clear();
+                spawnSet.Clear();
                 var layerProto = _proto.Index<BiomeMarkerLayerPrototype>(layer);
                 var buffer = layerProto.Radius / 2f;
                 mobChunks ??= new HashSet<Vector2i>();
                 mobChunks.Add(chunk);
                 loadedMarkers[layer] = mobChunks;
-                var rand = new Random(noise.GetSeed() + chunk.X * 8 + chunk.Y);
+                var rand = new Random(noise.GetSeed() + chunk.X * 8 + chunk.Y + layerProto.GetHashCode());
+
+                // We treat a null entity mask as requiring nothing else on the tile
+                var lower = (int) Math.Floor(buffer);
+                var upper = (int) Math.Ceiling(layerProto.Size - buffer);
+
+                // TODO: Okay this is inefficient as FUCK
+                // I think the ideal is pick a random tile then BFS outwards from it probably ig
+                // It will bias edge tiles significantly more but will make the CPU cry less.
+                for (var x = lower; x <= upper; x++)
+                {
+                    for (var y = lower; y <= upper; y++)
+                    {
+                        var index = new Vector2i(x + chunk.X, y + chunk.Y);
+                        TryGetEntity(index, component.Layers, component.Noise, grid, out var proto);
+
+                        if (proto != layerProto.EntityMask)
+                        {
+                            continue;
+                        }
+
+                        spawns.Add(index);
+                        spawnSet.Add(index);
+                    }
+                }
 
                 // Load NOW
-                // TODO: Need poisson but crashes whenever I use moony's due to inputs or smth
+                // TODO: Need poisson but crashes whenever I use moony's due to inputs or smth idk
                 var count = (int) ((layerProto.Size - buffer) * (layerProto.Size - buffer) / (layerProto.Radius * layerProto.Radius));
+                count = Math.Min(count, layerProto.MaxCount);
 
                 for (var i = 0; i < count; i++)
                 {
-                    for (var j = 0; j < 5; j++)
+                    if (spawns.Count == 0)
+                        break;
+
+                    var index = rand.Next(spawns.Count);
+                    var point = spawns[index];
+                    spawns.RemoveSwap(index);
+
+                    // Point was potentially used in BFS search below but we hadn't updated the list yet.
+                    if (!spawnSet.Remove(point))
                     {
-                        var point = new Vector2(
-                            chunk.X + buffer + rand.NextFloat() * (layerProto.Size - buffer),
-                            chunk.Y + buffer + rand.NextFloat() * (layerProto.Size - buffer));
+                        i--;
+                        continue;
+                    }
 
-                        var coords = new EntityCoordinates(gridUid, point);
-                        var tile = grid.LocalToTile(coords);
+                    // BFS search
+                    frontier.Enqueue(point);
+                    var groupCount = layerProto.GroupCount;
 
-                        // Blocked spawn, try again.
-                        if (grid.GetAnchoredEntitiesEnumerator(tile).MoveNext(out _))
+                    while (frontier.TryDequeue(out var node) && groupCount > 0)
+                    {
+                        var enumerator = grid.GetAnchoredEntitiesEnumerator(node);
+
+                        if (enumerator.MoveNext(out _))
                             continue;
 
-                        for (var k = 0; k < layerProto.GroupCount; k++)
+                        // Need to ensure the tile under it has loaded for anchoring.
+                        if (TryGetBiomeTile(node, component.Layers, component.Noise, grid, out var tile))
                         {
-                            // If it is a ghost role then purge it
-                            // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
-                            // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
-                            var uid = EntityManager.CreateEntityUninitialized(layerProto.Prototype, new EntityCoordinates(gridUid, point));
-                            RemComp<GhostTakeoverAvailableComponent>(uid);
-                            RemComp<GhostRoleComponent>(uid);
-                            EntityManager.InitializeAndStartEntity(uid);
+                            grid.SetTile(node, tile.Value);
                         }
 
-                        break;
+                        // If it is a ghost role then purge it
+                        // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
+                        // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
+                        var uid = EntityManager.CreateEntityUninitialized(layerProto.Prototype, new EntityCoordinates(gridUid, node));
+                        RemComp<GhostTakeoverAvailableComponent>(uid);
+                        RemComp<GhostRoleComponent>(uid);
+                        EntityManager.InitializeAndStartEntity(uid);
+                        groupCount--;
+
+                        for (var x = -1; x <= 1; x++)
+                        {
+                            for (var y = -1; y <= 1; y++)
+                            {
+                                if (x != 0 && y != 0)
+                                    continue;
+
+                                var neighbor = new Vector2i(x + node.X, y + node.Y);
+
+                                if (!spawnSet.Contains(neighbor))
+                                    continue;
+
+                                frontier.Enqueue(neighbor);
+                                // Rather than doing some uggo remove check on the list we'll defer it until later
+                                spawnSet.Remove(neighbor);
+                            }
+                        }
                     }
+
+                    // Add the unused nodes back in
+                    foreach (var node in frontier)
+                    {
+                        spawnSet.Add(node);
+                    }
+
+                    frontier.Clear();
                 }
             }
         }

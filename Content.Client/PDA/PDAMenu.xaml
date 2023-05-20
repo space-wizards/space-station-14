@@ -38,6 +38,9 @@
                                    HorizontalExpand="True" />
                 </BoxContainer>
             </PanelContainer>
+            <RichTextLabel Name="StationAlertLevelLabel" Access="Public" />
+            <RichTextLabel Name="StationTimeLabel" Access="Public" />
+            <RichTextLabel Name="StationAlertLevelInstructions" Access="Public" />
         </BoxContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical"

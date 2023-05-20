@@ -100,6 +100,9 @@
   - type: MobMover
   - type: Body
     prototype: Bot
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   parent: MobSiliconBase
@@ -115,7 +118,7 @@
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
   - type: Slippery
-    launchForwardsMultiplier: 6.0
+    launchForwardsMultiplier: 2
   - type: StepTrigger
     intersectRatio: 0.2
   - type: Physics
@@ -164,7 +167,7 @@
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: jonkbot
   - type: Slippery
-    launchForwardsMultiplier: 7.0
+    launchForwardsMultiplier: 2
   - type: Construction
     graph: JonkBot
     node: bot
