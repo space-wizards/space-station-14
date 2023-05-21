@@ -8,6 +8,8 @@ uplink-rifle-mosin-name = { ent-WeaponSniperMosin }
 uplink-rifle-mosin-desc = Затворная винтовка, повидавшая не одну войну. Не современная ни по каким стандартам, заряжается вручную и имеет ужасную отдачу, но зато дешёвая.
 uplink-esword-name = { ent-EnergySword }
 uplink-esword-desc = { ent-EnergySword.desc }
+uplink-dualesword-name = Двойной энергетический меч
+uplink-dualesword-desc = С таким мечем - море по колено!
 uplink-edagger-name = Энергокинжал
 uplink-edagger-desc = Небольшой энергитический кинжал, удобно замаскированный под ручку.
 uplink-fire-axe-flaming-name = { ent-FireAxeFlaming }
@@ -76,8 +78,6 @@ uplink-freedom-implanter-name = имплантер Свобода
 uplink-freedom-implanter-desc = Сбегите от этих противных сотрудников СБ при помощи этого имплантата, который можно использовать аж три раза!
 uplink-macro-bomb-implanter-name = имплантер Макробомба
 uplink-macro-bomb-implanter-desc = Вколите его, и после смерти вы устроите большой взрыв. Большой риск для союзников, используйте на свой страх и риск. Заменяет Микробомбу.
-uplink-uplink-implanter-name = имплантер Аплинк
-uplink-uplink-implanter-desc = Одноразовый имплантер, имплантат позволяет пользователю получить доступ аплинку по желанию.
 
 # Bundles
 uplink-c20r-bundle-name = { ent-ClothingBackpackDuffelSyndicateFilledSMG }
@@ -116,14 +116,6 @@ uplink-revolver-cap-gun-fake-name = Фальшивый игрушечный пи
 uplink-revolver-cap-gun-fake-desc = Одурачьте своих врагов! Использует как пистоны, так и патроны калибра .45 магнум. Последними и будет заряжен при покупке.
 uplink-banana-peel-explosive-name = Взрывная банановая кожура
 uplink-banana-peel-explosive-desc = Они взорвутся от смеха, когда поскользнутся на ней!
-uplink-rigged-boxing-gloves-name = Боксерские перчатки
-uplink-rigged-boxing-gloves-desc = Порхай, как бабочка, жаль, как пчела.
-uplink-hot-potato-name = горячая картошка
-uplink-hot-potato-desc = После активации эту бомбу замедленного действия нельзя выбросить — только передать кому-то еще!
-uplink-chimp-ammo-name = коробка с 10 Омега картриджами.
-uplink-chimp-ammo-desc = Коробка с 10 картриджами омега-частиц для РПЧ. Омега-частицы вызывают сильные ожоги и вызывают сверхкритические аномалии.
-uplink-proximity-mine-name = Бесконтактная мина
-uplink-proximity-mine-desc = Мина, замаскированная под знак мокрого пола.
 
 # Armor
 uplink-chameleon-name = набор "Хамелеон"
@@ -172,8 +164,6 @@ uplink-cat-ears-name = { ent-ClothingHeadHatCatEars }
 uplink-cat-ears-desc = UwU
 uplink-outlaw-hat-name = { ent-ClothingHeadHatOutlawHat }
 uplink-outlaw-hat-desc = { ent-ClothingHeadHatOutlawHat.desc }
-uplink-outlaw-glasses-name = Очки преступника
-uplink-outlaw-glasses-desc = Обязательно для каждого уважающего себя агента под прикрытием.
 uplink-costume-pyjama-name = { ent-ClothingBackpackDuffelSyndicatePyjamaBundle }
 uplink-costume-pyjama-desc = { ent-ClothingBackpackDuffelSyndicatePyjamaBundle.desc }
 uplink-costume-clown-name = вещмешок с костюмом клоуна
