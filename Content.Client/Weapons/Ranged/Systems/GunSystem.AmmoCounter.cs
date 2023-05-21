@@ -308,11 +308,12 @@ public sealed partial class GunSystem
                 {
                     (_chamberedBullet = new TextureRect
                     {
-                        Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/chambered_rotated.png"),
+                        Texture = StaticIoC.ResC.GetTexture(
+                            "/Textures/Interface/ItemStatus/Bullets/chambered_rotated.png"),
                         VerticalAlignment = VAlignment.Center,
                         HorizontalAlignment = HAlignment.Right,
                     }),
-                    new Control() { MinSize = (5,0) },
+                    new Control() { MinSize = (5, 0) },
                     new Control
                     {
                         HorizontalExpand = true,
@@ -327,14 +328,14 @@ public sealed partial class GunSystem
                             (_noMagazineLabel = new Label
                             {
                                 Text = "No Magazine!",
-                                StyleClasses = {StyleNano.StyleClassItemStatus}
+                                StyleClasses = { StyleNano.StyleClassItemStatus }
                             })
                         }
                     },
-                    new Control() { MinSize = (5,0) },
+                    new Control() { MinSize = (5, 0) },
                     (_ammoCount = new Label
                     {
-                        StyleClasses = {StyleNano.StyleClassItemStatus},
+                        StyleClasses = { StyleNano.StyleClassItemStatus },
                         HorizontalAlignment = HAlignment.Right,
                     }),
                 }
@@ -452,7 +453,8 @@ public sealed partial class GunSystem
             FillBulletRow(currentIndex, bullets, _bulletsList, texture, spentTexture);
         }
 
-        private void FillBulletRow(int currentIndex, bool?[] bullets, Control container, Texture texture, Texture emptyTexture)
+        private void FillBulletRow(int currentIndex, bool?[] bullets, Control container, Texture texture,
+            Texture emptyTexture)
         {
             var capacity = bullets.Length;
             var colorA = Color.FromHex("#b68f0e");
@@ -482,6 +484,7 @@ public sealed partial class GunSystem
                         ModulateSelfOverride = Color.LimeGreen,
                     });
                 }
+
                 Color color;
                 Texture bulletTexture = texture;
 
