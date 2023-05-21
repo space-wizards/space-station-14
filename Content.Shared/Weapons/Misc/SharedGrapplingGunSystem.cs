@@ -10,6 +10,7 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
@@ -23,9 +24,10 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+
+    public const string GrapplingJoint = "grappling";
 
     public const float ReelRate = 1.5f;
 
@@ -37,7 +39,6 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         SubscribeAllEvent<RequestGrapplingReelMessage>(OnGrapplingReel);
 
         SubscribeLocalEvent<GrapplingGunComponent, GunShotEvent>(OnGrapplingShot);
-        SubscribeLocalEvent<GrapplingGunComponent, EntParentChangedMessage>(OnGunParentChange);
         SubscribeLocalEvent<GrapplingGunComponent, ActivateInWorldEvent>(OnGunActivate);
         SubscribeLocalEvent<GrapplingGunComponent, HandDeselectedEvent>(OnGrapplingDeselected);
     }
@@ -73,15 +74,9 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             return;
         }
 
-        if (!TryComp<JointComponent>(player, out var jointComp) ||
-            jointComp.GetJoints.ContainsKey(grappling.Joint))
-        {
-            return;
-        }
-
         if (msg.Reeling &&
             (!TryComp<CombatModeComponent>(player, out var combatMode) ||
-            !combatMode.IsInCombatMode))
+             !combatMode.IsInCombatMode))
         {
             return;
         }
@@ -91,10 +86,17 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnWeightlessMove(ref CanWeightlessMoveEvent ev)
     {
-        if (ev.CanMove || !TryComp<JointComponent>(ev.Uid, out var jointComp) || !jointComp.GetJoints.ContainsKey(GrapplingJoint))
+        if (ev.CanMove || !TryComp<JointRelayTargetComponent>(ev.Uid, out var relayComp))
             return;
 
-        ev.CanMove = true;
+        foreach (var relay in relayComp.Relayed)
+        {
+            if (TryComp<JointComponent>(relay, out var jointRelay) && jointRelay.GetJoints.ContainsKey(GrapplingJoint))
+            {
+                ev.CanMove = true;
+                return;
+            }
+        }
     }
 
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
@@ -137,8 +139,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
-        var xformQuery = GetEntityQuery<TransformComponent>();
+        
         var query = EntityQueryEnumerator<GrapplingGunComponent>();
 
         while (query.MoveNext(out var uid, out var grappling))
@@ -146,9 +147,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             if (!grappling.Reeling)
                 continue;
 
-            var xform = xformQuery.GetComponent(uid);
-
-            if (!TryComp<JointComponent>(xform.ParentUid, out var jointComp) ||
+            if (!TryComp<JointComponent>(uid, out var jointComp) ||
                 !jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) ||
                 joint is not DistanceJoint distance)
             {
@@ -159,8 +158,14 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             // TODO: This should be on engine.
             distance.MaxLength = MathF.Max(distance.MinLength, distance.MaxLength - ReelRate * frameTime);
             distance.Length = MathF.Min(distance.MaxLength, distance.Length);
+
             _physics.WakeBody(joint.BodyAUid);
             _physics.WakeBody(joint.BodyBUid);
+
+            if (jointComp.Relay != null)
+            {
+                _physics.WakeBody(jointComp.Relay.Value);
+            }
 
             Dirty(jointComp);
 
@@ -171,28 +176,6 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         }
     }
 
-    private void OnGunParentChange(EntityUid uid, GrapplingGunComponent component, ref EntParentChangedMessage args)
-    {
-        if (!Timing.IsFirstTimePredicted)
-            return;
-
-        // Copy the joint to the gun.
-        if (TryComp<JointComponent>(args.OldParent, out var parentJoints) && parentJoints.GetJoints.TryGetValue(component.Joint, out var oldJoint) && oldJoint is DistanceJoint distance && !_containers.IsEntityOrParentInContainer(uid))
-        {
-            var joint = _joints.CreateDistanceJoint(oldJoint.BodyAUid, uid, anchorA: oldJoint.LocalAnchorA);
-            joint.MaxLength = distance.MaxLength;
-            joint.Length = distance.Length;
-            joint.Stiffness = distance.Stiffness;
-            joint.MinLength = distance.MinLength;
-            _joints.RemoveJoint(args.OldParent.Value, component.Joint);
-        }
-        else if (TryComp<JointComponent>(uid, out var grapplingJoints) && grapplingJoints.GetJoints.TryGetValue(component.Joint, out var weh))
-        {
-            var other = weh.BodyAUid == uid ? weh.BodyBUid : weh.BodyAUid;
-            QueueDel(other);
-        }
-    }
-
     private void OnGrappleCollide(EntityUid uid, GrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
     {
         if (!Timing.IsFirstTimePredicted)
@@ -200,7 +183,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
         var jointComp = EnsureComp<JointComponent>(uid);
         _joints.RemoveJoint(uid, GrapplingJoint);
-        var joint = _joints.CreateDistanceJoint(uid, args.Shooter, anchorA: new Vector2(0f, 0.5f));
+        var joint = _joints.CreateDistanceJoint(uid, args.Weapon, anchorA: new Vector2(0f, 0.5f), id: GrapplingJoint);
         joint.MaxLength = joint.Length + 0.2f;
         joint.Stiffness = 1f;
         joint.MinLength = 0.35f;
