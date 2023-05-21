@@ -1,3 +1,4 @@
+using System.Net;
 using Content.Client.Hands.Systems;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Misc;
@@ -25,26 +26,32 @@ public sealed class GrapplingGunSystem : SharedGrapplingGunSystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        if (_input.CmdStates.GetState(EngineKeyFunctions.UseSecondary) != BoundKeyState.Down)
-            return;
-
         var local = _player.LocalPlayer?.ControlledEntity;
 
-        if (!TryComp<CombatModeComponent>(local, out var combatMode) ||
-            !combatMode.IsInCombatMode ||
-            !TryComp<JointComponent>(local, out var jointComp) ||
+        if (!TryComp<GrapplingGunComponent>(_hands.GetActiveHandEntity(), out var grappling))
+            return;
+
+        if (!TryComp<JointComponent>(local, out var jointComp) ||
             !jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) ||
             joint is not DistanceJoint distance)
         {
             return;
         }
 
-        if (!TryComp<GrapplingGunComponent>(_hands.GetActiveHandEntity(), out var grappling))
+        if (distance.MaxLength <= distance.MinLength)
             return;
 
-        if (distance.Length <= distance.MinLength)
+        var reelKey = _input.CmdStates.GetState(EngineKeyFunctions.UseSecondary) == BoundKeyState.Down;
+
+        if (!TryComp<CombatModeComponent>(local, out var combatMode) ||
+            !combatMode.IsInCombatMode)
+        {
+            reelKey = false;
+        }
+
+        if (grappling.Reeling == reelKey)
             return;
 
-        RaisePredictiveEvent(new RequestGrapplingReelMessage());
+        RaisePredictiveEvent(new RequestGrapplingReelMessage(reelKey));
     }
 }

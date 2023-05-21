@@ -23,6 +23,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public const string GrapplingJoint = "grappling";
 
@@ -38,15 +39,6 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         SubscribeLocalEvent<GrapplingGunComponent, EntParentChangedMessage>(OnGunParentChange);
         SubscribeLocalEvent<GrapplingGunComponent, ActivateInWorldEvent>(OnGunActivate);
         SubscribeLocalEvent<GrapplingGunComponent, HandDeselectedEvent>(OnGrapplingDeselected);
-        SubscribeLocalEvent<GrapplingGunComponent, AfterAutoHandleStateEvent>(OnGrapplingState);
-    }
-
-    private void OnGrapplingState(EntityUid uid, GrapplingGunComponent component, ref AfterAutoHandleStateEvent args)
-    {
-        if (!component.Reeling)
-        {
-            component.Stream?.Stop();
-        }
     }
 
     private void OnGrapplingDeselected(EntityUid uid, GrapplingGunComponent component, HandDeselectedEvent args)
@@ -57,12 +49,6 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     private void OnGrapplingReel(RequestGrapplingReelMessage msg, EntitySessionEventArgs args)
     {
         var player = args.SenderSession.AttachedEntity;
-
-        if (!TryComp<CombatModeComponent>(player, out var combatMode) ||
-            !combatMode.IsInCombatMode)
-        {
-            return;
-        }
 
         if (!TryComp<JointComponent>(player, out var jointComp) ||
             !jointComp.GetJoints.ContainsKey(GrapplingJoint))
@@ -76,7 +62,14 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             return;
         }
 
-        SetReeling(hands.ActiveHandEntity.Value, grappling, true, player.Value);
+        if (msg.Reeling &&
+            (!TryComp<CombatModeComponent>(player, out var combatMode) ||
+            !combatMode.IsInCombatMode))
+        {
+            return;
+        }
+
+        SetReeling(hands.ActiveHandEntity.Value, grappling, msg.Reeling, player.Value);
     }
 
     private void OnWeightlessMove(ref CanWeightlessMoveEvent ev)
@@ -92,6 +85,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
+        SetReeling(uid, component, false, args.User);
         _joints.RemoveJoint(Transform(uid).ParentUid, GrapplingJoint);
     }
 
@@ -102,11 +96,13 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
         if (value)
         {
-            _audio.PlayPredicted(component.ReelSound, uid, user);
+            if (Timing.IsFirstTimePredicted)
+                component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user);
         }
         else
         {
             component.Stream?.Stop();
+            component.Stream = null;
         }
 
         component.Reeling = value;
@@ -135,10 +131,14 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 continue;
             }
 
+            // TODO: This should be on engine.
             distance.MaxLength = MathF.Max(distance.MinLength, distance.MaxLength - ReelRate * frameTime);
+            distance.Length = MathF.Min(distance.MaxLength, distance.Length);
+            _physics.WakeBody(xform.ParentUid);
+
             Dirty(jointComp);
 
-            if (distance.Length.Equals(distance.MinLength))
+            if (distance.MaxLength.Equals(distance.MinLength))
             {
                 SetReeling(uid, grappling, false, null);
             }
@@ -172,9 +172,9 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             return;
 
         var joint = _joints.CreateDistanceJoint(uid, args.Shooter, anchorA: new Vector2(0f, -0.5f), id: GrapplingJoint);
-        joint.MaxLength = joint.Length + 0.5f;
+        joint.MaxLength = joint.Length + 0.2f;
         joint.Stiffness = 1f;
-        joint.MinLength = 0.1f;
+        joint.MinLength = 0.35f;
         var visuals = EnsureComp<JointVisualsComponent>(uid);
         visuals.Sprite =
             new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
@@ -183,8 +183,13 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    public sealed class RequestGrapplingReelMessage : EntityEventArgs
+    protected sealed class RequestGrapplingReelMessage : EntityEventArgs
     {
+        public bool Reeling;
 
+        public RequestGrapplingReelMessage(bool reeling)
+        {
+            Reeling = reeling;
+        }
     }
 }

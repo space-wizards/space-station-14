@@ -38,14 +38,14 @@ public sealed class JointVisualsOverlay : Overlay
             if (xform.MapID != args.MapId)
                 continue;
 
-            foreach (var (id, joint) in jointComp.GetJoints)
+            foreach (var joint in jointComp.GetJoints.Values)
             {
                 if (!_drawn.Add(joint))
                     continue;
 
                 switch (joint)
                 {
-                    case DistanceJoint distance:
+                    case DistanceJoint:
                         var other = joint.BodyAUid == uid ? joint.BodyBUid : joint.BodyAUid;
                         var otherXform = xformQuery.GetComponent(other);
 
