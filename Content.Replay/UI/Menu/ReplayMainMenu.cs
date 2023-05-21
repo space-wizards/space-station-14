@@ -12,6 +12,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Replays;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
+using static Robust.Shared.Replays.IReplayRecordingManager;
 
 namespace Content.Replay.UI.Menu;
 
@@ -20,8 +21,8 @@ namespace Content.Replay.UI.Menu;
 /// </summary>
 public sealed class ReplayMainScreen : State
 {
+    [Dependency] private readonly IResourceManager _resMan = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
-    [Dependency] private readonly IResourceManager _resourceMan = default!;
     [Dependency] private readonly Manager.ReplayManager _replayMan = default!;
     [Dependency] private readonly IReplayLoadManager _loadMan = default!;
     [Dependency] private readonly IGameController _controllerProxy = default!;
@@ -32,11 +33,10 @@ public sealed class ReplayMainScreen : State
 
     // TODO cvar (or add a open-file dialog?).
     public static readonly ResPath DefaultReplayDirectory = new("/replays");
+    private readonly ResPath _directory = DefaultReplayDirectory;
 
     // Should probably be localized, but should never happen, so...
     public const string Error = "Error";
-
-    private IWritableDirProvider? _directory;
 
     protected override void Startup()
     {
@@ -47,8 +47,6 @@ public sealed class ReplayMainScreen : State
         _mainMenuControl.OptionsButton.OnPressed += OptionsButtonPressed;
         _mainMenuControl.RefreshButton.OnPressed += OnRefreshPressed;
         _mainMenuControl.LoadButton.OnPressed += OnLoadpressed;
-
-        _directory ??= _resourceMan.UserData.OpenSubdirectory(DefaultReplayDirectory);
         RefreshReplays();
     }
 
@@ -65,10 +63,9 @@ public sealed class ReplayMainScreen : State
     {
         var info = _mainMenuControl.Info;
 
-        if (_directory == null
-            || _mainMenuControl.ReplaySelect.SelectedMetadata is not ResPath path
-            || !_directory.Exists(path)
-            || _loadMan.LoadYamlMetadata(_directory.OpenSubdirectory(path)) is not { } data)
+        if (_mainMenuControl.ReplaySelect.SelectedMetadata is not ResPath replay
+            || !_resMan.UserData.Exists(replay)
+            || _loadMan.LoadYamlMetadata(_resMan.UserData, replay) is not { } data)
         {
             info.SetMarkup(Loc.GetString("replay-info-none"));
             info.HorizontalAlignment = Control.HAlignment.Center;
@@ -77,14 +74,14 @@ public sealed class ReplayMainScreen : State
             return;
         }
 
-        var file = path.ToRelativePath().ToString();
-        data.TryGet<ValueDataNode>("time", out var timeNode);
-        data.TryGet<ValueDataNode>("duration", out var durationNode);
+        var file = replay.ToRelativePath().ToString();
+        data.TryGet<ValueDataNode>(Time, out var timeNode);
+        data.TryGet<ValueDataNode>(Duration, out var durationNode);
         data.TryGet<ValueDataNode>("roundId", out var roundIdNode);
-        data.TryGet<ValueDataNode>("engineVersion", out var engineNode);
-        data.TryGet<ValueDataNode>("buildForkId", out var forkNode);
-        data.TryGet<ValueDataNode>("buildVersion", out var versionNode);
-        data.TryGet<ValueDataNode>("typeHash", out var hashNode);
+        data.TryGet<ValueDataNode>(Engine, out var engineNode);
+        data.TryGet<ValueDataNode>(Fork, out var forkNode);
+        data.TryGet<ValueDataNode>(ForkVersion, out var versionNode);
+        data.TryGet<ValueDataNode>(Hash, out var hashNode);
         var forkVersion = versionNode?.Value ?? Error;
         DateTime.TryParse((string?) timeNode?.Value, out var time);
         TimeSpan.TryParse((string?) durationNode?.Value, out var duration);
@@ -139,14 +136,8 @@ public sealed class ReplayMainScreen : State
 
     private void OnLoadpressed(BaseButton.ButtonEventArgs obj)
     {
-        if (_directory == null)
-            return;
-
-        if (_mainMenuControl.ReplaySelect.SelectedMetadata is not ResPath path)
-            return;
-
-        var dir = _directory.OpenSubdirectory(path);
-        _replayMan.LoadReplay(dir);
+        if (_mainMenuControl.ReplaySelect.SelectedMetadata is ResPath path)
+            _replayMan.LoadReplay(_resMan.UserData, _directory / path);
     }
 
     private void RefreshReplays()
@@ -156,14 +147,14 @@ public sealed class ReplayMainScreen : State
         var i = 0;
         if (_directory != null)
         {
-            foreach (var file in _directory.DirectoryEntries(ResPath.Root))
+            foreach (var entry in _resMan.UserData.DirectoryEntries(_directory))
             {
-                var path = new ResPath(file).ToRootedPath();
-                if (!_directory.Exists(path / IReplayRecordingManager.MetaFile.ToRelativePath()))
+                var file = _directory / entry;
+                if (!_resMan.UserData.Exists(file / IReplayRecordingManager.MetaFile))
                     continue;
 
-                _mainMenuControl.ReplaySelect.AddItem(file, i);
-                _mainMenuControl.ReplaySelect.SetItemMetadata(_mainMenuControl.ReplaySelect.GetIdx(i), path);
+                _mainMenuControl.ReplaySelect.AddItem(entry, i);
+                _mainMenuControl.ReplaySelect.SetItemMetadata(_mainMenuControl.ReplaySelect.GetIdx(i), file);
                 i++;
             }
         }

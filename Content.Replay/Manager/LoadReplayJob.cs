@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Replay.UI.Loading;
 using Robust.Client.Replays.Loading;
 using Robust.Shared.Replays;
+using Robust.Shared.Utility;
 
 namespace Content.Replay.Manager;
 
@@ -13,9 +14,10 @@ public sealed class ContentLoadReplayJob : LoadReplayJob
     public ContentLoadReplayJob(
         float maxTime,
         IWritableDirProvider dir,
+        ResPath path,
         IReplayLoadManager loadMan,
         LoadingScreen<ReplayData> screen)
-        : base(maxTime, dir, loadMan)
+        : base(maxTime, dir, path, loadMan)
     {
         _screen = screen;
     }
