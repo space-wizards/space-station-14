@@ -5,6 +5,9 @@ zombie-not-enough-ready-players = Not enough players readied up for the game! Th
 zombie-no-one-ready = No players readied up! Can't start Zombies.
 
 zombie-patientzero-role-greeting = You are patient 0. Hide your infection, get supplies, and be prepared to turn once you die.
+zombie-healing = You feel a stirring in your flesh
+zombie-infection-warning = You feel the zombie virus take hold
+zombie-infection-underway = Your blood begins to thicken
 
 zombie-alone = You feel entirely alone.
 

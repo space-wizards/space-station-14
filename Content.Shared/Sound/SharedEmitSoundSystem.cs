@@ -6,6 +6,7 @@ using Content.Shared.Popups;
 using Content.Shared.Sound.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
@@ -51,9 +52,12 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
     private void OnEmitSoundOnLand(EntityUid uid, BaseEmitSoundComponent component, ref LandEvent args)
     {
-        if (!TryComp<TransformComponent>(uid, out var xform) ||
+        if (!args.PlaySound ||
+            !TryComp<TransformComponent>(uid, out var xform) ||
             !_mapManager.TryGetGrid(xform.GridUid, out var grid))
+        {
             return;
+        }
 
         var tile = grid.GetTileRef(xform.Coordinates);
 
@@ -130,7 +134,15 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             return;
         }
 
+        const float MaxVolumeVelocity = 10f;
+        const float MinVolume = -10f;
+        const float MaxVolume = 2f;
+
+        var fraction = MathF.Min(1f, (physics.LinearVelocity.Length - component.MinimumVelocity) / MaxVolumeVelocity);
+        var volume = MinVolume + (MaxVolume - MinVolume) * fraction;
         component.NextSound = _timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
-        TryEmitSound(uid, component, predict: false);
+
+        if (_netMan.IsServer)
+            _audioSystem.PlayPvs(component.Sound, uid, AudioParams.Default.WithVolume(volume));
     }
 }

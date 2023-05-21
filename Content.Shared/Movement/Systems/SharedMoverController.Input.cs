@@ -52,6 +52,8 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, ComponentHandleState>(OnInputHandleState);
             SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
 
+            SubscribeLocalEvent<AutoOrientComponent, EntParentChangedMessage>(OnAutoParentChange);
+
             SubscribeLocalEvent<FollowedComponent, EntParentChangedMessage>(OnFollowedParentChange);
 
             _configManager.OnValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked, true);
@@ -109,6 +111,11 @@ namespace Content.Shared.Movement.Systems
         private void SetDiagonalMovement(bool value) => DiagonalMovementEnabled = value;
 
         protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
+
+        private void OnAutoParentChange(EntityUid uid, AutoOrientComponent component, ref EntParentChangedMessage args)
+        {
+            ResetCamera(uid);
+        }
 
         public void RotateCamera(EntityUid uid, Angle angle)
         {

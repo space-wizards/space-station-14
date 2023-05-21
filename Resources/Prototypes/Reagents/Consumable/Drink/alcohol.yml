@@ -423,7 +423,7 @@
   parent: BaseAlcohol
   desc: reagent-desc-antifreeze
   physicalDesc: reagent-physical-desc-translucent
-  flavor: alcohol
+  flavor: antifreeze
   color: "#ff7d63"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/antifreeze.rsi

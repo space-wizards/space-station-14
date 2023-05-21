@@ -18,6 +18,7 @@
     snapCardinals: true
     layers:
       - state: pod_0
+        map: ["base"]
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -65,15 +66,14 @@
   - type: ApcPowerReceiver
     powerLoad: 200 #Receives most of its power from the console
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: GenericEnumVisualizer
-        key: enum.CloningPodVisuals.Status
-        layer: 0
-        states:
-          enum.CloningPodStatus.Cloning: pod_1
-          enum.CloningPodStatus.NoMind: pod_e
-          enum.CloningPodStatus.Gore: pod_g
-          enum.CloningPodStatus.Idle: pod_0
+      enum.CloningPodVisuals.Status:
+        base:
+          Cloning: { state: pod_1 }
+          NoMind: { state: pod_e }
+          Gore: { state: pod_g }
+          Idle: { state: pod_0 }
   - type: Climbable
   - type: StaticPrice
     price: 1000
