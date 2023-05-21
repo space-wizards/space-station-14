@@ -1,91 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Temporarily removed interior IFF drawing due to seams in rendering.,
-    type: Tweak}
-  id: 3317
-  time: '2023-04-03T05:46:29.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: The cautery now functions! It can be used to close bleeding wounds.
-      (Use it as a melee), type: Add}
-  - {message: Added the blood pack! This item will very lightly reduce bleeding and
-      restore 10 blood to the patient. It has been added to most first aid kits and
-      medical spawns., type: Add}
-  - {message: Passive bleeding now properly exists! You can bleed at a maximum of
-      20u every 5 seconds., type: Add}
-  - {message: Critical bleed hit chance has been reduced. you shouldn't be dying from
-      this as often anymore. It's the original reason why we thought bleeding was
-      overpowered., type: Fix}
-  - {message: Iron has been tweaked to restore double the blood per unit. 50u iron
-      pills will no longer be needed ideally., type: Tweak}
-  id: 3318
-  time: '2023-04-03T05:59:51.0000000+00:00'
-- author: Naive817
-  changes:
-  - {message: Holobarrier projectors are now available to HoS and warden. It can make
-      soild but fragile holographic barriers to keep the crew from interfering with
-      the execution of the clown., type: Add}
-  id: 3319
-  time: '2023-04-03T06:20:15.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Added scientific beret, type: Add}
-  id: 3320
-  time: '2023-04-03T06:23:29.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added watermelon helmet., type: Add}
-  id: 3321
-  time: '2023-04-03T06:25:14.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Nanotrasen has supplied engineering departments with high capacity fuel
-      tanks., type: Add}
-  id: 3322
-  time: '2023-04-03T06:26:58.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: 'Changed access to fire axe cabinet, now not only an atmospheric technician
-      can get a fire axe.', type: Tweak}
-  id: 3323
-  time: '2023-04-03T06:27:45.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added robust nukie drink to vending machine cola., type: Add}
-  id: 3324
-  time: '2023-04-03T06:42:37.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Added new blood pack sprite!, type: Add}
-  id: 3325
-  time: '2023-04-03T07:50:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix shuttle airlocks., type: Fix}
-  id: 3326
-  time: '2023-04-03T18:28:27.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Getting drunk should no longer cause you to bleed, type: Fix}
-  id: 3327
-  time: '2023-04-03T22:48:58.0000000+00:00'
-- author: freeman2651
-  changes:
-  - {message: Five hours minimum overall playtime needed for Security Cadet to become
-      available., type: Tweak}
-  - {message: One hour minimum security playtime needed for Security Officer to become
-      available., type: Tweak}
-  - {message: Two hours minimum security playtime needed for Detective to become available.,
-    type: Tweak}
-  id: 3328
-  time: '2023-04-04T00:10:17.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Rat king (mobster) & dwarf accents are now more robust with transforming
-      capitalization., type: Tweak}
-  id: 3329
-  time: '2023-04-04T02:50:37.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: You can once again build several structures simultaneously., type: Fix}
@@ -2910,3 +2823,78 @@ Entries:
     type: Tweak}
   id: 3816
   time: '2023-05-19T10:21:36.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: updated sprites for changeling's sting drink, type: Tweak}
+  id: 3817
+  time: '2023-05-19T20:11:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Bags of holding now are significantly more expensive to produce., type: Tweak}
+  id: 3818
+  time: '2023-05-20T00:59:07.0000000+00:00'
+- author: WlarusFromDaSpace
+  changes:
+  - {message: The sad trombone implant now correctly only triggers whenever a mob
+      dies, type: Fix}
+  id: 3819
+  time: '2023-05-20T01:15:18.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: Added tons more scarfs for you to enjoy at your departments!, type: Add}
+  id: 3820
+  time: '2023-05-20T01:15:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Tech disks no longer contain exclusive discipline technology., type: Fix}
+  - {message: Printing tech disks now costs fewer points., type: Tweak}
+  id: 3821
+  time: '2023-05-20T02:10:29.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added space glue tube (can appear in maintenance lockers), type: Add}
+  id: 3822
+  time: '2023-05-20T02:42:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix fire stacks not spreading to other players., type: Fix}
+  id: 3823
+  time: '2023-05-20T03:34:41.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: the sprite of a doll with a skull bandana is now showing the skull,
+    type: Tweak}
+  id: 3824
+  time: '2023-05-20T19:46:10.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Spacing takes a short time to occur, rather than being totally instant.
+      The decompression will make you cold.', type: Add}
+  - {message: 'Ripped tiles during spacing reflect the wind that passed through that
+      area, ripped tiles tend to be concentrated around the breach.', type: Tweak}
+  id: 3825
+  time: '2023-05-20T19:53:04.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: Added a winterdrobe to store all your scarfs!, type: Add}
+  id: 3826
+  time: '2023-05-21T00:52:23.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Head Curator has allowed bibles and necronomicons to be stored in
+      bookshelves and book bags., type: Tweak}
+  id: 3827
+  time: '2023-05-21T00:52:48.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: NanoTrasen reports that crewmembers will no longer have to rely on the
+      placebo effect when ingesting chemicals found in puddles (which is not centcom-sanctioned
+      activity!), type: Fix}
+  id: 3828
+  time: '2023-05-21T03:05:22.0000000+00:00'
+- author: EEASAS
+  changes:
+  - {message: 'The Syndicate has supplied their traitors and nuclear operatives with
+      a rifle, the AKMS.', type: Add}
+  id: 3829
+  time: '2023-05-21T03:15:52.0000000+00:00'
