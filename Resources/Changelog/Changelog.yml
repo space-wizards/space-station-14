@@ -1,9 +1,4 @@
 Entries:
-- author: adamsong
-  changes:
-  - {message: Added tcoms server to dev map, type: Add}
-  id: 3331
-  time: '2023-04-04T13:26:00.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed being unable to toggle hardsuit helmets on incapacitated players,
@@ -2898,3 +2893,9 @@ Entries:
   - {message: Fixed cargo telepads working without being linked to a console., type: Fix}
   id: 3830
   time: '2023-05-21T10:09:32.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: 'moved syndicate scarves from clothing vending machine to winterdrobe,
+      they will appear after winterdrobe emag', type: Tweak}
+  id: 3831
+  time: '2023-05-21T23:55:00.0000000+00:00'
