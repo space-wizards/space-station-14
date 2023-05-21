@@ -18,7 +18,7 @@ public sealed class RechargeCycleAmmoSystem : EntitySystem
 
     private void OnRechargeCycled(EntityUid uid, RechargeCycleAmmoComponent component, ActivateInWorldEvent args)
     {
-        if (!TryComp<BasicEntityAmmoProviderComponent>(uid, out var basic))
+        if (!TryComp<BasicEntityAmmoProviderComponent>(uid, out var basic) || args.Handled)
             return;
 
         if (basic.Count >= basic.Capacity || basic.Count == null)
@@ -26,5 +26,6 @@ public sealed class RechargeCycleAmmoSystem : EntitySystem
 
         _gun.UpdateBasicEntityAmmoCount(uid, basic.Count.Value + 1, basic);
         Dirty(basic);
+        args.Handled = true;
     }
 }

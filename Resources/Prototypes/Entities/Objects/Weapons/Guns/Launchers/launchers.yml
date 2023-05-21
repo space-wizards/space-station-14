@@ -214,6 +214,7 @@
   parent: BaseItem
   id: WeaponGrapplingGun
   components:
+    - type: AmmoCounter
     - type: GrapplingGun
     - type: Gun
       soundGunshot: /Audio/Weapons/plasma_cutter.ogg
