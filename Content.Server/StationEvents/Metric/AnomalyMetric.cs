@@ -20,8 +20,8 @@ public sealed class AnomalyMetric : StationMetric<AnomalyMetricComponent>
         FixedPoint2 anomalyChaos = 0.0f;
 
         // Add up the pain of all the firelocks
-        var anomaly_q = EntityQueryEnumerator<AnomalyComponent>();
-        while (anomaly_q.MoveNext(out var uid, out var anomaly))
+        var anomalyQ = EntityQueryEnumerator<AnomalyComponent>();
+        while (anomalyQ.MoveNext(out var uid, out var anomaly))
         {
             if (anomaly.Severity > 0.8f)
             {

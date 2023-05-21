@@ -26,10 +26,10 @@ public sealed class CombatMetric : StationMetric<CombatMetricComponent>
         FixedPoint2 medical = 0.0f;
         FixedPoint2 death = 0.0f;
 
-        var nukie_q = GetEntityQuery<NukeOperativeComponent>();
-        var zombie_q = GetEntityQuery<ZombieComponent>();
+        var nukieQ = GetEntityQuery<NukeOperativeComponent>();
+        var zombieQ = GetEntityQuery<ZombieComponent>();
 
-        var humanoid_q = GetEntityQuery<HumanoidAppearanceComponent>();
+        var humanoidQ = GetEntityQuery<HumanoidAppearanceComponent>();
 
         while (query.MoveNext(out var uid, out var mind, out var mobState, out var damage))
         {
@@ -43,11 +43,11 @@ public sealed class CombatMetric : StationMetric<CombatMetricComponent>
                     continue;
 
                 // This is an antag
-                if (nukie_q.TryGetComponent(uid, out var nukie))
+                if (nukieQ.TryGetComponent(uid, out var nukie))
                 {
                     hostiles += component.HostileScore + component.NukieScore;
                 }
-                else if (zombie_q.TryGetComponent(uid, out var zombie))
+                else if (zombieQ.TryGetComponent(uid, out var zombie))
                 {
                     hostiles += component.HostileScore + component.ZombieScore;
                 }
@@ -60,7 +60,7 @@ public sealed class CombatMetric : StationMetric<CombatMetricComponent>
             {
                 // This is a friendly
                 // Quick filter for non-pets
-                if (!humanoid_q.TryGetComponent(uid, out var humanoid))
+                if (!humanoidQ.TryGetComponent(uid, out var humanoid))
                 {
                     continue;
                 }

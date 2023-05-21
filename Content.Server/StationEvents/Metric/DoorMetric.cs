@@ -26,8 +26,8 @@ public sealed class DoorMetric : StationMetric<DoorMetricComponent>
         FixedPoint2 emagChaos = 0.0f;
 
         // Add up the pain of all the firelocks
-        var query_firelock = EntityQueryEnumerator<DoorComponent, FirelockComponent, ApcPowerReceiverComponent>();
-        while (query_firelock.MoveNext(out var uid, out var door, out var firelock, out var power))
+        var queryFirelock = EntityQueryEnumerator<DoorComponent, FirelockComponent, ApcPowerReceiverComponent>();
+        while (queryFirelock.MoveNext(out var uid, out var door, out var firelock, out var power))
         {
             if (firelock.DangerFire)
             {
@@ -44,8 +44,8 @@ public sealed class DoorMetric : StationMetric<DoorMetricComponent>
             }
         }
 
-        var query_door = EntityQueryEnumerator<DoorComponent, AirlockComponent, ApcPowerReceiverComponent>();
-        while (query_door.MoveNext(out var uid, out var door, out var airlock, out var power))
+        var queryDoor = EntityQueryEnumerator<DoorComponent, AirlockComponent, ApcPowerReceiverComponent>();
+        while (queryDoor.MoveNext(out var uid, out var door, out var airlock, out var power))
         {
             if (door.State == DoorState.Emagging)
             {
