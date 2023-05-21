@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "This pixels made by @no_mad#0260",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "comm"
+    },
+    {
+      "name": "comm-equipped",
+      "directions": 4
+    },
+	{
+      "name": "donk"
+    },
+    {
+      "name": "donk-equipped",
+      "directions": 4
+    },
+	{
+      "name": "earth"
+    },
+    {
+      "name": "earth-equipped",
+      "directions": 4
+    },
+	{
+      "name": "logistika"
+    },
+    {
+      "name": "logistika-equipped",
+      "directions": 4
+    },
+	{
+      "name": "med"
+    },
+    {
+      "name": "med-equipped",
+      "directions": 4
+    },
+	{
+      "name": "nakamura"
+    },
+    {
+      "name": "nakamura-equipped",
+      "directions": 4
+    },
+	{
+      "name": "nano"
+    },
+    {
+      "name": "nano-equipped",
+      "directions": 4
+    },
+	{
+      "name": "sind"
+    },
+    {
+      "name": "sind-equipped",
+      "directions": 4
+    },
+	{
+      "name": "vit"
+    },
+    {
+      "name": "vit-equipped",
+      "directions": 4
+    }
+  ]
+}

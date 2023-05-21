@@ -21,13 +21,13 @@ public sealed class ArtifactEffectPrototype : IPrototype
     /// These are removed after the node is exited and the effect is changed.
     /// </summary>
     [DataField("components", serverOnly: true)]
-    public EntityPrototype.ComponentRegistry Components = new();
+    public ComponentRegistry Components = new();
 
     /// <summary>
     /// Components that are permanently added to an entity when the effect's node is entered.
     /// </summary>
     [DataField("permanentComponents")]
-    public EntityPrototype.ComponentRegistry PermanentComponents = new();
+    public ComponentRegistry PermanentComponents = new();
 
     //TODO: make this a list so we can have multiple target depths
     [DataField("targetDepth")]

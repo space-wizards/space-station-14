@@ -111,8 +111,7 @@ namespace Content.Server.Entry
                 _dbManager.Init();
                 IoCManager.Resolve<IServerPreferencesManager>().Init();
                 IoCManager.Resolve<INodeGroupFactory>().Initialize();
-                IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
-                IoCManager.Resolve<NetworkResourceManager>().Initialize();
+                IoCManager.Resolve<ContentNetworkResourceManager>().Initialize();
                 IoCManager.Resolve<GhostKickManager>().Initialize();
                 IoCManager.Resolve<DiscordAuthManager>().Initialize(); // Corvax-DiscordAuth
                 IoCManager.Resolve<SponsorsManager>().Initialize(); // Corvax-Sponsors
@@ -186,7 +185,6 @@ namespace Content.Server.Entry
         protected override void Dispose(bool disposing)
         {
             _playTimeTracking?.Shutdown();
-            _sysMan?.GetEntitySystemOrNull<StationSystem>()?.OnServerDispose();
             _dbManager?.Shutdown();
         }
 

@@ -14,6 +14,9 @@ pda-bound-user-interface-lock-uplink-title = Закрыть аплинк
 pda-bound-user-interface-lock-uplink-description = Предотвратите доступ к вашему аплинку персон без кода
 comp-pda-ui-menu-title = КПК
 comp-pda-ui-station = Станция: [color=white]{ $Station }[/color]
+comp-pda-ui-station-alert-level = Alert Level: [color={ $color }]{ $level }[/color]
+comp-pda-ui-station-alert-level-instructions = Instructions: [color=white]{ $instructions }[/color]
+comp-pda-ui-station-time = Shift duration: [color=white]{ $time }[/color]
 comp-pda-ui-eject-id-button = Извлечь ID
 comp-pda-ui-eject-pen-button = Извлечь ручку
 comp-pda-ui-ringtone-button-description = Измените рингтон вашего КПК

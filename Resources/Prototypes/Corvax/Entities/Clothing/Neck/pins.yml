@@ -1,0 +1,143 @@
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckUSSPPin
+  name: USSP pin
+  description: The pin of United Soviet Socialist Planet.
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: comm
+  - type: Clothing
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: comm-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckDonkPin
+  name: Donk pin
+  description: The pin of corporation Donk Pocket.
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: donk
+  - type: Clothing
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: donk-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckEarthPin
+  name: Earth pin
+  description: The pin of United Earth Government.
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: earth
+  - type: Clothing
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: earth-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckLogistikaPin
+  name: logistika pin
+  description: The pin of corporation Kosmologistika.
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: logistika
+  - type: Clothing
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: logistika-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckDeForestPin
+  name: DeForest pin
+  description: The pin of corporation DeForest.
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: med
+  - type: Clothing
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: med-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckNakamuraPin
+  name: Nakamura pin
+  description: The pin of corporation Nakamura engineering.
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: nakamura
+  - type: Clothing
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: nakamura-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckNanoTrasenPin
+  name: NanoTrasen pin
+  description: The pin of corporation NanoTrasen.
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: nano
+  - type: Clothing
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: nano-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckSyndicakePin
+  name: Syndicake pin
+  description: The pin of Syndicakes, on backside have a little numbers "2559".
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: sind
+  - type: Clothing
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: sind-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckVitezstviPin
+  name: Vitezstvi pin
+  description: The pin of corporation Vitezstvi.
+  components:
+  - type: Sprite
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: vit
+  - type: Clothing
+    sprite: Corvax/Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: vit-equipped

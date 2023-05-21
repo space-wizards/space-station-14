@@ -128,10 +128,10 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return splitSol;
     }
 
-    public Solution SplitStackSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity, int stackCount) 
+    public Solution SplitStackSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity, int stackCount)
     {
         var splitSol = solutionHolder.SplitSolution(quantity / stackCount);
-        Solution attackSolutionHolder = solutionHolder.SplitSolution(quantity - splitSol.Volume);
+        solutionHolder.SplitSolution(quantity - splitSol.Volume);
         UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }

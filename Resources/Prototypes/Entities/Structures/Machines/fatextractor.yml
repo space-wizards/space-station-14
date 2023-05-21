@@ -16,6 +16,7 @@
     snapCardinals: true
     layers:
     - state: fat
+      map: ["enum.StorageVisualLayers.Base"]
     - state: fat_door_off
       map: ["enum.StorageVisualLayers.Door"]
     - state: fat_red
