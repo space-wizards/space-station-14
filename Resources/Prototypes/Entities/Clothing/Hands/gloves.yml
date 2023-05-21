@@ -251,6 +251,20 @@
 
 - type: entity
   parent: ClothingHandsBase
+  id: ClothingHandsGlovesMercFingerless
+  name: mercenary fingerless gloves
+  description: Gloves that may not protect you from finger burns, but will make you cooler.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/mercfingerless.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/mercfingerless.rsi
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+    fiberColor: fibers-olive
+
+- type: entity
+  parent: ClothingHandsBase
   id: ThievingGloves
   suffix: Thieving
   name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
