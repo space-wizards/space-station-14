@@ -56,7 +56,7 @@
 - type: construction
   name: crude reinforced spear
   id: SpearReinforced
-  graph: SpearReinforced
+  graph: Spear
   startNode: start
   targetNode: spear
   category: construction-category-weapons
@@ -67,7 +67,7 @@
 - type: construction
   name: crude plasma spear
   id: SpearPlasma
-  graph: SpearPlasma
+  graph: Spear
   startNode: start
   targetNode: spear
   category: construction-category-weapons
@@ -78,7 +78,7 @@
 - type: construction
   name: crude uranium spear
   id: SpearUranium
-  graph: SpearUranium
+  graph: Spear
   startNode: start
   targetNode: spear
   category: construction-category-weapons

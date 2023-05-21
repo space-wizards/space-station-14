@@ -117,6 +117,10 @@
     damage:
       types:
         Piercing: 5
+  - type: Tag
+    tags:
+      - ReinforcedGlassShard
+      - Trash
 
 - type: entity
   parent: ShardBase
@@ -134,6 +138,10 @@
     damage:
       types:
         Piercing: 5
+  - type: Tag
+    tags:
+      - PlasmaGlassShard
+      - Trash
 
 - type: entity
   parent: ShardBase
@@ -152,4 +160,8 @@
       types:
         Piercing: 3
         Radiation: 2
+  - type: Tag
+    tags:
+      - UraniumGlassShard
+      - Trash
 

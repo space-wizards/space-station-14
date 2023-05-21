@@ -35,7 +35,7 @@
             - material: Cable
               amount: 2
               doAfter: 1
-            - tag: Trash
+            - tag: ReinforcedGlassShard
               name: Reinforced Glass Shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi
@@ -58,7 +58,7 @@
             - material: Cable
               amount: 2
               doAfter: 1
-            - tag: Trash
+            - tag: PlasmaGlassShard
               name: Plasma Glass Shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi
@@ -81,7 +81,7 @@
             - material: Cable
               amount: 2
               doAfter: 1
-            - tag: Trash
+            - tag: UraniumGlassShard
               name: Uranium Glass Shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi

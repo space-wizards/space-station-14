@@ -36,6 +36,9 @@
     tags:
     - CombatKnife
     - Knife
+  - type: Construction
+    graph: Shiv
+    node: icon
   - type: Sprite
     sprite: Objects/Weapons/Melee/shiv.rsi
     size: 2
@@ -61,6 +64,9 @@
     tags:
     - CombatKnife
     - Knife
+  - type: Construction
+    graph: ReinforcedShiv
+    node: icon 
   - type: Sprite
     sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
     size: 2
@@ -86,6 +92,9 @@
     tags:
     - CombatKnife
     - Knife
+  - type: Construction
+    graph: PlasmaShiv
+    node: icon 
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_shiv.rsi
     size: 2
@@ -111,6 +120,9 @@
     tags:
     - CombatKnife
     - Knife
+  - type: Construction
+    graph: UraniumShiv
+    node: icon 
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_shiv.rsi
     size: 2

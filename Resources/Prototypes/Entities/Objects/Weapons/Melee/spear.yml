@@ -109,7 +109,7 @@
     slots:
     - back
   - type: Construction
-    graph: Spear
+    graph: ReinforcedSpear
     node: spear
   - type: ItemCooldown
   - type: SolutionContainerManager
@@ -189,7 +189,7 @@
     slots:
     - back
   - type: Construction
-    graph: Spear
+    graph: PlasmaSpear
     node: spear
   - type: ItemCooldown
   - type: SolutionContainerManager
@@ -271,7 +271,7 @@
     slots:
     - back
   - type: Construction
-    graph: Spear
+    graph: UraniumSpear
     node: spear
   - type: ItemCooldown
   - type: SolutionContainerManager
