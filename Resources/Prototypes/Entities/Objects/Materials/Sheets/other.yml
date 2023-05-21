@@ -33,17 +33,19 @@
   components:
   - type: Stack
     stackType: Paper
+    baseLayer: base
+    layerStates:
+    - paper
+    - paper_2
+    - paper_3
   - type: Sprite
     state: paper_3
+    layers:
+    - state: paper_3
+      map: ["base"]
   - type: Item
     heldPrefix: paper
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - paper
-      - paper_2
-      - paper_3
 
 - type: entity
   parent: SheetPaper
@@ -68,17 +70,21 @@
       Plasma: 100
   - type: Stack
     stackType: Plasma
+# Corvax-Resprite-Start
+#    baseLayer: base
+#    layerStates:
+#    - plasma
+#    - plasma_2
+#    - plasma_3
   - type: Sprite
-    state: plasma # Corvax-Resprite
+    state: plasma
+#    layers:
+#    - state: plasma_3
+#      map: ["base"]
+# Corvax-Resprite-End
   - type: Item
     heldPrefix: plasma
-#  - type: Appearance
-#    visuals:
-#    - type: StackVisualizer
-#      stackLayers:
-#      - plasma
-#      - plasma_2
-#      - plasma_3
+  - type: Appearance
   - type: Extractable
     grindableSolutionName: plasma
   - type: SolutionContainerManager
@@ -119,17 +125,19 @@
       Plastic: 100
   - type: Stack
     stackType: Plastic
+    baseLayer: base
+    layerStates:
+    - plastic
+    - plastic_2
+    - plastic_3
   - type: Sprite
     state: plastic_3
+    layers:
+    - state: plastic_3
+      map: ["base"]
   - type: Item
     heldPrefix: plastic
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plastic
-      - plastic_2
-      - plastic_3
 
 - type: entity
   parent: SheetPlastic
@@ -156,15 +164,17 @@
       Uranium: 100
   - type: Stack
     stackType: Uranium
+    baseLayer: base
+    layerStates:
+    - uranium
+    - uranium_2
+    - uranium_3
   - type: Sprite
     state: uranium_3
+    layers:
+    - state: uranium_3
+      map: ["base"]
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - uranium
-      - uranium_2
-      - uranium_3
   - type: Item
     heldPrefix: uranium
   - type: Extractable

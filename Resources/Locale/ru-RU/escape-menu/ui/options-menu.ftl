@@ -145,6 +145,7 @@ ui-options-function-editor-cancel-place = Отменить размещение
 ui-options-function-editor-grid-place = Размещать в сетке
 ui-options-function-editor-line-place = Размещать в линию
 ui-options-function-editor-rotate-object = Повернуть
+ui-options-function-editor-flip-object = Flip
 ui-options-function-editor-copy-object = Копировать
 ui-options-function-open-abilities-menu = Открыть меню действий
 ui-options-function-show-debug-console = Открыть консоль

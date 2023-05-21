@@ -199,6 +199,7 @@ flavor-complex-themartinez = как фиалки и лимонная водка
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 
+flavor-complex-antifreeze = warm
 flavor-complex-pilk = как сладкое молоко
 
 # Medicine/chemical-specific flavors.

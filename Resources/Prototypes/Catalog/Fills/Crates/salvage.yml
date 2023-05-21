@@ -106,6 +106,27 @@
         orGroup: LGBTQIAPlusPins
       - id: ClothingNeckTransPin
         orGroup: LGBTQIAPlusPins
+      # Corvax-Pins-Start
+      - id: ClothingNeckUSSPPin
+        prob: 0.025
+        orGroup: CorporateAndGovermentPins
+      - id: ClothingNeckDonkPin
+        orGroup: CorporateAndGovermentPins
+      - id: ClothingNeckEarthPin
+        orGroup: CorporateAndGovermentPins
+      - id: ClothingNeckLogistikaPin
+        orGroup: CorporateAndGovermentPins
+      - id: ClothingNeckDeForestPin
+        orGroup: CorporateAndGovermentPins
+      - id: ClothingNeckNakamuraPin
+        orGroup: CorporateAndGovermentPins
+      - id: ClothingNeckNanoTrasenPin
+        orGroup: CorporateAndGovermentPins
+      - id: ClothingNeckSyndicakePin
+        orGroup: CorporateAndGovermentPins
+      - id: ClothingNeckVitezstviPin
+        orGroup: CorporateAndGovermentPins
+      # Corvax-Pins-End
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001

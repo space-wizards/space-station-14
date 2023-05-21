@@ -1,8 +1,9 @@
 using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.Station.Components;
+using Content.Server.Shuttles.Components;
 using Content.Server.Traitor;
 using Content.Shared.Cuffs.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -33,6 +34,7 @@ namespace Content.Server.Objectives.Conditions
                 return false;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
+            var transformSys = IoCManager.Resolve<TransformSystem>();
             var lookupSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EntityLookupSystem>();
 
             if (!entMan.TryGetComponent<MapGridComponent>(shuttle, out var shuttleGrid) ||
@@ -41,8 +43,8 @@ namespace Content.Server.Objectives.Conditions
                 return false;
             }
 
-            var shuttleAabb = shuttleXform.WorldMatrix.TransformBox(shuttleGrid.LocalAABB);
-            var agentOnShuttle = shuttleAabb.Contains(agentXform.WorldPosition);
+            var shuttleAabb = transformSys.GetWorldMatrix(shuttleXform).TransformBox(shuttleGrid.LocalAABB);
+            var agentOnShuttle = shuttleAabb.Contains(transformSys.GetWorldPosition(agentXform));
             var entities = lookupSys.GetEntitiesIntersecting(shuttleXform.MapID, shuttleAabb);
             foreach (var entity in entities)
             {
@@ -75,17 +77,15 @@ namespace Content.Server.Objectives.Conditions
 
                 var shuttleHijacked = false;
                 var agentIsAlive = !_mind.CharacterDeadIC;
-                var agentIsFree = true;
-
-                if (entMan.TryGetComponent<CuffableComponent>(_mind.OwnedEntity, out var cuffed)
-                    && cuffed.CuffedHandCount > 0)
-                    // You're not escaping if you're restrained!
-                    agentIsFree = false;
+                var agentIsFree = !(entMan.TryGetComponent<CuffableComponent>(_mind.OwnedEntity, out var cuffed)
+                                     && cuffed.CuffedHandCount > 0); // You're not escaping if you're restrained!
 
                 // Any emergency shuttle counts for this objective.
-                foreach (var stationData in entMan.EntityQuery<StationDataComponent>())
+                var query = entMan.AllEntityQueryEnumerator<StationEmergencyShuttleComponent>();
+                while (query.MoveNext(out var comp))
                 {
-                    if (IsShuttleHijacked(xform, stationData.EmergencyShuttle)) {
+                    if (IsShuttleHijacked(xform, comp.EmergencyShuttle))
+                    {
                         shuttleHijacked = true;
                         break;
                     }

@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Construction;
-using Content.Server.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Decals;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;

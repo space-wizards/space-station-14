@@ -79,7 +79,7 @@ namespace Content.Shared.Storage.EntitySystems
         /// <returns>false if <c>msg.Container.Owner</c> is not a storage, true otherwise.</returns>
         private bool TryGetLayers(ContainerModifiedMessage msg,
             ItemMapperComponent itemMapper,
-            out IReadOnlyList<string> showLayers)
+            out List<string> showLayers)
         {
             var containedLayers = _container.GetAllContainers(msg.Container.Owner)
                 .Where(c => itemMapper.ContainerWhitelist?.Contains(c.ID) ?? true).SelectMany(cont => cont.ContainedEntities).ToArray();

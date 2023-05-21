@@ -1,30 +1,6 @@
 Entries:
 - author: lapatison
   changes:
-  - message: "\u043D\u0435\u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u043F\u0435\u0440\
-      \u0435\u0432\u043E\u0434"
-    type: Add
-  id: 95
-  time: '2022-04-14T12:40:01.0000000+00:00'
-- author: lapatison
-  changes:
-  - message: "\u0440\u0430\u0437\u043B\u0438\u0447\u043D\u044B\u0435 \u043F\u0435\u0440\
-      \u0435\u0432\u043E\u0434\u044B"
-    type: Add
-  id: 96
-  time: '2022-04-14T12:40:14.0000000+00:00'
-- author: Morb0
-  changes:
-  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u043E\u0441\
-      \u043B\u0435\u0434\u043D\u0438\u0435 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\
-      \u043D\u0438\u044F \u0438\u0437 \u043E\u0444\u0438\u0446\u0438\u0430\u043B\u044C\
-      \u043D\u043E\u0433\u043E \u0440\u0435\u043F\u043E\u0437\u0438\u0442\u043E\u0440\
-      \u0438\u044F"
-    type: Add
-  id: 97
-  time: '2022-04-17T02:19:33.0000000+00:00'
-- author: lapatison
-  changes:
   - message: "\u041F\u0435\u0440\u0435\u0432\u043E\u0434 \u0444\u0430\u0439\u043B\u043E\
       \u0432, \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0445 \u0432\
       \ \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0438"
@@ -4302,3 +4278,25 @@ Entries:
     type: Add
   id: 594
   time: '2023-05-15T17:42:05.0000000+00:00'
+- author: lapatison
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u0435\
+      \u0440\u0435\u0432\u043E\u0434\u044B"
+    type: Fix
+  id: 595
+  time: '2023-05-18T11:29:34.0000000+00:00'
+- author: no_mad
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u0437\u043D\u0430\
+      \u0447\u043A\u0438 \u043A\u043E\u0440\u043F\u043E\u0440\u0430\u0446\u0438\u0439\
+      \ \u0438 \u0433\u043E\u0441\u0443\u0434\u0430\u0440\u0441\u0442\u0432"
+    type: Add
+  id: 596
+  time: '2023-05-20T20:15:18.0000000+00:00'
+- author: lzk
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u0435\
+      \u0440\u0435\u0432\u043E\u0434\u044B"
+    type: Fix
+  id: 597
+  time: '2023-05-20T18:51:17.0000000+00:00'

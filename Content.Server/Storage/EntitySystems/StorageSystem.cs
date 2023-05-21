@@ -3,6 +3,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
 using Content.Server.Interaction;
 using Content.Server.Popups;
+using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
@@ -37,10 +38,8 @@ using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Storage.EntitySystems
 {
-    [UsedImplicitly]
     public sealed partial class StorageSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
@@ -57,6 +56,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly StackSystem _stack = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
         /// <inheritdoc />
@@ -423,7 +423,7 @@ namespace Content.Server.Storage.EntitySystems
                 _appearance.SetData(uid, StackVisuals.Hide, !storageComp.IsOpen);
         }
 
-        private void RecalculateStorageUsed(ServerStorageComponent storageComp)
+        public void RecalculateStorageUsed(ServerStorageComponent storageComp)
         {
             storageComp.StorageUsed = 0;
             storageComp.SizeCache.Clear();
@@ -438,9 +438,18 @@ namespace Content.Server.Storage.EntitySystems
                 if (!itemQuery.TryGetComponent(entity, out var itemComp))
                     continue;
 
-                storageComp.StorageUsed += itemComp.Size;
-                storageComp.SizeCache.Add(entity, itemComp.Size);
+                var size = itemComp.Size;
+                storageComp.StorageUsed += size;
+                storageComp.SizeCache.Add(entity, size);
             }
+        }
+
+        public int GetAvailableSpace(EntityUid uid, ServerStorageComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return 0;
+
+            return component.StorageCapacityMax - component.StorageUsed;
         }
 
         /// <summary>
@@ -508,7 +517,7 @@ namespace Content.Server.Storage.EntitySystems
                 return false;
             }
 
-            if (TryComp(insertEnt, out ItemComponent? itemComp) &&
+            if (!HasComp<StackComponent>(insertEnt) && TryComp(insertEnt, out ItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
             {
                 reason = "comp-storage-insufficient-capacity";
@@ -525,8 +534,62 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if the entity was inserted, false otherwise</returns>
         public bool Insert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null, bool playSound = true)
         {
-            if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Storage?.Insert(insertEnt) == false)
+            if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Storage == null)
                 return false;
+
+            /*
+             * 1. If the inserted thing is stackable then try to stack it to existing stacks
+             * 2. If anything remains insert whatever is possible.
+             * 3. If insertion is not possible then leave the stack as is.
+             * At either rate still play the insertion sound
+             *
+             * For now we just treat items as always being the same size regardless of stack count.
+             */
+
+            // If it's stackable then prefer to stack it
+            var stackQuery = GetEntityQuery<StackComponent>();
+
+            if (stackQuery.TryGetComponent(insertEnt, out var insertStack))
+            {
+                var toInsertCount = insertStack.Count;
+
+                foreach (var ent in storageComp.Storage.ContainedEntities)
+                {
+                    if (!stackQuery.TryGetComponent(ent, out var containedStack) || !insertStack.StackTypeId.Equals(containedStack.StackTypeId))
+                        continue;
+
+                    if (!_stack.TryAdd(insertEnt, ent, insertStack, containedStack))
+                        continue;
+
+                    var remaining = insertStack.Count;
+                    toInsertCount -= toInsertCount - remaining;
+
+                    if (remaining > 0)
+                        continue;
+
+                    break;
+                }
+
+                // Still stackable remaining
+                if (insertStack.Count > 0)
+                {
+                    // Try to insert it as a new stack.
+                    if (TryComp(insertEnt, out ItemComponent? itemComp) &&
+                        itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed ||
+                        !storageComp.Storage.Insert(insertEnt))
+                    {
+                        // If we also didn't do any stack fills above then just end
+                        // otherwise play sound and update UI anyway.
+                        if (toInsertCount == insertStack.Count)
+                            return false;
+                    }
+                }
+            }
+            // Non-stackable but no insertion for reasons.
+            else if (!storageComp.Storage.Insert(insertEnt))
+            {
+                return false;
+            }
 
             if (playSound && storageComp.StorageInsertSound is not null)
                 _audio.PlayPvs(storageComp.StorageInsertSound, uid);
@@ -643,7 +706,7 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
-        private void UpdateStorageUI(EntityUid uid, ServerStorageComponent storageComp)
+        public void UpdateStorageUI(EntityUid uid, ServerStorageComponent storageComp)
         {
             if (storageComp.Storage == null)
                 return;

@@ -25,7 +25,7 @@ using Content.Server.ServerUpdates;
 using Content.Server.SS220.Discord;
 using Content.Server.SS220.PrimeWhitelist;
 using Content.Server.Voting.Managers;
-using Content.Shared.Administration;
+using Content.Server.Worldgen.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Kitchen;
@@ -53,10 +53,9 @@ namespace Content.Server.IoC
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
             IoCManager.Register<IAfkManager, AfkManager>();
             IoCManager.Register<IGameMapManager, GameMapManager>();
-            IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
             IoCManager.Register<RulesManager, RulesManager>();
             IoCManager.Register<RoleBanManager, RoleBanManager>();
-            IoCManager.Register<NetworkResourceManager>();
+            IoCManager.Register<ContentNetworkResourceManager>();
             IoCManager.Register<IAdminNotesManager, AdminNotesManager>();
             IoCManager.Register<GhostKickManager>();
             IoCManager.Register<ISharedAdminLogManager, AdminLogManager>();
@@ -68,6 +67,7 @@ namespace Content.Server.IoC
             IoCManager.Register<TTSManager>(); // Corvax-TTS
             IoCManager.Register<DiscordAuthManager>(); // Corvax-DiscordAuth
             IoCManager.Register<ServerInfoManager>();
+            IoCManager.Register<PoissonDiskSampler>();
             IoCManager.Register<Primelist>();
             IoCManager.Register<DiscordPlayerManager>();
         }
