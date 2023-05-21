@@ -6,10 +6,10 @@ namespace Content.Shared.Movement.Components;
 /// <summary>
 /// Raises the engine movement inputs for a particular entity onto the designated entity
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedMoverController))]
-public sealed class RelayInputMoverComponent : Component
+public sealed partial class RelayInputMoverComponent : Component
 {
-    [ViewVariables]
-    public EntityUid? RelayEntity;
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid RelayEntity;
 }

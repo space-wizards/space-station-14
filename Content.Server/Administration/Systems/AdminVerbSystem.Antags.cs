@@ -56,11 +56,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Wallmounts/signs.rsi"), "bio"),
             Act = () =>
             {
-                TryComp(args.Target, out MindComponent? mindComp);
-                if (mindComp == null || mindComp.Mind == null)
-                    return;
-
-                _zombify.ZombifyEntity(targetMindComp.Owner);
+                _zombify.ZombifyEntity(args.Target);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-zombie"),

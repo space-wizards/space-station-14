@@ -97,22 +97,25 @@
         types:
           Piercing: 15
           Slash: 15
-    - type: Dragon
-      spawnsLeft: 2
-      spawnsProto: MobCarpDragon
+    - type: Devourer
+      foodPreference: Humanoid
+      shouldStoreDevoured: true
+      chemical: Ichor
+      healRate: 15.0
+      whitelist:
+        components:
+          - MobState
+          - Door
+        tags:
+          - Wall
       devourAction:
-        event: !type:DragonDevourActionEvent
+        event: !type:DevourActionEvent
         icon: Interface/Actions/devour.png
         name: action-name-devour
         description: action-description-devour
-        devourChemical: Ichor
-        devourHealRate: 15.0
-        whitelist:
-          components:
-            - MobState
-            - Door
-          tags:
-            - Wall
+    - type: Dragon
+      spawnsLeft: 2
+      spawnsProto: MobCarpDragon
       spawnRiftAction:
         event: !type:DragonSpawnRiftActionEvent
         icon:

@@ -665,6 +665,11 @@
   description: flavor-complex-atomic-bomb
 
 - type: flavor
+  id: antifreeze
+  flavorType: Complex
+  description: flavor-complex-antifreeze
+
+- type: flavor
   id: atomiccola
   flavorType: Complex
   description: flavor-complex-atomic-cola
@@ -793,3 +798,8 @@
   id: themartinez
   flavorType: Complex
   description: flavor-complex-themartinez
+
+- type: flavor
+  id: rocksandstones
+  flavorType: Complex
+  description: flavor-complex-rocksandstones
