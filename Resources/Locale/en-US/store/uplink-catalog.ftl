@@ -1,4 +1,7 @@
 # Weapons
+uplink-rifle-ak-name = AKMS
+uplink-rifle-ak-desc = A high-risk high-reward rifle. Very conspicuous. (.30)
+
 uplink-pistol-viper-name = Viper
 uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Use pistol magazines (.35 auto).
 
