@@ -33,3 +33,4 @@ ent-BriefcaseIAAFilled = { ent-BriefcaseBrown }
 ent-SpawnPointIAA = АВД
     .desc = {SpawnPointJobBase.desc}
 
+stamp-component-stamped-name-iaa = Агент Внутренних Дел
