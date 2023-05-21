@@ -19,57 +19,6 @@ using System.ComponentModel;
 
 namespace Content.Server.Corvax.TTS;
 
-public record ConcurrentList<T> : ICollection<T> where T : notnull
-{
-    private readonly ConcurrentDictionary<T, object?> _store;
-
-    public ConcurrentList(IEnumerable<T>? items = null)
-    {
-        var prime = (items ?? Enumerable.Empty<T>()).Select(x => new KeyValuePair<T, object?>(x, null));
-        _store = new ConcurrentDictionary<T, object?>(prime);
-    }
-
-    public IEnumerator<T> GetEnumerator()
-    {
-        return _store.Keys.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    public void Add(T item)
-    {
-        if(_store.TryAdd(item, null) == false)
-            throw new ApplicationException("Unable to concurrently add item to list");
-    }
-
-    public void Clear()
-    {
-        _store.Clear();
-    }
-
-    public bool Contains(T item)
-    {
-        return _store.ContainsKey(item);
-    }
-
-    public void CopyTo(T[] array, int arrayIndex)
-    {
-        _store.Keys.CopyTo(array, arrayIndex);
-    }
-
-    public bool Remove(T item)
-    {
-        return _store.Keys.Remove(item);
-    }
-
-    public int Count => _store.Count;
-
-    public bool IsReadOnly => _store.Keys.IsReadOnly;
-}
-
 // ReSharper disable once InconsistentNaming
 public sealed class TTSManager
 {
@@ -104,9 +53,9 @@ public sealed class TTSManager
 
     private ISawmill _sawmill = default!;
     private readonly ConcurrentDictionary<string, byte[]> _cache = new();
-    private readonly ConcurrentList<string> _cacheKeysSeq = new();
+    private readonly HashSet<string> _cacheKeysSeq = new();
     private readonly ConcurrentDictionary<string, byte[]> _cacheRadio = new();
-    private readonly ConcurrentList<string> _cacheRadioKeysSeq = new();
+    private readonly HashSet<string> _cacheRadioKeysSeq = new();
 
     private int _maxCachedCount = 200;
 
@@ -171,8 +120,7 @@ public sealed class TTSManager
             var soundData = Convert.FromBase64String(json.Results.First().Audio);
 
             _cache.AddOrUpdate(cacheKey, soundData, (_, __) => soundData);
-            if (!_cacheKeysSeq.Contains(cacheKey))
-                _cacheKeysSeq.Add(cacheKey);
+            _cacheKeysSeq.Add(cacheKey);
             if (_cache.Count > _maxCachedCount)
             {
                 var firstKey = _cacheKeysSeq.First();
@@ -239,8 +187,7 @@ public sealed class TTSManager
                 // ignored
             }
             _cacheRadio.AddOrUpdate(cacheKey, soundData, (_, __) => soundData);
-            if (!_cacheRadioKeysSeq.Contains(cacheKey))
-                _cacheRadioKeysSeq.Add(cacheKey);
+            _cacheRadioKeysSeq.Add(cacheKey);
             if (_cacheRadio.Count > _maxCachedCount)
             {
                 var firstKey = _cacheRadioKeysSeq.First();
