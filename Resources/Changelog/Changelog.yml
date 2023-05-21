@@ -1,13 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: You can once again build several structures simultaneously., type: Fix}
-  - {message: Fixed being unable to repair reinforced windows., type: Fix}
-  - {message: Fixed APC-screw driver interaction, type: Fix}
-  - {message: Revenant soul-leeching will now be interrupted if they receive damage,
-    type: Tweak}
-  id: 3330
-  time: '2023-04-04T06:28:56.0000000+00:00'
 - author: adamsong
   changes:
   - {message: Added tcoms server to dev map, type: Add}
@@ -2898,3 +2889,12 @@ Entries:
       a rifle, the AKMS.', type: Add}
   id: 3829
   time: '2023-05-21T03:15:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Advanced Spray is now a tier 2 tech and Advanced Entertainment is a
+      tier 1 tech., type: Tweak}
+  - {message: Added Bluespace Cargo Transport as a new tier 3 civilian services technology.,
+    type: Add}
+  - {message: Fixed cargo telepads working without being linked to a console., type: Fix}
+  id: 3830
+  time: '2023-05-21T10:09:32.0000000+00:00'
