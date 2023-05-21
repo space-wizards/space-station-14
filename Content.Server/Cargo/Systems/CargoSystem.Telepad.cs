@@ -94,7 +94,7 @@ public sealed partial class CargoSystem
 
     private void OnUpgradeExamine(EntityUid uid, CargoTelepadComponent component, UpgradeExamineEvent args)
     {
-        args.AddPercentageUpgrade("cargo-telepad-delay-upgrade", component.BaseDelay / component.Delay);
+        args.AddPercentageUpgrade("cargo-telepad-delay-upgrade", component.Delay / component.BaseDelay);
     }
 
     private void SetEnabled(EntityUid uid, CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
