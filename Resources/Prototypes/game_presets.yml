@@ -98,3 +98,37 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+
+- type: gamePreset
+  id: CalmDynamic
+  alias:
+    - calm
+    - dynamic
+    - calmdynamic
+  name: calm-title
+  description: calm-description
+  showInVote: false
+  rules:
+    - CalmDynamic
+
+- type: gamePreset
+  id: CombatDynamic
+  alias:
+    - combat
+    - combatdynamic
+  name: combat-title
+  description: combat-description
+  showInVote: false
+  rules:
+    - CombatDynamic
+
+- type: gamePreset
+  id: TraitorDynamic
+  alias:
+    - traitordynamic
+  name: traitor-title
+  description: traitor-description
+  showInVote: false
+  rules:
+    - Traitor
+    - CombatDynamic
