@@ -1,14 +1,4 @@
 Entries:
-- author: freeman2651
-  changes:
-  - {message: Five hours minimum overall playtime needed for Security Cadet to become
-      available., type: Tweak}
-  - {message: One hour minimum security playtime needed for Security Officer to become
-      available., type: Tweak}
-  - {message: Two hours minimum security playtime needed for Detective to become available.,
-    type: Tweak}
-  id: 3328
-  time: '2023-04-04T00:10:17.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Rat king (mobster) & dwarf accents are now more robust with transforming
@@ -2901,3 +2891,10 @@ Entries:
       bookshelves and book bags., type: Tweak}
   id: 3827
   time: '2023-05-21T00:52:48.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: NanoTrasen reports that crewmembers will no longer have to rely on the
+      placebo effect when ingesting chemicals found in puddles (which is not centcom-sanctioned
+      activity!), type: Fix}
+  id: 3828
+  time: '2023-05-21T03:05:22.0000000+00:00'
