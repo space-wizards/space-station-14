@@ -1,16 +1,13 @@
 - type: constructionGraph
-  id: Spear
+  id: Shiv
   start: start
   graph:
     - node: start
       edges:
-        - to: spear
+        - to: icon
           steps:
-            - material: MetalRod
-              amount: 2
-              doAfter: 2
-            - material: Cable
-              amount: 2
+            - material: Cloth
+              amount: 1
               doAfter: 1
             - tag: GlassShard
               name: Glass Shard
@@ -18,22 +15,19 @@
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
               doAfter: 1
-    - node: spear
-      entity: Spear
+    - node: icon
+      entity: Shiv
 
 - type: constructionGraph
-  id: SpearReinforced
+  id: ReinforcedShiv
   start: start
   graph:
     - node: start
       edges:
-        - to: spear
+        - to: icon
           steps:
-            - material: MetalRod
-              amount: 2
-              doAfter: 2
-            - material: Cable
-              amount: 2
+            - material: Cloth
+              amount: 1
               doAfter: 1
             - tag: Trash
               name: Reinforced Glass Shard
@@ -41,22 +35,19 @@
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
               doAfter: 1
-    - node: spear
-      entity: SpearReinforced
+    - node: icon
+      entity: ReinforcedShiv
 
 - type: constructionGraph
-  id: SpearPlasma
+  id: PlasmaShiv
   start: start
   graph:
     - node: start
       edges:
-        - to: spear
+        - to: icon
           steps:
-            - material: MetalRod
-              amount: 2
-              doAfter: 2
-            - material: Cable
-              amount: 2
+            - material: Cloth
+              amount: 1
               doAfter: 1
             - tag: Trash
               name: Plasma Glass Shard
@@ -64,22 +55,19 @@
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
               doAfter: 1
-    - node: spear
-      entity: SpearPlasma
+    - node: icon
+      entity: PlasmaShiv
 
 - type: constructionGraph
-  id: SpearUranium
+  id: UraniumShiv
   start: start
   graph:
     - node: start
       edges:
-        - to: spear
+        - to: icon
           steps:
-            - material: MetalRod
-              amount: 2
-              doAfter: 2
-            - material: Cable
-              amount: 2
+            - material: Cloth
+              amount: 1
               doAfter: 1
             - tag: Trash
               name: Uranium Glass Shard
@@ -87,5 +75,5 @@
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
               doAfter: 1
-    - node: spear
-      entity: SpearUranium
+    - node: icon
+      entity: UraniumShiv

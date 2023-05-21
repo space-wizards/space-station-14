@@ -116,7 +116,7 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 10
+        Piercing: 5
 
 - type: entity
   parent: ShardBase
@@ -133,7 +133,7 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 15
+        Piercing: 5
 
 - type: entity
   parent: ShardBase
@@ -150,5 +150,6 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 10
-        Radiation: 5
+        Piercing: 3
+        Radiation: 2
+
