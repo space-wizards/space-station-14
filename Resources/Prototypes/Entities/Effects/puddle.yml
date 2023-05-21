@@ -121,3 +121,4 @@
       delay: 3
       transferAmount: 1
       solution: puddle
+      examinable: false

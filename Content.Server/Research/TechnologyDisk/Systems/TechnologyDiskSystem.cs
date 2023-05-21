@@ -42,7 +42,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
             }
         }
         _popup.PopupEntity(Loc.GetString("tech-disk-inserted"), target, args.User);
-        Del(uid);
+        QueueDel(uid);
         args.Handled = true;
     }
 
@@ -66,10 +66,19 @@ public sealed class TechnologyDiskSystem : EntitySystem
         if (component.Recipes != null)
             return;
 
+        var lockoutTiers = new Dictionary<string, int>();
+        foreach (var discipline in _prototype.EnumeratePrototypes<TechDisciplinePrototype>())
+        {
+            lockoutTiers.Add(discipline.ID, discipline.LockoutTier);
+        }
+
         //get a list of every distinct recipe in all the technologies.
         var allTechs = new List<string>();
         foreach (var tech in _prototype.EnumeratePrototypes<TechnologyPrototype>())
         {
+            if (tech.Tier >= lockoutTiers[tech.Discipline])
+                continue;
+
             allTechs.AddRange(tech.RecipeUnlocks);
         }
         allTechs = allTechs.Distinct().ToList();
@@ -83,7 +92,17 @@ public sealed class TechnologyDiskSystem : EntitySystem
         allUnlocked = allUnlocked.Distinct().ToList();
 
         //make a list of every single non-unlocked tech
-        var validTechs = allTechs.Where(tech => !allUnlocked.Contains(tech)).ToList();
+        var validTechs = new List<string>();
+        foreach (var tech in allTechs)
+        {
+            if (allUnlocked.Contains(tech))
+                continue;
+
+            validTechs.Add(tech);
+        }
+
+        if (!validTechs.Any())
+            return;
 
         //pick one
         component.Recipes = new();

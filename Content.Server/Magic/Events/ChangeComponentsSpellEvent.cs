@@ -13,7 +13,7 @@ public sealed class ChangeComponentsSpellEvent : EntityTargetActionEvent, ISpeak
 
     [DataField("toAdd")]
     [AlwaysPushInheritance]
-    public EntityPrototype.ComponentRegistry ToAdd = new();
+    public ComponentRegistry ToAdd = new();
 
     [DataField("toRemove")]
     [AlwaysPushInheritance]

@@ -802,6 +802,7 @@
     factions:
     - Passive
   - type: GhostRole
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description

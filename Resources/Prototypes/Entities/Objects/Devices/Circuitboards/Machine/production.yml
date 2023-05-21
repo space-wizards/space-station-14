@@ -776,6 +776,21 @@
             ExamineName: Glass Beaker
 
 - type: entity
+  id: CargoTelepadMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cargo telepad machine board
+  description: A machine printed circuit board for a cargo telepad.
+  components:
+    - type: Sprite
+      state: supply
+    - type: MachineBoard
+      prototype: CargoTelepad
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        Steel: 5
+
+- type: entity
   id: SodaDispenserMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: soda dispenser machine board
