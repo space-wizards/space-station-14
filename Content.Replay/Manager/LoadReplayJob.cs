@@ -25,7 +25,7 @@ public sealed class ContentLoadReplayJob : LoadReplayJob
         var header = Loc.GetString("replay-loading", ("cur", (int)state + 1), ("total", 5));
         var subText = Loc.GetString(state switch
         {
-            LoadingState.LoadingFiles => "replay-loading-reading",
+            LoadingState.ReadingFiles => "replay-loading-reading",
             LoadingState.ProcessingFiles => "replay-loading-processing",
             LoadingState.Spawning => "replay-loading-spawning",
             LoadingState.Initializing => "replay-loading-initializing",
