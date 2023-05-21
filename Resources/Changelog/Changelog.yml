@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Rat king (mobster) & dwarf accents are now more robust with transforming
-      capitalization., type: Tweak}
-  id: 3329
-  time: '2023-04-04T02:50:37.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: You can once again build several structures simultaneously., type: Fix}
@@ -2898,3 +2892,9 @@ Entries:
       activity!), type: Fix}
   id: 3828
   time: '2023-05-21T03:05:22.0000000+00:00'
+- author: EEASAS
+  changes:
+  - {message: 'The Syndicate has supplied their traitors and nuclear operatives with
+      a rifle, the AKMS.', type: Add}
+  id: 3829
+  time: '2023-05-21T03:15:52.0000000+00:00'
