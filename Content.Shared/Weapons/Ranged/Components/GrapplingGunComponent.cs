@@ -7,6 +7,12 @@ namespace Content.Shared.Weapons.Ranged.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GrapplingGunComponent : Component
 {
+    [DataField("jointId"), AutoNetworkedField]
+    public string Joint = string.Empty;
+
+    [DataField("projectile")]
+    public EntityUid? Projectile;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("reeling"), AutoNetworkedField]
     public bool Reeling;
 
