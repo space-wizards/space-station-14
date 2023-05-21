@@ -4,3 +4,4 @@ vape-component-vape-success-user-forced = Вас успешно заставил
 vape-component-try-use-vape-forced = {CAPITALIZE($user)} пытается заставить вас затянуться паром.
 vape-component-try-use-vape-forced-user = Вы заставляете {$target} затянуться вейпом.
 vape-component-try-use-vape = Вы пытаетесь затянуться вейпом.
+vape-component-vape-empty = Вейп пустой!
