@@ -37,10 +37,12 @@ namespace Content.Server.Administration.Commands
             
             var mindSystem = _entities.System<MindSystem>();
 
-            if (mind.VisitingEntity != default && _entities.HasComponent<GhostComponent>(mind.VisitingEntity))
+            if (mind.VisitingEntity != default && _entities.TryGetComponent<GhostComponent>(mind.VisitingEntity, out var oldGhostComponent))
             {
                 mindSystem.UnVisit(mind);
-                return;
+                // If already an admin ghost, then return to body.
+                if (oldGhostComponent.CanGhostInteract)
+                    return;
             }
 
             var canReturn = mind.CurrentEntity != null
