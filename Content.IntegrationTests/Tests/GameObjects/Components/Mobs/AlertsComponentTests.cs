@@ -58,7 +58,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 var controlled = local.ControlledEntity;
                 Assert.NotNull(controlled);
                 // Making sure it exists
-                Assert.That(entManager.HasComponent<AlertsComponent>(controlled.Value));
+                Assert.That(clientEntManager.HasComponent<AlertsComponent>(controlled.Value));
 
                 // find the alertsui
 
