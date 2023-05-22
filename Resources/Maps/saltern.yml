@@ -1288,7 +1288,7 @@ entities:
           decals:
             617: 20,17
             655: 20,17
-            673: -12,-21
+            671: -12,-21
         - node:
             angle: 3.141592653589793 rad
             color: '#FFFFFFFF'
@@ -1303,8 +1303,8 @@ entities:
             611: -30,11
             618: 30,8
             619: 30,9
-            671: -6,-27
-            672: -5,-27
+            669: -6,-27
+            670: -5,-27
         - node:
             angle: 3.141592653589793 rad
             color: '#FFFFFFFF'
@@ -30893,6 +30893,13 @@ entities:
   - uid: 9915
     components:
     - pos: 51.5,-22.5
+      parent: 31
+      type: Transform
+- proto: CrateNPCHamlet
+  entities:
+  - uid: 2458
+    components:
+    - pos: 0.5,29.5
       parent: 31
       type: Transform
 - proto: CrateNPCPenguin
