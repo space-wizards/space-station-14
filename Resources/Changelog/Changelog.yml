@@ -1,14 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix audio exception spam in large explosions., type: Fix}
-  id: 3338
-  time: '2023-04-05T22:47:02.0000000+00:00'
-- author: DEATHB4DEFEAT
-  changes:
-  - {message: Chemmaster scrolls instead of expands., type: Tweak}
-  id: 3339
-  time: '2023-04-05T22:55:14.0000000+00:00'
 - author: ZoldorfTheWizard
   changes:
   - {message: added uploadfolder command for game admins to speed up adminbus event
@@ -2889,3 +2879,14 @@ Entries:
   - {message: Added a salvage section to the guide book, type: Add}
   id: 3837
   time: '2023-05-22T04:01:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Locking closets popup is now predicted., type: Fix}
+  id: 3838
+  time: '2023-05-22T13:18:51.0000000+00:00'
+- author: ficcialfaint
+  changes:
+  - {message: PAI's Stop Searching button now removes the pAI from ghost roles list.,
+    type: Fix}
+  id: 3839
+  time: '2023-05-22T13:19:36.0000000+00:00'
