@@ -12,6 +12,7 @@ guide-entry-singularity = Singularity
 guide-entry-controls = Controls
 guide-entry-radio = Radio
 guide-entry-jobs = Jobs
+guide-entry-salvage = Salvage
 guide-entry-survival = Survival
 guide-entry-ss14 = Space Station 14
 

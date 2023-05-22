@@ -12,6 +12,17 @@
   - UplinkWeapons
 
 - type: listing
+  id: UplinkRifleAk
+  name: uplink-rifle-ak-name
+  description: uplink-rifle-ak-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Rifles/ak.rsi, state: icon }
+  productEntity: WeaponRifleAk
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkWeapons
+
+- type: listing
   id: UplinkRevolverPython
   name: uplink-revolver-python-name
   description: uplink-revolver-python-desc
