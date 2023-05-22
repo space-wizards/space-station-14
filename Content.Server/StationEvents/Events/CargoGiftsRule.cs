@@ -82,7 +82,6 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
 
         }
 
-        component.TimeUntilNextGifts = 30f;
     }
 
 }
