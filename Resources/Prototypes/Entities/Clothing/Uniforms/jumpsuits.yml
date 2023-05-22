@@ -1148,3 +1148,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitFlannel
+  name: flannel jumpsuit
+  description: Smells like someones been grillin'.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi

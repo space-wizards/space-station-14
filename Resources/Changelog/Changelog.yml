@@ -1,91 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added robust nukie drink to vending machine cola., type: Add}
-  id: 3324
-  time: '2023-04-03T06:42:37.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Added new blood pack sprite!, type: Add}
-  id: 3325
-  time: '2023-04-03T07:50:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix shuttle airlocks., type: Fix}
-  id: 3326
-  time: '2023-04-03T18:28:27.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Getting drunk should no longer cause you to bleed, type: Fix}
-  id: 3327
-  time: '2023-04-03T22:48:58.0000000+00:00'
-- author: freeman2651
-  changes:
-  - {message: Five hours minimum overall playtime needed for Security Cadet to become
-      available., type: Tweak}
-  - {message: One hour minimum security playtime needed for Security Officer to become
-      available., type: Tweak}
-  - {message: Two hours minimum security playtime needed for Detective to become available.,
-    type: Tweak}
-  id: 3328
-  time: '2023-04-04T00:10:17.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Rat king (mobster) & dwarf accents are now more robust with transforming
-      capitalization., type: Tweak}
-  id: 3329
-  time: '2023-04-04T02:50:37.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: You can once again build several structures simultaneously., type: Fix}
-  - {message: Fixed being unable to repair reinforced windows., type: Fix}
-  - {message: Fixed APC-screw driver interaction, type: Fix}
-  - {message: Revenant soul-leeching will now be interrupted if they receive damage,
-    type: Tweak}
-  id: 3330
-  time: '2023-04-04T06:28:56.0000000+00:00'
-- author: adamsong
-  changes:
-  - {message: Added tcoms server to dev map, type: Add}
-  id: 3331
-  time: '2023-04-04T13:26:00.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to toggle hardsuit helmets on incapacitated players,
-    type: Fix}
-  - {message: Fixed being unable to open some wiring panels with a screw driver, type: Fix}
-  - {message: Fixed various construction interactions getting stuck in an incomplete
-      state., type: Fix}
-  id: 3332
-  time: '2023-04-05T00:19:28.0000000+00:00'
-- author: Stealthbomber16
-  changes:
-  - {message: Rat servants are now much more susceptible to things like being killed.,
-    type: Tweak}
-  id: 3333
-  time: '2023-04-05T04:01:47.0000000+00:00'
-- author: EnDecc
-  changes:
-  - {message: 'Added String, Woodwind, Keyed and Percussion, and Specialty Music crates
-      to Cargo''s Manifest', type: Add}
-  - {message: 'Renamed ''Big Band'' crate to Variety Instrument collection, tweaked
-      ID of Brass crate to easily identify with other Instrument Crate IDs, and its
-      contents.', type: Tweak}
-  id: 3334
-  time: '2023-04-05T05:05:25.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: Nanotrasen has installed wheels on Security's Deployable Barriers. They
-      are now far easier to move., type: Tweak}
-  id: 3335
-  time: '2023-04-05T22:34:52.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'The desk bell is no longer anchorable, like god intended. It''s a bell.',
-    type: Tweak}
-  - {message: Fixed shutters not closing over desk bells., type: Fix}
-  id: 3336
-  time: '2023-04-05T22:36:20.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Bonks hit once and have a delay, type: Tweak}
@@ -2896,3 +2809,83 @@ Entries:
   - {message: Fix fire stacks not spreading to other players., type: Fix}
   id: 3823
   time: '2023-05-20T03:34:41.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: the sprite of a doll with a skull bandana is now showing the skull,
+    type: Tweak}
+  id: 3824
+  time: '2023-05-20T19:46:10.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Spacing takes a short time to occur, rather than being totally instant.
+      The decompression will make you cold.', type: Add}
+  - {message: 'Ripped tiles during spacing reflect the wind that passed through that
+      area, ripped tiles tend to be concentrated around the breach.', type: Tweak}
+  id: 3825
+  time: '2023-05-20T19:53:04.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: Added a winterdrobe to store all your scarfs!, type: Add}
+  id: 3826
+  time: '2023-05-21T00:52:23.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Head Curator has allowed bibles and necronomicons to be stored in
+      bookshelves and book bags., type: Tweak}
+  id: 3827
+  time: '2023-05-21T00:52:48.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: NanoTrasen reports that crewmembers will no longer have to rely on the
+      placebo effect when ingesting chemicals found in puddles (which is not centcom-sanctioned
+      activity!), type: Fix}
+  id: 3828
+  time: '2023-05-21T03:05:22.0000000+00:00'
+- author: EEASAS
+  changes:
+  - {message: 'The Syndicate has supplied their traitors and nuclear operatives with
+      a rifle, the AKMS.', type: Add}
+  id: 3829
+  time: '2023-05-21T03:15:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Advanced Spray is now a tier 2 tech and Advanced Entertainment is a
+      tier 1 tech., type: Tweak}
+  - {message: Added Bluespace Cargo Transport as a new tier 3 civilian services technology.,
+    type: Add}
+  - {message: Fixed cargo telepads working without being linked to a console., type: Fix}
+  id: 3830
+  time: '2023-05-21T10:09:32.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: 'moved syndicate scarves from clothing vending machine to winterdrobe,
+      they will appear after winterdrobe emag', type: Tweak}
+  id: 3831
+  time: '2023-05-21T23:55:00.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: 'Added a flannel jumpsuit, check your local ClothesMate!', type: Add}
+  id: 3832
+  time: '2023-05-22T00:05:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerf magboots of blinding speed., type: Fix}
+  id: 3833
+  time: '2023-05-22T00:06:07.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: craftable shivs and three more types of spears, type: Add}
+  id: 3834
+  time: '2023-05-22T00:14:43.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Handheld radios now use their own channel and will work without a telecomms
+      server., type: Tweak}
+  id: 3835
+  time: '2023-05-22T00:16:47.0000000+00:00'
+- author: MisterMecky
+  changes:
+  - {message: 'Watertanks, fueltanks and their large variants have a new look. They
+      now show their contained solutions.', type: Tweak}
+  id: 3836
+  time: '2023-05-22T00:27:51.0000000+00:00'
