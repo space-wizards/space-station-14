@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Bonks hit once and have a delay, type: Tweak}
-  id: 3337
-  time: '2023-04-05T22:44:27.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix audio exception spam in large explosions., type: Fix}
@@ -2889,3 +2884,8 @@ Entries:
       now show their contained solutions.', type: Tweak}
   id: 3836
   time: '2023-05-22T00:27:51.0000000+00:00'
+- author: AjexRose
+  changes:
+  - {message: Added a salvage section to the guide book, type: Add}
+  id: 3837
+  time: '2023-05-22T04:01:25.0000000+00:00'
