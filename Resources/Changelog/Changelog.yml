@@ -1,28 +1,6 @@
 Entries:
 - author: PuroSlavKing
   changes:
-  - {message: 'Added personal access for detective, and detective airlocks.', type: Add}
-  id: 3345
-  time: '2023-04-06T02:48:04.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed RCD deconstruction being able to deconstruct almost any entity
-      and ignoring ammo requirements., type: Fix}
-  id: 3346
-  time: '2023-04-06T05:26:15.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Melee attacking people with spillable containers will now splash some
-      of the solution onto them., type: Add}
-  - {message: Slipping on puddles now has a chance for some of its solution to interact
-      with you., type: Add}
-  - {message: 'Destructively spilling (throwing, breaking) spillable objects will
-      now splash some of its solution onto nearby reactive entities (like players)',
-    type: Add}
-  id: 3347
-  time: '2023-04-06T21:20:49.0000000+00:00'
-- author: PuroSlavKing
-  changes:
   - {message: Fixed base showcase robot in F5 (just remove it), type: Fix}
   id: 3348
   time: '2023-04-06T22:47:53.0000000+00:00'
@@ -2890,3 +2868,19 @@ Entries:
       There are Guns and Environmental suits also.', type: Add}
   id: 3844
   time: '2023-05-22T21:55:28.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Adds mercenary items for secrets at the NT space station, type: Add}
+  id: 3845
+  time: '2023-05-22T21:57:15.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed an error when saving maps with device links that reference deleted
+      entities., type: Fix}
+  id: 3846
+  time: '2023-05-22T21:57:31.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue with placing mime invisible walls next to walls, type: Fix}
+  id: 3847
+  time: '2023-05-22T21:58:04.0000000+00:00'
