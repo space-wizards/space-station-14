@@ -12,6 +12,7 @@ guide-entry-singularity = Singularity
 guide-entry-controls = Controls
 guide-entry-radio = Radio
 guide-entry-jobs = Jobs
+guide-entry-salvage = Salvage
 guide-entry-survival = Survival
 guide-entry-ss14 = Space Station 14
 guide-entry-janitorial = Janitorial
@@ -24,6 +25,7 @@ guide-entry-xenoarchaeology = Xenoarchaeology
 guide-entry-artifact-reports = Artifact Reports
 guide-entry-traversal-distorter = Traversal Distorter
 guide-entry-machine-upgrading = Machine Upgrading
+guide-entry-robotics = Robotics
 
 guide-entry-security = Security
 guide-entry-dna = DNA

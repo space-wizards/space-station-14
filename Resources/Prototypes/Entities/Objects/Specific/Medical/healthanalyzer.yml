@@ -9,7 +9,13 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
     netsync: false
-    state: analyzer
+    state: icon
+    layers:
+    - state: icon
+    - state: analyzer
+      shader: unshaded
+      visible: true
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: PowerCellDraw
     drawRate: 0
     useRate: 20
@@ -27,6 +33,13 @@
   - type: Tag
     tags:
     - DiscreteHealthAnalyzer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerCellSlotVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
 
 - type: entity
   id: HandheldHealthAnalyzerEmpty
@@ -36,4 +49,4 @@
   - type: ItemSlots
     slots:
       cell_slot:
-        name: power-cell-slot-component-slot-name-default 
+        name: power-cell-slot-component-slot-name-default

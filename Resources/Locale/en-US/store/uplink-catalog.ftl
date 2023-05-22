@@ -1,4 +1,7 @@
 # Weapons
+uplink-rifle-ak-name = AKMS
+uplink-rifle-ak-desc = A high-risk high-reward rifle. Very conspicuous. (.30)
+
 uplink-pistol-viper-name = Viper
 uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Use pistol magazines (.35 auto).
 
@@ -169,6 +172,9 @@ uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only 
 uplink-chimp-ammo-name = Box of 10 Omega Cartridges.
 uplink-chimp-ammo-desc = A box of 10 omega particle cartridges for the CHIMP. Omega particles inflict severe burns and cause anomalies to go supercritical.
 
+uplink-proximity-mine-name = Proximity Mine
+uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
@@ -255,4 +261,10 @@ uplink-operative-skirt-desc = A skirt given to our nuclear operatives with fine 
 
 uplink-balloon-name = Syndie Balloon
 uplink-balloon-desc = Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
+
+uplink-scarf-syndie-red-name = striped syndicate red scarf
+uplink-scarf-syndie-red-desc = A stylish striped syndicate red scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
+
+uplink-scarf-syndie-green-name = striped syndicate green scarf
+uplink-scarf-syndie-green-desc = A stylish striped syndicate green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
 

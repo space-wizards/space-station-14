@@ -196,6 +196,18 @@
   - type: Tool
     qualities:
       - Pulsing
+  - type: NetworkConfigurator
+  - type: ActivatableUI
+    key: enum.NetworkConfiguratorUiKey.List
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.NetworkConfiguratorUiKey.List
+        type: NetworkConfiguratorBoundUserInterface
+      - key: enum.NetworkConfiguratorUiKey.Configure
+        type: NetworkConfiguratorBoundUserInterface
+      - key: enum.NetworkConfiguratorUiKey.Link
+        type: NetworkConfiguratorBoundUserInterface
   - type: Tag
     tags:
       - Multitool
@@ -254,6 +266,9 @@
         - DroneUsable
     - type: StaticPrice
       price: 60
+    - type: GuideHelp
+      guides:
+        - NetworkConfigurator
 
 - type: entity
   name: power drill

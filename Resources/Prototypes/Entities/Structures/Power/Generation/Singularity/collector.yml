@@ -28,11 +28,10 @@
     netsync: false
     snapCardinals: true
     layers:
-      - state: ca_on
+      - state: ca_off
         map: ["enum.RadiationCollectorVisualLayers.Main"]
   - type: Appearance
-    visuals:
-      - type: RadiationCollectorVisualizer
+  - type: AnimationPlayer
   - type: NodeContainer
     examinable: true
     nodes:
