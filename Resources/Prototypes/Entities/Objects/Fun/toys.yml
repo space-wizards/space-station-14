@@ -17,6 +17,9 @@
   - type: EmitSoundOnCollide
     sound:
       collection: ToySqueak
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToyFall
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
