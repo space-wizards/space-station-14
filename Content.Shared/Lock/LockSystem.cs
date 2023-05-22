@@ -13,6 +13,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -25,7 +26,6 @@ namespace Content.Shared.Lock;
 public sealed class LockSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -206,8 +206,8 @@ public sealed class LockSystem : EntitySystem
         if (_accessReader.IsAllowed(user, reader))
             return true;
 
-        if (!quiet && _net.IsClient && _timing.IsFirstTimePredicted)
-            _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), uid, user);
+        if (!quiet && _timing.IsFirstTimePredicted)
+            _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), uid, Filter.Local(), true);
         return false;
     }
 
