@@ -1,13 +1,4 @@
 Entries:
-- author: EnDecc
-  changes:
-  - {message: 'Added String, Woodwind, Keyed and Percussion, and Specialty Music crates
-      to Cargo''s Manifest', type: Add}
-  - {message: 'Renamed ''Big Band'' crate to Variety Instrument collection, tweaked
-      ID of Brass crate to easily identify with other Instrument Crate IDs, and its
-      contents.', type: Tweak}
-  id: 3334
-  time: '2023-04-05T05:05:25.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Nanotrasen has installed wheels on Security's Deployable Barriers. They
@@ -2894,3 +2885,8 @@ Entries:
   - {message: Nerf magboots of blinding speed., type: Fix}
   id: 3833
   time: '2023-05-22T00:06:07.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: craftable shivs and three more types of spears, type: Add}
+  id: 3834
+  time: '2023-05-22T00:14:43.0000000+00:00'
