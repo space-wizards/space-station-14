@@ -128,8 +128,11 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         }
         else
         {
-            component.Stream?.Stop();
-            component.Stream = null;
+            if (Timing.IsFirstTimePredicted)
+            {
+                component.Stream?.Stop();
+                component.Stream = null;
+            }
         }
 
         component.Reeling = value;
@@ -139,7 +142,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        
+
         var query = EntityQueryEnumerator<GrapplingGunComponent>();
 
         while (query.MoveNext(out var uid, out var grappling))

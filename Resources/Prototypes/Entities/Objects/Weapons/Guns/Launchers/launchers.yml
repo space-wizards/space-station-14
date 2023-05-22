@@ -208,6 +208,28 @@
     - type: PowerCellDraw
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          shader: unshaded
+          visible: false
+        - type: ToggleableLightVisuals
+          spriteLayer: unshaded
+          inhandVisuals:
+            left:
+              - state: inhand-left-unshaded
+                shader: unshaded
+            right:
+              - state: inhand-right-unshaded
+                shader: unshaded
+        - type: Appearance
+        - type: GenericVisualizer
+          visuals:
+            enum.TetherVisualsStatus.Key:
+              unshaded:
+                True: { visible: true }
+                False: { visible: false }
 
 - type: entity
   name: grappling gun
@@ -217,7 +239,7 @@
     - type: AmmoCounter
     - type: GrapplingGun
     - type: Gun
-      soundGunshot: /Audio/Weapons/plasma_cutter.ogg
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
       fireRate: 0.5
     - type: RechargeCycleAmmo
     - type: BasicEntityAmmoProvider
