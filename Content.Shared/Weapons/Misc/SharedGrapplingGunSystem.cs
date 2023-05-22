@@ -185,11 +185,12 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             return;
 
         var jointComp = EnsureComp<JointComponent>(uid);
-        _joints.RemoveJoint(uid, GrapplingJoint);
         var joint = _joints.CreateDistanceJoint(uid, args.Weapon, anchorA: new Vector2(0f, 0.5f), id: GrapplingJoint);
         joint.MaxLength = joint.Length + 0.2f;
         joint.Stiffness = 1f;
         joint.MinLength = 0.35f;
+        // Setting velocity directly for mob movement fucks this so need to make them aware of it.
+        // joint.Breakpoint = 4000f;
         Dirty(jointComp);
     }
 

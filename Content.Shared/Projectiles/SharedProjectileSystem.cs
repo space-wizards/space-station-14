@@ -30,7 +30,7 @@ namespace Content.Shared.Projectiles
             _physics.SetLinearVelocity(uid, Vector2.Zero, body: args.OurBody);
             _physics.SetBodyType(uid, BodyType.Static, body: args.OurBody);
             _transform.SetParent(uid, args.OtherEntity);
-            var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon);
+            var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.OtherEntity);
             RaiseLocalEvent(uid, ref ev);
         }
 
