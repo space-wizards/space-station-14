@@ -103,6 +103,7 @@
       - FirelockElectronics
       - DoorElectronics
       - AirAlarmElectronics
+      - StationMapElectronics
       - FireAlarmElectronics
       - MailingUnitElectronics
       - APCElectronics

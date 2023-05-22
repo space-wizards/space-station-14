@@ -665,6 +665,9 @@
   id: StringInstrument
 
 - type: Tag
+  id: StationMapElectronics
+
+- type: Tag
   id: SubdermalImplant
 
 - type: Tag
