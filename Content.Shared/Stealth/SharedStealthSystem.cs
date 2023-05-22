@@ -10,7 +10,7 @@ namespace Content.Shared.Stealth;
 public abstract class SharedStealthSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-	[Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {

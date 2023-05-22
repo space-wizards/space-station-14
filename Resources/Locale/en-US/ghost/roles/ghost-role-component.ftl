@@ -89,7 +89,7 @@ ghost-role-information-salvage-spider-name = Space spider on salvage wreck
 ghost-role-information-salvage-spider-description = Space spiders are just as aggressive as regular spiders, feed.
 
 ghost-role-information-space-cobra-name = Space cobra
-ghost-role-information-space-cobra-description =  Space cobras really don't like guests, and will always snack on a visitor.
+ghost-role-information-space-cobra-description = Space cobras really don't like guests, and will always snack on a visitor.
 
 ghost-role-information-salvage-cobra-name = Space cobra on salvage wreck
 ghost-role-information-salvage-cobra-description = Space cobras really don't like guests, and will always snack on a visitor.
