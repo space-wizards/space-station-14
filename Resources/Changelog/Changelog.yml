@@ -1,11 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'The desk bell is no longer anchorable, like god intended. It''s a bell.',
-    type: Tweak}
-  - {message: Fixed shutters not closing over desk bells., type: Fix}
-  id: 3336
-  time: '2023-04-05T22:36:20.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Bonks hit once and have a delay, type: Tweak}
@@ -2890,3 +2883,9 @@ Entries:
       server., type: Tweak}
   id: 3835
   time: '2023-05-22T00:16:47.0000000+00:00'
+- author: MisterMecky
+  changes:
+  - {message: 'Watertanks, fueltanks and their large variants have a new look. They
+      now show their contained solutions.', type: Tweak}
+  id: 3836
+  time: '2023-05-22T00:27:51.0000000+00:00'
