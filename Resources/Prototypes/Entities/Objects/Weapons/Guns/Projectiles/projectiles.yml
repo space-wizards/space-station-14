@@ -701,6 +701,5 @@
           hard: false
           mask:
             - Impassable
-            - MidImpassable
-            - LowImpassable
+            - HighImpassable
     - type: GrapplingProjectile

@@ -30,57 +30,45 @@ public sealed class JointVisualsOverlay : Overlay
 
         var spriteSystem = _entManager.System<SpriteSystem>();
         var xformSystem = _entManager.System<SharedTransformSystem>();
-        var joints = _entManager.EntityQueryEnumerator<JointVisualsComponent, JointComponent, TransformComponent>();
+        var joints = _entManager.EntityQueryEnumerator<JointVisualsComponent, TransformComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        while (joints.MoveNext(out var uid, out var visuals, out var jointComp, out var xform))
+        while (joints.MoveNext(out var visuals, out var xform))
         {
             if (xform.MapID != args.MapId)
                 continue;
 
-            foreach (var joint in jointComp.GetJoints.Values)
-            {
-                if (!_drawn.Add(joint))
-                    continue;
+            var other = visuals.Target;
 
-                switch (joint)
-                {
-                    case DistanceJoint:
-                        var other = joint.BodyAUid == uid ? joint.BodyBUid : joint.BodyAUid;
-                        var otherXform = xformQuery.GetComponent(other);
+            if (!xformQuery.TryGetComponent(other, out var otherXform))
+                continue;
 
-                        if (xform.MapID != otherXform.MapID)
-                            continue;
+            if (xform.MapID != otherXform.MapID)
+                continue;
 
-                        var texture = spriteSystem.Frame0(visuals.Sprite);
-                        var width = texture.Width / (float) EyeManager.PixelsPerMeter;
+            var texture = spriteSystem.Frame0(visuals.Sprite);
+            var width = texture.Width / (float) EyeManager.PixelsPerMeter;
 
-                        var coordsA = xform.Coordinates;
-                        var coordsB = otherXform.Coordinates;
+            var coordsA = xform.Coordinates;
+            var coordsB = otherXform.Coordinates;
 
-                        var rotA = xform.LocalRotation;
-                        var rotB = otherXform.LocalRotation;
+            var rotA = xform.LocalRotation;
+            var rotB = otherXform.LocalRotation;
 
-                        coordsA = coordsA.Offset(rotA.RotateVec(visuals.OffsetA));
-                        coordsB = coordsB.Offset(rotB.RotateVec(visuals.OffsetB));
+            coordsA = coordsA.Offset(rotA.RotateVec(visuals.OffsetA));
+            coordsB = coordsB.Offset(rotB.RotateVec(visuals.OffsetB));
 
-                        var posA = coordsA.ToMapPos(_entManager, xformSystem);
-                        var posB = coordsB.ToMapPos(_entManager, xformSystem);
-                        var diff = (posB - posA);
-                        var length = diff.Length;
+            var posA = coordsA.ToMapPos(_entManager, xformSystem);
+            var posB = coordsB.ToMapPos(_entManager, xformSystem);
+            var diff = (posB - posA);
+            var length = diff.Length;
 
-                        var midPoint = diff / 2f + posA;
-                        var angle = (posB - posA).ToWorldAngle();
-                        var box = new Box2(-width / 2f, -length / 2f, width / 2f, length / 2f);
-                        var rotate = new Box2Rotated(box.Translated(midPoint), angle, midPoint);
+            var midPoint = diff / 2f + posA;
+            var angle = (posB - posA).ToWorldAngle();
+            var box = new Box2(-width / 2f, -length / 2f, width / 2f, length / 2f);
+            var rotate = new Box2Rotated(box.Translated(midPoint), angle, midPoint);
 
-                        worldHandle.DrawTextureRect(texture, rotate);
-
-                        break;
-                    default:
-                        continue;
-                }
-            }
+            worldHandle.DrawTextureRect(texture, rotate);
         }
     }
 }

@@ -57,6 +57,8 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             visuals.Sprite =
                 new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
             visuals.OffsetA = new Vector2(0f, 0.5f);
+            visuals.Target = uid;
+            Dirty(visuals);
         }
     }
 
