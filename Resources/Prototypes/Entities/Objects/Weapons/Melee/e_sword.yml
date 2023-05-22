@@ -53,8 +53,7 @@
     malus: 0
   - type: Reflect
     enabled: false
-    energeticChance: 0.5
-    kineticChance: 0.25
+    reflectProb: 0.25
     spread: 45
   - type: Construction
     graph: DualEnergySword
@@ -177,14 +176,14 @@
   name: dual energy sword
   parent: BaseItem
   id: DualEnergySword
-  description: 
+  description:
   components:
   - type: DualEnergySword
     litDamageBonus:
       types:
         Slash: 20
         Heat: 20
-        Structural: 4
+        Structural: 6
         Blunt: -4.5
     litDisarmMalus: 0.6
   - type: Sprite
@@ -234,8 +233,7 @@
         Blunt: 0
   - type: Reflect
     enabled: false
-    energeticChance: 0.75
-    kineticChance: 0.5
+    reflectProb: 0.65
     spread: 30
   - type: Item
     size: 10
