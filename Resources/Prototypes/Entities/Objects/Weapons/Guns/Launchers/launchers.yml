@@ -252,23 +252,24 @@
         - state: base-unshaded
           map: [ "unshaded" ]
           shader: unshaded
-          visible: false
-    - type: ToggleableLightVisuals
-      spriteLayer: unshaded
+          visible: true
+    - type: Item
       inhandVisuals:
         left:
-          - state: inhand-left-unshaded
+          - state: staff-inhand-left
+          - state: staff-inhand-left-unshaded
             shader: unshaded
         right:
-          - state: inhand-right-unshaded
+          - state: staff-inhand-right
+          - state: staff-inhand-right-unshaded
             shader: unshaded
     - type: Appearance
     - type: GenericVisualizer
       visuals:
         enum.TetherVisualsStatus.Key:
           unshaded:
-            True: { visible: true }
-            False: { visible: false }
+            True: { state: base-unshaded }
+            False: { state: base-unshaded-off }
 
 # Admeme
 - type: entity

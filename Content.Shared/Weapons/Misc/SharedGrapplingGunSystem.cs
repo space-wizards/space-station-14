@@ -7,7 +7,6 @@ using Content.Shared.Physics;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -23,6 +22,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -45,7 +45,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnGrapplingShot(EntityUid uid, GrapplingGunComponent component, ref GunShotEvent args)
     {
-        foreach (var (shotUid, shoot) in args.Ammo)
+        foreach (var (shotUid, _) in args.Ammo)
         {
             if (!HasComp<GrapplingProjectileComponent>(shotUid))
                 continue;
@@ -60,6 +60,9 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             visuals.Target = uid;
             Dirty(visuals);
         }
+
+        TryComp<AppearanceComponent>(uid, out var appearance);
+        _appearance.SetData(uid, SharedTetherGunSystem.TetherVisualsStatus.Key, false, appearance);
     }
 
     private void OnGrapplingDeselected(EntityUid uid, GrapplingGunComponent component, HandDeselectedEvent args)
@@ -106,12 +109,16 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
+        TryComp<AppearanceComponent>(uid, out var appearance);
+        _appearance.SetData(uid, SharedTetherGunSystem.TetherVisualsStatus.Key, true, appearance);
         SetReeling(uid, component, false, args.User);
 
         if (!Deleted(component.Projectile))
         {
             if (_netManager.IsServer)
+            {
                 QueueDel(component.Projectile.Value);
+            }
 
             component.Projectile = null;
             Dirty(component);
@@ -150,7 +157,16 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         while (query.MoveNext(out var uid, out var grappling))
         {
             if (!grappling.Reeling)
+            {
+                if (Timing.IsFirstTimePredicted)
+                {
+                    // Just in case.
+                    grappling.Stream?.Stop();
+                    grappling.Stream = null;
+                }
+
                 continue;
+            }
 
             if (!TryComp<JointComponent>(uid, out var jointComp) ||
                 !jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) ||
