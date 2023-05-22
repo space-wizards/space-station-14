@@ -33,7 +33,7 @@
     - type: SolutionContainerManager
       solutions:
         puddle:
-          maxVol: 6
+          maxVol: 1000
           reagents:
             - ReagentId: Egg
               Quantity: 6 # same as when cooking
@@ -45,7 +45,7 @@
     - type: SolutionContainerManager
       solutions:
         puddle:
-          maxVol: 10
+          maxVol: 1000
           reagents:
             - ReagentId: Nutriment
               Quantity: 5
@@ -59,12 +59,12 @@
     - type: SolutionContainerManager
       solutions:
         puddle:
-          maxVol: 50
+          maxVol: 1000
           reagents:
             - ReagentId: Nutriment
-              Quantity: 25
+              Quantity: 15
             - ReagentId: Water
-              Quantity: 25
+              Quantity: 15
 
 - type: entity
   id: PuddleFlour
@@ -73,7 +73,7 @@
     - type: SolutionContainerManager
       solutions:
         puddle:
-          maxVol: 15
+          maxVol: 1000
           reagents:
             - ReagentId: Flour
               Quantity: 15
