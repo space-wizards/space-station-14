@@ -1,10 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Food do afters no longer cancel on multiple uses., type: Tweak}
-  - {message: Drink do afters no longer cancel on multiple uses., type: Tweak}
-  id: 3344
-  time: '2023-04-06T02:47:20.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: 'Added personal access for detective, and detective airlocks.', type: Add}
@@ -2889,3 +2883,10 @@ Entries:
   - {message: Adds a Janitorial Guidebook, type: Add}
   id: 3843
   time: '2023-05-22T21:50:14.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'NanoTrasen has begun supplying the station with gifts. You might get
+      a pizza party, engineering gifts, a vending restock or a janitorial restock.
+      There are Guns and Environmental suits also.', type: Add}
+  id: 3844
+  time: '2023-05-22T21:55:28.0000000+00:00'
