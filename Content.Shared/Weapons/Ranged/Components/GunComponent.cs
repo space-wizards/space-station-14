@@ -41,14 +41,12 @@ public partial class GunComponent : Component
     /// Last time the gun fired.
     /// Used for recoil purposes.
     /// </summary>
-    [DataField("lastFire")]
-    public TimeSpan LastFire = TimeSpan.Zero;
+    [DataField("lastFire")] public TimeSpan LastFire = TimeSpan.Zero;
 
     /// <summary>
     /// What the current spread is for shooting. This gets changed every time the gun fires.
     /// </summary>
-    [DataField("currentAngle")]
-    [AutoNetworkedField]
+    [DataField("currentAngle")] [AutoNetworkedField]
     public Angle CurrentAngle;
 
     /// <summary>
@@ -60,21 +58,18 @@ public partial class GunComponent : Component
     /// <summary>
     /// How much the <see cref="CurrentAngle"/> decreases per second.
     /// </summary>
-    [DataField("angleDecay")]
-    public Angle AngleDecay = Angle.FromDegrees(4);
+    [DataField("angleDecay")] public Angle AngleDecay = Angle.FromDegrees(4);
 
     /// <summary>
     /// The maximum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("maxAngle")]
-    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxAngle")] [AutoNetworkedField]
     public Angle MaxAngle = Angle.FromDegrees(2);
 
     /// <summary>
     /// The minimum angle allowed for <see cref="CurrentAngle"/>
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("minAngle")]
-    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("minAngle")] [AutoNetworkedField]
     public Angle MinAngle = Angle.FromDegrees(1);
 
     #endregion
@@ -88,21 +83,17 @@ public partial class GunComponent : Component
     /// <summary>
     /// Where the gun is being requested to shoot.
     /// </summary>
-    [ViewVariables]
-    public EntityCoordinates? ShootCoordinates = null;
+    [ViewVariables] public EntityCoordinates? ShootCoordinates = null;
 
     /// <summary>
     /// Used for tracking semi-auto / burst
     /// </summary>
-    [ViewVariables]
-    [AutoNetworkedField]
-    public int ShotCounter = 0;
+    [ViewVariables] [AutoNetworkedField] public int ShotCounter = 0;
 
     /// <summary>
     /// How many times it shoots per second.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("fireRate")]
-    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("fireRate")] [AutoNetworkedField]
     public float FireRate = 8f;
 
     /// <summary>
@@ -115,39 +106,41 @@ public partial class GunComponent : Component
     /// When the gun is next available to be shot.
     /// Can be set multiple times in a single tick due to guns firing faster than a single tick time.
     /// </summary>
-    [DataField("nextFire", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    [AutoNetworkedField]
+    [DataField("nextFire", customTypeSerializer: typeof(TimeOffsetSerializer))] [AutoNetworkedField]
     public TimeSpan NextFire = TimeSpan.Zero;
 
     /// <summary>
     /// What firemodes can be selected.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("availableModes")]
-    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("availableModes")] [AutoNetworkedField]
     public SelectiveFire AvailableModes = SelectiveFire.SemiAuto;
 
     /// <summary>
     /// What firemode is currently selected.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("selectedMode")]
-    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("selectedMode")] [AutoNetworkedField]
     public SelectiveFire SelectedMode = SelectiveFire.SemiAuto;
 
-    [DataField("selectModeAction")]
-    public InstantAction? SelectModeAction;
+    [DataField("selectModeAction")] public InstantAction? SelectModeAction;
 
     /// <summary>
     /// Whether or not information about
     /// the gun will be shown on examine.
     /// </summary>
-    [DataField("showExamineText")]
-    public bool ShowExamineText = true;
+    [DataField("showExamineText")] public bool ShowExamineText = true;
+
+    /// <summary>
+    /// Store collision mask for next fire
+    /// for draw different hirecross effects on client side
+    /// </summary>
+    [ViewVariables] public int? NexFireCollisionMask = null;
 }
 
 [Flags]
 public enum SelectiveFire : byte
 {
     Invalid = 0,
+
     // Combat mode already functions as the equivalent of Safety
     SemiAuto = 1 << 0,
     Burst = 1 << 1,

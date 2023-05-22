@@ -1,7 +1,6 @@
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
-using Content.Shared.Input;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -16,6 +15,7 @@ using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using Robust.Shared.Physics.Components;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -132,6 +132,8 @@ public sealed partial class GunSystem : SharedGunSystem
         if (!TryGetGun(entity, out var gunUid, out var gun))
             return;
 
+        // Sawmill.Info($"collision mask {gun.NexFireCollisionMask} ++++");
+
         var useKey = gun.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
 
         if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down)
@@ -164,26 +166,6 @@ public sealed partial class GunSystem : SharedGunSystem
             Coordinates = coordinates,
             Gun = gunUid,
         });
-    }
-
-    private bool TryGetCurrentPlayerGun(out EntityUid? uid, out GunComponent? playerGun)
-    {
-        uid = null;
-        playerGun = default;
-
-        var playerEntityUid = _player.LocalPlayer?.ControlledEntity;
-
-        if (playerEntityUid is EntityUid playerUid
-            && TryGetGun(playerUid, out var gunUid, out var gun))
-        {
-            uid = gunUid;
-            playerGun = gun;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
@@ -358,5 +340,29 @@ public sealed partial class GunSystem : SharedGunSystem
 
         _animPlayer.Stop(uid, uidPlayer, "muzzle-flash-light");
         _animPlayer.Play(uid, uidPlayer, animTwo, "muzzle-flash-light");
+    }
+
+    private GunComponent? GetCurrentPlayerGunForAnyMode()
+    {
+        var playerEntityUid = _player.LocalPlayer?.ControlledEntity;
+
+        if (playerEntityUid is EntityUid playerUid
+            && TryGetGun(playerUid, out var gunUid, out var gun, true))
+        {
+            return gun;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    private void SetCollisionMaskForPrototype(EntityUid bulletUid)
+    {
+        if (GetCurrentPlayerGunForAnyMode() is not GunComponent gun)
+            return;
+
+        if (TryComp<PhysicsComponent>(bulletUid, out var physics))
+            gun.NexFireCollisionMask = physics.CollisionMask;
     }
 }
