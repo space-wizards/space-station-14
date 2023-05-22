@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.IdentityManagement;
+using Robust.Shared.Timing;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -11,6 +12,7 @@ public sealed class SpaceVendorsCartridgeSystem : EntitySystem
     [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -34,7 +36,7 @@ public sealed class SpaceVendorsCartridgeSystem : EntitySystem
         if (component.AppraisedItems.Count >= component.MaxSavedItems)
             component.AppraisedItems.RemoveAt(0);
 
-        var item = new AppraisedItem(Name(args.InteractEvent.Target.Value), $"{price:F2}");
+        var item = new AppraisedItem(Name(args.InteractEvent.Target.Value), $"{price:F2}",_timing.CurTime);
 
         component.AppraisedItems.Add(item);
         UpdateUiState(uid,args.Loader,component);

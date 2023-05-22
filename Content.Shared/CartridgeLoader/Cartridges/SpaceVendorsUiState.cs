@@ -18,12 +18,12 @@ public sealed class AppraisedItem
 {
     public readonly string Name;
     public readonly string Price;
-    public readonly DateTime DateTimeCreation;
+    public readonly TimeSpan DateTimeCreation;
 
-    public AppraisedItem(string name, string price)
+    public AppraisedItem(string name, string price, TimeSpan dateTimeCreation)
     {
         Name = name;
         Price = price;
-        DateTimeCreation = DateTime.Now;
+        DateTimeCreation = dateTimeCreation;
     }
 }

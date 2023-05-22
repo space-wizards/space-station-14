@@ -10,8 +10,9 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 [GenerateTypedNameReferences]
 public sealed partial class SpaceVendorsUiFragment : BoxContainer
 {
+    private readonly IGameTiming _timing;
 
-    Dictionary<Label, DateTime> _labelsAndDateTimeCreate = new Dictionary<Label, DateTime>();
+    private Dictionary<Label, TimeSpan> _labelsAndDateTimeCreate = new Dictionary<Label, TimeSpan>();
 
     private readonly StyleBoxFlat _styleBox = new()
     {
@@ -27,6 +28,7 @@ public sealed partial class SpaceVendorsUiFragment : BoxContainer
         HorizontalExpand = true;
         VerticalExpand = true;
         HeaderPanel.PanelOverride = _styleBox;
+        _timing = IoCManager.Resolve<IGameTiming>();
     }
 
     public void UpdateState(List<AppraisedItem> items)
@@ -89,8 +91,8 @@ public sealed partial class SpaceVendorsUiFragment : BoxContainer
     {
         foreach (var label in _labelsAndDateTimeCreate)
         {
-            TimeSpan date = DateTime.Now - label.Value;
-            label.Key.Text = (date.Hours * 60 + date.Minutes).ToString()+" min";
+            TimeSpan time = _timing.CurTime - label.Value;
+            label.Key.Text = (time.Hours * 60 + time.Minutes).ToString()+" min";
         }
     }
 }
