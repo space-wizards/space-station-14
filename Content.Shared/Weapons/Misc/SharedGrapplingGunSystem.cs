@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
+using Content.Shared.Timing;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Network;
@@ -26,10 +27,11 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
 
     public const string GrapplingJoint = "grappling";
 
-    public const float ReelRate = 1.5f;
+    public const float ReelRate = 2.5f;
 
     public override void Initialize()
     {
@@ -106,8 +108,11 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
     {
-        if (!Timing.IsFirstTimePredicted)
+        if (!Timing.IsFirstTimePredicted || _delay.ActiveDelay(uid))
             return;
+
+        _delay.BeginDelay(uid);
+        _audio.PlayPredicted(component.CycleSound, uid, args.User);
 
         TryComp<AppearanceComponent>(uid, out var appearance);
         _appearance.SetData(uid, SharedTetherGunSystem.TetherVisualsStatus.Key, true, appearance);

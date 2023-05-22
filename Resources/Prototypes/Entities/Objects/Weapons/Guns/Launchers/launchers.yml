@@ -253,16 +253,8 @@
           map: [ "unshaded" ]
           shader: unshaded
           visible: true
-    - type: Item
-      inhandVisuals:
-        left:
-          - state: staff-inhand-left
-          - state: staff-inhand-left-unshaded
-            shader: unshaded
-        right:
-          - state: staff-inhand-right
-          - state: staff-inhand-right-unshaded
-            shader: unshaded
+    - type: UseDelay
+      delay: 1.5
     - type: Appearance
     - type: GenericVisualizer
       visuals:

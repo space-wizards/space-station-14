@@ -10,8 +10,7 @@ public sealed partial class GrapplingGunComponent : Component
     [DataField("jointId"), AutoNetworkedField]
     public string Joint = string.Empty;
 
-    [DataField("projectile")]
-    public EntityUid? Projectile;
+    [DataField("projectile")] public EntityUid? Projectile;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("reeling"), AutoNetworkedField]
     public bool Reeling;
@@ -21,6 +20,9 @@ public sealed partial class GrapplingGunComponent : Component
     {
         Params = AudioParams.Default.WithLoop(true)
     };
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("cycleSound"), AutoNetworkedField]
+    public SoundSpecifier? CycleSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/kinetic_reload.ogg");
 
     public IPlayingAudioStream? Stream;
 }
