@@ -1,19 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to toggle hardsuit helmets on incapacitated players,
-    type: Fix}
-  - {message: Fixed being unable to open some wiring panels with a screw driver, type: Fix}
-  - {message: Fixed various construction interactions getting stuck in an incomplete
-      state., type: Fix}
-  id: 3332
-  time: '2023-04-05T00:19:28.0000000+00:00'
-- author: Stealthbomber16
-  changes:
-  - {message: Rat servants are now much more susceptible to things like being killed.,
-    type: Tweak}
-  id: 3333
-  time: '2023-04-05T04:01:47.0000000+00:00'
 - author: EnDecc
   changes:
   - {message: 'Added String, Woodwind, Keyed and Percussion, and Specialty Music crates
@@ -2899,3 +2884,13 @@ Entries:
       they will appear after winterdrobe emag', type: Tweak}
   id: 3831
   time: '2023-05-21T23:55:00.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: 'Added a flannel jumpsuit, check your local ClothesMate!', type: Add}
+  id: 3832
+  time: '2023-05-22T00:05:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerf magboots of blinding speed., type: Fix}
+  id: 3833
+  time: '2023-05-22T00:06:07.0000000+00:00'
