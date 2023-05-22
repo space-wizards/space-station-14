@@ -66,6 +66,9 @@ public abstract class SharedNinjaSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Handle revealing ninja if cloaked when attacked.
+    /// </summary>
     private void OnNinjaAttacked(EntityUid uid, NinjaComponent comp, AttackedEvent args)
     {
         if (comp.Suit != null && TryComp<NinjaSuitComponent>(comp.Suit, out var suit) && suit.Cloaked)

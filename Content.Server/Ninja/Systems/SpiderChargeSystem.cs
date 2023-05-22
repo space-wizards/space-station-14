@@ -22,6 +22,9 @@ public sealed class SpiderChargeSystem : EntitySystem
         SubscribeLocalEvent<SpiderChargeComponent, TriggerEvent>(OnExplode);
     }
 
+    /// <summary>
+    /// Require that the planter is a ninja and the charge is near the target warp point.
+    /// </summary>
     private void BeforePlant(EntityUid uid, SpiderChargeComponent comp, BeforeRangedInteractEvent args)
     {
         var user = args.User;
@@ -47,11 +50,18 @@ public sealed class SpiderChargeSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Allows greentext to occur after exploding.
+    /// </summary>
     private void OnStuck(EntityUid uid, SpiderChargeComponent comp, EntityStuckEvent args)
     {
         comp.Planter = args.User;
     }
 
+    /// <summary>
+    /// Handles greentext after exploding.
+    /// Assumes it didn't move and the target was destroyed so be nice.
+    /// </summary>
     private void OnExplode(EntityUid uid, SpiderChargeComponent comp, TriggerEvent args)
     {
         if (comp.Planter == null || !_ninja.GetNinjaRole(comp.Planter.Value, out var role))

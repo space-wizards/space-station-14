@@ -82,11 +82,18 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Adds the toggle action when equipped.
+    /// Since the event does not pass user this can't be nice and just not add the action if it isn't a ninja wearing but oh well.
+    /// </summary>
     private void OnGetItemActions(EntityUid uid, NinjaGlovesComponent comp, GetItemActionsEvent args)
     {
         args.Actions.Add(comp.ToggleAction);
     }
 
+    /// <summary>
+    /// Toggle gloves, if the user is a ninja wearing a ninja suit.
+    /// </summary>
     private void OnToggleAction(EntityUid uid, NinjaGlovesComponent comp, ToggleActionEvent args)
     {
         if (args.Handled)
@@ -124,6 +131,9 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Show if the gloves are enabled when examining.
+    /// </summary>
     private void OnExamined(EntityUid uid, NinjaGlovesComponent comp, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -132,6 +142,9 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         args.PushText(Loc.GetString(comp.User != null ? "ninja-gloves-examine-on" : "ninja-gloves-examine-off"));
     }
 
+    /// <summary>
+    /// Disable gloves when unequipped and clean up ninja's gloves reference
+    /// </summary>
     private void OnUnequipped(EntityUid uid, NinjaGlovesComponent comp, GotUnequippedEvent args)
     {
         if (comp.User != null)
@@ -170,6 +183,9 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Emag doors on click when enabled.
+    /// </summary>
     private void OnDoorjack(EntityUid uid, NinjaDoorjackComponent comp, InteractionAttemptEvent args)
     {
         if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
@@ -187,6 +203,9 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} doorjacked {ToPrettyString(target):target}");
     }
 
+    /// <summary>
+    /// Stun mobs on click when enabled and not on cooldown.
+    /// </summary>
     private void OnStun(EntityUid uid, NinjaStunComponent comp, InteractionAttemptEvent args)
     {
         if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
@@ -212,9 +231,16 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         _useDelay.BeginDelay(uid);
     }
 
-    // can't predict PNBC existing so only done on server.
+    /// <summary>
+    /// Start do after for draining a power source.
+    /// Can't predict PNBC existing so only done on server.
+    /// </summary>
     protected virtual void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args) { }
 
+    /// <summary>
+    /// Drain power from a power source (on server) and repeat if it succeeded.
+    /// Client will predict always succeeding since power is serverside.
+    /// </summary>
     private void OnDrainDoAfter(EntityUid uid, NinjaDrainComponent comp, DrainDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Target == null)
@@ -224,6 +250,10 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         args.Repeat = _ninja.TryDrainPower(args.User, comp, args.Target.Value);
     }
 
+    /// <summary>
+    /// Start do after for downloading techs from a r&d server.
+    /// Will only try if there is at least 1 tech researched.
+    /// </summary>
     private void OnDownload(EntityUid uid, NinjaDownloadComponent comp, InteractionAttemptEvent args)
     {
         if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
@@ -252,12 +282,21 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         args.Cancel();
     }
 
-    // can't predict roles so only done on server.
+    /// <summary>
+    /// Update greentext research nodes information from a server.
+    /// Can't predict roles so only done on server.
+    /// </summary>
     protected virtual void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DownloadDoAfterEvent args) { }
 
-    // cant predict roles for checking if already called
+    /// <summary>
+    /// Start do after for calling in a threat.
+    /// Can't predict roles for checking if already called.
+    /// </summary>
     protected virtual void OnTerror(EntityUid uid, NinjaTerrorComponent comp, InteractionAttemptEvent args) { }
 
-    // can't predict roles or anything announcements related so only done on server.
+    /// <summary>
+    /// Start a gamerule and update greentext information.
+    /// Can't predict roles or anything announcements related so only done on server.
+    /// </summary>
     protected virtual void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, TerrorDoAfterEvent args) { }
 }

@@ -15,6 +15,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
     [Dependency] private readonly NinjaSystem _ninja = default!;
 
+    /// <inheritdoc/>
     protected override void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args)
     {
         if (!GloveCheck(uid, args, out var gloves, out var user, out var target)
@@ -34,6 +35,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         _doAfter.TryStartDoAfter(doAfterArgs);
     }
 
+    /// <inheritdoc/>
     protected override void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DownloadDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
@@ -54,6 +56,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         Popup.PopupEntity(str, user, user, PopupType.Medium);
     }
 
+    /// <inheritdoc/>
     protected override void OnTerror(EntityUid uid, NinjaTerrorComponent comp, InteractionAttemptEvent args)
     {
         if (!GloveCheck(uid, args, out var gloves, out var user, out var target)
@@ -81,6 +84,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         args.Cancel();
     }
 
+    /// <inheritdoc/>
     protected override void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, TerrorDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)

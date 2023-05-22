@@ -35,6 +35,9 @@ public sealed class EnergyKatanaSystem : EntitySystem
         SubscribeLocalEvent<NinjaSuitComponent, KatanaDashEvent>(OnDash);
     }
 
+    /// <summary>
+    /// When equipped by a ninja, try to bind it.
+    /// </summary>
     private void OnEquipped(EntityUid uid, EnergyKatanaComponent comp, GotEquippedEvent args)
     {
         // check if already bound
@@ -51,6 +54,9 @@ public sealed class EnergyKatanaSystem : EntitySystem
         _ninja.BindKatana(ninja, uid);
     }
 
+    /// <summary>
+    /// Handle charges and teleport to a visible location.
+    /// </summary>
     public void OnDash(EntityUid suit, NinjaSuitComponent comp, KatanaDashEvent args)
     {
         if (!_timing.IsFirstTimePredicted)

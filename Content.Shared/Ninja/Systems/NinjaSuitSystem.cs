@@ -30,6 +30,9 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         SubscribeNetworkEvent<SetCloakedMessage>(OnSetCloakedMessage);
     }
 
+    /// <summary>
+    /// Call the shared and serverside code for when a ninja equips the suit.
+    /// </summary>
     private void OnEquipped(EntityUid uid, NinjaSuitComponent comp, GotEquippedEvent args)
     {
         var user = args.Equipee;
@@ -39,17 +42,24 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         NinjaEquippedSuit(uid, comp, user, ninja);
     }
 
+    /// <summary>
+    /// Add all the actions when a suit is equipped.
+    /// Since the event doesn't pass user this can't check if it's a ninja early and not add actions.
+    /// </summary>
     private void OnGetItemActions(EntityUid uid, NinjaSuitComponent comp, GetItemActionsEvent args)
     {
         args.Actions.Add(comp.TogglePhaseCloakAction);
         args.Actions.Add(comp.RecallKatanaAction);
         // TODO: ninja stars instead of soap, when embedding is a thing
-        // The cooldown should also be reduced from 10 to 1 or so
+        // The cooldown should also be reduced from 10 to 0.5 or so
         args.Actions.Add(comp.CreateSoapAction);
         args.Actions.Add(comp.KatanaDashAction);
         args.Actions.Add(comp.EmpAction);
     }
 
+    /// <summary>
+    /// Call the shared and serverside code for when anyone unequips a suit.
+    /// </summary>
     private void OnUnequipped(EntityUid uid, NinjaSuitComponent comp, GotUnequippedEvent args)
     {
         UserUnequippedSuit(uid, comp, args.Equipee);
@@ -140,6 +150,9 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         RemComp<StealthComponent>(user);
     }
 
+    /// <summary>
+    /// Handle cloak setting message sent by the server.
+    /// </summary>
     private void OnSetCloakedMessage(SetCloakedMessage msg)
     {
         if (TryComp<NinjaComponent>(msg.User, out var ninja) && TryComp<NinjaSuitComponent>(ninja.Suit, out var suit))

@@ -198,6 +198,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         return false;
     }
 
+    /// <inheritdoc/>
     public override bool TryUseCharge(EntityUid user, float charge)
     {
         return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge(uid.Value, charge, battery);
@@ -219,6 +220,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
     }
 
+    /// <inheritdoc/>
     public override bool TryDrainPower(EntityUid user, NinjaDrainComponent drain, EntityUid target)
     {
         if (!GetNinjaBattery(user, out var uid, out var suitBattery))
@@ -258,6 +260,9 @@ public sealed class NinjaSystem : SharedNinjaSystem
         return false;
     }
 
+    /// <summary>
+    /// Set up ninja when created.
+    /// </summary>
     private void OnNinjaStartup(EntityUid uid, NinjaComponent comp, ComponentStartup args)
     {
         // start with internals on, only when spawned by event. antag control ninja won't do this due to component add order.
@@ -267,15 +272,23 @@ public sealed class NinjaSystem : SharedNinjaSystem
         AddImplants(uid);
     }
 
+    /// <summary>
+    /// Inherit spawner's station grid and set the ninja's to it.
+    /// </summary>
     private void OnNinjaSpawned(EntityUid uid, NinjaComponent comp, GhostRoleSpawnerUsedEvent args)
     {
-        // inherit spawner's data
         if (TryComp<NinjaSpawnerDataComponent>(args.Spawner, out var data))
         {
             SetNinjaSpawnerData(uid, data.Grid);
         }
     }
 
+    /// <summary>
+    /// Add configured implants to the ninja.
+    /// </summary>
+    /// <remarks>
+    /// Could be replaced with job specials ImplantSpecial if ninja became a job somehow.
+    /// </remarks>
     private void AddImplants(EntityUid uid)
     {
         var config = RuleConfig();
@@ -291,12 +304,18 @@ public sealed class NinjaSystem : SharedNinjaSystem
         }
     }
 
+    /// <summary>
+    /// Greets the ninja when a ghost takes over a ninja, if that happens.
+    /// </summary>
     private void OnNinjaMindAdded(EntityUid uid, NinjaComponent comp, MindAddedMessage args)
     {
         if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
             GreetNinja(mind.Mind);
     }
 
+    /// <summary>
+    /// Set up everything for ninja to work and send the greeting message/sound.
+    /// </summary>
     private void GreetNinja(Mind.Mind mind)
     {
         if (!mind.TryGetSession(out var session) || mind.OwnedEntity == null)
@@ -349,6 +368,9 @@ public sealed class NinjaSystem : SharedNinjaSystem
         }
     }
 
+    /// <summary>
+    /// Handle greentext when a door is emagged.
+    /// </summary>
     private void OnDoorEmagged(EntityUid uid, DoorComponent door, ref DoorEmaggedEvent args)
     {
         // make sure it's a ninja doorjacking it
@@ -356,6 +378,9 @@ public sealed class NinjaSystem : SharedNinjaSystem
             role.DoorsJacked++;
     }
 
+    /// <summary>
+    /// Handle constant power drains from passive usage and cloak.
+    /// </summary>
     private void UpdateNinja(EntityUid uid, NinjaComponent ninja, float frameTime)
     {
         if (ninja.Suit == null || !TryComp<NinjaSuitComponent>(ninja.Suit, out var suit))
@@ -371,6 +396,9 @@ public sealed class NinjaSystem : SharedNinjaSystem
         }
     }
 
+    /// <summary>
+    /// Helper function for objectives.
+    /// </summary>
     private void AddObjective(Mind.Mind mind, string name)
     {
         if (_proto.TryIndex<ObjectivePrototype>(name, out var objective))
