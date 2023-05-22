@@ -674,6 +674,7 @@
 - type: entity
   id: GrapplingHook
   name: grappling hook
+  noSpawn: true
   components:
     - type: EmbeddableProjectile
     - type: Clickable
