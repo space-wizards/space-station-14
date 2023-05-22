@@ -18,7 +18,8 @@ public sealed partial class GunSystem
 
     private void OnAmmoCountUpdate(EntityUid uid, BatteryAmmoProviderComponent component, UpdateAmmoCounterEvent args)
     {
-        if (args.Control is not BoxesStatusControl boxes) return;
+        if (args.Control is not BoxesStatusControl boxes)
+            return;
 
         boxes.Update(component.Shots, component.Capacity);
     }

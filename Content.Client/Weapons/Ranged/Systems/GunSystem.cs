@@ -126,17 +126,11 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var entityNull = _player.LocalPlayer?.ControlledEntity;
 
-        if (entityNull == null)
-        {
+        if (entityNull is not EntityUid entity)
             return;
-        }
-
-        var entity = entityNull.Value;
 
         if (!TryGetGun(entity, out var gunUid, out var gun))
-        {
             return;
-        }
 
         var useKey = gun.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
 
@@ -172,13 +166,35 @@ public sealed partial class GunSystem : SharedGunSystem
         });
     }
 
+    private bool TryGetCurrentPlayerGun(out EntityUid? uid, out GunComponent? playerGun)
+    {
+        uid = null;
+        playerGun = default;
+
+        var playerEntityUid = _player.LocalPlayer?.ControlledEntity;
+
+        if (playerEntityUid is EntityUid playerUid
+            && TryGetGun(playerUid, out var gunUid, out var gun))
+        {
+            uid = gunUid;
+            playerGun = gun;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
-        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null, bool throwItems = false)
+        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null,
+        bool throwItems = false)
     {
         // Rather than splitting client / server for every ammo provider it's easier
         // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
         // This also means any ammo specific stuff can be grabbed as necessary.
-        var direction = fromCoordinates.ToMapPos(EntityManager, TransformSystem) - toCoordinates.ToMapPos(EntityManager, TransformSystem);
+        var direction = fromCoordinates.ToMapPos(EntityManager, TransformSystem) -
+                        toCoordinates.ToMapPos(EntityManager, TransformSystem);
 
         foreach (var (ent, shootable) in ammo)
         {
@@ -341,6 +357,6 @@ public sealed partial class GunSystem : SharedGunSystem
         var uidPlayer = EnsureComp<AnimationPlayerComponent>(uid);
 
         _animPlayer.Stop(uid, uidPlayer, "muzzle-flash-light");
-        _animPlayer.Play(uid, uidPlayer, animTwo,"muzzle-flash-light");
+        _animPlayer.Play(uid, uidPlayer, animTwo, "muzzle-flash-light");
     }
 }
