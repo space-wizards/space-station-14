@@ -1,10 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Nanotrasen has installed wheels on Security's Deployable Barriers. They
-      are now far easier to move., type: Tweak}
-  id: 3335
-  time: '2023-04-05T22:34:52.0000000+00:00'
 - author: moony
   changes:
   - {message: 'The desk bell is no longer anchorable, like god intended. It''s a bell.',
@@ -2890,3 +2884,9 @@ Entries:
   - {message: craftable shivs and three more types of spears, type: Add}
   id: 3834
   time: '2023-05-22T00:14:43.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Handheld radios now use their own channel and will work without a telecomms
+      server., type: Tweak}
+  id: 3835
+  time: '2023-05-22T00:16:47.0000000+00:00'
