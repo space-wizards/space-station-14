@@ -1,26 +1,4 @@
 Entries:
-- author: ZoldorfTheWizard
-  changes:
-  - {message: added uploadfolder command for game admins to speed up adminbus event
-      setup time., type: Add}
-  id: 3340
-  time: '2023-04-05T23:37:05.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: We have removed the skin color dye bottles from the possession of some
-      crewmates after a certain reality-bending event occurred some time ago., type: Fix}
-  id: 3341
-  time: '2023-04-05T23:41:11.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Ghost role station pets can no longer suicide., type: Tweak}
-  id: 3342
-  time: '2023-04-06T00:48:02.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Removed Dwarf description, type: Remove}
-  id: 3343
-  time: '2023-04-06T00:53:41.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Food do afters no longer cancel on multiple uses., type: Tweak}
@@ -2890,3 +2868,24 @@ Entries:
     type: Fix}
   id: 3839
   time: '2023-05-22T13:19:36.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed eggs and tomatoes not making puddles when thrown., type: Fix}
+  id: 3840
+  time: '2023-05-22T21:48:37.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Holobarriers can be climbed like tables with the alternate activate
+      entity in world action., type: Fix}
+  id: 3841
+  time: '2023-05-22T21:49:25.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Snares can be removed by yourself again., type: Fix}
+  id: 3842
+  time: '2023-05-22T21:49:37.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Adds a Janitorial Guidebook, type: Add}
+  id: 3843
+  time: '2023-05-22T21:50:14.0000000+00:00'
