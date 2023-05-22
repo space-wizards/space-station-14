@@ -8,7 +8,7 @@
   },
   "states": [
     {
-        "name": "space_cobra",
+        "name": "spacecobra",
         "directions": 4,
         "delays": [
           [0.3,0.2,0.2,0.4,0.2,0.2,0.3],
@@ -28,7 +28,7 @@
 		]
     },
     {
-		"name": "dead_space_cobra"
+		"name": "dead_spacecobra"
     }
   ]
 }

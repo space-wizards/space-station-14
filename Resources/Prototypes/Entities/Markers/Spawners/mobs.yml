@@ -353,7 +353,8 @@
   - type: Sprite
     layers:
     - state: green
-    - state: ai
+    - state: spacespider
+      sprite: Mobs/Animals/spacespider.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobSpiderSpace
@@ -366,7 +367,8 @@
   - type: Sprite
     layers:
     - state: green
-    - state: ai
+    - state: spacecobra
+      sprite: Mobs/Animals/spacecobra.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobCobraSpace
