@@ -77,6 +77,7 @@
         acts: ["Destruction"]
   - type: Machine
     board: MedicalScannerMachineCircuitboard
+  - type: WiresPanel
   - type: Wires
     BoardName: "MedicalScanner"
     LayoutId: MedicalScanner
