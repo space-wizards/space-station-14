@@ -11,10 +11,10 @@
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
-  - type: EmitSoundOnLand
+  - type: EmitSoundOnActivate
     sound:
       collection: ToySqueak
-  - type: EmitSoundOnActivate
+  - type: EmitSoundOnCollide
     sound:
       collection: ToySqueak
   - type: ItemCooldown
