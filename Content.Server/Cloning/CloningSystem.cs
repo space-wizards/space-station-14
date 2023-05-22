@@ -38,6 +38,7 @@ using Content.Shared.Emag.Systems;
 using Robust.Shared.Audio;
 using System.Runtime.InteropServices;
 using Content.Server.Popups;
+using Content.Server.Traits.Assorted;
 
 namespace Content.Server.Cloning
 {
@@ -207,6 +208,16 @@ namespace Content.Server.Cloning
             _material.TryChangeMaterialAmount(uid, clonePod.RequiredMaterial, -cloningCost);
             clonePod.UsedBiomass = cloningCost;
             // end of biomass checks
+
+            // Check if they have the uncloneable trait
+            if (TryComp<UncloneableComponent>(bodyToClone, out _))
+            {
+                if (clonePod.ConnectedConsole != null)
+                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value,
+                        Loc.GetString("cloning-console-uncloneable-trait-error"),
+                        InGameICChatType.Speak, false);
+                return false;
+            }
 
             // genetic damage checks
             if (TryComp<DamageableComponent>(bodyToClone, out var damageable) &&
