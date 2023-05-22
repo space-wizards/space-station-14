@@ -360,20 +360,6 @@
     - MobSpiderSpace
 
 - type: entity
-  name: Space Cobra Spawner
-  id: SpawnMobSpaceCobra
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: spacecobra
-      sprite: Mobs/Animals/spacecobra.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobCobraSpace
-
-- type: entity
   name: Slimes Spawner Blue
   id: SpawnMobAdultSlimesBlue
   parent: MarkerBase
