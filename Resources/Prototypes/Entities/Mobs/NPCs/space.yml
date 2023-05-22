@@ -304,11 +304,11 @@
       drawdepth: Mobs
       sprite: Mobs/Animals/spacecobra.rsi
       layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: spacecobra
-      - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-        state: glow
-        shader: unshaded
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: spacecobra
+        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          state: glow
+          shader: unshaded
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepSnake
@@ -327,13 +327,13 @@
           Base: dead_spacecobra
     - type: Butcherable
       spawned:
-      - id: FoodMeatSnake
-        amount: 2
-      - id: UraniumOre1
-        amount: 1
-      - id: ClothingShoesSnakeskinBoots
-        amount: 1
-        prob: 0.3
+        - id: FoodMeatSnake
+          amount: 2
+        - id: UraniumOre1
+          amount: 1
+        - id: ClothingShoesSnakeskinBoots
+          amount: 1
+          prob: 0.3
     - type: Bloodstream
       bloodMaxVolume: 200
       bloodReagent: Cryoxadone

@@ -186,6 +186,8 @@
   - type: Sprite
     layers:
     - state: green
+    - state: spacespider
+      sprite: Mobs/Animals/spacespider.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobSpiderSpaceSalvage
@@ -195,9 +197,11 @@
   id: SpawnMobCobraSalvage
   parent: MarkerBase
   components:
-  - type: Sprite
-    layers:
-    - state: green
-  - type: ConditionalSpawner
-    prototypes:
-    - MobCobraSpaceSalvage
+    - type: Sprite
+      layers:
+        - state: green
+        - state: spacecobra
+          sprite: Mobs/Animals/spacecobra.rsi
+    - type: ConditionalSpawner
+      prototypes:
+        - MobCobraSpaceSalvage
