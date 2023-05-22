@@ -76,8 +76,8 @@
   name: snakeskin boots
   description: Boots made of high-class snakeskin, everyone around you will be jealous.
   components:
-  - type: Sprite
-    sprite: Clothing/Shoes/Misc/snakeskin.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/Misc/snakeskin.rsi
-  - type: NoSlip
+    - type: Sprite
+      sprite: Clothing/Shoes/Misc/snakeskin.rsi
+    - type: Clothing
+      sprite: Clothing/Shoes/Misc/snakeskin.rsi
+    - type: NoSlip
