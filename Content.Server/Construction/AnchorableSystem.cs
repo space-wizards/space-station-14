@@ -91,22 +91,8 @@ namespace Content.Server.Construction
             {
                 var coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
 
-                if (_tagSystem.HasTag(uid, "Unstackable"))
-                {
-                    // Need to enforce the unstackable rules on anchoring also.
-                    var condition = new NoUnstackableInTile();
-                    if (NoUnstackableInTile.AnyUnstackableTiles(coordinates, _tagSystem))
-                    {
-                        var message = condition.GenerateGuideEntry()?.Localization;
-                        if (message != null)
-                        {
-                            // Show the reason to the user:
-                            _popup.PopupEntity(Loc.GetString(message), uid, args.User);
-                        }
-
-                        return;
-                    }
-                }
+                if (CheckUnstackable(uid, args.User, coordinates))
+                    return;
 
                 _transform.SetCoordinates(uid, coordinates);
             }
@@ -125,6 +111,28 @@ namespace Content.Server.Construction
                 LogImpact.Low,
                 $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(used):using}"
             );
+        }
+
+        private bool CheckUnstackable(EntityUid uid, EntityUid user, EntityCoordinates coordinates)
+        {
+            if (_tagSystem.HasTag(uid, "Unstackable"))
+            {
+                // Need to enforce the unstackable rules on anchoring also.
+                var condition = new NoUnstackableInTile();
+                if (NoUnstackableInTile.AnyUnstackableTiles(coordinates, _tagSystem))
+                {
+                    var message = condition.GenerateGuideEntry()?.Localization;
+                    if (message != null)
+                    {
+                        // Show the reason to the user:
+                        _popup.PopupEntity(Loc.GetString(message), uid, user);
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private bool TileFree(EntityCoordinates coordinates, PhysicsComponent anchorBody)
@@ -217,6 +225,9 @@ namespace Content.Server.Construction
                 _popup.PopupEntity(Loc.GetString("anchorable-occupied"), uid, userUid);
                 return;
             }
+
+            if (CheckUnstackable(uid, userUid, transform.Coordinates))
+                return;
 
             _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryAnchorCompletedEvent());
         }
