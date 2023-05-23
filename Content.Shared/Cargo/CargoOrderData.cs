@@ -43,18 +43,23 @@ namespace Content.Shared.Cargo
             Reason = reason;
         }
 
-        public void SetApproverData(IdCardComponent? idCard)
+        public void SetApproverData(string? fullname, string? jobtitle)
         {
             var sb = new StringBuilder();
-            if (!string.IsNullOrWhiteSpace(idCard?.FullName))
+            if (!string.IsNullOrWhiteSpace(fullname))
             {
-                sb.Append($"{idCard.FullName} ");
+                sb.Append($"{fullname} ");
             }
-            if (!string.IsNullOrWhiteSpace(idCard?.JobTitle))
+            if (!string.IsNullOrWhiteSpace(jobtitle))
             {
-                sb.Append($"({idCard.JobTitle})");
+                sb.Append($"({jobtitle})");
             }
             Approver = sb.ToString();
+        }
+
+        public void SetApproverData(IdCardComponent? idCard)
+        {
+            SetApproverData(idCard?.FullName, idCard?.JobTitle);
         }
     }
 }

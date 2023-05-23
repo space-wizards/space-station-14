@@ -4,20 +4,20 @@ cargo-gift-default-sender = NanoTrasen
 cargo-gift-default-dest = Cargo Dept.
 
 cargo-gift-dest-bar = bar
-cargo-gift-dest-eng = Engineering Dept
-cargo-gift-dest-supp = Cargo Dept
-cargo-gift-dest-janitor = Service Dept
-cargo-gift-dest-med = Medical Dept
-cargo-gift-dest-sec = Security Dept
+cargo-gift-dest-eng = engineering dept
+cargo-gift-dest-supp = cargo dept
+cargo-gift-dest-janitor = service dept
+cargo-gift-dest-med = medical dept
+cargo-gift-dest-sec = mecurity dept
 
-cargo-gift-pizza-small = A small pizza party
-cargo-gift-pizza-large = A large pizza party
+cargo-gift-pizza-small = a small pizza party
+cargo-gift-pizza-large = a large pizza party
 
-cargo-gift-eng = Repair Materials
-cargo-gift-vending = Vending machines refills
-cargo-gift-cleaning = Cleaning equipment
-cargo-gift-medical-supply = Medical supplies
-cargo-gift-space-protection = Space Hazard Protection
-cargo-gift-fire-protection = Fire Protection
-cargo-gift-security-guns = Lethal Weapons
-cargo-gift-security-riot = Riot Gear
+cargo-gift-eng = repair Materials
+cargo-gift-vending = vending machines refills
+cargo-gift-cleaning = cleaning equipment
+cargo-gift-medical-supply = medical supplies
+cargo-gift-space-protection = space Hazard Protection
+cargo-gift-fire-protection = fire Protection
+cargo-gift-security-guns = lethal Weapons
+cargo-gift-security-riot = riot Gear

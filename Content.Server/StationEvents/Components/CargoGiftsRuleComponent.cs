@@ -1,11 +1,13 @@
 ﻿using Content.Server.StationEvents.Events;
+using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.StationEvents.Components;
 
 /// <summary>
-/// Used an event that gifts the station with certian cargo
+/// Used an event that gifts the station with certain cargo
 /// </summary>
 [RegisterComponent, Access(typeof(CargoGiftsRule))]
 public sealed class CargoGiftsRuleComponent : Component
@@ -38,8 +40,8 @@ public sealed class CargoGiftsRuleComponent : Component
     /// Cargo that you would like gifted to the station, with the quantity for each
     /// Use Ids from cargoProduct Prototypes
     /// </summary>
-    [DataField("gifts"), ViewVariables(VVAccess.ReadWrite)]
-    public Dictionary<string, int> Gifts = new Dictionary<string, int>();
+    [DataField("gifts", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, CargoProductPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public Dictionary<string, int> Gifts = new();
 
     /// <summary>
     /// How much space (minimum) you want to leave in the order database for supply to actually do their work
@@ -50,6 +52,6 @@ public sealed class CargoGiftsRuleComponent : Component
     /// <summary>
     /// Time until we consider next lot of gifts (if supply is overflowing with orders)
     /// </summary>
-    [DataField("timeUntilNextGifts"), ViewVariables(VVAccess.ReadWrite)]
-    public float TimeUntilNextGifts = 10.0f;
+    [DataField("considerNextGiftsAt"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan ConsiderNextGiftsAt;
 }

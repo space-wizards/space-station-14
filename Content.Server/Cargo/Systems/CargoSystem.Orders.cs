@@ -300,7 +300,7 @@ namespace Content.Server.Cargo.Systems
             var order = new CargoOrderData(id, productId, qty, sender, description);
 
             // Approve it now
-            order.SetApproverData(new IdCardComponent(){FullName = dest, JobTitle = sender});
+            order.SetApproverData(dest, sender);
 
             // Log order addition
             _adminLogger.Add(LogType.Action, LogImpact.Low,
