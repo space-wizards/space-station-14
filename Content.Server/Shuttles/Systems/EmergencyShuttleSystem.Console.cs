@@ -163,7 +163,7 @@ public sealed partial class EmergencyShuttleSystem
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle))
                         continue;
 
-                    if (Deleted(CentCom))
+                    if (Deleted(CentComGrid))
                     {
                         // TODO: Need to get non-overlapping positions.
                         _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
@@ -174,7 +174,7 @@ public sealed partial class EmergencyShuttleSystem
                     else
                     {
                         _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
-                            CentCom.Value, _consoleAccumulator, TransitTime, true);
+                            CentComGrid.Value, _consoleAccumulator, TransitTime, true);
                     }
                 }
 
@@ -194,12 +194,12 @@ public sealed partial class EmergencyShuttleSystem
 
         while (podLaunchQuery.MoveNext(out var uid, out var pod, out var shuttle))
         {
-            if (CentCom == null || pod.LaunchTime == null || pod.LaunchTime < _timing.CurTime)
+            if (CentComGrid == null || pod.LaunchTime == null || pod.LaunchTime < _timing.CurTime)
                 continue;
 
             // Don't dock them. If you do end up doing this then stagger launch.
             _shuttle.FTLTravel(uid, shuttle,
-                CentCom.Value, hyperspaceTime: TransitTime);
+                CentComGrid.Value, hyperspaceTime: TransitTime);
 
             RemCompDeferred<EscapePodComponent>(uid);
         }
@@ -218,8 +218,8 @@ public sealed partial class EmergencyShuttleSystem
         if (_consoleAccumulator < minTime)
         {
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
-            if (CentCom != null)
-                _shuttle.AddFTLDestination(CentCom.Value, true);
+            if (CentComGrid != null)
+                _shuttle.AddFTLDestination(CentComGrid.Value, true);
         }
     }
 

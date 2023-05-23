@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -22,6 +23,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -53,7 +55,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
    private ISawmill _sawmill = default!;
 
    public MapId? CentComMap { get; private set; }
-   public EntityUid? CentCom { get; private set; }
+   public EntityUid? CentComGrid { get; private set; }
 
    /// <summary>
    /// Used for multiple shuttle spawn offsets.
@@ -200,6 +202,17 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
    private void OnRoundStart(RoundStartingEvent ev)
    {
+       if (CentComMap != null)
+           _mapManager.DeleteMap(CentComMap.Value);
+
+       // Just in case the grid isn't on the map.
+       DebugTools.Assert(Deleted(CentComGrid));
+       if (CentComGrid != null)
+           Del(CentComGrid.Value);
+
+       CentComGrid = null;
+       CentComMap = null;
+
        CleanupEmergencyConsole();
        SetupEmergencyShuttle();
    }
@@ -247,10 +260,10 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        if (!string.IsNullOrEmpty(centComPath))
        {
            var centcomm = _map.LoadGrid(CentComMap.Value, "/Maps/centcomm.yml");
-           CentCom = centcomm;
+           CentComGrid = centcomm;
 
-           if (CentCom != null)
-               _shuttle.AddFTLDestination(CentCom.Value, false);
+           if (CentComGrid != null)
+               _shuttle.AddFTLDestination(CentComGrid.Value, false);
        }
        else
        {
