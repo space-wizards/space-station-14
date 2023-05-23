@@ -823,10 +823,13 @@ public sealed class AnnouncementSpokeEvent : EntityEventArgs
 
 public sealed class RadioSpokeEvent : EntityEventArgs
 {
+    public readonly EntityUid Source;
     public readonly string Message;
 
-    public RadioSpokeEvent(string message)
+
+    public RadioSpokeEvent(EntityUid source, string message)
     {
+        Source = source;
         Message = message;
     }
 }

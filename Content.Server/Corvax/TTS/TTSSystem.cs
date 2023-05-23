@@ -42,24 +42,24 @@ public sealed partial class TTSSystem : EntitySystem
         _netMgr.RegisterNetMessage<MsgRequestTTS>(OnRequestTTS);
     }
 
-    private void OnRadioReceiveEvent(EntityUid uid, TTSComponent component, RadioSpokeEvent args)
+    private void OnRadioReceiveEvent(EntityUid uid, TTSComponent receiverComponent, RadioSpokeEvent args)
     {
         if (!_isEnabled ||
             args.Message.Length > MaxMessageChars)
         {
             return;
         }
-
-        var voiceId = component.VoicePrototypeId;
+        if (!TryComp(args.Source, out TTSComponent? senderComponent))
+            return;
+        var voiceId = senderComponent.VoicePrototypeId;
         var voiceEv = new TransformSpeakerVoiceEvent(uid, voiceId);
         RaiseLocalEvent(uid, voiceEv);
         voiceId = voiceEv.VoiceId;
-
         if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
             return;
-
         HandleRadio(uid, args.Message, protoVoice.Speaker);
     }
+
     private async void OnAnnouncementSpoke(AnnouncementSpokeEvent args)
     {
         if (!_isEnabled ||
