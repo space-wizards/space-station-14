@@ -347,21 +347,21 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         MapGridComponent grid,
         Random random)
     {
-        // spawn less mobs than usual since there's megafauna to deal with too
-        var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
-        await SpawnMobsRandomRooms(mission, dungeon, faction, grid, random, 0.5f);
-
         // spawn megafauna in a random place
         var roomIndex = random.Next(dungeon.Rooms.Count);
         var room = dungeon.Rooms[roomIndex];
         var tile = room.Tiles.ElementAt(random.Next(room.Tiles.Count));
         var position = grid.GridTileToLocal(tile);
 
+        var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
         var prototype = faction.Configs["Megafauna"];
         var uid = _entManager.SpawnEntity(prototype, position);
         // not removing ghost role since its 1 megafauna, expect that you won't be able to cheese it.
         var eliminationComp = _entManager.EnsureComponent<SalvageEliminationExpeditionComponent>(gridUid);
         eliminationComp.Megafauna.Add(uid);
+
+        // spawn less mobs than usual since there's megafauna to deal with too
+        await SpawnMobsRandomRooms(mission, dungeon, faction, grid, random, 0.5f);
     }
 
     private async Task SpawnMobsRandomRooms(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random, float scale = 1f)
