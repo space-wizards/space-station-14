@@ -1,0 +1,1 @@
+admin-object-tab-window-type = Тип объекта

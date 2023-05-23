@@ -1,18 +1,18 @@
 ﻿<DefaultWindow
-    xmlns="https://spacestation14.io" Title="{Loc Set Temperature}">
+    xmlns="https://spacestation14.io" Title="{Loc admin-atmos-actions-window-set-temperature}">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Grid}" MinSize="100 0" />
+            <Label Text="{Loc admin-set-temperature-window-grid}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <OptionButton Name="GridOptions" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc TileX}" MinSize="100 0" />
+            <Label Text="{Loc admin-set-temperature-window-tileX}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <SpinBox Name="TileXSpin" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc TileY}" MinSize="100 0" />
+            <Label Text="{Loc admin-set-temperature-window-tileY}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <SpinBox Name="TileYSpin" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
@@ -21,6 +21,6 @@
             <Control MinSize="50 0" />
             <SpinBox Name="TemperatureSpin" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
-        <Button Name="SubmitButton" Text="{Loc Set Temperature}" />
+        <Button Name="SubmitButton" Text="{Loc admin-set-temperature-window-set}" />
     </BoxContainer>
 </DefaultWindow>

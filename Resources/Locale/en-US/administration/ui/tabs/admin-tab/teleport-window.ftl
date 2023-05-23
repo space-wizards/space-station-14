@@ -1,0 +1,1 @@
+admin-teleport-window-teleport = Teleport
