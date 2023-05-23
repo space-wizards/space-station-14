@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed computer deconstruction not working., type: Fix}
-  id: 3355
-  time: '2023-04-08T00:54:28.0000000+00:00'
 - author: Mumohan
   changes:
   - {message: Gas mixers no longer show weird ratio numbers, type: Fix}
@@ -2893,3 +2888,9 @@ Entries:
   - {message: partially full syringe contents now easier to see, type: Fix}
   id: 3854
   time: '2023-05-23T19:06:36.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Artifacts now retain their monetary value after extracting points.,
+    type: Tweak}
+  id: 3855
+  time: '2023-05-23T23:52:33.0000000+00:00'
