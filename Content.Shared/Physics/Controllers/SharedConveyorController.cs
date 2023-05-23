@@ -13,9 +13,9 @@ namespace Content.Shared.Physics.Controllers;
 
 public abstract class SharedConveyorController : VirtualController
 {
-    [Dependency] protected readonly IMapManager _mapManager = default!;
-    [Dependency] protected readonly EntityLookupSystem _lookup = default!;
-    [Dependency] protected readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] protected readonly EntityLookupSystem Lookup = default!;
+    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
     protected const string ConveyorFixture = "conveyor";
@@ -49,9 +49,9 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
 
-        if (args.OtherFixture.Body.BodyType == BodyType.Static || component.State == ConveyorState.Off)
+        if (args.OtherBody.BodyType == BodyType.Static || component.State == ConveyorState.Off)
             return;
 
         component.Intersecting.Add(otherUid);
@@ -60,7 +60,7 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyorEndCollide(EntityUid uid, ConveyorComponent component, ref EndCollideEvent args)
     {
-        component.Intersecting.Remove(args.OtherFixture.Body.Owner);
+        component.Intersecting.Remove(args.OtherEntity);
 
         if (component.Intersecting.Count == 0)
             RemComp<ActiveConveyorComponent>(uid);
@@ -74,10 +74,10 @@ public abstract class SharedConveyorController : VirtualController
         // Don't use it directly in EntityQuery because we may be able to save getcomponents.
         var xformQuery = GetEntityQuery<TransformComponent>();
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
+        var query = EntityQueryEnumerator<ActiveConveyorComponent, ConveyorComponent>();
 
-        foreach (var (_, comp) in EntityQuery<ActiveConveyorComponent, ConveyorComponent>())
+        while (query.MoveNext(out var uid, out var _, out var comp))
         {
-            var uid = comp.Owner;
             Convey(uid, comp, xformQuery, bodyQuery, conveyed, frameTime, prediction);
         }
     }
@@ -115,8 +115,8 @@ public abstract class SharedConveyorController : VirtualController
             transform.LocalPosition = localPos;
 
             // Force it awake for collisionwake reasons.
-            _physics.SetAwake(entity, body, true);
-            _physics.SetSleepTime(body, 0f);
+            Physics.SetAwake(entity, body, true);
+            Physics.SetSleepTime(body, 0f);
         }
         Dirty(comp);
     }
@@ -161,9 +161,9 @@ public abstract class SharedConveyorController : VirtualController
         EntityQuery<PhysicsComponent> bodyQuery)
     {
         // Check if the thing's centre overlaps the grid tile.
-        var grid = _mapManager.GetGrid(xform.GridUid!.Value);
+        var grid = MapManager.GetGrid(xform.GridUid!.Value);
         var tile = grid.GetTileRef(xform.Coordinates);
-        var conveyorBounds = _lookup.GetLocalBounds(tile, grid.TileSize);
+        var conveyorBounds = Lookup.GetLocalBounds(tile, grid.TileSize);
 
         foreach (var entity in comp.Intersecting)
         {

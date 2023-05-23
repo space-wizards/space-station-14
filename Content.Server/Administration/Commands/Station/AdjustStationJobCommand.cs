@@ -1,3 +1,4 @@
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Roles;
@@ -9,6 +10,10 @@ namespace Content.Server.Administration.Commands.Station;
 [AdminCommand(AdminFlags.Round)]
 public sealed class AdjustStationJobCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entSysManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     public string Command => "adjstationjob";
 
     public string Description => "Adjust the job manifest on a station.";
@@ -23,19 +28,15 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
             return;
         }
 
-        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        var stationSystem = EntitySystem.Get<StationSystem>();
-        var stationJobs = EntitySystem.Get<StationJobsSystem>();
+        var stationJobs = _entSysManager.GetEntitySystem<StationJobsSystem>();
 
-        if (!int.TryParse(args[0], out var stationInt) || !stationSystem.Stations.Contains(new EntityUid(stationInt)))
+        if (!EntityUid.TryParse(args[0], out var station) || _entityManager.HasComponent<StationDataComponent>(station))
         {
             shell.WriteError(Loc.GetString("shell-argument-station-id-invalid", ("index", 1)));
             return;
         }
 
-        var station = new EntityUid(stationInt);
-
-        if (!prototypeManager.TryIndex<JobPrototype>(args[1], out var job))
+        if (!_prototypeManager.TryIndex<JobPrototype>(args[1], out var job))
         {
             shell.WriteError(Loc.GetString("shell-argument-must-be-prototype",
                 ("index", 2), ("prototypeName", nameof(JobPrototype))));

@@ -114,14 +114,15 @@
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.40,0.25,0.25"
-      density: 60
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.40,0.25,0.25"
+        density: 60
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Pullable
   - type: Drink
     isOpen: true
@@ -165,6 +166,52 @@
   - type: Tag
     tags:
       - WetFloorSign
+
+
+- type: entity
+  name: wet floor sign
+  suffix: Explosive
+  description: Caution! Wet Floor!
+  parent: BaseItem
+  id: WetFloorSignMineExplosive
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    state: caution
+  - type: Item
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    size: 15
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 0
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+          - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+  - type: LandMine
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 5 # about a ~67.5 total damage
+    totalIntensity: 60 # about a ~3 tile radius
+    canCreateVacuum: false
+  - type: DeleteOnTrigger
 
 - type: entity
   name: janitorial trolley
@@ -215,14 +262,15 @@
           priority: 3 # Higher than drinking priority
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeCircle
-          radius: 0.3
-        density: 250
-        layer:
-        - MobLayer
-        mask:
-        - MobMask
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.3
+          density: 250
+          layer:
+          - MobLayer
+          mask:
+          - MobMask
     - type: Spillable
       spillDelay: 3.0
     - type: SolutionContainerManager

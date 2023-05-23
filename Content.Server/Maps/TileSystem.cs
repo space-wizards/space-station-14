@@ -79,13 +79,19 @@ public sealed class TileSystem : EntitySystem
 
     private bool DeconstructTile(TileRef tileRef)
     {
-        var indices = tileRef.GridIndices;
+        if (tileRef.Tile.IsEmpty)
+            return false;
 
         var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
+
+        if (string.IsNullOrEmpty(tileDef.BaseTurf))
+            return false;
+
         var mapGrid = _mapManager.GetGrid(tileRef.GridUid);
 
         const float margin = 0.1f;
         var bounds = mapGrid.TileSize - margin * 2;
+        var indices = tileRef.GridIndices;
         var coordinates = mapGrid.GridTileToLocal(indices)
             .Offset(new Vector2(
                 (_robustRandom.NextFloat() - 0.5f) * bounds,
@@ -102,7 +108,7 @@ public sealed class TileSystem : EntitySystem
             _decal.RemoveDecal(tileRef.GridUid, id);
         }
 
-        var plating = _tileDefinitionManager[tileDef.BaseTurfs[^1]];
+        var plating = _tileDefinitionManager[tileDef.BaseTurf];
 
         mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
 

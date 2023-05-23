@@ -2,18 +2,41 @@
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Robust.Shared.Utility;
+using Content.Server.Chat.Systems;
+using Content.Server.Station.Systems;
+using Robust.Shared.Timing;
+using Robust.Shared.Audio;
 
 namespace Content.Server.PowerSink
 {
     public sealed class PowerSinkSystem : EntitySystem
     {
+        /// <summary>
+        /// Percentage of battery full to trigger the announcement warning at.
+        /// </summary>
+        private const float WarningMessageThreshold = 0.70f;
+
+        private readonly float[] _warningSoundThresholds = new[] { .80f, .90f, .95f, .98f };
+
+        /// <summary>
+        /// Length of time to delay explosion from battery full state -- this is used to play
+        /// a brief SFX winding up the explosion.
+        /// </summary>
+        /// <returns></returns>
+        private readonly TimeSpan _explosionDelayTime = TimeSpan.FromSeconds(1.465);
+
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly StationSystem _station = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<PowerSinkComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<PowerSinkComponent, EntityUnpausedEvent>(OnUnpaused);
         }
 
         private void OnExamine(EntityUid uid, PowerSinkComponent component, ExaminedEvent args)
@@ -30,26 +53,91 @@ namespace Content.Server.PowerSink
             );
         }
 
+        private void OnUnpaused(EntityUid uid, PowerSinkComponent component, ref EntityUnpausedEvent args)
+        {
+            if (component.ExplosionTime == null)
+                return;
+
+            component.ExplosionTime = component.ExplosionTime + args.PausedTime;
+        }
+
         public override void Update(float frameTime)
         {
-            var toRemove = new RemQueue<(PowerSinkComponent Sink, BatteryComponent Battery)>();
+            var toRemove = new RemQueue<(EntityUid Entity, PowerSinkComponent Sink)>();
+            var query = EntityQueryEnumerator<PowerSinkComponent, PowerConsumerComponent, BatteryComponent, TransformComponent>();
 
             // Realistically it's gonna be like <5 per station.
-            foreach (var (comp, networkLoad, battery, xform) in EntityManager.EntityQuery<PowerSinkComponent, PowerConsumerComponent, BatteryComponent, TransformComponent>())
+            while (query.MoveNext(out var entity, out var component, out var networkLoad, out var battery, out var transform))
             {
-                if (!xform.Anchored) continue;
+                if (!transform.Anchored)
+                    continue;
 
                 battery.CurrentCharge += networkLoad.NetworkLoad.ReceivingPower / 1000;
-                if (battery.CurrentCharge < battery.MaxCharge) continue;
 
-                toRemove.Add((comp, battery));
+                var currentBatteryThreshold = battery.CurrentCharge / battery.MaxCharge;
+
+                // Check for warning message threshold
+                if (!component.SentImminentExplosionWarningMessage &&
+                    currentBatteryThreshold >= WarningMessageThreshold)
+                {
+                    NotifyStationOfImminentExplosion(entity, component);
+                }
+
+                // Check for warning sound threshold
+                foreach (var testThreshold in _warningSoundThresholds)
+                {
+                    if (currentBatteryThreshold >= testThreshold &&
+                        testThreshold > component.HighestWarningSoundThreshold)
+                    {
+                        component.HighestWarningSoundThreshold = currentBatteryThreshold; // Don't re-play in future until next threshold hit
+                        _audio.PlayPvs(component.ElectricSound, entity); // Play SFX
+                        break;
+                    }
+                }
+
+                // Check for explosion
+                if (battery.CurrentCharge < battery.MaxCharge)
+                    continue;
+
+                if (component.ExplosionTime == null)
+                {
+                    // Set explosion sequence to start soon
+                    component.ExplosionTime = _gameTiming.CurTime.Add(_explosionDelayTime);
+
+                    // Wind-up SFX
+                    _audio.PlayPvs(component.ChargeFireSound, entity); // Play SFX
+                }
+                else if (_gameTiming.CurTime >= component.ExplosionTime)
+                {
+                    // Explode!
+                    toRemove.Add((entity, component));
+                }
             }
 
-            foreach (var (comp, battery) in toRemove)
+            foreach (var (entity, component) in toRemove)
             {
-                _explosionSystem.QueueExplosion(comp.Owner, "Default", 5 * (battery.MaxCharge / 2500000), 0.5f, 10, canCreateVacuum: false);
-                EntityManager.RemoveComponent(comp.Owner, comp);
+                _explosionSystem.QueueExplosion(entity, "PowerSink", 2000f, 4f, 20f, canCreateVacuum: true);
+                EntityManager.RemoveComponent(entity, component);
             }
+        }
+
+        private void NotifyStationOfImminentExplosion(EntityUid uid, PowerSinkComponent powerSinkComponent)
+        {
+            if (powerSinkComponent.SentImminentExplosionWarningMessage)
+                return;
+
+            powerSinkComponent.SentImminentExplosionWarningMessage = true;
+            var station = _station.GetOwningStation(uid);
+
+            if (station == null)
+                return;
+
+            _chat.DispatchStationAnnouncement(
+                station.Value,
+                Loc.GetString("powersink-immiment-explosion-announcement"),
+                playDefaultSound: true,
+                colorOverride: Color.Yellow
+            );
         }
     }
 }

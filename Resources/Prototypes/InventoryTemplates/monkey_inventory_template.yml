@@ -19,3 +19,39 @@
         - PetWearable
       components:
         - Smokable
+  - name: jumpsuit
+    slotTexture: uniform
+    slotFlags: INNERCLOTHING
+    stripTime: 6
+    uiWindowPos: 0,2
+    strippingWindowPos: 0,2
+    displayName: Jumpsuit
+  - name: id
+    slotTexture: id
+    slotFlags: IDCARD
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 2,1
+    strippingWindowPos: 2,4
+    dependsOn: jumpsuit
+    displayName: ID
+  - name: suitstorage
+    slotTexture: suit_storage
+    slotFlags:   SUITSTORAGE
+    stripTime: 3
+    uiWindowPos: 2,0
+    strippingWindowPos: 2,5
+    dependsOn: outerClothing
+    displayName: Suit Storage
+  - name: outerClothing
+    slotTexture: suit
+    slotFlags: OUTERCLOTHING
+    slotGroup: MainHotbar
+    stripTime: 6
+    uiWindowPos: 1,2
+    strippingWindowPos: 1,2
+    displayName: Suit
+    whitelist:
+      tags:
+        - HardsuitEVA
+
