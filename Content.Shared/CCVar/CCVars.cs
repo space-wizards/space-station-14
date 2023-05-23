@@ -567,7 +567,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<int> HudTheme =
-            CVarDef.Create("hud.theme", 0, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("hud.theme", 1, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         public static readonly CVarDef<bool> HudHeldItemShow =
             CVarDef.Create("hud.held_item_show", true, CVar.ARCHIVE | CVar.CLIENTONLY);
