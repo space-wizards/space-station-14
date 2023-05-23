@@ -4,6 +4,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Popups;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -12,6 +13,7 @@ public sealed class MobThresholdSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
 
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<MobThresholdsComponent, ComponentShutdown>(MobThresholdShutdown);
@@ -362,6 +364,8 @@ public sealed class MobThresholdSystem : EntitySystem
         if (!component.AllowRevives && component.CurrentThresholdState == MobState.Dead)
         {
             args.State = MobState.Dead;
+            //hardcoded popup on dead Event
+            _popupSystem.PopupEntity(Loc.GetString("entity-event-death", ("Entity", IdentityManagement.Identity.Entity(args.Target, EntityManager))), target, PopupType.SmallCaution);
         }
         else if (component.CurrentThresholdState != MobState.Invalid)
         {
