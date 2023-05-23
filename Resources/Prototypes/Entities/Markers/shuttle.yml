@@ -6,3 +6,13 @@
     - type: FTLDestination
     - type: Sprite
       state: pink
+
+- type: entity
+  name: shuttle spawner
+  id: SpawnShuttle
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+  - type: ShuttleSpawner
