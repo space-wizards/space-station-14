@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Broken bottles and glass shards are sharp, type: Tweak}
-  id: 3354
-  time: '2023-04-07T20:10:54.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed computer deconstruction not working., type: Fix}
@@ -2893,3 +2888,8 @@ Entries:
       emergency shuttle should arrive again.', type: Fix}
   id: 3853
   time: '2023-05-23T18:36:43.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: partially full syringe contents now easier to see, type: Fix}
+  id: 3854
+  time: '2023-05-23T19:06:36.0000000+00:00'
