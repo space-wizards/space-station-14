@@ -59678,6 +59678,20 @@ entities:
     - pos: -0.5,8.5
       parent: 31
       type: Transform
+- proto: SpawnShuttle
+  entities:
+  - uid: 2697
+    components:
+    - anchored: False
+      rot: 4.71238898038469 rad
+      pos: 34.5,43.5
+      parent: 658
+      type: Transform
+    - type: ShuttleSpawner
+      path: /Maps/Shuttles/mining.yml
+      airlocks:
+      - 9936
+      - 9946
 - proto: SpawnVehicleJanicart
   entities:
   - uid: 9118
