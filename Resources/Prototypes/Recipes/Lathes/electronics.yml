@@ -225,6 +225,16 @@
      Glass: 900
 
 - type: latheRecipe
+  id: ResearchAndDevelopmentServerCircuitboard
+  result: ResearchAndDevelopmentServerCircuitboard
+  completetime: 5
+  materials:
+     Steel: 1000
+     Glass: 500
+     Gold: 1000
+     Plastic: 300
+
+- type: latheRecipe
   id: ReagentGrinderMachineCircuitboard
   result: ReagentGrinderMachineCircuitboard
   completetime: 4

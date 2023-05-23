@@ -330,6 +330,7 @@
       - ExosuitFabricatorMachineCircuitboard
       - AnomalyVesselCircuitboard
       - APECircuitboard
+      - ResearchAndDevelopmentServerCircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
       - BoozeDispenserMachineCircuitboard

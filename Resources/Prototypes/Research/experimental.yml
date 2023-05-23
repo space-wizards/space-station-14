@@ -105,6 +105,18 @@
   - NanoManipulatorStockPart
 
 - type: technology
+  id: DataScience
+  name: research-technology-data-science
+  icon:
+    sprite: Structures/Machines/server.rsi
+    state: server
+  discipline: Experimental
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - ResearchAndDevelopmentServerCircuitboard
+
+- type: technology
   id: AbnormalArtifactManipulation
   name: research-technology-abnormal-artifact-manipulation
   icon:

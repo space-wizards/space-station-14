@@ -222,6 +222,26 @@
         Glass: 1
 
 - type: entity
+  id: ResearchAndDevelopmentServerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: research and development server board
+  description: A machine printed circuit board for an R&D server.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: ResearchAndDevelopmentServer
+    requirements:
+      Capacitor: 2
+    materialRequirements:
+      Steel: 5
+      Cable: 10
+      CableMV: 5
+      Uranium: 2
+      Silver: 6
+      Gold: 5
+
+- type: entity
   id: ThermomachineFreezerMachineCircuitBoard
   parent: BaseMachineCircuitboard
   name: freezer thermomachine machine board
