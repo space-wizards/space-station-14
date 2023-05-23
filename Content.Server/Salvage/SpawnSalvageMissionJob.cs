@@ -366,7 +366,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
     private async Task SpawnMobsRandomRooms(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random, float scale = 1f)
     {
-        var groupSpawns = _salvage.GetSpawnCount(mission.Difficulty) * scale;
+        var groupSpawns = _salvage.GetSpawnCount(mission.Difficulty);
         var groupSum = faction.MobGroups.Sum(o => o.Prob);
 
         for (var i = 0; i < groupSpawns; i++)
@@ -376,7 +376,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
             foreach (var group in faction.MobGroups)
             {
-                value += group.Prob;
+                value += group.Prob * scale;
 
                 if (value < roll)
                     continue;
