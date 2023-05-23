@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -73,7 +73,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "server_role_ban",
                 type: "boolean",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: true);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "last_edited_at",
@@ -105,7 +105,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "server_role_ban",
                 type: "integer",
                 nullable: false,
-                defaultValue: 1);
+                defaultValue: 2);
 
             migrationBuilder.AddColumn<bool>(
                 name: "hidden",
@@ -181,7 +181,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "admin_notes",
                 type: "integer",
                 nullable: false,
-                defaultValue: 1);
+                defaultValue: 2);
 
             migrationBuilder.AddColumn<TimeSpan>(
                 name: "playtime_at_note",
