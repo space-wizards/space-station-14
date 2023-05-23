@@ -1,16 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: The mop and trash bag can now be inserted and removed from the janitorial
-      trolley by alt-clicking., type: Tweak}
-  id: 3349
-  time: '2023-04-06T22:49:27.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Added the clown recorder to clown's starting gear in attempt to increase
-      their funniness, type: Add}
-  id: 3350
-  time: '2023-04-07T02:06:52.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix even more instances of NPC unintentionally dancing., type: Fix}
@@ -2890,3 +2878,16 @@ Entries:
       change their appearance, type: Tweak}
   id: 3848
   time: '2023-05-23T05:59:01.0000000+00:00'
+- author: HighTechPuddle
+  changes:
+  - {message: Changed some plushie sounds., type: Tweak}
+  - {message: Added some plushie sounds., type: Add}
+  id: 3849
+  time: '2023-05-23T10:00:24.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added 60+ new tips, type: Add}
+  - {message: Changed the wording of some tips, type: Tweak}
+  - {message: 'Removed tip about disease spread, as diseases have been removed', type: Remove}
+  id: 3850
+  time: '2023-05-23T10:01:00.0000000+00:00'
