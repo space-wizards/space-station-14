@@ -349,7 +349,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     {
         // spawn less mobs than usual since there's megafauna to deal with too
         var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
-        await SpawnMobsRandomRooms(mission, dungeon, faction, grid, random, 0.25f);
+        await SpawnMobsRandomRooms(mission, dungeon, faction, grid, random, 0.5f);
 
         // spawn megafauna in a random place
         var roomIndex = random.Next(dungeon.Rooms.Count);
