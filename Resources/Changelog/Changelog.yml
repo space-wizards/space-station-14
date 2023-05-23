@@ -1,9 +1,4 @@
 Entries:
-- author: JerryImMouse
-  changes:
-  - {message: Fixed janimaid's jumpskirt sprite, type: Fix}
-  id: 3353
-  time: '2023-04-07T20:10:35.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Broken bottles and glass shards are sharp, type: Tweak}
@@ -2892,3 +2887,9 @@ Entries:
   - {message: Added Gloves of the North Star, type: Add}
   id: 3852
   time: '2023-05-23T18:12:31.0000000+00:00'
+- author: Debug
+  changes:
+  - {message: 'Central Command finally got around to repairing their station, the
+      emergency shuttle should arrive again.', type: Fix}
+  id: 3853
+  time: '2023-05-23T18:36:43.0000000+00:00'
