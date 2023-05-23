@@ -8,8 +8,6 @@
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
-  - type: Thirst
-    baseDecayRate: 0.3
   - type: Icon
     sprite: Mobs/Species/Diona/parts.rsi
     state: full
