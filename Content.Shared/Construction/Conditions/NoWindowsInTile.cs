@@ -12,9 +12,8 @@ namespace Content.Shared.Construction.Conditions
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var tagSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TagSystem>();
-            var lookup = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EntityLookupSystem>();
 
-            foreach (var entity in lookup.GetEntitiesIntersecting(location, LookupFlags.Approximate | LookupFlags.Static))
+            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static))
             {
                 if (tagSystem.HasTag(entity, "Window"))
                     return false;
