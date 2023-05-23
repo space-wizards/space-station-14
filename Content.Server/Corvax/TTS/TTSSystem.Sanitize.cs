@@ -117,6 +117,8 @@ public sealed partial class TTSSystem
             {"нанотрейзен", "нанотрэйзэн"},
             {"рпзд", "Эр Пэ Зэ Дэ"},
             {"кз", "Кэ Зэ"},
+            {"рхбз", "Эр Хэ Бэ Зэ"},
+            {"рхбзз", "Эр Хэ Бэ Зэ Зэ"},
         };
 
     private static readonly IReadOnlyDictionary<string, string> ReverseTranslit =
