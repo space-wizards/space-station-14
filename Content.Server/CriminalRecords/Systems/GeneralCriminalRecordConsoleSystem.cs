@@ -26,6 +26,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly CriminalRecordsSystem _criminalRecordsSystem = default!;
 
     public override void Initialize()
     {
@@ -73,13 +74,8 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
         var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
 
-        TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
-
-        _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out GeneralCriminalRecord? record, stationRecordsComponent);
-
-        record!.Status = record.Status == SecurityStatus.Detained ? SecurityStatus.None : SecurityStatus.Detained;
-        record.Reason = (record.Status == SecurityStatus.None ? string.Empty : msg.Reason) ?? string.Empty;
-
+        if (!_criminalRecordsSystem.TryArrest(station!.Value, component.ActiveKey!.Value, out var status, msg.Reason))
+            return;
 
         if (msg.Reason != string.Empty)
         {
@@ -89,7 +85,8 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
                 { SecurityStatus.None, Loc.GetString("general-criminal-record-console-undetained-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
-            _radioSystem.SendRadioMessage(uid, messages[record.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
+            _radioSystem.SendRadioMessage(uid, messages[status],
+                _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
         }
 
         else if (msg.Reason == string.Empty)
@@ -100,10 +97,10 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
                 { SecurityStatus.None, Loc.GetString("general-criminal-record-console-undetained-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
-            _radioSystem.SendRadioMessage(uid, messages[record.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
+            _radioSystem.SendRadioMessage(uid, messages[status],
+                _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
         }
 
-        _stationRecordsSystem.Synchronize(station.Value);
         UpdateUserInterface(uid, component);
     }
 
@@ -119,15 +116,9 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
         var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
 
-        TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
-
-        _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out GeneralCriminalRecord? record, stationRecordsComponent);
-
-        if (msg.Status == record!.Status)
+        if (!_criminalRecordsSystem.TryChangeStatus(station!.Value, component.ActiveKey!.Value, msg.Status,
+                out var status, msg.Reason))
             return;
-
-        record.Reason = (msg.Status == SecurityStatus.None ? string.Empty : msg.Reason)!;
-        record.Status = msg.Status;
 
         if (msg.Reason != string.Empty)
         {
@@ -137,7 +128,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
                 { SecurityStatus.None, Loc.GetString("general-criminal-record-console-not-wanted-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
-            _radioSystem.SendRadioMessage(uid, messages[record.Status],
+            _radioSystem.SendRadioMessage(uid, messages[status],
                 _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
         }
 
@@ -149,11 +140,10 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
                 { SecurityStatus.None, Loc.GetString("general-criminal-record-console-not-wanted-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
-            _radioSystem.SendRadioMessage(uid, messages[record.Status],
+            _radioSystem.SendRadioMessage(uid, messages[status],
                 _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
         }
 
-        _stationRecordsSystem.Synchronize(station.Value);
         UpdateUserInterface(uid, component);
     }
 
