@@ -48,7 +48,12 @@ namespace Content.Shared.Examine
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
+            TryComp<ExaminerComponent>(examiner, out var examinerComp);
+
             if (entity.IsClientSide())
+                return true;
+
+            if (examinerComp is { SkipChecks: true })
                 return true;
 
             // check if the mob is in critical or dead
@@ -75,8 +80,10 @@ namespace Content.Shared.Examine
             if (examined.IsClientSide())
                 return true;
 
+            TryComp<ExaminerComponent>(examiner, out var examinerComp);
+
             return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
-                entity => entity == examiner || entity == examined, examined);
+                entity => entity == examiner || entity == examined, examined, examinerComp);
         }
 
         [Pure]
