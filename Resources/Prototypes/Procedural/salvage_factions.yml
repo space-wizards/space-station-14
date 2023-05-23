@@ -32,7 +32,6 @@
       maxAmount: 3
     prob: 0.5
   configs:
-    # TODO: fish tower
-    DefenseStructure: XenoWardingTower
+    DefenseStructure: CarpStatue
     Mining: Carps
     Megafauna: MobDragon
