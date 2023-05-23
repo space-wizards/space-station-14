@@ -103,7 +103,6 @@ public sealed class StationRecordsSystem : EntitySystem
     ///     about the player character.
     ///     Optional - other systems should anticipate this.
     /// </param>
-    /// <param name="status">Status of the person (None/Wanted/Detained).</param>
     /// <param name="records">Station records component.</param>
     public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, string? mobFingerprint, string? dna, HumanoidCharacterProfile? profile = null,
         StationRecordsComponent? records = null)
