@@ -159,6 +159,15 @@
     - type: Sprite
       sprite: Clothing/Back/Backpacks/salvage.rsi
 
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackMerc
+  name: merc bag
+  description: A backpack that has been in many dangerous places, a reliable combat backpack.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Backpacks/merc.rsi
+
 #ERT
 - type: entity
   parent: ClothingBackpack
