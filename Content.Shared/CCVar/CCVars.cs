@@ -644,6 +644,24 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.message_wait_time", 3f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
+        /// Default severity for role bans
+        /// </summary>
+        public static readonly CVarDef<string> RoleBanDefaultSeverity =
+            CVarDef.Create("admin.role_ban_default_severity", "medium", CVar.ARCHIVE | CVar.SERVER);
+
+        /// <summary>
+        /// Default severity for department bans
+        /// </summary>
+        public static readonly CVarDef<string> DepartmentBanDefaultSeverity =
+            CVarDef.Create("admin.department_ban_default_severity", "medium", CVar.ARCHIVE | CVar.SERVER);
+
+        /// <summary>
+        /// Default severity for server bans
+        /// </summary>
+        public static readonly CVarDef<string> ServerBanDefaultSeverity =
+            CVarDef.Create("admin.server_ban_default_severity", "high", CVar.ARCHIVE | CVar.SERVER);
+
+        /// <summary>
         ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
         /// </summary>
         public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =

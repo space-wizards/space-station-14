@@ -693,7 +693,7 @@ namespace Content.Server.Database
                 PlayerUserId = player,
                 PlaytimeAtNote = playtimeAtNote,
                 Message = message,
-                NoteSeverity = severity,
+                Severity = severity,
                 Secret = secret,
                 CreatedAt = createdAt,
                 LastEditedAt = createdAt,

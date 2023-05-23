@@ -20,7 +20,7 @@ public static class AdminNotesExtensions
         {
             case AdminNote adminNote:
                 type = NoteType.Note;
-                severity = adminNote.NoteSeverity;
+                severity = adminNote.Severity;
                 secret = adminNote.Secret;
                 break;
             case AdminWatchlist:

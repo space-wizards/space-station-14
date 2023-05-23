@@ -2,9 +2,11 @@ using System.Text;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Roles;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -23,7 +25,11 @@ public sealed class DepartmentBanCommand : IConsoleCommand
         string department;
         string reason;
         uint minutes;
-        var severity = NoteSeverity.Medium;
+        if (!Enum.TryParse(IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.DepartmentBanDefaultSeverity), out NoteSeverity severity))
+        {
+            Logger.WarningS("admin.department_ban", "Department ban severity could not be parsed from config! Defaulting to medium.");
+            severity = NoteSeverity.Medium;
+        }
 
         switch (args.Length)
         {

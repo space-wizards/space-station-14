@@ -1128,7 +1128,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             var note = await db.DbContext.AdminNotes.Where(note => note.Id == id).SingleAsync();
             note.Message = message;
-            note.NoteSeverity = severity;
+            note.Severity = severity;
             note.Secret = secret;
             note.LastEditedById = editedBy;
             note.LastEditedAt = editedAt;

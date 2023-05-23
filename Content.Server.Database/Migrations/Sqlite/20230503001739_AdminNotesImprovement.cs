@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -60,6 +60,13 @@ namespace Content.Server.Database.Migrations.Sqlite
                 table: "admin_notes",
                 newName: "secret");
 
+            migrationBuilder.UpdateData(
+                table: "admin_notes",
+                keyColumn: "secret",
+                keyValue: false,
+                column: "secret",
+                value: true);
+
             migrationBuilder.AddColumn<bool>(
                 name: "hidden",
                 table: "server_role_ban",
@@ -97,7 +104,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 table: "server_role_ban",
                 type: "INTEGER",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 2);
 
             migrationBuilder.AddColumn<bool>(
                 name: "hidden",
@@ -136,7 +143,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 table: "server_ban",
                 type: "INTEGER",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 3);
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "player_user_id",
@@ -169,11 +176,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "note_severity",
+                name: "severity",
                 table: "admin_notes",
                 type: "INTEGER",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 1);
 
             migrationBuilder.AddColumn<TimeSpan>(
                 name: "playtime_at_note",
@@ -592,7 +599,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 table: "admin_notes");
 
             migrationBuilder.DropColumn(
-                name: "note_severity",
+                name: "severity",
                 table: "admin_notes");
 
             migrationBuilder.DropColumn(
@@ -623,6 +630,13 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "secret",
                 table: "admin_notes",
                 newName: "shown_to_player");
+
+            migrationBuilder.UpdateData(
+                table: "admin_notes",
+                keyColumn: "shown_to_player",
+                keyValue: true,
+                column: "shown_to_player",
+                value: false);
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "player_user_id",

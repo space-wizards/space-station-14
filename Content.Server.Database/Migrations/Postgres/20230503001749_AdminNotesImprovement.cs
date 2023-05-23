@@ -144,7 +144,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "server_ban",
                 type: "integer",
                 nullable: false,
-                defaultValue: 2);
+                defaultValue: 3);
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "player_user_id",
@@ -177,11 +177,11 @@ namespace Content.Server.Database.Migrations.Postgres
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "note_severity",
+                name: "severity",
                 table: "admin_notes",
                 type: "integer",
                 nullable: false,
-                defaultValue: 2);
+                defaultValue: 1);
 
             migrationBuilder.AddColumn<TimeSpan>(
                 name: "playtime_at_note",
@@ -600,7 +600,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "admin_notes");
 
             migrationBuilder.DropColumn(
-                name: "note_severity",
+                name: "severity",
                 table: "admin_notes");
 
             migrationBuilder.DropColumn(

@@ -880,7 +880,7 @@ namespace Content.Server.Database
         [Required] public TimeSpan PlaytimeAtNote { get; set; }
 
         [Required, MaxLength(4096)] public string Message { get; set; } = string.Empty;
-        [Required] public NoteSeverity NoteSeverity { get; set; }
+        [Required] public NoteSeverity Severity { get; set; }
 
         [ForeignKey("CreatedBy")] public Guid? CreatedById { get; set; }
         public Player? CreatedBy { get; set; }

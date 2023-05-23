@@ -7,6 +7,7 @@ using Content.Server.Administration.Notes;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
@@ -27,7 +28,11 @@ namespace Content.Server.Administration.Commands
             string target;
             string reason;
             uint minutes;
-            var severity = NoteSeverity.High;
+            if (!Enum.TryParse(IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.DepartmentBanDefaultSeverity), out NoteSeverity severity))
+            {
+                Logger.WarningS("admin.server_ban", "Server ban severity could not be parsed from config! Defaulting to high.");
+                severity = NoteSeverity.High;
+            }
 
             switch (args.Length)
             {
