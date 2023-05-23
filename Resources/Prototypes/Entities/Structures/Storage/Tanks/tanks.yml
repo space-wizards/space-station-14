@@ -114,7 +114,15 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
-    state: watercooler
+    layers:
+      - state: watercooler-2
+      - state: watercooler-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: watercooler-2-
   - type: SolutionContainerManager
     solutions:
       tank:
