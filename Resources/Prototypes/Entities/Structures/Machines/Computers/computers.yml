@@ -279,6 +279,13 @@
   name: station records computer
   description: This can be used to check station records.
   components:
+  - type: GeneralStationRecordConsole
+  - type: UserInterface
+    interfaces:
+      - key: enum.GeneralStationRecordConsoleKey.Key
+        type: GeneralStationRecordConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.GeneralStationRecordConsoleKey.Key
   - type: PointLight
     radius: 1.5
     energy: 1.6
