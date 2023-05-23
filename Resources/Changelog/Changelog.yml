@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix even more instances of NPC unintentionally dancing., type: Fix}
-  id: 3351
-  time: '2023-04-07T10:54:20.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: ID Console shows the detective access correctly, type: Fix}
@@ -2891,3 +2886,9 @@ Entries:
   - {message: 'Removed tip about disease spread, as diseases have been removed', type: Remove}
   id: 3850
   time: '2023-05-23T10:01:00.0000000+00:00'
+- author: MisterMecky
+  changes:
+  - {message: Fixed water coolers having water tank sprites., type: Fix}
+  - {message: Water coolers now show their contained solutions., type: Tweak}
+  id: 3851
+  time: '2023-05-23T15:24:42.0000000+00:00'
