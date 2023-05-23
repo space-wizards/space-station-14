@@ -216,3 +216,22 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/survival_knife.rsi
+
+- type: entity
+  name: kukri knife
+  parent: CombatKnife
+  id: KukriKnife
+  description: Professionals have standards. Be polite. Be efficient. Have a plan to kill everyone you meet.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/kukri_knife.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 15
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/kukri_knife.rsi
