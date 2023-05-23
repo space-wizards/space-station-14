@@ -1,0 +1,31 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc admin-player-actions-window-timeto}" MinSize="425 325">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc admin-time-panel-window-player}" MinWidth="100" />
+            <Control MinWidth="50" />
+            <LineEdit Name="PlayerNameLine" MinWidth="100" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc admin-time-panel-window-role}" MinSize="100 0" />
+            <Control MinSize="50 0" />
+            <OptionButton Name="RoleOption" MinSize="250 0" HorizontalExpand="false" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc admin-time-panel-window-minutes}" MinWidth="100" />
+            <Control MinWidth="50" />
+            <LineEdit Name="MinutesLine" MinWidth="100" HorizontalExpand="True"/>
+            <Button Name="HourButton" Text="+1h (0)"/>
+            <Button Name="DayButton" Text="+1d (0)"/>
+            <Button Name="WeekButton" Text="+1w (0)"/>
+            <Button Name="MonthButton" Text="+1M (0)"/>
+        </BoxContainer>
+        <cc:PlayerListControl Name="PlayerList" VerticalExpand="True" />
+        <BoxContainer MinWidth="250" Orientation="Horizontal">
+            <Button Name="SubmitButton" Text="{Loc admin-time-panel-window-add-to-role}" HorizontalExpand="True"/>
+            <Button Name="SubmitOverallButton" Text="{Loc admin-time-panel-window-add-to-overall}" HorizontalExpand="True"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
