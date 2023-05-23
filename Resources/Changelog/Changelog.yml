@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Fixed base showcase robot in F5 (just remove it), type: Fix}
-  id: 3348
-  time: '2023-04-06T22:47:53.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: The mop and trash bag can now be inserted and removed from the janitorial
@@ -2884,3 +2879,14 @@ Entries:
   - {message: Fixed an issue with placing mime invisible walls next to walls, type: Fix}
   id: 3847
   time: '2023-05-22T21:58:04.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: 'Beverage producers Dr. Gibb are back in production with cans of their
+      signature drink, sold in all vending machines with drinks', type: Add}
+  - {message: 'Manufacturers of VODA Vending Machines have changed the filling of
+      their machines and now sell soda water, but there have been cases of cola being
+      found in hacked machines', type: Tweak}
+  - {message: Some hacked vending machines were found to contain strange drinks that
+      change their appearance, type: Tweak}
+  id: 3848
+  time: '2023-05-23T05:59:01.0000000+00:00'
