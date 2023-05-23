@@ -1,9 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: ID Console shows the detective access correctly, type: Fix}
-  id: 3352
-  time: '2023-04-07T20:09:30.0000000+00:00'
 - author: JerryImMouse
   changes:
   - {message: Fixed janimaid's jumpskirt sprite, type: Fix}
@@ -2892,3 +2887,8 @@ Entries:
   - {message: Water coolers now show their contained solutions., type: Tweak}
   id: 3851
   time: '2023-05-23T15:24:42.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: Added Gloves of the North Star, type: Add}
+  id: 3852
+  time: '2023-05-23T18:12:31.0000000+00:00'
