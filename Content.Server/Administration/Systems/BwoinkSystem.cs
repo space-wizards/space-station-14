@@ -372,7 +372,7 @@ namespace Content.Server.Administration.Systems
                 _ => $"{senderSession.Name}: {escapedText}",
             };
 
-            var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText);
+            var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText, isSenderAdmin:senderAHelpAdmin); // SS220
 
             LogBwoink(msg);
 
