@@ -43,6 +43,12 @@
   minOreYield: 1
   maxOreYield: 3
 
+- type: ore
+  id: OreElysium
+  oreEntity: ElysiumOre1
+  minOreYield: 1
+  maxOreYield: 4
+
 - type: weightedRandom
   id: RandomOreDistributionStandard
   weights:
@@ -52,4 +58,5 @@
     OrePlasma: 4
     OreSilver: 1
     OreUranium: 1
+    OreElysium: .77
     OreBananium: 0.5

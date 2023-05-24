@@ -40,6 +40,12 @@
   spawn: UraniumOre1
   maxCount: 30
 
+- type: stack
+  id: ElysiumOre
+  name: elysium ore
+  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: elysium }
+  spawn: ElysiumOre1
+  maxCount: 30
 
 - type: stack
   id: BananiumOre

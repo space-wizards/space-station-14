@@ -45,3 +45,19 @@
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: ruglass }
   color: "#2d872a"
   price: 0.7 # 2-2-1 mix of uranium, glass, and metal.
+
+- type: material
+  id: ElysiumGlass
+  stackEntity: SheetEGlass1
+  name: materials-elysium-glass
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: eglass }
+  color: "#ffffff"
+  price: 1 # idk yet
+
+- type: material
+  id: ReinforcedElysiumGlass
+  stackEntity: SheetREGlass1
+  name: materials-reinforced-elysium-glass
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: reglass }
+  color: "#ffffff"
+  price: 1 # idk yet

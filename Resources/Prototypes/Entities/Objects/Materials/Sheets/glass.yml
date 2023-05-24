@@ -261,7 +261,7 @@
   parent: SheetGlassBase
   id: SheetRUGlass
   name: reinforced uranium glass
-  description: A reinforced sheet of uranium.
+  description: A reinforced sheet of uranium glass.
   suffix: Full
   components:
   - type: Material
@@ -298,3 +298,87 @@
   - type: Stack
     stackType: ReinforcedUraniumGlass
     count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetEGlass
+  name: elysium glass
+  description: A sheet of elysium glass.
+  suffix: Full
+  components:
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        ElysiumGlass: 100
+    - type: Stack
+      stackType: ElysiumGlass
+      baseLayer: base
+      layerStates:
+        - eglass
+        - eglass_2
+        - eglass_3
+    - type: Sprite
+      state: eglass_3
+      layers:
+        - state: eglass_3
+          map: ["base"]
+    - type: Item
+      heldPrefix: eglass
+    - type: Appearance
+    - type: Construction
+      graph: Glass
+      node: SheetEGlass
+
+- type: entity
+  parent: SheetEGlass
+  id: SheetEGlass1
+  name: elysium glass
+  suffix: Single
+  components:
+    - type: Sprite
+      state: eglass
+    - type: Stack
+      stackType: ElysiumGlass
+      count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetREGlass
+  name: reinforced elysium glass
+  description: A reinforced sheet of elysium glass.
+  suffix: Full
+  components:
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        ReinforcedElysiumGlass: 100
+    - type: Stack
+      stackType: ReinforcedElysiumGlass
+      baseLayer: base
+      layerStates:
+        - reglass
+        - reglass_2
+        - reglass_3
+    - type: Sprite
+      state: reglass_3
+      layers:
+        - state: reglass_3
+          map: ["base"]
+    - type: Item
+      heldPrefix: reglass
+    - type: Appearance
+    - type: Construction
+      graph: Glass
+      node: SheetREGlass
+
+- type: entity
+  parent: SheetREGlass
+  id: SheetREGlass1
+  name: reinforced elysium glass
+  suffix: Single
+  components:
+    - type: Sprite
+      state: reglass
+    - type: Stack
+      stackType: ReinforcedElysiumGlass
+      count: 1

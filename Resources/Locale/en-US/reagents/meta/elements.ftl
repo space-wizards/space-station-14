@@ -61,5 +61,8 @@ reagent-desc-sodium = A silvery-white alkali metal. Highly reactive in its pure 
 reagent-name-uranium = uranium
 reagent-desc-uranium = A grey metallic chemical element in the actinide series, weakly radioactive.
 
+reagent-name-elysium = elysium
+reagent-desc-elysium = A lavender metal with a pearlescent indigo tint. It gives off a faint purple glow.
+
 reagent-name-bananium = bananium
 reagent-desc-bananium = A yellow radioactive organic solid.

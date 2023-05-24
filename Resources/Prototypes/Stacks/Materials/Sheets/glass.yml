@@ -39,3 +39,17 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: ruglass }
   spawn: SheetRUGlass1
   maxCount: 30
+
+- type: stack
+  id: ElysiumGlass
+  name: elysium glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: eglass }
+  spawn: SheetEGlass1
+  maxCount: 30
+
+- type: stack
+  id: ReinforcedElysiumGlass
+  name: reinforced elysium glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: reglass }
+  spawn: SheetREGlass1
+  maxCount: 30

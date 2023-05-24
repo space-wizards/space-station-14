@@ -8,20 +8,37 @@
   },
   "states": [
     {
-      "name": "glass"
+      "name": "eglass"
     },
     {
-      "name": "glass_2"
+      "name": "eglass_2"
     },
     {
-      "name": "glass_3"
+      "name": "eglass_3"
     },
     {
-      "name": "glass-inhand-left",
+      "name": "eglass-inhand-left",
       "directions": 4
     },
     {
-      "name": "glass-inhand-right",
+      "name": "eglass-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "reglass"
+    },
+    {
+      "name": "reglass_2"
+    },
+    {
+      "name": "reglass_3"
+    },
+    {
+      "name": "reglass-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "reglass-inhand-right",
       "directions": 4
     },
     {

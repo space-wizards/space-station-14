@@ -100,3 +100,40 @@
     state: silver
   - type: Stack
     count: 1
+
+- type: entity
+  parent: IngotBase
+  id: IngotElysium
+  name: elysium bar
+  suffix: Full
+  components:
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Elysium: 100
+    - type: Stack
+      stackType: Elysium
+      baseLayer: base
+      layerStates:
+        - gold
+        - gold_2
+        - gold_3
+    - type: Sprite
+      state: gold_3
+      layers:
+        - state: gold_3
+          map: ["base"]
+    - type: Item
+      heldPrefix: elysium
+    - type: Appearance
+
+- type: entity
+  parent: IngotElysium
+  id: IngotElysium1
+  name: elysium bar
+  suffix: Single
+  components:
+    - type: Sprite
+      state: elysium
+    - type: Stack
+      count: 1

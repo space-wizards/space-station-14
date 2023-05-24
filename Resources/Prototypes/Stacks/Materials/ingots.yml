@@ -11,3 +11,10 @@
   icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: silver }
   spawn: IngotSilver1
   maxCount: 30
+
+- type: stack
+  id: Elysium
+  name: elysium
+  icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: gold }
+  spawn: IngotElysium1
+  maxCount: 30

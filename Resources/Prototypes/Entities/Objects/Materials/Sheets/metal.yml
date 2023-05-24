@@ -107,3 +107,41 @@
   - type: Stack
     stackType: Plasteel
     count: 1
+
+  - type: entity
+    parent: SheetMetalBase
+    id: SheetElysium
+    name: elysium alloy
+    suffix: Full
+    components:
+      - type: Material
+      - type: PhysicalComposition
+        materialComposition:
+          ElysiumAlloy: 100
+      - type: Stack
+        stackType: ElysiumAlloy
+        baseLayer: base
+        layerStates:
+          - elysium
+          - elysium_2
+          - elysium_3
+      - type: Sprite
+        state: elysium_3
+        layers:
+          - state: elysium_3
+            map: [ "base" ]
+      - type: Item
+        heldPrefix: elysium alloy
+      - type: Appearance
+
+  - type: entity
+    parent: SheetElysiumAlloy
+    id: SheetElysium1
+    name: elysium alloy
+    suffix: Single
+    components:
+      - type: Sprite
+        state: elysium
+      - type: Stack
+        stackType: ElysiumAlloy
+        count: 1

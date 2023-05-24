@@ -175,6 +175,28 @@
   - type: Stack
     count: 1
 
+- type: entity
+  parent: OreBase
+  id: ElysiumOre
+  name: elysium ore
+  suffix: Full
+  components:
+    - type: Stack
+      stackType: ElysiumOre
+    - type: Sprite
+      state: elysium
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Elysium: 500
+
+- type: entity
+  parent: ElysiumOre
+  id: ElysiumOre1
+  suffix: Single
+  components:
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: OreBase
