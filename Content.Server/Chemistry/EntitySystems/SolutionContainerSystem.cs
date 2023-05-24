@@ -96,7 +96,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
             ("desc", primary.LocalizedPhysicalDescription)));
 
-
+        // Add descriptions of immediately recognizable reagents, like water or beer
         var recognized = new List<ReagentPrototype>();
         foreach (var (id, _) in solutionHolder)
         {
@@ -113,6 +113,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             recognized.Add(proto);
         }
 
+        // Skip if there's nothing recognizable
         if (recognized.Count == 0)
             return;
 
@@ -126,6 +127,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             }
             else if (reagent == recognized[^1])
             {
+                // this loc specifically  requires space to be appended, fluent doesnt support whitespace
+                msg.Append(' ');
                 part = "examinable-solution-recognized-last";
             }
             else
