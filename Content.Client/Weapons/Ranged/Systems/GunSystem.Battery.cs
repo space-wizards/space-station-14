@@ -49,7 +49,7 @@ public sealed partial class GunSystem
         switch (component)
         {
             case ProjectileBatteryAmmoProviderComponent proj:
-                SetCollisionMaskForAmmo(uid);
+                SetCollisionMaskFromPrototype(proj.Prototype, gun);
                 break;
             case HitscanBatteryAmmoProviderComponent hitscan:
                 gun.NexFireCollisionMask =

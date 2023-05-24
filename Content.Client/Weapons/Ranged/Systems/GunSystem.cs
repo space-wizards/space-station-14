@@ -132,7 +132,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (!TryGetGun(entity, out var gunUid, out var gun))
             return;
 
-        // Sawmill.Info($"collision mask {gun.NexFireCollisionMask} ++++");
+        Sawmill.Info($"collision mask {gun.NexFireCollisionMask} ++++");
 
         var useKey = gun.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
 
@@ -357,12 +357,21 @@ public sealed partial class GunSystem : SharedGunSystem
         }
     }
 
-    private void SetCollisionMaskForAmmo(EntityUid bulletUid)
+    private void SetCollisionMaskFromPrototype(string prototype, GunComponent? outGun = null)
     {
-        if (GetCurrentPlayerGunForAnyMode() is not GunComponent gun)
+        GunComponent gun;
+        if (outGun != null)
+            gun = outGun;
+        else if (GetCurrentPlayerGunForAnyMode() is GunComponent gunComp)
+            gun = gunComp;
+        else
             return;
 
-        if (TryComp<PhysicsComponent>(bulletUid, out var physics))
+        var bulletUid = Spawn(prototype, MapCoordinates.Nullspace);
+        var physics = CompOrNull<PhysicsComponent>(bulletUid);
+        Del(bulletUid);
+
+        if (physics is PhysicsComponent physicsComp)
             gun.NexFireCollisionMask = physics.CollisionMask;
     }
 }
