@@ -83,6 +83,17 @@
   meltingPoint: 1064.76
 
 - type: reagent
+  id: Elysium
+  name: reagent-name-elysium
+  group: Elements
+  desc: reagent-desc-elysium
+  physicalDesc: reagent-physical-desc-metallic
+  flavor: metallic
+  color: "#9455F5"
+  boilingPoint: 2700.0
+  meltingPoint: 1064.76
+
+- type: reagent
   id: Hydrogen
   name: reagent-name-hydrogen
   group: Elements
