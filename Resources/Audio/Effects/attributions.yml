@@ -32,3 +32,108 @@
   license: "CC0-1.0"
   copyright: "Taken from thisusernameis via freesound.org + mixed from stereo to mono."
   source: "https://freesound.org/people/thisusernameis/sounds/426891/"
+
+- files: ["adminhelp.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/d775e1ac804eb9d0259573f5f29a18d320c97ef3/sound/effects/adminhelp.ogg"
+
+- files: ["hit_kick.ogg"]
+  license: "Unknown"
+  copyright: "By Taira Komori"
+  source: "https://taira-komori.jpn.org/freesounden.html"
+
+- files: ["fire.ogg"]
+  license: "CC0"
+  copyright: "By raremess"
+  source: "https://freesound.org/people/raremess/sounds/222557/"
+
+- files: ["holy.ogg"]
+  license: "CC0"
+  copyright: "By random_intruder"
+  source: "https://freesound.org/people/random_intruder/sounds/392172/"
+
+- files: ["internals.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "By CEV-Eris"
+  source: "https://github.com/discordia-space/CEV-Eris/blob/f02a6e2c29b41c28b1cf4d8f897cb8f090f43552/sound/effects/internals.ogg"
+
+- files: ["poster_broken.ogg"]
+  license: "CC-BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg"
+
+- files: ["poster_being_set.ogg"]
+  license: "CC-BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg"
+
+- files: ["saw.ogg"]
+  license: "CC0"
+  copyright: "By domiscz"
+  source: "https://freesound.org/people/domiscz/sounds/461728/"
+
+- files: ["double_beep.ogg"]
+  license: "CC BY 4.0"
+  copyright: "By andersmmg"
+  source: "https://freesound.org/people/andersmmg/sounds/511492/"
+
+- files: ["smoke.ogg"]
+  license: "CC-BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/a5d362ce84e4f0c61026236d5ec84d3c81553664/sound/effects/smoke.ogg"
+
+- files: ["voteding.ogg"]
+  license: "CC BY 3.0"
+  copyright: "By InspectorJ"
+  source: "https://freesound.org/people/InspectorJ/sounds/484344/"
+
+- files: ["minibombcountdown.ogg"]
+  license: "CC BY 3.0"
+  copyright: "By thomas_evdokimoff"
+  source: "https://freesound.org/people/thomas_evdokimoff/sounds/202193/"
+
+- files: ["bite.ogg"]
+  license: "CC-BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
+
+- files: ["bone_rattle.ogg"]
+  license: "CC0 1.0"
+  copyright: "By spookymodem"
+  source: "https://freesound.org/people/spookymodem/sounds/202102/"
+
+- files: ["demon_attack1.ogg"]
+  license: "CC-BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
+
+- files: ["demon_consume.ogg"]
+  license: "CC-BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
+
+- files: ["demon_dies.ogg"]
+  license: "CC-BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
+
+- files: ["pop.ogg"]
+  license: "CC0"
+  copyright: "By mirrorcult"
+  source: "Unknown"
+
+- files: ["box_deploy.ogg"]
+  license: "CC-BY-SA 3.0"
+  copyright: "By Citadel Station
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61"
+
+- files: ["drop.ogg"]
+  license: "Royalty free"
+  copyright: "Sonniss.com - GDC 2016 - Game Audio Bundle - Levan Nadashvili - Soldier Footsteps - FS Concrete Soldier Crouch N02, mixed from stereo to mono"
+  source: "Unknown"
+
+- files: ["wall_bonk.ogg"]
+  license: "Royalty free"
+  copyright: "Sonniss.com - GDC 2023 - Game Audio Bundle - 344 Audio - Nuts and Bolts"
+  source: "Unknown"

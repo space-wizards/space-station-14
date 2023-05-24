@@ -1,0 +1,114 @@
+- files: ["monkey_scream.ogg"]
+  license: "CC BY-NC-SA 3.0"
+  copyright: "By goonstation"
+  source: "https://github.com/goonstation/goonstation/blob/4059e4be90832b02b1228b1bee3db342094e4f1e/sound/voice/screams/monkey_scream.ogg"
+
+- files: ["cat_meow.ogg"]
+  license: "CCBY 3.0"
+  copyright: "By TRNGLE"
+  source: "https://freesound.org/people/TRNGLE/sounds/368006/"
+
+- files: ["cat_hiss.ogg"]
+  license: "CC0"
+  copyright: "By Zabuhailo"
+  source: "https://freesound.org/people/Zabuhailo/sounds/146963/"
+
+- files: ["small_dog_bark_happy.ogg"]
+  license: "CC0"
+  copyright: "By MisterTood"
+  source: "https://freesound.org/people/MisterTood/sounds/9032/"
+
+- files: ["duck_quack_happy.ogg"]
+  license: "CC0"
+  copyright: "By Tabby+Gus"
+  source: "https://freesound.org/people/Tabby+Gus./sounds/515408/"
+
+- files: ["chicken_cluck_happy.ogg"]
+  license: "CC0"
+  copyright: "By Rudmer_Rotteveel"
+  source: "https://freesound.org/people/Rudmer_Rotteveel/sounds/316920/"
+
+- files: ["ferret_happy.ogg"]
+  license: "CC BY 3.0"
+  copyright: "By J.Zazvurek"
+  source: "https://freesound.org/people/J.Zazvurek/sounds/155115/"
+
+- files: ["mouse_squeak.ogg"]
+  license: "CC0"
+  copyright: "By Breviceps"
+  source: "https://freesound.org/people/Breviceps/sounds/445958/"
+
+- files: ["sloth_squeak.ogg"]
+  license: "CC0"
+  copyright: "By Higgs01"
+  source: "https://freesound.org/people/Higgs01/sounds/428114/"
+
+- files: ["parrot_raught.ogg"]
+  license: "CC BY 3.0"
+  copyright: "By Coral_Island_Studios"
+  source: "https://freesound.org/people/Coral_Island_Studios/sounds/432588/"
+
+- files: ["fox_squeak.ogg"]
+  license: "CC0"
+  copyright: "By Breviceps"
+  source: "https://freesound.org/people/Breviceps/sounds/468442/"
+
+- files: ["frog_ribbit.ogg"]
+  license: "CC0"
+  copyright: "By egomassive"
+  source: "https://freesound.org/people/egomassive/sounds/536759/"
+
+- files: ["goose_honk.ogg"]
+  license: "CC0"
+  copyright: "By SpaceJoe"
+  source: "https://freesound.org/people/SpaceJoe/sounds/510940/"
+
+- files: ["snake_hiss.ogg"]
+  license: "CC BY 4.0"
+  copyright: "By Garuda1982"
+  source: "https://freesound.org/people/Garuda1982/sounds/541656/"
+
+- files: ["pig_oink.ogg"]
+  license: "CC0"
+  copyright: "By qubodup"
+  source: "https://freesound.org/people/qubodup/sounds/442906/"
+
+- files: ["cerberus.ogg"]
+  license: "CCO"
+  copyright: "By ahill86"
+  source: "https://freesound.org/people/ahill86/sounds/207124/"
+
+- files: ["space_dragon_roar.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
+
+- files: ["penguin_squawk.ogg"]
+  license: "CC BY 3.0"
+  copyright: "By ProSounds"
+  source: "https://youtu.be/Anr35RbBL3Y"
+
+- files: ["raccoon_chatter.ogg"]
+  license: "CC BY 3.0"
+  copyright: "By jnargus"
+  source: "https://youtu.be/BGjFP1CP7E0"
+
+- files: ["goat_bah.ogg"]
+  license: "CC BY 3.0"
+  copyright: "By Winry Marini"
+  source: "https://youtu.be/QIhwzsk5bww"
+
+- files: ["lizard_happy.ogg"]
+  license: "CC BY 3.0"
+  copyright: "By Nagaty Studio"
+  source: "https://youtu.be/I7CX0AS8RNI"
+
+- files: ["bear.ogg"]
+  license: "CC BY 3.0"
+  copyright: "By Nagaty Studio"
+  source: "https://www.youtube.com/watch?v=pz6eZbESlU8"
+
+- files: ["kangaroo_grunt.ogg"]
+  license: "CC BY 4.0"
+  copyright: "By pfranzen"
+  source: "https://freesound.org/people/pfranzen/sounds/322744/"
