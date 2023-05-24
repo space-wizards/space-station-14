@@ -32,6 +32,7 @@
           type: ParticleAcceleratorBoundUserInterface
         - key: enum.WiresUiKey.Key
           type: WiresBoundUserInterface
+    - type: WiresPanel
     - type: Wires
       BoardName: "Mk2 Particle Accelerator"
       LayoutId: ParticleAccelerator
