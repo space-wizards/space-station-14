@@ -13,8 +13,8 @@
   maxCount: 30
 
 - type: stack
-  id: Elysium
+  id: ElysiumIngot
   name: elysium
-  icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: gold }
+  icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: elysium }
   spawn: IngotElysium1
   maxCount: 30
