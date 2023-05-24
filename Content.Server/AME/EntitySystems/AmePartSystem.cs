@@ -6,12 +6,10 @@ using Content.Server.Tools;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using JetBrains.Annotations;
 using Robust.Shared.Map;
 
 namespace Content.Server.AME.EntitySystems;
 
-[UsedImplicitly]
 public sealed class AmePartSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
