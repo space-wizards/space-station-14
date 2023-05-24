@@ -1,10 +1,4 @@
 Entries:
-- author: Skyedra
-  changes:
-  - {message: You can now close the most recently opened window with ESC, type: Add}
-  - {message: You can now close all open windows with Shift+ESC, type: Add}
-  id: 3358
-  time: '2023-04-09T02:19:32.0000000+00:00'
 - author: lzk
   changes:
   - {message: Clown satchel! More HONK!, type: Add}
@@ -2895,3 +2889,10 @@ Entries:
       been reinstated., type: Fix}
   id: 3857
   time: '2023-05-24T11:28:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bumped shuttle speedcaps a lot., type: Tweak}
+  - {message: Fix rounding issues with shuttle movement causing fluctuations near
+      speedcap., type: Fix}
+  id: 3858
+  time: '2023-05-24T13:15:03.0000000+00:00'
