@@ -74,10 +74,9 @@ namespace Content.Server.Medical
             TryComp<BloodstreamComponent>(target, out var bloodstream);
 
             OpenUserInterface(user, healthAnalyzer);
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
+
             _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : 0,
-                bloodstream.BloodSolution.FillFraction * 100));
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0 /*bloodstream.BloodSolution.FillFraction * 100*/));
         }
     }
 }

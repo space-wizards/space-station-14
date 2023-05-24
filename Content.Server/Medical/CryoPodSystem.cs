@@ -166,13 +166,12 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     {
         TryComp<TemperatureComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var temp);
         TryComp<BloodstreamComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var bloodstream);
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
+
         _userInterfaceSystem.TrySendUiMessage(
             uid,
             HealthAnalyzerUiKey.Key,
             new HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity,
-            temp != null ? temp.CurrentTemperature : 0, bloodstream.BloodSolution.FillFraction*100));
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            temp != null ? temp.CurrentTemperature : 0, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)
