@@ -13,7 +13,7 @@
   maxCount: 30
 
 - type: stack
-  id: ElysiumAlloy
+  id: Elysium
   name: elysium alloy
   icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: elysium }
   spawn: SheetElysium1

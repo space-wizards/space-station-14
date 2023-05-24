@@ -135,7 +135,7 @@
     - type: Appearance
 
 - type: entity
-  parent: SheetElysiumAlloy
+  parent: SheetElysium
   id: SheetElysium1
   name: elysium alloy
   suffix: Single
