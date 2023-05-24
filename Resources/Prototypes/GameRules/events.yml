@@ -295,15 +295,15 @@
 
 
 #- type: entity
-# id: ZombieOutbreak
-# parent: BaseGameRule
-# noSpawn: true
-# components:
-# - type: StationEvent
-#   earliestStart: 50
-#   weight: 2.5
-#   duration: 1
-# - type: ZombieRule
+#  id: ZombieOutbreak
+#  parent: BaseGameRule
+#  noSpawn: true
+#  components:
+#  - type: StationEvent
+#    earliestStart: 50
+#    weight: 2.5
+#    duration: 1
+#  - type: ZombieRule
 
 - type: entity
   id: LoneOpsSpawn
