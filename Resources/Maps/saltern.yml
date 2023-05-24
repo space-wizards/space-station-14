@@ -3503,16 +3503,10 @@ entities:
       type: Transform
 - proto: AirlockExternalGlassShuttleLocked
   entities:
-  - uid: 9936
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 33.5,38.5
-      parent: 31
-      type: Transform
   - uid: 9946
     components:
     - rot: 3.141592653589793 rad
-      pos: 35.5,38.5
+      pos: 33.5,38.5
       parent: 31
       type: Transform
   - uid: 10087
@@ -3525,6 +3519,14 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 22.5,28.5
+      parent: 31
+      type: Transform
+- proto: AirlockExternalGlassShuttleMining
+  entities:
+  - uid: 2697
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 35.5,38.5
       parent: 31
       type: Transform
 - proto: AirlockExternalLocked
@@ -54361,6 +54363,11 @@ entities:
       type: Transform
     - powerLoad: 0
       type: ApcPowerReceiver
+  - uid: 3927
+    components:
+    - pos: 34.5,37.5
+      parent: 31
+      type: Transform
   - uid: 3940
     components:
     - pos: 22.5,-9.5
@@ -54749,11 +54756,6 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: -22.5,-23.5
-      parent: 31
-      type: Transform
-  - uid: 9940
-    components:
-    - pos: 34.5,37.5
       parent: 31
       type: Transform
 - proto: Protolathe
