@@ -1,7 +1,7 @@
-﻿- type: gameMap
+- type: gameMap
   id: Cluster
   mapName: 'Cluster'
-  mapPath: /Maps/cluster.yml
+  mapPath: /Maps/cluster_imperial.yml
   minPlayers: 0
   maxPlayers: 35
   stations:
@@ -46,3 +46,5 @@
         SecurityCadet: [ 1, 1 ]
         SalvageSpecialist: [ 2, 2 ]
         Quartermaster: [ 1, 1 ]
+        IAA: [ 1, 1 ]
+        Reporter: [ 1, 1 ]
