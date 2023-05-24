@@ -77,6 +77,7 @@
     maxIntensity: 100
     intensitySlope: 2
     totalIntensity: 200
+  - type: WiresPanel
   - type: Wires
     BoardName: "Substation"
     LayoutId: Substation

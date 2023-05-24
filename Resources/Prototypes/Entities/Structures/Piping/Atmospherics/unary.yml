@@ -242,6 +242,7 @@
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
+    - type: WiresPanel
     - type: Wires
       BoardName: "Thermomachine"
       LayoutId: Thermomachine
