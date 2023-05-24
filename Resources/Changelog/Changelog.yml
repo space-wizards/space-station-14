@@ -1,9 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Clown satchel! More HONK!, type: Add}
-  id: 3359
-  time: '2023-04-09T02:24:45.0000000+00:00'
 - author: Menshin
   changes:
   - {message: Air and scrubbers sensors will now be properly detected by air alarms
@@ -2896,3 +2891,8 @@ Entries:
       speedcap., type: Fix}
   id: 3858
   time: '2023-05-24T13:15:03.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Mice can now escape potted plants and toilets, type: Fix}
+  id: 3859
+  time: '2023-05-24T17:30:08.0000000+00:00'
