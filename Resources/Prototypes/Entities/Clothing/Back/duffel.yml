@@ -231,4 +231,4 @@
   - type: Storage
     capacity: 9999
   - type: ClothingSpeedModifier
-    sprintModifier: 1 // makes its stats identical to other variants of bag of holding
+    sprintModifier: 1 # makes its stats identical to other variants of bag of holding
