@@ -1,11 +1,4 @@
 Entries:
-- author: Menshin
-  changes:
-  - {message: Air and scrubbers sensors will now be properly detected by air alarms
-      when manually linking them., type: Fix}
-  - {message: Air sensors appearance will now update on power changes., type: Fix}
-  id: 3360
-  time: '2023-04-09T02:25:39.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Head of security's common clothing now has slight armor, type: Tweak}
@@ -2896,3 +2889,9 @@ Entries:
   - {message: Mice can now escape potted plants and toilets, type: Fix}
   id: 3859
   time: '2023-05-24T17:30:08.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where dwarves sometimes couldn't get their words out.,
+    type: Fix}
+  id: 3860
+  time: '2023-05-24T19:03:44.0000000+00:00'
