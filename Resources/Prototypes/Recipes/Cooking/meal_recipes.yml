@@ -1574,3 +1574,11 @@
   solids:
     FoodMeatLizard: 1
     FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCookedSpaceshroom
+  name: cooked spaceshroom recipe
+  result: FoodSpaceshroomCooked
+  time: 5
+  solids:
+    FoodSpaceshroom: 1

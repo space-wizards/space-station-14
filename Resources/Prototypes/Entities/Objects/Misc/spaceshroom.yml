@@ -1,0 +1,77 @@
+# Structure
+- type: entity
+  name: spaceshroom
+  parent: BaseStructure
+  id: Spaceshroom
+  description: A cluster of wild mushrooms that likes to grow in dark, moist environments.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/spaceshroom.rsi
+    state: structure
+  - type: Item
+    sprite: Objects/Misc/spaceshroom.rsi
+  - type: Transform
+    anchored: true
+  - type: InteractionOutline
+  - type: StaticPrice
+    price: 250
+  - type: Spaceshroom
+    mindropcount: 2
+    maxdropcount: 3
+    dropradius: 1.2
+    harvesttime: 2.0
+
+# Object
+- type: entity
+  name: spaceshroom
+  parent: FoodProduceBase
+  id: FoodSpaceshroom
+  description: A wild mushroom that likes to grow in dark, moist environments.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - spaceshroom
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Misc/spaceshroom.rsi
+    state: object
+  - type: Produce
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: SpaceDrugs
+        Quantity: 10
+  - type: FoodSpaceshroom
+    solution: food
+        
+# Cooked Object
+- type: entity
+  name: cooked spaceshroom
+  parent: FoodProduceBase
+  id: FoodSpaceshroomCooked
+  description: Thoroughly cooked through.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - spaceshroomcooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Misc/spaceshroom.rsi
+    state: object_cooked
+  - type: Produce

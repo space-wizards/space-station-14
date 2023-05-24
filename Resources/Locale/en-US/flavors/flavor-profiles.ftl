@@ -42,6 +42,7 @@ flavor-base-cheap = cheap
 flavor-base-piquant = piquant
 flavor-base-sharp = sharp
 flavor-base-syrupy = syrupy
+flavor-base-spaceshroom = mysterious
 
 # lmao
 flavor-base-terrible = terrible
@@ -143,6 +144,7 @@ flavor-complex-chaos = like chaos
 flavor-complex-squirming = like squirming
 flavor-complex-electrons = like electrons
 flavor-complex-parents = like someone's parents
+flavor-complex-spaceshroom-cooked = like space umami
 
 # Drink-specific flavors.
 
