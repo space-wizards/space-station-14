@@ -11,7 +11,7 @@ namespace Content.Client.Arcade.UI
 
         //public SharedSpaceVillainArcadeComponent SpaceVillainArcade;
 
-        public SpaceVillainArcadeBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public SpaceVillainArcadeBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             SendAction(PlayerAction.RequestData);
         }
@@ -25,13 +25,6 @@ namespace Content.Client.Arcade.UI
         {
             base.Open();
 
-            /*if(!Owner.Owner.TryGetComponent(out SharedSpaceVillainArcadeComponent spaceVillainArcade))
-            {
-                return;
-            }
-
-            SpaceVillainArcade = spaceVillainArcade;*/
-
             _menu = new SpaceVillainArcadeMenu(this);
 
             _menu.OnClose += Close;
@@ -40,14 +33,16 @@ namespace Content.Client.Arcade.UI
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            if (message is SpaceVillainArcadeDataUpdateMessage msg) _menu?.UpdateInfo(msg);
+            if (message is SpaceVillainArcadeDataUpdateMessage msg)
+                _menu?.UpdateInfo(msg);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
 
-            if (disposing) _menu?.Dispose();
+            if (disposing)
+                _menu?.Dispose();
         }
     }
 }
