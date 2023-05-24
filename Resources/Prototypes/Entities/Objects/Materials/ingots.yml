@@ -115,13 +115,13 @@
       stackType: Elysium
       baseLayer: base
       layerStates:
-        - gold
-        - gold_2
-        - gold_3
+        - elysium
+        - elysium_2
+        - elysium_3
     - type: Sprite
-      state: gold_3
+      state: elysium_3
       layers:
-        - state: gold_3
+        - state: elysium_3
           map: ["base"]
     - type: Item
       heldPrefix: elysium
