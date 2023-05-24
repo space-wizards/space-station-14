@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "taken at https://github.com/ParadiseSS13/Paradise/blob/8b7f4c8b69c74c6de5a755272eb8d3520f3d87c7/icons/turf/floors.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "broken_wood1"
+        },
+        {
+            "name": "broken_wood2"
+        },
+        {
+            "name": "broken_wood3"
+        },
+        {
+            "name": "broken_wood4"
+        },
+        {
+            "name": "broken_wood5"
+        },
+        {
+            "name": "broken_wood6"
+        },
+        {
+            "name": "broken_wood7"
+        }
+    ]
+}
