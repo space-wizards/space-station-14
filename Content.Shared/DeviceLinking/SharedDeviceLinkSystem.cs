@@ -9,6 +9,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    private ISawmill _sawmill = default!;
 
     public const string InvokedPort = "link_port";
 
@@ -19,6 +20,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentStartup>(OnSinkStartup);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentRemove>(OnSourceRemoved);
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentRemove>(OnSinkRemoved);
+        _sawmill = Logger.GetSawmill("devicelink");
     }
 
     #region Link Validation
@@ -102,9 +104,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// </summary>
     private void OnSourceRemoved(EntityUid uid, DeviceLinkSourceComponent component, ComponentRemove args)
     {
+        var query = GetEntityQuery<DeviceLinkSinkComponent>();
         foreach (var sinkUid in component.LinkedPorts.Keys)
         {
-            RemoveSinkFromSource(uid, sinkUid, component);
+            if (query.TryGetComponent(sinkUid, out var sink))
+                RemoveSinkFromSourceInternal(uid, sinkUid, component, sink);
         }
     }
 
@@ -113,9 +117,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// </summary>
     private void OnSinkRemoved(EntityUid sinkUid, DeviceLinkSinkComponent sinkComponent, ComponentRemove args)
     {
+        var query = GetEntityQuery<DeviceLinkSourceComponent>();
         foreach (var linkedSource in sinkComponent.LinkedSources)
         {
-            RemoveSinkFromSource(linkedSource, sinkUid, null, sinkComponent);
+            if (query.TryGetComponent(sinkUid, out var source))
+                RemoveSinkFromSourceInternal(linkedSource, sinkUid, source, sinkComponent);
         }
     }
 
@@ -318,8 +324,37 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         DeviceLinkSourceComponent? sourceComponent = null,
         DeviceLinkSinkComponent? sinkComponent = null)
     {
-        if (!Resolve(sourceUid, ref sourceComponent, false) || !Resolve(sinkUid, ref sinkComponent, false))
+        if (Resolve(sourceUid, ref sourceComponent, false) && Resolve(sinkUid, ref sinkComponent, false))
+        {
+            RemoveSinkFromSourceInternal(sourceUid, sinkUid, sourceComponent, sinkComponent);
             return;
+        }
+
+        if (sourceComponent == null && sinkComponent == null)
+        {
+            // Both were delted?
+            return;
+        }
+
+        if (sourceComponent == null)
+        {
+            _sawmill.Error($"Attempted to remove link between {ToPrettyString(sourceUid)} and {ToPrettyString(sinkUid)}, but the source component was missing.");
+            sinkComponent!.LinkedSources.Remove(sourceUid);
+        }
+        else
+        {
+            _sawmill.Error($"Attempted to remove link between {ToPrettyString(sourceUid)} and {ToPrettyString(sinkUid)}, but the sink component was missing.");
+            sourceComponent.LinkedPorts.Remove(sourceUid);
+        }
+    }
+
+    private void RemoveSinkFromSourceInternal(
+        EntityUid sourceUid,
+        EntityUid sinkUid,
+        DeviceLinkSourceComponent sourceComponent,
+        DeviceLinkSinkComponent sinkComponent)
+    {
+        // This function gets called on component removal. Beware that TryComp & Resolve may return false.
 
         if (sourceComponent.LinkedPorts.TryGetValue(sinkUid, out var ports))
         {
