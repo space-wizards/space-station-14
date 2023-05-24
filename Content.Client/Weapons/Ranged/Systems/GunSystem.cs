@@ -357,7 +357,7 @@ public sealed partial class GunSystem : SharedGunSystem
         }
     }
 
-    private void SetCollisionMaskForPrototype(EntityUid bulletUid)
+    private void SetCollisionMaskForAmmo(EntityUid bulletUid)
     {
         if (GetCurrentPlayerGunForAnyMode() is not GunComponent gun)
             return;
