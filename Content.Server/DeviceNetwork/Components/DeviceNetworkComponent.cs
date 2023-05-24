@@ -107,7 +107,7 @@ namespace Content.Server.DeviceNetwork.Components
         ///     When a device subscribes to the deletion of another device the entity id of the device being subscribed
         ///     to also gets saved on the subscribing device.
         /// </summary>
-        [DataField("OnDeletionSubscribers")]
+        [DataField("ShutdownSubscribers")]
         public HashSet<EntityUid> ShutdownSubscribers = new();
     }
 }
