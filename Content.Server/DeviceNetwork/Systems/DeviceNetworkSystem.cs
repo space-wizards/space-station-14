@@ -111,7 +111,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnNetworkShutdown(EntityUid uid, DeviceNetworkComponent component, ComponentShutdown args)
         {
-            var eventArgs = new DeviceShutdownEvent(uid);
+            var eventArgs = new DeviceShutDownEvent(uid);
 
             foreach (var shutdownSubscriberId in component.ShutdownSubscribers)
             {
@@ -249,7 +249,7 @@ namespace Content.Server.DeviceNetwork.Systems
             targetDevice.ShutdownSubscribers.Add(subscriberId);
             subscribingDevice.ShutdownSubscribers.Add(targetId);
         }
-        
+
         public void UnsubscribeFromDeviceShutdown(
             EntityUid subscriberId, EntityUid targetId,
             DeviceNetworkComponent? subscribingDevice = null,
@@ -450,6 +450,10 @@ namespace Content.Server.DeviceNetwork.Systems
         }
     }
 
+    /// <summary>
+    /// Gets raised on entities that subscribed to shutdown event of the shut down entity
+    /// </summary>
+    /// <param name="ShutDownEntityUid">The entity that was shut down</param>
     [ByRefEvent]
-    public readonly record struct DeviceShutdownEvent(EntityUid DeletedEntityUid);
+    public readonly record struct DeviceShutDownEvent(EntityUid ShutDownEntityUid);
 }

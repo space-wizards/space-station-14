@@ -22,7 +22,7 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         SubscribeLocalEvent<DeviceListComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<DeviceListComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
         SubscribeLocalEvent<DeviceListComponent, BeforePacketSentEvent>(OnBeforePacketSent);
-        SubscribeLocalEvent<DeviceListComponent, DeviceShutdownEvent>(OnDeviceShutdown);
+        SubscribeLocalEvent<DeviceListComponent, DeviceShutDownEvent>(OnDeviceShutdown);
         SubscribeLocalEvent<BeforeSaveEvent>(OnMapSave);
         _sawmill = Logger.GetSawmill("devicelist");
     }
@@ -106,9 +106,9 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
             args.Cancel();
     }
 
-    private void OnDeviceShutdown(EntityUid uid, DeviceListComponent component, ref DeviceShutdownEvent args)
+    private void OnDeviceShutdown(EntityUid uid, DeviceListComponent component, ref DeviceShutDownEvent args)
     {
-        component.Devices.Remove(args.DeletedEntityUid);
+        component.Devices.Remove(args.ShutDownEntityUid);
         Dirty(component);
     }
 
