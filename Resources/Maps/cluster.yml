@@ -6802,14 +6802,14 @@ entities:
     - pos: -34.5,9.5
       parent: 1
       type: Transform
-- proto: AMEController
+- proto: AmeController
   entities:
   - uid: 6778
     components:
     - pos: 29.5,-6.5
       parent: 1
       type: Transform
-- proto: AMEPart
+- proto: AmePart
   entities:
   - uid: 6775
     components:

@@ -1,16 +1,16 @@
 - type: constructionGraph
-  id: AMEShielding
+  id: AmeShielding
   start: start
   graph:
     - node: start
 
     - node: ameShielding
-      entity: AMEShielding
+      entity: AmeShielding
       edges:
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: AMEPart
+              prototype: AmePart
               amount: 1
             - !type:DeleteEntity
           steps:

@@ -4,66 +4,39 @@ using static Content.Shared.AME.SharedAMEShieldComponent;
 
 namespace Content.Client.AME;
 
-public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShieldingVisualsComponent>
+public sealed class AmeShieldingVisualizerSystem : VisualizerSystem<AmeShieldingVisualsComponent>
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AMEShieldingVisualsComponent, ComponentInit>(OnComponentInit);
-    }
-
-    private void OnComponentInit(EntityUid uid, AMEShieldingVisualsComponent component, ComponentInit args)
-    {
-        if (TryComp<SpriteComponent>(uid, out var sprite))
-        {
-            sprite.LayerMapSet(AMEShieldingVisualsLayer.Core, sprite.AddLayerState("core"));
-            sprite.LayerSetVisible(AMEShieldingVisualsLayer.Core, false);
-            sprite.LayerMapSet(AMEShieldingVisualsLayer.CoreState, sprite.AddLayerState("core_weak"));
-            sprite.LayerSetVisible(AMEShieldingVisualsLayer.CoreState, false);
-        }
-    }
-
-    protected override void OnAppearanceChange(EntityUid uid, AMEShieldingVisualsComponent component, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, AmeShieldingVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData<string>(uid, AMEShieldVisuals.Core, out var core, args.Component))
-        {
-            if (core == "isCore")
-            {
-                args.Sprite.LayerSetState(AMEShieldingVisualsLayer.Core, "core");
-                args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.Core, true);
+        if (!AppearanceSystem.TryGetData<bool>(uid, AmeShieldVisuals.Core, out var core, args.Component))
+            core = false;
 
-            }
-            else
-            {
-                args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.Core, false);
-            }
-        }
+        args.Sprite.LayerSetVisible(AmeShieldingVisualsLayer.Core, core);
 
-        if (AppearanceSystem.TryGetData<string>(uid, AMEShieldVisuals.CoreState, out var coreState, args.Component))
+        if (!AppearanceSystem.TryGetData<AmeCoreState>(uid, AmeShieldVisuals.CoreState, out var coreState, args.Component))
+            coreState = AmeCoreState.Off;
+
+        switch (coreState)
         {
-            switch (coreState)
-            {
-                case "weak":
-                    args.Sprite.LayerSetState(AMEShieldingVisualsLayer.CoreState, "core_weak");
-                    args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.CoreState, true);
-                    break;
-                case "strong":
-                    args.Sprite.LayerSetState(AMEShieldingVisualsLayer.CoreState, "core_strong");
-                    args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.CoreState, true);
-                    break;
-                case "off":
-                    args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.CoreState, false);
-                    break;
-            }
+            case AmeCoreState.Weak:
+                args.Sprite.LayerSetState(AmeShieldingVisualsLayer.CoreState, component.StableState);
+                args.Sprite.LayerSetVisible(AmeShieldingVisualsLayer.CoreState, true);
+                break;
+            case AmeCoreState.Strong:
+                args.Sprite.LayerSetState(AmeShieldingVisualsLayer.CoreState, component.UnstableState);
+                args.Sprite.LayerSetVisible(AmeShieldingVisualsLayer.CoreState, true);
+                break;
+            case AmeCoreState.Off:
+                args.Sprite.LayerSetVisible(AmeShieldingVisualsLayer.CoreState, false);
+                break;
         }
     }
 }
 
-public enum AMEShieldingVisualsLayer : byte
+public enum AmeShieldingVisualsLayer : byte
 {
     Core,
     CoreState,

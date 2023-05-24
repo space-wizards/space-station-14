@@ -4,59 +4,41 @@ using static Content.Shared.AME.SharedAMEControllerComponent;
 
 namespace Content.Client.AME;
 
-public sealed class AMEControllerVisualizerSystem : VisualizerSystem<AMEControllerVisualsComponent>
+public sealed class AmeControllerVisualizerSystem : VisualizerSystem<AmeControllerVisualsComponent>
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AMEControllerVisualsComponent, ComponentInit>(OnComponentInit);
-    }
-
-    private void OnComponentInit(EntityUid uid, AMEControllerVisualsComponent component, ComponentInit args)
-    {
-        if (TryComp<SpriteComponent>(uid, out var sprite))
-        {
-            sprite.LayerMapSet(AMEControllerVisualLayers.Display, sprite.AddLayerState("control_on"));
-            sprite.LayerSetVisible(AMEControllerVisualLayers.Display, false);
-        }
-    }
-
-    protected override void OnAppearanceChange(EntityUid uid, AMEControllerVisualsComponent component, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, AmeControllerVisualsComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
 
         if (args.Sprite == null
-            || !AppearanceSystem.TryGetData<string>(uid, AMEControllerVisuals.DisplayState, out var state, args.Component))
-        {
+        || !AppearanceSystem.TryGetData<AmeControllerState>(uid, AmeControllerVisuals.DisplayState, out var state, args.Component))
             return;
-        }
 
         switch (state)
         {
-            case "on":
-                args.Sprite.LayerSetState(AMEControllerVisualLayers.Display, "control_on");
-                args.Sprite.LayerSetVisible(AMEControllerVisualLayers.Display, true);
+            case AmeControllerState.On:
+                args.Sprite.LayerSetState(AmeControllerVisualLayers.Display, component.StateOn);
+                args.Sprite.LayerSetVisible(AmeControllerVisualLayers.Display, true);
                 break;
-            case "critical":
-                args.Sprite.LayerSetState(AMEControllerVisualLayers.Display, "control_critical");
-                args.Sprite.LayerSetVisible(AMEControllerVisualLayers.Display, true);
+            case AmeControllerState.Critical:
+                args.Sprite.LayerSetState(AmeControllerVisualLayers.Display, component.StateCritical);
+                args.Sprite.LayerSetVisible(AmeControllerVisualLayers.Display, true);
                 break;
-            case "fuck":
-                args.Sprite.LayerSetState(AMEControllerVisualLayers.Display, "control_fuck");
-                args.Sprite.LayerSetVisible(AMEControllerVisualLayers.Display, true);
+            case AmeControllerState.Fuck:
+                args.Sprite.LayerSetState(AmeControllerVisualLayers.Display, component.StateFuck);
+                args.Sprite.LayerSetVisible(AmeControllerVisualLayers.Display, true);
                 break;
-            case "off":
-                args.Sprite.LayerSetVisible(AMEControllerVisualLayers.Display, false);
+            case AmeControllerState.Off:
+                args.Sprite.LayerSetVisible(AmeControllerVisualLayers.Display, false);
                 break;
             default:
-                args.Sprite.LayerSetVisible(AMEControllerVisualLayers.Display, false);
+                args.Sprite.LayerSetVisible(AmeControllerVisualLayers.Display, false);
                 break;
         }
     }
 }
 
-public enum AMEControllerVisualLayers : byte
+public enum AmeControllerVisualLayers : byte
 {
     Display
 }

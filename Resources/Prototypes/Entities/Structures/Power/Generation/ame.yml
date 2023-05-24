@@ -1,5 +1,5 @@
 - type: entity
-  id: AMEController
+  id: AmeController
   name: AME controller
   description: It's a controller for the antimatter engine.
   placement:
@@ -45,19 +45,19 @@
     noRot: true
   - type: Anchorable
   - type: Pullable
-  - type: AMEController
+  - type: AmeController
   - type: Explosive
     explosionType: Default
     intensitySlope: 5
     maxIntensity: 60
   - type: ActivatableUI
-    key: enum.AMEControllerUiKey.Key
+    key: enum.AmeControllerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.AMEControllerUiKey.Key
-      type: AMEControllerBoundUserInterface
+    - key: enum.AmeControllerUiKey.Key
+      type: AmeControllerBoundUserInterface
   - type: Appearance
-  - type: AMEControllerVisuals
+  - type: AmeControllerVisuals
   - type: NodeContainer
     examinable: true
     nodes:
@@ -73,7 +73,7 @@
     supplyRate: 0
   - type: ContainerContainer
     containers:
-      AMEController-fuelJarContainer: !type:ContainerSlot {}
+      AmeController-fuelJarContainer: !type:ContainerSlot {}
   - type: GuideHelp
     guides: [ AME, Power ]
   - type: Electrified
@@ -86,8 +86,8 @@
 
 - type: entity
   noSpawn: true
-  parent: AMEController
-  id: AMEControllerUnanchored
+  parent: AmeController
+  id: AmeControllerUnanchored
   suffix: Unanchored
   components:
   - type: Transform
@@ -96,7 +96,7 @@
     bodyType: Dynamic
 
 - type: entity
-  id: AMEShielding
+  id: AmeShielding
   name: AME shielding
   description: Keeps the antimatter in and the matter out.
   placement:
@@ -143,7 +143,7 @@
     mode: CardinalFlags
     base: shield_
     key: ame_shield
-  - type: AMEShield
+  - type: AmeShield
   - type: NodeContainer
     nodes:
       ame:
@@ -155,9 +155,9 @@
     energy: 0.5
     color: "#00AAFF"
   - type: Appearance
-  - type: AMEShieldingVisuals
+  - type: AmeShieldingVisuals
   - type: Construction
-    graph: AMEShielding
+    graph: AmeShielding
     node: ameShielding
   - type: GuideHelp
     guides: [ AME, Power ]

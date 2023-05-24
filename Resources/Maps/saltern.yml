@@ -4384,14 +4384,14 @@ entities:
     - pos: -36.5,13.5
       parent: 31
       type: Transform
-- proto: AMEController
+- proto: AmeController
   entities:
   - uid: 6636
     components:
     - pos: 50.5,7.5
       parent: 31
       type: Transform
-- proto: AMEPart
+- proto: AmePart
   entities:
   - uid: 3475
     components:
