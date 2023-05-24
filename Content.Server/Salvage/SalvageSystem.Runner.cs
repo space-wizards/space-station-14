@@ -44,9 +44,13 @@ public sealed partial class SalvageSystem
         // TODO: This is terrible but need bluespace harnesses or something.
         var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
 
-        while (query.MoveNext(out var _, out var _, out var mobXform))
+        while (query.MoveNext(out var uid, out var mobState, out var mobXform))
         {
             if (mobXform.MapUid != xform.MapUid)
+                continue;
+
+            // Don't count unidentified humans (loot) or anyone you murdered so you can still maroon them once dead.
+            if (_mobState.IsDead(uid, mobState))
                 continue;
 
             // Okay they're on salvage, so are they on the shuttle.
