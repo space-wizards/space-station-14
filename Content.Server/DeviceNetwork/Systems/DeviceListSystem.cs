@@ -61,7 +61,7 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         return devices;
     }
 
-    protected override void UpdateRemovalSubscription(EntityUid uid, List<EntityUid> newDevices, List<EntityUid> oldDevices)
+    protected override void UpdateShutdownSubscription(EntityUid uid, List<EntityUid> newDevices, List<EntityUid> oldDevices)
     {
         foreach (var device in newDevices)
         {

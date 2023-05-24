@@ -36,7 +36,7 @@ public abstract class SharedDeviceListSystem : EntitySystem
 
         deviceList.Devices = newDevices;
 
-        UpdateRemovalSubscription(uid, devicesList, oldDevices);
+        UpdateShutdownSubscription(uid, devicesList, oldDevices);
 
         RaiseLocalEvent(uid, new DeviceListUpdateEvent(oldDevices, devicesList));
 
@@ -54,7 +54,7 @@ public abstract class SharedDeviceListSystem : EntitySystem
         return component.Devices;
     }
 
-    protected virtual void UpdateRemovalSubscription(EntityUid uid, List<EntityUid> devicesList, List<EntityUid> oldDevices)
+    protected virtual void UpdateShutdownSubscription(EntityUid uid, List<EntityUid> devicesList, List<EntityUid> oldDevices)
     {
     }
 
