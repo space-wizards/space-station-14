@@ -106,8 +106,7 @@ public sealed class AnomalyComponent : Component
     public float PulseVariation = 0.1f;
 
     /// <summary>
-    /// The largest value by which the anomaly will vary in stability for each pulse.
-    /// In simple terms, every pulse, stability changes from a range of -this_value to this_value
+    /// The range that an anomaly's stability can vary each pulse. Scales with severity.
     /// </summary>
     /// <remarks>
     /// This is more likely to trend upwards than donwards, because that's funny
