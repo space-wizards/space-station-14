@@ -78,27 +78,30 @@
   result: ClothingBackpackHolding
   completetime: 5
   materials:
-    Steel: 1500
-    Plastic: 750
-    Plasma: 1000
+    Steel: 2000
+    Silver: 750
+    Plasma: 1500
+    Uranium: 1500
 
 - type: latheRecipe
   id: ClothingBackpackSatchelHolding
   result: ClothingBackpackSatchelHolding
   completetime: 5
   materials:
-    Steel: 1500
-    Plastic: 750
-    Plasma: 1000
+    Steel: 2000
+    Silver: 750
+    Plasma: 1500
+    Uranium: 1500
 
 - type: latheRecipe
   id: ClothingBackpackDuffelHolding
   result: ClothingBackpackDuffelHolding
   completetime: 5
   materials:
-    Steel: 1500
-    Plastic: 750
-    Plasma: 1000
+    Steel: 2000
+    Silver: 750
+    Plasma: 1500
+    Uranium: 1500
 
 - type: latheRecipe
   id: WeaponForceGun

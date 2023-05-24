@@ -1426,20 +1426,6 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        /// Controls whether new resources can be uploaded by admins.
-        /// Does not prevent already uploaded resources from being sent.
-        /// </summary>
-        public static readonly CVarDef<bool> ResourceUploadingEnabled =
-            CVarDef.Create("netres.enabled", true, CVar.REPLICATED | CVar.SERVER);
-
-        /// <summary>
-        /// Controls the data size limit in megabytes for uploaded resources. If they're too big, they will be dropped.
-        /// Set to zero or a negative value to disable limit.
-        /// </summary>
-        public static readonly CVarDef<float> ResourceUploadingLimitMb =
-            CVarDef.Create("netres.limit", 3f, CVar.REPLICATED | CVar.SERVER);
-
-        /// <summary>
         /// Whether uploaded files will be stored in the server's database.
         /// This is useful to keep "logs" on what files admins have uploaded in the past.
         /// </summary>

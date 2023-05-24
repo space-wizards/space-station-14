@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -22,6 +23,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -53,7 +55,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
    private ISawmill _sawmill = default!;
 
    public MapId? CentComMap { get; private set; }
-   public EntityUid? CentCom { get; private set; }
+   public EntityUid? CentComGrid { get; private set; }
 
    /// <summary>
    /// Used for multiple shuttle spawn offsets.
@@ -73,7 +75,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        // Don't immediately invoke as roundstart will just handle it.
        _configManager.OnValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
-       SubscribeLocalEvent<StationDataComponent, ComponentStartup>(OnStationStartup);
+       SubscribeLocalEvent<StationEmergencyShuttleComponent, ComponentStartup>(OnStationStartup);
        SubscribeNetworkEvent<EmergencyShuttleRequestPositionMessage>(OnShuttleRequestPosition);
        InitializeEmergencyConsole();
    }
@@ -115,19 +117,22 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
            return;
 
        var player = args.SenderSession.AttachedEntity;
+       if (player is null)
+           return;
 
-       if (player == null ||
-           !TryComp<StationDataComponent>(_station.GetOwningStation(player.Value), out var stationData) ||
-           !HasComp<ShuttleComponent>(stationData.EmergencyShuttle))
+       var station = _station.GetOwningStation(player.Value);
+
+       if (!TryComp<StationEmergencyShuttleComponent>(station, out var stationShuttle) ||
+           !HasComp<ShuttleComponent>(stationShuttle.EmergencyShuttle))
        {
            return;
        }
 
-       var targetGrid = _station.GetLargestGrid(stationData);
+       var targetGrid = _station.GetLargestGrid(Comp<StationDataComponent>(station.Value));
        if (targetGrid == null)
            return;
 
-       var config = _dock.GetDockingConfig(stationData.EmergencyShuttle.Value, targetGrid.Value, DockTag);
+       var config = _dock.GetDockingConfig(stationShuttle.EmergencyShuttle.Value, targetGrid.Value, DockTag);
        if (config == null)
            return;
 
@@ -143,14 +148,14 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
    /// </summary>
    public void CallEmergencyShuttle(EntityUid? stationUid)
    {
-       if (!TryComp<StationDataComponent>(stationUid, out var stationData) ||
-           !TryComp<TransformComponent>(stationData.EmergencyShuttle, out var xform) ||
-           !TryComp<ShuttleComponent>(stationData.EmergencyShuttle, out var shuttle))
+       if (!TryComp<StationEmergencyShuttleComponent>(stationUid, out var stationShuttle) ||
+           !TryComp<TransformComponent>(stationShuttle.EmergencyShuttle, out var xform) ||
+           !TryComp<ShuttleComponent>(stationShuttle.EmergencyShuttle, out var shuttle))
        {
            return;
        }
 
-       var targetGrid = _station.GetLargestGrid(stationData);
+       var targetGrid = _station.GetLargestGrid(Comp<StationDataComponent>(stationUid.Value));
 
        // UHH GOOD LUCK
        if (targetGrid == null)
@@ -164,11 +169,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
        var xformQuery = GetEntityQuery<TransformComponent>();
 
-       if (_shuttle.TryFTLDock(stationData.EmergencyShuttle.Value, shuttle, targetGrid.Value, DockTag))
+       if (_shuttle.TryFTLDock(stationShuttle.EmergencyShuttle.Value, shuttle, targetGrid.Value, DockTag))
        {
            if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
            {
-               var angle = _dock.GetAngle(stationData.EmergencyShuttle.Value, xform, targetGrid.Value, targetXform, xformQuery);
+               var angle = _dock.GetAngle(stationShuttle.EmergencyShuttle.Value, xform, targetGrid.Value, targetXform, xformQuery);
                _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir())), playDefaultSound: false);
            }
 
@@ -180,7 +185,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        {
            if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
            {
-               var angle = _dock.GetAngle(stationData.EmergencyShuttle.Value, xform, targetGrid.Value, targetXform, xformQuery);
+               var angle = _dock.GetAngle(stationShuttle.EmergencyShuttle.Value, xform, targetGrid.Value, targetXform, xformQuery);
                _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-nearby", ("direction", angle.GetDir())), playDefaultSound: false);
            }
 
@@ -190,13 +195,24 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        }
    }
 
-   private void OnStationStartup(EntityUid uid, StationDataComponent component, ComponentStartup args)
+   private void OnStationStartup(EntityUid uid, StationEmergencyShuttleComponent component, ComponentStartup args)
    {
        AddEmergencyShuttle(component);
    }
 
    private void OnRoundStart(RoundStartingEvent ev)
    {
+       if (CentComMap != null)
+           _mapManager.DeleteMap(CentComMap.Value);
+
+       // Just in case the grid isn't on the map.
+       DebugTools.Assert(Deleted(CentComGrid));
+       if (CentComGrid != null)
+           Del(CentComGrid.Value);
+
+       CentComGrid = null;
+       CentComMap = null;
+
        CleanupEmergencyConsole();
        SetupEmergencyShuttle();
    }
@@ -244,34 +260,33 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        if (!string.IsNullOrEmpty(centComPath))
        {
            var centcomm = _map.LoadGrid(CentComMap.Value, "/Maps/centcomm.yml");
-           CentCom = centcomm;
+           CentComGrid = centcomm;
 
-           if (CentCom != null)
-               _shuttle.AddFTLDestination(CentCom.Value, false);
+           if (CentComGrid != null)
+               _shuttle.AddFTLDestination(CentComGrid.Value, false);
        }
        else
        {
            _sawmill.Info("No CentCom map found, skipping setup.");
        }
 
-       foreach (var comp in EntityQuery<StationDataComponent>(true))
+       foreach (var comp in EntityQuery<StationEmergencyShuttleComponent>(true))
        {
            AddEmergencyShuttle(comp);
        }
    }
 
-   private void AddEmergencyShuttle(StationDataComponent component)
+   private void AddEmergencyShuttle(StationEmergencyShuttleComponent component)
    {
        if (!_emergencyShuttleEnabled
            || CentComMap == null
-           || component.EmergencyShuttle != null
-           || component.StationConfig == null)
+           || component.EmergencyShuttle != null)
        {
            return;
        }
 
        // Load escape shuttle
-       var shuttlePath = component.StationConfig.EmergencyShuttlePath;
+       var shuttlePath = component.EmergencyShuttlePath;
        var shuttle = _map.LoadGrid(CentComMap.Value, shuttlePath.ToString(), new MapLoadOptions()
        {
            // Should be far enough... right? I'm too lazy to bounds check CentCom rn.

@@ -516,7 +516,6 @@
     state: pumpPressure
   conditions:
     - !type:TileNotBlocked {}
-    - !type:NoUnstackableInTile
 
 - type: construction
   name: volumetric gas pump
@@ -538,7 +537,6 @@
     state: pumpVolume
   conditions:
     - !type:TileNotBlocked {}
-    - !type:NoUnstackableInTile
 
 - type: construction
   id: GasPassiveGate
@@ -560,7 +558,6 @@
     state: pumpPassiveGate
   conditions:
     - !type:TileNotBlocked {}
-    - !type:NoUnstackableInTile
 
 - type: construction
   id: GasValve
@@ -582,7 +579,6 @@
     state: pumpManualValve
   conditions:
     - !type:TileNotBlocked {}
-    - !type:NoUnstackableInTile
 
 - type: construction
   id: SignalControlledValve
@@ -604,7 +600,6 @@
     state: pumpSignalValve
   conditions:
   - !type:TileNotBlocked {}
-  - !type:NoUnstackableInTile
 
 - type: construction
   id: GasPort
@@ -626,7 +621,6 @@
     state: gasCanisterPort
   conditions:
     - !type:TileNotBlocked {}
-    - !type:NoUnstackableInTile
 
 - type: construction
   id: GasDualPortVentPump
@@ -684,24 +678,6 @@
   mirror: GasFilter
   conditions:
     - !type:TileNotBlocked {}
-    - !type:NoUnstackableInTile
-
-- type: construction
-  id: GasFilterFlipped
-  name: gas filter [flipped]
-  description: Very useful for filtering gases.
-  graph: GasTrinary
-  startNode: start
-  targetNode: filter
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
-    state: gasFilterF
-  conditions:
-    - !type:TileNotBlocked {}
-    - !type:NoUnstackableInTile
 
 - type: construction
   id: GasMixer
@@ -736,25 +712,7 @@
     state: gasMixerF
   mirror: GasMixer
   conditions:
-    - !type:TileNotBlocked
-    - !type:NoUnstackableInTile
-
-- type: construction
-  id: GasMixerFlipped
-  name: gas mixer [flipped]
-  description: Very useful for mixing gases.
-  graph: GasTrinary
-  startNode: start
-  targetNode: mixer
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/gasmixer.rsi
-    state: gasMixerF
-  conditions:
-    - !type:TileNotBlocked
-    - !type:NoUnstackableInTile
+    - !type:TileNotBlocked {}
 
 - type: construction
   id: PressureControlledValve
@@ -770,8 +728,7 @@
     sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
     state: off
   conditions:
-    - !type:TileNotBlocked
-    - !type:NoUnstackableInTile
+    - !type:TileNotBlocked {}
 
 # INTERCOM
 - type: construction

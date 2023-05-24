@@ -480,6 +480,17 @@
 
 - type: entity
   parent: ClothingBeltStorageBase
+  id: ClothingBeltMercWebbing
+  name: mercenarie webbing
+  description: Ideal for storing everything from ammo to weapons and combat essentials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/mercwebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/mercwebbing.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
   id: ClothingBeltSalvageWebbing
   name: salvage rig
   description: Universal unloading system for work in space.
