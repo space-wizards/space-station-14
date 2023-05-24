@@ -174,13 +174,15 @@ namespace Content.Server.Salvage
 
         private void OnRefreshParts(EntityUid uid, SalvageMagnetComponent component, RefreshPartsEvent args)
         {
-            var rating = args.PartRatings[component.MachinePartHoldTime] - 1;
-            component.HoldTime = component.BaseHoldTime * MathF.Pow(component.PartRatingHoldTime, rating);
+            var rating = args.PartRatings[component.MachinePartDelay] - 1;
+            var factor = MathF.Pow(component.PartRatingDelay, rating);
+            component.AttachingTime = component.BaseAttachingTime * factor;
+            component.CooldownTime = component.BaseCooldownTime * factor;
         }
 
         private void OnUpgradeExamine(EntityUid uid, SalvageMagnetComponent component, UpgradeExamineEvent args)
         {
-            args.AddPercentageUpgrade("salvage-system-magnet-hold-time-upgrade", (float) (component.HoldTime / component.BaseHoldTime));
+            args.AddPercentageUpgrade("salvage-system-magnet-delay-upgrade", (float) (component.CooldownTime / component.BaseCooldownTime));
         }
 
         private void OnExamined(EntityUid uid, SalvageMagnetComponent component, ExaminedEvent args)

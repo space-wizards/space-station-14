@@ -8,16 +8,16 @@ namespace Content.Shared.Salvage;
 public abstract class SharedSalvageMagnetComponent : Component
 {
     /// <summary>
-    /// The machine part that affects the hold time
+    /// The machine part that affects the attaching and cooldown times
     /// </summary>
-    [DataField("machinePartHoldTime", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string MachinePartHoldTime = "Capacitor";
+    [DataField("machinePartDelay", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public string MachinePartDelay = "Capacitor";
 
     /// <summary>
-    /// A multiplier applied to the hold time for each level of <see cref="MachinePartHoldTime"/>
+    /// A multiplier applied to the attaching and cooldown times for each level of <see cref="MachinePartDelay"/>
     /// </summary>
-    [DataField("partRatingHoldTime"), ViewVariables(VVAccess.ReadWrite)]
-    public float PartRatingHoldTime = 1.25f;
+    [DataField("partRatingDelay"), ViewVariables(VVAccess.ReadWrite)]
+    public float PartRatingDelay = 0.75f;
 }
 
 [Serializable, NetSerializable]
