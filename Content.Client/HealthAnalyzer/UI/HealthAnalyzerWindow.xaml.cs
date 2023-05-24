@@ -36,6 +36,8 @@ namespace Content.Client.HealthAnalyzer.UI
 
                 text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n");
 
+                text.Append(String.Format("Temperature: {0:F1} °C\n", msg.Temperature - 273f));
+
                 // Damage
                 text.Append($"\n{Loc.GetString("health-analyzer-window-entity-damage-total-text", ("amount", damageable.TotalDamage))}\n");
 
