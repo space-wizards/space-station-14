@@ -1,12 +1,12 @@
-- files: ["rain2.wav"]
+- files: ["rain2.ogg"]
   license: "Royalty free"
   copyright: "Varazuvi - Natural Environments"
-  source: "Taken from Soniss.com - GDC"
+  source: "https://sonniss.com/gameaudiogdc"
 
 - files: ["rain_heavy.ogg"]
   license: "Royalty free"
   copyright: "RATH - Rain Hard Loop 08"
-  source: "Taken from Soniss.com - GDC"
+  source: "https://sonniss.com/gameaudiogdc"
 
 - files: ["rain.ogg, snowstorm.ogg, snowstorm_weak.ogg, wind_2_1.ogg, wind_2_2.ogg, wind_3_1.ogg, wind_4_1.ogg, wind_4_2.ogg, wind_5_1.ogg"]
   license: "CC-BY-SA-3.0"
