@@ -773,6 +773,14 @@
   components:
     - type: GridFill
 
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleMining
+  suffix: External, Mining, Glass, Docking
+  components:
+  - type: GridFill
+    path: /Maps/Shuttles/mining.yml
+
 #HighSecDoors
 - type: entity
   parent: HighSecDoor
