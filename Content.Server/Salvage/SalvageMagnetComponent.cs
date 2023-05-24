@@ -24,14 +24,14 @@ namespace Content.Server.Salvage
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("offsetRadiusMin")]
-        public float OffsetRadiusMin = 0f;
+        public float OffsetRadiusMin = 24f;
 
         /// <summary>
         ///     Maximum distance from the offset position that will be used as a salvage's spawnpoint.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("offsetRadiusMax")]
-        public float OffsetRadiusMax = 0f;
+        public float OffsetRadiusMax = 48f;
 
         /// <summary>
         ///     The entity attached to the magnet
@@ -52,28 +52,35 @@ namespace Content.Server.Salvage
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("attachingTime")]
-        public TimeSpan AttachingTime = TimeSpan.FromSeconds(10);
+        public TimeSpan AttachingTime = TimeSpan.FromSeconds(30);
 
         /// <summary>
         ///     How long the magnet can hold the debris until it starts losing the lock
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("baseHoldTime")]
+        public TimeSpan BaseHoldTime = TimeSpan.FromSeconds(240);
+
+        /// <summary>
+        /// How long the magnet can actually hold the debris until it starts losing the lock
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("holdTime")]
-        public TimeSpan HoldTime = TimeSpan.FromSeconds(10);
+        public TimeSpan HoldTime = TimeSpan.FromSeconds(240);
 
         /// <summary>
         ///     How long the magnet can hold the debris while losing the lock
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("detachingTime")]
-        public TimeSpan DetachingTime = TimeSpan.FromSeconds(10);
+        public TimeSpan DetachingTime = TimeSpan.FromSeconds(30);
 
         /// <summary>
         ///     How long the magnet has to cool down after use
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("cooldownTime")]
-        public TimeSpan CooldownTime = TimeSpan.FromSeconds(10);
+        public TimeSpan CooldownTime = TimeSpan.FromSeconds(60);
 
         [DataField("salvageChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
         public string SalvageChannel = "Supply";

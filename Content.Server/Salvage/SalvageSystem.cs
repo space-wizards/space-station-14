@@ -1,3 +1,4 @@
+using Content.Server.Construction;
 using Content.Server.GameTicking;
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
@@ -61,6 +62,8 @@ namespace Content.Server.Salvage
 
             _sawmill = Logger.GetSawmill("salvage");
             SubscribeLocalEvent<SalvageMagnetComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<SalvageMagnetComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<SalvageMagnetComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<SalvageMagnetComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SalvageMagnetComponent, ComponentShutdown>(OnMagnetRemoval);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
@@ -167,6 +170,17 @@ namespace Content.Server.Salvage
                 Report(uid, component.SalvageChannel, "salvage-system-announcement-spawn-no-debris-available");
             }
             component.MagnetState = MagnetState.Inactive;
+        }
+
+        private void OnRefreshParts(EntityUid uid, SalvageMagnetComponent component, RefreshPartsEvent args)
+        {
+            var rating = args.PartRatings[component.MachinePartHoldTime] - 1;
+            component.HoldTime = component.BaseHoldTime * MathF.Pow(component.PartRatingHoldTime, rating);
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, SalvageMagnetComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("salvage-system-magnet-hold-time-upgrade", (float) (component.HoldTime / component.BaseHoldTime));
         }
 
         private void OnExamined(EntityUid uid, SalvageMagnetComponent component, ExaminedEvent args)
