@@ -39,9 +39,9 @@
   source: "https://github.com/tgstation/tgstation/blob/d775e1ac804eb9d0259573f5f29a18d320c97ef3/sound/effects/adminhelp.ogg"
 
 - files: ["hit_kick.ogg"]
-  license: "Unknown"
-  copyright: "By Taira Komori"
-  source: "https://taira-komori.jpn.org/freesounden.html"
+  license: "CC0 1.0"
+  copyright: "By florianreichelt"
+  source: "https://freesound.org/people/florianreichelt/sounds/460509/"
 
 - files: ["fire.ogg"]
   license: "CC0"
