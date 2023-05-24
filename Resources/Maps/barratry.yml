@@ -13218,14 +13218,14 @@ entities:
     - pos: 15.5,3.5
       parent: 1
       type: Transform
-- proto: AmeController
+- proto: AMEController
   entities:
   - uid: 10656
     components:
     - pos: -71.5,19.5
       parent: 1
       type: Transform
-- proto: AmeJar
+- proto: AMEJar
   entities:
   - uid: 5545
     components:

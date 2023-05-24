@@ -12172,7 +12172,7 @@ entities:
     - pos: -17.5,-71.5
       parent: 5350
       type: Transform
-- proto: AmeController
+- proto: AMEController
   entities:
   - uid: 23971
     components:

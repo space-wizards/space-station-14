@@ -549,14 +549,14 @@ entities:
       pos: -9.5,-16.5
       parent: 73
       type: Transform
-- proto: AmeController
+- proto: AMEController
   entities:
   - uid: 725
     components:
     - pos: -5.5,-23.5
       parent: 73
       type: Transform
-- proto: AmeJar
+- proto: AMEJar
   entities:
   - uid: 651
     components:
@@ -578,7 +578,7 @@ entities:
     - pos: -6.2820926,-22.42969
       parent: 73
       type: Transform
-- proto: AmeShielding
+- proto: AMEShielding
   entities:
   - uid: 69
     components:

@@ -13051,7 +13051,7 @@ entities:
     - pos: -25.5,19.5
       parent: 60
       type: Transform
-- proto: AmeController
+- proto: AMEController
   entities:
   - uid: 16064
     components:

@@ -102,7 +102,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
     {
-        var powered = TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) && powerSource.Powered;
+        var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
         var coreCount = TryGetAMENodeGroup(uid, out var group) ? group.CoreCount : 0;
 
         var hasJar = EntityManager.EntityExists(controller.JarSlot.ContainedEntity);
@@ -201,7 +201,7 @@ public sealed class AmeControllerSystem : EntitySystem
         // Admin alert
         var safeLimit = 0;
         if (TryGetAMENodeGroup(uid, out var group))
-            safeLimit = group.CoreCount;
+            safeLimit = group.CoreCount * 2;
 
         if (oldValue <= safeLimit && value > safeLimit)
             _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}", mind);

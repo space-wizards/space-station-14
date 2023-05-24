@@ -12,6 +12,11 @@
     snapCardinals: true
     sprite: Structures/Power/Generation/ame.rsi
     state: control
+    layers:
+    - state: control
+    - state: control_on
+      map: ["enum.AmeControllerVisualLayers.Display"]
+      visible: false
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -109,6 +114,15 @@
     drawdepth: Walls
     sprite: Structures/Power/Generation/ame.rsi
     state: shield_0
+    layers:
+    - state: shield_0
+    - state: core
+      map: ["enum.AmeShieldingVisualsLayer.Core"]
+      visible: false
+    - state: core_weak
+      map: ["enum.AmeShieldingVisualsLayer.CoreState"]
+      shader: unshaded
+      visible: false
   - type: Physics
   - type: Fixtures
     fixtures:

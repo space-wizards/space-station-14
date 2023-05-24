@@ -48,12 +48,12 @@ public sealed class AmePartSystem : EntitySystem
             return;
         }
 
-        var ent = EntityManager.SpawnEntity("AmeShielding", mapGrid.GridTileToLocal(snapPos));
+        var ent = Spawn("AmeShielding", mapGrid.GridTileToLocal(snapPos));
 
         _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(args.User):player} unpacked {ToPrettyString(ent)} at {Transform(ent).Coordinates} from {ToPrettyString(uid)}");
 
         _audioSystem.PlayPvs(component.UnwrapSound, uid);
 
-        EntityManager.QueueDeleteEntity(uid);
+        QueueDel(uid);
     }
 }
