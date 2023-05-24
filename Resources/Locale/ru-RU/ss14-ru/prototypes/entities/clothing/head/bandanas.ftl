@@ -14,3 +14,5 @@ ent-HatBandRed = красная бандана
     .desc = Красная бандана, чтобы выглядеть круто.
 ent-HatBandSkull = бандана с черепом
     .desc = Бандана с черепом, чтобы выглядеть еще круче.
+ent-HatBandMerc = mercenary bandana
+    .desc = To protect the head from the sun, insects and other dangers of the higher path.

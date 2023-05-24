@@ -13,6 +13,8 @@ uplink-edagger-name = Энергокинжал
 uplink-edagger-desc = Небольшой энергитический кинжал, удобно замаскированный под ручку.
 uplink-fire-axe-flaming-name = { ent-FireAxeFlaming }
 uplink-fire-axe-flaming-desc = Классическое оружие, оснащенное передовой атмос-технологией, позволяющей ему поджигать цели.
+uplink-gloves-north-star-name = Gloves of the North Star
+uplink-gloves-north-star-desc = A pair of gloves that reduce your punching cooldown drastically, allowing you to beat people to death in a flurry of punches.
 # Explosives
 uplink-explosive-grenade-name = { ent-ExGrenade }
 uplink-explosive-grenade-desc = { ent-ExGrenade.desc }

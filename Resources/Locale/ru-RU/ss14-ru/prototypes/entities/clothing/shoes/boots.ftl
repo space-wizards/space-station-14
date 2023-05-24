@@ -8,5 +8,7 @@ ent-ClothingShoesBootsPerformer = ботинки артиста
     .desc = Эти ботинки обеспечивают отличное сцепление с поверхностью, когда вы выходите на сцену.
 ent-ClothingShoesBootsCombat = армейские ботинки
     .desc = Надёжные армейские ботинки, для боевых операций или боевых действий. Борьба - всё, борьба - всегда.
+ent-ClothingShoesBootsMerc = mercenary boots
+    .desc = Boots that have gone through many conflicts and that have proven their combat reliability.
 ent-ClothingShoesBootsLaceup = шнурованные туфли
     .desc = Последний писк моды, и поставляются сразу отполированными!

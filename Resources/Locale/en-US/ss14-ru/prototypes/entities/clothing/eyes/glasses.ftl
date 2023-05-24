@@ -16,5 +16,7 @@ ent-ClothingEyesGlassesSunglasses = sun glasses
     .desc = Useful both for security and cargonia.
 ent-ClothingEyesGlassesSecurity = security sunglasses
     .desc = Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes. Often worn by budget security officers.
+ent-ClothingEyesGlassesMercenary = mercenary glasses
+    .desc = Glasses made for combat, to protect the eyes from bright blinding flashes.
 ent-ClothingEyesGlassesThermal = optical thermal scanner
     .desc = Thermals in the shape of glasses.
