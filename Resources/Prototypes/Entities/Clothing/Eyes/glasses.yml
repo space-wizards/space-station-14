@@ -144,3 +144,18 @@
       coefficients:
         Heat: 0.95
   - type: GroupExamine
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesScience
+  name: science goggles
+  description: A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/science.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/science.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
