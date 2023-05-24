@@ -44,7 +44,7 @@ public sealed partial class SalvageSystem
         // TODO: This is terrible but need bluespace harnesses or something.
         var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var mobState, out var mobXform))
+        while (query.MoveNext(out var uid, out var _, out var mobState, out var mobXform))
         {
             if (mobXform.MapUid != xform.MapUid)
                 continue;
