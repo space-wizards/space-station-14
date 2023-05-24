@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Head of security's common clothing now has slight armor, type: Tweak}
-  id: 3361
-  time: '2023-04-09T02:32:23.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Diona can now breathe CO2 and are not poisoned by it. They are still
@@ -2895,3 +2890,10 @@ Entries:
     type: Fix}
   id: 3860
   time: '2023-05-24T19:03:44.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Spacemen can now recognize common reagents, like water or beer, in
+      examinable solutions.', type: Add}
+  - {message: Puddle and glass drink solution contents are now examinable., type: Tweak}
+  id: 3861
+  time: '2023-05-24T23:08:06.0000000+00:00'
