@@ -1,0 +1,129 @@
+<Document>
+# Medical Doctor
+It's time to heal. Or at least, try to heal, anyway. Medical Doctors are the primary caretakers of every boo boo and ouchie crewmembers get on the station, be it a small scratch, or boiled skin.
+
+This guide will give you a basic outline of the treatment options you have available, triage, and other avenues of care.
+
+## The Basics
+There are two ways to tell what's ailing someone: Taking a scan (with a health analyzer or a medical PDA), or examining them, with a shift-click, and clicking the heart symbol.
+
+It's best to do both, if possible, as some things (such as poison, or radiation) don't show up on examination, while others (such as blood levels) don't show up on an analyzer.
+<Box>
+<GuideEntityEmbed Entity="SignExamroom" Caption="examine patient"/>
+<GuideEntityEmbed Entity="MedicalPDA"/>
+<GuideEntityEmbed Entity="MedicalInternPDA" Caption="intern PDA"/>
+<GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
+</Box>
+
+## Medication and Treatment Options
+Before we go any further, it's probably a good idea to go over damage types, and what will heal them The wiki has more extensive info available, but these are commonly used.
+
+An important note: Most medication has an overdose level, which will cause harm to your patient. Chemicals also take time to metabolise in pill form, if you want things to act quickly, use a syringe.
+
+- Brute Damage: Bicaridine and Bruise Packs
+- Burn Damage: Dermaline and Ointment
+- Toxin (Poison): Dylovene
+- Toxin (Radiation) Hyronalin or Arithrazine
+- Airloss: Dexaline or Inaprovaline
+- Bloodloss: Dexaline (Examine the patient, if pale, they still need blood or iron.)
+- Bleeding: Tranexamic acid and Gauze
+
+Many stations are stocked with kits in storage, and all medics have some equipment in their starting belt.
+
+<Box>
+<GuideEntityEmbed Entity="MedkitFilled"/>
+<GuideEntityEmbed Entity="MedkitBruteFilled" Caption="brute kit"/>
+<GuideEntityEmbed Entity="MedkitRadiationFilled" Caption="radiation kit"/>
+<GuideEntityEmbed Entity="MedkitBurnFilled" Caption="burn kit"/>
+<GuideEntityEmbed Entity="MedkitToxinFilled" Caption="toxin kit"/>
+</Box>
+
+<Box>
+<GuideEntityEmbed Entity="Brutepack"/>
+<GuideEntityEmbed Entity="Ointment"/>
+<GuideEntityEmbed Entity="EmergencyMedipen"/>
+<GuideEntityEmbed Entity="Bloodpack"/>
+<GuideEntityEmbed Entity="Gauze"/>
+</Box>
+
+## Basic Treatment and Triage
+Examine your patient, and note down the important details: Are they alive? Bleeding? What type of damage?
+
+If alive, treat them as best as you can. Patients are in critical condition at 100 damage, and dead at 200. Keep this in mind when choosing how to treat them. Emergency Pens and Epinephrine are often used to keep patients stable.
+
+If possible, buckle them to a medical bed, if you need time to treat them, strap them to a stasis bed instead. Just keep in mind that metabolism (and by extension, healing chemicals) are slowed to a crawl when on stasis, they'll need to be taken off of it for the medicine to be effective. (But Blood Packs, Ointment, and Brute packs all work as normal.)
+<Box>
+<GuideEntityEmbed Entity="MedicalBed"/>
+<GuideEntityEmbed Entity="StasisBed"/>
+</Box>
+## Death and Revival
+You can't save them all, sometimes, death happens. Depending on the status of the body, if there's a soul present, and if the body has started rotting, there are a few things that can be done.
+
+1. Do they have a soul attached? You can tell if, when examining, the following phrase is displayed: "Their soul has departed." If this isn't displayed, consider storing the body in a morgue tray, or using it for biomass.
+
+2. Is the body rotting? If it is, sadly, they'll have to be cloned. A rotting body can't be brought back with a defibrillator.
+
+3. If they have a soul, and aren't rotten, it's possible to revive them. Not counting airloss, Defibrillator's can be used to revive patients under 200 total damage. Chemicals don't metabolise in the dead, but brute packs and ointment can still patch them up. Use them to bring their numbers down enough for revival.
+
+<Box>
+<GuideEntityEmbed Entity="Brutepack"/>
+<GuideEntityEmbed Entity="Defibrillator"/>
+<GuideEntityEmbed Entity="Ointment"/>
+</Box>
+
+## Cloning
+If all else fails, patients will need to be cloned. This should only be used as a last resort, if recovery is impossible. This is most often the case when the body has started to rot, or if they have excessive amounts of damage.
+
+Cloning itself is relatively simple. (Assuming the network is set.) Just drag a body into the scanner, check the cloning console, and clone! If they've taken cellular damage, or have rotted for too long, the results can be... less than pleasant.
+
+As a note: Cloning isn't always available, and it would be best not to rely on it. Science might be able to set up cloning, if it's unavailable.
+<Box>
+<GuideEntityEmbed Entity="ComputerCloningConsole" Caption="cloning console"/>
+<GuideEntityEmbed Entity="MedicalScanner"/>
+<GuideEntityEmbed Entity="CloningPod"/>
+<GuideEntityEmbed Entity="NetworkConfigurator"/>
+</Box>
+## Biomass
+Creating a clone requires biomass, which, gruesomely, involves recycling organic material, be it crew members without a soul, station pets, or hostile creatures that have been 'taken care of'.
+
+Dragging a body onto the biomass reclaimer will mulch it for re-use. If it's a crew member, it's common practice to strip the body and return departmental gear before doing such.
+<Box>
+<GuideEntityEmbed Entity="BiomassReclaimer"/>
+<GuideEntityEmbed Entity="MaterialBiomass"/>
+</Box>
+## Cryogenics
+Cryogenics can be a bit daunting to understand, but hopefully, quick run through of this diagram, you'll learn how to work it! So, let's go over what each part does:
+
+- air in: Air comes in here through the distro or an air tank, giving those inside something to breathe, and the freezer something to chill.
+- gas pump: Limits the network pressure, so those in the tube aren't crushed.
+- freezer: Chills the air, and by extention, patients in the tube, so Cryoxadone can activate.
+- gas filters: Removes waste gas (Carbon Dioxide and Nitrous Oxide) from the loop.
+- air out: Waste gasses go here, either into a storage tank, or into the waste network.
+<Box>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeStraight" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeStraight" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="0"/>
+<GuideEntityEmbed Entity="CloningPod" Caption="cryo pod" Rotation="0"/>
+<GuideEntityEmbed Entity="GasThermoMachineFreezerEnabled" Rotation="0"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="180"/>
+<GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90"/>
+<GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="270"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="GasPort" Caption="air out" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="270"/>
+<GuideEntityEmbed Entity="GasPort" Caption="air in" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPressurePump" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="270"/>
+</Box>
+
+Not every network will look like this, but hopefully, it's enough to give you the basic gist of how it's functioning.
+
+</Document>
