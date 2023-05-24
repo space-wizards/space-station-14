@@ -25,6 +25,24 @@
       "directions": 4
     },
     {
+      "name": "elysium"
+    },
+    {
+      "name": "elysium_2"
+    },
+    {
+      "name": "elysium_3"
+    },
+    {
+      "name": "elysium-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "elysium-inhand-right",
+      "directions": 4
+    },
+
+    {
       "name": "alpha"
     },
     {
