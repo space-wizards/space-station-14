@@ -112,7 +112,7 @@
       materialComposition:
         Elysium: 100
     - type: Stack
-      stackType: Elysium
+      stackType: ElysiumIngot
       baseLayer: base
       layerStates:
         - elysium
