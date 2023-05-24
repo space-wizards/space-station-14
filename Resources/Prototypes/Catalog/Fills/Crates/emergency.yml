@@ -33,6 +33,7 @@
 - type: entity
   id: CrateEmergencyInternals
   parent: CrateInternals
+  name: Emergency Suits
   components:
   - type: StorageFill
     contents:
@@ -42,10 +43,28 @@
         amount: 3
       - id: OxygenTankFilled
         amount: 3
-      - id: EmergencyOxygenTankFilled
+      - id: NitrogenTankFilled
         amount: 3
       - id: ClothingOuterSuitEmergency
         amount: 3
+
+- type: entity
+  id: CrateEmergencyInternalsLarge
+  parent: CrateInternals
+  name: Emergency Suits (Large)
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingMaskGas
+          amount: 12
+        - id: ClothingMaskBreath
+          amount: 12
+        - id: OxygenTankFilled
+          amount: 12
+        - id: NitrogenTankFilled
+          amount: 12
+        - id: ClothingOuterSuitEmergency
+          amount: 12
 
 - type: entity
   id: CrateSlimepersonLifeSupport

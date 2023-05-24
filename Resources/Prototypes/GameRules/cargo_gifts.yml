@@ -1,0 +1,210 @@
+- type: entity
+  id: GiftsPizzaPartySmall
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    startDelay: 10
+    duration: 120
+    earliestStart: 20
+  - type: CargoGiftsRule
+    description: cargo-gift-pizza-small
+    sender: cargo-gift-default-sender
+    dest: cargo-gift-dest-bar
+    gifts:
+      FoodPizzaLarge: 1              # 16 pizzas
+      FoodBarSupply: 1
+      FoodSoftdrinks: 1
+      CrateVendingMachineRestockRobustSoftdrinks: 1
+
+- type: entity
+  id: GiftsPizzaPartyLarge
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 6
+      startDelay: 10
+      duration: 240
+      minimumPlayers: 50
+      earliestStart: 40
+    - type: CargoGiftsRule
+      description: cargo-gift-pizza-large
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-bar
+      gifts:
+        FoodPizzaLarge: 4              # 64 pizzas
+        FoodBarSupply: 1
+        FoodSoftdrinksLarge: 1
+
+- type: entity
+  id: GiftsEngineering
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 4
+      startDelay: 10
+      duration: 240
+      earliestStart: 30
+      minimumPlayers: 10
+    - type: CargoGiftsRule
+      description: cargo-gift-eng
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-eng
+      gifts:
+        EngineeringCableBulk: 1
+        AirlockKit: 1
+        MaterialSteel: 1
+        MaterialPlasteel: 1
+        MaterialGlass: 1
+        CrateVendingMachineRestockEngineering: 1
+
+- type: entity
+  id: GiftsVendingRestock
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 4
+      startDelay: 10
+      duration: 120
+      minimumPlayers: 40
+      earliestStart: 30
+    - type: CargoGiftsRule
+      description: cargo-gift-vending
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-supp
+      gifts:
+        CrateVendingMachineRestockHotDrinks: 3
+        CrateVendingMachineRestockBooze: 1
+        CrateVendingMachineRestockNutriMax: 1
+        CrateVendingMachineRestockRobustSoftdrinks: 2
+        CrateVendingMachineRestockVendomat: 1
+        CrateVendingMachineRestockGetmoreChocolateCorp: 1
+
+- type: entity
+  id: GiftsJanitor
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 8
+      startDelay: 10
+      duration: 120
+      minimumPlayers: 30
+      earliestStart: 20
+    - type: CargoGiftsRule
+      description: cargo-gift-cleaning
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-janitor
+      gifts:
+        ServiceJanitorial: 2
+        ServiceLightsReplacement: 2
+        ServiceJanitorBiosuit: 1
+
+- type: entity
+  id: GiftsMedical
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 8
+      startDelay: 10
+      duration: 120
+      earliestStart: 20
+      minimumPlayers: 30
+    - type: CargoGiftsRule
+      description: cargo-gift-medical-supply
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-med
+      gifts:
+        MedicalSupplies: 1
+        MedicalChemistrySupplies: 1
+        EmergencyBruteKit: 1
+        EmergencyAdvancedKit: 1
+        MedicalBiosuit: 1
+
+- type: entity
+  id: GiftsSpacingSupplies
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 6
+      startDelay: 10
+      duration: 120
+      earliestStart: 10
+      minimumPlayers: 40
+    - type: CargoGiftsRule
+      description: cargo-gift-space-protection
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-supp
+      gifts:
+        EmergencyInternalsLarge: 2
+        EmergencyInflatablewall: 1
+        EmergencyAdvancedKit: 1
+        MedicalBiosuit: 1
+        EmergencyO2Kit: 1
+
+- type: entity
+  id: GiftsFireProtection
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 3
+      startDelay: 10
+      duration: 120
+      earliestStart: 20
+      minimumPlayers: 40
+    - type: CargoGiftsRule
+      description: cargo-gift-fire-protection
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-supp
+      gifts:
+        EmergencyFire: 2
+        EmergencyBurnKit: 1
+        EmergencyBruteKit: 1
+
+- type: entity
+  id: GiftsSecurityGuns
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 2
+      startDelay: 10
+      duration: 120
+      earliestStart: 20
+      minimumPlayers: 50
+    - type: CargoGiftsRule
+      description: cargo-gift-security-guns
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-sec
+      gifts:
+        CrateSecurityArmor: 3
+        ArmorySmg: 1
+        ArmoryShotgun: 1
+        ArmoryLaser: 1
+
+- type: entity
+  id: GiftsSecurityRiot
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 4
+      startDelay: 10
+      duration: 120
+      earliestStart: 20
+      minimumPlayers: 50
+    - type: CargoGiftsRule
+      description: cargo-gift-security-riot
+      sender: cargo-gift-default-sender
+      dest: cargo-gift-dest-sec
+      gifts:
+        SecurityRiot: 2
+        CrateRestraints: 2
+        CrateSecurityNonlethal: 2

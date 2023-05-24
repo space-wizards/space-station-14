@@ -95,6 +95,7 @@
         acts: ["Destruction"]
   - type: Machine
     board: FatExtractorMachineCircuitboard
+  - type: WiresPanel
   - type: Wires
     BoardName: FatExtractor
     LayoutId: FatExtractor

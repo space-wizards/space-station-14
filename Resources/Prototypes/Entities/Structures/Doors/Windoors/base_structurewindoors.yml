@@ -115,6 +115,7 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
+  - type: WiresPanel
   - type: Wires
     BoardName: "Windoor Control"
     LayoutId: Airlock
