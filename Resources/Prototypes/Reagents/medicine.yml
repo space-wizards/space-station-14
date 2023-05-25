@@ -928,7 +928,7 @@
               min: 15
           damage:
             groups:
-              Genetic: 15
+              Genetic: 7.5
         - !type:PopupMessage
           conditions:
             - !type:ReagentThreshold

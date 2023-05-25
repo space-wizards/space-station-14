@@ -495,7 +495,7 @@
         - !type:HealthChange
           conditions:
             - !type:ReagentThreshold
-              min: 10
+              min: 5
           damage:
             groups:
               Airloss: 7.5

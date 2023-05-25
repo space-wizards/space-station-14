@@ -2,7 +2,7 @@
   name: captain's sabre
   parent: BaseItem
   id: CaptainSabre
-  description: A ceremonial weapon belonging to the captain of the station.
+  description: A ceremonial weapon belonging to the captain of the station. Can be used to pry airlocks in a pinch.
   components:
   - type: Sharp
   - type: Sprite
@@ -21,6 +21,9 @@
     tags:
     - CaptainSabre
   - type: DisarmMalus
+  - type: Tool
+    qualities:
+      - Prying
 
 - type: entity
   name: divine sabre
@@ -46,6 +49,9 @@
       tags:
         - CaptainSabre
     - type: DisarmMalus
+    - type: Tool
+      qualities:
+        - Prying
 
 - type: entity
   name: katana

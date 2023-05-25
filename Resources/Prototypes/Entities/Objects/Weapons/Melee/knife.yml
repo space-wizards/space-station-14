@@ -14,7 +14,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 12
+        Slash: 7
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
@@ -30,12 +30,8 @@
   name: shiv
   parent: BaseKnife
   id: Shiv
-  description: A crude weapon fashioned from  a piece of cloth and a glass shard.
+  description: A crude weapon fashioned from a piece of cloth and a glass shard.
   components:
-  - type: Tag
-    tags:
-    - CombatKnife
-    - Knife
   - type: Construction
     graph: Shiv
     node: icon
@@ -49,7 +45,7 @@
       types:
         Slash: 5
   - type: Item
-    size: 10
+    size: 7
     sprite: Objects/Weapons/Melee/shiv.rsi
   - type: DisarmMalus
     malus: 0.225
@@ -58,15 +54,11 @@
   name: reinforced shiv
   parent: BaseKnife
   id: ReinforcedShiv
-  description: A crude weapon fashioned from  a piece of cloth and a reinforced glass shard.
+  description: A crude weapon fashioned from a piece of cloth and a reinforced glass shard.
   components:
-  - type: Tag
-    tags:
-    - CombatKnife
-    - Knife
   - type: Construction
     graph: ReinforcedShiv
-    node: icon 
+    node: icon
   - type: Sprite
     sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
     size: 2
@@ -75,9 +67,9 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 10
+        Slash: 6
   - type: Item
-    size: 10
+    size: 7
     sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
   - type: DisarmMalus
     malus: 0.225
@@ -88,13 +80,9 @@
   id: PlasmaShiv
   description: A crude weapon fashioned from  a piece of cloth and a plasma shard.
   components:
-  - type: Tag
-    tags:
-    - CombatKnife
-    - Knife
   - type: Construction
     graph: PlasmaShiv
-    node: icon 
+    node: icon
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_shiv.rsi
     size: 2
@@ -103,9 +91,9 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 15
+        Slash: 7
   - type: Item
-    size: 10
+    size: 7
     sprite: Objects/Weapons/Melee/plasma_shiv.rsi
   - type: DisarmMalus
     malus: 0.225
@@ -114,15 +102,11 @@
   name: uranium shiv
   parent: BaseKnife
   id: UraniumShiv
-  description: A crude weapon fashioned from  a piece of cloth and a uranium shard.
+  description: A crude weapon fashioned from a piece of cloth and a uranium shard.
   components:
-  - type: Tag
-    tags:
-    - CombatKnife
-    - Knife
   - type: Construction
     graph: UraniumShiv
-    node: icon 
+    node: icon
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_shiv.rsi
     size: 2
@@ -131,13 +115,38 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 10
-        Radiation: 5
+        Slash: 8
+        Radiation: 3
   - type: Item
-    size: 10
+    size: 7
     sprite: Objects/Weapons/Melee/uranium_shiv.rsi
   - type: DisarmMalus
     malus: 0.225
+
+- type: entity
+  name: elysium shiv
+  parent: BaseKnife
+  id: ElysiumShiv
+  description: A crude weapon fashioned from a piece of cloth and an elysium shard.
+  components:
+    - type: Construction
+      graph: ElysiumShiv
+      node: icon
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/elysium_shiv.rsi
+      size: 2
+      state: icon
+    - type: MeleeWeapon
+      attackRate: 1.5
+      damage:
+        types:
+          Slash: 10
+          Shock: 4
+    - type: Item
+      size: 7
+      sprite: Objects/Weapons/Melee/uranium_shiv.rsi
+    - type: DisarmMalus
+      malus: 0.225
 
 - type: entity
   name: kitchen knife
@@ -182,7 +191,7 @@
   name: combat knife
   parent: BaseKnife
   id: CombatKnife
-  description: A deadly knife intended for melee confrontations.
+  description: A deadly, razor sharp knife intended for melee confrontations and close-quarters combat alike. The edge is serrated.
   components:
   - type: Tag
     tags:
@@ -196,7 +205,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 10
+        Slash: 15
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
@@ -207,14 +216,18 @@
   name: survival knife
   parent: CombatKnife
   id: SurvivalKnife
-  description: Weapon of first and last resort for combatting space carp.
+  description: Weapon of first and last resort for combating space carp.
   components:
+  - type: Tag
+    tags:
+      - CombatKnife
+      - Knife
   - type: Sprite
     sprite: Objects/Weapons/Melee/survival_knife.rsi
     size: 2
     state: icon
   - type: Item
-    size: 10
+    size: 12
     sprite: Objects/Weapons/Melee/survival_knife.rsi
 
 - type: entity

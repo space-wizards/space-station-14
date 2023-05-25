@@ -15,13 +15,13 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 4
+        Piercing: 7
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 6
+        Piercing: 8
   - type: Item
     size: 25
   - type: Clothing
@@ -48,7 +48,7 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Piercing: 4
+        Piercing: 5
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -95,13 +95,13 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 6
+        Piercing: 8
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 8
+        Piercing: 9
   - type: Item
     size: 25
   - type: Clothing
@@ -176,12 +176,14 @@
     damage:
       types:
         Piercing: 8
+        Poison: 1
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 10
+        Piercing: 9
+        Poison: 1
   - type: Item
     size: 25
   - type: Clothing
@@ -290,7 +292,7 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Piercing: 4
+        Piercing: 5
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -372,7 +374,7 @@
     - type: IncreaseDamageOnWield
       damage:
         types:
-          Piercing: 3
+          Piercing: 5
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible
