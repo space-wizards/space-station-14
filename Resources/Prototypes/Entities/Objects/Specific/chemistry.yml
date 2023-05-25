@@ -98,6 +98,8 @@
   components:
   - type: Spillable
     solution: beaker
+  - type: StaticPrice
+    price: 10
 
 - type: entity
   name: large beaker

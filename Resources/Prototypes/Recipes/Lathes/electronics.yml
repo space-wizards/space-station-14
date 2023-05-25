@@ -3,8 +3,8 @@
   result: FirelockElectronics
   completetime: 2
   materials:
-     Steel: 50
-     Plastic: 50
+     Steel: 100
+     Plastic: 300
 
 - type: latheRecipe
   id: MailingUnitElectronics
@@ -12,7 +12,7 @@
   completetime: 4
   materials:
     Steel: 50
-    Plastic: 50
+    Plastic: 300
 
 - type: latheRecipe
   id: DoorElectronics
@@ -20,15 +20,15 @@
   completetime: 2
   materials:
      Steel: 50
-     Plastic: 50
+     Plastic: 300
 
 - type: latheRecipe
   id: AirAlarmElectronics
   result: AirAlarmElectronics
   completetime: 2
   materials:
-     Steel: 50
-     Plastic: 50
+     Steel: 100
+     Plastic: 300
 
 - type: latheRecipe
   id: IntercomElectronics
@@ -36,15 +36,15 @@
   completetime: 2
   materials:
      Steel: 50
-     Plastic: 50
+     Plastic: 300
 
 - type: latheRecipe
   id: FireAlarmElectronics
   result: FireAlarmElectronics
   completetime: 2
   materials:
-     Steel: 50
-     Plastic: 50
+     Steel: 100
+     Plastic: 300
 
 - type: latheRecipe
   id: SignalTimerElectronics
@@ -361,7 +361,7 @@
   completetime: 2
   materials:
      Steel: 50
-     Glass: 100
+     Glass: 250
 
 - type: latheRecipe
   id: SubstationMachineCircuitboard
