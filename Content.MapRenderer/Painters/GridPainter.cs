@@ -73,7 +73,7 @@ namespace Content.MapRenderer.Painters
 
             foreach (var entity in _sEntityManager.GetEntities())
             {
-                if (!_sEntityManager.HasComponent<SpriteComponent>(entity))
+                if (!_cEntityManager.TryGetComponent(entity, out SpriteComponent? sprite))
                 {
                     continue;
                 }
@@ -82,12 +82,6 @@ namespace Content.MapRenderer.Painters
                 if (prototype == null)
                 {
                     continue;
-                }
-
-                if (!_cEntityManager.TryGetComponent(entity, out SpriteComponent? sprite))
-                {
-                    throw new InvalidOperationException(
-                        $"No sprite component found on an entity for which a server sprite component exists. Prototype id: {prototype.ID}");
                 }
 
                 var transform = _sEntityManager.GetComponent<TransformComponent>(entity);
