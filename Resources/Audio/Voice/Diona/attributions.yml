@@ -1,19 +1,19 @@
 ﻿- files: ["diona_scream.ogg"]
-  license: "CC-BY-4.0"
+  license: "CC-BY 4.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/InspectorJ/sounds/352201/"
 
 - files: ["diona_snap.ogg"]
-  license: "CC-BY-3.0"
+  license: "CC-BY 4.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/JasonElrod/sounds/85433/"
 
 - files: ["diona_clap.ogg"]
-  license: "CC0-1.0"
+  license: "CC0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/Alexbuk/sounds/391774/"
 
 - files: ["diona_rustle1.ogg", "diona_rustle2.ogg", "diona_rustle3.ogg"]
-  license: "CC0-1.0"
+  license: "CC0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/nicoproson/sounds/631406/"

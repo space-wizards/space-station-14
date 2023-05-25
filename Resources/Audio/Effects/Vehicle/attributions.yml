@@ -1,15 +1,15 @@
 - files: ["vehiclestartup.ogg, vehicleengineidle.ogg"]
-  license: "CC BY 4.0"
-  copyright: "By InspectorJ"
+  license: "CC-BY 4.0"
+  copyright: "Taken or edited from source"
   source: "https://freesound.org/people/InspectorJ/sounds/338954/"
 
 - files: ["carhorn.ogg"]
-  license: ""
-  copyright: ""
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["policesiren.ogg"]
   license: "CC0"
-  copyright: "blukotek"
+  copyright: "Taken or edited from source"
   source: "https://freesound.org/people/blukotek/sounds/431651/"
 

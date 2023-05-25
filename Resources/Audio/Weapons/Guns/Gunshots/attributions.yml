@@ -1,20 +1,20 @@
 ﻿- files: ["water_spray.ogg"]
-  license: "CC0-1.0"
+  license: "CC0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/elittle13/sounds/568558"
 
 - files: ["atreides.ogg, c-20r.ogg, flaregun.ogg, mateba.ogg, minigun.ogg, mk58.ogg"]
-  license: "CC BY-SA 3.0"
+  license: "CC-BY-SA 4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/cmss13-devs/cmss13"
 
 - files: ["rocket_launcher.ogg, taser2.ogg, kinetic_accel.ogg"]
-  license: "CC-BY-SA 3.0"
+  license: "CC-BY-SA 4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["batrifle.ogg, lmg.ogg, ltrifle.ogg, pistol.ogg, revolver.ogg, rifle.ogg, rifle2.ogg, shotgun.ogg, silenced.ogg, smg.ogg, sniper.ogg"]
-  license: "CC BY-SA 3.0"
+  license: "CC-BY-SA 4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/discordia-space/CEV-Eris"
 

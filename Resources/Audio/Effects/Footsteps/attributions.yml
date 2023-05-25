@@ -1,50 +1,50 @@
 - files: ["water1.ogg, water2.ogg, water3.ogg, water4.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "By Citadel Station"
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/b7392a25f826d038d35309cf36875f2066c3eb05/sound/effects/footstep"
 
 - files: ["bounce.ogg"]
-  license: "CC-BY-SA-4.0"
-  copyright: "By JustInvoke"
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://freesound.org/people/JustInvoke/sounds/446100/"
  
 - files: ["jesterstep1.ogg, jesterstep2.ogg"]
-  license: "CC-BY-SA-3.0"
+  license: "CC-BY-SA 4.0"
   copyright: "By GentleJester#8754"
   source: "https://github.com/space-wizards/space-station-14"
 
 - files: ["slime1.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "By tgstation"
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://github.com/nero1024/tgstation/blob/83ccc939a20489de8ab81cb47e6f8e84c490adc2/sound/effects/footstep/slime1.ogg"
 
 - files: ["grass1.ogg, grass2.ogg"]
-  license: "CC BY 3.0"
-  copyright: "By D001447733"
+  license: "CC-BY 4.0"
+  copyright: "Taken or edited from source"
   source: "https://freesound.org/people/D001447733/sounds/464609/"
 
 - files: ["grass3.ogg, grass4.ogg"]
   license: "CC0"
-  copyright: "By jevans27"
+  copyright: "Taken or edited from source"
   source: "https://freesound.org/people/jevans27/sounds/563529/"
 
 - files: ["snowstep1.ogg, snowstep2.ogg, snowstep3.ogg, snowstep4.ogg"]
-  license: "CC-0"
-  copyright: "By alexo400"
+  license: "CC0"
+  copyright: "Taken or edited from source"
   source: "https://freesound.org/people/alexo400/sounds/543385/"
 
 - files: ["asteroid1.ogg, asteroid2.ogg, asteroid3.ogg, asteroid4.ogg, asteroid5.ogg, carpet1.ogg, carpet2.ogg, carpet3.ogg, carpet4.ogg, carpet5.ogg, catwalk1.ogg, catwalk2.ogg, catwalk3.ogg, catwalk4.ogg, catwalk5.ogg, floor1.ogg, floor2.ogg, floor3.ogg, floor4.ogg, floor5.ogg, hull1.ogg, hull2.ogg, hull3.ogg, hull4.ogg, hull5.ogg, planting1.ogg, planting2.ogg, planting3.ogg, planting4.ogg, planting5.ogg, wood1.ogg, wood2.ogg, wood3.ogg, wood4.ogg, wood5.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "By CEV-Eris"
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://github.com/discordia-space/CEV-Eris"
 
 - files: ["carpetbarefoot1.ogg, carpetbarefoot2.ogg, carpetbarefoot3.ogg, carpetbarefoot4.ogg, carpetbarefoot5.ogg, hardbarefoot1.ogg, hardbarefoot2.ogg, hardbarefoot3.ogg, hardbarefoot4.ogg, hardbarefoot5.ogg, woodbarefoot1.ogg, woodbarefoot2.ogg, woodbarefoot3.ogg, woodbarefoot4.ogg, woodbarefoot5.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "By tgstation"
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["clownstep1.ogg, clownstep2.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "By vgstation13"
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://github.com/vgstation-coders/vgstation13"
 

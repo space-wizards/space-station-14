@@ -1,24 +1,24 @@
 - files: ["anomaly_drone.ogg"]
-  license: "CC0-1.0"
-  copyright: "Created by Joao_Janz, edited and converted to Mono by EmoGarbage"
+  license: "CC0"
+  copyright: "Taken or edited from source"
   source: "https://freesound.org/people/Joao_Janz/sounds/478472/"
 
 - files: ["shipambience.ogg"]
-  license: "CC-BY-SA"
-  copyright: "Taken from /tg/station"
-  source: "https://github.com/tgstation/tgstation/blob/66a625e6df15eaa97e599248a2281c74238ce26e/sound/ambience/shipambience.ogg"
+  license: "CC-BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/tgstation/tgstation"
 
 - files: ["starlight.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "By qwertyquerty"
+  license: "CC-BY-SA 3.0"
+  copyright: "Taken or edited from source"
   source: "https://www.youtube.com/watch?v=XTfPEFfmhrA"
 
 - files: ["constellations.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "By qwertyquerty"
+  license: "CC-BY-SA 3.0"
+  copyright: "Taken or edited from source"
   source: "https://www.youtube.com/watch?v=ufwRj1LI3aw"
 
 - files: ["drifting.ogg"]
-  license: "CC-BY-SA-3.0"
+  license: "CC-BY-SA 3.0"
   copyright: "By qwertyquerty"
-  source: "https://github.com/BeeStation/BeeStation-Hornet/pull/7304"
+  source: "https://github.com/BeeStation/BeeStation-Hornet"

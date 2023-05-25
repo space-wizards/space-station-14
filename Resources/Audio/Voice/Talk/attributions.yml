@@ -1,14 +1,14 @@
 - files: ["arachnid.ogg", "arachnid_ask.ogg", "arachnid_exclaim.ogg"]
-  license: "CC-BY-4.0"
+  license: "CC-BY 4.0"
   copyright: "By PixelTheKermit"
   source: "https://github.com/space-wizards/space-station-14"
 
 - files: ["pai.ogg, pai_ask.ogg, pai_exclaim.ogg"]
-  license: "CC-BY-3.0"
+  license: "CC-BY 4.0"
   copyright: "By hubismal"
   source: "https://github.com/space-wizards/space-station-14"
 
 - files: ["speak_1_ask.ogg, speak_1_exclaim.ogg, speak_1.ogg, speak_2_ask.ogg, speak_2_exclaim.ogg, speak_2.ogg, speak_3_ask.ogg, speak_3_exclaim.ogg, speak_3.ogg, speak_4_ask.ogg, speak_4_exclaim.ogg, speak_4.ogg, lizard.ogg, lizard_ask.ogg, lizard_exclaim.ogg, slime.ogg, slime_ask.ogg, slime_exclaim.ogg"]
-  license: "CC BY-NC-SA 3.0"
+  license: "CC-BY-NC-SA 4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/goonstation/goonstation"

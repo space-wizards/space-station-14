@@ -1,24 +1,24 @@
 - files: ["weh.ogg, muffled_weh.ogg"]
-  license: "CC0 1.0"
-  copyright: ""
-  source: ""
+  license: "CC0"
+  copyright: "Unknown"
+  source: "Unknown"
 
 - files: ["skub.ogg"]
-  license: "CC0 1.0"
-  copyright: ""
-  source: ""
+  license: "CC0"
+  copyright: "Unknown"
+  source: "Unknown"
 
 - files: [sitcom_laugh.ogg"]
-  license: "CC0 1.0"
-  copyright: "By Kinoton"
+  license: "CC0"
+  copyright: "Taken or edited from source"
   source: "https://freesound.org/people/Kinoton/sounds/371562/"
 
 - files: ["sitcom_laugh2.ogg"]
-  license: "CC0 1.0"
-  copyright: "By mrrap4food"
+  license: "CC0"
+  copyright: "Taken or edited from source"
   source: "https://freesound.org/people/mrrap4food/sounds/618972/"
 
 - files: ["toyfall1.ogg, toyfall2.ogg"]
-  license: "CC BY 4.0"
-  copyright: "Created by HighTechPuddle"
+  license: "CC-BY 4.0"
+  copyright: "Taken or edited from source"
   source: "https://freesound.org/people/HighTechPuddle/packs/38527/"

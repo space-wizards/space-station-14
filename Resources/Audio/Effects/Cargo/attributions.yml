@@ -1,14 +1,4 @@
-- files: ["buzz_sigh.ogg"]
-  license: "CC-BY-SA 3.0"
-  copyright: "By tgstation"
-  source: "https://github.com/tgstation/tgstation/tree/d6f15fb717e7c047f8befefabb4b7735b3c39a84/sound"
-
-- files: ["buzz_two.ogg"]
-  license: "CC-BY-SA 3.0"
-  copyright: "By tgstation"
-  source: "https://github.com/tgstation/tgstation/tree/d6f15fb717e7c047f8befefabb4b7735b3c39a84/sound"
-
-- files: ["ping.ogg"]
-  license: "CC-BY-SA 3.0"
-  copyright: "By tgstation"
-  source: "https://github.com/tgstation/tgstation/tree/d6f15fb717e7c047f8befefabb4b7735b3c39a84/sound"
+- files: ["buzz_sigh.ogg, buzz_two.ogg, ping.ogg"]
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/tgstation/tgstation"

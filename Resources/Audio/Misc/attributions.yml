@@ -1,30 +1,30 @@
 - files: ["tension_session.ogg"]
-  license: "CC-BY-3.0"
-  copyright: "Taken from source"
+  license: "CC-BY 4.0"
+  copyright: "Taken or edited from source"
   source: "https://www.youtube.com/@qwertyquerty"
 
 - files: ["epsilon.ogg"]
-  license: "CC BY-SA 3.0"
+  license: "CC-BY-SA 4.0"
   copyright: "By dj-34"
   source: "https://github.com/ss220-space/Paradise"
 
 - files: ["siren.ogg"]
-  license: "CC BY-SA 3.0"
-  copyright: "Taken from source"
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://github.com/ParadiseSS13/Paradise"
 
 - files: ["redalert.ogg"]
-  license: "CC BY-SA 3.0"
-  copyright: "Taken from source"
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://github.com/Skyrat-SS13/Skyrat13"
 
 - files: ["bluealert.ogg"]
-  license: "CC BY-SA 3.0"
-  copyright: "Taken from source"
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://github.com/Skyrat-SS13/Skyrat13"
 
 - files: ["nukeops.ogg"]
-  license: "CC BY-SA 3.0"
-  copyright: "Taken from source"
+  license: "CC-BY-SA 4.0"
+  copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
