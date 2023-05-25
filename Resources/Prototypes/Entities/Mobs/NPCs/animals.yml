@@ -2120,8 +2120,8 @@
     accent: mouse
   - type: Tag
     tags:
-    - Trash
     - CannotSuicide
+    - Trash
   - type: Respirator
     damage:
       types:
