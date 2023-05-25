@@ -158,3 +158,5 @@
       transferAmount: 1
       solution: puddle
       examinable: false
+    - type: ExaminableSolution
+      solution: puddle
