@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: 'Added in hand sprites for: ties, scarves and moth mask.', type: Add}
-  id: 3363
-  time: '2023-04-09T21:42:17.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Broken cuffs are now marked as trash., type: Add}
@@ -2898,3 +2893,10 @@ Entries:
   - {message: Decreased max anomaly point output., type: Tweak}
   id: 3862
   time: '2023-05-25T03:28:41.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'NanaTrasen has selectively bred less dangerous zombies. Your standard
+      jumpsuit deflects their attacks better, they are slower and easier to kill.
+      But they still rise from the dead.', type: Tweak}
+  id: 3863
+  time: '2023-05-25T03:41:04.0000000+00:00'
