@@ -1,19 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Changed to scull icon for Pirates spawner., type: Tweak}
-  id: 3365
-  time: '2023-04-09T21:50:29.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added motobike spawner!, type: Add}
-  id: 3366
-  time: '2023-04-09T21:57:40.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Fixed chemical bottles are now breaking!, type: Fix}
-  id: 3367
-  time: '2023-04-09T21:58:22.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Nanotrasen has updated their ethics policies and have supplied sustenance
@@ -2900,3 +2885,20 @@ Entries:
     type: Fix}
   id: 3864
   time: '2023-05-25T04:04:16.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Changed the selling price of most autolathe products., type: Tweak}
+  - {message: Slightly adjusted the production price of most electronics in the autolathe.,
+    type: Tweak}
+  id: 3865
+  time: '2023-05-25T09:10:28.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed the Smartfridge sprite, type: Tweak}
+  id: 3866
+  time: '2023-05-25T09:11:13.0000000+00:00'
+- author: McFck
+  changes:
+  - {message: Fixed infinite beaker fill from mop, type: Fix}
+  id: 3867
+  time: '2023-05-25T09:12:08.0000000+00:00'
