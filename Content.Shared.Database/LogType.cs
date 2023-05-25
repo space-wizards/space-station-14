@@ -86,5 +86,6 @@ public enum LogType
     Teleport = 81,
     EntityDelete = 82,
     Vote = 83,
-    GameDirector = 84,
+    ItemConfigure = 84,
+    GameDirector = 85,
 }

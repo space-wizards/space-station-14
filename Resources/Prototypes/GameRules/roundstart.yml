@@ -66,12 +66,12 @@
   components:
   - type: SecretRule
 
-- type: entity
-  id: Zombie
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: ZombieRule
+#- type: entity
+#  id: Zombie
+#  parent: BaseGameRule
+#  noSpawn: true
+#  components:
+#  - type: ZombieRule
 
 # event schedulers
 - type: entity
