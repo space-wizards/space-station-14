@@ -31,6 +31,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly DirectionalAccessSystem _directionalAccessSystem = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -500,6 +501,11 @@ public abstract class SharedDoorSystem : EntitySystem
             return false;
 
         if (!Resolve(uid, ref access, false))
+            return true;
+
+        // Open the door if it has directional access option
+        if (TryComp<DirectionalAccessComponent>(uid, out var directionalAccess) &&
+            _directionalAccessSystem.IsDirectionAllowed(uid, user.Value, directionalAccess))
             return true;
 
         var isExternal = access.AccessLists.Any(list => list.Contains("External"));
