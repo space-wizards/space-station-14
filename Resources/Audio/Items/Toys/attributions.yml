@@ -1,12 +1,12 @@
 - files: ["weh.ogg, muffled_weh.ogg"]
   license: "CC0-1.0"
-  copyright: "Unknown"
-  source: "Unknown"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/space-wizards/space-station-14"
 
 - files: ["skub.ogg"]
   license: "CC0-1.0"
-  copyright: "Unknown"
-  source: "Unknown"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/space-wizards/space-station-14"
 
 - files: [sitcom_laugh.ogg"]
   license: "CC0-1.0"
