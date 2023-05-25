@@ -20,13 +20,13 @@ Before we go any further, it's probably a good idea to go over damage types, and
 
 An important note: Most medication has an overdose level, which will cause harm to your patient. Chemicals also take time to metabolise in pill form, if you want things to act quickly, use a syringe.
 
-- Brute Damage: Bicaridine and Bruise Packs
-- Burn Damage: Dermaline and Ointment
+- Brute Damage: Bicaridine or Bruise Packs
+- Burn Damage: Dermaline or Ointment
 - Toxin (Poison): Dylovene
 - Toxin (Radiation) Hyronalin or Arithrazine
 - Airloss: Dexaline or Inaprovaline
 - Bloodloss: Dexaline (Examine the patient, if pale, they still need blood or iron.)
-- Bleeding: Tranexamic acid and Gauze
+- Bleeding: Tranexamic acid and Gauze (Bleeding can also be cauterized with burn damage.)
 
 Many stations are stocked with kits in storage, and all medics have some equipment in their starting belt.
 
