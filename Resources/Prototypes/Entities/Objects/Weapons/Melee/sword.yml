@@ -48,26 +48,26 @@
     - type: DisarmMalus
 
 - type: entity
-name: katana
-parent: BaseItem
-id: Katana
-description: Ancient craftwork made with not so ancient plasteel.
-components:
-- type: Sharp
-- type: Tag
-  tags:
-  - Katana
-- type: Sprite
-  sprite: Objects/Weapons/Melee/katana.rsi
-  state: icon
-- type: MeleeWeapon
-  damage:
-    types:
-      Slash: 25
-- type: Item
-  size: 15
-  sprite: Objects/Weapons/Melee/katana.rsi
-- type: DisarmMalus
+  name: katana
+  parent: BaseItem
+  id: Katana
+  description: Ancient craftwork made with not so ancient plasteel.
+  components:
+  - type: Sharp
+  - type: Tag
+    tags:
+    - Katana
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/katana.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 25
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/katana.rsi
+  - type: DisarmMalus
 
 - type: entity
   name: machete
