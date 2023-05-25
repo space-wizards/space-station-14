@@ -108,61 +108,6 @@ namespace Content.Client.Light.Components
     }
 
     /// <summary>
-    /// A light behaviour that alternates between StartValue and EndValue
-    /// </summary>
-    [UsedImplicitly]
-    public sealed class PulseBehaviour : LightBehaviourAnimationTrack
-    {
-        public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
-            object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
-        {
-            var playingTime = prevPlayingTime + frameTime;
-            var interpolateValue = playingTime / MaxTime;
-
-            if (Property == "Enabled") // special case for boolean
-            {
-                ApplyProperty(interpolateValue < 0.5f);
-                return (-1, playingTime);
-            }
-
-            if (interpolateValue < 0.5f)
-            {
-                switch (InterpolateMode)
-                {
-                    case AnimationInterpolationMode.Linear:
-                        ApplyProperty(InterpolateLinear(StartValue, EndValue, interpolateValue * 2f));
-                        break;
-                    case AnimationInterpolationMode.Cubic:
-                        ApplyProperty(InterpolateCubic(EndValue, StartValue, EndValue, StartValue, interpolateValue * 2f));
-                        break;
-                    default:
-                    case AnimationInterpolationMode.Nearest:
-                        ApplyProperty(StartValue);
-                        break;
-                }
-            }
-            else
-            {
-                switch (InterpolateMode)
-                {
-                    case AnimationInterpolationMode.Linear:
-                        ApplyProperty(InterpolateLinear(EndValue, StartValue, (interpolateValue - 0.5f) * 2f));
-                        break;
-                    case AnimationInterpolationMode.Cubic:
-                        ApplyProperty(InterpolateCubic(StartValue, EndValue, StartValue, EndValue, (interpolateValue - 0.5f) * 2f));
-                        break;
-                    default:
-                    case AnimationInterpolationMode.Nearest:
-                        ApplyProperty(EndValue);
-                        break;
-                }
-            }
-
-            return (-1, playingTime);
-        }
-    }
-
-    /// <summary>
     /// A light behaviour that interpolates from StartValue to EndValue
     /// </summary>
     [UsedImplicitly]

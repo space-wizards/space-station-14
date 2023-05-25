@@ -112,37 +112,6 @@
 # THE FOLLOWING ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
 # ----------------------------------------------------------------------------
 - type: entity
-  name: light pulse test
-  parent: BaseItem
-  id: LightBehaviourTest1
-  noSpawn: true
-  components:
-    - type: Sprite
-      sprite: Objects/Misc/glowstick.rsi
-      layers:
-        - state: glowstick_base
-        - state: glowstick_unlit
-          shader: unshaded
-          color: "#FF0000"
-    - type: Item
-      sprite: Objects/Misc/glowstick.rsi
-      heldPrefix: unlit
-    - type: PointLight
-      enabled: true
-      color: "#FF0000"
-      radius: 5
-    - type: LightBehaviour
-      behaviours:
-        - !type:PulseBehaviour
-          interpolate: Cubic
-          maxDuration: 10.0
-          minValue: 1.0
-          maxValue: 7.0
-          isLooped: true
-          property: Energy
-          enabled: true
-
-- type: entity
   name: color cycle test
   parent: BaseItem
   id: LightBehaviourTest2
@@ -196,13 +165,13 @@
       radius: 5
     - type: LightBehaviour
       behaviours:
-        - !type:PulseBehaviour
-          interpolate: Nearest
-          minDuration: 0.2
-          maxDuration: 1.0
-          maxValue: 0.2
-          property: Enabled
+        - !type:FadeBehaviour
+          interpolate: Cubic
+          maxDuration: 5.0
+          minValue: 0.0
+          maxValue: 10.0
           isLooped: true
+          property: Energy
           enabled: true
         - !type:ColorCycleBehaviour
           interpolate: Cubic
@@ -265,17 +234,6 @@
       enabled: false
       color: "#FF0000"
       radius: 5
-    - type: LightBehaviour
-      behaviours:
-        - !type:PulseBehaviour
-          interpolate: Cubic
-          minDuration: 1.0
-          maxDuration: 5.0
-          minValue: 2.0
-          maxValue: 10.0
-          isLooped: true
-          property: Radius
-          enabled: true
 
 - type: entity
   name: light randomize radius test

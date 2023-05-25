@@ -20,25 +20,25 @@ public sealed partial class PulsingLightComponent : Robust.Shared.GameObjects.Co
     /// The minimum brightness of the light
     /// </summary>
     [DataField("minBrightness"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public float MinBrightness;
+    public float? MinBrightness;
 
     /// <summary>
     /// The maximum brightness of the light
     /// </summary>
     [DataField("maxBrightness"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public float MaxBrightness;
+    public float? MaxBrightness;
 
     /// <summary>
     /// The minimum brightness of the light
     /// </summary>
     [DataField("minRadius"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public float MinRadius;
+    public float? MinRadius;
 
     /// <summary>
     /// The maximum brightness of the light
     /// </summary>
     [DataField("maxRadius"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public float MaxRadius;
+    public float? MaxRadius;
 
     /// <summary>
     /// How long does it take the light to complete one "cycle"

@@ -2,15 +2,14 @@ using Content.Client.Items;
 using Content.Client.Light.Components;
 using Content.Shared.Light;
 using Content.Shared.Toggleable;
-using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Animations;
 
 namespace Content.Client.Light;
 
 public sealed class HandheldLightSystem : SharedHandheldLightSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPulsingLightSystem _pulsingLight = default!;
 
     public override void Initialize()
     {
@@ -58,12 +57,14 @@ public sealed class HandheldLightSystem : SharedHandheldLightSystem
             switch (state)
             {
                 case HandheldLightPowerStates.FullPower:
+                    _pulsingLight.SetEnabled(uid, false, dirty: false);
                     break; // We just needed to reset all behaviours
                 case HandheldLightPowerStates.LowPower:
+                    _pulsingLight.SetEnabled(uid, false, dirty: false);
                     lightBehaviour.StartLightBehaviour(component.RadiatingBehaviourId);
                     break;
                 case HandheldLightPowerStates.Dying:
-                    lightBehaviour.StartLightBehaviour(component.BlinkingBehaviourId);
+                    _pulsingLight.SetEnabled(uid, true, dirty: false);
                     break;
             }
         }
