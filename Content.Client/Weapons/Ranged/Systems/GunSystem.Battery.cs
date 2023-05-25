@@ -37,13 +37,13 @@ public sealed partial class GunSystem
         if (GetCurrentPlayerGunForAnyMode() is not GunComponent gun)
             return;
 
-        if (component.Shots == 0 && gun.NexFireCollisionMask != null)
+        if (component.Shots == 0 && gun.NextShootCollisionMask != null)
         {
-            gun.NexFireCollisionMask = null;
+            gun.NextShootCollisionMask = null;
             return;
         }
 
-        if (component.Shots == 0 || gun.NexFireCollisionMask != null)
+        if (component.Shots == 0 || gun.NextShootCollisionMask != null)
             return;
 
         switch (component)
@@ -52,7 +52,7 @@ public sealed partial class GunSystem
                 SetCollisionMaskFromPrototype(proj.Prototype, gun);
                 break;
             case HitscanBatteryAmmoProviderComponent hitscan:
-                gun.NexFireCollisionMask =
+                gun.NextShootCollisionMask =
                     (ProtoManager.Index<HitscanPrototype>(hitscan.Prototype)).CollisionMask;
                 break;
         }

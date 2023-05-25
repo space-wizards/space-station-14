@@ -370,6 +370,6 @@ public sealed partial class GunSystem : SharedGunSystem
         Del(bulletUid);
 
         if (physics is PhysicsComponent physicsComp)
-            gun.NexFireCollisionMask = physics.CollisionMask;
+            gun.NextShootCollisionMask = physics.CollisionMask;
     }
 }

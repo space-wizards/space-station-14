@@ -147,7 +147,7 @@ public partial class GunComponent : Component
     /// Store collision mask for next fire
     /// for draw different hirecross effects on client side
     /// </summary>
-    [ViewVariables] public int? NexFireCollisionMask = null;
+    [ViewVariables] public int? NextShootCollisionMask = null;
 }
 
 [Flags]
