@@ -1,0 +1,35 @@
+- type: stationGoal
+  id: StationGoalShuttle
+  text: station-goal-shuttle
+
+- type: stationGoal
+  id: StationGoalSingularity
+  text: station-goal-singularity
+
+- type: stationGoal
+  id: StationGoalSolarPanels
+  text: station-goal-solar-panels
+
+- type: stationGoal
+  id: StationGoalArtifacts
+  text: station-goal-artifacts
+
+- type: stationGoal
+  id: StationGoalBank
+  text: station-goal-bank
+
+- type: stationGoal
+  id: StationGoalZoo
+  text: station-goal-zoo
+
+- type: stationGoal
+  id: StationGoalDock
+  text: station-goal-space-dock
+
+- type: stationGoal
+  id: StationGoalSecurity
+  text: station-goal-reinforced-security
+
+- type: stationGoal
+  id: StationGoalPlatform
+  text: station-goal-observation-platform
