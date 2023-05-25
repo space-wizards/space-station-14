@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix spreaders going through air blockers., type: Fix}
-  id: 3372
-  time: '2023-04-10T06:43:25.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'You can now melee attack yourself, if you like', type: Tweak}
@@ -2904,3 +2899,8 @@ Entries:
   - {message: Fixed tech disk terminal print button not updating correctly., type: Fix}
   id: 3871
   time: '2023-05-25T22:07:40.0000000+00:00'
+- author: Geekyhobo
+  changes:
+  - {message: Light replacer now has more description., type: Add}
+  id: 3872
+  time: '2023-05-25T22:09:55.0000000+00:00'
