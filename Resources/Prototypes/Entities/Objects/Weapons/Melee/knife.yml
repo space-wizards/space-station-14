@@ -27,6 +27,119 @@
       path: /Audio/Items/Culinary/chop.ogg
 
 - type: entity
+  name: shiv
+  parent: BaseKnife
+  id: Shiv
+  description: A crude weapon fashioned from  a piece of cloth and a glass shard.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+  - type: Construction
+    graph: Shiv
+    node: icon
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/shiv.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 5
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/shiv.rsi
+  - type: DisarmMalus
+    malus: 0.225
+
+- type: entity
+  name: reinforced shiv
+  parent: BaseKnife
+  id: ReinforcedShiv
+  description: A crude weapon fashioned from  a piece of cloth and a reinforced glass shard.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+  - type: Construction
+    graph: ReinforcedShiv
+    node: icon 
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 10
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
+  - type: DisarmMalus
+    malus: 0.225
+
+- type: entity
+  name: plasma shiv
+  parent: BaseKnife
+  id: PlasmaShiv
+  description: A crude weapon fashioned from  a piece of cloth and a plasma shard.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+  - type: Construction
+    graph: PlasmaShiv
+    node: icon 
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/plasma_shiv.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 15
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/plasma_shiv.rsi
+  - type: DisarmMalus
+    malus: 0.225
+
+- type: entity
+  name: uranium shiv
+  parent: BaseKnife
+  id: UraniumShiv
+  description: A crude weapon fashioned from  a piece of cloth and a uranium shard.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+  - type: Construction
+    graph: UraniumShiv
+    node: icon 
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/uranium_shiv.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 10
+        Radiation: 5
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/uranium_shiv.rsi
+  - type: DisarmMalus
+    malus: 0.225
+
+- type: entity
   name: kitchen knife
   parent: BaseKnife
   id: KitchenKnife
@@ -103,3 +216,22 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/survival_knife.rsi
+
+- type: entity
+  name: kukri knife
+  parent: CombatKnife
+  id: KukriKnife
+  description: Professionals have standards. Be polite. Be efficient. Have a plan to kill everyone you meet.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/kukri_knife.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 15
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/kukri_knife.rsi

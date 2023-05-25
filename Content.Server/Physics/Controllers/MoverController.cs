@@ -331,7 +331,7 @@ namespace Content.Server.Physics.Controllers
                     if (body.LinearVelocity.Length > 0f)
                     {
                         // Minimum brake velocity for a direction to show its thrust appearance.
-                        var appearanceThreshold = 0.1f;
+                        const float appearanceThreshold = 0.1f;
 
                         // Get velocity relative to the shuttle so we know which thrusters to fire
                         var shuttleVelocity = (-shuttleNorthAngle).RotateVec(body.LinearVelocity);
@@ -380,15 +380,15 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         var impulse = force * brakeInput * ShuttleComponent.BrakeCoefficient;
-                        var maxImpulse = shuttleVelocity * body.Mass;
+                        impulse = shuttleNorthAngle.RotateVec(impulse);
+                        var forceMul = frameTime * body.InvMass;
+                        var maxVelocity = (-body.LinearVelocity).Length / forceMul;
 
-                        if ((impulse * frameTime).LengthSquared > maxImpulse.LengthSquared)
-                        {
-                            impulse = -maxImpulse;
-                        }
+                        // Don't overshoot
+                        if (impulse.Length > maxVelocity)
+                            impulse = impulse.Normalized * maxVelocity;
 
-                        PhysicsSystem.ApplyForce(shuttle.Owner, shuttleNorthAngle.RotateVec(impulse), body: body);
-
+                        PhysicsSystem.ApplyForce(shuttle.Owner, impulse, body: body);
                     }
                     else
                     {
@@ -397,16 +397,23 @@ namespace Content.Server.Physics.Controllers
 
                     if (body.AngularVelocity != 0f)
                     {
-                        var impulse = shuttle.AngularThrust * brakeInput * (body.AngularVelocity > 0f ? -1f : 1f) * ShuttleComponent.BrakeCoefficient;
-                        var maxImpulse = body.AngularVelocity * body.Inertia;
+                        var torque = shuttle.AngularThrust * brakeInput * (body.AngularVelocity > 0f ? -1f : 1f) * ShuttleComponent.BrakeCoefficient;
+                        var torqueMul = body.InvI * frameTime;
 
-                        if (Math.Abs(impulse * frameTime) > Math.Abs(maxImpulse))
+                        if (body.AngularVelocity > 0f)
                         {
-                            impulse = -maxImpulse;
+                            torque = MathF.Max(-body.AngularVelocity / torqueMul, torque);
+                        }
+                        else
+                        {
+                            torque = MathF.Max(body.AngularVelocity / torqueMul, torque);
                         }
 
-                        PhysicsSystem.ApplyTorque(shuttle.Owner, impulse, body: body);
-                        _thruster.SetAngularThrust(shuttle, true);
+                        if (!torque.Equals(0f))
+                        {
+                            PhysicsSystem.ApplyTorque(shuttle.Owner, torque, body: body);
+                            _thruster.SetAngularThrust(shuttle, true);
+                        }
                     }
                     else
                     {
@@ -479,8 +486,15 @@ namespace Content.Server.Physics.Controllers
 
                     totalForce = shuttleNorthAngle.RotateVec(totalForce);
 
-                    if ((body.LinearVelocity + totalForce / body.Mass * frameTime).Length <= ShuttleComponent.MaxLinearVelocity)
+                    var forceMul = frameTime * body.InvMass;
+                    var maxVelocity = (ShuttleComponent.MaxLinearVelocity - body.LinearVelocity.Length) / forceMul;
+
+                    if (maxVelocity != 0f)
                     {
+                        // Don't overshoot
+                        if (totalForce.Length > maxVelocity)
+                            totalForce = totalForce.Normalized * maxVelocity;
+
                         PhysicsSystem.ApplyForce(shuttle.Owner, totalForce, body: body);
                     }
                 }
@@ -495,17 +509,21 @@ namespace Content.Server.Physics.Controllers
                 else
                 {
                     PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, false);
-                    var impulse = shuttle.AngularThrust * -angularInput;
-                    var tickChange = impulse * frameTime * body.InvI;
+                    var torque = shuttle.AngularThrust * -angularInput;
 
-                    // If the rotation brings it above speedcap then noop.
-                    if (Math.Sign(body.AngularVelocity) != Math.Sign(tickChange) ||
-                        Math.Abs(body.AngularVelocity + tickChange) <= ShuttleComponent.MaxAngularVelocity)
+                    // Need to cap the velocity if 1 tick of input brings us over cap so we don't continuously
+                    // edge onto the cap over and over.
+                    var torqueMul = body.InvI * frameTime;
+
+                    torque = Math.Clamp(torque,
+                        (-ShuttleComponent.MaxAngularVelocity - body.AngularVelocity) / torqueMul,
+                        (ShuttleComponent.MaxAngularVelocity - body.AngularVelocity) / torqueMul);
+
+                    if (!torque.Equals(0f))
                     {
-                        PhysicsSystem.ApplyTorque(shuttle.Owner, impulse, body: body);
+                        PhysicsSystem.ApplyTorque(shuttle.Owner, torque, body: body);
+                        _thruster.SetAngularThrust(shuttle, true);
                     }
-
-                    _thruster.SetAngularThrust(shuttle, true);
                 }
             }
         }

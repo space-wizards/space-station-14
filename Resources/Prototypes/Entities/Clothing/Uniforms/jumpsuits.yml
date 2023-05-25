@@ -888,6 +888,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
 
 - type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitMercenary
+  name: mercenary jumpsuit
+  description: Clothing for real mercenaries who have gone through fire, water and the jungle of planets flooded with dangerous monsters or targets for which a reward has been assigned.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
+
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAtmos
   name: atmospheric technician jumpsuit
@@ -1148,3 +1159,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitFlannel
+  name: flannel jumpsuit
+  description: Smells like someones been grillin'.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi

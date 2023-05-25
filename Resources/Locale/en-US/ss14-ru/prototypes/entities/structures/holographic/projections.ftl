@@ -3,4 +3,4 @@ ent-HolosignWetFloor = wet floor sign
 ent-HoloFan = holofan
     .desc = A barrier of hard light that blocks air, but nothing else.
 ent-HolosignSecurity = holographic barrier
-    .desc = A barrier of hard light that blocks movenment, but pretty weak.
+    .desc = A barrier of hard light that blocks movement, but pretty weak.
