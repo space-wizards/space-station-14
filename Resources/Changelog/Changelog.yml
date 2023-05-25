@@ -1,10 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: 'New pet spider for HoS, can attack tarantulas and rats.', type: Add}
-  - {message: A new faction for the pet to attack only those worth attacking., type: Tweak}
-  id: 3370
-  time: '2023-04-10T04:33:23.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added the material reclaimer. Insert junk you don't want to grind it
@@ -2905,3 +2899,9 @@ Entries:
       expeditions.', type: Add}
   id: 3869
   time: '2023-05-25T12:23:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a bug that caused rotting bodies to continue rotting even when
+      they shouldn't be., type: Fix}
+  id: 3870
+  time: '2023-05-25T22:05:33.0000000+00:00'
