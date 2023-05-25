@@ -564,6 +564,15 @@
      Glass: 900
 
 - type: latheRecipe
+  id: CargoTelepadMachineCircuitboard
+  result: CargoTelepadMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
   id: SodaDispenserMachineCircuitboard
   result: SodaDispenserMachineCircuitboard
   completetime: 4

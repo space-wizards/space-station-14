@@ -19,7 +19,7 @@ salvage-expedition-window-claim = Принять
 salvage-expedition-window-next = Следующее предложение
 # Expedition descriptions
 salvage-expedition-desc-mining = Добывайте ресурсы внутри зоны экспедиции.
-#  С вас удержат налог в размере {$tax}% от добытых ресурсов.
+#  С вас удержат налог в размере { $tax }% от добытых ресурсов.
 salvage-expedition-desc-structure = Уничтожьте { $count } ед. { $structure } внутри зоны экспедиции.
 salvage-expedition-type-Mining = Добыча
 salvage-expedition-type-Destruction = Уничтожение
@@ -29,7 +29,7 @@ salvage-expedition-difficulty-Moderate = Умеренная
 salvage-expedition-difficulty-Hazardous = Высокая
 salvage-expedition-difficulty-Extreme = Экстремальная
 # Runner
-salvage-expedition-not-all-present = Not all salvagers are aboard the shuttle!
+salvage-expedition-not-all-present = Не все утилизаторы вернулись на борт шаттла!
 # Runner
 salvage-expedition-announcement-countdown-minutes =
     До окончания экспедиции осталась { $duration } { $duration ->

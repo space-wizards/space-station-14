@@ -16,5 +16,7 @@ ent-ClothingEyesGlassesSunglasses = солнцезащитные очки
     .desc = Подходят как для СБ, так и для карго.
 ent-ClothingEyesGlassesSecurity = солнцезащитные очки охраны
     .desc = Странная древняя технология помогает обеспечить простейшую защиту глаз. Улучшенное покрытие блокирует различные вспышки. Часто носятся бюджетниками службы безопасности.
+ent-ClothingEyesGlassesMercenary = mercenary glasses
+    .desc = Glasses made for combat, to protect the eyes from bright blinding flashes.
 ent-ClothingEyesGlassesThermal = оптический термальный сканер
     .desc = Термалы в форме очков.
