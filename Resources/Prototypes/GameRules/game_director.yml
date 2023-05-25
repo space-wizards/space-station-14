@@ -7,7 +7,7 @@
     - type: GameDirectorSystem
       storyBeats:
         Peace:
-          description: Life returns to usual, but how usual?
+          description: Minor Chaos across a wide range
           goal:   # Try to achieve a wide range of different moderate values.
             Combat: -200 # Friendly forces should have the upper hand
             Anomaly: 100
@@ -18,13 +18,13 @@
             Thirst: 100
             Medical: 100
         EngineeringIssues:
-          description: The station just cannot seem to function
+          description: Create high engineering chaos
           goal:   # Annoying engineering issues
             Atmos: 400
             Power: 400
             Medical: 100
         MadScience:
-          description: Crazy experiments are taking place
+          description: Create high Science chaos
           goal:
             Anomaly: 400
             Power: 100
@@ -37,7 +37,7 @@
             Death: 400
             Combat: -100 # Friendly forces should retain the upper hand
         Attackers:
-          description: Hostiles are attacking the station.
+          description: Drive high combat
           goal:
             Hostile: 100  # Quite a few hostiles
           endIfAnyWorse:
@@ -47,7 +47,7 @@
             Death: 400
             Combat: -50 # Friendly forces should just retain the upper hand
         AttackMild:
-          description: Some Hostiles are attacking the station.
+          description: Drive medium combat
           goal:
             Hostile: 40  # Perhaps 4 hostiles
           endIfAnyWorse:
@@ -59,7 +59,7 @@
         RestoreOrder:
           description: Send help to quell disorder on the station
           goal:
-            Traitors: 0  # Try to drive down hostiles and engineering issues
+            # Traitors: 0  # Try to drive down hostiles and engineering issues
             Hostile: 10
             Atmos: 0
             Medical: 0
@@ -91,7 +91,7 @@
             - AttackMild
             - EngineeringIssues
         ScienceAttack:
-          description: Those scientists cannot keep things under control.
+          description: Science, minor attack and then engineering issues
           minPlayers: 30
           beats:
             - Peace
@@ -101,7 +101,7 @@
             - EngineeringIssues
             - RepairStation
         MajorCombat:
-          description: Attackers swarm the station
+          description: A minor and then major attack
           minPlayers: 40
           beats:
             - Peace
@@ -120,13 +120,13 @@
     - type: GameDirectorStories
       stories:
         Relaxed:
-          description: Mostly calm with a couple of minor problems.
+          description: A small attack
           beats:
             - Peace
             - AttackMild
             - EngineeringIssues
         Science:
-          description: Those scientists cannot keep things under control.
+          description: Science and engineering issues
           minPlayers: 30
           beats:
             - Peace
