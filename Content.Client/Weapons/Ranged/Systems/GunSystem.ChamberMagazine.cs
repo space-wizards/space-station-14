@@ -15,7 +15,8 @@ public sealed partial class GunSystem
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UpdateAmmoCounterEvent>(OnChamberMagazineAmmoUpdate);
     }
 
-    protected override void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, ContainerModifiedMessage args)
+    protected override void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component,
+        ContainerModifiedMessage args)
     {
         base.OnMagazineSlotChange(uid, component, args);
 
@@ -32,14 +33,17 @@ public sealed partial class GunSystem
         // to avoid 6-7 additional entity spawns.
     }
 
-    private void OnChamberMagazineCounter(EntityUid uid, ChamberMagazineAmmoProviderComponent component, AmmoCounterControlEvent args)
+    private void OnChamberMagazineCounter(EntityUid uid, ChamberMagazineAmmoProviderComponent component,
+        AmmoCounterControlEvent args)
     {
         args.Control = new ChamberMagazineStatusControl();
     }
 
-    private void OnChamberMagazineAmmoUpdate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UpdateAmmoCounterEvent args)
+    private void OnChamberMagazineAmmoUpdate(EntityUid uid, ChamberMagazineAmmoProviderComponent component,
+        UpdateAmmoCounterEvent args)
     {
-        if (args.Control is not ChamberMagazineStatusControl control) return;
+        if (args.Control is not ChamberMagazineStatusControl control)
+            return;
 
         var chambered = GetChamberEntity(uid);
         var magEntity = GetMagazineEntity(uid);

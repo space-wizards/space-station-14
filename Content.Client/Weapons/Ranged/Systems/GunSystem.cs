@@ -132,8 +132,6 @@ public sealed partial class GunSystem : SharedGunSystem
         if (!TryGetGun(entity, out var gunUid, out var gun))
             return;
 
-        Sawmill.Info($"collision mask {gun.NexFireCollisionMask} ++++");
-
         var useKey = gun.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
 
         if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down)
