@@ -1,9 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Added MK58 crate, type: Add}
-  id: 3369
-  time: '2023-04-09T22:06:30.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: 'New pet spider for HoS, can attack tarantulas and rats.', type: Add}
@@ -2902,3 +2897,11 @@ Entries:
       alerts when off station., type: Fix}
   id: 3868
   time: '2023-05-25T09:13:22.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Deep Rock NanoTrasen now offers elimination missions for daring salvagers
+      willing to kill very big game., type: Add}
+  - {message: 'Space Carp have begun attacking planets, expect to see them on some
+      expeditions.', type: Add}
+  id: 3869
+  time: '2023-05-25T12:23:21.0000000+00:00'
