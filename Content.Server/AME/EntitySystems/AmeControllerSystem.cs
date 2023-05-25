@@ -33,7 +33,6 @@ public sealed class AmeControllerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
-
     public override void Initialize()
     {
         base.Initialize();
