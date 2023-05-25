@@ -7,3 +7,5 @@ generic-reagent-effect-tearing-up = Your eyes start to tear up.
 generic-reagent-effect-nauseous = You feel nauseous.
 generic-reagent-effect-parched = You feel parched.
 generic-reagent-effect-thirsty = You feel thirsty.
+generic-reagent-effect-glow = You begin to emit a faint glow.
+generic-reagent-effect-energetic = You feel super energized.

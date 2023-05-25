@@ -729,10 +729,10 @@
       - !type:HealthChange
         damage:
           groups:
-            Burn: -2
-            Toxin: -2
-            Airloss: -2
-            Brute: -2
+            Burn: -3
+            Toxin: -3
+            Airloss: -3
+            Brute: -3
 
 - type: reagent
   id: Ultravasculine
@@ -891,3 +891,61 @@
         - !type:ReagentThreshold
           min: 30
         probability: 0.02
+
+- type: reagent
+  id: Halovene
+  name: reagent-name-halovene
+  desc: reagent-desc-halovene
+  group: Medicine
+  physicalDesc: reagent-physical-desc-starry
+  flavor: blessed
+  color: "#9595FF"
+  metabolisms:
+    Medicine:
+      metabolismRate: 2
+      effects:
+        - !type:PopupMessage
+          conditions:
+            - !type:ReagentThreshold
+              max: 25
+          visualType: Medium
+          messages: ["halovene-strengthened"]
+          type: Local
+          probability: 0.6
+        - !type:HealthChange
+          conditions:
+            - !type:ReagentThreshold
+              max: 25
+          damage:
+            groups:
+              Airloss: -6
+              Toxin: -4
+              Burn: -4
+              Genetic: -2
+        - !type:HealthChange
+          conditions:
+            - !type:ReagentThreshold
+              min: 15
+          damage:
+            groups:
+              Genetic: 15
+        - !type:PopupMessage
+          conditions:
+            - !type:ReagentThreshold
+              min: 15
+          visualType: Medium
+          messages: [ "halovene-miserable" ]
+          type: Local
+          probability: 1
+        - !type:AdjustReagent
+          conditions:
+            - !type:ReagentThreshold
+              reagent: Elysiatoxin
+              min: 1
+          reagent: Elysiatoxin
+          amount: -10
+        - !type:Jitter
+          conditions:
+            - !type:ReagentThreshold
+              min: 7
+          probability: 0.5

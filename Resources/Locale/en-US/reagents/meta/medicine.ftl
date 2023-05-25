@@ -99,3 +99,6 @@ reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine
 
 reagent-name-sigynate = sigynate
 reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids.  Tastes sweet!
+
+reagent-name-halovene = halovene
+reagent-desc-halovene = A potent healing solution that works in mysterious ways. Useful for neutralizing Elysiatoxin. Taking too much will inflict serious genetic damage.

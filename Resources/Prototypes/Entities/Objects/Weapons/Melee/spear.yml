@@ -15,13 +15,13 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 12
+        Piercing: 4
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 15
+        Piercing: 6
   - type: Item
     size: 25
   - type: Clothing
@@ -95,13 +95,13 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 15
+        Piercing: 6
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 18
+        Piercing: 8
   - type: Item
     size: 25
   - type: Clothing
@@ -128,7 +128,7 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Piercing: 4
+        Piercing: 5
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -175,13 +175,13 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 18
+        Piercing: 8
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 21
+        Piercing: 10
   - type: Item
     size: 25
   - type: Clothing
@@ -208,7 +208,7 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Piercing: 4
+        Piercing: 5
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -239,31 +239,31 @@
         Blunt: 5
 
 - type: entity
-  name: uranium spear
+  name: elysium spear
   parent: BaseItem
-  id: SpearUranium
-  description: A spear with a uranium shard as a tip.
+  id: SpearElysium
+  description: A spear with an elysium shard as a tip.
   components:
   - type: Tag
     tags:
     - Spear
   - type: Sharp
   - type: Sprite
-    sprite: Objects/Weapons/Melee/uranium_spear.rsi
+    sprite: Objects/Weapons/Melee/elysium_spear.rsi
     netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 10
-        Radiation: 8
+        Piercing: 13
+        Shock: 3
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 12
-        Radiation: 9
+        Piercing: 15
+        Shock: 4
   - type: Item
     size: 25
   - type: Clothing
@@ -319,3 +319,85 @@
     damage:
       types:
         Blunt: 5
+
+- type: entity
+  name: uranium spear
+  parent: BaseItem
+  id: SpearUranium
+  description: A spear with a uranium shard as a tip.
+  components:
+    - type: Tag
+      tags:
+        - Spear
+    - type: Sharp
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/uranium_spear.rsi
+      netsync: false
+      state: spear
+    - type: MeleeWeapon
+      damage:
+        types:
+          Piercing: 10
+          Radiation: 3
+      angle: 0
+      animation: WeaponArcThrust
+    - type: DamageOtherOnHit
+      damage:
+        types:
+          Piercing: 11
+          Radiation: 3
+    - type: Item
+      size: 25
+    - type: Clothing
+      quickEquip: false
+      slots:
+        - back
+    - type: Construction
+      graph: SpearUranium
+      node: spear
+    - type: ItemCooldown
+    - type: SolutionContainerManager
+      solutions:
+        melee:
+          maxVol: 5
+    - type: MeleeChemicalInjector
+      solution: melee
+    - type: RefillableSolution
+      solution: melee
+    - type: InjectableSolution
+      solution: melee
+    - type: SolutionTransfer
+      maxTransferAmount: 5
+    - type: Wieldable
+    - type: IncreaseDamageOnWield
+      damage:
+        types:
+          Piercing: 3
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 30 #excess damage avoids cost of spawning entities.
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                PartRodMetal1:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: DamageOnLand
+      damage:
+        types:
+          Blunt: 5

@@ -5,6 +5,11 @@
   description: flavor-base-savory
 
 - type: flavor
+  id: blessed
+  flavorType: Base
+  description: flavor-base-blessed
+
+- type: flavor
   id: sweet
   flavorType: Base
   description: flavor-base-sweet
@@ -168,6 +173,11 @@
   id: syrupy
   flavorType: Base
   description: flavor-base-syrupy
+
+- type: flavor
+  id: wrath
+  flavorType: Complex
+  description: flavor-complex-wrath
 
 - type: flavor
   id: nothing

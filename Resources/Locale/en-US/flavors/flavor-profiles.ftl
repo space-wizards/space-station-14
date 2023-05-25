@@ -9,6 +9,7 @@ flavor-profile-unknown = Tastes indescribable.
 # instead, you get "Tastes sweet, spicy and like tomatoes".
 
 flavor-base-savory = savory
+flavor-base-blessed = blessed
 flavor-base-sweet = sweet
 flavor-base-salty = salty
 flavor-base-sour = sour
@@ -62,6 +63,7 @@ flavor-complex-protein = like protein
 ## Generic food taste. This should be replaced with an actual flavor profile,
 ## if you have food that looks like this.
 flavor-complex-food = like food
+flavor-complex-wrath = like the wrath of god
 
 ## Basic foodstuffs (ingredients, generic flavors)
 flavor-complex-bun = like bun

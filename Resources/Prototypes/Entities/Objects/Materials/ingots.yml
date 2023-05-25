@@ -111,6 +111,14 @@
     - type: PhysicalComposition
       materialComposition:
         Elysium: 100
+    - type: Extractable
+      grindableSolutionName: elysium
+    - type: SolutionContainerManager
+      solutions:
+        elysium:
+          reagents:
+            - ReagentId: Elysium
+              Quantity: 20
     - type: Stack
       stackType: ElysiumIngot
       baseLayer: base

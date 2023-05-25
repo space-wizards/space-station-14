@@ -83,17 +83,6 @@
   meltingPoint: 1064.76
 
 - type: reagent
-  id: Elysium
-  name: reagent-name-elysium
-  group: Elements
-  desc: reagent-desc-elysium
-  physicalDesc: reagent-physical-desc-metallic
-  flavor: metallic
-  color: "#9455F5"
-  boilingPoint: 2700.0
-  meltingPoint: 1064.76
-
-- type: reagent
   id: Hydrogen
   name: reagent-name-hydrogen
   group: Elements
@@ -273,3 +262,57 @@
         damage:
           types:
             Radiation: 2
+
+- type: reagent
+  id: Elysium
+  name: reagent-name-elysium
+  group: Elements
+  desc: reagent-desc-elysium
+  physicalDesc: reagent-physical-desc-holy
+  flavor: blessed
+  color: "#9A8CFF"
+  meltingPoint: 5077.0
+  boilingPoint: 1077.0
+  metabolisms:
+    Toxin:
+      effects:
+        - !type:HealthChange
+          conditions:
+            - !type:ReagentThreshold
+              min: 30
+          damage:
+            types:
+              Cellular: .27
+    Medicine:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: -1
+              Brute: -1
+        - !type:Jitter
+          conditions:
+            - !type:ReagentThreshold
+              min: 10
+        - !type:PopupMessage
+          conditions:
+            - !type:ReagentThreshold
+              min: 15
+          type: Local
+          visualType: Medium
+          messages: [ "generic-reagent-effect-energetic" ]
+          probability: 1
+        - !type:PopupMessage
+          conditions:
+            - !type:ReagentThreshold
+              min: 15
+          type: Local
+          visualType: Medium
+          messages: [ "generic-reagent-effect-glow" ]
+          probability: .07
+    Alcohol:
+      effects:
+        - !type:Drunk
+          conditions:
+            - !type:ReagentThreshold
+              min: 20

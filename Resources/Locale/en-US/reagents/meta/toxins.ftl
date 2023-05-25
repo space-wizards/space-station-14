@@ -1,6 +1,9 @@
 reagent-name-toxin = toxin
 reagent-desc-toxin = A toxic chemical.
 
+reagent-name-elysiatoxin = elysiatoxin
+reagent-desc-elysiatoxin = A very deadly toxin. Poisons the victim, and directly damages cells.
+
 reagent-name-carpotoxin = carpotoxin
 reagent-desc-carpotoxin = Toxic secretions of a space carp. Causes a painful burning sensation.
 
