@@ -14,6 +14,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
     {
         [Dependency] private readonly IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
         private float _timer;
+        public bool RoleHasGone = false;
 
         public GhostRoleRulesWindow(string rules, Action<BaseButton.ButtonEventArgs> requestAction)
         {
@@ -23,7 +24,10 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
             if (ghostRoleTime > 0f)
             {
-                RequestButton.Text = Loc.GetString("ghost-roles-window-request-role-button-timer", ("time", $"{_timer:0.0}"));
+                var button_str = RoleHasGone
+                    ? "ghost-roles-window-request-role-button-timer-gone"
+                    : "ghost-roles-window-request-role-button-timer";
+                RequestButton.Text = Loc.GetString(button_str, ("time", $"{_timer:0.0}"));
                 TopBanner.SetMessage(FormattedMessage.FromMarkupPermissive(rules + "\n" + Loc.GetString("ghost-roles-window-rules-footer", ("time", ghostRoleTime))));
                 RequestButton.Disabled = true;
             }
@@ -31,20 +35,24 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             RequestButton.OnPressed += requestAction;
         }
 
-
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-            if (!RequestButton.Disabled) return;
             if (_timer > 0.0)
             {
                 _timer -= args.DeltaSeconds;
-                RequestButton.Text = Loc.GetString("ghost-roles-window-request-role-button-timer", ("time", $"{_timer:0.0}"));
+                var button_str = RoleHasGone
+                    ? "ghost-roles-window-request-role-button-timer-gone"
+                    : "ghost-roles-window-request-role-button-timer";
+                RequestButton.Text = Loc.GetString(button_str, ("time", $"{_timer:0.0}"));
             }
             else
             {
                 RequestButton.Disabled = false;
-                RequestButton.Text = Loc.GetString("ghost-roles-window-request-role-button");
+                var button_str = RoleHasGone
+                    ? "ghost-roles-window-request-role-button-gone"
+                    : "ghost-roles-window-request-role-button";
+                RequestButton.Text = Loc.GetString(button_str);
             }
         }
     }

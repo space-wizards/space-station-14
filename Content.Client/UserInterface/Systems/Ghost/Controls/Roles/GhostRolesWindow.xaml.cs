@@ -10,6 +10,9 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
         public event Action<GhostRoleInfo>? OnRoleRequested;
         public event Action<GhostRoleInfo>? OnRoleFollow;
 
+        // When you accept rules but fail to land a ghost role, next role no longer requires an accept.
+        public string? LastRulesAccepted;
+
         public void ClearEntries()
         {
             NoRolesMessage.Visible = true;
