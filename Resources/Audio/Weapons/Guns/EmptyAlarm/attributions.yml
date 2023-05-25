@@ -1,6 +1,6 @@
 - files: ["lmg_empty_alarm.ogg"]
-  license: "Royalty Free"
-  copyright: "Taken or edited from source"
+  license: "Custom"
+  copyright: "Taken or edited from source - Royalty Free"
   source: "https://sonniss.com/gameaudiogdc"
 
 - files: ["smg_empty_alarm.ogg"]

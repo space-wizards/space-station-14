@@ -1,9 +1,9 @@
 - files: ["alien_claw_flesh1.ogg, alien_claw_flesh2.ogg, alien_claw_flesh3.ogg"]
-  license: "CC BY-SA 3.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/cmss13-devs/cmss13"
 
 - files: ["alien_spitacid.ogg"]
-  license: "CC BY-SA 3.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation"

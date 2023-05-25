@@ -129,11 +129,11 @@
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13"
 
 - files: ["drop.ogg"]
-  license: "Royalty free"
-  copyright: "Sonniss.com - GDC 2016 - Game Audio Bundle - Levan Nadashvili - Soldier Footsteps - FS Concrete Soldier Crouch N02, mixed from stereo to mono"
+  license: "Custom"
+  copyright: "Sonniss.com - GDC 2016 - Game Audio Bundle - Levan Nadashvili - Soldier Footsteps - FS Concrete Soldier Crouch N02, mixed from stereo to mono - Royalty free"
   source: "https://sonniss.com/gameaudiogdc"
 
 - files: ["wall_bonk.ogg"]
-  license: "Royalty free"
-  copyright: "Sonniss.com - GDC 2023 - Game Audio Bundle - 344 Audio - Nuts and Bolts"
+  license: "Custom"
+  copyright: "Sonniss.com - GDC 2023 - Game Audio Bundle - 344 Audio - Nuts and Bolts - Royalty free"
   source: "https://sonniss.com/gameaudiogdc"

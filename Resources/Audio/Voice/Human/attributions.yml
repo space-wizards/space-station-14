@@ -19,9 +19,9 @@
   source: "https://freesound.org/people/thatkellytrna/sounds/425777/"
 
 - files: ["male_cough_1.ogg"]
-  license: "Unknown"
-  copyright: "Taken or edited from source"
-  source: "Deleted"
+  license: "Custom"
+  copyright: "Taken or edited from source - dont know"
+  source: "https://github.com/"
 
 - files: ["male_cough_2.ogg"]
   license: "CC0-1.0"

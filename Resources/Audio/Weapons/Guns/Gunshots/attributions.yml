@@ -19,6 +19,6 @@
   source: "https://github.com/discordia-space/CEV-Eris"
 
 - files: ["laser_cannon2.ogg, laser_cannon.ogg, laser.ogg, hpistol.ogg"]
-  license: "Royalty Free"
-  copyright: "Taken or edited from source"
+  license: "Custom"
+  copyright: "Taken or edited from source - Royalty Free"
   source: "https://sonniss.com/gameaudiogdc"

@@ -4,21 +4,21 @@
   source: "https://freesound.org/people/Joao_Janz/sounds/478472/"
 
 - files: ["shipambience.ogg"]
-  license: "CC-BY-SA 3.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["starlight.ogg"]
-  license: "CC-BY-SA 3.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://www.youtube.com/watch?v=XTfPEFfmhrA"
 
 - files: ["constellations.ogg"]
-  license: "CC-BY-SA 3.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://www.youtube.com/watch?v=ufwRj1LI3aw"
 
 - files: ["drifting.ogg"]
-  license: "CC-BY-SA 3.0"
+  license: "CC-BY-SA-4.0"
   copyright: "By qwertyquerty"
   source: "https://github.com/BeeStation/BeeStation-Hornet"
