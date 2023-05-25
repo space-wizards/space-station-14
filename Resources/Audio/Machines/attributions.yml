@@ -1,114 +1,114 @@
 - files: ["anomaly_generate.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Created by szegvari, converted to mono and .ogg by EmoGarbage404 (github)."
   source: "https://freesound.org/people/szegvari/sounds/536794/"
 
 - files: ["beep.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Created by dotY21."
   source: "https://freesound.org/people/dotY21/sounds/330726/"
 
 - files: ["vending_restock_start.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "https://freesound.org/people/Defaultv/"
   source: "https://freesound.org/people/Defaultv/sounds/534362/"
 
 - files: ["vending_restock_done.ogg"]
-  license: "CC-BY 4.0"
+  license: "CC-BY-4.0"
   copyright: "https://freesound.org/people/felipelnv/"
   source: "https://freesound.org/people/felipelnv/sounds/153298/"
 
 - files: ["short_print_and_rip.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "receipt printing.wav by 13F_Panska_Tlolkova_Matilda. This version is cleaned up, shortened, and converted to OGG."
   source: "https://freesound.org/people/13F_Panska_Tlolkova_Matilda/sounds/378331"
 
 - files: ["vessel_warning.ogg"]
-  license: "CC-BY 4.0"
+  license: "CC-BY-4.0"
   copyright: "Created by AUDACITIER (freesound), converted to MONO and .ogg and edited by EmoGarbage404 (github)."
   source: "https://freesound.org/people/AUDACITIER/sounds/629196/"
 
 - files: ["quickbeep.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Created by BasedUser#2215 on discord"
   source: "https://discord.com/channels/310555209753690112/536955542913024015/1066824680188690452"
 
 - files: ["circuitprinter.ogg"]
-  license: "CC-BY-NC 4.0"
+  license: "CC-BY-NC-4.0"
   copyright: "Edited"
   source: "https://freesound.org/people/OroborosNZ/sounds/273649/, https://freesound.org/people/170048@virtualwindow.co.za/sounds/408041/"
 
 - files: ["diagnoser_printing.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "By RobSp1derp1g"
   source: "https://freesound.org/people/RobSp1derp1g/sounds/615419/"
 
 - files: ["genetics.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "By Citadel Station"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP"
 
 - files: ["uniformprinter.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "By sukaton"
   source: "https://freesound.org/people/sukaton/sounds/60640/"
 
 - files: ["vaccinator_running.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "By RutgerMuller"
   source: "https://freesound.org/people/RutgerMuller/sounds/365413/"
 
 - files: ["vending_jingle.ogg"]
-  license: "CC-BY 4.0"
+  license: "CC-BY-4.0"
   copyright: "By hubismal"
   source: "https://github.com/space-wizards/space-station-14"
 
 - files: ["lightswitch.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "By Skyrat-tg"
   source: "https://github.com/Skyrat-SS13/Skyrat-tg"
 
 - files: ["reclaimer_startup.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "By cmorris035"
   source: "https://freesound.org/people/cmorris035/sounds/319152/"
 
 - files: ["airlock_open.ogg, airlock_close.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "By tgstation"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["machine_vend_hot_drink.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "By waxsocks"
   source: "https://freesound.org/people/waxsocks/sounds/402603/"
 
 - files: ["scan_loop.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "By steaq"
   source: "https://freesound.org/people/steaq/sounds/509249/"
 
 - files: ["scan_finish.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "By pan14"
   source: "https://freesound.org/people/pan14/sounds/263133/"
 
 - files: ["printer.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "By tgstation"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["high_tech_confirm.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "By tgstation"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["tray_eject.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "By tgstation"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["scanning.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "By SamuelGremaud"
   source: "https://freesound.org/people/SamuelGremaud/sounds/455375/"

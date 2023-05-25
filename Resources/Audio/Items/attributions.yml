@@ -1,49 +1,49 @@
 - files: ["beep.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/P%C3%B3l/sounds/385927/"
 
 - files: ["locator_beep.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/MATRIXXX_/sounds/657947/"
 
 - files: ["trayhit1.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["trayhit2.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["rped.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["scary_horn.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["airhorn.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["desk_bell_ring.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/SamKolber/sounds/210022/"
 
 - files: ["pill.ogg"]
-  license: "CC-BY-NC 4.0"
+  license: "CC-BY-NC-4.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/RuanZA/sounds/437480/"
 
 - files: ["ring.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"

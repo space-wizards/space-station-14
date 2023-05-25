@@ -4,7 +4,7 @@
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["KettleParallaxNeb.png", "KettleParallaxBG.png", "AspidParallaxBG.png", "AspidParallaxBG.png"]
-  license: "CC0-1.0"
+  license: "CC0-1.0-1.0"
   copyright: "Taken or edited from source"
   source: "https://opengameart.org/content/seamless-space-backgrounds"
 

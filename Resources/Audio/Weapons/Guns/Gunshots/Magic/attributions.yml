@@ -3,6 +3,6 @@
 # YOU EVEN USED IT WRONG! LET ME FIX IT FOR YOU. - HigTechPuddle
 
 - files: [ "staff_animation.ogg", "staff_change.ogg", "staff_chaos.ogg", "staff_door.ogg", "staff_healing.ogg" ]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"

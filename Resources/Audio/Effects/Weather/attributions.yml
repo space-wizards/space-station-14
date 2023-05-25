@@ -9,6 +9,6 @@
   source: "https://sonniss.com/gameaudiogdc"
 
 - files: ["rain.ogg, snowstorm.ogg, snowstorm_weak.ogg, wind_2_1.ogg, wind_2_2.ogg, wind_3_1.ogg, wind_4_1.ogg, wind_4_2.ogg, wind_5_1.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP"

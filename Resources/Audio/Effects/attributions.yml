@@ -1,130 +1,130 @@
 - files: ["pill_insert.ogg, pill_remove.ogg"]
-  license: "CC-BY-NC-SA 4.0"
+  license: "CC-BY-NC-SA-4.0"
   copyright: "By Bright0."
   source: "https://github.com/Bright0"
 
 - files: ["teleport_arrival.ogg, teleport_departure.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["sadtrombone.ogg"]
-  license: "CC-BY-NC-SA 4.0"
+  license: "CC-BY-NC-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13"
 
 - files: ["box_deploy.ogg"]
-  license: "CC-BY-NC-SA 4.0"
+  license: "CC-BY-NC-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13"
 
 - files: ["chime.ogg"]
-  license: "CC-BY-NC-SA 4.0"
+  license: "CC-BY-NC-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13"
 
 - files: ["tree_fell.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/felix.blume/sounds/414093/"
 
 - files: ["beep1.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/thisusernameis/sounds/426891/"
 
 - files: ["adminhelp.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["hit_kick.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/florianreichelt/sounds/460509/"
 
 - files: ["fire.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/raremess/sounds/222557/"
 
 - files: ["holy.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/random_intruder/sounds/392172/"
 
 - files: ["internals.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/discordia-space/CEV-Eris"
 
 - files: ["poster_broken.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["poster_being_set.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["saw.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/domiscz/sounds/461728/"
 
 - files: ["double_beep.ogg"]
-  license: "CC-BY 4.0"
+  license: "CC-BY-4.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/andersmmg/sounds/511492/"
 
 - files: ["smoke.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["voteding.ogg"]
-  license: "CC-BY 4.0"
+  license: "CC-BY-4.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/InspectorJ/sounds/484344/"
 
 - files: ["minibombcountdown.ogg"]
-  license: "CC-BY 4.0"
+  license: "CC-BY-4.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/thomas_evdokimoff/sounds/202193/"
 
 - files: ["bite.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["bone_rattle.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/spookymodem/sounds/202102/"
 
 - files: ["demon_attack1.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["demon_consume.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["demon_dies.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 
 - files: ["pop.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/space-wizards/space-station-14"
 
 - files: ["box_deploy.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13"
 

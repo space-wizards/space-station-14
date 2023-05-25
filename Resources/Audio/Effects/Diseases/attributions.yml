@@ -1,15 +1,15 @@
 - files: ["beepboop.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/Fidjo20/sounds/503526/"
 
 - files: ["monkey1.ogg"]
-  license: "CC-BY-NC 4.0"
+  license: "CC-BY-NC-4.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/TRAVELcandies/sounds/423396/
 
 - files: ["monkey2.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/Archeos/sounds/325549/"
 

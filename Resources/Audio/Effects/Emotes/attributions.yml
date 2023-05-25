@@ -1,12 +1,12 @@
 - files: ["clap1.ogg, clap2.ogg, clap3.ogg, clap4.ogg"]
-  license: "CC-BY-SA 4.0"
+  license: "CC-BY-SA-4.0"
   copyright: "Taken or edited from source"
   source: "https://github.com/tgstation/tgstation"
 - files: ["snap1.ogg, snap2.ogg, snap3.ogg"]
-  license: "CC-BY 4.0"
+  license: "CC-BY-4.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/Snapper4298/packs/11176/"
 - files: ["parp1.ogg"]
-  license: "CC-BY 4.0"
+  license: "CC-BY-4.0"
   copyright: "Taken or edited from source"
   source: "https://freesound.org/people/TV_LING/sounds/523467/"

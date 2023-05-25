@@ -1,5 +1,5 @@
 - files: ["anomaly_generator.ogg"]
-  license: "CC0-1.0"
+  license: "CC0-1.0-1.0"
   copyright: "Created by steaq, converted Mono and .ogg by EmoGarbage"
   source: "https://freesound.org/people/steaq/sounds/509249/"
 
@@ -9,12 +9,12 @@
   source: "https://freesound.org/people/juskiddink/sounds/66956/"
 
 - files: ["circular_saw.ogg"]
-  license: "CC0-1.0"
+  license: "CC0-1.0-1.0"
   copyright: "By derjuli"
   source: "https://freesound.org/people/derjuli/sounds/448133/"
 
 - files: ["gas_pump.ogg"]
-  license: "CC0-1.0"
+  license: "CC0-1.0-1.0"
   copyright: "By karinalarasart"
   source: "https://freesound.org/people/karinalarasart/sounds/441419/"
 
@@ -24,12 +24,12 @@
   source: "https://freesound.org/people/geodylabs/sounds/122803/"
 
 - files: ["gas_vent.ogg"]
-  license: "CC0-1.0"
+  license: "CC0-1.0-1.0"
   copyright: "By kyles"
   source: "https://freesound.org/people/kyles/sounds/453642/"
 
 - files: ["flowing_water_open.ogg"]
-  license: "CC0-1.0"
+  license: "CC0-1.0-1.0"
   copyright: "By sterferny"
   source: "https://freesound.org/people/sterferny/sounds/382322/"
 
@@ -44,7 +44,7 @@
   source: "https://freesound.org/people/PhreaKsAccount/sounds/46266/"
 
 - files: ["portable_scrubber.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "By Beethovenboy"
   source: "https://freesound.org/people/Beethovenboy/sounds/384335/"
 
@@ -54,6 +54,6 @@
   source: "https://github.com/Baystation12/Baystation12/commit/41b11ef289bccfdfa2940480beb9c1e3f50c3b93"
 
 - files: ["reclaimer_ambience.ogg"]
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "By cmorris035"
   source: "https://freesound.org/people/cmorris035/sounds/319152/"
