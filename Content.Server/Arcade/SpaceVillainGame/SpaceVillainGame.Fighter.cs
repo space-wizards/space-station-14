@@ -3,12 +3,12 @@ namespace Content.Server.Arcade.SpaceVillain;
 public sealed partial class SpaceVillainGame
 {
     /// <summary>
-    /// 
+    /// A state holder for the fighters in the SpaceVillain game.
     /// </summary>
-    private sealed class Fighter
+    public sealed class Fighter
     {
         /// <summary>
-        /// 
+        /// The current hit point total of the fighter.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int Hp
@@ -19,7 +19,7 @@ public sealed partial class SpaceVillainGame
         private int _hp;
 
         /// <summary>
-        /// 
+        /// The maximum hit point total of the fighter.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int HpMax
@@ -34,7 +34,7 @@ public sealed partial class SpaceVillainGame
         private int _hpMax;
 
         /// <summary>
-        /// 
+        /// The current mana total of the fighter.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int Mp
@@ -45,7 +45,7 @@ public sealed partial class SpaceVillainGame
         private int _mp;
 
         /// <summary>
-        /// 
+        /// The maximum mana total of the fighter.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int MpMax
@@ -59,6 +59,9 @@ public sealed partial class SpaceVillainGame
         }
         private int _mpMax;
 
+        /// <summary>
+        /// Whether the given fighter can take damage/lose mana.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Invincible = false;
     }

@@ -13,9 +13,9 @@ public sealed partial class SpaceVillainGame
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SpaceVillainArcadeSystem _svArcade = default!;
+    private readonly SharedAudioSystem _audioSystem = default!;
+    private readonly UserInterfaceSystem _uiSystem = default!;
+    private readonly SpaceVillainArcadeSystem _svArcade = default!;
 
 
     [ViewVariables]
@@ -28,16 +28,16 @@ public sealed partial class SpaceVillainGame
     public string Name => $"{_fightVerb} {_villainName}";
 
     [ViewVariables]
-    private string _fightVerb;
+    private readonly string _fightVerb;
 
     [ViewVariables]
-    private Fighter _playerChar;
+    public readonly Fighter PlayerChar;
 
     [ViewVariables]
-    private string _villainName;
+    private readonly string _villainName;
 
     [ViewVariables]
-    private Fighter _villainChar;
+    public readonly Fighter VillainChar;
 
     [ViewVariables]
     private int _turtleTracker = 0;
@@ -49,20 +49,23 @@ public sealed partial class SpaceVillainGame
     private string _latestEnemyActionMessage = "";
 
     public SpaceVillainGame(EntityUid owner, SpaceVillainArcadeComponent arcade, SpaceVillainArcadeSystem arcadeSystem)
-        : this(owner, arcade, arcadeSystem, arcadeSystem.GenerateFightVerb(arcade), arcadeSystem.GenerateEnemyName(arcade)) 
+        : this(owner, arcade, arcadeSystem, arcadeSystem.GenerateFightVerb(arcade), arcadeSystem.GenerateEnemyName(arcade))
     {
     }
 
     public SpaceVillainGame(EntityUid owner, SpaceVillainArcadeComponent arcade, SpaceVillainArcadeSystem arcadeSystem, string fightVerb, string enemyName)
     {
         IoCManager.InjectDependencies(this);
+        _audioSystem = _entityManager.System<SharedAudioSystem>();
+        _uiSystem = _entityManager.System<UserInterfaceSystem>();
+        _svArcade = _entityManager.System<SpaceVillainArcadeSystem>();
 
         _owner = owner;
         //todo defeat the curse secret game mode
         _fightVerb = fightVerb;
         _villainName = enemyName;
 
-        _playerChar = new()
+        PlayerChar = new()
         {
             HpMax = 30,
             Hp = 30,
@@ -70,7 +73,7 @@ public sealed partial class SpaceVillainGame
             Mp = 10
         };
 
-        _villainChar = new()
+        VillainChar = new()
         {
             HpMax = 45,
             Hp = 45,
@@ -82,7 +85,9 @@ public sealed partial class SpaceVillainGame
     /// <summary>
     /// Called by the SpaceVillainArcadeComponent when Userinput is received.
     /// </summary>
+    /// <param name="uid">The action the user picked.</param>
     /// <param name="action">The action the user picked.</param>
+    /// <param name="arcade">The action the user picked.</param>
     public void ExecutePlayerAction(EntityUid uid, PlayerAction action, SpaceVillainArcadeComponent arcade)
     {
         if (!_running)
@@ -98,8 +103,8 @@ public sealed partial class SpaceVillainGame
                     ("attackAmount", attackAmount)
                 );
                 _audioSystem.PlayPvs(arcade.PlayerAttackSound, uid, AudioParams.Default.WithVolume(-4f));
-                if (!_villainChar.Invincible)
-                    _villainChar.Hp -= attackAmount;
+                if (!VillainChar.Invincible)
+                    VillainChar.Hp -= attackAmount;
                 _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                 break;
             case PlayerAction.Heal:
@@ -111,9 +116,9 @@ public sealed partial class SpaceVillainGame
                     ("healAmount", healAmount)
                 );
                 _audioSystem.PlayPvs(arcade.PlayerHealSound, uid, AudioParams.Default.WithVolume(-4f));
-                if (!_playerChar.Invincible)
-                    _playerChar.Mp -= pointAmount;
-                _playerChar.Hp += healAmount;
+                if (!PlayerChar.Invincible)
+                    PlayerChar.Mp -= pointAmount;
+                PlayerChar.Hp += healAmount;
                 _turtleTracker++;
                 break;
             case PlayerAction.Recharge:
@@ -123,7 +128,7 @@ public sealed partial class SpaceVillainGame
                     ("regainedPoints", chargeAmount)
                 );
                 _audioSystem.PlayPvs(arcade.PlayerChargeSound, uid, AudioParams.Default.WithVolume(-4f));
-                _playerChar.Mp += chargeAmount;
+                PlayerChar.Mp += chargeAmount;
                 _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                 break;
         }
@@ -142,7 +147,6 @@ public sealed partial class SpaceVillainGame
     /// <summary>
     /// Handles the logic of the AI
     /// </summary>
-    /// <returns>An Enemyaction-message.</returns>
     private void ExecuteAiAction()
     {
         if (_turtleTracker >= 4)
@@ -153,14 +157,14 @@ public sealed partial class SpaceVillainGame
                 ("enemyName", _villainName),
                 ("damageReceived", boomAmount)
             );
-            if (_playerChar.Invincible)
+            if (PlayerChar.Invincible)
                 return;
-            _playerChar.Hp -= boomAmount;
+            PlayerChar.Hp -= boomAmount;
             _turtleTracker--;
             return;
         }
 
-        if (_villainChar.Mp <= 5 && _random.Prob(0.7f))
+        if (VillainChar.Mp <= 5 && _random.Prob(0.7f))
         {
             var stealAmount = _random.Next(2, 3);
             _latestEnemyActionMessage = Loc.GetString(
@@ -168,17 +172,17 @@ public sealed partial class SpaceVillainGame
                 ("enemyName", _villainName),
                 ("stolenAmount", stealAmount)
             );
-            if (_playerChar.Invincible)
+            if (PlayerChar.Invincible)
                 return;
-            _playerChar.Mp -= stealAmount;
-            _villainChar.Mp += stealAmount;
+            PlayerChar.Mp -= stealAmount;
+            VillainChar.Mp += stealAmount;
             return;
         }
 
-        if (_villainChar.Hp <= 10 && _villainChar.Mp > 4)
+        if (VillainChar.Hp <= 10 && VillainChar.Mp > 4)
         {
-            _villainChar.Hp += 4;
-            _villainChar.Mp -= 4;
+            VillainChar.Hp += 4;
+            VillainChar.Mp -= 4;
             _latestEnemyActionMessage = Loc.GetString(
                 "space-villain-game-enemy-heals-message",
                 ("enemyName", _villainName),
@@ -194,9 +198,9 @@ public sealed partial class SpaceVillainGame
                 ("enemyName", _villainName),
                 ("damageDealt", attackAmount)
             );
-        if (_playerChar.Invincible)
+        if (PlayerChar.Invincible)
             return;
-        _playerChar.Hp -= attackAmount;
+        PlayerChar.Hp -= attackAmount;
     }
 
     /// <summary>
@@ -205,9 +209,9 @@ public sealed partial class SpaceVillainGame
     /// <returns>A bool indicating if the game should continue.</returns>
     private bool CheckGameConditions(EntityUid uid, SpaceVillainArcadeComponent arcade)
     {
-        switch(
-            _playerChar.Hp > 0 && _playerChar.Mp > 0,
-            _villainChar.Hp > 0 && _villainChar.Mp > 0
+        switch (
+            PlayerChar.Hp > 0 && PlayerChar.Mp > 0,
+            VillainChar.Hp > 0 && VillainChar.Mp > 0
         )
         {
             case (true, true):

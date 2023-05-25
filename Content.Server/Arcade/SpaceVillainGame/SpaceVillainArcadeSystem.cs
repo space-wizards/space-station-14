@@ -25,7 +25,11 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
 
     /// <summary>
     /// Called when the user wins the game.
+    /// Dispenses a prize if the arcade machine has any left.
     /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="arcade"></param>
+    /// <param name="xform"></param>
     public void ProcessWin(EntityUid uid, SpaceVillainArcadeComponent? arcade = null, TransformComponent? xform = null)
     {
         if (!Resolve(uid, ref arcade, ref xform))
@@ -63,6 +67,8 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
 
     private void OnSVPlayerAction(EntityUid uid, SpaceVillainArcadeComponent component, SpaceVillainArcadePlayerActionMessage msg)
     {
+        if (component.Game == null)
+            return;
         if (!TryComp<ApcPowerReceiverComponent>(uid, out var power) || !power.Powered)
             return;
 
@@ -71,7 +77,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
             case PlayerAction.Attack:
             case PlayerAction.Heal:
             case PlayerAction.Recharge:
-                component.Game?.ExecutePlayerAction(uid, msg.PlayerAction, component);
+                component.Game.ExecutePlayerAction(uid, msg.PlayerAction, component);
                 break;
             case PlayerAction.NewGame:
                 _audioSystem.PlayPvs(component.NewGameSound, uid, AudioParams.Default.WithVolume(-4f));

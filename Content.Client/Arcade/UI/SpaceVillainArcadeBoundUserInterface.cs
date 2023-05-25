@@ -3,46 +3,45 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 
-namespace Content.Client.Arcade.UI
+namespace Content.Client.Arcade.UI;
+
+public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
 {
-    public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
+    [ViewVariables] private SpaceVillainArcadeMenu? _menu;
+
+    //public SharedSpaceVillainArcadeComponent SpaceVillainArcade;
+
+    public SpaceVillainArcadeBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
-        [ViewVariables] private SpaceVillainArcadeMenu? _menu;
+        SendAction(PlayerAction.RequestData);
+    }
 
-        //public SharedSpaceVillainArcadeComponent SpaceVillainArcade;
+    public void SendAction(PlayerAction action)
+    {
+        SendMessage(new SpaceVillainArcadePlayerActionMessage(action));
+    }
 
-        public SpaceVillainArcadeBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-            SendAction(PlayerAction.RequestData);
-        }
+    protected override void Open()
+    {
+        base.Open();
 
-        public void SendAction(PlayerAction action)
-        {
-            SendMessage(new SpaceVillainArcadePlayerActionMessage(action));
-        }
+        _menu = new SpaceVillainArcadeMenu(this);
 
-        protected override void Open()
-        {
-            base.Open();
+        _menu.OnClose += Close;
+        _menu.OpenCentered();
+    }
 
-            _menu = new SpaceVillainArcadeMenu(this);
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        if (message is SpaceVillainArcadeDataUpdateMessage msg)
+            _menu?.UpdateInfo(msg);
+    }
 
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
-        }
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        {
-            if (message is SpaceVillainArcadeDataUpdateMessage msg)
-                _menu?.UpdateInfo(msg);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-                _menu?.Dispose();
-        }
+        if (disposing)
+            _menu?.Dispose();
     }
 }

@@ -27,8 +27,8 @@ public sealed partial class SpaceVillainGame
     public SpaceVillainArcadeMetaDataUpdateMessage GenerateMetaDataMessage()
     {
         return new(
-            _playerChar.Hp, _playerChar.Mp,
-            _villainChar.Hp, _villainChar.Mp,
+            PlayerChar.Hp, PlayerChar.Mp,
+            VillainChar.Hp, VillainChar.Mp,
             _latestPlayerActionMessage,
             _latestEnemyActionMessage,
             Name,
@@ -44,8 +44,8 @@ public sealed partial class SpaceVillainGame
     public SpaceVillainArcadeDataUpdateMessage GenerateUpdateMessage()
     {
         return new(
-            _playerChar.Hp, _playerChar.Mp,
-            _villainChar.Hp, _villainChar.Mp,
+            PlayerChar.Hp, PlayerChar.Mp,
+            VillainChar.Hp, VillainChar.Mp,
             _latestPlayerActionMessage,
             _latestEnemyActionMessage
         );

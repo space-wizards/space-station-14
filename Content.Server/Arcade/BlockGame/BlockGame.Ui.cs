@@ -6,13 +6,44 @@ namespace Content.Server.Arcade.BlockGame;
 
 public sealed partial class BlockGame
 {
+    /// <summary>
+    /// How often to check the currently pressed inputs for whether to move the active piece horizontally.
+    /// </summary>
     private const float PressCheckSpeed = 0.08f;
+
+    /// <summary>
+    /// Whether the left button is pressed.
+    /// Moves the active piece left if true.
+    /// </summary>
     private bool _leftPressed = false;
+
+    /// <summary>
+    /// How long the left button has been pressed.
+    /// </summary>
     private float _accumulatedLeftPressTime = 0f;
+
+    /// <summary>
+    /// Whether the right button is pressed.
+    /// Moves the active piece right if true.
+    /// </summary>
     private bool _rightPressed = false;
+
+    /// <summary>
+    /// How long the right button has been pressed.
+    /// </summary>
     private float _accumulatedRightPressTime = 0f;
+
+    /// <summary>
+    /// Whether the down button is pressed.
+    /// Speeds up how quickly the active piece falls if true.
+    /// </summary>
     private bool _softDropPressed = false;
 
+
+    /// <summary>
+    /// Handles user input.
+    /// </summary>
+    /// <param name="action">The action to current player has prompted.</param>
     public void ProcessInput(BlockGamePlayerAction action)
     {
         if (_running)
@@ -74,6 +105,10 @@ public sealed partial class BlockGame
         }
     }
 
+    /// <summary>
+    /// Handle moving the active game piece in response to user input.
+    /// </summary>
+    /// <param name="frameTime">The amount of time the current game tick covers.</param>
     private void InputTick(float frameTime)
     {
         var anythingChanged = false;
@@ -116,18 +151,31 @@ public sealed partial class BlockGame
             UpdateFieldUI();
     }
 
+    /// <summary>
+    /// Handles sending a message to all players/spectators.
+    /// </summary>
+    /// <param name="message">The message to broadcase to all players/spectators.</param>
     private void SendMessage(BoundUserInterfaceMessage message)
     {
         if (_uiSystem.TryGetUi(_owner, BlockGameUiKey.Key, out var bui))
             _uiSystem.SendUiMessage(bui, message);
     }
 
+    /// <summary>
+    /// Handles sending a message to a specific player/spectator.
+    /// </summary>
+    /// <param name="message">The message to send to a specific player/spectator.</param>
+    /// <param name="session">The target recipient.</param>
     private void SendMessage(BoundUserInterfaceMessage message, IPlayerSession session)
     {
         if (_uiSystem.TryGetUi(_owner, BlockGameUiKey.Key, out var bui))
             _uiSystem.TrySendUiMessage(bui, message, session);
     }
 
+    /// <summary>
+    /// Handles sending the current state of the game to a player that has just opened the UI.
+    /// </summary>
+    /// <param name="session">The target recipient.</param>
     public void UpdateNewPlayerUI(IPlayerSession session)
     {
         if (_gameOver)
@@ -144,6 +192,9 @@ public sealed partial class BlockGame
         FullUpdate(session);
     }
 
+    /// <summary>
+    /// Handles broadcasting the full player-visible game state to everyone who can see the game.
+    /// </summary>
     private void FullUpdate()
     {
         UpdateFieldUI();
@@ -154,6 +205,10 @@ public sealed partial class BlockGame
         SendHighscoreUpdate();
     }
 
+    /// <summary>
+    /// Handles broadcasting the full player-visible game state to a specific player/spectator.
+    /// </summary>
+    /// <param name="session">The target recipient.</param>
     private void FullUpdate(IPlayerSession session)
     {
         UpdateFieldUI(session);
@@ -164,6 +219,9 @@ public sealed partial class BlockGame
         SendHighscoreUpdate(session);
     }
 
+    /// <summary>
+    /// Handles broadcasting the current location of all of the blocks in the playfield + the active piece to all spectators.
+    /// </summary>
     public void UpdateFieldUI()
     {
         if (!Started)
@@ -173,6 +231,10 @@ public sealed partial class BlockGame
         SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(computedField.ToArray(), BlockGameMessages.BlockGameVisualType.GameField));
     }
 
+    /// <summary>
+    /// Handles broadcasting the current location of all of the blocks in the playfield + the active piece to a specific player/spectator.
+    /// </summary>
+    /// <param name="session">The target recipient.</param>
     public void UpdateFieldUI(IPlayerSession session)
     {
         if (!Started)
@@ -182,6 +244,9 @@ public sealed partial class BlockGame
         SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(computedField.ToArray(), BlockGameMessages.BlockGameVisualType.GameField), session);
     }
 
+    /// <summary>
+    /// Generates the set of blocks to send to viewers.
+    /// </summary>
     public List<BlockGameBlock> ComputeField()
     {
         var result = new List<BlockGameBlock>();
@@ -206,16 +271,26 @@ public sealed partial class BlockGame
         return result;
     }
 
+    /// <summary>
+    /// Broadcasts the state of the next queued piece to all viewers.
+    /// </summary>
     private void SendNextPieceUpdate()
     {
         SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(NextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock));
     }
 
+    /// <summary>
+    /// Broadcasts the state of the next queued piece to a specific viewer.
+    /// </summary>
+    /// <param name="session">The target recipient.</param>
     private void SendNextPieceUpdate(IPlayerSession session)
     {
         SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(NextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock), session);
     }
 
+    /// <summary>
+    /// Broadcasts the state of the currently held piece to all viewers.
+    /// </summary>
     private void SendHoldPieceUpdate()
     {
         if (HeldPiece.HasValue)
@@ -224,6 +299,10 @@ public sealed partial class BlockGame
             SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(Array.Empty<BlockGameBlock>(), BlockGameMessages.BlockGameVisualType.HoldBlock));
     }
 
+    /// <summary>
+    /// Broadcasts the state of the currently held piece to a specific viewer.
+    /// </summary>
+    /// <param name="session">The target recipient.</param>
     private void SendHoldPieceUpdate(IPlayerSession session)
     {
         if (HeldPiece.HasValue)
@@ -232,31 +311,52 @@ public sealed partial class BlockGame
             SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(Array.Empty<BlockGameBlock>(), BlockGameMessages.BlockGameVisualType.HoldBlock), session);
     }
 
+    /// <summary>
+    /// Broadcasts the current game level to all viewers.
+    /// </summary>
     private void SendLevelUpdate()
     {
         SendMessage(new BlockGameMessages.BlockGameLevelUpdateMessage(Level));
     }
 
+    /// <summary>
+    /// Broadcasts the current game level to a specific viewer.
+    /// </summary>
+    /// <param name="session">The target recipient.</param>
     private void SendLevelUpdate(IPlayerSession session)
     {
         SendMessage(new BlockGameMessages.BlockGameLevelUpdateMessage(Level), session);
     }
 
+    /// <summary>
+    /// Broadcasts the current game score to all viewers.
+    /// </summary>
     private void SendPointsUpdate()
     {
         SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(Points));
     }
 
+    /// <summary>
+    /// Broadcasts the current game score to a specific viewer.
+    /// </summary>
+    /// <param name="session">The target recipient.</param>
     private void SendPointsUpdate(IPlayerSession session)
     {
         SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(Points), session);
     }
 
+    /// <summary>
+    /// Broadcasts the current game high score positions to all viewers.
+    /// </summary>
     private void SendHighscoreUpdate()
     {
         SendMessage(new BlockGameMessages.BlockGameHighScoreUpdateMessage(_arcadeSystem.GetLocalHighscores(), _arcadeSystem.GetGlobalHighscores()));
     }
 
+    /// <summary>
+    /// Broadcasts the current game high score positions to a specific viewer.
+    /// </summary>
+    /// <param name="session">The target recipient.</param>
     private void SendHighscoreUpdate(IPlayerSession session)
     {
         SendMessage(new BlockGameMessages.BlockGameHighScoreUpdateMessage(_arcadeSystem.GetLocalHighscores(), _arcadeSystem.GetGlobalHighscores()), session);

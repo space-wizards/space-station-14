@@ -26,7 +26,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         var query = EntityManager.EntityQueryEnumerator<BlockGameArcadeComponent>();
         while (query.MoveNext(out var _, out var blockGame))
         {
-            blockGame.Game.GameTick(frameTime);
+            blockGame.Game?.GameTick(frameTime);
         }
     }
 
@@ -62,7 +62,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
             component.Spectators.Add(session);
 
         UpdatePlayerStatus(uid, session, bui, component);
-        component.Game.UpdateNewPlayerUI(session);
+        component.Game?.UpdateNewPlayerUI(session);
     }
 
     private void OnAfterUiClose(EntityUid uid, BlockGameArcadeComponent component, BoundUIClosedEvent args)
@@ -103,6 +103,8 @@ public sealed class BlockGameArcadeSystem : EntitySystem
 
     private void OnPlayerAction(EntityUid uid, BlockGameArcadeComponent component, BlockGameMessages.BlockGamePlayerActionMessage msg)
     {
+        if (component.Game == null)
+            return;
         if (!BlockGameUiKey.Key.Equals(msg.UiKey))
             return;
         if (msg.Session != component.Player)

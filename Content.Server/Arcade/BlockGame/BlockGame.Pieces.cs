@@ -5,8 +5,16 @@ namespace Content.Server.Arcade.BlockGame;
 
 public sealed partial class BlockGame
 {
+    /// <summary>
+    /// The set of types of game pieces that exist.
+    /// Used as templates when creating pieces for the game.
+    /// </summary>
     private readonly BlockGamePieceType[] _allBlockGamePieces;
 
+    /// <summary>
+    /// The set of types of game pieces that exist.
+    /// Used to generate the templates used when creating pieces for the game.
+    /// </summary>
     private enum BlockGamePieceType
     {
         I,
@@ -18,6 +26,9 @@ public sealed partial class BlockGame
         O
     }
 
+    /// <summary>
+    /// The set of possible rotations for the game pieces.
+    /// </summary>
     private enum BlockGamePieceRotation
     {
         North,
@@ -26,6 +37,9 @@ public sealed partial class BlockGame
         West
     }
 
+    /// <summary>
+    /// A static extension for the rotations that allows rotating through the possible rotations.
+    /// </summary>
     private static BlockGamePieceRotation Next(BlockGamePieceRotation rotation, bool inverted)
     {
         return rotation switch
@@ -38,17 +52,40 @@ public sealed partial class BlockGame
         };
     }
 
+    /// <summary>
+    /// A static extension for the rotations that allows rotating through the possible rotations.
+    /// </summary>
     private struct BlockGamePiece
     {
+        /// <summary>
+        /// Where all of the blocks that make up this piece are located relative to the origin of the piece.
+        /// </summary>
         public Vector2i[] Offsets;
+
+        /// <summary>
+        /// The color of all of the blocks that make up this piece.
+        /// </summary>
         private BlockGameBlock.BlockGameBlockColor _gameBlockColor;
+
+        /// <summary>
+        /// Whether or not the block should be able to rotate about its origin.
+        /// </summary>
         public bool CanSpin;
 
+        /// <summary>
+        /// Generates a list of the positions of each block comprising this game piece in worldspace.
+        /// </summary>
+        /// <param name="center">The position of the game piece in worldspace.</param>
+        /// <param name="rotation">The rotation of the game piece in worldspace.</param>
         public readonly Vector2i[] Positions(Vector2i center, BlockGamePieceRotation rotation)
         {
             return RotatedOffsets(rotation).Select(v => center + v).ToArray();
         }
 
+        /// <summary>
+        /// Gets the relative position of each block comprising this piece given a rotation.
+        /// </summary>
+        /// <param name="rotation">The rotation to be applied to the local position of the blocks in this piece.</param>
         private readonly Vector2i[] RotatedOffsets(BlockGamePieceRotation rotation)
         {
             var rotatedOffsets = (Vector2i[]) Offsets.Clone();
@@ -73,6 +110,11 @@ public sealed partial class BlockGame
             return rotatedOffsets;
         }
 
+        /// <summary>
+        /// Gets a list of all of the blocks comprising this piece in worldspace.
+        /// </summary>
+        /// <param name="center">The position of the game piece in worldspace.</param>
+        /// <param name="rotation">The rotation of the game piece in worldspace.</param>
         public readonly BlockGameBlock[] Blocks(Vector2i center, BlockGamePieceRotation rotation)
         {
             var positions = Positions(center, rotation);
@@ -86,19 +128,30 @@ public sealed partial class BlockGame
             return result;
         }
 
+        /// <summary>
+        /// Gets a list of all of the blocks comprising this piece in worldspace.
+        /// Used to generate the held piece/next piece preview images.
+        /// </summary>
         public readonly BlockGameBlock[] BlocksForPreview()
         {
             var xOffset = 0;
             var yOffset = 0;
             foreach (var offset in Offsets)
             {
-                if (offset.X < xOffset) xOffset = offset.X;
-                if (offset.Y < yOffset) yOffset = offset.Y;
+                if (offset.X < xOffset)
+                    xOffset = offset.X;
+                if (offset.Y < yOffset)
+                    yOffset = offset.Y;
             }
 
             return Blocks(new Vector2i(-xOffset, -yOffset), BlockGamePieceRotation.North);
         }
 
+        /// <summary>
+        /// Generates a game piece for a given type of game piece.
+        /// See <see cref="BlockGamePieceType"/> for the available options.
+        /// </summary>
+        /// <param name="type">The type of game piece to generate.</param>
         public static BlockGamePiece GetPiece(BlockGamePieceType type)
         {
             //switch statement, hardcoded offsets
