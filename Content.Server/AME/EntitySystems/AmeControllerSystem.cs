@@ -17,7 +17,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using static Content.Shared.AME.SharedAMEControllerComponent;
+using static Content.Shared.AME.SharedAmeControllerComponent;
 
 namespace Content.Server.AME.EntitySystems;
 
@@ -92,7 +92,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         if (!Resolve(uid, ref uis, logMissing: false)
-        || !_userInterfaceSystem.TryGetUi(uid, SharedAMEControllerComponent.AmeControllerUiKey.Key, out var bui, uis))
+        || !_userInterfaceSystem.TryGetUi(uid, SharedAmeControllerComponent.AmeControllerUiKey.Key, out var bui, uis))
             return;
 
         var state = GetUiState(uid, controller);

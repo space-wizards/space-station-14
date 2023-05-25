@@ -3,7 +3,7 @@
 namespace Content.Shared.AME;
 
 [Virtual]
-public class SharedAMEControllerComponent : Component
+public class SharedAmeControllerComponent : Component
 {
     [Serializable, NetSerializable]
     public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceState

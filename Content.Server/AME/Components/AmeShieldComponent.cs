@@ -9,7 +9,7 @@ namespace Content.Server.AME.Components;
 /// </summary>
 [Access(typeof(AmeShieldingSystem), typeof(AmeNodeGroup))]
 [RegisterComponent]
-public sealed class AmeShieldComponent : SharedAMEShieldComponent
+public sealed class AmeShieldComponent : SharedAmeShieldComponent
 {
     /// <summary>
     /// Whether or not this AME shield counts as a core for the AME or not.

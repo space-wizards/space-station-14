@@ -11,7 +11,7 @@ namespace Content.Server.AME.Components;
 /// </summary>
 [Access(typeof(AmeControllerSystem), typeof(AmeNodeGroup))]
 [RegisterComponent]
-public sealed class AmeControllerComponent : SharedAMEControllerComponent
+public sealed class AmeControllerComponent : SharedAmeControllerComponent
 {
     /// <summary>
     /// The container for the fuel canisters used by the AME.
