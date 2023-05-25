@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
+using Content.Server.DeviceLinking.Events;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles;
@@ -49,6 +50,7 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<EmitterComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<EmitterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
+            SubscribeLocalEvent<EmitterComponent, SignalReceivedEvent>(OnSignalReceived);
         }
 
         private void OnAnchorStateChanged(EntityUid uid, EmitterComponent component, ref AnchorStateChangedEvent args)
@@ -311,6 +313,33 @@ namespace Content.Server.Singularity.EntitySystems
                 state = EmitterVisualState.Off;
             }
             _appearance.SetData(uid, EmitterVisuals.VisualState, state);
+        }
+
+        private void OnSignalReceived(EntityUid uid, EmitterComponent component, ref SignalReceivedEvent args)
+        {
+            if (args.Port == component.OffPort)
+            {
+                SwitchOff(uid, component);
+            }
+            else if (args.Port == component.OnPort)
+            {
+                SwitchOn(uid, component);
+            }
+            else if (args.Port == component.TogglePort)
+            {
+                if (component.IsOn)
+                {
+                    SwitchOff(uid, component);
+                }
+                else
+                {
+                    SwitchOn(uid, component);
+                }
+            }
+            else if (component.SetTypePorts.TryGetValue(args.Port, out var boltType))
+            {
+                component.BoltType = boltType;
+            }
         }
     }
 }
