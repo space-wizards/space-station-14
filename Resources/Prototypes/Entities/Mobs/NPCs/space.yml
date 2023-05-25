@@ -369,6 +369,8 @@
       transferAmount: 6
     - type: Stealth
     - type: StealthOnMove
+      passiveVisibilityRate: -0.30
+      movementVisibilityRate: 0.15
     - type: ReplacementAccent
       accent: xeno
     - type: InteractionPopup
