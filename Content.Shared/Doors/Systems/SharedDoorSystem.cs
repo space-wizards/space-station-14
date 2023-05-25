@@ -57,7 +57,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
 
-        SubscribeLocalEvent<DoorComponent, InteractedNoHandEvent>(OnInteractNoHand);
+        SubscribeLocalEvent<DoorComponent, InteractedNoHandEvent>(OnInteractedNoHand);
         SubscribeLocalEvent<DoorComponent, ActivateInWorldEvent>(OnActivate);
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
@@ -181,7 +181,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
     #region Interactions
 
-    private void OnInteractNoHand(EntityUid uid, DoorComponent component, InteractedNoHandEvent args)
+    private void OnInteractedNoHand(EntityUid uid, DoorComponent component, InteractedNoHandEvent args)
     {
         if (args.Handled || !component.ClickOpen || !Tags.HasTag(args.User, "DoorBumpOpener"))
             return;
