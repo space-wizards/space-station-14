@@ -230,6 +230,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
         _appearanceSystem.SetData(uid, AmeControllerVisuals.DisplayState, state, appearance);
     }
+    
     private void OnComponentStartup(EntityUid uid, AmeControllerComponent comp, ComponentStartup args)
     {
         // TODO: Fix this bad name. I'd update maps but then people get mad.
