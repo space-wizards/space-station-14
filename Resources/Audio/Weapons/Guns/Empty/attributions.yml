@@ -1,0 +1,9 @@
+- files: ["empty.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/discordia-space/CEV-Eris"
+
+- files: ["lmg_empty.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/vgstation-coders/vgstation13"

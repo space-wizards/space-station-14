@@ -38,7 +38,12 @@
   copyright: "Created by SamKolber, shortened and converted to OGG and mono"
   source: "https://freesound.org/people/SamKolber/sounds/210022/"
 
-- files: ["Toys/toyfall1.ogg, Toys/toyfall2.ogg"]
-  license: "CC0-1.0"
-  copyright: "Created by HighTechPuddle"
-  source: "https://github.com/HighTechPuddle/space-station-14"
+- files: ["pill.ogg"]
+  license: "CC BY-NC 3.0"
+  copyright: "By RuanZA"
+  source: "https://freesound.org/people/RuanZA/sounds/437480/"
+
+- files: ["ring.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation"

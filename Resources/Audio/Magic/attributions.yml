@@ -1,0 +1,25 @@
+- files: ["forcewall.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "By Citadel-Station-13"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13"
+
+- files: ["blink.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "By Citadel-Station-13"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13"
+
+- files: ["knock.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "By Citadel-Station-13"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13"
+
+- files: ["fireball.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation"
+
+- files: ["disintegrate.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "By tgstation"
+  source: "https://github.com/tgstation/tgstation"
+

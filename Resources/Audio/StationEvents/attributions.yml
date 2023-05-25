@@ -1,4 +1,9 @@
 - files: ["running_out.ogg"]
   license: "CC-BY-3.0"
-  copyright: "Created by Bolgarich"
+  copyright: "Taken from source"
   source: "https://www.youtube.com/watch?v=SzEp2nv6oZ4"
+
+- files: ["countdown.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from source"
+  source: "https://www.youtube.com/watch?v=Zf3eQmD3hts"

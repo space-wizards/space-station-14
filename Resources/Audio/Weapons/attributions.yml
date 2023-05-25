@@ -1,4 +1,54 @@
 - files: ["plasma_cutter.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Taken from Citadel station."
-  source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/5b43cb2545a19957ec6ce3352dceac5e347e77df/sound/weapons/plasma_cutter.ogg"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP"
+
+- files: ["dodgeball.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/tgstation/tgstation"
+
+- files: ["grille_hit.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/tgstation/tgstation"
+
+- files: ["slash.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/tgstation/tgstation"
+
+- files: ["tap.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/tgstation/tgstation"
+
+- files: ["boxingpunch1.ogg, boxingpunch2.ogg, boxingpunch3.ogg"]
+  license: "CC BY 4.0"
+  copyright: "Taken or edited from source"
+  source: "https://freesound.org/people/ryanconway/sounds/260739/"
+
+- files: ["boxingbell.ogg"]
+  license: "CC0 1.0"
+  copyright: "Taken or edited from source"
+  source: "https://freesound.org/people/Herkules92/sounds/520998/"
+
+- files: ["block_metal1.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13"
+
+- files: ["pierce.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/tgstation/tgstation"
+
+- files: ["weoweo.ogg"]
+  license: "Royalty Free"
+  copyright: "Taken or edited from source"
+  source: "https://sonniss.com/gameaudiogdc"
+
+- files: ["soup.ogg"]
+  license: "Royalty Free"
+  copyright: "Taken or edited from source"
+  source: "https://sonniss.com/gameaudiogdc"

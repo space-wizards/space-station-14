@@ -1,0 +1,9 @@
+- files: ["lmg_empty_alarm.ogg"]
+  license: "Royalty Free"
+  copyright: "Taken or edited from source"
+  source: "https://sonniss.com/gameaudiogdc"
+
+- files: ["smg_empty_alarm.ogg"]
+  license: "CC BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/discordia-space/CEV-Eris"

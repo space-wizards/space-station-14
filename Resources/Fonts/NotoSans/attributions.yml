@@ -1,0 +1,4 @@
+- files: ["NotoSans-Bold.ttf, NotoSans-BoldItalic.ttf, NotoSans-Italic.ttf, NotoSans-Regular.ttf, NotoSansSymbols2-Regular.ttf, NotoSansSymbols-Bold.ttf, NotoSansSymbols-Regular.ttf"]
+  license: "See LICENSE.txt"
+  copyright: "Taken from source"
+  source: "https://fonts.google.com/noto/specimen/Noto+Sans"

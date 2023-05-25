@@ -1,0 +1,9 @@
+- files: ["bullet_meat1.ogg, bullet_meat2.ogg, bullet_meat3.ogg, bullet_meat4.ogg, energy_meat1.ogg, energy_meat2.ogg, energy_metal1.ogg, energy_metal2.ogg"]
+  license: "CC-BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP"
+
+- files: ["ric1.ogg, ric2.ogg, ric3.ogg, ric4.ogg, ric5.ogg"]
+  license: "CC-BY-SA 3.0"
+  copyright: "Taken or edited from source"
+  source: "https://github.com/tgstation/tgstation"
