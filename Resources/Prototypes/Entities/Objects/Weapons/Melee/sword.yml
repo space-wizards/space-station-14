@@ -22,52 +22,52 @@
     - CaptainSabre
   - type: DisarmMalus
 
-  - type: entity
-    name: divine sabre
-    parent: BaseItem
-    id: DivineSabre
-    description: A ceremonial sabre infused and enhanced with Elysium alloy.
-    components:
-      - type: Sharp
-      - type: Sprite
-        sprite: Objects/Weapons/Melee/divine_sabre.rsi
-        state: icon
-      - type: MeleeWeapon
-        attackRate: 1.77
-        damage:
-          types:
-            Slash: 17 #cmon, it has to be at least BETTER than the rest. Aexxie - I totally agree. NO reason a fucking SPEAR should be more robust.
-            Pierce: 3
-            Shock: 5
-      - type: Item
-        size: 15
-        sprite: Objects/Weapons/Melee/divine_sabre.rsi
-      - type: Tag
-        tags:
-          - CaptainSabre
-      - type: DisarmMalus
+- type: entity
+  name: divine sabre
+  parent: BaseItem
+  id: DivineSabre
+  description: A ceremonial sabre infused and enhanced with Elysium alloy.
+  components:
+    - type: Sharp
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/divine_sabre.rsi
+      state: icon
+    - type: MeleeWeapon
+      attackRate: 1.77
+      damage:
+        types:
+          Slash: 17 #cmon, it has to be at least BETTER than the rest. Aexxie - I totally agree. NO reason a fucking SPEAR should be more robust.
+          Pierce: 3
+          Shock: 5
+    - type: Item
+      size: 15
+      sprite: Objects/Weapons/Melee/divine_sabre.rsi
+    - type: Tag
+      tags:
+        - CaptainSabre
+    - type: DisarmMalus
 
 - type: entity
-  name: katana
-  parent: BaseItem
-  id: Katana
-  description: Ancient craftwork made with not so ancient plasteel.
-  components:
-  - type: Sharp
-  - type: Tag
-    tags:
-    - Katana
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/katana.rsi
-    state: icon
-  - type: MeleeWeapon
-    damage:
-      types:
-        Slash: 25
-  - type: Item
-    size: 15
-    sprite: Objects/Weapons/Melee/katana.rsi
-  - type: DisarmMalus
+name: katana
+parent: BaseItem
+id: Katana
+description: Ancient craftwork made with not so ancient plasteel.
+components:
+- type: Sharp
+- type: Tag
+  tags:
+  - Katana
+- type: Sprite
+  sprite: Objects/Weapons/Melee/katana.rsi
+  state: icon
+- type: MeleeWeapon
+  damage:
+    types:
+      Slash: 25
+- type: Item
+  size: 15
+  sprite: Objects/Weapons/Melee/katana.rsi
+- type: DisarmMalus
 
 - type: entity
   name: machete
