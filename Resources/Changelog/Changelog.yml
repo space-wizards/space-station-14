@@ -1,10 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Nanotrasen has updated their ethics policies and have supplied sustenance
-      vendors to perma prisoners., type: Add}
-  id: 3368
-  time: '2023-04-09T22:00:23.0000000+00:00'
 - author: lzk
   changes:
   - {message: Added MK58 crate, type: Add}
@@ -2902,3 +2896,9 @@ Entries:
   - {message: Fixed infinite beaker fill from mop, type: Fix}
   id: 3867
   time: '2023-05-25T09:12:08.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: NanoTrasen technicians have fixed armed nuclear devices not sending
+      alerts when off station., type: Fix}
+  id: 3868
+  time: '2023-05-25T09:13:22.0000000+00:00'
