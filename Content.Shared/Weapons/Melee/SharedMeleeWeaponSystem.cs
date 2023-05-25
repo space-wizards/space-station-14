@@ -513,7 +513,15 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var attackedEvent = new AttackedEvent(meleeUid, user, targetXform.Coordinates);
         RaiseLocalEvent(ev.Target.Value, attackedEvent);
 
-        var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
+        var rawDamagePoints = damage + hitEvent.BonusDamage + attackedEvent.BonusDamage;
+        if (user == ev.Target)
+        {
+            rawDamagePoints /= 5;
+        }
+
+        var modifiedDamage = DamageSpecifier.ApplyModifierSets(rawDamagePoints, hitEvent.ModifiersList);
+
+
         var damageResult = Damageable.TryChangeDamage(ev.Target, modifiedDamage, origin:user);
 
         if (damageResult != null && damageResult.Total > FixedPoint2.Zero)

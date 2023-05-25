@@ -42,9 +42,10 @@
     highVoltageNode: power
     mediumVoltageNode: power
     lowVoltageNode: power
+    onAttacked: false
   - type: CableVis
     node: power
-   
+
 
 - type: entity
   parent: CableBase
