@@ -33,7 +33,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             var result = TryUseUtensil(ev.User, ev.Target.Value, component);
-            ev.Handled = result.Handled;
+            // We only handle this case if the attempt to use item was successful
+            // Otherwise, let other entities to handle it
+            // e.g. to place it on the table
+            // (Probably breaking something else somewhere)
+            if (result.Success)
+                ev.Handled = result.Handled;
         }
 
         public (bool Success, bool Handled) TryUseUtensil(EntityUid user, EntityUid target, UtensilComponent component)

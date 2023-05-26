@@ -7,8 +7,15 @@
   - Engineering
   - Science
   - Security
+  - Janitorial
+  - Salvage
 
 - type: guideEntry
   id: Survival
   name: guide-entry-survival
   text: "/ServerInfo/Guidebook/Survival.xml"
+
+- type: guideEntry
+  id: Janitorial
+  name: guide-entry-janitorial
+  text: "/ServerInfo/Guidebook/Janitorial.xml"

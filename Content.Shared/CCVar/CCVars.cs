@@ -1210,12 +1210,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> EmergencyShuttleAutoCallExtensionTime =
             CVarDef.Create("shuttle.auto_call_extension_time", 45, CVar.SERVERONLY);
 
-        /// <summary>
-        /// The map to load for CentCom for the emergency shuttle to dock to.
-        /// </summary>
-        public static readonly CVarDef<string> CentcommMap =
-            CVarDef.Create("shuttle.centcomm_map", "/Maps/centcomm.yml", CVar.SERVERONLY);
-
         /*
          * Crew Manifests
          */

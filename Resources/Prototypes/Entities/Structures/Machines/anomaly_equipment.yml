@@ -36,6 +36,7 @@
     energy: 2
     color: "#fca3c0"
   - type: Appearance
+  - type: WiresPanel
   - type: Wires
     BoardName: "Vessel"
     LayoutId: Vessel
@@ -167,6 +168,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: Appearance
+  - type: WiresPanel
   - type: WiresVisuals
   - type: Wires
     BoardName: "Ape"
@@ -244,6 +246,7 @@
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5
+  - type: WiresPanel
   - type: Wires
     BoardName: "AnomalyGenerator"
     LayoutId: AnomalyGenerator

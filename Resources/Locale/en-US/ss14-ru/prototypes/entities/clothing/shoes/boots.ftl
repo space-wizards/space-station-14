@@ -8,5 +8,7 @@ ent-ClothingShoesBootsPerformer = performer's boots
     .desc = These boots provide great traction for when you're up on stage.
 ent-ClothingShoesBootsCombat = combat boots
     .desc = Robust combat boots for combat scenarios or combat situations. All combat, all the time.
+ent-ClothingShoesBootsMerc = mercenary boots
+    .desc = Boots that have gone through many conflicts and that have proven their combat reliability.
 ent-ClothingShoesBootsLaceup = laceup shoes
     .desc = The height of fashion, and they're pre-polished!

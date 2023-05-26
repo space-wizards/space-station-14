@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: ShardBase
@@ -116,7 +116,11 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 10
+        Piercing: 5
+  - type: Tag
+    tags:
+      - ReinforcedGlassShard
+      - Trash
 
 - type: entity
   parent: ShardBase
@@ -133,7 +137,11 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 15
+        Piercing: 5
+  - type: Tag
+    tags:
+      - PlasmaGlassShard
+      - Trash
 
 - type: entity
   parent: ShardBase
@@ -150,4 +158,10 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 15
+        Piercing: 3
+        Radiation: 2
+  - type: Tag
+    tags:
+      - UraniumGlassShard
+      - Trash
+

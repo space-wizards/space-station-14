@@ -36,7 +36,5 @@ ent-SlimesSpawn = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
 ent-SpiderSpawn = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
-ent-ZombieOutbreak = { ent-BaseGameRule }
-    .desc = { ent-BaseGameRule.desc }
 ent-LoneOpsSpawn = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
