@@ -1,7 +1,7 @@
 - type: gameMap
   id: Origin
   mapName: "Origin"
-  mapPath: /Maps/origin.yml
+  mapPath: /Maps/origin_imperial.yml
   minPlayers: 50
   stations:
     Origin:
@@ -47,3 +47,5 @@
         ResearchAssistant: [2, 2]
         Boxer: [1, 1]
         Paramedic: [1, 1]
+        IAA: [1, 1]
+        Reporter: [1, 1]
