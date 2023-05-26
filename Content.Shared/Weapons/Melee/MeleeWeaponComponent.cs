@@ -53,7 +53,7 @@ public sealed class MeleeWeaponComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Attacking = false;
-	
+
 
     /// <summary>
     /// When did we start a heavy attack.
@@ -110,6 +110,11 @@ public sealed class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("wideAnimation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string WideAnimation = "WeaponArcSlash";
 
+    /// <summary>
+    /// List of damageTypes that will do full damage upon self hit.
+    /// </summary>
+    [DataField("selfDamage")] public List<string>? SelfDamage;
+
     // Sounds
 
     /// <summary>
@@ -160,8 +165,9 @@ public sealed class MeleeWeaponComponentState : ComponentState
     public string ClickAnimation;
     public string WideAnimation;
     public float Range;
+    public SoundSpecifier? HitSound;
 
-    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart, string clickAnimation, string wideAnimation, float range)
+    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart, string clickAnimation, string wideAnimation, float range, SoundSpecifier? hitSound)
     {
         AttackRate = attackRate;
         Attacking = attacking;
@@ -170,5 +176,6 @@ public sealed class MeleeWeaponComponentState : ComponentState
         ClickAnimation = clickAnimation;
         WideAnimation = wideAnimation;
         Range = range;
+        HitSound = hitSound;
     }
 }

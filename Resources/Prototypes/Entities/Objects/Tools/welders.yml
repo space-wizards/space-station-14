@@ -31,6 +31,8 @@
         shader: unshaded
   - type: ItemCooldown
   - type: MeleeWeapon
+    selfDamage:
+        - Heat
     damage:
       types:
         Blunt: 10
@@ -49,6 +51,8 @@
       collection: Welder
     qualities: Welding
   - type: Welder
+    litWelderHitSound:
+      collection: Welder
     litMeleeDamageBonus:
       types: # When lit, negate standard melee damage and replace with heat
         Heat: 10

@@ -12,11 +12,13 @@ using Content.Shared.Item;
 using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
+using Component = System.ComponentModel.Component;
 
 namespace Content.Server.Tools
 {
@@ -136,6 +138,11 @@ namespace Content.Server.Tools
                 _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, uid, true);
             }
 
+            if (TryComp<MeleeWeaponComponent>(uid, out var weaponComp))
+            {
+                weaponComp.HitSound = welder.LitWelderHitSound;
+            }
+
             _entityManager.Dirty(welder);
 
             _activeWelders.Add(uid);
@@ -176,6 +183,11 @@ namespace Content.Server.Tools
                 light.Enabled = false;
 
             _audioSystem.PlayPvs(welder.WelderOffSounds, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-5f));
+
+            if (TryComp<MeleeWeaponComponent>(uid, out var weaponComp))
+            {
+                weaponComp.HitSound = null;
+            }
 
             _entityManager.Dirty(welder);
 

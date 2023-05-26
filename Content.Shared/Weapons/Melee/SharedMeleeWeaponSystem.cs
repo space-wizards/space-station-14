@@ -252,7 +252,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
     {
         args.State = new MeleeWeaponComponentState(component.AttackRate, component.Attacking, component.NextAttack,
-            component.WindUpStart, component.ClickAnimation, component.WideAnimation, component.Range);
+            component.WindUpStart, component.ClickAnimation, component.WideAnimation, component.Range, component.HitSound);
     }
 
     private void OnHandleState(EntityUid uid, MeleeWeaponComponent component, ref ComponentHandleState args)
@@ -268,6 +268,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         component.ClickAnimation = state.ClickAnimation;
         component.WideAnimation = state.WideAnimation;
         component.Range = state.Range;
+        component.HitSound = state.HitSound;
     }
 
     public bool TryGetWeapon(EntityUid entity, out EntityUid weaponUid, [NotNullWhen(true)] out MeleeWeaponComponent? melee)
@@ -516,7 +517,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var rawDamagePoints = damage + hitEvent.BonusDamage + attackedEvent.BonusDamage;
         if (user == ev.Target)
         {
-            rawDamagePoints /= 5;
+            if (component.SelfDamage != null)
+            {
+                rawDamagePoints = rawDamagePoints.DamageDict.Keys.Any()
+                                  && component.SelfDamage.Any(key => rawDamagePoints.DamageDict.ContainsKey(key)) ?
+                    rawDamagePoints :
+                    rawDamagePoints/5;
+            }
+            else
+            {
+                rawDamagePoints /= 5;
+            }
         }
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(rawDamagePoints, hitEvent.ModifiersList);

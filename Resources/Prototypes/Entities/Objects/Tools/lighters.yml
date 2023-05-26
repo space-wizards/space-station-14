@@ -56,6 +56,8 @@
           Quantity: 8
         maxVol: 8 #uses less fuel than a welder, so this isnt as bad as it looks
   - type: MeleeWeapon
+    selfDamage:
+      - Heat
     damage:
       types:
         Blunt: 0 #this feels hacky, but is needed for burn damage while active (i think)

@@ -65,5 +65,10 @@ namespace Content.Server.Tools.Components
         [DataField("tankSafe")]
         public bool TankSafe = false; //I have no idea what I'm doing
 
+        /// <summary>
+        ///     Defines sound that will be emitted on lit welder hit.
+        /// </summary>
+        [DataField("litWelderHitSound")]
+        public SoundSpecifier? LitWelderHitSound { get; set; } = new SoundCollectionSpecifier("Welder");
     }
 }
