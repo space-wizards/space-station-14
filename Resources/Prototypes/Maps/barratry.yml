@@ -1,7 +1,7 @@
 - type: gameMap
   id: Barratry
   mapName: 'Barratry'
-  mapPath: /Maps/barratry.yml
+  mapPath: /Maps/barratry_imperial.yml
   minPlayers: 35
   maxPlayers: 70
   stations:
@@ -47,3 +47,6 @@
         SecurityCadet: [ 1, 2 ]
         Detective: [ 1, 1 ]
         ResearchAssistant: [1, 2]
+        IAA: [ 1, 1 ]
+        Paramedic: [ 1, 1 ]
+        Reporter: [ 1, 1 ]
