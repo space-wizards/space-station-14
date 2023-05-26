@@ -114,9 +114,10 @@
 
 - type: latheRecipe
   id: SheetElysium1
-  result: IngotElysium1
+  result: SheetElysium1
   completetime: 2
   materials:
-    Plasteel:
+    Plasteel: 200
+    Gold: 100
     RefinedElysium: 100
 
