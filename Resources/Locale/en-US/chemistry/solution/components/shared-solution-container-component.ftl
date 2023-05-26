@@ -8,5 +8,5 @@ examinable-solution-recognized-first = [color={$color}]{$chemical}[/color]
 examinable-solution-recognized-next = , [color={$color}]{$chemical}[/color]
 examinable-solution-recognized-last = and [color={$color}]{$chemical}[/color]
 
-examinable-solution-goggles-text = Contents:{$recognizedString}
+examinable-solution-goggles-text = Contains the following reagents:{$recognizedString}
 examinable-solution-goggles-next = {$quantity}u [color={$color}]{$chemical}[/color]
