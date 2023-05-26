@@ -239,6 +239,7 @@ namespace Content.Server.GameTicking
             UpdateLateJoinStatus();
             AnnounceRound();
             UpdateInfoText();
+            RaiseLocalEvent(new RoundStartedEvent(RoundId)); // Corvax-RoundNotifications
 
 #if EXCEPTION_TOLERANCE
             }
