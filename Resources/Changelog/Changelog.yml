@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'You can now melee attack yourself, if you like', type: Tweak}
-  id: 3373
-  time: '2023-04-10T21:28:27.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added robust nukie drink in EMAGGED sustenance vendor!, type: Add}
@@ -2904,3 +2899,9 @@ Entries:
   - {message: Light replacer now has more description., type: Add}
   id: 3872
   time: '2023-05-25T22:09:55.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Fixed crit people being seen as dead by the bleed code, crit people
+      will now correctly passively recover blood and heal bloodloss damage.', type: Fix}
+  id: 3873
+  time: '2023-05-26T07:23:30.0000000+00:00'
