@@ -165,3 +165,25 @@
       - UraniumGlassShard
       - Trash
 
+- type: entity
+  parent: ShardBase
+  id: ShardGlassElysium
+  name: elysium glass shard
+  description: A small piece of elysium glass.
+  components:
+    - type: Sprite
+      color: "#9595FF"
+    - type: WelderRefinable
+      refineResult:
+        - SheetPlasma1
+        - SheetElysium1
+    - type: DamageUserOnTrigger
+      damage:
+        types:
+          Piercing: 3
+          Shock: 2
+    - type: Tag
+      tags:
+        - ElysiumGlassShard
+        - Trash
+

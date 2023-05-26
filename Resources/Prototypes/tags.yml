@@ -704,6 +704,9 @@
   id: UraniumGlassShard
 
 - type: Tag
+  id: ElysiumGlassShard
+
+- type: Tag
   id: VehicleKey
 
 - type: Tag

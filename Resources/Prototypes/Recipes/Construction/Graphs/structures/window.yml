@@ -28,6 +28,18 @@
               amount: 2
               doAfter: 3
 
+        - to: elysiumWindow
+          steps:
+            - material: ElysiumGlass
+              amount: 2
+              doAfter: 2
+
+        - to: reinforcedElysiumWindow
+          steps:
+            - material: ReinforcedElysiumGlass
+              amount: 2
+              doAfter: 3
+
         - to: uraniumWindow
           steps:
             - material: UraniumGlass
@@ -142,6 +154,48 @@
               doAfter: 5
             - tool: Screwing
               doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: elysiumWindow
+      entity: ElysiumWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetEGlass1
+              amount: 2
+            - !type:DeleteEntity { }
+          steps:
+            - tool: Screwing
+              doAfter: 6
+            - tool: Prying
+              doAfter: 7
+            - tool: Screwing
+              doAfter: 4
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: reinforcedElysiumWindow
+      entity: ReinforcedElysiumWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetREGlass1
+              amount: 2
+            - !type:DeleteEntity { }
+          steps:
+            - tool: Welding
+              doAfter: 8
+            - tool: Screwing
+              doAfter: 4
+            - tool: Prying
+              doAfter: 5
+            - tool: Welding
+              doAfter: 7
+            - tool: Screwing
+              doAfter: 5
             - tool: Anchoring
               doAfter: 3
 

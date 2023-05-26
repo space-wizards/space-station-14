@@ -89,3 +89,26 @@
               doAfter: 1
     - node: spear
       entity: SpearUranium
+
+- type: constructionGraph
+  id: SpearElysium
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: spear
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 2
+            - material: Cable
+              amount: 2
+              doAfter: 1
+            - tag: ElysiumGlassShard
+              name: Elysium Glass Shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard1
+              doAfter: 1
+    - node: spear
+      entity: SpearElysium
