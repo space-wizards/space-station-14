@@ -252,6 +252,44 @@
   canRotate: false
 
 - type: construction
+  name: elysium window
+  id: ElysiumWindow
+  graph: Window
+  startNode: start
+  targetNode: elysiumWindow
+  category: construction-category-structures
+  description: Divine glass.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/elysium_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: reinforced elysium window
+  id: ReinforcedElysiumWindow
+  graph: Window
+  startNode: start
+  targetNode: reinforcedElysiumWindow
+  category: construction-category-structures
+  description: Divine glass with unrivaled strength.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/reinforced_elysium_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: tinted window
   id: TintedWindow
   graph: Window
@@ -341,6 +379,42 @@
   icon:
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: directional elysium window
+  id: ElysiumWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: elysiumWindowDirectional
+  category: construction-category-structures
+  description: Holy and clear.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: elysium_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: directional reinforced elysium window
+  id: ElysiumReinforcedWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: elysiumReinforcedWindowDirectional
+  category: construction-category-structures
+  description: Holy, Clear, and crazy tough.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: elysium_reinforced_window
   objectType: Structure
   placementMode: SnapgridCenter
 

@@ -141000,7 +141000,7 @@ entities:
     - pos: 38.5,-30.5
       parent: 5350
       type: Transform
-- proto: OreProcessor
+- proto: Refinery
   entities:
   - uid: 3903
     components:

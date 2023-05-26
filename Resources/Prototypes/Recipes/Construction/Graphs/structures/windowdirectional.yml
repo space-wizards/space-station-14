@@ -99,3 +99,45 @@
               doAfter: 2
             - tool: Anchoring
               doAfter: 3
+
+    - node: elysiumWindowDirectional
+      entity: ElysiumWindowDirectional
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetEGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 3
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: elysiumReinforcedWindowDirectional
+      entity: ElysiumReinforcedWindowDirectional
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetREGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 4
+            - tool: Screwing
+              doAfter: 4
+            - tool: Prying
+              doAfter: 3
+            - tool: Welding
+              doAfter: 4
+            - tool: Screwing
+              doAfter: 3
+            - tool: Anchoring
+              doAfter: 3

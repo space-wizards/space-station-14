@@ -111,3 +111,12 @@
   completetime: 2
   materials:
     Elysium: 200
+
+- type: latheRecipe
+  id: SheetElysium1
+  result: IngotElysium1
+  completetime: 2
+  materials:
+    Plasteel:
+    RefinedElysium: 100
+

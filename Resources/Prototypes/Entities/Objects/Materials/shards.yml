@@ -176,7 +176,7 @@
     - type: WelderRefinable
       refineResult:
         - SheetPlasma1
-        - SheetElysium1
+        - IngotElysium1
     - type: DamageUserOnTrigger
       damage:
         types:

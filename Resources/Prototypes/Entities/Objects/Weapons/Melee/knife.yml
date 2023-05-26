@@ -43,7 +43,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 5
+        Slash: 3
   - type: Item
     size: 7
     sprite: Objects/Weapons/Melee/shiv.rsi
@@ -67,7 +67,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 6
+        Slash: 4
   - type: Item
     size: 7
     sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
@@ -91,7 +91,8 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 7
+        Slash: 5
+        Poison: 1
   - type: Item
     size: 7
     sprite: Objects/Weapons/Melee/plasma_shiv.rsi
@@ -115,7 +116,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 8
+        Slash: 5
         Radiation: 3
   - type: Item
     size: 7
@@ -140,7 +141,7 @@
       attackRate: 1.5
       damage:
         types:
-          Slash: 10
+          Slash: 5
           Shock: 4
     - type: Item
       size: 7

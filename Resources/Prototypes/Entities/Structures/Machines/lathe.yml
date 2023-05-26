@@ -309,7 +309,7 @@
       - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
       - MaterialReclaimerMachineCircuitboard
-      - OreProcessorMachineCircuitboard
+      - RefineryMachineCircuitboard
       - CargoTelepadMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
@@ -637,9 +637,9 @@
 
 - type: entity
   parent: Autolathe
-  id: OreProcessor
-  name: ore processor
-  description: It produces sheets and ingots using ores.
+  id: Refinery
+  name: refinery
+  description: It refines ores, ingots, and other raw materials into refined material.
   components:
     - type: Sprite
       sprite: Structures/Machines/ore_processor.rsi
@@ -655,13 +655,15 @@
         - state: panel
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
-      board: OreProcessorMachineCircuitboard
+      board: RefineryMachineCircuitboard
     - type: MaterialStorage
       dropOnDeconstruct: false #should drop ores instead of ingots/sheets
       ignoreColor: true
       whitelist:
         tags:
           - Ore
+          - Sheet
+          - Ingot
     - type: Lathe
       staticRecipes:
         - SheetSteel30

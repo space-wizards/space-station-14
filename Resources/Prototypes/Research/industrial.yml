@@ -11,7 +11,7 @@
   cost: 7500
   recipeUnlocks:
   - MiningDrill
-  - OreProcessorMachineCircuitboard
+  - RefineryMachineCircuitboard
 
 - type: technology
   id: AdvancedPowercells
@@ -172,7 +172,7 @@
     - WelderIndustrialAdvanced
     - PowerDrill
     - JawsOfLife
-    
+
 # Tier 3
 
 - type: technology

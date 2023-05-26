@@ -89684,14 +89684,14 @@ entities:
     - pos: 19.5,30.5
       parent: 1
       type: Transform
-- proto: OreProcessor
+- proto: Refinery
   entities:
   - uid: 3530
     components:
     - pos: -34.5,-1.5
       parent: 1
       type: Transform
-- proto: OreProcessorMachineCircuitboard
+- proto: RefineryMachineCircuitboard
   entities:
   - uid: 5553
     components:

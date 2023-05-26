@@ -33,6 +33,26 @@
               amount: 1
             - material: MetalRod
               amount: 1
+        - to: SheetEGlass
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: SheetRPGlass
+              amount: 3
+            - material: SheetElysium
+              amount: 1
+        - to: SheetREGlass
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: Glass
+              amount: 1
+            - material: Plasma
+              amount: 1
+            - material: MetalRod
+              amount: 1
         - to: SheetUGlass
           completed:
             - !type:SetStackCount
@@ -65,6 +85,12 @@
 
     - node: SheetRPGlass
       entity: SheetRPGlass
+
+    - node: SheetEGlass
+      entity: SheetEGlass
+
+    - node: SheetREGlass
+      entity: SheetREGlass
 
     - node: SheetUGlass
       entity: SheetUGlass

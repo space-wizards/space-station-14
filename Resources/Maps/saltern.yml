@@ -51464,7 +51464,7 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-- proto: OreProcessor
+- proto: Refinery
   entities:
   - uid: 9919
     components:

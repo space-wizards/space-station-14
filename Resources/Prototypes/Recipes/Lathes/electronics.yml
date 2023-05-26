@@ -301,8 +301,8 @@
     Glass: 900
 
 - type: latheRecipe
-  id: OreProcessorMachineCircuitboard
-  result: OreProcessorMachineCircuitboard
+  id: RefineryMachineCircuitboard
+  result: RefineryMachineCircuitboard
   completetime: 4
   materials:
     Steel: 100

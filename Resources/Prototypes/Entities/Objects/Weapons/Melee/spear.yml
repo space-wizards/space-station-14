@@ -101,7 +101,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 9
+        Piercing: 15
   - type: Item
     size: 25
   - type: Clothing
@@ -182,8 +182,8 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 9
-        Poison: 1
+        Piercing: 15
+        Poison: 2
   - type: Item
     size: 25
   - type: Clothing
@@ -257,15 +257,15 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 13
-        Shock: 3
+        Piercing: 12
+        Shock: 4
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 15
-        Shock: 4
+        Piercing: 18
+        Shock: 6
   - type: Item
     size: 25
   - type: Clothing
@@ -346,8 +346,8 @@
     - type: DamageOtherOnHit
       damage:
         types:
-          Piercing: 11
-          Radiation: 3
+          Piercing: 15
+          Radiation: 5
     - type: Item
       size: 25
     - type: Clothing

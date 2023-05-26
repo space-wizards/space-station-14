@@ -634,14 +634,14 @@
         Plastic: 5
 
 - type: entity
-  id: OreProcessorMachineCircuitboard
+  id: RefineryMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: ore processor machine board
+  name: refinery machine board
   components:
     - type: Sprite
       state: supply
     - type: MachineBoard
-      prototype: OreProcessor
+      prototype: Refinery
       requirements:
         MatterBin: 1
         Manipulator: 3

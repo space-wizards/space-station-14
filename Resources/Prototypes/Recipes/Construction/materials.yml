@@ -21,6 +21,28 @@
   objectType: Item
 
 - type: construction
+  name: reinforced elysium glass
+  description: A reinforced sheet of elysium glass.
+  id: SheetREGlass
+  graph: Glass
+  startNode: start
+  targetNode: SheetREGlass
+  category: construction-category-materials
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: reglass }
+  objectType: Item
+
+- type: construction
+  name: elysium glass
+  description: A reinforced sheet of glass.
+  id: SheetEGlass
+  graph: Glass
+  startNode: start
+  targetNode: SheetEGlass
+  category: construction-category-materials
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: eglass }
+  objectType: Item
+
+- type: construction
   name: plasma glass
   description: A sheet of translucent plasma.
   id: SheetPGlass

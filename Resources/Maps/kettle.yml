@@ -140004,14 +140004,14 @@ entities:
     - pos: 47.505318,32.619854
       parent: 82
       type: Transform
-- proto: OreProcessor
+- proto: Refinery
   entities:
   - uid: 3561
     components:
     - pos: 43.5,31.5
       parent: 82
       type: Transform
-- proto: OreProcessorMachineCircuitboard
+- proto: RefineryMachineCircuitboard
   entities:
   - uid: 4207
     components:
