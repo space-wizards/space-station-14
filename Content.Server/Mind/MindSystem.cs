@@ -43,6 +43,9 @@ public sealed class MindSystem : EntitySystem
 
     private void OnVisitingMindRemoved(EntityUid uid, VisitingMindComponent component, ComponentRemove args)
     {
+        if (Deleted(uid) || Terminating(uid))
+            return;
+
         UnVisit(component.Mind);
     }
 

@@ -172,7 +172,7 @@ namespace Content.Server.Ghost
 
         private void OnPlayerDetached(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
         {
-            QueueDel(uid);
+            DeleteEntity(uid);
         }
 
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
@@ -238,7 +238,7 @@ namespace Content.Server.Ghost
 
             if (EntityManager.TryGetComponent<MindContainerComponent?>(uid, out var mind))
                 _mindSystem.SetGhostOnShutdown(uid, false, mind);
-            EntityManager.DeleteEntity(uid);
+            QueueDel(uid);
         }
 
         private IEnumerable<GhostWarp> GetLocationWarps()
