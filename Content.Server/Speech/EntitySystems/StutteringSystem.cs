@@ -15,7 +15,7 @@ namespace Content.Server.Speech.EntitySystems
         private const string StutterKey = "Stutter";
 
         // Regex of characters to stutter.
-        private static readonly Regex Stutter = new(@"[b-df-hj-np-tv-wxyz]",
+        private static readonly Regex Stutter = new(@"[b-df-hj-np-tv-wxyz-б-вд-к-лмн-прст]",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public override void Initialize()
