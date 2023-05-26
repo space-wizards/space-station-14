@@ -11,7 +11,6 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
