@@ -119,6 +119,8 @@
           reagents:
             - ReagentId: Elysium
               Quantity: 20
+    - type: PointLight
+      color: "#8E91FF"
     - type: Stack
       stackType: ElysiumIngot
       baseLayer: base

@@ -38,18 +38,18 @@
             - !type:SetStackCount
               amount: 1
           steps:
-            - material: SheetRPGlass
-              amount: 3
-            - material: SheetElysium
+            - material: ReinforcedPlasmaGlass
+              amount: 2
+            - material: ElysiumIngot
               amount: 1
         - to: SheetREGlass
           completed:
             - !type:SetStackCount
               amount: 1
           steps:
-            - material: Glass
+            - material: ElysiumGlass
               amount: 1
-            - material: Plasma
+            - material: ElysiumAlloy
               amount: 1
             - material: MetalRod
               amount: 1

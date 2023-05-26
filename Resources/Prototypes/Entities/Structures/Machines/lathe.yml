@@ -310,6 +310,7 @@
       - StasisBedMachineCircuitboard
       - MaterialReclaimerMachineCircuitboard
       - RefineryMachineCircuitboard
+      - ForgeMachineCircuitboard
       - CargoTelepadMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
@@ -642,7 +643,7 @@
   description: It refines ores, ingots, and other raw materials into refined material.
   components:
     - type: Sprite
-      sprite: Structures/Machines/ore_processor.rsi
+      sprite: Structures/Machines/refinery.rsi
       netsync: false
       layers:
         - state: icon
@@ -678,3 +679,35 @@
         - IngotGold1
         - IngotSilver1
         - MaterialBananium1
+
+- type: entity
+  parent: Autolathe
+  id: Forge
+  name: forge
+  description: It turns refined materials into sellable or usable equipment.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/refinery.rsi
+      netsync: false
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: inserting
+          map: ["enum.MaterialStorageVisualLayers.Inserting"]
+        - state: panel
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: Machine
+      board: ForgeMachineCircuitboard
+    - type: MaterialStorage
+      dropOnDeconstruct: true
+      ignoreColor: true
+      whitelist:
+        tags:
+          - Sheet
+          - Ingot
+    - type: Lathe
+      staticRecipes:
+        - ElysiumShiv

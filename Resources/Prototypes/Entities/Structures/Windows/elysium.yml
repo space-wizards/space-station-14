@@ -42,3 +42,42 @@
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 80
+
+- type: entity
+  id: ElysiumWindowDirectional
+  parent: WindowDirectional
+  name: directional elysium window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Window
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Windows/directional.rsi
+      state: elysium_window
+    - type: Icon
+      sprite: Structures/Windows/directional.rsi
+      state: elysium_window
+    - type: Construction
+      graph: WindowDirectional
+      node: elysiumWindowDirectional
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 666
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardGlassElysium:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: StaticPrice
+      price: 80

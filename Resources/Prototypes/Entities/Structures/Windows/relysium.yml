@@ -15,13 +15,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1200
+        damage: 1500
       behaviors: #excess damage, don't spawn entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 900
+        damage: 1333
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -50,3 +50,42 @@
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 140
+
+- type: entity
+  id: ReinforcedElysiumWindowDirectional
+  parent: WindowDirectional
+  name: directional reinforced elysium window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Window
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Windows/directional.rsi
+      state: elysium_reinforced_window
+    - type: Icon
+      sprite: Structures/Windows/directional.rsi
+      state: elysium_reinforced_window
+    - type: Construction
+      graph: WindowDirectional
+      node: reinforcedElysiumWindowDirectional
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 1111
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardGlassElysium:
+                  min: 1
+                  max: 2
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: StaticPrice
+      price: 80

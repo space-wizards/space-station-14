@@ -310,6 +310,15 @@
     Gold: 100
 
 - type: latheRecipe
+  id: ForgeMachineCircuitboard
+  result: RefineryMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 150
+
+- type: latheRecipe
   id: RipleyCentralElectronics
   result: RipleyCentralElectronics
   completetime: 4

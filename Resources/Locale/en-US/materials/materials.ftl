@@ -12,6 +12,7 @@ materials-gold = gold
 materials-silver = silver
 materials-plasteel = plasteel
 materials-elysium = elysium
+materials-elysium-alloy = elysium alloy
 
 # Other
 materials-biomass = biomass

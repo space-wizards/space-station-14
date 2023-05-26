@@ -12,6 +12,7 @@
   recipeUnlocks:
   - MiningDrill
   - RefineryMachineCircuitboard
+  - ForgeMachineCircuitboard
 
 - type: technology
   id: AdvancedPowercells

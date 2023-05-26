@@ -28,6 +28,18 @@
               amount: 1
               doAfter: 3
 
+        - to: elysiumReinforcedWindowDirectional
+          steps:
+            - material: ReinforcedElysiumGlass
+              amount: 1
+              doAfter: 3
+
+        - to: elysiumWindowDirectional
+          steps:
+            - material: ElysiumGlass
+              amount: 1
+              doAfter: 3
+
     - node: windowDirectional
       entity: WindowDirectional
       edges:
