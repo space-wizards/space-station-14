@@ -4,4 +4,4 @@ zombie-generic = зомби
 zombie-name-prefix = { $target } # Corvax-Zombies
 zombie-role-desc = Зловещий мертвец.
 zombie-role-rules = Вы - антагонист. Ищите и кусайте живых людей, чтобы заразить их и превратить в зомби. Работайте сообща с другими зомби, чтобы захватить станцию.
-zombie-permadeath = This time, you're dead for real.
+zombie-permadeath = В этот раз вы мертвы по-настоящему.
