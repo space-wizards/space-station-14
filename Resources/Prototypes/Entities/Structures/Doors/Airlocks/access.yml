@@ -797,3 +797,28 @@
   components:
   - type: AccessReader
     access: [["Armory"]]
+
+# Syndicate
+- type: entity
+  parent: AirlockSyndicate
+  id: AirlockSyndicateLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockSyndicateExternalLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockSyndicateExternalShuttleLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
