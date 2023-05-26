@@ -102,12 +102,12 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
             ("desc", primary.LocalizedPhysicalDescription)));
 
-        var gogglesOn = false;
+        var scannerOn = false;
         if (_inventorySystem.TryGetSlotEntity(args.Examiner, "eyes", out var ent))
         {
             if (HasComp<ReagentScannerComponent>(ent))
             {
-                gogglesOn = true;
+                scannerOn = true;
             }
         }
 
@@ -120,7 +120,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 continue;
             }
 
-            if (!proto.Recognizable && !gogglesOn)
+            if (!proto.Recognizable && !scannerOn)
             {
                 continue;
             }
@@ -136,7 +136,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         foreach (var reagent in recognized)
         {
             string part;
-            if (gogglesOn)
+            if (scannerOn)
             {
                 msg.Append("\r\n");
                 part = "examinable-solution-goggles-next";
@@ -163,7 +163,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 ("quantity", quantity)));
         }
 
-        if (gogglesOn)
+        if (scannerOn)
             args.PushMarkup(Loc.GetString("examinable-solution-goggles-text", ("recognizedString", msg.ToString())));
         else
             args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals", ("recognizedString", msg.ToString())));
