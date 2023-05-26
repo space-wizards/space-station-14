@@ -9,7 +9,6 @@ namespace Content.Server.Entry
             "InteractionOutline",
             "AnimationsTest",
             "ItemStatus",
-            "Marker",
             "GuidebookControlsTest",
             "GuideHelp",
             "Clickable",

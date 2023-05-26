@@ -6,6 +6,8 @@ using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
+using Content.Server.NPC.Components;
+using Content.Server.NPC.HTN;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -13,6 +15,7 @@ using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Markers;
 using Content.Shared.Mobs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -256,6 +259,7 @@ namespace Content.Server.Ghost.Roles
 
             ghostRole.Taken = true;
             UnregisterGhostRole(ghostRole);
+            RemComp<MarkerComponent>(uid);
         }
 
         private void OnMindRemoved(EntityUid uid, GhostTakeoverAvailableComponent component, MindRemovedMessage args)
@@ -294,6 +298,25 @@ namespace Content.Server.Ghost.Roles
             if (role.RoleRules == "")
                 role.RoleRules = Loc.GetString("ghost-role-component-default-rules");
             RegisterGhostRole(role);
+
+            CheckVisibility(uid, role);
+        }
+
+        private void CheckVisibility(EntityUid uid, GhostRoleComponent role)
+        {
+            var shouldVisible = TryComp<MindComponent>(uid, out var mind) && mind.HasMind;
+
+            // AI also count.
+            shouldVisible |= HasComp<HTNComponent>(uid);
+
+            if (shouldVisible)
+            {
+                RemComp<MarkerComponent>(uid);
+            }
+            else
+            {
+                EnsureComp<MarkerComponent>(uid);
+            }
         }
 
         private void OnShutdown(EntityUid uid, GhostRoleComponent role, ComponentShutdown args)
@@ -364,6 +387,7 @@ namespace Content.Server.Ghost.Roles
 
             GhostRoleInternalCreateMindAndTransfer(args.Player, uid, uid, ghostRole);
             UnregisterGhostRole(ghostRole);
+            RemComp<MarkerComponent>(uid);
 
             args.TookRole = true;
         }

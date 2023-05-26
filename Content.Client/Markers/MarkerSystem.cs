@@ -1,5 +1,5 @@
+using Content.Shared.Markers;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Markers;
 
@@ -22,11 +22,20 @@ public sealed class MarkerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MarkerComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<MarkerComponent, ComponentShutdown>(OnShutdown);
     }
 
     private void OnStartup(EntityUid uid, MarkerComponent marker, ComponentStartup args)
     {
         UpdateVisibility(uid);
+    }
+
+    private void OnShutdown(EntityUid uid, MarkerComponent marker, ComponentShutdown args)
+    {
+        if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+        {
+            sprite.Visible = true;
+        }
     }
 
     private void UpdateVisibility(EntityUid uid)
