@@ -15,7 +15,8 @@
   - type: InteractionOutline
   - type: StaticPrice
     price: 250
-  - type: Spaceshroom
+  - type: GatherableByHand
+    drop: FoodSpaceshroom
     mindropcount: 2
     maxdropcount: 3
     dropradius: 1.2
@@ -28,9 +29,18 @@
   id: FoodSpaceshroom
   description: A wild mushroom that likes to grow in dark, moist environments.
   components:
+  - type: Produce
+  - type: Sprite
+    sprite: Objects/Misc/spaceshroom.rsi
+    state: object
   - type: FlavorProfile
     flavors:
       - spaceshroom
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: SpaceDrugs
+        Quantity: 10
   - type: SolutionContainerManager
     solutions:
       food:
@@ -40,18 +50,25 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 2
-  - type: Sprite
-    sprite: Objects/Misc/spaceshroom.rsi
-    state: object
-  - type: Produce
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: SpaceDrugs
-        Quantity: 10
-  - type: FoodSpaceshroom
+  - type: RandomFillSolutionQuantity
     solution: food
-        
+    weightedRandomQuantityId: RandomFillSpaceshroom
+
+- type: weightedRandomQuantity
+  id: RandomFillSpaceshroom
+  weights:
+    SpaceDrugs: 10
+    Water: 5
+    Ephedrine: 3
+    Lexorin: 1
+    Amatoxin: 1
+  quantities:
+    SpaceDrugs: 10
+    Water: 0
+    Ephedrine: 10
+    Lexorin: 10
+    Amatoxin: 15
+
 # Cooked Object
 - type: entity
   name: cooked spaceshroom

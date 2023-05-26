@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed class SolutionRandomFillQuantitySystem : EntitySystem
+public sealed class SolutionRandomFillSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -17,21 +17,21 @@ public sealed class SolutionRandomFillQuantitySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RandomFillSolutionQuantityComponent, MapInitEvent>(OnRandomSolutionFillMapInit);
+        SubscribeLocalEvent<RandomFillSolutionComponent, MapInitEvent>(OnRandomSolutionFillMapInit);
     }
 
-    private void OnRandomSolutionFillMapInit(EntityUid uid, RandomFillSolutionQuantityComponent component, MapInitEvent args)
+    public void OnRandomSolutionFillMapInit(EntityUid uid, RandomFillSolutionComponent component, MapInitEvent args)
     {
         var target = _solutionsSystem.EnsureSolution(uid, component.Solution);
-        var (reagent, quantity) = _proto.Index<WeightedRandomQuantityPrototype>(component.WeightedRandomQuantityId).Pick(_random);
+        var reagent = _proto.Index<WeightedRandomPrototype>(component.WeightedRandomId).Pick(_random);
 
-        if (!_proto.TryIndex<ReagentPrototype>(reagent, out _))
+        if (!_proto.TryIndex<ReagentPrototype>(reagent, out ReagentPrototype? reagentProto))
         {
             Logger.Error(
-                $"Tried to add invalid reagent Id {reagent} using SolutionRandomQuantityFill.");
+                $"Tried to add invalid reagent Id {reagent} using SolutionRandomFill.");
             return;
         }
 
-        target.AddReagent(reagent, quantity);
+        target.AddReagent(reagent, component.Quantity);
     }
 }

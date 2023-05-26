@@ -1,17 +1,13 @@
-using Content.Server.Construction.Completions;
 using Content.Server.Destructible;
-using Content.Server.Mining.Components;
-using Content.Server.Spaceshroom.Components;
-using Content.Shared.Destructible;
+using Content.Server.Gatherable.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Spaceshroom;
-using Robust.Shared.Map;
 using Robust.Shared.Random;
 
-namespace Content.Server.Spaceshroom;
+namespace Content.Server.Gatherable;
 
-public sealed partial class SpaceshroomSystem : EntitySystem
+public sealed partial class GatherableByHandSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -21,11 +17,11 @@ public sealed partial class SpaceshroomSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpaceshroomComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<SpaceshroomComponent, SpaceshroomDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<GatherableByHandComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<GatherableByHandComponent, SpaceshroomDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnInteractHand(EntityUid uid, SpaceshroomComponent component, InteractHandEvent args)
+    private void OnInteractHand(EntityUid uid, GatherableByHandComponent component, InteractHandEvent args)
     {
         var doAfter = new DoAfterArgs(args.User, TimeSpan.FromSeconds(component.HarvestTime), new SpaceshroomDoAfterEvent(), uid, target: uid)
         {
@@ -40,7 +36,7 @@ public sealed partial class SpaceshroomSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfter);
     }
 
-    private void OnDoAfter(EntityUid uid, SpaceshroomComponent component, SpaceshroomDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, GatherableByHandComponent component, SpaceshroomDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled) return;
 
@@ -50,7 +46,7 @@ public sealed partial class SpaceshroomSystem : EntitySystem
         {
             var pos = Transform(uid).MapPosition;
             var spawnPos = pos.Offset(_random.NextVector2(component.DropRadius));
-            Spawn("FoodSpaceshroom", spawnPos);
+            Spawn(component.Drop, spawnPos);
         }
 
         _destructible.DestroyEntity(uid);

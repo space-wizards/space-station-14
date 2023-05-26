@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Dataset;
 using Robust.Shared.Random;
 
@@ -49,6 +49,37 @@ namespace Content.Shared.Random.Helpers
                 if (accumulated >= rand)
                 {
                     return key;
+                }
+            }
+
+            // Shouldn't happen
+            throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
+        }
+
+        public static (string reagent, float quantity) Pick(this WeightedRandomQuantityPrototype prototype, IRobustRandom? random = null)
+        {
+            IoCManager.Resolve(ref random);
+
+            var picksWeights = prototype.Weights;
+            var picksQuantities = prototype.Quantities;
+
+            var sum = picksWeights.Values.Sum();
+            var accumulated = 0f;
+
+            var rand = random.NextFloat() * sum;
+
+            foreach (var (key, weight) in picksWeights)
+            {
+                accumulated += weight;
+
+                if (accumulated >= rand)
+                {
+                    if (!picksQuantities.ContainsKey(key))
+                    {
+                        throw new InvalidOperationException($"Weighted pick {key} does not have a corresponding quantity for {prototype.ID}!");
+                    }
+
+                    return (key, picksQuantities[key]);
                 }
             }
 
