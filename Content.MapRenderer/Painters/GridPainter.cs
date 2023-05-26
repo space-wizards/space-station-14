@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -57,7 +58,7 @@ namespace Content.MapRenderer.Painters
 
             // Decals are always painted before entities, and are also optional.
             if (_decals.TryGetValue(grid.Owner, out var decals))
-                _decalPainter.Run(gridCanvas, decals);
+                _decalPainter.Run(gridCanvas, CollectionsMarshal.AsSpan(decals));
 
 
             _entityPainter.Run(gridCanvas, entities);
