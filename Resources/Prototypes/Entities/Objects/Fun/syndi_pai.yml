@@ -44,7 +44,6 @@
   - type: ActiveRadio
     channels:
     - Syndicate
-  - type: RadioMicrophone
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator
