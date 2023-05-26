@@ -98,6 +98,8 @@
   components:
   - type: Spillable
     solution: beaker
+  - type: StaticPrice
+    price: 10
 
 - type: entity
   name: large beaker
@@ -257,7 +259,7 @@
     solution: injector
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 4
+    maxFillLevels: 2
     fillBaseName: syringe
   - type: Tag
     tags:
