@@ -16,7 +16,7 @@
   - type: StaticPrice
     price: 250
   - type: GatherableByHand
-    drop: FoodSpaceshroom
+    loot: FoodSpaceshroom
     mindropcount: 2
     maxdropcount: 3
     dropradius: 1.2
@@ -50,11 +50,12 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 2
-  - type: RandomFillSolutionQuantity
+  - type: RandomFillSolution
     solution: food
-    weightedRandomQuantityId: RandomFillSpaceshroom
+    weightedRandomId: RandomFillSpaceshroom
+    quantity: 0
 
-- type: weightedRandomQuantity
+- type: weightedRandom
   id: RandomFillSpaceshroom
   weights:
     SpaceDrugs: 10

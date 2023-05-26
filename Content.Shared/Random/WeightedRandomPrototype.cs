@@ -12,4 +12,7 @@ public sealed class WeightedRandomPrototype : IPrototype
 
     [DataField("weights")]
     public Dictionary<string, float> Weights = new();
+
+    [DataField("quantities")]
+    public Dictionary<string, int> Quantities = new();
 }

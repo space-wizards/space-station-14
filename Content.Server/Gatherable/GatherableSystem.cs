@@ -56,7 +56,7 @@ public sealed partial class GatherableSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, GatherableComponent component, GatherableDoAfterEvent args)
     {
-        if(!TryComp<GatheringToolComponent>(args.Args.Used, out var tool))
+        if (!TryComp<GatheringToolComponent>(args.Args.Used, out var tool))
             return;
 
         tool.GatheringEntities.Remove(uid);
