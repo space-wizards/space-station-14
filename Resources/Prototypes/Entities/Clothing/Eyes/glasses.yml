@@ -159,3 +159,4 @@
     modifiers:
       coefficients:
         Caustic: 0.75
+  - type: ReagentScanner
