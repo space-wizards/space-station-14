@@ -6,9 +6,12 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
 using JetBrains.Annotations;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -41,6 +44,9 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
     [Dependency]
     private readonly IPrototypeManager _prototypeManager = default!;
+
+    [Dependency]
+    private readonly InventorySystem _inventorySystem = default!;
 
     public override void Initialize()
     {
@@ -96,6 +102,15 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
             ("desc", primary.LocalizedPhysicalDescription)));
 
+        var gogglesOn = false;
+        if (_inventorySystem.TryGetSlotEntity(args.Examiner, "eyes", out var ent))
+        {
+            if (HasComp<ReagentScannerComponent>(ent))
+            {
+                gogglesOn = true;
+            }
+        }
+
         // Add descriptions of immediately recognizable reagents, like water or beer
         var recognized = new List<ReagentPrototype>();
         foreach (var (id, _) in solutionHolder)
@@ -105,7 +120,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 continue;
             }
 
-            if (!proto.Recognizable)
+            if (!proto.Recognizable && !gogglesOn)
             {
                 continue;
             }
@@ -121,7 +136,12 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         foreach (var reagent in recognized)
         {
             string part;
-            if (reagent == recognized[0])
+            if (gogglesOn)
+            {
+                msg.Append("\r\n");
+                part = "examinable-solution-goggles-next";
+            }
+            else if (reagent == recognized[0])
             {
                 part = "examinable-solution-recognized-first";
             }
@@ -136,11 +156,17 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 part = "examinable-solution-recognized-next";
             }
 
+            solutionHolder.TryGetReagent(reagent.ID, out var quantity);
+
             msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
-                ("chemical", reagent.LocalizedName)));
+                ("chemical", reagent.LocalizedName),
+                ("quantity", quantity)));
         }
 
-        args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals", ("recognizedString", msg.ToString())));
+        if (gogglesOn)
+            args.PushMarkup(Loc.GetString("examinable-solution-goggles-text", ("recognizedString", msg.ToString())));
+        else
+            args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals", ("recognizedString", msg.ToString())));
     }
 
     public void UpdateAppearance(EntityUid uid, Solution solution,
