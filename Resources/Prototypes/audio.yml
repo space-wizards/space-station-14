@@ -1,0 +1,29 @@
+# Fallback if nothing else found
+- type: ambientMusic
+  id: general
+  sound:
+    collection:
+  rule: True
+
+- type: soundCollection
+  id: AmbienceGeneral
+  files:
+    - /Audio/Ambience/ambigen1.ogg
+    - /Audio/Ambience/ambigen3.ogg
+    - /Audio/Ambience/ambigen4.ogg
+    - /Audio/Ambience/ambigen5.ogg
+    - /Audio/Ambience/ambigen6.ogg
+    - /Audio/Ambience/ambigen7.ogg
+    - /Audio/Ambience/ambigen8.ogg
+    - /Audio/Ambience/ambigen9.ogg
+    - /Audio/Ambience/ambigen10.ogg
+    - /Audio/Ambience/ambigen11.ogg
+    - /Audio/Ambience/ambigen12.ogg
+    - /Audio/Ambience/ambigen14.ogg
+    - /Audio/Ambience/ambigen15.ogg
+
+# Always returns true
+- type: rule
+  id: True
+  rules:
+    - !type:TrueRule
