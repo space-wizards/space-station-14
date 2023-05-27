@@ -175,7 +175,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 8
+        Blunt: 7 #free man
         Structural: 3
 
 - type: entity
