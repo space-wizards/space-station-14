@@ -72,6 +72,8 @@ SERVER_CONTENT_ASSEMBLIES = [
 SERVER_EXTRA_ASSEMBLIES = [
     "Npgsql.",
     "Microsoft",
+    "MySql",
+    "FFMpeg"
 ]
 
 SERVER_NOT_EXTRA_ASSEMBLIES = [
