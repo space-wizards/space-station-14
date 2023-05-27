@@ -253,7 +253,7 @@ namespace Content.Shared.Movement.Systems
                 if (!weightless && mobMoverQuery.TryGetComponent(uid, out var mobMover) &&
                     TryGetSound(weightless, uid, mover, mobMover, xform, out var sound))
                 {
-                    var soundModifier = mover.Sprinting ? 2.5f : 1f;
+                    var soundModifier = mover.Sprinting ? 3.5f : 1.5f;
 
                     var audioParams = sound.Params
                         .WithVolume(sound.Params.Volume + soundModifier)
