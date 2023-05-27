@@ -27,7 +27,7 @@
                     <Control MinSize="8 0" />
                     <Slider Name="MidiVolumeSlider"
                             MinValue="0"
-                            MaxValue="200"
+                            MaxValue="100"
                             HorizontalExpand="True"
                             MinSize="80 0"
                             Rounded="True" />
@@ -40,7 +40,7 @@
                     <Control MinSize="8 0" />
                     <Slider Name="AmbienceVolumeSlider"
                             MinValue="0"
-                            MaxValue="300"
+                            MaxValue="100"
                             HorizontalExpand="True"
                             MinSize="80 0"
                             Rounded="True" />
@@ -53,7 +53,7 @@
                     <Control MinSize="8 0" />
                     <Slider Name="LobbyVolumeSlider"
                             MinValue="0"
-                            MaxValue="200"
+                            MaxValue="100"
                             HorizontalExpand="True"
                             MinSize="80 0"
                             Rounded="True" />
