@@ -109,9 +109,12 @@ namespace Content.Client.Options.UI.Tabs
         private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
         {
             _cfg.SetCVar(CVars.AudioMasterVolume, MasterVolumeSlider.Value / 100);
+            // Want the CVar updated values to have the multiplier applied
+            // For the UI we just display 0-100 still elsewhere
             _cfg.SetCVar(CVars.MidiVolume, LV100ToDB(MidiVolumeSlider.Value, CCVars.MidiMultiplier));
             _cfg.SetCVar(CCVars.AmbienceVolume, LV100ToDB(AmbienceVolumeSlider.Value, CCVars.AmbienceMultiplier));
             _cfg.SetCVar(CCVars.AmbientMusicVolume, LV100ToDB(AmbientMusicVolumeSlider.Value, CCVars.AmbientMusicMultiplier));
+
             _cfg.SetCVar(CCVars.LobbyMusicVolume, LV100ToDB(LobbyVolumeSlider.Value));
             _cfg.SetCVar(CCVars.MaxAmbientSources, (int)AmbienceSoundsSlider.Value);
             _cfg.SetCVar(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox.Pressed);
@@ -147,13 +150,15 @@ namespace Content.Client.Options.UI.Tabs
         // Do be sure to rename the setting though
         private float DBToLV100(float db, float multiplier = 1f)
         {
-            return MathF.Pow(10, (db / multiplier / 10)) * 100;
+            var weh = (float) (Math.Pow(10, db / 10) * 100 / multiplier);
+            return weh;
         }
 
         private float LV100ToDB(float lv100, float multiplier = 1f)
         {
             // Saving negative infinity doesn't work, so use -10000000 instead (MidiManager does it)
-            return MathF.Max(-10000000, MathF.Log(lv100 * multiplier / 100, 10) * 10);
+            var weh = MathF.Max(-10000000, (float) (Math.Log(lv100 * multiplier / 100, 10) * 10));
+            return weh;
         }
 
         private void UpdateChanges()
