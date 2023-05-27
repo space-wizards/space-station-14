@@ -808,6 +808,14 @@
     access: [["NuclearOperative"]]
 
 - type: entity
+  parent: AirlockSyndicateGlass
+  id: AirlockSyndicateGlassLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
   parent: AirlockExternal
   id: AirlockSyndicateExternalLocked
   suffix: Syndicate, Locked

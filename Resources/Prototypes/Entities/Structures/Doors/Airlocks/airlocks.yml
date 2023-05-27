@@ -86,6 +86,14 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
+- type: entity
+  parent: Airlock
+  id: AirlockSyndicate
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/syndicate.rsi
+
 # Glass
 
 - type: entity
@@ -218,9 +226,11 @@
     group: Glass
 
 - type: entity
-  parent: Airlock
-  id: AirlockSyndicate
+  parent: AirlockGlass
+  id: AirlockSyndicateGlass
   suffix: Syndicate
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/syndicate.rsi
+    sprite: Structures/Doors/Airlocks/Glass/syndicate.rsi
+  - type: PaintableAirlock
+    group: Glass
