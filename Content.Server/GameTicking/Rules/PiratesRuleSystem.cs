@@ -46,7 +46,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     /// <summary>
     ///     Path to antagonist alert sound.
     /// </summary>
-    private static string PirateAlert => "/Audio/Ambience/Antag/antagonist_start.ogg"; //TODO make another sound
+    private static string PirateAlert => "/Audio/Ambience/Antag/traitor_start.ogg"; //TODO make another sound
 
     /// <inheritdoc/>
     public override void Initialize()

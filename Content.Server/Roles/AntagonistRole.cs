@@ -1,6 +1,3 @@
-using Content.Server.Chat.Managers;
-using Content.Server.Roles;
-using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
 
@@ -10,8 +7,9 @@ namespace Content.Server.Roles
     {
         /// <summary>
         ///     Path to antagonist alert sound.
+        ///     TODO: Traitor sound will be a default one, cause there is no other sounds right now.
         /// </summary>
-        protected virtual string AntagonistAlert => "/Audio/Ambience/Antag/antagonist_start.ogg";
+        protected virtual string AntagonistAlert => "/Audio/Ambience/Antag/traitor_start.ogg";
 
         public AntagPrototype Prototype { get; }
 

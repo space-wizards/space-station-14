@@ -9,7 +9,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(TraitorRuleSystem))]
 public sealed class TraitorRuleComponent : Component
 {
-    public List<AntagonistRole> Traitors = new();
+    public List<TraitorRole> Traitors = new();
 
     [DataField("traitorPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string TraitorPrototypeId = "Traitor";

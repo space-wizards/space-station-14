@@ -18,7 +18,7 @@ namespace Content.Server.Objectives.Conditions
             var entityMgr = IoCManager.Resolve<IEntityManager>();
 
             var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
-            List<AntagonistRole> removeList = new();
+            List<TraitorRole> removeList = new();
 
             foreach (var traitor in traitors)
             {

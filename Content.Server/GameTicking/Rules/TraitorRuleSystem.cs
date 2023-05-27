@@ -240,7 +240,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         // Prepare antagonist role
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(traitorRule.TraitorPrototypeId);
-        var traitorRole = new AntagonistRole(mind, antagPrototype);
+        var traitorRole = new TraitorRole(mind, antagPrototype);
 
         // Give traitors their codewords and uplink code to keep in their character info menu
         traitorRole.Mind.Briefing = string.Format(
@@ -428,9 +428,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
     }
 
-    public List<AntagonistRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
+    public List<TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
     {
-        List<AntagonistRole> allTraitors = new();
+        List<TraitorRole> allTraitors = new();
         foreach (var traitor in EntityQuery<TraitorRuleComponent>())
         {
             foreach (var role in GetOtherTraitorsAliveAndConnected(ourMind, traitor))
@@ -443,7 +443,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return allTraitors;
     }
 
-    private List<AntagonistRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind, TraitorRuleComponent component)
+    private List<TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind, TraitorRuleComponent component)
     {
         return component.Traitors // don't want
             .Where(t => t.Mind.OwnedEntity is not null) // no entity

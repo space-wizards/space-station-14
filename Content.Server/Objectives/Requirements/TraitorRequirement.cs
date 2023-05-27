@@ -2,6 +2,7 @@
 using Content.Server.Roles;
 using Content.Server.Traitor;
 using JetBrains.Annotations;
+using TraitorRole = Content.Server.Roles.TraitorRole;
 
 namespace Content.Server.Objectives.Requirements
 {
@@ -11,7 +12,7 @@ namespace Content.Server.Objectives.Requirements
     {
         public bool CanBeAssigned(Mind.Mind mind)
         {
-            return mind.HasRole<AntagonistRole>();
+            return mind.HasRole<TraitorRole>();
         }
     }
 }
