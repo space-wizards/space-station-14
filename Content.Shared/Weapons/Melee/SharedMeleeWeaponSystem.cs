@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -17,7 +18,6 @@ using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
-using Robust.Shared;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
@@ -517,7 +517,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         RaiseLocalEvent(ev.Target.Value, attackedEvent);
 
         var rawDamagePoints = damage + hitEvent.BonusDamage + attackedEvent.BonusDamage;
-        if (user == ev.Target && _configManager.GetCVar(CVars.ReducedSelfDamage))
+        if (user == ev.Target && _configManager.GetCVar(CCVars.ReducedSelfDamage))
         {
             if (component.SelfDamage != null)
             {
@@ -528,7 +528,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             }
             else
             {
-                rawDamagePoints /= _configManager.GetCVar(CVars.ReducedSelfDamageMultiplier);
+                rawDamagePoints /= _configManager.GetCVar(CCVars.ReducedSelfDamageMultiplier);
             }
         }
 

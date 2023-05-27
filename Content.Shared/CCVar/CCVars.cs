@@ -131,6 +131,19 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        /// Should damage done to player through self harm(melee only) be reduced.
+        /// If true cuts damage to 1/[ReducedSelfDamageMultiplier] of the original value.
+        /// </summary>
+        public static readonly CVarDef<bool> ReducedSelfDamage =
+            CVarDef.Create("player.reducedSelfDamage", true, CVar.ARCHIVE);
+
+        /// <summary>
+        /// If ReducedSelfDamage is enabled then cuts damage by this multiplier.
+        /// </summary>
+        public static readonly CVarDef<int> ReducedSelfDamageMultiplier =
+            CVarDef.Create("player.reducedSelfDamageMultiplier", 5, CVar.ARCHIVE);
+
+        /// <summary>
         ///     Disables most functionality in the GameTicker.
         /// </summary>
         public static readonly CVarDef<bool>
