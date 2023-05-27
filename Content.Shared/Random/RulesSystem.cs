@@ -11,12 +11,26 @@ public sealed class RulesSystem : EntitySystem
                 case AlwaysTrueRule:
                     break;
                 case InSpaceRule:
+                {
                     if (!TryComp<TransformComponent>(uid, out var xform) ||
                         xform.GridUid != null)
                     {
                         return false;
                     }
+
                     break;
+                }
+                case OnMapGridRule:
+                {
+                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                        xform.GridUid != xform.MapUid ||
+                        xform.MapUid == null)
+                    {
+                        return false;
+                    }
+
+                    break;
+                }
                 default:
                     throw new NotImplementedException();
             }

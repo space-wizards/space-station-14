@@ -33,7 +33,7 @@ public sealed partial class ContentAudioSystem
     private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(3);
     private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(6);
 
-    private const float AmbientMusicFadeTime = 8f;
+    private const float AmbientMusicFadeTime = 10f;
     private static float _volumeSlider;
 
     // Don't need to worry about this being serializable or pauseable as it doesn't affect the sim.
@@ -169,9 +169,9 @@ public sealed partial class ContentAudioSystem
 
         if (_interruptable)
         {
-            var ambience = GetAmbience();
+            var player = _player.LocalPlayer?.ControlledEntity;
 
-            if (_musicProto != ambience)
+            if (player == null || _musicProto == null || !_rules.IsTrue(player.Value, _proto.Index<RulesPrototype>(_musicProto.Rules)))
             {
                 FadeOut(_ambientMusicStream, AmbientMusicFadeTime);
                 _musicProto = null;
@@ -241,7 +241,7 @@ public sealed partial class ContentAudioSystem
             return null;
 
         var ambiences = _proto.EnumeratePrototypes<AmbientMusicPrototype>().ToList();
-        ambiences.Sort((x, y) => (y.Priority.CompareTo(x.Priority)));
+        ambiences.Sort((x, y) => y.Priority.CompareTo(x.Priority));
 
         foreach (var amb in ambiences)
         {

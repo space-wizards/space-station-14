@@ -56,3 +56,11 @@ public sealed class AlwaysTrueRule : RulesRule
 {
 
 }
+
+/// <summary>
+/// Returns true if griduid and mapuid match (AKA on 'planet').
+/// </summary>
+public sealed class OnMapGridRule : RulesRule
+{
+
+}
