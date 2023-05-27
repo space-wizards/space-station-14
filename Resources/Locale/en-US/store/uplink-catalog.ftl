@@ -1,7 +1,4 @@
 # Weapons
-uplink-rifle-ak-name = AKMS
-uplink-rifle-ak-desc = A high-risk high-reward rifle. Very conspicuous. (.30)
-
 uplink-pistol-viper-name = Viper
 uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Use pistol magazines (.35 auto).
 
@@ -22,6 +19,9 @@ uplink-edagger-desc = A small energy blade conveniently disguised in the form of
 
 uplink-fire-axe-flaming-name = Fire Axe
 uplink-fire-axe-flaming-desc = A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire.
+
+uplink-gloves-north-star-name = Gloves of the North Star
+uplink-gloves-north-star-desc = A pair of gloves that reduce your punching cooldown drastically, allowing you to beat people to death in a flurry of punches.
 
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade

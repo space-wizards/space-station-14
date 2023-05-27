@@ -103,14 +103,16 @@ public sealed class AnomalyComponent : Component
     /// A percentage by which the length of a pulse might vary.
     /// </summary>
     [DataField("pulseVariation")]
-    public float PulseVariation = .1f;
+    public float PulseVariation = 0.1f;
 
     /// <summary>
-    /// The largest value by which the anomaly will vary in stability for each pulse.
-    /// In simple terms, every pulse, stability changes from a range of -this_value to this_value
+    /// The range that an anomaly's stability can vary each pulse. Scales with severity.
     /// </summary>
+    /// <remarks>
+    /// This is more likely to trend upwards than donwards, because that's funny
+    /// </remarks>
     [DataField("pulseStabilityVariation")]
-    public float PulseStabilityVariation = 0.05f;
+    public Vector2 PulseStabilityVariation = (-0.125f, 0.20f);
 
     /// <summary>
     /// The sound played when an anomaly pulses
@@ -180,7 +182,7 @@ public sealed class AnomalyComponent : Component
     /// This doesn't include the point bonus for being unstable.
     /// </summary>
     [DataField("maxPointsPerSecond")]
-    public int MaxPointsPerSecond = 100;
+    public int MaxPointsPerSecond = 75;
 
     /// <summary>
     /// The multiplier applied to the point value for the
