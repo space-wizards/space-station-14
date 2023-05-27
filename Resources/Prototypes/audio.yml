@@ -1,4 +1,13 @@
 - type: ambientMusic
+  id: Holy
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceHoly
+  rules: NearPrayable
+  priority: 2
+
+- type: ambientMusic
   id: Space
   sound:
     params:
@@ -7,7 +16,7 @@
   fadeIn: true
   interruptable: true
   rules: InSpace
-  priority: 10
+  priority: 1
 
 - type: ambientMusic
   id: Mining
@@ -18,7 +27,7 @@
   rules: OnMapGrid
   fadeIn: true
   interruptable: true
-  priority: 10
+  priority: 1
 
 ## Fallback if nothing else found
 - type: ambientMusic
@@ -100,6 +109,14 @@
   id: InSpace
   rules:
     - !type:InSpaceRule
+
+- type: rules
+  id: NearPrayable
+  rules:
+    - !type:NearbyComponentsRule
+      components:
+        - type: Prayable
+      range: 5
 
 - type: rules
   id: OnMapGrid

@@ -64,3 +64,12 @@ public sealed class OnMapGridRule : RulesRule
 {
 
 }
+
+public sealed class NearbyComponentsRule : RulesRule
+{
+    [DataField("components", required: true)]
+    public ComponentRegistry Components = default!;
+
+    [DataField("range")]
+    public float Range = 10f;
+}
