@@ -210,7 +210,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         _adminLogger.Add(LogType.GameDirector, showChat?LogImpact.Medium:LogImpact.High, $"{message}");
         if (showChat)
         {
-            _chat.SendAdminAlert("GameDirector "+ message);
+            _chat.SendAdminAnnouncement("GameDirector "+ message);
         }
 
     }
@@ -227,7 +227,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             if (scheduler.BeatTime > beat.MaxSecs)
             {
                 // Done with this beat (it's lasted too long)
-                LogMessage($"StoryBeat {beatName} complete. It's lasted {scheduler.BeatTime} out of a maximum of {beat.MaxSecs} seconds.");
+                _sawmill.Info($"StoryBeat {beatName} complete. It's lasted {scheduler.BeatTime} out of a maximum of {beat.MaxSecs} seconds.");
             }
             else if (scheduler.BeatTime > beat.MinSecs)
             {
@@ -235,12 +235,12 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
                 if (!beat.EndIfAnyWorse.Empty && chaos.AnyWorseThan(beat.EndIfAnyWorse))
                 {
                     // Done with this beat (chaos exceeded set bad level)
-                    LogMessage($"StoryBeat {beatName} complete. Chaos exceeds {beat.EndIfAnyWorse} (EndIfAnyWorse).");
+                    _sawmill.Info($"StoryBeat {beatName} complete. Chaos exceeds {beat.EndIfAnyWorse} (EndIfAnyWorse).");
                 }
                 else if(!beat.EndIfAllBetter.Empty && chaos.AllBetterThan(beat.EndIfAllBetter))
                 {
                     // Done with this beat (chaos reached set good level)
-                    LogMessage($"StoryBeat {beatName} complete. Chaos better than {beat.EndIfAllBetter} (EndIfAllBetter).");
+                    _sawmill.Info($"StoryBeat {beatName} complete. Chaos better than {beat.EndIfAllBetter} (EndIfAllBetter).");
                 }
                 else
                 {
@@ -284,7 +284,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
             scheduler.CurrStory = story.Beats.ShallowClone();
             scheduler.CurrStoryName = storyName;
             SetupEvents(scheduler, count);
-            LogMessage($"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
+            _sawmill.Info($"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
 
             var beatName = scheduler.CurrStory[0];
             var beat = scheduler.StoryBeats[beatName];
