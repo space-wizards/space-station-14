@@ -258,7 +258,7 @@
       - id: BoxSurvivalSyndicate
       - id: WeaponPistolViper
       - id: PinpointerNuclear
-
+      - id: AgentIDCard
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
