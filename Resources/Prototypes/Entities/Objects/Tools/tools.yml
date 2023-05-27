@@ -39,7 +39,7 @@
     materialComposition:
       Steel: 100
   - type: StaticPrice
-    price: 40
+    price: 30
 
 - type: entity
   name: screwdriver
@@ -81,7 +81,7 @@
     materialComposition:
       Steel: 100
   - type: StaticPrice
-    price: 40
+    price: 30
 
 - type: entity
   name: wrench
@@ -116,7 +116,7 @@
     materialComposition:
       Steel: 100
   - type: StaticPrice
-    price: 40
+    price: 22
 
 - type: entity
   name: crowbar
@@ -152,7 +152,7 @@
     materialComposition:
       Steel: 100
   - type: StaticPrice
-    price: 40
+    price: 22
 
 - type: entity
   name: emergency crowbar
@@ -217,7 +217,7 @@
       Steel: 100
       Plastic: 100
   - type: StaticPrice
-    price: 60
+    price: 56
 
 - type: entity
   name: network configurator
@@ -232,7 +232,7 @@
       sprite: Objects/Tools/network_configurator.rsi
       layers:
         - state: icon
-        - state: mode-list
+        - state: mode-link
           map: ["enum.NetworkConfiguratorLayers.ModeLight"]
           shader: unshaded
     - type: Item
@@ -265,7 +265,7 @@
       tags:
         - DroneUsable
     - type: StaticPrice
-      price: 60
+      price: 56
     - type: GuideHelp
       guides:
         - NetworkConfigurator

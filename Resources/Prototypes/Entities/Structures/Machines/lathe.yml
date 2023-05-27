@@ -244,6 +244,7 @@
       - HolofanProjector
       - WeaponForceGun
       - WeaponTetherGun
+      - WeaponGrapplingGun
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
       - ClothingBackpackDuffelHolding

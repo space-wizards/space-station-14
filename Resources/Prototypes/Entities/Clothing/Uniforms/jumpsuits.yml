@@ -888,6 +888,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
 
 - type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitMercenary
+  name: mercenary jumpsuit
+  description: Clothing for real mercenaries who have gone through fire, water and the jungle of planets flooded with dangerous monsters or targets for which a reward has been assigned.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
+
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAtmos
   name: atmospheric technician jumpsuit

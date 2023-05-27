@@ -12,3 +12,5 @@
       tags:
       - DroneUsable
       - FirelockElectronics
+    - type: StaticPrice
+      price: 61
