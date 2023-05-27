@@ -73,7 +73,8 @@ SERVER_EXTRA_ASSEMBLIES = [
     "Npgsql.",
     "Microsoft",
     "MySql",
-    "FFMpeg"
+    "FFMpeg",
+    "Pomelo"
 ]
 
 SERVER_NOT_EXTRA_ASSEMBLIES = [
