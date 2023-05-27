@@ -14,6 +14,9 @@ public sealed class ElectrifiedComponent : Component
     [DataField("onBump")]
     public bool OnBump = true;
 
+    [DataField("onDamageThresholdReached")]
+    public bool OnDamageThresholdReached = false;
+
     [DataField("onAttacked")]
     public bool OnAttacked = true;
 

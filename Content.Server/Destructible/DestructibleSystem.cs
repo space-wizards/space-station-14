@@ -49,7 +49,7 @@ namespace Content.Server.Destructible
             {
                 if (threshold.Reached(args.Damageable, this))
                 {
-                    RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold), true);
+                    RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold, args), true);
 
                     threshold.Execute(uid, this, EntityManager, args.Origin);
                 }
@@ -105,10 +105,13 @@ namespace Content.Server.Destructible
 
         public readonly DamageThreshold Threshold;
 
-        public DamageThresholdReached(DestructibleComponent parent, DamageThreshold threshold)
+        public readonly DamageChangedEvent DamageChangedEv;
+
+        public DamageThresholdReached(DestructibleComponent parent, DamageThreshold threshold, DamageChangedEvent damageChangedEv)
         {
             Parent = parent;
             Threshold = threshold;
+            DamageChangedEv = damageChangedEv;
         }
     }
 }

@@ -36,6 +36,7 @@
   - type: Appearance
   - type: Electrified
     onHandInteract: false
+    onDamageThresholdReached: true
     onInteractUsing: false # wire-cutting handled separately.
     onBump: false
     requirePower: true

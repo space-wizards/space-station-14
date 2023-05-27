@@ -17,8 +17,9 @@ using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared;
 using Robust.Shared.Audio;
-using Robust.Shared.Collections;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -46,6 +47,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly StaminaSystem _stamina = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -515,7 +517,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         RaiseLocalEvent(ev.Target.Value, attackedEvent);
 
         var rawDamagePoints = damage + hitEvent.BonusDamage + attackedEvent.BonusDamage;
-        if (user == ev.Target)
+        if (user == ev.Target && _configManager.GetCVar(CVars.ReducedSelfDamage))
         {
             if (component.SelfDamage != null)
             {
@@ -526,7 +528,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             }
             else
             {
-                rawDamagePoints /= 5;
+                rawDamagePoints /= _configManager.GetCVar(CVars.ReducedSelfDamageMultiplier);
             }
         }
 

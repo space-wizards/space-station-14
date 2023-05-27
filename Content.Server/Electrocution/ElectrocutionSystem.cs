@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Destructible;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
@@ -73,6 +74,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
         SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
         SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
+        SubscribeLocalEvent<DestructibleComponent, DamageThresholdReached>(OnElectrifiedDestroyed);
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
     }
@@ -220,7 +222,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth)),
-                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth)), 
+                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth)),
                     true,
                     electrified.SiemensCoefficient
                 );
@@ -249,7 +251,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     uid,
                     node,
                     (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageMult),
-                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) * timeMult), 
+                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) * timeMult),
                     true,
                     electrified.SiemensCoefficient);
             }
@@ -315,7 +317,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (siemensCoefficient <= 0.5f)
             return DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects);
 
-        if (!DoCommonElectrocution(uid, sourceUid, null, time, refresh, siemensCoefficient, statusEffects))
+        if (!DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
             return false;
 
         if (!Resolve(sourceUid, ref sourceTransform)) // This shouldn't really happen, but just in case...
@@ -374,7 +376,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         {
             return false;
         }
-        
+
         if (!_statusEffects.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time, refresh, statusEffects))
             return false;
 
@@ -448,6 +450,22 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             !visited.Contains(pullingId))
         {
             GetChainedElectrocutionTargetsRecurse(pullingId, depth + 1, visited, all);
+        }
+    }
+
+    private void OnElectrifiedDestroyed(EntityUid uid, DestructibleComponent comp, DamageThresholdReached args)
+    {
+        if(TryComp<ElectrifiedComponent>(uid, out var electrified))
+        {
+            if (!electrified.OnDamageThresholdReached)
+            {
+                return;
+            }
+
+            if (args.DamageChangedEv.Origin != null)
+            {
+                TryDoElectrifiedAct(uid, args.DamageChangedEv.Origin.Value, 1, electrified);
+            }
         }
     }
 
