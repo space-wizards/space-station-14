@@ -14,7 +14,7 @@ public sealed class GasMixtureStringRepresentationConverter : AdminLogConverter<
         writer.WriteNumber("temperature", value.Temperature);
         writer.WriteNumber("pressure", value.Pressure);
 
-        writer.WriteStartObject();
+        writer.WriteStartObject("gases");
         foreach (var x in value.MolesPerGas)
         {
             writer.WriteNumber(x.Key, x.Value);
