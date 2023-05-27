@@ -75,6 +75,8 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
+  - type: ExaminableSolution
+    solution: drink
 
 # Transformable container - normal glass
 - type: entity

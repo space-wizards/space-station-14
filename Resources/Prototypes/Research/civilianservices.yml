@@ -74,6 +74,20 @@
   - SurveillanceWirelessCameraMonitorCircuitboard
   - TelecomServerCircuitboard
 
+- type: technology
+  id: AdvancedEntertainment
+  name: research-technology-advanced-entertainment
+  icon:
+    sprite: Structures/Machines/computers.rsi
+    state: television
+  discipline: CivilianServices
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+    - ComputerTelevisionCircuitboard
+    - SynthesizerInstrument
+    - DawInstrumentMachineCircuitboard
+
 # Tier 2
 
 - type: technology
@@ -124,30 +138,28 @@
   - MechEquipmentHorn
 
 - type: technology
-  id: AdvancedEntertainment
-  name: research-technology-advanced-entertainment
-  icon:
-    sprite: Structures/Machines/computers.rsi
-    state: television
-  discipline: CivilianServices
-  tier: 2
-  cost: 7500
-  recipeUnlocks:
-  - ComputerTelevisionCircuitboard
-  - SynthesizerInstrument
-  - DawInstrumentMachineCircuitboard
-
-# Tier 3
-
-- type: technology
   id: AdvancedSpray
   name: research-technology-advanced-spray
   icon:
     sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
     state: icon
   discipline: CivilianServices
-  tier: 3
-  cost: 15000
+  tier: 2
+  cost: 10000
   recipeUnlocks:
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
+
+# Tier 3
+
+- type: technology
+  id: BluespaceCargoTransport
+  name: research-technology-bluespace-cargo-transport
+  icon:
+    sprite: Structures/cargo_telepad.rsi
+    state: display
+  discipline: CivilianServices
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - CargoTelepadMachineCircuitboard
