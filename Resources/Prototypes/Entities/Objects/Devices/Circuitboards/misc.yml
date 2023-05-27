@@ -2,7 +2,7 @@
   parent: BaseElectronics
   id: StationMapCircuitboard
   name: station map electronics
-  description:  An electronics board used in station maps.
+  description: An electronics board used in station maps.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
