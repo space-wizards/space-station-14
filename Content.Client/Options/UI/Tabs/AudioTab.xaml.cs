@@ -147,7 +147,6 @@ namespace Content.Client.Options.UI.Tabs
         // Do be sure to rename the setting though
         private float DBToLV100(float db)
         {
-            // Offset it so 100% volume is at 50% of the bar.
             return MathF.Pow(10, (db / 10)) * 100;
         }
 
