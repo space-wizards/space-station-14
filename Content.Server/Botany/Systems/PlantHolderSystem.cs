@@ -129,7 +129,6 @@ namespace Content.Server.Botany.Systems
 
         private void OnInteractUsing(EntityUid uid, PlantHolderComponent component, InteractUsingEvent args)
         {
-            // Seeds
             if (TryComp(args.Used, out SeedComponent? seeds))
             {
                 if (component.Seed == null)
@@ -162,7 +161,6 @@ namespace Content.Server.Botany.Systems
                 return;
             }
 
-            // Hoe
             if (_tagSystem.HasTag(args.Used, "Hoe"))
             {
                 if (component.WeedLevel > 0)
@@ -182,8 +180,6 @@ namespace Content.Server.Botany.Systems
                 return;
             }
 
-
-            // Shovel
             if (_tagSystem.HasTag(args.Used, "Shovel"))
             {
                 if (component.Seed != null)
@@ -203,7 +199,6 @@ namespace Content.Server.Botany.Systems
                 return;
             }
 
-            // Spray 
             if (_solutionSystem.TryGetDrainableSolution(args.Used, out var solution)
                 && _solutionSystem.TryGetSolution(uid, component.SoilSolutionName, out var targetSolution)
                 && TryComp(args.Used, out SprayComponent? spray))
@@ -235,7 +230,6 @@ namespace Content.Server.Botany.Systems
                 return;
             }
 
-            // Sample Taker
             if (_tagSystem.HasTag(args.Used, "PlantSampleTaker"))
             {
                 if (component.Seed == null)
@@ -279,11 +273,9 @@ namespace Content.Server.Botany.Systems
                 return;
             }
 
-            // Sharp
             if (HasComp<SharpComponent>(args.Used))
                 DoHarvest(uid, args.User, component);
 
-            // Food
             if (TryComp<ProduceComponent?>(args.Used, out var produce))
             {
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
