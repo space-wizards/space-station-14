@@ -76,7 +76,6 @@ namespace Content.Client.Options.UI.Tabs
 
         private void OnMasterVolumeSliderChanged(Range range)
         {
-            _clydeAudio.SetMasterVolume(MasterVolumeSlider.Value / 100);
             UpdateChanges();
         }
 
