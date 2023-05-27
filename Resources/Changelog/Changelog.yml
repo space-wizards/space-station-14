@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Material reclaimers no longer stack sound effects infinitely., type: Fix}
-  id: 3375
-  time: '2023-04-10T21:30:34.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixed artifacts being biased towards nodes that were already discovered.,
@@ -2905,3 +2900,8 @@ Entries:
   - {message: Resprited network configurator., type: Tweak}
   id: 3874
   time: '2023-05-27T03:51:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added a grappling gun, type: Add}
+  id: 3875
+  time: '2023-05-27T04:15:16.0000000+00:00'
