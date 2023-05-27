@@ -67,8 +67,10 @@ public sealed partial class GunSystem : SharedGunSystem
     }
 
     public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
-        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null, bool throwItems = false)
+        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, out bool userImpulse, EntityUid? user = null, bool throwItems = false)
     {
+        userImpulse = true;
+
         // Try a clumsy roll
         // TODO: Who put this here
         if (TryComp<ClumsyComponent>(user, out var clumsy))
@@ -88,6 +90,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value);
                     _adminLogger.Add(LogType.EntityDelete, LogImpact.Medium, $"Clumsy fire by {ToPrettyString(user.Value)} deleted {ToPrettyString(gunUid)}");
                     Del(gunUid);
+                    userImpulse = false;
                     return;
                 }
             }
@@ -161,6 +164,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                     else
                     {
+                        userImpulse = false;
                         Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
                     }
 
