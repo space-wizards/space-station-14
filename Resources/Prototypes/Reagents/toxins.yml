@@ -84,6 +84,7 @@
   desc: reagent-desc-mold
   flavor: bitter
   color: "#8a9a5b"
+  recognizable: true
   physicalDesc: reagent-physical-desc-fuzzy
   metabolisms:
     Poison:
@@ -180,6 +181,7 @@
   physicalDesc: reagent-physical-desc-oily
   flavor: acidic
   color: "#BF8C00"
+  recognizable: true
   boilingPoint: 337.0
   meltingPoint: 10.31
   plantMetabolism:

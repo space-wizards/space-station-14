@@ -13,7 +13,6 @@
 # Currently do not function as 'true' mesons, so they're useless for salvagers.
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled
-        prob: 0.8
       - id: SurvivalKnife
       - id: WeaponProtoKineticAccelerator
 
@@ -27,6 +26,5 @@
 # Currently do not function as 'true' mesons, so they're useless for salvagers.
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled
-        prob: 0.8
       - id: SurvivalKnife
       - id: WeaponProtoKineticAccelerator
