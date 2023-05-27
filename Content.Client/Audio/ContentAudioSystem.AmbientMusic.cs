@@ -7,6 +7,7 @@ using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Random;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Audio;
@@ -23,6 +24,7 @@ public sealed partial class ContentAudioSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IResourceCache _resource = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -30,16 +32,22 @@ public sealed partial class ContentAudioSystem
     [Dependency] private readonly RulesSystem _rules = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
-    private AudioSystem.PlayingStream? _ambientMusicStream;
-
-    private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(30);
-    private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(60);
+    private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(3);
+    private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(6);
 
     private const float DefaultVolume = -12f;
     private static float _volumeSlider;
 
     // Don't need to worry about this being serializable or pauseable as it doesn't affect the sim.
     private TimeSpan _nextAudio;
+
+    private AudioSystem.PlayingStream? _ambientMusicStream;
+    private AmbientMusicPrototype? _musicProto;
+
+    /// <summary>
+    /// If we find a better ambient music proto can we interrupt this one.
+    /// </summary>
+    private bool _interruptable;
 
     /// <summary>
     /// Track what ambient sounds we've played. This is so they all get played an even
@@ -53,7 +61,7 @@ public sealed partial class ContentAudioSystem
     private void InitializeAmbientMusic()
     {
         // TODO: Shitty preload
-        foreach (var audio in _proto.Index<SoundCollectionPrototype>("SpaceAmbienceBase").PickFiles)
+        foreach (var audio in _proto.Index<SoundCollectionPrototype>("AmbienceSpace").PickFiles)
         {
             _resource.GetResource<AudioResource>(audio.ToString());
         }
@@ -149,27 +157,37 @@ public sealed partial class ContentAudioSystem
         }
     }
 
-    public override void Update(float frameTime)
+    private void UpdateAmbientMusic()
     {
-        base.Update(frameTime);
-
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         // Update still runs in lobby so just ignore it.
         if (_state.CurrentState is not GameplayState)
         {
-            _ambientMusicStream?.Stop();
+            FadeOut(_ambientMusicStream);
             _ambientMusicStream = null;
             return;
         }
 
+        var isDone = _ambientMusicStream?.Done;
+
+        if (_interruptable)
+        {
+            var ambience = GetAmbience();
+
+            if (_musicProto != ambience)
+            {
+                FadeOut(_ambientMusicStream);
+                _musicProto = null;
+                _interruptable = false;
+                isDone = true;
+            }
+        }
+
         // Still running existing ambience
-        if (_ambientMusicStream?.Done == false)
+        if (isDone == false)
             return;
 
         // If ambience finished reset the CD (this also means if we have long ambience it won't clip)
-        if (_ambientMusicStream?.Done == true)
+        if (isDone == true)
         {
             // Also don't need to worry about rounding here as it doesn't affect the sim
             _nextAudio = _timing.CurTime + _random.Next(_minAmbienceTime, _maxAmbienceTime);
@@ -180,12 +198,16 @@ public sealed partial class ContentAudioSystem
         if (_nextAudio > _timing.CurTime)
             return;
 
-        var ambience = GetAmbience();
+        _musicProto = GetAmbience();
 
-        if (ambience == null)
+        if (_musicProto == null)
+        {
+            _interruptable = false;
             return;
+        }
 
-        var tracks = _ambientSounds[ambience.ID];
+        _interruptable = _musicProto.Interruptable;
+        var tracks = _ambientSounds[_musicProto.ID];
 
         var track = tracks[^1];
         tracks.RemoveAt(tracks.Count - 1);
@@ -199,23 +221,33 @@ public sealed partial class ContentAudioSystem
         if (strim != null)
         {
             _ambientMusicStream = (AudioSystem.PlayingStream) strim;
+
+            if (_musicProto.FadeIn)
+            {
+                FadeIn(_ambientMusicStream);
+            }
         }
 
         // Refresh the list
         if (tracks.Count == 0)
         {
-            RefreshTracks(ambience.Sound, tracks, track);
+            RefreshTracks(_musicProto.Sound, tracks, track);
         }
     }
 
     private AmbientMusicPrototype? GetAmbience()
     {
+        var player = _player.LocalPlayer?.ControlledEntity;
+
+        if (player == null)
+            return null;
+
         var ambiences = _proto.EnumeratePrototypes<AmbientMusicPrototype>().ToList();
         ambiences.Sort((x, y) => (y.Priority.CompareTo(x.Priority)));
 
         foreach (var amb in ambiences)
         {
-            if (!_rules.IsTrue(_proto.Index<RulesPrototype>(amb.Rules)))
+            if (!_rules.IsTrue(player.Value, _proto.Index<RulesPrototype>(amb.Rules)))
                 continue;
 
             return amb;

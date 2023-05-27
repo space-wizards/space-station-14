@@ -32,6 +32,14 @@ public abstract class RulesRule
 
 }
 
+/// <summary>
+/// Returns true if the attached entity is in space.
+/// </summary>
+public sealed class InSpaceRule : RulesRule
+{
+
+}
+
 public sealed class NearbyTilesRule : RulesRule
 {
     [DataField("percentage", required: true)]

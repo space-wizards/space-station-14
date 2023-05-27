@@ -1,6 +1,15 @@
+- type: ambientMusic
+  id: Space
+  sound:
+    collection: AmbienceSpace
+  fadeIn: true
+  interruptable: true
+  rules: InSpace
+  priority: 10
+
 # Fallback if nothing else found
 - type: ambientMusic
-  id: general
+  id: General
   sound:
     collection: AmbienceGeneral
   rules: AlwaysTrue
@@ -24,18 +33,25 @@
     - /Audio/Ambience/ambigen15.ogg
 
 - type: soundCollection
-  id: StationAmbienceBase
+  id: AmbienceStation
   files:
     - /Audio/Ambience/shipambience.ogg
 
 - type: soundCollection
-  id: SpaceAmbienceBase
+  id: AmbienceSpace
+  params:
+    volume: -10
   files:
     - /Audio/Ambience/starlight.ogg
     - /Audio/Ambience/constellations.ogg
     - /Audio/Ambience/drifting.ogg
 
 # Rules
+- type: rules
+  id: InSpace
+  rules:
+    - !type:InSpaceRule
+
 # Always returns true
 - type: rules
   id: AlwaysTrue
