@@ -181,6 +181,8 @@
   name: elysium ore
   suffix: Full
   components:
+    - type: PointLight
+      color: "#8E91FF"
     - type: Stack
       stackType: ElysiumOre
     - type: Sprite

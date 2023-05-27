@@ -110,7 +110,7 @@
     - type: Material
     - type: PhysicalComposition
       materialComposition:
-        Elysium: 100
+        RefinedElysium: 100
     - type: Extractable
       grindableSolutionName: elysium
     - type: SolutionContainerManager
