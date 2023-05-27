@@ -25,8 +25,6 @@ namespace Content.Client.Options.UI.Tabs
             RestartSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.RestartSoundsEnabled);
             EventMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.EventMusicEnabled);
             AdminSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.AdminSoundsEnabled);
-            StationAmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.StationAmbienceEnabled);
-            SpaceAmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.SpaceAmbienceEnabled);
 
             ApplyButton.OnPressed += OnApplyButtonPressed;
             ResetButton.OnPressed += OnResetButtonPressed;
@@ -39,8 +37,6 @@ namespace Content.Client.Options.UI.Tabs
             RestartSoundsCheckBox.OnToggled += OnRestartSoundsCheckToggled;
             EventMusicCheckBox.OnToggled += OnEventMusicCheckToggled;
             AdminSoundsCheckBox.OnToggled += OnAdminSoundsCheckToggled;
-            StationAmbienceCheckBox.OnToggled += OnStationAmbienceCheckToggled;
-            SpaceAmbienceCheckBox.OnToggled += OnSpaceAmbienceCheckToggled;
 
             AmbienceSoundsSlider.MinValue = _cfg.GetCVar(CCVars.MinMaxAmbientSourcesConfigured);
             AmbienceSoundsSlider.MaxValue = _cfg.GetCVar(CCVars.MaxMaxAmbientSourcesConfigured);
@@ -124,8 +120,6 @@ namespace Content.Client.Options.UI.Tabs
             _cfg.SetCVar(CCVars.RestartSoundsEnabled, RestartSoundsCheckBox.Pressed);
             _cfg.SetCVar(CCVars.EventMusicEnabled, EventMusicCheckBox.Pressed);
             _cfg.SetCVar(CCVars.AdminSoundsEnabled, AdminSoundsCheckBox.Pressed);
-            _cfg.SetCVar(CCVars.StationAmbienceEnabled, StationAmbienceCheckBox.Pressed);
-            _cfg.SetCVar(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCheckBox.Pressed);
             _cfg.SaveToFile();
             UpdateChanges();
         }
@@ -146,8 +140,6 @@ namespace Content.Client.Options.UI.Tabs
             RestartSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.RestartSoundsEnabled);
             EventMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.EventMusicEnabled);
             AdminSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.AdminSoundsEnabled);
-            StationAmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.StationAmbienceEnabled);
-            SpaceAmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.SpaceAmbienceEnabled);
             UpdateChanges();
         }
 
@@ -179,10 +171,8 @@ namespace Content.Client.Options.UI.Tabs
             var isRestartSoundsSame = RestartSoundsCheckBox.Pressed == _cfg.GetCVar(CCVars.RestartSoundsEnabled);
             var isEventSame = EventMusicCheckBox.Pressed == _cfg.GetCVar(CCVars.EventMusicEnabled);
             var isAdminSoundsSame = AdminSoundsCheckBox.Pressed == _cfg.GetCVar(CCVars.AdminSoundsEnabled);
-            var isStationAmbienceSame = StationAmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.StationAmbienceEnabled);
-            var isSpaceAmbienceSame = SpaceAmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.SpaceAmbienceEnabled);
             var isEverythingSame = isMasterVolumeSame && isMidiVolumeSame && isAmbientVolumeSame && isAmbientSoundsSame && isLobbySame && isRestartSoundsSame && isEventSame
-                                   && isAdminSoundsSame && isStationAmbienceSame && isSpaceAmbienceSame && isLobbyVolumeSame;
+                                   && isAdminSoundsSame && isLobbyVolumeSame;
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
             MasterVolumeLabel.Text =

@@ -1,9 +1,16 @@
 using System.Linq;
+using Content.Client.Gameplay;
+using Content.Client.GameTicking.Managers;
+using Content.Client.Lobby;
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Random;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
+using Robust.Client.State;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -14,9 +21,12 @@ namespace Content.Client.Audio;
 
 public sealed partial class ContentAudioSystem
 {
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IResourceCache _resource = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly RulesSystem _rules = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -24,6 +34,9 @@ public sealed partial class ContentAudioSystem
 
     private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(30);
     private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(60);
+
+    private const float DefaultVolume = -12f;
+    private static float _volumeSlider;
 
     // Don't need to worry about this being serializable or pauseable as it doesn't affect the sim.
     private TimeSpan _nextAudio;
@@ -39,6 +52,13 @@ public sealed partial class ContentAudioSystem
 
     private void InitializeAmbientMusic()
     {
+        // TODO: Shitty preload
+        foreach (var audio in _proto.Index<SoundCollectionPrototype>("SpaceAmbienceBase").PickFiles)
+        {
+            _resource.GetResource<AudioResource>(audio.ToString());
+        }
+
+        _configManager.OnValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged, true);
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("audio.ambience");
 
         // Reset audio
@@ -47,10 +67,23 @@ public sealed partial class ContentAudioSystem
         // TODO: On round end summary OR lobby cut audio.
         SetupAmbientSounds();
         _proto.PrototypesReloaded += OnProtoReload;
+        SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEndMessage);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
+    }
+
+    private void AmbienceCVarChanged(float obj)
+    {
+        _volumeSlider = obj;
+
+        if (_ambientMusicStream != null)
+        {
+            _ambientMusicStream.Volume = DefaultVolume + _volumeSlider;
+        }
     }
 
     private void ShutdownAmbientMusic()
     {
+        _configManager.UnsubValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
         _proto.PrototypesReloaded -= OnProtoReload;
         _ambientMusicStream?.Stop();
     }
@@ -75,6 +108,20 @@ public sealed partial class ContentAudioSystem
             RefreshTracks(ambience.Sound, tracks, null);
             _random.Shuffle(tracks);
         }
+    }
+
+    private void OnRoundEndMessage(RoundEndMessageEvent ev)
+    {
+        // If scoreboard shows then just stop the music
+        _ambientMusicStream?.Stop();
+        _ambientMusicStream = null;
+        _nextAudio = TimeSpan.FromMinutes(3);
+    }
+
+    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
+    {
+        // New round starting so reset ambience.
+        _nextAudio = _timing.CurTime + _random.Next(_minAmbienceTime, _maxAmbienceTime);
     }
 
     private void RefreshTracks(SoundSpecifier sound, List<ResPath> tracks, ResPath? lastPlayed)
@@ -106,16 +153,32 @@ public sealed partial class ContentAudioSystem
     {
         base.Update(frameTime);
 
-        if (!_ambientMusicStream?.Done == false || !_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted)
             return;
+
+        // Update still runs in lobby so just ignore it.
+        if (_state.CurrentState is not GameplayState)
+        {
+            _ambientMusicStream?.Stop();
+            _ambientMusicStream = null;
+            return;
+        }
+
+        // Still running existing ambience
+        if (_ambientMusicStream?.Done == false)
+            return;
+
+        // If ambience finished reset the CD (this also means if we have long ambience it won't clip)
+        if (_ambientMusicStream?.Done == true)
+        {
+            // Also don't need to worry about rounding here as it doesn't affect the sim
+            _nextAudio = _timing.CurTime + _random.Next(_minAmbienceTime, _maxAmbienceTime);
+        }
 
         _ambientMusicStream = null;
 
         if (_nextAudio > _timing.CurTime)
             return;
-
-        // Also don't need to worry about rounding here as it doesn't affect the sim
-        _nextAudio = _timing.CurTime + _random.Next(_minAmbienceTime, _maxAmbienceTime);
 
         var ambience = GetAmbience();
 
@@ -127,7 +190,11 @@ public sealed partial class ContentAudioSystem
         var track = tracks[^1];
         tracks.RemoveAt(tracks.Count - 1);
 
-        var strim = _audio.PlayGlobal(track.ToString(), Filter.Local(), false, AudioParams.Default.WithVolume(-12));
+        var strim = _audio.PlayGlobal(
+            track.ToString(),
+            Filter.Local(),
+            false,
+            AudioParams.Default.WithVolume(DefaultVolume + _volumeSlider));
 
         if (strim != null)
         {
@@ -144,7 +211,6 @@ public sealed partial class ContentAudioSystem
     private AmbientMusicPrototype? GetAmbience()
     {
         var ambiences = _proto.EnumeratePrototypes<AmbientMusicPrototype>().ToList();
-
         ambiences.Sort((x, y) => (y.Priority.CompareTo(x.Priority)));
 
         foreach (var amb in ambiences)

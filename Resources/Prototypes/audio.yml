@@ -5,6 +5,7 @@
     collection: AmbienceGeneral
   rules: AlwaysTrue
 
+# Sound collections
 - type: soundCollection
   id: AmbienceGeneral
   files:
@@ -22,6 +23,19 @@
     - /Audio/Ambience/ambigen14.ogg
     - /Audio/Ambience/ambigen15.ogg
 
+- type: soundCollection
+  id: StationAmbienceBase
+  files:
+    - /Audio/Ambience/shipambience.ogg
+
+- type: soundCollection
+  id: SpaceAmbienceBase
+  files:
+    - /Audio/Ambience/starlight.ogg
+    - /Audio/Ambience/constellations.ogg
+    - /Audio/Ambience/drifting.ogg
+
+# Rules
 # Always returns true
 - type: rules
   id: AlwaysTrue

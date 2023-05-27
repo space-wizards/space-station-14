@@ -79,8 +79,6 @@
                 <CheckBox Name="RestartSoundsCheckBox" Text="{Loc 'ui-options-restart-sounds'}" />
                 <CheckBox Name="EventMusicCheckBox" Text="{Loc 'ui-options-event-music'}" />
                 <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
-                <CheckBox Name="StationAmbienceCheckBox" Text="{Loc 'ui-options-station-ambience'}" />
-                <CheckBox Name="SpaceAmbienceCheckBox" Text="{Loc 'ui-options-space-ambience'}" />
             </BoxContainer>
         </BoxContainer>
         <controls:StripeBack HasBottomEdge="False" HasMargins="False">
