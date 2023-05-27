@@ -207,13 +207,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (component.WinType == WinType.OpsMajor || component.WinType == WinType.CrewMajor)
             return;
 
-        foreach (var (nuke, nukeTransform) in EntityQuery<NukeComponent, TransformComponent>(true))
+        var nukeQuery = AllEntityQuery<NukeComponent, TransformComponent>();
+        var centcomms = _emergency.GetCentcommMaps();
+
+        while (nukeQuery.MoveNext(out var nuke, out var nukeTransform))
         {
             if (nuke.Status != NukeStatus.ARMED)
                 continue;
 
             // UH OH
-            if (nukeTransform.MapID == _emergency.CentComMap)
+            if (centcomms.Contains(nukeTransform.MapID))
             {
                 component.WinConditions.Add(WinCondition.NukeActiveAtCentCom);
                 SetWinType(uid, WinType.OpsMajor, component);
@@ -259,10 +262,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         component.WinConditions.Add(WinCondition.SomeNukiesAlive);
 
         var diskAtCentCom = false;
-        foreach (var (_, transform) in EntityManager.EntityQuery<NukeDiskComponent, TransformComponent>())
+        var diskQuery = AllEntityQuery<NukeDiskComponent, TransformComponent>();
+
+        while (diskQuery.MoveNext(out _, out var transform))
         {
             var diskMapId = transform.MapID;
-            diskAtCentCom = _emergency.CentComMap == diskMapId;
+            diskAtCentCom = centcomms.Contains(diskMapId);
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
             // This is fine for now, because we can assume a single station in base SS14.

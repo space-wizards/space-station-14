@@ -62,6 +62,7 @@
       energy: 1.6
       color: "#c9c042"
       castShadows: false
+    - type: WiresPanel
     - type: Wires
       BoardName: "SMES"
       LayoutId: SMES
