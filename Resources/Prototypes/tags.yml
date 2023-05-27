@@ -291,6 +291,9 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: GasAnalyzer
+
+- type: Tag
   id: GasScrubber
 
 - type: Tag
@@ -699,6 +702,9 @@
 
 - type: Tag
   id: TrashBag
+
+- type: Tag
+  id: TrayScanner
 
 - type: Tag
   id: UraniumGlassShard
