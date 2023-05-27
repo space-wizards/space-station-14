@@ -232,7 +232,7 @@
       sprite: Objects/Tools/network_configurator.rsi
       layers:
         - state: icon
-        - state: mode-list
+        - state: mode-link
           map: ["enum.NetworkConfiguratorLayers.ModeLight"]
           shader: unshaded
     - type: Item
