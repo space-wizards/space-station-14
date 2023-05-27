@@ -1,5 +1,6 @@
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Random;
 
@@ -36,14 +37,14 @@ public sealed class NearbyTilesRule : RulesRule
     [DataField("percentage", required: true)]
     public float Percentage;
 
-    [DataField("tile", required: true, customTypeSerializer:typeof(ContentTileDefinition))]
+    [DataField("tile", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     public string Tile = string.Empty;
 }
 
 /// <summary>
 /// Always returns true. Used for fallbacks.
 /// </summary>
-public sealed class TrueRule : RulesRule
+public sealed class AlwaysTrueRule : RulesRule
 {
 
 }

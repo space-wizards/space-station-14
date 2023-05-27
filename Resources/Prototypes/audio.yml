@@ -2,8 +2,8 @@
 - type: ambientMusic
   id: general
   sound:
-    collection:
-  rule: True
+    collection: AmbienceGeneral
+  rules: AlwaysTrue
 
 - type: soundCollection
   id: AmbienceGeneral
@@ -23,7 +23,7 @@
     - /Audio/Ambience/ambigen15.ogg
 
 # Always returns true
-- type: rule
-  id: True
+- type: rules
+  id: AlwaysTrue
   rules:
-    - !type:TrueRule
+    - !type:AlwaysTrueRule

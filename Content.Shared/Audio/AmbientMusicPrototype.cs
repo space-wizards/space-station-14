@@ -13,6 +13,12 @@ public sealed class AmbientMusicPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 
+    /// <summary>
+    /// Traditionally you'd prioritise most rules to least as priority but in our case we'll just be explicit.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("priority")]
+    public int Priority = 0;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("sound", required: true)]
     public SoundSpecifier Sound = default!;
 
