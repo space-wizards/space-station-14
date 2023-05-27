@@ -130,16 +130,23 @@
     netsync: false
     enabled: false
     radius: 2
-    energy: 1.3
+    energy: 0.5
     color: "#FFFFEE"
   - type: Flash
   - type: LimitedCharges
-    maxCharges: 40
-    charges: 40
+    maxCharges: 3
+    charges: 3
+  - type: AutoRecharge
+    rechargeDuration: 30
   - type: MeleeWeapon
     damage:
       types:
         Blunt: 0 # melee weapon to allow flashing individual targets
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
   - type: GenericVisualizer
     visuals:
       enum.FlashVisuals.Burnt:

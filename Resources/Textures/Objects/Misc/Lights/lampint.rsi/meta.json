@@ -8,20 +8,23 @@
   },
   "states": [
     {
-        "name": "lamp-int"
+      "name": "lamp-int"
     },
     {
-        "name": "lamp-int-on"
+      "name": "lamp-int-on"
     },
     {
-        "name": "flashing",
-      	"delays": [
-          [
-            0.1,
-            0.1,
-            0.3
-          ]
-      	]
+      "name": "flashing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "burnt"
     },
     {
       "name": "off-inhand-left",
