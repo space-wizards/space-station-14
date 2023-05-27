@@ -1489,14 +1489,11 @@
       states:
         Alive:
           Base: clown
-        Critical:
-          Base: dead
         Dead:
           Base: dead
     - type: MobThresholds
       thresholds:
         0: Alive
-        100: Critical
         180: Dead
     - type: Spider
       webPrototype: SpiderWebClown
