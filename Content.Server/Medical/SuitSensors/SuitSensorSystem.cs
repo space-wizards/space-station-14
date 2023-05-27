@@ -296,7 +296,7 @@ namespace Content.Server.Medical.SuitSensors
             // get health mob state
             var isAlive = false;
             if (EntityManager.TryGetComponent(sensor.User.Value, out MobStateComponent? mobState))
-                isAlive = _mobStateSystem.IsAlive(sensor.User.Value, mobState);
+                isAlive = !_mobStateSystem.IsDead(sensor.User.Value, mobState);
 
             // get mob total damage
             var totalDamage = 0;

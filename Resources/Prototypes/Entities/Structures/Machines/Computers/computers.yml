@@ -673,6 +673,15 @@
     color: "#b89f25"
   - type: AccessReader
     access: [["Cargo"]]
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSource
+    range: 200
+    ports:
+      - OrderSender
 
 - type: entity
   parent: BaseComputer

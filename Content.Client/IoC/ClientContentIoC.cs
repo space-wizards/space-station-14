@@ -39,12 +39,10 @@ namespace Content.Client.IoC
             IoCManager.Register<ChangelogManager, ChangelogManager>();
             IoCManager.Register<RulesManager, RulesManager>();
             IoCManager.Register<ViewportManager, ViewportManager>();
-            IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
-            IoCManager.Register<NetworkResourceManager>();
             IoCManager.Register<ISharedAdminLogManager, SharedAdminLogManager>();
             IoCManager.Register<GhostKickManager>();
             IoCManager.Register<ExtendedDisconnectInformationManager>();
-            IoCManager.Register<PlayTimeTrackingManager>();
+            IoCManager.Register<JobRequirementsManager>();
             IoCManager.Register<DocumentParsingManager>();
         }
     }
