@@ -1,7 +1,11 @@
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+
 namespace Content.Shared.Random;
 
 public sealed class RulesSystem : EntitySystem
 {
+    [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -44,6 +48,33 @@ public sealed class RulesSystem : EntitySystem
                     }
 
                     if (!found)
+                        return false;
+
+                    break;
+                }
+                case NearbyTilesPercentRule tiles:
+                {
+                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                        !TryComp<MapGridComponent>(xform.GridUid, out var grid))
+                    {
+                        return false;
+                    }
+
+                    var tileCount = 0;
+                    var matchingTileCount = 0;
+
+                    foreach (var tile in grid.GetTilesIntersecting(new Circle(_transform.GetWorldPosition(xform),
+                                 tiles.Range)))
+                    {
+                        tileCount++;
+
+                        if (!tiles.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
+                            continue;
+
+                        matchingTileCount++;
+                    }
+
+                    if (matchingTileCount / (float) tileCount < tiles.Percent)
                         return false;
 
                     break;

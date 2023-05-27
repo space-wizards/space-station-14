@@ -5,6 +5,15 @@
       volume: -12
     collection: AmbienceHoly
   rules: NearPrayable
+  priority: 3
+
+- type: ambientMusic
+  id: Medical
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMedical
+  rules: NearMedical
   priority: 2
 
 - type: ambientMusic
@@ -68,6 +77,11 @@
     - /Audio/Ambience/ambiholy3.ogg
 
 - type: soundCollection
+  id: AmbienceMedical
+  files:
+    - /Audio/Ambience/ambinice.ogg
+
+- type: soundCollection
   id: AmbienceMining
   files:
     - /Audio/Ambience/ambicave.ogg
@@ -109,6 +123,15 @@
   id: InSpace
   rules:
     - !type:InSpaceRule
+
+- type: rules
+  id: NearMedical
+  rules:
+    - !type:NearbyTilesPercentRule
+      percent: 0.5
+      tiles:
+      - FloorWhite
+      range: 5
 
 - type: rules
   id: NearPrayable

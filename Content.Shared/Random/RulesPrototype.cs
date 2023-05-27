@@ -1,6 +1,6 @@
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Random;
 
@@ -40,13 +40,16 @@ public sealed class InSpaceRule : RulesRule
 
 }
 
-public sealed class NearbyTilesRule : RulesRule
+public sealed class NearbyTilesPercentRule : RulesRule
 {
-    [DataField("percentage", required: true)]
-    public float Percentage;
+    [DataField("percent", required: true)]
+    public float Percent;
 
-    [DataField("tile", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
-    public string Tile = string.Empty;
+    [DataField("tiles", required: true, customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
+    public List<string> Tiles = new();
+
+    [DataField("range")]
+    public float Range = 10f;
 }
 
 /// <summary>
