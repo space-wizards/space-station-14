@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixed artifacts being biased towards nodes that were already discovered.,
-    type: Fix}
-  id: 3376
-  time: '2023-04-10T22:35:43.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Chameleon masks can now mimic breath masks., type: Fix}
@@ -2905,3 +2899,9 @@ Entries:
   - {message: Added a grappling gun, type: Add}
   id: 3875
   time: '2023-05-27T04:15:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Role bans are now shown in the job preferences and latejoin interfaces.,
+    type: Add}
+  id: 3876
+  time: '2023-05-27T04:22:23.0000000+00:00'
