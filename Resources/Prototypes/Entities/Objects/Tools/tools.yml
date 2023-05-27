@@ -143,7 +143,7 @@
     damage:
       types:
         Blunt: 6
-        Structural: 2
+        Structural: 3
   - type: Tool
     qualities:
       - Prying
@@ -176,7 +176,7 @@
     damage:
       types:
         Blunt: 8 #free man
-        Structural: 2
+        Structural: 3
 
 - type: entity
   name: multitool
