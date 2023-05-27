@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added robust nukie drink in EMAGGED sustenance vendor!, type: Add}
-  id: 3374
-  time: '2023-04-10T21:29:15.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Material reclaimers no longer stack sound effects infinitely., type: Fix}
@@ -2905,3 +2900,8 @@ Entries:
       will now correctly passively recover blood and heal bloodloss damage.', type: Fix}
   id: 3873
   time: '2023-05-26T07:23:30.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Resprited network configurator., type: Tweak}
+  id: 3874
+  time: '2023-05-27T03:51:34.0000000+00:00'
