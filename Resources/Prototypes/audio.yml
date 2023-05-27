@@ -9,7 +9,18 @@
   rules: InSpace
   priority: 10
 
-# Fallback if nothing else found
+- type: ambientMusic
+  id: Mining
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMining
+  rules: OnMapGrid
+  fadeIn: true
+  interruptable: true
+  priority: 10
+
+## Fallback if nothing else found
 - type: ambientMusic
   id: General
   sound:
@@ -37,9 +48,34 @@
     - /Audio/Ambience/ambigen15.ogg
 
 - type: soundCollection
-  id: AmbienceStation
+  id: AmbienceHoly
   files:
-    - /Audio/Ambience/shipambience.ogg
+    - /Audio/Ambience/ambicha1.ogg
+    - /Audio/Ambience/ambicha2.ogg
+    - /Audio/Ambience/ambicha3.ogg
+    - /Audio/Ambience/ambicha4.ogg
+    - /Audio/Ambience/ambiholy.ogg
+    - /Audio/Ambience/ambiholy2.ogg
+    - /Audio/Ambience/ambiholy3.ogg
+
+- type: soundCollection
+  id: AmbienceMining
+  files:
+    - /Audio/Ambience/ambicave.ogg
+    - /Audio/Ambience/ambidanger.ogg
+    - /Audio/Ambience/ambidanger2.ogg
+    - /Audio/Ambience/ambilava1.ogg
+    - /Audio/Ambience/ambilava2.ogg
+    - /Audio/Ambience/ambilava3.ogg
+    - /Audio/Ambience/ambimaint1.ogg
+    - /Audio/Ambience/ambimine.ogg
+    - /Audio/Ambience/ambiruin.ogg
+    - /Audio/Ambience/ambiruin2.ogg
+    - /Audio/Ambience/ambiruin3.ogg
+    - /Audio/Ambience/ambiruin4.ogg
+    - /Audio/Ambience/ambiruin5.ogg
+    - /Audio/Ambience/ambiruin6.ogg
+    - /Audio/Ambience/ambiruin7.ogg
 
 - type: soundCollection
   id: AmbienceSpace
@@ -48,14 +84,24 @@
     - /Audio/Ambience/constellations.ogg
     - /Audio/Ambience/drifting.ogg
 
+## Background noise on station, separate to ambient music.
+- type: soundCollection
+  id: AmbienceStation
+  files:
+    - /Audio/Ambience/shipambience.ogg
+
 # Rules
+- type: rules
+  id: AlwaysTrue
+  rules:
+    - !type:AlwaysTrueRule
+
 - type: rules
   id: InSpace
   rules:
     - !type:InSpaceRule
 
-# Always returns true
 - type: rules
-  id: AlwaysTrue
+  id: OnMapGrid
   rules:
-    - !type:AlwaysTrueRule
+    - !type:OnMapGridRule
