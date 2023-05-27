@@ -11,13 +11,15 @@ replay-loading-failed = Failed to load replay:
 
 # Main Menu
 replay-menu-subtext = Replay Client
-replay-menu-load = Load Replay
-replay-menu-refresh = Refresh Replays
+replay-menu-load = Load Selected Replay
+replay-menu-select = Select a Replay
+replay-menu-open = Open Replay Folder
 replay-menu-none = No replays found.
 
 # Main Menu info box
 replay-info-title = Replay Information
-replay-info-none = [color=red]No replay selected[/color] 
+replay-info-none-selected = No replay selected
+replay-info-invalid = [color=red]Invalid replay selected[/color] 
 replay-info-info = {"["}color=gray]Selected:[/color]   {$file}
                    {"["}color=gray]Time:[/color]   {$time}
                    {"["}color=gray]Round ID:[/color]   {$roundId}
@@ -26,3 +28,6 @@ replay-info-info = {"["}color=gray]Selected:[/color]   {$file}
                    {"["}color=gray]Version:[/color]   {$version}
                    {"["}color=gray]Engine:[/color]   {$engVersion}
                    {"["}color=gray]Hash:[/color]   {$hash}
+
+# Replay selection window
+replay-menu-select-title = Select Replay
