@@ -1,9 +1,4 @@
 Entries:
-- author: freeman2651
-  changes:
-  - {message: Pill dosage limit reduced to 20u from 50u., type: Tweak}
-  id: 3378
-  time: '2023-04-11T01:23:35.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Splashing reagents using melee attacks & examining spillables should
@@ -2905,3 +2900,8 @@ Entries:
   - {message: Fix uplink typos, type: Fix}
   id: 3877
   time: '2023-05-27T05:33:19.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: Added a CentCom scarf., type: Add}
+  id: 3878
+  time: '2023-05-27T09:09:33.0000000+00:00'
