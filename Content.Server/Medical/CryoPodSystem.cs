@@ -154,8 +154,6 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
                     $"{ToPrettyString(args.User)} inserted {ToPrettyString(args.Args.Target.Value)} into {ToPrettyString(uid)}");
 
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                $"{ToPrettyString(args.User)} inserted {ToPrettyString(args.Args.Target.Value)} into {ToPrettyString(uid)}");
-            _adminLogger.Add(LogType.Action, LogImpact.Medium,
                 $"{ToPrettyString(args.User)} inserted {ToPrettyString(args.Args.Target.Value)} into {ToPrettyString(uid)} which contains gas: {cryoPodAir!.Air.ToPrettyString():gasMix}");
         }
         args.Handled = true;
