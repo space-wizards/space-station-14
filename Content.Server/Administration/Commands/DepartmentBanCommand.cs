@@ -1,11 +1,8 @@
-using System.Text;
 using Content.Server.Administration.Managers;
-using Content.Server.Administration.Notes;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Roles;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
@@ -15,9 +12,10 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Ban)]
 public sealed class DepartmentBanCommand : IConsoleCommand
 {
-    [Dependency] private readonly IPlayerLocator _locater = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly RoleBanManager _bans = default!;
+    [Dependency] private readonly IPlayerLocator _locator = default!;
+    [Dependency] private readonly IBanManager _banManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public string Command => "departmentban";
     public string Description => Loc.GetString("cmd-departmentban-desc");
@@ -29,7 +27,7 @@ public sealed class DepartmentBanCommand : IConsoleCommand
         string department;
         string reason;
         uint minutes;
-        if (!Enum.TryParse(IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.DepartmentBanDefaultSeverity), out NoteSeverity severity))
+        if (!Enum.TryParse(_cfg.GetCVar(CCVars.DepartmentBanDefaultSeverity), out NoteSeverity severity))
         {
             Logger.WarningS("admin.department_ban", "Department ban severity could not be parsed from config! Defaulting to medium.");
             severity = NoteSeverity.Medium;
@@ -84,7 +82,7 @@ public sealed class DepartmentBanCommand : IConsoleCommand
             return;
         }
 
-        var located = await IoCManager.Resolve<IPlayerLocator>().LookupIdByNameOrIdAsync(target);
+        var located = await _locator.LookupIdByNameOrIdAsync(target);
         if (located == null)
         {
             shell.WriteError(Loc.GetString("cmd-roleban-name-parse"));
@@ -94,17 +92,15 @@ public sealed class DepartmentBanCommand : IConsoleCommand
         var targetUid = located.UserId;
         var targetHWid = located.LastHWId;
 
-        var banManager = IoCManager.Resolve<BanManager>();
-
         // If you are trying to remove the following variable, please don't. It's there because the note system groups role bans by time, reason and banning admin.
         // Without it the note list will get needlessly cluttered.
         var now = DateTimeOffset.UtcNow;
         foreach (var job in departmentProto.Roles)
         {
-            banManager.CreateRoleBan(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, job, minutes, severity, reason, now);
+            _banManager.CreateRoleBan(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, job, minutes, severity, reason, now);
         }
 
-        _bans.SendRoleBans(located);
+        _banManager.SendRoleBans(located.UserId);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

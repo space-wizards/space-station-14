@@ -1,17 +1,12 @@
 using System.Linq;
 using System.Text;
 using Content.Server.Administration.Managers;
-using Content.Server.Administration.Notes;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Roles;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Prototypes;
-using Serilog;
-
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
@@ -19,6 +14,7 @@ public sealed class RoleBanCommand : IConsoleCommand
 {
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IBanManager _bans = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public string Command => "roleban";
     public string Description => Loc.GetString("cmd-roleban-desc");
@@ -30,7 +26,7 @@ public sealed class RoleBanCommand : IConsoleCommand
         string job;
         string reason;
         uint minutes;
-        if (!Enum.TryParse(IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.DepartmentBanDefaultSeverity), out NoteSeverity severity))
+        if (!Enum.TryParse(_cfg.GetCVar(CCVars.DepartmentBanDefaultSeverity), out NoteSeverity severity))
         {
             Logger.WarningS("admin.role_ban", "Role ban severity could not be parsed from config! Defaulting to medium.");
             severity = NoteSeverity.Medium;

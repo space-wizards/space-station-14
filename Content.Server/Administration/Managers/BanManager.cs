@@ -1,22 +1,18 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
-using Content.Server.Administration.Notes;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.Database;
+using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Microsoft.CodeAnalysis;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -31,6 +27,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILocalizationManager _localizationManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
@@ -227,6 +224,33 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             .ToHashSet();
     }
     #endregion
+
+    public void SendRoleBans(NetUserId userId)
+    {
+        if (!_playerManager.TryGetSessionById(userId, out var player))
+        {
+            return;
+        }
+
+        SendRoleBans(player);
+    }
+
+    public void SendRoleBans(IPlayerSession pSession)
+    {
+        if (!_cachedRoleBans.TryGetValue(pSession.UserId, out var roleBans))
+        {
+            _sawmill.Error($"Tried to send rolebans for {pSession.Name} but none cached?");
+            return;
+        }
+
+        var bans = new MsgRoleBans()
+        {
+            Bans = roleBans.Select(o => o.Role).ToList()
+        };
+
+        _sawmill.Debug($"Sent rolebans to {pSession.Name}");
+        _netManager.ServerSendMessage(bans, pSession.ConnectedClient);
+    }
 
     public void PostInject()
     {

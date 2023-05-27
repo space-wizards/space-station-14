@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 using Content.Shared.Database;
-using Robust.Shared.Console;
+using Robust.Server.Player;
 using Robust.Shared.Network;
 using System.Net;
 
@@ -35,4 +35,16 @@ public interface IBanManager
     /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>
     /// <param name="timeOfBan">Time when the ban was applied, used for grouping role bans</param>
     public void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan);
+
+    /// <summary>
+    /// Sends role bans to the target
+    /// </summary>
+    /// <param name="pSession">Player's user ID</param>
+    public void SendRoleBans(NetUserId userId);
+
+    /// <summary>
+    /// Sends role bans to the target
+    /// </summary>
+    /// <param name="pSession">Player's session</param>
+    public void SendRoleBans(IPlayerSession pSession);
 }
