@@ -33,7 +33,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 5 #i mean... i GUESS you could use it like that
   - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
@@ -50,7 +50,7 @@
     qualities: Welding
   - type: Welder
     litMeleeDamageBonus:
-      types: # When lit, negate standard melee damage and replace with heat
+      types:
         Heat: 10
         Blunt: -10
   - type: PointLight

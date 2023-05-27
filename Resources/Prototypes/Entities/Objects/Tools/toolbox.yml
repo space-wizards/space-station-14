@@ -11,12 +11,12 @@
   - type: Storage
     capacity: 60
   - type: Item
-    size: 9999
+    size: 110
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 12
     soundHit:
       path: "/Audio/Weapons/smash.ogg"
   - type: Tag
