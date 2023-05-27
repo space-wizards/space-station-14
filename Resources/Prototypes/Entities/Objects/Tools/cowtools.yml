@@ -88,7 +88,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 1 #have you ever swung at someone with a plastic bat? that shit hurts
+        Blunt: 1
   - type: StaminaDamageOnHit
     damage: 5 #have you ever been hit with a plastic bat? that shit hurts
   - type: Tool
