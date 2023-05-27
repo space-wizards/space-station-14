@@ -703,8 +703,7 @@ namespace Content.Client.Preferences.UI
             if (_previewDummy != null)
                 _entMan.DeleteEntity(_previewDummy.Value);
 
-            var playTime = IoCManager.Resolve<JobRequirementsManager>();
-            playTime.Updated -= UpdateRoleRequirements;
+            _requirements.Updated -= UpdateRoleRequirements;
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
         }
 
