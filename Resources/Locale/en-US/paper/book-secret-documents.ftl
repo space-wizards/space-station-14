@@ -14,7 +14,7 @@ book-text-sec-doc-1 = Only the Head of Security has the right to read these docu
     ORDER №15: Arrest the HoP and take them to the CC.
     ORDER №16: Arrest the CE and take them to the CC.
     ORDER №17: Arrest the QM and take them to the CC.
-    ORDER №20: Arrest the Captain and take him to the CC.
+    ORDER №20: Arrest the Captain and take them to the CC.
     ORDER №25: Carry out the arrest of all non-employees of the NT.
     ORDER №30: Carry out immediate evacuation of the Captain from the station.
     ORDER №31: Conduct immediate evacuation of Central Command members from the station.
