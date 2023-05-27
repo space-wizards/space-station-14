@@ -95,6 +95,7 @@
     ports:
       - DoorStatus
   - type: SoundOnOverload
+  - type: SpawnOnOverload
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
