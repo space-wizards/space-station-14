@@ -33,6 +33,7 @@ public sealed class ConfigurationSystem : EntitySystem
             return;
 
         args.Handled = _uiSystem.TryOpen(uid, ConfigurationUiKey.Key, actor.PlayerSession);
+        UpdateUi(uid, component);
     }
 
     private void OnStartup(EntityUid uid, ConfigurationComponent component, ComponentStartup args)
