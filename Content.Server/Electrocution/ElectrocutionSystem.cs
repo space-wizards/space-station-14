@@ -74,7 +74,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
         SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
         SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
-        SubscribeLocalEvent<DestructibleComponent, DamageThresholdReached>(OnElectrifiedDestroyed);
+        SubscribeLocalEvent<ElectrifiedComponent, DamageThresholdReached>(OnElectrifiedDestroyed);
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
     }
@@ -453,19 +453,16 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
     }
 
-    private void OnElectrifiedDestroyed(EntityUid uid, DestructibleComponent comp, DamageThresholdReached args)
+    private void OnElectrifiedDestroyed(EntityUid uid, ElectrifiedComponent electrified, DamageThresholdReached args)
     {
-        if(TryComp<ElectrifiedComponent>(uid, out var electrified))
+        if (!electrified.OnDamageThresholdReached)
         {
-            if (!electrified.OnDamageThresholdReached)
-            {
-                return;
-            }
+            return;
+        }
 
-            if (args.DamageChangedEv.Origin != null)
-            {
-                TryDoElectrifiedAct(uid, args.DamageChangedEv.Origin.Value, 1, electrified);
-            }
+        if (args.DamageChangedEv.Origin != null)
+        {
+            TryDoElectrifiedAct(uid, args.DamageChangedEv.Origin.Value, 1, electrified);
         }
     }
 
