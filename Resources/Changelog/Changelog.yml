@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Splashing reagents using melee attacks & examining spillables should
-      work properly again, type: Tweak}
-  id: 3379
-  time: '2023-04-11T01:56:21.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Nettles can no longer inject solutions through hardsuits. Yes, this
@@ -2905,3 +2899,8 @@ Entries:
   - {message: Added a CentCom scarf., type: Add}
   id: 3878
   time: '2023-05-27T09:09:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Change grappling gun tech from Experimental to Industrial., type: Fix}
+  id: 3879
+  time: '2023-05-27T12:19:03.0000000+00:00'
