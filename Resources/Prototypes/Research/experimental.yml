@@ -145,18 +145,6 @@
   recipeUnlocks:
   - RPED
 
-- type: technology
-  id: Grappling
-  name: research-technology-grappling
-  icon:
-    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
-    state: base
-  discipline: Experimental
-  tier: 2
-  cost: 5000
-  recipeUnlocks:
-    - WeaponGrapplingGun
-
 # Tier 3
 
 - type: technology
