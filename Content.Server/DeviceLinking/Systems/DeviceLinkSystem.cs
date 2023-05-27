@@ -89,9 +89,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
 
             if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))
                 continue;
-
-
-
+            
             foreach (var (source, sink) in links)
             {
                 if (source != port)
