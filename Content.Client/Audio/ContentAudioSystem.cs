@@ -14,7 +14,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     private readonly List<AudioSystem.PlayingStream> _fadeToRemove = new();
 
     private const float MinVolume = -32f;
-    private const float DefaultDuration = 5f;
+    private const float DefaultDuration = 2f;
 
     public override void Initialize()
     {
@@ -62,7 +62,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
         _fadingOut.Remove(stream);
         var curVolume = stream.Volume;
         var change = (curVolume - MinVolume) / duration;
-        _fadingIn.Add(stream, (change, duration));
+        _fadingIn.Add(stream, (change, stream.Volume));
         stream.Volume = MinVolume;
     }
 

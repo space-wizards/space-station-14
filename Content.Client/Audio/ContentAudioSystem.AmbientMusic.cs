@@ -1,7 +1,5 @@
 using System.Linq;
 using Content.Client.Gameplay;
-using Content.Client.GameTicking.Managers;
-using Content.Client.Lobby;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -35,7 +33,7 @@ public sealed partial class ContentAudioSystem
     private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(3);
     private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(6);
 
-    private const float DefaultVolume = -12f;
+    private const float AmbientMusicFadeTime = 8f;
     private static float _volumeSlider;
 
     // Don't need to worry about this being serializable or pauseable as it doesn't affect the sim.
@@ -83,9 +81,9 @@ public sealed partial class ContentAudioSystem
     {
         _volumeSlider = obj;
 
-        if (_ambientMusicStream != null)
+        if (_ambientMusicStream != null && _musicProto != null)
         {
-            _ambientMusicStream.Volume = DefaultVolume + _volumeSlider;
+            _ambientMusicStream.Volume = _musicProto.Sound.Params.Volume + _volumeSlider;
         }
     }
 
@@ -175,7 +173,7 @@ public sealed partial class ContentAudioSystem
 
             if (_musicProto != ambience)
             {
-                FadeOut(_ambientMusicStream);
+                FadeOut(_ambientMusicStream, AmbientMusicFadeTime);
                 _musicProto = null;
                 _interruptable = false;
                 isDone = true;
@@ -216,7 +214,7 @@ public sealed partial class ContentAudioSystem
             track.ToString(),
             Filter.Local(),
             false,
-            AudioParams.Default.WithVolume(DefaultVolume + _volumeSlider));
+            AudioParams.Default.WithVolume(_musicProto.Sound.Params.Volume + _volumeSlider));
 
         if (strim != null)
         {
@@ -224,7 +222,7 @@ public sealed partial class ContentAudioSystem
 
             if (_musicProto.FadeIn)
             {
-                FadeIn(_ambientMusicStream);
+                FadeIn(_ambientMusicStream, AmbientMusicFadeTime);
             }
         }
 

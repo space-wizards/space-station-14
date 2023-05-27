@@ -1,6 +1,8 @@
 - type: ambientMusic
   id: Space
   sound:
+    params:
+      volume: -10
     collection: AmbienceSpace
   fadeIn: true
   interruptable: true
@@ -11,6 +13,8 @@
 - type: ambientMusic
   id: General
   sound:
+    params:
+      volume: -12
     collection: AmbienceGeneral
   rules: AlwaysTrue
 
@@ -39,8 +43,6 @@
 
 - type: soundCollection
   id: AmbienceSpace
-  params:
-    volume: -10
   files:
     - /Audio/Ambience/starlight.ogg
     - /Audio/Ambience/constellations.ogg
