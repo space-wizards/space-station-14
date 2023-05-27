@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using Content.Shared.CCVar;
+using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Robust.Client;
@@ -11,7 +13,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Players.PlayTimeTracking;
 
-public sealed class PlayTimeTrackingManager
+public sealed class JobRequirementsManager
 {
     [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly IClientNetManager _net = default!;
@@ -20,9 +22,18 @@ public sealed class PlayTimeTrackingManager
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
+    private readonly List<string> _roleBans = new();
+
+    private ISawmill _sawmill = default!;
+
+    public event Action? Updated;
 
     public void Initialize()
     {
+        _sawmill = Logger.GetSawmill("job_requirements");
+
+        // Yeah the client manager handles role bans and playtime but the server ones are separate DEAL.
+        _net.RegisterNetMessage<MsgRoleBans>(RxRoleBans);
         _net.RegisterNetMessage<MsgPlayTime>(RxPlayTime);
 
         _client.RunLevelChanged += ClientOnRunLevelChanged;
@@ -35,6 +46,18 @@ public sealed class PlayTimeTrackingManager
             // Reset on disconnect, just in case.
             _roles.Clear();
         }
+    }
+
+    private void RxRoleBans(MsgRoleBans message)
+    {
+        _sawmill.Debug($"Received roleban info containing {message.Bans.Count} entries.");
+
+        if (_roleBans.Equals(message.Bans))
+            return;
+
+        _roleBans.Clear();
+        _roleBans.AddRange(message.Bans);
+        Updated?.Invoke();
     }
 
     private void RxPlayTime(MsgPlayTime message)
@@ -52,27 +75,36 @@ public sealed class PlayTimeTrackingManager
         {
             sawmill.Info($"{tracker}: {time}");
         }*/
+        Updated?.Invoke();
     }
 
     public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out string? reason)
     {
         reason = null;
 
+        if (_roleBans.Contains($"Job:{job.ID}"))
+        {
+            reason = Loc.GetString("role-ban");
+            return false;
+        }
+
         if (job.Requirements == null ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))
+        {
             return true;
+        }
 
         var player = _playerManager.LocalPlayer?.Session;
 
-        if (player == null) return true;
+        if (player == null)
+            return true;
 
-        var roles = _roles;
         var reasonBuilder = new StringBuilder();
 
         var first = true;
         foreach (var requirement in job.Requirements)
         {
-            if (JobRequirements.TryRequirementMet(requirement, roles, out reason, _prototypes))
+            if (JobRequirements.TryRequirementMet(requirement, _roles, out reason, _prototypes))
                 continue;
 
             if (!first)

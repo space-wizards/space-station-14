@@ -320,11 +320,11 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
-        Shoot(gunUid, gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user, throwItems: attemptEv.ThrowItems);
-        var shotEv = new GunShotEvent(user);
+        Shoot(gunUid, gun, ev.Ammo, fromCoordinates, toCoordinates.Value, out var userImpulse, user, throwItems: attemptEv.ThrowItems);
+        var shotEv = new GunShotEvent(user, ev.Ammo);
         RaiseLocalEvent(gunUid, ref shotEv);
-        // Projectiles cause impulses especially important in non gravity environments
-        if (TryComp<PhysicsComponent>(user, out var userPhysics))
+
+        if (userImpulse && TryComp<PhysicsComponent>(user, out var userPhysics))
         {
             if (_gravity.IsWeightless(user, userPhysics))
                 CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
@@ -339,12 +339,13 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityUid ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
+        out bool userImpulse,
         EntityUid? user = null,
         bool throwItems = false)
     {
         var shootable = EnsureComp<AmmoComponent>(ammo);
         Shoot(gunUid, gun, new List<(EntityUid? Entity, IShootable Shootable)>(1) { (ammo, shootable) },
-            fromCoordinates, toCoordinates, user, throwItems);
+            fromCoordinates, toCoordinates, out userImpulse, user, throwItems);
     }
 
     public abstract void Shoot(
@@ -353,6 +354,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         List<(EntityUid? Entity, IShootable Shootable)> ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
+        out bool userImpulse,
         EntityUid? user = null,
         bool throwItems = false);
 
@@ -449,7 +451,7 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 /// </summary>
 /// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
-public record struct GunShotEvent(EntityUid User);
+public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
 
 public enum EffectLayers : byte
 {

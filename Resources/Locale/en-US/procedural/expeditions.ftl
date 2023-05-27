@@ -4,6 +4,8 @@ salvage-expedition-structure-remaining = {$count ->
     *[other] {$count} structures remaining.
 }
 
+salvage-expedition-megafauna-remaining = {$count} megafauna remaining.
+
 salvage-expedition-window-title = Salvage expeditions
 salvage-expedition-window-difficulty = Difficulty:
 salvage-expedition-window-details = Details:
@@ -25,9 +27,11 @@ salvage-expedition-desc-structure = {$count ->
     [one] Destroy {$count} {$structure} inside the area.
     *[other] Destroy {$count} {$structure}s inside the area.
 }
+salvage-expedition-desc-elimination = Kill a large and dangerous creature inside the area.
 
 salvage-expedition-type-Mining = Mining
 salvage-expedition-type-Destruction = Destruction
+salvage-expedition-type-Elimination = Elimination
 
 salvage-expedition-difficulty-Minimal = Minimal
 salvage-expedition-difficulty-Minor = Minor

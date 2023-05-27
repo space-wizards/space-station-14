@@ -42,7 +42,7 @@ namespace Content.Client.IoC
             IoCManager.Register<ISharedAdminLogManager, SharedAdminLogManager>();
             IoCManager.Register<GhostKickManager>();
             IoCManager.Register<ExtendedDisconnectInformationManager>();
-            IoCManager.Register<PlayTimeTrackingManager>();
+            IoCManager.Register<JobRequirementsManager>();
             IoCManager.Register<DocumentParsingManager>();
         }
     }
