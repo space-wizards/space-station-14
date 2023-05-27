@@ -58,7 +58,7 @@ public sealed partial class ContentAudioSystem
             _resource.GetResource<AudioResource>(audio.ToString());
         }
 
-        _configManager.OnValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged, true);
+        _configManager.OnValueChanged(CCVars.AmbientMusicVolume, AmbienceCVarChanged, true);
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("audio.ambience");
 
         // Reset audio
@@ -83,7 +83,7 @@ public sealed partial class ContentAudioSystem
 
     private void ShutdownAmbientMusic()
     {
-        _configManager.UnsubValueChanged(CCVars.AmbienceVolume, AmbienceCVarChanged);
+        _configManager.UnsubValueChanged(CCVars.AmbientMusicVolume, AmbienceCVarChanged);
         _proto.PrototypesReloaded -= OnProtoReload;
         _ambientMusicStream?.Stop();
     }

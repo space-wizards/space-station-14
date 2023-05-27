@@ -36,6 +36,19 @@
                     <Control MinSize="4 0"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
+                    <Label Text="{Loc 'ui-options-ambient-music-volume'}" HorizontalExpand="True" />
+                    <Control MinSize="8 0" />
+                    <Slider Name="AmbientMusicVolumeSlider"
+                            MinValue="0"
+                            MaxValue="100"
+                            HorizontalExpand="True"
+                            MinSize="80 0"
+                            Rounded="True" />
+                    <Control MinSize="8 0" />
+                    <Label Name="AmbientMusicVolumeLabel" MinSize="48 0" Align="Right" />
+                    <Control MinSize="4 0"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
                     <Label Text="{Loc 'ui-options-ambience-volume'}" HorizontalExpand="True" />
                     <Control MinSize="8 0" />
                     <Slider Name="AmbienceVolumeSlider"
