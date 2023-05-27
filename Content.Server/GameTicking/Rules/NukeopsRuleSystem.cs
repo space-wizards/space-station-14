@@ -10,6 +10,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
 using Content.Server.Nuke;
 using Content.Server.Preferences.Managers;
+using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -583,7 +584,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             {
                 role ??= nukeops.OperativeRoleProto;
 
-                mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
+                mind.AddRole(new AntagonistRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
                 nukeops.OperativeMindPendingData.Remove(uid);
             }
 
@@ -760,7 +761,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                     CharacterName = spawnDetails.Name
                 };
                 newMind.ChangeOwningPlayer(session.UserId);
-                newMind.AddRole(new TraitorRole(newMind, nukeOpsAntag));
+                newMind.AddRole(new AntagonistRole(newMind, nukeOpsAntag));
 
                 newMind.TransferTo(mob);
             }
@@ -808,7 +809,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         //ok hardcoded value bad but so is everything else here
-        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>("Nukeops")));
+        mind.AddRole(new AntagonistRole(mind, _prototypeManager.Index<AntagPrototype>("Nukeops")));
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "SyndicateOperativeGearFull", EntityManager);
     }
 

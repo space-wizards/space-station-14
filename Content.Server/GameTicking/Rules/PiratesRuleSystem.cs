@@ -14,12 +14,14 @@ using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.Enums;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -39,6 +41,12 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    /// <summary>
+    ///     Path to antagonist alert sound.
+    /// </summary>
+    private static string PirateAlert => "/Audio/Ambience/Antag/antagonist_start.ogg"; //TODO make another sound
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -226,6 +234,17 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 pirates.InitialItems.Add(uid);
                 return true;
             }); // Include the players in the appraisal.
+
+            // Notificate every player about a pirate antagonist role with sound
+            _audio.PlayGlobal(
+                PirateAlert,
+                Filter.Entities(
+                    pirates.Pirates
+                        .Where(p => p.CurrentEntity.HasValue)
+                        .Select(p => p.CurrentEntity!.Value)
+                        .ToArray()),
+                false,
+                AudioParams.Default);
         }
     }
 
@@ -235,6 +254,16 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
         if (!mind.OwnedEntity.HasValue)
             return;
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "PirateGear", EntityManager);
+
+        // Notificate every player about a pirate antagonist role with sound
+        if (mind.CurrentEntity.HasValue)
+        {
+            _audio.PlayEntity(
+                PirateAlert,
+                mind.CurrentEntity.Value,
+                mind.CurrentEntity.Value,
+                AudioParams.Default);
+        }
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

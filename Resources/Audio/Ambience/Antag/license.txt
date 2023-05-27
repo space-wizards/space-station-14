@@ -1,0 +1,1 @@
+﻿antagonist_start.ogg was taken from: https://github.com/tgstation/tgstation/blob/7bafed4bf6d8b99853a21faf936242c055ac5c29/sound/ambience/antag/tatoralert.ogg

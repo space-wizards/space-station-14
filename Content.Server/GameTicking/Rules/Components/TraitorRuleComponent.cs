@@ -1,8 +1,7 @@
-﻿using Content.Server.Traitor;
+﻿using Content.Server.Roles;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -10,8 +9,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(TraitorRuleSystem))]
 public sealed class TraitorRuleComponent : Component
 {
-    public readonly SoundSpecifier AddedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
-    public List<TraitorRole> Traitors = new();
+    public List<AntagonistRole> Traitors = new();
 
     [DataField("traitorPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string TraitorPrototypeId = "Traitor";
