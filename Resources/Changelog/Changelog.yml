@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Nettles can no longer inject solutions through hardsuits. Yes, this
-      means deathnettles don''t work on nukies anymore.', type: Tweak}
-  id: 3380
-  time: '2023-04-11T02:19:44.0000000+00:00'
 - author: Skyedra
   changes:
   - {message: Ability to bind the menu toggle key directly in the UI, type: Add}
@@ -2904,3 +2898,10 @@ Entries:
   - {message: Change grappling gun tech from Experimental to Industrial., type: Fix}
   id: 3879
   time: '2023-05-27T12:19:03.0000000+00:00'
+- author: malchanceux
+  changes:
+  - {message: NanoTrasen Counterintelligence has uncovered that threat actors have
+      started recruiting atmospheric technicians into their ranks. Whether this is
+      genuine or a red herring remains to be seen., type: Add}
+  id: 3880
+  time: '2023-05-27T19:50:51.0000000+00:00'
