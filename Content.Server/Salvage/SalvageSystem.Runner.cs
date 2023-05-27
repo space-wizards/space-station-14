@@ -7,6 +7,7 @@ using Content.Server.Station.Components;
 using Content.Shared.Chat;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Audio;
@@ -21,6 +22,8 @@ public sealed partial class SalvageSystem
     /*
      * Handles actively running a salvage expedition.
      */
+
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private void InitializeRunner()
     {
@@ -41,9 +44,13 @@ public sealed partial class SalvageSystem
         // TODO: This is terrible but need bluespace harnesses or something.
         var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
 
-        while (query.MoveNext(out var _, out var _, out var mobXform))
+        while (query.MoveNext(out var uid, out var _, out var mobState, out var mobXform))
         {
             if (mobXform.MapUid != xform.MapUid)
+                continue;
+
+            // Don't count unidentified humans (loot) or anyone you murdered so you can still maroon them once dead.
+            if (_mobState.IsDead(uid, mobState))
                 continue;
 
             // Okay they're on salvage, so are they on the shuttle.
@@ -231,6 +238,38 @@ public sealed partial class SalvageSystem
             }
 
             if (structure.Structures.Count == 0)
+            {
+                comp.Completed = true;
+                Announce(uid, Loc.GetString("salvage-expedition-completed"));
+            }
+        }
+
+        // Elimination missions
+        var eliminationQuery = EntityQueryEnumerator<SalvageEliminationExpeditionComponent, SalvageExpeditionComponent>();
+        while (eliminationQuery.MoveNext(out var uid, out var elimination, out var comp))
+        {
+            if (comp.Completed)
+                continue;
+
+            var announce = false;
+
+            for (var i = 0; i < elimination.Megafauna.Count; i++)
+            {
+                var mob = elimination.Megafauna[i];
+
+                if (Deleted(mob) || _mobState.IsDead(mob))
+                {
+                    elimination.Megafauna.RemoveSwap(i);
+                    announce = true;
+                }
+            }
+
+            if (announce)
+            {
+                Announce(uid, Loc.GetString("salvage-expedition-megafauna-remaining", ("count", elimination.Megafauna.Count)));
+            }
+
+            if (elimination.Megafauna.Count == 0)
             {
                 comp.Completed = true;
                 Announce(uid, Loc.GetString("salvage-expedition-completed"));
