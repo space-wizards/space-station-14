@@ -51,8 +51,8 @@
   - type: Welder
     litMeleeDamageBonus:
       types:
-        Heat: 10
-        Blunt: -10
+        Heat: 8
+        Blunt: -5
   - type: PointLight
     netsync: false
     enabled: false

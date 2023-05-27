@@ -65,10 +65,10 @@
     sprite: Objects/Tools/screwdriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1
     damage:
       types:
-        Piercing: 7 #could probably stand to be nerfed if someone adds poking your eyes out so that this has a niche over the wrench, but this is probably fine for now.
+        Piercing: 6
   - type: Tool
     qualities:
       - Screwing
@@ -88,7 +88,7 @@
   name: wrench
   parent: BaseItem
   id: Wrench
-  description: 'A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.'
+  description: A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.
   components:
   - type: EmitSoundOnLand
     sound:
@@ -107,7 +107,7 @@
     attackRate: 1.5
     damage:
       types:
-        Blunt: 6.5
+        Blunt: 4.5
   - type: Tool
     qualities:
       - Anchoring
@@ -143,7 +143,7 @@
     damage:
       types:
         Blunt: 6
-        Structural: 3
+        Structural: 2
   - type: Tool
     qualities:
       - Prying
@@ -175,8 +175,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 7 #free man
-        Structural: 3
+        Blunt: 8 #free man
+        Structural: 2
 
 - type: entity
   name: multitool
