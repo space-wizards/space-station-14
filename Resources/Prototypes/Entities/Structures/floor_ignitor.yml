@@ -1,0 +1,44 @@
+﻿- type: entity
+  name: floor ignitor
+  parent: BaseStructure
+  id: FloorIgnitor
+  description: An electrical arc generator creating a small fire to ignite gasses.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/floor_ignitor.rsi
+    layers:
+      - state: ignitor_base
+      - state: lighter_flame
+    drawdepth: Mobs
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 1.5
+  - type: IgnitionSource
+    temperature: 700
+    ignited: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        mask:
+        - ItemMask
+  - type: InteractionOutline
+  - type: Anchorable
+  - type: Pullable
+  - type: Rotatable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+
