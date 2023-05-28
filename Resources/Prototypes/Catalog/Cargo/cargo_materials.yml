@@ -104,6 +104,6 @@
     sprite: Objects/Materials/Sheets/other.rsi
     state: ink_3
   product: CrateMaterialInk
-  cost: 1500
+  cost: 750
   category: Materials
   group: market
