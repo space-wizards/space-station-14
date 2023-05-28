@@ -1,4 +1,6 @@
+using Content.Shared.Access;
 using Content.Shared.Maps;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -18,14 +20,6 @@ public sealed class RulesPrototype : IPrototype
     public List<RulesRule> Rules = new();
 }
 
-/*
- * TODO: Make an audio datadef that has an attached rules proto
- * Make a priority list of audio rules
- * Need a debug thing to check rules nearby
- * Play the full audio clip then re-check rules
- * Shuffle audio only once every rule played (then need to make sure next track isn't repeated)
- */
-
 [ImplicitDataDefinitionForInheritors]
 public abstract class RulesRule
 {
@@ -38,6 +32,25 @@ public abstract class RulesRule
 public sealed class InSpaceRule : RulesRule
 {
 
+}
+
+/// <summary>
+/// Checks for entities matching the whitelist in range.
+/// This is more expensive than <see cref="NearbyComponentsRule"/> so prefer that!
+/// </summary>
+public sealed class NearbyEntitiesRule : RulesRule
+{
+    /// <summary>
+    /// How many of the entity need to be nearby.
+    /// </summary>
+    [DataField("count")]
+    public int Count = 1;
+
+    [DataField("whitelist", required: true)]
+    public EntityWhitelist Whitelist = new();
+
+    [DataField("range")]
+    public float Range = 10f;
 }
 
 public sealed class NearbyTilesPercentRule : RulesRule
@@ -68,8 +81,28 @@ public sealed class OnMapGridRule : RulesRule
 
 }
 
+/// <summary>
+/// Checks for an entity nearby with the specified access.
+/// </summary>
+public sealed class NearbyAccessRule : RulesRule
+{
+    /// <summary>
+    /// Count of entities that need to be nearby.
+    /// </summary>
+    [DataField("count")]
+    public int Count = 1;
+
+    [DataField("access", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
+    public List<string> Access = new();
+
+    [DataField("range")]
+    public float Range = 10f;
+}
+
 public sealed class NearbyComponentsRule : RulesRule
 {
+    [DataField("count")] public int Count;
+
     [DataField("components", required: true)]
     public ComponentRegistry Components = default!;
 

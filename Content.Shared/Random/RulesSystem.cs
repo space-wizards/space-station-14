@@ -1,3 +1,5 @@
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -6,6 +8,7 @@ namespace Content.Shared.Random;
 public sealed class RulesSystem : EntitySystem
 {
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
+    [Dependency] private readonly AccessReaderSystem _reader = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -27,6 +30,39 @@ public sealed class RulesSystem : EntitySystem
 
                     break;
                 }
+                case NearbyAccessRule access:
+                {
+                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                        xform.MapUid == null)
+                    {
+                        return false;
+                    }
+
+                    var found = false;
+                    var worldPos = _transform.GetWorldPosition(xform);
+                    var count = 0;
+
+                    // TODO: Update this when we get the callback version
+                    foreach (var comp in _lookup.GetComponentsInRange<AccessReaderComponent>(xform.MapID,
+                                 worldPos, access.Range))
+                    {
+                        if (!_reader.AreAccessTagsAllowed(access.Access, comp))
+                            continue;
+
+                        count++;
+
+                        if (count < access.Count)
+                            continue;
+
+                        found = true;
+                        break;
+                    }
+
+                    if (!found)
+                        return false;
+
+                    break;
+                }
                 case NearbyComponentsRule nearbyComps:
                 {
                     if (!TryComp<TransformComponent>(uid, out var xform) ||
@@ -37,10 +73,52 @@ public sealed class RulesSystem : EntitySystem
 
                     var found = false;
                     var worldPos = _transform.GetWorldPosition(xform);
+                    var count = 0;
 
                     foreach (var comp in nearbyComps.Components.Values)
                     {
-                        if (!_lookup.AnyComponentsInRange(comp.Component.GetType(), xform.MapID, worldPos, nearbyComps.Range))
+                        // TODO: Update this when we get the callback version
+                        foreach (var _ in _lookup.GetComponentsInRange(comp.Component.GetType(), xform.MapID,
+                                     worldPos, nearbyComps.Range))
+                        {
+                            count++;
+
+                            if (count >= nearbyComps.Count)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (found)
+                            break;
+                    }
+
+                    if (!found)
+                        return false;
+
+                    break;
+                }
+                case NearbyEntitiesRule entity:
+                {
+                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                        xform.MapUid == null)
+                    {
+                        return false;
+                    }
+
+                    var found = false;
+                    var worldPos = _transform.GetWorldPosition(xform);
+                    var count = 0;
+
+                    foreach (var ent in _lookup.GetEntitiesInRange(xform.MapID, worldPos, entity.Range))
+                    {
+                        if (!entity.Whitelist.IsValid(ent, EntityManager))
+                            continue;
+
+                        count++;
+
+                        if (count < entity.Count)
                             continue;
 
                         found = true;
