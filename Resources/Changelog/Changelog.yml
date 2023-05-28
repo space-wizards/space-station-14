@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added Brigmedic job and other things for brigmedic., type: Add}
-  id: 3385
-  time: '2023-04-11T23:11:01.0000000+00:00'
 - author: Mumohan
   changes:
   - {message: Plushies and other toys no longer conduct electricity, type: Fix}
@@ -2906,3 +2901,8 @@ Entries:
     type: Tweak}
   id: 3884
   time: '2023-05-28T10:24:09.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: Added reaction for cola creation., type: Add}
+  id: 3885
+  time: '2023-05-28T10:25:12.0000000+00:00'
