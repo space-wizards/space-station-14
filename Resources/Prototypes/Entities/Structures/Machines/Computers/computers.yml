@@ -732,7 +732,7 @@
   id: ComputerSalvageExpedition
   parent: BaseComputer
   name: salvage expeditions computer
-  description: Used take salvage missions.
+  description: Used to accept salvage missions, if you're tough enough.
   components:
     - type: Sprite
       layers:
