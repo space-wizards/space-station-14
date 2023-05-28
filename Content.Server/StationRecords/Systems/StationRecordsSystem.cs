@@ -128,7 +128,8 @@ public sealed class StationRecordsSystem : EntitySystem
             Gender = gender,
             DisplayPriority = jobPrototype.Weight,
             Fingerprint = mobFingerprint,
-            DNA = dna
+            DNA = dna,
+            Profile = profile
         };
 
         var key = AddRecord(station, records);
