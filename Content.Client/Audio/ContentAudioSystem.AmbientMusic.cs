@@ -68,14 +68,13 @@ public sealed partial class ContentAudioSystem
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("audio.ambience");
 
         // Reset audio
-        // If they sit in lobby it'll be eh but their issue.
-        _nextAudio = _timing.CurTime + _random.Next(_minAmbienceTime, _maxAmbienceTime);
+        _nextAudio = TimeSpan.MaxValue;
 
-        // TODO: On round end summary OR lobby cut audio.
         SetupAmbientSounds();
         _proto.PrototypesReloaded += OnProtoReload;
+        _state.OnStateChanged += OnStateChange;
+        // On round end summary OR lobby cut audio.
         SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEndMessage);
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
     }
 
     private void AmbienceCVarChanged(float obj)
@@ -92,6 +91,7 @@ public sealed partial class ContentAudioSystem
     {
         _configManager.UnsubValueChanged(CCVars.AmbientMusicVolume, AmbienceCVarChanged);
         _proto.PrototypesReloaded -= OnProtoReload;
+        _state.OnStateChanged -= OnStateChange;
         _ambientMusicStream?.Stop();
     }
 
@@ -105,6 +105,15 @@ public sealed partial class ContentAudioSystem
 
         _ambientSounds.Clear();
         SetupAmbientSounds();
+    }
+
+    private void OnStateChange(StateChangedEventArgs obj)
+    {
+        if (obj.NewState is not GameplayState)
+            return;
+
+        // If they go to game then reset the ambience timer.
+        _nextAudio = _timing.CurTime + _random.Next(_minAmbienceTime, _maxAmbienceTime);
     }
 
     private void SetupAmbientSounds()
@@ -123,12 +132,6 @@ public sealed partial class ContentAudioSystem
         _ambientMusicStream?.Stop();
         _ambientMusicStream = null;
         _nextAudio = TimeSpan.FromMinutes(3);
-    }
-
-    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
-    {
-        // New round starting so reset ambience.
-        _nextAudio = _timing.CurTime + _random.Next(_minAmbienceTime, _maxAmbienceTime);
     }
 
     private void RefreshTracks(SoundSpecifier sound, List<ResPath> tracks, ResPath? lastPlayed)
@@ -163,6 +166,7 @@ public sealed partial class ContentAudioSystem
         {
             FadeOut(_ambientMusicStream);
             _ambientMusicStream = null;
+            _musicProto = null;
             return;
         }
 
