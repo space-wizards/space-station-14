@@ -208,6 +208,9 @@
   id: InSpace
   rules:
     - !type:InSpaceRule
+    - !type:GridInRangeRule
+      inverted: true
+      range: 10
 
 # TODO
 - type: rules

@@ -30,8 +30,8 @@ public sealed partial class ContentAudioSystem
     [Dependency] private readonly RulesSystem _rules = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
-    private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(3);
-    private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(6);
+    private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(30);
+    private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(60);
 
     private const float AmbientMusicFadeTime = 10f;
     private static float _volumeSlider;
@@ -68,7 +68,8 @@ public sealed partial class ContentAudioSystem
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("audio.ambience");
 
         // Reset audio
-        _nextAudio = TimeSpan.Zero;
+        // If they sit in lobby it'll be eh but their issue.
+        _nextAudio = _timing.CurTime + _random.Next(_minAmbienceTime, _maxAmbienceTime);
 
         // TODO: On round end summary OR lobby cut audio.
         SetupAmbientSounds();

@@ -74,6 +74,18 @@ public sealed class AlwaysTrueRule : RulesRule
 }
 
 /// <summary>
+/// Returns true if on a grid or in range of one.
+/// </summary>
+public sealed class GridInRangeRule : RulesRule
+{
+    [DataField("range")]
+    public float Range = 10f;
+
+    [DataField("inverted")]
+    public bool Inverted = false;
+}
+
+/// <summary>
 /// Returns true if griduid and mapuid match (AKA on 'planet').
 /// </summary>
 public sealed class OnMapGridRule : RulesRule

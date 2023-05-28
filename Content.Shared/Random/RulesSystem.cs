@@ -7,6 +7,7 @@ namespace Content.Shared.Random;
 
 public sealed class RulesSystem : EntitySystem
 {
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly AccessReaderSystem _reader = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -20,6 +21,29 @@ public sealed class RulesSystem : EntitySystem
             {
                 case AlwaysTrueRule:
                     break;
+                case GridInRangeRule griddy:
+                {
+                    if (!TryComp<TransformComponent>(uid, out var xform))
+                    {
+                        return false;
+                    }
+
+                    if (xform.GridUid != null)
+                    {
+                        return !griddy.Inverted;
+                    }
+
+                    var worldPos = _transform.GetWorldPosition(xform);
+
+                    foreach (var _ in _mapManager.FindGridsIntersecting(
+                                 xform.MapID,
+                                 new Box2(worldPos - griddy.Range, worldPos + griddy.Range)))
+                    {
+                        return !griddy.Inverted;
+                    }
+
+                    break;
+                }
                 case InSpaceRule:
                 {
                     if (!TryComp<TransformComponent>(uid, out var xform) ||
