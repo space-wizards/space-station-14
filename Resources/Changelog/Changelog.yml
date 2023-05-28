@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix emergency shuttles docking at the wrong airlocks., type: Fix}
-  id: 3391
-  time: '2023-04-12T09:05:55.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Added show disconnected button to admin player tab., type: Add}
@@ -2907,3 +2902,12 @@ Entries:
   - {message: Fixed suit sensors for crew arriving via arrivals shuttle, type: Fix}
   id: 3890
   time: '2023-05-28T20:07:31.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Most tools no longer deal 10 blunt damage, and are across-the-board
+      weaker.', type: Tweak}
+  - {message: The red crowbar is now stronger than the grey crowbar., type: Tweak}
+  - {message: Shovels and toolboxes are now much more robust., type: Tweak}
+  - {message: Power tools can now deal damage., type: Tweak}
+  id: 3891
+  time: '2023-05-28T20:09:25.0000000+00:00'
