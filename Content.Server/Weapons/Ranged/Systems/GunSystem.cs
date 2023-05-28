@@ -227,7 +227,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         var dmg = hitscan.Damage;
 
-                        string hitName = ToPrettyString(hitEntity);
+                        var hitName = ToPrettyString(hitEntity);
                         if (dmg != null)
                             dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
 
@@ -251,7 +251,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             else
                             {
                                 Logs.Add(LogType.HitScanHit,
-                                    $"Hit {hitName:target} using hitscan and dealt {dmg.Total:damage} damage");
+                                    $"{hitName:target} hit by hitscan dealing {dmg.Total:damage} damage");
                             }
                         }
                     }
