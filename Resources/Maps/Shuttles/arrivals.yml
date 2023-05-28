@@ -1550,8 +1550,6 @@ entities:
       pos: 2.5,5.5
       parent: 292
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 280
@@ -1560,8 +1558,6 @@ entities:
       pos: -3.5,3.5
       parent: 292
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 281
@@ -1570,8 +1566,6 @@ entities:
       pos: 2.5,-1.5
       parent: 292
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 282
@@ -1580,8 +1574,6 @@ entities:
       pos: -3.5,-3.5
       parent: 292
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 283
@@ -1590,8 +1582,6 @@ entities:
       pos: -1.5,7.5
       parent: 292
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: Rack

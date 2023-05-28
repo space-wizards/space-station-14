@@ -3526,8 +3526,6 @@ entities:
       pos: -11.5,-0.5
       parent: 179
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 660
@@ -3591,8 +3589,6 @@ entities:
       pos: -15.5,-0.5
       parent: 179
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 676
@@ -3617,8 +3613,6 @@ entities:
       pos: 7.5,-1.5
       parent: 179
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 680

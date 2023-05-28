@@ -2540,86 +2540,64 @@ entities:
     - pos: 2.5,7.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 243
     components:
     - rot: -1.5707963267948966 rad
       pos: 3.5,2.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 252
     components:
     - rot: 1.5707963267948966 rad
       pos: -3.5,7.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 253
     components:
     - rot: 1.5707963267948966 rad
       pos: -8.5,6.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 255
     components:
     - rot: 1.5707963267948966 rad
       pos: -8.5,2.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 257
     components:
     - rot: 1.5707963267948966 rad
       pos: -8.5,-1.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 258
     components:
     - rot: 3.141592653589793 rad
       pos: -2.5,-4.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 260
     components:
     - pos: -2.5,9.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 660
     components:
     - pos: 3.5,9.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 700
     components:
     - rot: -1.5707963267948966 rad
       pos: -6.5,8.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 718
     components:
     - rot: 3.141592653589793 rad
       pos: -2.5,0.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
 - proto: GasVentScrubber
   entities:
   - uid: 645
@@ -2627,31 +2605,23 @@ entities:
     - pos: 2.5,-4.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 696
     components:
     - pos: -6.5,-0.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 697
     components:
     - rot: -1.5707963267948966 rad
       pos: -3.5,10.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 698
     components:
     - rot: 3.141592653589793 rad
       pos: -6.5,9.5
       parent: 732
       type: Transform
-    - enabled: False
-      type: AmbientSound
 - proto: GeneratorUranium
   entities:
   - uid: 55

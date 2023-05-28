@@ -3298,16 +3298,12 @@ entities:
       pos: -2.5,-1.5
       parent: 818
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 341
     components:
     - rot: 3.141592653589793 rad
       pos: 1.5,-1.5
       parent: 818
       type: Transform
-    - enabled: False
-      type: AmbientSound
 - proto: ReinforcedWindow
   entities:
   - uid: 19

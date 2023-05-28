@@ -955,8 +955,6 @@ entities:
       pos: -2.5,-1.5
       parent: 166
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: RandomArtifactSpawner

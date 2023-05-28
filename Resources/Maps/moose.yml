@@ -67521,8 +67521,6 @@ entities:
     - pos: -10.5,-73.5
       parent: 6
       type: Transform
-    - enabled: False
-      type: AmbientSound
 - proto: MachineAnomalyVessel
   entities:
   - uid: 14284

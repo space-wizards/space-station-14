@@ -916,8 +916,6 @@ entities:
       pos: -3.5,2.5
       parent: 222
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: PoweredSmallLight

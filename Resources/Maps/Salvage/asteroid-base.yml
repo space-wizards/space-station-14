@@ -2105,8 +2105,6 @@ entities:
       pos: -8.5,-4.5
       parent: 407
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: PoweredlightSodium
@@ -2116,8 +2114,6 @@ entities:
     - pos: 5.5,1.5
       parent: 407
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: PoweredSmallLight

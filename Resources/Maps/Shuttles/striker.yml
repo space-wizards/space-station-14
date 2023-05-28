@@ -1505,8 +1505,6 @@ entities:
       transmitFrequency: 1621
       receiveFrequency: 1621
       type: DeviceNetwork
-    - enabled: False
-      type: AmbientSound
   - uid: 219
     components:
     - rot: 1.5707963267948966 rad
@@ -1517,8 +1515,6 @@ entities:
       transmitFrequency: 1621
       receiveFrequency: 1621
       type: DeviceNetwork
-    - enabled: False
-      type: AmbientSound
   - uid: 220
     components:
     - rot: -1.5707963267948966 rad
@@ -1529,8 +1525,6 @@ entities:
       transmitFrequency: 1621
       receiveFrequency: 1621
       type: DeviceNetwork
-    - enabled: False
-      type: AmbientSound
   - uid: 221
     components:
     - rot: -1.5707963267948966 rad
@@ -1541,8 +1535,6 @@ entities:
       transmitFrequency: 1621
       receiveFrequency: 1621
       type: DeviceNetwork
-    - enabled: False
-      type: AmbientSound
   - uid: 222
     components:
     - rot: 1.5707963267948966 rad
@@ -1553,8 +1545,6 @@ entities:
       transmitFrequency: 1621
       receiveFrequency: 1621
       type: DeviceNetwork
-    - enabled: False
-      type: AmbientSound
 - proto: GeneratorUranium
   entities:
   - uid: 41

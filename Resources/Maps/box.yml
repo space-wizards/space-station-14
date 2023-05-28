@@ -12382,8 +12382,6 @@ entities:
     - pos: -38.5,-19.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 85
       supplyRampPosition: 53.91901
       type: PowerNetworkBattery
@@ -12443,8 +12441,6 @@ entities:
     - pos: 39.5,14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 10
       supplyRampPosition: 1.347667
       type: PowerNetworkBattery
@@ -12473,8 +12469,6 @@ entities:
     - pos: -29.5,-63.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 55
       supplyRampPosition: 2.6408517
       type: PowerNetworkBattery
@@ -12492,8 +12486,6 @@ entities:
     - pos: 31.5,2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 20
       supplyRampPosition: 0.010999783
       type: PowerNetworkBattery
@@ -12504,8 +12496,6 @@ entities:
     - pos: 28.5,-3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 10
       supplyRampPosition: 2.735612
       type: PowerNetworkBattery
@@ -12645,8 +12635,6 @@ entities:
     - pos: 43.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 65
       supplyRampPosition: 17.574497
       type: PowerNetworkBattery
@@ -12657,8 +12645,6 @@ entities:
     - pos: 73.5,-4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 45
       supplyRampPosition: 2.4463015
       type: PowerNetworkBattery
@@ -12675,8 +12661,6 @@ entities:
     - pos: 66.5,20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 5
       supplyRampPosition: 2.4463015
       type: PowerNetworkBattery
@@ -12709,8 +12693,6 @@ entities:
     - pos: -31.5,7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 15
       supplyRampPosition: 1.142588
       type: PowerNetworkBattery
@@ -12721,8 +12703,6 @@ entities:
     - pos: -43.5,6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 30
       supplyRampPosition: 18.132214
       type: PowerNetworkBattery
@@ -12733,8 +12713,6 @@ entities:
     - pos: -57.5,6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 25
       supplyRampPosition: 9.296312
       type: PowerNetworkBattery
@@ -12745,8 +12723,6 @@ entities:
     - pos: -65.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 145
       supplyRampPosition: 32.478764
       type: PowerNetworkBattery
@@ -12763,8 +12739,6 @@ entities:
     - pos: -21.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 10
       supplyRampPosition: 6.0937796
       type: PowerNetworkBattery
@@ -12806,8 +12780,6 @@ entities:
     - pos: -52.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 5
       supplyRampPosition: 2.4463015
       type: PowerNetworkBattery
@@ -12818,8 +12790,6 @@ entities:
     - pos: -25.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 65
       supplyRampPosition: 2.4463015
       type: PowerNetworkBattery
@@ -12830,8 +12800,6 @@ entities:
     - pos: -29.5,-34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 25
       supplyRampPosition: 9.488577
       type: PowerNetworkBattery
@@ -12860,8 +12828,6 @@ entities:
     - pos: -8.5,-54.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 10
       supplyRampPosition: 1.347667
       type: PowerNetworkBattery
@@ -12872,8 +12838,6 @@ entities:
     - pos: 8.5,-49.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 10
       supplyRampPosition: 1.347667
       type: PowerNetworkBattery
@@ -12915,8 +12879,6 @@ entities:
     - pos: -24.5,-63.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 5
       supplyRampPosition: 2.4463015
       type: PowerNetworkBattery
@@ -107923,8 +107885,6 @@ entities:
       type: Transform
     - open: False
       type: GasValve
-    - enabled: False
-      type: AmbientSound
   - uid: 22843
     components:
     - name: waste valve 2
@@ -107964,8 +107924,6 @@ entities:
       pos: 56.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 5382
@@ -107974,8 +107932,6 @@ entities:
       pos: 56.5,-10.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 7282
@@ -107984,8 +107940,6 @@ entities:
       pos: 3.5,50.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 7293
@@ -107994,8 +107948,6 @@ entities:
       pos: -11.5,48.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 7296
@@ -108004,8 +107956,6 @@ entities:
       pos: -7.5,45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 8909
@@ -108014,8 +107964,6 @@ entities:
       pos: -9.5,40.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 8910
@@ -108024,8 +107972,6 @@ entities:
       pos: -9.5,50.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 8950
@@ -108034,8 +107980,6 @@ entities:
       pos: -9.5,34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 8955
@@ -108044,8 +107988,6 @@ entities:
       pos: -20.5,44.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 9392
@@ -108053,8 +107995,6 @@ entities:
     - pos: 13.5,20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 10452
@@ -108063,8 +108003,6 @@ entities:
       pos: 46.5,-0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 14562
@@ -108073,8 +108011,6 @@ entities:
       pos: 66.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 15344
@@ -108083,8 +108019,6 @@ entities:
       pos: 1.5,-21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 17177
@@ -108092,8 +108026,6 @@ entities:
     - pos: -15.5,-68.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 17188
@@ -108101,8 +108033,6 @@ entities:
     - pos: -1.5,-66.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 20368
@@ -108111,8 +108041,6 @@ entities:
       pos: 55.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 22458
@@ -108120,8 +108048,6 @@ entities:
     - pos: 1.5,0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 22696
@@ -108130,8 +108056,6 @@ entities:
       pos: 79.5,-12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 22950
@@ -108140,8 +108064,6 @@ entities:
       pos: 9.5,-46.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 22952
@@ -108149,8 +108071,6 @@ entities:
     - pos: 16.5,-40.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 22985
@@ -108158,8 +108078,6 @@ entities:
     - pos: 5.5,-44.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 22996
@@ -108168,8 +108086,6 @@ entities:
       pos: 3.5,-47.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23011
@@ -108177,8 +108093,6 @@ entities:
     - pos: 9.5,-52.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23012
@@ -108187,8 +108101,6 @@ entities:
       pos: 3.5,-53.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23068
@@ -108197,8 +108109,6 @@ entities:
       pos: 0.5,-56.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23089
@@ -108207,8 +108117,6 @@ entities:
       pos: -11.5,-55.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23090
@@ -108216,8 +108124,6 @@ entities:
     - pos: -7.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23091
@@ -108225,8 +108131,6 @@ entities:
     - pos: -6.5,-54.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23111
@@ -108235,8 +108139,6 @@ entities:
       pos: 9.5,-61.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23121
@@ -108245,8 +108147,6 @@ entities:
       pos: 9.5,-66.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23146
@@ -108254,8 +108154,6 @@ entities:
     - pos: 3.5,-62.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23179
@@ -108264,8 +108162,6 @@ entities:
       pos: 3.5,-73.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23180
@@ -108274,8 +108170,6 @@ entities:
       pos: 12.5,-73.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23201
@@ -108283,8 +108177,6 @@ entities:
     - pos: -7.5,-63.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23238
@@ -108293,8 +108185,6 @@ entities:
       pos: -4.5,-73.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23239
@@ -108303,8 +108193,6 @@ entities:
       pos: -9.5,-74.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23261
@@ -108313,8 +108201,6 @@ entities:
       pos: -23.5,-69.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23279
@@ -108323,8 +108209,6 @@ entities:
       pos: -4.5,-42.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23281
@@ -108333,8 +108217,6 @@ entities:
       pos: -0.5,-48.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23303
@@ -108343,8 +108225,6 @@ entities:
       pos: -4.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23304
@@ -108353,8 +108233,6 @@ entities:
       pos: -0.5,-37.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23946
@@ -108363,8 +108241,6 @@ entities:
       pos: -0.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23947
@@ -108373,8 +108249,6 @@ entities:
       pos: -2.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23949
@@ -108383,8 +108257,6 @@ entities:
       pos: -11.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23998
@@ -108392,8 +108264,6 @@ entities:
     - pos: -20.5,-22.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 23999
@@ -108401,8 +108271,6 @@ entities:
     - pos: -21.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24010
@@ -108411,8 +108279,6 @@ entities:
       pos: -39.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24011
@@ -108421,8 +108287,6 @@ entities:
       pos: -34.5,-21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24031
@@ -108431,8 +108295,6 @@ entities:
       pos: -27.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24038
@@ -108441,8 +108303,6 @@ entities:
       pos: -21.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24052
@@ -108451,8 +108311,6 @@ entities:
       pos: -31.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24057
@@ -108461,8 +108319,6 @@ entities:
       pos: -24.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24063
@@ -108471,8 +108327,6 @@ entities:
       pos: -13.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24072
@@ -108480,8 +108334,6 @@ entities:
     - pos: -7.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24082
@@ -108490,8 +108342,6 @@ entities:
       pos: -21.5,-11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24085
@@ -108500,8 +108350,6 @@ entities:
       pos: -16.5,-24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24086
@@ -108510,8 +108358,6 @@ entities:
       pos: -16.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24096
@@ -108520,8 +108366,6 @@ entities:
       pos: 5.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24098
@@ -108530,8 +108374,6 @@ entities:
       pos: 15.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24108
@@ -108540,8 +108382,6 @@ entities:
       pos: 10.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24110
@@ -108550,8 +108390,6 @@ entities:
       pos: 15.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24178
@@ -108559,8 +108397,6 @@ entities:
     - pos: -2.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24179
@@ -108568,8 +108404,6 @@ entities:
     - pos: 1.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24187
@@ -108578,8 +108412,6 @@ entities:
       pos: -1.5,-11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24216
@@ -108588,8 +108420,6 @@ entities:
       pos: 10.5,-21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24217
@@ -108598,8 +108428,6 @@ entities:
       pos: 5.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24220
@@ -108608,8 +108436,6 @@ entities:
       pos: 6.5,-22.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24240
@@ -108618,8 +108444,6 @@ entities:
       pos: -7.5,-16.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24241
@@ -108628,8 +108452,6 @@ entities:
       pos: -16.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24243
@@ -108638,8 +108460,6 @@ entities:
       pos: 15.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24246
@@ -108647,8 +108467,6 @@ entities:
     - pos: 78.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24291
@@ -108657,8 +108475,6 @@ entities:
       pos: 6.5,6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24292
@@ -108667,8 +108483,6 @@ entities:
       pos: 6.5,9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24293
@@ -108677,8 +108491,6 @@ entities:
       pos: 6.5,12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24294
@@ -108687,8 +108499,6 @@ entities:
       pos: 6.5,15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24299
@@ -108696,8 +108506,6 @@ entities:
     - pos: 11.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24331
@@ -108706,8 +108514,6 @@ entities:
       pos: -11.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24333
@@ -108716,8 +108522,6 @@ entities:
       pos: -11.5,6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24334
@@ -108726,8 +108530,6 @@ entities:
       pos: -5.5,6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24336
@@ -108736,8 +108538,6 @@ entities:
       pos: -11.5,2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24368
@@ -108745,8 +108545,6 @@ entities:
     - pos: 11.5,12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24369
@@ -108754,8 +108552,6 @@ entities:
     - pos: 12.5,14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24370
@@ -108763,8 +108559,6 @@ entities:
     - pos: 16.5,14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24376
@@ -108772,8 +108566,6 @@ entities:
     - pos: 19.5,12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24400
@@ -108782,8 +108574,6 @@ entities:
       pos: 29.5,14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24419
@@ -108792,8 +108582,6 @@ entities:
       pos: 17.5,6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24420
@@ -108802,8 +108590,6 @@ entities:
       pos: 12.5,6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24463
@@ -108812,8 +108598,6 @@ entities:
       pos: 22.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24493
@@ -108821,8 +108605,6 @@ entities:
     - pos: 30.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24505
@@ -108831,8 +108613,6 @@ entities:
       pos: 38.5,-8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24519
@@ -108840,8 +108620,6 @@ entities:
     - pos: 37.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24583
@@ -108850,8 +108628,6 @@ entities:
       pos: 33.5,-17.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24584
@@ -108860,8 +108636,6 @@ entities:
       pos: 24.5,-17.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24585
@@ -108869,8 +108643,6 @@ entities:
     - pos: 29.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24588
@@ -108878,8 +108650,6 @@ entities:
     - pos: 29.5,-24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24599
@@ -108887,8 +108657,6 @@ entities:
     - pos: 19.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24643
@@ -108896,8 +108664,6 @@ entities:
     - pos: 42.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24645
@@ -108905,8 +108671,6 @@ entities:
     - pos: 39.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24671
@@ -108914,8 +108678,6 @@ entities:
     - pos: 40.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24672
@@ -108924,8 +108686,6 @@ entities:
       pos: 45.5,-28.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24705
@@ -108934,8 +108694,6 @@ entities:
       pos: 24.5,-28.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24706
@@ -108944,8 +108702,6 @@ entities:
       pos: 25.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24707
@@ -108954,8 +108710,6 @@ entities:
       pos: 19.5,-34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24708
@@ -108964,8 +108718,6 @@ entities:
       pos: 30.5,-34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24745
@@ -108974,8 +108726,6 @@ entities:
       pos: 40.5,-32.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24746
@@ -108984,8 +108734,6 @@ entities:
       pos: 45.5,-32.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24775
@@ -108994,8 +108742,6 @@ entities:
       pos: 35.5,-40.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24776
@@ -109004,8 +108750,6 @@ entities:
       pos: 40.5,-41.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24811
@@ -109014,8 +108758,6 @@ entities:
       pos: 44.5,-46.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24812
@@ -109024,8 +108766,6 @@ entities:
       pos: 36.5,-46.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24813
@@ -109034,8 +108774,6 @@ entities:
       pos: 36.5,-49.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24831
@@ -109044,8 +108782,6 @@ entities:
       pos: 40.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24849
@@ -109053,8 +108789,6 @@ entities:
     - pos: 44.5,-53.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24863
@@ -109062,8 +108796,6 @@ entities:
     - pos: 35.5,-55.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24864
@@ -109072,8 +108804,6 @@ entities:
       pos: 40.5,-58.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24879
@@ -109082,8 +108812,6 @@ entities:
       pos: 44.5,-59.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24880
@@ -109092,8 +108820,6 @@ entities:
       pos: 47.5,-59.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24914
@@ -109102,8 +108828,6 @@ entities:
       pos: 45.5,-8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24920
@@ -109111,8 +108835,6 @@ entities:
     - pos: 47.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24921
@@ -109120,8 +108842,6 @@ entities:
     - pos: 67.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24931
@@ -109129,8 +108849,6 @@ entities:
     - pos: 73.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 24968
@@ -109139,8 +108857,6 @@ entities:
       pos: 66.5,2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25013
@@ -109149,15 +108865,11 @@ entities:
       pos: 72.5,-41.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 25069
     components:
     - pos: 70.5,-23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25070
@@ -109166,8 +108878,6 @@ entities:
       pos: 77.5,-24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25115
@@ -109176,8 +108886,6 @@ entities:
       pos: 61.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25131
@@ -109186,8 +108894,6 @@ entities:
       pos: 54.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25132
@@ -109196,8 +108902,6 @@ entities:
       pos: 53.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25133
@@ -109206,8 +108910,6 @@ entities:
       pos: 56.5,-29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25142
@@ -109216,8 +108918,6 @@ entities:
       pos: 62.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25164
@@ -109226,8 +108926,6 @@ entities:
       pos: 62.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25165
@@ -109236,8 +108934,6 @@ entities:
       pos: 69.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25168
@@ -109246,8 +108942,6 @@ entities:
       pos: 66.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25170
@@ -109256,8 +108950,6 @@ entities:
       pos: 66.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25206
@@ -109266,8 +108958,6 @@ entities:
       pos: 69.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25224
@@ -109276,8 +108966,6 @@ entities:
       pos: 67.5,-40.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25242
@@ -109285,8 +108973,6 @@ entities:
     - pos: 56.5,-39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25260
@@ -109295,8 +108981,6 @@ entities:
       pos: 74.5,-44.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25276
@@ -109305,8 +108989,6 @@ entities:
       pos: -71.5,-14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25289
@@ -109315,8 +108997,6 @@ entities:
       pos: -71.5,9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25304
@@ -109325,8 +109005,6 @@ entities:
       pos: -71.5,-4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25307
@@ -109335,8 +109013,6 @@ entities:
       pos: -64.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25314
@@ -109345,8 +109021,6 @@ entities:
       pos: -60.5,-10.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25315
@@ -109354,8 +109028,6 @@ entities:
     - pos: -59.5,1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25316
@@ -109364,8 +109036,6 @@ entities:
       pos: -59.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25325
@@ -109373,8 +109043,6 @@ entities:
     - pos: -60.5,4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25336
@@ -109383,8 +109051,6 @@ entities:
       pos: -51.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25366
@@ -109393,8 +109059,6 @@ entities:
       pos: -46.5,-11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25367
@@ -109403,8 +109067,6 @@ entities:
       pos: -43.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25376
@@ -109412,8 +109074,6 @@ entities:
     - pos: -38.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25394
@@ -109422,8 +109082,6 @@ entities:
       pos: -33.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25395
@@ -109432,8 +109090,6 @@ entities:
       pos: -27.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25396
@@ -109441,8 +109097,6 @@ entities:
     - pos: -40.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25407
@@ -109450,8 +109104,6 @@ entities:
     - pos: -30.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25409
@@ -109459,8 +109111,6 @@ entities:
     - pos: -25.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25418
@@ -109469,8 +109119,6 @@ entities:
       pos: -21.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25420
@@ -109479,8 +109127,6 @@ entities:
       pos: -0.5,5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25421
@@ -109489,8 +109135,6 @@ entities:
       pos: -0.5,16.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25483
@@ -109498,8 +109142,6 @@ entities:
     - pos: -16.5,23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25484
@@ -109508,8 +109150,6 @@ entities:
       pos: -18.5,19.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25485
@@ -109518,8 +109158,6 @@ entities:
       pos: -10.5,15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25486
@@ -109528,8 +109166,6 @@ entities:
       pos: -4.5,15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25488
@@ -109537,8 +109173,6 @@ entities:
     - pos: -6.5,20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25519
@@ -109546,8 +109180,6 @@ entities:
     - pos: 9.5,20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25533
@@ -109556,8 +109188,6 @@ entities:
       pos: 5.5,23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25557
@@ -109566,8 +109196,6 @@ entities:
       pos: 10.5,27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25558
@@ -109576,8 +109204,6 @@ entities:
       pos: 8.5,23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25619
@@ -109586,8 +109212,6 @@ entities:
       pos: 1.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25620
@@ -109596,8 +109220,6 @@ entities:
       pos: -2.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25621
@@ -109606,8 +109228,6 @@ entities:
       pos: -6.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25622
@@ -109616,8 +109236,6 @@ entities:
       pos: -10.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25623
@@ -109626,8 +109244,6 @@ entities:
       pos: -13.5,23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25751
@@ -109636,8 +109252,6 @@ entities:
       pos: -15.5,31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25753
@@ -109646,8 +109260,6 @@ entities:
       pos: -7.5,30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25755
@@ -109655,8 +109267,6 @@ entities:
     - pos: -10.5,27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25757
@@ -109665,8 +109275,6 @@ entities:
       pos: -4.5,28.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25761
@@ -109674,8 +109282,6 @@ entities:
     - pos: 1.5,36.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25762
@@ -109684,8 +109290,6 @@ entities:
       pos: 0.5,31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25803
@@ -109693,8 +109297,6 @@ entities:
     - pos: 15.5,38.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25804
@@ -109703,8 +109305,6 @@ entities:
       pos: 15.5,30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25805
@@ -109712,8 +109312,6 @@ entities:
     - pos: 8.5,36.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 25824
@@ -109722,8 +109320,6 @@ entities:
       pos: 23.5,32.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 26949
@@ -109732,8 +109328,6 @@ entities:
       pos: 28.5,-109.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 26950
@@ -109742,8 +109336,6 @@ entities:
       pos: 29.5,-106.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 26951
@@ -109752,8 +109344,6 @@ entities:
       pos: 27.5,-92.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 26958
@@ -109762,8 +109352,6 @@ entities:
       pos: 24.5,-91.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 26959
@@ -109772,8 +109360,6 @@ entities:
       pos: 32.5,-91.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 26960
@@ -109782,8 +109368,6 @@ entities:
       pos: 29.5,-85.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 26961
@@ -109791,8 +109375,6 @@ entities:
     - pos: 28.5,-79.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
   - uid: 27233
@@ -109801,8 +109383,6 @@ entities:
       pos: 23.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
 - proto: GasVentScrubber
@@ -109812,8 +109392,6 @@ entities:
     - pos: 57.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 7021
@@ -109822,8 +109400,6 @@ entities:
       pos: -13.5,-69.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 7284
@@ -109831,8 +109407,6 @@ entities:
     - pos: -7.5,44.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 7294
@@ -109840,8 +109414,6 @@ entities:
     - pos: -13.5,47.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 7295
@@ -109849,8 +109421,6 @@ entities:
     - pos: -18.5,44.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 7301
@@ -109859,8 +109429,6 @@ entities:
       pos: -7.5,50.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 8953
@@ -109869,8 +109437,6 @@ entities:
       pos: -10.5,34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 9185
@@ -109879,8 +109445,6 @@ entities:
       pos: -1.5,50.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 15347
@@ -109889,8 +109453,6 @@ entities:
       pos: -2.5,-21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 15504
@@ -109899,8 +109461,6 @@ entities:
       pos: -0.5,-50.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 17187
@@ -109909,8 +109469,6 @@ entities:
       pos: 0.5,-67.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 20132
@@ -109919,8 +109477,6 @@ entities:
       pos: -71.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 20658
@@ -109929,8 +109485,6 @@ entities:
       pos: 59.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 20865
@@ -109939,8 +109493,6 @@ entities:
       pos: 58.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 22459
@@ -109948,8 +109500,6 @@ entities:
     - pos: -2.5,0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 22695
@@ -109958,8 +109508,6 @@ entities:
       pos: 77.5,-12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 22951
@@ -109967,8 +109515,6 @@ entities:
     - pos: 11.5,-47.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 22953
@@ -109977,8 +109523,6 @@ entities:
       pos: 22.5,-43.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#3AB334FF'
       type: AtmosPipeColor
   - uid: 22986
@@ -109987,8 +109531,6 @@ entities:
       pos: 6.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 22997
@@ -109997,8 +109539,6 @@ entities:
       pos: 4.5,-48.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23009
@@ -110007,8 +109547,6 @@ entities:
       pos: 4.5,-52.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23010
@@ -110017,8 +109555,6 @@ entities:
       pos: 8.5,-52.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23067
@@ -110027,8 +109563,6 @@ entities:
       pos: -1.5,-57.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23086
@@ -110037,8 +109571,6 @@ entities:
       pos: -7.5,-57.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23087
@@ -110047,8 +109579,6 @@ entities:
       pos: -11.5,-56.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23088
@@ -110056,8 +109586,6 @@ entities:
     - pos: -5.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23110
@@ -110066,8 +109594,6 @@ entities:
       pos: 8.5,-62.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23120
@@ -110076,8 +109602,6 @@ entities:
       pos: 8.5,-65.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23145
@@ -110085,8 +109609,6 @@ entities:
     - pos: 5.5,-62.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23176
@@ -110095,8 +109617,6 @@ entities:
       pos: 8.5,-75.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23177
@@ -110105,8 +109625,6 @@ entities:
       pos: 3.5,-74.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23178
@@ -110115,8 +109633,6 @@ entities:
       pos: 12.5,-74.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23202
@@ -110124,8 +109640,6 @@ entities:
     - pos: -5.5,-63.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23240
@@ -110134,8 +109648,6 @@ entities:
       pos: -10.5,-75.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23241
@@ -110144,8 +109656,6 @@ entities:
       pos: -4.5,-74.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23260
@@ -110154,8 +109664,6 @@ entities:
       pos: -23.5,-68.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23278
@@ -110164,8 +109672,6 @@ entities:
       pos: -4.5,-43.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23302
@@ -110174,8 +109680,6 @@ entities:
       pos: -4.5,-36.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23305
@@ -110184,8 +109688,6 @@ entities:
       pos: -0.5,-38.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23941
@@ -110194,8 +109696,6 @@ entities:
       pos: -0.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23948
@@ -110203,8 +109703,6 @@ entities:
     - pos: 1.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 23950
@@ -110212,8 +109710,6 @@ entities:
     - pos: -12.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24012
@@ -110222,8 +109718,6 @@ entities:
       pos: -32.5,-21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24013
@@ -110231,8 +109725,6 @@ entities:
     - pos: -22.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24014
@@ -110241,8 +109733,6 @@ entities:
       pos: -20.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24032
@@ -110251,8 +109741,6 @@ entities:
       pos: -24.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24039
@@ -110261,8 +109749,6 @@ entities:
       pos: -21.5,-31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24051
@@ -110271,8 +109757,6 @@ entities:
       pos: -31.5,-31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24056
@@ -110281,8 +109765,6 @@ entities:
       pos: -25.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24062
@@ -110291,8 +109773,6 @@ entities:
       pos: -13.5,-22.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24073
@@ -110300,8 +109780,6 @@ entities:
     - pos: -8.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24083
@@ -110310,8 +109788,6 @@ entities:
       pos: -21.5,-12.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24084
@@ -110320,8 +109796,6 @@ entities:
       pos: -16.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24087
@@ -110330,8 +109804,6 @@ entities:
       pos: -16.5,-15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24097
@@ -110340,8 +109812,6 @@ entities:
       pos: 4.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24099
@@ -110350,8 +109820,6 @@ entities:
       pos: 15.5,-31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24109
@@ -110360,8 +109828,6 @@ entities:
       pos: 10.5,-25.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24111
@@ -110370,8 +109836,6 @@ entities:
       pos: 15.5,-19.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24180
@@ -110380,8 +109844,6 @@ entities:
       pos: -3.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24181
@@ -110390,8 +109852,6 @@ entities:
       pos: 2.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24188
@@ -110400,8 +109860,6 @@ entities:
       pos: 0.5,-11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24219
@@ -110410,8 +109868,6 @@ entities:
       pos: 7.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24224
@@ -110420,8 +109876,6 @@ entities:
       pos: 12.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24239
@@ -110430,8 +109884,6 @@ entities:
       pos: -8.5,-16.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24242
@@ -110440,8 +109892,6 @@ entities:
       pos: -16.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24244
@@ -110450,8 +109900,6 @@ entities:
       pos: 15.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24245
@@ -110459,8 +109907,6 @@ entities:
     - pos: 76.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24295
@@ -110469,8 +109915,6 @@ entities:
       pos: 6.5,14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24296
@@ -110479,8 +109923,6 @@ entities:
       pos: 6.5,11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24297
@@ -110489,8 +109931,6 @@ entities:
       pos: 6.5,8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24298
@@ -110499,8 +109939,6 @@ entities:
       pos: 6.5,5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24300
@@ -110509,8 +109947,6 @@ entities:
       pos: 10.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24332
@@ -110519,16 +109955,12 @@ entities:
       pos: -11.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 24335
     components:
     - rot: 3.141592653589793 rad
       pos: -12.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24337
@@ -110537,8 +109969,6 @@ entities:
       pos: -13.5,8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24338
@@ -110547,8 +109977,6 @@ entities:
       pos: -5.5,8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24371
@@ -110556,8 +109984,6 @@ entities:
     - pos: 13.5,14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24372
@@ -110565,8 +109991,6 @@ entities:
     - pos: 17.5,14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24373
@@ -110575,8 +109999,6 @@ entities:
       pos: 11.5,9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24377
@@ -110585,8 +110007,6 @@ entities:
       pos: 19.5,9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24401
@@ -110595,8 +110015,6 @@ entities:
       pos: 29.5,9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24421
@@ -110605,8 +110023,6 @@ entities:
       pos: 12.5,5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24422
@@ -110615,8 +110031,6 @@ entities:
       pos: 18.5,5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24436
@@ -110625,8 +110039,6 @@ entities:
       pos: 21.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24464
@@ -110634,8 +110046,6 @@ entities:
     - pos: 20.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24494
@@ -110643,8 +110053,6 @@ entities:
     - pos: 29.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24506
@@ -110653,8 +110061,6 @@ entities:
       pos: 35.5,-8.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24520
@@ -110662,8 +110068,6 @@ entities:
     - pos: 36.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24581
@@ -110672,8 +110076,6 @@ entities:
       pos: 27.5,-17.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24582
@@ -110682,8 +110084,6 @@ entities:
       pos: 34.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24586
@@ -110692,8 +110092,6 @@ entities:
       pos: 31.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24587
@@ -110702,8 +110100,6 @@ entities:
       pos: 31.5,-24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24610
@@ -110711,8 +110107,6 @@ entities:
     - pos: 20.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24644
@@ -110720,8 +110114,6 @@ entities:
     - pos: 41.5,-20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24646
@@ -110729,8 +110121,6 @@ entities:
     - pos: 38.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24673
@@ -110739,8 +110129,6 @@ entities:
       pos: 41.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24674
@@ -110749,8 +110137,6 @@ entities:
       pos: 45.5,-26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24709
@@ -110759,8 +110145,6 @@ entities:
       pos: 26.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24710
@@ -110769,8 +110153,6 @@ entities:
       pos: 30.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24711
@@ -110779,8 +110161,6 @@ entities:
       pos: 19.5,-33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24712
@@ -110789,8 +110169,6 @@ entities:
       pos: 27.5,-28.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24747
@@ -110799,8 +110177,6 @@ entities:
       pos: 45.5,-34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24752
@@ -110809,8 +110185,6 @@ entities:
       pos: 40.5,-35.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24777
@@ -110819,8 +110193,6 @@ entities:
       pos: 40.5,-39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24778
@@ -110829,8 +110201,6 @@ entities:
       pos: 35.5,-39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24814
@@ -110839,8 +110209,6 @@ entities:
       pos: 36.5,-48.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24815
@@ -110849,8 +110217,6 @@ entities:
       pos: 36.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24816
@@ -110859,8 +110225,6 @@ entities:
       pos: 44.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24830
@@ -110869,8 +110233,6 @@ entities:
       pos: 40.5,-53.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24850
@@ -110879,8 +110241,6 @@ entities:
       pos: 46.5,-59.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24851
@@ -110889,8 +110249,6 @@ entities:
       pos: 43.5,-59.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24852
@@ -110899,8 +110257,6 @@ entities:
       pos: 36.5,-55.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24853
@@ -110909,8 +110265,6 @@ entities:
       pos: 40.5,-56.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24878
@@ -110918,8 +110272,6 @@ entities:
     - pos: 43.5,-53.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24916
@@ -110927,8 +110279,6 @@ entities:
     - pos: 47.5,-0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24917
@@ -110937,8 +110287,6 @@ entities:
       pos: 45.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24918
@@ -110947,8 +110295,6 @@ entities:
       pos: 46.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24919
@@ -110957,8 +110303,6 @@ entities:
       pos: 65.5,-13.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24930
@@ -110967,8 +110311,6 @@ entities:
       pos: 73.5,-10.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 24967
@@ -110977,8 +110319,6 @@ entities:
       pos: 66.5,1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25012
@@ -110987,16 +110327,12 @@ entities:
       pos: 72.5,-39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 25035
     components:
     - rot: -1.5707963267948966 rad
       pos: 67.5,-18.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25071
@@ -111005,8 +110341,6 @@ entities:
       pos: 77.5,-23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25072
@@ -111014,8 +110348,6 @@ entities:
     - pos: 70.5,-21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25116
@@ -111023,8 +110355,6 @@ entities:
     - pos: 61.5,-22.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25134
@@ -111033,8 +110363,6 @@ entities:
       pos: 53.5,-31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25135
@@ -111043,8 +110371,6 @@ entities:
       pos: 57.5,-31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25136
@@ -111053,8 +110379,6 @@ entities:
       pos: 54.5,-27.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25143
@@ -111063,8 +110387,6 @@ entities:
       pos: 61.5,-30.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25166
@@ -111073,8 +110395,6 @@ entities:
       pos: 62.5,-34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25167
@@ -111083,8 +110403,6 @@ entities:
       pos: 69.5,-34.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25169
@@ -111093,8 +110411,6 @@ entities:
       pos: 67.5,-32.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25171
@@ -111103,8 +110419,6 @@ entities:
       pos: 67.5,-23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25207
@@ -111113,8 +110427,6 @@ entities:
       pos: 69.5,-50.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25223
@@ -111123,8 +110435,6 @@ entities:
       pos: 67.5,-41.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25241
@@ -111132,8 +110442,6 @@ entities:
     - pos: 58.5,-39.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25261
@@ -111142,8 +110450,6 @@ entities:
       pos: 74.5,-45.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25290
@@ -111152,8 +110458,6 @@ entities:
       pos: -71.5,10.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25305
@@ -111162,8 +110466,6 @@ entities:
       pos: -71.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25306
@@ -111172,8 +110474,6 @@ entities:
       pos: -63.5,-2.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25313
@@ -111182,8 +110482,6 @@ entities:
       pos: -60.5,-9.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25317
@@ -111191,8 +110489,6 @@ entities:
     - pos: -58.5,-4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25318
@@ -111201,8 +110497,6 @@ entities:
       pos: -58.5,0.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25324
@@ -111210,8 +110504,6 @@ entities:
     - pos: -57.5,4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25337
@@ -111220,8 +110512,6 @@ entities:
       pos: -50.5,-7.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25364
@@ -111230,8 +110520,6 @@ entities:
       pos: -40.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25365
@@ -111240,8 +110528,6 @@ entities:
       pos: -45.5,-11.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25377
@@ -111249,8 +110535,6 @@ entities:
     - pos: -45.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25392
@@ -111259,8 +110543,6 @@ entities:
       pos: -26.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25393
@@ -111269,8 +110551,6 @@ entities:
       pos: -32.5,-5.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25397
@@ -111279,8 +110559,6 @@ entities:
       pos: -43.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25406
@@ -111288,8 +110566,6 @@ entities:
     - pos: -31.5,3.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25408
@@ -111298,8 +110574,6 @@ entities:
       pos: -23.5,-1.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25419
@@ -111308,8 +110582,6 @@ entities:
       pos: -22.5,-6.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25422
@@ -111318,8 +110590,6 @@ entities:
       pos: -0.5,14.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25423
@@ -111328,8 +110598,6 @@ entities:
       pos: -0.5,4.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25479
@@ -111338,8 +110606,6 @@ entities:
       pos: -5.5,15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25480
@@ -111348,8 +110614,6 @@ entities:
       pos: -11.5,15.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25481
@@ -111358,8 +110622,6 @@ entities:
       pos: -18.5,20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25482
@@ -111367,8 +110629,6 @@ entities:
     - pos: -17.5,23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25487
@@ -111377,8 +110637,6 @@ entities:
       pos: -7.5,20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25516
@@ -111387,8 +110645,6 @@ entities:
       pos: 13.5,21.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25518
@@ -111397,8 +110653,6 @@ entities:
       pos: 8.5,20.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25534
@@ -111407,8 +110661,6 @@ entities:
       pos: 5.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25559
@@ -111417,8 +110669,6 @@ entities:
       pos: 9.5,23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25560
@@ -111427,8 +110677,6 @@ entities:
       pos: 10.5,28.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25624
@@ -111437,8 +110685,6 @@ entities:
       pos: -14.5,23.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25625
@@ -111447,8 +110693,6 @@ entities:
       pos: -8.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25626
@@ -111457,8 +110701,6 @@ entities:
       pos: -4.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25627
@@ -111467,8 +110709,6 @@ entities:
       pos: -0.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25628
@@ -111477,8 +110717,6 @@ entities:
       pos: 2.5,24.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25752
@@ -111487,8 +110725,6 @@ entities:
       pos: -13.5,31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25754
@@ -111497,8 +110733,6 @@ entities:
       pos: -7.5,31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25756
@@ -111507,8 +110741,6 @@ entities:
       pos: -11.5,26.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25758
@@ -111517,8 +110749,6 @@ entities:
       pos: -5.5,29.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25759
@@ -111527,8 +110757,6 @@ entities:
       pos: 3.5,31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25760
@@ -111536,8 +110764,6 @@ entities:
     - pos: 2.5,36.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25800
@@ -111546,8 +110772,6 @@ entities:
       pos: 14.5,31.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25801
@@ -111555,8 +110779,6 @@ entities:
     - pos: 7.5,37.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25802
@@ -111565,8 +110787,6 @@ entities:
       pos: 13.5,38.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
   - uid: 25823
@@ -111575,8 +110795,6 @@ entities:
       pos: 23.5,33.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
 - proto: GasVolumePump
@@ -122526,8 +121744,6 @@ entities:
     - pos: 76.5,-51.5
       parent: 8364
       type: Transform
-    - enabled: False
-      type: AmbientSound
 - proto: MachineAnomalyVessel
   entities:
   - uid: 21398

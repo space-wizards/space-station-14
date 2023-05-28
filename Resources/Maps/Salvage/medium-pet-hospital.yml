@@ -1356,8 +1356,6 @@ entities:
     - pos: 4.5,-4.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 228
@@ -1365,8 +1363,6 @@ entities:
     - pos: 7.5,-4.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 229
@@ -1375,8 +1371,6 @@ entities:
       pos: 0.5,-6.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 230
@@ -1385,8 +1379,6 @@ entities:
       pos: 12.5,-7.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 231
@@ -1395,8 +1387,6 @@ entities:
       pos: 12.5,-10.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 250
@@ -1405,8 +1395,6 @@ entities:
       pos: 4.5,-2.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 251
@@ -1414,8 +1402,6 @@ entities:
     - pos: 5.5,-8.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 252
@@ -1424,8 +1410,6 @@ entities:
       pos: 8.5,-9.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 253
@@ -1434,8 +1418,6 @@ entities:
       pos: 1.5,-9.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: PoweredlightExterior
@@ -1446,8 +1428,6 @@ entities:
       pos: 14.5,-7.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 237
@@ -1455,8 +1435,6 @@ entities:
     - pos: 3.5,-12.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: PoweredlightSodium
@@ -1466,8 +1444,6 @@ entities:
     - pos: 10.5,-1.5
       parent: 289
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: RandomSpawner

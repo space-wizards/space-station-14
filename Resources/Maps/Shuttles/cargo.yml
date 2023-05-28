@@ -1145,8 +1145,6 @@ entities:
       pos: -0.5,2.5
       parent: 173
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 148
@@ -1155,8 +1153,6 @@ entities:
       pos: -4.5,2.5
       parent: 173
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 149
@@ -1165,8 +1161,6 @@ entities:
       pos: -3.5,7.5
       parent: 173
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 150
@@ -1175,8 +1169,6 @@ entities:
       pos: -1.5,7.5
       parent: 173
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: ShuttleWindow

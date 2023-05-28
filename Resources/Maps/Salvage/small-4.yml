@@ -62,8 +62,6 @@ entities:
     - pos: -0.5,-3.5
       parent: 37
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - loadingNetworkDemand: 20
       supplyRampPosition: 0.010999783
       type: PowerNetworkBattery
@@ -338,8 +336,6 @@ entities:
       pos: 0.5,-2.5
       parent: 37
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
   - uid: 45
@@ -348,8 +344,6 @@ entities:
       pos: -2.5,-1.5
       parent: 37
       type: Transform
-    - enabled: False
-      type: AmbientSound
     - powerLoad: 0
       type: ApcPowerReceiver
 - proto: PuddleVomit
