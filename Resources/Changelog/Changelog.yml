@@ -1,9 +1,4 @@
 Entries:
-- author: Skyedra
-  changes:
-  - {message: '''Esc Menu'' title renamed to ''Game Menu''', type: Tweak}
-  id: 3382
-  time: '2023-04-11T06:26:39.0000000+00:00'
 - author: EnDecc
   changes:
   - {message: 'Doubled drain buffer size from 500u > 1000u, Tripled units deleted
@@ -2904,3 +2899,8 @@ Entries:
   - {message: Station Map has been resprited and can now be constructed., type: Add}
   id: 3881
   time: '2023-05-28T06:42:41.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Emitters and APEs can now be controlled with device linking., type: Add}
+  id: 3882
+  time: '2023-05-28T06:44:28.0000000+00:00'
