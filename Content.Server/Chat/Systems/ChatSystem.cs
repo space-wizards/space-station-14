@@ -258,6 +258,29 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     /// <summary>
+    /// Dispatches an announcement to all of the dead.
+    /// </summary>
+    /// <param name="message">The contents of the message</param>
+    /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
+    /// <param name="playSound">Play the announcement sound</param>
+    /// <param name="colorOverride">Optional color for the announcement message</param>
+    public void SendDeadAnnouncement(string message, string sender = "Central Command",
+        bool playSound = true, SoundSpecifier? announcementSound = null, Color? colorOverride = null)
+    {
+        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead station announcement from {sender}: {message}");
+
+        var clients = GetDeadChatClients();
+        _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, default, false, true, clients.ToList(), colorOverride:colorOverride);
+
+        if (playSound)
+        {
+            var deadFilter = GetDeadChatSessions();
+            SoundSystem.Play(announcementSound?.GetSound() ?? DefaultAnnouncementSound, deadFilter, AudioParams.Default.WithVolume(-2f));
+        }
+    }
+
+    /// <summary>
     /// Dispatches an announcement on a specific station
     /// </summary>
     /// <param name="source">The entity making the announcement (used to determine the station)</param>
@@ -485,6 +508,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, false, clients.ToList());
 
     }
+
     #endregion
 
     #region Utility
@@ -609,11 +633,16 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private IEnumerable<INetChannel> GetDeadChatClients()
     {
+        return GetDeadChatSessions()
+            .Recipients
+            .Select(p => p.ConnectedClient);
+    }
+
+    private Filter GetDeadChatSessions()
+    {
         return Filter.Empty()
             .AddWhereAttachedEntity(HasComp<GhostComponent>)
-            .Recipients
-            .Union(_adminManager.ActiveAdmins)
-            .Select(p => p.ConnectedClient);
+            .AddPlayers(_adminManager.ActiveAdmins);
     }
 
     private string SanitizeMessagePeriod(string message)

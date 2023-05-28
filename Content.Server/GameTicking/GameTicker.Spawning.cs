@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Linq;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
@@ -119,15 +120,7 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            if (station == EntityUid.Invalid)
-            {
-                var stations = EntityQuery<StationJobsComponent, StationSpawningComponent>().Select(x => x.Item1.Owner).ToList();
-                _robustRandom.Shuffle(stations);
-                if (stations.Count == 0)
-                    station = EntityUid.Invalid;
-                else
-                    station = stations[0];
-            }
+            ResolveStation(ref station);
 
             if (lateJoin && DisallowLateJoin)
             {
@@ -180,6 +173,32 @@ namespace Content.Server.GameTicking
             {
                 CharacterName = character.Name
             };
+
+            var mob = SpawnAndAttachMind(player, character, station, jobId, lateJoin, newMind, data);
+
+            // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
+            PlayersJoinedRoundNormally++;
+            var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, PlayersJoinedRoundNormally, station, character);
+            RaiseLocalEvent(mob, aev, true);
+        }
+
+        private void ResolveStation(ref EntityUid station)
+        {
+            if (station == EntityUid.Invalid)
+            {
+                var stations = EntityQuery<StationJobsComponent, StationSpawningComponent>().Select(x => x.Item1.Owner)
+                    .ToList();
+                _robustRandom.Shuffle(stations);
+                if (stations.Count == 0)
+                    station = EntityUid.Invalid;
+                else
+                    station = stations[0];
+            }
+        }
+
+        private EntityUid SpawnAndAttachMind(IPlayerSession player, HumanoidCharacterProfile character, EntityUid station,
+            string jobId, bool lateJoin, Mind.Mind newMind, PlayerData data)
+        {
             newMind.ChangeOwningPlayer(data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
@@ -200,8 +219,8 @@ namespace Content.Server.GameTicking
                 _chatSystem.DispatchStationAnnouncement(station,
                     Loc.GetString(
                         "latejoin-arrival-announcement",
-                    ("character", MetaData(mob).EntityName),
-                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
+                        ("character", MetaData(mob).EntityName),
+                        ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
                     ), Loc.GetString("latejoin-arrival-sender"),
                     playDefaultSound: false);
             }
@@ -214,9 +233,11 @@ namespace Content.Server.GameTicking
             _stationJobs.TryAssignJob(station, jobPrototype);
 
             if (lateJoin)
-                _adminLogger.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
+                _adminLogger.Add(LogType.LateJoin, LogImpact.Medium,
+                    $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
             else
-                _adminLogger.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
+                _adminLogger.Add(LogType.RoundStartJoin, LogImpact.Medium,
+                    $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
 
             // Make sure they're aware of extended access.
             if (Comp<StationJobsComponent>(station).ExtendedAccess
@@ -239,10 +260,65 @@ namespace Content.Server.GameTicking
                 _chatManager.DispatchServerMessage(player, Loc.GetString("latejoin-arrivals-direction"));
             }
 
+            return mob;
+        }
+
+
+        // Called by a system which is currently spawning ghost-role players deliberately, like a tourist event
+        private bool SpawnPlayerAgain(IPlayerSession player, EntityUid station, Mind.Mind mind, string jobId)
+        {
+            // Can't spawn players with a dummy ticker!
+            if (DummyTicker)
+                return true;
+
+            ResolveStation(ref station);
+
+            // Figure out job restrictions
+            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            if (jobBans == null || jobBans.Contains(jobId))
+                return false;
+
+            if (!_playTimeTrackings.IsAllowed(player, jobId))
+                return false;
+
+            // We can't give this player the exact profile (name, etc) they had last time, but perhaps the same species.
+            var character = GetPlayerProfile(player).AnonimizedRandomly();
+
+            mind.CharacterName = character.Name;
+            var data = player.ContentData();
+
+            DebugTools.AssertNotNull(data);
+            if (data == null)
+                return false;
+
+            var mob = SpawnAndAttachMind(player, character, station, jobId, true, mind, data);
+
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
-            PlayersJoinedRoundNormally++;
-            var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, PlayersJoinedRoundNormally, station, character);
+            //  PlayersJoinedRoundNormally++; - They DID NOT join normally again, they joined earlier.
+            var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, true, PlayersJoinedRoundNormally, station, character);
             RaiseLocalEvent(mob, aev, true);
+            return true;
+        }
+
+        public bool SpawnPlayerAgain(IPlayerSession player, string jobId, Mind.Mind? mind = null)
+        {
+
+            if (mind == null)
+            {
+                // // Find the mind attached to the player's session
+                // var playerUid = player.AttachedEntity;
+                // if (playerUid == null || !TryComp<MindComponent>(playerUid, out var mindComp) || mindComp.Mind == null)
+                //     return false; // Could not find existing mind. Could maybe make a new one here?
+                //
+                // mind = mindComp.Mind;
+
+                mind = new Mind.Mind(player.UserId)
+                {
+                };
+            }
+
+            // Will return false if failed, for instance if this role is banned for this player.
+            return SpawnPlayerAgain(player, EntityUid.Invalid, mind, jobId);
         }
 
         public void Respawn(IPlayerSession player)

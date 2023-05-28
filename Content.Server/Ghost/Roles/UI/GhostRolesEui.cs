@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.EUI;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
@@ -8,7 +9,7 @@ namespace Content.Server.Ghost.Roles.UI
     {
         public override GhostRolesEuiState GetNewState()
         {
-            return new(EntitySystem.Get<GhostRoleSystem>().GetGhostRolesInfo());
+            return new(EntitySystem.Get<GhostRoleSystem>().GhostRoles.ToArray());
         }
 
         public override void HandleMessage(EuiMessageBase msg)

@@ -386,6 +386,9 @@ namespace Content.Server.Mind
 
         public void ChangeOwningPlayer(NetUserId? newOwner)
         {
+            if (newOwner == UserId)
+                return; // Nothing to do here.
+
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
             PlayerData? newOwnerData = null;
 

@@ -187,6 +187,16 @@ namespace Content.Shared.Preferences
                 }, PreferenceUnavailableMode.StayInLobby, new List<string>(), new List<string>());
         }
 
+        public HumanoidCharacterProfile AnonimizedRandomly()
+        {
+            // A new name and appearance. But preserve our preferences and our race, gender, sex and age traits.
+            var copy = new HumanoidCharacterProfile(this);
+            copy.Name = GetName(copy.Species, copy.Gender);
+            copy.Appearance = HumanoidCharacterAppearance.Random(copy.Species, copy.Sex);
+
+            return copy;
+        }
+
         public string Name { get; private set; }
         public string FlavorText { get; private set; }
         public string Species { get; private set; }

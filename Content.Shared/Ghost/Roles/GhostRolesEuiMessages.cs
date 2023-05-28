@@ -10,6 +10,14 @@ namespace Content.Shared.Ghost.Roles
         public string Name { get; set; }
         public string Description { get; set; }
         public string Rules { get; set; }
+        public EntityUid Owner { get; set; }
+
+        public string UserId { get; set; }
+
+        public override string ToString()
+        {
+            return (UserId != "") ? $"{Identifier}: {Name} ({UserId})" :  $"{Identifier}: {Name}";
+        }
     }
 
     [NetSerializable, Serializable]

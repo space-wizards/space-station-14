@@ -34,14 +34,14 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
 
-        private uint _nextRoleIdentifier;
+        private uint _nextRoleIdentifier = 1;
         private bool _needsUpdateGhostRoleCount = true;
-        private readonly Dictionary<uint, GhostRoleComponent> _ghostRoles = new();
+        private readonly Dictionary<uint, GhostRoleInfo> _ghostRoles = new();
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
         private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
 
         [ViewVariables]
-        public IReadOnlyCollection<GhostRoleComponent> GhostRoles => _ghostRoles.Values;
+        public IReadOnlyCollection<GhostRoleInfo> GhostRoles => _ghostRoles.Values;
 
         public override void Initialize()
         {
@@ -69,12 +69,12 @@ namespace Content.Server.Ghost.Roles
                 case MobState.Alive:
                 {
                     if (!ghostRole.Taken)
-                        RegisterGhostRole(ghostRole);
+                        RegisterGhostRole(uid, ghostRole);
                     break;
                 }
                 case MobState.Critical:
                 case MobState.Dead:
-                    UnregisterGhostRole(ghostRole);
+                    UnregisterGhostRole(uid, ghostRole);
                     break;
             }
         }
@@ -170,32 +170,63 @@ namespace Content.Server.Ghost.Roles
             }
         }
 
-        public void RegisterGhostRole(GhostRoleComponent role)
+        // Triggered on GhostRole Component addition. userId is passed back in the TakeGhostRoleEvent
+        public void RegisterGhostRole(EntityUid uid, GhostRoleComponent role, string userId = "")
         {
-            if (_ghostRoles.ContainsValue(role)) return;
-            _ghostRoles[role.Identifier = GetNextRoleIdentifier()] = role;
-            UpdateAllEui();
+            if (_ghostRoles.ContainsKey(role.Identifier))
+                return;
+            var info = new GhostRoleInfo()
+                { Identifier = 0, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules, Owner = uid, UserId = userId};
 
+            RegisterGhostRole(ref info);
+            role.Identifier = info.Identifier;
         }
 
-        public void UnregisterGhostRole(GhostRoleComponent role)
+        // Triggered by setters inside GhostRole to update the info relating to that role.
+        public void UpdateGhostRole(GhostRoleComponent role)
         {
-            if (!_ghostRoles.ContainsKey(role.Identifier) || _ghostRoles[role.Identifier] != role) return;
+            if (_ghostRoles.TryGetValue(role.Identifier, out var info))
+            {
+                // Copy new information from the role.
+                info.Name = role.RoleName;
+                info.Description = role.RoleDescription;
+                info.Rules = role.RoleRules;
+                UpdateAllEui();
+            }
+        }
+
+        public void RegisterGhostRole(ref GhostRoleInfo info)
+        {
+            if (info.Identifier == 0)
+                info.Identifier = GetNextRoleIdentifier();
+            _ghostRoles[info.Identifier] = info;
+            UpdateAllEui();
+        }
+
+        public void UnregisterGhostRole(EntityUid uid, GhostRoleComponent role)
+        {
+            if (!_ghostRoles.ContainsKey(role.Identifier) || _ghostRoles[role.Identifier].Owner != uid) return;
             _ghostRoles.Remove(role.Identifier);
             UpdateAllEui();
+        }
+
+        public void UnregisterGhostRole(GhostRoleInfo info)
+        {
+            if (_ghostRoles.Remove(info.Identifier))
+                UpdateAllEui();
         }
 
         public void Takeover(IPlayerSession player, uint identifier)
         {
             if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
 
-            var ev = new TakeGhostRoleEvent(player);
+            var ev = new TakeGhostRoleEvent(player, role.UserId);
             RaiseLocalEvent(role.Owner, ref ev);
 
             if (!ev.TookRole) return;
 
             if (player.AttachedEntity != null)
-                _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
+                _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.Name:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
 
             CloseEui(player);
         }
@@ -226,21 +257,6 @@ namespace Content.Server.Ghost.Roles
             newMind.TransferTo(mob);
         }
 
-        public GhostRoleInfo[] GetGhostRolesInfo()
-        {
-            var roles = new GhostRoleInfo[_ghostRoles.Count];
-
-            var i = 0;
-
-            foreach (var (id, role) in _ghostRoles)
-            {
-                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules};
-                i++;
-            }
-
-            return roles;
-        }
-
         private void OnPlayerAttached(PlayerAttachedEvent message)
         {
             // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.
@@ -255,7 +271,7 @@ namespace Content.Server.Ghost.Roles
                 return;
 
             ghostRole.Taken = true;
-            UnregisterGhostRole(ghostRole);
+            UnregisterGhostRole(uid, ghostRole);
         }
 
         private void OnMindRemoved(EntityUid uid, GhostTakeoverAvailableComponent component, MindRemovedMessage args)
@@ -268,7 +284,7 @@ namespace Content.Server.Ghost.Roles
                 return;
 
             ghostRole.Taken = false;
-            RegisterGhostRole(ghostRole);
+            RegisterGhostRole(uid, ghostRole);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -293,12 +309,12 @@ namespace Content.Server.Ghost.Roles
 
             if (role.RoleRules == "")
                 role.RoleRules = Loc.GetString("ghost-role-component-default-rules");
-            RegisterGhostRole(role);
+            RegisterGhostRole(uid, role);
         }
 
         private void OnShutdown(EntityUid uid, GhostRoleComponent role, ComponentShutdown args)
         {
-            UnregisterGhostRole(role);
+            UnregisterGhostRole(uid, role);
         }
 
         private void OnSpawnerTakeRole(EntityUid uid, GhostRoleMobSpawnerComponent component, ref TakeGhostRoleEvent args)
@@ -363,7 +379,7 @@ namespace Content.Server.Ghost.Roles
                 MakeSentientCommand.MakeSentient(uid, EntityManager, ghostRole.AllowMovement, ghostRole.AllowSpeech);
 
             GhostRoleInternalCreateMindAndTransfer(args.Player, uid, uid, ghostRole);
-            UnregisterGhostRole(ghostRole);
+            UnregisterGhostRole(uid, ghostRole);
 
             args.TookRole = true;
         }

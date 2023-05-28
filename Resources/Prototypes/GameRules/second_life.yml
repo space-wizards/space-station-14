@@ -1,0 +1,115 @@
+- type: entity
+  id: LifeTourists
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    startDelay: 10
+    duration: 120
+    earliestStart: 20
+    reoccurrenceDelay: 20
+  - type: SecondLifeRule
+    announce: second-life-tourist-announce
+    description: second-life-tourist
+    roles:
+      Passenger: 15
+
+- type: entity
+  id: LifeSecurity
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 0.5
+      startDelay: 10
+      duration: 60
+      earliestStart: 20
+      reoccurrenceDelay: 60
+    - type: SecondLifeRule
+      announce: second-life-security-announce
+      description: second-life-security
+      roles:
+        Passenger: 3
+        SecurityOfficer: 5
+
+- type: entity
+  id: LifeEngineer
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 0.5
+      startDelay: 10
+      duration: 60
+      earliestStart: 20
+      reoccurrenceDelay: 60
+    - type: SecondLifeRule
+      announce: second-life-engineer-announce
+      description: second-life-engineer
+      roles:
+        Passenger: 3
+        StationEngineer: 3
+        AtmosphericTechnician: 1
+
+- type: entity
+  id: LifeService
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 0.5
+      startDelay: 10
+      duration: 60
+      earliestStart: 20
+      reoccurrenceDelay: 60
+    - type: SecondLifeRule
+      announce: second-life-service-announce
+      description: second-life-service
+      roles:
+        Passenger: 3
+        Botanist: 1
+        Chef: 1
+        Janitor: 2
+        Librarian: 1
+
+- type: entity
+  id: LifeMedical
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 0.5
+      startDelay: 10
+      duration: 60
+      earliestStart: 20
+      reoccurrenceDelay: 40
+    - type: SecondLifeRule
+      announce: second-life-medical-announce
+      description: second-life-medical
+      roles:
+        Passenger: 3
+        Chemist: 1
+        MedicalDoctor: 2
+        Paramedic: 1
+
+- type: entity
+  id: LifeCargo
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 0.5
+      startDelay: 10
+      duration: 60
+      earliestStart: 20
+      reoccurrenceDelay: 60
+    - type: SecondLifeRule
+      announce: second-life-cargo-announce
+      description: second-life-cargo
+      roles:
+        Passenger: 3
+        CargoTechnician: 2
+        SalvageSpecialist: 1
+
+
