@@ -21,12 +21,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
+using Content.Server.Voting.Managers;
+using Content.Shared.Voting;
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
         [Dependency] private readonly ITaskManager _taskManager = default!;
+        [Dependency] private readonly IVoteManager _voteManager = default!;
 
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
@@ -402,6 +405,13 @@ namespace Content.Server.GameTicking
 
                 SendStatusToAll();
                 UpdateInfoText();
+
+                // Imperial-start
+                if (_configurationManager.GetCVar(CCVars.VoteAutoStartInLobby))
+                {
+                    _voteManager.CreateStandardVote(null, StandardVoteType.Map);
+                }
+                // Imperial-end
 
                 ReqWindowAttentionAll();
             }

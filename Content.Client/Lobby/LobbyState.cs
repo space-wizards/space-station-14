@@ -6,6 +6,7 @@ using Content.Client.Preferences;
 using Content.Client.Preferences.UI;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.Voting;
+using Content.Shared.CCVar;
 using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.Input;
@@ -73,7 +74,13 @@ namespace Content.Client.Lobby
             };
 
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
-            _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
+            //_lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
+
+            // Imperial Space Start
+            var cfgMan = IoCManager.Resolve<IConfigurationManager>();
+            _lobby.ServerName.Text = cfgMan.GetCVar(CCVars.LobbyName);
+            // Imperial Space End
+
             UpdateLobbyUi();
 
             _lobby.CharacterPreview.CharacterSetupButton.OnPressed += OnSetupPressed;
