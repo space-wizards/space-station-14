@@ -24,7 +24,6 @@ public sealed class BreakerSystem : EntitySystem
             {
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"Breaker of {ToPrettyString(uid):battery)} popped from supplying {battery.CurrentSupply} with a breaker limit of {breaker.Limit}");
                 RaiseLocalEvent(uid, new BreakerPoppedEvent());
-                // TODO: make sure this isnt fucky
             }
         }
     }
