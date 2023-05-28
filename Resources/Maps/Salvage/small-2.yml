@@ -110,8 +110,6 @@ entities:
     - pos: -0.5,1.5
       parent: 55
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -200,8 +198,6 @@ entities:
     - pos: -1.5,1.5
       parent: 55
       type: Transform
-    - enabled: True
-      type: AmbientSound
 - proto: CannedApplauseInstrument
   entities:
   - uid: 75

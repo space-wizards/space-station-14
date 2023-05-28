@@ -161,8 +161,6 @@ entities:
     - pos: 2.5,-2.5
       parent: 55
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 26
     components:
     - pos: 1.5,-2.5
@@ -208,8 +206,6 @@ entities:
     - pos: 1.5,1.5
       parent: 55
       type: Transform
-    - enabled: True
-      type: AmbientSound
 - proto: ChairOfficeDark
   entities:
   - uid: 19
@@ -227,8 +223,6 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
     - type: ActiveEmergencyLight
 - proto: FirelockGlass
   entities:
@@ -276,8 +270,6 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - enabled: True
-      type: AmbientSound
   - uid: 36
     components:
     - rot: -1.5707963267948966 rad
@@ -318,8 +310,6 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - enabled: True
-      type: AmbientSound
   - uid: 41
     components:
     - rot: -1.5707963267948966 rad
@@ -360,8 +350,6 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - enabled: True
-      type: AmbientSound
 - proto: GeneratorRTG
   entities:
   - uid: 17

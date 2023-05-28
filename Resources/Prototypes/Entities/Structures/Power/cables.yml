@@ -14,6 +14,7 @@
   - type: Physics
     bodyType: Static
     canCollide: false
+  - type: Fixtures
   - type: Sprite
     netsync: false
     drawdepth: ThinWire
@@ -42,7 +43,6 @@
     lowVoltageNode: power
   - type: CableVis
     node: power
-
 
 - type: entity
   parent: CableBase

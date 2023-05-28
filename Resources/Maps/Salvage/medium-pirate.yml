@@ -139,8 +139,6 @@ entities:
     - pos: -0.5,1.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -157,8 +155,6 @@ entities:
     - pos: 3.5,0.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -215,8 +211,6 @@ entities:
     - pos: -0.5,2.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -225,8 +219,6 @@ entities:
     - pos: -0.5,3.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -235,8 +227,6 @@ entities:
     - pos: 0.5,3.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -245,8 +235,6 @@ entities:
     - pos: 1.5,3.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -255,8 +243,6 @@ entities:
     - pos: 2.5,3.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -265,8 +251,6 @@ entities:
     - pos: 2.5,2.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -275,8 +259,6 @@ entities:
     - pos: 2.5,1.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -285,8 +267,6 @@ entities:
     - pos: -1.5,2.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -295,8 +275,6 @@ entities:
     - pos: -2.5,2.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -305,8 +283,6 @@ entities:
     - pos: 3.5,2.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -315,8 +291,6 @@ entities:
     - pos: 4.5,2.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -325,8 +299,6 @@ entities:
     - pos: 2.5,4.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -335,8 +307,6 @@ entities:
     - pos: -0.5,4.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -355,8 +325,6 @@ entities:
     - pos: -0.5,1.5
       parent: 52
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 

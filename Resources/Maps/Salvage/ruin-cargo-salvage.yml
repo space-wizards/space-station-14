@@ -1851,22 +1851,16 @@ entities:
     - pos: 0.5,-3.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 345
     components:
     - pos: 2.5,-3.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 514
     components:
     - pos: 7.5,-0.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -1915,8 +1909,6 @@ entities:
     - pos: 1.5,-0.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -1925,8 +1917,6 @@ entities:
     - pos: 0.5,-0.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -1975,8 +1965,6 @@ entities:
     - pos: -5.5,-0.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -2145,8 +2133,6 @@ entities:
     - pos: 5.5,-1.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -2195,8 +2181,6 @@ entities:
     - pos: 5.5,4.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -2317,8 +2301,6 @@ entities:
     - pos: 7.5,1.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -2327,8 +2309,6 @@ entities:
     - pos: 8.5,1.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -2385,169 +2365,121 @@ entities:
     - pos: 15.5,1.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 651
     components:
     - pos: 15.5,2.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 652
     components:
     - pos: 14.5,1.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 653
     components:
     - pos: 15.5,3.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 654
     components:
     - pos: 15.5,4.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 655
     components:
     - pos: 15.5,5.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 656
     components:
     - pos: 16.5,5.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 657
     components:
     - pos: 17.5,5.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 658
     components:
     - pos: 18.5,5.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 659
     components:
     - pos: 19.5,5.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 660
     components:
     - pos: 20.5,5.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 661
     components:
     - pos: 21.5,5.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 662
     components:
     - pos: 15.5,0.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 663
     components:
     - pos: 15.5,-0.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 664
     components:
     - pos: 15.5,-1.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 665
     components:
     - pos: 15.5,-2.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 666
     components:
     - pos: 15.5,-3.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 667
     components:
     - pos: 15.5,-4.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 668
     components:
     - pos: 16.5,-4.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 669
     components:
     - pos: 17.5,-4.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 670
     components:
     - pos: 18.5,-4.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 671
     components:
     - pos: 19.5,-4.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 672
     components:
     - pos: 20.5,-4.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 673
     components:
     - pos: 21.5,-4.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
 - proto: CableHV
   entities:
   - uid: 493
@@ -2555,8 +2487,6 @@ entities:
     - pos: 3.5,10.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -2565,8 +2495,6 @@ entities:
     - pos: 4.5,11.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -2604,8 +2532,6 @@ entities:
     - pos: 3.5,10.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -2614,8 +2540,6 @@ entities:
     - pos: 4.5,10.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -2647,8 +2571,6 @@ entities:
     - pos: 4.5,5.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 
@@ -2721,8 +2643,6 @@ entities:
     - pos: 7.5,-0.5
       parent: 16
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - canCollide: False
       type: Physics
 

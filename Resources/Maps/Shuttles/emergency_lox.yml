@@ -960,8 +960,6 @@ entities:
     - pos: -0.5,-8.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 198
     components:
     - pos: -4.5,-8.5
@@ -1037,15 +1035,11 @@ entities:
     - pos: -5.5,-6.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 347
     components:
     - pos: -2.5,-2.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 348
     components:
     - pos: -5.5,-5.5
@@ -1101,15 +1095,11 @@ entities:
     - pos: -6.5,-3.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 416
     components:
     - pos: -4.5,4.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 417
     components:
     - pos: -4.5,5.5
@@ -1280,8 +1270,6 @@ entities:
     - pos: -0.5,9.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 451
     components:
     - pos: 0.5,9.5
@@ -1312,8 +1300,6 @@ entities:
     - pos: -7.5,9.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 459
     components:
     - pos: -3.5,10.5
@@ -1339,8 +1325,6 @@ entities:
     - pos: -7.5,10.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 464
     components:
     - pos: -6.5,9.5
@@ -1351,8 +1335,6 @@ entities:
     - pos: -6.5,8.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 466
     components:
     - pos: -2.5,10.5
@@ -1368,8 +1350,6 @@ entities:
     - pos: -0.5,12.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 469
     components:
     - pos: -0.5,13.5
@@ -1410,92 +1390,66 @@ entities:
     - pos: -6.5,14.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 477
     components:
     - pos: -6.5,15.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 478
     components:
     - pos: -5.5,15.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 479
     components:
     - pos: -5.5,16.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 480
     components:
     - pos: -4.5,16.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 481
     components:
     - pos: -3.5,16.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 482
     components:
     - pos: -2.5,16.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 483
     components:
     - pos: -1.5,16.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 484
     components:
     - pos: -0.5,16.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 485
     components:
     - pos: 0.5,16.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 486
     components:
     - pos: 0.5,15.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 487
     components:
     - pos: 1.5,15.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 488
     components:
     - pos: 1.5,14.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 489
     components:
     - pos: 0.5,14.5
@@ -1586,8 +1540,6 @@ entities:
     - pos: -5.5,-11.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 664
     components:
     - pos: 0.5,-9.5
@@ -1603,8 +1555,6 @@ entities:
     - pos: 0.5,-11.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 667
     components:
     - pos: -2.5,-9.5
@@ -1622,15 +1572,11 @@ entities:
     - pos: -4.5,-6.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 31
     components:
     - pos: -5.5,12.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 156
     components:
     - pos: -5.5,11.5
@@ -1651,15 +1597,11 @@ entities:
     - pos: -3.5,-6.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 302
     components:
     - pos: -6.5,-7.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 324
     components:
     - pos: -3.5,-7.5
@@ -1670,22 +1612,16 @@ entities:
     - pos: -3.5,12.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 517
     components:
     - pos: -5.5,-7.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 518
     components:
     - pos: -4.5,-7.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
 - proto: CableMV
   entities:
   - uid: 11
@@ -1703,8 +1639,6 @@ entities:
     - pos: -3.5,12.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 28
     components:
     - pos: -3.5,11.5
@@ -1750,8 +1684,6 @@ entities:
     - pos: -0.5,12.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 145
     components:
     - pos: 1.5,1.5
@@ -1762,8 +1694,6 @@ entities:
     - pos: -0.5,9.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 152
     components:
     - pos: 1.5,2.5
@@ -1794,8 +1724,6 @@ entities:
     - pos: -0.5,-8.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 173
     components:
     - pos: -4.5,5.5
@@ -1901,8 +1829,6 @@ entities:
     - pos: -5.5,-6.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 368
     components:
     - pos: -5.5,7.5
@@ -1933,8 +1859,6 @@ entities:
     - pos: -4.5,4.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 376
     components:
     - pos: 0.5,13.5
@@ -1950,15 +1874,11 @@ entities:
     - pos: -3.5,-6.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 394
     components:
     - pos: -5.5,-7.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 396
     components:
     - pos: 0.5,10.5
@@ -1979,8 +1899,6 @@ entities:
     - pos: -7.5,9.5
       parent: 670
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 457
     components:
     - pos: -6.5,9.5
@@ -2516,8 +2434,6 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
     - type: ActiveEmergencyLight
   - uid: 639
     components:
@@ -2527,8 +2443,6 @@ entities:
       type: Transform
     - enabled: True
       type: PointLight
-    - enabled: True
-      type: AmbientSound
     - type: ActiveEmergencyLight
 - proto: ExtinguisherCabinetFilled
   entities:
@@ -2661,8 +2575,6 @@ entities:
       type: AtmosPipeColor
     - bodyType: Static
       type: Physics
-    - enabled: True
-      type: AmbientSound
   - uid: 535
     components:
     - rot: -1.5707963267948966 rad

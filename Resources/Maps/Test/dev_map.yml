@@ -891,29 +891,21 @@ entities:
     - pos: -2.5,11.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 764
     components:
     - pos: -1.5,11.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 765
     components:
     - pos: -7.5,0.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 766
     components:
     - pos: -0.5,11.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 767
     components:
     - pos: -3.5,10.5
@@ -1084,36 +1076,26 @@ entities:
     - pos: -8.5,0.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 803
     components:
     - pos: 2.5,-2.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 804
     components:
     - pos: 2.5,-3.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 805
     components:
     - pos: -9.5,0.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 806
     components:
     - pos: -10.5,0.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 807
     components:
     - pos: -14.5,0.5
@@ -1169,22 +1151,16 @@ entities:
     - pos: 7.5,5.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 818
     components:
     - pos: 7.5,7.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 819
     components:
     - pos: 7.5,8.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 820
     components:
     - pos: 7.5,9.5
@@ -1295,8 +1271,6 @@ entities:
     - pos: 0.5,11.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 842
     components:
     - pos: 2.5,12.5
@@ -1372,8 +1346,6 @@ entities:
     - pos: 7.5,6.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 877
     components:
     - pos: -6.5,3.5
@@ -1384,36 +1356,26 @@ entities:
     - pos: -2.5,-4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 879
     components:
     - pos: -1.5,-4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 880
     components:
     - pos: -0.5,-4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 881
     components:
     - pos: 0.5,-4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 882
     components:
     - pos: 1.5,-4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 883
     components:
     - pos: 2.5,-4.5
@@ -1429,106 +1391,76 @@ entities:
     - pos: 4.5,-4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 886
     components:
     - pos: 5.5,-4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 887
     components:
     - pos: 6.5,-4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 888
     components:
     - pos: 7.5,-4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 889
     components:
     - pos: 8.5,-4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 890
     components:
     - pos: 8.5,-3.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 891
     components:
     - pos: 8.5,-2.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 892
     components:
     - pos: 8.5,-1.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 893
     components:
     - pos: 8.5,-0.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 894
     components:
     - pos: 8.5,0.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 895
     components:
     - pos: 8.5,1.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 896
     components:
     - pos: 8.5,2.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 897
     components:
     - pos: 8.5,3.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 898
     components:
     - pos: 8.5,4.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 899
     components:
     - pos: 8.5,5.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
   - uid: 900
     components:
     - pos: -14.5,5.5
@@ -2752,8 +2684,6 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - enabled: True
-      type: AmbientSound
 - proto: GasPipeFourway
   entities:
   - uid: 728
@@ -2763,8 +2693,6 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - enabled: True
-      type: AmbientSound
 - proto: GasPipeStraight
   entities:
   - uid: 749
@@ -2775,8 +2703,6 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - enabled: True
-      type: AmbientSound
 - proto: GasPipeTJunction
   entities:
   - uid: 748
@@ -2786,8 +2712,6 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-    - enabled: True
-      type: AmbientSound
 - proto: GasPort
   entities:
   - uid: 457
@@ -2816,8 +2740,6 @@ entities:
       pos: 4.5,-2.5
       parent: 179
       type: Transform
-    - enabled: True
-      type: AmbientSound
     - bodyType: Static
       type: Physics
 - proto: GasVentPump
