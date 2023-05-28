@@ -57,7 +57,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
             var mapManager = IoCManager.Resolve<IMapManager>();
 
-            if (!mapManager.TryFindGridAt(transform.MapPosition, out var grid) ||
+            if (!mapManager.TryFindGridAt(transform.MapPosition, out _, out var grid) ||
                 !grid.TryGetTileRef(transform.Coordinates, out var tileRef) ||
                 tileRef.Tile.IsSpace())
             {

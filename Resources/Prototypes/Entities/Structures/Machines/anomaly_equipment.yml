@@ -151,6 +151,10 @@
     - AnomalousParticleDelta
     - AnomalousParticleEpsilon
     - AnomalousParticleZeta
+    setTypePorts:
+      SetParticleDelta: AnomalousParticleDelta
+      SetParticleEpsilon: AnomalousParticleEpsilon
+      SetParticleZeta: AnomalousParticleZeta
     fireBurstSize: 1
     baseFireBurstDelayMin: 2
     baseFireBurstDelayMax: 6
@@ -179,6 +183,19 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
+      - SetParticleDelta
+      - SetParticleEpsilon
+      - SetParticleZeta
 
 - type: entity
   id: MachineAnomalyGenerator

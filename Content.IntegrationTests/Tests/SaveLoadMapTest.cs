@@ -68,8 +68,8 @@ namespace Content.IntegrationTests.Tests
             await server.WaitAssertion(() =>
             {
                 {
-                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var mapGrid) ||
-                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.Owner, out var gridXform))
+                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var gridUid, out var mapGrid) ||
+                        !sEntities.TryGetComponent<TransformComponent>(gridUid, out var gridXform))
                     {
                         Assert.Fail();
                         return;
@@ -80,8 +80,8 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, (TileRenderFlag)1, 255)));
                 }
                 {
-                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid) ||
-                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.Owner, out var gridXform))
+                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var gridUid, out var mapGrid) ||
+                        !sEntities.TryGetComponent<TransformComponent>(gridUid, out var gridXform))
                     {
                         Assert.Fail();
                         return;
