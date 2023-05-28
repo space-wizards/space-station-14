@@ -11,12 +11,15 @@
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
-  - type: EmitSoundOnLand
-    sound:
-      collection: ToySqueak
   - type: EmitSoundOnActivate
     sound:
       collection: ToySqueak
+  - type: EmitSoundOnCollide
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToyFall
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
@@ -231,16 +234,17 @@
               solution: plushie
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.3,-0.3,0.3,0.3"
           density: 15
           mask:
             - ItemMask
-        - shape:
+        rehydrate:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.3,-0.3,0.3,0.3"
-          id: "rehydrate"
           hard: false
           layer:
             - LowImpassable
@@ -415,6 +419,27 @@
   - type: Sprite
     state: plushie_atmosian
 
+- type: entity
+  parent: BasePlushie
+  id: PlushieXeno
+  name: xeno plushie
+  description: An adorable stuffed toy that resembles a scary xenomorf. You're lucky it's just a toy.
+  components:
+  - type: Sprite
+    state: plushie_xeno
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
 ## Figurines
 
 - type: entity
@@ -450,6 +475,20 @@
   components:
   - type: Sprite
     state: nuketoy
+  - type: UseDelay
+    delay: 180.0
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxdistance: 10
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxdistance: 10
 
 - type: entity
   parent: BaseFigurine
@@ -838,6 +877,8 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: orb
+  - type: TileFrictionModifier
+    modifier: 0.001
 
 - type: entity
   id: ToySword
@@ -944,3 +985,4 @@
   - type: Tag
     tags:
     - ClownRecorder
+

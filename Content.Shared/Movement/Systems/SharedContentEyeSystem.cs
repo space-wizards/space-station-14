@@ -1,3 +1,5 @@
+using Content.Shared.Administration.Managers;
+using Content.Shared.Ghost;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Input;
@@ -12,6 +14,8 @@ namespace Content.Shared.Movement.Systems;
 /// </summary>
 public abstract class SharedContentEyeSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminManager _admin = default!;
+
     private const float ZoomMod = 1.2f;
     private const byte ZoomMultiple = 10;
 
@@ -24,6 +28,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ContentEyeComponent, ComponentStartup>(OnContentEyeStartup);
         SubscribeAllEvent<RequestTargetZoomEvent>(OnContentZoomRequest);
+        SubscribeAllEvent<RequestFovEvent>(OnRequestFov);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ZoomIn,  new ScrollInputCmdHandler(true, this))
@@ -41,6 +46,21 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
         content.TargetZoom = msg.TargetZoom;
         Dirty(content);
+    }
+
+    private void OnRequestFov(RequestFovEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { } player)
+            return;
+
+        if (!HasComp<SharedGhostComponent>(player) && !_admin.IsAdmin(player))
+            return;
+
+        if (TryComp<SharedEyeComponent>(player, out var eyeComp))
+        {
+            eyeComp.DrawFov = msg.Fov;
+            Dirty(eyeComp);
+        }
     }
 
     public override void Shutdown()
@@ -178,5 +198,14 @@ public abstract class SharedContentEyeSystem : EntitySystem
     public sealed class RequestTargetZoomEvent : EntityEventArgs
     {
         public Vector2 TargetZoom;
+    }
+
+    /// <summary>
+    /// Sendable from client to server to request changing fov.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class RequestFovEvent : EntityEventArgs
+    {
+        public bool Fov;
     }
 }

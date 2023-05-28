@@ -79,7 +79,7 @@ namespace Content.Shared.Chemistry.Reagent
         EntityUid SolutionEntity,
         EntityUid? OrganEntity,
         Solution? Source,
-        ReagentPrototype Reagent,
+        ReagentPrototype? Reagent,
         FixedPoint2 Quantity,
         IEntityManager EntityManager,
         ReactionMethod? Method,

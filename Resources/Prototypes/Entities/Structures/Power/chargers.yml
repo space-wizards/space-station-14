@@ -11,13 +11,18 @@
     sprite: Structures/Power/cell_recharger.rsi
     drawdepth: SmallObjects
     snapCardinals: true
+    layers:
+    - map: ["enum.PowerChargerVisualLayers.Base"]
+      state: "empty"
+    - map: ["enum.PowerChargerVisualLayers.Light"]
+      state: "light-off"
+      shader: "unshaded"
   - type: Charger
     slotId: charger_slot
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Appearance
-    visuals:
-    - type: PowerChargerVisualizer
+  - type: PowerChargerVisuals
   - type: Anchorable
   - type: Pullable
   - type: Clickable
@@ -47,12 +52,13 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.10,-0.10,0.10,0.10"
-      density: 500
-      mask:
-        - TabletopMachineMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.10,0.10,0.10"
+        density: 500
+        mask:
+          - TabletopMachineMask
   - type: ItemSlots
     slots:
       charger_slot:

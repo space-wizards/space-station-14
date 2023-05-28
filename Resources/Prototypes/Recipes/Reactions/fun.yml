@@ -23,3 +23,14 @@
       amount: 1
   products:
     BuzzochloricBees: 3
+
+- type: reaction
+  id: SpaceGlue
+  minTemp: 370
+  reactants:
+    SpaceLube:
+      amount: 1
+    Slime:
+      amount: 1
+  products:
+    SpaceGlue: 2

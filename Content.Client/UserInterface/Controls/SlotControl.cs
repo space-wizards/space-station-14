@@ -1,6 +1,6 @@
 using Content.Client.Cooldown;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
-using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -10,8 +10,6 @@ namespace Content.Client.UserInterface.Controls
     [Virtual]
     public abstract class SlotControl : Control
     {
-        private const string HighlightShader = "SelectionOutlineInrange";
-
         public static int DefaultButtonSize = 64;
 
         public TextureRect ButtonRect { get; }
@@ -52,52 +50,48 @@ namespace Content.Client.UserInterface.Controls
 
         public bool Blocked { get => BlockedRect.Visible; set => BlockedRect.Visible = value;}
 
-        public Texture BlockedTexture => Theme.ResolveTexture(BlockedTexturePath);
-
-        private string _blockedTexturePath = "";
-        public string BlockedTexturePath
+        private string? _blockedTexturePath;
+        public string? BlockedTexturePath
         {
             get => _blockedTexturePath;
             set
             {
                 _blockedTexturePath = value;
-                BlockedRect.Texture = Theme.ResolveTexture(_blockedTexturePath);
+                BlockedRect.Texture = Theme.ResolveTextureOrNull(_blockedTexturePath)?.Texture;
             }
         }
 
-        public Texture ButtonTexture => Theme.ResolveTexture(ButtonTexturePath);
-
-        private string _buttonTexturePath = "";
-        public string ButtonTexturePath {
+        private string? _buttonTexturePath;
+        public string? ButtonTexturePath
+        {
             get => _buttonTexturePath;
             set
             {
                 _buttonTexturePath = value;
-                ButtonRect.Texture = Theme.ResolveTexture(_buttonTexturePath);
+                ButtonRect.Texture = Theme.ResolveTextureOrNull(_buttonTexturePath)?.Texture;
             }
         }
 
-        public Texture StorageTexture => Theme.ResolveTexture(StorageTexturePath);
 
-        private string _storageTexturePath = "";
-        public string StorageTexturePath
+        private string? _storageTexturePath;
+        public string? StorageTexturePath
         {
             get => _buttonTexturePath;
             set
             {
                 _storageTexturePath = value;
-                StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
+                StorageButton.TextureNormal = Theme.ResolveTextureOrNull(_storageTexturePath)?.Texture;
             }
         }
 
-        private string _highlightTexturePath = "";
-        public string HighlightTexturePath
+        private string? _highlightTexturePath;
+        public string? HighlightTexturePath
         {
             get => _highlightTexturePath;
             set
             {
                 _highlightTexturePath = value;
-                HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
+                HighlightRect.Texture = Theme.ResolveTextureOrNull(_highlightTexturePath)?.Texture;
             }
         }
 
@@ -132,12 +126,14 @@ namespace Content.Client.UserInterface.Controls
             AddChild(SpriteView = new SpriteView
             {
                 Scale = (2, 2),
+                SetSize = (DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
             AddChild(HoverSpriteView = new SpriteView
             {
                 Scale = (2, 2),
+                SetSize = (DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
@@ -230,9 +226,11 @@ namespace Content.Client.UserInterface.Controls
 
         protected override void OnThemeUpdated()
         {
-            StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
-            ButtonRect.Texture = Theme.ResolveTexture(_buttonTexturePath);
-            HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
+            base.OnThemeUpdated();
+
+            StorageButton.TextureNormal = Theme.ResolveTextureOrNull(_storageTexturePath)?.Texture;
+            ButtonRect.Texture = Theme.ResolveTextureOrNull(_buttonTexturePath)?.Texture;
+            HighlightRect.Texture = Theme.ResolveTextureOrNull(_highlightTexturePath)?.Texture;
         }
     }
 }

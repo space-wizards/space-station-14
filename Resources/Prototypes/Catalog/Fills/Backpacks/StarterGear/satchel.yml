@@ -29,6 +29,16 @@
 
 - type: entity
   noSpawn: true
+  parent: ClothingBackpackSatchelBrigmedic
+  id: ClothingBackpackSatchelBrigmedicFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalBrigmedic
+      - id: Flash
+
+- type: entity
+  noSpawn: true
   parent: ClothingBackpackSatchelMedical
   id: ClothingBackpackSatchelMedicalFilled
   components:
@@ -87,7 +97,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalMedical
       - id: Flash
       #- id: TelescopicBaton
 
@@ -109,7 +119,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalSecurity
       - id: Flash
 
 - type: entity
@@ -210,3 +220,13 @@
   - type: Tag
     tags:
     - InnateDontDelete
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel # need to sprite mime's satchel
+  id: ClothingBackpackSatchelMimeFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: RubberStampMime

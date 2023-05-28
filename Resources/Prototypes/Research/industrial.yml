@@ -1,0 +1,202 @@
+﻿# Tier 1
+
+- type: technology
+  id: SalvageEquipment
+  name: research-technology-salvage-equipment
+  icon:
+    sprite: Objects/Tools/handdrill.rsi
+    state: handdrill
+  discipline: Industrial
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - MiningDrill
+  - OreProcessorMachineCircuitboard
+
+- type: technology
+  id: AdvancedPowercells
+  name: research-technology-advanced-powercells
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: medium
+  discipline: Industrial
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - PowerCellMedium
+
+- type: technology
+  id: CompactPower
+  name: research-technology-compact-power
+  icon:
+    sprite: Structures/Power/Generation/wallmount_generator.rsi
+    state: panel
+  discipline: Industrial
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - WallmountSubstationElectronics
+  - WallmountGeneratorElectronics
+  - WallmountGeneratorAPUElectronics
+
+- type: technology
+  id: IndustrialEngineering
+  name: research-technology-industrial-engineering
+  icon:
+    sprite: Structures/Machines/protolathe.rsi
+    state: icon
+  discipline: Industrial
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - ProtolatheMachineCircuitboard
+  - AutolatheMachineCircuitboard
+  - CircuitImprinterMachineCircuitboard
+  - MaterialReclaimerMachineCircuitboard
+
+- type: technology
+  id: PowerGeneration
+  name: research-technology-power-generation
+  icon:
+    sprite: Structures/Power/Generation/portable_generator.rsi
+    state: portgen0_1
+  discipline: Industrial
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - GeneratorPlasmaMachineCircuitboard
+  - GeneratorUraniumMachineCircuitboard
+  - PowerComputerCircuitboard #the actual solar panel itself should be in here
+  - SolarControlComputerCircuitboard
+  - EmitterCircuitboard
+
+- type: technology
+  id: AtmosphericTech
+  name: research-technology-atmospheric-tech
+  icon:
+    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    state: freezerOff
+  discipline: Industrial
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ThermomachineFreezerMachineCircuitBoard
+  - GasRecyclerMachineCircuitboard
+
+# Tier 2
+
+- type: technology
+  id: Grappling
+  name: research-technology-grappling
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+    state: base
+  discipline: Industrial
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+    - WeaponGrapplingGun
+
+- type: technology
+  id: RapidConstruction
+  name: research-technology-rapid-construction
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - RCD
+  - RCDAmmo
+
+- type: technology
+  id: Shuttlecraft
+  name: research-technology-shuttlecraft
+  icon:
+    sprite: Structures/Shuttles/gyroscope.rsi
+    state: base
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - ShuttleConsoleCircuitboard
+  - RadarConsoleCircuitboard
+  - ThrusterMachineCircuitboard
+  - GyroscopeMachineCircuitboard
+
+- type: technology
+  id: RipleyAPLU
+  name: research-technology-ripley-aplu
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: ripley
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - RipleyHarness
+  - RipleyLArm
+  - RipleyRArm
+  - RipleyLLeg
+  - RipleyRLeg
+  - RipleyCentralElectronics
+  - RipleyPeripheralsElectronics
+  - MechEquipmentGrabber
+
+- type: technology
+  id: AdvancedAtmospherics
+  name: research-technology-advanced-atmospherics
+  icon:
+    sprite: Objects/Devices/Holoprojectors/atmos.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+  - HolofanProjector
+  - PortableScrubberMachineCircuitBoard
+
+- type: technology
+  id: SuperPowercells
+  name: research-technology-super-powercells
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: high
+  discipline: Industrial
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - PowerCellHigh
+  technologyPrerequisites:
+  - AdvancedPowercells
+
+- type: technology
+  id: AdvancedToolsTechnology
+  name: research-technology-advanced-tools
+  icon:
+    sprite: Objects/Tools/welder_experimental.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+    - WelderIndustrialAdvanced
+    - PowerDrill
+    - JawsOfLife
+
+# Tier 3
+
+- type: technology
+  id: BluespaceStorage
+  name: research-technology-bluespace-storage
+  icon:
+    sprite: Clothing/Back/Backpacks/holding.rsi
+    state: holding
+  discipline: Industrial
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - ClothingBackpackHolding
+  - ClothingBackpackSatchelHolding
+  - ClothingBackpackDuffelHolding

@@ -39,6 +39,16 @@
   group: market
 
 - type: cargoProduct
+  id: LivestockCrab
+  icon:
+    sprite: Mobs/Animals/crab.rsi
+    state: crab
+  product: CrateNPCCrab
+  cost: 1800
+  category: Livestock
+  group: market
+
+- type: cargoProduct
   id: LivestockDuck
   icon:
     sprite: Mobs/Animals/duck.rsi

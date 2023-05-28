@@ -6,12 +6,32 @@
   physicalDesc: reagent-physical-desc-powdery
   flavor: chalky
   color: white
+  recognizable: true
   metabolisms:
     Food:
       effects:
       - !type:AdjustReagent
         reagent: Sugar
         amount: 0.4
+      - !type:SatiateThirst
+        factor: -0.2 #its flour
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
+
+- type: reagent
+  id: Cornmeal
+  name: reagent-name-cornmeal
+  group: Foods
+  desc: reagent-desc-cornmeal
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: corn #so corn doesnt taste chalky
+  color: tan
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateThirst
+        factor: -0.2 #its cornflour
       - !type:AdjustReagent
         reagent: Nutriment
         amount: 0.1
@@ -51,6 +71,7 @@
   physicalDesc: reagent-physical-desc-mucus-like
   flavor: egg
   color: white
+  recognizable: true
   metabolisms:
     Food:
       effects:
@@ -66,6 +87,7 @@
   physicalDesc: reagent-physical-desc-grainy
   flavor: peppery
   color: black
+  recognizable: true
 
 - type: reagent
   id: Vinegar
@@ -75,6 +97,7 @@
   physicalDesc: reagent-physical-desc-sour
   flavor: bitter
   color: tan
+  recognizable: true
   metabolisms:
     Food:
       effects:
@@ -98,6 +121,7 @@
   physicalDesc: reagent-physical-desc-chewy
   flavor: rice
   color: white
+  recognizable: true
   metabolisms:
     Food:
       effects:
@@ -116,6 +140,7 @@
   physicalDesc: reagent-physical-desc-oily
   flavor: oily
   color: olive
+  recognizable: true
   metabolisms:
     Food:
       effects:
@@ -130,6 +155,7 @@
   desc: reagent-desc-oil
   physicalDesc: reagent-physical-desc-oily
   flavor: oily
+  recognizable: true
   color: "#b67823"
   boilingPoint: 300.0
   meltingPoint: -16.0
@@ -143,6 +169,7 @@
   physicalDesc: reagent-physical-desc-oily
   flavor: spicy
   color: "#FF0000"
+  recognizable: true
   meltingPoint: 146
   boilingPoint: 410 # Really high boiling point compared to its melting
   metabolisms:

@@ -111,6 +111,17 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnNetworkShutdown(EntityUid uid, DeviceNetworkComponent component, ComponentShutdown args)
         {
+            var eventArgs = new DeviceShutDownEvent(uid);
+
+            foreach (var shutdownSubscriberId in component.ShutdownSubscribers)
+            {
+                RaiseLocalEvent(shutdownSubscriberId, ref eventArgs);
+
+                DeviceNetworkComponent? device = null!;
+                if (Resolve(shutdownSubscriberId, ref device))
+                    device.ShutdownSubscribers.Remove(uid);
+            }
+
             GetNetwork(component.DeviceNetId).Remove(component);
         }
 
@@ -222,6 +233,36 @@ namespace Content.Server.DeviceNetwork.Systems
             device.CustomAddress = false;
             device.Address = "";
             deviceNet.Add(device);
+        }
+
+        public void SubscribeToDeviceShutdown(
+            EntityUid subscriberId, EntityUid targetId,
+            DeviceNetworkComponent? subscribingDevice = null,
+            DeviceNetworkComponent? targetDevice = null)
+        {
+            if (subscriberId == targetId)
+                return;
+
+            if (!Resolve(subscriberId, ref subscribingDevice) || !Resolve(targetId, ref targetDevice))
+                return;
+
+            targetDevice.ShutdownSubscribers.Add(subscriberId);
+            subscribingDevice.ShutdownSubscribers.Add(targetId);
+        }
+
+        public void UnsubscribeFromDeviceShutdown(
+            EntityUid subscriberId, EntityUid targetId,
+            DeviceNetworkComponent? subscribingDevice = null,
+            DeviceNetworkComponent? targetDevice = null)
+        {
+            if (subscriberId == targetId)
+                return;
+
+            if (!Resolve(subscriberId, ref subscribingDevice) || !Resolve(targetId, ref targetDevice))
+                return;
+
+            targetDevice.ShutdownSubscribers.Remove(subscriberId);
+            subscribingDevice.ShutdownSubscribers.Remove(targetId);
         }
 
         /// <summary>
@@ -408,4 +449,11 @@ namespace Content.Server.DeviceNetwork.Systems
             Data = data;
         }
     }
+
+    /// <summary>
+    /// Gets raised on entities that subscribed to shutdown event of the shut down entity
+    /// </summary>
+    /// <param name="ShutDownEntityUid">The entity that was shut down</param>
+    [ByRefEvent]
+    public readonly record struct DeviceShutDownEvent(EntityUid ShutDownEntityUid);
 }

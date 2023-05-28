@@ -8,6 +8,7 @@ using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Events;
 using Robust.Shared.Utility;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -31,6 +32,25 @@ public sealed class FollowerSystem : EntitySystem
         SubscribeLocalEvent<FollowerComponent, PullStartedMessage>(OnPullStarted);
         SubscribeLocalEvent<FollowerComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
+        SubscribeLocalEvent<BeforeSaveEvent>(OnBeforeSave);
+    }
+
+    private void OnBeforeSave(BeforeSaveEvent ev)
+    {
+        // Some followers will not be map savable. This ensures that maps don't get saved with empty/invalid
+        // followers, but just stopping any following on the map being saved.
+
+        var query = AllEntityQuery<FollowerComponent, TransformComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out var follower, out var xform, out var meta))
+        {
+            if (meta.EntityPrototype == null || meta.EntityPrototype.MapSavable)
+                continue;
+
+            if (xform.MapUid != ev.Map)
+                continue;
+
+            StopFollowingEntity(uid, follower.Following);
+        }
     }
 
     private void OnGetAlternativeVerbs(GetVerbsEvent<AlternativeVerb> ev)
@@ -99,8 +119,14 @@ public sealed class FollowerSystem : EntitySystem
     public void StartFollowingEntity(EntityUid follower, EntityUid entity)
     {
         // No recursion for you
-        if (Transform(entity).ParentUid == follower)
-            return;
+        var targetXform = Transform(entity);
+        while (targetXform.ParentUid.IsValid())
+        {
+            if (targetXform.ParentUid == follower)
+                return;
+
+            targetXform = Transform(targetXform.ParentUid);
+        }
 
         var followerComp = EnsureComp<FollowerComponent>(follower);
         followerComp.Following = entity;
