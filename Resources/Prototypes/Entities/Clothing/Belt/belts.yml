@@ -29,8 +29,6 @@
         - HolofanProjector
         - Multitool
         - AppraisalTool
-        - TrayScanner
-        - GasAnalyzer
       components:
         - AirlockPainter
         - NetworkConfigurator
@@ -309,7 +307,6 @@
         - PlantSampleTaker
         - PlantBGone
         - Bottle
-        - Syringe
         - CigPack
       components:
         - Seed
