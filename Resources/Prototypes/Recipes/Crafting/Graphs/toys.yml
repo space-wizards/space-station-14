@@ -1,0 +1,15 @@
+﻿- type: constructionGraph
+  id: PlushieGhostRevenant
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: plushie
+          steps:
+            - prototype: PlushieGhost
+              name: a ghost plushie
+            - prototype: Ectoplasm
+              name: ectoplasm
+              doAfter: 10
+    - node: plushie
+      entity: PlushieGhostRevenant

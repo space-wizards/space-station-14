@@ -92,7 +92,7 @@ namespace Content.Client.Configurable.UI
                 var input = new LineEdit
                 {
                     Name = field.Key + "-input",
-                    Text = field.Value,
+                    Text = field.Value ?? "",
                     IsValid = Validate,
                     HorizontalExpand = true,
                     SizeFlagsStretchRatio = .8f

@@ -31,6 +31,14 @@
      Plastic: 300
 
 - type: latheRecipe
+  id: StationMapElectronics
+  result: StationMapCircuitboard
+  completetime: 2
+  materials:
+     Steel: 50
+     Plastic: 50
+
+- type: latheRecipe
   id: IntercomElectronics
   result: IntercomElectronics
   completetime: 2
