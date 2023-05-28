@@ -332,7 +332,7 @@
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
-      - PaperPrinterCircuitboard
+#      - PaperPrinterCircuitboard  # will be added along with the documents so as not to get a machine with an empty list of recipes
   - type: MaterialStorage
     whitelist:
       tags:
@@ -699,7 +699,8 @@
     idleState: icon
     runningState: building
     staticRecipes:
-#   - PaperNameExample
+#    - PaperNameExample
+    - Drill # for YAML Linter, remove after documents will added
   - type: MaterialStorage
     materialWhiteList:
     - Ink
