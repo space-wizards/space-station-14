@@ -6,7 +6,7 @@ namespace Content.Shared.Weapons.Melee.Components;
 /// This is used for adding in bonus damage via <see cref="GetMeleeWeaponEvent"/>
 /// This exists only for event relays and doing entity shenanigans.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class BonusMeleeDamageComponent : Component
 {
     /// <summary>
