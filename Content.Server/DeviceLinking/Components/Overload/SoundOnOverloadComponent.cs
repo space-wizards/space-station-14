@@ -4,7 +4,9 @@ using Robust.Shared.Audio;
 namespace Content.Server.DeviceLinking.Components.Overload;
 
 /// <summary>
-/// Plays a sound when a device link overloads
+/// Plays a sound when a device link overloads.
+/// An overload happens when a device link sink is invoked to many times per tick
+/// and it raises a <see cref="Content.Server.DeviceLinking.Events.DeviceLinkOverloadedEvent"/>
 /// </summary>
 [RegisterComponent]
 [Access(typeof(DeviceLinkOverloadSystem))]

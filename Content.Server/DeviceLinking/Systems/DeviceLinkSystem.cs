@@ -23,7 +23,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
     {
         var query = EntityQueryEnumerator<DeviceLinkSinkComponent>();
 
-        while (query.MoveNext(out var uid, out var component))
+        while (query.MoveNext(out var component))
         {
             if (component.InvokeLimit < 1)
             {
@@ -33,14 +33,6 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
 
             if(component.InvokeCounter > 0)
                 component.InvokeCounter--;
-
-            if (component.InvokeCounter <= component.InvokeLimit)
-                continue;
-
-            component.InvokeCounter = 0;
-            var args = new DeviceLinkOverloadedEvent();
-            RaiseLocalEvent(uid, ref args);
-            RemoveAllFromSink(uid, component);
         }
     }
 
@@ -94,6 +86,15 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
             {
                 if (source != port)
                     continue;
+
+                if (sinkComponent.InvokeCounter > sinkComponent.InvokeLimit)
+                {
+                    sinkComponent.InvokeCounter = 0;
+                    var args = new DeviceLinkOverloadedEvent();
+                    RaiseLocalEvent(sinkUid, ref args);
+                    RemoveAllFromSink(sinkUid, sinkComponent);
+                    continue;
+                }
 
                 sinkComponent.InvokeCounter++;
 

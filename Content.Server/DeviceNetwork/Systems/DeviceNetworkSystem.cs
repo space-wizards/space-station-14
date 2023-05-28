@@ -86,6 +86,9 @@ namespace Content.Server.DeviceNetwork.Systems
         /// Swaps the active queue.
         /// Queues are swapped so that packets being sent in the current tick get processed in the next tick.
         /// </summary>
+        /// <remarks>
+        /// This prevents infinite loops while sending packets
+        /// </remarks>
         private void SwapQueues()
         {
             _nextQueue = _activeQueue;
