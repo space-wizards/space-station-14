@@ -37,6 +37,7 @@
         - Welder
         - PowerCell
         - Geiger
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
       drill:
@@ -110,6 +111,7 @@
         - Handcuff
         - PowerCell
         - Geiger
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
       drill:
