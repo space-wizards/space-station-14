@@ -44,12 +44,12 @@
     - type: Sprite
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
-      netsync: false
       noRot: true
     - type: Item
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.25,-0.25,0.25,0.25"
           density: 20
@@ -63,7 +63,7 @@
       fixedRotation: true
       bodyType: Dynamic
     - type: TileFrictionModifier
-      modifier: 0.01
+      modifier: 0.1
     - type: Tag
       tags:
         - ForceableFollow
