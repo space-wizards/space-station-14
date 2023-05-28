@@ -83,13 +83,13 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target, null);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand);
 
                 Assert.That(handSys.TryPickup(user, item));
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target, null);
                 Assert.That(interactUsing);
             });
 
@@ -146,13 +146,13 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target, null);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand, Is.False);
 
                 Assert.That(handSys.TryPickup(user, item));
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target, null);
                 Assert.That(interactUsing, Is.False);
             });
 
@@ -207,13 +207,13 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target, null);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand);
 
                 Assert.That(handSys.TryPickup(user, item));
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target, null);
                 Assert.That(interactUsing);
             });
 
@@ -269,13 +269,13 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 testInteractionSystem.InteractUsingEvent   = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(target)); interactHand = true; };
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target, null);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand, Is.False);
 
                 Assert.That(handSys.TryPickup(user, item));
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target, null);
                 Assert.That(interactUsing, Is.False);
             });
 
@@ -340,20 +340,20 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 testInteractionSystem.InteractUsingEvent    = (ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity)); interactUsing = true; };
                 testInteractionSystem.InteractHandEvent     = (ev) => { Assert.That(ev.Target, Is.EqualTo(containerEntity)); interactHand = true; };
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target, null);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand, Is.False);
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(containerEntity).Coordinates, containerEntity);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(containerEntity).Coordinates, containerEntity, null);
                 Assert.That(interactUsing, Is.False);
                 Assert.That(interactHand);
 
                 Assert.That(handSys.TryPickup(user, item));
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target, null);
                 Assert.That(interactUsing, Is.False);
 
-                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(containerEntity).Coordinates, containerEntity);
+                interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(containerEntity).Coordinates, containerEntity, null);
                 Assert.That(interactUsing, Is.True);
             });
 

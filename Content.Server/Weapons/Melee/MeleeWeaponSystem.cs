@@ -200,19 +200,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
     {
-        EntityCoordinates targetCoordinates;
-        Angle targetLocalAngle;
-
-        if (session is IPlayerSession pSession)
-        {
-            (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
-        }
-        else
-        {
-            var xform = Transform(target);
-            targetCoordinates = xform.Coordinates;
-            targetLocalAngle = xform.LocalRotation;
-        }
+        var (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, session);
 
         return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range);
     }

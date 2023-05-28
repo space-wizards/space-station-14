@@ -251,7 +251,7 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            InteractSys.UserInteraction(Player, SEntMan.GetComponent<TransformComponent>(target).Coordinates, target);
+            InteractSys.UserInteraction(Player, SEntMan.GetComponent<TransformComponent>(target).Coordinates, target, null);
         });
     }
 
@@ -290,7 +290,7 @@ public abstract partial class InteractionTest
     {
         if (Target == null || !Target.Value.IsClientSide())
         {
-            await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
+            await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target, null));
             await RunTicks(1);
         }
         else

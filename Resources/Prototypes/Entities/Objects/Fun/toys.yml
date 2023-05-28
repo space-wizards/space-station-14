@@ -63,7 +63,7 @@
       fixedRotation: true
       bodyType: Dynamic
     - type: TileFrictionModifier
-      modifier: 0.1
+      modifier: 0.01
     - type: Tag
       tags:
         - ForceableFollow

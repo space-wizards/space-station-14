@@ -2,10 +2,10 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -33,25 +33,7 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
-            SubscribeLocalEvent<ThrownItemComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<ThrownItemComponent, ComponentHandleState>(OnHandleState);
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
-        }
-
-        private void OnGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
-        {
-            args.State = new ThrownItemComponentState(component.Thrower);
-        }
-
-        private void OnHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not ThrownItemComponentState {Thrower: not null } state ||
-                !state.Thrower.Value.IsValid())
-            {
-                return;
-            }
-
-            component.Thrower = state.Thrower.Value;
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
@@ -110,6 +92,11 @@ namespace Content.Shared.Throwing
                 {
                     _fixtures.DestroyFixture(uid, fixture, manager: manager);
                 }
+            }
+
+            if (!thrownItemComponent.LagCompensated)
+            {
+                RemComp<LagCompensationComponent>(uid);
             }
 
             EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent {User = thrownItemComponent.Thrower}, true);

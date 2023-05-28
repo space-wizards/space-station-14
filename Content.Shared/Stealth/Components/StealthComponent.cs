@@ -9,14 +9,14 @@ namespace Content.Shared.Stealth.Components;
 /// It also turns the entity invisible.
 /// Use other components (like StealthOnMove) to modify this component's visibility based on certain conditions.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedStealthSystem))]
-public sealed class StealthComponent : Component
+public sealed partial class StealthComponent : Component
 {
     /// <summary>
     /// Whether or not the stealth effect should currently be applied.
     /// </summary>
-    [DataField("enabled")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("enabled"), AutoNetworkedField]
     public bool Enabled = true;
 
     /// <summary>
@@ -28,7 +28,7 @@ public sealed class StealthComponent : Component
     /// <summary>
     /// Minimum visibility before the entity becomes unexaminable (and thus no longer appears on context menus).
     /// </summary>
-    [DataField("examineThreshold")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("examineThreshold")]
     public readonly float ExamineThreshold = 0.5f;
 
     /// <summary>
@@ -37,8 +37,8 @@ public sealed class StealthComponent : Component
     /// get the actual current visibility, use <see cref="SharedStealthSystem.GetVisibility(EntityUid, StealthComponent?)"/>
     /// If you don't have anything else updating the stealth, this will just stay at a constant value, which can be useful.
     /// </summary>
-    [DataField("lastVisibility")]
-    [Access(typeof(SharedStealthSystem), Other = AccessPermissions.None)]
+    [ViewVariables(VVAccess.ReadWrite), DataField("lastVisibility")]
+    [Access(typeof(SharedStealthSystem), Other = AccessPermissions.None), AutoNetworkedField]
     public float LastVisibility = 1;
 
 
@@ -46,7 +46,7 @@ public sealed class StealthComponent : Component
     /// Time at which <see cref="LastVisibility"/> was set. Null implies the entity is currently paused and not
     /// accumulating any visibility change.
     /// </summary>
-    [DataField("lastUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [ViewVariables(VVAccess.ReadWrite), DataField("lastUpdate", customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan? LastUpdated;
 
     /// <summary>
@@ -66,19 +66,4 @@ public sealed class StealthComponent : Component
     /// </summary>
     [DataField("examinedDesc")]
     public string ExaminedDesc = "stealth-visual-effect";
-}
-
-[Serializable, NetSerializable]
-public sealed class StealthComponentState : ComponentState
-{
-    public readonly float Visibility;
-    public readonly TimeSpan? LastUpdated;
-    public readonly bool Enabled;
-
-    public StealthComponentState(float stealthLevel, TimeSpan? lastUpdated, bool enabled)
-    {
-        Visibility = stealthLevel;
-        LastUpdated = lastUpdated;
-        Enabled = enabled;
-    }
 }

@@ -24,7 +24,7 @@ public sealed class InteractWithOperator : HTNOperator
             return HTNOperatorStatus.Continuing;
         }
 
-        _entManager.System<InteractionSystem>().UserInteraction(owner, targetXform.Coordinates, moveTarget);
+        _entManager.System<InteractionSystem>().UserInteraction(owner, targetXform.Coordinates, moveTarget, null);
 
         return HTNOperatorStatus.Finished;
     }

@@ -114,6 +114,12 @@ public sealed class ThrowingSystem : EntitySystem
         var comp = EnsureComp<ThrownItemComponent>(uid);
         comp.Thrower = user;
 
+        // Just so every item under the sun doesn't get lag comp iteration we'll cull it after throwing
+        if (!EntityManager.EnsureComponent<LagCompensationComponent>(uid, out _))
+        {
+            comp.LagCompensated = false;
+        }
+
         // Give it a l'il spin.
         if (physics.InvI > 0f && (!tagQuery.TryGetComponent(uid, out var tag) || !_tagSystem.HasTag(tag, "NoSpinOnThrow")))
             _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse / physics.InvI, body: physics);

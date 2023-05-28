@@ -1,5 +1,6 @@
 using Content.Server.Movement.Components;
-using Robust.Server.Player;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -10,7 +11,7 @@ namespace Content.Server.Movement.Systems;
 /// Stores a buffer of previous positions of the relevant entity.
 /// Can be used to check the entity's position at a recent point in time.
 /// </summary>
-public sealed class LagCompensationSystem : EntitySystem
+public sealed class LagCompensationSystem : SharedLagCompensationSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -36,7 +37,9 @@ public sealed class LagCompensationSystem : EntitySystem
 
         // Cull any old ones from active updates
         // Probably fine to include ignored.
-        foreach (var (_, comp) in EntityQuery<ActiveLagCompensationComponent, LagCompensationComponent>(true))
+        var allQuery = AllEntityQuery<LagCompensationComponent>();
+
+        while (allQuery.MoveNext(out var comp))
         {
             while (comp.Positions.TryPeek(out var pos))
             {
@@ -48,11 +51,6 @@ public sealed class LagCompensationSystem : EntitySystem
 
                 break;
             }
-
-            if (comp.Positions.Count == 0)
-            {
-                RemComp<ActiveLagCompensationComponent>(comp.Owner);
-            }
         }
     }
 
@@ -61,11 +59,10 @@ public sealed class LagCompensationSystem : EntitySystem
         if (!args.NewPosition.EntityId.IsValid())
             return; // probably being sent to nullspace for deletion.
 
-        EnsureComp<ActiveLagCompensationComponent>(uid);
         component.Positions.Enqueue((_timing.CurTime, args.NewPosition, args.NewRotation));
     }
 
-    public (EntityCoordinates Coordinates, Angle Angle) GetCoordinatesAngle(EntityUid uid, ICommonSession? pSession,
+    public override (EntityCoordinates Coordinates, Angle Angle) GetCoordinatesAngle(EntityUid uid, ICommonSession? pSession,
         TransformComponent? xform = null)
     {
         if (!Resolve(uid, ref xform))

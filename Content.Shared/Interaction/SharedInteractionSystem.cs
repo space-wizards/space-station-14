@@ -17,6 +17,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Pulling;
@@ -56,6 +57,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly ISharedAdminManager _adminManager = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedLagCompensationSystem _lag = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
@@ -216,7 +218,7 @@ namespace Content.Shared.Interaction
 
             if (msg.AltInteract)
                 // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
-                UserInteraction(user.Value, itemXform.Coordinates, msg.ItemUid, msg.AltInteract);
+                UserInteraction(user.Value, itemXform.Coordinates, msg.ItemUid, args.SenderSession, msg.AltInteract);
             else
                 // User used 'E'. We want to activate it, not simulate clicking on the item
                 InteractionActivate(user.Value, msg.ItemUid);
@@ -231,7 +233,7 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
-            UserInteraction(user.Value, coords, uid, altInteract: true, checkAccess: ShouldCheckAccess(user.Value));
+            UserInteraction(user.Value, coords, uid, session, altInteract: true, checkAccess: ShouldCheckAccess(user.Value));
 
             return false;
         }
@@ -245,7 +247,7 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
-            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null, checkAccess: ShouldCheckAccess(userEntity.Value));
+            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null, session, checkAccess: ShouldCheckAccess(userEntity.Value));
 
             return false;
         }
@@ -270,6 +272,7 @@ namespace Content.Shared.Interaction
             EntityUid user,
             EntityCoordinates coordinates,
             EntityUid? target,
+            ICommonSession? session,
             bool altInteract = false,
             bool checkCanInteract = true,
             bool checkAccess = true,
@@ -280,7 +283,7 @@ namespace Content.Shared.Interaction
                 // TODO this needs to be handled better. This probably bypasses many complex can-interact checks in weird roundabout ways.
                 if (_actionBlockerSystem.CanInteract(user, target))
                 {
-                    UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract, checkAccess, checkCanUse);
+                    UserInteraction(relay.RelayEntity.Value, coordinates, target, session, altInteract, checkCanInteract, checkAccess, checkCanUse);
                     return;
                 }
             }
@@ -314,11 +317,26 @@ namespace Content.Shared.Interaction
                 && target != null
                 && !_containerSystem.IsInSameOrParentContainer(user, target.Value)
                 && !CanAccessViaStorage(user, target.Value))
+            {
                 return;
+            }
 
-            var inRangeUnobstructed = target == null
-                ? !checkAccess || InRangeUnobstructed(user, coordinates)
-                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
+            var inRangeUnobstructed = true;
+
+            if (target == null)
+            {
+                inRangeUnobstructed = !checkAccess || InRangeUnobstructed(user, coordinates);
+            }
+            else
+            {
+                if (checkAccess)
+                {
+                    var (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target.Value, session);
+
+                    // permits interactions with wall mounted entities
+                    inRangeUnobstructed = InRangeUnobstructed(user, target.Value, targetCoordinates, targetLocalAngle, InteractionRange);
+                }
+            }
 
             // Does the user have hands?
             if (!TryComp(user, out HandsComponent? hands) || hands.ActiveHand == null)
