@@ -31,8 +31,6 @@
         acts: ["Destruction"]
   - type: SubFloorHide
   - type: CollideOnAnchor
-  - type: AmbientSound
-    enabled: false  # Leaving as false because 90% of them are set to this.
   - type: Appearance
   - type: Electrified
     onHandInteract: false
@@ -44,7 +42,7 @@
     lowVoltageNode: power
   - type: CableVis
     node: power
-   
+
 
 - type: entity
   parent: CableBase
@@ -89,6 +87,7 @@
   - type: CableVisualizer
     statePrefix: hvcable_
   - type: AmbientSound
+    enabled: false
     volume: -15
     range: 2
     sound:
@@ -137,11 +136,6 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: mvcable_
-  - type: AmbientSound
-    volume: -16
-    range: 2
-    sound:
-      path: /Audio/Ambience/Objects/emf_buzz.ogg
 
 - type: entity
   parent: CableBase
@@ -189,8 +183,3 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: lvcable_
-  - type: AmbientSound
-    volume: -17
-    range: 2
-    sound:
-      path: /Audio/Ambience/Objects/emf_buzz.ogg
