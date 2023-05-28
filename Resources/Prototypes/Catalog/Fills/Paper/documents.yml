@@ -1,0 +1,7 @@
+#- type: entity
+#  id: PaperNameExample
+#  name: name example
+#  parent: PaperOffice
+#  components:
+#  - type: Paper
+#    content: document-text-name-example

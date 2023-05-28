@@ -85,6 +85,23 @@
     {
       "name": "uranium-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "ink"
+    },
+    {
+      "name": "ink_2"
+    },
+    {
+      "name": "ink_3"
+    },
+    {
+      "name": "ink-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "ink-inhand-right",
+      "directions": 4
     }
   ]
 }

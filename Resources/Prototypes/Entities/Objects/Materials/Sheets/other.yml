@@ -31,6 +31,10 @@
   name: paper
   suffix: Full
   components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 100
   - type: Stack
     stackType: Paper
     baseLayer: base
@@ -190,5 +194,43 @@
   name: uranium
   suffix: Single
   components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: SheetOtherBase
+  id: SheetInk
+  name: solid ink
+  suffix: Full
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: ink_3
+  - type: Item
+    sprite: Objects/Materials/Sheets/other.rsi
+    heldPrefix: ink
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Ink: 100
+  - type: Stack
+    stackType: Ink
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - ink
+      - ink_2
+      - ink_3
+
+- type: entity
+  parent: SheetInk
+  id: SheetInk1
+  name: solid ink
+  suffix: Single
+  components:
+  - type: Sprite
+    state: ink
   - type: Stack
     count: 1

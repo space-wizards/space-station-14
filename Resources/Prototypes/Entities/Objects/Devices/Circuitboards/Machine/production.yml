@@ -804,3 +804,17 @@
       materialRequirements:
         Steel: 1
         Cable: 2
+
+- type: entity
+  id: PaperPrinterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: printer machine board
+  description: A machine printed circuit board for a printer.
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: PaperPrinter
+      requirements:
+        MatterBin: 2
+        Manipulator: 2

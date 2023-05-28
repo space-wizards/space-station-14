@@ -25,3 +25,10 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: uranium }
   spawn: SheetUranium1
   maxCount: 30
+
+- type: stack
+  id: Ink
+  name: solid ink
+  icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: ink }
+  spawn: SheetInk1
+  maxCount: 30
