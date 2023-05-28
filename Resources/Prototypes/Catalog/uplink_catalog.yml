@@ -894,7 +894,7 @@
   description: uplink-experimental-stimpack-desc
   productEntity: StimpackExperimental
   cost:
-    Telecrystal: 15
+    Telecrystal: 8
   categories:
   - UplinkMisc
   conditions:
