@@ -1,32 +1,4 @@
 Entries:
-- author: Mumohan
-  changes:
-  - {message: Plushies and other toys no longer conduct electricity, type: Fix}
-  id: 3386
-  time: '2023-04-12T00:11:55.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Being unable to deconstruct communications servers., type: Fix}
-  - {message: Fixed metal rods sometimes not being consumed when placing down lattice
-      tiles., type: Fix}
-  id: 3387
-  time: '2023-04-12T00:18:30.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not showing the ahelp relay label unless the relay was changed
-      while connected., type: Fix}
-  id: 3388
-  time: '2023-04-12T00:19:09.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Added showing ban and note count to admins in the ahelp window., type: Add}
-  id: 3389
-  time: '2023-04-12T00:34:25.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Cloth can be used as gauze to stop bleeding!, type: Add}
-  id: 3390
-  time: '2023-04-12T08:53:10.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix emergency shuttles docking at the wrong airlocks., type: Fix}
@@ -2906,3 +2878,32 @@ Entries:
   - {message: Added reaction for cola creation., type: Add}
   id: 3885
   time: '2023-05-28T10:25:12.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'As per request of several Operatives the experimental stimpack was
+      cut down in price by nearly half, don''t forget the antitoxin that (doesn''t)
+      come in the package.', type: Tweak}
+  id: 3886
+  time: '2023-05-28T20:05:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'NanoTrasen''s CBURN unit fell asleep on the job, accidentally reintroducing
+      the undead into the standard station ecosystem. Watch your back and don''t get
+      bit.', type: Add}
+  id: 3887
+  time: '2023-05-28T20:06:15.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Tweaked singularity to stay small with with a level 1 PA., type: Tweak}
+  id: 3888
+  time: '2023-05-28T20:06:36.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Fixed not being able to set up mailing units, type: Fix}
+  id: 3889
+  time: '2023-05-28T20:06:54.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Fixed suit sensors for crew arriving via arrivals shuttle, type: Fix}
+  id: 3890
+  time: '2023-05-28T20:07:31.0000000+00:00'
