@@ -1,10 +1,4 @@
 Entries:
-- author: EnDecc
-  changes:
-  - {message: 'Doubled drain buffer size from 500u > 1000u, Tripled units deleted
-      per tick from 1 > 3', type: Tweak}
-  id: 3383
-  time: '2023-04-11T11:21:31.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Tools no longer make sounds if using them fails., type: Fix}
@@ -2904,3 +2898,8 @@ Entries:
   - {message: Emitters and APEs can now be controlled with device linking., type: Add}
   id: 3882
   time: '2023-05-28T06:44:28.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Revenants now drop ectoplasm when they die., type: Tweak}
+  id: 3883
+  time: '2023-05-28T09:21:07.0000000+00:00'
