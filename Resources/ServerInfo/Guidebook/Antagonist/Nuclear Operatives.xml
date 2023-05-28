@@ -18,7 +18,7 @@ If you have been selected for either of these special roles but don't feel ready
 
 ## Preparation
 
-Taking on a whole station in a fight is a difficult job, luckily you are well prepared for the job. Every operative has an [color=#a4885c]Uplink[/color]. It comes with 40 [color=#a4885c]Telecrystals[/color], which you can use to purchase gear. What you get depends on the strategy picked by your commander or voted for by the team. You will not have any accesses aboard the station, so remember to bring a way to hack or explode your way in. In general you should need some weapons, something to breach doors, and utility/healing.
+Taking on a whole station in a fight is a difficult job, luckily you are well prepared for the job. Every operative has an [color=#a4885c]Uplink[/color]. It comes with 40 [color=#a4885c]Telecrystals[/color], which you can use to purchase gear. What you get depends on the strategy picked by your commander or voted for by the team. Only your commander and agent will have passenger access, but no external airlock access. This means you will need something to hack or blast your way onto the station.  In general you should need some weapons, something to breach doors, and utility/healing.
 
 <Box>
 <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="The Uplink"/>
