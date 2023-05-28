@@ -1,12 +1,6 @@
 Entries:
 - author: Skyedra
   changes:
-  - {message: Ability to bind the menu toggle key directly in the UI, type: Add}
-  - {message: Default menu toggle moved from F12 to F10, type: Tweak}
-  id: 3381
-  time: '2023-04-11T03:40:07.0000000+00:00'
-- author: Skyedra
-  changes:
   - {message: '''Esc Menu'' title renamed to ''Game Menu''', type: Tweak}
   id: 3382
   time: '2023-04-11T06:26:39.0000000+00:00'
@@ -2905,3 +2899,8 @@ Entries:
       genuine or a red herring remains to be seen., type: Add}
   id: 3880
   time: '2023-05-27T19:50:51.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Station Map has been resprited and can now be constructed., type: Add}
+  id: 3881
+  time: '2023-05-28T06:42:41.0000000+00:00'
