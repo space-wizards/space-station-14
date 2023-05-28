@@ -1,0 +1,42 @@
+<Document>
+# Antagonists
+
+Antagonists are a drving force during a round of space station 14, usually creating conflict and defying the crew. Antagonists goals can vary, but they usually require some thievery, sabotage, or murder.
+
+## Various Antagonists
+
+Antagonists can take various forms. These include:
+- Elite nuclear operatives, with the goal of infiltrating and destroying the station.
+- Sneaky traitors disguised as normal crew, who assasinate crewmembers and steal high value items.
+- Several non-humanoid creatures, who usually just try to bring down as many crewmembers as they can. 
+
+## How to deal with them
+Antagonists are a major threat to the station, and usually must be taken down through lethal or nonlethal means.
+
+Traitors have access to an arsenal of dangerous gear. This gear is contraband, and possesion of it is enough to warrent a search or an arrest by security. If a potential traitor poses a threat, whether they are attacking people or possesing a lethal weapon or bomb, they should be taken down accordingly. Remember to follow escelation rules!
+
+<Box>
+<GuideEntityEmbed Entity="WeaponRevolverPython" Caption="Syndicate python, "/>
+<GuideEntityEmbed Entity="C4" Caption="C-4 explosive, "/>
+<GuideEntityEmbed Entity="Emag" Caption="Electromagnetic sequencer"/>
+</Box>
+
+
+Nuclear operatives, or nukies, are usually a gang of 3-5 people in blood-red hardsuits. They are a station-wide threat. If you see theem you should tell as many people as you can so the station can prepare for a fight.
+
+<Box>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieCommander" Caption=""/>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieElite" Caption="Several possible nukie hardsuits"/>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitSyndie" Caption=""/>
+</Box>
+
+
+Nonhuman critters like spiders, rat kings, and slimes will usually be attacking everybody, so prepare to use lethal force when you see one.
+
+<Box>
+<GuideEntityEmbed Entity="MobGiantSpider" Caption="Giant Spider"/>
+<GuideEntityEmbed Entity="MobRatKing" Caption="Rat King"/>
+<GuideEntityEmbed Entity="MobAdultSlimesGreen" Caption="Slime"/>  
+</Box>
+
+</Document>

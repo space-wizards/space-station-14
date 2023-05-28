@@ -1,0 +1,53 @@
+<Document>
+# Nuclear Operatives
+
+AUTOTELL ON STANDBY. YOUR OBJECTIVES ARE SIMPLE. DELIVER THE PAYLOAD AND GET OUT BEFORE THE PAYLOAD DETONATES. BEGIN MISSION.
+
+If you hear this message on roundstart then congratulations! You have just been chosen to be a nuclear operative for the syndicate. You have one goal, to blow up the space station with a nuclear fission explosive.
+
+## Operatives
+
+Your team will usually consist of three to five operatives. There is one commander, one agent, and the rest are normal. You can identify your commander and agent by their unique suits. The commander will create or approve of your plan and wears the red [color=#a4885c]Commander Hardsuit[/color]. The agent will usually act as a combat medic and wears the black [color=#a4885c]Elite Hardsuit[/color].
+If you have been selected for either of these special roles but don't feel ready, one of your teammates can take responsibility.
+
+<Box>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieCommander" Caption="Commander Hardsuit"/>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieElite" Caption="Agent Hardsuit"/>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitSyndie" Caption="Regular Hardsuit"/>
+</Box>
+
+## Preparation
+
+Taking on a whole station in a fight is a difficult job, luckily you are well prepared for the job. Every operative has an [color=#a4885c]Uplink[/color]. It comes with 40 [color=#a4885c]Telecrystals[/color], which you can use to purchase gear. What you get depends on the strategy picked by your commander or voted for by the team. You will not have any accesses aboard the station, so remember to bring a way to hack or explode your way in. In general you should need some weapons, something to breach doors, and utility/healing.
+
+<Box>
+<GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="The Uplink"/>
+</Box>
+
+## Getting to the Station
+
+After gearing up and creating a plan, grab a jetpack from your armory and go with your other operatives to the [color=#a4885c]Nukie Shuttle[/color]. Here you will find some extra explosives and tools, as well as your nuke and nuke codes.
+Go to the head of the shuttle and interact with the IFF console. Turn [color=#a4885c]Show IFF[/color] and [color=#a4885c]Show Vessel[/color] off, so that nobody using a mass scanner on the station can see your ship. When everyone is ready, FTL to the station and fly to it with a jetpack. Don't forget the nuclear fission explosive on your ship if you are going to use it, and definitely don't forget the nuke codes or pinpointer.
+
+## The Disk
+
+You will notice that each operative starts with a [color=#a4885c]Pinpointer[/color]. This device is one of the most important to the mission, and you should keep it with you at all times. Turn on the pinpointer when you arrive to the station and it will always point to the [color=#a4885c]Nuke Disk[/color], your next objective.
+The nuke disk belongs to the captain, they will almost always have it on them. Follow the direction of the arrow on the pinpointer to the captain, and do whatever it takes to get it from them.
+
+<Box>
+<GuideEntityEmbed Entity="PinpointerNuclear" Caption="The Pinpointer"/>
+<GuideEntityEmbed Entity="NukeDisk" Caption="The Nuke Disk"/>
+</Box>
+
+## The Nuke
+
+On your shuttle you will find one of two [color=#a4885c]Nuclear Fission Explosives[/color] and a paper with the nuke codes. The paper will tell you which explosive it corresponds to. If the ID is the same as the one on your nuke, the codes will only work for it. If it is not, then they will only work for the explosive in the station's vault.
+
+When you acquire the nuke disk, put it into the explosives and use the code to arm the nuke. It takes 30 seconds for a crewmember to disarm, and will count down from 300. Be prepared to defend the nuke for as long as possible, remember that escaping alive isn't necessary, but recommended.
+
+<Box>
+<GuideEntityEmbed Entity="NuclearBomb" Caption="The Nuclear Fission Explosive"/>
+</Box>
+
+If you manage to complete all these steps, then congratulations operative! You have succeeded in your mission.
+</Document>

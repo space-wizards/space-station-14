@@ -26,3 +26,6 @@ guide-entry-machine-upgrading = Machine Upgrading
 
 guide-entry-security = Security
 guide-entry-dna = DNA
+
+guide-entry-antagonists = Antagonists
+guide-entry-nuclear-operatives = Nuclear Operatives
