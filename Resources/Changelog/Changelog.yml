@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Tools no longer make sounds if using them fails., type: Fix}
-  id: 3384
-  time: '2023-04-11T17:31:12.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added Brigmedic job and other things for brigmedic., type: Add}
@@ -2903,3 +2898,11 @@ Entries:
   - {message: Revenants now drop ectoplasm when they die., type: Tweak}
   id: 3883
   time: '2023-05-28T09:21:07.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Adds the universal pinpointer. A pinpointer that can be linked to track
+      anything., type: Add}
+  - {message: Pinpointers can now be emagged to act as stealthy universal pinpointers.,
+    type: Tweak}
+  id: 3884
+  time: '2023-05-28T10:24:09.0000000+00:00'
