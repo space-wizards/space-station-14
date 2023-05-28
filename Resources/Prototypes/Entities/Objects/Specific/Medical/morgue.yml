@@ -123,3 +123,26 @@
   - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
+
+- type: entity
+  parent: Ash
+  id: Ectoplasm
+  name: ectoplasm
+  description: Much less deadly in this form.
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Mobs/Ghosts/revenant.rsi
+      state: ectoplasm
+    - type: Tag
+      tags:
+        - Trash
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 50
+          reagents:
+            - ReagentId: Ash
+              Quantity: 5
+            - ReagentId: SpaceLube
+              Quantity: 5

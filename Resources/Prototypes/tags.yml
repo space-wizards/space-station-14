@@ -285,6 +285,9 @@
   id: FootstepSound
 
 - type: Tag
+  id: ForceableFollow
+
+- type: Tag
   id: ForceFixRotations # fixrotations command WILL target this
 
 - type: Tag

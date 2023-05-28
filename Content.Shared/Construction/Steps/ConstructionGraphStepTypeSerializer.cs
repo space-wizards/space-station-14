@@ -31,6 +31,11 @@ namespace Content.Shared.Construction.Steps
                 return typeof(TagConstructionGraphStep);
             }
 
+            if (node.Has("prototype"))
+            {
+                return typeof(PrototypeConstructionGraphStep);
+            }
+
             if (node.Has("allTags") || node.Has("anyTags"))
             {
                 return typeof(MultipleTagsConstructionGraphStep);
