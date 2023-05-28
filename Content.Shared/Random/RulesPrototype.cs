@@ -98,6 +98,9 @@ public sealed class OnMapGridRule : RulesRule
 /// </summary>
 public sealed class NearbyAccessRule : RulesRule
 {
+    [DataField("anchored")]
+    public bool Anchored = true;
+
     /// <summary>
     /// Count of entities that need to be nearby.
     /// </summary>

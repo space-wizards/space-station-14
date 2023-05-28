@@ -56,22 +56,27 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case NearbyAccessRule access:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    var xformQuery = GetEntityQuery<TransformComponent>();
+
+                    if (!xformQuery.TryGetComponent(uid, out var xform) ||
                         xform.MapUid == null)
                     {
                         return false;
                     }
 
                     var found = false;
-                    var worldPos = _transform.GetWorldPosition(xform);
+                    var worldPos = _transform.GetWorldPosition(xform, xformQuery);
                     var count = 0;
 
                     // TODO: Update this when we get the callback version
                     foreach (var comp in _lookup.GetComponentsInRange<AccessReaderComponent>(xform.MapID,
                                  worldPos, access.Range))
                     {
-                        if (!_reader.AreAccessTagsAllowed(access.Access, comp))
+                        if (access.Anchored && !xformQuery.GetComponent(comp.Owner).Anchored ||
+                            !_reader.AreAccessTagsAllowed(access.Access, comp))
+                        {
                             continue;
+                        }
 
                         count++;
 
