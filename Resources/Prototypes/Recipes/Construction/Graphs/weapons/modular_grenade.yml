@@ -14,8 +14,7 @@
   - node: emptyCase
     entity: ModularGrenade      
     actions:
-    - !type:SpriteStateChange
-      state: empty
+    - !type:AppearanceChange
     edges:
     - to: wiredCase
       steps:
@@ -34,8 +33,7 @@
   - node: wiredCase
     entity: ModularGrenade      
     actions:
-    - !type:SpriteStateChange
-      state: wired
+    - !type:AppearanceChange
     - !type:PlaySound
       sound: /Audio/Machines/button.ogg
     edges:
@@ -55,8 +53,7 @@
 
   - node: caseWithTrigger
     actions:
-    - !type:SpriteStateChange
-      state: no-payload
+    - !type:AppearanceChange
     - !type:PlaySound
       sound: /Audio/Machines/button.ogg
     edges:
@@ -76,8 +73,7 @@
 
   - node: grenade
     actions:
-    - !type:SpriteStateChange
-      state: complete
+    - !type:AppearanceChange
     - !type:PlaySound
       sound: /Audio/Machines/button.ogg
     - !type:AdminLog

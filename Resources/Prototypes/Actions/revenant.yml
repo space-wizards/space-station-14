@@ -21,13 +21,13 @@
   serverEvent: !type:RevenantOverloadLightsActionEvent
   useDelay: 20
 
-- type: instantAction
-  id: RevenantBlight
-  icon: Interface/Actions/blight.png
-  name: Blight
-  description: Costs 50 Essence.
-  serverEvent: !type:RevenantBlightActionEvent
-  useDelay: 20
+#- type: instantAction
+#  id: RevenantBlight
+#  icon: Interface/Actions/blight.png
+#  name: Blight
+#  description: Costs 50 Essence.
+#  serverEvent: !type:RevenantBlightActionEvent
+#  useDelay: 20
 
 - type: instantAction
   id: RevenantMalfunction

@@ -1,4 +1,6 @@
 using Content.Server.Shuttles.Components;
+using Content.Server.Station.Components;
+using Content.Shared.CCVar;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -18,6 +20,9 @@ public sealed partial class ShuttleSystem
             return;
         }
 
+        if (_cfg.GetCVar(CCVars.DisableGridFill))
+            return;
+
         // Spawn on a dummy map and try to dock if possible, otherwise dump it.
         var mapId = _mapManager.CreateMap();
         var valid = false;
@@ -35,6 +40,12 @@ public sealed partial class ShuttleSystem
                 if (config != null)
                 {
                     FTLDock(config, shuttleXform);
+
+                    if (TryComp<StationMemberComponent>(xform.GridUid, out var stationMember))
+                    {
+                        _station.AddGridToStation(stationMember.Station, ent[0]);
+                    }
+
                     valid = true;
                 }
             }

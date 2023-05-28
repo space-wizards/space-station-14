@@ -140,26 +140,29 @@ public sealed partial class MeleeWeaponSystem
         sprite.Rotation = localPos.ToWorldAngle();
         var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
 
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var xform = xformQuery.GetComponent(animationUid);
+
         switch (arcComponent.Animation)
         {
             case WeaponArcAnimation.Slash:
                 _animation.Play(animationUid, GetSlashAnimation(sprite, angle), SlashAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.065f, 0.065f + 0.05f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.Thrust:
                 _animation.Play(animationUid, GetThrustAnimation(sprite, distance), ThrustAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
-                var xformQuery = GetEntityQuery<TransformComponent>();
-                var (mapPos, mapRot) = _transform.GetWorldPositionRotation(userXform, xformQuery);
-                var xform = xformQuery.GetComponent(animationUid);
-                xform.AttachToGridOrMap();
+                var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform, xformQuery);
+                TransformSystem.AttachToGridOrMap(animationUid, xform);
                 var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
-                var newLocalPos = _transform.GetInvWorldMatrix(xform.ParentUid, xformQuery).Transform(worldPos);
-                _transform.SetLocalPositionNoLerp(xform, newLocalPos);
+                var newLocalPos = TransformSystem.GetInvWorldMatrix(xform.ParentUid, xformQuery).Transform(worldPos);
+                TransformSystem.SetLocalPositionNoLerp(xform, newLocalPos);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
                 break;

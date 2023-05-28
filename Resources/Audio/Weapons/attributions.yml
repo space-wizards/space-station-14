@@ -1,0 +1,9 @@
+- files: ["plasma_cutter.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel station."
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/5b43cb2545a19957ec6ce3352dceac5e347e77df/sound/weapons/plasma_cutter.ogg"
+
+- files: ["reel.ogg"]
+  license: "CC0-1.0"
+  copyright: "User tosha73 on freesound.org"
+  source: "https://freesound.org/people/tosha73/sounds/509902/"

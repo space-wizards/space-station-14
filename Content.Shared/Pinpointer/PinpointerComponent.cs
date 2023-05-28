@@ -1,10 +1,31 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Pinpointer
+namespace Content.Shared.Pinpointer;
+
+/// <summary>
+/// Displays a sprite on the item that points towards the target component.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
+[Access(typeof(SharedPinpointerSystem))]
+public sealed partial class PinpointerComponent : Component
 {
+    // TODO: Type serializer oh god
+    [DataField("component")]
+    public string? Component;
+
+    [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
+    public float MediumDistance = 16f;
+
+    [DataField("closeDistance"), ViewVariables(VVAccess.ReadWrite)]
+    public float CloseDistance = 8f;
+
+    [DataField("reachedDistance"), ViewVariables(VVAccess.ReadWrite)]
+    public float ReachedDistance = 1f;
+
     /// <summary>
-    /// Displays a sprite on the item that points towards the target component.
+    ///     Pinpointer arrow precision in radians.
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]

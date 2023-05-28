@@ -57,6 +57,7 @@ public static class PoolManager
         (CCVars.ArrivalsShuttles.Name,        "false"),
         (CCVars.EmergencyShuttleEnabled.Name, "false"),
         (CCVars.ProcgenPreload.Name,          "false"),
+        (CCVars.WorldgenEnabled.Name,         "false"),
         // @formatter:on
     };
 
@@ -669,6 +670,25 @@ we are just going to end this here to save a lot of time. This is the exception 
         }
 
         Assert.That(passed);
+    }
+
+    /// <summary>
+    ///     Helper method that retrieves all entity prototypes that have some component.
+    /// </summary>
+    public static List<EntityPrototype> GetEntityPrototypes<T>(RobustIntegrationTest.IntegrationInstance instance) where T : Component
+    {
+        var protoMan = instance.ResolveDependency<IPrototypeManager>();
+        var compFact = instance.ResolveDependency<IComponentFactory>();
+
+        var id = compFact.GetComponentName(typeof(T));
+        var list = new List<EntityPrototype>();
+        foreach (var ent in protoMan.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (ent.Components.ContainsKey(id))
+                list.Add(ent);
+        }
+
+        return list;
     }
 }
 

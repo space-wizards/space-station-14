@@ -1,0 +1,63 @@
+﻿- type: entity
+  id: BaseStation
+  abstract: true
+  components:
+    - type: StationData
+
+- type: entity
+  id: BaseStationCargo
+  abstract: true
+  components:
+    - type: StationBankAccount
+    - type: StationCargoOrderDatabase
+
+- type: entity
+  id: BaseStationJobsSpawning
+  abstract: true
+  components:
+    - type: StationJobs
+      availableJobs: {}
+    - type: StationSpawning
+
+- type: entity
+  id: BaseStationRecords
+  abstract: true
+  components:
+    - type: StationRecords
+
+- type: entity
+  id: BaseStationArrivals
+  abstract: true
+  components:
+    - type: StationArrivals
+
+- type: entity
+  id: BaseStationCentcomm
+  abstract: true
+  components:
+    - type: StationCentcomm
+
+- type: entity
+  id: BaseStationEvacuation
+  abstract: true
+  components:
+    - type: StationEmergencyShuttle
+
+- type: entity
+  id: BaseStationAlertLevels
+  abstract: true
+  components:
+    - type: AlertLevel
+      alertLevelPrototype: stationAlerts
+
+- type: entity
+  id: BaseStationExpeditions
+  abstract: true
+  components:
+    - type: SalvageExpeditionData
+
+- type: entity
+  id: BaseStationAllEventsEligible
+  abstract: true
+  components:
+    - type: StationEventEligible # For when someone makes this more granular in the future.
