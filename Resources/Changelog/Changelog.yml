@@ -1,26 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Chameleon masks can now mimic breath masks., type: Fix}
-  id: 3377
-  time: '2023-04-11T00:31:15.0000000+00:00'
-- author: freeman2651
-  changes:
-  - {message: Pill dosage limit reduced to 20u from 50u., type: Tweak}
-  id: 3378
-  time: '2023-04-11T01:23:35.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Splashing reagents using melee attacks & examining spillables should
-      work properly again, type: Tweak}
-  id: 3379
-  time: '2023-04-11T01:56:21.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Nettles can no longer inject solutions through hardsuits. Yes, this
-      means deathnettles don''t work on nukies anymore.', type: Tweak}
-  id: 3380
-  time: '2023-04-11T02:19:44.0000000+00:00'
 - author: Skyedra
   changes:
   - {message: Ability to bind the menu toggle key directly in the UI, type: Add}
@@ -2905,3 +2883,25 @@ Entries:
     type: Add}
   id: 3876
   time: '2023-05-27T04:22:23.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fix uplink typos, type: Fix}
+  id: 3877
+  time: '2023-05-27T05:33:19.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: Added a CentCom scarf., type: Add}
+  id: 3878
+  time: '2023-05-27T09:09:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Change grappling gun tech from Experimental to Industrial., type: Fix}
+  id: 3879
+  time: '2023-05-27T12:19:03.0000000+00:00'
+- author: malchanceux
+  changes:
+  - {message: NanoTrasen Counterintelligence has uncovered that threat actors have
+      started recruiting atmospheric technicians into their ranks. Whether this is
+      genuine or a red herring remains to be seen., type: Add}
+  id: 3880
+  time: '2023-05-27T19:50:51.0000000+00:00'
