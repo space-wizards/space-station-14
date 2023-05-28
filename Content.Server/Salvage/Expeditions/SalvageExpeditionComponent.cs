@@ -1,3 +1,4 @@
+using Content.Shared.Random;
 using Content.Shared.Salvage;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -27,7 +28,7 @@ public sealed class SalvageExpeditionComponent : Component
     /// <summary>
     /// Station whose mission this is.
     /// </summary>
-    [ViewVariables, DataField("station")]
+    [DataField("station")]
     public EntityUid Station;
 
     [ViewVariables] public bool Completed = false;
@@ -48,6 +49,13 @@ public sealed class SalvageExpeditionComponent : Component
     {
         Params = AudioParams.Default.WithVolume(-15),
     };
+
+    /// <summary>
+    /// Possible rewards sent to cargo upon mission completion.
+    /// Based on mission difficulty.
+    /// </summary>
+    [DataField("rewards", customTypeSerializer: PrototypeIdSerializer<typeof(WeightedRandomPrototype)>)]
+    public string Rewards = string.Empty;
 }
 
 public enum ExpeditionStage : byte

@@ -1,3 +1,4 @@
+using Content.Server.Cargo.Systems;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Components;
@@ -8,6 +9,7 @@ using Content.Shared.Chat;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Random;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Audio;
@@ -23,6 +25,7 @@ public sealed partial class SalvageSystem
      * Handles actively running a salvage expedition.
      */
 
+    [Dependency] private readonly CargoSystem _cargo = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private void InitializeRunner()
@@ -163,8 +166,7 @@ public sealed partial class SalvageSystem
             else if (comp.Stage < ExpeditionStage.MusicCountdown && remaining < TimeSpan.FromMinutes(2))
             {
                 // TODO: Some way to play audio attached to a map for players.
-               comp.Stream = _audio.PlayGlobal(comp.Sound,
-                    Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true);
+                comp.Stream = _audio.PlayGlobal(comp.Sound, Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true);
                 comp.Stage = ExpeditionStage.MusicCountdown;
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
             }
@@ -209,7 +211,7 @@ public sealed partial class SalvageSystem
             }
         }
 
-        // Mining missions: NOOP
+        // Mining missions: NOOP since it's handled after ftling
 
         // Structure missions
         var structureQuery = EntityQueryEnumerator<SalvageStructureExpeditionComponent, SalvageExpeditionComponent>();
@@ -240,7 +242,6 @@ public sealed partial class SalvageSystem
             if (structure.Structures.Count == 0)
             {
                 comp.Completed = true;
-                Announce(uid, Loc.GetString("salvage-expedition-completed"));
             }
         }
 
@@ -272,8 +273,48 @@ public sealed partial class SalvageSystem
             if (elimination.Megafauna.Count == 0)
             {
                 comp.Completed = true;
-                Announce(uid, Loc.GetString("salvage-expedition-completed"));
             }
+        }
+
+        if (comp.Completed)
+        {
+            Announce(uid, Loc.GetString("salvage-expedition-completed"));
+            GiveReward(uid, comp);
+        }
+    }
+
+    private void GiveReward(EntityUid uid, SalvageExpeditionComponent comp)
+    {
+        // pick a random reward to give
+        var rewards = _prototypeManager.Index<WeightedRandomPrototype>(comp.Rewards);
+        var reward = rewards.Pick(_random);
+
+        // send it to cargo if possible
+        if (TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var cargoDb))
+        {
+            return;
+        }
+
+        var sender = Loc.GetString("cargo-gift-default-sender");
+        var desc = Loc.GetString("salvage-expedition-reward-description");
+        var dest = Loc.GetString("cargo-gift-default-dest");
+        _cargo.AddAndApproveOrder(cargoDb, reward, 1, sender, desc, dest);
+    }
+
+    private string RewardPrototype(DifficultyRating rating)
+    {
+        switch (rating)
+        {
+            case DifficultyRating.Minimal:
+            case DifficultyRating.Minor:
+                return "SalvageRewardCommon";
+            case DifficultyRating.Moderate:
+            case DifficultyRating.Hazardous:
+                return "SalvageRewardRare";
+            case DifficultyRating.Extreme:
+                return "SalvageRewardEpic";
+            default:
+                throw new NotImplementedException();
         }
     }
 }
