@@ -87,7 +87,6 @@
   - type: CableVisualizer
     statePrefix: hvcable_
   - type: AmbientSound
-    enabled: false
     volume: -15
     range: 2
     sound:

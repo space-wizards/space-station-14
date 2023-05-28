@@ -44,7 +44,6 @@
     canCollide: false
     bodyType: static
   - type: AmbientSound
-    enabled: false
     volume: -15
     range: 2
     sound:
