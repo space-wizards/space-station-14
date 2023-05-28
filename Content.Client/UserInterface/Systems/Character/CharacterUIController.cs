@@ -30,9 +30,10 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         DebugTools.Assert(_window == null);
 
         _window = UIManager.CreateWindow<CharacterWindow>();
+        _window.OnClose += DeactivateButton;
+        _window.OnOpen += ActivateButton;
+
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
-
-
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
@@ -81,14 +82,6 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         }
 
         CharacterButton.OnPressed += CharacterButtonPressed;
-
-        if (_window == null)
-        {
-            return;
-        }
-
-        _window.OnClose += DeactivateButton;
-        _window.OnOpen += ActivateButton;
     }
 
     private void DeactivateButton() => CharacterButton!.Pressed = false;
