@@ -12,6 +12,7 @@
     description: cargo-gift-pizza-small
     sender: cargo-gift-default-sender
     dest: cargo-gift-dest-bar
+    announce: cargo-gift-pizza-small-announce
     gifts:
       FoodPizzaLarge: 1              # 16 pizzas
       FoodBarSupply: 1
@@ -33,6 +34,7 @@
       description: cargo-gift-pizza-large
       sender: cargo-gift-default-sender
       dest: cargo-gift-dest-bar
+      announce: cargo-gift-pizza-large-announce
       gifts:
         FoodPizzaLarge: 3              # 48 pizzas
         FoodBarSupply: 1
@@ -53,6 +55,7 @@
       description: cargo-gift-eng
       sender: cargo-gift-default-sender
       dest: cargo-gift-dest-eng
+      announce: cargo-gift-eng-announce
       gifts:
         EngineeringCableBulk: 1
         AirlockKit: 1
@@ -76,6 +79,7 @@
       description: cargo-gift-vending
       sender: cargo-gift-default-sender
       dest: cargo-gift-dest-supp
+      announce: cargo-gift-vending-announce
       gifts:
         CrateVendingMachineRestockHotDrinks: 3
         CrateVendingMachineRestockBooze: 1
@@ -99,6 +103,7 @@
       description: cargo-gift-cleaning
       sender: cargo-gift-default-sender
       dest: cargo-gift-dest-janitor
+      announce: cargo-gift-cleaning-announce
       gifts:
         ServiceJanitorial: 2
         ServiceLightsReplacement: 2
@@ -141,6 +146,7 @@
       description: cargo-gift-space-protection
       sender: cargo-gift-default-sender
       dest: cargo-gift-dest-supp
+      announce: cargo-gift-space-announce
       gifts:
         EmergencyInternalsLarge: 2
         EmergencyInflatablewall: 1
@@ -204,6 +210,7 @@
       description: cargo-gift-security-riot
       sender: cargo-gift-default-sender
       dest: cargo-gift-dest-sec
+      announce: cargo-gift-security-riot-announce
       gifts:
         SecurityRiot: 2
         CrateRestraints: 2
