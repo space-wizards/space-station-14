@@ -25,8 +25,8 @@ namespace Content.Client.Access.UI
             _window.OpenCentered();
 
             _window.OnClose += Close;
-            _window.OnNameEntered += OnNameChanged;
-            _window.OnJobEntered += OnJobChanged;
+            _window.OnNameChanged += OnNameChanged;
+            _window.OnJobChanged += OnJobChanged;
         }
 
         private void OnNameChanged(string newName)

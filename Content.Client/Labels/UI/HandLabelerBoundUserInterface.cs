@@ -26,14 +26,12 @@ namespace Content.Client.Labels.UI
             _window.OpenCentered();
 
             _window.OnClose += Close;
-            _window.OnLabelEntered += OnLabelChanged;
-
+            _window.OnLabelChanged += OnLabelChanged;
         }
 
         private void OnLabelChanged(string newLabel)
         {
             SendMessage(new HandLabelerLabelChangedMessage(newLabel));
-            Close();
         }
 
         /// <summary>
