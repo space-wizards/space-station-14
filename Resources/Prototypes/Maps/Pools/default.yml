@@ -2,15 +2,16 @@
   id: DefaultMapPool
   maps:
   - Aspid
-  - Bagel
+#  - Bagel
   - Barratry
+  - Delta
   - Box
-  - Cluster
-  - Fland
-  - Kettle
-  - Marathon
-  - Meta
-  ##- Moose
-  - Omega
+#  - Cluster
+#  - Fland
+#  - Kettle
+#  - Marathon
+#  - Meta
+#  - Moose
+#  - Omega
   - Origin
-  - Saltern
+#  - Saltern
