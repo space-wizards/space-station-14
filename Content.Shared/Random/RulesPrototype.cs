@@ -98,6 +98,10 @@ public sealed class OnMapGridRule : RulesRule
 /// </summary>
 public sealed class NearbyAccessRule : RulesRule
 {
+    // This exists because of doorelectronics contained inside doors.
+    /// <summary>
+    /// Does the access entity need to be anchored.
+    /// </summary>
     [DataField("anchored")]
     public bool Anchored = true;
 
