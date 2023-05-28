@@ -208,9 +208,22 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         absorberSoln.RemoveReagent(PuddleSystem.EvaporationReagent, split.Volume / PuddleSystem.EvaporationReagentRatio);
         puddleSolution.AddReagent(PuddleSystem.EvaporationReagent, split.Volume / PuddleSystem.EvaporationReagentRatio);
+
+        // Here we make a split to prevent overflow at the next step.
         absorberSoln.AddSolution(split.SplitSolution(absorberSoln.AvailableVolume), _prototype);
-        // puts back the excess if any, a hack to circumvent it being a differential equation and prevent the
-        // overflow of the absorber due to residual water not being checked for
+
+        // Puts back the excess if any, to avoid complicated checks for available volume.
+        // We would want to always transfer PuddleSystem.EvaporationReagentRatio times more puddle
+        // volume than water. But the available volume on the absorber at the moment the puddle
+        // volume transfer takes place depend on the amount of water transferred.
+        //
+        // This solves the problem by just transfering back what might had overflown
+        // This means when a mop is too full, it might transfer a little less than
+        // PuddleSystem.EvaporationReagentRatio times the amount of transferred water.
+        // In any case, this should be a corner case since there's no reason for the mop to get
+        // filled with water anyway, unless PuddleSystem.EvaporationReagentRatio = 1:
+        // The optimal amount of water is pickupAmount / PuddleSystem.EvaporationReagentRatio.
+
         if (split.Volume > 0){
             puddleSolution.AddSolution(split, _prototype);
         }
