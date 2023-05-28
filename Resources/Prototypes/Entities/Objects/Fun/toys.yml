@@ -67,6 +67,7 @@
     - type: Tag
       tags:
         - ForceableFollow
+        - PlushieGhost
     - type: RandomWalk
       accumulatorRatio: 0.5
       maxSpeed: 1
