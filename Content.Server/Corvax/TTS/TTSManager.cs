@@ -109,7 +109,8 @@ public sealed class TTSManager
         var reqTime = DateTime.UtcNow;
         try
         {
-            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            var timeout = _cfg.GetCVar(CCCVars.TTSRequestTimeout);
+            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
             var response = await _httpClient.PostAsJsonAsync(url, body, cts.Token);
             if (!response.IsSuccessStatusCode)
             {
