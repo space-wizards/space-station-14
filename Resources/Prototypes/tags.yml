@@ -704,9 +704,6 @@
   id: TrashBag
 
 - type: Tag
-  id: TrayScanner
-
-- type: Tag
   id: UraniumGlassShard
 
 - type: Tag
