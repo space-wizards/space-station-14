@@ -30,6 +30,36 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         CommandBinds.Unregister<SharedContentEyeSystem>();
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var localPlayer = _player.LocalPlayer?.ControlledEntity;
+
+        if (HasContentEyeComp(null, localPlayer) is not ContentEyeComponent content
+            || !TryComp<EyeComponent>(localPlayer, out var eyeComp))
+        {
+            return;
+        }
+
+        if (eyeComp.Zoom.Equals(content.TargetZoom))
+            return;
+
+        var diff = content.TargetZoom - eyeComp.Zoom;
+
+        if (diff.LengthSquared < 0.00001f)
+        {
+            eyeComp.Zoom = content.TargetZoom;
+            Logger.Debug("set target zoom ++++++++++++++++++++");
+            RaisePredictiveEvent(new EndOfTargetZoomAnimation());
+            return;
+        }
+
+        var change = diff * 10 * frameTime;
+
+        eyeComp.Zoom += change;
+    }
+
     public void RequestZoom(Vector2 zoom)
     {
         RaisePredictiveEvent(new RequestTargetZoomEvent()
@@ -60,7 +90,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
     private void OnZoomChangeKeyBind(KeyBindsTypes type)
     {
-        RaisePredictiveEvent(new RequestPlayeChangeZoomEvent()
+        RaisePredictiveEvent(new RequestPlayerChangeZoomEvent()
         {
             TypeZoom = type,
             PlayerUid = _player.LocalPlayer?.ControlledEntity,

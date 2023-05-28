@@ -20,11 +20,7 @@ public sealed partial class ContentEyeComponent : Component
     public Vector2 TargetZoom
     {
         get => _targetZoom;
-        set
-        {
-            _targetZoom = value;
-            IsProcessed = true;
-        }
+        set { _targetZoom = value; }
     }
 
     /// <summary>

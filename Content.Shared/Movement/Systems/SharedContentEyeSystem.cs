@@ -25,9 +25,9 @@ public abstract class SharedContentEyeSystem : EntitySystem
         SubscribeLocalEvent<ContentEyeComponent, ComponentStartup>(OnContentEyeStartup);
         SubscribeAllEvent<RequestTargetZoomEvent>(OnContentZoomRequest);
         SubscribeAllEvent<RequestFovEvent>(OnRequestFov);
-        SubscribeAllEvent<RequestPlayeChangeZoomEvent>(OnChangeZoomRquest);
+        SubscribeAllEvent<RequestPlayerChangeZoomEvent>(OnChangeZoomForType);
 
-        Sawmill.Level = LogLevel.Info;
+        Sawmill.Level = LogLevel.Debug;
     }
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
@@ -63,8 +63,9 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(component);
     }
 
-    private void OnChangeZoomRquest(RequestPlayeChangeZoomEvent msg, EntitySessionEventArgs args)
+    public void OnChangeZoomForType(RequestPlayerChangeZoomEvent msg, EntitySessionEventArgs args)
     {
+        Logger.Debug("zoom change!");
         if (HasContentEyeComp(args.SenderSession, msg.PlayerUid) is ContentEyeComponent content)
         {
             switch (msg.TypeZoom)
@@ -82,23 +83,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
         }
     }
 
-    protected void UpdateEye(ContentEyeComponent content, SharedEyeComponent eye, float frameTime)
-    {
-        var diff = content.TargetZoom - eye.Zoom;
-
-        if (diff.LengthSquared < 0.00001f)
-        {
-            eye.Zoom = content.TargetZoom;
-            Dirty(eye);
-            return;
-        }
-
-        var change = diff * 10 * frameTime;
-
-        eye.Zoom += change;
-        Dirty(eye);
-    }
-
     public ContentEyeComponent? HasContentEyeComp(ICommonSession? session, EntityUid? playerUid)
     {
         var uid = session?.AttachedEntity ?? playerUid;
@@ -114,6 +98,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             return null;
         }
     }
+
     private void ResetZoom(ContentEyeComponent component)
     {
         var actual = Vector2.ComponentMin(component.MaxZoom, DefaultZoom);
@@ -178,9 +163,16 @@ public abstract class SharedContentEyeSystem : EntitySystem
     /// uses for send user zoom keys events
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class RequestPlayeChangeZoomEvent : EntityEventArgs
+    public sealed class RequestPlayerChangeZoomEvent : EntityEventArgs
     {
         public EntityUid? PlayerUid;
         public KeyBindsTypes TypeZoom;
     }
+
+    /// <summary>
+    /// the end target animation on client
+    /// set Zoom for server side
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class EndOfTargetZoomAnimation : EntityEventArgs { }
 }
