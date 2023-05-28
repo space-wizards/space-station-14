@@ -6,17 +6,12 @@ using Robust.Client.Player;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Players;
-using Robust.Shared.Timing;
-
 
 namespace Content.Client.Movement.Systems;
 
 public sealed class ContentEyeSystem : SharedContentEyeSystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-    private TimeSpan? _userZoomChangeRequestTimeOut = null;
 
     public override void Initialize()
     {
@@ -65,21 +60,11 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
     private void OnZoomChangeKeyBind(KeyBindsTypes type)
     {
-        var delay = TimeSpan.FromSeconds(0.2f);
-
-        if (_userZoomChangeRequestTimeOut != null
-            && _userZoomChangeRequestTimeOut + delay > _gameTiming.CurTime)
-        {
-            return;
-        }
-
         RaisePredictiveEvent(new RequestPlayeChangeZoomEvent()
         {
             TypeZoom = type,
             PlayerUid = _player.LocalPlayer?.ControlledEntity,
         });
-
-        _userZoomChangeRequestTimeOut = _gameTiming.CurTime;
     }
 
     private sealed class KeyBindsInputCmdHandler : InputCmdHandler
@@ -100,7 +85,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
             _system.OnZoomChangeKeyBind(_typeBind);
 
-            return false;
+            return true;
         }
     }
 }
