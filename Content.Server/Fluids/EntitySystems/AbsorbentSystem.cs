@@ -181,8 +181,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return true;
         }
 
-        // Check if we have any evaporative reagents on our absorber to transfer
-        absorberSoln.TryGetReagent(PuddleSystem.EvaporationReagent, out var available);
+        // Amount of evaporative reagents on our absorber to transfer
+        var available = absorberSoln.GetReagentQuantity(PuddleSystem.EvaporationReagent);
 
         // No material
         if (available == FixedPoint2.Zero)
