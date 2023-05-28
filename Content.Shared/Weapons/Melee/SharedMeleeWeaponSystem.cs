@@ -73,6 +73,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeLocalEvent<MeleeWeaponComponent, HandDeselectedEvent>(OnMeleeDropped);
         SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnMeleeSelected);
         SubscribeLocalEvent<MeleeWeaponComponent, GunShotEvent>(OnMeleeShot);
+        SubscribeLocalEvent<BonusMeleeDamageComponent, GetMeleeDamageEvent>(OnGetBonusMeleeDamage);
 
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
@@ -138,6 +139,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         component.WindUpStart = null;
         Dirty(component);
+    }
+
+    private void OnGetBonusMeleeDamage(EntityUid uid, BonusMeleeDamageComponent component, ref GetMeleeDamageEvent args)
+    {
+        args.Damage += component.BonusDamage;
     }
 
     private void OnStopAttack(StopAttackEvent msg, EntitySessionEventArgs args)
@@ -268,6 +274,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         component.ClickAnimation = state.ClickAnimation;
         component.WideAnimation = state.WideAnimation;
         component.Range = state.Range;
+    }
+
+    public DamageSpecifier GetDamage(EntityUid uid, MeleeWeaponComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return new DamageSpecifier();
+
+        var ev = new GetMeleeDamageEvent(new (component.Damage));
+        RaiseLocalEvent(uid, ref ev);
+
+        return ev.Damage;
     }
 
     public bool TryGetWeapon(EntityUid entity, out EntityUid weaponUid, [NotNullWhen(true)] out MeleeWeaponComponent? melee)
@@ -469,7 +486,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
-        var damage = component.Damage * GetModifier(component, true);
+        var damage = GetDamage(meleeUid, component) * GetModifier(component, true);
 
         // For consistency with wide attacks stuff needs damageable.
         if (Deleted(ev.Target) ||
@@ -543,7 +560,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             {
                 Audio.PlayPredicted(hitEvent.HitSoundOverride, meleeUid, user);
             }
-            else if (component.Damage.Total.Equals(FixedPoint2.Zero) && component.HitSound != null)
+            else if (GetDamage(meleeUid, component).Total.Equals(FixedPoint2.Zero) && component.HitSound != null)
             {
                 Audio.PlayPredicted(component.HitSound, meleeUid, user);
             }
@@ -576,7 +593,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var direction = targetMap.Position - userPos;
         var distance = Math.Min(component.Range, direction.Length);
 
-        var damage = component.Damage * GetModifier(component, false);
+        var damage = GetDamage(meleeUid, component) * GetModifier(component, false);
         var entities = ev.Entities;
 
         if (entities.Count == 0)

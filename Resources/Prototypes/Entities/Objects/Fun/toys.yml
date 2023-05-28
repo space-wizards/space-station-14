@@ -37,6 +37,59 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieGhost
+  name: ghost soft toy
+  description: The start of your personal GHOST GANG!
+  components:
+    - type: Sprite
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: icon
+      noRot: true
+    - type: Item
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          density: 20
+          mask:
+            - ItemMask
+          restitution: 0.98
+          friction: 0.01
+    - type: Physics
+      angularDamping: 0.02
+      linearDamping: 0.02
+      fixedRotation: true
+      bodyType: Dynamic
+    - type: TileFrictionModifier
+      modifier: 0.1
+    - type: Tag
+      tags:
+        - ForceableFollow
+    - type: RandomWalk
+      accumulatorRatio: 0.5
+      maxSpeed: 1
+      minSpeed: 0.25
+
+- type: entity
+  parent: PlushieGhost
+  id: PlushieGhostRevenant
+  name: revenant soft toy
+  suffix: DO NOT MAP
+  description: So soft it almost makes you want to take a nap...
+  components:
+    - type: Sprite
+      sprite: Mobs/Ghosts/revenant.rsi
+      state: icon
+      netsync: false
+      noRot: true
+    - type: Construction
+      graph: PlushieGhostRevenant
+      node: plushie
+
+- type: entity
+  parent: BasePlushie
   id: PlushieBee
   name: bee plushie
   description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.

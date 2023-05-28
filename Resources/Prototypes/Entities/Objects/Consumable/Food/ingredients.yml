@@ -572,3 +572,6 @@
           Quantity: 2
         - ReagentId: Toxin
           Quantity: 3
+  - type: Tag
+    tags:
+    - Trash
