@@ -58,6 +58,7 @@
         acts: ["Destruction"]
   - type: Machine
     board: MaterialReclaimerMachineCircuitboard
+  - type: WiresPanel
   - type: Wires
     BoardName: "reclaimer"
     LayoutId: Reclaimer

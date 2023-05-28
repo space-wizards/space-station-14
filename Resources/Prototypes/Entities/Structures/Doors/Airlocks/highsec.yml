@@ -3,6 +3,8 @@
   parent: BaseStructure
   name: high security door
   description: Keeps the bad out and keeps the good in.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: InteractionOutline
   - type: Sprite
@@ -65,6 +67,7 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
+  - type: WiresPanel
   - type: Wires
     BoardName: "HighSec Control"
     LayoutId: HighSec
@@ -90,5 +93,3 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
-  placement:
-    mode: SnapgridCenter

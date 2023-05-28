@@ -74,6 +74,7 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
+  - type: WiresPanel
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock
