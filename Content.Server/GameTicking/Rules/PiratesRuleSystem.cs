@@ -256,12 +256,12 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "PirateGear", EntityManager);
 
         // Notificate every player about a pirate antagonist role with sound
-        if (mind.CurrentEntity.HasValue)
+        if (mind.Session != null)
         {
-            _audio.PlayEntity(
+            _audio.PlayGlobal(
                 PirateAlert,
-                mind.CurrentEntity.Value,
-                mind.CurrentEntity.Value,
+                Filter.Empty().AddPlayer(mind.Session),
+                false,
                 AudioParams.Default);
         }
     }

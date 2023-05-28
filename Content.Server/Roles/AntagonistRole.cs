@@ -1,5 +1,6 @@
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.Roles
 {
@@ -36,12 +37,12 @@ namespace Content.Server.Roles
             // Alert a player about antagonist role with a sound notification
             var entMgr = IoCManager.Resolve<IEntityManager>();
             entMgr.EntitySysManager.TryGetEntitySystem(out SharedAudioSystem? audio);
-            if (audio != null && Mind.CurrentEntity.HasValue)
+            if (audio != null && Mind.Session != null)
             {
-                audio.PlayEntity(
+                audio.PlayGlobal(
                     AntagonistAlert,
-                    Mind.CurrentEntity.Value,
-                    Mind.CurrentEntity.Value,
+                    Filter.Empty().AddPlayer(Mind.Session),
+                    false,
                     AudioParams.Default);
             }
         }
