@@ -1,42 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added robust nukie drink in EMAGGED sustenance vendor!, type: Add}
-  id: 3374
-  time: '2023-04-10T21:29:15.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Material reclaimers no longer stack sound effects infinitely., type: Fix}
-  id: 3375
-  time: '2023-04-10T21:30:34.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed artifacts being biased towards nodes that were already discovered.,
-    type: Fix}
-  id: 3376
-  time: '2023-04-10T22:35:43.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Chameleon masks can now mimic breath masks., type: Fix}
-  id: 3377
-  time: '2023-04-11T00:31:15.0000000+00:00'
-- author: freeman2651
-  changes:
-  - {message: Pill dosage limit reduced to 20u from 50u., type: Tweak}
-  id: 3378
-  time: '2023-04-11T01:23:35.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Splashing reagents using melee attacks & examining spillables should
-      work properly again, type: Tweak}
-  id: 3379
-  time: '2023-04-11T01:56:21.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Nettles can no longer inject solutions through hardsuits. Yes, this
-      means deathnettles don''t work on nukies anymore.', type: Tweak}
-  id: 3380
-  time: '2023-04-11T02:19:44.0000000+00:00'
 - author: Skyedra
   changes:
   - {message: Ability to bind the menu toggle key directly in the UI, type: Add}
@@ -2905,3 +2867,41 @@ Entries:
       will now correctly passively recover blood and heal bloodloss damage.', type: Fix}
   id: 3873
   time: '2023-05-26T07:23:30.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Resprited network configurator., type: Tweak}
+  id: 3874
+  time: '2023-05-27T03:51:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added a grappling gun, type: Add}
+  id: 3875
+  time: '2023-05-27T04:15:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Role bans are now shown in the job preferences and latejoin interfaces.,
+    type: Add}
+  id: 3876
+  time: '2023-05-27T04:22:23.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fix uplink typos, type: Fix}
+  id: 3877
+  time: '2023-05-27T05:33:19.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: Added a CentCom scarf., type: Add}
+  id: 3878
+  time: '2023-05-27T09:09:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Change grappling gun tech from Experimental to Industrial., type: Fix}
+  id: 3879
+  time: '2023-05-27T12:19:03.0000000+00:00'
+- author: malchanceux
+  changes:
+  - {message: NanoTrasen Counterintelligence has uncovered that threat actors have
+      started recruiting atmospheric technicians into their ranks. Whether this is
+      genuine or a red herring remains to be seen., type: Add}
+  id: 3880
+  time: '2023-05-27T19:50:51.0000000+00:00'
