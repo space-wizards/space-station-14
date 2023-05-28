@@ -1,5 +1,5 @@
 meta:
-  format: 4
+  format: 5
   postmapinit: false
 tilemap:
   0: Space
@@ -24,7 +24,8 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-
+    - fixtures: {}
+      type: Fixtures
     - type: OccluderTree
     - type: Shuttle
     - nextUpdate: 0.45
@@ -36,5 +37,6 @@ entities:
         version: 2
         nodes: []
       type: DecalGrid
-    - type: SpreaderGrid
+    - nextUpdate: 0
+      type: SpreaderGrid
 ...

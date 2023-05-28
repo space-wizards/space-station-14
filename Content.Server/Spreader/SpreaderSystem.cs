@@ -84,8 +84,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void OnGridInit(GridInitializeEvent ev)
     {
-        var comp = EnsureComp<SpreaderGridComponent>(ev.EntityUid);
-
+        EnsureComp<SpreaderGridComponent>(ev.EntityUid);
     }
 
     /// <inheritdoc/>
