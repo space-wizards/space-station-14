@@ -670,3 +670,38 @@
     radius: 1
     color: orange
     energy: 0.5
+
+- type: entity
+  id: GrapplingHook
+  name: grappling hook
+  noSpawn: true
+  components:
+    - type: EmbeddableProjectile
+    - type: Clickable
+    - type: Sprite
+      noRot: false
+      sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+      layers:
+        - state: hook
+        - state: hook-unshaded
+          shader: unshaded
+    - type: Physics
+      bodyType: Dynamic
+      linearDamping: 0
+      angularDamping: 0
+    - type: Projectile
+      deleteOnCollide: false
+      damage:
+        types:
+          Blunt: 0
+    - type: Fixtures
+      fixtures:
+        projectile:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.1,-0.1,0.1,0.1"
+          hard: false
+          mask:
+            - Impassable
+            - HighImpassable
+    - type: GrapplingProjectile

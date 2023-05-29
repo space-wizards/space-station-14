@@ -145,6 +145,7 @@
   slippery: true
   flavor: bitter
   color: "#a76b1c"
+  recognizable: true
   boilingPoint: -84.7 # Acetylene. Close enough.
   meltingPoint: -80.7
   tileReactions:

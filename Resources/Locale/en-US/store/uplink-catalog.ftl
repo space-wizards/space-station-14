@@ -1,12 +1,12 @@
 # Weapons
 uplink-pistol-viper-name = Viper
-uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Use pistol magazines (.35 auto).
+uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses pistol magazines (.35 auto).
 
 uplink-revolver-python-name = Python
 uplink-revolver-python-desc = A loud and deadly revolver. Uses .45 Magnum.
 
 uplink-pistol-cobra-name = Cobra
-uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
+uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Uses pistol magazines (.25 caseless).
 
 uplink-rifle-mosin-name = Surplus Rifle
 uplink-rifle-mosin-desc = A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
@@ -185,7 +185,7 @@ uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slip
 uplink-clothing-thieving-gloves-name = Thieving Gloves
 uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and increase your thieving technique with these fancy new gloves, all while looking like normal gloves!
 
-uplink-clothing-outer-vest-web-name = Web West
+uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
 
 uplink-hardsuit-syndie-name = Syndicate Hardsuit

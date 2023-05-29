@@ -1,141 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Head of security's common clothing now has slight armor, type: Tweak}
-  id: 3361
-  time: '2023-04-09T02:32:23.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: Diona can now breathe CO2 and are not poisoned by it. They are still
-      capable of breathing oxygen!, type: Tweak}
-  id: 3362
-  time: '2023-04-09T02:35:07.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: 'Added in hand sprites for: ties, scarves and moth mask.', type: Add}
-  id: 3363
-  time: '2023-04-09T21:42:17.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Broken cuffs are now marked as trash., type: Add}
-  - {message: Broken makeshift handcuffs are now the correct color., type: Fix}
-  id: 3364
-  time: '2023-04-09T21:44:24.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Changed to scull icon for Pirates spawner., type: Tweak}
-  id: 3365
-  time: '2023-04-09T21:50:29.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added motobike spawner!, type: Add}
-  id: 3366
-  time: '2023-04-09T21:57:40.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Fixed chemical bottles are now breaking!, type: Fix}
-  id: 3367
-  time: '2023-04-09T21:58:22.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Nanotrasen has updated their ethics policies and have supplied sustenance
-      vendors to perma prisoners., type: Add}
-  id: 3368
-  time: '2023-04-09T22:00:23.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Added MK58 crate, type: Add}
-  id: 3369
-  time: '2023-04-09T22:06:30.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: 'New pet spider for HoS, can attack tarantulas and rats.', type: Add}
-  - {message: A new faction for the pet to attack only those worth attacking., type: Tweak}
-  id: 3370
-  time: '2023-04-10T04:33:23.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added the material reclaimer. Insert junk you don't want to grind it
-      up into its raw material form. Try stuff out!, type: Add}
-  - {message: Fixed a few material exploit methods., type: Fix}
-  - {message: Slightly nerfed lathe material reduction upgrades., type: Tweak}
-  id: 3371
-  time: '2023-04-10T04:38:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix spreaders going through air blockers., type: Fix}
-  id: 3372
-  time: '2023-04-10T06:43:25.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'You can now melee attack yourself, if you like', type: Tweak}
-  id: 3373
-  time: '2023-04-10T21:28:27.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added robust nukie drink in EMAGGED sustenance vendor!, type: Add}
-  id: 3374
-  time: '2023-04-10T21:29:15.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Material reclaimers no longer stack sound effects infinitely., type: Fix}
-  id: 3375
-  time: '2023-04-10T21:30:34.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed artifacts being biased towards nodes that were already discovered.,
-    type: Fix}
-  id: 3376
-  time: '2023-04-10T22:35:43.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Chameleon masks can now mimic breath masks., type: Fix}
-  id: 3377
-  time: '2023-04-11T00:31:15.0000000+00:00'
-- author: freeman2651
-  changes:
-  - {message: Pill dosage limit reduced to 20u from 50u., type: Tweak}
-  id: 3378
-  time: '2023-04-11T01:23:35.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Splashing reagents using melee attacks & examining spillables should
-      work properly again, type: Tweak}
-  id: 3379
-  time: '2023-04-11T01:56:21.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Nettles can no longer inject solutions through hardsuits. Yes, this
-      means deathnettles don''t work on nukies anymore.', type: Tweak}
-  id: 3380
-  time: '2023-04-11T02:19:44.0000000+00:00'
-- author: Skyedra
-  changes:
-  - {message: Ability to bind the menu toggle key directly in the UI, type: Add}
-  - {message: Default menu toggle moved from F12 to F10, type: Tweak}
-  id: 3381
-  time: '2023-04-11T03:40:07.0000000+00:00'
-- author: Skyedra
-  changes:
-  - {message: '''Esc Menu'' title renamed to ''Game Menu''', type: Tweak}
-  id: 3382
-  time: '2023-04-11T06:26:39.0000000+00:00'
-- author: EnDecc
-  changes:
-  - {message: 'Doubled drain buffer size from 500u > 1000u, Tripled units deleted
-      per tick from 1 > 3', type: Tweak}
-  id: 3383
-  time: '2023-04-11T11:21:31.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Tools no longer make sounds if using them fails., type: Fix}
-  id: 3384
-  time: '2023-04-11T17:31:12.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added Brigmedic job and other things for brigmedic., type: Add}
-  id: 3385
-  time: '2023-04-11T23:11:01.0000000+00:00'
 - author: Mumohan
   changes:
   - {message: Plushies and other toys no longer conduct electricity, type: Fix}
@@ -2895,3 +2758,151 @@ Entries:
     type: Fix}
   id: 3860
   time: '2023-05-24T19:03:44.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Spacemen can now recognize common reagents, like water or beer, in
+      examinable solutions.', type: Add}
+  - {message: Puddle and glass drink solution contents are now examinable., type: Tweak}
+  id: 3861
+  time: '2023-05-24T23:08:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Made random anomaly stability fluctuation more random and scale with
+      severity, type: Tweak}
+  - {message: Decreased max anomaly point output., type: Tweak}
+  id: 3862
+  time: '2023-05-25T03:28:41.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'NanaTrasen has selectively bred less dangerous zombies. Your standard
+      jumpsuit deflects their attacks better, they are slower and easier to kill.
+      But they still rise from the dead.', type: Tweak}
+  id: 3863
+  time: '2023-05-25T03:41:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed weapon attack arcs lagging behind if a player attacked while moving.,
+    type: Fix}
+  id: 3864
+  time: '2023-05-25T04:04:16.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Changed the selling price of most autolathe products., type: Tweak}
+  - {message: Slightly adjusted the production price of most electronics in the autolathe.,
+    type: Tweak}
+  id: 3865
+  time: '2023-05-25T09:10:28.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed the Smartfridge sprite, type: Tweak}
+  id: 3866
+  time: '2023-05-25T09:11:13.0000000+00:00'
+- author: McFck
+  changes:
+  - {message: Fixed infinite beaker fill from mop, type: Fix}
+  id: 3867
+  time: '2023-05-25T09:12:08.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: NanoTrasen technicians have fixed armed nuclear devices not sending
+      alerts when off station., type: Fix}
+  id: 3868
+  time: '2023-05-25T09:13:22.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Deep Rock NanoTrasen now offers elimination missions for daring salvagers
+      willing to kill very big game., type: Add}
+  - {message: 'Space Carp have begun attacking planets, expect to see them on some
+      expeditions.', type: Add}
+  id: 3869
+  time: '2023-05-25T12:23:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a bug that caused rotting bodies to continue rotting even when
+      they shouldn't be., type: Fix}
+  id: 3870
+  time: '2023-05-25T22:05:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Tech disks can now contain Tier 3 technology., type: Tweak}
+  - {message: Tech disk terminals can now print duplicate disks., type: Tweak}
+  - {message: Fixed tech disk terminal print button not updating correctly., type: Fix}
+  id: 3871
+  time: '2023-05-25T22:07:40.0000000+00:00'
+- author: Geekyhobo
+  changes:
+  - {message: Light replacer now has more description., type: Add}
+  id: 3872
+  time: '2023-05-25T22:09:55.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Fixed crit people being seen as dead by the bleed code, crit people
+      will now correctly passively recover blood and heal bloodloss damage.', type: Fix}
+  id: 3873
+  time: '2023-05-26T07:23:30.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Resprited network configurator., type: Tweak}
+  id: 3874
+  time: '2023-05-27T03:51:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added a grappling gun, type: Add}
+  id: 3875
+  time: '2023-05-27T04:15:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Role bans are now shown in the job preferences and latejoin interfaces.,
+    type: Add}
+  id: 3876
+  time: '2023-05-27T04:22:23.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fix uplink typos, type: Fix}
+  id: 3877
+  time: '2023-05-27T05:33:19.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: Added a CentCom scarf., type: Add}
+  id: 3878
+  time: '2023-05-27T09:09:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Change grappling gun tech from Experimental to Industrial., type: Fix}
+  id: 3879
+  time: '2023-05-27T12:19:03.0000000+00:00'
+- author: malchanceux
+  changes:
+  - {message: NanoTrasen Counterintelligence has uncovered that threat actors have
+      started recruiting atmospheric technicians into their ranks. Whether this is
+      genuine or a red herring remains to be seen., type: Add}
+  id: 3880
+  time: '2023-05-27T19:50:51.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Station Map has been resprited and can now be constructed., type: Add}
+  id: 3881
+  time: '2023-05-28T06:42:41.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Emitters and APEs can now be controlled with device linking., type: Add}
+  id: 3882
+  time: '2023-05-28T06:44:28.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Revenants now drop ectoplasm when they die., type: Tweak}
+  id: 3883
+  time: '2023-05-28T09:21:07.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Adds the universal pinpointer. A pinpointer that can be linked to track
+      anything., type: Add}
+  - {message: Pinpointers can now be emagged to act as stealthy universal pinpointers.,
+    type: Tweak}
+  id: 3884
+  time: '2023-05-28T10:24:09.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: Added reaction for cola creation., type: Add}
+  id: 3885
+  time: '2023-05-28T10:25:12.0000000+00:00'
