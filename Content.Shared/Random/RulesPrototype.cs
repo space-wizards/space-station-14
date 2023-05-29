@@ -125,6 +125,12 @@ public sealed class NearbyAccessRule : RulesRule
 
 public sealed class NearbyComponentsRule : RulesRule
 {
+    /// <summary>
+    /// Does the entity need to be anchored.
+    /// </summary>
+    [DataField("anchored")]
+    public bool Anchored = true;
+
     [DataField("count")] public int Count;
 
     [DataField("components", required: true)]

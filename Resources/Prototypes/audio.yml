@@ -244,6 +244,7 @@
   id: NearPrayable
   rules:
     - !type:NearbyComponentsRule
+      anchored: true
       components:
         - type: Prayable
       range: 5
