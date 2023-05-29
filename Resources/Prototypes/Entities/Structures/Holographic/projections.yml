@@ -77,3 +77,16 @@
       color: red
     - type: Climbable
     - type: Clickable
+
+- type: entity
+  id: HolosignSoap
+  name: soap sign
+  description: Probably the most slippery projection.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Holo/soap.rsi
+    state: icon
+    netsync: false
+# imo it should has EmitSoundOnStep or something, i hope it will be added
