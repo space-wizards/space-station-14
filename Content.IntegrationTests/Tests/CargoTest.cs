@@ -63,8 +63,6 @@ public sealed class CargoTest
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
-        var cfg = server.ResolveDependency<IConfigurationManager>();
-        await server.WaitPost(() => cfg.SetCVar(CCVars.GridFill, true));
 
         await server.WaitAssertion(() =>
         {
@@ -106,7 +104,6 @@ public sealed class CargoTest
             mapManager.DeleteMap(mapId);
         });
 
-        await server.WaitPost(() => cfg.SetCVar(CCVars.GridFill, false));
         await pairTracker.CleanReturnAsync();
     }
 
