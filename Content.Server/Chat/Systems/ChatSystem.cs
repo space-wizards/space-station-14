@@ -331,13 +331,13 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"CollectiveMind chat from {ToPrettyString(source):Player}: {message}");
 
-        _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
+        _chatManager.ChatMessageToManyFiltered(clients,
+            ChatChannel.CollectiveMind,
             message,
             messageWrap,
             source,
             hideChat,
             true,
-            clients.Recipients.Select(p => p.ConnectedClient).ToList(),
             sourseCollectiveMindComp.ChannelColor);
 
         _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
