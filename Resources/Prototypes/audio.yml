@@ -235,10 +235,11 @@
   id: NearMedical
   rules:
     - !type:NearbyTilesPercentRule
+      anchored: false
       percent: 0.5
       tiles:
       - FloorWhite
-      range: 5
+      range: 3
 
 - type: rules
   id: NearPrayable
