@@ -1,10 +1,4 @@
 Entries:
-- author: Arteben
-  changes:
-  - {message: 'Added filters of name, fingerprints and DNA for the station records
-      computer', type: Add}
-  id: 3394
-  time: '2023-04-12T14:27:13.0000000+00:00'
 - author: mhamster
   changes:
   - {message: Changed sleep action icon from egg to syndie pyjama, type: Tweak}
@@ -2915,3 +2909,8 @@ Entries:
   - {message: Maintenance ambience should play less frequently in corridors., type: Fix}
   id: 3893
   time: '2023-05-29T04:19:00.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: The Centcom scarf has been moved to the Centdrobe, type: Tweak}
+  id: 3894
+  time: '2023-05-29T04:34:45.0000000+00:00'
