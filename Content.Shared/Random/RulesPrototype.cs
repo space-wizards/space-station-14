@@ -129,7 +129,7 @@ public sealed class NearbyComponentsRule : RulesRule
     /// Does the entity need to be anchored.
     /// </summary>
     [DataField("anchored")]
-    public bool Anchored = true;
+    public bool Anchored;
 
     [DataField("count")] public int Count;
 
