@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has started packaging its sinister pens in boxes for easier
-      identification by the end user., type: Tweak}
-  id: 3398
-  time: '2023-04-12T18:44:52.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Increased passive blood recovery from 0.3u to 1u. This is added every
@@ -2912,3 +2906,8 @@ Entries:
   - {message: Fix landing pad clipping dungeons in some instances., type: Fix}
   id: 3897
   time: '2023-05-29T11:48:15.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Device network addresses now look prettier., type: Tweak}
+  id: 3898
+  time: '2023-05-29T14:56:31.0000000+00:00'
