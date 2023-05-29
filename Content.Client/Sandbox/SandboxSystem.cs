@@ -108,7 +108,7 @@ namespace Content.Client.Sandbox
             }
 
             // Try copy tile.
-            if (!_map.TryFindGridAt(coords.ToMap(EntityManager), out var grid) || !grid.TryGetTileRef(coords, out var tileRef))
+            if (!_map.TryFindGridAt(coords.ToMap(EntityManager), out _, out var grid) || !grid.TryGetTileRef(coords, out var tileRef))
                 return false;
 
             if (_placement.Eraser)

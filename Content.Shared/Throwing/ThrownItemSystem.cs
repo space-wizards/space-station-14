@@ -137,7 +137,7 @@ namespace Content.Shared.Throwing
             if (thrownItem.Thrower is not null)
                 _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
-            _broadphase.RegenerateContacts(physics);
+            _broadphase.RegenerateContacts(uid, physics);
             var landEvent = new LandEvent(thrownItem.Thrower, playSound);
             RaiseLocalEvent(landing, ref landEvent);
         }
