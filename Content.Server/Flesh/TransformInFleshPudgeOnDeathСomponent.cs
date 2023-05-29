@@ -7,6 +7,7 @@ namespace Content.Server.Flesh
     [RegisterComponent]
     public sealed class TransformInFleshPudgeOnDeathComponent : Component
     {
+
         [ViewVariables(VVAccess.ReadWrite),
          DataField("fleshPudgeId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string FleshPudgeId = "MobFleshPudge";
