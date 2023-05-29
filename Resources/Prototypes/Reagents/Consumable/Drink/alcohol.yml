@@ -29,6 +29,7 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: ale
   color: "#663100"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/aleglass.rsi
     state: icon
@@ -41,6 +42,7 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: beer
   color: "#cfa85f"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
@@ -73,6 +75,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#AB3C05"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/cognacglass.rsi
     state: icon
@@ -171,6 +174,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
     state: icon
@@ -253,6 +257,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: rum
   color: "#664300"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/rumglass.rsi
     state: icon
@@ -311,6 +316,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: vodka
   color: "#d1d1d155"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
     state: icon
@@ -331,6 +337,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: whiskey
   color: "#664300"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
     state: icon
@@ -351,6 +358,7 @@
   physicalDesc: reagent-physical-desc-translucent
   flavor: shittywine
   color: "#7E4043"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/wineglass.rsi
     state: icon

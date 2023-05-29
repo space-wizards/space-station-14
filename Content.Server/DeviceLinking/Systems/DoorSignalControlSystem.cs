@@ -43,7 +43,7 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    if (door.State != DoorState.Open)
+                    if (door.State == DoorState.Closed)
                         _doorSystem.TryOpen(uid, door);
                 }
             }
@@ -51,7 +51,7 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    if (door.State != DoorState.Closed)
+                    if (door.State == DoorState.Open)
                         _doorSystem.TryClose(uid, door);
                 }
             }
@@ -59,7 +59,8 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    _doorSystem.TryToggleDoor(uid, door);
+                    if (door.State is DoorState.Closed or DoorState.Open)
+                        _doorSystem.TryToggleDoor(uid, door);
                 }
             }
             else if (args.Port == component.InBolt)

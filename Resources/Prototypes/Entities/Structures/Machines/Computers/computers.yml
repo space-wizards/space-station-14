@@ -673,6 +673,15 @@
     color: "#b89f25"
   - type: AccessReader
     access: [["Cargo"]]
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSource
+    range: 200
+    ports:
+      - OrderSender
 
 - type: entity
   parent: BaseComputer
@@ -723,7 +732,7 @@
   id: ComputerSalvageExpedition
   parent: BaseComputer
   name: salvage expeditions computer
-  description: Used take salvage missions.
+  description: Used to accept salvage missions, if you're tough enough.
   components:
     - type: Sprite
       layers:

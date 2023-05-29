@@ -1,4 +1,7 @@
-﻿namespace Content.Server.Research.TechnologyDisk.Components;
+﻿using Content.Shared.Random;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
+namespace Content.Server.Research.TechnologyDisk.Components;
 
 [RegisterComponent]
 public sealed class TechnologyDiskComponent : Component
@@ -8,4 +11,10 @@ public sealed class TechnologyDiskComponent : Component
     /// </summary>
     [DataField("recipes")]
     public List<string>? Recipes;
+
+    /// <summary>
+    /// A weighted random prototype for how rare each tier should be.
+    /// </summary>
+    [DataField("tierWeightPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
+    public string TierWeightPrototype = "TechDiskTierWeights";
 }

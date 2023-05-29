@@ -63,6 +63,7 @@
       type: VendingMachineBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+  - type: WiresPanel
   - type: Wires
     BoardName: "Vending Machine"
     LayoutId: Vending

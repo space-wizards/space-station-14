@@ -440,6 +440,30 @@ public sealed class StationSystem : EntitySystem
     {
         return EntityQuery<StationDataComponent>().Select(x => x.Owner).ToHashSet();
     }
+
+    /// <summary>
+    /// Returns the first station that has a grid in a certain map.
+    /// If the map has no stations, null is returned instead.
+    /// </summary>
+    /// </remarks
+    /// If there are multiple stations on a map it is probably arbitrary which one is returned.
+    /// </remarks>
+    public EntityUid? GetStationInMap(MapId map)
+    {
+        var query = EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out var data))
+        {
+            foreach (var gridUid in data.Grids)
+            {
+                if (Transform(gridUid).MapID == map)
+                {
+                    return uid;
+                }
+            }
+        }
+
+        return null;
+    }
 }
 
 /// <summary>
