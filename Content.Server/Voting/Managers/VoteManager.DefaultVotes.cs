@@ -203,14 +203,11 @@ namespace Content.Server.Voting.Managers
                     picked = (GameMapPrototype) args.Winner;
                     title = maps.FirstOrDefault(x => x.Value == picked).Key;
                 }
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-win",
+                    ("winner", title)));
                 if (title == "Secret")
                 {
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-secret-win"));
-                }
-                else
-                {
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-win",
-                        ("winner", title)));
                 }
 
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Map vote finished: {picked.MapName}");
