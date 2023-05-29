@@ -2,6 +2,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Random;
 
@@ -72,8 +73,10 @@ public sealed class RulesSystem : EntitySystem
                     foreach (var comp in _lookup.GetComponentsInRange<AccessReaderComponent>(xform.MapID,
                                  worldPos, access.Range))
                     {
-                        if (access.Anchored && !xformQuery.GetComponent(comp.Owner).Anchored ||
-                            !_reader.AreAccessTagsAllowed(access.Access, comp))
+                        if (!_reader.AreAccessTagsAllowed(access.Access, comp) ||
+                            access.Anchored &&
+                            (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
+                             !compXform.Anchored))
                         {
                             continue;
                         }
@@ -113,7 +116,8 @@ public sealed class RulesSystem : EntitySystem
                                      worldPos, nearbyComps.Range))
                         {
                             if (nearbyComps.Anchored &&
-                                (!xformQuery.TryGetComponent(comp.Owner, out var compXform) || !compXform.Anchored))
+                                (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
+                                 !compXform.Anchored))
                             {
                                 continue;
                             }
@@ -186,7 +190,7 @@ public sealed class RulesSystem : EntitySystem
                         if (!tiles.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
                             continue;
 
-                        if (tiles.Anchored && grid.GetAnchoredEntitiesEnumerator(tile.GridIndices).MoveNext(out _))
+                        if (tiles.IgnoreAnchored && grid.GetAnchoredEntitiesEnumerator(tile.GridIndices).MoveNext(out _))
                             continue;
 
                         matchingTileCount++;

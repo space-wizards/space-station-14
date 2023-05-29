@@ -225,7 +225,7 @@
   id: NearMaintenance
   rules:
     - !type:NearbyTilesPercentRule
-      anchored: false
+      ignoreAnchored: true
       percent: 0.25
       tiles:
         - Plating
@@ -235,10 +235,11 @@
   id: NearMedical
   rules:
     - !type:NearbyTilesPercentRule
+      ignoreAnchored: true
       percent: 0.5
       tiles:
       - FloorWhite
-      range: 5
+      range: 3
 
 - type: rules
   id: NearPrayable
@@ -253,6 +254,7 @@
   id: NearMorgue
   rules:
     - !type:NearbyComponentsRule
+      anchored: true
       count: 2
       components:
         - type: Morgue
