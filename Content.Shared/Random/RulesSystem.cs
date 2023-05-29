@@ -2,6 +2,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Random;
 
@@ -56,6 +57,7 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case NearbyAccessRule access:
                 {
+                    var physicsQuery = GetEntityQuery<PhysicsComponent>();
                     var xformQuery = GetEntityQuery<TransformComponent>();
 
                     if (!xformQuery.TryGetComponent(uid, out var xform) ||
@@ -72,8 +74,12 @@ public sealed class RulesSystem : EntitySystem
                     foreach (var comp in _lookup.GetComponentsInRange<AccessReaderComponent>(xform.MapID,
                                  worldPos, access.Range))
                     {
-                        if (access.Anchored && !xformQuery.GetComponent(comp.Owner).Anchored ||
-                            !_reader.AreAccessTagsAllowed(access.Access, comp))
+                        if (!_reader.AreAccessTagsAllowed(access.Access, comp) ||
+                            access.Anchored &&
+                            (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
+                             !compXform.Anchored) ||
+                            !physicsQuery.TryGetComponent(comp.Owner, out var physics) ||
+                            !physics.CanCollide)
                         {
                             continue;
                         }
@@ -94,7 +100,10 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case NearbyComponentsRule nearbyComps:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    var physicsQuery = GetEntityQuery<PhysicsComponent>();
+                    var xformQuery = GetEntityQuery<TransformComponent>();
+
+                    if (!xformQuery.TryGetComponent(uid, out var xform) ||
                         xform.MapUid == null)
                     {
                         return false;
@@ -110,6 +119,15 @@ public sealed class RulesSystem : EntitySystem
                         foreach (var _ in _lookup.GetComponentsInRange(comp.Component.GetType(), xform.MapID,
                                      worldPos, nearbyComps.Range))
                         {
+                            if (nearbyComps.Anchored &&
+                                (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
+                                 !compXform.Anchored) ||
+                                 !physicsQuery.TryGetComponent(comp.Owner, out var physics) ||
+                                 !physics.CanCollide)
+                            {
+                                continue;
+                            }
+
                             count++;
 
                             if (count >= nearbyComps.Count)
