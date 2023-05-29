@@ -18,10 +18,5 @@ namespace Content.Server.Flesh
 
         [DataField("deathMobSpawnCount"), ViewVariables(VVAccess.ReadWrite)]
         public int DeathMobSpawnCount = 0;
-
-        [DataField("collectiveMindChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
-        public string CollectiveMindChannel = "Flesh";
-
-        public bool IsDeath = false;
     }
 }

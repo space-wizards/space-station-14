@@ -1,28 +1,21 @@
-﻿using Content.Server.Chat.Systems;
-using Content.Server.Popups;
-using Content.Server.Radio.EntitySystems;
+﻿using Content.Server.Popups;
 using Content.Shared.Flesh;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
-using Content.Shared.Radio;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Flesh
 {
     public sealed class FleshMobSystem : EntitySystem
     {
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-        [Dependency] private readonly RadioSystem _radio = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FleshMobComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<FleshMobComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<FleshMobComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<FleshMobComponent, AttackAttemptEvent>(OnAttackAttempt);
@@ -78,11 +71,6 @@ namespace Content.Server.Flesh
                 var coords = new EntityCoordinates(uid, new Vector2(offsetX, offsetY));
                 Spawn(component.DeathMobSpawnId, coords);
             }
-        }
-
-        private void OnStartup(EntityUid uid, FleshMobComponent component, ComponentStartup args)
-        {
-
         }
     }
 }

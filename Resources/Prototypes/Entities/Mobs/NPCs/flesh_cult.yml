@@ -83,7 +83,6 @@
       soundDeath: "/Audio/Animals/Flesh/flesh_worm_dead.ogg"
       deathMobSpawnId: "MobFleshWorm"
       deathMobSpawnCount: 1
-      collectiveMindChannel: Flesh
     - type: Sprite
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -174,7 +173,6 @@
       soundDeath: "/Audio/Animals/Flesh/flesh_pudge_dead.ogg"
       deathMobSpawnId: "MobFleshWorm"
       deathMobSpawnCount: 2
-      collectiveMindChannel: Flesh
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/FleshCult/flesh_cult_pudge.rsi
@@ -295,7 +293,6 @@
       soundDeath: "/Audio/Animals/Flesh/abom_scream.ogg"
       deathMobSpawnId: "MobFleshWorm"
       deathMobSpawnCount: 2
-      collectiveMindChannel: Flesh
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/FleshCult/flesh_cult_abom.rsi
@@ -369,7 +366,6 @@
       soundDeath: "/Audio/Animals/Flesh/flesh_pudge_dead.ogg"
       deathMobSpawnId: "MobFleshWorm"
       deathMobSpawnCount: 0
-      collectiveMindChannel: Flesh
     - type: Sprite
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -438,7 +434,6 @@
       soundDeath: "/Audio/Animals/Flesh/flesh_worm_dead.ogg"
       deathMobSpawnId: "MobFleshWorm"
       deathMobSpawnCount: 0
-      collectiveMindChannel: Flesh
     - type: Sprite
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -505,7 +500,6 @@
       soundDeath: "/Audio/Animals/Flesh/flesh_worm_dead.ogg"
       deathMobSpawnId: "MobFleshWorm"
       deathMobSpawnCount: 0
-      collectiveMindChannel: Flesh
     - type: FleshWorm
       paralyzeTime: 3
       chansePounce: 33
