@@ -11,6 +11,7 @@ using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
+using Content.Shared.Movement.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
@@ -30,6 +31,7 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
 
     public override void Initialize()
     {
@@ -62,7 +64,8 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         RefreshShuttleConsoles();
     }
 
-    private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component, ShuttleConsoleFTLRequestMessage args)
+    private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component,
+        ShuttleConsoleFTLRequestMessage args)
     {
         if (!TryComp<FTLDestinationComponent>(args.Destination, out var dest))
         {
@@ -150,7 +153,7 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// </summary>
     private void OnConsoleUIClose(EntityUid uid, ShuttleConsoleComponent component, BoundUIClosedEvent args)
     {
-        if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key ||
+        if ((ShuttleConsoleUiKey)args.UiKey != ShuttleConsoleUiKey.Key ||
             args.Session.AttachedEntity is not { } user)
         {
             return;
@@ -165,13 +168,15 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         RemovePilot(user);
     }
 
-    private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
+    private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component,
+        ActivatableUIOpenAttemptEvent args)
     {
         if (!TryPilot(args.User, uid))
             args.Cancel();
     }
 
-    private void OnConsoleAnchorChange(EntityUid uid, ShuttleConsoleComponent component, ref AnchorStateChangedEvent args)
+    private void OnConsoleAnchorChange(EntityUid uid, ShuttleConsoleComponent component,
+        ref AnchorStateChangedEvent args)
     {
         UpdateState(uid);
     }
@@ -391,10 +396,7 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             return;
         }
 
-        if (TryComp<SharedEyeComponent>(entity, out var eye))
-        {
-            eye.Zoom = component.Zoom;
-        }
+        _eyeSystem.SetTargetZoomDirectly(component.Zoom, entity);
 
         component.SubscribedPilots.Add(pilotComponent);
 
@@ -416,10 +418,7 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         pilotComponent.Console = null;
         pilotComponent.Position = null;
 
-        if (TryComp<SharedEyeComponent>(pilotUid, out var eye))
-        {
-            eye.Zoom = new(1.0f, 1.0f);
-        }
+        _eyeSystem.SetTargetZoomDirectly(_eyeSystem.DefaultZoom, pilotUid);
 
         if (!helmsman.SubscribedPilots.Remove(pilotComponent))
             return;

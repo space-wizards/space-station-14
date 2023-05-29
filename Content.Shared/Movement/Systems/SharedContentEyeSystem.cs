@@ -17,7 +17,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     [Dependency] private readonly ISharedAdminManager _admin = default!;
 
     private const float ZoomMod = 1.6f;
-    private Vector2 DefaultZoom { get; } = Vector2.One;
+    public Vector2 DefaultZoom { get; } = Vector2.One;
     private static readonly Vector2 MinZoom = Vector2.One * (float)Math.Pow(ZoomMod, -2);
 
     protected ISawmill Sawmill = Logger.GetSawmill("ceye");
@@ -102,9 +102,9 @@ public abstract class SharedContentEyeSystem : EntitySystem
         }
     }
 
-    public ContentEyeComponent? HasContentEyeComp(ICommonSession session)
+    private ContentEyeComponent? HasContentEyeComp(ICommonSession? session, EntityUid? playerUid = null)
     {
-        var uid = session.AttachedEntity;
+        var uid = session != null ? session.AttachedEntity : playerUid;
 
         if (uid is EntityUid entityUid
             && TryComp<ContentEyeComponent>(entityUid, out var ghostComp))
@@ -150,6 +150,15 @@ public abstract class SharedContentEyeSystem : EntitySystem
         component.TargetZoom = actual;
         Dirty(component);
         Sawmill.Debug($"Set target zoom to {actual}");
+    }
+
+    public void SetTargetZoomDirectly(Vector2 newZoom, EntityUid playerUid)
+    {
+        if (HasContentEyeComp(null, playerUid) is not ContentEyeComponent content)
+            return;
+
+        content.TargetZoom = newZoom;
+        Dirty(content);
     }
 
     private sealed class KeyBindsInputCmdHandler : InputCmdHandler
