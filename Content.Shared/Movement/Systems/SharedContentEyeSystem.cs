@@ -65,7 +65,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     public void OnChangeZoomForType(RequestPlayerChangeZoomEvent msg, EntitySessionEventArgs args)
     {
-        Logger.Debug("zoom change!");
         if (HasContentEyeComp(args.SenderSession, msg.PlayerUid) is ContentEyeComponent content)
         {
             switch (msg.TypeZoom)
