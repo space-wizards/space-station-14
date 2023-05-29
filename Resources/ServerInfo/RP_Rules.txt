@@ -39,7 +39,7 @@ This is the "short" form of the rules, which has all the information any regular
 [color=#a4885c]12.[/color] Don't be a dick. You are playing a multiplayer game with other people who also want to enjoy the game.
     - [color=#ff0000]The arrivals station, shuttle, and general arrivals docking area are completely off-limits to any hostile activity, including activity by antagonists. Attacking newly spawned players in these areas or damaging/sabotaging these areas is strictly forbidden.[/color]
     - Do not intentionally make other players' lives hell for your own amusement.
-    - [color=#ff0000]THE ROUND IS NOT OVER UNTIL THE GAME RETURNS TO THE LOBBY. KILLING SOMEONE FOR NO REASON BEFORE THIS WILL BE HANDLED ACCORDINGLY.[/color]
+    - [color=#ff0000]THE ROUND IS NOT OVER UNTIL THE GAME RETURNS TO THE LOBBY. ESCALATION AND SELF-ANTAG RULES APPLY EVEN AFTER THE ROUND SUMMARY APPEARS.[/color]
     - Antagonists have a lot of leeway with this rule and may kill/sabotage as they see fit, however if your behavior degrades the experience for the majority of the server you will be told to stop. Antagonists are still forbidden from causing massive station damage early into the round (less than 30 minutes) and are forbidden from needlessly prolonging rounds.
 
 [color=#a4885c]13.[/color] Don't harass or target players across rounds for actions in prior rounds or for actions outside of the game (this is referred to as "Metagrudging".)
@@ -47,7 +47,7 @@ This is the "short" form of the rules, which has all the information any regular
 
 [color=#a4885c]14.[/color] Don't use information gained from outside your character's knowledge to gain an advantage (this is referred to as "Metagaming").
     - Using information you gain from outside your own character (such as spectating while a ghost, metacomms, or other means) to your advantage is strictly forbidden. If you take a ghost role, unless otherwise stated, you DO NOT REMEMBER ANYTHING from your past life.
-    - New Life Rule is in effect, you remember all events up until you fall unconscious unless cloned, in which case you remember everything but the events culminating in your death.
+    - New Life Rule is in effect, you remember all events up until you fall unconscious unless you enter a dead state. Being defibrillated will return all your memories expect for the events leading up to your death, being cloned will make your character forget everything since the shift started.
 
 [color=#a4885c]15.[/color] Do your best not to interact negatively with SSD/AFK players. Moving them to safety is acceptable; killing, looting, or otherwise griefing them while they are away is not.
     - SSD characters are players who are disconnected or AFK. It is possible for players to return to SSD bodies. Players become catatonic when they take a ghost spawner role or commit suicide. Players are NOT able to return to these bodies without admin intervention.
