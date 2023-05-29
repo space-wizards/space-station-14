@@ -179,24 +179,44 @@ public sealed class RulesSystem : EntitySystem
                         return false;
                     }
 
+                    var physicsQuery = GetEntityQuery<PhysicsComponent>();
                     var tileCount = 0;
                     var matchingTileCount = 0;
 
                     foreach (var tile in grid.GetTilesIntersecting(new Circle(_transform.GetWorldPosition(xform),
                                  tiles.Range)))
                     {
+                        // Only consider collidable anchored (for reasons some subfloor stuff has physics but non-collidable)
+                        if (tiles.IgnoreAnchored)
+                        {
+                            var gridEnum = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
+                            var found = false;
+
+                            while (gridEnum.MoveNext(out var ancUid))
+                            {
+                                if (!physicsQuery.TryGetComponent(ancUid, out var physics) ||
+                                    !physics.CanCollide)
+                                {
+                                    continue;
+                                }
+
+                                found = true;
+                                break;
+                            }
+
+                            if (found)
+                                continue;
+                        }
+
                         tileCount++;
 
                         if (!tiles.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
                             continue;
 
-                        if (tiles.IgnoreAnchored && grid.GetAnchoredEntitiesEnumerator(tile.GridIndices).MoveNext(out _))
-                            continue;
-
                         matchingTileCount++;
                     }
 
-                    if (matchingTileCount / (float) tileCount < tiles.Percent)
+                    if (tileCount == 0 || matchingTileCount / (float) tileCount < tiles.Percent)
                         return false;
 
                     break;
