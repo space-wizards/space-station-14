@@ -373,6 +373,10 @@
         whitelist:
           components:
           - Stunbaton
+      teargrenade:
+        whitelist:
+          components:
+            - SmokeOnTrigger
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
 
