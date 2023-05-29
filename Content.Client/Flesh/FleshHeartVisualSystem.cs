@@ -10,14 +10,13 @@ public sealed class FleshHeartSystem : VisualizerSystem<FleshHeartComponent>
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData<FleshHeartStatus>(uid, FleshHeartVisuals.State, out var state, args.Component))
-        {
-            var layer = args.Sprite.LayerMapGet(FleshHeartLayers.Base);
+        if (!AppearanceSystem.TryGetData<FleshHeartStatus>(uid, FleshHeartVisuals.State, out var state, args.Component))
+            return;
+        var layer = args.Sprite.LayerMapGet(FleshHeartLayers.Base);
 
-            if (state == FleshHeartStatus.Active)
-            {
-                args.Sprite.LayerSetState(layer, component.FinalState);
-            }
+        if (state == FleshHeartStatus.Active)
+        {
+            args.Sprite.LayerSetState(layer, component.FinalState);
         }
     }
 }
