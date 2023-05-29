@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fixed NPCs not properly steering around thindows in some instances.,
-    type: Fix}
-  id: 3393
-  time: '2023-04-12T13:50:08.0000000+00:00'
 - author: Arteben
   changes:
   - {message: 'Added filters of name, fingerprints and DNA for the station records
@@ -2916,3 +2910,8 @@ Entries:
       slider updates and not require you to leave range., type: Fix}
   id: 3892
   time: '2023-05-29T00:44:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Maintenance ambience should play less frequently in corridors., type: Fix}
+  id: 3893
+  time: '2023-05-29T04:19:00.0000000+00:00'

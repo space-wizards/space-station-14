@@ -55,6 +55,11 @@ public sealed class NearbyEntitiesRule : RulesRule
 
 public sealed class NearbyTilesPercentRule : RulesRule
 {
+    /// <summary>
+    /// If there are anchored entities on the tile do we ignore the tile.
+    /// </summary>
+    [DataField("anchored")] public bool Anchored;
+
     [DataField("percent", required: true)]
     public float Percent;
 
@@ -120,6 +125,12 @@ public sealed class NearbyAccessRule : RulesRule
 
 public sealed class NearbyComponentsRule : RulesRule
 {
+    /// <summary>
+    /// Does the entity need to be anchored.
+    /// </summary>
+    [DataField("anchored")]
+    public bool Anchored;
+
     [DataField("count")] public int Count;
 
     [DataField("components", required: true)]

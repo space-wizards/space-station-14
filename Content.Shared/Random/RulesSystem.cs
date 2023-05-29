@@ -113,10 +113,10 @@ public sealed class RulesSystem : EntitySystem
                     var worldPos = _transform.GetWorldPosition(xform);
                     var count = 0;
 
-                    foreach (var comp in nearbyComps.Components.Values)
+                    foreach (var compType in nearbyComps.Components.Values)
                     {
                         // TODO: Update this when we get the callback version
-                        foreach (var _ in _lookup.GetComponentsInRange(comp.Component.GetType(), xform.MapID,
+                        foreach (var comp in _lookup.GetComponentsInRange(compType.Component.GetType(), xform.MapID,
                                      worldPos, nearbyComps.Range))
                         {
                             if (nearbyComps.Anchored &&
@@ -130,11 +130,11 @@ public sealed class RulesSystem : EntitySystem
 
                             count++;
 
-                            if (count >= nearbyComps.Count)
-                            {
-                                found = true;
-                                break;
-                            }
+                            if (count < nearbyComps.Count)
+                                continue;
+
+                            found = true;
+                            break;
                         }
 
                         if (found)
@@ -194,6 +194,9 @@ public sealed class RulesSystem : EntitySystem
                         tileCount++;
 
                         if (!tiles.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
+                            continue;
+
+                        if (tiles.Anchored && grid.GetAnchoredEntitiesEnumerator(tile.GridIndices).MoveNext(out _))
                             continue;
 
                         matchingTileCount++;
