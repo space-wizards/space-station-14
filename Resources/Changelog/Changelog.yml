@@ -1,11 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: 'Fixed now the security cadet''s spawner has an icon not of a passenger,
-      but of a cadet (I just stuck the cadet badge next to the officer''s sprite)',
-    type: Fix}
-  id: 3397
-  time: '2023-04-12T18:33:19.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The Syndicate has started packaging its sinister pens in boxes for easier
@@ -2914,3 +2907,8 @@ Entries:
   - {message: Cap throwing scaling so bad mass values don't yeet you too far., type: Fix}
   id: 3896
   time: '2023-05-29T07:11:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix landing pad clipping dungeons in some instances., type: Fix}
+  id: 3897
+  time: '2023-05-29T11:48:15.0000000+00:00'
