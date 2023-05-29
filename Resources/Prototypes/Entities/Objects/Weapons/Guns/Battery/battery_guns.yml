@@ -428,3 +428,38 @@
   - type: Appearance
   - type: StaticPrice
     price: 63
+
+- type: entity
+  name: HK Phalanx
+  parent: BaseWeaponBatterySmall
+  id: WeaponHKPhalanx
+  description: Laser pistol stylized as a revolver. Issued with Nanotrasen as a service weapon for Blue Shield officers. A beautiful pistol and a powerful aid to protect the heads.
+  components:
+  - type: Item
+    size: 30
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_revolver.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/laser_revolver.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StaticPrice
+    price: 150

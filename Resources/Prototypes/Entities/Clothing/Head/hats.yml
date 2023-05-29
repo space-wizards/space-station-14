@@ -586,3 +586,14 @@
     sprite: Clothing/Head/Hats/hetman_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hetman_hat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretNavyBlue
+  name: navy blue officers beret
+  description: A navy blue beret adorned with the shield—a silver kite shield with an engraved sword—of the Nanotrasen security forces, announcing to the world that the wearer is a defender of Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_navyblue.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_navyblue.rsi
