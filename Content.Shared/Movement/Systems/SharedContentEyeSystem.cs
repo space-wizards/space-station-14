@@ -35,7 +35,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             .Bind(ContentKeyFunctions.ResetZoom, new KeyBindsInputCmdHandler(KeyBindsTypes.Reset, this))
             .Register<SharedContentEyeSystem>();
 
-        Sawmill.Level = LogLevel.Debug;
+        Sawmill.Level = LogLevel.Info;
     }
 
     private Vector2 CheckZoomValue(Vector2 checkedZoom, ContentEyeComponent component)
