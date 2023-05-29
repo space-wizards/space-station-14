@@ -178,6 +178,9 @@ public sealed class RulesSystem : EntitySystem
                         if (!tiles.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
                             continue;
 
+                        if (tiles.Anchored && grid.GetAnchoredEntitiesEnumerator(tile.GridIndices).MoveNext(out _))
+                            continue;
+
                         matchingTileCount++;
                     }
 
