@@ -1,0 +1,13 @@
+﻿- type: antag
+  id: FleshCultist
+  name: roles-antag-flesh-cultist-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-flesh-cultist-objective
+
+- type: antag
+  id: FleshCultistLeader
+  name: roles-antag-flesh-cultist-leader-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-flesh-cultist-leader-objective
