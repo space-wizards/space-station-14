@@ -38,23 +38,29 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Sawmill.Level = LogLevel.Debug;
     }
 
+    private Vector2 CheckZoomValue(Vector2 checkedZoom, ContentEyeComponent component)
+    {
+        var returnedZoom = Vector2.ComponentMax(MinZoom, checkedZoom);
+        return Vector2.ComponentMin(component.MaxZoom, returnedZoom);
+    }
+
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
     {
-        // if (HasContentEyeComp(args.SenderSession) is not ContentEyeComponent content)
-        //     return;
-        //
-        // if (args.SenderSession.AttachedEntity is not EntityUid uid)
-        //     return;
-        //
-        // if (!TryComp<SharedEyeComponent>(uid, out var eyeComp))
-        //     return;
-        //
-        // Logger.Debug($"Set zoom for shared component {msg.TargetZoom}");
-        // eyeComp.Zoom = msg.TargetZoom;
-        // Dirty(eyeComp);
+        if (HasContentEyeComp(args.SenderSession) is not ContentEyeComponent content)
+            return;
 
-        // content.TargetZoom = CheckZoomValue(msg.TargetZoom, content);
-        // Dirty(content);
+        if (args.SenderSession.AttachedEntity is not EntityUid uid)
+            return;
+
+        if (!TryComp<SharedEyeComponent>(uid, out var eyeComp))
+            return;
+
+        Logger.Debug($"Set zoom for shared component {msg.TargetZoom}");
+        eyeComp.Zoom = msg.TargetZoom;
+        Dirty(eyeComp);
+
+        content.TargetZoom = CheckZoomValue(msg.TargetZoom, content);
+        Dirty(content);
     }
 
     private void OnRequestFov(RequestFovEvent msg, EntitySessionEventArgs args)
@@ -83,32 +89,26 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (!TryComp<SharedEyeComponent>(uid, out var eyeComp))
             return;
 
-        component.TargetZoom = CheckZoomValue(eyeComp.Zoom, component);
+        component.TargetZoom = eyeComp.Zoom;
         Dirty(component);
-    }
-
-    private Vector2 CheckZoomValue(Vector2 checkedZoom, ContentEyeComponent component)
-    {
-        var returnedZoom = Vector2.ComponentMax(MinZoom, checkedZoom);
-        return Vector2.ComponentMin(component.MaxZoom, returnedZoom);
     }
 
     private void ChangeZoomForType(KeyBindsTypes typeZoom, ICommonSession session)
     {
-        if (HasContentEyeComp(session) is ContentEyeComponent content)
+        if (HasContentEyeComp(session) is not ContentEyeComponent content)
+            return;
+
+        switch (typeZoom)
         {
-            switch (typeZoom)
-            {
-                case KeyBindsTypes.ZoomIn:
-                    Zoom(content, true);
-                    return;
-                case KeyBindsTypes.ZoomOut:
-                    Zoom(content, false);
-                    return;
-                default:
-                    ResetZoom(content);
-                    return;
-            }
+            case KeyBindsTypes.ZoomIn:
+                Zoom(content, true);
+                return;
+            case KeyBindsTypes.ZoomOut:
+                Zoom(content, false);
+                return;
+            default:
+                ResetZoom(content);
+                return;
         }
     }
 
