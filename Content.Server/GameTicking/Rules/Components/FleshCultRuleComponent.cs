@@ -41,16 +41,11 @@ public sealed class FleshCultRuleComponent : Component
         "Human",
         "Reptilian",
         "Dwarf",
-        "HumanoidFoxes",
-        "Felinid",
-        "Oni",
-        "Moth"
     };
 
     public enum WinTypes
     {
         FleshHeartFinal,
-        AllCultistsDead,
         Fail
     }
 
@@ -62,6 +57,5 @@ public sealed class FleshCultRuleComponent : Component
     }
 
     public SelectionState SelectionStatus = SelectionState.WaitingForSpawn;
-    public TimeSpan AnnounceAt = TimeSpan.Zero;
     public Dictionary<IPlayerSession, HumanoidCharacterProfile> StartCandidates = new();
 }

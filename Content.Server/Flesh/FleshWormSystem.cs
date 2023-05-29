@@ -167,8 +167,6 @@ namespace Content.Server.Flesh
                 var equipped = _inventory.TryEquip(entity, uid, "mask", true);
                 if (!equipped)
                     return;
-                // if (HasComp<DiseaseCarrierComponent>(entity))
-                //    _disease.TryAddDisease(entity, "ActiveParasite");
 
                 component.EquipedOn = entity;
 
