@@ -172,6 +172,27 @@
       variation: 0.125
 
 - type: emoteSounds
+  id: FleshPudgeEmote
+  sound:
+    path: /Audio/Animals/Flesh/flesh_pudge_dead.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: FleshWormEmote
+  sound:
+    path: /Audio/Animals/Flesh/flesh_worm_scream.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: FleshAbomEmote
+  sound:
+    path: /Audio/Animals/Flesh/abom_scream.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
   id: Cerberus
   sound:
     path: /Audio/Animals/cerberus.ogg

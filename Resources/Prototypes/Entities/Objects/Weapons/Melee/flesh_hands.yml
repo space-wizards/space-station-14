@@ -24,8 +24,6 @@
       damage:
         types:
           Slash: 15
-        soundHit:
-          path: /Audio/Effects/hit_kick.ogg
     - type: ToolForcePowered
     - type: MultipleTool
       statusShowBehavior: true
@@ -105,8 +103,7 @@
     - type: AmmoCounter
     - type: Appearance
     - type: RechargeBasicEntityAmmo
-      minRechargeCooldown: 2
-      maxRechargeCooldown: 2
+      rechargeCooldown: 2
       rechargeSound: /Audio/Animals/Flesh/spike_gun_reload.ogg
     - type: Unremoveable
       deleteOnDrop: true
