@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Added show disconnected button to admin player tab., type: Add}
-  id: 3392
-  time: '2023-04-12T13:30:09.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fixed NPCs not properly steering around thindows in some instances.,
@@ -2911,3 +2906,13 @@ Entries:
   - {message: Power tools can now deal damage., type: Tweak}
   id: 3891
   time: '2023-05-28T20:09:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added ambient music!, type: Add}
+  - {message: Footstep sounds have been bumped., type: Tweak}
+  - {message: Volume sliders are now consistent and only go to 100% (rather than 100
+      / 200 / 300). They still scale identically to before., type: Tweak}
+  - {message: Ambient sound sources (e.g. APCs) will now update whenever the audio
+      slider updates and not require you to leave range., type: Fix}
+  id: 3892
+  time: '2023-05-29T00:44:12.0000000+00:00'
