@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Examine;
 using Content.Client.Strip;

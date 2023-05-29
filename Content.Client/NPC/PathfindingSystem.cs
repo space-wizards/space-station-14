@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using Content.Shared.NPC;
 using Robust.Client.Graphics;

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Singularity.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;

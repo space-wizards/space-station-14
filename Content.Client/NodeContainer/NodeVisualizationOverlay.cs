@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Text;
 using Content.Client.Resources;
 using Robust.Client.Graphics;

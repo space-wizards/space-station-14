@@ -1,4 +1,5 @@
-﻿using Content.Client.Parallax.Managers;
+﻿using System.Numerics;
+using Content.Client.Parallax.Managers;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.Random;

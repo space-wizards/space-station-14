@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Random;
+﻿using System.Numerics;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Random.Helpers

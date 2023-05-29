@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Explosion;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;

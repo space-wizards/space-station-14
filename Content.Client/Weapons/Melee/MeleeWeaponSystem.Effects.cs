@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.Weapons;
 using Content.Shared.Weapons.Melee;

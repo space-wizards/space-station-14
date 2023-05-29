@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Content.Client.Paper;
 
 [RegisterComponent]

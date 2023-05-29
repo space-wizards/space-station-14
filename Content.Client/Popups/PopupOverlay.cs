@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Examine;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;

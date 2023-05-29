@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-﻿using Robust.Shared.Random;
+using System.Numerics;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Worldgen.Tools;

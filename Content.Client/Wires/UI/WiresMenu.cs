@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;

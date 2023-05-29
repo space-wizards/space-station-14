@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Maps;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

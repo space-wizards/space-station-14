@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Damage;

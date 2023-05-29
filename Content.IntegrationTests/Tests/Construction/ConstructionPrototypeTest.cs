@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using NUnit.Framework;

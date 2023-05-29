@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Salvage;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;

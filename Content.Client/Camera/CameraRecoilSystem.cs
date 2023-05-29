@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Camera;
 
 namespace Content.Client.Camera;

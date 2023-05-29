@@ -1,4 +1,5 @@
-﻿using Content.Shared.Pulling;
+﻿using System.Numerics;
+using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Rotatable;
 using Robust.Shared.Physics;

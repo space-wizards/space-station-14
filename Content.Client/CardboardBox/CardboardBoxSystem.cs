@@ -1,4 +1,5 @@
-﻿using Content.Shared.CardboardBox;
+﻿using System.Numerics;
+using Content.Shared.CardboardBox;
 using Content.Shared.CardboardBox.Components;
 using Content.Shared.Examine;
 using Content.Shared.Movement.Components;

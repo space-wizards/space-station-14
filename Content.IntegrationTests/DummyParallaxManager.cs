@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Client.Parallax.Managers;
 using Content.Client.Parallax;

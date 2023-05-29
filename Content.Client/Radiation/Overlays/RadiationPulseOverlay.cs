@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Radiation.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
