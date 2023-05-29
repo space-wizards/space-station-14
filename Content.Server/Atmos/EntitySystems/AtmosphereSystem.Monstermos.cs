@@ -504,7 +504,15 @@ namespace Content.Server.Atmos.EntitySystems
                         // Temperature reduces as air drains. But nerf the real temperature reduction a bit
                         //   Also, limit the temperature loss to remain > 10 Deg.C for convenience
                         float realtemploss = (otherTile.Air.TotalMoles - sum) / otherTile.Air.TotalMoles;
-                        otherTile.Air.Temperature *= 0.9f + 0.1f * realtemploss;
+                        if (otherTile.Air.Temperature > 500.0f)
+                        {
+                            // For really hot air, drop temperature faster
+                            otherTile.Air.Temperature *= 0.7f + 0.3f * realtemploss;
+                        }
+                        else
+                        {
+                            otherTile.Air.Temperature *= 0.9f + 0.1f * realtemploss;
+                        }
                     }
                 }
                 else
