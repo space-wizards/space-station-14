@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests
 
             IEntityManager entityMan = null;
             var cfg = server.ResolveDependency<IConfigurationManager>();
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
+            await server.WaitPost(() => cfg.SetCVar(CCVars.GridFill, true));
 
             await server.WaitPost(() =>
             {
@@ -65,7 +65,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
+            await server.WaitPost(() => cfg.SetCVar(CCVars.GridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -78,7 +78,7 @@ namespace Content.IntegrationTests.Tests
             IEntityManager entityMan = null;
 
             var cfg = server.ResolveDependency<IConfigurationManager>();
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
+            await server.WaitPost(() => cfg.SetCVar(CCVars.GridFill, true));
 
             await server.WaitPost(() =>
             {
@@ -109,7 +109,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
+            await server.WaitPost(() => cfg.SetCVar(CCVars.GridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -129,7 +129,7 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
             var sEntMan = server.ResolveDependency<IEntityManager>();
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
+            await server.WaitPost(() => cfg.SetCVar(CCVars.GridFill, true));
             Assert.That(cfg.GetCVar(CVars.NetPVS), Is.False);
 
             var protoIds = prototypeMan
@@ -178,7 +178,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(sEntMan.EntityCount, Is.Zero);
             });
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
+            await server.WaitPost(() => cfg.SetCVar(CCVars.GridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
