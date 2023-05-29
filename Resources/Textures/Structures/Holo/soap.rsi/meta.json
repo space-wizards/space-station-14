@@ -3,13 +3,13 @@
   "size": {
     "x": 32,
     "y": 32
-    },
+  },
     "license": "CC-BY-SA-3.0",
     "copyright": "Taken from ss220-space at https://github.com/ss220-space/Paradise/commit/868f65f58dfe9b6f1827642727e86fcf4897f1d6#diff-ae286d719d429966114d9db2a426913abc2cffd78633d8f55955c22544dfb21f",
     "states": [
         {
-        "name": "icon",
-        "delays": [
+            "name": "icon",
+            "delays": [
                 [
                     2,
                     0.1,
