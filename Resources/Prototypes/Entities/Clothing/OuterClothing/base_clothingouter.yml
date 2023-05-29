@@ -93,7 +93,6 @@
     sprintModifier: 0.8
   - type: Item
     size: 80
-    protection: 0.05
   - type: Tag
     tags:
       - FullBodyOuter
