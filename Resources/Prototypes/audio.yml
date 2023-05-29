@@ -225,10 +225,11 @@
   id: NearMaintenance
   rules:
     - !type:NearbyTilesPercentRule
+      anchored: false
       percent: 0.25
       tiles:
         - Plating
-      range: 3
+      range: 2
 
 - type: rules
   id: NearMedical
@@ -243,6 +244,7 @@
   id: NearPrayable
   rules:
     - !type:NearbyComponentsRule
+      anchored: true
       components:
         - type: Prayable
       range: 5

@@ -94,7 +94,9 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case NearbyComponentsRule nearbyComps:
                 {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    var xformQuery = GetEntityQuery<TransformComponent>();
+
+                    if (!xformQuery.TryGetComponent(uid, out var xform) ||
                         xform.MapUid == null)
                     {
                         return false;
@@ -104,19 +106,25 @@ public sealed class RulesSystem : EntitySystem
                     var worldPos = _transform.GetWorldPosition(xform);
                     var count = 0;
 
-                    foreach (var comp in nearbyComps.Components.Values)
+                    foreach (var compType in nearbyComps.Components.Values)
                     {
                         // TODO: Update this when we get the callback version
-                        foreach (var _ in _lookup.GetComponentsInRange(comp.Component.GetType(), xform.MapID,
+                        foreach (var comp in _lookup.GetComponentsInRange(compType.Component.GetType(), xform.MapID,
                                      worldPos, nearbyComps.Range))
                         {
+                            if (nearbyComps.Anchored &&
+                                (!xformQuery.TryGetComponent(comp.Owner, out var compXform) || !compXform.Anchored))
+                            {
+                                continue;
+                            }
+
                             count++;
 
-                            if (count >= nearbyComps.Count)
-                            {
-                                found = true;
-                                break;
-                            }
+                            if (count < nearbyComps.Count)
+                                continue;
+
+                            found = true;
+                            break;
                         }
 
                         if (found)
@@ -176,6 +184,9 @@ public sealed class RulesSystem : EntitySystem
                         tileCount++;
 
                         if (!tiles.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
+                            continue;
+
+                        if (tiles.Anchored && grid.GetAnchoredEntitiesEnumerator(tile.GridIndices).MoveNext(out _))
                             continue;
 
                         matchingTileCount++;
