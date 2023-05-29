@@ -9,7 +9,17 @@
     price: 750
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
-    state: fueltank
+    layers:
+      - state: fueltank-2
+      - state: fueltank-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fueltank-2-
+  - type: ExaminableSolution
+    solution: tank
   - type: ReagentTank
     tankType: Fuel
   - type: DamageOnToolInteract
@@ -43,7 +53,14 @@
     price: 2500
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
-    state: highfueltank
+    layers:
+      - state: highfueltank-2
+      - state: highfueltank-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 7
+    fillBaseName: highfueltank-2-
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -66,7 +83,17 @@
     price: 500
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
-    state: watertank
+    layers:
+      - state: watertank-2
+      - state: watertank-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: watertank-2-
+  - type: ExaminableSolution
+    solution: tank
 
 - type: entity
   parent: WaterTank
@@ -86,7 +113,14 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
-    state: watercooler
+    layers:
+      - state: watercooler-2
+      - state: watercooler-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: watercooler-2-
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -101,7 +135,15 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
-    state: highwatertank
+    layers:
+      - state: highwatertank-2
+      - state: highwatertank-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 7
+    fillBaseName: highwatertank-2-
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -111,5 +153,7 @@
           Quantity: 10000
         maxVol: 10000
 #   It's pressurized...
+  - type: ExaminableSolution
+    solution: tank
   - type: ReagentTank
     transferAmount: 100

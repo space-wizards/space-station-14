@@ -9,7 +9,6 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Melee.Components;
-using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
@@ -41,7 +40,7 @@ public sealed class WieldableSystem : EntitySystem
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
         SubscribeLocalEvent<GunRequiresWieldComponent, AttemptShootEvent>(OnShootAttempt);
 
-        SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
+        SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
 
     private void OnMeleeAttempt(EntityUid uid, MeleeRequiresWieldComponent component, ref AttemptMeleeEvent args)
@@ -244,16 +243,13 @@ public sealed class WieldableSystem : EntitySystem
             AttemptUnwield(args.BlockingEntity, component, args.User);
     }
 
-    private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, MeleeHitEvent args)
+    private void OnGetMeleeDamage(EntityUid uid, IncreaseDamageOnWieldComponent component, ref GetMeleeDamageEvent args)
     {
-        if (EntityManager.TryGetComponent<WieldableComponent>(uid, out var wield))
-        {
-            if (!wield.Wielded)
-                return;
-        }
-        if (args.Handled)
+        if (!TryComp<WieldableComponent>(uid, out var wield))
+            return;
+        if (!wield.Wielded)
             return;
 
-        args.BonusDamage += component.BonusDamage;
+        args.Damage += component.BonusDamage;
     }
 }

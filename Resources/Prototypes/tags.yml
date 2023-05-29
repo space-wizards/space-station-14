@@ -550,6 +550,9 @@
   id: PlantSampleTaker
 
 - type: Tag
+  id: PlasmaGlassShard
+
+- type: Tag
   id: Plastic
 
 - type: Tag
@@ -570,6 +573,9 @@
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
+
+- type: Tag
+  id: ReinforcedGlassShard
 
 - type: Tag
   id: RipleyCentralControlModule
@@ -659,6 +665,9 @@
   id: StringInstrument
 
 - type: Tag
+  id: StationMapElectronics
+
+- type: Tag
   id: SubdermalImplant
 
 - type: Tag
@@ -695,7 +704,7 @@
   id: TrashBag
 
 - type: Tag
-  id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
+  id: UraniumGlassShard
 
 - type: Tag
   id: VehicleKey

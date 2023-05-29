@@ -185,8 +185,8 @@ namespace Content.Shared.Movement.Systems
 
                 if (!touching)
                 {
-                    var ev = new CanWeightlessMoveEvent();
-                    RaiseLocalEvent(uid, ref ev);
+                    var ev = new CanWeightlessMoveEvent(uid);
+                    RaiseLocalEvent(uid, ref ev, true);
                     // No gravity: is our entity touching anything?
                     touching = ev.CanMove;
 

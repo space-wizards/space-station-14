@@ -11,8 +11,6 @@
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Effects/wall_bonk.ogg
-      params:
-        volume: 2
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Effects/drop.ogg

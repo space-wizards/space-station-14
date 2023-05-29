@@ -180,6 +180,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen0_1
+  - type: WiresPanel
   - type: Wires
     BoardName: "GeneratorPlasma"
     LayoutId: GeneratorPlasma
@@ -199,6 +200,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen1_1
+  - type: WiresPanel
   - type: Wires
     BoardName: "GeneratorUranium"
     LayoutId: GeneratorUranium

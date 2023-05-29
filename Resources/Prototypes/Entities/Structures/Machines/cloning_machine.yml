@@ -60,6 +60,7 @@
   - type: MaterialStorage
     materialWhiteList:
     - Biomass
+  - type: WiresPanel
   - type: Wires
     BoardName: "CloningPod"
     LayoutId: CloningPod

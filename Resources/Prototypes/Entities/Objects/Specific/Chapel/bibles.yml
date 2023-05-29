@@ -43,6 +43,9 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+  - type: Tag
+    tags:
+    - Book
 
 - type: entity
   parent: Bible
