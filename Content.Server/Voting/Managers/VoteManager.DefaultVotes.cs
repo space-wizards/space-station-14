@@ -158,7 +158,13 @@ namespace Content.Server.Voting.Managers
 
         private void CreateMapVote(IPlayerSession? initiator)
         {
-            var maps = _gameMapManager.CurrentlyEligibleMaps().ToDictionary(map => map, map => map.MapName);
+            var maps = new Dictionary<string, GameMapPrototype>();
+            var eligibleMaps = _gameMapManager.CurrentlyEligibleMaps().ToList();
+            maps.Add("Secret", _random.Pick(eligibleMaps));
+            foreach (var map in eligibleMaps)
+            {
+                maps.Add(map.MapName, map);
+            }
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -174,7 +180,7 @@ namespace Content.Server.Voting.Managers
 
             foreach (var (k, v) in maps)
             {
-                options.Options.Add((v, k));
+                options.Options.Add((k, v));
             }
 
             WirePresetVoteInitiator(options, initiator);
@@ -184,17 +190,27 @@ namespace Content.Server.Voting.Managers
             vote.OnFinished += (_, args) =>
             {
                 GameMapPrototype picked;
+                string title;
                 if (args.Winner == null)
                 {
                     picked = (GameMapPrototype) _random.Pick(args.Winners);
+                    title = maps.FirstOrDefault(x => x.Value == picked).Key;
                     _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("ui-vote-map-tie", ("picked", maps[picked])));
+                        Loc.GetString("ui-vote-map-tie", ("picked", title)));
                 }
                 else
                 {
                     picked = (GameMapPrototype) args.Winner;
-                    _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("ui-vote-map-win", ("winner", maps[picked])));
+                    title = maps.FirstOrDefault(x => x.Value == picked).Key;
+                }
+                if (title == "Secret")
+                {
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-secret-win"));
+                }
+                else
+                {
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-win",
+                        ("winner", title)));
                 }
 
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Map vote finished: {picked.MapName}");
@@ -214,7 +230,8 @@ namespace Content.Server.Voting.Managers
                     }
                     else
                     {
-                        _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-notlobby-time"));
+                        var timeString = $"{ticker.RoundPreloadTime.Minutes:0}:{ticker.RoundPreloadTime.Seconds:00}";
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-notlobby-time", ("time", timeString)));
                     }
                 }
             };
