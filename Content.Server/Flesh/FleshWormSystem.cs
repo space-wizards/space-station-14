@@ -75,9 +75,6 @@ namespace Content.Server.Flesh
             if (!equipped)
                 return;
 
-            //if (HasComp<DiseaseCarrierComponent>(args.Target))
-            //    _disease.TryAddDisease(args.Target, "ActiveParasite");
-
             component.EquipedOn = args.Target;
 
             _popup.PopupEntity(Loc.GetString("flesh-pudge-throw-worm-hit-user"),

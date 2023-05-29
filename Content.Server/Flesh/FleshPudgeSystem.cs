@@ -29,15 +29,9 @@ namespace Content.Server.Flesh
             base.Initialize();
 
             SubscribeLocalEvent<FleshPudgeComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<FleshPudgeComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<FleshPudgeComponent, FleshPudgeThrowWormActionEvent>(OnThrowWorm);
             SubscribeLocalEvent<FleshPudgeComponent, FleshPudgeAbsorbBloodPoolActionEvent>(OnAbsorbBloodPoolActionEvent);
             SubscribeLocalEvent<FleshPudgeComponent, FleshPudgeAcidSpitActionEvent>(OnAcidSpit);
-        }
-
-        private void OnShutdown(EntityUid uid, FleshPudgeComponent component, ComponentShutdown args)
-        {
-
         }
 
         public sealed class FleshPudgeThrowWormActionEvent : WorldTargetActionEvent

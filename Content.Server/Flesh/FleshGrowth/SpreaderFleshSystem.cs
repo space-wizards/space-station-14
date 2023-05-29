@@ -190,14 +190,6 @@ public sealed class SpreaderFleshSystem : EntitySystem
         return didGrow;
     }
 
-    public void EnableSpreader(EntityUid ent, SpreaderFleshComponent? component = null)
-    {
-        if (!Resolve(ent, ref component))
-            return;
-        component.Enabled = true;
-        _edgeGrowths.Add(ent);
-    }
-
     private bool IsTileBlockedFrom(EntityUid ent, DirectionFlag dir)
     {
         if (EntityManager.TryGetComponent<SpreaderFleshComponent>(ent, out _))

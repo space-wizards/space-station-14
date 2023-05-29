@@ -18,12 +18,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Flesh
 {
-    /// <summary>
-    ///     Handles zombie propagation and inherent zombie traits
-    /// </summary>
-    /// <remarks>
-    ///     Don't Shitcode Open Inside
-    /// </remarks>
     public sealed class TransformInFleshPudgeOnDeathSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popup = default!;

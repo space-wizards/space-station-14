@@ -16,14 +16,8 @@ namespace Content.Server.Flesh
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FleshMobComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<FleshMobComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<FleshMobComponent, AttackAttemptEvent>(OnAttackAttempt);
-
-        }
-
-        private void OnShutdown(EntityUid uid, FleshMobComponent component, ComponentShutdown args)
-        {
 
         }
 

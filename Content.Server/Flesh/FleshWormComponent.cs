@@ -1,5 +1,4 @@
-﻿using Content.Server.Damage.Systems;
-using Content.Shared.Actions.ActionTypes;
+﻿using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 

@@ -1,6 +1,3 @@
-using Content.Shared.Maps;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-
 namespace Content.Server.Flesh.FleshGrowth;
 
 /// <summary>
