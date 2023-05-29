@@ -57,7 +57,6 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case NearbyAccessRule access:
                 {
-                    var physicsQuery = GetEntityQuery<PhysicsComponent>();
                     var xformQuery = GetEntityQuery<TransformComponent>();
 
                     if (!xformQuery.TryGetComponent(uid, out var xform) ||
@@ -77,9 +76,7 @@ public sealed class RulesSystem : EntitySystem
                         if (!_reader.AreAccessTagsAllowed(access.Access, comp) ||
                             access.Anchored &&
                             (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
-                             !compXform.Anchored) ||
-                            !physicsQuery.TryGetComponent(comp.Owner, out var physics) ||
-                            !physics.CanCollide)
+                             !compXform.Anchored))
                         {
                             continue;
                         }
@@ -100,7 +97,6 @@ public sealed class RulesSystem : EntitySystem
                 }
                 case NearbyComponentsRule nearbyComps:
                 {
-                    var physicsQuery = GetEntityQuery<PhysicsComponent>();
                     var xformQuery = GetEntityQuery<TransformComponent>();
 
                     if (!xformQuery.TryGetComponent(uid, out var xform) ||
@@ -121,9 +117,7 @@ public sealed class RulesSystem : EntitySystem
                         {
                             if (nearbyComps.Anchored &&
                                 (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
-                                 !compXform.Anchored) ||
-                                 !physicsQuery.TryGetComponent(comp.Owner, out var physics) ||
-                                 !physics.CanCollide)
+                                 !compXform.Anchored))
                             {
                                 continue;
                             }
@@ -196,7 +190,7 @@ public sealed class RulesSystem : EntitySystem
                         if (!tiles.Tiles.Contains(_tileDef[tile.Tile.TypeId].ID))
                             continue;
 
-                        if (tiles.Anchored && grid.GetAnchoredEntitiesEnumerator(tile.GridIndices).MoveNext(out _))
+                        if (tiles.IgnoreAnchored && grid.GetAnchoredEntitiesEnumerator(tile.GridIndices).MoveNext(out _))
                             continue;
 
                         matchingTileCount++;
