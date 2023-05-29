@@ -1,6 +1,6 @@
 ghost-gui-return-to-body-button = Вернуться в тело
 ghost-gui-ghost-warp-button = Телепорт призрака
-ghost-gui-ghost-roles-button = Роли призраков ({$count})
+ghost-gui-ghost-roles-button = Роли призраков {$count}
 ghost-gui-toggle-ghost-visibility-name = Переключить призраков
 ghost-gui-toggle-ghost-visibility-desc = Переключить видимость других призраков.
 ghost-gui-toggle-ghost-visibility-popup = Видимость других призраков была изменена.
@@ -16,7 +16,7 @@ ghost-target-window-current-button = Телепорт в: {$name}
 
 ghost-roles-window-title = Роли призраков
 ghost-roles-window-request-role-button = Запросить
-ghost-roles-window-request-role-button-timer = Запросить ({$time}сек.)
+ghost-roles-window-request-role-button-timer = Запросить {$time}сек.
 ghost-roles-window-follow-role-button = Следовать
 ghost-roles-window-no-roles-available-label = В настоящее время нет доступных ролей призраков.
 ghost-roles-window-rules-footer = Кнопка станет доступна через {$time} секунд (эта задержка нужна, чтобы убедиться, что вы прочитали правила).
