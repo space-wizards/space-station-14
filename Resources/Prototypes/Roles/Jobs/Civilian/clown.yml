@@ -29,9 +29,10 @@
     back: ClothingBackpackClownFilled
     shoes: ClothingShoesClown
     mask: ClothingMaskClown
-    pocket1: BikeHorn
+    pocket1: HoloprojectorSoap
     pocket2: ClownRecorder
     id: ClownPDA
+    belt: BikeHorn
     ears: ClothingHeadsetService
   satchel: ClothingBackpackSatchelClownFilled
   duffelbag: ClothingBackpackDuffelClownFilled

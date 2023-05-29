@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from ss220-space at https://github.com/ss220-space/Paradise/blob/master220/icons/effects/effects.dmi",
+    "states": [
+        {
+        "name": "icon",
+        "delays": [
+                [
+                    2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

@@ -64,3 +64,22 @@
         - HolofanProjector
     - type: StaticPrice
       price: 80
+
+- type: entity
+  parent: Holoprojector
+  id: HoloprojectorSoap
+  name: soap sign projector
+  description: In case there was no real soap.
+  components:
+  - type: HolosignProjector
+    signProto: HolosignSoap
+    chargeUse: 120
+  - type: Sprite
+    sprite: Objects/Devices/Holoprojectors/soap.rsi
+    state: icon
+    netsync: false
+  - type: Tag
+    tags:
+      - HolosignProjector
+  - type: StaticPrice
+    price: 80
