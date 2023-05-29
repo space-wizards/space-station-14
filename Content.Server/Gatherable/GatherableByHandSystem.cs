@@ -19,12 +19,12 @@ public sealed partial class GatherableByHandSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GatherableByHandComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<GatherableByHandComponent, SpaceshroomDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<GatherableByHandComponent, GatherableByHandDoAfterEvent>(OnDoAfter);
     }
 
     private void OnInteractHand(EntityUid uid, GatherableByHandComponent component, InteractHandEvent args)
     {
-        var doAfter = new DoAfterArgs(args.User, TimeSpan.FromSeconds(component.HarvestTime), new SpaceshroomDoAfterEvent(), uid, target: uid)
+        var doAfter = new DoAfterArgs(args.User, TimeSpan.FromSeconds(component.HarvestTime), new GatherableByHandDoAfterEvent(), uid, target: uid)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,
@@ -35,9 +35,12 @@ public sealed partial class GatherableByHandSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfter);
     }
 
-    private void OnDoAfter(EntityUid uid, GatherableByHandComponent component, SpaceshroomDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, GatherableByHandComponent component, GatherableByHandDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled) return;
+        if (args.Handled || args.Cancelled)
+        {
+            return;
+        }
 
         Gather(uid, component);
         args.Handled = true;
@@ -45,9 +48,15 @@ public sealed partial class GatherableByHandSystem : EntitySystem
 
     private void Gather(EntityUid uid, GatherableByHandComponent? component = null)
     {
-        if (!Resolve(uid, ref component)) return;
+        if (!Resolve(uid, ref component))
+        {
+            return;
+        }
 
-        if (component.Loot == null) return;
+        if (component.Loot == null)
+        {
+            return;
+        }
 
         var dropCount = _random.Next(component.MinDropCount, component.MaxDropCount + 1);
         var pos = Transform(uid).MapPosition;
@@ -59,6 +68,6 @@ public sealed partial class GatherableByHandSystem : EntitySystem
             Spawn(component.Loot, spawnPos);
         }
 
-        _destructible.DestroyEntity(uid);
+        QueueDel(uid);
     }
 }

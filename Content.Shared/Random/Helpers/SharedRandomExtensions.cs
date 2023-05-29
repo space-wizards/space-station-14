@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Dataset;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Random.Helpers
@@ -36,11 +35,6 @@ namespace Content.Shared.Random.Helpers
 
         public static string Pick(this WeightedRandomPrototype prototype, IRobustRandom? random = null)
         {
-            return prototype.PickWithQuantity(random).result;
-        }
-
-        public static (string result, FixedPoint2 quantity) PickWithQuantity(this WeightedRandomPrototype prototype, IRobustRandom? random = null)
-        {
             IoCManager.Resolve(ref random);
             var picks = prototype.Weights;
             var sum = picks.Values.Sum();
@@ -52,23 +46,15 @@ namespace Content.Shared.Random.Helpers
             {
                 accumulated += weight;
 
-                var quantity = prototype.Quantities.TryGetValue(key, out var value) ? value : -1;
-
-                if (quantity < -1)
-                {
-                    quantity = 0;
-                }
-
                 if (accumulated >= rand)
                 {
-                    return (key, quantity);
+                    return key;
                 }
             }
 
             // Shouldn't happen
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
-
 
         public static string Pick(this IRobustRandom random, Dictionary<string, float> weights)
         {

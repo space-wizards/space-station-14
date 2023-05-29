@@ -5,6 +5,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Spaceshroom;
 
 [Serializable, NetSerializable]
-public sealed class SpaceshroomDoAfterEvent : SimpleDoAfterEvent
+public sealed class GatherableByHandDoAfterEvent : SimpleDoAfterEvent
 {
 }

@@ -23,7 +23,7 @@ public sealed class SolutionRandomFillSystem : EntitySystem
     private void OnRandomSolutionFillMapInit(EntityUid uid, RandomFillSolutionComponent component, MapInitEvent args)
     {
         var target = _solutionsSystem.EnsureSolution(uid, component.Solution);
-        var (reagent, quantity) = _proto.Index<WeightedRandomPrototype>(component.WeightedRandomId).PickWithQuantity(_random);
+        var reagent = _proto.Index<WeightedRandomPrototype>(component.WeightedRandomId).Pick(_random);
 
         if (!_proto.TryIndex<ReagentPrototype>(reagent, out _))
         {
@@ -32,9 +32,13 @@ public sealed class SolutionRandomFillSystem : EntitySystem
             return;
         }
 
-        if (quantity <= -1)
+        // Default quantity
+        var quantity = component.Quantity;
+
+        // Optionally specified quantity for specific reagent
+        if (component.Quantities.TryGetValue(reagent, out var value))
         {
-            quantity = component.Quantity;
+            quantity = value;
         }
 
         target.AddReagent(reagent, quantity);

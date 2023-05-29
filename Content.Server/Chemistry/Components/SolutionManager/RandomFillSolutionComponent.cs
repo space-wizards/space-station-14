@@ -24,8 +24,19 @@ public sealed class RandomFillSolutionComponent : Component
     public string WeightedRandomId { get; set; } = "default";
 
     /// <summary>
-    ///     Amount of reagent to add.
+    ///     Amount of reagent to add by default.
     /// </summary>
     [DataField("quantity")]
     public FixedPoint2 Quantity { get; set; } = 0;
+
+    /// <summary>
+    ///     Amount of reagent to add, keyed by reagent ID. Overrides default if specified.
+    ///     Example:
+    ///     quantities:
+    ///         Water: 0
+    ///         Amatoxin: 10
+    ///         SpaceDrugs: 15
+    /// </summary>
+    [DataField("quantities")]
+    public Dictionary<string, int> Quantities = new();
 }

@@ -14,7 +14,7 @@
     anchored: true
   - type: InteractionOutline
   - type: StaticPrice
-    price: 250
+    price: 150
   - type: GatherableByHand
     loot: FoodSpaceshroom
     mindropcount: 2
@@ -53,7 +53,12 @@
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillSpaceshroom
-    quantity: 0
+    quantities:
+      SpaceDrugs: 10
+      Water: 0
+      Ephedrine: 10
+      Lexorin: 10
+      Amatoxin: 15
 
 - type: weightedRandom
   id: RandomFillSpaceshroom
@@ -63,12 +68,6 @@
     Ephedrine: 3
     Lexorin: 1
     Amatoxin: 1
-  quantities:
-    SpaceDrugs: 10
-    Water: 0
-    Ephedrine: 10
-    Lexorin: 10
-    Amatoxin: 15
 
 # Cooked Object
 - type: entity
