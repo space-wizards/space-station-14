@@ -1,11 +1,6 @@
 Entries:
 - author: PuroSlavKing
   changes:
-  - {message: Added boxer spawnpoint., type: Add}
-  id: 3396
-  time: '2023-04-12T18:32:49.0000000+00:00'
-- author: PuroSlavKing
-  changes:
   - {message: 'Fixed now the security cadet''s spawner has an icon not of a passenger,
       but of a cadet (I just stuck the cadet badge next to the officer''s sprite)',
     type: Fix}
@@ -2914,3 +2909,8 @@ Entries:
   - {message: Fixed cleanbots., type: Fix}
   id: 3895
   time: '2023-05-29T06:53:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cap throwing scaling so bad mass values don't yeet you too far., type: Fix}
+  id: 3896
+  time: '2023-05-29T07:11:54.0000000+00:00'
