@@ -6,6 +6,7 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Coordinates.Helpers;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -17,6 +18,7 @@ using Content.Shared.Smoking;
 using Content.Shared.Spawners;
 using Content.Shared.Spawners.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -39,6 +41,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -49,6 +52,7 @@ public sealed class SmokeSystem : EntitySystem
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
         SubscribeLocalEvent<SmokeDissipateSpawnComponent, TimedDespawnEvent>(OnSmokeDissipate);
         SubscribeLocalEvent<SpreadGroupUpdateRate>(OnSpreadUpdateRate);
+        SubscribeLocalEvent<SmokeOnTriggerComponent, TriggerEvent>(HandleSmokeTrigger);
     }
 
     private void OnSpreadUpdateRate(ref SpreadGroupUpdateRate ev)
@@ -296,6 +300,22 @@ public sealed class SmokeSystem : EntitySystem
         EnsureComp<EdgeSpreaderComponent>(uid);
         var timer = EnsureComp<TimedDespawnComponent>(uid);
         timer.Lifetime = duration;
+    }
+
+    private void HandleSmokeTrigger(EntityUid uid, SmokeOnTriggerComponent comp, TriggerEvent args)
+    {
+        var xform = Transform(uid);
+        var smokeEnt = Spawn("Smoke", xform.Coordinates);
+        var smoke = EnsureComp<SmokeComponent>(smokeEnt);
+        smoke.SpreadAmount = comp.SpreadAmount;
+        var solution = new Solution();
+        foreach (var reagent in comp.SmokeReagents)
+        {
+            solution.AddReagent(reagent.ReagentId, reagent.Quantity);
+        }
+        Start(smokeEnt, smoke, solution, comp.Time);
+        _audioSystem.PlayPvs(comp.Sound, xform.Coordinates, AudioParams.Default.WithVariation(0.125f));
+        args.Handled = true;
     }
 
     /// <summary>

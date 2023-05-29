@@ -199,3 +199,37 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: smoke grenade
+  description:
+  parent: GrenadeBase
+  id: SmokeGrenade
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Grenades/smokegrenade.rsi
+    - type: SmokeOnTrigger
+      spreadAmount: 50
+      time: 30
+      sound: /Audio/Effects/smoke.ogg
+    - type: DeleteOnTrigger
+    - type: Appearance
+
+- type: entity
+  name: tear smoke grenade
+  description:
+  parent: GrenadeBase
+  id: TearSmokeGrenade
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Grenades/tearsmokegrenade.rsi
+    - type: SmokeOnTrigger
+      time: 10
+      spreadAmount: 30
+      smokeReagents:
+        - ReagentId: TearAcid
+          Quantity: 5
+      sound: /Audio/Effects/smoke.ogg
+    - type: DeleteOnTrigger
+    - type: Appearance
+

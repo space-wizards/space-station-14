@@ -30,6 +30,9 @@ uplink-explosive-grenade-desc = Grenade that creates a small but devastating exp
 uplink-flash-grenade-name = Flashbang
 uplink-flash-grenade-desc = Eeeeeeeeeeeeeeeeeeeeee
 
+uplink-smoke-grenade-name = Smoke grenade
+uplink-smoke-grenade-desc = To leave quietly
+
 uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
 

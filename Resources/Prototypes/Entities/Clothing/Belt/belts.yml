@@ -359,6 +359,7 @@
         - Radio
       components:
         - Stunbaton
+        - SmokeOnTrigger
         - FlashOnTrigger
         - Flash
         - Handcuff
