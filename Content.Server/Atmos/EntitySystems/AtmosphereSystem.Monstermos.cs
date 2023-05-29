@@ -530,7 +530,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // TODO ATMOS: Come up with better values for these.
                 _physics.ApplyLinearImpulse(mapGrid.Owner, direction * totalMolesRemoved * gridPhysics.Mass, body: gridPhysics);
-                _physics.ApplyAngularImpulse(mapGrid.Owner, Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved, body: gridPhysics);
+                _physics.ApplyAngularImpulse(mapGrid.Owner, Vector2Helpers.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved, body: gridPhysics);
             }
 
             if(tileCount > 10 && (totalMolesRemoved / tileCount) > 10)

@@ -313,7 +313,7 @@ public sealed class ListContainer : Control
             child.Measure(constraint);
             if (child == _vScrollBar)
                 continue;
-            childSize = Vector2.ComponentMax(childSize, child.DesiredSize);
+            childSize = Vector2.Max(childSize, child.DesiredSize);
         }
 
         if (_itemHeight == 0 && childSize.Y != 0)

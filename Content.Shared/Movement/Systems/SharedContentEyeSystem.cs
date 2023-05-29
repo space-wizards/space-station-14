@@ -129,8 +129,8 @@ public abstract class SharedContentEyeSystem : EntitySystem
             actual *= ZoomMod;
         }
 
-        actual = Vector2.ComponentMax(MinZoom, actual);
-        actual = Vector2.ComponentMin(component.MaxZoom, actual);
+        actual = Vector2.Max(MinZoom, actual);
+        actual = Vector2.Min(component.MaxZoom, actual);
 
         if (actual.Equals(component.TargetZoom))
             return;

@@ -63,7 +63,7 @@ namespace Content.Client.UserInterface.Controls
             foreach (var child in Children)
             {
                 child.Measure(availableSize);
-                size = Vector2.ComponentMax(size, child.DesiredSize);
+                size = Vector2.Max(size, child.DesiredSize);
             }
 
             return size + (0, padSizeTotal);
