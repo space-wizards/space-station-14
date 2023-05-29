@@ -1,11 +1,7 @@
-using Content.Shared.Input;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Input;
-using Robust.Shared.Input.Binding;
-using Robust.Shared.Players;
 
 namespace Content.Client.Movement.Systems;
 
@@ -13,58 +9,14 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
 
-    public override void Initialize()
+    public void RequestZoom(EntityUid uid, Vector2 zoom, ContentEyeComponent? content = null)
     {
-        base.Initialize();
-
-        CommandBinds.Builder
-            .Bind(ContentKeyFunctions.ZoomIn, new KeyBindsInputCmdHandler(KeyBindsTypes.ZoomIn, this))
-            .Bind(ContentKeyFunctions.ZoomOut, new KeyBindsInputCmdHandler(KeyBindsTypes.ZoomOut, this))
-            .Bind(ContentKeyFunctions.ResetZoom, new KeyBindsInputCmdHandler(KeyBindsTypes.Reset, this))
-            .Register<ContentEyeSystem>();
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        CommandBinds.Unregister<SharedContentEyeSystem>();
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var localPlayer = _player.LocalPlayer?.ControlledEntity;
-
-        if (HasContentEyeComp(null, localPlayer) is not ContentEyeComponent content
-            || !TryComp<EyeComponent>(localPlayer, out var eyeComp))
-        {
-            return;
-        }
-
-        if (eyeComp.Zoom.Equals(content.TargetZoom))
+        if (!Resolve(uid, ref content, false))
             return;
 
-        var diff = content.TargetZoom - eyeComp.Zoom;
-
-        if (diff.LengthSquared < 0.00001f)
-        {
-            eyeComp.Zoom = content.TargetZoom;
-            Logger.Debug("set target zoom ++++++++++++++++++++");
-            RaisePredictiveEvent(new EndOfTargetZoomAnimation());
-            return;
-        }
-
-        var change = diff * 10 * frameTime;
-
-        eyeComp.Zoom += change;
-    }
-
-    public void RequestZoom(Vector2 zoom)
-    {
         RaisePredictiveEvent(new RequestTargetZoomEvent()
         {
-            TargetZoom = zoom
+            TargetZoom = zoom,
         });
     }
 
@@ -88,34 +40,32 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         });
     }
 
-    private void OnZoomChangeKeyBind(KeyBindsTypes type)
+    public override void Update(float frameTime)
     {
-        RaisePredictiveEvent(new RequestPlayerChangeZoomEvent()
-        {
-            TypeZoom = type,
-            PlayerUid = _player.LocalPlayer?.ControlledEntity,
-        });
-    }
+        base.Update(frameTime);
 
-    private sealed class KeyBindsInputCmdHandler : InputCmdHandler
-    {
-        private readonly KeyBindsTypes _typeBind;
-        private readonly ContentEyeSystem _system;
+        var localPlayer = _player.LocalPlayer?.ControlledEntity;
 
-        public KeyBindsInputCmdHandler(KeyBindsTypes bind, ContentEyeSystem system)
+        if (!TryComp<ContentEyeComponent>(localPlayer, out var content)
+            || !TryComp<EyeComponent>(localPlayer, out var eyeComp))
         {
-            _typeBind = bind;
-            _system = system;
+            return;
         }
 
-        public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+        if (eyeComp.Zoom.Equals(content.TargetZoom))
+            return;
+
+        var diff = content.TargetZoom - eyeComp.Zoom;
+
+        if (diff.LengthSquared < 0.000001f)
         {
-            if (message is not FullInputCmdMessage full || full.State != BoundKeyState.Down)
-                return false;
-
-            _system.OnZoomChangeKeyBind(_typeBind);
-
-            return true;
+            eyeComp.Zoom = content.TargetZoom;
+            RaisePredictiveEvent(new EndOfTargetZoomAnimation());
+            return;
         }
+
+        var change = diff * 10 * frameTime;
+
+        eyeComp.Zoom += change;
     }
 }
