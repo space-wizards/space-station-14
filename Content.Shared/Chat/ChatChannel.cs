@@ -80,7 +80,7 @@ namespace Content.Shared.Chat
         Unspecified = 1 << 13,
 
         /// <summary>
-        ///     Unspecified.
+        ///     Collective mind channel for entities who have comp.
         /// </summary>
         CollectiveMind = 1 << 14,
 

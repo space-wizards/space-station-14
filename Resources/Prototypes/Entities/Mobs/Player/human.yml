@@ -64,13 +64,9 @@
         - FleshCultistAbilities
       currencyWhitelist:
         - StolenMutationPoint
-    - type: IntrinsicRadioReceiver
-    - type: ActiveRadio
-      channels:
-        - Flesh
-    - type: IntrinsicRadioTransmitter
-      channels:
-        - Flesh
+    - type: CollectiveMind
+      channel: Flesh
+      channelColor: "#bd0966"
 
 # Nuclear Operative
 - type: entity

@@ -10,6 +10,7 @@ hud-chatbox-select-channel-Whisper = Whisper
 hud-chatbox-select-channel-LOOC = LOOC
 hud-chatbox-select-channel-OOC = OOC
 hud-chatbox-select-channel-Damage = Damage
+hud-chatbox-select-channel-CollectiveMind = Collective Mind
 hud-chatbox-select-channel-Visual = Actions
 hud-chatbox-select-channel-Radio = Radio
 
@@ -24,6 +25,7 @@ hud-chatbox-channel-LOOC = LOOC
 hud-chatbox-channel-OOC = OOC
 hud-chatbox-channel-Radio = Radio
 hud-chatbox-channel-Server = Server
+hud-chatbox-channel-CollectiveMind = Collective Mind
 hud-chatbox-channel-Visual = Actions
 hud-chatbox-channel-Damage = Damage
 hud-chatbox-channel-Unspecified = Unspecified

@@ -507,9 +507,10 @@ public sealed class ChatUIController : UIController
             FilterableChannels |= ChatChannel.AdminAlert;
             FilterableChannels |= ChatChannel.AdminChat;
             CanSendChannels |= ChatSelectChannel.Admin;
+            FilterableChannels |= ChatChannel.CollectiveMind;
         }
 
-        // psionics
+        // collective mind
         if (_collectiveMind != null && _collectiveMind.IsCollectiveMind)
         {
             FilterableChannels |= ChatChannel.CollectiveMind;

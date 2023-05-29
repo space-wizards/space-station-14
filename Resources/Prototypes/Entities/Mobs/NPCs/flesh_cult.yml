@@ -49,10 +49,6 @@
           Slash: 3
     - type: ReplacementAccent
       accent: genericAggressive
-    - type: IntrinsicRadioReceiver
-    - type: ActiveRadio
-      channels:
-        - Flesh
     - type: Armor
       modifiers:
         coefficients:
@@ -70,6 +66,9 @@
       damage:
         types:
           Blunt: 0.03
+    - type: CollectiveMind
+      channel: Flesh
+      channelColor: "#bd0966"
 
 - type: entity
   parent: BaseMobFleshCult

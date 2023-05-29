@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
@@ -304,11 +305,15 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp))
             return;
 
-        var query = GetEntityQuery<CollectiveMindComponent>();
-        var clients = Filter.Empty()
-            .AddWhereAttachedEntity(entity => query.GetComponent(entity).Channel == sourseCollectiveMindComp.Channel)
-            .Recipients
-            .Select(p => p.ConnectedClient);
+        var clients = Filter.Empty();
+        var mindQuery = EntityQueryEnumerator<CollectiveMindComponent, ActorComponent>();
+        while (mindQuery.MoveNext(out var uid, out var collectMindComp, out var actorComp))
+        {
+            if (collectMindComp.Channel == sourseCollectiveMindComp.Channel)
+            {
+                clients.AddPlayer(actorComp.PlayerSession);
+            }
+        }
 
         var admins = _adminManager.ActiveAdmins
             .Select(p => p.ConnectedClient);
@@ -316,10 +321,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         string adminMessageWrap;
 
         messageWrap = Loc.GetString("chat-manager-send-collective-mind-chat-wrap-message",
-            ("collectiveMindChannelName", Loc.GetString("chat-manager-collective-mind-channel-name")), ("message", message));
+            ("message", message),
+            ("channel", sourseCollectiveMindComp.Channel));
 
         adminMessageWrap = Loc.GetString("chat-manager-send-collective-mind-chat-wrap-message-admin",
-            ("source", source), ("message", message));
+            ("source", source),
+            ("message", message),
+            ("channel", sourseCollectiveMindComp.Channel));
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"CollectiveMind chat from {ToPrettyString(source):Player}: {message}");
 
@@ -329,8 +337,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             source,
             hideChat,
             true,
-            clients.ToList(),
-            Color.PaleVioletRed);
+            clients.Recipients.Select(p => p.ConnectedClient).ToList(),
+            sourseCollectiveMindComp.ChannelColor);
 
         _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
             message,
@@ -339,8 +347,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             hideChat,
             true,
             admins,
-            Color.PaleVioletRed);
-
+            sourseCollectiveMindComp.ChannelColor);
     }
 
     private void SendEntitySpeak(EntityUid source, string originalMessage, ChatTransmitRange range, string? nameOverride, bool hideLog = false)
