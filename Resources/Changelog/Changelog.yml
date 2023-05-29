@@ -1,9 +1,4 @@
 Entries:
-- author: mhamster
-  changes:
-  - {message: Changed sleep action icon from egg to syndie pyjama, type: Tweak}
-  id: 3395
-  time: '2023-04-12T18:26:07.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added boxer spawnpoint., type: Add}
@@ -2914,3 +2909,8 @@ Entries:
   - {message: The Centcom scarf has been moved to the Centdrobe, type: Tweak}
   id: 3894
   time: '2023-05-29T04:34:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed cleanbots., type: Fix}
+  id: 3895
+  time: '2023-05-29T06:53:28.0000000+00:00'
