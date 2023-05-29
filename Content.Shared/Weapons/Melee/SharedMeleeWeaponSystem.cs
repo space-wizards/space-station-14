@@ -479,7 +479,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             !HasComp<DamageableComponent>(ev.Target) ||
             !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
             // Not in LOS.
-            !InRange(user, ev.Target.Value, component.Range, session))
+            !InRange(user, ev.Target.Value, component.Range, session) ||
+            user == ev.Target && !TryComp(user, out HandsComponent? handsComp))
         {
             // Leave IsHit set to true, because the only time it's set to false
             // is when a melee weapon is examined. Misses are inferred from an
@@ -519,17 +520,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var rawDamagePoints = damage + hitEvent.BonusDamage + attackedEvent.BonusDamage;
         if (user == ev.Target && _configManager.GetCVar(CCVars.ReducedSelfDamage))
         {
-            if (component.SelfDamage != null)
-            {
-                rawDamagePoints = rawDamagePoints.DamageDict.Keys.Any()
-                                  && component.SelfDamage.Any(key => rawDamagePoints.DamageDict.ContainsKey(key)) ?
-                    rawDamagePoints :
-                    rawDamagePoints/5;
-            }
-            else
-            {
-                rawDamagePoints /= _configManager.GetCVar(CCVars.ReducedSelfDamageMultiplier);
-            }
+            var reducedDamage = rawDamagePoints * _configManager.GetCVar(CCVars.ReducedSelfDamageMultiplier);
+            rawDamagePoints = component.SelfDamage != null &&
+                              rawDamagePoints.DamageDict.Keys.Any() &&
+                              component.SelfDamage.Any(key => rawDamagePoints.DamageDict.ContainsKey(key))
+                ? rawDamagePoints
+                : reducedDamage;
         }
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(rawDamagePoints, hitEvent.ModifiersList);
