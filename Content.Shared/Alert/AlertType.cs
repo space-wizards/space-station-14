@@ -37,6 +37,7 @@ namespace Content.Shared.Alert
         VowOfSilence,
         VowBroken,
         Essence,
+        MutationPoint,
         Corporeal,
         Debug1,
         Debug2,

@@ -409,6 +409,55 @@
       base: plastitanium
 
 - type: entity
+  parent: BaseWall
+  id: WallFlesh
+  name: flesh wall
+  components:
+    - type: Appearance
+    - type: Sprite
+      sprite: Structures/Walls/flesh.rsi
+    - type: Icon
+      sprite: Structures/Walls/flesh.rsi
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 10
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: IconSmooth
+      key: walls
+      base: flesh
+    - type: Tag
+      tags:
+        - Flesh
+        - Wall
+        - Window
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      ColdDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true
+      cold:
+        types: {}
+      damage:
+        types:
+          Heat: 1
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+    - type: FireVisuals
+      sprite: Effects/fire.rsi
+      normalState: 1
+
+- type: entity
   parent: WallPlastitaniumIndestructible
   id: WallPlastitanium
   name: plastitanium wall

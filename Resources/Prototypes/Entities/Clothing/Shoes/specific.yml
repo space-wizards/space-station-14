@@ -161,3 +161,25 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/cluwne.rsi
   - type: Unremoveable
+
+
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingFleshSpiderLegs
+  name: Flesh Spider Legs
+  description: "Flesh Spider Legs."
+  components:
+    - type: ClothingSpeedModifier
+      walkModifier: 1.2
+      sprintModifier: 1.3
+    - type: Sprite
+      sprite: Clothing/Shoes/Specific/flesh_spider.rsi
+    - type: Clothing
+      sprite: Clothing/Shoes/Specific/flesh_spider.rsi
+    - type: Unremoveable
+      deleteOnDrop: true
+    - type: NoSlip
+    - type: Tag
+      tags:
+        - HidesLegs

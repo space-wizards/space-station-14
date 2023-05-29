@@ -267,6 +267,9 @@
   id: Flesh
 
 - type: Tag
+  id: FleshBlocker
+
+- type: Tag
   id: WhitelistChameleon
 
 - type: Tag
@@ -295,6 +298,9 @@
 
 - type: Tag
   id: ForceNoFixRotations # fixrotations command WON'T target this
+
+- type: Tag
+  id: FullBodyOuter # this outerclothing wraps around the feet and legs
 
 - type: Tag
   id: GasScrubber
@@ -344,6 +350,9 @@
 
 - type: Tag
   id: HidesHair # for headwear.
+
+- type: Tag
+  id: HidesLegs # for spider legs.
 
 - type: Tag
   id: HighRiskItem
@@ -735,6 +744,9 @@
 
 - type: Tag
   id: Window
+
+- type: Tag
+  id: Directional
 
 - type: Tag
   id: WizardWand # that evil vvizard vvand

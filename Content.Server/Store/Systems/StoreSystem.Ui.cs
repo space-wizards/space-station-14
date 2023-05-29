@@ -158,6 +158,8 @@ public sealed partial class StoreSystem
         if (listing.ProductEntity != null)
         {
             var product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
+            var ev = new ItemPurchasedEvent(buyer);
+            RaiseLocalEvent(product, ref ev);
             _hands.PickupOrDrop(buyer, product);
         }
 
@@ -168,10 +170,17 @@ public sealed partial class StoreSystem
             _actions.AddAction(buyer, action, null);
         }
 
+        //give world target action
+        if (listing.ProductWorldTargetAction != null)
+        {
+            var action = new WorldTargetAction(_proto.Index<WorldTargetActionPrototype>(listing.ProductWorldTargetAction));
+            _actions.AddAction(buyer, action, null);
+        }
+
         //broadcast event
         if (listing.ProductEvent != null)
         {
-            RaiseLocalEvent(listing.ProductEvent);
+            RaiseLocalEvent(uid, listing.ProductEvent, true);
         }
 
         //log dat shit.

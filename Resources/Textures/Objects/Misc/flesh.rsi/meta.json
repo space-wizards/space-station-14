@@ -1,0 +1,38 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/commit/15bf91049e33979a855995579b48592e34bcdd8c",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "flesh_33"
+        },
+        {
+            "name": "flesh_32"
+        },
+        {
+            "name": "flesh_31"
+        },
+        {
+            "name": "flesh_23"
+        },
+        {
+            "name": "flesh_22"
+        },
+        {
+            "name": "flesh_21"
+        },
+        {
+            "name": "flesh_13"
+        },
+        {
+            "name": "flesh_12"
+        },
+        {
+            "name": "flesh_11"
+        }
+    ]
+}

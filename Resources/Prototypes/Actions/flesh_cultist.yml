@@ -1,0 +1,115 @@
+﻿- type: instantAction
+  id: FleshCultistShop
+  icon: Interface/Actions/fleshCultistShop.png
+  name: flesh-cultist-shop-name
+  description: flesh-cultist-shop-desc
+  serverEvent: !type:FleshCultistShopActionEvent
+
+- type: instantAction
+  id: FleshCultistBlade
+  icon: Interface/Actions/fleshCultistBlade.png
+  name: flesh-cultist-blade-name
+  description: flesh-cultist-blade-desc
+  serverEvent: !type:FleshCultistBladeActionEvent
+  useDelay: 10
+
+- type: instantAction
+  id: FleshCultistBreakCuffs
+  icon: Interface/Actions/fleshCultistBreakCuffs.png
+  name: flesh-cultist-break-cuffs-name
+  description: flesh-cultist-break-cuffs-desc
+  serverEvent: !type:FleshCultistBreakCuffsActionEvent
+  checkCanInteract: false
+  useDelay: 60
+
+- type: instantAction
+  id: FleshCultistAdrenalin
+  icon: Interface/Actions/fleshCultistAdrenalin.png
+  name: flesh-cultist-adrenalin-name
+  description: flesh-cultist-adrenalin-desc
+  serverEvent: !type:FleshCultistAdrenalinActionEvent
+  useDelay: 150
+
+- type: instantAction
+  id: FleshCultistCreateFleshHeart
+  icon: Interface/Actions/fleshCultistFleshHeart.png
+  name: flesh-cultist-create-flesh-heart-name
+  description: flesh-cultist-create-flesh-heart-desc
+  serverEvent: !type:FleshCultistCreateFleshHeartActionEvent
+  useDelay: 360
+
+- type: instantAction
+  id: FleshCultistThrowWorm
+  icon: Interface/Actions/fleshCultistThrowWorm.png
+  name: flesh-cultist-throw-worm-name
+  description: flesh-cultist-throw-worm-desc
+  serverEvent: !type:FleshCultistThrowWormActionEvent
+  useDelay: 60
+
+- type: worldTargetAction
+  id: FleshCultistAcidSpit
+  icon: Interface/Actions/fleshAcidSpit.png
+  name: flesh-cultist-acid-spit-name
+  description: flesh-cultist-acid-spit-desc
+  serverEvent: !type:FleshCultistAcidSpitActionEvent
+  range: 200
+  useDelay: 60
+
+- type: instantAction
+  id: FleshCultistClaw
+  icon: Interface/Actions/fleshCultistClaw.png
+  name: flesh-cultist-claw-name
+  description: flesh-cultist-claw-desc
+  serverEvent: !type:FleshCultistClawActionEvent
+  useDelay: 10
+
+- type: instantAction
+  id: FleshCultistFist
+  icon: Interface/Actions/fleshCultistFist.png
+  name: flesh-cultist-fist-name
+  description: flesh-cultist-fist-desc
+  serverEvent: !type:FleshCultistFistActionEvent
+  useDelay: 10
+
+- type: instantAction
+  id: FleshCultistSpikeGun
+  icon: Interface/Actions/fleshCultistSpikeGun.png
+  name: flesh-cultist-spike-gun-name
+  description: flesh-cultist-spike-gun-desc
+  serverEvent: !type:FleshCultistSpikeHandGunActionEvent
+  useDelay: 10
+
+- type: instantAction
+  id: FleshCultistArmor
+  icon: Interface/Actions/fleshCultistArmor.png
+  name: flesh-cultist-armor-name
+  description: flesh-cultist-armor-desc
+  serverEvent: !type:FleshCultistArmorActionEvent
+  useDelay: 30
+
+- type: instantAction
+  id: FleshCultistSpiderlegs
+  icon: Interface/Actions/fleshCultistSpiderLegs.png
+  name: flesh-cultist-spider-legs-name
+  description: flesh-cultist-spider-legs-desc
+  serverEvent: !type:FleshCultistSpiderLegsActionEvent
+  useDelay: 30
+
+- type: instantAction
+  id: FleshCultistAbsorbBloodPool
+  icon: Interface/Actions/fleshCultistAbsorbBloodPool.png
+  name: flesh-cultist-absorb-blood-pool-name
+  description: flesh-cultist-absorb-blood-pool-desc
+  serverEvent: !type:FleshCultistAbsorbBloodPoolActionEvent
+  useDelay: 10
+
+- type: entityTargetAction
+  id: FleshCultistDevour
+  icon: Interface/Actions/fleshCultistDevour.png
+  name: flesh-cultist-devour-name
+  description: flesh-cultist-devour-desc
+  serverEvent: !type:FleshCultistDevourActionEvent
+  useDelay: 15
+  whitelist:
+    components:
+      - MobState

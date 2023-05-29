@@ -20,6 +20,7 @@
   - type: GroupExamine
   - type: Tag
     tags:
+    - FullBodyOuter
     - Hardsuit
 
 - type: entity
@@ -64,6 +65,9 @@
   - type: TemperatureProtection
     coefficient: 0.01
   - type: GroupExamine
+  - type: Tag
+    tags:
+      - FullBodyOuter
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing]
@@ -81,6 +85,9 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
   - type: GroupExamine
+  - type: Tag
+    tags:
+      - FullBodyOuter
 
 - type: entity
   parent: ClothingOuterBase
@@ -99,6 +106,9 @@
         Slash: 0.6
         Piercing: 0.6
         Heat: 0.6
+  - type: Tag
+    tags:
+      - FullBodyOuter
 
 - type: entity
   parent: ClothingOuterBase
@@ -110,6 +120,9 @@
     sprite: Clothing/OuterClothing/Suits/chicken.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/chicken.rsi
+  - type: Tag
+    tags:
+      - FullBodyOuter
 
 - type: entity
   parent: ClothingOuterBase
@@ -121,6 +134,9 @@
     sprite: Clothing/OuterClothing/Suits/shrine-maiden.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/shrine-maiden.rsi
+  - type: Tag
+    tags:
+      - FullBodyOuter
 
 - type: entity
   parent: ClothingOuterBase
@@ -132,6 +148,9 @@
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
+  - type: Tag
+    tags:
+      - FullBodyOuter
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -157,3 +176,6 @@
     walkModifier: 0.7
     sprintModifier: 0.75
   - type: GroupExamine
+  - type: Tag
+    tags:
+      - FullBodyOuter

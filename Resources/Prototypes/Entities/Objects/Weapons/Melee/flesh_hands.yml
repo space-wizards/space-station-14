@@ -1,0 +1,116 @@
+- type: entity
+  name: Flesh Claw
+  parent: BaseItem
+  id: FleshClaw
+  description: Flesh Claw
+  components:
+    - type: Unremoveable
+      deleteOnDrop: true
+    - type: Tag
+    - type: Sprite
+      sprite: Objects/Tools/flesh_claw.rsi
+      state: icon
+      netsync: false
+    - type: Item
+      size: 50
+    - type: TilePrying
+    - type: LatticeCutting
+    - type: Tool
+      qualities:
+        - Prying
+      speed: 1.5
+      useSound: /Audio/Items/jaws_pry.ogg
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 15
+        soundHit:
+          path: /Audio/Effects/hit_kick.ogg
+    - type: ToolForcePowered
+    - type: MultipleTool
+      statusShowBehavior: true
+      entries:
+        - behavior: Prying
+          sprite:
+            sprite: Objects/Tools/flesh_claw.rsi
+            state: icon
+          useSound: /Audio/Items/jaws_pry.ogg
+          changeSound: /Audio/Items/change_jaws.ogg
+        - behavior: Cutting
+          sprite:
+            sprite: Objects/Tools/flesh_claw.rsi
+            state: icon
+          useSound: /Audio/Items/jaws_cut.ogg
+          changeSound: /Audio/Items/change_jaws.ogg
+
+- type: entity
+  name: flesh fist
+  parent: BaseItem
+  id: FleshFist
+  description: Fisting is three hundred bucks
+  components:
+    - type: Unremoveable
+      deleteOnDrop: true
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/flesh_fist.rsi
+      state: icon
+    - type: MeleeWeapon
+      attackRate: 0.75
+      damage:
+        types:
+          Blunt: 25
+          Structural: 60
+    - type: Item
+      size: 150
+
+- type: entity
+  name: Flesh blade
+  parent: BaseItem
+  id: FleshBlade
+  description: Flesh blade
+  components:
+    - type: Unremoveable
+      deleteOnDrop: true
+    - type: Sharp
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/flesh_blade.rsi
+      state: icon
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 30
+    - type: Item
+      size: 15
+      sprite: Objects/Weapons/Melee/flesh_blade.rsi
+    - type: DisarmMalus
+
+- type: entity
+  name: spike gun
+  id: FleshSpikeHandGun
+  parent: BaseItem
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Basic/flesh_spike_hand.rsi
+      state: icon
+    - type: Item
+      sprite: Objects/Weapons/Guns/Basic/flesh_spike_hand.rsi
+      size: 30
+    - type: Gun
+      fireRate: 3
+      selectedMode: SemiAuto
+      availableModes:
+        - SemiAuto
+      soundGunshot:
+        path: /Audio/Animals/Flesh/spike_gun_shot.ogg
+    - type: AmmoCounter
+    - type: Appearance
+    - type: RechargeBasicEntityAmmo
+      minRechargeCooldown: 2
+      maxRechargeCooldown: 2
+      rechargeSound: /Audio/Animals/Flesh/spike_gun_reload.ogg
+    - type: Unremoveable
+      deleteOnDrop: true
+    - type: BasicEntityAmmoProvider
+      proto: BulletSpike
+      capacity: 7
+      count: 0

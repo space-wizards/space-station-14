@@ -1,0 +1,15 @@
+﻿- type: objective
+  id: CreateFleshHeartObjective
+  issuer: flesh-cult
+  requirements:
+    - !type:FleshCultistRequirement {}
+  conditions:
+    - !type:CreateFleshHeartCondition {}
+
+- type: objective
+  id: FleshCultistSurvivalObjective
+  issuer: flesh-cult
+  requirements:
+    - !type:FleshCultistRequirement {}
+  conditions:
+    - !type:FleshCultistSurvivalCondition {}

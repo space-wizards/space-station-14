@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by ",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "flesh_point0"
+    },
+    {
+      "name": "flesh_point1"
+    },
+    {
+      "name": "flesh_point2"
+    },
+    {
+      "name": "flesh_point3"
+    },
+    {
+      "name": "flesh_point4"
+    },
+    {
+      "name": "flesh_point5"
+    },
+    {
+      "name": "flesh_point6"
+    },
+    {
+      "name": "flesh_point7"
+    },
+    {
+      "name": "flesh_point8"
+    },
+    {
+      "name": "flesh_point9"
+    },
+    {
+      "name": "flesh_point10"
+    },
+    {
+      "name": "flesh_point11"
+    },
+    {
+      "name": "flesh_point12"
+    },
+    {
+      "name": "flesh_point13"
+    },
+    {
+      "name": "flesh_point14"
+    },
+    {
+      "name": "flesh_point15"
+    },
+    {
+      "name": "flesh_point16"
+    }
+  ]
+}

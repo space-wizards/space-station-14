@@ -231,6 +231,17 @@ namespace Content.Server.Cloning
             var mob = Spawn(speciesPrototype.Prototype, Transform(clonePod.Owner).MapPosition);
             _humanoidSystem.CloneAppearance(bodyToClone, mob);
 
+            // If the cultist ate the body we need to visually reset it after cloning
+            if (TryComp<HumanoidAppearanceComponent>(mob, out var HuAppComponent))
+            {
+                var speciesProto = _prototype.Index<SpeciesPrototype>(HuAppComponent.Species);
+                var skeletonSprites = _prototype.Index<HumanoidSpeciesBaseSpritesPrototype>(speciesProto.SpriteSet);
+                foreach (var (key, id) in skeletonSprites.Sprites)
+                {
+                    _humanoidSystem.SetBaseLayerId(mob, key, id, humanoid: HuAppComponent);
+                }
+            }
+
             var ev = new CloningEvent(bodyToClone, mob);
             RaiseLocalEvent(bodyToClone, ref ev);
 

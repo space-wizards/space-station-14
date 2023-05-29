@@ -345,11 +345,18 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         // If this was passed into the component, we update
         // the data to ensure that the current disabled
         // bool matches.
-        if (AppearanceSystem.TryGetData<bool>(uid, DamageVisualizerKeys.Disabled, out var disabledStatus, args.Component))
+        if (AppearanceSystem.TryGetData<bool>(uid, DamageVisualizerKeys.Disabled, out var disabledStatus,
+                args.Component))
+        {
+            damageVisComp.Thresholds = new List<FixedPoint2>() { 0 };
+            HandleDamage(args.Component, damageVisComp);
             damageVisComp.Disabled = disabledStatus;
+        }
 
         if (damageVisComp.Disabled)
+        {
             return;
+        }
 
         HandleDamage(args.Component, damageVisComp);
     }

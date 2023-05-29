@@ -74,6 +74,9 @@
         Heat: 0.5
         Radiation: 0
         Caustic: 0.75
+  - type: Tag
+    tags:
+      - FullBodyOuter
   - type: GroupExamine
 
 - type: entity
@@ -209,7 +212,40 @@
         Radiation: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.7
-    sprintModifier: 0.65 
+    sprintModifier: 0.65
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: Tag
+    tags:
+      - FullBodyOuter
   - type: GroupExamine
+
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorFlesh
+  name: flesh armor
+  description: flesh armor
+  components:
+    - type: Unremoveable
+      deleteOnDrop: true
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Armor/flesh_armor.rsi
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Armor/flesh_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.4
+          Heat: 0.5
+    - type: ClothingSpeedModifier
+      walkModifier: 0.9
+      sprintModifier: 0.85
+    - type: ExplosionResistance
+      damageCoefficient: 0.5
+    - type: Tag
+      tags:
+        - FullBodyOuter
+    - type: GroupExamine

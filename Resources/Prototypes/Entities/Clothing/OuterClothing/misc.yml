@@ -155,6 +155,9 @@
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
+  - type: Tag
+    tags:
+      - FullBodyOuter
 
 # Is this wizard wearing a fanny pack???
 - type: entity

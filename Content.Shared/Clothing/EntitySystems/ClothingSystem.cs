@@ -29,6 +29,14 @@ public abstract class ClothingSystem : EntitySystem
         component.InSlot = args.Slot;
         if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, "HidesHair"))
             _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, false);
+        if (_tagSystem.HasTag(args.Equipment, "HidesLegs"))
+        {
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.LFoot, false);
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.RFoot, false);
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.LLeg, false);
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.RLeg, false);
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.LegsMask, true);
+        }
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
@@ -36,6 +44,14 @@ public abstract class ClothingSystem : EntitySystem
         component.InSlot = null;
         if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, "HidesHair"))
             _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, true);
+        if (_tagSystem.HasTag(args.Equipment, "HidesLegs"))
+        {
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.LFoot, true);
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.RFoot, true);
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.LLeg, true);
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.RLeg, true);
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.LegsMask, false);
+        }
     }
 
     private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)

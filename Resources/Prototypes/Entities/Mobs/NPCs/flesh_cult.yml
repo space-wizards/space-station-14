@@ -1,0 +1,595 @@
+﻿- type: entity
+  parent: SimpleMobBase
+  id: BaseMobFleshCult
+  name: aberrant flesh
+  description: A shambling mass of flesh, animated through anomalous energy.
+  abstract: true
+  components:
+    - type: HTN
+      rootTask: SimpleHostileCompound
+    - type: Faction
+      factions:
+        - Flesh
+    - type: Tag
+      tags:
+        - DoorBumpOpener
+        - Flesh
+        - CannotSuicide
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Aliens/FleshCult/flesh_cult_mobs.rsi
+    - type: MovementAlwaysTouching
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 3
+    - type: MobState
+      allowedStates:
+        - Alive
+        - Dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        75: Dead
+    - type: Stamina
+      excess: 50
+    - type: Appearance
+    - type: Butcherable
+      spawned:
+        - id: FoodMeat
+          amount: 1
+    - type: CombatMode
+    - type: MeleeWeapon
+      hidden: true
+      soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      angle: 0
+      animation: WeaponArcClaw
+      damage:
+        types:
+          Slash: 3
+    - type: ReplacementAccent
+      accent: genericAggressive
+    - type: IntrinsicRadioReceiver
+    - type: ActiveRadio
+      channels:
+        - Flesh
+    - type: Armor
+      modifiers:
+        coefficients:
+          Heat: 1.4
+          Blunt: 0.6
+          Piercing: 0.6
+    - type: Respirator
+      damage:
+        types:
+          Asphyxiation: 0.05
+      damageRecovery:
+        types:
+          Asphyxiation: -0.05
+    - type: Barotrauma
+      damage:
+        types:
+          Blunt: 0.03
+
+- type: entity
+  parent: BaseMobFleshCult
+  name: flesh spider
+  id: MobFleshSpider
+  components:
+    - type: Butcherable
+      spawned:
+        - id: FoodMeat
+          amount: 2
+    - type: FleshMob
+      soundDeath: "/Audio/Animals/Flesh/flesh_worm_dead.ogg"
+      deathMobSpawnId: "MobFleshWorm"
+      deathMobSpawnCount: 1
+      collectiveMindChannel: Flesh
+    - type: Sprite
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: spider
+    - type: Vocal
+      sounds:
+        Unsexed: FleshWormEmote
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: spider
+        Critical:
+          Base: spider_dead
+        Dead:
+          Base: spider_dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        100: Dead
+    - type: Bloodstream
+      bloodMaxVolume: 100
+      bloodReagent: Blood
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 3
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: mob-flesh-spider-ghost-role-name
+      description: mob-flesh-spider-ghost-role-name
+      rules: Не атакуйте культистов плоти, не ломайте ДАМы, сервера, консоли и прочее. Не делайте разгерметизацию.
+    - type: GhostTakeoverAvailable
+    - type: MeleeWeapon
+      hidden: true
+      soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      angle: 0
+      animation: WeaponArcClaw
+      damage:
+        types:
+          Piercing: 3
+    - type: Spider
+    - type: IgnoreSpiderWeb
+    - type: Puller
+      needsHands: false
+
+
+- type: entity
+  parent: BaseMobFleshCult
+  name: flesh pudge
+  id: MobFleshPudge
+  components:
+    - type: Butcherable
+      spawned:
+        - id: FoodMeat
+          amount: 5
+    - type: Hands
+      showInHands: false
+    - type: FleshPudge
+      wormMobSpawnId: "MobFleshWorm"
+      actionThrowWorm:
+        icon: Interface/Actions/fleshPudgeThrowWorm.png
+        name: flesh-pudge-throw-worm-name
+        description: flesh-pudge-throw-worm-desc
+        itemIconStyle: NoItem
+        range: 200
+        event: !type:FleshPudgeThrowWormActionEvent
+        useDelay: 120
+      actionAcidSpit:
+        icon: Interface/Actions/fleshAcidSpit.png
+        name: flesh-cultist-acid-spit-name
+        description: flesh-cultist-acid-spit-desc
+        itemIconStyle: NoItem
+        range: 200
+        event: !type:FleshPudgeAcidSpitActionEvent
+        useDelay: 20
+      actionAbsorbBloodPool:
+        icon: Interface/Actions/fleshCultistAbsorbBloodPool.png
+        name: flesh-cultist-absorb-blood-pool-name
+        description: flesh-cultist-absorb-blood-pool-desc
+        event: !type:FleshPudgeAbsorbBloodPoolActionEvent
+        useDelay: 15
+    - type: Vocal
+      sounds:
+        Unsexed: FleshPudgeEmote
+    - type: FleshMob
+      soundDeath: "/Audio/Animals/Flesh/flesh_pudge_dead.ogg"
+      deathMobSpawnId: "MobFleshWorm"
+      deathMobSpawnCount: 2
+      collectiveMindChannel: Flesh
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Aliens/FleshCult/flesh_cult_pudge.rsi
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: alive
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+        Critical:
+          Base: crit
+        Dead:
+          Base: dead
+    - type: Bloodstream
+      bloodMaxVolume: 300
+      bloodReagent: Blood
+    - type: InputMover
+    - type: MobMover
+    - type: Physics
+      bodyType: Dynamic
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 1.5
+      baseSprintSpeed: 2
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        200: Critical
+        250: Dead
+    - type: MobState
+      allowedStates:
+        - Alive
+        - Critical
+        - Dead
+    - type: Stamina
+      excess: 300
+    - type: MeleeWeapon
+      hidden: true
+      soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      angle: 0
+      animation: WeaponArcSmash
+      damage:
+        types:
+          Blunt: 20
+          Structural: 30
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: mob-flesh-pudge-ghost-role-name
+      description: mob-flesh-pudge-ghost-role-name
+      rules: Не атакуйте культистов плоти, не ломайте ДАМы, сервера, консоли и прочее. Не делайте разгерметизацию.
+    - type: GhostTakeoverAvailable
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.45
+          density: 230
+          mask:
+            - SmallMobMask
+          layer:
+            - SmallMobLayer
+    - type: Puller
+      needsHands: false
+
+
+- type: entity
+  parent: BaseMobFleshCult
+  name: flesh abom
+  id: MobFleshAbom
+  components:
+    - type: Butcherable
+      spawned:
+        - id: FoodMeat
+          amount: 5
+    - type: Hands
+      showInHands: false
+    - type: FleshPudge
+      wormMobSpawnId: "MobFleshWorm"
+      actionThrowWorm:
+        icon: Interface/Actions/fleshPudgeThrowWorm.png
+        name: flesh-pudge-throw-worm-name
+        description: flesh-pudge-throw-worm-desc
+        itemIconStyle: NoItem
+        range: 200
+        event: !type:FleshPudgeThrowWormActionEvent
+        useDelay: 120
+      actionAcidSpit:
+        icon: Interface/Actions/fleshAcidSpit.png
+        name: flesh-cultist-acid-spit-name
+        description: flesh-cultist-acid-spit-desc
+        itemIconStyle: NoItem
+        range: 200
+        event: !type:FleshPudgeAcidSpitActionEvent
+        useDelay: 20
+      actionAbsorbBloodPool:
+        icon: Interface/Actions/fleshCultistAbsorbBloodPool.png
+        name: flesh-cultist-absorb-blood-pool-name
+        description: flesh-cultist-absorb-blood-pool-desc
+        event: !type:FleshPudgeAbsorbBloodPoolActionEvent
+        useDelay: 15
+    - type: Vocal
+      sounds:
+        Unsexed: FleshAbomEmote
+    - type: MobState
+      allowedStates:
+        - Alive
+        - Critical
+        - Dead
+    - type: FleshMob
+      soundDeath: "/Audio/Animals/Flesh/abom_scream.ogg"
+      deathMobSpawnId: "MobFleshWorm"
+      deathMobSpawnCount: 2
+      collectiveMindChannel: Flesh
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Aliens/FleshCult/flesh_cult_abom.rsi
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: alive
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+        Critical:
+          Base: crit
+        Dead:
+          Base: dead
+    - type: Bloodstream
+      bloodMaxVolume: 300
+      bloodReagent: Blood
+    - type: InputMover
+    - type: MobMover
+    - type: Physics
+      bodyType: Dynamic
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 1.5
+      baseSprintSpeed: 2
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        300: Critical
+        350: Dead
+    - type: Stamina
+      excess: 300
+    - type: MeleeWeapon
+      hidden: true
+      range: 2
+      soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      angle: 0
+      animation: WeaponArcSmash
+      damage:
+        types:
+          Blunt: 25
+          Structural: 30
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: mob-flesh-abom-ghost-role-name
+      description: mob-flesh-abom-ghost-role-name
+      rules: Не атакуйте культистов плоти, не ломайте ДАМы, сервера, консоли и прочее. Не делайте разгерметизацию.
+    - type: GhostTakeoverAvailable
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PhysShapeCircle
+            radius: 0.45
+          density: 500
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: Puller
+      needsHands: false
+
+
+- type: entity
+  parent: BaseMobFleshCult
+  name: flesh ball
+  id: MobFleshBall
+  components:
+    - type: FleshMob
+      soundDeath: "/Audio/Animals/Flesh/flesh_pudge_dead.ogg"
+      deathMobSpawnId: "MobFleshWorm"
+      deathMobSpawnCount: 0
+      collectiveMindChannel: Flesh
+    - type: Sprite
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: ball
+    - type: MeleeWeapon
+      hidden: true
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      angle: 0
+      animation: WeaponArcSmash
+      damage:
+        types:
+          Piercing: 2
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: ball
+        Critical:
+          Base: ball_dead
+        Dead:
+          Base: ball_dead
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.25
+          density: 10
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: mob-flesh-ball-ghost-role-name
+      description: mob-flesh-ball-ghost-role-name
+      rules: Не атакуйте культистов плоти, не ломайте ДАМы, сервера, консоли и прочее. Не делайте разгерметизацию.
+    - type: GhostTakeoverAvailable
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        25: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 1.5
+      baseSprintSpeed: 2
+    - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
+      mobState: Dead
+    - type: TriggerImplantAction
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Flesh
+      totalIntensity: 30
+      intensitySlope: 3
+      maxIntensity: 50
+      canCreateVacuum: false
+
+
+- type: entity
+  parent: BaseMobFleshCult
+  name: flesh bat
+  id: MobFleshBat
+  components:
+    - type: FleshMob
+      soundDeath: "/Audio/Animals/Flesh/flesh_worm_dead.ogg"
+      deathMobSpawnId: "MobFleshWorm"
+      deathMobSpawnCount: 0
+      collectiveMindChannel: Flesh
+    - type: Sprite
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: bat
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: bat
+        Critical:
+          Base: bat_dead
+        Dead:
+          Base: bat_dead
+    - type: Bloodstream
+      bloodMaxVolume: 50
+      bloodReagent: Blood
+    - type: Vocal
+      sounds:
+        Unsexed: FleshWormEmote
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.25
+          density: 10
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: mob-flesh-bat-ghost-role-name
+      description: mob-flesh-bat-ghost-role-name
+      rules: Не атакуйте культистов плоти, не ломайте ДАМы, сервера, консоли и прочее. Не делайте разгерметизацию.
+    - type: GhostTakeoverAvailable
+    - type: MeleeWeapon
+      hidden: true
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      angle: 0
+      animation: WeaponArcBite
+      damage:
+        types:
+          Piercing: 3
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        50: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2.5
+      baseSprintSpeed: 3.5
+    - type: Puller
+      needsHands: false
+
+
+- type: entity
+  parent: BaseMobFleshCult
+  name: flesh worm
+  id: MobFleshWorm
+  components:
+    - type: FleshMob
+      soundDeath: "/Audio/Animals/Flesh/flesh_worm_dead.ogg"
+      deathMobSpawnId: "MobFleshWorm"
+      deathMobSpawnCount: 0
+      collectiveMindChannel: Flesh
+    - type: FleshWorm
+      paralyzeTime: 3
+      chansePounce: 33
+      damage:
+        types:
+          Piercing: 2
+      actionWormJump:
+        useDelay: 10
+        icon: Interface/Actions/fleshPudgeThrowWorm.png
+        name: flesh-worm-jump-name
+        description: flesh-worm-jump-description
+        itemIconStyle: NoItem
+        range: 160
+        event: !type:FleshWormJumpActionEvent
+    - type: Sprite
+      drawdepth: SmallMobs
+      noRot: true
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: worm
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: worm
+        Critical:
+          Base: worm_dead
+        Dead:
+          Base: worm_dead
+    - type: Vocal
+      sounds:
+        Unsexed: FleshWormEmote
+    - type: Item
+      sprite: Mobs/Aliens/FleshCult/flesh_cult_mobs.rsi
+      heldPrefix: worm
+      size: 5
+    - type: Clothing
+      quickEquip: false
+      sprite: Mobs/Aliens/FleshCult/flesh_cult_mobs.rsi
+      equippedPrefix: worm
+      slots:
+        - MASK
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.2
+          density: 100
+          mask:
+            - SmallMobMask
+          layer:
+            - SmallMobLayer
+    - type: Speech
+    - type: Bloodstream
+      bloodMaxVolume: 10
+      bloodReagent: Blood
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: mob-flesh-worm-ghost-role-name
+      description: mob-flesh-worm-ghost-role-name
+      rules: Не атакуйте культистов плоти, не ломайте ДАМы, сервера, консоли и прочее. Не делайте разгерметизацию.
+    - type: GhostTakeoverAvailable
+    - type: MeleeWeapon
+      hidden: true
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      angle: 0
+      animation: WeaponArcBite
+      damage:
+        types:
+          Piercing: 2
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        25: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 3
+      baseSprintSpeed: 4
+    - type: Tag
+      tags:
+        - Flesh
+        - CannotSuicide

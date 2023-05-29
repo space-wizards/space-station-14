@@ -48,6 +48,30 @@
       factions:
       - Syndicate
 
+#Flesh Cultist
+- type: entity
+  parent: MobHuman
+  id: MobHumanFleshCultist
+  name: Flesh Cultist
+  components:
+    - type: FleshCultist
+      startingEvolutionPoint: 300
+    - type: Faction
+      factions:
+        - Flesh
+    - type: Store
+      categories:
+        - FleshCultistAbilities
+      currencyWhitelist:
+        - StolenMutationPoint
+    - type: IntrinsicRadioReceiver
+    - type: ActiveRadio
+      channels:
+        - Flesh
+    - type: IntrinsicRadioTransmitter
+      channels:
+        - Flesh
+
 # Nuclear Operative
 - type: entity
   noSpawn: true

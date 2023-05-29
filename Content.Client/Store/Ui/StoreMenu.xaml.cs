@@ -132,6 +132,12 @@ public sealed partial class StoreMenu : DefaultWindow
             if (action.Icon != null)
                 texture = spriteSys.Frame0(action.Icon);
         }
+        else if (listing.ProductWorldTargetAction != null)
+        {
+            var action = _prototypeManager.Index<WorldTargetActionPrototype>(listing.ProductWorldTargetAction);
+            if (action.Icon != null)
+                texture = spriteSys.Frame0(action.Icon);
+        }
 
         var newListing = new StoreListingControl(listingName, listingDesc, GetListingPriceString(listing), canBuy, texture);
         newListing.StoreItemBuyButton.OnButtonDown += args

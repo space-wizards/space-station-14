@@ -156,6 +156,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         foreach (var player in candidates.Keys)
         {
+            // We don't want a flesh cultist to be a traitor as well, right?
+            if (player.Data.ContentData()?.Mind?.AllRoles.Count() > 1)
+            {
+                continue;
+            }
+
             // Role prevents antag.
             if (!(player.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false))
             {

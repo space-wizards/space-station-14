@@ -80,8 +80,13 @@ namespace Content.Shared.Chat
         Unspecified = 1 << 13,
 
         /// <summary>
+        ///     Unspecified.
+        /// </summary>
+        CollectiveMind = 1 << 14,
+
+        /// <summary>
         ///     Channels considered to be IC.
         /// </summary>
-        IC = Local | Whisper | Radio | Dead | Emotes | Damage | Visual,
+        IC = Local | Whisper | Radio | Dead | Emotes | Damage | Visual | CollectiveMind,
     }
 }
