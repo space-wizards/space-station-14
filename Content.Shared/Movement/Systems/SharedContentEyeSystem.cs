@@ -126,6 +126,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
         component.TargetZoom = actual;
         Dirty(component);
+        Sawmill.Debug($"Set reset zoom for user");
     }
 
     private void Zoom(ContentEyeComponent component, bool zoomIn)
