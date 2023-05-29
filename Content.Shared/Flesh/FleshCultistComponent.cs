@@ -33,10 +33,6 @@ public sealed class FleshCultistComponent : Component
         "Human",
         "Reptilian",
         "Dwarf",
-        "HumanoidFoxes",
-        "Felinid",
-        "Oni",
-        "Moth"
     };
 
     [DataField("adrenalinReagents")] public List<Solution.ReagentQuantity> AdrenalinReagents = new()

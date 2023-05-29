@@ -2,6 +2,7 @@
 using Content.Shared.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Flesh
@@ -18,10 +19,6 @@ namespace Content.Server.Flesh
             "Human",
             "Reptilian",
             "Dwarf",
-            "HumanoidFoxes",
-            "Felinid",
-            "Oni",
-            "Moth"
         };
 
         [DataField("alertLevelOnActivate")] public string AlertLevelOnActivate = "red";
@@ -45,11 +42,11 @@ namespace Content.Server.Flesh
         [DataField("spawnObjectsRadius"), ViewVariables(VVAccess.ReadWrite)]
         public float SpawnObjectsRadius = 5;
 
-        [DataField("fleshTileId", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>)),
+        [DataField("fleshTileId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)),
          ViewVariables(VVAccess.ReadWrite)]
         public string FleshTileId = "Flesh";
 
-        [DataField("fleshBlockerId", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>)),
+        [DataField("fleshBlockerId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)),
          ViewVariables(VVAccess.ReadWrite)]
         public string FleshBlockerId = "FleshBlocker";
 
