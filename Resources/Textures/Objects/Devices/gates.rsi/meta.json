@@ -1,14 +1,29 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Kevin Zheng 2022",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "or.png created by Kevin Zheng, 2022. Others are modified by deltanedas (github) for SS14, 2023.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "or"
     },
-    "states": [
-        {
-            "name": "or"
-        }
-    ]
+    {
+      "name": "and"
+    },
+    {
+      "name": "xor"
+    },
+    {
+      "name": "nor"
+    },
+    {
+      "name": "nand"
+    },
+    {
+      "name": "xnor"
+    }
+  ]
 }

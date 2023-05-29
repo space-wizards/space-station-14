@@ -1,19 +1,15 @@
 - type: entity
-  id: OrGate
-  name: MS7432
-  description: Dual 2-Input OR Gate
   parent: BaseItem
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
+  id: LogicGate
+  name: logic gate
+  description: A logic gate with two inputs and one output. Technicians can change its mode of operation using a screwdriver.
   components:
   - type: Anchorable
   - type: Sprite
     sprite: Objects/Devices/gates.rsi
     state: or
   - type: Rotatable
-  - type: OrGate
+  - type: LogicGate
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -21,11 +17,8 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - A1
-      - B1
-      - A2
-      - B2
+    - InputA
+    - InputB
   - type: DeviceLinkSource
     ports:
-      - O1
-      - O2
+    - Output
