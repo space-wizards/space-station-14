@@ -22,3 +22,6 @@
   - type: DeviceLinkSource
     ports:
     - Output
+  - type: Construction
+    graph: LogicGate
+    node: logic_gate
