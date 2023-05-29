@@ -65,15 +65,10 @@ namespace Content.Server.DeviceLinking.Systems
             }
             else if (args.Port == component.InBolt)
             {
-                if (state == SignalState.High)
+                var bolt = state == SignalState.High;
+                if (TryComp<AirlockComponent>(uid, out var airlockComponent))
                 {
-                    if(TryComp<AirlockComponent>(uid, out var airlockComponent))
-                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, true);
-                }
-                else
-                {
-                    if(TryComp<AirlockComponent>(uid, out var airlockComponent))
-                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, false);
+                    _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, bolt);
                 }
             }
         }
