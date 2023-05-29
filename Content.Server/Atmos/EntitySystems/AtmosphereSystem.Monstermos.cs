@@ -468,7 +468,8 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 // Pressure as a multiple of normal air pressure (takes temperature into account)
-                float pressureMultiple = (otherTile.Air.Pressure / 110.0f);
+                //   Allow more wind at higher pressures, but cap at 0.5 so low pressures aren't slowed by wind.
+                float pressureMultiple = Math.Max(0.5f, otherTile.Air.Pressure / 110.0f);
                 var sum = otherTile.Air.TotalMoles * Atmospherics.SpacingEscapeRatio * pressureMultiple;
                 if (sum < Atmospherics.SpacingMinGas)
                 {
