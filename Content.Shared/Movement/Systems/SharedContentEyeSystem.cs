@@ -49,16 +49,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (HasContentEyeComp(args.SenderSession) is not ContentEyeComponent content)
             return;
 
-        if (args.SenderSession.AttachedEntity is not EntityUid uid)
-            return;
-
-        if (!TryComp<SharedEyeComponent>(uid, out var eyeComp))
-            return;
-
-        Logger.Debug($"Set zoom for shared component {msg.TargetZoom}");
-        eyeComp.Zoom = msg.TargetZoom;
-        Dirty(eyeComp);
-
         content.TargetZoom = CheckZoomValue(msg.TargetZoom, content);
         Dirty(content);
     }
