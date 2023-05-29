@@ -1,10 +1,12 @@
 ﻿using System.Threading;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Singularity.Components;
 
@@ -107,6 +109,30 @@ public sealed class EmitterComponent : Component
     /// </summary>
     [DataField("underpoweredState")]
     public string? UnderpoweredState = "underpowered";
+
+    /// <summary>
+    /// Signal port that turns on the emitter.
+    /// </summary>
+    [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+    public string OnPort = "On";
+
+    /// <summary>
+    /// Signal port that turns off the emitter.
+    /// </summary>
+    [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+    public string OffPort = "Off";
+
+    /// <summary>
+    /// Signal port that toggles the emitter on or off.
+    /// </summary>
+    [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+    public string TogglePort = "Toggle";
+
+    /// <summary>
+    /// Map of signal ports to entity prototype IDs of the entity that will be fired.
+    /// </summary>
+    [DataField("setTypePorts", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<string, SinkPortPrototype>))]
+    public Dictionary<string, string> SetTypePorts = new();
 }
 
 [NetSerializable, Serializable]

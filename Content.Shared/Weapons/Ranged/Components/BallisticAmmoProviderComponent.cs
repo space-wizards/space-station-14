@@ -22,6 +22,8 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("capacity")]
     public int Capacity = 30;
 
+    public int Count => UnspawnedCount + Container.ContainedEntities.Count;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("unspawnedCount")]
     [AutoNetworkedField]
     public int UnspawnedCount;

@@ -19,6 +19,23 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
         SubscribeLocalEvent<DeviceLinkSinkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
     }
 
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<DeviceLinkSinkComponent>();
+
+        while (query.MoveNext(out var component))
+        {
+            if (component.InvokeLimit < 1)
+            {
+                component.InvokeCounter = 0;
+                continue;
+            }
+
+            if(component.InvokeCounter > 0)
+                component.InvokeCounter--;
+        }
+    }
+
     /// <summary>
     /// Moves existing links from machine linking to device linking to ensure linked things still work even when the map wasn't updated yet
     /// </summary>
@@ -62,10 +79,24 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
             if (!sourceComponent.LinkedPorts.TryGetValue(sinkUid, out var links))
                 continue;
 
+            if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))
+                continue;
+
             foreach (var (source, sink) in links)
             {
                 if (source != port)
                     continue;
+
+                if (sinkComponent.InvokeCounter > sinkComponent.InvokeLimit)
+                {
+                    sinkComponent.InvokeCounter = 0;
+                    var args = new DeviceLinkOverloadedEvent();
+                    RaiseLocalEvent(sinkUid, ref args);
+                    RemoveAllFromSink(sinkUid, sinkComponent);
+                    continue;
+                }
+
+                sinkComponent.InvokeCounter++;
 
                 //Just skip using device networking if the source or the sink doesn't support it
                 if (!HasComp<DeviceNetworkComponent>(uid) || !TryComp<DeviceNetworkComponent?>(sinkUid, out var sinkNetworkComponent))
@@ -109,6 +140,4 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
         RaiseLocalEvent(uid,  ref eventArgs);
     }
     #endregion
-
-
 }

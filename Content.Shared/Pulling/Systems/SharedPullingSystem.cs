@@ -12,6 +12,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
 
 namespace Content.Shared.Pulling
@@ -22,6 +24,7 @@ namespace Content.Shared.Pulling
         [Dependency] private readonly SharedPullingStateManagementSystem _pullSm = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly SharedJointSystem _joints = default!;
 
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
@@ -45,6 +48,7 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<PullStoppedMessage>(OnPullStopped);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerInsert);
             SubscribeLocalEvent<SharedPullableComponent, JointRemovedEvent>(OnJointRemoved);
+            SubscribeLocalEvent<SharedPullableComponent, CollisionChangeEvent>(OnPullableCollisionChange);
 
             SubscribeLocalEvent<SharedPullableComponent, PullStartedMessage>(PullableHandlePullStarted);
             SubscribeLocalEvent<SharedPullableComponent, PullStoppedMessage>(PullableHandlePullStopped);
@@ -54,6 +58,14 @@ namespace Content.Shared.Pulling
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
                 .Register<SharedPullingSystem>();
+        }
+
+        private void OnPullableCollisionChange(EntityUid uid, SharedPullableComponent component, ref CollisionChangeEvent args)
+        {
+            if (component.PullJointId != null && !args.CanCollide)
+            {
+                _joints.RemoveJoint(uid, component.PullJointId);
+            }
         }
 
         private void OnJointRemoved(EntityUid uid, SharedPullableComponent component, JointRemovedEvent args)

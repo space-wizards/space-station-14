@@ -25,14 +25,25 @@ namespace Content.Server.Singularity
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            foreach (var comp in entityManager.EntityQuery<EmitterComponent>())
+
+            // Turn on emitters
+            var emitterQuery = entityManager.EntityQueryEnumerator<EmitterComponent>();
+            var emitterSystem = entitySystemManager.GetEntitySystem<EmitterSystem>();
+            while (emitterQuery.MoveNext(out var uid, out var emitterComponent))
             {
-                entitySystemManager.GetEntitySystem<EmitterSystem>().SwitchOn(comp);
+                //FIXME: This turns on ALL emitters, including APEs. It should only turn on the containment field emitters.
+                emitterSystem.SwitchOn(uid, emitterComponent);
             }
-            foreach (var comp in entityManager.EntityQuery<RadiationCollectorComponent>())
+
+            // Turn on radiation collectors
+            var radiationCollectorQuery = entityManager.EntityQueryEnumerator<RadiationCollectorComponent>();
+            var radiationCollectorSystem = entitySystemManager.GetEntitySystem<RadiationCollectorSystem>();
+            while (radiationCollectorQuery.MoveNext(out var uid, out var radiationCollectorComponent))
             {
-                entitySystemManager.GetEntitySystem<RadiationCollectorSystem>().SetCollectorEnabled(comp.Owner, true, null, comp);
+                radiationCollectorSystem.SetCollectorEnabled(uid, enabled: true, user: null, radiationCollectorComponent);
             }
+
+            // Setup PA
             foreach (var comp in entityManager.EntityQuery<ParticleAcceleratorControlBoxComponent>())
             {
                 comp.RescanParts();
