@@ -544,3 +544,7 @@ binds:
   type: State
   key: Num9
   mod1: Shift
+- function: LieDownStandUp
+  type: State
+  key: Z
+  mod1: Shift

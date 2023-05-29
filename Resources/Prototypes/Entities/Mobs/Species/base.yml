@@ -296,6 +296,22 @@
     attributes:
       proper: true
   - type: StandingState
+    lie-down-action:
+      type: instantAction
+      id: LieDown
+      icon: Interface/Actions/lie-down-state.png
+      name: action-name-liedown
+      itemIconStyle: NoItem
+      event: !type:LieDownActionEvent
+      checkCanInteract: true
+    stand-up-action:
+      type: instantAction
+      id: StandUp
+      icon: Interface/Actions/stand-up-state.png
+      name: action-name-standup
+      itemIconStyle: NoItem
+      event: !type:StandUpActionEvent
+      checkCanInteract: true
   - type: Fingerprint
   - type: Dna
   - type: MobPrice

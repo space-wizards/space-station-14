@@ -1,3 +1,5 @@
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -20,5 +22,20 @@ namespace Content.Shared.Standing
         /// </summary>
         [DataField("changedFixtures")]
         public List<string> ChangedFixtures = new();
+
+        /// <summary>
+        ///     The action to lie down on ground.
+        /// </summary>
+        [DataField("lie-down-action")]
+        public InstantAction LieDownAction { get; set; } = new();
+
+        /// <summary>
+        ///     The action to lie down or stand up.
+        /// </summary>
+        [DataField("stand-up-action")]
+        public InstantAction StandUpAction { get; set; } = new();
     }
+
+    public sealed class LieDownActionEvent : InstantActionEvent {}
+    public sealed class StandUpActionEvent : InstantActionEvent {}
 }
