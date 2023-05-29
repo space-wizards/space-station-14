@@ -1,116 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Splashing reagents using melee attacks & examining spillables should
-      work properly again, type: Tweak}
-  id: 3379
-  time: '2023-04-11T01:56:21.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Nettles can no longer inject solutions through hardsuits. Yes, this
-      means deathnettles don''t work on nukies anymore.', type: Tweak}
-  id: 3380
-  time: '2023-04-11T02:19:44.0000000+00:00'
-- author: Skyedra
-  changes:
-  - {message: Ability to bind the menu toggle key directly in the UI, type: Add}
-  - {message: Default menu toggle moved from F12 to F10, type: Tweak}
-  id: 3381
-  time: '2023-04-11T03:40:07.0000000+00:00'
-- author: Skyedra
-  changes:
-  - {message: '''Esc Menu'' title renamed to ''Game Menu''', type: Tweak}
-  id: 3382
-  time: '2023-04-11T06:26:39.0000000+00:00'
-- author: EnDecc
-  changes:
-  - {message: 'Doubled drain buffer size from 500u > 1000u, Tripled units deleted
-      per tick from 1 > 3', type: Tweak}
-  id: 3383
-  time: '2023-04-11T11:21:31.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Tools no longer make sounds if using them fails., type: Fix}
-  id: 3384
-  time: '2023-04-11T17:31:12.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added Brigmedic job and other things for brigmedic., type: Add}
-  id: 3385
-  time: '2023-04-11T23:11:01.0000000+00:00'
-- author: Mumohan
-  changes:
-  - {message: Plushies and other toys no longer conduct electricity, type: Fix}
-  id: 3386
-  time: '2023-04-12T00:11:55.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Being unable to deconstruct communications servers., type: Fix}
-  - {message: Fixed metal rods sometimes not being consumed when placing down lattice
-      tiles., type: Fix}
-  id: 3387
-  time: '2023-04-12T00:18:30.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not showing the ahelp relay label unless the relay was changed
-      while connected., type: Fix}
-  id: 3388
-  time: '2023-04-12T00:19:09.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Added showing ban and note count to admins in the ahelp window., type: Add}
-  id: 3389
-  time: '2023-04-12T00:34:25.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Cloth can be used as gauze to stop bleeding!, type: Add}
-  id: 3390
-  time: '2023-04-12T08:53:10.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix emergency shuttles docking at the wrong airlocks., type: Fix}
-  id: 3391
-  time: '2023-04-12T09:05:55.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Added show disconnected button to admin player tab., type: Add}
-  id: 3392
-  time: '2023-04-12T13:30:09.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fixed NPCs not properly steering around thindows in some instances.,
-    type: Fix}
-  id: 3393
-  time: '2023-04-12T13:50:08.0000000+00:00'
-- author: Arteben
-  changes:
-  - {message: 'Added filters of name, fingerprints and DNA for the station records
-      computer', type: Add}
-  id: 3394
-  time: '2023-04-12T14:27:13.0000000+00:00'
-- author: mhamster
-  changes:
-  - {message: Changed sleep action icon from egg to syndie pyjama, type: Tweak}
-  id: 3395
-  time: '2023-04-12T18:26:07.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added boxer spawnpoint., type: Add}
-  id: 3396
-  time: '2023-04-12T18:32:49.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: 'Fixed now the security cadet''s spawner has an icon not of a passenger,
-      but of a cadet (I just stuck the cadet badge next to the officer''s sprite)',
-    type: Fix}
-  id: 3397
-  time: '2023-04-12T18:33:19.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has started packaging its sinister pens in boxes for easier
-      identification by the end user., type: Tweak}
-  id: 3398
-  time: '2023-04-12T18:44:52.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Increased passive blood recovery from 0.3u to 1u. This is added every
@@ -2905,3 +2793,121 @@ Entries:
   - {message: Added a CentCom scarf., type: Add}
   id: 3878
   time: '2023-05-27T09:09:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Change grappling gun tech from Experimental to Industrial., type: Fix}
+  id: 3879
+  time: '2023-05-27T12:19:03.0000000+00:00'
+- author: malchanceux
+  changes:
+  - {message: NanoTrasen Counterintelligence has uncovered that threat actors have
+      started recruiting atmospheric technicians into their ranks. Whether this is
+      genuine or a red herring remains to be seen., type: Add}
+  id: 3880
+  time: '2023-05-27T19:50:51.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Station Map has been resprited and can now be constructed., type: Add}
+  id: 3881
+  time: '2023-05-28T06:42:41.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Emitters and APEs can now be controlled with device linking., type: Add}
+  id: 3882
+  time: '2023-05-28T06:44:28.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Revenants now drop ectoplasm when they die., type: Tweak}
+  id: 3883
+  time: '2023-05-28T09:21:07.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Adds the universal pinpointer. A pinpointer that can be linked to track
+      anything., type: Add}
+  - {message: Pinpointers can now be emagged to act as stealthy universal pinpointers.,
+    type: Tweak}
+  id: 3884
+  time: '2023-05-28T10:24:09.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: Added reaction for cola creation., type: Add}
+  id: 3885
+  time: '2023-05-28T10:25:12.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'As per request of several Operatives the experimental stimpack was
+      cut down in price by nearly half, don''t forget the antitoxin that (doesn''t)
+      come in the package.', type: Tweak}
+  id: 3886
+  time: '2023-05-28T20:05:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'NanoTrasen''s CBURN unit fell asleep on the job, accidentally reintroducing
+      the undead into the standard station ecosystem. Watch your back and don''t get
+      bit.', type: Add}
+  id: 3887
+  time: '2023-05-28T20:06:15.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Tweaked singularity to stay small with with a level 1 PA., type: Tweak}
+  id: 3888
+  time: '2023-05-28T20:06:36.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Fixed not being able to set up mailing units, type: Fix}
+  id: 3889
+  time: '2023-05-28T20:06:54.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Fixed suit sensors for crew arriving via arrivals shuttle, type: Fix}
+  id: 3890
+  time: '2023-05-28T20:07:31.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Most tools no longer deal 10 blunt damage, and are across-the-board
+      weaker.', type: Tweak}
+  - {message: The red crowbar is now stronger than the grey crowbar., type: Tweak}
+  - {message: Shovels and toolboxes are now much more robust., type: Tweak}
+  - {message: Power tools can now deal damage., type: Tweak}
+  id: 3891
+  time: '2023-05-28T20:09:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added ambient music!, type: Add}
+  - {message: Footstep sounds have been bumped., type: Tweak}
+  - {message: Volume sliders are now consistent and only go to 100% (rather than 100
+      / 200 / 300). They still scale identically to before., type: Tweak}
+  - {message: Ambient sound sources (e.g. APCs) will now update whenever the audio
+      slider updates and not require you to leave range., type: Fix}
+  id: 3892
+  time: '2023-05-29T00:44:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Maintenance ambience should play less frequently in corridors., type: Fix}
+  id: 3893
+  time: '2023-05-29T04:19:00.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: The Centcom scarf has been moved to the Centdrobe, type: Tweak}
+  id: 3894
+  time: '2023-05-29T04:34:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed cleanbots., type: Fix}
+  id: 3895
+  time: '2023-05-29T06:53:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cap throwing scaling so bad mass values don't yeet you too far., type: Fix}
+  id: 3896
+  time: '2023-05-29T07:11:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix landing pad clipping dungeons in some instances., type: Fix}
+  id: 3897
+  time: '2023-05-29T11:48:15.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Device network addresses now look prettier., type: Tweak}
+  id: 3898
+  time: '2023-05-29T14:56:31.0000000+00:00'

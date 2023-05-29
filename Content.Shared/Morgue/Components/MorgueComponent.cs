@@ -1,8 +1,9 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Morgue.Components;
+namespace Content.Shared.Morgue.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class MorgueComponent : Component
 {
     /// <summary>
