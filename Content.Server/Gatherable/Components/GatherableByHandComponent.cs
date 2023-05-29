@@ -1,7 +1,9 @@
 namespace Content.Server.Gatherable.Components;
 
-[RegisterComponent]
-[Access(typeof(GatherableByHandSystem))]
+/// <summary>
+///     Allows an entity to be interacted with by hand to yield a random number of a specified loot entity.
+/// </summary>
+[RegisterComponent, Access(typeof(GatherableByHandSystem))]
 public sealed class GatherableByHandComponent : Component
 {
     /// <summary>
