@@ -90,7 +90,7 @@ namespace Content.Shared.Lathe
         /// <summary>
         /// Checks if the lather can eject materials from it
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("canEject")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("canEject"), AutoNetworkedField]
         public bool CanEject = true;
         #endregion
     }
