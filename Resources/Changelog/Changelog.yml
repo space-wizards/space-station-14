@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Vending machines now use the robot typing indicator., type: Tweak}
-  id: 3400
-  time: '2023-04-12T20:15:28.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Station maps have been added., type: Add}
@@ -2911,3 +2906,8 @@ Entries:
     type: Tweak}
   id: 3899
   time: '2023-05-30T02:51:32.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: limited Northstar battlecry to 12 characters, type: Fix}
+  id: 3900
+  time: '2023-05-30T17:57:53.0000000+00:00'
