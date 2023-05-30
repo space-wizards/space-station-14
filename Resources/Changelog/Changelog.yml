@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added custom speech bubble for the moth cloak., type: Add}
-  id: 3402
-  time: '2023-04-13T07:21:57.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Nanotrasen no longer makes ice cream with soda., type: Fix}
@@ -2911,3 +2906,8 @@ Entries:
   - {message: You can't see grilles in the power monitoring console anymore, type: Tweak}
   id: 3901
   time: '2023-05-30T22:34:45.0000000+00:00'
+- author: 612git
+  changes:
+  - {message: Fixed Poppy potency scaling, type: Fix}
+  id: 3902
+  time: '2023-05-30T23:07:15.0000000+00:00'
