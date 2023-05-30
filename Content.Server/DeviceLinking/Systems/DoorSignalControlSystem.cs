@@ -65,7 +65,7 @@ namespace Content.Server.DeviceLinking.Systems
             }
             else if (args.Port == component.InBolt)
             {
-                if (TryComp<AirlockComponent>(uid, out var airlockComponent))
+                if (!TryComp<AirlockComponent>(uid, out var airlockComponent))
                     return;
 
                 // if its a pulse toggle, otherwise set bolts to high/low
