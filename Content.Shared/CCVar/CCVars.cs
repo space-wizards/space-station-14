@@ -33,10 +33,6 @@ namespace Content.Shared.CCVar
         /*
          * Ambience
          */
-        //TODO: This is so that this compiles, yell at me if this is still in
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambiance.basic_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
-
 
         /// <summary>
         /// How long we'll wait until re-sampling nearby objects for ambience. Should be pretty fast, but doesn't have to match the tick rate.
@@ -74,23 +70,24 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AmbienceVolume =
             CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        // Midi is on engine so deal
+        public const float MidiMultiplier = 3f;
+
+        public const float AmbienceMultiplier = 2f;
+
+        /// <summary>
+        /// Ambience music volume.
+        /// </summary>
+        public static readonly CVarDef<float> AmbientMusicVolume =
+            CVarDef.Create("ambience.music_volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        public const float AmbientMusicMultiplier = 2f;
+
         /// <summary>
         /// Lobby / round end music volume.
         /// </summary>
         public static readonly CVarDef<float> LobbyMusicVolume =
             CVarDef.Create("ambience.lobby_music_volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        /// <summary>
-        /// Whether to play the station ambience (humming) sound
-        /// </summary>
-        public static readonly CVarDef<bool> StationAmbienceEnabled =
-            CVarDef.Create("ambience.station_ambience", true, CVar.ARCHIVE | CVar.CLIENTONLY);
-
-        /// <summary>
-        /// Whether to play the space ambience
-        /// </summary>
-        public static readonly CVarDef<bool> SpaceAmbienceEnabled =
-            CVarDef.Create("ambience.space_ambience", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Status
@@ -449,6 +446,17 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> DatabaseSqliteDelay =
             CVarDef.Create("database.sqlite_delay", DefaultSqliteDelay, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Amount of concurrent SQLite database operations.
+        /// </summary>
+        /// <remarks>
+        /// Note that SQLite is not a properly asynchronous database and also has limited read/write concurrency.
+        /// Increasing this number may allow more concurrent reads, but it probably won't matter much.
+        /// SQLite operations are normally ran on the thread pool, which may cause thread pool starvation if the concurrency is too high.
+        /// </remarks>
+        public static readonly CVarDef<int> DatabaseSqliteConcurrency =
+            CVarDef.Create("database.sqlite_concurrency", 3, CVar.SERVERONLY);
+
 #if DEBUG
         private const int DefaultSqliteDelay = 1;
 #else
@@ -561,6 +569,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> HudHeldItemShow =
             CVarDef.Create("hud.held_item_show", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        public static readonly CVarDef<bool> CombatModeIndicatorsPointShow =
+            CVarDef.Create("hud.combat_mode_indicators_point_show", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
         public static readonly CVarDef<float> HudHeldItemOffset =
             CVarDef.Create("hud.held_item_offset", 28f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
@@ -603,6 +614,12 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
+        /// </summary>
+        public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
+            CVarDef.Create("admin.alert.explosion_min_intensity", 60, CVar.SERVERONLY);
 
         /*
          * Explosions
@@ -902,7 +919,7 @@ namespace Content.Shared.CCVar
         /// Whether or not OOC chat should be enabled during a round.
         /// </summary>
         public static readonly CVarDef<bool> OocEnableDuringRound =
-            CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED |CVar.SERVER);
+            CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
 
         /*
          * LOOC
@@ -1071,7 +1088,7 @@ namespace Content.Shared.CCVar
         /// Cooldown between arrivals departures. This should be longer than the FTL time or it will double cycle.
         /// </summary>
         public static readonly CVarDef<float> ArrivalsCooldown =
-            CVarDef.Create("shuttle.arrivals_cooldown", 90f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.arrivals_cooldown", 50f, CVar.SERVERONLY);
 
         /// <summary>
         /// Are players allowed to return on the arrivals shuttle.
@@ -1084,7 +1101,7 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> CargoShuttles =
             CVarDef.Create("shuttle.cargo", true, CVar.SERVERONLY);
-        
+
         /// <summary>
         /// Whether to automatically spawn escape shuttles.
         /// </summary>
@@ -1150,12 +1167,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> EmergencyShuttleAutoCallExtensionTime =
             CVarDef.Create("shuttle.auto_call_extension_time", 45, CVar.SERVERONLY);
-
-        /// <summary>
-        /// The map to load for CentCom for the emergency shuttle to dock to.
-        /// </summary>
-        public static readonly CVarDef<string> CentcommMap =
-            CVarDef.Create("shuttle.centcomm_map", "/Maps/centcomm.yml", CVar.SERVERONLY);
 
         /*
          * Crew Manifests
@@ -1406,20 +1417,6 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        /// Controls whether new resources can be uploaded by admins.
-        /// Does not prevent already uploaded resources from being sent.
-        /// </summary>
-        public static readonly CVarDef<bool> ResourceUploadingEnabled =
-            CVarDef.Create("netres.enabled", true, CVar.REPLICATED | CVar.SERVER);
-
-        /// <summary>
-        /// Controls the data size limit in megabytes for uploaded resources. If they're too big, they will be dropped.
-        /// Set to zero or a negative value to disable limit.
-        /// </summary>
-        public static readonly CVarDef<float> ResourceUploadingLimitMb =
-            CVarDef.Create("netres.limit", 3f, CVar.REPLICATED | CVar.SERVER);
-
-        /// <summary>
         /// Whether uploaded files will be stored in the server's database.
         /// This is useful to keep "logs" on what files admins have uploaded in the past.
         /// </summary>
@@ -1569,5 +1566,26 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ConfigPresetDebug =
             CVarDef.Create("config.preset_debug", true, CVar.SERVERONLY);
+
+        /*
+         * World Generation
+         */
+        /// <summary>
+        ///     Whether or not world generation is enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> WorldgenEnabled =
+            CVarDef.Create("worldgen.enabled", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The worldgen config to use.
+        /// </summary>
+        public static readonly CVarDef<string> WorldgenConfig =
+            CVarDef.Create("worldgen.worldgen_config", "Default", CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The maximum amount of time the entity GC can process, in ms.
+        /// </summary>
+        public static readonly CVarDef<int> GCMaximumTimeMs =
+            CVarDef.Create("entgc.maximum_time_ms", 5, CVar.SERVERONLY);
     }
 }

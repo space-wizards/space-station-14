@@ -1,6 +1,7 @@
 ﻿using Content.Server.PowerCell;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Pinpointer;
+using Content.Shared.PowerCell;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
@@ -22,7 +23,6 @@ public sealed class ProximityBeeperSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ProximityBeeperComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<ProximityBeeperComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ProximityBeeperComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<ProximityBeeperComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
     }
@@ -32,12 +32,6 @@ public sealed class ProximityBeeperSystem : EntitySystem
             return;
 
         args.Handled = TryToggle(uid, component, args.User);
-    }
-
-    private void OnInit(EntityUid uid, ProximityBeeperComponent component, MapInitEvent args)
-    {
-        if (component.NextBeepTime < _timing.CurTime)
-            component.NextBeepTime = _timing.CurTime;
     }
 
     private void OnUnpaused(EntityUid uid, ProximityBeeperComponent component, ref EntityUnpausedEvent args)
@@ -62,23 +56,20 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
         if (!component.Enabled)
         {
-            component.NextBeepTime += component.MinBeepInterval;
+            component.NextBeepTime += component.MaxBeepInterval;
             return;
         }
 
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(uid);
-        var comp = EntityManager.ComponentFactory.GetRegistration(component.Component).Type;
+        var compType = EntityManager.ComponentFactory.GetRegistration(component.Component).Type;
         float? closestDistance = null;
-        foreach (var targetXform in _entityLookup.GetComponentsInRange<TransformComponent>(xform.MapPosition, component.MaximumDistance))
+        foreach (var comp in _entityLookup.GetComponentsInRange(compType, xform.MapPosition, component.MaximumDistance))
         {
             // forgive me father, for i have sinned.
-            var ent = targetXform.Owner;
+            var ent = comp.Owner;
 
-            if (!HasComp(ent, comp))
-                continue;
-
-            var dist = (_transform.GetWorldPosition(xform, xformQuery) - _transform.GetWorldPosition(targetXform, xformQuery)).Length;
+            var dist = (_transform.GetWorldPosition(xform, xformQuery) - _transform.GetWorldPosition(ent, xformQuery)).Length;
             if (dist >= (closestDistance ?? float.MaxValue))
                 continue;
             closestDistance = dist;
@@ -113,7 +104,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
         component.NextBeepTime = _timing.CurTime;
         UpdateBeep(uid, component, false);
         if (draw != null)
-            draw.Enabled = true;
+            _powerCell.SetPowerCellDrawEnabled(uid, true, draw);
         return true;
     }
 
@@ -130,8 +121,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
         component.Enabled = false;
         _appearance.SetData(uid, ProximityBeeperVisuals.Enabled, false);
-        if (TryComp<PowerCellDrawComponent>(uid, out var draw))
-            draw.Enabled = true;
+        _powerCell.SetPowerCellDrawEnabled(uid, false);
         UpdateBeep(uid, component);
         return true;
     }

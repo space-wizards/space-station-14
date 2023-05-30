@@ -19,7 +19,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.PowerCell;
 
-public sealed class PowerCellSystem : SharedPowerCellSystem
+/// <summary>
+/// Handles Power cells
+/// </summary>
+public sealed partial class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -39,41 +42,17 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         SubscribeLocalEvent<PowerCellComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<PowerCellComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<PowerCellComponent, RejuvenateEvent>(OnRejuvenate);
-
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
 
-        SubscribeLocalEvent<PowerCellDrawComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PowerCellDrawComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<PowerCellDrawComponent, ChargeChangedEvent>(OnDrawChargeChanged);
+        SubscribeLocalEvent<PowerCellDrawComponent, PowerCellChangedEvent>(OnDrawCellChanged);
 
         // funny
+        SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnCellSlotExamined);
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
+
         SubscribeLocalEvent<BatteryComponent, BeingMicrowavedEvent>(OnMicrowaved);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<PowerCellDrawComponent, PowerCellSlotComponent>();
-
-        while (query.MoveNext(out var uid, out var comp, out var slot))
-        {
-            if (!comp.Enabled)
-                continue;
-
-            if (_timing.CurTime < comp.NextUpdateTime)
-                continue;
-            comp.NextUpdateTime += TimeSpan.FromSeconds(1);
-
-            if (!TryGetBatteryFromSlot(uid, out var batteryEnt, out var battery, slot))
-                continue;
-
-            if (_battery.TryUseCharge(batteryEnt.Value, comp.DrawRate, battery))
-                continue;
-
-            comp.Enabled = false;
-            var ev = new PowerCellSlotEmptyEvent();
-            RaiseLocalEvent(uid, ref ev);
-        }
     }
 
     private void OnRejuvenate(EntityUid uid, PowerCellComponent component, RejuvenateEvent args)
@@ -83,13 +62,13 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
     {
-        if (_itemSlotsSystem.TryGetSlot(uid, component.CellSlotId, out ItemSlot? slot))
-        {
-            if (slot.Item == null)
-                return;
+        if (!_itemSlotsSystem.TryGetSlot(uid, component.CellSlotId, out var slot))
+            return;
 
-            RaiseLocalEvent(slot.Item.Value, args);
-        }
+        if (slot.Item == null)
+            return;
+
+        RaiseLocalEvent(slot.Item.Value, args);
     }
 
     private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
@@ -111,17 +90,14 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             return;
         }
 
-        if (!TryComp(uid, out AppearanceComponent? appearance))
-            return;
-
         var frac = args.Charge / args.MaxCharge;
         var level = (byte) ContentHelpers.RoundToNearestLevels(frac, 1, PowerCellComponent.PowerCellVisualsLevels);
-        _sharedAppearanceSystem.SetData(uid, PowerCellVisuals.ChargeLevel, level, appearance);
+        _sharedAppearanceSystem.SetData(uid, PowerCellVisuals.ChargeLevel, level);
 
         // If this power cell is inside a cell-slot, inform that entity that the power has changed (for updating visuals n such).
         if (_containerSystem.TryGetContainingContainer(uid, out var container)
             && TryComp(container.Owner, out PowerCellSlotComponent? slot)
-            && _itemSlotsSystem.TryGetSlot(container.Owner, slot.CellSlotId, out ItemSlot? itemSlot))
+            && _itemSlotsSystem.TryGetSlot(container.Owner, slot.CellSlotId, out var itemSlot))
         {
             if (itemSlot.Item == uid)
                 RaiseLocalEvent(container.Owner, new PowerCellChangedEvent(false));
@@ -134,17 +110,6 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         var ev = new PowerCellSlotEmptyEvent();
         RaiseLocalEvent(uid, ref ev);
-    }
-
-    private void OnMapInit(EntityUid uid, PowerCellDrawComponent component, MapInitEvent args)
-    {
-        if (component.NextUpdateTime < _timing.CurTime)
-            component.NextUpdateTime = _timing.CurTime;
-    }
-
-    private void OnUnpaused(EntityUid uid, PowerCellDrawComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdateTime += args.PausedTime;
     }
 
     private void Explode(EntityUid uid, BatteryComponent? battery = null, EntityUid? cause = null)
@@ -172,7 +137,6 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         return HasCharge(uid, battery.UseRate, cell, user);
     }
-
     /// <summary>
     /// Tries to use the <see cref="PowerCellDrawComponent.UseRate"/> for this entity.
     /// </summary>
@@ -185,6 +149,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         if (TryUseCharge(uid, battery.UseRate, cell, user))
         {
+            _sharedAppearanceSystem.SetData(uid, PowerCellSlotVisuals.Enabled, HasActivatableCharge(uid, battery, cell, user));
             _activatable.CheckUsage(uid);
             return true;
         }
@@ -192,7 +157,28 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         return false;
     }
 
+    /// <summary>
+    /// Whether the power cell has any power at all for the draw rate.
+    /// </summary>
+    public bool HasDrawCharge(EntityUid uid, PowerCellDrawComponent? battery = null,
+        PowerCellSlotComponent? cell = null, EntityUid? user = null)
+    {
+        if (!Resolve(uid, ref battery, ref cell, false))
+            return true;
+
+        return HasCharge(uid, float.MinValue, cell, user);
+    }
+
     #endregion
+
+    public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false) || enabled == component.Drawing)
+            return;
+
+        component.Drawing = enabled;
+        component.NextUpdateTime = _timing.CurTime;
+    }
 
     /// <summary>
     /// Returns whether the entity has a slotted battery and charge for the requested action.
@@ -240,6 +226,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             return false;
         }
 
+        _sharedAppearanceSystem.SetData(uid, PowerCellSlotVisuals.Enabled, battery.Charge > 0);
         return true;
     }
 
@@ -285,10 +272,19 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void OnCellExamined(EntityUid uid, PowerCellComponent component, ExaminedEvent args)
     {
-        if (!TryComp(uid, out BatteryComponent? battery))
-            return;
+        if (TryComp<BatteryComponent>(uid, out var battery))
+            OnBatteryExamined(uid, battery, args);
+    }
 
-        var charge = battery.CurrentCharge / battery.MaxCharge * 100;
+    private void OnCellSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)
+    {
+        if (TryGetBatteryFromSlot(uid, out var battery))
+            OnBatteryExamined(uid, battery, args);
+    }
+
+    private void OnBatteryExamined(EntityUid uid, BatteryComponent component, ExaminedEvent args)
+    {
+        var charge = component.CurrentCharge / component.MaxCharge * 100;
         args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
     }
 }

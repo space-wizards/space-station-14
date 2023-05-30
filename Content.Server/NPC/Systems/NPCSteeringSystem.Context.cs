@@ -455,7 +455,7 @@ public sealed partial class NPCSteeringSystem
         EntityQuery<PhysicsComponent> bodyQuery,
         EntityQuery<TransformComponent> xformQuery)
     {
-        var detectionRadius = agentRadius + 0.1f;
+        var detectionRadius = MathF.Max(0.35f, agentRadius + 0.1f);
         var ourVelocity = body.LinearVelocity;
         var factionQuery = GetEntityQuery<FactionComponent>();
         factionQuery.TryGetComponent(uid, out var ourFaction);
@@ -470,7 +470,7 @@ public sealed partial class NPCSteeringSystem
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0 ||
                 !factionQuery.TryGetComponent(ent, out var otherFaction) ||
-                !_faction.IsFriendly(uid, ent, ourFaction, otherFaction) ||
+                !_faction.IsEntityFriendly(uid, ent, ourFaction, otherFaction) ||
                 // Use <= 0 so we ignore stationary friends in case.
                 Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)
             {

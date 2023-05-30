@@ -25,14 +25,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - WallLayer
   - type: EntityStorage
     isCollidableWhenOpen: true
     showContents: false
@@ -84,7 +85,7 @@
     sprite: Structures/Storage/morgue.rsi
     layers:
     - state: crema_closed
-      map: ["enum.CrematoriumVisualLayers.Base"]
+      map: ["enum.CrematoriumVisualLayers.Base", "enum.StorageVisualLayers.Base"]
     - state: crema_tray
       offset: 0, -1
       map: ["enum.StorageVisualLayers.Door"]
@@ -102,14 +103,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: EntityStorage
     isCollidableWhenOpen: true
     showContents: false
@@ -125,11 +127,10 @@
     containers:
       entity_storage: !type:Container
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: crema_closed
-      state_alt: crema_open
-      state_open: crema_tray
+  - type: EntityStorageVisuals
+    stateBaseClosed: crema_closed
+    stateBaseOpen: crema_open
+    stateDoorOpen: crema_tray
   - type: GenericVisualizer
     visuals:
       enum.CrematoriumVisuals.Burning:

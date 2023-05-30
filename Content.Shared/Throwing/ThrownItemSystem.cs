@@ -74,10 +74,10 @@ namespace Content.Shared.Throwing
                 return;
 
             var thrower = component.Thrower;
-            var otherBody = args.OtherFixture.Body;
+            if (args.OtherEntity == thrower)
+                return;
 
-            if (otherBody.Owner == thrower) return;
-            ThrowCollideInteraction(thrower, args.OurFixture.Body, otherBody);
+            ThrowCollideInteraction(thrower, args.OurBody, args.OtherBody);
         }
 
         private void PreventCollision(EntityUid uid, ThrownItemComponent component, ref PreventCollideEvent args)
@@ -116,7 +116,7 @@ namespace Content.Shared.Throwing
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
-        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics)
+        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics, bool playSound)
         {
             _physics.SetBodyStatus(physics, BodyStatus.OnGround);
 
@@ -137,8 +137,8 @@ namespace Content.Shared.Throwing
             if (thrownItem.Thrower is not null)
                 _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
-            _broadphase.RegenerateContacts(physics);
-            var landEvent = new LandEvent(thrownItem.Thrower);
+            _broadphase.RegenerateContacts(uid, physics);
+            var landEvent = new LandEvent(thrownItem.Thrower, playSound);
             RaiseLocalEvent(landing, ref landEvent);
         }
 

@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Map;
@@ -8,9 +9,12 @@ using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 
 using Content.Server.Ghost.Components;
+using Content.Server.Mind.Components;
 using Content.Server.Station.Components;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.Events;
+using Content.Shared.Database;
+using Content.Shared.Tag;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -24,7 +28,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 #endregion Dependencies
 
     /// <summary>
@@ -123,8 +129,16 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="outerContainer">The innermost container of the entity to consume that isn't also being consumed by the event horizon.</param>
     public void ConsumeEntity(EntityUid uid, EventHorizonComponent eventHorizon, IContainer? outerContainer = null)
     {
+        var eventHorizonOwner = eventHorizon.Owner;
+
+        if (!EntityManager.IsQueuedForDeletion(uid) && // I saw it log twice a few times for some reason?
+            (HasComp<MindComponent>(uid) ||
+             _tagSystem.HasTag(uid, "HighRiskItem") ||
+             HasComp<ContainmentFieldGeneratorComponent>(uid)))
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(uid)} entered the event horizon of {ToPrettyString(eventHorizonOwner)} and was deleted");
+
         EntityManager.QueueDeleteEntity(uid);
-        RaiseLocalEvent(eventHorizon.Owner, new EntityConsumedByEventHorizonEvent(uid, eventHorizon, outerContainer));
+        RaiseLocalEvent(eventHorizonOwner, new EntityConsumedByEventHorizonEvent(uid, eventHorizon, outerContainer));
         RaiseLocalEvent(uid, new EventHorizonConsumedEntityEvent(uid, eventHorizon, outerContainer));
     }
 
@@ -421,7 +435,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (args.OurFixture.ID != comp.HorizonFixtureId)
             return;
 
-        AttemptConsumeEntity(args.OtherFixture.Body.Owner, comp);
+        AttemptConsumeEntity(args.OtherEntity, comp);
     }
 
     /// <summary>

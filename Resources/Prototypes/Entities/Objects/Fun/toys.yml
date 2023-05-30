@@ -11,12 +11,15 @@
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
-  - type: EmitSoundOnLand
-    sound:
-      collection: ToySqueak
   - type: EmitSoundOnActivate
     sound:
       collection: ToySqueak
+  - type: EmitSoundOnCollide
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToyFall
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
@@ -31,6 +34,60 @@
       Cloth: 100
   - type: StaticPrice
     price: 5
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieGhost
+  name: ghost soft toy
+  description: The start of your personal GHOST GANG!
+  components:
+    - type: Sprite
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: icon
+      noRot: true
+    - type: Item
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          density: 20
+          mask:
+            - ItemMask
+          restitution: 0.98
+          friction: 0.01
+    - type: Physics
+      angularDamping: 0.02
+      linearDamping: 0.02
+      fixedRotation: true
+      bodyType: Dynamic
+    - type: TileFrictionModifier
+      modifier: 0.1
+    - type: Tag
+      tags:
+        - ForceableFollow
+        - PlushieGhost
+    - type: RandomWalk
+      accumulatorRatio: 0.5
+      maxSpeed: 1
+      minSpeed: 0.25
+
+- type: entity
+  parent: PlushieGhost
+  id: PlushieGhostRevenant
+  name: revenant soft toy
+  suffix: DO NOT MAP
+  description: So soft it almost makes you want to take a nap...
+  components:
+    - type: Sprite
+      sprite: Mobs/Ghosts/revenant.rsi
+      state: icon
+      netsync: false
+      noRot: true
+    - type: Construction
+      graph: PlushieGhostRevenant
+      node: plushie
 
 - type: entity
   parent: BasePlushie
@@ -178,16 +235,17 @@
               solution: plushie
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.3,-0.3,0.3,0.3"
           density: 15
           mask:
             - ItemMask
-        - shape:
+        rehydrate:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.3,-0.3,0.3,0.3"
-          id: "rehydrate"
           hard: false
           layer:
             - LowImpassable
@@ -362,6 +420,27 @@
   - type: Sprite
     state: plushie_atmosian
 
+- type: entity
+  parent: BasePlushie
+  id: PlushieXeno
+  name: xeno plushie
+  description: An adorable stuffed toy that resembles a scary xenomorf. You're lucky it's just a toy.
+  components:
+  - type: Sprite
+    state: plushie_xeno
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
 ## Figurines
 
 - type: entity
@@ -397,6 +476,20 @@
   components:
   - type: Sprite
     state: nuketoy
+  - type: UseDelay
+    delay: 180.0
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxdistance: 10
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxdistance: 10
 
 - type: entity
   parent: BaseFigurine
@@ -785,6 +878,8 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: orb
+  - type: TileFrictionModifier
+    modifier: 0.001
 
 - type: entity
   id: ToySword
@@ -891,3 +986,4 @@
   - type: Tag
     tags:
     - ClownRecorder
+
