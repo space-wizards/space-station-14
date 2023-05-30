@@ -8,7 +8,7 @@ namespace Content.Shared.Chat;
 public abstract class SharedChatSystem : EntitySystem
 {
     public const char RadioCommonPrefix = ';';
-    public const char RadioChannelPrefix = ':';
+    public const char RadioChannelPrefix = ':'; //just a change so I can make a draft PR to see what people think of the idea
     public const char LocalPrefix = '.';
     public const char ConsolePrefix = '/';
     public const char DeadPrefix = '\\';
