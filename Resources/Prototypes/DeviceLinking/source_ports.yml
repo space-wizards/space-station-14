@@ -78,3 +78,13 @@
   id: Output
   name: signal-port-name-logic-output
   description: signal-port-description-logic-output
+
+- type: sourcePort
+  id: OutputHigh
+  name: signal-port-name-logic-output-high
+  description: signal-port-description-logic-output-high
+
+- type: sourcePort
+  id: OutputLow
+  name: signal-port-name-logic-output-low
+  description: signal-port-description-logic-output-low

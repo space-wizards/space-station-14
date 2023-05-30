@@ -6,14 +6,14 @@ using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
-using Robust.Shared.Utility;
+//using Robust.Shared.Utility;
 using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
 
 namespace Content.Server.DeviceLinking.Systems;
 
 public sealed class LogicGateSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceLinkSystem _signal = default!;
+    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
@@ -32,8 +32,8 @@ public sealed class LogicGateSystem : EntitySystem
 
     private void OnInit(EntityUid uid, LogicGateComponent comp, ComponentInit args)
     {
-        _signal.EnsureSinkPorts(uid, comp.InputPortA, comp.InputPortB);
-        _signal.EnsureSourcePorts(uid, comp.OutputPort);
+        _deviceLink.EnsureSinkPorts(uid, comp.InputPortA, comp.InputPortB);
+        _deviceLink.EnsureSourcePorts(uid, comp.OutputPort);
     }
 
     private void OnExamined(EntityUid uid, LogicGateComponent comp, ExaminedEvent args)
@@ -123,7 +123,7 @@ public sealed class LogicGateSystem : EntitySystem
                 [DeviceNetworkConstants.LogicState] = output ? SignalState.High : SignalState.Low
             };
 
-            _signal.InvokePort(uid, comp.OutputPort, data);
+            _deviceLink.InvokePort(uid, comp.OutputPort, data);
         }
     }
 }

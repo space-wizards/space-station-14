@@ -16,6 +16,17 @@
   startNode: start
   targetNode: logic_gate
   category: construction-category-tools
-  description: A binary logic gate.
+  description: A binary logic gate for signals.
   icon: { sprite: Objects/Devices/gates.rsi, state: or }
+  objectType: Item
+
+- type: construction
+  name: edge detector
+  id: EdgeDetector
+  graph: LogicGate
+  startNode: start
+  targetNode: edge_detector
+  category: construction-category-tools
+  description: An edge detector for signals.
+  icon: { sprite: Objects/Devices/gates.rsi, state: edge_detector }
   objectType: Item

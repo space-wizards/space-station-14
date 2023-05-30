@@ -24,6 +24,9 @@
     },
     {
       "name": "xnor"
+    },
+    {
+      "name": "edge_detector"
     }
   ]
 }

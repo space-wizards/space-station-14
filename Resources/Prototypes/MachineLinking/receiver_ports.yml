@@ -87,3 +87,8 @@
   id: InputB
   name: signal-port-name-logic-input-b
   description: signal-port-description-logic-input-b
+
+- type: receiverPort
+  id: InputA
+  name: signal-port-name-logic-input
+  description: signal-port-description-logic-input

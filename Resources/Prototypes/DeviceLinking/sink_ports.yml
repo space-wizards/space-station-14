@@ -89,6 +89,11 @@
   description: signal-port-description-logic-input-b
 
 - type: sinkPort
+  id: Input
+  name: signal-port-name-logic-input
+  description: signal-port-description-logic-input
+
+- type: sinkPort
   id: SetParticleDelta
   name: signal-port-name-set-particle-delta
   description: signal-port-description-set-particle-delta

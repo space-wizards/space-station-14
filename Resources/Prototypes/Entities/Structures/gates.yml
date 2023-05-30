@@ -1,20 +1,26 @@
 - type: entity
+  abstract: true
   parent: BaseItem
-  id: LogicGate
-  name: logic gate
-  description: A logic gate with two inputs and one output. Technicians can change its mode of operation using a screwdriver.
+  id: BaseLogicItem
   components:
   - type: Anchorable
-  - type: Sprite
-    sprite: Objects/Devices/gates.rsi
-    state: or
   - type: Rotatable
-  - type: LogicGate
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
     range: 200
+
+- type: entity
+  parent: BaseLogicItem
+  id: LogicGate
+  name: logic gate
+  description: A logic gate with two inputs and one output. Technicians can change its mode of operation using a screwdriver.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/gates.rsi
+    state: or
+  - type: LogicGate
   - type: DeviceLinkSink
     ports:
     - InputA
@@ -25,3 +31,24 @@
   - type: Construction
     graph: LogicGate
     node: logic_gate
+
+- type: entity
+  parent: BaseLogicItem
+  id: EdgeDetector
+  name: edge detector
+  description: Splits rising and falling edges into unique pulses and detects how edgy you are.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/gates.rsi
+    state: edge_detector
+  - type: EdgeDetector
+  - type: DeviceLinkSink
+    ports:
+    - Input
+  - type: DeviceLinkSource
+    ports:
+    - OutputHigh
+    - OutputLow
+  - type: Construction
+    graph: LogicGate
+    node: edge_detector
