@@ -71,6 +71,12 @@ namespace Content.Server.Mind
         [ViewVariables]
         public NetUserId OriginalOwnerUserId { get; }
 
+        /// <summary>
+        ///     Entity UID for the first entity that this mind controlled. Used for round end.
+        ///     Might be relevant if the player has ghosted since.
+        /// </summary>
+        [ViewVariables] public EntityUid? OriginalOwnedEntity;
+
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
 
@@ -357,8 +363,11 @@ namespace Content.Server.Mind
                 _mindSystem.InternalEjectMind(OwnedComponent.Owner, OwnedComponent);
 
             OwnedComponent = component;
-            if(OwnedComponent != null)
+            if (OwnedComponent != null)
+            {
                 _mindSystem.InternalAssignMind(OwnedComponent.Owner, this, OwnedComponent);
+                OriginalOwnedEntity ??= OwnedComponent.Owner;
+            }
 
             // Don't do the full deletion cleanup if we're transferring to our visitingentity
             if (alreadyAttached)
