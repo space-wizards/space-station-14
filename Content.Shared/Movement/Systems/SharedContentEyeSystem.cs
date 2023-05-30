@@ -40,8 +40,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private Vector2 CheckZoomValue(Vector2 checkedZoom, ContentEyeComponent component)
     {
-        var returnedZoom = Vector2.ComponentMax(MinZoom, checkedZoom);
-        return Vector2.ComponentMin(component.MaxZoom, returnedZoom);
+        return Vector2.ComponentMin(component.MaxZoom, Vector2.ComponentMax(MinZoom, checkedZoom));
     }
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
@@ -119,7 +118,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void ResetZoom(ContentEyeComponent component)
     {
-        var actual = Vector2.ComponentMin(component.MaxZoom, DefaultZoom);
+        var actual = CheckZoomValue(DefaultZoom, component);
 
         if (component.TargetZoom.Equals(actual))
             return;
