@@ -19,7 +19,7 @@
     loot: FoodSpaceshroom
     mindropcount: 2
     maxdropcount: 3
-    dropradius: 1.2
+    dropradius: 0.9
     harvesttime: 2.0
 
 # Object
