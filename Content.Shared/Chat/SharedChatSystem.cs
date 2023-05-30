@@ -9,7 +9,7 @@ public abstract class SharedChatSystem : EntitySystem
 {
     public const char RadioCommonPrefix = ';';
     public const char RadioChannelPrefix = ':';
-   public const char RadioChannelAltPrefix = '.';
+    public const char RadioChannelAltPrefix = '.';
     public const char LocalPrefix = '>';
     public const char ConsolePrefix = '/';
     public const char DeadPrefix = '\\';
@@ -18,7 +18,6 @@ public abstract class SharedChatSystem : EntitySystem
     public const char EmotesPrefix = '@';
     public const char AdminPrefix = ']';
     public const char WhisperPrefix = ',';
-
     public const char DefaultChannelKey = 'h';
     public const string CommonChannel = "Common";
     public static string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
