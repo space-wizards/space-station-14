@@ -8,8 +8,9 @@ namespace Content.Shared.Chat;
 public abstract class SharedChatSystem : EntitySystem
 {
     public const char RadioCommonPrefix = ';';
-    public const char RadioChannelPrefix = ':'; //just a change so I can make a draft PR to see what people think of the idea
-    public const char LocalPrefix = '.';
+    public const char RadioChannelPrefix = ':';
+   public const char RadioChannelAltPrefix = '.';
+    public const char LocalPrefix = '>';
     public const char ConsolePrefix = '/';
     public const char DeadPrefix = '\\';
     public const char LOOCPrefix = '(';
@@ -89,7 +90,7 @@ public abstract class SharedChatSystem : EntitySystem
             return true;
         }
 
-        if (!input.StartsWith(RadioChannelPrefix))
+        if (!(input.StartsWith(RadioChannelPrefix) || input.StartsWith(RadioChannelAltPrefix)))
             return false;
 
         if (input.Length < 2 || char.IsWhiteSpace(input[1]))
