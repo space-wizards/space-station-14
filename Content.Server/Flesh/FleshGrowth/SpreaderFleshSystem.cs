@@ -195,12 +195,8 @@ public sealed class SpreaderFleshSystem : EntitySystem
         if (EntityManager.TryGetComponent<SpreaderFleshComponent>(ent, out _))
             return true;
 
-        if (!EntityManager.TryGetComponent<AirtightComponent>(ent, out var airtight))
-            return false;
-
-        // var oppositeDir = dir.AsDir().GetOpposite().ToAtmosDirection();
-
-        // return airtight.AirBlocked && airtight.AirBlockedDirection.IsFlagSet(oppositeDir);
+        if (EntityManager.TryGetComponent<AirtightComponent>(ent, out var airtight))
+            return true;
 
         return false;
     }
