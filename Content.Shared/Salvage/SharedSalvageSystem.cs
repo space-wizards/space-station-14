@@ -33,6 +33,8 @@ public abstract class SharedSalvageSystem : EntitySystem
                 return Loc.GetString("salvage-expedition-desc-structure",
                     ("count", GetStructureCount(mission.Difficulty)),
                     ("structure", _loc.GetEntityData(proto).Name));
+            case SalvageMissionType.Elimination:
+                return Loc.GetString("salvage-expedition-desc-elimination");
             default:
                 throw new NotImplementedException();
         }
@@ -219,6 +221,11 @@ public enum SalvageMissionType : byte
     /// Destroy the specified structures in a dungeon.
     /// </summary>
     Destruction,
+
+    /// <summary>
+    /// Kill a large creature in a dungeon.
+    /// </summary>
+    Elimination,
 }
 
 [Serializable, NetSerializable]

@@ -28,8 +28,6 @@ public sealed partial class SalvageSystem
 
     private void InitializeExpeditions()
     {
-        SubscribeLocalEvent<StationInitializedEvent>(OnSalvageExpStationInit);
-
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ComponentInit>(OnSalvageConsoleInit);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, EntParentChangedMessage>(OnSalvageConsoleParent);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ClaimSalvageMessage>(OnSalvageClaimMessage);
@@ -113,11 +111,6 @@ public sealed partial class SalvageSystem
     private void OnExpeditionUnpaused(EntityUid uid, SalvageExpeditionComponent component, ref EntityUnpausedEvent args)
     {
         component.EndTime += args.PausedTime;
-    }
-
-    private void OnSalvageExpStationInit(StationInitializedEvent ev)
-    {
-        EnsureComp<SalvageExpeditionDataComponent>(ev.Station);
     }
 
     private void UpdateExpeditions()

@@ -240,6 +240,9 @@
   id: DroneUsable
 
 - type: Tag
+  id: Ectoplasm
+
+- type: Tag
   id: Egg
 
 - type: Tag
@@ -283,6 +286,9 @@
 
 - type: Tag
   id: FootstepSound
+
+- type: Tag
+  id: ForceableFollow
 
 - type: Tag
   id: ForceFixRotations # fixrotations command WILL target this
@@ -550,7 +556,13 @@
   id: PlantSampleTaker
 
 - type: Tag
+  id: PlasmaGlassShard
+
+- type: Tag
   id: Plastic
+
+- type: Tag
+  id: PlushieGhost
 
 - type: Tag
   id: Powerdrill
@@ -570,6 +582,9 @@
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
+
+- type: Tag
+  id: ReinforcedGlassShard
 
 - type: Tag
   id: RipleyCentralControlModule
@@ -659,6 +674,9 @@
   id: StringInstrument
 
 - type: Tag
+  id: StationMapElectronics
+
+- type: Tag
   id: SubdermalImplant
 
 - type: Tag
@@ -693,6 +711,9 @@
 
 - type: Tag
   id: TrashBag
+
+- type: Tag
+  id: UraniumGlassShard
 
 - type: Tag
   id: VehicleKey

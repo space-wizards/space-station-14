@@ -6,6 +6,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
+using Content.Server.Weapons.Melee;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
@@ -37,6 +38,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedJitteringSystem _jittering = default!;
+    [Dependency] private readonly MeleeWeaponSystem _meleeWeapon = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -161,12 +163,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             if (!electrified.OnAttacked)
                 return;
 
-            //Dont shock if the attacker used a toy
-            if (EntityManager.TryGetComponent<MeleeWeaponComponent>(args.Used, out var meleeWeaponComponent))
-            {
-                if (meleeWeaponComponent.Damage.Total == 0)
-                    return;
-            }
+            if (_meleeWeapon.GetDamage(args.Used).Total == 0)
+                return;
 
             TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
@@ -220,7 +218,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth)),
-                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth)), 
+                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth)),
                     true,
                     electrified.SiemensCoefficient
                 );
@@ -249,7 +247,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     uid,
                     node,
                     (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageMult),
-                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) * timeMult), 
+                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) * timeMult),
                     true,
                     electrified.SiemensCoefficient);
             }
@@ -374,7 +372,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         {
             return false;
         }
-        
+
         if (!_statusEffects.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time, refresh, statusEffects))
             return false;
 

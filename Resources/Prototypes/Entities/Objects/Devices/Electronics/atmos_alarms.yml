@@ -11,6 +11,8 @@
     tags:
       - DroneUsable
       - AirAlarmElectronics
+  - type: StaticPrice
+    price: 61
 
 - type: entity
   id: FireAlarmElectronics
@@ -25,3 +27,5 @@
     tags:
       - DroneUsable
       - FireAlarmElectronics
+  - type: StaticPrice
+    price: 61
