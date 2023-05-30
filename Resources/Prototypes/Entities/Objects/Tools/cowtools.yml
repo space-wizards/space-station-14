@@ -147,9 +147,6 @@
     - key: enum.GasAnalyzerUiKey.Key
       type: GasAnalyzerBoundUserInterface
   - type: Appearance
-  - type: Tag
-    tags:
-      - GasAnalyzer
 
 - type: entity
   name: cow toolbox

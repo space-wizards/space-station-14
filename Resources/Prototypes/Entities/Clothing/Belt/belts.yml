@@ -29,7 +29,6 @@
         - HolofanProjector
         - Multitool
         - AppraisalTool
-        - GasAnalyzer
       components:
         - AirlockPainter
         - NetworkConfigurator
@@ -39,6 +38,7 @@
         - PowerCell
         - Geiger
         - TrayScanner
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
       drill:
