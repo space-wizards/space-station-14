@@ -14,6 +14,10 @@ public sealed partial class MeleeSpeechComponent : Component
 	[AutoNetworkedField]
 	[Access(typeof(SharedMeleeSpeechSystem), Other = AccessPermissions.ReadWrite)]
 	public string? Battlecry;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("MaxBattlecryLength")]
+    public int MaxBattlecryLength = 12;
 }
 
 /// <summary>
