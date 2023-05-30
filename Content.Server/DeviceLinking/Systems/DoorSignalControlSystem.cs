@@ -72,8 +72,8 @@ namespace Content.Server.DeviceLinking.Systems
                 }
                 else if (state == SignalState.Momentary)
                 {
-                    if (TryComp<AirlockComponent>(uid, out var airlockComponent))
-                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, newBolts: !airlockComponent.BoltsDown);
+                    if (TryComp<DoorBoltComponent>(uid, out var bolts))
+                        _bolts.SetBoltsWithAudio(uid, bolts, newBolts: !bolts.BoltsDown);
                 }
                 else
                 {
