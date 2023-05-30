@@ -83,7 +83,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 13
+        Slash: 10
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
@@ -207,7 +207,7 @@
     damage:
       types:
         Slash: 7
-        Radiation: 4 #damage is high because apparently uranium glass is apparently a pain in the ass to make.
+        Radiation: 4
   - type: Item
     sprite: Objects/Weapons/Melee/uranium_shiv.rsi
   - type: Sprite
