@@ -144,7 +144,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 5
+        Slash: 5.5
   - type: Item
     size: 4 #as much as a regular glass shard
     sprite: Objects/Weapons/Melee/shiv.rsi
