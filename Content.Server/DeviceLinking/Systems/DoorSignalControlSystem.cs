@@ -65,11 +65,21 @@ namespace Content.Server.DeviceLinking.Systems
             }
             else if (args.Port == component.InBolt)
             {
-                var bolt = state == SignalState.High;
                 if (TryComp<AirlockComponent>(uid, out var airlockComponent))
+                    return;
+
+                // if its a pulse toggle, otherwise set bolts to high/low
+                bool bolt;
+                if (state == SignalState.Momentary)
                 {
-                    _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, bolt);
+                    bolt = !airlockComponent.BoltsDown;
                 }
+                else
+                {
+                    bolt = state == SignalState.High;
+                }
+
+                _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, bolt);
             }
         }
 
