@@ -246,24 +246,16 @@ namespace Content.Server.Zombies
 
             foreach (var entity in args.HitEntities)
             {
-                if (args.User == entity)
+                if (args.User == entity ||
+                    !TryComp<MobStateComponent>(entity, out var mobState) ||
+                    GetIsForbiddenTarget(entity))
                     continue;
 
-                if (!TryComp<MobStateComponent>(entity, out var mobState) || HasComp<DroneComponent>(entity))
-                    continue;
-
-                if (HasComp<ZombieComponent>(entity))
+                if (_random.Prob(GetZombieInfectionChance(entity, component)))
                 {
-                    args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
-                }
-                else
-                {
-                    if (_random.Prob(GetZombieInfectionChance(entity, component)))
-                    {
-                        var pending = EnsureComp<PendingZombieComponent>(entity);
-                        pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.ZombieInfectionTurnTime;
-                        EnsureComp<ZombifyOnDeathComponent>(entity);
-                    }
+                    var pending = EnsureComp<PendingZombieComponent>(entity);
+                    pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.ZombieInfectionTurnTime;
+                    EnsureComp<ZombifyOnDeathComponent>(entity);
                 }
 
                 if ((mobState.CurrentState == MobState.Dead || mobState.CurrentState == MobState.Critical)
@@ -310,6 +302,17 @@ namespace Content.Server.Zombies
         {
             if (UnZombify(args.Source, args.Target, zombiecomp))
                 args.NameHandled = true;
+        }
+
+        private bool GetIsForbiddenTarget(var entity)
+        {
+            return
+                HasComp<ZombieComponent>(entity) ||
+                HasComp<DroneComponent>(entity) ||
+                HasComp<AMEPartComponent>(entity) ||
+                HasComp<SharedAMEControllerComponent>(entity) ||
+                HasComp<GravityComponent>(entity) ||
+                HasComp<SharedGravityGeneratorComponent>(entity);
         }
     }
 }
