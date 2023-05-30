@@ -20,6 +20,7 @@ using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -161,7 +162,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
        {
            StationUid = targetGrid,
-           Position = config.Area,
+           Position = Comp<MapGridComponent>(stationShuttle.EmergencyShuttle.Value).LocalAABB.Translated(config.Coordinates.Position)
        });
    }
 
