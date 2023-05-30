@@ -1,0 +1,24 @@
+The following sounds were used from game LonaRPG:
+
+    abom_scream.ogg:
+
+    devour_flesh_cultistogg:
+
+    flesh_culstis_greeting.ogg:
+
+    flesh_cultist_buy_succes.ogg:
+
+    flesh_cultist_mutation.ogg:
+
+    flesh_pudge_dead.ogg:
+
+    flesh_worm_dead.ogg:
+
+    flesh_worm_scream.ogg:
+
+    spike_gun_reload.ogg:
+
+    spike_gun_shot.ogg:
+
+    throw_worm.ogg:
+
