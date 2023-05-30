@@ -304,7 +304,7 @@ namespace Content.Server.Zombies
                 args.NameHandled = true;
         }
 
-        private bool GetIsForbiddenTarget(var entity)
+        private bool GetIsForbiddenTarget(EntityUid entity)
         {
             return
                 HasComp<ZombieComponent>(entity) ||
