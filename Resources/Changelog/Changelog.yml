@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Increased passive blood recovery from 0.3u to 1u. This is added every
-      5 seconds., type: Tweak}
-  id: 3399
-  time: '2023-04-12T20:14:42.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Vending machines now use the robot typing indicator., type: Tweak}
@@ -2911,3 +2905,9 @@ Entries:
   - {message: Device network addresses now look prettier., type: Tweak}
   id: 3898
   time: '2023-05-29T14:56:31.0000000+00:00'
+- author: malchanceux
+  changes:
+  - {message: Switches and remote signallers can now toggle bolts on linked doors,
+    type: Tweak}
+  id: 3899
+  time: '2023-05-30T02:51:32.0000000+00:00'
