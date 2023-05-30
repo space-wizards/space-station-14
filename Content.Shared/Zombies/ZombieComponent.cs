@@ -14,13 +14,6 @@ namespace Content.Shared.Zombies
     public sealed class ZombieComponent : Component
     {
         /// <summary>
-        /// The coefficient of the damage reduction applied when a zombie
-        /// attacks another zombie. longe name
-        /// </summary>
-        [ViewVariables]
-        public float OtherZombieDamageCoefficient = 0.25f;
-
-        /// <summary>
         /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
