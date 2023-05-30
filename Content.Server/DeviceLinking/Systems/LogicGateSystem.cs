@@ -1,12 +1,13 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.MachineLinking.Events;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
-//using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
 
 namespace Content.Server.DeviceLinking.Systems;
@@ -14,6 +15,7 @@ namespace Content.Server.DeviceLinking.Systems;
 public sealed class LogicGateSystem : EntitySystem
 {
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
@@ -60,6 +62,7 @@ public sealed class LogicGateSystem : EntitySystem
         // notify the user
         _audio.PlayPvs(comp.CycleSound, uid);
         _popup.PopupEntity(Loc.GetString($"logic-gate-cycle-{comp.Gate}"), uid, args.User);
+        _appearance.SetData(uid, LogicGateVisuals.Gate, comp.Gate);
     }
 
     private void OnSignalReceived(EntityUid uid, LogicGateComponent comp, ref SignalReceivedEvent args)

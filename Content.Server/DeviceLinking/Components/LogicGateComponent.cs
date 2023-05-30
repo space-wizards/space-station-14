@@ -71,16 +71,3 @@ public enum SignalState : byte
     Low,
     High
 }
-
-/// <summary>
-/// Types of logic gates that can be used, determines how the output port is set.
-/// </summary>
-public enum LogicGate : byte
-{
-    Or,
-    And,
-    Xor,
-    Nor,
-    Nand,
-    Xnor
-}

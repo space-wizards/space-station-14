@@ -17,7 +17,7 @@
   targetNode: logic_gate
   category: construction-category-tools
   description: A binary logic gate for signals.
-  icon: { sprite: Objects/Devices/gates.rsi, state: or }
+  icon: { sprite: Objects/Devices/gates.rsi, state: or_icon }
   objectType: Item
 
 - type: construction
