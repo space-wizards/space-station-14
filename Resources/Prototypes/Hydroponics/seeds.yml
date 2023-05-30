@@ -685,7 +685,7 @@
     Bicaridine:
       Min: 1
       Max: 20
-      PotencyDivisor: 20
+      PotencyDivisor: 5
 
 - type: seed
   id: aloe
