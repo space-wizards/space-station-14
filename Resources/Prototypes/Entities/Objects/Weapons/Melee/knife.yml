@@ -188,10 +188,8 @@
         Slash: 9
   - type: Item
     sprite: Objects/Weapons/Melee/plasma_shiv.rsi
-    state: icon
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_shiv.rsi
-    state: icon
 
 - type: entity
   name: uranium shiv
