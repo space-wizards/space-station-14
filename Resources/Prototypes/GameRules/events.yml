@@ -279,6 +279,10 @@
 
 - type: entity
   id: SpiderClownSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
     earliestStart: 20
     minimumPlayers: 15
     weight: 2
