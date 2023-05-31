@@ -11,7 +11,7 @@ namespace Content.Server.Roles
         /// <summary>
         ///     Path to antagonist alert sound.
         /// </summary>
-        protected override string AntagonistAlert => "/Audio/Ambience/Antag/nukeops_start.ogg";
+        protected override SoundSpecifier AntagonistAlert { get; } = new SoundPathSpecifier("/Audio/Ambience/Antag/nukeops_start.ogg");
 
         public NukeopsRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind, antagPrototype) { }
     }

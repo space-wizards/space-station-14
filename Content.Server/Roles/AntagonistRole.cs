@@ -10,7 +10,7 @@ namespace Content.Server.Roles
         ///     Path to antagonist alert sound.
         ///     TODO: Traitor sound will be a default one, cause there is no other sounds right now.
         /// </summary>
-        protected virtual string AntagonistAlert => "/Audio/Ambience/Antag/traitor_start.ogg";
+        protected virtual SoundSpecifier AntagonistAlert { get; } = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 
         public AntagPrototype Prototype { get; }
 
