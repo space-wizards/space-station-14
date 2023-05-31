@@ -1,0 +1,23 @@
+- type: entity
+  parent: MarkerBase
+  id: RandomOreRock
+  name: random ore rock spawner
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Structures/Walls/rock.rsi
+        state: rock_random
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - WallRockQuartz
+      - WallRockTin
+      - WallRockPlasma
+      - WallRockUranium
+      - WallRock
+      - WallRockGold
+      - WallRockSilver
+    chance: 0.95
+    rarePrototypes:
+      - WallRockBananium
+    rareChance: 0.05

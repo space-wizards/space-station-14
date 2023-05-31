@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/817e7c1f225876b45891e3f06908e6d032f0a8bc/icons/turf/walls.dmiMade, rock_bananium made by brainfood1183 (github) for ss14",
+    "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/817e7c1f225876b45891e3f06908e6d032f0a8bc/icons/turf/walls.dmiMade, rock_bananium made by brainfood1183 (github) for ss14, rock_random edited by Kit0vras (github) for ss14",
     "size": {
         "x": 32,
         "y": 32
@@ -78,6 +78,9 @@
         },
         {
             "name": "rock_bananium"
+        },
+        {
+            "name": "rock_random"
         }
     ]
 }
