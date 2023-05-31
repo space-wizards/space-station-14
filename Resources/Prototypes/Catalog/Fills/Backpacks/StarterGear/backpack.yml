@@ -220,7 +220,6 @@
         - id: MagazinePistol
         - id: Handcuffs
         - id: CrowbarRed
-        - id: DoorRemoteAll
 
 - type: entity
   noSpawn: true
