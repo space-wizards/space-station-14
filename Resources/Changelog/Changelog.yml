@@ -1,9 +1,4 @@
 Entries:
-- author: VigersRay
-  changes:
-  - {message: Vehicle display fix!, type: Fix}
-  id: 3412
-  time: '2023-04-15T06:02:03.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The brigmedic no longer has a hypospray., type: Remove}
@@ -2908,3 +2903,8 @@ Entries:
   - {message: Fix some docking configs not being considered valid., type: Fix}
   id: 3911
   time: '2023-05-31T14:09:14.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: Added the uncloneable trait!, type: Add}
+  id: 3912
+  time: '2023-05-31T17:34:30.0000000+00:00'
