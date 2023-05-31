@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: A second pair of shoes was added to the Autodrobe for the clothing set
-      that was missing shoes., type: Add}
-  id: 3411
-  time: '2023-04-14T22:15:11.0000000+00:00'
 - author: VigersRay
   changes:
   - {message: Vehicle display fix!, type: Fix}
@@ -2909,3 +2903,8 @@ Entries:
   - {message: swab is trash now, type: Tweak}
   id: 3910
   time: '2023-05-31T13:51:52.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some docking configs not being considered valid., type: Fix}
+  id: 3911
+  time: '2023-05-31T14:09:14.0000000+00:00'
