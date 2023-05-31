@@ -15,7 +15,7 @@ public sealed class GluedSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GluedComponent, ComponentInit>(OnGlued);
+        SubscribeLocalEvent<GluedComponent, ComponentInit>(OnGluedInit);
         SubscribeLocalEvent<GluedComponent, InteractHandEvent>(OnPickUp);
     }
 
@@ -34,7 +34,6 @@ public sealed class GluedSystem : EntitySystem
             if (_timing.CurTime < glue.GlueTime)
                 continue;
 
-            glue.Enabled = true;
             glue.Glued = false;
             glue.GlueBroken = false;
             MetaData(uid).EntityName = glue.BeforeGluedEntityName;
@@ -44,7 +43,7 @@ public sealed class GluedSystem : EntitySystem
     }
 
     //Adds the prefix on init.
-    private void OnGlued(EntityUid uid, GluedComponent component, ComponentInit args)
+    private void OnGluedInit(EntityUid uid, GluedComponent component, ComponentInit args)
     {
         var meta = MetaData(uid);
         var name = meta.EntityName;
@@ -58,7 +57,6 @@ public sealed class GluedSystem : EntitySystem
         var userHands = Comp<HandsComponent>(args.User);
         if (userHands.ActiveHandEntity == uid)
         {
-            component.Enabled = false;
             component.GlueBroken = true;
             component.GlueTime = _timing.CurTime + component.GlueCooldown;
         }

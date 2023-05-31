@@ -4,7 +4,7 @@ using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Chat.Prototypes;
-using Content.Shared.Dummy;
+using Content.Shared.Puppet;
 using Content.Shared.Speech;
 
 namespace Content.Server.Speech.Muting
@@ -49,7 +49,7 @@ namespace Content.Server.Speech.Muting
             if (HasComp<MimePowersComponent>(uid))
                 _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
 
-            if (HasComp<DummyComponent>(uid))
+            if (HasComp<PuppetDummyComponent>(uid))
                 _popupSystem.PopupEntity(Loc.GetString("dummy-cant-speak"), uid, uid);
 
             else

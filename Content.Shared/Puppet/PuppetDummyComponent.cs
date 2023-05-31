@@ -1,9 +1,9 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Dummy
+namespace Content.Shared.Puppet
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class DummyComponent : Component
+    public sealed class PuppetDummyComponent : Component
     {
         [DataField("enabled")]
         public bool Enabled = false;

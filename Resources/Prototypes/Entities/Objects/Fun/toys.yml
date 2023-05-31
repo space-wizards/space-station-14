@@ -1126,7 +1126,7 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: CrazyGlueReagent
+        - ReagentId: SpaceGlue
           Quantity: 6
 
 - type: entity

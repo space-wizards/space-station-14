@@ -13,8 +13,12 @@
   - type: Input
     context: "human"
   - type: DoAfter
-  - type: Dummy
+  - type: PuppetDummy
+  - type: Item
+    size: 5
   - type: Muted
+  - type: TypingIndicator
+    proto: robot
   - type: Actions
   - type: MobState
     allowedStates:

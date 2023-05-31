@@ -1,29 +1,33 @@
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Dummy;
+using Content.Shared.Puppet;
 using Content.Shared.Hands.Components;
 using Content.Server.Speech.Muting;
 using Content.Shared.CombatMode;
 using Content.Shared.Actions;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Hands;
+using Content.Shared.Interaction.Components;
+using Content.Server.Mind.Components;
 
-namespace Content.Server.Dummy
+namespace Content.Server.Puppet
 {
-    public sealed class DummySystem : SharedDummySystem
+    public sealed class PuppetDummySystem : SharedPuppetDummySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DummyComponent, DroppedEvent>(OnDropped);
-            SubscribeLocalEvent<DummyComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<PuppetDummyComponent, DroppedEvent>(OnDropped);
+            SubscribeLocalEvent<PuppetDummyComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<PuppetDummyComponent, GotUnequippedHandEvent>(OnUnequippedHand);
         }
 
-        private void OnUseInHand(EntityUid uid, DummyComponent component, UseInHandEvent args)
+        private void OnUseInHand(EntityUid uid, PuppetDummyComponent component, UseInHandEvent args)
         {
             if (args.Handled)
                 return;
@@ -55,25 +59,30 @@ namespace Content.Server.Dummy
                 RemComp<CombatModeComponent>(uid);
             }
 
-            else if (HasComp<MutedComponent>(uid))
-            {
-            }
-
             args.Handled = true;
         }
 
-        private void OnDropped(EntityUid uid, DummyComponent component, DroppedEvent args)
+        private void OnDropped(EntityUid uid, PuppetDummyComponent component, DroppedEvent args)
         {
-            if (args.Handled)
-                return;
-
             if (HasComp<MutedComponent>(uid))
                 return;
 
+            _popupSystem.PopupEntity(Loc.GetString("dummy-remove-hand"), uid, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("dummy-removed-hand"), uid, uid);
             AddComp<MutedComponent>(uid);
             RemComp<CombatModeComponent>(uid);
+        }
 
-            args.Handled = true;
+        private void OnUnequippedHand(EntityUid uid, PuppetDummyComponent component, GotUnequippedHandEvent args)
+        {
+            if (HasComp<MutedComponent>(uid))
+                return;
+
+            _popupSystem.PopupEntity(Loc.GetString("dummy-remove-hand"), uid, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("dummy-removed-hand"), uid, uid);
+            AddComp<MutedComponent>(uid);
+            RemComp<CombatModeComponent>(uid);
+            RemComp<UnremoveableComponent>(uid);
         }
     }
 }

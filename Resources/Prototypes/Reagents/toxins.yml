@@ -477,31 +477,3 @@
         damage:
           types:
             Poison: 0.06
-
-- type: reagent
-  id: CrazyGlueReagent
-  name: reagent-name-glue
-  desc: reagent-desc-glue
-  physicalDesc: reagent-physical-desc-pungent
-  color: "#AAAAAA"
-  metabolisms:
-    Poison:
-      effects:
-      - !type:GenericStatusEffect
-        key: Muted
-        component: Muted
-        type: Add
-        time: 30
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
-        time: 3
-        refresh: false
-      - !type:HealthChange
-        conditions:
-        - !type:OrganType
-          type: Human
-        damage:
-          types:
-            Poison: 2
