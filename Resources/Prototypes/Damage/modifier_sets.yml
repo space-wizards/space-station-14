@@ -309,7 +309,7 @@
     Blunt: 1.2
     Slash: 1.2
     Piercing: 1.2
-    Heat: .7
+    Heat: 1.7
 
 - type: damageModifierSet
   id: ActiveMirrorShieldBlock
@@ -317,6 +317,6 @@
     Blunt: 1.2
     Slash: 1.2
     Piercing: 1.2
-    Heat: .6
+    Heat: 1.6
   flatReductions:
     Heat: 1
