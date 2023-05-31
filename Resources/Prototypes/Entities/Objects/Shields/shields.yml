@@ -222,7 +222,7 @@
   name: energy shield
   parent: BaseItem
   id: EnergyShield
-  description: Exotic energy shield that reflects almost all laser beams. But only them.
+  description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
     - type: EnergySword #A little unsure about this one, but it works fine
       secret: true
