@@ -166,16 +166,27 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         NoteAdded?.Invoke(note);
     }
 
+    private async Task<SharedAdminNote?> GetAdminRemark(int id, NoteType type)
+    {
+        return type switch
+        {
+            NoteType.Note => (await _db.GetAdminNote(id))?.ToShared(),
+            NoteType.Watchlist => (await _db.GetAdminWatchlist(id))?.ToShared(),
+            NoteType.Message => (await _db.GetAdminMessage(id))?.ToShared(),
+            NoteType.ServerBan => (await _db.GetServerBanAsNoteAsync(id))?.ToShared(),
+            NoteType.RoleBan => (await _db.GetServerRoleBanAsNoteAsync(id))?.ToShared(),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type")
+        };
+    }
+
     public async Task DeleteAdminRemark(int noteId, NoteType type, IPlayerSession deletedBy)
     {
-        var note = await _db.GetAdminNote(noteId);
+        var note = await GetAdminRemark(noteId, type);
         if (note == null)
         {
-            _sawmill.Info($"{deletedBy.Name} has tried to delete non-existent note {noteId}");
+            _sawmill.Warning($"Player {deletedBy.Name} has tried to delete non-existent {type} {noteId}");
             return;
         }
-
-        _sawmill.Info($"{deletedBy.Name} has deleted note {noteId}");
 
         var deletedAt = DateTime.UtcNow;
 
@@ -200,22 +211,15 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
         }
 
-        NoteDeleted?.Invoke(note.ToShared());
+        _sawmill.Info($"{deletedBy.Name} has deleted {type} {noteId}");
+        NoteDeleted?.Invoke(note);
     }
 
     public async Task ModifyAdminRemark(int noteId, NoteType type, IPlayerSession editedBy, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
     {
         message = message.Trim();
 
-        var note = type switch
-        {
-            NoteType.Note => (await _db.GetAdminNote(noteId))?.ToShared(),
-            NoteType.Watchlist => (await _db.GetAdminWatchlist(noteId))?.ToShared(),
-            NoteType.Message => (await _db.GetAdminMessage(noteId))?.ToShared(),
-            NoteType.ServerBan => (await _db.GetServerBanAsNoteAsync(noteId))?.ToShared(),
-            NoteType.RoleBan => (await _db.GetServerRoleBanAsNoteAsync(noteId))?.ToShared(),
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type")
-        };
+        var note = await GetAdminRemark(noteId, type);
 
         // If the note doesn't exist or is the same, we skip updating it
         if (note == null ||

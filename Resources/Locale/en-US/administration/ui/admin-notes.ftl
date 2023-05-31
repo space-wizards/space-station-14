@@ -26,7 +26,7 @@ admin-notes-unbanned = Unbanned by {$admin} on {$date}
 admin-notes-message-window-title = Alert!
 admin-notes-message-admin = New message from {$admin}, added on {$date}
 admin-notes-message-wait = The accept button will be enabled after {$time} seconds.
-admin-notes-message-accept = I understand
+admin-notes-message-accept = Dismiss permanently
 admin-notes-message-dismiss = Dismiss for now
 admin-notes-message-seen = Seen
 admin-notes-banned-from = Banned from
@@ -65,7 +65,7 @@ admin-note-editor-submit-confirm = Are you sure?
 admin-notes-verb-text = Open Admin Notes
 
 # Watchlist and message login
-admin-notes-watchlist = {$player} is on the watchlist and has just connected: {$message}
+admin-notes-watchlist = Watchlist for {$player}: {$message}
 admin-notes-new-message = You've received an admin message from {$admin}: {$message}
 
 # Admin remarks
