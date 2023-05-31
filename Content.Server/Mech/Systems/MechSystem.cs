@@ -306,7 +306,7 @@ public sealed class MechSystem : SharedMechSystem
         if (component.Airtight && TryComp(uid, out MechAirComponent? mechAir))
         {
             var coordinates = Transform(uid).MapPosition;
-            if (_map.TryFindGridAt(coordinates, out var grid))
+            if (_map.TryFindGridAt(coordinates, out _, out var grid))
             {
                 var tile = grid.GetTileRef(coordinates);
 
@@ -330,7 +330,7 @@ public sealed class MechSystem : SharedMechSystem
         if (component.Airtight && TryComp(uid, out MechAirComponent? mechAir))
         {
             var coordinates = Transform(uid).MapPosition;
-            if (_map.TryFindGridAt(coordinates, out var grid))
+            if (_map.TryFindGridAt(coordinates, out _, out var grid))
             {
                 var tile = grid.GetTileRef(coordinates);
 

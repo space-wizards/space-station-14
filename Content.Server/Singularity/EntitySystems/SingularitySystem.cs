@@ -313,7 +313,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
             6 => 20,
             5 => 15,
             4 => 10,
-            3 => 5,
+            3 => 6,
             2 => 2,
             1 => 1,
             _ => 0

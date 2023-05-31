@@ -97,3 +97,18 @@
   id: B2
   name: "Input B2"
   description: "Input B2"
+
+- type: sinkPort
+  id: SetParticleDelta
+  name: signal-port-name-set-particle-delta
+  description: signal-port-description-set-particle-delta
+
+- type: sinkPort
+  id: SetParticleEpsilon
+  name: signal-port-name-set-particle-epsilon
+  description: signal-port-description-set-particle-epsilon
+
+- type: sinkPort
+  id: SetParticleZeta
+  name: signal-port-name-set-particle-zeta
+  description: signal-port-description-set-particle-zeta

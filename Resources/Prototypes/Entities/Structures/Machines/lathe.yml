@@ -103,6 +103,7 @@
       - FirelockElectronics
       - DoorElectronics
       - AirAlarmElectronics
+      - StationMapElectronics
       - FireAlarmElectronics
       - MailingUnitElectronics
       - APCElectronics
@@ -243,6 +244,7 @@
       - HolofanProjector
       - WeaponForceGun
       - WeaponTetherGun
+      - WeaponGrapplingGun
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
       - ClothingBackpackDuffelHolding

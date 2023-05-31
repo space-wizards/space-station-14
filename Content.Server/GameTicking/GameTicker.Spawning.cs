@@ -343,11 +343,11 @@ namespace Content.Server.GameTicking
                 var spawn = _robustRandom.Pick(_possiblePositions);
                 var toMap = spawn.ToMap(EntityManager);
 
-                if (_mapManager.TryFindGridAt(toMap, out var foundGrid))
+                if (_mapManager.TryFindGridAt(toMap, out var gridUid, out _))
                 {
-                    var gridXform = Transform(foundGrid.Owner);
+                    var gridXform = Transform(gridUid);
 
-                    return new EntityCoordinates(foundGrid.Owner,
+                    return new EntityCoordinates(gridUid,
                         gridXform.InvWorldMatrix.Transform(toMap.Position));
                 }
 

@@ -46,7 +46,7 @@ namespace Content.Client.IoC
             IoCManager.Register<ISharedAdminLogManager, SharedAdminLogManager>();
             IoCManager.Register<GhostKickManager>();
             IoCManager.Register<ExtendedDisconnectInformationManager>();
-            IoCManager.Register<PlayTimeTrackingManager>();
+            IoCManager.Register<JobRequirementsManager>();
             IoCManager.Register<SponsorsManager>(); // Corvax-Sponsors
             IoCManager.Register<JoinQueueManager>(); // Corvax-Queue
             IoCManager.Register<TTSManager>(); // Corvax-TTS
