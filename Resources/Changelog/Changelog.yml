@@ -1,11 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: 'Changed sprites of the livestock crate, t-ray, fax machine, remote
-      signaller and cell rechargers.', type: Tweak}
-  - {message: Fixed grey mice changing colors on death., type: Fix}
-  id: 3406
-  time: '2023-04-14T19:43:50.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Nanotrasen has improved the blood pack formula. (now restores 15u blood),
@@ -2909,3 +2902,11 @@ Entries:
       but made it so veins only drop 1 ore each.', type: Tweak}
   id: 3905
   time: '2023-05-31T03:40:37.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Shivs have been rebalanced. The regular glass shiv now does 5.5 damage,
+      but the damage gain from the better tiers of glass is much lower.', type: Tweak}
+  - {message: Glass shards now weigh a more appropriate size, type: Tweak}
+  - {message: Plasma glass shards are no longer orange, type: Fix}
+  id: 3906
+  time: '2023-05-31T03:42:14.0000000+00:00'
