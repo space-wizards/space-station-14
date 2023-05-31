@@ -43,7 +43,7 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    if (door.State == DoorState.Closed)
+                    if (door.State != DoorState.Closed)
                         _doorSystem.TryOpen(uid, door);
                 }
             }
@@ -51,7 +51,7 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    if (door.State == DoorState.Open)
+                    if (door.State != DoorState.Open)
                         _doorSystem.TryClose(uid, door);
                 }
             }
@@ -69,6 +69,11 @@ namespace Content.Server.DeviceLinking.Systems
                 {
                     if(TryComp<AirlockComponent>(uid, out var airlockComponent))
                         _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, true);
+                }
+                else if (state == SignalState.Momentary)
+                {
+                    if (TryComp<AirlockComponent>(uid, out var airlockComponent))
+                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, newBolts: !airlockComponent.BoltsDown);
                 }
                 else
                 {

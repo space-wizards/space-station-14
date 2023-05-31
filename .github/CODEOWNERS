@@ -2,3 +2,6 @@
 
 # Ping for all PRs
 * @Morb0
+
+# Ping for all PRs that include translations/editing fluent strings
+*.ftl @ficcialfaint

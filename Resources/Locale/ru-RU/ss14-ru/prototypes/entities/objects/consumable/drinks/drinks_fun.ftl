@@ -1,2 +1,2 @@
-ent-DrinkSpaceGlue = space glue tube
-    .desc = High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
+ent-DrinkSpaceGlue = тюбик космического клея
+    .desc = Высокоэффективный клей, предназначенный для обслуживания чрезвычайно сложного механического оборудования. НЕ ПИТЬ!

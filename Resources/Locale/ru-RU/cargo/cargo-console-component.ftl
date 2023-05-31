@@ -41,4 +41,4 @@ cargo-shuttle-console-station-unknown = Неизвестно
 cargo-shuttle-console-shuttle-not-found = Не найден
 cargo-no-shuttle = Грузовой шаттл не найден!
 cargo-shuttle-console-organics = На шаттле обнаружены органические формы жизни
-cargo-telepad-delay-upgrade = Teleport delay
+cargo-telepad-delay-upgrade = Задержка телепортации

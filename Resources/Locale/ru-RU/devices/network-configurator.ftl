@@ -39,7 +39,7 @@ network-configurator-tooltip-clear = Очистка списка целевых 
 network-configurator-tooltip-copy = Копирование списка целевых устройств в мультитул
 network-configurator-tooltip-show = Показывать голографическую визуализацию списка целевых устройств
 # examine
-network-configurator-examine-mode-link = [color=red]Соединено[/color]
+network-configurator-examine-mode-link = [color=red]Соединение[/color]
 network-configurator-examine-mode-list = [color=green]Список[/color]
 network-configurator-examine-current-mode = Текущий режим: { $mode }
 network-configurator-examine-switch-modes = Нажмите { $key } чтобы переключить режим
