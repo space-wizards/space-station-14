@@ -120,3 +120,12 @@
     Steel: 500
     Glass: 400
     Silver: 100
+
+- type: latheRecipe
+  id: WeaponGrapplingGun
+  result: WeaponGrapplingGun
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 400
+    Gold: 100

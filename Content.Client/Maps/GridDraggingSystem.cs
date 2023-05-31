@@ -97,10 +97,10 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
         if (_dragging == null)
         {
-            if (!_mapManager.TryFindGridAt(mousePos, out var grid))
+            if (!_mapManager.TryFindGridAt(mousePos, out var gridUid, out var grid))
                 return;
 
-            StartDragging(grid.Owner, Transform(grid.Owner).InvWorldMatrix.Transform(mousePos.Position));
+            StartDragging(gridUid, Transform(gridUid).InvWorldMatrix.Transform(mousePos.Position));
         }
 
         if (!TryComp<TransformComponent>(_dragging, out var xform))

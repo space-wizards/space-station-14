@@ -56,3 +56,5 @@ ent-BulletWaterShot = water
     .desc = { "" }
 ent-BulletCannonBall = cannonball
     .desc = { ent-BaseBulletTrigger.desc }
+ent-GrapplingHook = grappling hook
+    .desc = { "" }

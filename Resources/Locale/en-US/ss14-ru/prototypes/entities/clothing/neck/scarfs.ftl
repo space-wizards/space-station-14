@@ -18,5 +18,7 @@ ent-ClothingNeckScarfStripedSyndieGreen = striped syndicate green scarf
     .desc = A stylish striped syndicate green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
 ent-ClothingNeckScarfStripedSyndieRed = striped syndicate red scarf
     .desc = A stylish striped syndicate red scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
+ent-ClothingNeckScarfStripedCentcom = striped CentCom scarf
+    .desc = A stylish striped centcom colored scarf. The perfect winter accessory for those with a keen fashion sense, and those who need to do paperwork in the cold.
 ent-ClothingNeckScarfStripedZebra = zebra scarf
     .desc = A striped scarf, a mandatory accessory for artists.

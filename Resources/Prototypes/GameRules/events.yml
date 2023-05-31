@@ -301,16 +301,16 @@
         amount: 4
         maxAmount: 8
 
-#- type: entity
-#  id: ZombieOutbreak
-#  parent: BaseGameRule
-#  noSpawn: true
-#  components:
-#  - type: StationEvent
-#    earliestStart: 50
-#    weight: 2.5
-#    duration: 1
-#  - type: ZombieRule
+- type: entity
+  id: ZombieOutbreak
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 50
+    weight: 2.5
+    duration: 1
+  - type: ZombieRule
 
 - type: entity
   id: LoneOpsSpawn
