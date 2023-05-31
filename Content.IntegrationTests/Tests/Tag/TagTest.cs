@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Tag
 {
@@ -47,7 +48,6 @@ namespace Content.IntegrationTests.Tests.Tag
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
-            var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var entManager = server.ResolveDependency<IEntitySystemManager>();
@@ -120,31 +120,31 @@ namespace Content.IntegrationTests.Tests.Tag
                 });
 
                 // Single
-                Assert.Throws<UnknownPrototypeException>(() =>
+                Assert.Throws<DebugAssertException>(() =>
                 {
                     tagSystem.HasTag(sTagDummy, UnregisteredTag);
                 });
-                Assert.Throws<UnknownPrototypeException>(() =>
+                Assert.Throws<DebugAssertException>(() =>
                 {
                     tagSystem.HasTag(sTagComponent, UnregisteredTag);
                 });
 
                 // Any
-                Assert.Throws<UnknownPrototypeException>(() =>
+                Assert.Throws<DebugAssertException>(() =>
                 {
                     tagSystem.HasAnyTag(sTagDummy, UnregisteredTag);
                 });
-                Assert.Throws<UnknownPrototypeException>(() =>
+                Assert.Throws<DebugAssertException>(() =>
                 {
                     tagSystem.HasAnyTag(sTagComponent, UnregisteredTag);
                 });
 
                 // All
-                Assert.Throws<UnknownPrototypeException>(() =>
+                Assert.Throws<DebugAssertException>(() =>
                 {
                     tagSystem.HasAllTags(sTagDummy, UnregisteredTag);
                 });
-                Assert.Throws<UnknownPrototypeException>(() =>
+                Assert.Throws<DebugAssertException>(() =>
                 {
                     tagSystem.HasAllTags(sTagComponent, UnregisteredTag);
                 });
