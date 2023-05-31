@@ -1,4 +1,4 @@
-﻿- type: artifactEffect
+- type: artifactEffect
   id: EffectBadFeeling
   targetDepth: 0
   effectHint: artifact-effect-hint-mental
@@ -118,7 +118,7 @@
   effectHint: artifact-effect-hint-creation
   components:
   - type: SpawnArtifact
-    maxSpawns: 20
+    maxSpawns: 200000 #hi future terezi, get owned.
     spawns:
     - id: FoodBanana
 
