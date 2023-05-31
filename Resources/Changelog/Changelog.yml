@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Nanotrasen has improved the blood pack formula. (now restores 15u blood),
-    type: Tweak}
-  id: 3407
-  time: '2023-04-14T19:48:11.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: added Radio Jammer to uplink (5 TC). When active blocks radios in range
@@ -2910,3 +2904,8 @@ Entries:
   - {message: Plasma glass shards are no longer orange, type: Fix}
   id: 3906
   time: '2023-05-31T03:42:14.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added brown bandana to cargodrobe, type: Add}
+  id: 3907
+  time: '2023-05-31T04:32:15.0000000+00:00'
