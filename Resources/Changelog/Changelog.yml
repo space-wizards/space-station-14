@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The brigmedic no longer has a hypospray., type: Remove}
-  id: 3413
-  time: '2023-04-15T15:07:14.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Changed CBURN Starting Gear., type: Tweak}
@@ -2908,3 +2903,10 @@ Entries:
   - {message: Added the uncloneable trait!, type: Add}
   id: 3912
   time: '2023-05-31T17:34:30.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added the NTSRA voidsuit, you may be able to find it in derelicts.',
+    type: Add}
+  - {message: Removed the IHS voidsuit and gloves., type: Remove}
+  id: 3913
+  time: '2023-05-31T22:03:15.0000000+00:00'
