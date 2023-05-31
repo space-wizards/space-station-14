@@ -1,11 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: 'Added a context sensitive EscapeContext keybind that defaults to ESC,
-      which closes the most recently opened window or if there are no windows, opens
-      the game menu.', type: Fix}
-  id: 3404
-  time: '2023-04-14T01:10:45.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Dehydrated space carp can now be petted to make them nice to you. Have
@@ -2911,3 +2904,8 @@ Entries:
   - {message: Fix northstar gloves sending radio messages., type: Fix}
   id: 3903
   time: '2023-05-31T01:11:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Mining shuttle will spawn roundstart., type: Add}
+  id: 3904
+  time: '2023-05-31T01:13:03.0000000+00:00'
