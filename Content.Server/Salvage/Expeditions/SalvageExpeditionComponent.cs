@@ -51,10 +51,16 @@ public sealed class SalvageExpeditionComponent : Component
     };
 
     /// <summary>
+    /// The difficulty this mission had or, in the future, was selected.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("difficulty")]
+    public DifficultyRating Difficulty;
+
+    /// <summary>
     /// Possible rewards sent to cargo upon mission completion.
     /// Based on mission difficulty.
     /// </summary>
-    [DataField("rewards", customTypeSerializer: PrototypeIdSerializer<typeof(WeightedRandomPrototype)>)]
+    [ViewVariables(VVAccess.ReadWrite), DataField("rewards", customTypeSerializer: PrototypeIdSerializer<typeof(WeightedRandomPrototype)>)]
     public string Rewards = string.Empty;
 }
 

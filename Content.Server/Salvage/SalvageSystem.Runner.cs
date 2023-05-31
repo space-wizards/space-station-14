@@ -300,21 +300,4 @@ public sealed partial class SalvageSystem
         var dest = Loc.GetString("cargo-gift-default-dest");
         _cargo.AddAndApproveOrder(cargoDb, reward, 1, sender, desc, dest);
     }
-
-    private string RewardPrototype(DifficultyRating rating)
-    {
-        switch (rating)
-        {
-            case DifficultyRating.Minimal:
-            case DifficultyRating.Minor:
-                return "SalvageRewardCommon";
-            case DifficultyRating.Moderate:
-            case DifficultyRating.Hazardous:
-                return "SalvageRewardRare";
-            case DifficultyRating.Extreme:
-                return "SalvageRewardEpic";
-            default:
-                throw new NotImplementedException();
-        }
-    }
 }

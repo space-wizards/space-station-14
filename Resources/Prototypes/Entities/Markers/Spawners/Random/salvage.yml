@@ -90,6 +90,42 @@
       offset: 0.0
 
 - type: entity
+  parent: MarkerBase
+  id: SalvagePartsT3Spawner
+  name: tier 3 machine part
+  suffix: Spawner
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Misc/stock_parts.rsi
+          state: super_matter_bin
+    - type: RandomSpawner
+      prototypes:
+        - SuperCapacitorStockPart
+        - PicoManipulatorStockPart
+        - SuperMatterBinStockPart
+      offset: 0.0
+
+- type: entity
+  parent: MarkerBase
+  id: SalvagePartsT4Spawner
+  name: tier 4 machine part
+  suffix: Spawner
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Misc/stock_parts.rsi
+          state: bluespace_matter_bin
+    - type: RandomSpawner
+      prototypes:
+        - QuadraticCapacitorStockPart
+        - PicoManipulatorStockPart
+        - BluespaceMatterBinStockPart
+      offset: 0.0
+
+- type: entity
   name: Salvage Mob Spawner
   id: SalvageMobSpawner
   parent: MarkerBase
