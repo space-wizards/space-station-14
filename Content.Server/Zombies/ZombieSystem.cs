@@ -3,7 +3,6 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Cloning;
-using Content.Server.Drone.Components;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Shared.Bed.Sleep;
@@ -308,11 +307,11 @@ namespace Content.Server.Zombies
         {
             return
                 HasComp<ZombieComponent>(entity) ||
-                HasComp<DroneComponent>(entity) ||
-                HasComp<AMEPartComponent>(entity) ||
-                HasComp<SharedAMEControllerComponent>(entity) ||
-                HasComp<GravityComponent>(entity) ||
-                HasComp<SharedGravityGeneratorComponent>(entity);
+                HasComp<Drone.Components.DroneComponent>(entity) ||
+                HasComp<AME.Components.AMEPartComponent>(entity) ||
+                HasComp<Shared.AME.SharedAMEControllerComponent>(entity) ||
+                HasComp<Shared.Gravity.GravityComponent>(entity) ||
+                HasComp<Shared.Gravity.SharedGravityGeneratorComponent>(entity);
         }
     }
 }
