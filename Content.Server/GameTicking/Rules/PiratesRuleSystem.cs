@@ -37,16 +37,10 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-
-    /// <summary>
-    ///     Path to antagonist alert sound.
-    /// </summary>
-    private static string PirateAlert => "/Audio/Ambience/Antag/traitor_start.ogg"; //TODO make another sound
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -237,14 +231,14 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
             // Notificate every player about a pirate antagonist role with sound
             _audio.PlayGlobal(
-                PirateAlert,
+                pirates.PirateAlertSound,
                 Filter.Entities(
                     pirates.Pirates
                         .Where(p => p.CurrentEntity.HasValue)
                         .Select(p => p.CurrentEntity!.Value)
                         .ToArray()),
                 false,
-                AudioParams.Default);
+                AudioParams.Default.WithVolume(4));
         }
     }
 
@@ -256,13 +250,14 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "PirateGear", EntityManager);
 
         // Notificate every player about a pirate antagonist role with sound
+        var pirateComponent = EntityManager.ComponentFactory.GetComponent<PiratesRuleComponent>();
         if (mind.Session != null)
         {
             _audio.PlayGlobal(
-                PirateAlert,
+                pirateComponent.PirateAlertSound,
                 Filter.Empty().AddPlayer(mind.Session),
                 false,
-                AudioParams.Default);
+                AudioParams.Default.WithVolume(4));
         }
     }
 

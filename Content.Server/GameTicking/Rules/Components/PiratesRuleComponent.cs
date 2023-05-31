@@ -1,4 +1,6 @@
-﻿namespace Content.Server.GameTicking.Rules.Components;
+﻿using Robust.Shared.Audio;
+
+namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(PiratesRuleSystem))]
 public sealed class PiratesRuleComponent : Component
@@ -12,4 +14,9 @@ public sealed class PiratesRuleComponent : Component
     [ViewVariables]
     public double InitialShipValue;
 
+    /// <summary>
+    ///     Path to antagonist alert sound.
+    /// </summary>
+    [DataField("pirateAlertSound")]
+    public readonly SoundSpecifier PirateAlertSound = new SoundPathSpecifier("/Audio/Effects/Diseases/monkey1.ogg");
 }
