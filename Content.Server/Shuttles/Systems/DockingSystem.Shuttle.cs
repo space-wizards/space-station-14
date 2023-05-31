@@ -238,7 +238,7 @@ public sealed partial class DockingSystem
         // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
         validDockConfigs = validDockConfigs
            .OrderByDescending(x => x.Docks.Any(docks =>
-               TryComp<PriorityDockComponent>(docks.DockB.Owner, out var priority) &&
+               TryComp<PriorityDockComponent>(docks.DockBUid, out var priority) &&
                priority.Tag?.Equals(priorityTag) == true))
            .ThenByDescending(x => x.Docks.Count)
            .ThenBy(x => Math.Abs(Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta)).ToList();
