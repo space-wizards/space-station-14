@@ -10,49 +10,49 @@ using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Shared.Zombies
 {
-    [RegisterComponent, NetworkedComponent]
-    public sealed class ZombieComponent : Component
+    [DataDefinition]
+    public sealed class ZombieSettings
     {
         /// <summary>
         /// The coefficient of the damage reduction applied when a zombie
         /// attacks another zombie. longe name
         /// </summary>
-        [ViewVariables]
+        [DataField("otherZombieDamageCoefficient"), ViewVariables]
         public float OtherZombieDamageCoefficient = 0.25f;
 
         /// <summary>
         /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("zombiePermadeathChance"), ViewVariables(VVAccess.ReadWrite)]
         public float ZombiePermadeathChance = 0.80f;
+
+        /// <summary>
+        /// Chance that this zombie be permanently killed (rolled once on alive->crit transition)
+        /// </summary>
+        [DataField("zombieCritDeathChance"), ViewVariables(VVAccess.ReadWrite)]
+        public float ZombieCritDeathChance = 0.40f;
 
         /// <summary>
         /// Chance that this zombie will be healed (rolled each second when in crit or dead)
         ///   3% means you have a 60% chance after 30 secs and a 84% chance after 60.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("zombieReviveChance"), ViewVariables(VVAccess.ReadWrite)]
         public float ZombieReviveChance = 0.03f;
-
-        /// <summary>
-        /// Has this zombie stopped healing now that it's died for real?
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Permadeath = false;
 
         /// <summary>
         /// The baseline infection chance you have if you are completely nude
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("maxZombieInfectionChance"), ViewVariables(VVAccess.ReadWrite)]
         public float MaxZombieInfectionChance = 0.30f;
 
         /// <summary>
         /// The minimum infection chance possible. This is simply to prevent
         /// being invincible by bundling up.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("minZombieInfectionChance"), ViewVariables(VVAccess.ReadWrite)]
         public float MinZombieInfectionChance = 0.05f;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("zombieMovementSpeedDebuff"), ViewVariables(VVAccess.ReadWrite)]
         public float ZombieMovementSpeedDebuff = 0.70f;
 
         /// <summary>
@@ -87,10 +87,168 @@ namespace Content.Shared.Zombies
         public string AttackAnimation = "WeaponArcBite";
 
         /// <summary>
+        /// The attack range of the zombie
+        /// </summary>
+        public float MeleeRange = 1.5f;
+
+        /// <summary>
         /// The role prototype of the zombie antag role
         /// </summary>
         [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
         public readonly string ZombieRoleId = "Zombie";
+
+        [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
+        public string? EmoteSoundsId = "Zombie";
+
+        public EmoteSoundsPrototype? EmoteSounds;
+
+        /// <summary>
+        /// Healing each second
+        /// </summary>
+        [DataField("healing")] public DamageSpecifier Healing = new()
+        {
+            DamageDict = new ()
+            {
+                { "Blunt", -0.4 },
+                { "Slash", -0.2 },
+                { "Piercing", -0.2 },
+                { "Heat", -0.2 },
+                { "Cold", -0.2 },
+                { "Shock", -0.2 },
+            }
+        };
+
+        /// <summary>
+        /// How much the virus hurts you (base, scales rapidly)
+        /// </summary>
+        [DataField("virusDamage")] public DamageSpecifier VirusDamage = new()
+        {
+            DamageDict = new ()
+            {
+                { "Blunt", 0.8 },
+                { "Toxin", 0.2 },
+            }
+        };
+
+        /// <summary>
+        /// How much damage is inflicted per bite.
+        /// </summary>
+        [DataField("attackDamage")] public DamageSpecifier AttackDamage = new()
+        {
+            DamageDict = new ()
+            {
+                { "Slash", 13 },
+                { "Piercing", 7 },
+                { "Structural", 10 },
+            }
+        };
+
+        /// <summary>
+        /// Number of seconds that a typical infection will last before the player is totally overwhelmed with damage and
+        ///   dies.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("maxInfectionLength")]
+        public float MaxInfectionLength = 120f;
+
+    }
+
+    [DataDefinition]
+    public sealed class ZombieFamily
+    {
+        /// <summary>
+        /// Generation of this zombie (patient zero is 0, their victims are 1, etc)
+        /// </summary>
+        [DataField("generation"), ViewVariables(VVAccess.ReadOnly)]
+        public int Generation = default!;
+
+        /// <summary>
+        /// If this zombie is not patient 0, this is the player who infected this zombie.
+        /// </summary>
+        [DataField("infector"), ViewVariables(VVAccess.ReadOnly)]
+        public EntityUid? Infector = null;
+
+        /// <summary>
+        /// When created by a ZombieRuleComponent, this points to the entity which unleashed this zombie horde.
+        /// </summary>
+        [DataField("rules"), ViewVariables(VVAccess.ReadOnly)]
+        public EntityUid? Rules = null;
+
+    }
+
+    [RegisterComponent, NetworkedComponent]
+    public sealed class ZombieComponent : Component
+    {
+        /// <summary>
+        /// Our settings (describes what the zombie can do)
+        /// </summary>
+        [DataField("settings"), ViewVariables(VVAccess.ReadOnly)]
+        public ZombieSettings Settings = default!;
+
+        /// <summary>
+        /// Settings for any victims we might have (if they are not the same as our settings)
+        /// </summary>
+        [DataField("victimSettings"), ViewVariables(VVAccess.ReadOnly)]
+        public ZombieSettings? VictimSettings;
+
+        /// <summary>
+        /// Our family (describes how we became a zombie and where the rules are)
+        /// </summary>
+        [DataField("family"), ViewVariables(VVAccess.ReadOnly)]
+        public ZombieFamily Family = default!;
+
+        public float OtherZombieDamageCoefficient = 0.25f;
+
+
+        /// <summary>
+        /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
+        /// </summary>
+        public float ZombieCritDeathChance => Settings.ZombieCritDeathChance;
+
+        /// <summary>
+        /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
+        /// </summary>
+        public float ZombiePermadeathChance => Settings.ZombiePermadeathChance;
+
+        /// <summary>
+        /// Chance that this zombie will be healed (rolled each second when in crit or dead)
+        ///   3% means you have a 60% chance after 30 secs and a 84% chance after 60.
+        /// </summary>
+        public float ZombieReviveChance => Settings.ZombieReviveChance;
+
+        /// <summary>
+        /// Has this zombie stopped healing now that it's died for real?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Permadeath;
+
+        /// <summary>
+        /// The baseline infection chance you have if you are completely nude
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float MaxZombieInfectionChance => Settings.MaxZombieInfectionChance;
+
+        /// <summary>
+        /// The minimum infection chance possible. This is simply to prevent
+        /// being invincible by bundling up.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float MinZombieInfectionChance => Settings.MinZombieInfectionChance;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float ZombieMovementSpeedDebuff => Settings.ZombieMovementSpeedDebuff;
+
+        /// <summary>
+        /// How long it takes our bite victims to turn in seconds (max).
+        ///   Will roll 25% - 100% of this on bite.
+        /// </summary>
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float ZombieInfectionTurnTime => Settings.ZombieInfectionTurnTime;
+
+        /// <summary>
+        /// Healing each second
+        /// </summary>
+        public DamageSpecifier Healing => Settings.Healing;
 
         /// <summary>
         /// The EntityName of the humanoid to restore in case of cloning
@@ -110,28 +268,9 @@ namespace Content.Shared.Zombies
         [DataField("beforeZombifiedSkinColor")]
         public Color BeforeZombifiedSkinColor;
 
-        [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
-        public string? EmoteSoundsId = "Zombie";
-
-        public EmoteSoundsPrototype? EmoteSounds;
-
         [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
         public TimeSpan NextTick;
 
-        /// <summary>
-        /// Healing each second
-        /// </summary>
-        [DataField("damage")] public DamageSpecifier Damage = new()
-        {
-            DamageDict = new ()
-            {
-                { "Blunt", -0.4 },
-                { "Slash", -0.2 },
-                { "Piercing", -0.2 },
-                { "Heat", -0.2 },
-                { "Cold", -0.2 },
-                { "Shock", -0.2 },
-            }
-        };
+
     }
 }

@@ -177,17 +177,14 @@ namespace Content.Server.Zombies
                 // Stop random groaning
                 _autoEmote.RemoveEmote(uid, "ZombieGroan");
 
-                if (args.NewMobState == MobState.Dead)
+                // Roll to see if this zombie is not coming back.
+                //   Note that due to damage reductions it takes a lot of hits to gib a zombie without this.
+                if (_random.Prob((args.NewMobState == MobState.Dead)? component.ZombiePermadeathChance : component.ZombieCritDeathChance))
                 {
-                    // Roll to see if this zombie is not coming back.
-                    //   Note that due to damage reductions it takes a lot of hits to gib a zombie without this.
-                    if (_random.Prob(component.ZombiePermadeathChance))
-                    {
-                        // You're dead! No reviving for you.
-                        _mobThreshold.SetAllowRevives(uid, false);
-                        component.Permadeath = true;
-                        _popup.PopupEntity(Loc.GetString("zombie-permadeath"), uid, uid);
-                    }
+                    // You're dead! No reviving for you.
+                    _mobThreshold.SetAllowRevives(uid, false);
+                    component.Permadeath = true;
+                    _popup.PopupEntity(Loc.GetString("zombie-permadeath"), uid, uid);
                 }
             }
         }
@@ -255,29 +252,47 @@ namespace Content.Server.Zombies
                 if (HasComp<ZombieComponent>(entity))
                 {
                     args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
+                    if (_random.Prob(0.3f))
+                    {
+                        // Tell the zombo that they are eating the dead
+                        _popup.PopupEntity(Loc.GetString("zombie-bite-already-infected"), uid, uid);
+                    }
                 }
                 else
                 {
-                    if (_random.Prob(GetZombieInfectionChance(entity, component)))
+                    if (_random.Prob(GetZombieInfectionChance(entity, component)) || mobState.CurrentState != MobState.Alive)
                     {
+                        // On a diceroll or if critical we infect this victim
                         var pending = EnsureComp<PendingZombieComponent>(entity);
                         pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.ZombieInfectionTurnTime;
+
+                        // Our victims inherit our settings, which defines damage and more.
+                        pending.Settings = component.VictimSettings ?? component.Settings;
+
+                        // Track who infected this new zombo
+                        pending.Family = new ZombieFamily()
+                        {
+                            Rules = component.Family.Rules, Generation = component.Family.Generation + 1, Infector = uid
+                        };
+
                         EnsureComp<ZombifyOnDeathComponent>(entity);
+                        _popup.PopupEntity(Loc.GetString("zombie-bite-infected-victim"), uid, uid);
+                    }
+
+                    // Zombify the dead right now. (Usually that occurs on the critical -> dead transition)
+                    if (mobState.CurrentState == MobState.Dead)
+                    {
+                        _zombify.ZombifyEntity(entity);
+                        args.BonusDamage = -args.BaseDamage;
+                    }
+                    else if (mobState.CurrentState == MobState.Alive) //heals when zombies bite live entities
+                    {
+                        var healingSolution = new Solution();
+                        healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
+                        _bloodstream.TryAddToChemicals(args.User, healingSolution);
                     }
                 }
 
-                if ((mobState.CurrentState == MobState.Dead || mobState.CurrentState == MobState.Critical)
-                    && !HasComp<ZombieComponent>(entity))
-                {
-                    _zombify.ZombifyEntity(entity);
-                    args.BonusDamage = -args.BaseDamage;
-                }
-                else if (mobState.CurrentState == MobState.Alive) //heals when zombies bite live entities
-                {
-                    var healingSolution = new Solution();
-                    healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
-                    _bloodstream.TryAddToChemicals(args.User, healingSolution);
-                }
             }
         }
 

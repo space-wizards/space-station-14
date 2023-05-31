@@ -23,6 +23,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
@@ -40,6 +41,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -48,7 +50,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobAssigned);
 
         SubscribeLocalEvent<EntityZombifiedEvent>(OnEntityZombified);
         SubscribeLocalEvent<ZombifyOnDeathComponent, ZombifySelfActionEvent>(OnZombifySelf);
@@ -103,16 +104,17 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         }
     }
 
-    private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
-    {
-        var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var zombies, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
-            InfectInitialPlayers(zombies);
-        }
-    }
+    // private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
+    // {
+    //     var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
+    //     while (query.MoveNext(out var uid, out var zombies, out var gameRule))
+    //     {
+    //         if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+    //             continue;
+    //
+    //         InfectInitialPlayers(zombies);
+    //     }
+    // }
 
     /// <remarks>
     ///     This is just checked if the last human somehow dies
@@ -137,7 +139,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var zombies, out var gameRule))
         {
-            if (GameTicker.IsGameRuleActive(uid, gameRule))
+            if (!GameTicker.IsGameRuleActive(uid, gameRule))
                 continue;
 
             // We only care about players, not monkeys and such.
@@ -180,7 +182,40 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-        InfectInitialPlayers(component);
+
+        component.AnnounceAt = GameTicker.RoundDuration() +
+                               TimeSpan.FromSeconds(_random.NextFloat(component.AnnounceMinimum,
+                                   component.AnnounceMaximum));
+        component.InfectInitialAt = GameTicker.RoundDuration() + TimeSpan.FromSeconds(component.InitialInfectDelaySecs);
+
+        component.FirstTurnAllowed = GameTicker.RoundDuration() + TimeSpan.FromSeconds(component.TurnTimeMinimum);
+    }
+
+    protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule,
+        float frameTime)
+    {
+        if (component.InfectInitialAt != TimeSpan.Zero && component.InfectInitialAt < GameTicker.RoundDuration())
+        {
+            // Time to infect the initial players
+            InfectInitialPlayers(uid, component);
+            component.InfectInitialAt = TimeSpan.Zero;
+        }
+
+        if (component.AnnounceAt != TimeSpan.Zero && component.AnnounceAt < GameTicker.RoundDuration())
+        {
+            // Announce the brain eating about to commence
+            if (_random.Prob(component.AnnounceChance))
+            {
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("zombies-will-eat-your-brains"));
+            }
+            component.AnnounceAt = TimeSpan.Zero;
+        }
+
+        if (component.FirstTurnAllowed != TimeSpan.Zero && component.FirstTurnAllowed < GameTicker.RoundDuration())
+        {
+            ActivateZombifyOnDeath(uid, component);
+            component.FirstTurnAllowed = TimeSpan.Zero;
+        }
     }
 
     private void OnZombifySelf(EntityUid uid, ZombifyOnDeathComponent component, ZombifySelfActionEvent args)
@@ -223,7 +258,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     ///     allowing this gamemode to be started midround. As such, it doesn't need
     ///     any information besides just running.
     /// </remarks>
-    private void InfectInitialPlayers(ZombieRuleComponent component)
+    private void InfectInitialPlayers(EntityUid uid, ZombieRuleComponent component)
     {
         var allPlayers = _playerManager.ServerSessions.ToList();
         var playerList = new List<IPlayerSession>();
@@ -294,11 +329,20 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 var pending = EnsureComp<PendingZombieComponent>(mind.OwnedEntity.Value);
                 // Only take damage after this many seconds
                 pending.InfectedSecs = -(int)(groupTimelimit + personalDelay);
+
+                // Patient zero zombies get one set of zombie settings, later zombies get a different (less powerful) set.
+                pending.Settings = component.EarlySettings;
+                pending.VictimSettings = component.VictimSettings;
+                pending.Family = new ZombieFamily() { Rules = uid, Generation = 0 };
+
                 EnsureComp<ZombifyOnDeathComponent>(mind.OwnedEntity.Value);
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
 
                 var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombieRuleComponent.ZombifySelfActionPrototype));
+                var curTime = _gameTiming.CurTime;
+                action.Cooldown = (curTime, component.FirstTurnAllowed);
                 _action.AddAction(mind.OwnedEntity.Value, action, null);
+                // Set a cooldown on the action here that reflects the time until initial infection.
             }
 
             if (mind.Session != null)
@@ -314,6 +358,28 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 // You got a free T-shirt!?!?
                 _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
                    wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Plum);
+            }
+        }
+    }
+
+    private void ActivateZombifyOnDeath(EntityUid ruleUid, ZombieRuleComponent component)
+    {
+        var query = EntityQueryEnumerator<PendingZombieComponent, MobStateComponent>();
+        while (query.MoveNext(out var uid, out var pending, out var mobState))
+        {
+            // Don't change zombies that don't belong to these rules.
+            if (pending.Family.Rules != ruleUid)
+                continue;
+
+            if (mobState.CurrentState == MobState.Dead)
+            {
+                // Zombify them immediately
+                _zombify.ZombifyEntity(uid, pending);
+            }
+            else
+            {
+                // Now they will zombify if they die. They already have the pending zombie component.
+                EnsureComp<ZombifyOnDeathComponent>(uid);
             }
         }
     }

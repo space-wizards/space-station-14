@@ -85,11 +85,11 @@ namespace Content.Server.Zombies
         /// <remarks>
         ///     ALRIGHT BIG BOY. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
         ///     This function is the god function for zombie stuff, and it is cursed. I have
-        ///     attempted to label everything thouroughly for your sanity. I have attempted to
+        ///     attempted to label everything thoroughly for your sanity. I have attempted to
         ///     rewrite this, but this is how it shall lie eternal. Turn back now.
         ///     -emo
         /// </remarks>
-        public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null)
+        public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null, PendingZombieComponent? pending= null)
         {
             //Don't zombfiy zombies
             if (HasComp<ZombieComponent>(target))
@@ -100,6 +100,14 @@ namespace Content.Server.Zombies
 
             //you're a real zombie now, son.
             var zombiecomp = AddComp<ZombieComponent>(target);
+
+            if (Resolve(target, ref pending, logMissing: false))
+            {
+                // Created by a standard zombie bite (rather than a manual invocation like admin)
+                zombiecomp.Settings = pending.Settings;
+                zombiecomp.VictimSettings = pending.VictimSettings;
+                zombiecomp.Family = pending.Family;
+            }
 
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, or die in space
@@ -120,9 +128,9 @@ namespace Content.Server.Zombies
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
             var melee = EnsureComp<MeleeWeaponComponent>(target);
-            melee.ClickAnimation = zombiecomp.AttackAnimation;
-            melee.WideAnimation = zombiecomp.AttackAnimation;
-            melee.Range = 1.5f;
+            melee.ClickAnimation = zombiecomp.Settings.AttackAnimation;
+            melee.WideAnimation = zombiecomp.Settings.AttackAnimation;
+            melee.Range = zombiecomp.Settings.MeleeRange;
             Dirty(melee);
 
             if (mobState.CurrentState == MobState.Alive)
@@ -143,22 +151,16 @@ namespace Content.Server.Zombies
                 zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
                 zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
 
-                _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, verify: false, humanoid: huApComp);
-                _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
+                _sharedHuApp.SetSkinColor(target, zombiecomp.Settings.SkinColor, verify: false, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.Settings.EyeColor, humanoid: huApComp);
 
                 // this might not resync on clone?
-                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Tail, zombiecomp.BaseLayerExternal, humanoid: huApComp);
-                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.HeadSide, zombiecomp.BaseLayerExternal, humanoid: huApComp);
-                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.HeadTop, zombiecomp.BaseLayerExternal, humanoid: huApComp);
-                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombiecomp.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Tail, zombiecomp.Settings.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.HeadSide, zombiecomp.Settings.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.HeadTop, zombiecomp.Settings.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombiecomp.Settings.BaseLayerExternal, humanoid: huApComp);
 
-                //This is done here because non-humanoids shouldn't get baller damage
-                //lord forgive me for the hardcoded damage
-                DamageSpecifier dspec = new();
-                dspec.DamageDict.Add("Slash", 13);
-                dspec.DamageDict.Add("Piercing", 7);
-                dspec.DamageDict.Add("Structural", 10);
-                melee.Damage = dspec;
+                melee.Damage = zombiecomp.Settings.AttackDamage;
             }
 
             //The zombie gets the assigned damage weaknesses and strengths

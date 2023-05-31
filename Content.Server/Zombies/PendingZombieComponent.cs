@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.Zombies;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Zombies;
@@ -10,14 +11,18 @@ namespace Content.Server.Zombies;
 [RegisterComponent]
 public sealed class PendingZombieComponent : Component
 {
-    [DataField("damage")] public DamageSpecifier Damage = new()
-    {
-        DamageDict = new ()
-        {
-            { "Blunt", 0.8 },
-            { "Toxin", 0.2 },
-        }
-    };
+    [DataField("settings")] public ZombieSettings Settings = default!;
+    /// <summary>
+    /// Settings for any victims we might have (if they are not the same as our settings)
+    /// </summary>
+    [DataField("victimSettings"), ViewVariables(VVAccess.ReadOnly)]
+    public ZombieSettings? VictimSettings;
+
+    /// <summary>
+    /// Our family (describes how we became a zombie and where the rules are)
+    /// </summary>
+    [DataField("family"), ViewVariables(VVAccess.ReadOnly)]
+    public ZombieFamily Family = default!;
 
     [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
@@ -55,4 +60,9 @@ public sealed class PendingZombieComponent : Component
     /// </summary>
     [DataField("minimumCritMultiplier")]
     public float MinimumCritMultiplier = 10;
+
+    /// <summary>
+    /// How much the virus hurts you (base, scales rapidly)
+    /// </summary>
+    public DamageSpecifier VirusDamage => Settings.VirusDamage;
 }
