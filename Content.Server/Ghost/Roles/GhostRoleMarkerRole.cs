@@ -10,11 +10,13 @@ namespace Content.Server.Ghost.Roles
     {
         private readonly string _name;
         public override string Name => _name;
-        public override bool Antagonist => false;
+        private bool _antagonist;
+        public override bool Antagonist => _antagonist;
 
-        public GhostRoleMarkerRole(Mind.Mind mind, string name) : base(mind)
+        public GhostRoleMarkerRole(Mind.Mind mind, string name, bool antagonist = false) : base(mind)
         {
             _name = name;
+            _antagonist = antagonist;
         }
     }
 }
