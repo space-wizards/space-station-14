@@ -5,5 +5,5 @@ ent-BodyBag_Folded = мешок для тела
     .suffix = Сложенный
 ent-Ash = пепел
     .desc = Раньше это чем-то было, но теперь это не так.
-ent-Ectoplasm = ectoplasm
-    .desc = Much less deadly in this form.
+ent-Ectoplasm = эктоплазма
+    .desc = В таком виде она гораздо менее смертельна.
