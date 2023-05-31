@@ -1,3 +1,4 @@
+using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
@@ -10,6 +11,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Audio;
@@ -276,10 +278,15 @@ public sealed partial class SalvageSystem
             }
         }
 
-        if (comp.Completed)
+        // give rewards if it was completed
+        var rewardQuery = EntityQueryEnumerator<SalvageExpeditionComponent>();
+        while (rewardQuery.MoveNext(out var uid, out var comp))
         {
-            Announce(uid, Loc.GetString("salvage-expedition-completed"));
-            GiveReward(uid, comp);
+            if (comp.Completed)
+            {
+                Announce(uid, Loc.GetString("salvage-expedition-completed"));
+                GiveReward(uid, comp);
+            }
         }
     }
 
@@ -290,7 +297,7 @@ public sealed partial class SalvageSystem
         var reward = rewards.Pick(_random);
 
         // send it to cargo if possible
-        if (TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var cargoDb))
+        if (!TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var cargoDb))
         {
             return;
         }
@@ -298,6 +305,7 @@ public sealed partial class SalvageSystem
         var sender = Loc.GetString("cargo-gift-default-sender");
         var desc = Loc.GetString("salvage-expedition-reward-description");
         var dest = Loc.GetString("cargo-gift-default-dest");
+        // FIXME: this needs changes to just deliver an item rather than a cargo product
         _cargo.AddAndApproveOrder(cargoDb, reward, 1, sender, desc, dest);
     }
 }
