@@ -265,6 +265,9 @@
       reflectProb: 0.95
       reflects:
       - Energy
+    - type: Blocking
+      passiveBlockModifier: PassiveEnergyShieldBlock
+      activeBlockModifier: ActiveEnergyShieldBlock
     - type: Appearance
     - type: Damageable
       damageContainer: Shield

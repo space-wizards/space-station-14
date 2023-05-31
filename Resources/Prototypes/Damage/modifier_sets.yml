@@ -320,3 +320,23 @@
     Heat: .6
   flatReductions:
     Heat: 1
+
+#Energy shield, good protection against bullets and laser beams, but only when active.
+- type: damageModifierSet
+  id: PassiveEnergyShieldBlock
+  coefficients:
+    Blunt: 1.0
+    Slash: 0.95
+    Piercing: 0.95
+    Heat: 1.0
+
+- type: damageModifierSet
+  id: ActiveEnergyShieldBlock
+  coefficients:
+    Blunt: 1.1
+    Slash: 0.85
+    Piercing: 0.7
+    Heat: 0.4
+  flatReductions:
+    Heat: 1
+    Piercing: 1
