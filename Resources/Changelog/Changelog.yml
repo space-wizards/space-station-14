@@ -1,10 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: 'Support multiline text edit for papers, communication console and admin
-      announcements', type: Tweak}
-  id: 3410
-  time: '2023-04-14T19:57:47.0000000+00:00'
 - author: Whisper
   changes:
   - {message: A second pair of shoes was added to the Autodrobe for the clothing set
@@ -2909,3 +2903,9 @@ Entries:
       and construct them like other machines., type: Add}
   id: 3909
   time: '2023-05-31T13:48:55.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: added some tools to belts whitelist, type: Tweak}
+  - {message: swab is trash now, type: Tweak}
+  id: 3910
+  time: '2023-05-31T13:51:52.0000000+00:00'
