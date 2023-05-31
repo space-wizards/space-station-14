@@ -63,8 +63,7 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
-        - id: OxygenTankFilled
+        - id: JetpackVoidFilled
         - id: ClothingOuterHardsuitAncientEVA
         - id: ClothingHeadHelmetAncient
         - id: ClothingMaskBreath
