@@ -1,4 +1,5 @@
 using Content.Server.Cargo.Components;
+using Content.Server.Shuttle.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
@@ -254,7 +255,7 @@ namespace Content.Server.Physics.Controllers
                 var consoleEnt = pilot.Console?.Owner;
 
                 // TODO: This is terrible. Just make a new mover and also make it remote piloting + device networks
-                if (TryComp<CargoPilotConsoleComponent>(consoleEnt, out var cargoConsole))
+                if (TryComp<DroneConsoleComponent>(consoleEnt, out var cargoConsole))
                 {
                     consoleEnt = cargoConsole.Entity;
                 }

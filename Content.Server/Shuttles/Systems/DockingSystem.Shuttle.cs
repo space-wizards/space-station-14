@@ -4,6 +4,7 @@ using Content.Server.Shuttles.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Shuttles.Systems;
@@ -38,16 +39,17 @@ public sealed partial class DockingSystem
        TransformComponent shuttleDockXform,
        DockingComponent gridDock,
        TransformComponent gridDockXform,
-       Angle targetGridRotation,
        Box2 shuttleAABB,
+       Angle targetGridRotation,
+       FixturesComponent shuttleFixtures,
        MapGridComponent grid,
-       [NotNullWhen(true)] out Box2? shuttleDockedAABB,
        out Matrix3 matty,
+       [NotNullWhen(true)] out Box2? shuttleDockedAABB,
        out Angle gridRotation)
    {
+       shuttleDockedAABB = null;
        gridRotation = Angle.Zero;
        matty = Matrix3.Identity;
-       shuttleDockedAABB = null;
 
        if (shuttleDock.Docked ||
            gridDock.Docked ||
@@ -64,18 +66,17 @@ public sealed partial class DockingSystem
        // Need to invert the grid's angle.
        var shuttleDockAngle = shuttleDockXform.LocalRotation;
        var gridDockAngle = gridDockXform.LocalRotation.Opposite();
+       var offsetAngle = gridDockAngle - shuttleDockAngle;
 
        var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleDockAngle);
        var gridXformMatrix = Matrix3.CreateTransform(gridDockXform.LocalPosition, gridDockAngle);
        Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
-       shuttleDockedAABB = matty.TransformBox(shuttleAABB);
-       // Rounding moment
-       shuttleDockedAABB = shuttleDockedAABB.Value.Enlarged(-0.01f);
 
-       if (!ValidSpawn(grid, shuttleDockedAABB.Value))
+       if (!ValidSpawn(grid, matty, offsetAngle, shuttleFixtures))
            return false;
 
-       gridRotation = (targetGridRotation + gridDockAngle - shuttleDockAngle).Reduced();
+       shuttleDockedAABB = matty.TransformBox(shuttleAABB);
+       gridRotation = (targetGridRotation + offsetAngle).Reduced();
        return true;
    }
 
@@ -129,16 +130,19 @@ public sealed partial class DockingSystem
         var targetGridGrid = Comp<MapGridComponent>(targetGrid);
         var targetGridXform = xformQuery.GetComponent(targetGrid);
         var targetGridAngle = _transform.GetWorldRotation(targetGridXform).Reduced();
-
+        var shuttleFixturesComp = Comp<FixturesComponent>(shuttleUid);
         var shuttleAABB = Comp<MapGridComponent>(shuttleUid).LocalAABB;
+        var foundDocks = new HashSet<EntityUid>();
 
         var validDockConfigs = new List<DockingConfig>();
-
         if (shuttleDocks.Count > 0)
         {
            // We'll try all combinations of shuttle docks and see which one is most suitable
            foreach (var (dockUid, shuttleDock) in shuttleDocks)
            {
+               if (foundDocks.Contains(dockUid))
+                   continue;
+
                var shuttleDockXform = xformQuery.GetComponent(dockUid);
 
                foreach (var (gridDockUid, gridDock) in gridDocks)
@@ -148,11 +152,12 @@ public sealed partial class DockingSystem
                    if (!CanDock(
                            shuttleDock, shuttleDockXform,
                            gridDock, gridXform,
-                           targetGridAngle,
                            shuttleAABB,
+                           targetGridAngle,
+                           shuttleFixturesComp,
                            targetGridGrid,
-                           out var dockedAABB,
                            out var matty,
+                           out var dockedAABB,
                            out var targetAngle))
                    {
                        continue;
@@ -162,6 +167,7 @@ public sealed partial class DockingSystem
                    var spawnPosition = new EntityCoordinates(targetGrid, matty.Transform(Vector2.Zero));
                    spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, spawnPosition.ToMapPos(EntityManager, _transform));
 
+                   // TODO: use tight bounds
                    var dockedBounds = new Box2Rotated(shuttleAABB.Translated(spawnPosition.Position), targetAngle, spawnPosition.Position);
 
                    // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
@@ -182,7 +188,7 @@ public sealed partial class DockingSystem
 
                    foreach (var (otherUid, other) in shuttleDocks)
                    {
-                       if (other == shuttleDock)
+                       if (other == shuttleDock || foundDocks.Contains(otherUid))
                            continue;
 
                        foreach (var (otherGridUid, otherGrid) in gridDocks)
@@ -195,13 +201,14 @@ public sealed partial class DockingSystem
                                    xformQuery.GetComponent(otherUid),
                                    otherGrid,
                                    xformQuery.GetComponent(otherGridUid),
+                                   shuttleAABB,
                                    targetGridAngle,
-                                   shuttleAABB, targetGridGrid,
-                                   out var otherDockedAABB,
+                                   shuttleFixturesComp, targetGridGrid,
                                    out _,
+                                   out var otherdockedAABB,
                                    out var otherTargetAngle) ||
-                               !otherDockedAABB.Equals(dockedAABB) ||
-                               !targetAngle.Equals(otherTargetAngle))
+                               !targetAngle.Equals(otherTargetAngle) ||
+                               !dockedAABB.Equals(otherdockedAABB))
                            {
                                continue;
                            }
@@ -213,21 +220,25 @@ public sealed partial class DockingSystem
                    validDockConfigs.Add(new DockingConfig()
                    {
                        Docks = dockedPorts,
-                       Area = dockedAABB.Value,
                        Coordinates = spawnPosition,
                        Angle = targetAngle,
                    });
+
+                   foreach (var dock in dockedPorts)
+                   {
+                       foundDocks.Add(dock.DockAUid);
+                   }
                }
            }
         }
 
         if (validDockConfigs.Count <= 0)
-           return null;
+            return null;
 
         // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
         validDockConfigs = validDockConfigs
            .OrderByDescending(x => x.Docks.Any(docks =>
-               TryComp<PriorityDockComponent>(docks.DockB.Owner, out var priority) &&
+               TryComp<PriorityDockComponent>(docks.DockBUid, out var priority) &&
                priority.Tag?.Equals(priorityTag) == true))
            .ThenByDescending(x => x.Docks.Count)
            .ThenBy(x => Math.Abs(Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta)).ToList();
@@ -242,9 +253,22 @@ public sealed partial class DockingSystem
    /// <summary>
    /// Checks whether the emergency shuttle can warp to the specified position.
    /// </summary>
-   private bool ValidSpawn(MapGridComponent grid, Box2 area)
+   private bool ValidSpawn(MapGridComponent grid, Matrix3 matty, Angle angle, FixturesComponent shuttleFixturesComp)
    {
-       return !grid.GetLocalTilesIntersecting(area).Any();
+       var transform = new Transform(matty.Transform(Vector2.Zero), angle);
+
+       // Because some docking bounds are tight af need to check each chunk individually
+       foreach (var fix in shuttleFixturesComp.Fixtures.Values)
+       {
+           var polyShape = (PolygonShape) fix.Shape;
+           var aabb = polyShape.ComputeAABB(transform, 0);
+           aabb = aabb.Enlarged(-0.01f);
+
+           if (grid.GetLocalTilesIntersecting(aabb).Any())
+               return false;
+       }
+
+       return true;
    }
 
    public List<(EntityUid Uid, DockingComponent Component)> GetDocks(EntityUid uid)

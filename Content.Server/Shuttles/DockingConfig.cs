@@ -14,11 +14,6 @@ public sealed class DockingConfig
     public List<(EntityUid DockAUid, EntityUid DockBUid, DockingComponent DockA, DockingComponent DockB)> Docks = new();
 
     /// <summary>
-    /// Area relative to the target grid the emergency shuttle will spawn in on.
-    /// </summary>
-    public Box2 Area;
-
-    /// <summary>
     /// Target grid for docking.
     /// </summary>
     public EntityUid TargetGrid;
