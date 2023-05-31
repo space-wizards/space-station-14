@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed typo in uplink for the syndicate stamp., type: Fix}
-  id: 3409
-  time: '2023-04-14T19:53:36.0000000+00:00'
 - author: Morb0
   changes:
   - {message: 'Support multiline text edit for papers, communication console and admin
@@ -2908,3 +2903,9 @@ Entries:
   - {message: Forensic scanner prints receipts now, type: Add}
   id: 3908
   time: '2023-05-31T09:09:05.0000000+00:00'
+- author: Segonist
+  changes:
+  - {message: Now you can print cell recharger and recharger circuits on autolathe
+      and construct them like other machines., type: Add}
+  id: 3909
+  time: '2023-05-31T13:48:55.0000000+00:00'
