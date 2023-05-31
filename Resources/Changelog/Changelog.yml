@@ -1,10 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Changed CBURN Starting Gear., type: Tweak}
-  - {message: Changed Death Squad Starting Gear., type: Tweak}
-  id: 3414
-  time: '2023-04-15T20:05:54.0000000+00:00'
 - author: keronshb
   changes:
   - {message: The eating & drinking interactions now automatically repeat while there
@@ -2910,3 +2904,8 @@ Entries:
   - {message: Removed the IHS voidsuit and gloves., type: Remove}
   id: 3913
   time: '2023-05-31T22:03:15.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Replaced some lethal mines in Barratry maintenance., type: Tweak}
+  id: 3914
+  time: '2023-05-31T22:25:13.0000000+00:00'
