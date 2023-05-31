@@ -72,7 +72,7 @@ namespace Content.Server.DeviceLinking.Systems
                 bool bolt;
                 if (state == SignalState.Momentary)
                 {
-                    bolt = !airlockComponent.BoltsDown;
+                    bolt = !bolts.BoltsDown;
                 }
                 else
                 {
