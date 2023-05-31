@@ -7,11 +7,13 @@ using Robust.Client.Graphics;
 using Robust.Client.Replays.Loading;
 using Robust.Client.State;
 using Robust.Client.Timing;
+using Robust.Client.Upload;
 using Robust.Client.UserInterface;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
@@ -25,11 +27,13 @@ public sealed partial class ReplayManager
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IClientGameTiming _timing = default!;
     [Dependency] private readonly IClientNetManager _netMan = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IGameController _controller = default!;
     [Dependency] private readonly IReplayLoadManager _loadMan = default!;
     [Dependency] private readonly IClientEntityManager _entMan = default!;
     [Dependency] private readonly IUserInterfaceManager _uiMan = default!;
     [Dependency] private readonly IConfigurationManager _confMan = default!;
+    [Dependency] private readonly NetworkResourceManager _netResMan = default!;
     [Dependency] private readonly IClientGameStateManager _gameState = default!;
     [Dependency] private readonly IClientNetConfigurationManager _netConf = default!;
 

@@ -74,7 +74,8 @@ public sealed partial class ReplayManager
         _entMan.FlushEntities();
         _stateMan.RequestStateChange<ReplayMainScreen>();
 
-        // TODO REPLAYS unload extra prototypes
-        // TODO REPLAYS unload extra resources.
+        // Unload "uploaded" prototypes & resources.
+        _netResMan.ClearResources();
+        _protoMan.Reset();
     }
 }
