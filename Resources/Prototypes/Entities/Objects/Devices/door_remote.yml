@@ -138,3 +138,20 @@
   - type: Access
     groups:
     - Engineering
+
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteAll
+  name: super door remote
+  suffix: Admeme
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#2eba22"
+    - state: door_remotescreencolour
+      color: "#22871a"
+  - type: Access
+    groups:
+    - AllAccess
