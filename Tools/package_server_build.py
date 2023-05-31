@@ -74,7 +74,8 @@ SERVER_EXTRA_ASSEMBLIES = [
     "Microsoft",
     "MySql",
     "FFMpeg",
-    "Pomelo"
+    "Pomelo",
+    "Instances"
 ]
 
 SERVER_NOT_EXTRA_ASSEMBLIES = [
