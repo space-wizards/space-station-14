@@ -160,7 +160,7 @@ namespace Content.Server.Voting.Managers
         {
             var maps = new Dictionary<string, GameMapPrototype>();
             var eligibleMaps = _gameMapManager.CurrentlyEligibleMaps().ToList();
-            maps.Add("Secret", _random.Pick(eligibleMaps));
+            maps.Add(Loc.GetString("ui-vote-secret-map"), _random.Pick(eligibleMaps));
             foreach (var map in eligibleMaps)
             {
                 maps.Add(map.MapName, map);
@@ -205,7 +205,7 @@ namespace Content.Server.Voting.Managers
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-win",
                         ("winner", title)));
                 }
-                if (title == "Secret")
+                if (title == Loc.GetString("ui-vote-secret-map"))
                 {
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-secret-win"));
                 }

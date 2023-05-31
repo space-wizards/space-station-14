@@ -20,4 +20,5 @@ ui-vote-map-win = { $winner } won the map vote!
 ui-vote-map-notlobby = Voting for maps is only valid in the pre-round lobby!
 ui-vote-map-notlobby-time = Voting for maps is only valid in the pre-round lobby with { $time } remaining!
 
+ui-vote-secret-map = Secret
 ui-vote-secret-win = The next map will be chosen randomly.
