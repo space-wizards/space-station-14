@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Dehydrated space carp can now be petted to make them nice to you. Have
-      the whole station pet him and be friends forever!, type: Tweak}
-  id: 3405
-  time: '2023-04-14T01:17:26.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: 'Changed sprites of the livestock crate, t-ray, fax machine, remote
@@ -2909,3 +2903,9 @@ Entries:
   - {message: Mining shuttle will spawn roundstart., type: Add}
   id: 3904
   time: '2023-05-31T01:13:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'All ore veins are guaranteed on expeditions, tripled the vein count,
+      but made it so veins only drop 1 ore each.', type: Tweak}
+  id: 3905
+  time: '2023-05-31T03:40:37.0000000+00:00'
