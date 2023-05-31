@@ -53,6 +53,9 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         {
             foreach (PowerConsumerComponent pcc in netQ.Consumers)
             {
+                if (!pcc.ShowInMonitor)
+                    continue;
+
                 loads.Add(LoadOrSource(pcc, pcc.DrawRate, false));
                 totalLoads += pcc.DrawRate;
             }

@@ -137,6 +137,7 @@
     - type: Tag
       tags:
         - Trash
+        - Ectoplasm
     - type: SolutionContainerManager
       solutions:
         food:
