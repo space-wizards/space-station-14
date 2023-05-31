@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Nanotrasen no longer makes ice cream with soda., type: Fix}
-  id: 3403
-  time: '2023-04-13T19:51:11.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: 'Added a context sensitive EscapeContext keybind that defaults to ESC,
@@ -2911,3 +2906,8 @@ Entries:
   - {message: Fixed Poppy potency scaling, type: Fix}
   id: 3902
   time: '2023-05-30T23:07:15.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: Fix northstar gloves sending radio messages., type: Fix}
+  id: 3903
+  time: '2023-05-31T01:11:36.0000000+00:00'
