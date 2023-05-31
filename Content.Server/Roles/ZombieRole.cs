@@ -11,7 +11,7 @@ namespace Content.Server.Roles
         /// <summary>
         ///     Path to antagonist alert sound.
         /// </summary>
-        protected override SoundSpecifier AntagonistAlert { get; } = new SoundPathSpecifier("/Audio/Voice/Zombie/zombie-3.ogg");
+        protected override SoundSpecifier AntagonistAlert { get; } = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
 
         public ZombieRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind, antagPrototype) { }
     }

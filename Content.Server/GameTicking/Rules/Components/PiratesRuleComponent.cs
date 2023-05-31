@@ -18,5 +18,5 @@ public sealed class PiratesRuleComponent : Component
     ///     Path to antagonist alert sound.
     /// </summary>
     [DataField("pirateAlertSound")]
-    public readonly SoundSpecifier PirateAlertSound = new SoundPathSpecifier("/Audio/Effects/Diseases/monkey1.ogg");
+    public readonly SoundSpecifier PirateAlertSound = new SoundPathSpecifier("/Audio/Ambience/Antag/pirate_start.ogg");
 }
