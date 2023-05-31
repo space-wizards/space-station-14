@@ -1,7 +1,9 @@
 using Content.Client.Administration.Managers;
+using Content.Client.Ghost;
 using Content.Client.Movement.Systems;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
+using Robust.Client.GameObjects;
 using Robust.Client.Placement;
 using Robust.Client.Placement.Modes;
 using Robust.Shared.Map;
@@ -22,10 +24,18 @@ namespace Content.Client.Sandbox
         public event Action? SandboxEnabled;
         public event Action? SandboxDisabled;
 
+        public event Action? LightingToggled;
+        public event Action? FovToggled;
+        public event Action? PlayerAttached;
+
         public override void Initialize()
         {
             _adminManager.AdminStatusUpdated += CheckStatus;
             SubscribeNetworkEvent<MsgSandboxStatus>(OnSandboxStatus);
+
+            SubscribeLocalEvent<ToggleLightingActionEvent>(OnToggleLighting);
+            SubscribeLocalEvent<ToggleFoVActionEvent>(OnToggleFoV);
+            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         }
 
         private void CheckStatus()
@@ -59,6 +69,21 @@ namespace Content.Client.Sandbox
         {
             _sandboxEnabled = sandboxEnabled;
             CheckStatus();
+        }
+
+        private void OnPlayerAttached(PlayerAttachedEvent ev)
+        {
+            PlayerAttached?.Invoke();
+        }
+
+        private void OnToggleFoV(ToggleFoVActionEvent ev)
+        {
+            FovToggled?.Invoke();
+        }
+
+        private void OnToggleLighting(ToggleLightingActionEvent ev)
+        {
+            LightingToggled?.Invoke();
         }
 
         public void Respawn()
