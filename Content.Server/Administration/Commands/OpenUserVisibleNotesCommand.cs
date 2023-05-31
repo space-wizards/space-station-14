@@ -11,6 +11,8 @@ namespace Content.Server.Administration.Commands;
 public sealed class OpenUserVisibleNotesCommand : IConsoleCommand
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IAdminNotesManager _notes = default!;
+
     public const string CommandName = "adminremarks";
 
     public string Command => CommandName;
@@ -31,6 +33,6 @@ public sealed class OpenUserVisibleNotesCommand : IConsoleCommand
             return;
         }
 
-        await IoCManager.Resolve<IAdminNotesManager>().OpenUserNotesEui(player);
+        await _notes.OpenUserNotesEui(player);
     }
 }

@@ -14,7 +14,7 @@ public sealed partial class AdminRemarksWindow : FancyWindow
 {
     [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
     private readonly SpriteSystem _sprites;
-    private Dictionary<(int, NoteType), AdminNotesLine> Inputs { get; } = new();
+    private readonly Dictionary<(int, NoteType), AdminNotesLine> _inputs = new();
 
     public AdminRemarksWindow()
     {
@@ -25,17 +25,17 @@ public sealed partial class AdminRemarksWindow : FancyWindow
 
     public void SetNotes(Dictionary<(int, NoteType), SharedAdminNote> notes)
     {
-        foreach (var (id, input) in Inputs)
+        foreach (var (id, input) in _inputs)
         {
             if (notes.ContainsKey(id))
                 continue;
             NotesContainer.RemoveChild(input);
-            Inputs.Remove(id);
+            _inputs.Remove(id);
         }
 
         foreach (var note in notes.Values.OrderByDescending(note => note.CreatedAt))
         {
-            if (Inputs.TryGetValue((note.Id, note.NoteType), out var input))
+            if (_inputs.TryGetValue((note.Id, note.NoteType), out var input))
             {
                 input.UpdateNote(note);
                 continue;
@@ -43,7 +43,7 @@ public sealed partial class AdminRemarksWindow : FancyWindow
 
             input = new AdminNotesLine(_sprites, note);
             NotesContainer.AddChild(input);
-            Inputs[(note.Id, note.NoteType)] = input;
+            _inputs[(note.Id, note.NoteType)] = input;
         }
     }
 }

@@ -103,7 +103,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         }
 
         // Check for expired bans
-        foreach (var (_, roleBans) in _cachedRoleBans)
+        foreach (var roleBans in _cachedRoleBans.Values)
         {
             roleBans.RemoveWhere(ban => DateTimeOffset.Now > ban.ExpirationTime);
         }
