@@ -5,12 +5,7 @@ using Content.Shared.Puppet;
 using Content.Shared.Hands.Components;
 using Content.Server.Speech.Muting;
 using Content.Shared.CombatMode;
-using Content.Shared.Actions;
-using Content.Shared.Stealth.Components;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Hands;
-using Content.Shared.Interaction.Components;
-using Content.Server.Mind.Components;
 
 namespace Content.Server.Puppet
 {
@@ -27,6 +22,13 @@ namespace Content.Server.Puppet
             SubscribeLocalEvent<PuppetDummyComponent, GotUnequippedHandEvent>(OnUnequippedHand);
         }
 
+        /// <summary>
+        /// When used user inserts hand into dummy and the dummy can speak, when used again the user removes hand
+        /// from dummy and the dummy cannot speak.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <param name="args"></param>
         private void OnUseInHand(EntityUid uid, PuppetDummyComponent component, UseInHandEvent args)
         {
             if (args.Handled)
@@ -53,36 +55,45 @@ namespace Content.Server.Puppet
 
             else if (userHands.ActiveHandEntity == uid && !HasComp<MutedComponent>(uid))
             {
-                AddComp<MutedComponent>(uid);
                 _popupSystem.PopupEntity(Loc.GetString("dummy-remove-hand"), uid, args.User);
-                _popupSystem.PopupEntity(Loc.GetString("dummy-removed-hand"), uid, uid);
-                RemComp<CombatModeComponent>(uid);
+                MuteDummy(uid, component);
             }
 
             args.Handled = true;
         }
 
+        /// <summary>
+        /// When dropped the dummy is muted again.
+        /// </summary>
         private void OnDropped(EntityUid uid, PuppetDummyComponent component, DroppedEvent args)
         {
             if (HasComp<MutedComponent>(uid))
                 return;
 
             _popupSystem.PopupEntity(Loc.GetString("dummy-remove-hand"), uid, args.User);
-            _popupSystem.PopupEntity(Loc.GetString("dummy-removed-hand"), uid, uid);
-            AddComp<MutedComponent>(uid);
-            RemComp<CombatModeComponent>(uid);
+            MuteDummy(uid, component);
         }
 
+        /// <summary>
+        /// When unequipped from a hand slot the dummy is muted again.
+        /// </summary>
         private void OnUnequippedHand(EntityUid uid, PuppetDummyComponent component, GotUnequippedHandEvent args)
         {
             if (HasComp<MutedComponent>(uid))
                 return;
 
             _popupSystem.PopupEntity(Loc.GetString("dummy-remove-hand"), uid, args.User);
+            MuteDummy(uid, component);
+        }
+
+        /// <summary>
+        /// Mutes the dummy.
+        /// </summary>
+        private void MuteDummy(EntityUid uid, PuppetDummyComponent component)
+        {
             _popupSystem.PopupEntity(Loc.GetString("dummy-removed-hand"), uid, uid);
             AddComp<MutedComponent>(uid);
             RemComp<CombatModeComponent>(uid);
-            RemComp<UnremoveableComponent>(uid);
         }
     }
 }

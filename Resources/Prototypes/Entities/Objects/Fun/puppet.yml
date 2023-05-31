@@ -15,7 +15,7 @@
   - type: DoAfter
   - type: PuppetDummy
   - type: Item
-    size: 5
+    size: 30
   - type: Muted
   - type: TypingIndicator
     proto: robot

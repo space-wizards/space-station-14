@@ -39,7 +39,4 @@ public sealed class GluedComponent : Component
     [DataField("glued")]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Glued = false;
-
-    [DataField("enabled")]
-    public bool Enabled = true;
 }

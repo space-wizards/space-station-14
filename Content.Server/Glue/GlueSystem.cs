@@ -32,9 +32,6 @@ namespace Content.Server.Glue
             if (!args.CanReach || args.Target is not { Valid: true } target)
                 return;
 
-            if (!HasComp<ItemComponent>(target))
-                return;
-
             if (HasComp<GluedComponent>(target))
             {
                 _popup.PopupEntity(Loc.GetString("glue-failure", ("target", Identity.Entity(target, EntityManager))), args.User,
@@ -43,7 +40,7 @@ namespace Content.Server.Glue
             }
 
 
-            if (!HasComp<GluedComponent>(target) || !HasComp<UnremoveableComponent>(target))
+            if (HasComp<ItemComponent>(target))
             {
                 _audio.PlayPvs(component.Squeeze, uid);
                 EnsureComp<UnremoveableComponent>(target);
