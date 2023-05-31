@@ -60,7 +60,7 @@ public sealed class SalvageExpeditionComponent : Component
     /// Possible rewards sent to cargo upon mission completion.
     /// Based on mission difficulty.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("rewards", customTypeSerializer: PrototypeIdSerializer<typeof(WeightedRandomPrototype)>)]
+    [ViewVariables(VVAccess.ReadWrite), DataField("rewards", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
     public string Rewards = string.Empty;
 }
 
