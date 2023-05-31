@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: added Radio Jammer to uplink (5 TC). When active blocks radios in range
-      from sending messages., type: Add}
-  id: 3408
-  time: '2023-04-14T19:50:19.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed typo in uplink for the syndicate stamp., type: Fix}
@@ -2909,3 +2903,8 @@ Entries:
   - {message: Added brown bandana to cargodrobe, type: Add}
   id: 3907
   time: '2023-05-31T04:32:15.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Forensic scanner prints receipts now, type: Add}
+  id: 3908
+  time: '2023-05-31T09:09:05.0000000+00:00'
