@@ -89,4 +89,22 @@
     sprite: Structures/Holo/soap.rsi
     state: icon
     netsync: false
-# imo it should has EmitSoundOnStep or something, i hope it will be added
+  - type: Slippery
+    paralyzeTime: 0.5
+    launchForwardsMultiplier: 1
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        layer:
+        - SlipLayer
+        hard: false
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 10
+        mask:
+        - ItemMask
