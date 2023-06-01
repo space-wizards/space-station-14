@@ -12,6 +12,7 @@
     size: 550, 410
     setup:
       !type:TabletopBackgammonSetup
+      boardPrototype: BackgammonBoardTabletop
 
 - type: entity
   id: BackgammonBoardTabletop

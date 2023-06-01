@@ -11,7 +11,9 @@
   - type: TabletopGame
     boardName: tabletop-chess-board-name
     size: 338, 274
-    setup: !type:TabletopChessSetup
+    setup:
+      !type:TabletopChessSetup
+      boardPrototype: ChessBoardTabletop
 
 # Chessboard tabletop item (item only visible in tabletop game)
 - type: entity

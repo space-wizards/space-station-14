@@ -13,6 +13,7 @@
     size: 574, 574
     setup:
       !type:TabletopParchisSetup
+      boardPrototype: ParchisBoardTabletop
 
 # Parchís tabletop item (item only visible in tabletop game)
 - type: entity

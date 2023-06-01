@@ -11,7 +11,9 @@
   - type: TabletopGame
     boardName: tabletop-checkers-board-name
     size: 338, 274
-    setup: !type:TabletopCheckerSetup
+    setup:
+      !type:TabletopCheckerSetup
+      boardPrototype: CheckerBoardTabletop
 
 # Checkerboard tabletop item (item only visible in tabletop game)
 - type: entity
