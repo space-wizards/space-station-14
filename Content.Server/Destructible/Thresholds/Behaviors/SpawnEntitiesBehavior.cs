@@ -1,6 +1,5 @@
 using Content.Server.Forensics;
 using Content.Server.Shuttles.Components;
-using Content.Server.Shuttles.Systems;
 using Content.Server.Stack;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
