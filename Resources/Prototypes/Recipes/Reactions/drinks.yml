@@ -878,3 +878,17 @@
       amount: 1
   products:
     TheMartinez: 6
+
+- type: reaction
+  id: Cola
+  reactants:
+    Ipecac:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Cola: 4

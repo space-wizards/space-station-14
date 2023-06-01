@@ -108,20 +108,6 @@
     fiberColor: fibers-regal-blue
   - type: FingerprintMask
 
-- type: entity
-  parent: ClothingHandsBase
-  id: ClothingHandsGlovesIhscombat
-  name: IHS combat gloves
-  description: These tactical gloves are somewhat fire and impact resistant.
-  components:
-  - type: Sprite
-    sprite: Clothing/Hands/Gloves/ihscombat.rsi
-  - type: Clothing
-    sprite: Clothing/Hands/Gloves/ihscombat.rsi
-  - type: Fiber
-    fiberMaterial: fibers-durathread
-  - type: FingerprintMask
-
 #### Medical
 - type: entity
   parent: ClothingHandsBase
@@ -172,7 +158,7 @@
   parent: ClothingHandsBase
   id: ClothingHandsGlovesPowerglove
   name: power gloves
-  description: Now I'm playin' with power! Wait, they are turned off. # Use Now I'm playin' with power! BAM! for when they're turned on
+  description: Now I'm playin' with power! Wait... they're turned off. #Use "Now I'm playin' with power! BAM!" for when they're turned on
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/powerglove.rsi
@@ -297,7 +283,7 @@
   parent: ClothingHandsBase
   id: ClothingHandsGlovesNorthStar
   name: gloves of the north star
-  description: These gloves allow you to punch incredibly fast
+  description: These gloves allow you to punch incredibly fast.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/northstar.rsi
