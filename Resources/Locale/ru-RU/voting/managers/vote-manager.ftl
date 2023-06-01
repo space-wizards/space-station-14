@@ -14,4 +14,5 @@ ui-vote-gamemode-win = { $winner } победил в голосовании за
 ui-vote-map-title = Следующая карта
 ui-vote-map-tie = Ничья при голосовании за карту! Выбирается... { $picked }
 ui-vote-map-win = { $winner } выиграла голосование о выборе карты!
+ui-vote-map-notlobby = Voting for maps is only valid in the pre-round lobby!
 ui-vote-map-notlobby-time = Голосование о выборе карты действует только в предраундовом лобби!

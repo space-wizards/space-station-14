@@ -1,2 +1,2 @@
-north-star-current-battlecry = Battlecry:
-north-star-menu-title = Set Battlecry
+north-star-current-battlecry = Боевой клич:
+north-star-menu-title = Выбрать боевой клич

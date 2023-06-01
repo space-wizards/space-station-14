@@ -61,7 +61,7 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 		if (meleeSpeechComp.Battlecry == battlecry)
             return true;
 
-		meleeSpeechComp.Battlecry = battlecry;
+        meleeSpeechComp.Battlecry = battlecry;
 		Dirty(meleeSpeechComp);
 
 		_adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $" {ToPrettyString(uid):entity}'s battlecry has been changed to {battlecry}");

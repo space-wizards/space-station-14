@@ -19,4 +19,4 @@ fibers-orange = оранжевые
 fibers-white = белые
 fibers-yellow = жёлтые
 fibers-regal-blue = королевские синие
-fibers-olive = olive
+fibers-olive = оливковые

@@ -12,7 +12,8 @@ ui-options-default = По-умолчанию
 ## Audio menu
 
 ui-options-master-volume = Основная громкость:
-ui-options-midi-volume = MIDI (Инструменты) громкость:
+ui-options-midi-volume = Громкость MIDI (Муз. инструменты):
+ui-options-ambient-music-volume = Ambient music volume:
 ui-options-ambience-volume = Громкость окружения:
 ui-options-lobby-volume = Громкость лобби и окончания раунда:
 ui-options-ambience-max-sounds = Кол-во одновременных звуков окружения:
@@ -20,8 +21,6 @@ ui-options-lobby-music = Музыка в лобби
 ui-options-restart-sounds = Звуки перезапуска раунда
 ui-options-event-music = Музыка событий
 ui-options-admin-sounds = Музыка админов
-ui-options-station-ambience = Эмбиент станции
-ui-options-space-ambience = Эмбиент космоса
 ui-options-volume-label = Громкость
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
