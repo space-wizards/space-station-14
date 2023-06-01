@@ -55,6 +55,8 @@
         orGroup: GiftPool
       - id: JetpackMiniFilled
         orGroup: GiftPool
+      - id: PlushieGhost
+        orGroup: GiftPool
       - id: PlushieBee
         orGroup: GiftPool
       - id: PlushieRGBee

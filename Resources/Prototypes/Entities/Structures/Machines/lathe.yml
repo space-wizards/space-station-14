@@ -103,11 +103,14 @@
       - FirelockElectronics
       - DoorElectronics
       - AirAlarmElectronics
+      - StationMapElectronics
       - FireAlarmElectronics
       - MailingUnitElectronics
       - APCElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
+      - CellRechargerCircuitboard
+      - WeaponCapacitorRechargerCircuitboard
   - type: StaticPrice
     price: 800
 

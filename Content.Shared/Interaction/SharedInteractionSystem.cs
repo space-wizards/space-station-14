@@ -689,7 +689,7 @@ namespace Content.Shared.Interaction
                     ignoreAnchored = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
                 }
 
-                if (ignoreAnchored && _mapManager.TryFindGridAt(targetCoords, out var grid))
+                if (ignoreAnchored && _mapManager.TryFindGridAt(targetCoords, out _, out var grid))
                     ignored.UnionWith(grid.GetAnchoredEntities(targetCoords));
             }
 
