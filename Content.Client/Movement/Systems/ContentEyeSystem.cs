@@ -46,26 +46,12 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 
         var localPlayer = _player.LocalPlayer?.ControlledEntity;
 
-        if (!TryComp<ContentEyeComponent>(localPlayer, out var content)
-            || !TryComp<EyeComponent>(localPlayer, out var eyeComp))
+        if (!TryComp<ContentEyeComponent>(localPlayer, out var content) ||
+            !TryComp<EyeComponent>(localPlayer, out var eye))
         {
             return;
         }
 
-        if (eyeComp.Zoom.Equals(content.TargetZoom))
-            return;
-
-        var diff = content.TargetZoom - eyeComp.Zoom;
-
-        if (diff.LengthSquared < 0.000001f)
-        {
-            eyeComp.Zoom = content.TargetZoom;
-            RaisePredictiveEvent(new EndOfTargetZoomAnimation());
-            return;
-        }
-
-        var change = diff * 10 * frameTime;
-
-        eyeComp.Zoom += change;
+        UpdateEye(localPlayer.Value, content, eye, frameTime);
     }
 }
