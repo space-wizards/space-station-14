@@ -13,6 +13,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
@@ -370,6 +371,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
        component.EmergencyShuttle = shuttle;
        EnsureComp<ProtectedGridComponent>(shuttle.Value);
+       EnsureComp<PreventPilotComponent>(shuttle.Value);
    }
 
    private void OnEscapeUnpaused(EntityUid uid, EscapePodComponent component, ref EntityUnpausedEvent args)
