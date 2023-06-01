@@ -291,7 +291,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        // Check for existing centcomms and just point to that
        var query = AllEntityQuery<StationCentcommComponent>();
 
-       while (query.MoveNext(out var uid, out var otherComp))
+       while (query.MoveNext(out var otherComp))
        {
            if (otherComp == component)
                continue;
