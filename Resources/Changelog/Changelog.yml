@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added use toy mouse like hat!, type: Add}
-  id: 3420
-  time: '2023-04-15T22:44:00.0000000+00:00'
 - author: EnDecc
   changes:
   - {message: 'The Janitorial Trolley now has an exclusive slot for the bucket, which
@@ -2907,3 +2902,9 @@ Entries:
   - {message: Fix NPCs getting stuck on corners., type: Fix}
   id: 3919
   time: '2023-06-01T13:11:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Less severe anomalies now have higher baseline point output., type: Tweak}
+  - {message: Random anomaly stability fluctuation is less extreme., type: Tweak}
+  id: 3920
+  time: '2023-06-01T23:07:20.0000000+00:00'
