@@ -14,6 +14,7 @@ public sealed class SpaceGarbageSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SpaceGarbageComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<SpaceGarbageComponent, PreventCollideEvent>(PreventCollision);
     }
 
     private void OnCollide(EntityUid uid, SpaceGarbageComponent component, ref StartCollideEvent args)
@@ -26,5 +27,13 @@ public sealed class SpaceGarbageSystem : EntitySystem
         if (ourXform.GridUid == otherXform.GridUid) return;
 
         QueueDel(uid);
+    }
+
+    private void PreventCollision(EntityUid uid, SpaceGarbageComponent component, ref PreventCollideEvent args)
+    {
+        if (args.BodyB.Owner == component.Spawner)
+        {
+            args.Cancelled = true;
+        }
     }
 }
