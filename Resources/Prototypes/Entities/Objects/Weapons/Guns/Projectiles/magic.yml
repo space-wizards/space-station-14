@@ -149,7 +149,7 @@
   noSpawn: true
   components:
   - type: PolymorphOnCollide
-    polymorph: FoodBreadPlain
+    polymorph: BreadMorph
     whitelist:
       components:
       - Body

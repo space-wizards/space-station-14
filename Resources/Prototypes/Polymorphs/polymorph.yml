@@ -85,7 +85,7 @@
   revertOnDeath: false
 
 - type: polymorph
-  id: FoodBreadPlain
+  id: BreadMorph
   entity: FoodBreadPlain
   forced: true
   inventory: None
@@ -93,3 +93,4 @@
   transferDamage: true
   revertOnCrit: false
   revertOnDeath: true
+  revertOnEat: true
