@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.AME;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
@@ -266,7 +267,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         {
             if (id != null &&
                 nodeContainer.TryGetNode<Node>(id, out var tryNode) &&
-                tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: > 0 } })
+                (tryNode.NodeGroupID == NodeGroupID.AMEngine || tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: > 0 } }))
             {
                 return tryNode;
             }
