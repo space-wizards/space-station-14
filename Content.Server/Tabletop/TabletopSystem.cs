@@ -1,6 +1,8 @@
 using Content.Server.Tabletop.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tabletop;
+using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -16,6 +18,7 @@ namespace Content.Server.Tabletop
     public sealed partial class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
 
         public override void Initialize()
@@ -27,8 +30,32 @@ namespace Content.Server.Tabletop
             SubscribeLocalEvent<TabletopGamerComponent, PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<TabletopGamerComponent, ComponentShutdown>(OnGamerShutdown);
             SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
+            SubscribeLocalEvent<TabletopGameComponent, InteractUsingEvent>(OnInteractUsing);
 
             InitializeMap();
+        }
+
+        private void OnInteractUsing(EntityUid uid, TabletopGameComponent component, InteractUsingEvent args)
+        {
+            if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
+                return;
+
+            if (component.Session is not { } session)
+                return;
+
+            if (hands.ActiveHand == null)
+                return;
+
+            if (hands.ActiveHand.HeldEntity == null)
+                return;
+
+            var handEnt = hands.ActiveHand.HeldEntity.Value;
+            var entId = MetaData(handEnt).EntityPrototype?.ID;
+
+            var ent = _entityManager.SpawnEntity(entId, session.Position.Offset(-1, 0));
+            EnsureComp<TabletopDraggableComponent>(ent);
+            Logger.Debug(ent.ToString());
+            session.Entities.Add(ent);
         }
 
         protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
