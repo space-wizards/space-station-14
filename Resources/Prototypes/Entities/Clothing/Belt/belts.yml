@@ -37,6 +37,7 @@
         - Welder
         - PowerCell
         - Geiger
+        - TrayScanner
         - GasAnalyzer
   - type: ItemMapper
     mapLayers:
@@ -111,6 +112,7 @@
         - Handcuff
         - PowerCell
         - Geiger
+        - TrayScanner
         - GasAnalyzer
   - type: ItemMapper
     mapLayers:
@@ -309,6 +311,7 @@
         - PlantSampleTaker
         - PlantBGone
         - Bottle
+        - Syringe
         - CigPack
       components:
         - Seed

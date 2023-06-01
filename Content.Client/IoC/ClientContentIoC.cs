@@ -51,6 +51,7 @@ namespace Content.Client.IoC
             IoCManager.Register<JoinQueueManager>(); // Corvax-Queue
             IoCManager.Register<TTSManager>(); // Corvax-TTS
             IoCManager.Register<DiscordAuthManager>(); // Corvax-DiscordAuth
+            IoCManager.Register<JobRequirementsManager>();
             IoCManager.Register<DocumentParsingManager>();
         }
     }

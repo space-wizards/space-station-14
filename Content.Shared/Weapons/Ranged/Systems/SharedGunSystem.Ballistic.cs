@@ -29,6 +29,9 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)
     {
+        if (args.Handled)
+            return;
+
         ManualCycle(uid, component, Transform(uid).MapPosition, args.User);
         args.Handled = true;
     }

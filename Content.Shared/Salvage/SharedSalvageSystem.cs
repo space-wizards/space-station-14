@@ -120,7 +120,7 @@ public abstract class SharedSalvageSystem : EntitySystem
             mods.Add(time.Description);
         }
 
-        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), GetDifficulty(difficulty), seed);
+        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().Where(o => !o.Guaranteed).ToList(), GetDifficulty(difficulty), seed);
         return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots, mods);
     }
 

@@ -127,8 +127,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficial
-  name: CentCom officer's suit # Corvax-Resprite
-  description: It's a suit worn by CentCom's highest-tier Commanders. # Corvax-Resprite
+  name: CentCom official's jumpsuit
+  description: It's a jumpsuit worn by CentCom's officials.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi

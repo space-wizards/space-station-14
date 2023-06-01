@@ -55,6 +55,19 @@
         - id: ClothingHeadHelmetEVA
         - id: ClothingMaskGas
 
+#NTSRA Voidsuit
+- type: entity
+  id: SuitStorageNTSRA
+  parent: SuitStorageBase
+  suffix: Ancient EVA
+  components:
+  - type: StorageFill
+    contents:
+        - id: JetpackVoidFilled
+        - id: ClothingOuterHardsuitAncientEVA
+        - id: ClothingHeadHelmetAncient
+        - id: ClothingMaskBreath
+        
 #HARDSUITS
 #Engineering hardsuit
 - type: entity

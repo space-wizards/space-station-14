@@ -76,17 +76,17 @@
 - type: gamePreset
   id: Zombie
   alias:
-    - zombie
-    - zombies
-#    - Zombies
-    - zz14
-    - zomber
+  - zombie
+  - zombies
+  - Zombies
+  - zz14
+  - zomber
   name: zombie-title
   description: zombie-description
   showInVote: false
   rules:
-    - Zombie
-    - BasicStationEventScheduler
+  - Zombie
+  - BasicStationEventScheduler
 
 - type: gamePreset
   id: Pirates
