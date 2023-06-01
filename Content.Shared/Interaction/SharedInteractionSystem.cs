@@ -256,7 +256,7 @@ namespace Content.Shared.Interaction
         {
             // This is for Admin/mapping convenience. If ever there are other ghosts that can still interact, this check
             // might need to be more selective.
-            return !HasComp<SharedGhostComponent>(user);
+            return !_tagSystem.HasTag(user, "BypassInteractionRangeChecks");
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Content.Shared.Interaction
                     return true;
                 }
                 // Entity can bypass range checks.
-                else if (_tagSystem.HasTag(origin, "BypassInteractionRangeChecks"))
+                else if (ShouldCheckAccess(origin))
                 {
                     return true;
                 }
@@ -638,7 +638,7 @@ namespace Content.Shared.Interaction
             if (inRange)
             {
                 var rayPredicate = GetPredicate(originPos, other, targetPos, targetRot, collisionMask, combinedPredicate);
-                inRange = InRangeUnobstructed(originPos, targetPos, range, collisionMask, rayPredicate, _tagSystem.HasTag(origin, "BypassInteractionRangeChecks"));
+                inRange = InRangeUnobstructed(originPos, targetPos, range, collisionMask, rayPredicate, ShouldCheckAccess(origin));
             }
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
@@ -784,7 +784,7 @@ namespace Content.Shared.Interaction
         {
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
             var originPosition = Transform(origin).MapPosition;
-            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicate, _tagSystem.HasTag(origin, "BypassInteractionRangeChecks"));
+            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicate, ShouldCheckAccess(origin));
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
