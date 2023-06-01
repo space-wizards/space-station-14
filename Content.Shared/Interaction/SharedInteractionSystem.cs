@@ -476,7 +476,7 @@ namespace Content.Shared.Interaction
         ///     A predicate to check whether to ignore an entity or not.
         ///     If it returns true, it will be ignored.
         /// </param>
-        /// <param name="bypassRange">Bypasses range checks</param>
+        /// <param name="checkAccess">Perform range checks</param>
         /// <returns>
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
@@ -486,13 +486,13 @@ namespace Content.Shared.Interaction
             float range = InteractionRange,
             CollisionGroup collisionMask = InRangeUnobstructedMask,
             Ignored? predicate = null,
-            bool bypassRange = false)
+            bool checkAccess = true)
         {
             // Have to be on same map regardless.
             if (other.MapId != origin.MapId)
                 return false;
 
-            if (bypassRange)
+            if (!checkAccess)
                 return true;
 
             var dir = other.Position - origin.Position;
@@ -610,7 +610,7 @@ namespace Content.Shared.Interaction
                     return true;
                 }
                 // Entity can bypass range checks.
-                else if (ShouldCheckAccess(origin))
+                else if (!ShouldCheckAccess(origin))
                 {
                     return true;
                 }
