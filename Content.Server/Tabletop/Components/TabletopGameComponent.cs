@@ -9,6 +9,9 @@ namespace Content.Server.Tabletop.Components
         [DataField("boardName")]
         public string BoardName { get; } = "tabletop-default-board-name";
 
+        [DataField("pieceMaxSize")]
+        public int PieceMaxSize { get; } = 10;
+
         [DataField("setup", required: true)]
         public TabletopSetup Setup { get; } = new TabletopChessSetup();
 

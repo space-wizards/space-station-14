@@ -1,6 +1,7 @@
 ﻿## TabletopGameComponent
 tabletop-verb-play-game = Play Game
 tabletop-default-board-name = Board Game
+tabletop-too-big = This is too big!
 
 ## Chess
 tabletop-chess-board-name = Chess

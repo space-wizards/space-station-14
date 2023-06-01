@@ -1,6 +1,8 @@
+using Content.Server.Popups;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
@@ -20,6 +22,7 @@ namespace Content.Server.Tabletop
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -32,7 +35,29 @@ namespace Content.Server.Tabletop
             SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
             SubscribeLocalEvent<TabletopGameComponent, InteractUsingEvent>(OnInteractUsing);
 
+            SubscribeNetworkEvent<TabletopRequestTakeOut>(OnTabletopRequestTakeOut);
+
             InitializeMap();
+        }
+
+        private void OnTabletopRequestTakeOut(TabletopRequestTakeOut msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession is not IPlayerSession playerSession)
+                return;
+
+            if (!TryComp(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+                return;
+
+            // Check if player is actually playing at this table
+            if (!session.Players.ContainsKey(playerSession))
+                return;
+
+            var entId = MetaData(msg.Entity).EntityPrototype?.ID;
+            var ent = _entityManager.SpawnEntity(entId, Transform(msg.TableUid).MapPosition);
+            RemComp<TabletopDraggableComponent>(ent);
+            session.Entities.TryGetValue(msg.Entity, out var result);
+            session.Entities.Remove(result);
+            _entityManager.QueueDeleteEntity(result);
         }
 
         private void OnInteractUsing(EntityUid uid, TabletopGameComponent component, InteractUsingEvent args)
@@ -50,12 +75,23 @@ namespace Content.Server.Tabletop
                 return;
 
             var handEnt = hands.ActiveHand.HeldEntity.Value;
+
+            if (!TryComp<ItemComponent>(handEnt, out var item))
+                return;
+
+            if (item.Size > component.PieceMaxSize)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("tabletop-too-big"), uid);
+                return;
+            }
+
             var entId = MetaData(handEnt).EntityPrototype?.ID;
 
             var ent = _entityManager.SpawnEntity(entId, session.Position.Offset(-1, 0));
             EnsureComp<TabletopDraggableComponent>(ent);
-            Logger.Debug(ent.ToString());
             session.Entities.Add(ent);
+            // i refuse to do parenting bullshit
+            _entityManager.QueueDeleteEntity(handEnt);
         }
 
         protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
