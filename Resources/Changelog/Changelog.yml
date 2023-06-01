@@ -1,9 +1,4 @@
 Entries:
-- author: BurninDreamer
-  changes:
-  - {message: Syndicate smokes now have 3x the healing chemical., type: Tweak}
-  id: 3417
-  time: '2023-04-15T22:41:33.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Synaptizine is now a powerful treatment to hallucinations caused by
@@ -2907,3 +2902,10 @@ Entries:
   - {message: PKA requires wielding now., type: Tweak}
   id: 3916
   time: '2023-06-01T02:27:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: L6 firerate is 6 again. It requires wielding to have decent accuracy.,
+    type: Tweak}
+  - {message: SMG accuracy reduced to 3-tiles width at full screen away., type: Tweak}
+  id: 3917
+  time: '2023-06-01T02:40:11.0000000+00:00'
