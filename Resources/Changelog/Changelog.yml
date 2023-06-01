@@ -1,12 +1,6 @@
 Entries:
 - author: PuroSlavKing
   changes:
-  - {message: Added Centcom received an animated PDA with a Centcom pen as a gift!,
-    type: Add}
-  id: 3419
-  time: '2023-04-15T22:43:15.0000000+00:00'
-- author: PuroSlavKing
-  changes:
   - {message: Added use toy mouse like hat!, type: Add}
   id: 3420
   time: '2023-04-15T22:44:00.0000000+00:00'
@@ -2908,3 +2902,8 @@ Entries:
   - {message: Autolathe board economy crashed, type: Tweak}
   id: 3918
   time: '2023-06-01T06:49:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs getting stuck on corners., type: Fix}
+  id: 3919
+  time: '2023-06-01T13:11:41.0000000+00:00'
