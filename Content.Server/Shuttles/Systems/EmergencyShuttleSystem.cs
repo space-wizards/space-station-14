@@ -162,7 +162,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
        {
            StationUid = targetGrid,
-           Position = Comp<MapGridComponent>(stationShuttle.EmergencyShuttle.Value).LocalAABB.Translated(config.Coordinates.Position)
+           Position = config.Area,
        });
    }
 

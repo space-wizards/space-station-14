@@ -132,7 +132,6 @@ public sealed partial class DockingSystem
         var targetGridAngle = _transform.GetWorldRotation(targetGridXform).Reduced();
         var shuttleFixturesComp = Comp<FixturesComponent>(shuttleUid);
         var shuttleAABB = Comp<MapGridComponent>(shuttleUid).LocalAABB;
-        var foundDocks = new HashSet<EntityUid>();
 
         var validDockConfigs = new List<DockingConfig>();
         if (shuttleDocks.Count > 0)
@@ -140,9 +139,6 @@ public sealed partial class DockingSystem
            // We'll try all combinations of shuttle docks and see which one is most suitable
            foreach (var (dockUid, shuttleDock) in shuttleDocks)
            {
-               if (foundDocks.Contains(dockUid))
-                   continue;
-
                var shuttleDockXform = xformQuery.GetComponent(dockUid);
 
                foreach (var (gridDockUid, gridDock) in gridDocks)
@@ -188,7 +184,7 @@ public sealed partial class DockingSystem
 
                    foreach (var (otherUid, other) in shuttleDocks)
                    {
-                       if (other == shuttleDock || foundDocks.Contains(otherUid))
+                       if (other == shuttleDock)
                            continue;
 
                        foreach (var (otherGridUid, otherGrid) in gridDocks)
@@ -221,13 +217,9 @@ public sealed partial class DockingSystem
                    {
                        Docks = dockedPorts,
                        Coordinates = spawnPosition,
+                       Area = dockedAABB.Value,
                        Angle = targetAngle,
                    });
-
-                   foreach (var dock in dockedPorts)
-                   {
-                       foundDocks.Add(dock.DockAUid);
-                   }
                }
            }
         }
