@@ -1,5 +1,0 @@
-﻿nukeops_start.ogg was taken from: https://github.com/tgstation/tgstation/commit/827967c9650c23af64280ad1491405fed8f644c5
-
-pirate_start.ogg was taken from: https://github.com/SerbiaStrong-220/space-station-14/pull/21/commits/15aa6e22a3914f80ce4537a710a1bb52ae87e27c
-
-zombie_start.ogg was taken from: https://github.com/SerbiaStrong-220/space-station-14/pull/21/commits/15aa6e22a3914f80ce4537a710a1bb52ae87e27c

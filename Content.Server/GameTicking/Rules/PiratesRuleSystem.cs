@@ -220,6 +220,13 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
                 pirates.Pirates.Add(newMind);
 
+                // Notificate every player about a pirate antagonist role with sound
+                _audio.PlayGlobal(
+                    pirates.PirateAlertSound,
+                    Filter.SinglePlayer(session),
+                    false,
+                    pirates.PirateAlertSound.Params);
+
                 GameTicker.PlayerJoinGame(session);
             }
 
@@ -228,17 +235,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 pirates.InitialItems.Add(uid);
                 return true;
             }); // Include the players in the appraisal.
-
-            // Notificate every player about a pirate antagonist role with sound
-            _audio.PlayGlobal(
-                pirates.PirateAlertSound,
-                Filter.Entities(
-                    pirates.Pirates
-                        .Where(p => p.CurrentEntity.HasValue)
-                        .Select(p => p.CurrentEntity!.Value)
-                        .ToArray()),
-                false,
-                AudioParams.Default.WithVolume(4));
         }
     }
 
@@ -249,15 +245,22 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             return;
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "PirateGear", EntityManager);
 
+        var pirateRule = EntityQuery<PiratesRuleComponent>().FirstOrDefault();
+        if (pirateRule == null)
+        {
+            //todo fuck me this shit is awful
+            GameTicker.StartGameRule("Pirates", out var ruleEntity);
+            pirateRule = Comp<PiratesRuleComponent>(ruleEntity);
+        }
+
         // Notificate every player about a pirate antagonist role with sound
-        var pirateComponent = EntityManager.ComponentFactory.GetComponent<PiratesRuleComponent>();
         if (mind.Session != null)
         {
             _audio.PlayGlobal(
-                pirateComponent.PirateAlertSound,
-                Filter.Empty().AddPlayer(mind.Session),
+                pirateRule.PirateAlertSound,
+                Filter.SinglePlayer(mind.Session),
                 false,
-                AudioParams.Default.WithVolume(4));
+                pirateRule.PirateAlertSound.Params);
         }
     }
 

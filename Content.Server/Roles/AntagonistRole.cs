@@ -2,49 +2,49 @@ using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
-namespace Content.Server.Roles
+namespace Content.Server.Roles;
+
+public abstract class AntagonistRole : Role
 {
-    public class AntagonistRole : Role
+    /// <summary>
+    ///     Path to antagonist alert sound.
+    /// </summary>
+    protected virtual SoundSpecifier? AntagonistAlert { get; } = null;
+
+    public AntagPrototype Prototype { get; }
+
+    public override string Name { get; }
+
+    public override bool Antagonist { get; }
+
+    /// <summary>
+    /// .ctor
+    /// </summary>
+    /// <param name="mind">A mind (player)</param>
+    /// <param name="antagPrototype">Antagonist prototype</param>
+    protected AntagonistRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind)
     {
-        /// <summary>
-        ///     Path to antagonist alert sound.
-        ///     TODO: Traitor sound will be a default one, cause there is no other sounds right now.
-        /// </summary>
-        protected virtual SoundSpecifier AntagonistAlert { get; } = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
+        Prototype = antagPrototype;
+        Name = Loc.GetString(antagPrototype.Name);
+        Antagonist = antagPrototype.Antagonist;
+    }
 
-        public AntagPrototype Prototype { get; }
+    public override void Greet()
+    {
+        base.Greet();
 
-        public override string Name { get; }
-
-        public override bool Antagonist { get; }
-
-        /// <summary>
-        /// .ctor
-        /// </summary>
-        /// <param name="mind">A mind (player)</param>
-        /// <param name="antagPrototype">Antagonist prototype</param>
-        public AntagonistRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind)
+        // Alert a player about antagonist role with a sound notification
+        if (AntagonistAlert == null)
+            return;
+        var entMgr = IoCManager.Resolve<IEntityManager>();
+        entMgr.EntitySysManager.TryGetEntitySystem(out SharedAudioSystem? audio);
+        if (audio != null && Mind.Session != null)
         {
-            Prototype = antagPrototype;
-            Name = Loc.GetString(antagPrototype.Name);
-            Antagonist = antagPrototype.Antagonist;
-        }
-
-        public override void Greet()
-        {
-            base.Greet();
-
-            // Alert a player about antagonist role with a sound notification
-            var entMgr = IoCManager.Resolve<IEntityManager>();
-            entMgr.EntitySysManager.TryGetEntitySystem(out SharedAudioSystem? audio);
-            if (audio != null && Mind.Session != null)
-            {
-                audio.PlayGlobal(
-                    AntagonistAlert,
-                    Filter.Empty().AddPlayer(Mind.Session),
-                    false,
-                    AudioParams.Default);
-            }
+            audio.PlayGlobal(
+                AntagonistAlert,
+                Filter.Empty().AddPlayer(Mind.Session),
+                false,
+                AntagonistAlert.Params);
         }
     }
 }
