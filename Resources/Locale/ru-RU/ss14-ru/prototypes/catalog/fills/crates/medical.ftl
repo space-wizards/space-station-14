@@ -1,3 +1,5 @@
+ent-CrateMedicalDefib = ящик с дефибриллятором
+    .desc = { ent-CrateMedical.desc }
 ent-CrateMedicalSupplies = ящик медицинских припасов
     .desc = Стандартные медикаменты.
 ent-CrateChemistrySupplies = ящик химического оборудования

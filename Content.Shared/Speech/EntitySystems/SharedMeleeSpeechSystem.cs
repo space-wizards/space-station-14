@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Speech.EntitySystems;
+namespace Content.Shared.Weapons.Melee;
 
 public abstract class SharedMeleeSpeechSystem : EntitySystem
 {

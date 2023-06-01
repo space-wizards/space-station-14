@@ -194,7 +194,7 @@ namespace Content.Server.Power.Pow3r
             foreach (var batteryId in network.BatteryLoads)
             {
                 var battery = state.Batteries[batteryId];
-                if (!battery.Enabled || battery.DesiredPower == 0 || battery.Paused || !battery.CanCharge)
+                if (!battery.Enabled || battery.DesiredPower == 0 || battery.Paused)
                     continue;
 
                 battery.LoadingMarked = true;
@@ -240,7 +240,7 @@ namespace Content.Server.Power.Pow3r
             foreach (var batteryId in network.BatterySupplies)
             {
                 var battery = state.Batteries[batteryId];
-                if (!battery.Enabled || battery.Paused || !battery.CanDischarge)
+                if (!battery.Enabled || battery.Paused)
                     continue;
 
                 battery.SupplyingMarked = true;

@@ -3,7 +3,6 @@ using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Morgue;
-using Content.Shared.Morgue.Components;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Morgue;

@@ -5,5 +5,3 @@ ent-BodyBag_Folded = body bag
     .suffix = folded
 ent-Ash = ash
     .desc = This used to be something, but now it's not.
-ent-Ectoplasm = ectoplasm
-    .desc = Much less deadly in this form.

@@ -228,10 +228,7 @@ public sealed class DeviceNet
         prefix = string.IsNullOrWhiteSpace(prefix) ? null : Loc.GetString(prefix);
         string address;
         do
-        {
-            var num = _random.Next();
-            address = $"{prefix}{num >> 16:X4}-{num & 0xFFFF:X4}";
-        }
+            address = $"{prefix}{_random.Next():x}";
         while (Devices.ContainsKey(address));
 
         return address;

@@ -1,17 +1,17 @@
-<Document>
-  # ДНК
+﻿<Document>
+  # DNA
 
-  ## Как узнать чью-либо ДНК?
+  ## How to get someone’s DNA?
 
-  С помощью [color=#a4885c]криминалистического сканера[/color] можно сканировать лужи крови и рвоты, стаканы, бутылки, банки и другие ёмкости с жидкостями, чтобы узнать ДНК члена экипажа, который с ними взаимодействовал.
+  You can scan blood puddles, vomit, glasses, bottles, cans and other liquid containers using the [color=#a4885c]forensic scanner[/color] to get DNA of any person.
   <Box>
     <GuideEntityEmbed Entity="ForensicScanner"/>
   </Box>
-  Помните это, прежде чем начинать драку с кем-то.
+  So be careful before fighting with someone.
 
-  ## Я нашёл ДНК. Как мне узнать, чья она?
+  ## I got DNA. How do I recognize whose it is?
 
-  Вы можете распечатать заключение криминалистической экспертизы об объекте, который вы просканировали, чтобы ничего не упустить. Теперь, имея отчёт с ДНК, воспользуйтесь [color=#a4885c]консолью станционного учёта[/color], введите ДНК в поле поиска, и вы увидите обладателя данной ДНК.
+  You can print the forensic information of the object you scanned so you never miss it. Now with the paper containing DNA you can simply find a [color=#a4885c]Station Records Computer[/color] and look for a person whose DNA matches.
   <Box>
     <GuideEntityEmbed Entity="ComputerStationRecords"/>
   </Box>

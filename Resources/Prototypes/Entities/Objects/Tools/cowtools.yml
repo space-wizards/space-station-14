@@ -14,8 +14,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Pierce: 0
-    attackRate: 2
+        Blunt: 10
   - type: Tool
     qualities:
     - Cutting
@@ -38,10 +37,9 @@
     sprite: Objects/Tools/Cowtools/moodriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
-    attackRate: 1.5
     damage:
       types:
-        Blunt: 0.1 #poke poke poke
+        Piercing: 10
   - type: Tool
     qualities:
     - Screwing
@@ -62,10 +60,9 @@
     sprite: Objects/Tools/Cowtools/wronch.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
-    attackRate: 1.5
     damage:
       types:
-        Blunt: 0.1
+        Blunt: 10
   - type: Tool
     qualities:
     - Anchoring
@@ -88,9 +85,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 1
-  - type: StaminaDamageOnHit
-    damage: 5 #have you ever been hit with a plastic bat? that shit hurts
+        Blunt: 10
   - type: Tool
     qualities:
     - Prying
@@ -164,10 +159,6 @@
     state: cow_toolbox
   - type: Item
     sprite: Objects/Tools/Cowtools/cow_toolbox.rsi
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 4
 
 - type: entity
   id: CowToolboxFilled
@@ -185,3 +176,4 @@
     - id: Cowelder
     - id: Milkalyzer
 
+# I hate these fucking cowtools I hope the burn in hell -Swept

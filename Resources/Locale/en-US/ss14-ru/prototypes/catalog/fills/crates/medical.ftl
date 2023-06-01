@@ -1,3 +1,5 @@
+ent-CrateMedicalDefib = { ent-CrateMedical }
+    .desc = { ent-CrateMedical.desc }
 ent-CrateMedicalSupplies = { ent-CrateMedical }
     .desc = { ent-CrateMedical.desc }
 ent-CrateChemistrySupplies = { ent-CrateMedical }

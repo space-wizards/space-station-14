@@ -12,30 +12,18 @@
   branches:
     - tasks:
         - id: PickPuddlePrimitive
-        - id: MoveToCombatTargetPrimitive
-        - id: MopPrimitive
+        - id: MoveToAccessiblePrimitive
+        - id: InteractWithPrimitive
 
 - type: htnPrimitive
   id: PickPuddlePrimitive
-  operator: !type:UtilityOperator
-    proto: NearbyPuddles
+  operator: !type:PickPuddleOperator
+    rangeKey: BufferRange
+    targetKey: MovementTarget
+    component: Puddle
 
 - type: htnPrimitive
   id: SetIdleTimePrimitive
   operator: !type:SetFloatOperator
     targetKey: IdleTime
     amount: 3
-
-- type: htnPrimitive
-  id: MopPrimitive
-  preconditions:
-    - !type:TargetInRangePrecondition
-      targetKey: CombatTarget
-      rangeKey: InteractRange
-  operator: !type:InteractWithOperator
-    targetKey: CombatTarget
-  services:
-    - !type:UtilityService
-      id: PuddleService
-      proto: NearbyPuddles
-      key: CombatTarget
