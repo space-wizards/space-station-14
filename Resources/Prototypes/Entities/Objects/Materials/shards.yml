@@ -27,6 +27,7 @@
         Slash: 3.5
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
+    size: 4
   - type: CollisionWake
     enabled: false
   - type: Fixtures
@@ -129,7 +130,7 @@
   description: A small piece of plasma glass.
   components:
   - type: Sprite
-    color: "#f3b489"
+    color: "#FF72E7"
   - type: WelderRefinable
     refineResult:
     - SheetGlass1

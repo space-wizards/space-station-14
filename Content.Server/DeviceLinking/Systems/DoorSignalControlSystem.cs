@@ -11,7 +11,7 @@ namespace Content.Server.DeviceLinking.Systems
     [UsedImplicitly]
     public sealed class DoorSignalControlSystem : EntitySystem
     {
-        [Dependency] private readonly AirlockSystem _airlockSystem = default!;
+        [Dependency] private readonly DoorBoltSystem _bolts = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
 
@@ -67,18 +67,18 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (state == SignalState.High)
                 {
-                    if(TryComp<AirlockComponent>(uid, out var airlockComponent))
-                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, true);
+                    if(TryComp<DoorBoltComponent>(uid, out var bolts))
+                        _bolts.SetBoltsWithAudio(uid, bolts, true);
                 }
                 else if (state == SignalState.Momentary)
                 {
-                    if (TryComp<AirlockComponent>(uid, out var airlockComponent))
-                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, newBolts: !airlockComponent.BoltsDown);
+                    if (TryComp<DoorBoltComponent>(uid, out var bolts))
+                        _bolts.SetBoltsWithAudio(uid, bolts, newBolts: !bolts.BoltsDown);
                 }
                 else
                 {
-                    if(TryComp<AirlockComponent>(uid, out var airlockComponent))
-                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, false);
+                    if(TryComp<DoorBoltComponent>(uid, out var bolts))
+                        _bolts.SetBoltsWithAudio(uid, bolts, false);
                 }
             }
         }

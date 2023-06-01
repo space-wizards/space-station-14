@@ -1,113 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Station maps have been added., type: Add}
-  id: 3401
-  time: '2023-04-13T06:21:24.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added custom speech bubble for the moth cloak., type: Add}
-  id: 3402
-  time: '2023-04-13T07:21:57.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Nanotrasen no longer makes ice cream with soda., type: Fix}
-  id: 3403
-  time: '2023-04-13T19:51:11.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: 'Added a context sensitive EscapeContext keybind that defaults to ESC,
-      which closes the most recently opened window or if there are no windows, opens
-      the game menu.', type: Fix}
-  id: 3404
-  time: '2023-04-14T01:10:45.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Dehydrated space carp can now be petted to make them nice to you. Have
-      the whole station pet him and be friends forever!, type: Tweak}
-  id: 3405
-  time: '2023-04-14T01:17:26.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: 'Changed sprites of the livestock crate, t-ray, fax machine, remote
-      signaller and cell rechargers.', type: Tweak}
-  - {message: Fixed grey mice changing colors on death., type: Fix}
-  id: 3406
-  time: '2023-04-14T19:43:50.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Nanotrasen has improved the blood pack formula. (now restores 15u blood),
-    type: Tweak}
-  id: 3407
-  time: '2023-04-14T19:48:11.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: added Radio Jammer to uplink (5 TC). When active blocks radios in range
-      from sending messages., type: Add}
-  id: 3408
-  time: '2023-04-14T19:50:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed typo in uplink for the syndicate stamp., type: Fix}
-  id: 3409
-  time: '2023-04-14T19:53:36.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: 'Support multiline text edit for papers, communication console and admin
-      announcements', type: Tweak}
-  id: 3410
-  time: '2023-04-14T19:57:47.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: A second pair of shoes was added to the Autodrobe for the clothing set
-      that was missing shoes., type: Add}
-  id: 3411
-  time: '2023-04-14T22:15:11.0000000+00:00'
-- author: VigersRay
-  changes:
-  - {message: Vehicle display fix!, type: Fix}
-  id: 3412
-  time: '2023-04-15T06:02:03.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The brigmedic no longer has a hypospray., type: Remove}
-  id: 3413
-  time: '2023-04-15T15:07:14.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Changed CBURN Starting Gear., type: Tweak}
-  - {message: Changed Death Squad Starting Gear., type: Tweak}
-  id: 3414
-  time: '2023-04-15T20:05:54.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: The eating & drinking interactions now automatically repeat while there
-      is still something left to consume., type: Add}
-  id: 3415
-  time: '2023-04-15T22:14:26.0000000+00:00'
-- author: hsagerer
-  changes:
-  - {message: Fixed Cake and Cake Slices from having sizes that do not add to the
-      same value., type: Fix}
-  id: 3416
-  time: '2023-04-15T22:40:51.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: Syndicate smokes now have 3x the healing chemical., type: Tweak}
-  id: 3417
-  time: '2023-04-15T22:41:33.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: Synaptizine is now a powerful treatment to hallucinations caused by
-      Space Drugs or similar chemicals., type: Tweak}
-  id: 3418
-  time: '2023-04-15T22:42:17.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Added Centcom received an animated PDA with a Centcom pen as a gift!,
-    type: Add}
-  id: 3419
-  time: '2023-04-15T22:43:15.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added use toy mouse like hat!, type: Add}
@@ -2911,3 +2802,108 @@ Entries:
   - {message: limited Northstar battlecry to 12 characters, type: Fix}
   id: 3900
   time: '2023-05-30T17:57:53.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: You can't see grilles in the power monitoring console anymore, type: Tweak}
+  id: 3901
+  time: '2023-05-30T22:34:45.0000000+00:00'
+- author: 612git
+  changes:
+  - {message: Fixed Poppy potency scaling, type: Fix}
+  id: 3902
+  time: '2023-05-30T23:07:15.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: Fix northstar gloves sending radio messages., type: Fix}
+  id: 3903
+  time: '2023-05-31T01:11:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Mining shuttle will spawn roundstart., type: Add}
+  id: 3904
+  time: '2023-05-31T01:13:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'All ore veins are guaranteed on expeditions, tripled the vein count,
+      but made it so veins only drop 1 ore each.', type: Tweak}
+  id: 3905
+  time: '2023-05-31T03:40:37.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Shivs have been rebalanced. The regular glass shiv now does 5.5 damage,
+      but the damage gain from the better tiers of glass is much lower.', type: Tweak}
+  - {message: Glass shards now weigh a more appropriate size, type: Tweak}
+  - {message: Plasma glass shards are no longer orange, type: Fix}
+  id: 3906
+  time: '2023-05-31T03:42:14.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added brown bandana to cargodrobe, type: Add}
+  id: 3907
+  time: '2023-05-31T04:32:15.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Forensic scanner prints receipts now, type: Add}
+  id: 3908
+  time: '2023-05-31T09:09:05.0000000+00:00'
+- author: Segonist
+  changes:
+  - {message: Now you can print cell recharger and recharger circuits on autolathe
+      and construct them like other machines., type: Add}
+  id: 3909
+  time: '2023-05-31T13:48:55.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: added some tools to belts whitelist, type: Tweak}
+  - {message: swab is trash now, type: Tweak}
+  id: 3910
+  time: '2023-05-31T13:51:52.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some docking configs not being considered valid., type: Fix}
+  id: 3911
+  time: '2023-05-31T14:09:14.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: Added the uncloneable trait!, type: Add}
+  id: 3912
+  time: '2023-05-31T17:34:30.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added the NTSRA voidsuit, you may be able to find it in derelicts.',
+    type: Add}
+  - {message: Removed the IHS voidsuit and gloves., type: Remove}
+  id: 3913
+  time: '2023-05-31T22:03:15.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Replaced some lethal mines in Barratry maintenance., type: Tweak}
+  id: 3914
+  time: '2023-05-31T22:25:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some docking configs (e.g. saltern)., type: Fix}
+  id: 3915
+  time: '2023-06-01T00:48:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: PKA requires wielding now., type: Tweak}
+  id: 3916
+  time: '2023-06-01T02:27:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: L6 firerate is 6 again. It requires wielding to have decent accuracy.,
+    type: Tweak}
+  - {message: SMG accuracy reduced to 3-tiles width at full screen away., type: Tweak}
+  id: 3917
+  time: '2023-06-01T02:40:11.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Autolathe board economy crashed, type: Tweak}
+  id: 3918
+  time: '2023-06-01T06:49:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs getting stuck on corners., type: Fix}
+  id: 3919
+  time: '2023-06-01T13:11:41.0000000+00:00'
