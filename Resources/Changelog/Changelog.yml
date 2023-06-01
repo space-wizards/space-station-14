@@ -1,10 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Synaptizine is now a powerful treatment to hallucinations caused by
-      Space Drugs or similar chemicals., type: Tweak}
-  id: 3418
-  time: '2023-04-15T22:42:17.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added Centcom received an animated PDA with a Centcom pen as a gift!,
@@ -2909,3 +2903,8 @@ Entries:
   - {message: SMG accuracy reduced to 3-tiles width at full screen away., type: Tweak}
   id: 3917
   time: '2023-06-01T02:40:11.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Autolathe board economy crashed, type: Tweak}
+  id: 3918
+  time: '2023-06-01T06:49:50.0000000+00:00'
