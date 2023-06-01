@@ -33,6 +33,8 @@ public abstract class SharedSalvageSystem : EntitySystem
                 return Loc.GetString("salvage-expedition-desc-structure",
                     ("count", GetStructureCount(mission.Difficulty)),
                     ("structure", _loc.GetEntityData(proto).Name));
+            case SalvageMissionType.Elimination:
+                return Loc.GetString("salvage-expedition-desc-elimination");
             default:
                 throw new NotImplementedException();
         }
@@ -118,7 +120,7 @@ public abstract class SharedSalvageSystem : EntitySystem
             mods.Add(time.Description);
         }
 
-        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), GetDifficulty(difficulty), seed);
+        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().Where(o => !o.Guaranteed).ToList(), GetDifficulty(difficulty), seed);
         return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots, mods);
     }
 
@@ -219,6 +221,11 @@ public enum SalvageMissionType : byte
     /// Destroy the specified structures in a dungeon.
     /// </summary>
     Destruction,
+
+    /// <summary>
+    /// Kill a large creature in a dungeon.
+    /// </summary>
+    Elimination,
 }
 
 [Serializable, NetSerializable]
