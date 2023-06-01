@@ -47,7 +47,7 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
-                new []{typeof(VocalSystem), typeof(BodyEmotesSystem)});
+                new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
@@ -232,7 +232,7 @@ namespace Content.Server.Zombies
             var max = component.MaxZombieInfectionChance;
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
-            var chance = (max-min) * ((total - items)/total) + min;
+            var chance = (max - min) * ((total - items) / total) + min;
             return chance;
         }
 
@@ -246,18 +246,17 @@ namespace Content.Server.Zombies
 
             foreach (var entity in args.HitEntities)
             {
-                if (GetIsForbiddenTarget(entity))
-                {
-                    args.BonusDamage = -args.BaseDamage;
-                }
-
                 if (args.User == entity)
                     continue;
 
                 if (!TryComp<MobStateComponent>(entity, out var mobState) || HasComp<DroneComponent>(entity))
                     continue;
 
-                if (!HasComp<ZombieComponent>(entity))
+                if (HasComp<ZombieComponent>(entity))
+                {
+                    args.BonusDamage = -args.BaseDamage;
+                }
+                else
                 {
                     if (_random.Prob(GetZombieInfectionChance(entity, component)))
                     {
@@ -265,11 +264,13 @@ namespace Content.Server.Zombies
                         pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.ZombieInfectionTurnTime;
                         EnsureComp<ZombifyOnDeathComponent>(entity);
                     }
+                }
 
-                    if (mobState.CurrentState == MobState.Dead || mobState.CurrentState == MobState.Critical)
-                    {
-                        _zombify.ZombifyEntity(entity);
-                    }
+                if ((mobState.CurrentState == MobState.Dead || mobState.CurrentState == MobState.Critical)
+                    && !HasComp<ZombieComponent>(entity))
+                {
+                    _zombify.ZombifyEntity(entity);
+                    args.BonusDamage = -args.BaseDamage;
                 }
                 else if (mobState.CurrentState == MobState.Alive) //heals when zombies bite live entities
                 {
@@ -309,13 +310,6 @@ namespace Content.Server.Zombies
         {
             if (UnZombify(args.Source, args.Target, zombiecomp))
                 args.NameHandled = true;
-        }
-
-        private bool GetIsForbiddenTarget(EntityUid entity)
-        {
-            return
-                HasComp<ZombieComponent>(entity) ||
-                HasComp<AME.Components.AMEShieldComponent>(entity);
         }
     }
 }
