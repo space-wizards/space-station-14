@@ -1,10 +1,4 @@
 Entries:
-- author: hsagerer
-  changes:
-  - {message: Fixed Cake and Cake Slices from having sizes that do not add to the
-      same value., type: Fix}
-  id: 3416
-  time: '2023-04-15T22:40:51.0000000+00:00'
 - author: BurninDreamer
   changes:
   - {message: Syndicate smokes now have 3x the healing chemical., type: Tweak}
@@ -2908,3 +2902,8 @@ Entries:
   - {message: Fix some docking configs (e.g. saltern)., type: Fix}
   id: 3915
   time: '2023-06-01T00:48:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: PKA requires wielding now., type: Tweak}
+  id: 3916
+  time: '2023-06-01T02:27:19.0000000+00:00'
