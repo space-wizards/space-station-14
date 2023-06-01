@@ -90,7 +90,7 @@ namespace Content.Shared.Polymorph
         public bool RevertOnDeath = true;
 
         /// <summary>
-        /// Whether or not the polymorph reverts when the entity is eaten.
+        /// Whether or not the polymorph reverts when the entity is eaten or fully sliced.
         /// </summary>
         [DataField("revertOnEat", serverOnly: true)]
         public bool RevertOnEat = false;

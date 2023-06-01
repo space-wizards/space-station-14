@@ -52,6 +52,7 @@ namespace Content.Server.Polymorph.Systems
             SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(OnPolymorphActionEvent);
             SubscribeLocalEvent<PolymorphedEntityComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
+            SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
             SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
 
             InitializeCollide();
@@ -105,6 +106,21 @@ namespace Content.Server.Polymorph.Systems
         }
 
         private void OnBeforeFullyEaten(EntityUid uid, PolymorphedEntityComponent comp, BeforeFullyEatenEvent args)
+        {
+            if (!_proto.TryIndex<PolymorphPrototype>(comp.Prototype, out var proto))
+            {
+                _saw.Error("Invalid polymorph prototype {comp.Prototype}");
+                return;
+            }
+
+            if (proto.RevertOnEat)
+            {
+                args.Cancel();
+                Revert(uid, comp);
+            }
+        }
+
+        private void OnBeforeFullySliced(EntityUid uid, PolymorphedEntityComponent comp, BeforeFullySlicedEvent args)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(comp.Prototype, out var proto))
             {
@@ -252,9 +268,6 @@ namespace Content.Server.Polymorph.Systems
             _transform.SetParent(parent, parentXform, uidXform.ParentUid);
             parentXform.Coordinates = uidXform.Coordinates;
             parentXform.LocalRotation = uidXform.LocalRotation;
-
-            if (_container.TryGetContainingContainer(uid, out var cont))
-                cont.Insert(component.Parent);
 
             if (proto.TransferDamage &&
                 TryComp<DamageableComponent>(parent, out var damageParent) &&
