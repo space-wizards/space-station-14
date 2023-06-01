@@ -1,10 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: The eating & drinking interactions now automatically repeat while there
-      is still something left to consume., type: Add}
-  id: 3415
-  time: '2023-04-15T22:14:26.0000000+00:00'
 - author: hsagerer
   changes:
   - {message: Fixed Cake and Cake Slices from having sizes that do not add to the
@@ -2909,3 +2903,8 @@ Entries:
   - {message: Replaced some lethal mines in Barratry maintenance., type: Tweak}
   id: 3914
   time: '2023-05-31T22:25:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some docking configs (e.g. saltern)., type: Fix}
+  id: 3915
+  time: '2023-06-01T00:48:45.0000000+00:00'
