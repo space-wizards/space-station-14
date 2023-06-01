@@ -1,4 +1,4 @@
-﻿# Special entity used to attach to power networks as load when somebody gets electrocuted.
+# Special entity used to attach to power networks as load when somebody gets electrocuted.
 - type: entity
   id: VirtualElectrocutionLoadHVPower
   name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
@@ -43,3 +43,19 @@
     voltage: Apc
     drawRate: 50000
   - type: Electrocution
+
+- type: entity
+  id: VirtualElectrocutionLoadAMEngine
+  name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
+  noSpawn: true
+  components:
+  - type: NodeContainer
+    nodes:
+      electrocution: !type:ElectrocutionNode
+        nodeGroupID: AMEngine
+        needAnchored: false
+  - type: PowerConsumer
+    voltage: High
+    drawRate: 50000
+  - type: Electrocution
+  
