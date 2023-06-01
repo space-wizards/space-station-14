@@ -1,0 +1,28 @@
+﻿# Chessboard item (normal in game item you can hold in your hand)
+- type: entity
+  parent: BaseItem
+  id: DNDGrassBattlemap
+  name: grass battlemap
+  description: A battlemap for your epic dungeon exploring to begin, pieces not included!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chessboard.rsi
+    state: chessboard
+  - type: TabletopGame
+    boardName: tabletop-battlemap-board-name
+    size: 512, 512
+    setup:
+      !type:TabletopEmptySetup
+      boardPrototype: GrassBoardTabletop
+
+# Chessboard tabletop item (item only visible in tabletop game)
+- type: entity
+  id: GrassBoardTabletop
+  name: grass battlemap
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/grass_tabletop.rsi
+    state: chessboard_tabletop
+    noRot: false
+    drawdepth: FloorTiles
