@@ -14,12 +14,16 @@
     quickEquip: false
     slots:
     - Back
+  - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -20
   - type: Gun
-    minAngle: 4
-    maxAngle: 20
+    minAngle: 24
+    maxAngle: 45
     angleIncrease: 4
     angleDecay: 16
-    fireRate: 5
+    fireRate: 8
     selectedMode: FullAuto
     availableModes:
       - FullAuto
