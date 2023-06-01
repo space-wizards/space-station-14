@@ -10,7 +10,7 @@
     state: chessboard
   - type: TabletopGame
     boardName: tabletop-battlemap-board-name
-    size: 512, 512
+    size: 256, 256
     setup:
       !type:TabletopEmptySetup
       boardPrototype: GrassBoardTabletop
@@ -23,6 +23,6 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/grass_tabletop.rsi
-    state: chessboard_tabletop
+    state: tabletop
     noRot: false
     drawdepth: FloorTiles
