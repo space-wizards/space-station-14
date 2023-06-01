@@ -1,7 +1,4 @@
 using JetBrains.Annotations;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Tabletop
 {
@@ -10,8 +7,8 @@ namespace Content.Server.Tabletop
     {
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
-            var checkerboard = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0));
-            session.Entities.Add(checkerboard);
+            var board = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(0, 0));
+            session.Entities.Add(board);
         }
     }
 }
