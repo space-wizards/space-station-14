@@ -52,3 +52,8 @@ BulletAntiMaterial: BulletAntiMateriel
 FoodCondimentBottleSmallHotsauce: FoodCondimentBottleHotsauce
 FoodBakedCookieFortune: FoodSnackCookieFortune
 GunSafeSubMachineGunVector: GunSafeSubMachineGunDrozd
+
+# 2023-05-31
+IHSVoidsuit: null
+ClothingHeadHelmetIHSVoidHelm: null
+ClothingHandsGlovesIhscombat: null
