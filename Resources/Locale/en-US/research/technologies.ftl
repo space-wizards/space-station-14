@@ -4,6 +4,7 @@ research-discipline-biochemical = Biochemical
 research-discipline-experimental = Experimental
 research-discipline-civilian-services = Civilian Services
 
+research-technology-salvage-weapons = Salvage weapons
 research-technology-salvage-equipment = Salvage Equipment
 research-technology-advanced-powercells = Advanced Powercells
 research-technology-compact-power = Compact Power
