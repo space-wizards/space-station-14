@@ -1,16 +1,9 @@
 using Content.Shared.Roles;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 
 namespace Content.Server.Roles;
 
 public abstract class AntagonistRole : Role
 {
-    /// <summary>
-    ///     Path to antagonist alert sound.
-    /// </summary>
-    protected virtual SoundSpecifier? AntagonistAlert { get; } = null;
-
     public AntagPrototype Prototype { get; }
 
     public override string Name { get; }
@@ -27,24 +20,5 @@ public abstract class AntagonistRole : Role
         Prototype = antagPrototype;
         Name = Loc.GetString(antagPrototype.Name);
         Antagonist = antagPrototype.Antagonist;
-    }
-
-    public override void Greet()
-    {
-        base.Greet();
-
-        // Alert a player about antagonist role with a sound notification
-        if (AntagonistAlert == null)
-            return;
-        var entMgr = IoCManager.Resolve<IEntityManager>();
-        entMgr.EntitySysManager.TryGetEntitySystem(out SharedAudioSystem? audio);
-        if (audio != null && Mind.Session != null)
-        {
-            audio.PlayGlobal(
-                AntagonistAlert,
-                Filter.Empty().AddPlayer(Mind.Session),
-                false,
-                AntagonistAlert.Params);
-        }
     }
 }

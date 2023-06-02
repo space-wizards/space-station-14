@@ -33,6 +33,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly FactionSystem _faction = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -252,6 +253,15 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         mind.AddRole(traitorRole);
         SendTraitorBriefing(mind, traitorRule.Codewords, code);
         traitorRule.Traitors.Add(traitorRole);
+
+        if (mind.TryGetSession(out var session))
+        {
+            // Notificate player about new role assignment
+            _audio.PlayGlobal(
+                traitorRule.GreetSoundNotification,
+                session,
+                traitorRule.GreetSoundNotification.Params);
+        }
 
         // Change the faction
         _faction.RemoveFaction(entity, "NanoTrasen", false);

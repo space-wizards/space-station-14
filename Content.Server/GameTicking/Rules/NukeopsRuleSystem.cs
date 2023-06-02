@@ -54,6 +54,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -599,7 +600,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 return;
 
             if (nukeops.TargetStation != null && !string.IsNullOrEmpty(Name(nukeops.TargetStation.Value)))
+            {
                 _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", nukeops.TargetStation.Value)));
+
+                 // Notificate player about new role assignment
+                 _audio.PlayGlobal(
+                     component.GreetSoundNotification,
+                     playerSession,
+                     component.GreetSoundNotification.Params);
+            }
         }
     }
 

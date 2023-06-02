@@ -2,6 +2,7 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Roles;
 using Content.Shared.Humanoid;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -133,5 +134,11 @@ namespace Content.Shared.Zombies
                 { "Shock", -0.2 },
             }
         };
+
+        /// <summary>
+        ///     Path to antagonist alert sound.
+        /// </summary>
+        [DataField("greetSoundNotification")]
+        public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
     }
 }
