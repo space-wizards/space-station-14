@@ -5,7 +5,7 @@ ui-vote-initiator-server = Сервер
 
 ui-vote-restart-title = Перезапуск раунда
 ui-vote-restart-succeeded = Голосование о перезапуске раунда успешно.
-ui-vote-restart-failed = Голосование о перезапуске раунда отклонено (требуется { TOSTRING($ratio, "P0") }).
+ui-vote-restart-failed = Голосование о перезапуске раунда отклонено требуется { TOSTRING($ratio, "P0") }.
 ui-vote-restart-yes = Да
 ui-vote-restart-no = Нет
 ui-vote-restart-abstain = Воздерживаюсь
@@ -18,4 +18,4 @@ ui-vote-map-title = Следующая карта
 ui-vote-map-tie = Ничья при голосовании за карту! Выбирается... { $picked }
 ui-vote-map-win = { $winner } выиграла голосование о выборе карты!
 ui-vote-map-notlobby-time = Голосование о выборе карты действует только в предраундовом лобби!
-ui-vote-map-notlobby-time = Голосование за карты возможно только в предраундовом лобби, когда осталось { $time }!
+ui-vote-map-notlobby-time = Голосование о выборе карты действует только в предраундовом лобби!

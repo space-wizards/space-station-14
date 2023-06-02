@@ -1,5 +1,5 @@
 fax-machine-popup-source-unknown = неизвестно
-fax-machine-popup-received = Получил корреспонденцию от { $from }.
+fax-machine-popup-received = Получено сообщение от { $from }.
 fax-machine-popup-name-long = Имя факса слишком длинное
 fax-machine-popup-name-exist = Факс с таким именем уже существует в сети
 fax-machine-popup-name-set = Имя факса обновлено
