@@ -139,7 +139,12 @@
       - id: BackgammonBoard
       - id: ParchisBoard
       - id: CheckerBoard
-      - id: d6Dice
+      - id: DNDShipBattlemap
+      - id: DNDSnowBattlemap
+      - id: DNDSandBattlemap
+      - id: DNDMoonBattlemap
+      - id: DNDGrassBattlemap
+      - id: DiceBag
         amount: 4
 
 - type: entity
