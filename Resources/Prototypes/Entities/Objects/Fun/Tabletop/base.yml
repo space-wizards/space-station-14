@@ -10,6 +10,8 @@
       blacklist:
         tags:
           - HighRiskItem
+        components:
+          - Explosive
       setup:
         !type:TabletopEmptySetup
         boardPrototype: Crowbar
