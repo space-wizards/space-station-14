@@ -1,41 +1,41 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
-  id: ParticleAcceleratorEmitterLeft
+  id: ParticleAcceleratorEmitterPort
   name: PA containment emitter L
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_left.rsi
-    - type: ParticleAcceleratorEmitter
-      emitterType: Left
-    - type: Construction
-      graph: ParticleAcceleratorEmitterLeft
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_port.rsi
+  - type: ParticleAcceleratorEmitter
+    emitterType: Port
+  - type: Construction
+    graph: ParticleAcceleratorEmitterPort
 
 - type: entity
   parent: ParticleAcceleratorFinishedPart
-  id: ParticleAcceleratorEmitterCenter
+  id: ParticleAcceleratorEmitterFore
   name: PA containment emitter C
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_center.rsi
-    - type: ParticleAcceleratorEmitter
-      emitterType: Center
-    - type: Construction
-      graph: ParticleAcceleratorEmitterCenter
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_fore.rsi
+  - type: ParticleAcceleratorEmitter
+    emitterType: Fore
+  - type: Construction
+    graph: ParticleAcceleratorEmitterFore
 
 - type: entity
   parent: ParticleAcceleratorFinishedPart
-  id: ParticleAcceleratorEmitterRight
+  id: ParticleAcceleratorEmitterStarboard
   name: PA containment emitter R
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_right.rsi
-    - type: ParticleAcceleratorEmitter
-      emitterType: Right
-    - type: Construction
-      graph: ParticleAcceleratorEmitterRight
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_starboard.rsi
+  - type: ParticleAcceleratorEmitter
+    emitterType: Starboard
+  - type: Construction
+    graph: ParticleAcceleratorEmitterStarboard
 
 # Unfinished
 
@@ -46,10 +46,10 @@
   suffix: Unfinished, Left
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_left.rsi
-    - type: Construction
-      graph: ParticleAcceleratorEmitterLeft
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_port.rsi
+  - type: Construction
+    graph: ParticleAcceleratorEmitterPort
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
@@ -58,10 +58,10 @@
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_center.rsi
-    - type: Construction
-      graph: ParticleAcceleratorEmitterCenter
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_fore.rsi
+  - type: Construction
+    graph: ParticleAcceleratorEmitterFore
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
@@ -70,7 +70,7 @@
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_right.rsi
-    - type: Construction
-      graph: ParticleAcceleratorEmitterRight
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_starboard.rsi
+  - type: Construction
+    graph: ParticleAcceleratorEmitterStarboard

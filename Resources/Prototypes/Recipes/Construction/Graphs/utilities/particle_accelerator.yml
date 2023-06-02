@@ -197,7 +197,7 @@
               doAfter: 0.5
 
 - type: constructionGraph
-  id: ParticleAcceleratorEmitterLeft
+  id: ParticleAcceleratorEmitterPort
   start: start
   graph:
     - node: start
@@ -236,7 +236,7 @@
               doAfter: 0.5
 
     - node: completed
-      entity: ParticleAcceleratorEmitterLeft
+      entity: ParticleAcceleratorEmitterPort
       edges:
         - to: wired
           conditions:
@@ -246,7 +246,7 @@
               doAfter: 0.5
 
 - type: constructionGraph
-  id: ParticleAcceleratorEmitterCenter
+  id: ParticleAcceleratorEmitterFore
   start: start
   graph:
     - node: start
@@ -285,7 +285,7 @@
               doAfter: 0.5
 
     - node: completed
-      entity: ParticleAcceleratorEmitterCenter
+      entity: ParticleAcceleratorEmitterFore
       edges:
         - to: wired
           conditions:
@@ -295,7 +295,7 @@
               doAfter: 0.5
 
 - type: constructionGraph
-  id: ParticleAcceleratorEmitterRight
+  id: ParticleAcceleratorEmitterStarboard
   start: start
   graph:
     - node: start
@@ -334,7 +334,7 @@
               doAfter: 0.5
 
     - node: completed
-      entity: ParticleAcceleratorEmitterRight
+      entity: ParticleAcceleratorEmitterStarboard
       edges:
         - to: wired
           conditions:

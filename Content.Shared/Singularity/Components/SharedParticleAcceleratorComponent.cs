@@ -22,13 +22,13 @@ namespace Content.Shared.Singularity.Components
     }
 
     [NetSerializable, Serializable]
-    public enum ParticleAcceleratorPowerState
+    public enum ParticleAcceleratorPowerState : byte
     {
         Standby = ParticleAcceleratorVisualState.Powered,
         Level0 = ParticleAcceleratorVisualState.Level0,
         Level1 = ParticleAcceleratorVisualState.Level1,
         Level2 = ParticleAcceleratorVisualState.Level2,
-        Level3 = ParticleAcceleratorVisualState.Level3
+        Level3 = ParticleAcceleratorVisualState.Level3,
     }
 
     public enum ParticleAcceleratorVisualLayers

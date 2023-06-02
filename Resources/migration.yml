@@ -57,3 +57,8 @@ GunSafeSubMachineGunVector: GunSafeSubMachineGunDrozd
 IHSVoidsuit: null
 ClothingHeadHelmetIHSVoidHelm: null
 ClothingHandsGlovesIhscombat: null
+
+# 2023-06-02
+ParticleAcceleratorEmitterLeft: ParticleAcceleratorEmitterPort
+ParticleAcceleratorEmitterCenter: ParticleAcceleratorEmitterFore
+ParticleAcceleratorEmitterRight: ParticleAcceleratorEmitterStarboard

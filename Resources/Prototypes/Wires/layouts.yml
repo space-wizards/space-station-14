@@ -75,3 +75,12 @@
   wires:
   - !type:PowerWireAction
   - !type:CryoPodEjectLockWireAction
+
+- type: WireLayout
+  id: ParticleAccelerator
+  dummyWires: 1
+  wires:
+  - !type:ParticleAcceleratorToggleWireAction
+  - !type:ParticleAcceleratorInterfaceWireAction
+  - !type:ParticleAcceleratorStrengthWireAction
+  - !type:ParticleAcceleratorLimiterWireAction
