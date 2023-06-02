@@ -55,7 +55,7 @@ public sealed partial class BlockingSystem
             if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
             {
                 args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
-                _audio.PlayPvs(blockingComponent.BlockSound, component.Owner, AudioParams.Default.WithVariation(0.2f));
+                _audio.PlayPvs(blockingComponent.BlockSound, uid, AudioParams.Default.WithVariation(0.2f));
             }
         }
     }
