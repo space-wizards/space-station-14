@@ -18,6 +18,8 @@ guide-entry-ss14 = Space Station 14
 guide-entry-janitorial = Janitorial
 guide-entry-medical = Medical
 guide-entry-medicaldoctor = Medical Doctor
+guide-entry-cloning = Cloning
+guide-entry-cryogenics = Cryogenics
 
 guide-entry-science = Science
 guide-entry-anomalous-research = Anomalous Research
