@@ -27,7 +27,7 @@ public sealed class ReflectSystem : SharedReflectSystem
         Dirty(comp);
     }
 
-	private void ShieldEnableReflect(EntityUid uid, ReflectComponent comp, ref EnergyShieldActivatedEvent args)
+    private void ShieldEnableReflect(EntityUid uid, ReflectComponent comp, ref EnergyShieldActivatedEvent args)
     {
         comp.Enabled = true;
         Dirty(comp);
