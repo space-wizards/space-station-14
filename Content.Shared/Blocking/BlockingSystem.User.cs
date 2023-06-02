@@ -47,15 +47,22 @@ public sealed partial class BlockingSystem
 
     private void OnUserDamageModified(EntityUid uid, BlockingUserComponent component, DamageModifyEvent args)
     {
-        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockingComponent))
+        if (TryComp<BlockingComponent>(component.BlockingItem, out var blocking))
         {
-            if (_proto.TryIndex(blockingComponent.PassiveBlockDamageModifer, out DamageModifierSetPrototype? passiveblockModifier) && !blockingComponent.IsBlocking)
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, passiveblockModifier);
+            _proto.TryIndex<DamageModifierSetPrototype>(blocking.PassiveBlockDamageModifer, out var passiveblockModifier);
+            _proto.TryIndex<DamageModifierSetPrototype>(blocking.ActiveBlockDamageModifier, out var activeBlockModifier);
 
-            if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
+            var modifier = blocking.IsBlocking ? activeBlockModifier : passiveblockModifier;
+            if (modifier == null)
             {
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
-                _audio.PlayPvs(blockingComponent.BlockSound, uid, AudioParams.Default.WithVariation(0.2f));
+                return;
+            }
+
+            args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, modifier);
+            
+            if (blocking.IsBlocking)
+            {
+                _audio.PlayPvs(blocking.BlockSound, uid, AudioParams.Default.WithVariation(0.2f));
             }
         }
     }
