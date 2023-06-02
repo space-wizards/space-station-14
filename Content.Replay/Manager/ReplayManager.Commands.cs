@@ -1,4 +1,3 @@
-using Content.Replay.UI.Menu;
 using Robust.Shared.Console;
 
 namespace Content.Replay.Manager;
@@ -15,12 +14,53 @@ public sealed partial class ReplayManager
 
     private void RegisterCommands()
     {
-        _consoleHost.RegisterCommand(StopCommand, (_, _, _) => StopReplay());
-        _consoleHost.RegisterCommand(PlayCommand, (_, _, _) => Playing = true);
-        _consoleHost.RegisterCommand(PauseCommand, (_, _, _) => Playing = false);
-        _consoleHost.RegisterCommand(ToggleCommand, (_, _, _) => Playing = !Playing);
-        _consoleHost.RegisterCommand(SkipCommand, SkipTicks);
-        _consoleHost.RegisterCommand(SetCommand, SetIndex);
+        _consoleHost.RegisterCommand(PlayCommand,
+            Loc.GetString("cmd-replay-play-desc"),
+            Loc.GetString("cmd-replay-play-help"),
+            (_, _, _) => Playing = true);
+
+        _consoleHost.RegisterCommand(PauseCommand,
+            Loc.GetString("cmd-replay-pause-desc"),
+            Loc.GetString("cmd-replay-pause-help"),
+            (_, _, _) => Playing = false);
+
+        _consoleHost.RegisterCommand(ToggleCommand,
+            Loc.GetString("cmd-replay-toggle-desc"),
+            Loc.GetString("cmd-replay-toggle-help"),
+            (_, _, _) => Playing = !Playing);
+
+        _consoleHost.RegisterCommand(SkipCommand,
+            Loc.GetString("cmd-replay-skip-desc"),
+            Loc.GetString("cmd-replay-skip-help"),
+            OnSkipCommand,
+            SkipCommandCompletion);
+
+        _consoleHost.RegisterCommand(SetCommand,
+            Loc.GetString("cmd-replay-set-desc"),
+            Loc.GetString("cmd-replay-set-help"),
+            OnSetCommand,
+            SetCommandCompletion);
+
+        _consoleHost.RegisterCommand(StopCommand,
+            Loc.GetString("cmd-replay-stop-desc"),
+            Loc.GetString("cmd-replay-stop-help"),
+            (_, _, _) => StopReplay());
+    }
+
+    private CompletionResult SkipCommandCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length != 1)
+            return CompletionResult.Empty;
+
+        return CompletionResult.FromHint(Loc.GetString("cmd-replay-skip-hint"));
+    }
+
+    private CompletionResult SetCommandCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length != 1)
+            return CompletionResult.Empty;
+
+        return CompletionResult.FromHint(Loc.GetString("cmd-replay-set-hint"));
     }
 
     private void UnregisterCommands()
@@ -33,49 +73,77 @@ public sealed partial class ReplayManager
         _consoleHost.UnregisterCommand(StopCommand);
     }
 
-    private void SkipTicks(IConsoleShell shell, string argStr, string[] args)
+    private void OnSkipCommand(IConsoleShell shell, string argStr, string[] args)
     {
         if (CurrentReplay == null)
             return;
 
-        if (!int.TryParse(args[0], out var ticks))
-            return;
-
-        if (ticks == 0)
+        if (args.Length != 1)
         {
-            Playing = false;
-        }
-
-        if (ticks > 0)
-        {
-            Playing = true;
-            Steps ??= 0;
-            Steps = Steps + ticks;
+            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
             return;
         }
 
-        SetIndex(CurrentReplay.CurrentIndex + ticks, false);
+        if (int.TryParse(args[0], out var ticks))
+        {
+            if (ticks < 0)
+                SetIndex(CurrentReplay.CurrentIndex + ticks, false);
+            else if (ticks == 0)
+                Playing = false;
+            else
+            {
+                Playing = true;
+                PlaybackLimit ??= 0;
+                PlaybackLimit += ticks;
+            }
+
+            return;
+        }
+
+        if (!TimeSpan.TryParse(args[0], out var time))
+        {
+            shell.WriteError(Loc.GetString("cmd-replay-error-time", ("time", args[0])));
+            return;
+        }
+
+        var target = CurrentReplay.CurTime + time;
+        var index = Array.BinarySearch(CurrentReplay.ServerTime, target);
+
+        if (index < 0)
+            index = Math.Max(0, ~index - 1);
+
+        SetIndex(index, true);
     }
 
-    private void SetIndex(IConsoleShell shell, string argStr, string[] args)
+    private void OnSetCommand(IConsoleShell shell, string argStr, string[] args)
     {
+        if (CurrentReplay == null)
+            return;
+
+        if (args.Length != 1)
+        {
+            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+            return;
+        }
+
         ActivelyScrubbing = false;
         if (int.TryParse(args[0], out var index))
+        {
             SetIndex(index, true);
-        else
-            shell.WriteError("invalid input");
-    }
+            return;
+        }
 
-    public void StopReplay()
-    {
-        CurrentReplay = null;
-        _controller.TickUpdateOverride -= TickUpdateOverride;
-        UnregisterCommands();
-        _entMan.FlushEntities();
-        _stateMan.RequestStateChange<ReplayMainScreen>();
+        if (!TimeSpan.TryParse(args[0], out var target))
+        {
+            shell.WriteError(Loc.GetString("cmd-replay-error-time", ("time", args[0])));
+            return;
+        }
 
-        // Unload "uploaded" prototypes & resources.
-        _netResMan.ClearResources();
-        _protoMan.Reset();
+        index = Array.BinarySearch(CurrentReplay.ServerTime, target);
+
+        if (index < 0)
+            index = Math.Max(0, ~index - 1);
+
+        SetIndex(index, true);
     }
 }

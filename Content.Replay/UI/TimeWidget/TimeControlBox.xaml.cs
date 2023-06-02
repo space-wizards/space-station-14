@@ -23,6 +23,7 @@ public sealed partial class TimeControlBox : UIWidget
         RewindButton.OnPressed += (args) => con.ExecuteCommand($"{SkipCommand} -1");
         ForwardFiveButton.OnPressed += (args) => con.ExecuteCommand($"{SkipCommand} 5");
         RewindFiveButton.OnPressed += (args) => con.ExecuteCommand($"{SkipCommand} -5");
+        StopButton.OnPressed += (args) => con.ExecuteCommand(StopCommand);
 
         TickSlider.OnKeyBindUp += (args) =>
         {

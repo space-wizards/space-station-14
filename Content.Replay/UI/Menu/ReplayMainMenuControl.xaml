@@ -8,17 +8,17 @@
         <BoxContainer Name="VBox" Orientation="Vertical" StyleIdentifier="mainMenuVBox">
             <TextureRect Name="Logo" Stretch="KeepCentered" />
             <Label Name="Subtext" Access="Public" Text="{Loc 'replay-menu-subtext'}"/>
-            <Button Name="SelectButton"
-                    Access="Public"
-                    Text="{Loc 'replay-menu-select'}"
-                    TextAlign="Center"
-                    StyleIdentifier="mainMenu"/>
             <Button Name="LoadButton"
                     Access="Public"
                     Text="{Loc 'replay-menu-load'}"
                     TextAlign="Center"
                     StyleIdentifier="mainMenu"
                     Disabled="True"/>
+            <Button Name="SelectButton"
+                    Access="Public"
+                    Text="{Loc 'replay-menu-select'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu"/>
             <Button Name="FolderButton"
                     Access="Public"
                     Text="{Loc 'replay-menu-open'}"

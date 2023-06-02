@@ -1,3 +1,4 @@
+using Content.Replay.UI.Menu;
 using Robust.Client;
 using Robust.Client.Audio.Midi;
 using Robust.Client.Configuration;
@@ -58,7 +59,7 @@ public sealed partial class ReplayManager
         var checkpointIndex = Array.BinarySearch(data.Checkpoints, target);
 
         if (checkpointIndex < 0)
-            checkpointIndex = Math.Max(0, (~checkpointIndex) - 1);
+            checkpointIndex = Math.Max(0, ~checkpointIndex - 1);
 
         var checkpoint = data.Checkpoints[checkpointIndex];
         DebugTools.Assert(checkpoint.Index <= index);
@@ -109,5 +110,18 @@ public sealed partial class ReplayManager
         _confMan.OnValueChanged(CVars.CheckpointInterval, (value) => _checkpointInterval = value, true);
 
         _confMan.OnValueChanged(CVars.VisualEventThreshold, (value) => _visualEventThreshold = value, true);
+    }
+
+    public void StopReplay()
+    {
+        CurrentReplay = null;
+        _controller.TickUpdateOverride -= TickUpdateOverride;
+        UnregisterCommands();
+        _entMan.FlushEntities();
+        _stateMan.RequestStateChange<ReplayMainScreen>();
+
+        // Unload "uploaded" prototypes & resources.
+        _netResMan.ClearResources();
+        _protoMan.Reset();
     }
 }

@@ -27,8 +27,10 @@
                 <Button Name="PlayButton" Access="Public" Text="⏯" ToggleMode="True" />
                 <Button Name="ForwardButton" Access="Public" Text="⏵" />
                 <Button Name="ForwardFiveButton" Access="Public" Text="⏩" />
+                <Button Name="StopButton" Access="Public" Text="⏹" />
             </BoxContainer>
-            <CheckBox Name="DynamicScrubbingCheckbox" Access="Public" Text="Dynamic Scrubbing" Pressed="True" />
+            <CheckBox Name="DynamicScrubbingCheckbox" Access="Public"
+                      Text="{Loc 'replay-dynamic-scrubbing-label'}"/>
             <Label Name="CheckpointLabel" Access="Public"/>
         </BoxContainer>
     </PanelContainer>
