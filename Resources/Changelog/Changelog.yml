@@ -1,12 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: Chemists now get a medical survival box instead of a normal survival
-      box., type: Tweak}
-  - {message: 'Most medical techfab recipes have been changed to be available immediately,
-      rather than relying on science.', type: Tweak}
-  id: 3424
-  time: '2023-04-16T05:52:46.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: SpaceLube is slippery again, type: Fix}
@@ -2902,3 +2894,12 @@ Entries:
   - {message: Cowelding tool no longer heals blunt damage when lit, type: Fix}
   id: 3923
   time: '2023-06-02T00:53:25.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Avoid doing actions like placing wires if you fail to insert something
+      into a backpack., type: Tweak}
+  - {message: Improved error messages for storage items., type: Tweak}
+  - {message: Stacks don't get dropped on the ground anymore if they can't fit in
+      a storage item., type: Fix}
+  id: 3924
+  time: '2023-06-02T01:13:56.0000000+00:00'
