@@ -23,6 +23,7 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
     {
         base.Started(uid, comp, gameRule, args);
 
+        var stations = Station.GetStations().ToList();
         if (StationSystem.Stations.Count == 0)
         {
             Sawmill.Error("No stations exist, cannot spawn space ninja!");
@@ -30,11 +31,7 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
         }
 
         var station = _random.Pick(StationSystem.Stations);
-        if (!TryComp<StationDataComponent>(station, out var stationData))
-        {
-            Sawmill.Error("Chosen station isn't a station, cannot spawn space ninja!");
-            return;
-        }
+        var stationData = Comp<StationDataComponent>(station);
 
         // find a station grid
         var gridUid = StationSystem.GetLargestGrid(stationData);

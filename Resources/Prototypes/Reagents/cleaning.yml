@@ -27,6 +27,7 @@
   physicalDesc: reagent-physical-desc-lemony-fresh
   flavor: bitter
   color: "#c8ff69"
+  recognizable: true
   boilingPoint: 147.0 # Made this up, loosely based on bleach
   meltingPoint: -11.0
   tileReactions:
@@ -41,6 +42,7 @@
   physicalDesc: reagent-physical-desc-shiny
   flavor: funny
   color: "#77b58e"
+  recognizable: true
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
   tileReactions:

@@ -1,6 +1,6 @@
 - type: entity
   name: pinpointer
-  description: A handheld tracking device that locks onto certain signals.
+  description: A handheld tracking device. While typically far more capable, this one has been configured to lock onto certain signals.
   parent: BaseItem
   id: PinpointerBase
   abstract: true
@@ -43,3 +43,14 @@
   components:
   - type: Pinpointer
     component: NukeDisk
+    targetName: nuclear authentication disk
+
+- type: entity
+  name: universal pinpointer
+  description: A handheld tracking device that locks onto any physical entity while off.
+  id: PinpointerUniversal
+  parent: PinpointerBase
+  components:
+  - type: Pinpointer
+    updateTargetName: true
+    canRetarget: true

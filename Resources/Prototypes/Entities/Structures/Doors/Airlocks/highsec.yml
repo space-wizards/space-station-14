@@ -59,6 +59,7 @@
     fuel: 10
     time: 10
   - type: Airlock
+  - type: DoorBolt
   - type: Appearance
   - type: WiresVisuals
   - type: ApcPowerReceiver
