@@ -56,14 +56,14 @@ public sealed partial class ReplayManager
         _timing.CurTick += 1;
         _entMan.TickUpdate(args.DeltaSeconds, noPredictions: true);
 
-        if (!Playing || Steps == null)
+        if (!Playing || PlaybackLimit == null)
             return;
 
-        Steps = Steps - 1;
-        if (Steps <= 0)
+        PlaybackLimit -= 1;
+        if (PlaybackLimit <= 0)
         {
             Playing = false;
-            DebugTools.AssertNull(Steps);
+            DebugTools.AssertNull(PlaybackLimit);
         }
     }
 

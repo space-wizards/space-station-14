@@ -43,7 +43,13 @@ public sealed partial class ReplayManager
     private int _visualEventThreshold;
     public int ScrubbingIndex;
     public bool ActivelyScrubbing = false;
-    public int? Steps;
+
+    /// <summary>
+    /// Optional tick limit playback. E.g., if you want to advance the replay by 5 ticks, set this to 5 and set
+    /// <see cref="Playing"/> to true.
+    /// </summary>
+    public int? PlaybackLimit;
+
     private bool _playing;
 
     public CheckpointState GetLastCheckpoint(ReplayData data, int index)
@@ -75,7 +81,6 @@ public sealed partial class ReplayManager
         return checkpoint;
     }
 
-
     public bool Playing
     {
         get => _playing && !ActivelyScrubbing;
@@ -84,7 +89,7 @@ public sealed partial class ReplayManager
             if (_playing && !value)
             {
                 StopAudio();
-                Steps = null;
+                PlaybackLimit = null;
             }
 
             _playing = value;

@@ -13,12 +13,12 @@ public sealed partial class ReplayManager
     /// <summary>
     ///     Set the current replay index (aka, jump to a specific point in time).
     /// </summary>
-    private void SetIndex(int value, bool stopPlaying)
+    private void SetIndex(int value, bool pausePlayback)
     {
         if (CurrentReplay == null)
             return;
 
-        Playing &= !stopPlaying;
+        Playing &= !pausePlayback;
         value = Math.Clamp(value, 0, CurrentReplay.States.Count - 1);
         if (value == CurrentReplay.CurrentIndex)
             return;
