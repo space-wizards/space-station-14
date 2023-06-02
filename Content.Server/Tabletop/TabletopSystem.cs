@@ -182,16 +182,20 @@ namespace Content.Server.Tabletop
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
                 Act = () => OpenSessionFor(actor.PlayerSession, uid)
             };
-            args.Verbs.Add(playVerb);
 
             ActivationVerb dumpVerb = new()
             {
-                Act = () => DumpAllPiecesOut(uid, true),
-                Text = Loc.GetString("verb-common-close-ui"),
-                Icon = new SpriteSpecifier.Texture(
-                    new ("/Textures/Interface/VerbIcons/close.svg.192dpi.png"))
+                Act = () =>
+                {
+                    var dumped = DumpAllPiecesOut(uid, true);
+                    if (dumped)
+                        _popupSystem.PopupEntity(Loc.GetString("tabletop-pieces-fell"), uid, PopupType.Large);
+                },
+                Text = Loc.GetString("tabletop-verb-dump-pieces"),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/close.svg.192dpi.png"))
             };
 
+            args.Verbs.Add(playVerb);
             args.Verbs.Add(dumpVerb);
         }
 
