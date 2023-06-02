@@ -135,6 +135,12 @@ namespace Content.Server.Tabletop
             if (!TryComp<ItemComponent>(handEnt, out var item))
                 return;
 
+            if (component.Blacklist != null && component.Blacklist.IsValid(handEnt))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("tabletop-too-big"), uid);
+                return;
+            }
+
             if (item.Size > component.PieceMaxSize)
             {
                 _popupSystem.PopupEntity(Loc.GetString("tabletop-too-big"), uid);

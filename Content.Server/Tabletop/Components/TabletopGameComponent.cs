@@ -1,3 +1,5 @@
+using Content.Shared.Whitelist;
+
 namespace Content.Server.Tabletop.Components
 {
     /// <summary>
@@ -23,6 +25,9 @@ namespace Content.Server.Tabletop.Components
 
         [DataField("dumpPiecesOnPickup")]
         public bool DumpPiecesOnPickup { get; } = true;
+
+        [DataField("blacklist")]
+        public EntityWhitelist? Blacklist;
 
         [ViewVariables]
         public TabletopSession? Session { get; set; } = null;
