@@ -1,16 +1,4 @@
 - type: entity
-  id: BaseTabletopPiece
-  parent: BaseItem
-  abstract: true
-  components:
-  - type: TabletopDraggable
-  - type: Sprite
-    netsync: false
-    noRot: true
-    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
-  - type: Appearance
-
-- type: entity
   id: RedTabletopPiece
   name: red piece
   parent: BaseTabletopPiece

@@ -680,6 +680,12 @@
   id: Taser
 
 - type: Tag
+  id: TabletopBoard
+
+- type: Tag
+  id: TabletopPiece
+
+- type: Tag
   id: TimerBrigElectronics
 
 - type: Tag

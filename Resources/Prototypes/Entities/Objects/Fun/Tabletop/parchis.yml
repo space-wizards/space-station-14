@@ -19,11 +19,10 @@
 - type: entity
   id: ParchisBoardTabletop
   name: parchís
+  parent: BaseBoardTabletop
   noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/parchis_tabletop.rsi
     state: board
-    noRot: false
-    drawdepth: FloorTiles
 

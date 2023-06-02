@@ -19,13 +19,12 @@
 - type: entity
   id: CheckerBoardTabletop
   name: checkerboard
+  parent: BaseBoardTabletop
   noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
     state: chessboard_tabletop
-    noRot: false
-    drawdepth: FloorTiles
 
 - type: entity
   id: BaseCheckerPiece

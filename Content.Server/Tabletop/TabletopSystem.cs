@@ -1,11 +1,14 @@
+using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Popups;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -35,10 +38,53 @@ namespace Content.Server.Tabletop
             SubscribeLocalEvent<TabletopGamerComponent, ComponentShutdown>(OnGamerShutdown);
             SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
             SubscribeLocalEvent<TabletopGameComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<TabletopGameComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
 
             SubscribeNetworkEvent<TabletopRequestTakeOut>(OnTabletopRequestTakeOut);
 
             InitializeMap();
+        }
+
+        /// <summary>
+        /// Dumps all entities inside of the tabletop component out.
+        /// </summary>
+        /// <param name="tableUid">The tabletop component in question</param>
+        /// <param name="dumpTabletopPieces">Should we also dump out the pieces with the "TabletopPiece" tag?</param>
+        private bool DumpAllPiecesOut(EntityUid tableUid, bool dumpTabletopPieces = false)
+        {
+            if (!TryComp(tableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+                return false;
+
+            var piecesDumped = false;
+
+            foreach (var entity in session.Entities.ToList())
+            {
+                if (TryComp<TagComponent>(entity, out var tag))
+                {
+                    if (tag.Tags.Contains("TabletopPiece") && !dumpTabletopPieces && !tag.Tags.Contains("TabletopBoard"))
+                        continue;
+                }
+
+                // Find the entity, remove it from the session and set it's position to the tabletop
+                session.Entities.Remove(entity);
+                RemComp<TabletopDraggableComponent>(entity);
+
+                // Get the transform of the object so that we can manipulate it
+                var xform = Transform(tableUid);
+                _transformSystem.SetParent(entity, _mapManager.GetMapEntityId(xform.MapID));
+                _transformSystem.SetWorldPosition(entity, xform.MapPosition.Position);
+
+                piecesDumped = true;
+            }
+
+            return piecesDumped;
+        }
+
+        private void OnPickupAttempt(EntityUid uid, TabletopGameComponent component, GettingPickedUpAttemptEvent args)
+        {
+            var dumped = DumpAllPiecesOut(uid);
+            if (dumped)
+                _popupSystem.PopupEntity(Loc.GetString("tabletop-pieces-fell"), uid, PopupType.Large);
         }
 
         private void OnTabletopRequestTakeOut(TabletopRequestTakeOut msg, EntitySessionEventArgs args)
@@ -63,8 +109,8 @@ namespace Content.Server.Tabletop
 
             // Get the transform of the object so that we can manipulate it
             var xform = Transform(msg.TableUid);
-            _transformSystem.SetWorldPosition(msg.Entity, xform.MapPosition.Position);
             _transformSystem.SetParent(result, _mapManager.GetMapEntityId(xform.MapID));
+            _transformSystem.SetWorldPosition(msg.Entity, xform.MapPosition.Position);
         }
 
         private void OnInteractUsing(EntityUid uid, TabletopGameComponent component, InteractUsingEvent args)
@@ -127,11 +173,23 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
-            ActivationVerb verb = new();
-            verb.Text = Loc.GetString("tabletop-verb-play-game");
-            verb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/die.svg.192dpi.png"));
-            verb.Act = () => OpenSessionFor(actor.PlayerSession, uid);
-            args.Verbs.Add(verb);
+            ActivationVerb playVerb = new()
+            {
+                Text = Loc.GetString("tabletop-verb-play-game"),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
+                Act = () => OpenSessionFor(actor.PlayerSession, uid)
+            };
+            args.Verbs.Add(playVerb);
+
+            ActivationVerb dumpVerb = new()
+            {
+                Act = () => DumpAllPiecesOut(uid, true),
+                Text = Loc.GetString("verb-common-close-ui"),
+                Icon = new SpriteSpecifier.Texture(
+                    new ("/Textures/Interface/VerbIcons/close.svg.192dpi.png"))
+            };
+
+            args.Verbs.Add(dumpVerb);
         }
 
         private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateInWorldEvent args)

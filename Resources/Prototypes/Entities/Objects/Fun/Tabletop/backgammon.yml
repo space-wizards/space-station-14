@@ -17,10 +17,9 @@
 - type: entity
   id: BackgammonBoardTabletop
   name: backgammon
+  parent: BaseBoardTabletop
   noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/backgammon_tabletop.rsi
     state: backgammonBoard
-    noRot: false
-    drawdepth: FloorTiles

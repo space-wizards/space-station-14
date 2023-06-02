@@ -19,25 +19,18 @@
 - type: entity
   id: ChessBoardTabletop
   name: chessboard
+  parent: BaseBoardTabletop
   noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
     state: chessboard_tabletop
-    noRot: false
-    drawdepth: FloorTiles
 
 ## Chess pieces
 - type: entity
   id: BaseChessPiece
-  parent: BaseItem
+  parent: BaseTabletopPiece
   abstract: true
-  components:
-  - type: TabletopDraggable
-  - type: Sprite
-    netsync: false
-    noRot: true
-  - type: Appearance
 
 # White pieces
 - type: entity
