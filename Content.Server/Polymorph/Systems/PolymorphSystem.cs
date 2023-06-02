@@ -57,6 +57,8 @@ namespace Content.Server.Polymorph.Systems
 
             InitializeCollide();
             InitializeMap();
+
+            _saw = Logger.GetSawmill("polymorph");
         }
 
         private void OnStartup(EntityUid uid, PolymorphableComponent component, ComponentStartup args)
@@ -85,7 +87,7 @@ namespace Content.Server.Polymorph.Systems
             if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
             {
                 // warning instead of error because of the all-comps one entity test.
-                _saw.Warning($"{nameof(PolymorphSystem)} encountered an improperly set up polymorph component while initializing. Entity {ToPrettyString(uid)}. Prototype: {component?.Prototype}");
+                _saw.Warning($"{nameof(PolymorphSystem)} encountered an improperly set up polymorph component while initializing. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
                 RemCompDeferred(uid, component);
                 return;
             }
