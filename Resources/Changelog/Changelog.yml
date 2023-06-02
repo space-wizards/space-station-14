@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: SpaceLube is slippery again, type: Fix}
-  id: 3425
-  time: '2023-04-16T05:53:47.0000000+00:00'
 - author: Nimfar
   changes:
   - {message: 'Gun safe for SO, now weapons can be stored in even more security',
@@ -2903,3 +2898,8 @@ Entries:
       a storage item., type: Fix}
   id: 3924
   time: '2023-06-02T01:13:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added bruise packs and ointment to medical techfab., type: Add}
+  id: 3925
+  time: '2023-06-02T01:36:33.0000000+00:00'
