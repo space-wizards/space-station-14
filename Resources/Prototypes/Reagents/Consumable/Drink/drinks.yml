@@ -369,7 +369,7 @@
   name: reagent-name-kira-special
   parent: BaseDrink
   desc: reagent-desc-kira-special
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sweet
   color: "#CCCC99"
   metamorphicSprite:
@@ -381,7 +381,7 @@
   name: reagent-name-rewriter
   parent: BaseDrink
   desc: reagent-desc-rewriter
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sweet
   color: "#485000"
   metamorphicSprite:
