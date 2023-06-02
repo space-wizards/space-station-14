@@ -20,6 +20,8 @@
     - type: Eye
       autoExpose: # Human night vision
         max: 10
+      nightVision:
+        color: "#B0D0FFFF"
     - type: CameraRecoil
     - type: Examiner
     - type: CanHostGuardian

@@ -146,6 +146,11 @@
   - type: Alerts
   - type: NameIdentifier
     group: GenericNumber
+  - type: Eye
+    autoExpose: # Human night vision
+      max: 10
+    nightVision:
+      color: "#E0FFC0FF"
   - type: SlowOnDamage
     speedModifierThresholds:
       60: 0.7

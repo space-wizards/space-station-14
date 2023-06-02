@@ -24,6 +24,7 @@
       nightVision:
         range: 0.8
         power: 0.4
+        color: "#FFE0E0FF"
     - type: CameraRecoil
     - type: Examiner
     - type: CanHostGuardian

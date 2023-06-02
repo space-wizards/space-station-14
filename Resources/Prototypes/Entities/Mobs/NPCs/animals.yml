@@ -1433,6 +1433,17 @@
     interactFailureString: petting-failure-generic
   - type: NoSlip
   - type: Spider
+  - type: Eye
+    autoExpose: # Spider vision
+      max: 12
+      min: 1.2
+      rampUp: 0.05
+      rampUpNight: 0.01
+    nightVision:
+      color: "#FFB0B0FF"
+      minExposure: 0.9
+      range: 0.4
+      power: 0.3
   - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 150
@@ -1503,6 +1514,15 @@
     spawned:
     - id: FoodMeat
       amount: 3
+  - type: Eye
+    autoExpose: # Animal Night vision
+      max: 12
+      min: 1.2
+      rampUp: 0.05
+      rampUpNight: 0.01
+    nightVision:
+      range: 0.5
+      power: 0.4
   - type: InteractionPopup
     successChance: 0.2 # Low when undomesticated.
     interactSuccessString: petting-success-possum # Possums don't really make much noise when they're happy. They make clicking noises as a mating call, but that is NOT the same thing!
@@ -1568,6 +1588,16 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Eye
+    autoExpose: # Animal Night vision
+      max: 12
+      min: 1.2
+      rampUp: 0.05
+      rampUpNight: 0.01
+    nightVision:
+      color: "#E0FFC0FF"
+      range: 0.5
+      power: 0.4
 
 - type: entity
   name: fox
@@ -1626,6 +1656,16 @@
       gender: epicene
   - type: Bloodstream
     bloodMaxVolume: 100
+  - type: Eye
+    autoExpose: # Animal Night vision
+      max: 12
+      min: 1.2
+      rampUp: 0.05
+      rampUpNight: 0.01
+    nightVision:
+      color: "#E0FFC0FF"
+      range: 0.5
+      power: 0.4
 
 - type: entity
   name: corgi
@@ -1688,6 +1728,16 @@
   - type: Puller
   - type: MobPrice
     price: 200
+  - type: Eye
+    autoExpose: # Animal Night vision
+      max: 12
+      min: 1.2
+      rampUp: 0.05
+      rampUpNight: 0.01
+    nightVision:
+      color: "#E0FFC0FF"
+      range: 0.5
+      power: 0.4
 
 - type: entity
   name: corrupted corgi
@@ -1839,6 +1889,19 @@
       gender: epicene
   - type: MobPrice
     price: 200
+  - type: Eye
+    autoExpose: # Powerful animal Night vision
+      max: 15
+      min: 0.8
+      rampDown: 0.2
+      rampNight: 1.0
+      rampUp: 0.05
+      rampUpNight: 0.01
+    nightVision:
+      color: "#E7FFE0FF"
+      minExposure: 0.9
+      range: 0.6
+      power: 0.3
 
 - type: entity
   name: calico cat

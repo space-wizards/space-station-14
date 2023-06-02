@@ -32,6 +32,8 @@
       rampUp: 0.1
       rampUpNight: 0.01
     nightVision:
+      color: "#C0E0FFFF"
+      minExposure: 1.2
       range: 1.0
       power: 1.0
   - type: Input

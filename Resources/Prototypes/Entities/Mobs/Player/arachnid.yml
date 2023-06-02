@@ -26,9 +26,13 @@
         Asphyxiation: -0.5 # Recovery will suck without chems
   - type: Alerts
   - type: Actions
-  - type: Eye
-    autoExpose: # Some night vision
+    autoExpose: # Enhanced Arachnid night vision
       max: 12
+      rampUp: 0.05
+      rampUpNight: 0.01
+    nightVision:
+      range: 0.8
+      power: 0.4
   - type: CameraRecoil
   - type: Examiner
   - type: CanHostGuardian

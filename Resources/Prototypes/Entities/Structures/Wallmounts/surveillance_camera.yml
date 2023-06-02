@@ -21,6 +21,7 @@
       rampUp: 0.05
       rampUpNight: 0.01
     nightVision:
+      color: "#D0FFB0FF"
       range: 0.8
       power: 0.4
   - type: WiredNetworkConnection
