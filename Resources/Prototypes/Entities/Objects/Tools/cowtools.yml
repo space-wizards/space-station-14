@@ -134,7 +134,7 @@
     litMeleeDamageBonus:
       types: # When lit, negate standard melee damage and replace with heat
         Heat: 0.5
-        Blunt: -10
+        Blunt: -5
 
 - type: entity
   name: milkalyzer
