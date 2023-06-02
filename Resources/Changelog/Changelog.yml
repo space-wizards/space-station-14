@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: we Lied. Water is slippery still., type: Add}
-  id: 3423
-  time: '2023-04-16T02:42:55.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Chemists now get a medical survival box instead of a normal survival
@@ -2902,3 +2897,8 @@ Entries:
       range', type: Tweak}
   id: 3922
   time: '2023-06-02T00:50:17.0000000+00:00'
+- author: icesickleone
+  changes:
+  - {message: Cowelding tool no longer heals blunt damage when lit, type: Fix}
+  id: 3923
+  time: '2023-06-02T00:53:25.0000000+00:00'
