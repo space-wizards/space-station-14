@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Client.Message;
 using Content.Client.UserInterface.Systems.EscapeMenu;
-using Content.Replay.Manager;
 using Robust.Client;
 using Robust.Client.Replays.Loading;
 using Robust.Client.ResourceManagement;
@@ -24,7 +23,6 @@ namespace Content.Replay.UI.Menu;
 public sealed class ReplayMainScreen : State
 {
     [Dependency] private readonly IResourceManager _resMan = default!;
-    [Dependency] private readonly ReplayManager _replayMan = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IReplayLoadManager _loadMan = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -188,7 +186,7 @@ public sealed class ReplayMainScreen : State
     private void OnLoadpressed(BaseButton.ButtonEventArgs obj)
     {
         if (_selected.HasValue)
-            _replayMan.LoadReplay(_resMan.UserData, _selected.Value);
+            _loadMan.LoadAndStartReplay(_resMan.UserData, _selected.Value);
     }
 
     private void RefreshReplays()

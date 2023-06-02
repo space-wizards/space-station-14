@@ -10,6 +10,7 @@ using Robust.Shared.Map.Components;
 using System.Linq;
 using Content.Shared.Movement.Systems;
 using Robust.Client;
+using Robust.Client.Replays.Playback;
 using Robust.Shared.Utility;
 
 namespace Content.Replay.Observer;
@@ -31,6 +32,9 @@ public sealed partial class ReplayObserverSystem : EntitySystem
     [Dependency] private readonly SharedMoverController _mover = default!;
     [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly SharedContentEyeSystem _eye = default!;
+    [Dependency] private readonly IReplayPlaybackManager _replayPlayback = default!;
+
+    private ObserverData? _oldPosition;
 
     public override void Initialize()
     {
@@ -43,6 +47,21 @@ public sealed partial class ReplayObserverSystem : EntitySystem
         InitializeBlockers();
         InitializeMovement();
         _conHost.RegisterCommand("observe", ObserveCommand);
+
+        _replayPlayback.BeforeSetTick += OnBeforeSetTick;
+        _replayPlayback.AfterSetTick += OnAfterSetTick;
+    }
+
+    private void OnBeforeSetTick()
+    {
+        _oldPosition = GetObserverPosition();
+    }
+
+    private void OnAfterSetTick()
+    {
+        if (_oldPosition != null)
+            SetObserverPosition(_oldPosition.Value);
+        _oldPosition = null;
     }
 
     public override void Shutdown()
@@ -191,7 +210,6 @@ public sealed partial class ReplayObserverSystem : EntitySystem
 
         var old = _player.LocalPlayer.ControlledEntity;
 
-        // TODO use an actual prototype.
         var ent = Spawn("MobObserver", coords);
         _eye.SetMaxZoom(ent, Vector2.One * 5);
         EnsureComp<ReplayObserverComponent>(ent);

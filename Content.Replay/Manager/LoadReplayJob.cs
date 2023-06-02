@@ -2,21 +2,20 @@ using Robust.Shared.ContentPack;
 using System.Threading.Tasks;
 using Content.Replay.UI.Loading;
 using Robust.Client.Replays.Loading;
-using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
 namespace Content.Replay.Manager;
 
 public sealed class ContentLoadReplayJob : LoadReplayJob
 {
-    private readonly LoadingScreen<ReplayData> _screen;
+    private readonly LoadingScreen<bool> _screen;
 
     public ContentLoadReplayJob(
         float maxTime,
         IWritableDirProvider dir,
         ResPath path,
         IReplayLoadManager loadMan,
-        LoadingScreen<ReplayData> screen)
+        LoadingScreen<bool> screen)
         : base(maxTime, dir, path, loadMan)
     {
         _screen = screen;

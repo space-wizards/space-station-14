@@ -1,7 +1,7 @@
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
-using Content.Replay.UI.TimeWidget;
+using Robust.Client.Replays.UI;
 using Robust.Shared.Analyzers;
 using static Robust.Client.UserInterface.Controls.LayoutContainer;
 
@@ -22,9 +22,7 @@ public class ReplaySpectateEntityState : GameplayState
             return;
 
         screen.ShowWidget<GameTopMenuBar>(false);
-
-        var box = screen.GetOrAddWidget<TimeControlBox>();
-        SetAnchorAndMarginPreset(box, LayoutPreset.TopLeft, margin: 10);
+        SetAnchorAndMarginPreset(screen.GetOrAddWidget<ReplayControlWidget>(), LayoutPreset.TopLeft, margin: 10);
 
         foreach (var chatbox in UserInterfaceManager.GetUIController<ChatUIController>().Chats)
         {
@@ -37,7 +35,7 @@ public class ReplaySpectateEntityState : GameplayState
         var screen = UserInterfaceManager.ActiveScreen;
         if (screen != null)
         {
-            screen.RemoveWidget<TimeControlBox>();
+            screen.RemoveWidget<ReplayControlWidget>();
             screen.ShowWidget<GameTopMenuBar>(true);
         }
 
