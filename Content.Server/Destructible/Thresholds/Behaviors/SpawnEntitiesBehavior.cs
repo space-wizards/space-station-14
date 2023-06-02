@@ -1,5 +1,4 @@
 using Content.Server.Forensics;
-using Content.Server.Shuttles.Components;
 using Content.Server.Stack;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
@@ -45,7 +44,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     system.StackSystem.SetCount(spawned, count);
 
                     TransferForensics(spawned, system, owner);
-                    AvoidSpaceGarbageCollision(spawned, system, owner);
                 }
                 else
                 {
@@ -54,7 +52,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                         var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
 
                         TransferForensics(spawned, system, owner);
-                        AvoidSpaceGarbageCollision(spawned, system, owner);
                     }
                 }
             }
@@ -73,14 +70,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 return;
             comp.Fingerprints = forensicsComponent.Fingerprints;
             comp.Fibers = forensicsComponent.Fibers;
-        }
-
-        private void AvoidSpaceGarbageCollision(EntityUid spawned, DestructibleSystem system, EntityUid owner)
-        {
-            if (system.EntityManager.TryGetComponent<SpaceGarbageComponent>(spawned, out var spaceGarbage))
-            {
-                spaceGarbage.Spawner = owner;
-            }
         }
     }
 }

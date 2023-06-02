@@ -2,6 +2,7 @@ using Content.Server.Shuttles.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -10,11 +11,12 @@ namespace Content.Server.Shuttles.Systems;
 /// </summary>
 public sealed class SpaceGarbageSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<SpaceGarbageComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<SpaceGarbageComponent, PreventCollideEvent>(PreventCollision);
     }
 
     private void OnCollide(EntityUid uid, SpaceGarbageComponent component, ref StartCollideEvent args)
@@ -26,14 +28,8 @@ public sealed class SpaceGarbageSystem : EntitySystem
 
         if (ourXform.GridUid == otherXform.GridUid) return;
 
-        QueueDel(uid);
-    }
+        if (component.CreationTick == _gameTiming.CurTick) return;
 
-    private void PreventCollision(EntityUid uid, SpaceGarbageComponent component, ref PreventCollideEvent args)
-    {
-        if (args.OtherBody.Owner == component.Spawner)
-        {
-            args.Cancelled = true;
-        }
+        QueueDel(uid);
     }
 }
