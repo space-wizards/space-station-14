@@ -42,7 +42,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
 
-        private readonly ISawmill _saw = default!;
+        private ISawmill _sawmill = default!;
 
         public override void Initialize()
         {
@@ -58,7 +58,7 @@ namespace Content.Server.Polymorph.Systems
             InitializeCollide();
             InitializeMap();
 
-            _saw = Logger.GetSawmill("polymorph");
+            _sawmill = Logger.GetSawmill("polymorph");
         }
 
         private void OnStartup(EntityUid uid, PolymorphableComponent component, ComponentStartup args)
@@ -87,7 +87,7 @@ namespace Content.Server.Polymorph.Systems
             if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
             {
                 // warning instead of error because of the all-comps one entity test.
-                _saw.Warning($"{nameof(PolymorphSystem)} encountered an improperly set up polymorph component while initializing. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
+                _sawmill.Warning($"{nameof(PolymorphSystem)} encountered an improperly set up polymorph component while initializing. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
                 RemCompDeferred(uid, component);
                 return;
             }
@@ -111,7 +111,7 @@ namespace Content.Server.Polymorph.Systems
         {
             if (!_proto.TryIndex<PolymorphPrototype>(comp.Prototype, out var proto))
             {
-                _saw.Error("Invalid polymorph prototype {comp.Prototype}");
+                _sawmill.Error("Invalid polymorph prototype {comp.Prototype}");
                 return;
             }
 
@@ -126,7 +126,7 @@ namespace Content.Server.Polymorph.Systems
         {
             if (!_proto.TryIndex<PolymorphPrototype>(comp.Prototype, out var proto))
             {
-                _saw.Error("Invalid polymorph prototype {comp.Prototype}");
+                _sawmill.Error("Invalid polymorph prototype {comp.Prototype}");
                 return;
             }
 
@@ -146,7 +146,7 @@ namespace Content.Server.Polymorph.Systems
         {
             if (!_proto.TryIndex<PolymorphPrototype>(id, out var proto))
             {
-                _saw.Error("Invalid polymorph prototype {id}");
+                _sawmill.Error("Invalid polymorph prototype {id}");
                 return null;
             }
 
@@ -260,7 +260,7 @@ namespace Content.Server.Polymorph.Systems
 
             if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
             {
-                _saw.Error($"{nameof(PolymorphSystem)} encountered an improperly initialized polymorph component while reverting. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
+                _sawmill.Error($"{nameof(PolymorphSystem)} encountered an improperly initialized polymorph component while reverting. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
                 return;
             }
 
@@ -328,7 +328,7 @@ namespace Content.Server.Polymorph.Systems
         {
             if (!_proto.TryIndex<PolymorphPrototype>(id, out var polyproto))
             {
-                _saw.Error("Invalid polymorph prototype");
+                _sawmill.Error("Invalid polymorph prototype");
                 return;
             }
 
@@ -377,7 +377,7 @@ namespace Content.Server.Polymorph.Systems
 
                 if (!_proto.TryIndex(comp.Prototype, out PolymorphPrototype? proto))
                 {
-                    _saw.Error($"{nameof(PolymorphSystem)} encountered an improperly initialized polymorph component while updating. Entity {ToPrettyString(uid)}. Prototype: {comp.Prototype}");
+                    _sawmill.Error($"{nameof(PolymorphSystem)} encountered an improperly initialized polymorph component while updating. Entity {ToPrettyString(uid)}. Prototype: {comp.Prototype}");
                     RemCompDeferred(uid, comp);
                     continue;
                 }
