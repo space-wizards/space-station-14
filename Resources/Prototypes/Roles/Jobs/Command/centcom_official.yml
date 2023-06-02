@@ -22,5 +22,5 @@
     outerClothing: ClothingOuterVestKevlar
     id: CentcomPDA
     ears: ClothingHeadsetAltCommand
-    pocket1: Paper
-    pocket2: Pen
+    pocket1: PaperOffice
+    pocket2: PenCentcom

@@ -27,15 +27,12 @@ namespace Content.IntegrationTests.Tests
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Destructive = true});
             var server = pairTracker.Pair.Server;
 
-            IEntityManager entityMan = null;
-            var cfg = server.ResolveDependency<IConfigurationManager>();
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
+            var entityMan = server.ResolveDependency<IEntityManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var prototypeMan = server.ResolveDependency<IPrototypeManager>();
 
             await server.WaitPost(() =>
             {
-                entityMan = IoCManager.Resolve<IEntityManager>();
-                var mapManager = IoCManager.Resolve<IMapManager>();
-                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p=>!p.Abstract)
@@ -65,7 +62,6 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -75,16 +71,13 @@ namespace Content.IntegrationTests.Tests
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Destructive = true});
             var server = pairTracker.Pair.Server;
             var map = await PoolManager.CreateTestMap(pairTracker);
-            IEntityManager entityMan = null;
 
-            var cfg = server.ResolveDependency<IConfigurationManager>();
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
+            var entityMan = server.ResolveDependency<IEntityManager>();
+            var prototypeMan = server.ResolveDependency<IPrototypeManager>();
 
             await server.WaitPost(() =>
             {
-                entityMan = IoCManager.Resolve<IEntityManager>();
 
-                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p=>!p.Abstract)
@@ -109,7 +102,6 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -129,7 +121,6 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
             var sEntMan = server.ResolveDependency<IEntityManager>();
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
             Assert.That(cfg.GetCVar(CVars.NetPVS), Is.False);
 
             var protoIds = prototypeMan
@@ -178,7 +169,6 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(sEntMan.EntityCount, Is.Zero);
             });
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 

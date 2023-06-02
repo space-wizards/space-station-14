@@ -451,6 +451,50 @@
         Capacitor: 5
 
 - type: entity
+  id: CellRechargerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cell recharger machine board
+  description: A machine printed circuit board for a cell recharger.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+    - type: MachineBoard
+      prototype: PowerCellRecharger
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        Cable: 5
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 30
+        Plastic: 30
+    - type: StaticPrice
+      price: 15
+
+- type: entity
+  id: WeaponCapacitorRechargerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: recharger machine board
+  description: A machine printed circuit board for a recharger.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+    - type: MachineBoard
+      prototype: WeaponCapacitorRecharger
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        CableMV: 5
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 30
+        Plastic: 30
+    - type: StaticPrice
+      price: 15
+
+- type: entity
   id: SubstationMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: substation machine board
