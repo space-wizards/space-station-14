@@ -1,7 +1,7 @@
 - type: gameMap
   id: Saltern
   mapName: 'Saltern'
-  mapPath: /Maps/saltern.yml
+  mapPath: /Maps/saltern_imperial.yml
   minPlayers: 0
   maxPlayers: 35
   fallback: true
@@ -46,3 +46,4 @@
         ServiceWorker: [ 2, 2 ]
         SecurityCadet: [ 2, 2 ]
         Warden: [ 1, 1 ]
+        IAA: [ 1, 1 ]
