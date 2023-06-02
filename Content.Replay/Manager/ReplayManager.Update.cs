@@ -35,7 +35,7 @@ public sealed partial class ReplayManager
             Playing = false;
 
         // TODO REPLAYS do we actually need to do this?
-        // if not, we can probably remove all of the UpdateFullRep() calls
+        // if not, we can probably remove all of the UpdateFullRep() calls, which speeds things up significantly.
         _gameState.ResetPredictedEntities();
 
         if (Playing)
@@ -74,18 +74,19 @@ public sealed partial class ReplayManager
 
         foreach (var message in replayMessageList.Messages)
         {
-            // TODO REPLAYS find a better/more extensible way of handling messages than this giant switch statement.
+            if (message is CvarChangeMsg cvars)
+            {
+                _netMan.DispatchLocalNetMessage(new MsgConVars { Tick = _timing.CurTick, NetworkedVars = cvars.ReplicatedCvars });
+                continue;
+            }
+
+            DebugTools.Assert(message is not ReplayPrototypeUploadMsg && message is not SharedNetworkResourceManager.ReplayResourceUploadMsg);
+
             switch (message)
             {
-                case ReplayPrototypeUploadMsg:
-                case SharedNetworkResourceManager.ReplayResourceUploadMsg:
-                    break; // TODO REPLAYS record these in a separate list.
                 case ChatMessage chat:
                     // Just pass on the chat message to the UI controller, but skip speech-bubbles if we are fast-forwarding.
                     _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: !skipEffectEvents);
-                    break;
-                case CvarChangeMsg cvars:
-                    _netMan.DispatchLocalNetMessage(new MsgConVars { Tick = _timing.CurTick, NetworkedVars = cvars.ReplicatedCvars });
                     break;
                 case RoundEndMessageEvent:
 

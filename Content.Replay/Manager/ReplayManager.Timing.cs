@@ -11,7 +11,7 @@ namespace Content.Replay.Manager;
 public sealed partial class ReplayManager
 {
     /// <summary>
-    ///     Set the current replay index (aka, jump to a specific point in time).
+    /// Set the current replay index (aka, jump to a specific point in time).
     /// </summary>
     private void SetIndex(int value, bool pausePlayback)
     {
@@ -66,7 +66,7 @@ public sealed partial class ReplayManager
     }
 
     /// <summary>
-    ///     This function resets the game state to some checkpoint state. This is effectively what enables rewinding time.
+    /// This function resets the game state to some checkpoint state. This is effectively what enables rewinding time.
     /// </summary>
     /// <param name="index">The target tick/index. The actual checkpoint will have an index less than or equal to this.</param>
     /// <param name="flushEntities">Whether to delete all entities</param>
