@@ -237,7 +237,7 @@ public sealed partial class ParticleAcceleratorSystem
 
     private void UpdateAppearance(EntityUid uid, ParticleAcceleratorControlBoxComponent? comp = null, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref comp, ref appearance))
+        if (!Resolve(uid, ref comp))
             return;
 
         _appearanceSystem.SetData(

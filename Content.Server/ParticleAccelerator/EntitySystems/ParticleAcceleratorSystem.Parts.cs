@@ -131,14 +131,12 @@ public sealed partial class ParticleAcceleratorSystem
             if (TryComp(entity, out comp))
             {
                 part = entity;
-                // Spawn("JetpackEffect", new EntityCoordinates(uid, coordinates + new Vector2(0.5f, 0.5f)));
                 return true;
             }
         }
 
         part = null;
         comp = null;
-        // Spawn("HotPotatoEffect", new EntityCoordinates(uid, coordinates + new Vector2(0.5f, 0.5f)));
         return false;
     }
 
