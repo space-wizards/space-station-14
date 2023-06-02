@@ -1328,6 +1328,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AfkTime =
             CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
 
+        public static readonly CVarDef<bool> AfkTimeKickEnabled =
+            CVarDef.Create("afk.time_kick_enabled", true, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> AfkTimeKick =
+            CVarDef.Create("afk.time_kick", 600f, CVar.SERVERONLY);
+
         /*
          * IC
          */

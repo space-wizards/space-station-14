@@ -80,6 +80,11 @@ public sealed class AFKSystem : EntitySystem
             var pSession = (IPlayerSession) session;
             var isAfk = _afkManager.IsAfk(pSession);
 
+            if (_afkManager.IsAfkKick(pSession))
+            {
+                pSession.ConnectedClient.Disconnect(Loc.GetString("kick-afk"), true);
+                continue;
+            }
             if (isAfk && _afkPlayers.Add(pSession))
             {
                 var ev = new AFKEvent(pSession);

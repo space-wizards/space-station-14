@@ -38,3 +38,4 @@ panic-bunker-account-reason-overall =
         [few] часа
        *[other] часов
     }.
+kick-afk = Вы были кикнуты за AFK

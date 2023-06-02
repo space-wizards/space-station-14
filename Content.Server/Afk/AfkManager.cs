@@ -5,6 +5,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Input;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Afk
@@ -21,6 +22,8 @@ namespace Content.Server.Afk
         /// <param name="player">The player to check.</param>
         /// <returns>True if the player is AFK, false otherwise.</returns>
         bool IsAfk(IPlayerSession player);
+
+        bool IsAfkKick(IPlayerSession player);
 
         /// <summary>
         /// Resets AFK status for the player as if they just did an action and are definitely not AFK.
@@ -71,6 +74,18 @@ namespace Content.Server.Afk
                 return true;
 
             var timeOut = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AfkTime));
+            return _gameTiming.RealTime - time > timeOut;
+        }
+
+        public bool IsAfkKick(IPlayerSession player)
+        {
+            if (!_cfg.GetCVar(CCVars.AfkTimeKickEnabled))
+                return false;
+            if (!_lastActionTimes.TryGetValue(player, out var time))
+                // Some weird edge case like disconnected clients. Just say true I guess.
+                return true;
+
+            var timeOut = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AfkTimeKick));
             return _gameTiming.RealTime - time > timeOut;
         }
 

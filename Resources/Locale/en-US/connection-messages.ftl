@@ -37,3 +37,4 @@ panic-bunker-account-denied = This server is in panic bunker mode. New connectio
 panic-bunker-account-denied-reason = This server is in panic bunker mode and you were rejected. Reason: "{$reason}"
 panic-bunker-account-reason-account = The account's age must be older than {$minutes} minutes
 panic-bunker-account-reason-overall = The account's overall playtime must be greater than {$hours} hours
+kick-afk = You were kicked for AFK
