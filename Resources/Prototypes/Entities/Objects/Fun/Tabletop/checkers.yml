@@ -28,14 +28,8 @@
 
 - type: entity
   id: BaseCheckerPiece
-  parent: BaseItem
+  parent: BaseTabletopPiece
   noSpawn: true
-  components:
-  - type: TabletopDraggable
-  - type: Sprite
-    netsync: false
-    noRot: true
-  - type: Appearance
 
 # The pieces
 - type: entity

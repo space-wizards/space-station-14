@@ -21,6 +21,9 @@ namespace Content.Server.Tabletop.Components
         [DataField("cameraZoom")]
         public Vector2 CameraZoom { get; } = Vector2.One;
 
+        [DataField("dumpPiecesOnPickup")]
+        public bool DumpPiecesOnPickup { get; } = true;
+
         [ViewVariables]
         public TabletopSession? Session { get; set; } = null;
     }

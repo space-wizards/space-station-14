@@ -84,6 +84,7 @@
 
 # Background entity (actually shown in the board)
 - type: entity
+  parent: BaseBoardTabletop
   id: GrassBoardTabletop
   name: grass battlemap
   noSpawn: true
@@ -91,8 +92,11 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/grassbm_tabletop.rsi
     state: tabletop
+    noRot: false
+    drawdepth: FloorTiles
 
 - type: entity
+  parent: BaseBoardTabletop
   id: MoonBoardTabletop
   name: grass battlemap
   noSpawn: true
@@ -102,6 +106,7 @@
     state: tabletop
 
 - type: entity
+  parent: BaseBoardTabletop
   id: SandBoardTabletop
   name: sand battlemap
   noSpawn: true
@@ -111,6 +116,7 @@
     state: tabletop
 
 - type: entity
+  parent: BaseBoardTabletop
   id: SnowBoardTabletop
   name: snow battlemap
   noSpawn: true
@@ -120,8 +126,8 @@
     state: tabletop
 
 - type: entity
-  id: ShipBoardTabletop
   parent: BaseBoardTabletop
+  id: ShipBoardTabletop
   name: ship battlemap
   noSpawn: true
   components:

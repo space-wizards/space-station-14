@@ -61,7 +61,7 @@ namespace Content.Server.Tabletop
             {
                 if (TryComp<TagComponent>(entity, out var tag))
                 {
-                    if (tag.Tags.Contains("TabletopPiece") && !dumpTabletopPieces && !tag.Tags.Contains("TabletopBoard"))
+                    if ((tag.Tags.Contains("TabletopPiece") && !dumpTabletopPieces) || tag.Tags.Contains("TabletopBoard"))
                         continue;
                 }
 
@@ -82,6 +82,9 @@ namespace Content.Server.Tabletop
 
         private void OnPickupAttempt(EntityUid uid, TabletopGameComponent component, GettingPickedUpAttemptEvent args)
         {
+            if (!component.DumpPiecesOnPickup)
+                return;
+
             var dumped = DumpAllPiecesOut(uid);
             if (dumped)
                 _popupSystem.PopupEntity(Loc.GetString("tabletop-pieces-fell"), uid, PopupType.Large);
