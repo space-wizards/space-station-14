@@ -1,8 +1,9 @@
 using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using System.Diagnostics.CodeAnalysis;
 
@@ -13,7 +14,6 @@ public sealed partial class ParticleAcceleratorSystem
 {
     private void InitializePartSystem()
     {
-        SubscribeLocalEvent<ParticleAcceleratorPartComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<ParticleAcceleratorPartComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<ParticleAcceleratorPartComponent, MoveEvent>(OnMoveEvent);
         SubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
@@ -77,7 +77,7 @@ public sealed partial class ParticleAcceleratorSystem
 
         // Calculate offsets for each of the parts of the PA.
         // These are all done relative to the fuel chamber BC that is basically the center of the machine.
-        var positionFuelChamber = (Vector2i) fuelXform.LocalPosition;                                   //       // 
+        var positionFuelChamber = grid.TileIndicesFor(fuelXform.Coordinates);                           //       // 
         var positionEndCap = positionFuelChamber + (Vector2i) rotation.RotateVec((0, 1));               //   n   // n: End Cap
         var positionPowerBox = positionFuelChamber + (Vector2i) rotation.RotateVec((0, -1));            //  CF   // C: Control Box, F: Fuel Chamber
         var positionPortEmitter = positionFuelChamber + (Vector2i) rotation.RotateVec((1, -2));         //   P   // P: Power Box
@@ -91,11 +91,11 @@ public sealed partial class ParticleAcceleratorSystem
         || portEmitter!.Type != ParticleAcceleratorEmitterType.Port)
             controller.PortEmitter = null;
 
-        if (!ScanPart<ParticleAcceleratorEmitterComponent>(gridUid!.Value, positionForeEmitter, out controller.PortEmitter, out var foreEmitter, grid)
+        if (!ScanPart<ParticleAcceleratorEmitterComponent>(gridUid!.Value, positionForeEmitter, out controller.ForeEmitter, out var foreEmitter, grid)
         || foreEmitter!.Type != ParticleAcceleratorEmitterType.Fore)
             controller.ForeEmitter = null;
 
-        if (!ScanPart<ParticleAcceleratorEmitterComponent>(gridUid!.Value, positionStarboardEmitter, out controller.PortEmitter, out var starboardEmitter, grid)
+        if (!ScanPart<ParticleAcceleratorEmitterComponent>(gridUid!.Value, positionStarboardEmitter, out controller.StarboardEmitter, out var starboardEmitter, grid)
         || starboardEmitter!.Type != ParticleAcceleratorEmitterType.Starboard)
             controller.StarboardEmitter = null;
 
@@ -128,21 +128,18 @@ public sealed partial class ParticleAcceleratorSystem
 
         foreach (var entity in grid.GetAnchoredEntities(coordinates))
         {
-            if (TryComp<T>(entity, out comp))
+            if (TryComp(entity, out comp))
             {
                 part = entity;
+                // Spawn("JetpackEffect", new EntityCoordinates(uid, coordinates + new Vector2(0.5f, 0.5f)));
                 return true;
             }
         }
 
         part = null;
         comp = null;
+        // Spawn("HotPotatoEffect", new EntityCoordinates(uid, coordinates + new Vector2(0.5f, 0.5f)));
         return false;
-    }
-
-    private void OnComponentStartup(EntityUid uid, ParticleAcceleratorPartComponent comp, ComponentStartup args)
-    {
-        _transformSystem.AnchorEntity(uid, Transform(uid));
     }
 
     private void OnComponentShutdown(EntityUid uid, ParticleAcceleratorPartComponent comp, ComponentShutdown args)

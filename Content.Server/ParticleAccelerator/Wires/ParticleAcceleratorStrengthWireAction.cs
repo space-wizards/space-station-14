@@ -10,18 +10,9 @@ namespace Content.Server.ParticleAccelerator.Wires;
 
 public sealed class ParticleAcceleratorStrengthWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
 {
-    private IRobustRandom _random = default!;
-   
     public override string Name { get; set; } = "wire-name-pa-strength";
     public override Color Color { get; set; } = Color.Blue;
-    public override object StatusKey { get; } = ParticleAcceleratorControlBoxWires.Strength;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _random = IoCManager.Resolve<IRobustRandom>();
-    }
+    public override object StatusKey { get; } = ParticleAcceleratorWireStatus.Strength;
 
     public override StatusLightState? GetLightState(Wire wire, ParticleAcceleratorControlBoxComponent component)
     {

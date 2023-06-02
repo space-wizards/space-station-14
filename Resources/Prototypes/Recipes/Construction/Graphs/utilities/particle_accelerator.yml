@@ -201,7 +201,7 @@
   start: start
   graph:
     - node: start
-      entity: ParticleAcceleratorEmitterLeftUnfinished
+      entity: ParticleAcceleratorEmitterPortUnfinished
       actions:
       - !type:AppearanceChange
       edges:
@@ -213,7 +213,7 @@
               doAfter: 0.5
 
     - node: wired
-      entity: ParticleAcceleratorEmitterLeftUnfinished
+      entity: ParticleAcceleratorEmitterPortUnfinished
       actions:
       - !type:AppearanceChange
       edges:
@@ -250,7 +250,7 @@
   start: start
   graph:
     - node: start
-      entity: ParticleAcceleratorEmitterCenterUnfinished
+      entity: ParticleAcceleratorEmitterForeUnfinished
       actions:
       - !type:AppearanceChange
       edges:
@@ -262,7 +262,7 @@
               doAfter: 0.5
 
     - node: wired
-      entity: ParticleAcceleratorEmitterCenterUnfinished
+      entity: ParticleAcceleratorEmitterForeUnfinished
       actions:
       - !type:AppearanceChange
       edges:
@@ -299,7 +299,7 @@
   start: start
   graph:
     - node: start
-      entity: ParticleAcceleratorEmitterRightUnfinished
+      entity: ParticleAcceleratorEmitterStarboardUnfinished
       actions:
       - !type:AppearanceChange
       edges:
@@ -311,7 +311,7 @@
               doAfter: 0.5
 
     - node: wired
-      entity: ParticleAcceleratorEmitterRightUnfinished
+      entity: ParticleAcceleratorEmitterStarboardUnfinished
       actions:
       - !type:AppearanceChange
       edges:

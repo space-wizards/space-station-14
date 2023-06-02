@@ -1,10 +1,7 @@
-using Content.Server.Mind.Components;
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Wires;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Wires;
@@ -16,7 +13,7 @@ public sealed class ParticleAcceleratorLimiterWireAction : ComponentWireAction<P
 {
     public override string Name { get; set; } = "wire-name-pa-limiter";
     public override Color Color { get; set; } = Color.Teal;
-    public override object StatusKey { get; } = ParticleAcceleratorControlBoxWires.Limiter;
+    public override object StatusKey { get; } = ParticleAcceleratorWireStatus.Limiter;
 
     public override StatusLightData? GetStatusLightData(Wire wire)
     {

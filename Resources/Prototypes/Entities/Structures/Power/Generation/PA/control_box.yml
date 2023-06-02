@@ -1,5 +1,5 @@
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorControlBox
   name: PA control computer
   description: This controls the density of the particles.

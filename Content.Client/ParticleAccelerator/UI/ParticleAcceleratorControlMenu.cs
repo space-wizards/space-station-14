@@ -19,10 +19,10 @@ namespace Content.Client.ParticleAccelerator.UI
     {
         private readonly ShaderInstance _greyScaleShader;
 
-        private readonly ParticleAcceleratorBoundUserInterface Owner;
+        private readonly ParticleAcceleratorBoundUserInterface _owner;
 
         private readonly Label _drawLabel;
-        private readonly NoiseGenerator _drawNoiseGenerator;
+        private readonly FastNoiseLite _drawNoiseGenerator;
         private readonly Button _onButton;
         private readonly Button _offButton;
         private readonly Button _scanButton;
@@ -36,9 +36,9 @@ namespace Content.Client.ParticleAccelerator.UI
         private readonly PASegmentControl _fuelChamberTexture;
         private readonly PASegmentControl _controlBoxTexture;
         private readonly PASegmentControl _powerBoxTexture;
-        private readonly PASegmentControl _emitterCenterTexture;
-        private readonly PASegmentControl _emitterRightTexture;
-        private readonly PASegmentControl _emitterLeftTexture;
+        private readonly PASegmentControl _emitterForeTexture;
+        private readonly PASegmentControl _emitterPortTexture;
+        private readonly PASegmentControl _emitterStarboardTexture;
 
         private float _time;
         private int _lastDraw;
@@ -53,8 +53,9 @@ namespace Content.Client.ParticleAccelerator.UI
             SetSize = (400, 320);
             _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
 
-            Owner = owner;
-            _drawNoiseGenerator = new NoiseGenerator(NoiseGenerator.NoiseType.Fbm);
+            _owner = owner;
+            _drawNoiseGenerator = new();
+            _drawNoiseGenerator.SetFractalType(FastNoiseLite.FractalType.FBm);
             _drawNoiseGenerator.SetFrequency(0.5f);
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
@@ -98,7 +99,7 @@ namespace Content.Client.ParticleAccelerator.UI
                 MouseFilter = MouseFilterMode.Pass
             });
 
-            _stateSpinBox = new SpinBox {Value = 0, IsValid = StrengthSpinBoxValid,};
+            _stateSpinBox = new SpinBox { Value = 0, IsValid = StrengthSpinBoxValid };
             _stateSpinBox.InitDefaultButtons();
             _stateSpinBox.ValueChanged += PowerStateChanged;
             _stateSpinBox.LineEditDisabled = true;
@@ -107,7 +108,7 @@ namespace Content.Client.ParticleAccelerator.UI
             {
                 ToggleMode = false,
                 Text = Loc.GetString("particle-accelerator-control-menu-off-button"),
-                StyleClasses = {StyleBase.ButtonOpenRight},
+                StyleClasses = { StyleBase.ButtonOpenRight },
             };
             _offButton.OnPressed += args => owner.SendEnableMessage(false);
 
@@ -115,13 +116,13 @@ namespace Content.Client.ParticleAccelerator.UI
             {
                 ToggleMode = false,
                 Text = Loc.GetString("particle-accelerator-control-menu-on-button"),
-                StyleClasses = {StyleBase.ButtonOpenLeft},
+                StyleClasses = { StyleBase.ButtonOpenLeft },
             };
             _onButton.OnPressed += args => owner.SendEnableMessage(true);
 
             var closeButton = new TextureButton
             {
-                StyleClasses = {"windowCloseButton"},
+                StyleClasses = { "windowCloseButton" },
                 HorizontalAlignment = HAlignment.Right,
                 Margin = new Thickness(0, 0, 8, 0)
             };
@@ -130,7 +131,7 @@ namespace Content.Client.ParticleAccelerator.UI
             var serviceManual = new Label
             {
                 HorizontalAlignment = HAlignment.Center,
-                StyleClasses = {StyleBase.StyleClassLabelSubText},
+                StyleClasses = { StyleBase.StyleClassLabelSubText },
                 Text = Loc.GetString("particle-accelerator-control-menu-service-manual-reference")
             };
             _drawLabel = new Label();
@@ -267,9 +268,9 @@ namespace Content.Client.ParticleAccelerator.UI
                                                     new Control {MinSize = imgSize},
                                                     (_powerBoxTexture = Segment("power_box")),
                                                     new Control {MinSize = imgSize},
-                                                    (_emitterLeftTexture = Segment("emitter_left")),
-                                                    (_emitterCenterTexture = Segment("emitter_center")),
-                                                    (_emitterRightTexture = Segment("emitter_right")),
+                                                    (_emitterStarboardTexture = Segment("emitter_starboard")),
+                                                    (_emitterForeTexture = Segment("emitter_fore")),
+                                                    (_emitterPortTexture = Segment("emitter_port")),
                                                 }
                                             }
                                         }
@@ -312,7 +313,7 @@ namespace Content.Client.ParticleAccelerator.UI
                 }
             });
 
-            _scanButton.OnPressed += args => Owner.SendScanPartsMessage();
+            _scanButton.OnPressed += args => _owner.SendScanPartsMessage();
 
             _alarmControl.AnimationCompleted += s =>
             {
@@ -356,16 +357,15 @@ namespace Content.Client.ParticleAccelerator.UI
                 case 3:
                     newState = ParticleAcceleratorPowerState.Level2;
                     break;
-                // They can't reach this level anyway and I just want to fix the bugginess for now.
-                //case 4:
-                //    newState = ParticleAcceleratorPowerState.Level3;
-                //    break;
+                case 4:
+                    newState = ParticleAcceleratorPowerState.Level3;
+                    break;
                 default:
                     return;
             }
 
             _stateSpinBox.SetButtonDisabled(true);
-            Owner.SendPowerStateMessage(newState);
+            _owner.SendPowerStateMessage(newState);
         }
 
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
@@ -430,12 +430,12 @@ namespace Content.Client.ParticleAccelerator.UI
         private void UpdatePreview(ParticleAcceleratorUIState updateMessage)
         {
             _endCapTexture.SetPowerState(updateMessage, updateMessage.EndCapExists);
-            _fuelChamberTexture.SetPowerState(updateMessage, updateMessage.FuelChamberExists);
             _controlBoxTexture.SetPowerState(updateMessage, true);
+            _fuelChamberTexture.SetPowerState(updateMessage, updateMessage.FuelChamberExists);
             _powerBoxTexture.SetPowerState(updateMessage, updateMessage.PowerBoxExists);
-            _emitterCenterTexture.SetPowerState(updateMessage, updateMessage.EmitterCenterExists);
-            _emitterLeftTexture.SetPowerState(updateMessage, updateMessage.EmitterLeftExists);
-            _emitterRightTexture.SetPowerState(updateMessage, updateMessage.EmitterRightExists);
+            _emitterStarboardTexture.SetPowerState(updateMessage, updateMessage.EmitterStarboardExists);
+            _emitterForeTexture.SetPowerState(updateMessage, updateMessage.EmitterForeExists);
+            _emitterPortTexture.SetPowerState(updateMessage, updateMessage.EmitterPortExists);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -453,7 +453,7 @@ namespace Content.Client.ParticleAccelerator.UI
             var watts = 0;
             if (_lastDraw != 0)
             {
-                var val = _drawNoiseGenerator.GetNoise(_time);
+                var val = _drawNoiseGenerator.GetNoise(_time, 0f);
                 watts = (int) (_lastDraw + val * 5);
             }
 
@@ -476,7 +476,7 @@ namespace Content.Client.ParticleAccelerator.UI
                 _baseState = name;
                 _rsi = cache.GetResource<RSIResource>($"/Textures/Structures/Power/Generation/PA/{name}.rsi").RSI;
 
-                AddChild(_base = new TextureRect {Texture = _rsi[$"completed"].Frame0});
+                AddChild(_base = new TextureRect { Texture = _rsi[$"completed"].Frame0 });
                 AddChild(_unlit = new TextureRect());
                 MinSize = _rsi.Size;
             }

@@ -1,16 +1,17 @@
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Wires;
+using Content.Shared.Singularity.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.ParticleAccelerator.Wires;
 
-public sealed class ParticleAcceleratorToggleWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
+public sealed class ParticleAcceleratorPowerWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
 {
-    public override string Name { get; set; } = "wire-name-pa-toggle";
+    public override string Name { get; set; } = "wire-name-pa-power";
     public override Color Color { get; set; } = Color.Yellow;
-    public override object StatusKey { get; } = ParticleAcceleratorControlBoxWires.Toggle;
+    public override object StatusKey { get; } = ParticleAcceleratorWireStatus.Power;
 
     public override StatusLightState? GetLightState(Wire wire, ParticleAcceleratorControlBoxComponent component)
     {

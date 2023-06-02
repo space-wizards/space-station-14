@@ -1,7 +1,7 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterPort
-  name: port PA containment emitter
+  name: PA port containment emitter
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
   - type: Sprite
@@ -14,7 +14,7 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterFore
-  name: fore PA containment emitter
+  name: PA fore containment emitter
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
   - type: Sprite
@@ -27,7 +27,7 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterStarboard
-  name: starboard PA containment emitter
+  name: PA starboard containment emitter
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
   - type: Sprite
@@ -41,8 +41,8 @@
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
-  id: ParticleAcceleratorEmitterLeftUnfinished
-  name: Port PA containment emitter
+  id: ParticleAcceleratorEmitterPortUnfinished
+  name: PA port containment emitter
   suffix: Unfinished, Port
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
@@ -53,8 +53,8 @@
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
-  id: ParticleAcceleratorEmitterCenterUnfinished
-  name: Fore PA containment emitter
+  id: ParticleAcceleratorEmitterForeUnfinished
+  name: PA fore containment emitter
   suffix: Unfinished, Fore
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
@@ -65,8 +65,8 @@
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
-  id: ParticleAcceleratorEmitterRightUnfinished
-  name: Starboard PA containment emitter
+  id: ParticleAcceleratorEmitterStarboardUnfinished
+  name: PA starboard containment emitter
   suffix: Unfinished, Starboard
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:

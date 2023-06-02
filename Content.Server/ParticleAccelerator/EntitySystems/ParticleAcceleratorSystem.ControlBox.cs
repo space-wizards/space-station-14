@@ -66,7 +66,7 @@ public sealed partial class ParticleAcceleratorSystem
 
         DebugTools.Assert(comp.Assembled);
 
-        if (comp.Enabled && comp.CanBeEnabled)
+        if (comp.Enabled || !comp.CanBeEnabled)
             return;
 
         if (HasComp<MindComponent>(user?.AttachedEntity))
@@ -223,9 +223,9 @@ public sealed partial class ParticleAcceleratorSystem
             comp.SelectedStrength,
             (int) draw,
             (int) receive,
-            comp.PortEmitter != null,
-            comp.ForeEmitter != null,
             comp.StarboardEmitter != null,
+            comp.ForeEmitter != null,
+            comp.PortEmitter != null,
             comp.PowerBox != null,
             comp.FuelChamber != null,
             comp.EndCap != null,
@@ -328,7 +328,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
-        if (msg.Enabled && comp.Assembled)
+        if (msg.Enabled)
         {
             if (comp.Assembled)
                 SwitchOn(uid, (IPlayerSession?) msg.Session, comp);
