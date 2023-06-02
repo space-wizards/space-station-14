@@ -16,7 +16,7 @@
     sprite: Structures/Machines/fax_machine_special/fax_machine_cent.rsi
     state: icon
   - type: FaxMachine
-    name: "Central Command"
+    name: "ЦК"
     receiveNukeCodes: true
     notifyAdmins: true
     receiveStationGoal: true
@@ -62,7 +62,7 @@
     sprite: Structures/Machines/fax_machine_special/fax_machine_captain.rsi
     state: icon
   - type: FaxMachine
-    name: "Captain's Office"
+    name: "Капитан"
     receiveNukeCodes: true
     receiveStationGoal: true
 
@@ -84,7 +84,7 @@
     sprite: Structures/Machines/fax_machine_special/fax_machine_bridge.rsi
     state: icon
   - type: FaxMachine
-    name: "Bridge"
+    name: "Мостик"
 
 - type: entity
   parent: FaxMachineBase
@@ -104,7 +104,7 @@
     sprite: Structures/Machines/fax_machine_special/fax_machine_ce.rsi
     state: icon
   - type: FaxMachine
-    name: "Chief Engineer"
+    name: "СИ"
 
 - type: entity
   parent: FaxMachineBase
@@ -124,7 +124,7 @@
     sprite: Structures/Machines/fax_machine_special/fax_machine_cmo.rsi
     state: icon
   - type: FaxMachine
-    name: "Chief Medical Officer"
+    name: "ГВ"
 
 - type: entity
   parent: FaxMachineBase
@@ -144,7 +144,7 @@
     sprite: Structures/Machines/fax_machine_special/fax_machine_hop.rsi
     state: icon
   - type: FaxMachine
-    name: "Head of Personnel"
+    name: "ГП"
 
 - type: entity
   parent: FaxMachineBase
@@ -164,7 +164,7 @@
     sprite: Structures/Machines/fax_machine_special/fax_machine_hos.rsi
     state: icon
   - type: FaxMachine
-    name: "Head of Security"
+    name: "ГСБ"
 
 - type: entity
   parent: FaxMachineBase
@@ -184,7 +184,7 @@
     sprite: Structures/Machines/fax_machine_special/fax_machine_rd.rsi
     state: icon
   - type: FaxMachine
-    name: "Research Director"
+    name: "НР"
 
 - type: entity
   parent: FaxMachineBase
@@ -204,7 +204,7 @@
     sprite: Structures/Machines/fax_machine_special/fax_machine_quart.rsi
     state: icon
   - type: FaxMachine
-    name: "Quartermaster"
+    name: "КМ"
 
 - type: entity
   parent: FaxMachineBase
@@ -224,4 +224,4 @@
     sprite: Structures/Machines/fax_machine_special/fax_machine_iaa.rsi
     state: icon
   - type: FaxMachine
-    name: "IAA"
+    name: "АВД"
