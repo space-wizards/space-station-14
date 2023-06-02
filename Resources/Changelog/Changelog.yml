@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Water is no longer slippery., type: Remove}
-  id: 3422
-  time: '2023-04-16T02:31:53.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: we Lied. Water is slippery still., type: Add}
@@ -2901,3 +2896,9 @@ Entries:
       them in disposal bins, backpacks, etc.', type: Fix}
   id: 3921
   time: '2023-06-02T00:48:43.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: 'Ghosts can perform interactions, like fully examining things, at any
+      range', type: Tweak}
+  id: 3922
+  time: '2023-06-02T00:50:17.0000000+00:00'
