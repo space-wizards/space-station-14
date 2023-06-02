@@ -30,6 +30,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> RulesHeader =
             CVarDef.Create("server.rules_header", "ui-rules-header", CVar.REPLICATED | CVar.SERVER);
 
+        // Imperial Space Start
+        public static readonly CVarDef<string> LobbyName =
+            CVarDef.Create("server.lobby_name", "MyServer", CVar.REPLICATED | CVar.SERVER);
+        // Imperial Space End
+
         /*
          * Ambience
          */
@@ -572,7 +577,7 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> HudHeldItemShow =
             CVarDef.Create("hud.held_item_show", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
-        public static readonly CVarDef<bool> CombatModeIndicatorsPointShow =
+                public static readonly CVarDef<bool> CombatModeIndicatorsPointShow =
             CVarDef.Create("hud.combat_mode_indicators_point_show", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         public static readonly CVarDef<float> HudHeldItemOffset =
@@ -618,7 +623,7 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
-        /// <summary>
+                /// <summary>
         ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
         /// </summary>
         public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
@@ -787,7 +792,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
@@ -1043,6 +1048,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int>
             VoteTimerAlone = CVarDef.Create("vote.timeralone", 10, CVar.SERVERONLY);
 
+        // Imperial-start
+        public static readonly CVarDef<bool>
+            VoteAutoStartInLobby = CVarDef.Create("vote.autostartinlobby", true, CVar.SERVERONLY);
+        // Imperial-end
+
 
         /*
          * BAN
@@ -1134,6 +1144,11 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.emergency_authorize_time", 10f, CVar.SERVERONLY);
 
         /// <summary>
+        /// How long after the console is authorized for the shuttle to early launch.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleTransitTime =
+            CVarDef.Create("shuttle.emergency_transit_time", 60f, CVar.SERVERONLY);
+            /// <summary>
         /// The minimum time for the emergency shuttle to arrive at centcomm.
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleMinTransitTime =
@@ -1302,7 +1317,13 @@ namespace Content.Shared.CCVar
         /// How long a client can go without any input before being considered AFK.
         /// </summary>
         public static readonly CVarDef<float> AfkTime =
-            CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
+            CVarDef.Create("afk.time", 480f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long seconds a client can go after being detected as AFK before being kicked.
+        /// </summary>
+        public static readonly CVarDef<float> AfkKickTime =
+            CVarDef.Create("afk.kick_time", 120f, CVar.SERVERONLY);
 
         /*
          * IC
@@ -1481,7 +1502,7 @@ namespace Content.Shared.CCVar
         /// The time you must spend reading the rules, before the "Request" button is enabled
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
-            CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
+            CVarDef.Create("ghost.role_time", 10f, CVar.REPLICATED);
 
         /*
          * Fire alarm
@@ -1556,6 +1577,11 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> InfoLinksAppeal =
             CVarDef.Create("infolinks.appeal", "", CVar.SERVER | CVar.REPLICATED);
+
+        // Imperial-start
+        // public static readonly CVarDef<bool>
+        //     EconomyWagesEnabled = CVarDef.Create("economy.wages_enabled", true, CVar.SERVERONLY);
+        // Imperial-end
 
         /*
          * CONFIG
