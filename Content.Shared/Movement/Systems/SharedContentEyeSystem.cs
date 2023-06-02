@@ -40,7 +40,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     private Vector2 CheckZoomValueClamping(Vector2 checkedZoom, ContentEyeComponent component)
     {
         var minZoom = Vector2.One * (float)Math.Pow(ZoomMod, -3);
-        return Vector2.ComponentMin(component.MaxZoom, Vector2.ComponentMax(minZoom, checkedZoom));
+        return Vector2.Clamp(checkedZoom, minZoom, component.MaxZoom);
     }
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
