@@ -1,6 +1,6 @@
 # Uses the chessboard and generic pieces
 - type: entity
-  parent: BaseItem
+  parent: BaseBoardEntity
   id: CheckerBoard
   name: checkerboard
   description: A checkerboard. Pieces included!

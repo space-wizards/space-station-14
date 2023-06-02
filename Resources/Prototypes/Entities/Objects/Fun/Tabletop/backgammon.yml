@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: BaseBoardEntity
   id: BackgammonBoard
   name: backgammon board
   description: Old fashioned game of dice and pieces.

@@ -1,6 +1,6 @@
 ﻿# Chessboard item (normal in game item you can hold in your hand)
 - type: entity
-  parent: BaseItem
+  parent: BaseBoardEntity
   id: ChessBoard
   name: chessboard
   description: A chessboard. Pieces included!

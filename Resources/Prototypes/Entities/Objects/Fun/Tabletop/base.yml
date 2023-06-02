@@ -1,5 +1,21 @@
 - type: entity
-  id: BaseTabletopPiece
+  parent: BaseItem
+  id: BaseBoardEntity # Board item
+  name: board
+  abstract: true
+  description: A blank board.
+  components:
+    - type: TabletopGame
+      size: 256, 256
+      blacklist:
+        tags:
+          - HighRiskItem
+      setup:
+        !type:TabletopEmptySetup
+        boardPrototype: Crowbar
+
+- type: entity
+  id: BaseTabletopPiece # Board piece
   parent: BaseItem
   abstract: true
   components:

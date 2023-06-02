@@ -1,6 +1,6 @@
 ﻿# Board item (given to players)
 - type: entity
-  parent: BaseItem
+  parent: BaseBoardEntity
   id: BaseBattlemap
   name: battlemap
   abstract: true
@@ -11,7 +11,6 @@
       state: icon
     - type: TabletopGame
       boardName: tabletop-battlemap-board-name
-      size: 256, 256
       setup:
         !type:TabletopEmptySetup
         boardPrototype: GrassBoardTabletop

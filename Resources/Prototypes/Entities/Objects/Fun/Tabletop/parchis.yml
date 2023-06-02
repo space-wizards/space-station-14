@@ -1,6 +1,6 @@
 # Parchís board item (normal in game item you can hold in your hand)
 - type: entity
-  parent: BaseItem
+  parent: BaseBoardEntity
   id: ParchisBoard
   name: parchís board
   description: Cross and circle board game famous for destroying countless friendships.
