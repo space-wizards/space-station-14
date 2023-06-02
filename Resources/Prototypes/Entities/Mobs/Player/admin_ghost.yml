@@ -10,6 +10,7 @@
   - type: Tag
     tags:
     - CanPilot
+    - BypassInteractionRangeChecks
   - type: Input
     context: "aghost"
   - type: Ghost
