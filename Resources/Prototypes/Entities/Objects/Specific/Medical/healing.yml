@@ -44,6 +44,14 @@
     price: 10
 
 - type: entity
+  id: Ointment1
+  parent: Ointment
+  components:
+  - type: Stack
+    stackType: Ointment
+    count: 1
+
+- type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: BaseHealingItem
@@ -68,6 +76,14 @@
     count: 10
   - type: StackPrice
     price: 10
+
+- type: entity
+  id: Brutepack1
+  parent: Brutepack
+  components:
+  - type: Stack
+    stackType: Brutepack
+    count: 1
 
 - type: entity
   name: blood pack

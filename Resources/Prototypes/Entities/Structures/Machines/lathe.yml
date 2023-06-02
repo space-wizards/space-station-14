@@ -109,6 +109,8 @@
       - APCElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
+      - CellRechargerCircuitboard
+      - WeaponCapacitorRechargerCircuitboard
   - type: StaticPrice
     price: 800
 
@@ -482,6 +484,8 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - Brutepack
+      - Ointment
       - HandLabeler
       - Defibrillator
       - HandheldHealthAnalyzer

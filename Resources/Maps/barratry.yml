@@ -86717,16 +86717,6 @@ entities:
       type: Transform
 - proto: LandMineExplosive
   entities:
-  - uid: 5452
-    components:
-    - pos: -23.381935,-8.161524
-      parent: 1
-      type: Transform
-  - uid: 5455
-    components:
-    - pos: -24.157843,-7.5365233
-      parent: 1
-      type: Transform
   - uid: 7512
     components:
     - pos: -26.633177,54.728065
@@ -86816,6 +86806,18 @@ entities:
     components:
     - pos: -16.45288,-7.494507
       parent: 5016
+      type: Transform
+- proto: LandMineKick
+  entities:
+  - uid: 5452
+    components:
+    - pos: -24.148834,-7.530878
+      parent: 1
+      type: Transform
+  - uid: 5455
+    components:
+    - pos: -23.419668,-8.156313
+      parent: 1
       type: Transform
 - proto: lantern
   entities:

@@ -55,6 +55,7 @@
 - type: salvageLoot
   id: OreTin
   desc: Veins of steel
+  guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
       proto: OreTin
@@ -63,6 +64,7 @@
 - type: salvageLoot
   id: OreGold
   desc: Veins of gold ore
+  guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
       proto: OreGold
@@ -70,6 +72,7 @@
 - type: salvageLoot
   id: OreSilver
   desc: Veins of silver ore
+  guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
       proto: OreSilver
@@ -78,6 +81,7 @@
 - type: salvageLoot
   id: OrePlasma
   desc: Veins of plasma ore
+  guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
       proto: OrePlasma
@@ -85,6 +89,7 @@
 - type: salvageLoot
   id: OreUranium
   desc: Veins of uranium ore
+  guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
       proto: OreUranium
