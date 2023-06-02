@@ -1,17 +1,4 @@
 Entries:
-- author: EnDecc
-  changes:
-  - {message: 'The Janitorial Trolley now has an exclusive slot for the bucket, which
-      can be utilized the same way as the mop by alt-clicking the cart with the bucket.
-      It also keeps its reagents!', type: Add}
-  - {message: 'Significantly deepened the water container of the Janitorial Trolley
-      from 500u > 800u, to try and make up for its heavyweight nature. Additionally,
-      slightly reduced said heavyweight nature by lowering density from 350 > 250,
-      allowing it to be pulled somewhat faster.', type: Tweak}
-  - {message: 'Slightly deepened the Mop Bucket (the yellow one) from 500u > 600u,
-      requiring a bit less back-and-forth between fills for some QoL.', type: Tweak}
-  id: 3421
-  time: '2023-04-15T22:46:00.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Water is no longer slippery., type: Remove}
@@ -2908,3 +2895,9 @@ Entries:
   - {message: Random anomaly stability fluctuation is less extreme., type: Tweak}
   id: 3920
   time: '2023-06-01T23:07:20.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: 'Handcuffs don''t eat all interaction events anymore, so you can put
+      them in disposal bins, backpacks, etc.', type: Fix}
+  id: 3921
+  time: '2023-06-02T00:48:43.0000000+00:00'
