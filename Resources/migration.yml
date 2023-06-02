@@ -59,6 +59,9 @@ ClothingHeadHelmetIHSVoidHelm: null
 ClothingHandsGlovesIhscombat: null
 
 # 2023-06-02
-ParticleAcceleratorEmitterLeft: ParticleAcceleratorEmitterPort
+# Yes, this is right. They were, in fact, reversed because the default orientation of the particle accelerator was _down_ relative to the screen.
+# This resulted in the parts being named assuming that the person building the accelerator treated it like a rocket with the particles coming out the _back_.
+# As this was confusing they were converted to nautical orientation with forward being towards the emitters.
+ParticleAcceleratorEmitterLeft: ParticleAcceleratorEmitterStarboard
 ParticleAcceleratorEmitterCenter: ParticleAcceleratorEmitterFore
-ParticleAcceleratorEmitterRight: ParticleAcceleratorEmitterStarboard
+ParticleAcceleratorEmitterRight: ParticleAcceleratorEmitterPort

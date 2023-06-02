@@ -1,7 +1,7 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterPort
-  name: PA containment emitter L
+  name: port PA containment emitter
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
   - type: Sprite
@@ -14,7 +14,7 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterFore
-  name: PA containment emitter C
+  name: fore PA containment emitter
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
   - type: Sprite
@@ -27,7 +27,7 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterStarboard
-  name: PA containment emitter R
+  name: starboard PA containment emitter
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
   - type: Sprite
@@ -42,8 +42,8 @@
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEmitterLeftUnfinished
-  name: PA containment emitter L
-  suffix: Unfinished, Left
+  name: Port PA containment emitter
+  suffix: Unfinished, Port
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
   - type: Sprite
@@ -54,8 +54,8 @@
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEmitterCenterUnfinished
-  name: PA containment emitter C
-  suffix: Unfinished
+  name: Fore PA containment emitter
+  suffix: Unfinished, Fore
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
   - type: Sprite
@@ -66,8 +66,8 @@
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEmitterRightUnfinished
-  name: PA containment emitter R
-  suffix: Unfinished
+  name: Starboard PA containment emitter
+  suffix: Unfinished, Starboard
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
   - type: Sprite
