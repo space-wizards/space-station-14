@@ -31,7 +31,7 @@ public sealed class SpaceGarbageSystem : EntitySystem
 
     private void PreventCollision(EntityUid uid, SpaceGarbageComponent component, ref PreventCollideEvent args)
     {
-        if (args.BodyB.Owner == component.Spawner)
+        if (args.OtherBody.Owner == component.Spawner)
         {
             args.Cancelled = true;
         }
