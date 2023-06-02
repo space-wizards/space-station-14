@@ -23,6 +23,7 @@ namespace Content.Server.Tabletop
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {
@@ -48,16 +49,22 @@ namespace Content.Server.Tabletop
             if (!TryComp(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
                 return;
 
+            if (!msg.Entity.IsValid())
+                return;
+
             // Check if player is actually playing at this table
             if (!session.Players.ContainsKey(playerSession))
                 return;
 
-            var entId = MetaData(msg.Entity).EntityPrototype?.ID;
-            var ent = _entityManager.SpawnEntity(entId, Transform(msg.TableUid).MapPosition);
-            RemComp<TabletopDraggableComponent>(ent);
+            // Find the entity, remove it from the session and set it's position to the tabletop
             session.Entities.TryGetValue(msg.Entity, out var result);
             session.Entities.Remove(result);
-            _entityManager.QueueDeleteEntity(result);
+            RemComp<TabletopDraggableComponent>(result);
+
+            // Get the transform of the object so that we can manipulate it
+            var xform = Transform(msg.TableUid);
+            _transformSystem.SetWorldPosition(msg.Entity, xform.MapPosition.Position);
+            _transformSystem.SetParent(result, _mapManager.GetMapEntityId(xform.MapID));
         }
 
         private void OnInteractUsing(EntityUid uid, TabletopGameComponent component, InteractUsingEvent args)
@@ -85,13 +92,13 @@ namespace Content.Server.Tabletop
                 return;
             }
 
-            var entId = MetaData(handEnt).EntityPrototype?.ID;
-
-            var ent = _entityManager.SpawnEntity(entId, session.Position.Offset(-1, 0));
-            EnsureComp<TabletopDraggableComponent>(ent);
-            session.Entities.Add(ent);
-            // i refuse to do parenting bullshit
-            _entityManager.QueueDeleteEntity(handEnt);
+            // guess i had to do parenting bullshit after all
+            // Make sure the entity can be dragged, move it into the board game world and add it to the Entities hashmap
+            _transformSystem.SetWorldPosition(handEnt, session.Position.Offset(-1, 0).Position);
+            _transformSystem.SetParent(handEnt, _mapManager.GetMapEntityId(session.Position.MapId));
+            _transformSystem.SetWorldRotation(handEnt, new Angle(0));
+            EnsureComp<TabletopDraggableComponent>(handEnt);
+            session.Entities.Add(handEnt);
         }
 
         protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
