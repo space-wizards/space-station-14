@@ -1,0 +1,15 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Assembled by Just-a-Unity-Dev on GitHub or eclips_e#0001 (728101795427254312) on Discord, parallax from https://opengameart.org/content/seamless-space-backgrounds",
+
+    "size": {
+        "x": 543,
+        "y": 543
+    },
+    "states": [
+        {
+            "name": "tabletop"
+        }
+    ]
+}

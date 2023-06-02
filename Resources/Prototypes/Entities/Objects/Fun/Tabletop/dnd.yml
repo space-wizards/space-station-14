@@ -1,28 +1,139 @@
-﻿# Chessboard item (normal in game item you can hold in your hand)
+﻿# Board item (given to players)
 - type: entity
   parent: BaseItem
+  id: BaseBattlemap
+  name: battlemap
+  abstract: true
+  description: A battlemap for your epic dungeon exploring to begin, pieces not included!
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/Tabletop/grassbm.rsi
+      state: icon
+    - type: TabletopGame
+      boardName: tabletop-battlemap-board-name
+      size: 256, 256
+      setup:
+        !type:TabletopEmptySetup
+        boardPrototype: GrassBoardTabletop
+
+- type: entity
+  parent: BaseBattlemap
   id: DNDGrassBattlemap
   name: grass battlemap
   description: A battlemap for your epic dungeon exploring to begin, pieces not included!
   components:
-  - type: Sprite
-    sprite: Objects/Fun/Tabletop/chessboard.rsi
-    state: chessboard
-  - type: TabletopGame
-    boardName: tabletop-battlemap-board-name
-    size: 256, 256
-    setup:
-      !type:TabletopEmptySetup
-      boardPrototype: GrassBoardTabletop
+    - type: Sprite
+      sprite: Objects/Fun/Tabletop/Battlemaps/grassbm.rsi
+    - type: TabletopGame
+      setup:
+        !type:TabletopEmptySetup
+        boardPrototype: GrassBoardTabletop
 
-# Chessboard tabletop item (item only visible in tabletop game)
+- type: entity
+  parent: BaseBattlemap
+  id: DNDMoonBattlemap
+  name: moon battlemap
+  description: A battlemap for your epic moon exploring to begin, pieces not included!
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/Tabletop/Battlemaps/moonbm.rsi
+    - type: TabletopGame
+      setup:
+        !type:TabletopEmptySetup
+        boardPrototype: MoonBoardTabletop
+
+- type: entity
+  parent: BaseBattlemap
+  id: DNDSandBattlemap
+  name: sand battlemap
+  description: A battlemap for your epic beach episodes to begin, pieces not included!
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/Tabletop/Battlemaps/sandbm.rsi
+    - type: TabletopGame
+      setup:
+        !type:TabletopEmptySetup
+        boardPrototype: SandBoardTabletop
+
+- type: entity
+  parent: BaseBattlemap
+  id: DNDSnowBattlemap
+  name: snow battlemap
+  description: A battlemap for your frigid exploring to begin, pieces not included! # if this isn't funny enough i can remove it
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/Tabletop/Battlemaps/snowbm.rsi
+    - type: TabletopGame
+      setup:
+        !type:TabletopEmptySetup
+        boardPrototype: SnowBoardTabletop
+
+- type: entity
+  parent: BaseBattlemap
+  id: DNDShipBattlemap
+  name: ship battlemap
+  description: A battlemap for your epic space exploring to begin, pieces not included!
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/Tabletop/Battlemaps/shipbm.rsi
+    - type: TabletopGame
+      size: 543, 543
+      setup:
+        !type:TabletopEmptySetup
+        boardPrototype: ShipBoardTabletop
+
+# Background entity (actually shown in the board)
 - type: entity
   id: GrassBoardTabletop
   name: grass battlemap
   noSpawn: true
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/grass_tabletop.rsi
+    sprite: Objects/Fun/Tabletop/Battlemaps/grassbm_tabletop.rsi
+    state: tabletop
+    noRot: false
+    drawdepth: FloorTiles
+
+- type: entity
+  id: MoonBoardTabletop
+  name: grass battlemap
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/Battlemaps/moonbm_tabletop.rsi
+    state: tabletop
+    noRot: false
+    drawdepth: FloorTiles
+
+- type: entity
+  id: SandBoardTabletop
+  name: sand battlemap
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/Battlemaps/sandbm_tabletop.rsi
+    state: tabletop
+    noRot: false
+    drawdepth: FloorTiles
+
+- type: entity
+  id: SnowBoardTabletop
+  name: snow battlemap
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/Battlemaps/snowbm_tabletop.rsi
+    state: tabletop
+    noRot: false
+    drawdepth: FloorTiles
+
+- type: entity
+  id: ShipBoardTabletop
+  name: ship battlemap
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/Battlemaps/shipbm_tabletop.rsi
     state: tabletop
     noRot: false
     drawdepth: FloorTiles
