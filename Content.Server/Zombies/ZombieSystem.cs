@@ -45,7 +45,6 @@ namespace Content.Server.Zombies
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
                 new []{typeof(VocalSystem), typeof(BodyEmotesSystem)});
 
@@ -92,6 +91,17 @@ namespace Content.Server.Zombies
                     // This zombie has a latent virus, probably set up by ZombieRuleSystem. No damage yet.
                     continue;
                 }
+                if (mobState.CurrentState == MobState.Dead)
+                {
+                    if (comp.InfectedSecs >= comp.Settings.ZombieDeadMinTurnTime)
+                    {
+                        // You can turn into a zombie now.
+                        _zombify.ZombifyEntity(uid, mobState, pending);
+                    }
+
+                    // No need to compute extra damage if you are already dead.
+                    continue;
+                }
 
                 // Pain of becoming a zombie grows over time
                 // By scaling the number of seconds we have an accessible way to scale this exponential function.
@@ -106,7 +116,7 @@ namespace Content.Server.Zombies
                     //   multiplier is at least 10x
                     painMultiple = Math.Max(comp.MinimumCritMultiplier, painMultiple);
                 }
-                _damageable.TryChangeDamage(uid, comp.Damage * painMultiple, true, false, damage);
+                _damageable.TryChangeDamage(uid, comp.VirusDamage * painMultiple, true, false, damage);
             }
 
             // Heal the zombified
@@ -127,12 +137,13 @@ namespace Content.Server.Zombies
                 if (mobState.CurrentState == MobState.Alive)
                 {
                     // Gradual healing for living zombies.
-                    _damageable.TryChangeDamage(uid, comp.Damage, true, false, damage);
+                    _damageable.TryChangeDamage(uid, comp.Healing, true, false, damage);
                 }
                 else if (_random.Prob(comp.ZombieReviveChance))
                 {
-                    // There's a small chance to reverse all the zombie's damage (damage.Damage) in one go
-                    _damageable.TryChangeDamage(uid, -damage.Damage, true, false, damage);
+                    // There's a small chance to reverse most of the zombie's damage (damage.Damage) in one go
+                    var multiplier = Math.Max(0.7f, (float)((damage.TotalDamage - 50.0f) / damage.TotalDamage));
+                    _damageable.TryChangeDamage(uid, -damage.Damage * multiplier, true, false, damage);
                 }
             }
         }
@@ -142,19 +153,12 @@ namespace Content.Server.Zombies
             args.Cancelled = true;
         }
 
-        private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
-        {
-            if (component.EmoteSoundsId == null)
-                return;
-            _protoManager.TryIndex(component.EmoteSoundsId, out component.EmoteSounds);
-        }
-
         private void OnEmote(EntityUid uid, ZombieComponent component, ref EmoteEvent args)
         {
             // always play zombie emote sounds and ignore others
             if (args.Handled)
                 return;
-            args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
+            args.Handled = _chat.TryPlayEmoteSound(uid, component.Settings.EmoteSounds, args.Emote);
         }
 
         private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
@@ -260,7 +264,8 @@ namespace Content.Server.Zombies
                 }
                 else
                 {
-                    if (_random.Prob(GetZombieInfectionChance(entity, component)) || mobState.CurrentState != MobState.Alive)
+                    if (_random.Prob(GetZombieInfectionChance(entity, component)) ||
+                        mobState.CurrentState != MobState.Alive)
                     {
                         // On a diceroll or if critical we infect this victim
                         var pending = EnsureComp<PendingZombieComponent>(entity);
@@ -292,7 +297,6 @@ namespace Content.Server.Zombies
                         _bloodstream.TryAddToChemicals(args.User, healingSolution);
                     }
                 }
-
             }
         }
 

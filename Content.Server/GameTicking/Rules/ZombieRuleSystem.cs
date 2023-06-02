@@ -189,6 +189,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         component.InfectInitialAt = GameTicker.RoundDuration() + TimeSpan.FromSeconds(component.InitialInfectDelaySecs);
 
         component.FirstTurnAllowed = GameTicker.RoundDuration() + TimeSpan.FromSeconds(component.TurnTimeMinimum);
+
+        if (component.EarlySettings.EmoteSoundsId != null)
+        {
+            _prototypeManager.TryIndex(component.EarlySettings.EmoteSoundsId, out component.EarlySettings.EmoteSounds);
+        }
+        if (component.VictimSettings.EmoteSoundsId != null)
+        {
+            _prototypeManager.TryIndex(component.VictimSettings.EmoteSoundsId, out component.VictimSettings.EmoteSounds);
+        }
     }
 
     protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule,
@@ -374,7 +383,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             if (mobState.CurrentState == MobState.Dead)
             {
                 // Zombify them immediately
-                _zombify.ZombifyEntity(uid, pending);
+                _zombify.ZombifyEntity(uid, mobState, pending);
             }
             else
             {

@@ -61,6 +61,11 @@ namespace Content.Shared.Zombies
         /// </summary>
         [DataField("zombieInfectionTurnTime"), ViewVariables(VVAccess.ReadWrite)]
         public float ZombieInfectionTurnTime = 480.0f;
+        /// <summary>
+        /// Minimum time a zombie victim will lie dead before rising as a zombie.
+        /// </summary>
+        [DataField("zombieInfectionTurnTime"), ViewVariables(VVAccess.ReadWrite)]
+        public float ZombieDeadMinTurnTime = 10.0f;
 
         /// <summary>
         /// The skin color of the zombie
