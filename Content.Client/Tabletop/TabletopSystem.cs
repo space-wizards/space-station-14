@@ -43,11 +43,9 @@ namespace Content.Client.Tabletop
             UpdatesOutsidePrediction = true;
 
             CommandBinds.Builder
-                        .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true))
-                        .Register<TabletopSystem>();
-            CommandBinds.Builder
-                        .Bind(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(OnUseSecondary, true, true))
-                        .Register<TabletopSystem>();
+                .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true))
+                .Bind(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(OnUseSecondary, true, true))
+                .Register<TabletopSystem>();
 
             SubscribeNetworkEvent<TabletopPlayEvent>(OnTabletopPlay);
             SubscribeLocalEvent<TabletopDraggableComponent, ComponentHandleState>(HandleComponentState);
