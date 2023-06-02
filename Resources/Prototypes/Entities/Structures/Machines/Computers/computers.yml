@@ -727,6 +727,9 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
+  - type: GuideHelp
+    guides:
+    - Cloning
 
 - type: entity
   id: ComputerSalvageExpedition

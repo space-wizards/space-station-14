@@ -12,7 +12,7 @@ As a note: Cloning isn't always available, and it would be best not to rely on i
 <GuideEntityEmbed Entity="NetworkConfigurator"/>
 </Box>
 ## Biomass
-Creating a clone requires biomass, which, gruesomely, involves recycling organic material, be it crew members without a soul, station pets, or hostile creatures that have been 'taken care of'.
+Creating a clone requires biomass, which, gruesomely, involves recycling organic material. Be it crew members without a soul, station pets, or hostile creatures that have been 'taken care of', things can often be recycled.
 
 Dragging a body onto the biomass reclaimer (with your cursor) will mulch it for re-use. If it's a crew member, it's common practice to strip the body and return departmental gear before doing such.
 <Box>
