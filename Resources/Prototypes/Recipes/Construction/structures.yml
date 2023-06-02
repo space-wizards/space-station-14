@@ -507,7 +507,6 @@
   description: Just like a lattice. Except it looks better.
   conditions:
     - !type:TileNotBlocked
-      failIfSpace: false
     - !type:TileType
       targets:
         - Lattice
@@ -529,7 +528,6 @@
   description: A slippery floor of bright yellow bananium.
   conditions:
     - !type:TileNotBlocked
-      failIfSpace: false
     - !type:TileType
       targets:
         - Plating

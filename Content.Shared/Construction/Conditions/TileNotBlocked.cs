@@ -9,16 +9,22 @@ namespace Content.Shared.Construction.Conditions
     public sealed class TileNotBlocked : IConstructionCondition
     {
         [DataField("filterMobs")] private bool _filterMobs = false;
-        [DataField("failIfSpace")] private bool _failIfSpace = true;
+        [DataField("failIfNotSturdy")] private bool _failIfNotSturdy = true;
 
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var tileRef = location.GetTileRef();
 
-            if (tileRef == null || tileRef.Value.IsSpace())
-                return !_failIfSpace;
+            if (tileRef == null)
+                return false;
 
-            return !tileRef.Value.IsBlockedTurf(_filterMobs);
+            if (_failIfNotSturdy && !tileRef.Value.GetContentTileDefinition().Sturdy)
+                return false;
+
+            if (tileRef.Value.IsBlockedTurf(_filterMobs))
+                return false;
+
+            return true;
         }
 
         public ConstructionGuideEntry GenerateGuideEntry()
