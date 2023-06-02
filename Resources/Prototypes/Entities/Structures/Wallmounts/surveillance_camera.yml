@@ -16,6 +16,13 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Eye
+    autoExpose: # Enhanced Dwarf-level night vision
+      max: 12
+      rampUp: 0.05
+      rampUpNight: 0.01
+    nightVision:
+      range: 0.8
+      power: 0.4
   - type: WiredNetworkConnection
   - type: DeviceNetworkRequiresPower
   - type: Transform

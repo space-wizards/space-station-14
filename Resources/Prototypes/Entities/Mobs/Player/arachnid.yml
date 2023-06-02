@@ -27,6 +27,8 @@
   - type: Alerts
   - type: Actions
   - type: Eye
+    autoExpose: # Some night vision
+      max: 12
   - type: CameraRecoil
   - type: Examiner
   - type: CanHostGuardian

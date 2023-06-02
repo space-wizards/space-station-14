@@ -26,6 +26,8 @@
     - type: InputMover
     - type: Alerts
     - type: Eye
+      autoExpose: # Human night vision
+        max: 10
     - type: CameraRecoil
     - type: Examiner
     - type: CanHostGuardian

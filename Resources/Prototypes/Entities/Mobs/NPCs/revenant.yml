@@ -44,6 +44,14 @@
   - type: NoSlip
   - type: Actions
   - type: Eye
+    autoExpose: # Powerful night vision
+      max: 12
+      rampDown: 0.1
+      rampUp: 0.05
+      rampUpNight: 0.005
+    nightVision:
+      range: 0.5
+      power: 0.4
     drawFov: false
   - type: DoAfter
   - type: Alerts
