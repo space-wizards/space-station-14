@@ -466,7 +466,7 @@
       materialRequirements:
         Cable: 5
     - type: StaticPrice
-      price: 15
+      price: 30
 
 - type: entity
   id: WeaponCapacitorRechargerCircuitboard
@@ -484,7 +484,7 @@
       materialRequirements:
         CableMV: 5
     - type: StaticPrice
-      price: 15
+      price: 30
 
 - type: entity
   id: SubstationMachineCircuitboard
