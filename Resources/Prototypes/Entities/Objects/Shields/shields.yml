@@ -224,14 +224,13 @@
   id: EnergyShield
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
-    - type: EnergySword #A little unsure about this one, but it works fine
+    - type: EnergyShield
       secret: true
-      litDamageBonus:
-        types:
-          Slash: 0
-          Heat: 0
-          Blunt: -1
       litDisarmMalus: 0.6
+      activateSound:
+        path: /Audio/Weapons/ebladeon.ogg
+      deActivateSound:
+        path: /Audio/Weapons/ebladeoff.ogg
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -245,6 +244,8 @@
       size: 5
       sprite: Objects/Weapons/Melee/e_shield.rsi
       heldPrefix: eshield
+    - type: UseDelay
+      delay: 0.5
     - type: ToggleableLightVisuals
       spriteLayer: shield
       inhandVisuals:
@@ -259,12 +260,12 @@
       enabled: false
       radius: 1.5
       energy: 2
-      color: white
+      color: blue
     - type: Reflect
       enabled: false
       reflectProb: 0.95
       reflects:
-      - Energy
+        - Energy
     - type: Blocking
       passiveBlockModifier: PassiveEnergyShieldBlock
       activeBlockModifier: ActiveEnergyShieldBlock
