@@ -24,7 +24,8 @@ namespace Content.Client.HealthAnalyzer.UI
             var text = new StringBuilder();
             var entities = IoCManager.Resolve<IEntityManager>();
 
-            if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
+            if (msg.TargetEntity != null &&
+                entities.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
             {
                 string entityName = "Unknown";
                 if (msg.TargetEntity != null &&
@@ -34,10 +35,21 @@ namespace Content.Client.HealthAnalyzer.UI
                 IReadOnlyDictionary<string, FixedPoint2> damagePerGroup = damageable.DamagePerGroup;
                 IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
 
-                text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n");
+                // researched object
+                text.Append(
+                    $"{Loc.GetString(
+                        "health-analyzer-window-entity-health-text",
+                        ("entityName", entityName)
+                    )}\n"
+                );
 
                 // Damage
-                text.Append($"\n{Loc.GetString("health-analyzer-window-entity-damage-total-text", ("amount", damageable.TotalDamage))}\n");
+                text.Append(
+                    $"\n{Loc.GetString(
+                        "health-analyzer-window-entity-damage-total-text",
+                        ("amount", damageable.TotalDamage)
+                    )}\n"
+                );
 
                 HashSet<string> shownTypes = new();
 
@@ -46,7 +58,13 @@ namespace Content.Client.HealthAnalyzer.UI
                 // Show the total damage and type breakdown for each damage group.
                 foreach (var (damageGroupId, damageAmount) in damagePerGroup)
                 {
-                    text.Append($"\n{Loc.GetString("health-analyzer-window-damage-group-text", ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)), ("amount", damageAmount))}");
+                    text.Append(
+                        $"\n{Loc.GetString(
+                            "health-analyzer-window-damage-group-text",
+                            ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)),
+                            ("amount", damageAmount)
+                        )}"
+                    );
                     // Show the damage for each type in that group.
                     var group = protos.Index<DamageGroupPrototype>(damageGroupId);
                     foreach (var type in group.DamageTypes)
@@ -57,14 +75,23 @@ namespace Content.Client.HealthAnalyzer.UI
                             if (!shownTypes.Contains(type))
                             {
                                 shownTypes.Add(type);
-                                text.Append($"\n- {Loc.GetString("health-analyzer-window-damage-type-text", ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + type)), ("amount", typeAmount))}");
+                                text.Append(
+                                    $"\n- {Loc.GetString(
+                                        "health-analyzer-window-damage-type-text",
+                                        ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + type)),
+                                        ("amount", typeAmount)
+                                    )}"
+                                );
                             }
                         }
                     }
+
                     text.AppendLine();
+                    Logger.Debug($"{text.ToString()}");
                 }
-                Diagnostics.Text = text.ToString();
-                SetSize = (250, 600);
+
+                // Diagnostics.Text = text.ToString();
+                // SetSize = (500, 500);
             }
             else
             {

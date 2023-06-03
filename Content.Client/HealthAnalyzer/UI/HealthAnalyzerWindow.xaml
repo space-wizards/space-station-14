@@ -1,9 +1,177 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
-            MinSize="250 100"
-            SetSize="250 100">
-    <BoxContainer Orientation="Vertical">
-        <Label
-            Name="Diagnostics"
-            Text="{Loc health-analyzer-window-no-patient-data-text}"/>
+               MinSize="250 100"
+               MaxSize="500 500">
+    <BoxContainer Name="Root"
+                  Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True">
+        <Label Name="Diagnostics"
+               Visible="False"
+               Text="{Loc health-analyzer-window-no-patient-data-text}" />
+        <BoxContainer
+            Margin="0 10 0 10"
+            HorizontalExpand="True"
+            Orientation="Horizontal">
+            <BoxContainer
+                Margin="0 0 50 0"
+                Align="Begin"
+                Orientation="Vertical">
+                <BoxContainer
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+                    <PanelContainer
+                        StyleClasses="Inset"
+                        VerticalAlignment="Center">
+                        <SpriteView
+                            Name="GroupSprite"
+                            SetSize="20 20"
+                            OverrideDirection="South" />
+                    </PanelContainer>
+                    <Label
+                        Margin="0 0 10 0"
+                        Text="Burn: 0" />
+                </BoxContainer>
+                <PanelContainer StyleClasses="LowDivider" />
+                <Label
+                    Margin="0 0 10 0"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+            </BoxContainer>
+            <BoxContainer
+                Margin="0 0 50 0"
+                Align="Begin"
+                Orientation="Vertical">
+                <Label
+                    Margin="0 0 10 0"
+                    Text="Burn: 0" />
+                <PanelContainer StyleClasses="LowDivider" />
+                <Label
+                    Margin="0 0 10 0"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer
+            Margin="0 10 0 10"
+            HorizontalExpand="True"
+            Orientation="Horizontal">
+            <BoxContainer
+                Margin="0 0 50 0"
+                Align="Begin"
+                Orientation="Vertical">
+                <Label
+                    Margin="0 0 10 0"
+                    Text="Burn: 0" />
+                <PanelContainer StyleClasses="LowDivider" />
+                <Label
+                    Margin="0 0 10 0"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+            </BoxContainer>
+            <BoxContainer
+                Margin="0 0 50 0"
+                Align="Begin"
+                Orientation="Vertical">
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="Burn: 0" />
+                <PanelContainer StyleClasses="LowDivider" />
+                <Label
+                    Margin="0 0 10 0"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer
+            Margin="0 10 0 10"
+            HorizontalExpand="True"
+            Orientation="Horizontal">
+            <BoxContainer
+                Margin="0 0 50 0"
+                Align="Begin"
+                Orientation="Vertical">
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="Burn: 0" />
+                <PanelContainer StyleClasses="LowDivider" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+            </BoxContainer>
+            <BoxContainer
+                Margin="0 0 50 0"
+                Align="Begin"
+                Orientation="Vertical">
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="Burn: 0" />
+                <PanelContainer StyleClasses="LowDivider" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer
+            Margin="0 10 0 10"
+            HorizontalExpand="True"
+            Orientation="Horizontal">
+            <BoxContainer
+                Margin="0 0 50 0"
+                Align="Begin"
+                Orientation="Vertical">
+                <Label
+                    Margin="0 0 10 0"
+                    Text="Burn: 0" />
+                <PanelContainer StyleClasses="LowDivider" />
+                <Label
+                    Margin="0 0 10 0"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+                <Label
+                    Margin="0 0 10 0"
+                    StyleClasses="LabelSubText"
+                    Text="- Heat: 0" />
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
