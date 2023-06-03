@@ -1,3 +1,4 @@
+using Content.Server.ParticleAccelerator.Wires;
 using Content.Shared.Singularity.Components;
 
 namespace Content.Server.ParticleAccelerator.Components;
@@ -19,66 +20,97 @@ public sealed class ParticleAcceleratorControlBoxComponent : Component
 
     /// <summary>
     /// Whether the PA is currently set to fire at the console.
+    /// Requires <see cref="Assembled"/> to be true.
     /// </summary>
     [ViewVariables]
     public bool Enabled = false;
 
     /// <summary>
     /// Whether the PA actually has the power necessary to fire.
+    /// Requires <see cref="Enabled"/> to be true.
     /// </summary>
     [ViewVariables]
     public bool Powered = false;
 
     /// <summary>
     /// Whether the PA is currently firing or charging to fire.
+    /// Requires <see cref="Powered"/> to be true.
     /// </summary>
     [ViewVariables]
     public bool Firing = false;
 
     /// <summary>
     /// Whether the PA is currently firing or charging to fire.
+    /// Bounded by <see cref="ParticleAcceleratorPowerState.Standby"/> and <see cref="MaxStrength"/>.
+    /// Modified by <see cref="ParticleAcceleratorStrengthWireAction"/>.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     public ParticleAcceleratorPowerState SelectedStrength = ParticleAcceleratorPowerState.Standby;
 
     /// <summary>
-    /// Whether the PA is currently firing or charging to fire.
+    /// The maximum strength level this particle accelerator can be set to operate at.
+    /// Modified by <see cref="ParticleAcceleratorLimiterWireAction"/>.
     /// </summary>
+    [ViewVariables]
     public ParticleAcceleratorPowerState MaxStrength = ParticleAcceleratorPowerState.Level2;
 
     /// <summary>
-    /// Whether the PA is currently firing or charging to fire.
+    /// The power supply unit of the assembled particle accelerator.
+    /// Implies the existance of a <see cref="ParticleAcceleratorPowerBoxComponent"/> attached to this entity.
     /// </summary>
+    [ViewVariables]
     public EntityUid? PowerBox;
+
     /// <summary>
     /// Whether the PA is currently firing or charging to fire.
+    /// Implies the existance of a <see cref="ParticleAcceleratorEndCapComponent"/> attached to this entity.
     /// </summary>
+    [ViewVariables]
     public EntityUid? EndCap;
+
     /// <summary>
     /// Whether the PA is currently firing or charging to fire.
+    /// Implies the existance of a <see cref="ParticleAcceleratorFuelChamberComponent"/> attached to this entity.
     /// </summary>
+    [ViewVariables]
     public EntityUid? FuelChamber;
+
     /// <summary>
     /// Whether the PA is currently firing or charging to fire.
+    /// Implies the existance of a <see cref="ParticleAcceleratorEmitterComponent"/> attached to this entity.
     /// </summary>
+    [ViewVariables]
     public EntityUid? PortEmitter;
+
     /// <summary>
     /// Whether the PA is currently firing or charging to fire.
+    /// Implies the existance of a <see cref="ParticleAcceleratorEmitterComponent"/> attached to this entity.
     /// </summary>
+    [ViewVariables]
     public EntityUid? ForeEmitter;
+
     /// <summary>
     /// Whether the PA is currently firing or charging to fire.
+    /// Implies the existance of a <see cref="ParticleAcceleratorEmitterComponent"/> attached to this entity.
     /// </summary>
+    [ViewVariables]
     public EntityUid? StarboardEmitter;
 
     /// <summary>
-    /// The amount of power the PA draws just by existing as a functional machine.
+    /// The amount of power the particle accelerator must be provided with relative to the expected power draw to function.
+    /// </summary>
+    [ViewVariables]
+    public const float RequiredPowerRatio = 0.999f;
+
+    /// <summary>
+    /// The amount of power (in watts) the PA draws just by existing as a functional machine.
     /// </summary>
     [DataField("powerDrawBase")]
     [ViewVariables(VVAccess.ReadWrite)]
     public int BasePowerDraw = 500;
 
     /// <summary>
-    /// The amount of power the PA draws per level when turned on.
+    /// The amount of power (in watts) the PA draws per level when turned on.
     /// </summary>
     [DataField("powerDrawMult")]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -117,18 +149,21 @@ public sealed class ParticleAcceleratorControlBoxComponent : Component
 
     /// <summary>
     /// Whether the interface has been disabled via a cut wire or not.
+    /// Modified by <see cref="ParticleAcceleratorKeyboardWireAction"/>.
     /// </summary>
     [ViewVariables]
     public bool InterfaceDisabled = false;
 
     /// <summary>
     /// Whether the ability to change the strength of the PA has been disabled via a cut wire or not.
+    /// Modified by <see cref="ParticleAcceleratorStrengthWireAction"/>.
     /// </summary>
     [ViewVariables]
     public bool StrengthLocked = false;
 
     /// <summary>
-    /// Whether the ability to change the strength of the PA has been disabled via a cut wire or not.
+    /// Whether the PA can be turned on.
+    /// Modified by <see cref="ParticleAcceleratorPowerWireAction"/>.
     /// </summary>
     [ViewVariables]
     public bool CanBeEnabled = true;

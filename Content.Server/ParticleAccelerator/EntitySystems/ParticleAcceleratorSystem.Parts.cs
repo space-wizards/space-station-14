@@ -1,8 +1,6 @@
 using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
 using System.Diagnostics.CodeAnalysis;
@@ -84,18 +82,18 @@ public sealed partial class ParticleAcceleratorSystem
         var positionForeEmitter = positionFuelChamber + (Vector2i) rotation.RotateVec((0, -2));         //  EEE  // E: Emitter (Starboard, Fore, Port)
         var positionStarboardEmitter = positionFuelChamber + (Vector2i) rotation.RotateVec((-1, -2));   //       //
 
-        ScanPart<ParticleAcceleratorEndCapComponent>(gridUid!.Value, positionEndCap, out controller.EndCap, out var _, grid);
-        ScanPart<ParticleAcceleratorPowerBoxComponent>(gridUid!.Value, positionPowerBox, out controller.PowerBox, out var _, grid);
+        ScanPart<ParticleAcceleratorEndCapComponent>(gridUid!.Value, positionEndCap, rotation, out controller.EndCap, out var _, grid);
+        ScanPart<ParticleAcceleratorPowerBoxComponent>(gridUid!.Value, positionPowerBox, rotation, out controller.PowerBox, out var _, grid);
 
-        if (!ScanPart<ParticleAcceleratorEmitterComponent>(gridUid!.Value, positionPortEmitter, out controller.PortEmitter, out var portEmitter, grid)
+        if (!ScanPart<ParticleAcceleratorEmitterComponent>(gridUid!.Value, positionPortEmitter, rotation, out controller.PortEmitter, out var portEmitter, grid)
         || portEmitter!.Type != ParticleAcceleratorEmitterType.Port)
             controller.PortEmitter = null;
 
-        if (!ScanPart<ParticleAcceleratorEmitterComponent>(gridUid!.Value, positionForeEmitter, out controller.ForeEmitter, out var foreEmitter, grid)
+        if (!ScanPart<ParticleAcceleratorEmitterComponent>(gridUid!.Value, positionForeEmitter, rotation, out controller.ForeEmitter, out var foreEmitter, grid)
         || foreEmitter!.Type != ParticleAcceleratorEmitterType.Fore)
             controller.ForeEmitter = null;
 
-        if (!ScanPart<ParticleAcceleratorEmitterComponent>(gridUid!.Value, positionStarboardEmitter, out controller.StarboardEmitter, out var starboardEmitter, grid)
+        if (!ScanPart<ParticleAcceleratorEmitterComponent>(gridUid!.Value, positionStarboardEmitter, rotation, out controller.StarboardEmitter, out var starboardEmitter, grid)
         || starboardEmitter!.Type != ParticleAcceleratorEmitterType.Starboard)
             controller.StarboardEmitter = null;
 
@@ -113,10 +111,11 @@ public sealed partial class ParticleAcceleratorSystem
                 partState.Master = uid;
         }
 
+        UpdatePowerDraw(uid, controller);
         UpdateUI(uid, controller);
     }
 
-    private bool ScanPart<T>(EntityUid uid, Vector2i coordinates, [NotNullWhen(true)] out EntityUid? part, [NotNullWhen(true)] out T? comp, MapGridComponent? grid = null)
+    private bool ScanPart<T>(EntityUid uid, Vector2i coordinates, Angle? rotation, [NotNullWhen(true)] out EntityUid? part, [NotNullWhen(true)] out T? comp, MapGridComponent? grid = null)
         where T : Component
     {
         if (!Resolve(uid, ref grid))
@@ -126,9 +125,12 @@ public sealed partial class ParticleAcceleratorSystem
             return false;
         }
 
+        var compQuery = GetEntityQuery<T>();
         foreach (var entity in grid.GetAnchoredEntities(coordinates))
         {
-            if (TryComp(entity, out comp))
+            if (compQuery.TryGetComponent(entity, out comp)
+            && TryComp<ParticleAcceleratorPartComponent>(entity, out var partState) && partState.Master == null
+            && (rotation == null || MathHelper.CloseTo(Transform(entity).LocalRotation.Theta, rotation!.Value.Theta)))
             {
                 part = entity;
                 return true;

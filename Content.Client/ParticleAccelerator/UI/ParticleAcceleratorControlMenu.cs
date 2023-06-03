@@ -47,6 +47,7 @@ namespace Content.Client.ParticleAccelerator.UI
         private bool _blockSpinBox;
         private bool _assembled;
         private bool _shouldContinueAnimating;
+        private int _maxStrength = 3;
 
         public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
         {
@@ -228,7 +229,8 @@ namespace Content.Client.ParticleAccelerator.UI
                                                 Align = Label.AlignMode.Center
                                             },
                                             serviceManual
-                                        }
+                                        },
+                                        Visible = false,
                                     }),
                                 }
                             },
@@ -337,7 +339,7 @@ namespace Content.Client.ParticleAccelerator.UI
 
         private bool StrengthSpinBoxValid(int n)
         {
-            return (n >= 0 && n <= 3 && !_blockSpinBox);
+            return n >= 0 && n <= _maxStrength && !_blockSpinBox;
         }
 
         private void PowerStateChanged(ValueChangedEventArgs e)
@@ -402,14 +404,15 @@ namespace Content.Client.ParticleAccelerator.UI
             });
 
 
-            _shouldContinueAnimating = false;
-            _alarmControl.StopAnimation("warningAnim");
-            _alarmControl.Visible = false;
-            if (maxState == ParticleAcceleratorPowerState.Level3 && enabled && assembled)
+            _maxStrength = maxState == ParticleAcceleratorPowerState.Level3 ? 4 : 3;
+            if (_maxStrength > 3 && enabled && assembled)
             {
                 _shouldContinueAnimating = true;
-                _alarmControl.PlayAnimation(_alarmControlAnimation, "warningAnim");
+                if (!_alarmControl.Visible)
+                    _alarmControl.PlayAnimation(_alarmControlAnimation, "warningAnim");
             }
+            else
+                _shouldContinueAnimating = false;
         }
 
         private void UpdateUI(bool assembled, bool blocked, bool enabled, bool powerBlock)

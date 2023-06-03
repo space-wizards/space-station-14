@@ -75,7 +75,8 @@ public sealed partial class ParticleAcceleratorSystem
         comp.Enabled = true;
         UpdatePowerDraw(uid, comp);
 
-        if (!TryComp<PowerConsumerComponent>(comp.PowerBox, out var powerConsumer) || powerConsumer.ReceivedPower >= powerConsumer.DrawRate)
+        if (!TryComp<PowerConsumerComponent>(comp.PowerBox, out var powerConsumer)
+        || powerConsumer.ReceivedPower >= powerConsumer.DrawRate * ParticleAcceleratorControlBoxComponent.RequiredPowerRatio)
             PowerOn(uid, comp);
 
         UpdateUI(uid, comp);
@@ -92,6 +93,7 @@ public sealed partial class ParticleAcceleratorSystem
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{EntityManager.ToPrettyString((EntityUid) user!.AttachedEntity):player} has turned {EntityManager.ToPrettyString(uid)} off");
 
         comp.Enabled = false;
+        UpdatePowerDraw(uid, comp);
         PowerOff(uid, comp);
         UpdateUI(uid, comp);
     }
@@ -108,6 +110,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         comp.Powered = true;
+        UpdatePowerDraw(uid, comp);
         UpdateFiring(uid, comp);
         UpdatePartVisualStates(uid, comp);
         UpdateUI(uid, comp);
@@ -121,6 +124,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         comp.Powered = false;
+        UpdatePowerDraw(uid, comp);
         UpdateFiring(uid, comp);
         UpdatePartVisualStates(uid, comp);
         UpdateUI(uid, comp);
@@ -211,7 +215,7 @@ public sealed partial class ParticleAcceleratorSystem
         var draw = 0f;
         var receive = 0f;
 
-        if (comp.Enabled && TryComp<PowerConsumerComponent>(comp.PowerBox, out var powerConsumer))
+        if (TryComp<PowerConsumerComponent>(comp.PowerBox, out var powerConsumer))
         {
             draw = powerConsumer.DrawRate;
             receive = powerConsumer.ReceivedPower;
