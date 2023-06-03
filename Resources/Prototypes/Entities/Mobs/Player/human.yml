@@ -96,7 +96,3 @@
     nameSegments:
     - names_ninja_title
     - names_ninja
-  - type: Tag
-    tags:
-    # fight with honor!
-    - GunsDisabled

@@ -1,5 +1,6 @@
 using Content.Shared.Ninja.Components;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Popups;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 
@@ -8,12 +9,14 @@ namespace Content.Shared.Ninja.Systems;
 public abstract class SharedNinjaSystem : EntitySystem
 {
     [Dependency] protected readonly SharedNinjaSuitSystem _suit = default!;
+    [Dependency] protected readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<NinjaComponent, AttackedEvent>(OnNinjaAttacked);
+        SubscribeLocalEvent<NinjaComponent, ShotAttemptedEvent>(OnShotAttempted);
     }
 
     /// <summary>
@@ -75,5 +78,13 @@ public abstract class SharedNinjaSystem : EntitySystem
         {
             _suit.RevealNinja(comp.Suit.Value, suit, uid, true);
         }
+    }
+
+    /// <summary>
+    /// Require ninja to fight with HONOR, no guns!
+    /// </summary>
+    private void OnShotAttempted(EntityUid uid, NinjaComponent comp, ShotAttemptedEvent args)
+    {
+        _popup.ClientPopup(Loc.GetString("gun-disabled"), uid, uid);
     }
 }
