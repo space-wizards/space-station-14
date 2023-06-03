@@ -10,10 +10,11 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
+using TerraFX.Interop.Windows;
 using static Robust.Shared.Replays.IReplayRecordingManager;
+using IResourceManager = Robust.Shared.ContentPack.IResourceManager;
 
 namespace Content.Replay.Menu;
 
@@ -23,6 +24,7 @@ namespace Content.Replay.Menu;
 public sealed class ReplayMainScreen : State
 {
     [Dependency] private readonly IResourceManager _resMan = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IReplayLoadManager _loadMan = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -85,6 +87,7 @@ public sealed class ReplayMainScreen : State
         data.TryGet<ValueDataNode>(Duration, out var durationNode);
         data.TryGet<ValueDataNode>("roundId", out var roundIdNode);
         data.TryGet<ValueDataNode>(Hash, out var hashNode);
+        data.TryGet<ValueDataNode>(CompHash, out var compHashNode);
         DateTime.TryParse(timeNode?.Value, out var time);
         TimeSpan.TryParse(durationNode?.Value, out var duration);
 
@@ -132,14 +135,29 @@ public sealed class ReplayMainScreen : State
             throw new Exception("Invalid metadata file. Missing type hash");
 
         var typeHash = hashNode.Value;
+        _mainMenuControl.LoadButton.Disabled = false;
         if (Convert.FromHexString(typeHash).SequenceEqual(_serializer.GetSerializableTypesHash()))
         {
             typeHash = $"[color=green]{typeHash[..16]}[/color]";
-            _mainMenuControl.LoadButton.Disabled = false;
         }
         else
         {
             typeHash = $"[color=red]{typeHash[..16]}[/color]";
+            _mainMenuControl.LoadButton.Disabled = true;
+        }
+
+        if (compHashNode == null)
+            throw new Exception("Invalid metadata file. Missing component hash");
+
+        var compHash = compHashNode.Value;
+        if (Convert.FromHexString(compHash).SequenceEqual(_factory.GetHash(true)))
+        {
+            compHash = $"[color=green]{compHash[..16]}[/color]";
+            _mainMenuControl.LoadButton.Disabled = false;
+        }
+        else
+        {
+            compHash = $"[color=red]{compHash[..16]}[/color]";
             _mainMenuControl.LoadButton.Disabled = true;
         }
 
@@ -173,6 +191,7 @@ public sealed class ReplayMainScreen : State
             ("forkId", forkId),
             ("version", forkVersion),
             ("engVersion", engineVersion),
+            ("compHash", compHash),
             ("hash", typeHash)));
     }
 
@@ -224,7 +243,16 @@ public sealed class ReplayMainScreen : State
             return;
 
         _selected = replay;
-        UpdateSelectedInfo();
+        try
+        {
+            UpdateSelectedInfo();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"Failed to load replay info. Exception: {ex}");
+            SelectReplay(null);
+            return;
+        }
         _selectWindow?.UpdateSelected(replay);
     }
 

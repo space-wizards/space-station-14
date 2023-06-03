@@ -27,7 +27,8 @@ replay-info-info = {"["}color=gray]Selected:[/color]  {$name} ({$file})
                    {"["}color=gray]ForkId:[/color]   {$forkId}
                    {"["}color=gray]Version:[/color]   {$version}
                    {"["}color=gray]Engine:[/color]   {$engVersion}
-                   {"["}color=gray]Hash:[/color]   {$hash}
+                   {"["}color=gray]Type Hash:[/color]   {$hash}
+                   {"["}color=gray]Comp Hash:[/color]   {$compHash}
 
 # Replay selection window
 replay-menu-select-title = Select Replay
