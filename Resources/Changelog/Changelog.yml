@@ -1,10 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: 'Lone nuclear operatives have recently started attacking stations. Make
-      sure to watch out for them on long, extended shifts.', type: Add}
-  id: 3435
-  time: '2023-04-17T06:00:44.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed not being able to take over the rat king ghost role., type: Fix}
@@ -2903,3 +2897,9 @@ Entries:
   - {message: Slightly buffed mega spray bottle., type: Tweak}
   id: 3934
   time: '2023-06-03T19:31:50.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'DoAfters (green bar above your head) now work when moving without gravity
+      so you can cuff, strip and use meds in spess.', type: Tweak}
+  id: 3935
+  time: '2023-06-03T19:33:41.0000000+00:00'
