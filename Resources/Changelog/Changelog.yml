@@ -1,11 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Emergency space suits, emergency fire suits, and O2 will now always
-      spawn in their respective lockers.', type: Tweak}
-  - {message: Maintenance wall lockers no longer contain emergency locker gear., type: Fix}
-  id: 3429
-  time: '2023-04-17T05:38:43.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: added bomber jackets to clothesmate vendor, type: Add}
@@ -2902,3 +2895,8 @@ Entries:
   - {message: Added hampter plushie based on discord emoji/sticker, type: Add}
   id: 3928
   time: '2023-06-03T18:50:53.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Added GuideHelp tags to some Janitorial items., type: Add}
+  id: 3929
+  time: '2023-06-03T19:07:06.0000000+00:00'
