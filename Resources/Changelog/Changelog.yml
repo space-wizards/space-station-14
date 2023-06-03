@@ -1,10 +1,4 @@
 Entries:
-- author: Owai-Seek
-  changes:
-  - {message: added bomber jackets to clothesmate vendor, type: Add}
-  - {message: moved bowler hat to bardrobe, type: Tweak}
-  id: 3430
-  time: '2023-04-17T05:43:42.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Fix displaying tracking implanted person on crew monitor systems, type: Fix}
@@ -2900,3 +2894,8 @@ Entries:
   - {message: Added GuideHelp tags to some Janitorial items., type: Add}
   id: 3929
   time: '2023-06-03T19:07:06.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Uranium window now can block radiation, type: Tweak}
+  id: 3930
+  time: '2023-06-03T19:12:27.0000000+00:00'
