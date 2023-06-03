@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation",
+  "states": [
+    {
+      "name": "airloss"
+    },
+    {
+      "name": "genetic"
+    },
+    {
+      "name": "brute"
+    },
+    {
+      "name": "toxin"
+    },
+    {
+      "name": "burn"
+    }
+  ]
+}
