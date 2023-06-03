@@ -1,9 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Jester shoes now jingle., type: Add}
-  id: 3432
-  time: '2023-04-17T05:56:19.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The research team in the XenoArcheology lab have discovered how to extract
@@ -2900,3 +2895,8 @@ Entries:
       console., type: Tweak}
   id: 3931
   time: '2023-06-03T19:13:31.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Joints and blunts will get you high again., type: Fix}
+  id: 3932
+  time: '2023-06-03T19:29:46.0000000+00:00'
