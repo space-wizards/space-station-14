@@ -111,21 +111,6 @@
     lowPressureMultiplier: 1000
 
 - type: entity
-  parent: HatBase
-  id: ClothingHeadHelmetIHSVoidHelm
-  noSpawn: true
-  name: IHS voidhelm
-  description: A robust, tactical IHS helmet.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ihsvoid.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ihsvoid.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.3
-    lowPressureMultiplier: 10000
-
-- type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitMedical
   noSpawn: true
