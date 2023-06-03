@@ -107,6 +107,27 @@
             Quantity: 10
 
 - type: entity
+  parent: BasePlushie
+  id: PlushieHampter
+  name: hampter plushie
+  description: A cute stuffed toy that resembles a hamster. Its face looks squished.
+  components:
+  - type: Sprite
+    state: plushie_hampter
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+
+- type: entity
   parent: PlushieBee
   id: PlushieRGBee
   name: RGBee plushie
