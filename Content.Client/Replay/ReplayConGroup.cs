@@ -1,6 +1,6 @@
 using Robust.Client.Console;
 
-namespace Content.Replay;
+namespace Content.Client.Replay;
 
 public sealed class ConGroup : IClientConGroupImplementation
 {

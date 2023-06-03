@@ -1,5 +1,5 @@
 <Control xmlns="https://spacestation14.io"
-         xmlns:pllax="clr-namespace:Content.Client.Parallax;assembly=Content.Client">
+         xmlns:pllax="clr-namespace:Content.Client.Parallax">
     <pllax:ParallaxControl />
     <PanelContainer Name="Background"
                     HorizontalAlignment="Center"

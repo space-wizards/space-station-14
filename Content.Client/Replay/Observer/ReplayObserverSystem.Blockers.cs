@@ -6,7 +6,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Throwing;
 
-namespace Content.Replay.Observer;
+namespace Content.Client.Replay.Observer;
 
 public sealed partial class ReplayObserverSystem
 {

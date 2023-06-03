@@ -3,7 +3,7 @@ using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Client.UserInterface.Systems.Ghost.Widgets;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 
-namespace Content.Replay.UI;
+namespace Content.Client.Replay.UI;
 
 /// <summary>
 /// Gameplay state when moving around a replay as a ghost.

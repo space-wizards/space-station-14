@@ -20,7 +20,7 @@ replay-menu-none = No replays found.
 replay-info-title = Replay Information
 replay-info-none-selected = No replay selected
 replay-info-invalid = [color=red]Invalid replay selected[/color] 
-replay-info-info = {"["}color=gray]Selected:[/color]   {$file}
+replay-info-info = {"["}color=gray]Selected:[/color]  {$name} ({$file})
                    {"["}color=gray]Time:[/color]   {$time}
                    {"["}color=gray]Round ID:[/color]   {$roundId}
                    {"["}color=gray]Duration:[/color]   {$duration}

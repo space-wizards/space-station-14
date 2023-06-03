@@ -11,12 +11,11 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Replays;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
 using static Robust.Shared.Replays.IReplayRecordingManager;
 
-namespace Content.Replay.UI.Menu;
+namespace Content.Replay.Menu;
 
 /// <summary>
 /// Main menu screen for selecting and loading replays.
@@ -159,11 +158,15 @@ public sealed class ReplayMainScreen : State
         // Strip milliseconds. Apparently there is no general format string that suppresses milliseconds.
         duration = new((int)Math.Floor(duration.TotalDays), duration.Hours, duration.Minutes, duration.Seconds);
 
+        data.TryGet<ValueDataNode>(Name, out var nameNode);
+        var name = nameNode?.Value ?? string.Empty;
+
         info.HorizontalAlignment = Control.HAlignment.Left;
         info.VerticalAlignment = Control.VAlignment.Top;
         info.SetMarkup(Loc.GetString(
             "replay-info-info",
             ("file", file),
+            ("name", name),
             ("time", time),
             ("roundId", roundIdNode?.Value ?? "???"),
             ("duration", duration),

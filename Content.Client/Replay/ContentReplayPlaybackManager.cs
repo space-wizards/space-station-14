@@ -1,7 +1,7 @@
+using Content.Client.Launcher;
+using Content.Client.MainMenu;
+using Content.Client.Replay.UI.Loading;
 using Content.Client.UserInterface.Systems.Chat;
-using Content.Replay.Observer;
-using Content.Replay.UI.Loading;
-using Content.Replay.UI.Menu;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands;
@@ -12,6 +12,7 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Client;
 using Robust.Client.GameObjects;
 using Robust.Client.Replays.Loading;
 using Robust.Client.Replays.Playback;
@@ -20,17 +21,24 @@ using Robust.Client.Timing;
 using Robust.Client.UserInterface;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
+using ReplayObserverSystem = Content.Client.Replay.Observer.ReplayObserverSystem;
 
-namespace Content.Replay.Manager;
+namespace Content.Client.Replay;
 
-public sealed class ReplayManager
+public sealed class ContentReplayPlaybackManager
 {
     [Dependency] private readonly IStateManager _stateMan = default!;
     [Dependency] private readonly IClientGameTiming _timing = default!;
     [Dependency] private readonly IReplayLoadManager _loadMan = default!;
+    [Dependency] private readonly IGameController _controller = default!;
     [Dependency] private readonly IClientEntityManager _entMan = default!;
     [Dependency] private readonly IUserInterfaceManager _uiMan = default!;
     [Dependency] private readonly IReplayPlaybackManager _playback = default!;
+
+    /// <summary>
+    /// UI state to return to when stopping a replay or loading fails.
+    /// </summary>
+    public Type? DefaultState;
 
     private bool _initialized;
 
@@ -42,7 +50,6 @@ public sealed class ReplayManager
         _initialized = true;
         _playback.HandleReplayMessage += OnHandleReplayMessage;
         _playback.ReplayPlaybackStopped += OnReplayPlaybackStopped;
-        _playback.ReplayPlaybackStarted += OnReplayPlaybackStarted;
         _playback.ReplayCheckpointReset += OnCheckpointReset;
         _loadMan.LoadOverride += LoadOverride;
     }
@@ -58,9 +65,19 @@ public sealed class ReplayManager
     {
         if (exception != null)
         {
-            _stateMan.RequestStateChange<ReplayMainScreen>();
+            ReturnToDefaultState();
             _uiMan.Popup(Loc.GetString("replay-loading-failed", ("reason", exception)));
         }
+    }
+
+    public void ReturnToDefaultState()
+    {
+        if (DefaultState != null)
+            _stateMan.RequestStateChange(DefaultState);
+        else if (_controller.LaunchState.FromLauncher)
+            _stateMan.RequestStateChange<LauncherConnecting>().SetDisconnected();
+        else
+            _stateMan.RequestStateChange<MainScreen>();
     }
 
     private void OnCheckpointReset()
@@ -108,13 +125,8 @@ public sealed class ReplayManager
         return false;
     }
 
-    private void OnReplayPlaybackStarted()
-    {
-        _entMan.EntitySysManager.GetEntitySystem<ReplayObserverSystem>().SetObserverPosition(default);
-    }
-
     private void OnReplayPlaybackStopped()
     {
-        _stateMan.RequestStateChange<ReplayMainScreen>();
+        ReturnToDefaultState();
     }
 }

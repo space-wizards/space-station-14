@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Replay.UI.Menu;
+namespace Content.Replay.Menu;
 
 [GenerateTypedNameReferences]
 public sealed partial class ReplayMainMenuControl : Control

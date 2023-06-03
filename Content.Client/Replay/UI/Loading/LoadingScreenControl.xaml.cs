@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 
-namespace Content.Replay.UI.Loading;
+namespace Content.Client.Replay.UI.Loading;
 
 [GenerateTypedNameReferences]
 public sealed partial class LoadingScreenControl : Control

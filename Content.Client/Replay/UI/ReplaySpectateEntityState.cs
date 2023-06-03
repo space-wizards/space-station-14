@@ -2,10 +2,9 @@ using Content.Client.Gameplay;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Robust.Client.Replays.UI;
-using Robust.Shared.Analyzers;
 using static Robust.Client.UserInterface.Controls.LayoutContainer;
 
-namespace Content.Replay.UI;
+namespace Content.Client.Replay.UI;
 
 /// <summary>
 /// Gameplay state when observing/spectating an entity during a replay.

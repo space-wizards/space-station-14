@@ -1,19 +1,19 @@
-using Content.Replay.UI;
+using System.Linq;
+using Content.Client.Replay.UI;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Verbs;
+using Robust.Client;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using System.Linq;
-using Content.Shared.Movement.Systems;
-using Robust.Client;
-using Robust.Client.Replays.Playback;
 using Robust.Shared.Utility;
 
-namespace Content.Replay.Observer;
+namespace Content.Client.Replay.Observer;
 
 /// <summary>
 /// This system handles spawning replay observer ghosts and maintaining their positions when traveling through time.
@@ -46,16 +46,18 @@ public sealed partial class ReplayObserverSystem : EntitySystem
         SubscribeLocalEvent<ReplayObserverComponent, PlayerDetachedEvent>(OnDetached);
 
         InitializeBlockers();
-        InitializeMovement();
         _conHost.RegisterCommand("observe", ObserveCommand);
 
         _replayPlayback.BeforeSetTick += OnBeforeSetTick;
         _replayPlayback.AfterSetTick += OnAfterSetTick;
+        _replayPlayback.ReplayPlaybackStarted += OnPlaybackStarted;
+        _replayPlayback.ReplayPlaybackStopped += OnPlaybackStopped;
     }
 
-    private void OnBeforeSetTick()
+    private void OnPlaybackStarted()
     {
-        _oldPosition = GetObserverPosition();
+        InitializeMovement();
+        SetObserverPosition(default);
     }
 
     private void OnAfterSetTick()
@@ -69,8 +71,22 @@ public sealed partial class ReplayObserverSystem : EntitySystem
     {
         base.Shutdown();
         _conHost.UnregisterCommand("observe");
+        _replayPlayback.BeforeSetTick -= OnBeforeSetTick;
+        _replayPlayback.AfterSetTick -= OnAfterSetTick;
+        _replayPlayback.ReplayPlaybackStarted -= OnPlaybackStarted;
+        _replayPlayback.ReplayPlaybackStopped -= OnPlaybackStopped;
+    }
+
+    private void OnPlaybackStopped()
+    {
         ShutdownMovement();
     }
+
+    private void OnBeforeSetTick()
+    {
+        _oldPosition = GetObserverPosition();
+    }
+
     private void OnDetached(EntityUid uid, ReplayObserverComponent component, PlayerDetachedEvent args)
     {
         if (uid.IsClientSide())
@@ -124,6 +140,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
 
     public struct ObserverData
     {
+        // TODO REPLAYS handle ghost-following.
         public EntityUid Entity;
         public (EntityCoordinates Coords, Angle Rot)? Local;
         public (EntityCoordinates Coords, Angle Rot)? World;
@@ -161,13 +178,16 @@ public sealed partial class ReplayObserverSystem : EntitySystem
 
     private void OnGetAlternativeVerbs(GetVerbsEvent<AlternativeVerb> ev)
     {
+        if (_replayPlayback.Replay == null)
+            return;
+
         var verb = new AlternativeVerb
         {
             Priority = 100,
-            Act = (() =>
+            Act = () =>
             {
                 SpectateEntity(ev.Target);
-            }),
+            },
 
             Text = "Observe",
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/vv.svg.192dpi.png"))

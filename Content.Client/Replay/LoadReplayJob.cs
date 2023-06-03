@@ -1,10 +1,10 @@
-using Robust.Shared.ContentPack;
 using System.Threading.Tasks;
-using Content.Replay.UI.Loading;
+using Content.Client.Replay.UI.Loading;
 using Robust.Client.Replays.Loading;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 
-namespace Content.Replay.Manager;
+namespace Content.Client.Replay;
 
 public sealed class ContentLoadReplayJob : LoadReplayJob
 {

@@ -1,7 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <PropertyGroup>
-    <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
     <TargetFramework>$(TargetFramework)</TargetFramework>
     <LangVersion>10</LangVersion>
     <IsPackable>false</IsPackable>
@@ -11,7 +9,6 @@
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
     <PackageReference Include="Nett" Version="0.15.0" />
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" PrivateAssets="All" />
@@ -25,6 +22,5 @@
     <ProjectReference Include="..\Content.Client\Content.Client.csproj" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
-  <Import Project="..\RobustToolbox\MSBuild\Robust.Engine.targets" />
-  <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 </Project>

@@ -1,11 +1,10 @@
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
-using Robust.Shared.Analyzers;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Timing;
 
-namespace Content.Replay.UI.Loading;
+namespace Content.Client.Replay.UI.Loading;
 
 [Virtual]
 public class LoadingScreen<TResult> : State

@@ -4,12 +4,13 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 
-namespace Content.Replay.Observer;
+namespace Content.Client.Replay.Observer;
 
 // Partial class handles movement logic for observers.
 public sealed partial class ReplayObserverSystem
 {
     public DirectionFlag Direction;
+    // TODO REPLAYS make this a cvar
     public const float DefaultSpeed = 12;
 
     private void InitializeMovement()
@@ -37,6 +38,9 @@ public sealed partial class ReplayObserverSystem
     // This just runs on frame updates, no acceleration or friction here.
     public override void FrameUpdate(float frameTime)
     {
+        if (_replayPlayback.Replay == null)
+            return;
+
         if (_player.LocalPlayer?.ControlledEntity is not { } player)
             return;
 
