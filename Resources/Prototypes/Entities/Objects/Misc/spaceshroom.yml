@@ -1,0 +1,94 @@
+# Structure
+- type: entity
+  name: spaceshroom
+  parent: BaseStructure
+  id: Spaceshroom
+  description: A cluster of wild mushrooms that likes to grow in dark, moist environments.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/spaceshroom.rsi
+    state: structure
+  - type: Item
+    sprite: Objects/Misc/spaceshroom.rsi
+  - type: Transform
+    anchored: true
+  - type: InteractionOutline
+  - type: StaticPrice
+    price: 150
+  - type: GatherableByHand
+    loot: FoodSpaceshroom
+    mindropcount: 2
+    maxdropcount: 3
+    dropradius: 0.9
+    harvesttime: 2.0
+
+# Object
+- type: entity
+  name: spaceshroom
+  parent: FoodProduceBase
+  id: FoodSpaceshroom
+  description: A wild mushroom that likes to grow in dark, moist environments.
+  components:
+  - type: Produce
+  - type: Sprite
+    sprite: Objects/Misc/spaceshroom.rsi
+    state: object
+  - type: FlavorProfile
+    flavors:
+      - spaceshroom
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: SpaceDrugs
+        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: RandomFillSolution
+    solution: food
+    weightedRandomId: RandomFillSpaceshroom
+    quantities:
+      SpaceDrugs: 10
+      Water: 0
+      Ephedrine: 10
+      Lexorin: 10
+      Amatoxin: 15
+
+- type: weightedRandom
+  id: RandomFillSpaceshroom
+  weights:
+    SpaceDrugs: 10
+    Water: 5
+    Ephedrine: 3
+    Lexorin: 1
+    Amatoxin: 1
+
+# Cooked Object
+- type: entity
+  name: cooked spaceshroom
+  parent: FoodProduceBase
+  id: FoodSpaceshroomCooked
+  description: It appears the heat has removed its chemical effects.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - spaceshroomcooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Misc/spaceshroom.rsi
+    state: object_cooked
+  - type: Produce
