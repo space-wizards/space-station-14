@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Managers;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
@@ -20,6 +21,7 @@ public sealed class AFKSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
 
     private float _checkDelay;
     private TimeSpan _checkTime;
@@ -80,7 +82,7 @@ public sealed class AFKSystem : EntitySystem
             var pSession = (IPlayerSession) session;
             var isAfk = _afkManager.IsAfk(pSession);
 
-            if (_afkManager.IsAfkKick(pSession))
+            if (_afkManager.IsAfkKick(pSession) && !_adminManager.IsAdmin(pSession))
             {
                 pSession.ConnectedClient.Disconnect(Loc.GetString("kick-afk"), true);
                 continue;
