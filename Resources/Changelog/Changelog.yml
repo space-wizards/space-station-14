@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Aspid now requires a minimum of 25 players., type: Tweak}
-  id: 3428
-  time: '2023-04-16T18:53:26.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Emergency space suits, emergency fire suits, and O2 will now always
@@ -2902,3 +2897,8 @@ Entries:
   - {message: Swords no longer clank, type: Tweak}
   id: 3927
   time: '2023-06-03T10:17:15.0000000+00:00'
+- author: Renlou
+  changes:
+  - {message: Added hampter plushie based on discord emoji/sticker, type: Add}
+  id: 3928
+  time: '2023-06-03T18:50:53.0000000+00:00'
