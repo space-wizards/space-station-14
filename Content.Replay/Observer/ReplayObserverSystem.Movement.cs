@@ -34,7 +34,6 @@ public sealed partial class ReplayObserverSystem
 
     // Normal mover code works via physics. Replays don't do prediction/physics. You can fudge it by relying on the
     // fact that only local-player physics is currently predicted, but instead I've just added crude mover logic here.
-    //
     // This just runs on frame updates, no acceleration or friction here.
     public override void FrameUpdate(float frameTime)
     {
@@ -78,9 +77,7 @@ public sealed partial class ReplayObserverSystem
             return;
         }
 
-        // A poor mans grid-traversal system.
-        // Should also handle interrupting following.
-        // TODO do this properly.
+        // A poor mans grid-traversal system. Should also interrupt ghost-following.
         _transform.SetGridId(player, xform, null);
         _transform.AttachToGridOrMap(player);
 

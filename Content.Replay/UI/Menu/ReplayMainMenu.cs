@@ -11,6 +11,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Replays;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
 using static Robust.Shared.Replays.IReplayRecordingManager;
@@ -18,7 +19,7 @@ using static Robust.Shared.Replays.IReplayRecordingManager;
 namespace Content.Replay.UI.Menu;
 
 /// <summary>
-///     Main menu screen for selecting and loading replays.
+/// Main menu screen for selecting and loading replays.
 /// </summary>
 public sealed class ReplayMainScreen : State
 {
@@ -32,16 +33,9 @@ public sealed class ReplayMainScreen : State
 
     private ReplayMainMenuControl _mainMenuControl = default!;
     private SelectReplayWindow? _selectWindow;
-
-    // TODO cvar (or add a open-file dialog?).
-    public static readonly ResPath DefaultReplayDirectory = new("/replays");
-    private readonly ResPath _directory = DefaultReplayDirectory;
-
-    private List<ResPath> _replays = new();
+    private ResPath _directory;
+    private List<(string Name, ResPath Path)> _replays = new();
     private ResPath? _selected;
-
-    // Should probably be localized, but should never happen, so...
-    public const string Error = "Error";
 
     protected override void Startup()
     {
@@ -54,14 +48,15 @@ public sealed class ReplayMainScreen : State
         _mainMenuControl.FolderButton.OnPressed += OnFolderPressed;
         _mainMenuControl.LoadButton.OnPressed += OnLoadpressed;
 
+        _directory = new ResPath(_cfg.GetCVar(CVars.ReplayDirectory)).ToRootedPath();
         RefreshReplays();
-        SelectReplay(_replays.FirstOrNull());
+        SelectReplay(_replays.FirstOrNull()?.Path);
         if (_selected == null) // force initial update
             UpdateSelectedInfo();
     }
 
     /// <summary>
-    ///     Read replay meta-data and update the replay info box.
+    /// Read replay meta-data and update the replay info box.
     /// </summary>
     private void UpdateSelectedInfo()
     {
@@ -115,7 +110,7 @@ public sealed class ReplayMainScreen : State
             try
             {
                 Convert.FromHexString(forkVersion);
-                // version is a probably some GH hash. Crop it to keep the info box small.
+                // version is a probably some git commit. Crop it to keep the info box small.
                 forkVersion = forkVersion[..16];
             }
             catch
@@ -134,8 +129,10 @@ public sealed class ReplayMainScreen : State
             }
         }
 
+        if (hashNode == null)
+            throw new Exception("Invalid metadata file. Missing type hash");
 
-        var typeHash = hashNode?.Value ?? Error;
+        var typeHash = hashNode.Value;
         if (Convert.FromHexString(typeHash).SequenceEqual(_serializer.GetSerializableTypesHash()))
         {
             typeHash = $"[color=green]{typeHash[..16]}[/color]";
@@ -159,8 +156,7 @@ public sealed class ReplayMainScreen : State
                 engineVersion = $"[color=yellow]{engineNode.Value}[/color]";
         }
 
-        // Strip milliseconds.
-        // why the fuck isn't there a general format string that suppresses milliseconds.
+        // Strip milliseconds. Apparently there is no general format string that suppresses milliseconds.
         duration = new((int)Math.Floor(duration.TotalDays), duration.Hours, duration.Minutes, duration.Seconds);
 
         info.HorizontalAlignment = Control.HAlignment.Left;
@@ -169,9 +165,9 @@ public sealed class ReplayMainScreen : State
             "replay-info-info",
             ("file", file),
             ("time", time),
-            ("roundId", roundIdNode?.Value ?? Error),
+            ("roundId", roundIdNode?.Value ?? "???"),
             ("duration", duration),
-            ("forkId", forkNode?.Value ?? Error),
+            ("forkId", forkId),
             ("version", forkVersion),
             ("engVersion", engineVersion),
             ("hash", typeHash)));
@@ -196,13 +192,24 @@ public sealed class ReplayMainScreen : State
         foreach (var entry in _resMan.UserData.DirectoryEntries(_directory))
         {
             var file = _directory / entry;
-            if (_resMan.UserData.Exists(file / MetaFile))
-                _replays.Add(file);
+            try
+            {
+                var data = _loadMan.LoadYamlMetadata(_resMan.UserData, file);
+                if (data == null)
+                    continue;
+
+                var name = data.Get<ValueDataNode>(Name).Value;
+                _replays.Add((name, file));
+
+            }
+            catch
+            {
+                // Ignore file
+            }
         }
 
         _selectWindow?.Repopulate(_replays);
-
-        if (_selected.HasValue && !_replays.Contains(_selected.Value))
+        if (_selected.HasValue && _replays.All(x => x.Path != _selected.Value))
             SelectReplay(null);
         else
             _selectWindow?.UpdateSelected(_selected);

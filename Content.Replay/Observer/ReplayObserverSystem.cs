@@ -16,12 +16,13 @@ using Robust.Shared.Utility;
 namespace Content.Replay.Observer;
 
 /// <summary>
-///     This system handles spawning replay observer ghosts and maintaining their positions when traveling through time.
+/// This system handles spawning replay observer ghosts and maintaining their positions when traveling through time.
+/// It also blocks most normal interactions, just in case.
 /// </summary>
 /// <remarks>
-///     E.g., if an observer is on a grid, and then jumps forward or backward in time to a point where the grid does not
-///     exist, where should the observer go? This attempts to maintain their position and eye rotation or just re-spawns
-///     them as needed.
+/// E.g., if an observer is on a grid, and then jumps forward or backward in time to a point where the grid does not
+/// exist, where should the observer go? This attempts to maintain their position and eye rotation or just re-spawns
+/// them as needed.
 /// </remarks>
 public sealed partial class ReplayObserverSystem : EntitySystem
 {

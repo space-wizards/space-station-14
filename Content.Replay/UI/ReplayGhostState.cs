@@ -6,7 +6,7 @@ using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 namespace Content.Replay.UI;
 
 /// <summary>
-///     Gameplay state when moving around a replay as a ghost.
+/// Gameplay state when moving around a replay as a ghost.
 /// </summary>
 public sealed class ReplayGhostState : ReplaySpectateEntityState
 {

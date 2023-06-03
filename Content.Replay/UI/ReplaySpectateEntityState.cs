@@ -8,7 +8,7 @@ using static Robust.Client.UserInterface.Controls.LayoutContainer;
 namespace Content.Replay.UI;
 
 /// <summary>
-///     Gameplay state when observing/spectating an entity during a replay.
+/// Gameplay state when observing/spectating an entity during a replay.
 /// </summary>
 [Virtual]
 public class ReplaySpectateEntityState : GameplayState

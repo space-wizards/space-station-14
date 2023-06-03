@@ -26,7 +26,7 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
         if (args.Sprite == null)
             return;
 
-        // default behaviour is RotationState.Vertical if try-get fails.
+        // If not defined, defaults to standing.
         AppearanceSystem.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component);
 
         switch (state)

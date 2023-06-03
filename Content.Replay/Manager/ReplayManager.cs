@@ -1,5 +1,3 @@
-using System.Linq;
-using Content.Client.RoundEnd;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Replay.Observer;
 using Content.Replay.UI.Loading;
@@ -67,14 +65,11 @@ public sealed class ReplayManager
 
     private void OnCheckpointReset()
     {
-        // Remove future chat messages when rewinding time.
+        // This function removes future chat messages when rewinding time.
 
         // TODO REPLAYS add chat messages when jumping forward in time.
         // Need to allow content to add data to checkpoint states.
 
-        // TODO REPLAYS custom chat control
-        // Maybe one that allows players to skip directly to players via their names?
-        // I don't like having to just manipulate ChatUiController like this.
         _uiMan.GetUIController<ChatUIController>().History.RemoveAll(x => x.Item1 > _timing.CurTick);
         _uiMan.GetUIController<ChatUIController>().Repopulate();
     }
@@ -87,25 +82,13 @@ public sealed class ReplayManager
                     // Just pass on the chat message to the UI controller, but skip speech-bubbles if we are fast-forwarding.
                     _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: !skipEffects);
                     return true;
-                case RoundEndMessageEvent roundEnd:
-
-                    if (skipEffects)
-                        return true;
-
-                    // TODO REPLAYS handle round end windows properly to prevent window duplication.
-                    // The round-end logic just needs to properly track the window. Clients should also be able to
-                    // re-open the window after having closed it.
-
-                    if (!_uiMan.WindowRoot.Children.Any(x => x is RoundEndSummaryWindow))
-                        _entMan.DispatchReceivedNetworkMsg(roundEnd);
-                    return true;
-                //
                 // TODO REPLAYS figure out a cleaner way of doing this. This sucks.
                 // Next: we want to avoid spamming animations, sounds, and pop-ups while scrubbing or rewinding time
                 // (e.g., to rewind 1 tick, we really rewind ~60 and then fast forward 59). Currently, this is
                 // effectively an EntityEvent blacklist. But this is kinda shit and should be done differently somehow.
                 // The unifying aspect of these events is that they trigger pop-ups, UI changes, spawn client-side
                 // entities or start animations.
+                case RoundEndMessageEvent:
                 case PopupEvent:
                 case AudioMessage:
                 case PickupAnimationEvent:
