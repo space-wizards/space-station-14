@@ -1,6 +1,6 @@
 book-text-sec-doc-1 = Only the Head of Security has the right to read these documents, if you are not him, close immediately, or you will be sentenced to execution on the spot.
 
-    The Emergency Orders listed here are only executed by direct order of the Central Command, properly executed, and using all necessary codes. Otherwise the Orders must be considered invalid. Secret Documents must not be seen by ANYONE but the Head of Security, and they must NEVER fall into the wrong hands.
+    The Emergency Security Orders listed here are only executed by direct order of the Central Command, properly executed, and using all necessary codes. Otherwise the Orders must be considered invalid. Secret documents must not be seen by ANYONE but the Head of Security, and they must NEVER fall into the wrong hands.
 
     ORDER №1: Isolate the brig from the entire station, evacuate the heads to the brig.
     ORDER №3: Assemble all heads on the bridge under house arrest, and do not release them until a special order from the Central Command.
