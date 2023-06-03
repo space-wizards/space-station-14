@@ -57,6 +57,7 @@
     fuel: 10
     time: 10
   - type: Airlock
+    openUnlitVisible: true #resprite
   - type: Appearance
   - type: WiresVisuals
   - type: ApcPowerReceiver
