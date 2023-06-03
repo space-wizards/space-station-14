@@ -1,10 +1,4 @@
 Entries:
-- author: Nimfar
-  changes:
-  - {message: 'Gun safe for SO, now weapons can be stored in even more security',
-    type: Add}
-  id: 3426
-  time: '2023-04-16T05:55:23.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed the admin menu not being openable in the lobby., type: Fix}
@@ -2903,3 +2897,8 @@ Entries:
   - {message: Added bruise packs and ointment to medical techfab., type: Add}
   id: 3925
   time: '2023-06-02T01:36:33.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: 'Toy Box has been added, it is filled with new toys.', type: Add}
+  id: 3926
+  time: '2023-06-03T03:31:48.0000000+00:00'
