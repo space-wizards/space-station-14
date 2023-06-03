@@ -74,6 +74,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
   - type: EyeProtection
+    visionDarken: 2
 
 - type: entity
   parent: ClothingEyesBase
@@ -113,6 +114,7 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
+    visionDarken: 5
 
 - type: entity
   parent: ClothingEyesBase
@@ -127,6 +129,7 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
+    visionDarken: 5
 
 - type: entity
   parent: ClothingEyesBase
@@ -141,6 +144,7 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
+    visionDarken: 3
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity

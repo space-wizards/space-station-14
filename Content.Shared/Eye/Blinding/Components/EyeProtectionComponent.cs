@@ -12,4 +12,10 @@ public sealed class EyeProtectionComponent : Component
     /// </summary>
     [DataField("protectionTime")]
     public readonly TimeSpan ProtectionTime = TimeSpan.FromSeconds(10);
+
+    /// <summary>
+    /// How much of your night vision wearing these costs you.
+    /// </summary>
+    [DataField("visionDarken")]
+    public float VisionDarken = 1.0f;
 }

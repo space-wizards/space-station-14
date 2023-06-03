@@ -1,5 +1,8 @@
 using System.Runtime.InteropServices;
+using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Follower.Components;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
@@ -22,7 +25,36 @@ public sealed class EyeExposureSystem : EntitySystem
     {
         base.Initialize();
 
-        UpdatesOutsidePrediction = true;
+        // UpdatesOutsidePrediction = true;
+
+        SubscribeLocalEvent<EyeProtectionComponent, GotEquippedEvent>(OnGlassesEquipped);
+        SubscribeLocalEvent<EyeProtectionComponent, GotUnequippedEvent>(OnGlassesUnequipped);
+    }
+
+    private void OnGlassesEquipped(EntityUid uid, EyeProtectionComponent component, GotEquippedEvent args)
+    {
+        if ((args.SlotFlags & (SlotFlags.EYES | SlotFlags.MASK | SlotFlags.HEAD)) == 0)
+            return;
+
+        if (TryComp<EyeComponent>(args.Equipee, out var eyes) && eyes.AutoExpose != null && eyes.Eye != null)
+        {
+            // Putting on glasses makes everything darker, your nightvision will adjust but also suffer.
+            // eyes.AutoExpose.Reduction += component.VisionDarken;
+            // eyes.Eye.Exposure /= component.VisionDarken;
+        }
+    }
+
+    private void OnGlassesUnequipped(EntityUid uid, EyeProtectionComponent component, GotUnequippedEvent args)
+    {
+        if ((args.SlotFlags & (SlotFlags.EYES | SlotFlags.MASK | SlotFlags.HEAD)) == 0)
+            return;
+
+        if (TryComp<EyeComponent>(uid, out var eyes) && eyes.AutoExpose != null && eyes.Eye != null)
+        {
+            // Removing on glasses makes everything lighter again.
+            // eyes.AutoExpose.Reduction -= component.VisionDarken;
+            // eyes.Eye.Exposure *= component.VisionDarken;
+        }
     }
 
     public override void Update(float frameTime)
@@ -43,31 +75,35 @@ public sealed class EyeExposureSystem : EntitySystem
         var eye = eyeComp.Eye;
         var auto = eye.AutoExpose;
 
+        // Simulate an eye behind something that is reducing the light, for instance sunglasses.
+        float rawExpose = eye.Exposure + auto.Reduction;
+
         // How much should we increase or decrease brightness as a ratio to land at 80% lighting?
         // By limiting the ranges goalChange can take on and avoiding div/0 here it is much easier to tune this.
         var goalChange = Math.Clamp(auto.GoalBrightness / Math.Max(0.0001f, auto.LastBrightness), 0.2f, 5.0f);
-        var goalExposure = eye.Exposure * goalChange;
+        var goalExposure = rawExpose * goalChange;
 
         if (goalChange < 1.0f)
         {
             // Reduce exposure
-            var speed = MathHelper.Lerp(auto.RampDown, auto.RampDownNight, Math.Clamp(eye.Exposure / auto.Max, 0.0f, 1.0f));
-            eye.Exposure = MathHelper.Lerp(eye.Exposure, goalExposure, frameTime * auto.RampDown * 0.2f);
+            var speed = MathHelper.Lerp(auto.RampDown, auto.RampDownNight, Math.Clamp(rawExpose / auto.Max, 0.0f, 1.0f));
+            rawExpose = MathHelper.Lerp(rawExpose, goalExposure, frameTime * auto.RampDown * 0.2f);
         }
         else
         {
             // Increase exposure
-            var speed = MathHelper.Lerp(auto.RampUp, auto.RampUpNight, Math.Clamp(eye.Exposure / auto.Max, 0.0f, 1.0f));
-            eye.Exposure = MathHelper.Lerp(eye.Exposure, goalExposure, frameTime * speed * 0.2f);
+            var speed = MathHelper.Lerp(auto.RampUp, auto.RampUpNight, Math.Clamp(rawExpose / auto.Max, 0.0f, 1.0f));
+            rawExpose = MathHelper.Lerp(rawExpose, goalExposure, frameTime * speed * 0.2f);
         }
 
         // Reset
-        if (float.IsNaN(eye.Exposure))
+        if (float.IsNaN(rawExpose))
         {
-            eye.Exposure = 1.0f;
+            rawExpose = 1.0f;
         }
         // Clamp to a range
-        eye.Exposure = Math.Clamp(eye.Exposure, auto.Min, auto.Max);
+        rawExpose = Math.Clamp(rawExpose, auto.Min, auto.Max);
+        eye.Exposure = rawExpose - auto.Reduction;
     }
 
 }
