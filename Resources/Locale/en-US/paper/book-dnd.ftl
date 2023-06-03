@@ -1,4 +1,4 @@
-book-dnd-sheet = DND 5e Character Sheet
+book-cnc-sheet = C&C 5e Character Sheet
     --------------------------------------------------------------------------------------
     SECTION 1:  THE BASICS
     --------------------------------------------------------------------------------------
@@ -151,5 +151,5 @@ book-dnd-sheet = DND 5e Character Sheet
 
     9: Name  Casting Time  Range  Duration  Components  Ritual?
     --------------------------------------------------------------------------------------
-    DND 5e
+    Carps and Crypts 5e
 

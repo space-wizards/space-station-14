@@ -134,13 +134,13 @@
 - type: entity
   name: character sheet
   parent: Paper
-  id: PaperDNDSheet # it's perfectly legal for us to say "DND" but not "D&D"
-  description: 'A sheet for your DND characters.'
+  id: PaperCNCSheet # legally gray zone of using "D&D" and "DND"
+  description: 'A sheet for your Carps and Crypts characters.'
   components:
   - type: Paper
     contentSize: 10000
     escapeFormatting: false
-    content: book-dnd-sheet
+    content: book-cnc-sheet
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     netsync: false

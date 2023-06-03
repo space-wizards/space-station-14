@@ -17,7 +17,7 @@
 
 - type: entity
   parent: BaseBattlemap
-  id: DNDGrassBattlemap
+  id: GrassBattlemap
   name: grass battlemap
   description: A battlemap for your epic dungeon exploring to begin, pieces not included!
   components:
@@ -30,7 +30,7 @@
 
 - type: entity
   parent: BaseBattlemap
-  id: DNDMoonBattlemap
+  id: MoonBattlemap
   name: moon battlemap
   description: A battlemap for your epic moon exploring to begin, pieces not included!
   components:
@@ -43,7 +43,7 @@
 
 - type: entity
   parent: BaseBattlemap
-  id: DNDSandBattlemap
+  id: SandBattlemap
   name: sand battlemap
   description: A battlemap for your epic beach episodes to begin, pieces not included!
   components:
@@ -56,7 +56,7 @@
 
 - type: entity
   parent: BaseBattlemap
-  id: DNDSnowBattlemap
+  id: SnowBattlemap
   name: snow battlemap
   description: A battlemap for your frigid exploring to begin, pieces not included! # if this isn't funny enough i can remove it
   components:
@@ -69,7 +69,7 @@
 
 - type: entity
   parent: BaseBattlemap
-  id: DNDShipBattlemap
+  id: ShipBattlemap
   name: ship battlemap
   description: A battlemap for your epic space exploring to begin, pieces not included!
   components:
