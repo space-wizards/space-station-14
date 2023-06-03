@@ -1,3 +1,4 @@
+using Content.Client.Administration.Managers;
 using Content.Client.Launcher;
 using Content.Client.MainMenu;
 using Content.Client.Replay.UI.Loading;
@@ -13,6 +14,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client;
+using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Replays.Loading;
 using Robust.Client.Replays.Playback;
@@ -21,7 +23,6 @@ using Robust.Client.Timing;
 using Robust.Client.UserInterface;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
-using ReplayObserverSystem = Content.Client.Replay.Observer.ReplayObserverSystem;
 
 namespace Content.Client.Replay;
 
@@ -34,6 +35,8 @@ public sealed class ContentReplayPlaybackManager
     [Dependency] private readonly IClientEntityManager _entMan = default!;
     [Dependency] private readonly IUserInterfaceManager _uiMan = default!;
     [Dependency] private readonly IReplayPlaybackManager _playback = default!;
+    [Dependency] private readonly IClientConGroupController _conGrp = default!;
+    [Dependency] private readonly IClientAdminManager _adminMan = default!;
 
     /// <summary>
     /// UI state to return to when stopping a replay or loading fails.
@@ -50,6 +53,7 @@ public sealed class ContentReplayPlaybackManager
         _initialized = true;
         _playback.HandleReplayMessage += OnHandleReplayMessage;
         _playback.ReplayPlaybackStopped += OnReplayPlaybackStopped;
+        _playback.ReplayPlaybackStarted += OnReplayPlaybackStarted;
         _playback.ReplayCheckpointReset += OnCheckpointReset;
         _loadMan.LoadOverride += LoadOverride;
     }
@@ -125,8 +129,15 @@ public sealed class ContentReplayPlaybackManager
         return false;
     }
 
+
+    private void OnReplayPlaybackStarted()
+    {
+        _conGrp.Implementation = new ReplayConGroup();
+    }
+
     private void OnReplayPlaybackStopped()
     {
+        _conGrp.Implementation = (IClientConGroupImplementation)_adminMan;
         ReturnToDefaultState();
     }
 }

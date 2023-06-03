@@ -27,7 +27,7 @@ public sealed class EntryPoint : GameClient
     {
         base.PostInit();
         _client.StartSinglePlayer();
-        _conGrp.Implementation = new ConGroup();
+        _conGrp.Implementation = new ReplayConGroup();
         _contentReplayPlaybackMan.DefaultState = typeof(ReplayMainScreen);
         _stateMan.RequestStateChange<ReplayMainScreen>();
     }
