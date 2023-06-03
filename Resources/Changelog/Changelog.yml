@@ -1,11 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: Fixed not being able to take over the rat king ghost role., type: Fix}
-  id: 3436
-  time: '2023-04-17T06:18:39.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: Fixed admin note updates duplicating visually across all open admin
       note windows., type: Fix}
   id: 3437
@@ -2903,3 +2898,8 @@ Entries:
       so you can cuff, strip and use meds in spess.', type: Tweak}
   id: 3935
   time: '2023-06-03T19:33:41.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: puddle stickiness now updates when solution changes, type: Fix}
+  id: 3936
+  time: '2023-06-03T19:34:44.0000000+00:00'
