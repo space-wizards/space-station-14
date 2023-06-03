@@ -300,7 +300,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 DeleteAndSpawnTrash(component, uid, args.User);
         }
 
-        private void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid? user = null)
+        public void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid? user = null)
         {
             //We're empty. Become trash.
             var position = Transform(food).MapPosition;
