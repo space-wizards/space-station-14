@@ -10,7 +10,10 @@ namespace Content.Client.Replay.Observer;
 public sealed partial class ReplayObserverSystem
 {
     public DirectionFlag Direction;
-    // TODO REPLAYS make this a cvar
+
+    /// <summary>
+    /// Fallback speed if the observer ghost has no <see cref="MovementSpeedModifierComponent"/>.
+    /// </summary>
     public const float DefaultSpeed = 12;
 
     private void InitializeMovement()

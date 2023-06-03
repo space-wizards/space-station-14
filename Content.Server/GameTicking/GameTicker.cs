@@ -30,6 +30,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -67,7 +68,7 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(_prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == FallbackOverflowJobName,
                 "Overflow role does not have the correct name!");
             InitializeGameRules();
-            InitializeRoundFlow();
+            _replay.OnRecordingStarted += OnRecordingStart;
             _initialized = true;
         }
 
@@ -87,6 +88,12 @@ namespace Content.Server.GameTicking
             base.Shutdown();
 
             ShutdownGameRules();
+            _replay.OnRecordingStarted -= OnRecordingStart;
+        }
+
+        private void OnRecordingStart((MappingDataNode, List<object>) data)
+        {
+            data.Item1["roundId"] = new ValueDataNode(RoundId.ToString());
         }
 
         private void SendServerMessage(string message)

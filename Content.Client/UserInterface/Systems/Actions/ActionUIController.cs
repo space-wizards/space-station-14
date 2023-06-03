@@ -771,6 +771,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void LoadGui()
     {
+        DebugTools.Assert(_window == null);
         _window = UIManager.CreateWindow<ActionsWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 
@@ -787,7 +788,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         ActionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
         ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
-
 
         RegisterActionContainer(ActionsBar.ActionsContainer);
 
