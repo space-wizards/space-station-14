@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed the admin menu not being openable in the lobby., type: Fix}
-  id: 3427
-  time: '2023-04-16T06:06:01.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Aspid now requires a minimum of 25 players., type: Tweak}
@@ -2902,3 +2897,8 @@ Entries:
   - {message: 'Toy Box has been added, it is filled with new toys.', type: Add}
   id: 3926
   time: '2023-06-03T03:31:48.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: Swords no longer clank, type: Tweak}
+  id: 3927
+  time: '2023-06-03T10:17:15.0000000+00:00'
