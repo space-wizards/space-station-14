@@ -1,4 +1,5 @@
 using Content.Shared.Ninja.Components;
+using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Popups;
 using Robust.Shared.GameStates;
