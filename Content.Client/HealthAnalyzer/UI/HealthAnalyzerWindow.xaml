@@ -22,10 +22,9 @@
                     <PanelContainer
                         StyleClasses="Inset"
                         VerticalAlignment="Center">
-                        <SpriteView
-                            Name="GroupSprite"
-                            SetSize="20 20"
-                            OverrideDirection="South" />
+                        <TextureRect
+                            Name="GroupTexture"
+                            SetSize="32 32"/>
                     </PanelContainer>
                     <Label
                         Margin="0 0 10 0"
