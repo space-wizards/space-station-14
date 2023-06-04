@@ -273,7 +273,7 @@
         key: SeeingRainbows
         component: SeeingRainbows
         type: Add
-        time: 5
+        time: 16
         refresh: false
 
 - type: reagent
@@ -291,7 +291,7 @@
         key: SeeingRainbows
         component: SeeingRainbows
         type: Add
-        time: 5
+        time: 16
         refresh: false
 
 - type: reagent
