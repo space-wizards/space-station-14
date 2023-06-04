@@ -322,6 +322,7 @@
       - banana
   - type: Food
     trash: TrashBananiumPeel
+  - type: BadFood
   - type: SolutionContainerManager
     solutions:
       food:
