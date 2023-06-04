@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using Content.Server.Maps;
 using Content.Shared.Corvax.CCCVars;
 using Content.Shared.GameTicking;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 
 namespace Content.Server.Corvax.RoundNotifications;
@@ -19,11 +20,15 @@ public sealed class RoundNotificationsSystem : EntitySystem
 
     private ISawmill _sawmill = default!;
     private readonly HttpClient _httpClient = new();
-    
-    private string _webhookUrl = String.Empty;
-    private string _roleId = String.Empty;
+
+    private string _webhookUrl = string.Empty;
+    private string _roleId = string.Empty;
+    private string _serverName = string.Empty;
     private bool _roundStartOnly;
-    
+
+    private const int EmbedColor = 0xff6600;
+    private const int EmbedColorRestart = 0x00eb1f;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -34,29 +39,36 @@ public sealed class RoundNotificationsSystem : EntitySystem
         _config.OnValueChanged(CCCVars.DiscordRoundWebhook, value => _webhookUrl = value, true);
         _config.OnValueChanged(CCCVars.DiscordRoundRoleId, value => _roleId = value, true);
         _config.OnValueChanged(CCCVars.DiscordRoundStartOnly, value => _roundStartOnly = value, true);
+        _config.OnValueChanged(CVars.GameHostName, value => _serverName = value, true);
 
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("notifications");
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent e)
     {
-        if (String.IsNullOrEmpty(_webhookUrl))
+        if (string.IsNullOrEmpty(_webhookUrl))
             return;
 
+        var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
         var payload = new WebhookPayload()
         {
-            Content = Loc.GetString("discord-round-new"),
+            Embeds = new List<Embed>
+            {
+                new()
+                {
+                    Title = Loc.GetString("discord-round-embed-title", ("server", serverName)),
+                    Description = Loc.GetString("discord-round-new"),
+                    Color = EmbedColorRestart
+                }
+            }
         };
 
-        if (!String.IsNullOrEmpty(_roleId))
+        if (!string.IsNullOrEmpty(_roleId))
         {
-            payload = new WebhookPayload()
+            payload.Content = $"<@&{_roleId}>";
+            payload.AllowedMentions = new Dictionary<string, string[]>
             {
-                Content = $"<@&{_roleId}> {Loc.GetString("discord-round-new")}",
-                AllowedMentions = new Dictionary<string, string[]>
-                {
-                    { "roles", new []{ _roleId } }
-                },
+                { "roles", new[] { _roleId } }
             };
         }
 
@@ -65,30 +77,56 @@ public sealed class RoundNotificationsSystem : EntitySystem
 
     private void OnRoundStarted(RoundStartedEvent e)
     {
-        if (String.IsNullOrEmpty(_webhookUrl))
+        if (string.IsNullOrEmpty(_webhookUrl))
             return;
 
+        var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
         var map = _gameMapManager.GetSelectedMap();
         var mapName = map?.MapName ?? Loc.GetString("discord-round-unknown-map");
         var text = Loc.GetString("discord-round-start",
             ("id", e.RoundId),
             ("map", mapName));
-        var payload = new WebhookPayload() { Content = text };
+
+        var payload = new WebhookPayload()
+        {
+            Embeds = new List<Embed>
+            {
+                new()
+                {
+                    Title = Loc.GetString("discord-round-embed-title", ("server", serverName)),
+                    Description = text,
+                    Color = EmbedColor
+                }
+            }
+        };
 
         SendDiscordMessage(payload);
     }
-    
+
     private void OnRoundEnded(RoundEndedEvent e)
     {
-        if (String.IsNullOrEmpty(_webhookUrl) || _roundStartOnly)
+        if (string.IsNullOrEmpty(_webhookUrl) || _roundStartOnly)
             return;
 
+        var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
         var text = Loc.GetString("discord-round-end",
             ("id", e.RoundId),
             ("hours", e.RoundDuration.Hours),
             ("minutes", e.RoundDuration.Minutes),
             ("seconds", e.RoundDuration.Seconds));
-        var payload = new WebhookPayload() { Content = text };
+
+        var payload = new WebhookPayload()
+        {
+            Embeds = new List<Embed>
+            {
+                new()
+                {
+                    Title = Loc.GetString("discord-round-embed-title", ("server", serverName)),
+                    Description = text,
+                    Color = EmbedColor
+                }
+            }
+        };
 
         SendDiscordMessage(payload);
     }
@@ -101,8 +139,8 @@ public sealed class RoundNotificationsSystem : EntitySystem
         var content = await request.Content.ReadAsStringAsync();
         if (!request.IsSuccessStatusCode)
         {
-            _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when posting message: {request.StatusCode}\nResponse: {content}");
-            return;
+            _sawmill.Log(LogLevel.Error,
+                $"Discord returned bad status code when posting message: {request.StatusCode}\nResponse: {content}");
         }
     }
 
@@ -110,6 +148,9 @@ public sealed class RoundNotificationsSystem : EntitySystem
     {
         [JsonPropertyName("content")]
         public string Content { get; set; } = "";
+
+        [JsonPropertyName("embeds")]
+        public List<Embed>? Embeds { get; set; } = null;
 
         [JsonPropertyName("allowed_mentions")]
         public Dictionary<string, string[]> AllowedMentions { get; set; } =
@@ -119,6 +160,23 @@ public sealed class RoundNotificationsSystem : EntitySystem
             };
 
         public WebhookPayload()
+        {
+        }
+    }
+
+    // https://discord.com/developers/docs/resources/channel#embed-object-embed-structure
+    private struct Embed
+    {
+        [JsonPropertyName("title")]
+        public string Title { get; set; } = "";
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = "";
+
+        [JsonPropertyName("color")]
+        public int Color { get; set; } = 0;
+
+        public Embed()
         {
         }
     }
