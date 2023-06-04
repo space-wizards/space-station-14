@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed admin note updates duplicating visually across all open admin
-      note windows., type: Fix}
-  id: 3437
-  time: '2023-04-17T06:18:54.0000000+00:00'
 - author: Klaypexx
   changes:
   - {message: added sound to jackboots and combat boots, type: Add}
@@ -2903,3 +2897,9 @@ Entries:
   - {message: puddle stickiness now updates when solution changes, type: Fix}
   id: 3936
   time: '2023-06-03T19:34:44.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Due to budget cuts in atmos, large gas tanks had their volume reduced
+      by 78%.', type: Tweak}
+  id: 3937
+  time: '2023-06-04T00:09:37.0000000+00:00'
