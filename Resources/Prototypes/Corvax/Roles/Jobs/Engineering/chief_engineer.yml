@@ -4,14 +4,9 @@
   description: job-description-ce
   playTimeTracker: JobChiefEngineer
   requirements:
-    - !type:RoleTimeRequirement
-      role: JobAtmosphericTechnician
-      time: 36000 # Corvax-RoleTime
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 54000 # Corvax-RoleTime
-#    - !type:OverallPlaytimeRequirement
-#      time: 108000
+      time: 54000 # SS220-RoleTime
   weight: 10
   startingGear: ChiefEngineerGear
   icon: "ChiefEngineer"

@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 7200 # Corvax-RoleTime
+      time: 18000 # SS220-RoleTime
   startingGear: DoctorGear
   icon: "MedicalDoctor"
   supervisors: job-supervisors-cmo

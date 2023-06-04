@@ -3,6 +3,10 @@
   name: job-name-psychologist
   description: job-description-psychologist
   playTimeTracker: JobPsychologist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 3600 # SS220-RoleTime
   startingGear: PsychologistGear
   icon: "Psychologist"
   supervisors: job-supervisors-cmo

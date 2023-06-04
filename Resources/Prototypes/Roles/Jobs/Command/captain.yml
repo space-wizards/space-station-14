@@ -5,16 +5,8 @@
   playTimeTracker: JobCaptain
   requirements:
     - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 54000 # Corvax-RoleTime
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 54000 # Corvax-RoleTime
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 54000 # Corvax-RoleTime
-    - !type:OverallPlaytimeRequirement
-      time: 324000 # Corvax-RoleTime
+      department: Command
+      time: 54000 # SS220-RoleTime
   weight: 20
   startingGear: CaptainGear
   icon: "Captain"

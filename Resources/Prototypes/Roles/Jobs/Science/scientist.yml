@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 18000 # Corvax-RoleTime
+      time: 18000 # SS220-RoleTime
   startingGear: ScientistGear
   icon: "Scientist"
   supervisors: job-supervisors-rd

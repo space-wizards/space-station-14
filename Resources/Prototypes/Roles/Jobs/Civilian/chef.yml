@@ -4,9 +4,8 @@
   description: job-description-chef
   playTimeTracker: JobChef
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Civilian
-      time: 3600 # Corvax-RoleTime
+    - !type:OverallPlaytimeRequirement
+      time: 3600 # SS220-RoleTime
   startingGear: ChefGear
   icon: "Chef"
   supervisors: job-supervisors-hop

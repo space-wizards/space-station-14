@@ -4,10 +4,8 @@
   description: job-description-research-assistant
   playTimeTracker: JobResearchAssistant
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Science
-      time: 36000 # Corvax-RoleTime
-      inverted: true # stop playing intern if you're good at science!
+    - !type:OverallPlaytimeRequirement
+      time: 3600 # SS220-RoleTime
   startingGear: ResearchAssistantGear
   icon: "ResearchAssistant"
   supervisors: job-supervisors-rd

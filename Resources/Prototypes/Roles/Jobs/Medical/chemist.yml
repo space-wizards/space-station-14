@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 18000 # Corvax-RoleTime
+      time: 10800 # SS220-RoleTime
   startingGear: ChemistGear
   icon: "Chemist"
   supervisors: job-supervisors-cmo

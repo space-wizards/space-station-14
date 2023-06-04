@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 10800 # Corvax-RoleTime
+      time: 10800 # SS220-RoleTime
   icon: "ShaftMiner"
   startingGear: SalvageSpecialistGear
   supervisors: job-supervisors-hop-qm

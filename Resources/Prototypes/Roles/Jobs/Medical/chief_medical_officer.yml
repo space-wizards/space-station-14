@@ -6,12 +6,9 @@
   description: job-description-cmo
   playTimeTracker: JobChiefMedicalOfficer
   requirements:
-    - !type:RoleTimeRequirement # Corvax-RoleTime
-      role: JobChemist
-      time: 18000
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 54000 # Corvax-RoleTime
+      time: 54000 # SS220-RoleTime
   weight: 10
   startingGear: CMOGear
   icon: "ChiefMedicalOfficer"
