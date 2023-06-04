@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -34,11 +35,11 @@ namespace Content.Client.HealthAnalyzer.UI
             if (msg.TargetEntity == null ||
                 !_entityManager.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
             {
-                Diagnostics.Text = Loc.GetString("health-analyzer-window-no-patient-data-text");
+                NoPatientDataText.Visible = true;
                 SetSize = (250, 100);
                 return;
             }
-            
+
             string entityName = "Unknown";
             if (msg.TargetEntity != null &&
                 _entityManager.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out var metaData))
@@ -46,11 +47,11 @@ namespace Content.Client.HealthAnalyzer.UI
 
             IReadOnlyDictionary<string, FixedPoint2> damagePerGroup = damageable.DamagePerGroup;
             IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
-            
-            var text = new StringBuilder();
+
+            var patientText = new StringBuilder();
 
             // researched object
-            text.Append(
+            patientText.Append(
                 $"{Loc.GetString(
                     "health-analyzer-window-entity-health-text",
                     ("entityName", entityName)
@@ -58,40 +59,59 @@ namespace Content.Client.HealthAnalyzer.UI
             );
 
             // Damage
-            text.Append(
+            patientText.Append(
                 $"\n{Loc.GetString(
                     "health-analyzer-window-entity-damage-total-text",
                     ("amount", damageable.TotalDamage)
                 )}\n"
             );
 
+            PatientData.Text = patientText.ToString();
+            PatientData.Visible = true;
+
             HashSet<string> shownTypes = new();
 
             var protos = IoCManager.Resolve<IPrototypeManager>();
 
-            GroupTexture.Texture = GetTexture("toxin");
+            int diagnosticGroupsCounter = 1;
+
+            BoxContainer? diagnosticGroupRow = null;
 
             // Show the total damage and type breakdown for each damage group.
             foreach (var (damageGroupId, damageAmount) in damagePerGroup)
             {
-                text.Append(
+                if (diagnosticGroupsCounter % 2 > 0)
+                {
+                    diagnosticGroupRow = CreateDiagnosticGroupsRow();
+                    RootContainer.AddChild(diagnosticGroupRow);
+                }
+
+                if (diagnosticGroupRow is not BoxContainer groupRow)
+                    continue;
+                
+                var groupText = new StringBuilder();
+                
+                groupText.Append(
                     $"\n{Loc.GetString(
                         "health-analyzer-window-damage-group-text",
                         ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)),
                         ("amount", damageAmount)
                     )}"
                 );
+                
                 // Show the damage for each type in that group.
                 var group = protos.Index<DamageGroupPrototype>(damageGroupId);
+                
                 foreach (var type in group.DamageTypes)
                 {
                     if (damagePerType.TryGetValue(type, out var typeAmount))
                     {
-                        // If damage types are allowed to belong to more than one damage group, they may appear twice here. Mark them as duplicate.
+                        // If damage types are allowed to belong to more than one damage group,
+                        // they may appear twice here. Mark them as duplicate.
                         if (!shownTypes.Contains(type))
                         {
                             shownTypes.Add(type);
-                            text.Append(
+                            groupText.Append(
                                 $"\n- {Loc.GetString(
                                     "health-analyzer-window-damage-type-text",
                                     ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + type)),
@@ -101,19 +121,40 @@ namespace Content.Client.HealthAnalyzer.UI
                         }
                     }
                 }
-
-                text.AppendLine();
-                Logger.Debug($"{text.ToString()}");
+                
+                groupText.AppendLine();
+                var diagnosticGroup = CreateDiagnosticItemLabel(groupText.ToString());
+                diagnosticGroupRow.AddChild(diagnosticGroup);
+                diagnosticGroupsCounter++;
             }
 
-            // Diagnostics.Text = text.ToString();
-            // SetSize = (500, 500);
+            RootContainer.UpdateDraw();
+            SetSize = (500, 500);
         }
 
         private Texture GetTexture(string texture)
         {
             var sprite = new SpriteSpecifier.Rsi(new("/Textures/Objects/Devices/health_analyzer.rsi"), texture);
             return _spriteSystem.Frame0(sprite);
+        }
+
+        private static BoxContainer CreateDiagnosticGroupsRow()
+        {
+            return new BoxContainer
+            {
+                Margin = new Thickness(0, 10),
+                HorizontalExpand = true,
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            };
+        }
+
+        private static Label CreateDiagnosticItemLabel(string text)
+        {
+            return new Label
+            {
+                Margin = new Thickness(0, 0, 10, 0),
+                Text = text
+            };
         }
     }
 }
