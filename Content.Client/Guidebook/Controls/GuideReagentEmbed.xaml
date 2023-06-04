@@ -15,7 +15,7 @@
                     <CollapsibleHeading Title="{Loc 'guidebook-reagent-recipes-header'}"/>
                     <CollapsibleBody>
                         <BoxContainer Name="RecipesDescriptionContainer"
-                                      Margin="5 0 5 0"
+                                      Margin="10 0 10 0"
                                       Orientation="Horizontal"
                                       HorizontalAlignment="Stretch"
                                       HorizontalExpand="True">
@@ -25,7 +25,7 @@
                                                VerticalAlignment="Center"/>
                             </BoxContainer>
                             <BoxContainer Orientation="Vertical"  VerticalAlignment="Center">
-                                <TextureRect TexturePath="/Textures/Objects/Specific/Chemistry/beaker_large.rsi/beakerlarge.png"/>
+                                <TextureRect TexturePath="/Textures/Interface/Misc/beakerlarge.png"/>
                                 <Label Text="{Loc 'guidebook-reagent-recipes-mix'}"
                                        HorizontalAlignment="Center"/>
                             </BoxContainer>
@@ -42,14 +42,15 @@
                 <Collapsible Orientation="Vertical">
                     <CollapsibleHeading Title="{Loc 'guidebook-reagent-effects-header'}"/>
                     <CollapsibleBody>
-                        <BoxContainer Name="EffectsDescriptionContainer">
-                            <Label Text="FUCK"/>
-                        </BoxContainer>
+                        <BoxContainer Name="EffectsDescriptionContainer"
+                                      Orientation="Vertical"
+                                      Margin="10 0 10 0"
+                                      HorizontalExpand="True"/>
                     </CollapsibleBody>
                 </Collapsible>
             </BoxContainer>
-            <BoxContainer Margin="5 5 5 10" HorizontalExpand="True">
-                <!--The troublemaker!-->
+            <BoxContainer Margin="10 5 10 10" HorizontalExpand="True">
+                <!-- The troublemaker !-->
                 <RichTextLabel Name="ReagentDescription" HorizontalAlignment="Left"/>
             </BoxContainer>
         </BoxContainer>

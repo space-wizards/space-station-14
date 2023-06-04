@@ -10,22 +10,20 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
     {
         base.Initialize();
 
-        Net.RegisterNetMessage<MsgUpdateReagentGuideRegistry>(OnReceiveRegistryUpdate);
+        SubscribeNetworkEvent<ReagentGuideRegistryChangedEvent>(OnReceiveRegistryUpdate);
     }
 
-    private void OnReceiveRegistryUpdate(MsgUpdateReagentGuideRegistry message)
+    private void OnReceiveRegistryUpdate(ReagentGuideRegistryChangedEvent message)
     {
-        Logger.Debug("received changes");
         var data = message.Changeset;
-
         foreach (var remove in data.Removed)
         {
-            _reagentGuideRegistry.Remove(remove);
+            Registry.Remove(remove);
         }
 
         foreach (var (key, val) in data.GuideEntries)
         {
-            _reagentGuideRegistry[val.ReagentPrototype] = val;
+            Registry[key] = val;
         }
     }
 }

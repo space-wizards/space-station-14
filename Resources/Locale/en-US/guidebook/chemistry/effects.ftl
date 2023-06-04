@@ -48,8 +48,8 @@ reagent-effect-guidebook-satiate-thirst =
         [1] Satiates
         *[other] satiate
     } { $relative ->
-        [1.0] thirst averagely
-        *[other] thirst at {NATURALFIXED($relative, 3)}x the average
+        [1] thirst averagely
+        *[other] thirst at {NATURALFIXED($relative, 3)}x the average rate
     }
 
 reagent-effect-guidebook-satiate-hunger =
@@ -57,8 +57,8 @@ reagent-effect-guidebook-satiate-hunger =
         [1] Satiates
         *[other] satiate
     } { $relative ->
-        [1.0] hunger averagely
-        *[other] hunger at {NATURALFIXED($relative, 3)}x the average
+        [1] hunger averagely
+        *[other] hunger at {NATURALFIXED($relative, 3)}x the average rate
     }
 
 reagent-effect-guidebook-health-change =
@@ -130,7 +130,10 @@ reagent-effect-guidebook-adjust-reagent-reagent =
                 [1] add
                 *[-1] remove
             }
-    } {NATURALFIXED($amount, 2)}u of {$reagent} from the solution
+    } {NATURALFIXED($amount, 2)}u of {$reagent} { $deltasign ->
+        [1] to
+        *[-1] from
+    } the solution
 
 reagent-effect-guidebook-adjust-reagent-group =
     { $chance ->
@@ -143,7 +146,10 @@ reagent-effect-guidebook-adjust-reagent-group =
                 [1] add
                 *[-1] remove
             }
-    } {NATURALFIXED($amount, 2)}u of reagents in the group {$group} from the solution
+    } {NATURALFIXED($amount, 2)}u of reagents in the group {$group} { $deltasign ->
+            [1] to
+            *[-1] from
+        } the solution
 
 reagent-effect-guidebook-adjust-temperature =
     { $chance ->
@@ -156,7 +162,10 @@ reagent-effect-guidebook-adjust-temperature =
                 [1] add
                 *[-1] remove
             }
-    } {POWERJOULES($amount)} of heat from the body it's in
+    } {POWERJOULES($amount)} of heat { $deltasign ->
+            [1] to
+            *[-1] from
+        } the body it's in
 
 reagent-effect-guidebook-chem-cause-disease =
     { $chance ->
@@ -226,7 +235,7 @@ reagent-effect-guidebook-electrocute =
     { $chance ->
         [1] Electrocutes
         *[other] electrocute
-    } the metabolizer for {NATURALFIXED($time, 3)} {MANY(second, $time)}
+    } the metabolizer for {NATURALFIXED($time, 3)} {MANY("second", $time)}
 
 reagent-effect-guidebook-extinguish-reaction =
     { $chance ->
@@ -255,12 +264,12 @@ reagent-effect-guidebook-make-sentient =
 reagent-effect-guidebook-modify-bleed-amount =
     { $chance ->
         [1] { $deltasign ->
-                [1] Reduces
-                *[-1] Induces
+                [1] Induces
+                *[-1] Reduces
             }
         *[other] { $deltasign ->
-                    [1] reduce
-                    *[-1] induce
+                    [1] induce
+                    *[-1] reduce
                  }
     } bleeding
 
@@ -280,13 +289,13 @@ reagent-effect-guidebook-paralyze =
     { $chance ->
         [1] Paralyzes
         *[other] paralyze
-    } the metabolizer for at least {NATURALFIXED($time, 3)} {MANY(second, $time)}
+    } the metabolizer for at least {NATURALFIXED($time, 3)} {MANY("second", $time)}
 
 reagent-effect-guidebook-movespeed-modifier =
     { $chance ->
         [1] Modifies
         *[other] modify
-    } movement speed by {NATURALFIXED($walkspeed, 3)}x for at least {NATURALFIXED($time, 3)} {MANY(second, $time)}
+    } movement speed by {NATURALFIXED($walkspeed, 3)}x for at least {NATURALFIXED($time, 3)} {MANY("second", $time)}
 
 reagent-effect-guidebook-reset-narcolepsy =
     { $chance ->

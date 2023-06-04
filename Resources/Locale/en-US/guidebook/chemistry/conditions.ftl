@@ -20,8 +20,7 @@ reagent-effect-condition-guidebook-mob-state-condition =
     the mob is { $state }
 
 reagent-effect-condition-guidebook-solution-temperature =
-    the solution's temperature is
-        { $max ->
+    the solution's temperature is { $max ->
             [2147483648] at least {NATURALFIXED($min, 2)}k
             *[other] { $min ->
                         [0] at most {NATURALFIXED($max, 2)}k
@@ -30,8 +29,7 @@ reagent-effect-condition-guidebook-solution-temperature =
     }
 
 reagent-effect-condition-guidebook-body-temperature =
-    the body's temperature is
-        { $max ->
+    the body's temperature is { $max ->
             [2147483648] at least {NATURALFIXED($min, 2)}k
             *[other] { $min ->
                         [0] at most {NATURALFIXED($max, 2)}k
@@ -43,7 +41,7 @@ reagent-effect-condition-guidebook-organ-type =
     the metabolizing organ { $shouldhave ->
                                 [true] is
                                 *[false] is not
-                           } {INDEFINITE($name)} organ
+                           } {INDEFINITE($name)} {$name} organ
 
 reagent-effect-condition-guidebook-has-tag =
     the target { $invert ->

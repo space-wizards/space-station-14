@@ -8,9 +8,9 @@
     }
 
 guidebook-reagent-name = [bold][color={$color}]{CAPITALIZE($name)}[/color][/bold]
-guidebook-reagent-recipes-header = Recipes
+guidebook-reagent-recipes-header = Recipe
 guidebook-reagent-recipes-reagent-display = [bold]{$reagent}[/bold] \[{$ratio}\]
 guidebook-reagent-recipes-mix = Mix
 guidebook-reagent-effects-header = Effects
-guidebook-reagent-effects-metabolism-group-rate = [bold]{$group}[/bold] ({$rate} units per second)
+guidebook-reagent-effects-metabolism-group-rate = [bold]{$group}[/bold] [color=gray]({$rate} units per second)[/color]
 guidebook-reagent-physical-description = Seems to be {$description}.

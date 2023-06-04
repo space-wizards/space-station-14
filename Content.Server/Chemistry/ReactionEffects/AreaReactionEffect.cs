@@ -46,11 +46,8 @@ namespace Content.Server.Chemistry.ReactionEffects
 
         public override bool ShouldLog => true;
 
-        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        {
-            //todo this needs implementing
-            return "fuck you go to hell";
-        }
+        protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-missing");
 
         public override LogImpact LogImpact => LogImpact.High;
 
