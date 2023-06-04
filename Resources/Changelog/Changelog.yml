@@ -1,11 +1,6 @@
 Entries:
 - author: PuroSlavKing
   changes:
-  - {message: Added InHand sprites for cloaks!, type: Add}
-  id: 3441
-  time: '2023-04-17T22:21:49.0000000+00:00'
-- author: PuroSlavKing
-  changes:
   - {message: Added research magboots in RND!, type: Add}
   id: 3442
   time: '2023-04-17T22:26:31.0000000+00:00'
@@ -2904,3 +2899,8 @@ Entries:
   - {message: 'Adds Medical Doctor, Cryo, and Cloning Guidebooks', type: Add}
   id: 3940
   time: '2023-06-04T21:06:43.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Added Chef Guidebook, type: Add}
+  id: 3941
+  time: '2023-06-04T21:34:29.0000000+00:00'
