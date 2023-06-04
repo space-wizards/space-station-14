@@ -24,37 +24,6 @@ public sealed class EyeExposureSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        // UpdatesOutsidePrediction = true;
-
-        SubscribeLocalEvent<EyeProtectionComponent, GotEquippedEvent>(OnGlassesEquipped);
-        SubscribeLocalEvent<EyeProtectionComponent, GotUnequippedEvent>(OnGlassesUnequipped);
-    }
-
-    private void OnGlassesEquipped(EntityUid uid, EyeProtectionComponent component, GotEquippedEvent args)
-    {
-        if ((args.SlotFlags & (SlotFlags.EYES | SlotFlags.MASK | SlotFlags.HEAD)) == 0)
-            return;
-
-        if (TryComp<EyeComponent>(args.Equipee, out var eyes) && eyes.AutoExpose != null && eyes.Eye != null)
-        {
-            // Putting on glasses makes everything darker, your nightvision will adjust but also suffer.
-            // eyes.AutoExpose.Reduction += component.VisionDarken;
-            // eyes.Eye.Exposure /= component.VisionDarken;
-        }
-    }
-
-    private void OnGlassesUnequipped(EntityUid uid, EyeProtectionComponent component, GotUnequippedEvent args)
-    {
-        if ((args.SlotFlags & (SlotFlags.EYES | SlotFlags.MASK | SlotFlags.HEAD)) == 0)
-            return;
-
-        if (TryComp<EyeComponent>(uid, out var eyes) && eyes.AutoExpose != null && eyes.Eye != null)
-        {
-            // Removing on glasses makes everything lighter again.
-            // eyes.AutoExpose.Reduction -= component.VisionDarken;
-            // eyes.Eye.Exposure *= component.VisionDarken;
-        }
     }
 
     public override void Update(float frameTime)
@@ -76,7 +45,7 @@ public sealed class EyeExposureSystem : EntitySystem
         var auto = eye.AutoExpose;
 
         // Simulate an eye behind something that is reducing the light, for instance sunglasses.
-        float rawExpose = eye.Exposure + auto.Reduction;
+        float rawExpose = eye.Exposure * auto.Reduction;
 
         // How close we are to full night vision as a ratio.
         float nightPortion = Math.Clamp(rawExpose / auto.Max, 0.0f, 1.0f);
@@ -111,7 +80,7 @@ public sealed class EyeExposureSystem : EntitySystem
         // Clamp to a range
         auto.Min = Math.Min(auto.Min, auto.Max); // Avoid a VV or other code exception here.
         rawExpose = Math.Clamp(rawExpose, auto.Min, auto.Max);
-        eye.Exposure = rawExpose - auto.Reduction;
+        eye.Exposure = rawExpose / auto.Reduction;
     }
 
 }

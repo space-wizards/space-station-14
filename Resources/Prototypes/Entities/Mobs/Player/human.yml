@@ -26,6 +26,7 @@
   - type: Alerts
   - type: Actions
   - type: Eye
+  - type: EyeTraits
     autoExpose: # Human night vision
       max: 8
     nightVision:

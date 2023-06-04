@@ -44,6 +44,7 @@
   - type: NoSlip
   - type: Actions
   - type: Eye
+  - type: EyeTraits
     autoExpose: # Powerful night vision
       max: 12
       rampDown: 0.1

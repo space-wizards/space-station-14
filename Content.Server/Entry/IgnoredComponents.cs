@@ -21,6 +21,7 @@ namespace Content.Server.Entry
             "PDABorderColor",
             "InventorySlots",
             "LightFade",
+            "EyeTraits",
         };
     }
 }

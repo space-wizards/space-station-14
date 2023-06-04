@@ -36,7 +36,7 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
-    visionDarken: 3
+    reduction: 1.5
 
 - type: entity
   parent: ClothingMaskGas

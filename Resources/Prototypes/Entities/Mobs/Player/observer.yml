@@ -25,6 +25,7 @@
   - type: InputMover
   - type: Appearance
   - type: Eye
+  - type: EyeTraits
     drawFov: false
     autoExpose: # Ghost has quite powerful & fast night vision
       max: 10

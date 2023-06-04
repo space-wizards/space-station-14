@@ -19,6 +19,7 @@
     - type: Alerts
     - type: Actions
     - type: Eye
+    - type: EyeTraits
       autoExpose: # Enhanced Dwarf night vision
         max: 10
         rampUp: 0.05
