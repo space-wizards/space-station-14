@@ -406,7 +406,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full)
                 continue; // Won't get logged to chat, and ghosts are too far away to see the pop-up, so we just won't send it to them.
 
-            if (data.Range <= WhisperRange)
+            if (data.Range <= WhisperRange || data.Observer)
                 _chatManager.ChatMessageToOne(ChatChannel.Whisper, message, wrappedMessage, source, false, session.ConnectedClient);
             else
                 _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedobfuscatedMessage, source, false, session.ConnectedClient);
@@ -669,15 +669,19 @@ public sealed partial class ChatSystem : SharedChatSystem
 
             var observer = ghosts.HasComponent(playerEntity);
 
-            // even if they are an observer, in some situations we still need the range
-            if (sourceCoords.TryDistance(EntityManager, transformEntity.Coordinates, out var distance) && distance < voiceRange)
+            // admin ghosts should hear whispers on any range
+            if (observer && _adminManager.IsAdmin((IPlayerSession) player))
             {
-                recipients.Add(player, new ICChatRecipientData(distance, observer));
+                recipients.Add(player, new ICChatRecipientData(-1, true));
                 continue;
             }
 
-            if (observer)
-                recipients.Add(player, new ICChatRecipientData(-1, true));
+            // even if they are an observer, in some situations we still need the range
+            if (sourceCoords.TryDistance(EntityManager, transformEntity.Coordinates, out var distance)
+                && (observer || distance < voiceRange))
+            {
+                recipients.Add(player, new ICChatRecipientData(distance, observer));
+            }
         }
 
         RaiseLocalEvent(new ExpandICChatRecipientstEvent(source, voiceRange, recipients));
