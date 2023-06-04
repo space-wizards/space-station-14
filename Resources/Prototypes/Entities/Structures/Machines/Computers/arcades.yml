@@ -10,8 +10,8 @@
     priority: Low
   - type: ExtensionCableReceiver
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#3db83b"
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
@@ -59,7 +59,7 @@
   - type: SpaceVillainArcade
     rewardMinAmount: 5
     rewardMaxAmount: 8
-    
+
 - type: entity
   id: BlockGameArcade
   description: An arcade cabinet with a strangely familiar game.

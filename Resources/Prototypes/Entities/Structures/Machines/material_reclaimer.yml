@@ -37,8 +37,8 @@
           False: { visible: false }
   - type: LitOnPowered
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     enabled: false
     color: "#da824d"
     mask: /Textures/Effects/LightMasks/cone.png

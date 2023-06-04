@@ -27,7 +27,7 @@
   - type: Actions
   - type: Eye
     autoExpose: # Human night vision
-      max: 10
+      max: 8
     nightVision:
       color: "#E0FFC0FF"
   - type: CameraRecoil

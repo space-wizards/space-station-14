@@ -43,7 +43,7 @@
     - type: PointLight
       netsync: false
       enabled: false
-      radius: 3
+      radius: 2.5
       energy: 2.5
       color: "#FFC458"
     - type: Appearance

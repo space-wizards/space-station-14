@@ -109,6 +109,7 @@ public sealed class EyeExposureSystem : EntitySystem
             rawExpose = 1.0f;
         }
         // Clamp to a range
+        auto.Min = Math.Min(auto.Min, auto.Max); // Avoid a VV or other code exception here.
         rawExpose = Math.Clamp(rawExpose, auto.Min, auto.Max);
         eye.Exposure = rawExpose - auto.Reduction;
     }

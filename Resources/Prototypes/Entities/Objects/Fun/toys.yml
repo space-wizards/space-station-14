@@ -146,7 +146,7 @@
     state: plushie_lamp
   - type: PointLight
     netsync: false
-    radius: 1.5
+    radius: 1.2
     energy: 2
 
 - type: entity

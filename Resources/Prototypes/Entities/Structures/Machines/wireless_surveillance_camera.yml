@@ -8,10 +8,11 @@
     - type: InteractionOutline
     - type: Eye
       autoExpose: # Enhanced Dwarf-level night vision
-        max: 12
+        max: 10
         rampUp: 0.05
         rampUpNight: 0.01
       nightVision:
+        lightIntolerance: 0.6 # More disrupted by bright light
         color: "#D0FFB0FF"
         range: 0.8
         power: 0.4

@@ -228,8 +228,8 @@
   - type: AccessReader
     access: [["Service"]]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#4b93ad"
 
 - type: entity
@@ -396,8 +396,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#3c5eb5"
 
 - type: entity
@@ -416,8 +416,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#423438"
 
 - type: entity
@@ -437,8 +437,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#A50824"
 
 - type: entity
@@ -460,8 +460,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#44964A"
 
 - type: entity
@@ -482,8 +482,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#CBC6BE"
 
 - type: entity
@@ -505,8 +505,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#D3A44D"
 
 - type: entity
@@ -539,8 +539,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#66538F"
 
 - type: entity
@@ -573,8 +573,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#6927C5"
 
 - type: entity
@@ -604,8 +604,8 @@
   - type: AccessReader
     access: [["Service"]]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#4b93ad"
 
 - type: entity
@@ -632,8 +632,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#9a18d6"
 
 - type: entity
@@ -663,8 +663,8 @@
     - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#6148c7"
 
 - type: entity
@@ -693,8 +693,8 @@
   - type: AccessReader
     access: [["Engineering"]]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#b89e2a"
 
 - type: entity
@@ -726,8 +726,8 @@
   - type: AccessReader
     access: [["Medical"]]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#9dc5c9"
 
 - type: entity
@@ -758,8 +758,8 @@
   - type: AccessReader
     access: [["Hydroponics"]]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#326e3f"
 
 - type: entity
@@ -821,8 +821,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#326e3f"
 
 - type: entity
@@ -864,8 +864,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#9dc5c9"
 
 - type: entity
@@ -897,8 +897,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#c73434"
 
 - type: entity
@@ -927,8 +927,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#737785"
 
 - type: entity
@@ -947,8 +947,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#3c5eb5"
 
 - type: entity
@@ -967,8 +967,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#CE3401"
 
 - type: entity
@@ -987,8 +987,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#5F6A1C"
 
 - type: entity
@@ -1007,8 +1007,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#207E79"
 
 - type: entity
@@ -1040,8 +1040,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#389690"
 
 - type: entity
@@ -1075,8 +1075,8 @@
       map: ["enum.VendingMachineVisualLayers.Screen"]
       shader: unshaded
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#c73434"
   - type: Tag
     tags:
@@ -1109,8 +1109,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#9dc5c9"
 
 - type: entity
@@ -1142,8 +1142,8 @@
   - type: AccessReader
     access: [["Research"]]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#B0ADA9"
 
 - type: entity
@@ -1170,8 +1170,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#d4ab33"
   - type: Tag
     tags:
@@ -1203,8 +1203,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#326e3f"
 
 - type: entity
@@ -1234,8 +1234,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#ffe599"
 
 - type: entity
@@ -1261,8 +1261,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#9dc5c9"
   - type: AccessReader
     access: [["Salvage"]]
@@ -1294,8 +1294,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#d4ab33"
 
 # wallmounted machines
@@ -1470,8 +1470,8 @@
   - type: AccessReader
     access: [["Chapel"]]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#CCCCCC" #The holy C
 
 - type: entity
@@ -1808,8 +1808,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#48CF48"
 
 - type: entity
@@ -1839,8 +1839,8 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     color: "#3c5eb5"
   - type: Advertise
     pack: HappyHonkAds

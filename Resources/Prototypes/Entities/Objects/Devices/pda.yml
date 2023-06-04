@@ -60,7 +60,8 @@
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
-    radius: 1.5
+    radius: 0.5
+    energy: 0.2
     softness: 5
     autoRot: true
   - type: Ringer
@@ -474,7 +475,7 @@
     scanDelay: 1.2
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
-      
+
 - type: entity
   parent: BasePDA
   id: ParamedicPDA
@@ -493,7 +494,7 @@
     scanDelay: 0.5
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
-      
+
 - type: entity
   parent: BasePDA
   id: ChemistryPDA

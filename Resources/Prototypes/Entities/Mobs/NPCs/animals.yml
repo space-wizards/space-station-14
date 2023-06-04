@@ -1435,7 +1435,7 @@
   - type: Spider
   - type: Eye
     autoExpose: # Spider vision
-      max: 12
+      max: 10
       min: 1.2
       rampUp: 0.05
       rampUpNight: 0.01
@@ -1516,7 +1516,7 @@
       amount: 3
   - type: Eye
     autoExpose: # Animal Night vision
-      max: 12
+      max: 10
       min: 1.2
       rampUp: 0.05
       rampUpNight: 0.01
@@ -1590,7 +1590,7 @@
       gender: epicene
   - type: Eye
     autoExpose: # Animal Night vision
-      max: 12
+      max: 10
       min: 1.2
       rampUp: 0.05
       rampUpNight: 0.01
@@ -1658,7 +1658,7 @@
     bloodMaxVolume: 100
   - type: Eye
     autoExpose: # Animal Night vision
-      max: 12
+      max: 10
       min: 1.2
       rampUp: 0.05
       rampUpNight: 0.01
@@ -1730,7 +1730,7 @@
     price: 200
   - type: Eye
     autoExpose: # Animal Night vision
-      max: 12
+      max: 10
       min: 1.2
       rampUp: 0.05
       rampUpNight: 0.01
@@ -1891,7 +1891,7 @@
     price: 200
   - type: Eye
     autoExpose: # Powerful animal Night vision
-      max: 15
+      max: 13
       min: 0.8
       rampDown: 0.2
       rampNight: 1.0
@@ -1899,6 +1899,7 @@
       rampUpNight: 0.01
     nightVision:
       color: "#E7FFE0FF"
+      lightIntolerance: 0.2
       minExposure: 0.9
       range: 0.6
       power: 0.3

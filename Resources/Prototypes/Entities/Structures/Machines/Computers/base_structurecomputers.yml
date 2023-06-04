@@ -42,8 +42,8 @@
           False: { visible: true, shader: shaded }
   - type: LitOnPowered
   - type: PointLight
-    radius: 1.5
-    energy: 1.6
+    radius: 0.9
+    energy: 0.6
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true

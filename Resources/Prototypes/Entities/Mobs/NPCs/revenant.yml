@@ -51,6 +51,7 @@
       rampUpNight: 0.005
     nightVision:
       color: "#C0E0FFFF"
+      lightIntolerance: 0.2
       range: 0.5
       power: 0.4
     drawFov: false
