@@ -27,13 +27,16 @@
   - type: Eye
     drawFov: false
     autoExpose: # Ghost has quite powerful & fast night vision
-      max: 12
+      max: 10
       rampDown: 0.2
       rampUp: 0.1
       rampUpNight: 0.01
     nightVision:
+      color: "#C0E0FFFF"
+      minExposure: 1.2
+      lightIntolerance: 0.05 # Hardly notices over-bright lighting
       range: 1.0
-      power: 1.0
+      power: 1.5
   - type: Input
     context: "ghost"
   - type: Examiner
