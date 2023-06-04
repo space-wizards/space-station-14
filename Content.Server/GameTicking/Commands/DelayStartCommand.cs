@@ -1,5 +1,7 @@
 ﻿using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
 namespace Content.Server.GameTicking.Commands
@@ -19,10 +21,11 @@ namespace Content.Server.GameTicking.Commands
                 shell.WriteLine("This can only be executed while the game is in the pre-round lobby.");
                 return;
             }
-
             if (args.Length == 0)
             {
                 var paused = ticker.TogglePause();
+                var cfg = IoCManager.Resolve<IConfigurationManager>();
+                cfg.SetCVar(CCVars.DelayEnabled, paused);
                 shell.WriteLine(paused ? "Paused the countdown." : "Resumed the countdown.");
                 return;
             }

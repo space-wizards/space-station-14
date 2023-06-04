@@ -927,6 +927,8 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY | CVar.REPLICATED);
 
+        public static readonly CVarDef<bool> DelayEnabled = CVarDef.Create("delay.enabled", false, CVar.NOTIFY | CVar.REPLICATED);
+
         public static readonly CVarDef<bool> AdminLoocEnabled =
             CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
 
