@@ -81,6 +81,44 @@
 
 
 - type: entity
+  id: Carriage
+  parent: BaseVehicle
+  name: Сarriage
+  description: Don't take it away from those who need it.
+  components:
+    - type: Vehicle
+      northOver: true
+      hasKey: true
+      northOverride: 0
+      southOverride: 0
+    - type: Sprite
+      sprite: Objects/Vehicles/carriage.rsi
+      layers:
+        - state: vehicle
+          map: ["enum.VehicleVisualLayers.AutoAnimate"]
+      netsync: false
+      noRot: true
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 2
+    - type: Strap
+      buckleOffset: "0,0"
+      maxBuckleDistance: 1
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.2
+          density: 360
+          restitution: 0.0
+          mask:
+            - MobMask
+          layer:
+            - TableLayer
+
+
+- type: entity
   id: VehicleJanicart
   parent: BaseVehicle
   name: janicart

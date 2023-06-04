@@ -42,3 +42,14 @@
   description: trait-muted-desc
   components:
     - type: Muted
+
+- type: trait
+  id: BrokenLegs
+  name: trait-broken-legs-name
+  description: trait-broken-legs-desc
+  components:
+    - type: BrokenLegs
+      walkSpeedModifier: 0
+      sprintSpeedModifier: 0
+      accelerationSpeedModifier: 1
+      carriageId: Carriage
