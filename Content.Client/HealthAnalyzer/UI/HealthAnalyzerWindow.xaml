@@ -7,12 +7,13 @@
             Orientation="Vertical"
             HorizontalExpand="True"
             VerticalExpand="True">
-            <Label Name="NoPatientDataText"
-                   Visible="False"
-                   Text="{Loc health-analyzer-window-no-patient-data-text}" />
-            <Label Name="PatientData"
-                   Visible="False"
-                   Text="{Loc health-analyzer-window-no-patient-data-text}" />
+            <Label
+                Name="NoPatientDataText"
+                Visible="False"
+                Text="{Loc health-analyzer-window-no-patient-data-text}" />
+            <Label
+                Name="PatientData"
+                Visible="False" />
         </BoxContainer>
     </ScrollContainer>
     <BoxContainer
@@ -27,19 +28,21 @@
         Margin="0 0 50 0"
         Align="Begin"
         Orientation="Vertical">
-        <BoxContainer
-            VerticalAlignment="Bottom"
-            Orientation="Horizontal">
-        </BoxContainer>
         <PanelContainer StyleClasses="LowDivider" />
     </BoxContainer>
-    <PanelContainer
-        Name="DiagnosticItemPictureTemplate"
-        StyleClasses="Inset"
-        VerticalAlignment="Center">
-        <TextureRect
-            SetSize="32 32" />
-    </PanelContainer>
+
+    <BoxContainer
+        VerticalAlignment="Bottom"
+        Orientation="Horizontal">
+        <PanelContainer
+            Name="DiagnosticItemPictureTemplate"
+            StyleClasses="Inset"
+            VerticalAlignment="Center">
+            <TextureRect
+                SetSize="32 32" />
+        </PanelContainer>
+    </BoxContainer>
+
     <Label
         Name="DiagnosticItemLabelTemplate"
         Visible="False"

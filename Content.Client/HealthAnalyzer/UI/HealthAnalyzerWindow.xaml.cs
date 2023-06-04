@@ -82,26 +82,38 @@ namespace Content.Client.HealthAnalyzer.UI
             {
                 if (diagnosticGroupsCounter % 2 > 0)
                 {
-                    diagnosticGroupRow = CreateDiagnosticGroupsRow();
+                    diagnosticGroupRow = new BoxContainer
+                    {
+                        Margin = new Thickness(0, 10),
+                        HorizontalExpand = true,
+                        Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                    };
+
                     RootContainer.AddChild(diagnosticGroupRow);
                 }
 
                 if (diagnosticGroupRow is not BoxContainer groupRow)
                     continue;
-                
-                var groupText = new StringBuilder();
-                
-                groupText.Append(
-                    $"\n{Loc.GetString(
-                        "health-analyzer-window-damage-group-text",
-                        ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)),
-                        ("amount", damageAmount)
-                    )}"
-                );
-                
+
+                var groupTitleText = $"\n{Loc.GetString(
+                    "health-analyzer-window-damage-group-text",
+                    ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)),
+                    ("amount", damageAmount)
+                )}";
+
+                var groupContainer = new BoxContainer
+                {
+                    Margin = new Thickness(0, 0, 50, 0),
+                    Align = BoxContainer.AlignMode.Begin,
+                    Orientation = BoxContainer.LayoutOrientation.Vertical
+                };
+
+                groupContainer.AddChild(CreateDiagnosticGroupTitle(groupTitleText, damageGroupId, (int)damageAmount));
+                groupContainer.AddChild(new PanelContainer { StyleClasses = { "LowDivider" } });
+
                 // Show the damage for each type in that group.
                 var group = protos.Index<DamageGroupPrototype>(damageGroupId);
-                
+
                 foreach (var type in group.DamageTypes)
                 {
                     if (damagePerType.TryGetValue(type, out var typeAmount))
@@ -111,25 +123,24 @@ namespace Content.Client.HealthAnalyzer.UI
                         if (!shownTypes.Contains(type))
                         {
                             shownTypes.Add(type);
-                            groupText.Append(
-                                $"\n- {Loc.GetString(
-                                    "health-analyzer-window-damage-type-text",
-                                    ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + type)),
-                                    ("amount", typeAmount)
-                                )}"
+
+                            var damageString = Loc.GetString(
+                                "health-analyzer-window-damage-type-text",
+                                ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + type)),
+                                ("amount", typeAmount)
                             );
+
+                            groupContainer.AddChild(CreateDiagnosticItemLabel(damageString, (int)typeAmount > 0));
                         }
                     }
                 }
-                
-                groupText.AppendLine();
-                var diagnosticGroup = CreateDiagnosticItemLabel(groupText.ToString());
-                diagnosticGroupRow.AddChild(diagnosticGroup);
+
+                diagnosticGroupRow.AddChild(groupContainer);
                 diagnosticGroupsCounter++;
             }
 
             RootContainer.UpdateDraw();
-            SetSize = (500, 500);
+            SetSize = (400, 600);
         }
 
         private Texture GetTexture(string texture)
@@ -138,23 +149,35 @@ namespace Content.Client.HealthAnalyzer.UI
             return _spriteSystem.Frame0(sprite);
         }
 
-        private static BoxContainer CreateDiagnosticGroupsRow()
+        private static Label CreateDiagnosticItemLabel(string text, bool isBold = false)
         {
-            return new BoxContainer
+            var labelStyle = !isBold ? "LabelSubText" : "";
+
+            return new Label
             {
-                Margin = new Thickness(0, 10),
-                HorizontalExpand = true,
-                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                Margin = new Thickness(2, 2),
+                Text = text,
+                StyleClasses = { labelStyle },
             };
         }
 
-        private static Label CreateDiagnosticItemLabel(string text)
+        private BoxContainer CreateDiagnosticGroupTitle(string text, string id, int damageAmount)
         {
-            return new Label
+            var rootContainer = new BoxContainer
             {
-                Margin = new Thickness(0, 0, 10, 0),
-                Text = text
+                VerticalAlignment = VAlignment.Bottom,
+                Orientation = BoxContainer.LayoutOrientation.Horizontal
             };
+
+            rootContainer.AddChild(new TextureRect
+            {
+                SetSize = new Vector2(30, 20),
+                Texture = GetTexture(id.ToLower())
+            });
+
+            rootContainer.AddChild(CreateDiagnosticItemLabel(text, damageAmount > 0));
+
+            return rootContainer;
         }
     }
 }
