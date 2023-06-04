@@ -7,3 +7,10 @@
         *[other] {" "}when { $conditions }.
     }
 
+guidebook-reagent-name = [bold][color={$color}]{CAPITALIZE($name)}[/color][/bold]
+guidebook-reagent-recipes-header = Recipes
+guidebook-reagent-recipes-reagent-display = [bold]{$reagent}[/bold] \[{$ratio}\]
+guidebook-reagent-recipes-mix = Mix
+guidebook-reagent-effects-header = Effects
+guidebook-reagent-effects-metabolism-group-rate = [bold]{$group}[/bold] ({$rate} units per second)
+guidebook-reagent-physical-description = Seems to be {$description}.

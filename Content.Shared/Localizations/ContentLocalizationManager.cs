@@ -55,11 +55,11 @@ namespace Content.Shared.Localizations
 
             if (Math.Abs(count - 1) < 0.0001f)
             {
-                return args.Args[0];
+                return (LocValueString) args.Args[0];
             }
             else
             {
-                return FormatMakePlural(args);
+                return (LocValueString) FormatMakePlural(args);
             }
         }
 

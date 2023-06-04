@@ -29,6 +29,6 @@ namespace Content.Server.Chemistry.ReagentEffects
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-            => Loc.GetString("reagent-effect-guidebook-satiate-hunger", ("chance", Probability), ("relative", $"{NutritionFactor / DefaultNutritionFactor:f1}"));
+            => Loc.GetString("reagent-effect-guidebook-satiate-hunger", ("chance", Probability), ("relative", NutritionFactor / DefaultNutritionFactor));
     }
 }

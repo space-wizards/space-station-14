@@ -1,7 +1,9 @@
 ﻿using System.IO;
+using System.Linq;
 using Content.Shared.Chemistry.Reagent;
 using Lidgren.Network;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -10,38 +12,49 @@ namespace Content.Shared.Chemistry;
 /// <summary>
 /// This handles the chemistry guidebook and caching it.
 /// </summary>
-public sealed class ChemistryGuideDataSystem : EntitySystem
+public abstract class SharedChemistryGuideDataSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] protected readonly INetManager Net = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    private Dictionary<string, ReagentGuideEntry> _reagentGuideRegistry = new();
+    protected Dictionary<string, ReagentGuideEntry> _reagentGuideRegistry = new();
 
     public IReadOnlyDictionary<string, ReagentGuideEntry> ReagentGuideRegistry => _reagentGuideRegistry;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        if (_net.IsServer)
-        {
-            _net.RegisterNetMessage<MsgUpdateReagentGuideRegistry>(OnReceiveRegistryUpdate);
-        }
+        _prototype.PrototypesReloaded += PrototypeReload;
+
+        InitializeServerRegistry();
     }
 
-    private void OnReceiveRegistryUpdate(MsgUpdateReagentGuideRegistry message)
+    private void InitializeServerRegistry()
     {
-        var data = message.Changeset;
-        if (data == null)
+
+    }
+
+    private void PrototypeReload(PrototypesReloadedEventArgs obj)
+    {
+        if (Net.IsClient)
             return;
 
-        foreach (var remove in data.Removed)
+        if (!obj.ByType.TryGetValue(typeof(ReagentPrototype), out var reagents))
         {
-            _reagentGuideRegistry.Remove(remove);
+            return;
         }
 
-        foreach (var (key, val) in data.GuideEntries)
+        var msg = new MsgUpdateReagentGuideRegistry()
         {
-            _reagentGuideRegistry[key] = val;
+            Changeset = new ReagentGuideChangeset(new Dictionary<string, ReagentGuideEntry>(), new HashSet<string>())
+        };
+        foreach (var (id, proto) in reagents.Modified)
+        {
+            var reagentProto = (ReagentPrototype) proto;
+            msg.Changeset.GuideEntries.Add(id, new ReagentGuideEntry(reagentProto, _prototype, EntityManager.EntitySysManager));
+            _reagentGuideRegistry[id] = new ReagentGuideEntry(reagentProto, _prototype, EntityManager.EntitySysManager);
         }
+        Net.ServerSendToAll(msg);
     }
 }
 
@@ -51,20 +64,20 @@ public sealed class MsgUpdateReagentGuideRegistry : NetMessage
     // This could break with prototype loads if unordered.
     public override NetDeliveryMethod DeliveryMethod { get; } = NetDeliveryMethod.ReliableOrdered;
 
-    public ReagentGuideChangeset? Changeset { get; set; }
+    public ReagentGuideChangeset Changeset = default!;
 
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
         var length = buffer.ReadVariableInt32();
         using var stream = buffer.ReadAlignedMemory(length);
-        Changeset = serializer.Deserialize<ReagentGuideChangeset>(stream);
+        serializer.DeserializeDirect(stream, out Changeset);
     }
 
     public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
     {
         var stream = new MemoryStream();
         DebugTools.AssertNotNull(Changeset);
-        serializer.Serialize(stream, Changeset!);
+        serializer.SerializeDirect(stream, Changeset!);
 
         buffer.WriteVariableInt32((int)stream.Length);
         buffer.Write(stream.AsSpan());
