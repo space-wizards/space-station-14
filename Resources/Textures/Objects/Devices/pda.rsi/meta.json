@@ -200,6 +200,9 @@
       "name": "pda-interntech"
     },
     {
+      "name": "pda-bs"
+    },
+    {
       "name": "pda-zookeeper"
     },
     {

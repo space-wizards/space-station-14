@@ -291,6 +291,17 @@
       - state: green
       - state: hop
 
+- type: entity
+  id: SpawnPointBlueShield
+  parent: SpawnPointJobBase
+  name: blueshield
+  components:
+  - type: SpawnPoint
+    job_id: BlueShield
+  - type: Sprite
+    layers:
+      - state: green
+
 # Engineering
 
 - type: entity
@@ -354,7 +365,7 @@
     layers:
       - state: green
       - state: doctor
-      
+
 - type: entity
   id: SpawnPointParamedic
   parent: SpawnPointJobBase

@@ -132,6 +132,18 @@
 
 - type: entity
   parent: BasePDA
+  id: BlueShieldPDA
+  name: blue shield PDA
+  description: average style.
+  components:
+  - type: PDA
+    id: BlueShieldIDCard
+    state: pda-bs
+  - type: Icon
+    state: pda-bs
+
+- type: entity
+  parent: BasePDA
   id: MedicalInternPDA
   name: medical intern PDA
   description: Why isn't it white? Has a built-in health analyzer.
@@ -474,7 +486,7 @@
     scanDelay: 1.2
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
-      
+
 - type: entity
   parent: BasePDA
   id: ParamedicPDA
@@ -493,7 +505,7 @@
     scanDelay: 0.5
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
-      
+
 - type: entity
   parent: BasePDA
   id: ChemistryPDA

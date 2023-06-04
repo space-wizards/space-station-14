@@ -1,0 +1,52 @@
+- type: job
+  id: BlueShield
+  name: job-name-blueshield
+  description: job-description-blueshield
+  playTimeTracker: JobBlueShield
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 72000 # Corvax-RoleTime
+  startingGear: BlueShieldGear
+  icon: "BlueShield"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  access:
+  - Command
+  - Bar
+  - Service
+  - Maintenance
+  - Janitor
+  - Theatre
+  - Kitchen
+  - Chapel
+  - Hydroponics
+  - External
+  - Chemistry
+  - Engineering
+  - Research
+  - Detective
+  - Salvage
+  - Security
+  - Brig
+  - Cargo
+  - Atmospherics
+  - Cargo
+  - Medical
+
+- type: startingGear
+  id: BlueShieldGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBlueShield
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesBlueShield
+    head: ClothingHeadHatBeretNavyBlue
+    outerClothing: ClothingOuterArmorBulletproof
+    id: BlueShieldPDA
+    ears: ClothingHeadsetAltCommand
+    pocket1: WeaponHKPhalanx
+    pocket2: HandheldCrewMonitor
+    belt: ClothingBeltSecurityFilled
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

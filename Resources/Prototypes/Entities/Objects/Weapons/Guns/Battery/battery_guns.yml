@@ -435,8 +435,6 @@
   id: WeaponHKPhalanx
   description: Laser pistol stylized as a revolver. Issued with Nanotrasen as a service weapon for Blue Shield officers. A beautiful pistol and a powerful aid to protect the heads.
   components:
-  - type: Item
-    size: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_revolver.rsi
     layers:
@@ -458,8 +456,5 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
-  - type: Tag
-    tags:
-    - HighRiskItem
   - type: StaticPrice
     price: 150

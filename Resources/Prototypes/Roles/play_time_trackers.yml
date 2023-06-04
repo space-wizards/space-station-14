@@ -87,7 +87,7 @@
 
 - type: playTimeTracker
   id: JobPassenger
-  
+
 - type: playTimeTracker
   id: JobParamedic
 
@@ -135,3 +135,6 @@
 
 - type: playTimeTracker
   id: JobZookeeper
+
+- type: playTimeTracker
+  id: JobBlueShield

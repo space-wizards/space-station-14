@@ -48,6 +48,18 @@
 
 - type: entity
   parent: PassengerIDCard
+  id: BlueShieldIDCard
+  name: blue shield ID card
+  components:
+  - type: PresetIdCard
+    job: BlueShield
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idblueshield
+
+- type: entity
+  parent: PassengerIDCard
   id: MedicalInternIDCard
   name: medical intern ID card
   components:

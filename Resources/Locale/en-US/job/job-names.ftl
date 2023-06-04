@@ -43,12 +43,14 @@ job-name-ertmedic = ERT Medic
 job-name-ertjanitor = ERT Janitor
 job-name-boxer = Boxer
 job-name-zookeeper = Zookeeper
+job-name-blueshield = Blue Shield
 
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Atmospheric Technician
 JobBartender = Bartender
 JobBotanist = Botanist
 JobBoxer = Boxer
+JobBlueShield = Blue Shield
 JobCaptain = Captain
 JobCargoTechnician = Cargo Technician
 JobCentralCommandOfficial = Central Command Official

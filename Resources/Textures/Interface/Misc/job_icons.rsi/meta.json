@@ -137,6 +137,9 @@
             "name": "TechnicalAssistant"
         },
         {
+            "name": "BlueShield"
+        },
+        {
             "name": "ServiceWorker"
         },
         {
