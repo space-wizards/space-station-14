@@ -1,9 +1,4 @@
 Entries:
-- author: Klaypexx
-  changes:
-  - {message: added sound to jackboots and combat boots, type: Add}
-  id: 3438
-  time: '2023-04-17T06:19:03.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Security has reported sightings of Space Ninja in long shifts, be on
@@ -2903,3 +2898,9 @@ Entries:
       by 78%.', type: Tweak}
   id: 3937
   time: '2023-06-04T00:09:37.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Due to carp budget cuts, the Chief Space Carp can no longer send the
+      strongest carp and dragons to expedition dungeons.', type: Tweak}
+  id: 3938
+  time: '2023-06-04T11:06:13.0000000+00:00'
