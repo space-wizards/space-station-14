@@ -157,7 +157,8 @@
         tags:
         - Flesh
     - type: Kudzu
-      growthTickChance: 0.3
+      growthTickChance: 0.1
+      spreadChance: 0.4
       # Heals each time it manages to do a growth tick:
       damageRecovery:
         types:
@@ -175,7 +176,7 @@
     - type: Barotrauma
       damage:
         types:
-          Blunt: 0.15 #per second, scales with pressure and other constants.
+          Blunt: 0.10 #per second, scales with pressure and other constants.
     - type: Flammable
       fireSpread: true
       damage:

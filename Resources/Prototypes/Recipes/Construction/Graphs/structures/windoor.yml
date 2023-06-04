@@ -108,7 +108,7 @@
     - to: wired
       conditions:
       - !type:EntityAnchored {}
-      - !type:AirlockBolted
+      - !type:DoorBolted
         value: false
       - !type:WirePanel {}
       - !type:AllWiresCut
@@ -206,7 +206,7 @@
     - to: wired
       conditions:
       - !type:EntityAnchored {}
-      - !type:AirlockBolted
+      - !type:DoorBolted
         value: false
       - !type:WirePanel {}
       - !type:ContainerNotEmpty # TODO ShadowCommander: Remove when map gets updated

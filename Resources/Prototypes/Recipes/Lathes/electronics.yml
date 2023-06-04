@@ -15,6 +15,22 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: CellRechargerCircuitboard
+  result: CellRechargerCircuitboard
+  completetime: 2
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
+  id: WeaponCapacitorRechargerCircuitboard
+  result: WeaponCapacitorRechargerCircuitboard
+  completetime: 2
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
   id: DoorElectronics
   result: DoorElectronics
   completetime: 2
