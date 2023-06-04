@@ -1221,7 +1221,7 @@
   time: 15
   reagents:
     Water: 10
-    Protein: 6
+    UncookedAnimalProteins: 6
   solids:
     FoodDoughSlice: 3
     
