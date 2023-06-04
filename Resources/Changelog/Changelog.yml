@@ -1,82 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed the admin menu not being openable in the lobby., type: Fix}
-  id: 3427
-  time: '2023-04-16T06:06:01.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Aspid now requires a minimum of 25 players., type: Tweak}
-  id: 3428
-  time: '2023-04-16T18:53:26.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Emergency space suits, emergency fire suits, and O2 will now always
-      spawn in their respective lockers.', type: Tweak}
-  - {message: Maintenance wall lockers no longer contain emergency locker gear., type: Fix}
-  id: 3429
-  time: '2023-04-17T05:38:43.0000000+00:00'
-- author: Owai-Seek
-  changes:
-  - {message: added bomber jackets to clothesmate vendor, type: Add}
-  - {message: moved bowler hat to bardrobe, type: Tweak}
-  id: 3430
-  time: '2023-04-17T05:43:42.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Fix displaying tracking implanted person on crew monitor systems, type: Fix}
-  id: 3431
-  time: '2023-04-17T05:51:13.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Jester shoes now jingle., type: Add}
-  id: 3432
-  time: '2023-04-17T05:56:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The research team in the XenoArcheology lab have discovered how to extract
-      points from artifacts without breaking them., type: Tweak}
-  id: 3433
-  time: '2023-04-17T05:57:21.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: 'Fixed now the chameleon not only mimics hardsuits, but also their helmet!',
-    type: Fix}
-  id: 3434
-  time: '2023-04-17T05:58:54.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: 'Lone nuclear operatives have recently started attacking stations. Make
-      sure to watch out for them on long, extended shifts.', type: Add}
-  id: 3435
-  time: '2023-04-17T06:00:44.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not being able to take over the rat king ghost role., type: Fix}
-  id: 3436
-  time: '2023-04-17T06:18:39.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed admin note updates duplicating visually across all open admin
-      note windows., type: Fix}
-  id: 3437
-  time: '2023-04-17T06:18:54.0000000+00:00'
-- author: Klaypexx
-  changes:
-  - {message: added sound to jackboots and combat boots, type: Add}
-  id: 3438
-  time: '2023-04-17T06:19:03.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Security has reported sightings of Space Ninja in long shifts, be on
-      the look out for moving shadows or doors opening by themselves.', type: Add}
-  id: 3439
-  time: '2023-04-17T07:33:28.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed being able to eat and drink despite wearing a mask., type: Fix}
-  id: 3440
-  time: '2023-04-17T07:56:42.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added InHand sprites for cloaks!, type: Add}
@@ -2902,3 +2824,83 @@ Entries:
   - {message: 'Toy Box has been added, it is filled with new toys.', type: Add}
   id: 3926
   time: '2023-06-03T03:31:48.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: Swords no longer clank, type: Tweak}
+  id: 3927
+  time: '2023-06-03T10:17:15.0000000+00:00'
+- author: Renlou
+  changes:
+  - {message: Added hampter plushie based on discord emoji/sticker, type: Add}
+  id: 3928
+  time: '2023-06-03T18:50:53.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Added GuideHelp tags to some Janitorial items., type: Add}
+  id: 3929
+  time: '2023-06-03T19:07:06.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Uranium window now can block radiation, type: Tweak}
+  id: 3930
+  time: '2023-06-03T19:12:27.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Players being electrocuted now shows up nicer on the power monitoring
+      console., type: Tweak}
+  id: 3931
+  time: '2023-06-03T19:13:31.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Joints and blunts will get you high again., type: Fix}
+  id: 3932
+  time: '2023-06-03T19:29:46.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'Latest scientific research shows small boxes around Flesh Anomalies
+      are no longer best practice. Asked to comment on this, our scientific advisor
+      had this to say: "The Tendons! Tendons everywhere! Arrrghhh!"', type: Tweak}
+  id: 3933
+  time: '2023-06-03T19:31:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being able to override the amount of the amount of liquid shot
+      out of a spray bottle., type: Fix}
+  - {message: Fixed vapor sprites being rotated in the wrong direction., type: Fix}
+  - {message: Slightly buffed mega spray bottle., type: Tweak}
+  id: 3934
+  time: '2023-06-03T19:31:50.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'DoAfters (green bar above your head) now work when moving without gravity
+      so you can cuff, strip and use meds in spess.', type: Tweak}
+  id: 3935
+  time: '2023-06-03T19:33:41.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: puddle stickiness now updates when solution changes, type: Fix}
+  id: 3936
+  time: '2023-06-03T19:34:44.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Due to budget cuts in atmos, large gas tanks had their volume reduced
+      by 78%.', type: Tweak}
+  id: 3937
+  time: '2023-06-04T00:09:37.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Due to carp budget cuts, the Chief Space Carp can no longer send the
+      strongest carp and dragons to expedition dungeons.', type: Tweak}
+  id: 3938
+  time: '2023-06-04T11:06:13.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: Nanotrasen has remembered that they had built a therapy room for a reason
+      and is now allowing psychologists to board Origin Station., type: Fix}
+  id: 3939
+  time: '2023-06-04T20:11:15.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: 'Adds Medical Doctor, Cryo, and Cloning Guidebooks', type: Add}
+  id: 3940
+  time: '2023-06-04T21:06:43.0000000+00:00'

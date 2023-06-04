@@ -10,11 +10,17 @@
   - Security
   - Janitorial
   - Salvage
+  - Medical
 
 - type: guideEntry
   id: Survival
   name: guide-entry-survival
   text: "/ServerInfo/Guidebook/Survival.xml"
+
+- type: guideEntry
+  id: Chemicals
+  name: guide-entry-chemicals
+  text: "/ServerInfo/Guidebook/Chemicals.xml"
 
 - type: guideEntry
   id: Janitorial

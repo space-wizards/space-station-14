@@ -83,3 +83,6 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       clonepod-bodyContainer: !type:ContainerSlot
+  - type: GuideHelp
+    guides:
+    - Cloning
