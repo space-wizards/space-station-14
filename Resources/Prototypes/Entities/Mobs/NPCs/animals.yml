@@ -1435,15 +1435,16 @@
   - type: Spider
   - type: Eye
     autoExpose: # Spider vision
-      max: 10
-      min: 1.2
+      max: 12
+      min: 4.5
       rampUp: 0.05
       rampUpNight: 0.01
     nightVision:
+      lightIntolerance: 0.7 # More disrupted by bright light
       color: "#FFB0B0FF"
       minExposure: 0.9
-      range: 0.4
-      power: 0.3
+      range: 0.3
+      power: 1.5
   - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 150
