@@ -7,11 +7,6 @@
   components:
     - type: TabletopGame
       size: 256, 256
-      blacklist:
-        tags:
-          - HighRiskItem
-        components:
-          - Explosive
       setup:
         !type:TabletopEmptySetup
         boardPrototype: Crowbar

@@ -1,14 +1,12 @@
-using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Tabletop.Components;
+using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Popups;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
-using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -26,7 +24,6 @@ namespace Content.Server.Tabletop
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {
@@ -38,56 +35,10 @@ namespace Content.Server.Tabletop
             SubscribeLocalEvent<TabletopGamerComponent, ComponentShutdown>(OnGamerShutdown);
             SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
             SubscribeLocalEvent<TabletopGameComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<TabletopGameComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
 
             SubscribeNetworkEvent<TabletopRequestTakeOut>(OnTabletopRequestTakeOut);
 
             InitializeMap();
-        }
-
-        /// <summary>
-        /// Dumps all entities inside of the tabletop component out.
-        /// </summary>
-        /// <param name="tableUid">The tabletop component in question</param>
-        /// <param name="dumpTabletopPieces">Should we also dump out the pieces with the "TabletopPiece" tag?</param>
-        private bool DumpAllPiecesOut(EntityUid tableUid, bool dumpTabletopPieces = false)
-        {
-            if (!TryComp(tableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
-                return false;
-
-            var piecesDumped = false;
-
-            foreach (var entity in session.Entities.ToList())
-            {
-                if (TryComp<TagComponent>(entity, out var tag))
-                {
-                    if ((tag.Tags.Contains("TabletopPiece") && !dumpTabletopPieces) || tag.Tags.Contains("TabletopBoard"))
-                        continue;
-                }
-
-                // Find the entity, remove it from the session and set it's position to the tabletop
-                session.Entities.Remove(entity);
-                RemComp<TabletopDraggableComponent>(entity);
-
-                // Get the transform of the object so that we can manipulate it
-                var xform = Transform(tableUid);
-                _transformSystem.SetParent(entity, _mapManager.GetMapEntityId(xform.MapID));
-                _transformSystem.SetWorldPosition(entity, xform.MapPosition.Position);
-
-                piecesDumped = true;
-            }
-
-            return piecesDumped;
-        }
-
-        private void OnPickupAttempt(EntityUid uid, TabletopGameComponent component, GettingPickedUpAttemptEvent args)
-        {
-            if (!component.DumpPiecesOnPickup)
-                return;
-
-            var dumped = DumpAllPiecesOut(uid);
-            if (dumped)
-                _popupSystem.PopupEntity(Loc.GetString("tabletop-pieces-fell"), uid, PopupType.Large);
         }
 
         private void OnTabletopRequestTakeOut(TabletopRequestTakeOut msg, EntitySessionEventArgs args)
@@ -98,8 +49,15 @@ namespace Content.Server.Tabletop
             if (!TryComp(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
                 return;
 
+
             if (!msg.Entity.IsValid())
                 return;
+
+            if (!TryComp(msg.Entity, out TabletopHologramComponent? hologram))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("tabletop-error-remove-non-hologram"), msg.TableUid, args.SenderSession);
+                return;
+            }
 
             // Check if player is actually playing at this table
             if (!session.Players.ContainsKey(playerSession))
@@ -108,12 +66,7 @@ namespace Content.Server.Tabletop
             // Find the entity, remove it from the session and set it's position to the tabletop
             session.Entities.TryGetValue(msg.Entity, out var result);
             session.Entities.Remove(result);
-            RemComp<TabletopDraggableComponent>(result);
-
-            // Get the transform of the object so that we can manipulate it
-            var xform = Transform(msg.TableUid);
-            _transformSystem.SetParent(result, _mapManager.GetMapEntityId(xform.MapID));
-            _transformSystem.SetWorldPosition(msg.Entity, xform.MapPosition.Position);
+            _entityManager.QueueDeleteEntity(result);
         }
 
         private void OnInteractUsing(EntityUid uid, TabletopGameComponent component, InteractUsingEvent args)
@@ -135,25 +88,17 @@ namespace Content.Server.Tabletop
             if (!TryComp<ItemComponent>(handEnt, out var item))
                 return;
 
-            if (component.Blacklist != null && component.Blacklist.IsValid(handEnt))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("tabletop-too-big"), uid);
-                return;
-            }
+            var meta = MetaData(handEnt);
+            var protoId = meta.EntityPrototype?.ID;
 
-            if (item.Size > component.PieceMaxSize)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("tabletop-too-big"), uid);
-                return;
-            }
+            var hologram = _entityManager.SpawnEntity(protoId, session.Position.Offset(-1, 0));
 
-            // guess i had to do parenting bullshit after all
-            // Make sure the entity can be dragged, move it into the board game world and add it to the Entities hashmap
-            _transformSystem.SetWorldPosition(handEnt, session.Position.Offset(-1, 0).Position);
-            _transformSystem.SetParent(handEnt, _mapManager.GetMapEntityId(session.Position.MapId));
-            _transformSystem.SetWorldRotation(handEnt, new Angle(0));
-            EnsureComp<TabletopDraggableComponent>(handEnt);
-            session.Entities.Add(handEnt);
+            // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap
+            EnsureComp<TabletopDraggableComponent>(hologram);
+            EnsureComp<TabletopHologramComponent>(hologram);
+            session.Entities.Add(hologram);
+
+            _popupSystem.PopupEntity(Loc.GetString("tabletop-added-piece"), uid, args.User);
         }
 
         protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
@@ -182,27 +127,14 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
-            ActivationVerb playVerb = new()
+            var playVerb = new ActivationVerb()
             {
                 Text = Loc.GetString("tabletop-verb-play-game"),
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
                 Act = () => OpenSessionFor(actor.PlayerSession, uid)
             };
 
-            ActivationVerb dumpVerb = new()
-            {
-                Act = () =>
-                {
-                    var dumped = DumpAllPiecesOut(uid, true);
-                    if (dumped)
-                        _popupSystem.PopupEntity(Loc.GetString("tabletop-pieces-fell"), uid, PopupType.Large);
-                },
-                Text = Loc.GetString("tabletop-verb-dump-pieces"),
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/close.svg.192dpi.png"))
-            };
-
             args.Verbs.Add(playVerb);
-            args.Verbs.Add(dumpVerb);
         }
 
         private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateInWorldEvent args)

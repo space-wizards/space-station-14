@@ -2,8 +2,8 @@
 tabletop-verb-play-game = Play Game
 tabletop-verb-dump-pieces = Dump Pieces
 tabletop-default-board-name = Board Game
-tabletop-too-big = This is too big!
-tabletop-pieces-fell = The pieces fall to the floor!
+tabletop-error-remove-non-hologram = You cant remove a built in piece!
+tabletop-added-piece = The board shimmers brightly!
 
 ## Chess
 tabletop-chess-board-name = Chess
