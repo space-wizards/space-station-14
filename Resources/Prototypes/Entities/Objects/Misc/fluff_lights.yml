@@ -123,14 +123,15 @@
     canCollide: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2, -0.5, 0.2, 0.5"
-      density: 50
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2, -0.5, 0.2, 0.5"
+        density: 50
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: PointLight
     enabled: false
     radius: 8
@@ -173,6 +174,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 40
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
@@ -188,11 +195,12 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2, -0.5, 0.2, 0.5"
-      density: 50
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2, -0.5, 0.2, 0.5"
+        density: 50
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer

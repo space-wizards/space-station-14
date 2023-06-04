@@ -36,6 +36,7 @@
     energy: 2
     color: "#fca3c0"
   - type: Appearance
+  - type: WiresPanel
   - type: Wires
     BoardName: "Vessel"
     LayoutId: Vessel
@@ -78,6 +79,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:DoActsBehavior
@@ -118,14 +125,15 @@
     noRot: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Machine
@@ -143,6 +151,10 @@
     - AnomalousParticleDelta
     - AnomalousParticleEpsilon
     - AnomalousParticleZeta
+    setTypePorts:
+      SetParticleDelta: AnomalousParticleDelta
+      SetParticleEpsilon: AnomalousParticleEpsilon
+      SetParticleZeta: AnomalousParticleZeta
     fireBurstSize: 1
     baseFireBurstDelayMin: 2
     baseFireBurstDelayMax: 6
@@ -160,6 +172,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: Appearance
+  - type: WiresPanel
   - type: WiresVisuals
   - type: Wires
     BoardName: "Ape"
@@ -170,6 +183,19 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
+      - SetParticleDelta
+      - SetParticleEpsilon
+      - SetParticleZeta
 
 - type: entity
   id: MachineAnomalyGenerator
@@ -225,17 +251,19 @@
     - Plasma
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-1.5,-0.5,1.5,0.6"
-      density: 50
-      mask:
-      - LargeMobMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-0.5,1.5,0.6"
+        density: 50
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5
+  - type: WiresPanel
   - type: Wires
     BoardName: "AnomalyGenerator"
     LayoutId: AnomalyGenerator

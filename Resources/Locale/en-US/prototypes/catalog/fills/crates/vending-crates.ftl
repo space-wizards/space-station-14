@@ -40,11 +40,11 @@ ent-CrateVendingMachineRestockSeedsFilled = MegaSeed restock crate
 ent-CrateVendingMachineRestockSmokesFilled = ShadyCigs restock crate
     .desc = Contains two restock boxes for the ShadyCigs vending machine.
 
-ent-CrateVendingMachineRestockSnacksFilled = Snack restock crate
-    .desc = Contains four restock boxes, each covering a different snack vendor. Mr. Chang's, Discount Dans, Robust Donuts, and Getmore Chocolate are featured on the advertisement.
-
 ent-CrateVendingMachineRestockVendomatFilled = Vendomat restock crate
     .desc = Contains a restock box for a Vendomat vending machine.
+
+ent-CrateVendingMachineRestockRoboticsFilled = Robotech Deluxe restock crate
+    .desc = Contains a restock box for a Robotech Deluxe vending machine.
 
 ent-CrateVendingMachineRestockTankDispenserFilled = Tank dispenser restock crate
     .desc = Contains a restock box for an Engineering or Atmospherics tank dispenser.
@@ -52,3 +52,14 @@ ent-CrateVendingMachineRestockTankDispenserFilled = Tank dispenser restock crate
 ent-CrateVendingMachineRestockHappyHonkFilled = Happy honk restock crate
     .desc = Contains a restock box for a happy honk dispenser.
 
+ent-CrateVendingMachineRestockGetmoreChocolateCorpFilled = Getmore Chocolate Corp restock crate
+    .desc = Contains a restock box for a Getmore Chocolate Corp dispenser.
+
+ent-CrateVendingMachineRestockChangFilled = Chang restock crate
+    .desc = Contains a restock box for a Mr. Chang dispenser.
+
+ent-CrateVendingMachineRestockDiscountDansFilled = Discount Dans restock crate
+    .desc = Contains a restock box for a Discount Dan's dispenser.
+
+ent-CrateVendingMachineRestockDonutFilled = Donut restock crate
+    .desc = Contains a restock box for a Monkin' Donuts dispenser.

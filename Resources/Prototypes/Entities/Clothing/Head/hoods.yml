@@ -9,8 +9,6 @@
     sprite: Clothing/Head/Hoods/Bio/general.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/general.rsi
-  - type: DiseaseProtection
-    protection: 0.15
   - type: Tag
     tags:
     - HidesHair
@@ -26,8 +24,6 @@
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
-  - type: DiseaseProtection
-    protection: 0.25
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -40,7 +36,6 @@
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
-
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -77,8 +72,6 @@
     sprite: Clothing/Head/Hoods/Bio/virology.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/virology.rsi
-  - type: DiseaseProtection
-    protection: 0.25
 
 - type: entity
   parent: ClothingHeadBase
@@ -139,3 +132,18 @@
     sprite: Clothing/Head/Hoods/goliathcloak.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/goliathcloak.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodMoth
+  name: moth mask
+  description: A mask in the form of a moths head is usually made of lightweight materials. It mimics the shape of a moths head with large eyes and long antennae. Such masks are often used in cosplay, or when shooting movies and videos.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/moth.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/moth.rsi
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - HidesHair

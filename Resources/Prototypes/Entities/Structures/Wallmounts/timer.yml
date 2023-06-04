@@ -1,0 +1,96 @@
+- type: entity
+  id: SignalTimer
+  name: signal timer
+  description: It's a timer for sending timed signals to things.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: Transform
+    anchored: true
+  - type: WallMount
+    arc: 360
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Wallmounts/switch.rsi
+    netsync: false
+    state: on
+  - type: Appearance
+  - type: Rotatable
+  - type: SignalTimer
+    canEditLabel: false
+  - type: DeviceLinkSource
+    ports:
+      - Start
+      - Timer
+  - type: ActivatableUI
+    key: enum.SignalTimerUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.SignalTimerUiKey.Key
+      type: SignalTimerBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 100
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: ExtensionCableReceiver
+  - type: ActivatableUIRequiresPower
+  - type: Construction
+    graph: Timer
+    node: signal
+
+- type: entity
+  id: ScreenTimer
+  parent: SignalTimer
+  name: screen timer
+  description: It's a timer for sending timed signals to things, with a built-in screen.
+  components:
+  - type: SignalTimer
+    canEditLabel: true
+  - type: TextScreenVisuals
+  - type: Sprite
+    sprite: Structures/Wallmounts/textscreen.rsi
+    state: textscreen
+    noRot: true
+  - type: Construction
+    graph: Timer
+    node: screen
+
+- type: entity
+  id: BrigTimer
+  parent: ScreenTimer
+  name: brig timer
+  description: It's a timer for brig cells.
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Construction
+    graph: Timer
+    node: brig
+
+# Construction Frame
+
+- type: entity
+  noSpawn: true
+  id: TimerFrame
+  name: timer frame
+  description: A construction frame for a timer.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Wallmounts/textscreen.rsi
+    state: textscreen
+  - type: Construction
+    graph: Timer
+    node: frame
+  - type: WallMount

@@ -8,7 +8,6 @@
     sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
-  - type: BoxingGloves
   - type: StaminaDamageOnHit
     damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
     # This needs to be moved to boxinggloves
@@ -25,6 +24,9 @@
     fiberMaterial: fibers-leather
     fiberColor: fibers-red
   - type: FingerprintMask
+  - type: Tag
+    tags:
+    - Kangaroo
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed
@@ -75,6 +77,20 @@
   - type: FingerprintMask
 
 - type: entity
+  parent: ClothingHandsGlovesBoxingBlue
+  id: ClothingHandsGlovesBoxingRigged
+  name: blue boxing gloves
+  description: Blue gloves for competitive boxing. Feels like they're heavier than usual...
+  components:
+  - type: StaminaDamageOnHit
+    damage: 30
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 8
+
+- type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesCaptain
   name: captain gloves
@@ -92,20 +108,6 @@
     fiberColor: fibers-regal-blue
   - type: FingerprintMask
 
-- type: entity
-  parent: ClothingHandsBase
-  id: ClothingHandsGlovesIhscombat
-  name: IHS combat gloves
-  description: These tactical gloves are somewhat fire and impact resistant.
-  components:
-  - type: Sprite
-    sprite: Clothing/Hands/Gloves/ihscombat.rsi
-  - type: Clothing
-    sprite: Clothing/Hands/Gloves/ihscombat.rsi
-  - type: Fiber
-    fiberMaterial: fibers-durathread
-  - type: FingerprintMask
-
 #### Medical
 - type: entity
   parent: ClothingHandsBase
@@ -117,8 +119,6 @@
     sprite: Clothing/Hands/Gloves/latex.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/latex.rsi
-  - type: DiseaseProtection
-    protection: 0.1
   - type: Fiber
     fiberMaterial: fibers-latex
   - type: FingerprintMask
@@ -133,8 +133,6 @@
     sprite: Clothing/Hands/Gloves/Color/blue.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/blue.rsi
-  - type: DiseaseProtection
-    protection: 0.15
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask
@@ -160,7 +158,7 @@
   parent: ClothingHandsBase
   id: ClothingHandsGlovesPowerglove
   name: power gloves
-  description: Now I'm playin' with power! Wait, they are turned off. # Use Now I'm playin' with power! BAM! for when they're turned on
+  description: Now I'm playin' with power! Wait... they're turned off. #Use "Now I'm playin' with power! BAM!" for when they're turned on
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/powerglove.rsi
@@ -239,10 +237,24 @@
 
 - type: entity
   parent: ClothingHandsBase
+  id: ClothingHandsGlovesMercFingerless
+  name: mercenary fingerless gloves
+  description: Gloves that may not protect you from finger burns, but will make you cooler.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/mercfingerless.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/mercfingerless.rsi
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+    fiberColor: fibers-olive
+
+- type: entity
+  parent: ClothingHandsBase
   id: ThievingGloves
   suffix: Thieving
   name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
-  description: Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
+  description: Regular black gloves that do not keep you from frying.
   components:
     - type: Tag
       tags: [] # ignore "WhitelistChameleon" tag
@@ -266,3 +278,50 @@
   description:  A cursed pair of cluwne hands.
   components:
   - type: Unremoveable
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesNorthStar
+  name: gloves of the north star
+  description: These gloves allow you to punch incredibly fast.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/northstar.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/northstar.rsi
+  - type: MeleeWeapon
+    attackRate: 4
+    damage:
+      types:
+       Blunt: 8
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-blue
+  - type: FingerprintMask
+  - type: MeleeSpeech
+  - type: ActivatableUI
+    key: enum.MeleeSpeechUiKey.Key
+    closeOnHandDeselect: false
+    rightClickOnly: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.MeleeSpeechUiKey.Key
+        type: MeleeSpeechBoundUserInterface
+  - type: StaticPrice
+    price: 0
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ForensicGloves
+  name: forensic gloves
+  description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/forensic.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/forensic.rsi
+  - type: FingerprintMask
+

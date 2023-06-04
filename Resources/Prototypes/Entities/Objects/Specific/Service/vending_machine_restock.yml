@@ -31,6 +31,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 40
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
@@ -75,12 +81,29 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockClothes
-  name: ClothesMate restock box
-  description: It's time to step up your fashion! Place inside the ClothesMate restock slot to begin.
+  name: wardrobe restock box
+  description: It's time to step up your fashion! Place inside any clothes vendor restock slot to begin.
   components:
   - type: VendingMachineRestock
     canRestock:
     - ClothesMateInventory
+    - AtmosDrobeInventory
+    - BarDrobeInventory
+    - CargoDrobeInventory
+    - ChefDrobeInventory
+    - ChemDrobeInventory
+    - DetDrobeInventory
+    - EngiDrobeInventory
+    - GeneDrobeInventory
+    - HyDrobeInventory
+    - JaniDrobeInventory
+    - LawDrobeInventory
+    - MediDrobeInventory
+    - RoboDrobeInventory
+    - SciDrobeInventory
+    - SecDrobeInventory
+    - ViroDrobeInventory
+    - WinterDrobeInventory
   - type: Sprite
     layers:
     - state: base
@@ -139,7 +162,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockDonut
-  name: Robust Donuts box
+  name: Robust Donuts restock box
   description: A box full of toroidal bundles of fried dough for restocking a vending machine. Use only as directed by Robust Industries, LLC.
   components:
   - type: VendingMachineRestock
@@ -155,7 +178,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockEngineering
-  name: EngiVend resupply box
+  name: EngiVend restock box
   description: Only to be used by certified professionals.
   components:
   - type: VendingMachineRestock
@@ -220,7 +243,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockMedical
-  name: NanoMed resupply box
+  name: NanoMed restock box
   description: Slot into your department's NanoMed or NanoMedPlus to dispense. Handle with care.
   components:
   - type: VendingMachineRestock
@@ -253,7 +276,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockPTech
-  name: PTech resupply box
+  name: PTech restock box
   description: All the bureaucracy you can handle, and more! Load into the PTech vending machine to get started.
   components:
   - type: VendingMachineRestock
@@ -276,6 +299,11 @@
     canRestock:
     - RobustSoftdrinksInventory
     - BodaInventory
+    - PwrGameInventory
+    - ShamblersJuiceInventory
+    - StarkistInventory
+    - SpaceUpInventory
+    - SodaInventory
   - type: Sprite
     layers:
     - state: base
@@ -286,7 +314,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockSecTech
-  name: SecTech resupply box
+  name: SecTech restock box
   description: "Communists beware: the reinforcements have arrived! A label reads SECURITY PERSONNEL ONLY."
   components:
   - type: VendingMachineRestock
@@ -302,7 +330,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockSalvageEquipment
-  name: salvage resupply box
+  name: Salvage Vendor restock box
   description: Strike the earth ere the space carp nip your behind! Slam into a salvage vendor to begin.
   components:
   - type: VendingMachineRestock
@@ -350,7 +378,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockTankDispenser
-  name: tank dispenser resupply box
+  name: tank dispenser restock box
   description: Capable of replacing tanks in a gas tank dispenser. Handle with care.
   components:
   - type: VendingMachineRestock
@@ -367,7 +395,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockVendomat
-  name: vendomat restock box
+  name: Vendomat restock box
   description: A box full of parts for various machinery. Load it into a Vendomat to begin.
   components:
   - type: VendingMachineRestock
@@ -382,8 +410,24 @@
 
 - type: entity
   parent: BaseVendingMachineRestock
+  id: VendingMachineRestockRobotics
+  name: Robotech Deluxe restock box
+  description: A box full of tools for creating borgs. Load it into a Robotech Deluxe to begin.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - RoboticsInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_robotics
+
+- type: entity
+  parent: BaseVendingMachineRestock
   id: VendingMachineRestockHappyHonk
-  name: happy honk restock box
+  name: Happy Honk restock box
   description: place this box full of fun into the restock slot on the Happy Honk Dispenser to begin.
   components:
   - type: VendingMachineRestock
@@ -395,3 +439,19 @@
     - state: green_bit
       shader: unshaded
     - state: refill_honk
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockChemVend
+  name: ChemVend restock box
+  description: A box filled with chemicals and covered in dangerous-looking NFPA diamonds. Load it into a ChemVend to begin.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - ChemVendInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_medical

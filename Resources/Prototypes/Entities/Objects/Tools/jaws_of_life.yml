@@ -41,6 +41,10 @@
           state: jaws_cutter
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
 
 - type: entity
   name: syndicate jaws of life
@@ -51,6 +55,12 @@
   - type: Sprite
     sprite: Objects/Tools/jaws_of_life.rsi
     state: syn_jaws_pry
+  - type: Item
+    size: 35
+  - type: Tool
+    qualities:
+      - Prying
+    speed: 3.0
   - type: MultipleTool
     entries:
       - behavior: Prying
@@ -65,3 +75,7 @@
           state: syn_jaws_cutter
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14

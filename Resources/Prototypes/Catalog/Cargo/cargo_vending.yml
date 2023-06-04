@@ -22,7 +22,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockClothesFilled
-  cost: 4200
+  cost: 4350
   category: Service
   group: market
 
@@ -42,7 +42,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockEngineeringFilled
-  cost: 3000
+  cost: 3200
   category: Engineering
   group: market
 
@@ -72,7 +72,17 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockMedicalFilled
-  cost: 1500
+  cost: 1750
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockChemVend
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockChemVendFilled
+  cost: 3500
   category: Medical
   group: market
 
@@ -132,7 +142,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockSeedsFilled
-  cost: 2700
+  cost: 3000
   category: Hydroponics
   group: market
 
@@ -147,16 +157,6 @@
   group: market
 
 - type: cargoProduct
-  id: CrateVendingMachineRestockSnacks
-  icon:
-    sprite: Objects/Specific/Service/vending_machine_restock.rsi
-    state: base
-  product: CrateVendingMachineRestockSnacksFilled
-  cost: 3000
-  category: Service
-  group: market
-
-- type: cargoProduct
   id: CrateVendingMachineRestockVendomat
   icon:
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
@@ -164,6 +164,16 @@
   product: CrateVendingMachineRestockVendomatFilled
   cost: 1200
   category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockRobotics
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockRoboticsFilled
+  cost: 1600
+  category: Science
   group: market
 
 - type: cargoProduct
@@ -183,5 +193,45 @@
     state: base
   product: CrateVendingMachineRestockHappyHonkFilled
   cost: 2100
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockGetmoreChocolateCorp
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockGetmoreChocolateCorpFilled
+  cost: 1200
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockChang
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockChangFilled
+  cost: 1200
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockDiscountDans
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockDiscountDansFilled
+  cost: 1200
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockDonut
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockDonutFilled
+  cost: 1200
   category: Service
   group: market

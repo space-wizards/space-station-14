@@ -1,201 +1,162 @@
-# TODO: Add the other mess types
+# TODO: Fix - The idea is that blood and vomit is potentially not tile-bound versions of puddles(?)
 - type: entity
-  id: PuddleBase
+  id: PuddleTemporary
+  parent: Puddle
   abstract: true
   components:
-  - type: Transform
-    anchored: true
-  - type: Sprite
-    drawdepth: FloorObjects
-  - type: SolutionContainerManager
-    solutions:
-      puddle: { maxVol: 1000 }
-  - type: Puddle
-    spillSound:
-      path: /Audio/Effects/Fluids/splat.ogg
-    recolor: true
-  - type: Clickable
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - id: slipFixture
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      mask:
-      - ItemMask
-      layer:
-      - SlipLayer
-      hard: false
-  - type: Appearance
-  - type: PuddleVisualizer
-    wetFloorEffectThreshold: 0 # non-evaporating puddles don't become sparkles.
+    - type: Transform
+      anchored: true
+      noRot: false
 
 - type: entity
-  id: EvaporatingPuddle
-  parent: PuddleBase
-  abstract: true
-  components:
-  - type: Evaporation
-  - type: PuddleVisualizer
-    wetFloorEffectThreshold: 5
-
-- type: entity
-  name: gibblets
-  id: PuddleGibblet
-  parent: PuddleBase
-  description: Gross.
-  components:
-  - type: Sprite
-    sprite: Fluids/gibblet.rsi # Placeholder
-    state: gibblet-0
-    netsync: false
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Water
-          Quantity: 10
-  - type: Slippery
-    launchForwardsMultiplier: 2.0
-  - type: StepTrigger
-
-- type: entity
-  name: puddle
   id: PuddleSmear
-  parent: EvaporatingPuddle
-  description: A puddle of liquid.
+  parent: PuddleTemporary
+
+- type: entity
+  id: PuddleVomit
+  parent: PuddleTemporary
   components:
-  - type: Sprite
-    sprite: Fluids/smear.rsi # Placeholder
-    state: smear-0
-    netsync: false
-  - type: Puddle
-    slipThreshold: 3
-  - type: Appearance
-  - type: PuddleVisualizer
-  - type: Slippery
-    launchForwardsMultiplier: 2.0
-  - type: StepTrigger
+    - type: SolutionContainerManager
+      solutions:
+        puddle:
+          maxVol: 1000
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 5
+            - ReagentId: Water
+              Quantity: 5
+
+- type: entity
+  id: PuddleEgg
+  parent: PuddleTemporary
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        puddle:
+          maxVol: 1000
+          reagents:
+            - ReagentId: Egg
+              Quantity: 6 # same as when cooking
+
+- type: entity
+  id: PuddleTomato
+  parent: PuddleTemporary
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        puddle:
+          maxVol: 1000
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 5
+            - ReagentId: Water
+              Quantity: 5
+
+- type: entity
+  id: PuddleWatermelon
+  parent: PuddleTemporary
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        puddle:
+          maxVol: 1000
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 15
+            - ReagentId: Water
+              Quantity: 15
+
+- type: entity
+  id: PuddleFlour
+  parent: PuddleTemporary
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        puddle:
+          maxVol: 1000
+          reagents:
+            - ReagentId: Flour
+              Quantity: 15
+
+- type: entity
+  id: PuddleSparkle
+  name: Sparkle
+  placement:
+    mode: SnapgridCenter
+  components:
+    # Animation is like 3 something seconds so we just need to despawn it before then.
+    - type: TimedDespawn
+      lifetime: 1
+    - type: EvaporationSparkle
+    - type: Transform
+      noRot: true
+      anchored: true
+    - type: Sprite
+      layers:
+        - sprite: Fluids/wet_floor_sparkles.rsi
+          state: sparkles
+      netsync: false
+      drawdepth: FloorObjects
+      color: "#FFFFFF80"
 
 - type: entity
   name: puddle
-  id: PuddleSplatter
-  parent: EvaporatingPuddle
+  id: Puddle
   description: A puddle of liquid.
+  placement:
+    mode: SnapgridCenter
   components:
-  - type: Sprite
-    sprite: Fluids/splatter.rsi # Placeholder
-    state: splatter-0
-    netsync: false
-  - type: Puddle
-    slipThreshold: 3
-  - type: Appearance
-  - type: PuddleVisualizer
-  - type: Slippery
-    launchForwardsMultiplier: 2.0
-  - type: StepTrigger
-
-- type: entity
-  id: PuddleBlood
-  name: blood
-  description: This can't be a good sign.
-  parent: PuddleBase
-  components:
-  - type: Sprite
-    sprite: Fluids/splatter.rsi # Placeholder
-    state: splatter-0
-    netsync: false
-  - type: Puddle
-    overflowVolume: 50
-    opacityModifier: 8
-
-- type: entity
-  name: vomit
-  id: PuddleVomit # No parent because we don't want the VisualizerSystem to behave in the standard way
-  description: Gross.
-  components:
-  - type: Transform
-    anchored: true
-  - type: Clickable
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - id: slipFixture
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      mask:
-      - ItemMask
-      layer:
-      - SlipLayer
-      hard: false
-  - type: Sprite
-    sprite: Fluids/vomit.rsi
-    state: vomit-0
-    netsync: false
-  - type: Puddle
-    slipThreshold: 5
-    recolor: false
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Water
-          Quantity: 5
-  - type: Slippery
-    launchForwardsMultiplier: 2.0
-  - type: StepTrigger
-  - type: Appearance
-  - type: PuddleVisualizer
-    customPuddleSprite: true
-
-- type: entity
-  name: toxins vomit
-  id: PuddleVomitToxin
-  parent: PuddleVomit
-  description: You probably don't want to get too close to this.
-  components:
-  - type: Sprite
-    sprite: Fluids/vomit_toxin.rsi
-    state: vomit_toxin-0
-    netsync: false
-  - type: Puddle
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Toxin
-          Quantity: 5
-        - ReagentId: Water
-          Quantity: 5
-  - type: Appearance
-  - type: PuddleVisualizer
-    customPuddleSprite: true
-  - type: Slippery
-    launchForwardsMultiplier: 2.0
-  - type: StepTrigger
-
-- type: entity
-  name: writing
-  id: PuddleWriting
-  parent: PuddleBase
-  description: A bit of liquid.
-  components:
-  - type: Sprite
-    sprite: Fluids/writing.rsi # Placeholder
-    state: writing-0
-    netsync: false
-  - type: Puddle
-  - type: Evaporation
-    evaporateTime: 10
-  - type: Appearance
-  - type: PuddleVisualizer
-  - type: Slippery
-    launchForwardsMultiplier: 2.0
-  - type: StepTrigger
+    - type: Clickable
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepWater
+        params:
+          volume: 6
+    - type: Slippery
+      launchForwardsMultiplier: 2.0
+    - type: Transform
+      noRot: true
+      anchored: true
+    - type: Sprite
+      layers:
+        - sprite: Fluids/puddle.rsi
+          state: splat0
+      drawdepth: FloorObjects
+      color: "#FFFFFF80"
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        slipFixture:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          mask:
+            - ItemMask
+          layer:
+            - SlipLayer
+          hard: false
+    - type: IconSmooth
+      key: puddles
+      base: splat
+      mode: CardinalFlags
+    - type: SolutionContainerManager
+      solutions:
+        puddle: { maxVol: 1000 }
+    - type: Puddle
+    - type: Appearance
+    - type: EdgeSpreader
+    - type: StepTrigger
+    - type: NodeContainer
+      nodes:
+        puddle:
+          !type:SpreaderNode
+          nodeGroupID: Spreader
+    - type: Drink
+      isOpen: true
+      delay: 3
+      transferAmount: 1
+      solution: puddle
+      examinable: false
+    - type: ExaminableSolution
+      solution: puddle

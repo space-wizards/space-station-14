@@ -16,10 +16,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.Cargo.Systems;
-using Content.Server.NPC.Pathfinding;
+using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Robust.Shared.Timing;
 
@@ -27,19 +28,23 @@ namespace Content.Server.Salvage
 {
     public sealed partial class SalvageSystem : SharedSalvageSystem
     {
+        [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
         [Dependency] private readonly BiomeSystem _biome = default!;
-        [Dependency] private readonly CargoSystem _cargo = default!;
         [Dependency] private readonly DungeonSystem _dungeon = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
-        [Dependency] private readonly PathfindingSystem _pathfinding = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly ShuttleSystem _shuttle = default!;
+        [Dependency] private readonly ShuttleConsoleSystem _shuttleConsoles = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -62,6 +67,15 @@ namespace Content.Server.Salvage
 
             // Can't use RoundRestartCleanupEvent, I need to clean up before the grid, and components are gone to prevent the announcements
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
+
+            InitializeExpeditions();
+            InitializeRunner();
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            ShutdownExpeditions();
         }
 
         private void OnRoundEnd(GameRunLevelChangedEvent ev)
@@ -376,7 +390,7 @@ namespace Content.Server.Salvage
 
             var message = args.Length == 0 ? Loc.GetString(messageKey) : Loc.GetString(messageKey, args);
             var channel = _prototypeManager.Index<RadioChannelPrototype>(channelName);
-            _radioSystem.SendRadioMessage(source, message, channel);
+            _radioSystem.SendRadioMessage(source, message, channel, source);
         }
 
         private void Transition(SalvageMagnetComponent magnet, TimeSpan currentTime)
@@ -449,6 +463,9 @@ namespace Content.Server.Salvage
                     state.ActiveMagnets.Remove(magnet);
                 }
             }
+
+            UpdateExpeditions();
+            UpdateRunner();
         }
     }
 

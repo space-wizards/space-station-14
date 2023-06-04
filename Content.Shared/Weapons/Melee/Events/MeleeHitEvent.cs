@@ -45,6 +45,11 @@ public sealed class MeleeHitEvent : HandledEntityEventArgs
     public readonly EntityUid User;
 
     /// <summary>
+    /// The melee weapon used.
+    /// </summary>
+    public readonly EntityUid Weapon;
+
+    /// <summary>
     /// Check if this is true before attempting to do something during a melee attack other than changing/adding bonus damage. <br/>
     /// For example, do not spend charges unless <see cref="IsHit"/> equals true.
     /// </summary>
@@ -53,10 +58,18 @@ public sealed class MeleeHitEvent : HandledEntityEventArgs
     /// </remarks>
     public bool IsHit = true;
 
-    public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user, DamageSpecifier baseDamage)
+    public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user, EntityUid weapon, DamageSpecifier baseDamage)
     {
         HitEntities = hitEntities;
         User = user;
+        Weapon = weapon;
         BaseDamage = baseDamage;
     }
 }
+
+/// <summary>
+/// Raised on a melee weapon to calculate potential damage bonuses or decreases.
+/// </summary>
+/// <param name="Damage"></param>
+[ByRefEvent]
+public record struct GetMeleeDamageEvent(DamageSpecifier Damage);

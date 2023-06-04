@@ -1,0 +1,17 @@
+- type: vendingMachineInventory
+  id: CentDrobeInventory
+  startingInventory:
+    ClothingShoesBootsLaceup: 3
+    ClothingShoesBootsJack: 3
+    ClothingHandsGlovesCombat: 3
+    ClothingEyesGlassesSunglasses: 3
+    ClothingUniformJumpsuitCentcomOfficer: 3
+    ClothingUniformJumpsuitCentcomOfficial: 3
+    ClothingUniformJumpsuitCentcomFormal: 3
+    ClothingUniformJumpskirtCentcomFormalDress: 3
+    ClothingHeadHatCentcom: 3
+    ClothingMaskGasCentcom: 3
+    ClothingHeadsetCentCom: 3
+    ClothingOuterWinterCentcom: 3
+    ClothingNeckScarfStripedCentcom: 3
+    

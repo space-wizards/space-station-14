@@ -60,7 +60,7 @@ namespace Content.Client.Atmos.UI
             // We don't need to send both nodes because it's just 100.0f - node
             float node = float.TryParse(value, out var parsed) ? parsed : 1.0f;
 
-            node = Math.Clamp(node, 0, 100);
+            node = Math.Clamp(node, 0f, 100.0f);
 
             if (_window is not null) node = _window.NodeOneLastEdited ? node : 100.0f - node;
 

@@ -1,0 +1,39 @@
+- type: entity
+  id: HandheldStationMap
+  name: station map
+  description: Displays a readout of the current station.
+  parent:
+    - BaseItem
+    - PowerCellSlotSmallItem
+  suffix: Handheld
+  components:
+    - type: StationMap
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Devices/tablets.rsi
+      layers:
+        - state: tablet
+        - state: generic
+          shader: unshaded
+    - type: PowerCellDraw
+      drawRate: 0
+      useRate: 20
+    - type: ActivatableUIRequiresPowerCell
+    - type: ActivatableUI
+      inHandsOnly: true
+      singleUser: true
+      key: enum.StationMapUiKey.Key
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: UserInterface
+      interfaces:
+        - key: enum.StationMapUiKey.Key
+          type: StationMapBoundUserInterface

@@ -14,6 +14,7 @@ github     = "https://github.com/space-wizards/space-station-14"
 patreon    = "https://www.patreon.com/spacestation14"
 website    = "https://spacestation14.io"
 wiki       = "https://wiki.spacestation14.io"
+appeal     = "https://appeal.ss14.io"
 
 [net]
 max_connections = 1024

@@ -1,13 +1,4 @@
 - type: entity
-  id: CrateMedicalDefib
-  parent: CrateMedical
-  components:
-  - type: StorageFill
-#    contents:
-#      - id: Defibrillator
-#        amount: 1
-
-- type: entity
   id: CrateMedicalSupplies
   parent: CrateMedical
   components:
@@ -17,12 +8,11 @@
         amount: 2
       - id: Gauze
         amount: 2
+      - id: Bloodpack
+        amount: 2
       - id: BoxLatexGloves
-        amount: 1
       - id: BoxSterileMask
-        amount: 1
       - id: BoxMouthSwab
-        amount: 1
 
 - type: entity
   id: CrateChemistrySupplies
@@ -31,11 +21,8 @@
   - type: StorageFill
     contents:
       - id: BoxSyringe
-        amount: 1
       - id: BoxBeaker
-        amount: 1
       - id: BoxPillCanister
-        amount: 1
       - id: Dropper
         amount: 2
       - id: BoxBottle
@@ -48,19 +35,12 @@
   - type: StorageFill
     contents:
       - id: Scalpel
-        amount: 1
       - id: Retractor
-        amount: 1
       - id: Cautery
-        amount: 1
       - id: Drill
-        amount: 1
       - id: Saw
-        amount: 1
       - id: Hemostat
-        amount: 1
       - id: ClothingMaskSterile
-        amount: 1
 
 - type: entity
   id: CrateMedicalScrubs
@@ -69,17 +49,11 @@
   - type: StorageFill
     contents:
       - id: UniformScrubsColorGreen
-        amount: 1
       - id: UniformScrubsColorPurple
-        amount: 1
       - id: UniformScrubsColorBlue
-        amount: 1
       - id: HatBandBlue
-        amount: 1
       - id: HatBandRed
-        amount: 1
       - id: HatBandGreen
-        amount: 1
       - id: ClothingMaskSterile
         amount: 3
 
@@ -136,3 +110,25 @@
     contents:
       - id: MedkitRadiationFilled
         amount: 4
+
+- type: entity
+  id: CrateBodyBags
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxBodyBag
+        amount: 2
+
+- type: entity
+  id: CrateVirologyBiosuit
+  parent: CrateMedicalSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterBioVirology
+        amount: 2
+      - id: ClothingHeadHatHoodBioVirology
+        amount: 2
+      - id: ClothingMaskSterile
+        amount: 2

@@ -1,5 +1,3 @@
-using Content.Shared.Shuttles.Components;
-
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
@@ -7,6 +5,18 @@ namespace Content.Server.Shuttles.Components
     {
         [ViewVariables]
         public bool Enabled = true;
+
+        [ViewVariables]
+        public Vector2[] CenterOfThrust = new Vector2[4];
+
+        /// <summary>
+        /// Thrust gets multiplied by this value if it's for braking.
+        /// </summary>
+        public const float BrakeCoefficient = 1.5f;
+
+        public const float MaxLinearVelocity = 20f;
+
+        public const float MaxAngularVelocity = 4f;
 
         /// <summary>
         /// The cached thrust available for each cardinal direction
@@ -17,12 +27,12 @@ namespace Content.Server.Shuttles.Components
         /// <summary>
         /// The thrusters contributing to each direction for impulse.
         /// </summary>
-        public readonly List<ThrusterComponent>[] LinearThrusters = new List<ThrusterComponent>[4];
+        public readonly List<EntityUid>[] LinearThrusters = new List<EntityUid>[4];
 
         /// <summary>
         /// The thrusters contributing to the angular impulse of the shuttle.
         /// </summary>
-        public readonly List<ThrusterComponent> AngularThrusters = new();
+        public readonly List<EntityUid> AngularThrusters = new();
 
         [ViewVariables]
         public float AngularThrust = 0f;

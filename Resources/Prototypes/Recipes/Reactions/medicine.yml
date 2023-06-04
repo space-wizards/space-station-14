@@ -242,15 +242,16 @@
 
 - type: reaction
   id: Impedrezene
+  minTemp: 370
   reactants:
     Mercury:
       amount: 1
     Oxygen:
       amount: 1
-    Sugar:
+    Water:
       amount: 1
   products:
-    Impedrezene: 3
+    Impedrezene: 1
 
 - type: reaction
   id: Lexorin
@@ -356,3 +357,19 @@
       amount: 1
   products:
     Cognizine: 1
+
+- type: reaction
+  id: Sigynate
+  impact: Medium
+  minTemp: 370
+  reactants:
+    SodiumCarbonate: 
+      amount: 1
+    Kelotane:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar: 
+      amount: 1
+  products:
+    Sigynate: 4

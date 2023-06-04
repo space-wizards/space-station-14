@@ -29,9 +29,12 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private const float ReactTime = 0.125f;
 
+        private ISawmill _sawmill = default!;
+
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = Logger.GetSawmill("vapor");
             SubscribeLocalEvent<VaporComponent, StartCollideEvent>(HandleCollide);
         }
 
@@ -41,7 +44,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             foreach (var value in contents.Solutions.Values)
             {
-                value.DoEntityReaction(args.OtherFixture.Body.Owner, ReactionMethod.Touch);
+                value.DoEntityReaction(args.OtherEntity, ReactionMethod.Touch);
             }
 
             // Check for collision with a impassable object (e.g. wall) and stop
@@ -63,7 +66,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 _physics.SetLinearDamping(physics, 0f);
                 _physics.SetAngularDamping(physics, 0f);
 
-                _throwing.TryThrow(vapor.Owner, dir * speed, user: user, pushbackRatio: 50f);
+                _throwing.TryThrow(vapor.Owner, dir, speed, user: user, pushbackRatio: ThrowingSystem.PushbackDefault * 10f);
 
                 var distance = (target.Position - vaporXform.WorldPosition).Length;
                 var time = (distance / physics.LinearVelocity.Length);
@@ -117,8 +120,17 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                    _solutionContainerSystem.TryRemoveReagent(vapor.Owner, contents, reagentQuantity.ReagentId,
-                        reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));
+
+                    var reaction =
+                        reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f);
+
+                    if (reaction > reagentQuantity.Quantity)
+                    {
+                        _sawmill.Error($"Tried to tile react more than we have for reagent {reagentQuantity.ReagentId}. Found {reaction} and we only have {reagentQuantity.Quantity}");
+                        reaction = reagentQuantity.Quantity;
+                    }
+
+                    _solutionContainerSystem.TryRemoveReagent(vapor.Owner, contents, reagentQuantity.ReagentId, reaction);
                 }
             }
 

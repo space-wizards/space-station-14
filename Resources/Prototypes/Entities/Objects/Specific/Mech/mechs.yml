@@ -3,19 +3,9 @@
   save: false
   abstract: true
   components:
-  - type: Sprite
-    netsync: false
-    drawdepth: Mobs
-    noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
-    layers:
-    - map: [ "enum.MechVisualLayers.Base" ]
-      state: ripley
   - type: MobMover
   - type: Mech
-    baseState: ripley
-    openState: ripley-open
-    brokenState: ripley-broken
+  - type: MechAir
   - type: DoAfter
   - type: Repairable
     fuelCost: 25
@@ -46,19 +36,21 @@
   - type: Physics
     bodyType: KinematicController
   - type: Clickable
+  - type: WiresPanel
   - type: Wires #we just want the panel
     BoardName: Mech
     LayoutId: Mech
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      density: 1000
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 1000
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: ContainerContainer
     containers:
@@ -71,13 +63,24 @@
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/mechmove03.ogg
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: MechRipley
   parent: BaseMech
-  name: ripley
-  description: Cargo's favorite robotic box hauling friend.
+  name: Ripley APLU
+  description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Autonomous Power Loading Unit.
   components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: ripley
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
@@ -85,16 +88,57 @@
     baseState: ripley
     openState: ripley-open
     brokenState: ripley-broken
-    mechToPilotDamageMultiplier: 0.5
+    mechToPilotDamageMultiplier: 0.75
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 14 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea.
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6
 
 - type: entity
   id: MechRipleyBattery
   parent: MechRipley
   suffix: Battery
   components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
+
+# TODO: have a whitelist for honker equipment
+- type: entity
+  id: MechHonker
+  parent: BaseMech
+  name: H.O.N.K.
+  description: "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. Used to spread the fun and joy of life. HONK!"
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: honker
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
   - type: Mech
-    baseState: ripley
-    openState: ripley-open
-    brokenState: ripley-broken
-    startingBattery: PowerCellHigh
+    baseState: honker
+    openState: honker-open
+    brokenState: honker-broken
     mechToPilotDamageMultiplier: 0.5
+
+- type: entity
+  id: MechHonkerBattery
+  parent: MechHonker
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh

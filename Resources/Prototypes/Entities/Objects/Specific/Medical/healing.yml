@@ -14,7 +14,7 @@
 
 - type: entity
   name: ointment
-  description: Used to treat those nasty burns.
+  description: Used to treat those nasty burns. Less effective on caustic burns.
   parent: BaseHealingItem
   id: Ointment
   components:
@@ -26,10 +26,14 @@
   - type: Item
     heldPrefix: ointment
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
-      groups:
-        Burn: -15 # 5 for each type in the group
+      types:
+        Heat: -5
+        Cold: -5
+        Shock: -5
+        Caustic: -1.5
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
     healingEndSound:
@@ -39,6 +43,14 @@
     count: 10
   - type: StackPrice
     price: 10
+
+- type: entity
+  id: Ointment1
+  parent: Ointment
+  components:
+  - type: Stack
+    stackType: Ointment
+    count: 1
 
 - type: entity
   name: bruise pack
@@ -52,17 +64,53 @@
   - type: Sprite
     state: brutepack
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
-    bloodlossModifier: -3 # a little bit of bloodloss healing.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: Brutepack
+    count: 10
+  - type: StackPrice
+    price: 10
+
+- type: entity
+  id: Brutepack1
+  parent: Brutepack
+  components:
+  - type: Stack
+    stackType: Brutepack
+    count: 1
+
+- type: entity
+  name: blood pack
+  description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
+  parent: BaseHealingItem
+  id: Bloodpack
+  components:
+  - type: Tag
+    tags:
+    - Bloodpack
+  - type: Sprite
+    state: bloodpack
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Bloodloss: -0.5 #lowers bloodloss damage
+    ModifyBloodLevel: 15 #restores about 5% blood per use on standard humanoids.
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: Bloodpack
     count: 10
   - type: StackPrice
     price: 10
@@ -82,7 +130,8 @@
     graph: Gauze
     node: gauze
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
       types:
         Slash: -2.5
@@ -128,10 +177,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Dexalin
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: dylovene pill
@@ -141,10 +190,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Dylovene
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: hyronalin pill
@@ -154,10 +203,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Hyronalin
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: iron pill
@@ -167,10 +216,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Iron
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: kelotane pill
@@ -180,10 +229,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Kelotane
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: space drugs
@@ -193,7 +242,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: SpaceDrugs
           Quantity: 15
@@ -206,10 +255,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Tricordrazine
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
   name: romerol pill
@@ -219,7 +268,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Romerol
           Quantity: 10

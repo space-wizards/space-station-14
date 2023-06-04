@@ -1,11 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Construction;
-using Content.Server.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Decals;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Content.Shared.Procedural.PostGeneration;
+using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -27,7 +28,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
     private readonly DungeonConfigPrototype _gen;
     private readonly int _seed;
-    private readonly Vector2 _position;
+    private readonly Vector2i _position;
 
     private readonly MapGridComponent _grid;
     private readonly EntityUid _gridUid;
@@ -50,7 +51,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
         MapGridComponent grid,
         EntityUid gridUid,
         int seed,
-        Vector2 position,
+        Vector2i position,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _sawmill = sawmill;
@@ -76,6 +77,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
     {
         Dungeon dungeon;
         _sawmill.Info($"Generating dungeon {_gen.ID} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
+        _grid.CanSplit = false;
 
         switch (_gen.Generator)
         {
@@ -126,6 +128,8 @@ public sealed partial class DungeonJob : Job<Dungeon>
             ValidateResume();
         }
 
+        _grid.CanSplit = true;
+        _entManager.System<GridFixtureSystem>().CheckSplits(_gridUid);
         return dungeon;
     }
 

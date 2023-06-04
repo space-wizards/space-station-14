@@ -41,6 +41,12 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
+            damage: 600
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
             damage: 300
           behaviors:
             - !type:PlaySoundBehavior
@@ -61,14 +67,15 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          density: 190
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
     - type: AtmosDevice
       requireAnchored: false
       joinSystem: true
@@ -108,9 +115,18 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 # Water vapor
+          - 0 # Miasma
+          - 0 # N2O
+          - 0 # Frezon
         temperature: 293.15
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -147,6 +163,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
@@ -176,6 +198,12 @@
       temperature: 293.15
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -210,6 +238,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -241,6 +275,12 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -279,6 +319,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -314,6 +360,12 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -354,6 +406,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -389,6 +447,12 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -431,6 +495,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -463,10 +533,17 @@
       - 0 # Tritium
       - 0 #  Water vapor
       - 0 # Miasma
+      - 0 # N2O
       - 1871.71051 # Frezon
       temperature: 293.15
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -495,6 +572,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 100
         behaviors:
         - !type:PlaySoundBehavior
@@ -518,15 +601,18 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
-    - type: Recyclable
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.3,0.4,0.3"
+          density: 190
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 500
     - type: StaticPrice
       price: 60
 

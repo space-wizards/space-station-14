@@ -17,7 +17,7 @@ public sealed class ArtifactTriggerPrototype : IPrototype
     public string ID { get; } = default!;
 
     [DataField("components", serverOnly: true)]
-    public EntityPrototype.ComponentRegistry Components = new();
+    public ComponentRegistry Components = new();
 
     [DataField("targetDepth")]
     public int TargetDepth = 0;

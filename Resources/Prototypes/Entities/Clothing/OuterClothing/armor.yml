@@ -73,6 +73,7 @@
         Piercing: 0.2
         Heat: 0.5
         Radiation: 0
+        Caustic: 0.75
   - type: GroupExamine
 
 - type: entity
@@ -134,8 +135,9 @@
       coefficients:
         Blunt: 0.4
         Slash: 0.4
-        Piercing: 0.9
+        Piercing: 0.7
         Heat: 0.9
+        Caustic: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: GroupExamine
@@ -157,9 +159,13 @@
         Slash: 0.7
         Piercing: 0.4
         Heat: 0.9
+        Caustic: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.8
   - type: GroupExamine
+  - type: Tag
+    tags:
+    - Hardsuit
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -178,6 +184,7 @@
         Slash: 0.5
         Piercing: 0.6
         Heat: 0.5
+        Caustic: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.65
   - type: GroupExamine

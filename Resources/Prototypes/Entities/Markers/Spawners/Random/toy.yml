@@ -11,6 +11,7 @@
     - type: RandomSpawner
       rarePrototypes:
         - FoamBlade
+        - PlushieGhost
       rareChance: 0.03
       prototypes:
         - PlushieBee
@@ -31,6 +32,7 @@
         - PlushieSharkGrey
         - ToyAmongPequeno
         - ToyMouse
+        - PlushieDiona
       chance: 0.5
       offset: 0.2
 

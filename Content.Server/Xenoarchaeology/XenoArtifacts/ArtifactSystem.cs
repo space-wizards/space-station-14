@@ -6,6 +6,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
+using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -17,9 +18,13 @@ public sealed partial class ArtifactSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    private ISawmill _sawmill = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _sawmill = Logger.GetSawmill("artifact");
 
         SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
@@ -46,33 +51,11 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </remarks>
     private void GetPrice(EntityUid uid, ArtifactComponent component, ref PriceCalculationEvent args)
     {
-        if (component.NodeTree == null)
-            return;
-
-        var price = component.NodeTree.AllNodes.Sum(x => GetNodePrice(x, component));
-
-        // 25% bonus for fully exploring every node.
-        var fullyExploredBonus = component.NodeTree.AllNodes.Any(x => !x.Triggered) ? 1 : 1.25f;
-
-        args.Price =+ price * fullyExploredBonus;
-    }
-
-    private float GetNodePrice(ArtifactNode node, ArtifactComponent component)
-    {
-        if (!node.Discovered) //no money for undiscovered nodes.
-            return 0;
-
-        //quarter price if not triggered
-        var priceMultiplier = node.Triggered ? 1f : 0.25f;
-        //the danger is the average of node depth, effect danger, and trigger danger.
-        var nodeDanger = (node.Depth + node.Effect.TargetDepth + node.Trigger.TargetDepth) / 3;
-
-        var price = MathF.Pow(2f, nodeDanger) * component.PricePerNode * priceMultiplier;
-        return price;
+        args.Price += (GetResearchPointValue(uid, component) + component.ConsumedPoints) * component.PriceMultiplier;
     }
 
     /// <summary>
-    /// Calculates how many research points the artifact is worht
+    /// Calculates how many research points the artifact is worth
     /// </summary>
     /// <remarks>
     /// General balancing (for fully unlocked artifacts):
@@ -86,14 +69,36 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </remarks>
     public int GetResearchPointValue(EntityUid uid, ArtifactComponent? component = null, bool getMaxPrice = false)
     {
-        if (!Resolve(uid, ref component) || component.NodeTree == null)
+        if (!Resolve(uid, ref component))
             return 0;
 
-        var sumValue = component.NodeTree.AllNodes.Sum(n => GetNodePointValue(n, component, getMaxPrice));
-        var fullyExploredBonus = component.NodeTree.AllNodes.All(x => x.Triggered) || getMaxPrice ? 1.25f : 1;
+        var sumValue = component.NodeTree.Sum(n => GetNodePointValue(n, component, getMaxPrice));
+        var fullyExploredBonus = component.NodeTree.All(x => x.Triggered) || getMaxPrice ? 1.25f : 1;
 
-        var pointValue = (int) (sumValue * fullyExploredBonus);
-        return pointValue;
+        return (int) (sumValue * fullyExploredBonus) - component.ConsumedPoints;
+    }
+
+    /// <summary>
+    /// Adjusts how many points on the artifact have been consumed
+    /// </summary>
+    public void AdjustConsumedPoints(EntityUid uid, int amount, ArtifactComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.ConsumedPoints += amount;
+    }
+
+    /// <summary>
+    /// Sets whether or not the artifact is suppressed,
+    /// preventing it from activating
+    /// </summary>
+    public void SetIsSuppressed(EntityUid uid, bool suppressed, ArtifactComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.IsSuppressed = suppressed;
     }
 
     /// <summary>
@@ -109,7 +114,11 @@ public sealed partial class ArtifactSystem : EntitySystem
 
             valueDeduction = !node.Triggered ? 0.25f : 1;
         }
-        var nodeDanger = (node.Depth + node.Effect.TargetDepth + node.Trigger.TargetDepth) / 3;
+
+        var triggerProto = _prototype.Index<ArtifactTriggerPrototype>(node.Trigger);
+        var effectProto = _prototype.Index<ArtifactEffectPrototype>(node.Effect);
+
+        var nodeDanger = (node.Depth + effectProto.TargetDepth + triggerProto.TargetDepth) / 3;
         return component.PointsPerNode * MathF.Pow(component.PointDangerMultiplier, nodeDanger) * valueDeduction;
     }
 
@@ -121,10 +130,9 @@ public sealed partial class ArtifactSystem : EntitySystem
     {
         var nodeAmount = _random.Next(component.NodesMin, component.NodesMax);
 
-        component.NodeTree = new ArtifactTree();
-
         GenerateArtifactNodeTree(uid, ref component.NodeTree, nodeAmount);
-        EnterNode(uid, ref component.NodeTree.StartNode, component);
+        var firstNode = GetRootNode(component.NodeTree);
+        EnterNode(uid, ref firstNode, component);
     }
 
     /// <summary>
@@ -162,7 +170,7 @@ public sealed partial class ArtifactSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
-        if (component.CurrentNode == null)
+        if (component.CurrentNodeId == null)
             return;
 
         component.LastActivationTime = _gameTiming.CurTime;
@@ -173,8 +181,10 @@ public sealed partial class ArtifactSystem : EntitySystem
         };
         RaiseLocalEvent(uid, ev, true);
 
-        component.CurrentNode.Triggered = true;
-        if (component.CurrentNode.Edges.Any())
+        var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
+
+        currentNode.Triggered = true;
+        if (currentNode.Edges.Any())
         {
             var newNode = GetNewNode(uid, component);
             if (newNode == null)
@@ -185,10 +195,14 @@ public sealed partial class ArtifactSystem : EntitySystem
 
     private ArtifactNode? GetNewNode(EntityUid uid, ArtifactComponent component)
     {
-        if (component.CurrentNode == null)
+        if (component.CurrentNodeId == null)
             return null;
 
-        var allNodes = component.CurrentNode.Edges;
+        var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
+
+        var allNodes = currentNode.Edges;
+        _sawmill.Debug($"our node: {currentNode.Id}");
+        _sawmill.Debug($"other nodes: {string.Join(", ", allNodes)}");
 
         if (TryComp<BiasedArtifactComponent>(uid, out var bias) &&
             TryComp<TraversalDistorterComponent>(bias.Provider, out var trav) &&
@@ -198,26 +212,28 @@ public sealed partial class ArtifactSystem : EntitySystem
             switch (trav.BiasDirection)
             {
                 case BiasDirection.In:
-                    var foo = allNodes.Where(x => x.Depth < component.CurrentNode.Depth).ToList();
+                    var foo = allNodes.Where(x => GetNodeFromId(x, component).Depth < currentNode.Depth).ToHashSet();
                     if (foo.Any())
                         allNodes = foo;
                     break;
                 case BiasDirection.Out:
-                    var bar = allNodes.Where(x => x.Depth > component.CurrentNode.Depth).ToList();
+                    var bar = allNodes.Where(x => GetNodeFromId(x, component).Depth > currentNode.Depth).ToHashSet();
                     if (bar.Any())
                         allNodes = bar;
                     break;
             }
         }
 
-        var undiscoveredNodes = allNodes.Where(x => !x.Discovered).ToList();
+        var undiscoveredNodes = allNodes.Where(x => !GetNodeFromId(x, component).Discovered).ToList();
+        _sawmill.Debug($"Undiscovered nodes: {string.Join(", ", undiscoveredNodes)}");
         var newNode = _random.Pick(allNodes);
         if (undiscoveredNodes.Any() && _random.Prob(0.75f))
         {
             newNode = _random.Pick(undiscoveredNodes);
         }
 
-        return newNode;
+        _sawmill.Debug($"Going to node {newNode}");
+        return GetNodeFromId(newNode, component);
     }
 
     /// <summary>
@@ -236,10 +252,11 @@ public sealed partial class ArtifactSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        if (component.CurrentNode == null)
+        if (component.CurrentNodeId == null)
             return false;
+        var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
 
-        if (component.CurrentNode.NodeData.TryGetValue(key, out var dat) && dat is T value)
+        if (currentNode.NodeData.TryGetValue(key, out var dat) && dat is T value)
         {
             data = value;
             return true;
@@ -260,10 +277,21 @@ public sealed partial class ArtifactSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.CurrentNode == null)
+        if (component.CurrentNodeId == null)
             return;
+        var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
 
-        component.CurrentNode.NodeData[key] = value;
+        currentNode.NodeData[key] = value;
+    }
+
+    /// <summary>
+    /// Gets the base node (depth 0) of an artifact's node graph
+    /// </summary>
+    /// <param name="allNodes"></param>
+    /// <returns></returns>
+    public ArtifactNode GetRootNode(List<ArtifactNode> allNodes)
+    {
+        return allNodes.First(n => n.Depth == 0);
     }
 
     /// <summary>
@@ -271,10 +299,11 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </summary>
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
     {
-        foreach (var artifactComp in EntityQuery<ArtifactComponent>())
+        var query = EntityQueryEnumerator<ArtifactComponent>();
+        while (query.MoveNext(out var ent, out var artifactComp))
         {
             artifactComp.CooldownTime = TimeSpan.Zero;
-            var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(artifactComp.Owner);
+            var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(ent);
             timerTrigger.ActivationRate = TimeSpan.FromSeconds(0.5); //HAHAHAHAHAHAHAHAHAH -emo
         }
     }

@@ -11,9 +11,11 @@
   - type: Clothing
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
+    capacity: 45
     # TODO: Fill this out more.
     whitelist:
       tags:
+        - Powerdrill
         - Wirecutter
         - Crowbar
         - Screwdriver
@@ -25,17 +27,24 @@
         - CigPack
         - Radio
         - HolofanProjector
+        - Multitool
         - AppraisalTool
       components:
         - AirlockPainter
-        - SignalLinker
+        - NetworkConfigurator
         - RCD
         - RCDAmmo
         - Welder
         - PowerCell
         - Geiger
+        - TrayScanner
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
+      drill:
+        whitelist:
+          tags:
+          - Powerdrill
       cutters_red:
         whitelist:
           tags:
@@ -58,8 +67,8 @@
           - Wrench
       multitool:
         whitelist:
-          components:
-          - SignalLinker
+          tags:
+            - Multitool
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
 
@@ -74,7 +83,7 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
-    capacity: 100
+    capacity: 105
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -91,10 +100,11 @@
         - CigPack
         - Radio
         - HolofanProjector
+        - Multitool
         - AppraisalTool
       components:
         - AirlockPainter
-        - SignalLinker
+        - NetworkConfigurator
         - RCD
         - RCDAmmo
         - Welder
@@ -102,6 +112,8 @@
         - Handcuff
         - PowerCell
         - Geiger
+        - TrayScanner
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
       drill:
@@ -130,8 +142,8 @@
           - Screwdriver
       multitool:
         whitelist:
-          components:
-          - SignalLinker
+          tags:
+            - Multitool
       wrench:
         whitelist:
           tags:
@@ -232,15 +244,17 @@
         - Bottle
         - Spray
         - Brutepack
+        - Bloodpack
         - Gauze
         - Ointment
         - CigPack
-        - Pill
         - PillCanister
         - Radio
+        - DiscreteHealthAnalyzer
       components:
         - Hypospray
         - Injector
+        - Pill
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -253,8 +267,9 @@
           - Hypospray
       pill:
         whitelist:
-          tags:
+          components:
           - Pill
+          tags:
           - PillCanister
       bottle_spray:
         whitelist:
@@ -296,6 +311,7 @@
         - PlantSampleTaker
         - PlantBGone
         - Bottle
+        - Syringe
         - CigPack
       components:
         - Seed
@@ -419,6 +435,9 @@
   - type: Clothing
     sprite: Clothing/Belt/champion.rsi
     quickEquip: true
+  - type: Tag
+    tags:
+    - Kangaroo
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -450,7 +469,6 @@
     whitelist:
       components:
         - Gun
-        - MeleeWeapon
         - BallisticAmmoProvider
         - CartridgeAmmo
 
@@ -467,6 +485,28 @@
 
 - type: entity
   parent: ClothingBeltStorageBase
+  id: ClothingBeltMercWebbing
+  name: mercenarie webbing
+  description: Ideal for storing everything from ammo to weapons and combat essentials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/mercwebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/mercwebbing.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltSalvageWebbing
+  name: salvage rig
+  description: Universal unloading system for work in space.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/salvagewebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/salvagewebbing.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
   id: ClothingBeltMilitaryWebbing
   name: chest rig
   description: A set of tactical webbing worn by Syndicate boarding parties.
@@ -480,16 +520,16 @@
   parent: ClothingBeltStorageBase
   id: ClothingBeltMilitaryWebbingMed
   name: medical chest rig
-  description: A set of tactical webbing worn by Gorlax Marauder medic operatives.
+  description: A set of tactical webbing worn by Gorlex Marauder medic operatives.
   components:
   - type: Sprite
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Clothing
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Item
-    size: 60
+    size: 70
   - type: Storage
-    capacity: 60
+    capacity: 70
 
 - type: entity
   parent: ClothingBeltBase
@@ -497,6 +537,9 @@
   name: suspenders
   description: For holding your pants up.
   components:
+  - type: Tag
+    tags:
+    - MimeBelt
   - type: Sprite
     sprite: Clothing/Belt/suspenders.rsi
     state: icon

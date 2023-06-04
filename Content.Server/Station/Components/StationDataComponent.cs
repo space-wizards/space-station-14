@@ -1,5 +1,7 @@
 ﻿using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Components;
 
@@ -19,15 +21,6 @@ public sealed class StationDataComponent : Component
     /// <summary>
     /// List of all grids this station is part of.
     /// </summary>
-    /// <remarks>
-    /// You should not mutate this yourself, go through StationSystem so the appropriate events get fired.
-    /// </remarks>
     [DataField("grids")]
     public readonly HashSet<EntityUid> Grids = new();
-
-    /// <summary>
-    /// The emergency shuttle assigned to this station.
-    /// </summary>
-    [ViewVariables, Access(typeof(ShuttleSystem), Friend = AccessPermissions.ReadWrite)]
-    public EntityUid? EmergencyShuttle;
 }

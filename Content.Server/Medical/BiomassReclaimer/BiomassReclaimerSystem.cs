@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Shared.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.Jittering;
@@ -14,7 +13,6 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Climbing;
 using Content.Server.Construction;
-using Content.Server.DoAfter;
 using Content.Server.Materials;
 using Content.Server.Mind.Components;
 using Content.Shared.DoAfter;
@@ -27,7 +25,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Server.Player;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Humanoid;
+using Content.Shared.Medical;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
@@ -39,11 +37,11 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly SharedAudioSystem _sharedAudioSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly PuddleSystem _puddleSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
 
@@ -62,7 +60,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                     {
                         Solution blood = new();
                         blood.AddReagent(reclaimer.BloodReagent, 50);
-                        _spillableSystem.SpillAt(reclaimer.Owner, blood, "PuddleBlood");
+                        _puddleSystem.TrySpillAt(reclaimer.Owner, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
                     {
@@ -97,7 +95,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             SubscribeLocalEvent<BiomassReclaimerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<BiomassReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<BiomassReclaimerComponent, SuicideEvent>(OnSuicide);
-            SubscribeLocalEvent<BiomassReclaimerComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<BiomassReclaimerComponent, ReclaimerDoAfterEvent>(OnDoAfter);
         }
 
         private void OnSuicide(EntityUid uid, BiomassReclaimerComponent component, SuicideEvent args)
@@ -152,11 +150,10 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (!HasComp<MobStateComponent>(args.Used) || !CanGib(uid, args.Used, component))
                 return;
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, 7f, target:args.Target, used:args.Used)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, 7f, new ReclaimerDoAfterEvent(), uid, target: args.Target, used: args.Used)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 NeedHand = true
             });
         }

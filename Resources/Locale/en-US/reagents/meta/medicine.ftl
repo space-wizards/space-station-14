@@ -38,7 +38,7 @@ reagent-name-inaprovaline = inaprovaline
 reagent-desc-inaprovaline = Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding by a good amount. Acts as a decent painkiller.
 
 reagent-name-kelotane = kelotane
-reagent-desc-kelotane = Treats burn damage and prevents infection.
+reagent-desc-kelotane = Treats burn damage. Overdosing greatly reduces the body's ability to retain water.
 
 reagent-name-leporazine = leporazine
 reagent-desc-leporazine = This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA, but prevents use of the cryogenics tubes.
@@ -96,3 +96,6 @@ reagent-desc-ethyloxyephedrine = An unstable medicine derived from desoxyephedri
 
 reagent-name-diphenylmethylamine = diphenylmethylamine
 reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine. Useful for keeping someone awake.
+
+reagent-name-sigynate = sigynate
+reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids.  Tastes sweet!

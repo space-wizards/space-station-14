@@ -102,6 +102,9 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.CameraRotateLeft);
             AddButton(EngineKeyFunctions.CameraRotateRight);
             AddButton(EngineKeyFunctions.CameraReset);
+            AddButton(ContentKeyFunctions.ZoomIn);
+            AddButton(ContentKeyFunctions.ZoomOut);
+            AddButton(ContentKeyFunctions.ResetZoom);
 
             AddHeader("ui-options-header-interaction-basic");
             AddButton(EngineKeyFunctions.Use);
@@ -126,8 +129,10 @@ namespace Content.Client.Options.UI.Tabs
             AddHeader("ui-options-header-ui");
             AddButton(ContentKeyFunctions.FocusChat);
             AddButton(ContentKeyFunctions.FocusLocalChat);
+            AddButton(ContentKeyFunctions.FocusEmote);
             AddButton(ContentKeyFunctions.FocusWhisperChat);
             AddButton(ContentKeyFunctions.FocusRadio);
+            AddButton(ContentKeyFunctions.FocusLOOC);
             AddButton(ContentKeyFunctions.FocusOOC);
             AddButton(ContentKeyFunctions.FocusAdminChat);
             AddButton(ContentKeyFunctions.FocusDeadChat);
@@ -145,6 +150,10 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.OpenTileSpawnWindow);
             AddButton(ContentKeyFunctions.OpenDecalSpawnWindow);
             AddButton(ContentKeyFunctions.OpenAdminMenu);
+            AddButton(EngineKeyFunctions.WindowCloseAll);
+            AddButton(EngineKeyFunctions.WindowCloseRecent);
+            AddButton(EngineKeyFunctions.EscapeMenu);
+            AddButton(ContentKeyFunctions.EscapeContext);
 
             AddHeader("ui-options-header-misc");
             AddButton(ContentKeyFunctions.TakeScreenshot);
@@ -175,6 +184,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.EditorGridPlace);
             AddButton(EngineKeyFunctions.EditorLinePlace);
             AddButton(EngineKeyFunctions.EditorRotateObject);
+            AddButton(ContentKeyFunctions.EditorFlipObject);
             AddButton(ContentKeyFunctions.EditorCopyObject);
 
             AddHeader("ui-options-header-dev");

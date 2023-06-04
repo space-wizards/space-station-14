@@ -20,6 +20,8 @@ namespace Content.Client.Cloning.UI
                 _window.Close();
             };
 
+            _window.OnClose += () => SendMessage(new AcceptCloningChoiceMessage(AcceptCloningUiButton.Deny));
+
             _window.AcceptButton.OnPressed += _ =>
             {
                 SendMessage(new AcceptCloningChoiceMessage(AcceptCloningUiButton.Accept));

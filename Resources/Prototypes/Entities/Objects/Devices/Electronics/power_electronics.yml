@@ -10,6 +10,13 @@
       sprite: Objects/Misc/module.rsi
       state: charger_APC
       netsync: false
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 50
+      chemicalComposition:
+        Silicon: 20
+    - type: StaticPrice
+      price: 34
 
 # Wallmount Substation
 - type: entity

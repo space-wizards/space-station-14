@@ -37,4 +37,10 @@ public sealed class BonkableComponent : Component
     /// <seealso cref="Bonk"/>
     [DataField("bonkDamage")]
     public DamageSpecifier? BonkDamage;
+
+    /// <summary>
+    /// How long it takes to bonk.
+    /// </summary>
+    [DataField("bonkDelay")]
+    public float BonkDelay = 0.8f;
 }

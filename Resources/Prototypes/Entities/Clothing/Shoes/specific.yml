@@ -22,6 +22,10 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
+  # for H.O.N.K. construction
+  - type: Tag
+    tags:
+    - ClownShoes
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -141,6 +145,9 @@
       sprite: Clothing/Shoes/Specific/jester.rsi
     - type: Clothing
       sprite: Clothing/Shoes/Specific/jester.rsi
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepJester
 
 - type: entity
   parent: ClothingShoesClown
@@ -154,3 +161,25 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/cluwne.rsi
   - type: Unremoveable
+
+- type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesClownLarge
+  name: large clown shoes
+  description: "When you need to stand out in a room full of clowns!"
+  components:
+  - type: Sprite
+    state: "icon"
+    sprite: Clothing/Shoes/Specific/large_clown.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/large_clown.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+        offset: "0, -0.02"
+  - type: Item
+    size: 10
+    sprite: Clothing/Shoes/Specific/large_clown.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.8

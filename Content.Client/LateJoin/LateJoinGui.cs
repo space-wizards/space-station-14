@@ -22,7 +22,7 @@ namespace Content.Client.LateJoin
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+        [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
 
         public event Action<(EntityUid, string)> SelectedId;
 
@@ -54,6 +54,7 @@ namespace Content.Client.LateJoin
 
             Contents.AddChild(_base);
 
+            _jobRequirements.Updated += RebuildUI;
             RebuildUI();
 
             SelectedId += x =>
@@ -231,7 +232,7 @@ namespace Content.Client.LateJoin
                             Stretch = TextureRect.StretchMode.KeepCentered
                         };
 
-                        var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), prototype.Icon);
+                        var specifier = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/job_icons.rsi"), prototype.Icon);
                         icon.Texture = _sprites.Frame0(specifier);
                         jobSelector.AddChild(icon);
 
@@ -249,7 +250,7 @@ namespace Content.Client.LateJoin
 
                         jobButton.OnPressed += _ => SelectedId.Invoke((id, jobButton.JobId));
 
-                        if (!_playTimeTracking.IsAllowed(prototype, out var reason))
+                        if (!_jobRequirements.IsAllowed(prototype, out var reason))
                         {
                             jobButton.Disabled = true;
 
@@ -262,7 +263,7 @@ namespace Content.Client.LateJoin
                             {
                                 TextureScale = (0.4f, 0.4f),
                                 Stretch = TextureRect.StretchMode.KeepCentered,
-                                Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/Nano/lock.svg.192dpi.png"))),
+                                Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ("/Textures/Interface/Nano/lock.svg.192dpi.png"))),
                                 HorizontalExpand = true,
                                 HorizontalAlignment = HAlignment.Right,
                             });
@@ -289,6 +290,7 @@ namespace Content.Client.LateJoin
 
             if (disposing)
             {
+                _jobRequirements.Updated -= RebuildUI;
                 _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
                 _jobButtons.Clear();
                 _jobCategories.Clear();

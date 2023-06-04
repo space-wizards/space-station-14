@@ -16,6 +16,12 @@
         visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -65,6 +71,7 @@
           ShardGlass:
             min: 1
             max: 1
+        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -91,6 +98,8 @@
   components:
   - type: Spillable
     solution: beaker
+  - type: StaticPrice
+    price: 10
 
 - type: entity
   name: large beaker
@@ -135,7 +144,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 40
+        maxVol: 60
         canReact: false
   - type: Damageable
     damageContainer: Inorganic
@@ -144,7 +153,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 5
       behaviors:
       - !type:SpillBehavior
         solution: beaker
@@ -235,6 +244,7 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: "syringe_base0"
   - type: Item
+    size: 3
     sprite: Objects/Specific/Chemistry/syringe.rsi
     heldPrefix: 0
   - type: SolutionContainerManager
@@ -249,7 +259,7 @@
     solution: injector
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 4
+    maxFillLevels: 2
     fillBaseName: syringe
   - type: Tag
     tags:
@@ -276,9 +286,7 @@
   - type: Item
     size: 1
     sprite: Objects/Specific/Chemistry/pills.rsi
-  - type: Tag
-    tags:
-      - Pill
+  - type: Pill
   - type: Food
     forceFeedDelay: 1
     transferAmount: null
@@ -289,7 +297,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
   - type: SolutionSpiker
     sourceSolution: food
   - type: DeleteOnTrigger
@@ -297,6 +305,19 @@
     grindableSolutionName: food
   - type: StaticPrice
     price: 0
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   name: pill canister
@@ -320,6 +341,6 @@
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
     whitelist:
-      tags:
-        - Pill
+      components:
+      - Pill
   - type: Dumpable

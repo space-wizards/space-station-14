@@ -1,4 +1,29 @@
 - type: entity
+  id: LockerWardenFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerWarden
+  components:
+  - type: StorageFill
+    contents:
+      - id: FlashlightSeclite
+      - id: WeaponDisabler
+        prob: 0.3
+      - id: ClothingHeadHatWarden
+      - id: ClothingHeadHatBeretWarden
+      - id: ClothingBeltSecurityFilled
+      - id: Flash
+      - id: ClothingEyesGlassesSecurity
+      - id: ClothingHeadsetAltSecurity
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingShoesBootsJack
+      - id: ClothingOuterCoatWarden
+      - id: ClothingOuterWinterWarden
+      - id: RubberStampWarden
+      - id: DoorRemoteArmory
+      - id: ClothingOuterHardsuitWarden
+      - id: HoloprojectorSecurity
+
+- type: entity
   id: LockerWardenFilled
   suffix: Filled
   parent: LockerWarden
@@ -20,6 +45,7 @@
       - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
       - id: DoorRemoteArmory
+      - id: HoloprojectorSecurity
 
 - type: entity
   id: LockerSecurityFilled
@@ -43,6 +69,40 @@
       - id: ClothingShoesBootsJack
 
 - type: entity
+  id: LockerBrigmedicFilled
+  suffix: Brigmedic, Filled
+  parent: LockerBrigmedic
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponDisabler
+      - id: TrackingImplanter
+        amount: 2
+      - id: ClothingOuterHardsuitBrigmedic
+      - id: BoxSterileMask
+      - id: ClothingHeadHatBeretBrigmedic
+      - id: ClothingOuterCoatAMG
+      - id: ClothingUniformJumpsuitBrigmedic
+      - id: ClothingUniformJumpskirtBrigmedic
+      - id: ClothingUniformJumpskirtOfLife
+        prob: 0.1
+      - id: MedkitFilled
+      - id: MedkitCombatFilled
+        prob: 0.6
+      - id: MedkitAdvancedFilled
+        prob: 0.4
+      - id: MedkitOxygenFilled
+        prob: 0.3
+      - id: MedkitBruteFilled
+        prob: 0.3
+      - id: MedkitToxinFilled
+        prob: 0.3
+      - id: MedkitBurnFilled
+        prob: 0.7
+      - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
+        prob: 0.15
+
+- type: entity
   id: LockerDetectiveFilled
   suffix: Filled
   parent: LockerDetective
@@ -59,6 +119,7 @@
       - id: WeaponRevolverInspector
       - id: DrinkDetFlask
       - id: SpeedLoaderMagnum
+      - id: ForensicGloves
 
 - type: entity
   id: ClosetBombFilled
@@ -70,3 +131,96 @@
       - id: ClothingHeadHelmetBombSuit
       - id: ClothingOuterSuitBomb
       - id: ClothingMaskGas
+
+- type: entity
+  parent: GunSafe
+  id: GunSafeDisabler
+  name: disabler safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponDisabler
+      amount: 5
+
+- type: entity
+  parent: GunSafe
+  id: GunSafePistolMk58
+  name: mk58 safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponPistolMk58
+      amount: 4
+    - id: MagazinePistol
+      amount: 8
+
+- type: entity
+  parent: GunSafe
+  id: GunSafeRifleLecter
+  name: lecter safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleLecter
+      amount: 2
+    - id: MagazineRifle
+      amount: 4
+
+- type: entity
+  parent: GunSafe
+  id: GunSafeSubMachineGunDrozd
+  name: drozd safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponSubMachineGunDrozd
+      amount: 2
+    - id: MagazinePistolSubMachineGun
+      amount: 4
+
+- type: entity
+  parent: GunSafe
+  id: GunSafeShotgunEnforcer
+  name: enforcer safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponShotgunEnforcer
+      amount: 2
+    - id: MagazineShotgun
+      amount: 4
+
+- type: entity
+  parent: GunSafe
+  id: GunSafeShotgunKammerer
+  name: kammerer safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponShotgunKammerer
+      amount: 2
+    - id: MagazineShotgun
+      amount: 4
+
+- type: entity
+  id: GunSafeSubMachineGunWt550
+  suffix: Wt550
+  parent: GunSafe
+  name: wt550 safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponSubMachineGunWt550
+      amount: 2
+    - id: MagazinePistolSubMachineGun
+      amount: 4
+
+- type: entity
+  parent: GunSafe
+  id: GunSafeLaserCarbine
+  name: laser safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponLaserCarbine
+      amount: 3

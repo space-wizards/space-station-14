@@ -10,7 +10,7 @@ namespace Content.Client.Humanoid;
 [GenerateTypedNameReferences]
 public sealed partial class SingleMarkingPicker : BoxContainer
 {
-    [Dependency] private MarkingManager _markingManager = default!;
+    [Dependency] private readonly MarkingManager _markingManager = default!;
 
     /// <summary>
     ///     What happens if a marking is selected.
@@ -89,7 +89,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
             if (!string.IsNullOrEmpty(_species))
             {
-                PopulateList();
+                PopulateList(Search.Text);
             }
         }
     }
@@ -138,6 +138,11 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         {
             OnSlotRemove!(_slot);
         };
+
+        Search.OnTextChanged += args =>
+        {
+            PopulateList(args.Text);
+        };
     }
 
     public void UpdateData(List<Marking> markings, string species, int totalPoints)
@@ -154,12 +159,12 @@ public sealed partial class SingleMarkingPicker : BoxContainer
             return;
         }
 
-        PopulateList();
+        PopulateList(Search.Text);
         PopulateColors();
         PopulateSlotSelector();
     }
 
-    public void PopulateList()
+    public void PopulateList(string filter)
     {
         if (string.IsNullOrEmpty(_species))
         {
@@ -176,7 +181,12 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         MarkingList.Clear();
 
-        foreach (var (id, marking) in _markingPrototypeCache)
+        var sortedMarkings = _markingPrototypeCache.Where(m =>
+            m.Key.ToLower().Contains(filter.ToLower()) ||
+            GetMarkingName(m.Value).ToLower().Contains(filter.ToLower())
+        ).OrderBy(p => Loc.GetString($"marking-{p.Key}"));
+
+        foreach (var (id, marking) in sortedMarkings)
         {
             var item = MarkingList.AddItem(Loc.GetString($"marking-{id}"), marking.Sprites[0].Frame0());
             item.Metadata = marking.ID;
@@ -259,6 +269,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     private void PopulateSlotSelector()
     {
         SlotSelector.Visible = Slot >= 0;
+        Search.Visible = Slot >= 0;
         AddButton.HorizontalExpand = Slot < 0;
         RemoveButton.HorizontalExpand = Slot < 0;
         AddButton.Disabled = PointsLeft == 0 && _totalPoints > -1 ;
@@ -279,5 +290,10 @@ public sealed partial class SingleMarkingPicker : BoxContainer
                 SlotSelector.SelectId(i);
             }
         }
+    }
+
+    private string GetMarkingName(MarkingPrototype marking)
+    {
+        return Loc.GetString($"marking-{marking.ID}");
     }
 }

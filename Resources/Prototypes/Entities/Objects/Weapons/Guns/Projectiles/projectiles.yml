@@ -25,6 +25,7 @@
   description: If you can see this you're probably dead!
   abstract: true
   components:
+  - type: Reflective
   - type: FlyBySound
   - type: Clickable
   - type: Sprite
@@ -40,24 +41,23 @@
     angularDamping: 0
   - type: Fixtures
     fixtures:
-    - id: projectile
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.1,-0.1,0.1,0.1"
-      hard: false
-      mask:
-      - Impassable
-      - BulletImpassable
-    - &flybyfixture
-      id: fly-by
-      shape: !type:PhysShapeCircle
-        radius: 1.5
-      layer:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      hard: False
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: &flybyfixture
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
   - type: Projectile
     impactEffect: BulletImpactEffect
     damage:
@@ -81,15 +81,15 @@
         Blunt: 7 # more damage than a punch.
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.15,-0.45,0.15,0.15"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.15"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
 
 - type: entity
   id: BaseBulletHighVelocity
@@ -126,7 +126,7 @@
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
   - type: StaminaDamageOnCollide
-    damage: 15
+    damage: 22 # 5 hits to stun sounds reasonable
 
 # Energy projectiles
 - type: entity
@@ -150,14 +150,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.15"
+        hard: false
+        mask:
+          - Impassable
+          - BulletImpassable
+      fly-by: *flybyfixture
   - type: Ammo
   - type: Projectile
     damage:
@@ -176,6 +177,9 @@
   parent: BaseBullet
   noSpawn: true
   components:
+  - type: Reflective
+    reflective:
+    - Energy
   - type: FlyBySound
     sound:
       collection: EnergyMiss
@@ -189,15 +193,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.15,-0.3,0.15,0.3"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 30
@@ -229,15 +233,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.15,-0.3,0.15,0.3"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 5
@@ -267,15 +271,14 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - Opaque
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: *flybyfixture
   - type: Projectile
 #   soundHit:  Waiting on serv3
     damage:
@@ -294,18 +297,55 @@
   noSpawn: true
   description: Not too bad, but you still don't want to get hit by it.
   components:
+  - type: Reflective
+    reflective:
+      - NonEnergy
   - type: Sprite
-    netsync: false
     noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
     - state: chronobolt
       shader: unshaded
+  - type: GatheringProjectile
   - type: Projectile
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Blunt: 10
+        Blunt: 20
+  # Short lifespan
+  - type: TimedDespawn
+    lifetime: 0.4
+
+- type: entity
+  id: BulletCharge
+  name: charge bolt
+  parent: BaseBulletHighVelocity
+  noSpawn: true
+  description: Marks a target for additional damage.
+  components:
+  - type: Reflective
+    reflective:
+    - NonEnergy
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+      - state: chronobolt
+        shader: unshaded
+  - type: GatheringProjectile
+  - type: DamageMarkerOnCollide
+    whitelist:
+      components:
+        - MobState
+    damage:
+      types:
+        Blunt: 20
+        Slash: 5
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 0
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.4
@@ -328,21 +368,33 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - Opaque
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: *flybyfixture
   - type: Projectile
     damage:
       types:
-        Heat: 3
+        Heat: 5
   - type: TimedDespawn
     lifetime: 3
+
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleDeltaStrong
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Delta
+    severityPerSeverityHit: 0.05
+    stabilityPerDestabilizingHit: 0.08
+    healthPerWeakeningeHit: -0.1
+    stabilityPerWeakeningeHit: -0.2
 
 - type: entity
   parent: AnomalousParticleDelta
@@ -354,6 +406,18 @@
     particleType: Epsilon
 
 - type: entity
+  parent: AnomalousParticleEpsilon
+  id: AnomalousParticleEpsilonStrong
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Epsilon
+    severityPerSeverityHit: 0.05
+    stabilityPerDestabilizingHit: 0.08
+    healthPerWeakeningeHit: -0.1
+    stabilityPerWeakeningeHit: -0.2
+
+- type: entity
   parent: AnomalousParticleDelta
   id: AnomalousParticleZeta
   name: zeta particles
@@ -361,6 +425,41 @@
   components:
   - type: AnomalousParticle
     particleType: Zeta
+
+- type: entity
+  parent: AnomalousParticleZeta
+  id: AnomalousParticleZetaStrong
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Zeta
+    severityPerSeverityHit: 0.05
+    stabilityPerDestabilizingHit: 0.08
+    healthPerWeakeningeHit: -0.1
+    stabilityPerWeakeningeHit: -0.2
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleOmegaStrong
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+      - state: magicm_green
+        shader: unshaded
+  - type: AnomalousParticle
+    particleType: Default
+    severityOverride: true
+    severityPerSeverityHit: 0.1
+    stabilityPerDestabilizingHit: 0.05
+    healthPerWeakeningeHit: 1
+    stabilityPerWeakeningeHit: -0.05
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Heat: 20
 
 # Launcher projectiles (grenade / rocket)
 - type: entity
@@ -499,7 +598,7 @@
   components:
     - type: Projectile
       damage:
-        groups:
+        types:
           Caustic: 5
     - type: Sprite
       sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
@@ -507,3 +606,102 @@
         - state: xeno_toxic
     - type: Ammo
       muzzleFlash: null
+
+- type: entity
+  id: BulletWaterShot
+  name: water
+  noSpawn: true
+  components:
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0 #it's just water, bro
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/water_shot.rsi
+    layers:
+    - state: icon
+      map: ["enum.VaporVisualLayers.Base"]
+  - type: Ammo
+    muzzleFlash: null
+  - type: SolutionContainerManager
+    solutions:
+      vapor:
+        maxVol: 50
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.30,0.10,0.15"
+        hard: false
+        mask:
+        - FullTileMask
+        - Opaque
+  - type: Vapor
+    active: true
+  - type: Appearance
+  - type: VaporVisuals
+
+- type: entity
+  id: BulletCannonBall
+  name: cannonball
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: ball
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: DemolitionCharge
+    maxIntensity: 9
+    intensitySlope: 6
+    totalIntensity: 60
+    maxTileBreak: 0
+  - type: PointLight
+    radius: 1
+    color: orange
+    energy: 0.5
+
+- type: entity
+  id: GrapplingHook
+  name: grappling hook
+  noSpawn: true
+  components:
+    - type: EmbeddableProjectile
+    - type: Clickable
+    - type: Sprite
+      noRot: false
+      sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+      layers:
+        - state: hook
+        - state: hook-unshaded
+          shader: unshaded
+    - type: Physics
+      bodyType: Dynamic
+      linearDamping: 0
+      angularDamping: 0
+    - type: Projectile
+      deleteOnCollide: false
+      damage:
+        types:
+          Blunt: 0
+    - type: Fixtures
+      fixtures:
+        projectile:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.1,-0.1,0.1,0.1"
+          hard: false
+          mask:
+            - Impassable
+            - HighImpassable
+    - type: GrapplingProjectile

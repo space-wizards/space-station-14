@@ -124,3 +124,32 @@
     whitelist:
       components:
       - Body
+
+- type: entity
+  id: ProjectileIcicle
+  parent: BaseBulletHighVelocity
+  name: Icicle
+  description: Brrrrr.
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 20
+        Cold: 20
+        Structural: 40
+
+- type: entity
+  parent: ProjectilePolyboltBase
+  id: ProjectilePolyboltBread
+  name: bread polybolt
+  description: Nooo, I don't wanna be bread!
+  noSpawn: true
+  components:
+  - type: PolymorphOnCollide
+    polymorph: BreadMorph
+    whitelist:
+      components:
+      - Body

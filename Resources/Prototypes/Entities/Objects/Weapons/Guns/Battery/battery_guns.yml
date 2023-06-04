@@ -390,6 +390,9 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: Tag
+    tags:
+    - HighRiskItem
   - type: StaticPrice
     price: 750
 

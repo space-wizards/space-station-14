@@ -1,11 +1,9 @@
 using Content.Server.Body.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using System.Threading;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
@@ -19,6 +17,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.NPC.Systems;
+using Content.Server.Station.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
@@ -26,19 +25,20 @@ using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Dragon
 {
-    public sealed partial class DragonSystem : GameRuleSystem
+    public sealed partial class DragonSystem : GameRuleSystem<DragonRuleComponent>
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
 
         /// <summary>
@@ -59,11 +59,8 @@ namespace Content.Server.Dragon
 
             SubscribeLocalEvent<DragonComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
-            SubscribeLocalEvent<DragonComponent, DragonDevourActionEvent>(OnDevourAction);
             SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnDragonRift);
             SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
-
-            SubscribeLocalEvent<DragonComponent, DoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
 
@@ -73,30 +70,6 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonRiftComponent, ExaminedEvent>(OnRiftExamined);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRiftRoundEnd);
-        }
-
-        private void OnDoAfter(EntityUid uid, DragonComponent component, DoAfterEvent args)
-        {
-            if (args.Handled || args.Cancelled)
-                return;
-
-            var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
-
-            //Humanoid devours allow dragon to get eggs, corpses included
-            if (HasComp<HumanoidAppearanceComponent>(args.Args.Target))
-            {
-                ichorInjection.ScaleSolution(0.5f);
-                component.DragonStomach.Insert(args.Args.Target.Value);
-                _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
-            }
-
-            //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
-            //If it's not human, it must be a structure
-            else if (args.Args.Target != null)
-                EntityManager.QueueDeleteEntity(args.Args.Target.Value);
-
-            if (component.SoundDevour != null)
-                _audioSystem.PlayPvs(component.SoundDevour, uid, component.SoundDevour.Params);
         }
 
         public override void Update(float frameTime)
@@ -211,8 +184,8 @@ namespace Content.Server.Dragon
 
                 // We can't predict the rift being destroyed anyway so no point adding weakened to shared.
                 dragon.WeakenedAccumulator = dragon.WeakenedDuration;
-                _movement.RefreshMovementSpeedModifiers(component.Dragon);
-                _popupSystem.PopupEntity(Loc.GetString("carp-rift-destroyed"), component.Dragon, component.Dragon);
+                _movement.RefreshMovementSpeedModifiers(component.Dragon.Value);
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-destroyed"), component.Dragon.Value, component.Dragon.Value);
             }
         }
 
@@ -304,8 +277,6 @@ namespace Content.Server.Dragon
                 if (component.SoundDeath != null)
                     _audioSystem.PlayPvs(component.SoundDeath, uid, component.SoundDeath.Params);
 
-                component.DragonStomach.EmptyContainer();
-
                 foreach (var rift in component.Rifts)
                 {
                     QueueDel(rift);
@@ -323,64 +294,10 @@ namespace Content.Server.Dragon
 
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
         {
-            //Dragon doesn't actually chew, since he sends targets right into his stomach.
-            //I did it mom, I added ERP content into upstream. Legally!
-            component.DragonStomach = _containerSystem.EnsureContainer<Container>(uid, "dragon_stomach");
-
-            if (component.DevourAction != null)
-                _actionsSystem.AddAction(uid, component.DevourAction, null);
-
             if (component.SpawnRiftAction != null)
                 _actionsSystem.AddAction(uid, component.SpawnRiftAction, null);
 
             Roar(component);
-        }
-
-        /// <summary>
-        /// The devour action
-        /// </summary>
-        private void OnDevourAction(EntityUid uid, DragonComponent component, DragonDevourActionEvent args)
-        {
-            if (args.Handled || component.DevourWhitelist?.IsValid(args.Target, EntityManager) != true)
-                return;
-
-            args.Handled = true;
-            var target = args.Target;
-
-            // Structure and mob devours handled differently.
-            if (EntityManager.TryGetComponent(target, out MobStateComponent? targetState))
-            {
-                switch (targetState.CurrentState)
-                {
-                    case MobState.Critical:
-                    case MobState.Dead:
-
-                        _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, target:target)
-                        {
-                            BreakOnTargetMove = true,
-                            BreakOnUserMove = true,
-                            BreakOnStun = true,
-                        });
-                        break;
-                    default:
-                        _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), uid, uid);
-                        break;
-                }
-
-                return;
-            }
-
-            _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, uid);
-
-            if (component.SoundStructureDevour != null)
-                _audioSystem.PlayPvs(component.SoundStructureDevour, uid, component.SoundStructureDevour.Params);
-
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.StructureDevourTime, target:target)
-            {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                BreakOnStun = true,
-            });
         }
     }
 }

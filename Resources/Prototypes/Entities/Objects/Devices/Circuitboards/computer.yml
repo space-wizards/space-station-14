@@ -13,6 +13,11 @@
         - DroneUsable
     - type: StaticPrice
       price: 100
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 400
+      chemicalComposition:
+        Silicon: 20
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -68,6 +73,10 @@
       prototype: ComputerCargoOrders
     - type: StaticPrice
       price: 750
+    - type: Tag
+      tags:
+      - DroneUsable
+      - HighRiskItem
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -82,12 +91,32 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: SalvageExpeditionsComputerCircuitboard
+  name: salvage expeditions computer board
+  description: A computer printed circuit board for a salvage expeditions computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerSalvageExpedition
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: CargoShuttleConsoleCircuitboard
-  name: supply shuttle console board
+  name: cargo shuttle console board
   description: A computer printed circuit board for a cargo shuttle console.
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleCargo
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SalvageShuttleConsoleCircuitboard
+  name: salvage shuttle console board
+  description: A computer printed circuit board for a salvage shuttle console.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttleSalvage
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -149,7 +178,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: TechDiskComputerCircuitboard
-  name: technology disk terminal board
+  name: tech disk terminal board
   description: A computer printed circuit board for a technology disk terminal.
   components:
   - type: Sprite
@@ -178,6 +207,10 @@
       prototype: ComputerId
     - type: StaticPrice
       price: 750
+    - type: Tag
+      tags:
+      - DroneUsable
+      - HighRiskItem
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -286,3 +319,23 @@
       state: cpu_medical
     - type: ComputerBoard
       prototype: ComputerCloningConsole
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerIFFCircuitboard
+  name: IFF console board
+  description: Allows you to control the IFF characteristics of this vessel.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: ComputerIFF
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerIFFSyndicateCircuitboard
+  name: syndicate IFF console board
+  description: Allows you to control the IFF and stealth characteristics of this vessel.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerIFFSyndicate

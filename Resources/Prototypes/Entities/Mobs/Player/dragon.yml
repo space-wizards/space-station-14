@@ -1,125 +1,148 @@
 - type: entity
-  name: space dragon
   parent: SimpleSpaceMobBase
-  id: MobDragon
+  id: BaseMobDragon
   suffix: ""
+  name: space dragon
   description: A flying leviathan, loosely related to space carps.
   components:
-    - type: GhostTakeoverAvailable
-      allowMovement: true
-      allowSpeech: true
-      makeSentient: true
-      name: Space dragon
-      description: Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
-    - type: HTN
-      rootTask: XenoCompound
-    - type: Faction
-      factions:
-        - Dragon
-    - type: Speech
-    - type: CombatMode
-      disarmAction:
-        enabled: false
-        autoPopulate: false
-        name: action-name-disarm
-    - type: MobMover
-    - type: InputMover
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 3
-      baseSprintSpeed: 5
-      weightlessModifier: 1.5
-    - type: RandomSprite
-      available:
-        - enum.DamageStateVisualLayers.Base:
-            alive: Rainbow
-    - type: Sprite
-      sprite: Mobs/Aliens/Carps/dragon.rsi
-      netsync: false
-      noRot: true
-      layers:
-        - map: [ "enum.DamageStateVisualLayers.Base" ]
-          state: alive
-        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-          state: alive-unshaded
-          shader: unshaded
-    - type: Appearance
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: alive
-          BaseUnshaded: alive-unshaded
-        Critical:
-          Base: crit
-        Dead:
-          Base: dead
-          BaseUnshaded: dead-unshaded
-    - type: Physics
-      bodyType: KinematicController
-    - type: Fixtures
-      fixtures:
-        - shape:
-            !type:PhysShapeCircle
-            radius: 0.40
-          density: 100
-          mask:
-            - FlyingMobMask
-          layer:
-            - FlyingMobLayer
-    - type: MobState
-    - type: MobThresholds
-      thresholds:
-        0: Alive
-        450: Critical
-        500: Dead
-    - type: Metabolizer
-      solutionOnBody: false
-      updateFrequency: 0.25
-      metabolizerTypes: [ Dragon ]
-      groups:
-        - id: Medicine
-        - id: Poison
-    - type: MovementAlwaysTouching
-    - type: NoSlip
-    - type: Butcherable
-      spawned:
-        - id: FoodMeatDragon
-          amount: 2
-    - type: InteractionPopup
-      successChance: 0.25 # It's no goose, but you better smell like carp.
-      interactSuccessString: petting-success-dragon
-      interactFailureString: petting-failure-dragon
-      interactFailureSound:
-        path: /Audio/Animals/space_dragon_roar.ogg
-      soundPerceivedByOthers: false # A 75% chance for a loud roar would get old fast.
-    - type: MeleeWeapon
-      hidden: true
-      soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
-      damage:
-        types:
-          Piercing: 15
-          Slash: 15
-    - type: Dragon
-      spawnsLeft: 2
-      spawnsProto: MobCarpDragon
-      devourAction:
-        event: !type:DragonDevourActionEvent
-        icon: Interface/Actions/devour.png
-        name: action-name-devour
-        description: action-description-devour
-        devourChemical: Ichor
-        devourHealRate: 15.0
-        whitelist:
-          components:
-            - MobState
-            - Door
-          tags:
-            - Wall
-      spawnRiftAction:
-        event: !type:DragonSpawnRiftActionEvent
-        icon:
-          sprite: Interface/Actions/carp_rift.rsi
-          state: icon
-        name: action-name-carp-rift
-        description: action-description-carp-rift
-        useDelay: 1
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-space-dragon-name
+    description: ghost-role-information-space-dragon-description
+  - type: GhostTakeoverAvailable
+  - type: HTN
+    rootTask: XenoCompound
+  - type: Faction
+    factions:
+    - Dragon
+  - type: Speech
+  - type: CombatMode
+  - type: MobMover
+  - type: InputMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 5
+    weightlessModifier: 1.5
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        alive: Rainbow
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/dragon.rsi
+    noRot: true
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: alive-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+        BaseUnshaded: alive-unshaded
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+        BaseUnshaded: dead-unshaded
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      450: Critical
+      500: Dead
+  - type: Metabolizer
+    solutionOnBody: false
+    updateFrequency: 0.25
+    metabolizerTypes: [ Dragon ]
+    groups:
+    - id: Medicine
+    - id: Poison
+  - type: MovementAlwaysTouching
+  - type: NoSlip
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatDragon
+      amount: 2
+  - type: InteractionPopup
+    successChance: 0.25 # It's no goose, but you better smell like carp.
+    interactSuccessString: petting-success-dragon
+    interactFailureString: petting-failure-dragon
+    interactFailureSound:
+      path: /Audio/Animals/space_dragon_roar.ogg
+    soundPerceivedByOthers: false # A 75% chance for a loud roar would get old fast.
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    damage:
+      types:
+        Piercing: 15
+        Slash: 15
+  - type: Devourer
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: Ichor
+    healRate: 15.0
+    whitelist:
+      components:
+      - MobState
+      - Door
+      tags:
+      - Wall
+    devourAction:
+      event: !type:DevourActionEvent
+      icon: Interface/Actions/devour.png
+      name: action-name-devour
+      description: action-description-devour
+
+- type: entity
+  parent: BaseMobDragon
+  id: MobDragon
+  components:
+  - type: Dragon
+    spawnsLeft: 2
+    spawnsProto: MobCarpDragon
+    spawnRiftAction:
+      event: !type:DragonSpawnRiftActionEvent
+      icon:
+        sprite: Interface/Actions/carp_rift.rsi
+        state: icon
+      name: action-name-carp-rift
+      description: action-description-carp-rift
+      useDelay: 1
+
+- type: entity
+  parent: BaseMobDragon
+  id: MobDragonDungeon
+  suffix: Dungeon
+  components:
+  - type: GhostRole
+    description: ghost-role-information-space-dragon-dungeon-description
+  # less tanky, no crit
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Dead
+  # less meat spawned since it's a lot easier to kill
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatDragon
+      amount: 1

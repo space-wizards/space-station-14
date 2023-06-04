@@ -29,6 +29,7 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: ale
   color: "#663100"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/aleglass.rsi
     state: icon
@@ -41,6 +42,7 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: beer
   color: "#cfa85f"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
@@ -73,6 +75,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#AB3C05"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/cognacglass.rsi
     state: icon
@@ -110,6 +113,7 @@
   name: reagent-name-ethanol
   parent: BaseAlcohol
   desc: reagent-desc-ethanol
+  slippery: true
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#b05b3c"
@@ -122,15 +126,41 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
+        - !type:OrganType
+          type: Dwarf
+          shouldHave: false
+        damage:
+          types:
+            Poison: 1
+      # dwarves take less toxin damage and heal a marginal amount of brute
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+        - !type:OrganType
+          type: Dwarf
+        damage:
+          types:
+            Poison: 0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+        - !type:OrganType
+          type: Dwarf
         damage:
           groups:
-            Caustic: 1
+            Brute: -1
       - !type:ChemVomit
         probability: 0.04
         conditions:
         - !type:ReagentThreshold
           reagent: Ethanol
           min: 3
+        # dwarves immune to vomiting from alcohol
+        - !type:OrganType
+          type: Dwarf
+          shouldHave: false
     Alcohol:
       effects:
       - !type:Drunk
@@ -144,6 +174,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
     state: icon
@@ -226,6 +257,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: rum
   color: "#664300"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/rumglass.rsi
     state: icon
@@ -284,6 +316,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: vodka
   color: "#d1d1d155"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
     state: icon
@@ -304,6 +337,7 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: whiskey
   color: "#664300"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
     state: icon
@@ -324,6 +358,7 @@
   physicalDesc: reagent-physical-desc-translucent
   flavor: shittywine
   color: "#7E4043"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/wineglass.rsi
     state: icon
@@ -396,7 +431,7 @@
   parent: BaseAlcohol
   desc: reagent-desc-antifreeze
   physicalDesc: reagent-physical-desc-translucent
-  flavor: alcohol
+  flavor: antifreeze
   color: "#ff7d63"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/antifreeze.rsi
@@ -930,8 +965,8 @@
   name: reagent-name-manly-dorf
   parent: BaseAlcohol
   desc: reagent-desc-manly-dorf
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: alcohol
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: rocksandstones
   color: "#664300"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
@@ -1099,6 +1134,29 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.15
+
+- type: reagent
+  id: CogChamp
+  name: reagent-name-cogchamp
+  parent: BaseAlcohol
+  desc: reagent-desc-cogchamp
+  physicalDesc: reagent-physical-desc-ground-brass
+  flavor: cogchamp
+  color: "#B5A642"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cogchamp.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+        - !type:GenericStatusEffect
+          key: RatvarianLanguage
+          component: RatvarianLanguage
+        - !type:SatiateThirst
+          factor: 2
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
 
 - type: reagent
   id: Silencer

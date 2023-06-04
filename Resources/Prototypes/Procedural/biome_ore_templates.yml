@@ -1,0 +1,54 @@
+# Low value
+- type: biomeMarkerLayer
+  id: OreTin
+  proto: WallRockTin
+  entityMask: WallRock
+  maxCount: 15
+  groupCount: 10
+  radius: 4
+
+# Medium value
+# Gold
+- type: biomeMarkerLayer
+  id: OreGold
+  proto: WallRockGold
+  entityMask: WallRock
+  maxCount: 15
+  groupCount: 5
+  radius: 4
+
+# Silver
+- type: biomeMarkerLayer
+  id: OreSilver
+  proto: WallRockSilver
+  entityMask: WallRock
+  maxCount: 15
+  groupCount: 5
+  radius: 4
+
+# High value
+# Plasma
+- type: biomeMarkerLayer
+  id: OrePlasma
+  proto: WallRockPlasma
+  entityMask: WallRock
+  maxCount: 6
+  groupCount: 5
+  radius: 4
+
+# Uranium
+- type: biomeMarkerLayer
+  id: OreUranium
+  proto: WallRockUranium
+  entityMask: WallRock
+  maxCount: 6
+  groupCount: 5
+  radius: 4
+
+- type: biomeMarkerLayer
+  id: OreBananium
+  proto: WallRockBananium
+  entityMask: WallRock
+  maxCount: 6
+  groupCount: 5
+  radius: 4

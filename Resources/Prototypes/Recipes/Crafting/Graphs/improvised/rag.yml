@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: Rag
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: rag
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 3
+  - node: rag
+    entity: RagItem

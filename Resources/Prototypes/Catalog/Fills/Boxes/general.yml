@@ -220,7 +220,7 @@
   - type: Sprite
     layers:
       - state: box
-      - state: writing
+      - state: inflatable
   - type: Tag
     tags:
       - DroneUsable
@@ -252,7 +252,7 @@
   - type: Sprite
     layers:
       - state: box
-      - state: writing
+      - state: flare
 
 - type: entity
   name: trashbag box
@@ -272,7 +272,7 @@
   - type: Sprite
     layers:
       - state: box
-      - state: writing
+      - state: trashbag
   - type: Tag
     tags:
       - DroneUsable
@@ -376,3 +376,18 @@
     contents:
       - id: EncryptionKeyService
         amount: 6
+
+- type: entity
+  name: syndicate encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeySyndie
+  description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
+  components:
+  - type: Item
+    size: 15
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeySyndie
+        amount: 2
+  - type: Storage
+    capacity: 15

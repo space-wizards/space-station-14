@@ -14,6 +14,12 @@
   - type: Drink
   - type: Sprite
     state: icon
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: Spillable
     solution: drink
   - type: FitsInDispenser
@@ -54,6 +60,7 @@
           ShardGlass:
             min: 1
             max: 1
+        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -65,6 +72,11 @@
     damage:
       types:
         Blunt: 5
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
+  - type: ExaminableSolution
+    solution: drink
 
 # Transformable container - normal glass
 - type: entity
@@ -513,23 +525,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/chocolateglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkCafeLatte
-  name: cafe latte
-  description: A nice, strong and tasty beverage while you are reading.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: CafeLatte
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1603,6 +1598,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkCogChampBase
+  name: cogchamp glass
+  description: This mix of Cognac, Screwdriver and Welding Fuel will have you seeing His light surely!
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: CogChamp
+              Quantity: 30
+    - type: Drink
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/cogchamp.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkSuiDreamGlass
   name: sui dream glass
   description: A froofy, fruity, and sweet mixed drink. Understanding the name only brings shame.
@@ -2157,7 +2169,6 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage
 
 - type: entity
@@ -2178,16 +2189,16 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkKvassGlass
-  name: kvass glass
-  description: A cool refreshing drink with a taste of socialism.
+  id: DrinkTheMartinez
+  name: The Martinez glass
+  description: The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
   components:
     - type: SolutionContainerManager
       solutions:
         drink:
           maxVol: 30
           reagents:
-            - ReagentId: Kvass
+            - ReagentId: TheMartinez
               Quantity: 30
     - type: Sprite
-      sprite: Objects/Consumable/Drinks/kvass.rsi
+      sprite: Objects/Consumable/Drinks/the_martinez.rsi

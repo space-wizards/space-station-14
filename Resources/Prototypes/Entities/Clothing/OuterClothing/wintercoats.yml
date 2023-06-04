@@ -98,6 +98,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -108,6 +112,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -138,6 +146,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -178,6 +190,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -188,6 +204,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -218,6 +238,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -238,6 +262,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -258,6 +286,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -278,6 +310,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat

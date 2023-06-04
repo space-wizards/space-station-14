@@ -33,7 +33,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 5 #i mean... i GUESS you could use it like that
   - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
@@ -50,9 +50,9 @@
     qualities: Welding
   - type: Welder
     litMeleeDamageBonus:
-      types: # When lit, negate standard melee damage and replace with heat
-        Heat: 10
-        Blunt: -10
+      types:
+        Heat: 8
+        Blunt: -5
   - type: PointLight
     netsync: false
     enabled: false
@@ -60,6 +60,9 @@
     color: orange
   - type: Appearance
   - type: RequiresEyeProtection
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200
   - type: StaticPrice
     price: 40
   - type: IgnitionSource
@@ -124,6 +127,12 @@
     enabled: false
     radius: 1.5
     color: lightblue
+  - type: SolutionRegeneration
+    solution: Welder
+    generated:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 1
 
 - type: entity
   name: emergency welding tool
@@ -134,6 +143,7 @@
   - type: Sprite
     sprite: Objects/Tools/welder_mini.rsi
   - type: Item
+    size: 5
     sprite: Objects/Tools/welder_mini.rsi
   - type: RefillableSolution
     solution: Welder

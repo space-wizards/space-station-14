@@ -119,13 +119,22 @@
     Shock: 1.2
 
 - type: damageModifierSet
+  id: Arachnid # Don't do too well with high temperatures, venomous (well some kinds anyways) and have an exo-skeleton (so probably harder to stab but easier to... break?)
+  coefficients:
+    Blunt: 1.15
+    Piercing: 1.15
+    Slash: 0.85
+    Heat: 1.25
+    Poison: 0.8
+
+- type: damageModifierSet
   id: Zombie #Blunt resistent and immune to biological threats, but can be hacked apart and burned
   coefficients:
-    Blunt: 0.5
-    Slash: 0.7
-    Piercing: 0.7
+    Blunt: 0.7
+    Slash: 1.1
+    Piercing: 0.9
     Shock: 1.5
-    Cold: 0.2
+    Cold: 0.3
     Heat: 2.0
     Poison: 0.0
     Radiation: 0.0
@@ -147,21 +156,34 @@
     Blunt: 5
 
 # Represents which damage types should be modified
-# in relation to how they cause bloodloss damage.
+# in relation to how they cause bleed rate.
 - type: damageModifierSet
   id: BloodlossHuman
   coefficients:
-    Blunt: 0.8
-    Slash: 2.5
-    Piercing: 2.0
+    Blunt: 0.08
+    Slash: 0.25
+    Piercing: 0.2
     Shock: 0.0
     Cold: 0.0
-    Heat: -0.25 # heat damage cauterizes wounds!
+    Heat: -1 # heat damage cauterizes wounds, but will still hurt obviously.
     Poison: 0.0
     Radiation: 0.0
     Asphyxiation: 0.0
     Bloodloss: 0.0 # no double dipping
     Cellular: 0.0
+    Caustic: 0.0
+
+- type: damageModifierSet
+  id: SlimePet # Very survivable slimes
+  coefficients:
+    Blunt: 0.5
+    Slash: 0.8
+    Piercing: 0.8
+    Cold: 1.0
+    Poison: 0.2
+    Cellular: 0.0
+    Radiation: 0.2
+    Caustic: 0.0
 
 # Represents what a riot shield should block passively
 # Each shield will probably have their own passive and active modifier sets

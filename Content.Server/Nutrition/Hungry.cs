@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Administration;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -37,8 +38,8 @@ namespace Content.Server.Nutrition
                 return;
             }
 
-            var hungryThreshold = hunger.HungerThresholds[HungerThreshold.Starving];
-            hunger.CurrentHunger = hungryThreshold;
+            var hungryThreshold = hunger.Thresholds[HungerThreshold.Starving];
+            _entities.System<HungerSystem>().SetHunger(playerEntity, hungryThreshold, hunger);
         }
     }
 }

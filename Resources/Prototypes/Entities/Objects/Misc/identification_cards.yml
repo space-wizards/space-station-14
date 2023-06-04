@@ -107,6 +107,11 @@
     heldPrefix: gold
   - type: PresetIdCard
     job: Captain
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - HighRiskItem
 
 - type: entity
   parent: IDCardStandard
@@ -155,6 +160,18 @@
     - state: idmedicaldoctor
   - type: PresetIdCard
     job: MedicalDoctor
+
+- type: entity
+  parent: IDCardStandard
+  id: ParamedicIDCard
+  name: paramedic ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idparamedic
+  - type: PresetIdCard
+    job: Paramedic
 
 - type: entity
   parent: IDCardStandard
@@ -396,6 +413,16 @@
 
 - type: entity
   parent: IDCardStandard
+  id: BrigmedicIDCard
+  name: brigmedic ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idbrigmedic
+
+- type: entity
+  parent: IDCardStandard
   id: CentcomIDCard
   name: command officer ID card
   components:
@@ -548,7 +575,7 @@
     - state: idzookeeper
   - type: PresetIdCard
     job: Zookeeper
-    
+
 - type: entity
   parent: IDCardStandard
   id: DetectiveIDCard
@@ -572,7 +599,7 @@
     - state: idcentcom
   - type: Item
     heldPrefix: gold
-    
+
 
 - type: entity
   parent: IDCardStandard

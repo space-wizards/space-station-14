@@ -35,6 +35,11 @@
     damage:
       types:
         Blunt: 10
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   parent: GasTankBase
@@ -47,7 +52,7 @@
   - type: GasTank
     outputPressure: 21.27825
     air:
-      volume: 70
+      volume: 15
       temperature: 293.15
     tankLowPressure: 30.0
   - type: Clothing
@@ -109,6 +114,9 @@
     damage:
       types:
         Blunt: 5
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -170,7 +178,7 @@
     - type: GasTank
       outputPressure: 101.325
       air:
-        volume: 70
+        volume: 15
         temperature: 293.15
     - type: Clothing
       sprite: Objects/Tanks/generic.rsi
@@ -189,7 +197,7 @@
     - type: GasTank
       outputPressure: 101.325
       air:
-        volume: 70
+        volume: 15
         temperature: 293.15
     - type: Clothing
       sprite: Objects/Tanks/anesthetic.rsi
@@ -208,7 +216,7 @@
     - type: GasTank
       outputPressure: 101.325
       air:
-        volume: 70
+        volume: 15
         temperature: 293.15
     - type: Item
       size: 10

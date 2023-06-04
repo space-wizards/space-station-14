@@ -16,6 +16,9 @@ ent-MaterialPlasteel = { ent-CrateMaterialPlasteel }
 ent-MaterialPlasma = { ent-CrateMaterialPlasma }
     .desc = { ent-CrateMaterialPlasma.desc }
 
+ent-CardboardMaterial = { ent-CrateMaterialCardboard }
+    .desc = { ent-CrateMaterialCardboard.desc }
+
 ent-MaterialFuelTank = { ent-WeldingFuelTankFull }
     .desc = { ent-WeldingFuelTankFull.desc }
 

@@ -1,9 +1,11 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.CCVar;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -25,6 +27,8 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
             await server.WaitPost(() =>
             {
@@ -43,14 +47,14 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            var rp1 = new ResourcePath("/save load save 1.yml");
+            var rp1 = new ResPath("/save load save 1.yml");
             await using (var stream = userData.Open(rp1, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = await reader.ReadToEndAsync();
             }
 
-            var rp2 = new ResourcePath("/save load save 2.yml");
+            var rp2 = new ResPath("/save load save 2.yml");
             await using (var stream = userData.Open(rp2, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
@@ -78,6 +82,8 @@ namespace Content.IntegrationTests.Tests
             await pairTracker.CleanReturnAsync();
         }
 
+        const string TestMap = "Maps/bagel.yml";
+
         /// <summary>
         ///     Loads the default map, runs it for 5 ticks, then assert that it did not change.
         /// </summary>
@@ -90,14 +96,16 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
 
             MapId mapId = default;
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
-            // Load saltern.yml as uninitialized map, and save it to ensure it's up to date.
+            // Load bagel.yml as uninitialized map, and save it to ensure it's up to date.
             server.Post(() =>
             {
                 mapId = mapManager.CreateMap();
                 mapManager.AddUninitializedMap(mapId);
                 mapManager.SetMapPaused(mapId, true);
-                mapLoader.LoadMap(mapId, "Maps/bagel.yml");
+                mapLoader.LoadMap(mapId, TestMap);
                 mapLoader.SaveMap(mapId, "load save ticks save 1.yml");
             });
 
@@ -115,13 +123,13 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            await using (var stream = userData.Open(new ResourcePath("/load save ticks save 1.yml"), FileMode.Open))
+            await using (var stream = userData.Open(new ResPath("/load save ticks save 1.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = await reader.ReadToEndAsync();
             }
 
-            await using (var stream = userData.Open(new ResourcePath("/load save ticks save 2.yml"), FileMode.Open))
+            await using (var stream = userData.Open(new ResPath("/load save ticks save 2.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 two = await reader.ReadToEndAsync();
@@ -145,6 +153,80 @@ namespace Content.IntegrationTests.Tests
                     TestContext.Error.WriteLine(twoTmp);
                 }
             });
+
+            await server.WaitPost(() => mapManager.DeleteMap(mapId));
+            await pairTracker.CleanReturnAsync();
+        }
+
+        /// <summary>
+        ///     Loads the same uninitialized map at slightly different times, and then checks that they are the same
+        ///     when getting saved.
+        /// </summary>
+        /// <remarks>
+        ///     Should ensure that entities do not perform randomization prior to initialization and should prevents
+        ///     bugs like the one discussed in github.com/space-wizards/RobustToolbox/issues/3870. This test is somewhat
+        ///     similar to <see cref="LoadSaveTicksSaveBagel"/> and <see cref="SaveLoadSave"/>, but neither of these
+        ///     caught the mentioned bug.
+        /// </remarks>
+        [Test]
+        public async Task LoadTickLoadBagel()
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
+
+            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var userData = server.ResolveDependency<IResourceManager>().UserData;
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
+
+            MapId mapId = default;
+            const string fileA = "/load tick load a.yml";
+            const string fileB = "/load tick load b.yml";
+            string yamlA;
+            string yamlB;
+
+            // Load & save the first map
+            server.Post(() =>
+            {
+                mapId = mapManager.CreateMap();
+                mapManager.AddUninitializedMap(mapId);
+                mapManager.SetMapPaused(mapId, true);
+                mapLoader.LoadMap(mapId, TestMap);
+                mapLoader.SaveMap(mapId, fileA);
+            });
+
+            await server.WaitIdleAsync();
+            await using (var stream = userData.Open(new ResPath(fileA), FileMode.Open))
+            using (var reader = new StreamReader(stream))
+            {
+                yamlA = await reader.ReadToEndAsync();
+            }
+
+            server.RunTicks(5);
+
+            // Load & save the second map
+            server.Post(() =>
+            {
+                mapManager.DeleteMap(mapId);
+                mapManager.CreateMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
+                mapManager.SetMapPaused(mapId, true);
+                mapLoader.LoadMap(mapId, TestMap);
+                mapLoader.SaveMap(mapId, fileB);
+            });
+
+            await server.WaitIdleAsync();
+
+            await using (var stream = userData.Open(new ResPath(fileB), FileMode.Open))
+            using (var reader = new StreamReader(stream))
+            {
+                yamlB = await reader.ReadToEndAsync();
+            }
+
+            Assert.That(yamlA, Is.EqualTo(yamlB));
+
+            await server.WaitPost(() => mapManager.DeleteMap(mapId));
             await pairTracker.CleanReturnAsync();
         }
     }

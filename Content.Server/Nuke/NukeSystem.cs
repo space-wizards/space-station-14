@@ -2,7 +2,6 @@ using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
@@ -25,10 +24,10 @@ namespace Content.Server.Nuke
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -67,7 +66,7 @@ namespace Content.Server.Nuke
             SubscribeLocalEvent<NukeComponent, NukeKeypadEnterMessage>(OnEnterButtonPressed);
 
             // Doafter events
-            SubscribeLocalEvent<NukeComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<NukeComponent, NukeDisarmDoAfterEvent>(OnDoAfter);
         }
 
         private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
@@ -100,7 +99,7 @@ namespace Content.Server.Nuke
 
         private void OnMapInit(EntityUid uid, NukeComponent nuke, MapInitEvent args)
         {
-            var originStation = _stationSystem.GetOwningStation(uid);
+            var originStation = _station.GetOwningStation(uid);
 
             if (originStation != null)
                 nuke.OriginStation = originStation;
@@ -437,14 +436,14 @@ namespace Content.Server.Nuke
             if (component.Status == NukeStatus.ARMED)
                 return;
 
-            var stationUid = _stationSystem.GetOwningStation(uid);
+            var nukeXform = Transform(uid);
+            var stationUid = _station.GetStationInMap(nukeXform.MapID);
             // The nuke may not be on a station, so it's more important to just
             // let people know that a nuclear bomb was armed in their vicinity instead.
             // Otherwise, you could set every station to whatever AlertLevelOnActivate is.
             if (stationUid != null)
                 _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
 
-            var nukeXform = Transform(uid);
             var pos =  nukeXform.MapPosition;
             var x = (int) pos.X;
             var y = (int) pos.Y;
@@ -454,7 +453,7 @@ namespace Content.Server.Nuke
             var announcement = Loc.GetString("nuke-component-announcement-armed",
                 ("time", (int) component.RemainingTime), ("position", posText));
             var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false, null, Color.Red);
+            _chatSystem.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, null, Color.Red);
 
             _soundSystem.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
 
@@ -475,7 +474,7 @@ namespace Content.Server.Nuke
             if (component.Status != NukeStatus.ARMED)
                 return;
 
-            var stationUid = _stationSystem.GetOwningStation(uid);
+            var stationUid = _station.GetOwningStation(uid);
             if (stationUid != null)
                 _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnDeactivate, true, true, true);
 
@@ -559,16 +558,17 @@ namespace Content.Server.Nuke
 
         private void DisarmBombDoafter(EntityUid uid, EntityUid user, NukeComponent nuke)
         {
-            var doafter = new DoAfterEventArgs(user, nuke.DisarmDoafterLength, target: uid)
+            var doafter = new DoAfterArgs(user, nuke.DisarmDoafterLength, new NukeDisarmDoAfterEvent(), uid, target: uid)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = true
             };
 
-            _doAfterSystem.DoAfter(doafter);
+            if (!_doAfterSystem.TryStartDoAfter(doafter))
+                return;
+
             _popups.PopupEntity(Loc.GetString("nuke-component-doafter-warning"), user,
                 user, PopupType.LargeCaution);
         }

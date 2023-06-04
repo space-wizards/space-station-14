@@ -53,6 +53,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -71,12 +77,26 @@
     maxIntensity: 100
     intensitySlope: 2
     totalIntensity: 200
+  - type: WiresPanel
   - type: Wires
     BoardName: "Substation"
     LayoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
   - type: StationInfiniteBatteryTarget
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -5
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: input
+    mediumVoltageNode: output
 
 # Compact Wall Substation Base
 - type: entity
@@ -89,10 +109,10 @@
   components:
   - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -15
+    volume: -5
     range: 2
     sound:
-      path: /Audio/Ambience/Objects/hdd_buzz.ogg
+      path: /Audio/Ambience/Objects/buzzing.ogg
   - type: PointLight
     netsync: false
     radius: 1.5
@@ -144,6 +164,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100

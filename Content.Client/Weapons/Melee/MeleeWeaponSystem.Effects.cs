@@ -113,7 +113,7 @@ public sealed partial class MeleeWeaponSystem
     /// <summary>
     /// Does all of the melee effects for a player that are predicted, i.e. character lunge and weapon animation.
     /// </summary>
-    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation)
+    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true)
     {
         if (!Timing.IsFirstTimePredicted)
             return;
@@ -140,23 +140,29 @@ public sealed partial class MeleeWeaponSystem
         sprite.Rotation = localPos.ToWorldAngle();
         var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
 
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var xform = xformQuery.GetComponent(animationUid);
+
         switch (arcComponent.Animation)
         {
             case WeaponArcAnimation.Slash:
                 _animation.Play(animationUid, GetSlashAnimation(sprite, angle), SlashAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.065f, 0.065f + 0.05f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.Thrust:
                 _animation.Play(animationUid, GetThrustAnimation(sprite, distance), ThrustAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
-                var (mapPos, mapRot) = _transform.GetWorldPositionRotation(userXform, GetEntityQuery<TransformComponent>());
-                var xform = Transform(animationUid);
-                xform.AttachToGridOrMap();
-                _transform.SetWorldPosition(xform, mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos));
+                var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform, xformQuery);
+                TransformSystem.AttachToGridOrMap(animationUid, xform);
+                var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
+                var newLocalPos = TransformSystem.GetInvWorldMatrix(xform.ParentUid, xformQuery).Transform(worldPos);
+                TransformSystem.SetLocalPositionNoLerp(xform, newLocalPos);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
                 break;

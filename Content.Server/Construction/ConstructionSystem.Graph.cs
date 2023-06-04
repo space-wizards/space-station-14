@@ -3,6 +3,7 @@ using Content.Server.Containers;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
+using Content.Shared.Containers;
 using Content.Shared.Database;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -87,6 +88,23 @@ namespace Content.Server.Construction
                 return null;
 
             return GetCurrentNode(uid, construction) is not {} node ? null : GetEdgeFromNode(node, edgeIndex);
+        }
+
+        /// <summary>
+        ///     Variant of <see cref="GetCurrentEdge"/> that returns both the node and edge.
+        /// </summary>
+        public (ConstructionGraphNode?, ConstructionGraphEdge?) GetCurrentNodeAndEdge(EntityUid uid, ConstructionComponent? construction = null)
+        {
+            if (!Resolve(uid, ref construction, false))
+                return (null, null);
+
+            if (GetCurrentNode(uid, construction) is not { } node)
+                return (null, null);
+
+            if (construction.EdgeIndex is not {} edgeIndex)
+                return (node, null);
+
+            return (node, GetEdgeFromNode(node, edgeIndex));
         }
 
         /// <summary>
@@ -324,6 +342,7 @@ namespace Content.Server.Construction
 
             // Transform transferring.
             var newTransform = Transform(newUid);
+            newTransform.AttachToGridOrMap(); // in case in hands or a container
             newTransform.LocalRotation = transform.LocalRotation;
             newTransform.Anchored = transform.Anchored;
 
@@ -350,6 +369,10 @@ namespace Content.Server.Construction
                     }
                 }
             }
+
+            var entChangeEv = new ConstructionChangeEntityEvent(newUid, uid);
+            RaiseLocalEvent(uid, entChangeEv);
+            RaiseLocalEvent(newUid, entChangeEv, broadcast: true);
 
             QueueDel(uid);
 
@@ -381,6 +404,22 @@ namespace Content.Server.Construction
 
             construction.Graph = graphId;
             return ChangeNode(uid, userUid, nodeId, performActions, construction);
+        }
+    }
+
+    /// <summary>
+    ///     This event gets raised when an entity changes prototype / uid during construction. The event is raised
+    ///     directed both at the old and new entity.
+    /// </summary>
+    public sealed class ConstructionChangeEntityEvent : EntityEventArgs
+    {
+        public readonly EntityUid New;
+        public readonly EntityUid Old;
+
+        public ConstructionChangeEntityEvent(EntityUid newUid, EntityUid oldUid)
+        {
+            New = newUid;
+            Old = oldUid;
         }
     }
 }

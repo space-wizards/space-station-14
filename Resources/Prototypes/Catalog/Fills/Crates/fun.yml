@@ -5,82 +5,121 @@
   - type: StorageFill
     contents:
       - id: PlushieBee
-        amount: 1
       - id: PlushieNar
-        amount: 1
       - id: PlushieCarp
-        amount: 1
       - id: PlushieNuke
-        amount: 1
       - id: PlushieSlime
-        amount: 1
       - id: PlushieSnake
-        amount: 1
       - id: PlushieLizard
-        amount: 1
       - id: PlushieSpaceLizard
-        amount: 1
       - id: PlushieVox
-        amount: 1
       - id: PlushieRouny
-        amount: 1
       - id: PlushieRatvar
-        amount: 1
       - id: PlushieSharkBlue
-        amount: 1
+        orGroup: PlushieShark
+      - id: PlushieSharkGrey
+        orGroup: PlushieShark
       - id: PlushieAtmosian
-        amount: 1
-
+      - id: PlushieDiona
+      - id: PlushieXeno
+      - id: PlushieHampter
 
 - type: entity
-  id: CrateFunInstruments
+  id: CrateFunInstrumentsVariety
   parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
       - id: SynthesizerInstrument
-        amount: 1
       - id: AcousticGuitarInstrument
-        amount: 1
-      - id: ViolinInstrument
-        amount: 1
       - id: TrumpetInstrument
-        amount: 1
-      - id: ElectricGuitarInstrument
-        amount: 1
       - id: AccordionInstrument
-        amount: 1
       - id: HarmonicaInstrument
-        amount: 1
       - id: RecorderInstrument
-        amount: 1
-      - id: TromboneInstrument
-        amount: 1
-      - id: SaxophoneInstrument
-        amount: 1
       - id: GlockenspielInstrument
-        amount: 1
-      - id: BanjoInstrument
-        amount: 1
-      - id: BikeHornInstrument
-        amount: 1
 
 - type: entity
-  id: CrateFunBrass
+  id: CrateFunInstrumentsBrass
   parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
       - id: TrumpetInstrument
-        amount: 3
+        amount: 2
       - id: TromboneInstrument
-        amount: 3
+        amount: 2
       - id: FrenchHornInstrument
         amount: 2
+      - id: SaxophoneInstrument
+        amount: 2
       - id: EuphoniumInstrument
-        amount: 1
       - id: TubaInstrument
-        amount: 1
+
+- type: entity
+  id: CrateFunInstrumentsString
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: AcousticGuitarInstrument
+      - id: ElectricGuitarInstrument
+      - id: BassGuitarInstrument
+      - id: RockGuitarInstrument
+      - id: BanjoInstrument
+      - id: ViolinInstrument
+      - id: CelloInstrument
+      - id: ViolaInstrument
+      - id: HarpInstrument
+
+- type: entity
+  id: CrateFunInstrumentsWoodwind
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: RecorderInstrument
+        amount: 2
+      - id: BagpipeInstrument
+      - id: ClarinetInstrument
+      - id: FluteInstrument
+      - id: HarmonicaInstrument
+        amount: 2
+      - id: OcarinaInstrument
+      - id: PanFluteInstrument
+
+- type: entity
+  id: CrateFunInstrumentsKeyedPercussion
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SynthesizerInstrument
+        amount: 2
+      - id: AccordionInstrument
+        amount: 2
+      - id: KalimbaInstrument
+        amount: 2
+      - id: WoodblockInstrument
+      - id: GlockenspielInstrument
+        amount: 2
+      - id: VibraphoneInstrument
+
+- type: entity
+  id: CrateFunInstrumentsSpecial
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: BikeHornInstrument
+      - id: MusicBoxInstrument
+      - id: SeashellInstrument
+      - id: XylophoneInstrument
+      - id: GunpetInstrument
+      - id: MicrophoneInstrument
+      - id: HelicopterInstrument
+      - id: BirdToyInstrument
+      - id: MusicalLungInstrument
+      - id: ReverseCymbalsInstrument
 
 - type: entity
   id: CrateFunArtSupplies
@@ -89,9 +128,7 @@
   - type: StorageFill
     contents:
       - id: CrayonBox
-        amount: 1
       - id: CrayonWhite
-        amount: 1
 
 - type: entity
   id: CrateFunBoardGames
@@ -100,13 +137,9 @@
   - type: StorageFill
     contents:
       - id: ChessBoard
-        amount: 1
       - id: BackgammonBoard
-        amount: 1
       - id: ParchisBoard
-        amount: 1
       - id: CheckerBoard
-        amount: 1
       - id: d6Dice
         amount: 4
 
@@ -117,9 +150,7 @@
   - type: StorageFill
     contents:
       - id: VehicleATV
-        amount: 1
       - id: VehicleKeyATV
-        amount: 1
 
 - type: entity
   id: CrateFunSadTromboneImplants
@@ -156,11 +187,19 @@
       - id: GlowstickYellow
         amount: 2
       - id: FoodCakeBirthday
-        amount: 1
       - id: DrinkLean
         amount: 4
       - id: KnifePlastic
-        amount: 1
+
+- type: entity
+  id: CrateFunWaterGuns
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponWaterBlaster
+      - id: WeaponWaterPistol
+        amount: 5
 
 - type: entity
   id: CrateFunSyndicateSegway
@@ -169,6 +208,56 @@
     - type: StorageFill
       contents:
         - id: VehicleSyndicateSegway
-          amount: 1
         - id: VehicleKeySyndicateSegway
-          amount: 1
+
+- type: entity
+  id: CrateFunBoxing
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesBoxingRed
+      - id: ClothingHandsGlovesBoxingBlue
+      - id: ClothingHandsGlovesBoxingYellow
+      - id: ClothingHandsGlovesBoxingGreen
+      - id: UniformShortsRed
+        amount: 3
+      - id: UniformShortsRedWithTop
+        amount: 3
+
+- type: entity
+  id: CrateFunPirate
+  parent: CratePirate
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitPirate
+        amount: 2
+      - id: ClothingHeadHatPirate
+      - id: ClothingOuterCoatPirate
+      - id: ClothingShoesBootsLaceup
+        amount: 2
+      - id: HatBandRed
+      - id: FoamCutlass
+        amount: 2
+
+- type: entity
+  id: CrateFunToyBox
+  parent: CrateToyBox
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrazyGlue
+        amount: 2
+      - id: PlasticBanana
+      - id: WhoopieCushion
+      - id: ToyHammer
+      - id: MrChips
+        orGroup: GiftPool
+      - id: MrDips
+        orGroup: Giftpool
+      - id: RevolverCapGun
+      - id: VehicleUnicycleFolded
+      - id: ClothingShoesClownLarge
+      - id: ClothingHeadHatMagician
