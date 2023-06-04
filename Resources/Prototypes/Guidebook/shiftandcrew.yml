@@ -3,6 +3,7 @@
   name: guide-entry-jobs
   text: "/ServerInfo/Guidebook/Jobs.xml"
   children:
+  - Chef
   - Botany
   - Engineering
   - Science
@@ -25,3 +26,15 @@
   id: Janitorial
   name: guide-entry-janitorial
   text: "/ServerInfo/Guidebook/Janitorial.xml"
+
+- type: guideEntry
+  id: Chef
+  name: guide-entry-chef
+  text: "/ServerInfo/Guidebook/Chef.xml"
+  children:
+  - Food Recipes
+
+- type: guideEntry
+  id: Food Recipes
+  name: guide-entry-foodrecipes
+  text: "/ServerInfo/Guidebook/Food Recipes.xml"
