@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Security has reported sightings of Space Ninja in long shifts, be on
-      the look out for moving shadows or doors opening by themselves.', type: Add}
-  id: 3439
-  time: '2023-04-17T07:33:28.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed being able to eat and drink despite wearing a mask., type: Fix}
@@ -2904,3 +2898,9 @@ Entries:
       strongest carp and dragons to expedition dungeons.', type: Tweak}
   id: 3938
   time: '2023-06-04T11:06:13.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: Nanotrasen has remembered that they had built a therapy room for a reason
+      and is now allowing psychologists to board Origin Station., type: Fix}
+  id: 3939
+  time: '2023-06-04T20:11:15.0000000+00:00'
