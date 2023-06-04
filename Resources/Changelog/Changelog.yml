@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added research magboots in RND!, type: Add}
-  id: 3442
-  time: '2023-04-17T22:26:31.0000000+00:00'
 - author: Kit0vras
   changes:
   - {message: Fixed non-appearing ERT equipment., type: Fix}
@@ -2904,3 +2899,9 @@ Entries:
   - {message: Added Chef Guidebook, type: Add}
   id: 3941
   time: '2023-06-04T21:34:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Advanced tools now has the recipe for the Experimental welding tool
+      instead of the Industrial welding tool, type: Fix}
+  id: 3942
+  time: '2023-06-04T22:23:27.0000000+00:00'
