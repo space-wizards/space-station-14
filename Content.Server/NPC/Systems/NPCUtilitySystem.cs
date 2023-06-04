@@ -133,6 +133,10 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!_food.IsDigestibleBy(owner, targetUid, food))
                     return 0f;
 
+                // no mouse don't eat the uranium-235
+                if (HasComp<BadFoodComponent>(targetUid))
+                    return 0f;
+
                 return 1f;
             }
             case TargetAccessibleCon:
