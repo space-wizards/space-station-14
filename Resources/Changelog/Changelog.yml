@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed being able to eat and drink despite wearing a mask., type: Fix}
-  id: 3440
-  time: '2023-04-17T07:56:42.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added InHand sprites for cloaks!, type: Add}
@@ -2904,3 +2899,8 @@ Entries:
       and is now allowing psychologists to board Origin Station., type: Fix}
   id: 3939
   time: '2023-06-04T20:11:15.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: 'Adds Medical Doctor, Cryo, and Cloning Guidebooks', type: Add}
+  id: 3940
+  time: '2023-06-04T21:06:43.0000000+00:00'
