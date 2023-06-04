@@ -1437,7 +1437,7 @@
   - type: EyeTraits
     autoExpose: # Spider vision
       max: 12
-      min: 4.5
+      min: 1.2
       rampUp: 0.05
       rampUpNight: 0.01
     nightVision:

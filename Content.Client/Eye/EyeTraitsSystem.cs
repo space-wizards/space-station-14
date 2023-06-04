@@ -6,6 +6,7 @@ using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Timing;
+using EyeProtectionComponent = Content.Client.Eye.Blinding.EyeProtectionComponent;
 
 namespace Content.Client.Eye;
 
