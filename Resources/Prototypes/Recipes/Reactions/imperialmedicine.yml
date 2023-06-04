@@ -31,9 +31,9 @@
       amount: 1
     Copper:
       amount: 2
-    Inaprovaline:
+    Bicaridine:
       amount: 1
-    Oculine:
+    Tricordrasine:
       amount: 1
   products:
     Rezocillin: 1
@@ -48,4 +48,4 @@
     AdenosineTriPhosphate:
       amount: 1
   products:
-    Thrivenin: 1
+    Thrivenin: 2

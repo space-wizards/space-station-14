@@ -92,10 +92,11 @@
       - !type:HealthChange
         damage:
           types:
-            Cellular: -1.45
-            Brute: -0.5
-            Poison: -0.2
-            Radiation: -1
+            Cellular: -1.35
+            Brute: -2
+            Poison: -1.25 
+            Radiation: -1.33
+            Heat: -1.33
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
