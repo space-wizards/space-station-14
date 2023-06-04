@@ -336,6 +336,8 @@ public sealed partial class DungeonJob
     {
         // TODO: Annotate a random room middle as the entrance.
         // Ideally we'd just use markers for it.
+
+        // TODO: For now just pick a random middle spot as the entrance
     }
 
     private async Task PostGen(MiddleConnectionPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
