@@ -32,23 +32,15 @@ public sealed partial class DungeonJob
         // - Tiles first
         foreach (var room in dungeon.Rooms)
         {
-            foreach (var index in room.Tiles)
+            foreach (var neighbor in room.Exterior)
             {
-                for (var x = -1; x <= 1; x++)
-                {
-                    for (var y = -1; y <= 1; y++)
-                    {
-                        var neighbor = new Vector2i(x + index.X, y + index.Y);
+                if (dungeon.RoomTiles.Contains(neighbor))
+                    continue;
 
-                        if (dungeon.RoomTiles.Contains(neighbor))
-                            continue;
+                if (!_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
+                    continue;
 
-                        if (!_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
-                            continue;
-
-                        tiles.Add((neighbor, tile));
-                    }
-                }
+                tiles.Add((neighbor, tile));
             }
         }
 
@@ -338,6 +330,12 @@ public sealed partial class DungeonJob
                 validTiles.Clear();
             }
         }
+    }
+
+    private async Task PostGen(CorridorPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
+    {
+        // TODO: Annotate a random room middle as the entrance.
+        // Ideally we'd just use markers for it.
     }
 
     private async Task PostGen(MiddleConnectionPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)

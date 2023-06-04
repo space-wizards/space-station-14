@@ -25,6 +25,7 @@
     - -14,36,-9,53
     - 10,36,15,53
 
+# Four large boxes on cardinal points with cross in the middle.
 - type: dungeonPreset
   id: FourSquare
   roomPacks:
@@ -35,3 +36,11 @@
     - -2,18,3,35
     - -20,24,-3,29
     - 4,24,21,29
+
+- type: dungeonPreset
+  id: FourSquareSpread
+  roomPacks:
+    - -38,18,-21,35
+    - -8,36,9,53
+    - 22,18,39,35
+    - -8,0,9,17

@@ -1,0 +1,21 @@
+# dungen:
+#   Try spread room packs
+#   Generate rooms + reserve walls (doors / walls at this point should be optional i..e the corridor pieces we might still want)
+#   once that works
+# Also need to add exteriors to a global exteriors hashset.
+#   Prim's algo to connect single line tiles to each one as MT (specify connections as like a generic thing)
+#   add param for width (i.e. 0 / 1 tiles away)
+#   add all neighbors and spawn walls
+#   Rest of the postgen steps as normal
+
+- type: dungeonConfig
+  id: ExperimentTwo
+  generator: !type:PrefabDungen
+    roomWhitelist:
+      - SalvageExperiment
+    presets:
+      - FourSquareSpread
+  postGeneration:
+    - !type:CorridorPostGen
+      width: 3
+

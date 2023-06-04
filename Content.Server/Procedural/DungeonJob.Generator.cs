@@ -125,10 +125,7 @@ public sealed partial class DungeonJob
         }
 
         var tiles = new List<(Vector2i, Tile)>();
-        var dungeon = new Dungeon()
-        {
-            Position = _position
-        };
+        var dungeon = new Dungeon();
         var availablePacks = new List<DungeonRoomPackPrototype>();
         var chosenPacks = new DungeonRoomPackPrototype?[gen.RoomPacks.Count];
         var packTransforms = new Matrix3[gen.RoomPacks.Count];
@@ -311,6 +308,8 @@ public sealed partial class DungeonJob
                 var templateGrid = _entManager.GetComponent<MapGridComponent>(templateMapUid);
                 var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
                 var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);
+                var exterior = new HashSet<Vector2i>(room.Size.X * 2 + room.Size.Y * 2);
+                var tileOffset = -roomCenter + grid.TileSize / 2f;
 
                 // Load tiles
                 for (var x = 0; x < room.Size.X; x++)
@@ -320,10 +319,24 @@ public sealed partial class DungeonJob
                         var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
                         var tileRef = templateGrid.GetTileRef(indices);
 
-                        var tilePos = dungeonMatty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter);
+                        var tilePos = dungeonMatty.Transform(indices + tileOffset);
                         var rounded = tilePos.Floored();
                         tiles.Add((rounded, tileRef.Tile));
                         roomTiles.Add(rounded);
+                    }
+                }
+
+                for (var x = -1; x <= room.Size.X; x++)
+                {
+                    for (var y = -1; y <= room.Size.Y; y++)
+                    {
+                        if (x != -1 && y != -1 && x != room.Size.X && y != room.Size.Y)
+                        {
+                            continue;
+                        }
+
+                        var tilePos = dungeonMatty.Transform(new Vector2i(x + room.Offset.X, y + room.Offset.Y) + tileOffset);
+                        exterior.Add(tilePos.Floored());
                     }
                 }
 
@@ -331,12 +344,12 @@ public sealed partial class DungeonJob
 
                 foreach (var tile in roomTiles)
                 {
-                    center += ((Vector2) tile + grid.TileSize / 2f);
+                    center += (Vector2) tile + grid.TileSize / 2f;
                 }
 
                 center /= roomTiles.Count;
 
-                dungeon.Rooms.Add(new DungeonRoom(roomTiles, center));
+                dungeon.Rooms.Add(new DungeonRoom(roomTiles, center, exterior));
                 grid.SetTiles(tiles);
                 tiles.Clear();
                 var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
@@ -434,8 +447,6 @@ public sealed partial class DungeonJob
         {
             dungeonCenter += room.Center;
         }
-
-        dungeon.Center = (Vector2i) (dungeonCenter / dungeon.Rooms.Count);
 
         return dungeon;
     }
