@@ -15,9 +15,6 @@
       shader: unshaded
       map: ["enum.DiseaseMachineVisualLayers.IsOn"]
     netsync: false
-  - type: DiseaseVaccineCreator
-  - type: DiseaseMachine
-    machineOutput: Vaccine
   - type: Appearance
   - type: DiseaseMachineVisuals
     idleState: icon

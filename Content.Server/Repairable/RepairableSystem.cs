@@ -65,7 +65,7 @@ namespace Content.Server.Repairable
                 delay *= component.SelfRepairPenalty;
 
             // Can the tool actually repair this, does it have enough fuel?
-            args.Handled = !_toolSystem.UseTool(args.Used, args.User, uid, delay, component.QualityNeeded, new RepairFinishedEvent(), component.FuelCost);
+            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, delay, component.QualityNeeded, new RepairFinishedEvent(), component.FuelCost);
         }
     }
 }

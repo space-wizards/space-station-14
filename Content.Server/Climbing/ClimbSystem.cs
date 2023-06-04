@@ -13,6 +13,7 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -41,7 +42,6 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly BonkSystem _bonkSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -94,26 +94,35 @@ public sealed class ClimbSystem : SharedClimbSystem
         // TODO VERBS ICON add a climbing icon?
         args.Verbs.Add(new AlternativeVerb
         {
-            Act = () => TryMoveEntity(component, args.User, args.User, args.Target),
+            Act = () => TryClimb(args.User, args.User, args.Target, component),
             Text = Loc.GetString("comp-climbable-verb-climb")
         });
     }
 
     private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, ref DragDropTargetEvent args)
     {
-        TryMoveEntity(component, args.User, args.Dragged, uid);
+        // definitely a better way to check if two entities are equal
+        // but don't have computer access and i have to do this without syntax
+        if (args.Handled || args.User != args.Dragged && !HasComp<HandsComponent>(args.User))
+            return;
+        TryClimb(args.User, args.Dragged, uid, component);
     }
 
-    private void TryMoveEntity(ClimbableComponent component, EntityUid user, EntityUid entityToMove,
-        EntityUid climbable)
+    public void TryClimb(EntityUid user,
+        EntityUid entityToMove,
+        EntityUid climbable,
+        ClimbableComponent? comp = null,
+        ClimbingComponent? climbing = null)
     {
-        if (!TryComp(entityToMove, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
+        if (!Resolve(climbable, ref comp) || !Resolve(entityToMove, ref climbing))
             return;
 
-        if (_bonkSystem.TryBonk(entityToMove, climbable))
+        // Note, IsClimbing does not mean a DoAfter is active, it means the target has already finished a DoAfter and
+        // is currently on top of something..
+        if (climbing.IsClimbing)
             return;
 
-        var args = new DoAfterArgs(user, component.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
+        var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -222,7 +231,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             if (fixture == args.OtherFixture)
                 continue;
             // If still colliding with a climbable, do not stop climbing
-            if (HasComp<ClimbableComponent>(fixture.Body.Owner))
+            if (HasComp<ClimbableComponent>(args.OtherEntity))
                 return;
         }
 
@@ -338,7 +347,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         Climb(uid, uid, uid, climbable, true, component);
     }
 
-    private void OnBuckleChange(EntityUid uid, ClimbingComponent component, BuckleChangeEvent args)
+    private void OnBuckleChange(EntityUid uid, ClimbingComponent component, ref BuckleChangeEvent args)
     {
         if (!args.Buckling)
             return;

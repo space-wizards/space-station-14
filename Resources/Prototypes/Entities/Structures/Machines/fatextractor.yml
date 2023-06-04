@@ -1,0 +1,115 @@
+﻿- type: entity
+  id: FatExtractor
+  parent: BaseMachinePowered
+  name: lipid extractor
+  description: Safely and efficiently extracts excess fat from a subject.
+  components:
+  - type: FatExtractor
+    processSound:
+      path: /Audio/Machines/microwave_loop.ogg
+      params:
+        loop: true
+        maxdistance: 5
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/fat_sucker.rsi
+    snapCardinals: true
+    layers:
+    - state: fat
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: fat_door_off
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: fat_red
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: fat_green
+      shader: unshaded
+      visible: false
+      map: ["enum.FatExtractorVisualLayers.Light"]
+    - state: fat_panel
+      visible: false
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: fat_stack #cash cash cash
+      visible: false
+      map: ["enum.FatExtractorVisualLayers.Stack"]
+    - state: fat_smoke
+      visible: false
+      map: ["enum.FatExtractorVisualLayers.Smoke"]
+  - type: Lock
+    breakOnEmag: false
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        enum.StorageVisualLayers.Door:
+          True: { visible: false }
+          False: { visible: true }
+      enum.FatExtractorVisuals.Processing:
+        enum.StorageVisualLayers.Door:
+          True: { state: fat_door_on }
+          False: { state: fat_door_off }
+        enum.FatExtractorVisualLayers.Smoke:
+          True: { visible: true }
+          False: { visible: false }
+        enum.FatExtractorVisualLayers.Stack:
+          True: { visible: true }
+          False: { visible: false }
+        enum.FatExtractorVisualLayers.Light:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PowerDeviceVisuals.Powered:
+        enum.FatExtractorVisualLayers.Light:
+          False: { visible: false }
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.StorageVisuals.HasContents:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: fat_yellow }
+          False: { state: fat_red }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Construction
+    graph: Machine
+    node: machine
+    containers:
+    - machine_board
+    - machine_parts
+    - entity_storage
+  - type: EmptyOnMachineDeconstruct
+    containers:
+     - entity_storage
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Machine
+    board: FatExtractorMachineCircuitboard
+  - type: WiresPanel
+  - type: Wires
+    BoardName: FatExtractor
+    LayoutId: FatExtractor
+  - type: Appearance
+  - type: Speech
+  - type: Advertise
+    pack: FatExtractorFacts
+  - type: StaticPrice
+    price: 1000
+  - type: ResistLocker
+  - type: EntityStorage
+    capacity: 1
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      entity_storage: !type:Container

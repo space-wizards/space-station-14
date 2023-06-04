@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -8,6 +9,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -33,7 +35,7 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
     [Dependency]
-    private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
+    private readonly ChemicalReactionSystem _chemistrySystem = default!;
 
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -64,7 +66,9 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         SolutionContainerManagerComponent? solutionsManager = null;
         if (!Resolve(args.Examined, ref solutionsManager)
             || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solutionHolder))
+        {
             return;
+        }
 
         var primaryReagent = solutionHolder.GetPrimaryReagentId();
 
@@ -74,7 +78,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return;
         }
 
-        if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
+        if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? primary))
         {
             Logger.Error(
                 $"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
@@ -90,7 +94,53 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             ("wordedAmount", Loc.GetString(solutionHolder.Contents.Count == 1
                 ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-            ("desc", proto.LocalizedPhysicalDescription)));
+            ("desc", primary.LocalizedPhysicalDescription)));
+
+        // Add descriptions of immediately recognizable reagents, like water or beer
+        var recognized = new List<ReagentPrototype>();
+        foreach (var (id, _) in solutionHolder)
+        {
+            if (!_prototypeManager.TryIndex<ReagentPrototype>(id, out var proto))
+            {
+                continue;
+            }
+
+            if (!proto.Recognizable)
+            {
+                continue;
+            }
+
+            recognized.Add(proto);
+        }
+
+        // Skip if there's nothing recognizable
+        if (recognized.Count == 0)
+            return;
+
+        var msg = new StringBuilder();
+        foreach (var reagent in recognized)
+        {
+            string part;
+            if (reagent == recognized[0])
+            {
+                part = "examinable-solution-recognized-first";
+            }
+            else if (reagent == recognized[^1])
+            {
+                // this loc specifically  requires space to be appended, fluent doesnt support whitespace
+                msg.Append(' ');
+                part = "examinable-solution-recognized-last";
+            }
+            else
+            {
+                part = "examinable-solution-recognized-next";
+            }
+
+            msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
+                ("chemical", reagent.LocalizedName)));
+        }
+
+        args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals", ("recognizedString", msg.ToString())));
     }
 
     public void UpdateAppearance(EntityUid uid, Solution solution,
@@ -123,6 +173,25 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     public Solution SplitSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity)
     {
         var splitSol = solutionHolder.SplitSolution(quantity);
+        UpdateChemicals(targetUid, solutionHolder);
+        return splitSol;
+    }
+
+    public Solution SplitStackSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity, int stackCount)
+    {
+        var splitSol = solutionHolder.SplitSolution(quantity / stackCount);
+        solutionHolder.SplitSolution(quantity - splitSol.Volume);
+        UpdateChemicals(targetUid, solutionHolder);
+        return splitSol;
+    }
+
+    /// <summary>
+    /// Splits a solution without the specified reagent(s).
+    /// </summary>
+    public Solution SplitSolutionWithout(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity,
+        params string[] reagents)
+    {
+        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagents);
         UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }
@@ -491,6 +560,37 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Gets the most common reagent across all solutions by volume.
+    /// </summary>
+    /// <param name="component"></param>
+    public ReagentPrototype? GetMaxReagent(SolutionContainerManagerComponent component)
+    {
+        if (component.Solutions.Count == 0)
+            return null;
+
+        var reagentCounts = new Dictionary<string, FixedPoint2>();
+
+        foreach (var solution in component.Solutions.Values)
+        {
+            foreach (var reagent in solution.Contents)
+            {
+                reagentCounts.TryGetValue(reagent.ReagentId, out var existing);
+                existing += reagent.Quantity;
+                reagentCounts[reagent.ReagentId] = existing;
+            }
+        }
+
+        var max = reagentCounts.Max();
+
+        return _prototypeManager.Index<ReagentPrototype>(max.Key);
+    }
+
+    public SoundSpecifier? GetSound(SolutionContainerManagerComponent component)
+    {
+        var max = GetMaxReagent(component);
+        return max?.FootstepSound;
+    }
 
     // Thermal energy and temperature management.
 

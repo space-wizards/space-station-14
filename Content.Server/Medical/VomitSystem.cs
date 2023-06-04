@@ -2,26 +2,33 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
+using Content.Shared.Audio;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Fluids.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.StatusEffect;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Medical
 {
     public sealed class VomitSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly ThirstSystem _thirst = default!;
@@ -49,32 +56,37 @@ namespace Content.Server.Medical
             if (TryComp<StatusEffectsComponent>(uid, out var status))
                 _stun.TrySlowdown(uid, TimeSpan.FromSeconds(solutionSize), true, 0.5f, 0.5f, status);
 
-            var puddle = EntityManager.SpawnEntity("PuddleVomit", Transform(uid).Coordinates);
+            // TODO: Need decals
+            var solution = new Solution();
 
-            var forensics = EnsureComp<ForensicsComponent>(puddle);
-            if (TryComp<DnaComponent>(uid, out var dna))
-                forensics.DNAs.Add(dna.DNA);
-
-            var puddleComp = Comp<PuddleComponent>(puddle);
-
-            _audio.PlayPvs("/Audio/Effects/Fluids/splat.ogg", uid, AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
-
-            _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
-            // Get the solution of the puddle we spawned
-            if (!_solutionContainer.TryGetSolution(puddle, puddleComp.SolutionName, out var puddleSolution))
-                return;
             // Empty the stomach out into it
             foreach (var stomach in stomachList)
             {
-                if (_solutionContainer.TryGetSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName, out var sol))
-                    _solutionContainer.TryAddSolution(puddle, puddleSolution, sol);
+                if (_solutionContainer.TryGetSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName,
+                        out var sol))
+                {
+                    solution.AddSolution(sol, _proto);
+                    sol.RemoveAllSolution();
+                    _solutionContainer.UpdateChemicals(stomach.Comp.Owner, sol);
+                }
             }
             // And the small bit of the chem stream from earlier
             if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
             {
-                var temp = bloodStream.ChemicalSolution.SplitSolution(solutionSize);
-                _solutionContainer.TryAddSolution(puddle, puddleSolution, temp);
+                var temp = _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize);
+                solution.AddSolution(temp, _proto);
             }
+
+            if (_puddle.TrySpillAt(uid, solution, out var puddle, false))
+            {
+                var forensics = EnsureComp<ForensicsComponent>(puddle);
+                if (TryComp<DnaComponent>(uid, out var dna))
+                    forensics.DNAs.Add(dna.DNA);
+            }
+
+            // Force sound to play as spill doesn't work if solution is empty.
+            _audio.PlayPvs("/Audio/Effects/Fluids/splat.ogg", uid, AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
+            _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
         }
     }
 }

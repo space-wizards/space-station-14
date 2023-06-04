@@ -11,6 +11,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Audio
 {
@@ -106,7 +107,19 @@ namespace Content.Client.Audio
                 _playingCount.Remove(sound.Sound);
         }
 
-        private void SetAmbienceVolume(float value) => _ambienceVolume = value;
+        private void SetAmbienceVolume(float value)
+        {
+            _ambienceVolume = value;
+
+            foreach (var (comp, values) in _playingSounds)
+            {
+                if (values.Stream == null)
+                    continue;
+
+                var stream = (AudioSystem.PlayingStream) values.Stream;
+                stream.Volume = _params.Volume + comp.Volume + _ambienceVolume;
+            }
+        }
         private void SetCooldown(float value) => _cooldown = value;
         private void SetAmbientCount(int value) => _maxAmbientCount = value;
         private void SetAmbientRange(float value) => _maxAmbientRange = value;
@@ -205,7 +218,7 @@ namespace Content.Client.Audio
             string key;
 
             if (ambientComp.Sound is SoundPathSpecifier path)
-                key = path.Path?.ToString() ?? string.Empty;
+                key = path.Path.ToString();
             else
                 key = ((SoundCollectionSpecifier) ambientComp.Sound).Collection ?? string.Empty;
 

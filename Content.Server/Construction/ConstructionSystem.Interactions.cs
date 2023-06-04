@@ -7,6 +7,7 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Steps;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -33,7 +34,7 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<ConstructionComponent, ConstructionInteractDoAfterEvent>(EnqueueEvent);
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
-            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem)});
+            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem)},  new []{typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
         }
 
@@ -139,7 +140,7 @@ namespace Content.Server.Construction
 
             if (step == null)
             {
-                _sawmill.Warning($"Called {nameof(HandleEdge)} on entity {uid} but the current state is not valid for that!");
+                _sawmill.Warning($"Called {nameof(HandleEdge)} on entity {ToPrettyString(uid)} but the current state is not valid for that!");
                 return HandleResult.False;
             }
 
@@ -162,6 +163,10 @@ namespace Content.Server.Construction
             {
                 // Edge finished!
                 PerformActions(uid, user, edge.Completed);
+
+                if (construction.Deleted)
+                    return HandleResult.True;
+
                 construction.TargetEdgeIndex = null;
                 construction.EdgeIndex = null;
                 construction.StepIndex = 0;
@@ -223,9 +228,6 @@ namespace Content.Server.Construction
             // The DoAfter events can only perform special logic when we're not validating events.
             if (ev is ConstructionInteractDoAfterEvent interactDoAfter)
             {
-                if (!validation)
-                    construction.DoAfter = null;
-
                 if (interactDoAfter.Cancelled)
                     return HandleResult.False;
 
@@ -256,12 +258,6 @@ namespace Content.Server.Construction
                     if (ev is not InteractUsingEvent interactUsing)
                         break;
 
-                    if (construction.DoAfter != null && !validation)
-                    {
-                        _doAfterSystem.Cancel(construction.DoAfter);
-                        return HandleResult.False;
-                    }
-
                     // TODO: Sanity checks.
 
                     user = interactUsing.User;
@@ -290,7 +286,7 @@ namespace Content.Server.Construction
                             NeedHand = true
                         };
 
-                        var started  = _doAfterSystem.TryStartDoAfter(doAfterEventArgs, out construction.DoAfter);
+                        var started  = _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
 
                         if (!started)
                             return HandleResult.False;
@@ -343,12 +339,6 @@ namespace Content.Server.Construction
                     if (ev is not InteractUsingEvent interactUsing)
                         break;
 
-                    if (construction.DoAfter != null && !validation)
-                    {
-                        _doAfterSystem.Cancel(construction.DoAfter);
-                        return HandleResult.False;
-                    }
-
                     // TODO: Sanity checks.
 
                     user = interactUsing.User;
@@ -374,10 +364,10 @@ namespace Content.Server.Construction
                         TimeSpan.FromSeconds(toolInsertStep.DoAfter),
                         new [] { toolInsertStep.Tool },
                         new ConstructionInteractDoAfterEvent(interactUsing),
-                        out construction.DoAfter,
+                        out var doAfter,
                         fuel: toolInsertStep.Fuel);
 
-                    return construction.DoAfter != null ? HandleResult.DoAfter : HandleResult.False;
+                    return result && doAfter != null ? HandleResult.DoAfter : HandleResult.False;
                 }
 
                 case TemperatureConstructionGraphStep temperatureChangeStep:
@@ -484,28 +474,17 @@ namespace Content.Server.Construction
                 {
 #endif
 
-                // temporary code for debugging a grafana exception. Something is fishy with the girder graph.
-                object? prev = null;
-                var queued = string.Join(", ", construction.InteractionQueue.Select(x => x.GetType().Name));
-
                 // Handle all queued interactions!
                 while (construction.InteractionQueue.TryDequeue(out var interaction))
                 {
                     if (construction.Deleted)
                     {
-                        // I suspect the error might just happen if two users try to deconstruction or otherwise modify an entity at the exact same tick?
-                        // In which case this isn't really an error, but should just be a `if (deleted) -> break`
-                        // But might as well verify this.
-
                         _sawmill.Error($"Construction component was deleted while still processing interactions." +
                             $"Entity {ToPrettyString(uid)}, graph: {construction.Graph}, " +
-                            $"Previous: {prev?.GetType()?.Name ?? "null"}, " +
                             $"Next: {interaction.GetType().Name}, " +
-                            $"Initial Queue: {queued}, " +
                             $"Remaining Queue: {string.Join(", ", construction.InteractionQueue.Select(x => x.GetType().Name))}");
                         break;
                     }
-                    prev = interaction;
 
                     // We set validation to false because we actually want to perform the interaction here.
                     HandleEvent(uid, interaction, false, construction);

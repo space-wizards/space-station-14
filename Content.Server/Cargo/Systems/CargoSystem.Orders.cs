@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
-using Content.Server.MachineLinking.System;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
@@ -14,6 +14,7 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Server.Paper;
+using Content.Shared.Access.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -34,7 +35,7 @@ namespace Content.Server.Cargo.Systems
 
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-        [Dependency] private readonly SignalLinkerSystem _linker = default!;
+        [Dependency] private readonly DeviceLinkSystem _linker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -243,7 +244,7 @@ namespace Content.Server.Cargo.Systems
             return new CargoOrderData(id, args.ProductId, args.Amount, args.Requester, args.Reason);
         }
 
-        private int GetOutstandingOrderCount(StationCargoOrderDatabaseComponent component)
+        public int GetOutstandingOrderCount(StationCargoOrderDatabaseComponent component)
         {
             var amount = 0;
 
@@ -281,11 +282,35 @@ namespace Content.Server.Cargo.Systems
                 if (station != component.Owner)
                     continue;
 
-                UpdateShuttleState(uid, comp, station);
+                UpdateShuttleState(uid, station);
             }
         }
 
-        public bool TryAddOrder(StationCargoOrderDatabaseComponent component, CargoOrderData data)
+        public bool AddAndApproveOrder(StationCargoOrderDatabaseComponent component, string productId, int qty, string sender, string description, string dest)
+        {
+            if (!_prototypeManager.HasIndex<CargoProductPrototype>(productId))
+            {
+                _sawmill.Warning($"CargoSystem.Orders could not find CargoProductPrototype for '{productId}' in {description}.");
+                // Pretend that it worked OK, since we don't want the caller to try again.
+                return true;
+            }
+
+            // Make an order
+            var id = GenerateOrderId(component);
+            var order = new CargoOrderData(id, productId, qty, sender, description);
+
+            // Approve it now
+            order.SetApproverData(new IdCardComponent(){FullName = dest, JobTitle = sender});
+
+            // Log order addition
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"AddAndApproveOrder {description} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}]");
+
+            // Add it to the list
+            return TryAddOrder(component, order);
+        }
+
+        private bool TryAddOrder(StationCargoOrderDatabaseComponent component, CargoOrderData data)
         {
             component.Orders.Add(data);
             UpdateOrders(component);
@@ -294,7 +319,7 @@ namespace Content.Server.Cargo.Systems
 
         private int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
         {
-            // We need an arbitrary unique ID to idenitfy orders, since they may
+            // We need an arbitrary unique ID to identify orders, since they may
             // want to be cancelled later.
             return ++orderDB.NumOrdersCreated;
         }

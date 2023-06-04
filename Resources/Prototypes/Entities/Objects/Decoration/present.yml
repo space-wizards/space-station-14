@@ -55,6 +55,8 @@
         orGroup: GiftPool
       - id: JetpackMiniFilled
         orGroup: GiftPool
+      - id: PlushieGhost
+        orGroup: GiftPool
       - id: PlushieBee
         orGroup: GiftPool
       - id: PlushieRGBee
@@ -376,5 +378,4 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage

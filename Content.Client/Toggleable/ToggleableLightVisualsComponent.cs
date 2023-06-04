@@ -1,5 +1,4 @@
 using Content.Shared.Hands.Components;
-using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Toggleable;
 
@@ -14,7 +13,7 @@ namespace Content.Client.Toggleable;
 public sealed class ToggleableLightVisualsComponent : Component
 {
     /// <summary>
-    ///     Sprite layer that will have it's visibility toggled when this item is toggled.
+    ///     Sprite layer that will have its visibility toggled when this item is toggled.
     /// </summary>
     [DataField("spriteLayer")]
     public string SpriteLayer = "light";

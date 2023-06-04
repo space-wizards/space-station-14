@@ -3,7 +3,6 @@ using Content.Shared.Chemistry.Reagent;
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry;
@@ -31,7 +30,18 @@ public sealed class ChemistryGuideDataSystem : EntitySystem
     private void OnReceiveRegistryUpdate(MsgUpdateReagentGuideRegistry message)
     {
         var data = message.Changeset;
+        if (data == null)
+            return;
 
+        foreach (var remove in data.Removed)
+        {
+            _reagentGuideRegistry.Remove(remove);
+        }
+
+        foreach (var (key, val) in data.GuideEntries)
+        {
+            _reagentGuideRegistry[key] = val;
+        }
     }
 }
 

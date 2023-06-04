@@ -28,6 +28,24 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
 
+- type: construction
+  name: station map
+  id: StationMap
+  graph: StationMap
+  startNode: start
+  targetNode: station_map
+  category: construction-category-structures
+  description: A station map.
+  icon:
+    sprite: Structures/Machines/station_map.rsi
+    state: station_map0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}
+
 # POWER
 - type: construction
   name: APC
@@ -39,7 +57,7 @@
   description: "Area Power Controller (APC). Controls power. In an area."
   icon:
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -65,7 +83,6 @@
       targets:
         - Lattice
         - Plating
-        - UnderPlating
 
 - type: construction
   name: cable terminal
@@ -211,6 +228,23 @@
   icon:
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j1s
+  mirror: DisposalRouterFlipped
+
+- type: construction
+  hide: true
+  name: disposal router
+  description: A three-way router. Entities with matching tags get routed to the side.
+  id: DisposalRouterFlipped
+  graph: DisposalPipe
+  startNode: start
+  targetNode: routerflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j2s
+  mirror: DisposalRouter
 
 - type: construction
   name: disposal junction
@@ -225,6 +259,23 @@
   icon:
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j1
+  mirror: DisposalJunctionFlipped
+
+- type: construction
+  hide: true
+  name: disposal junction
+  description: A three-way junction. The arrow indicates where items exit.
+  id: DisposalJunctionFlipped
+  graph: DisposalPipe
+  startNode: start
+  targetNode: junctionflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j2
+  mirror: DisposalJunction
 
 - type: construction
   name: disposal Y junction
@@ -624,6 +675,25 @@
   icon:
     sprite: Structures/Piping/Atmospherics/gasfilter.rsi
     state: gasFilter
+  mirror: GasFilterFlipped
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  id: GasFilterFlipped
+  hide: true
+  name: gas filter
+  description: Very useful for filtering gases.
+  graph: GasTrinary
+  startNode: start
+  targetNode: filterflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+    state: gasFilterF
+  mirror: GasFilter
   conditions:
     - !type:TileNotBlocked {}
 
@@ -640,6 +710,25 @@
   icon:
     sprite: Structures/Piping/Atmospherics/gasmixer.rsi
     state: gasMixer
+  mirror: GasMixerFlipped
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  id: GasMixerFlipped
+  hide: true
+  name: gas mixer
+  description: Very useful for mixing gases.
+  graph: GasTrinary
+  startNode: start
+  targetNode: mixerflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gasmixer.rsi
+    state: gasMixerF
+  mirror: GasMixer
   conditions:
     - !type:TileNotBlocked {}
 
@@ -677,3 +766,57 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition {}
+
+# TIMERS
+- type: construction
+  name: signal timer
+  id: SignalTimer
+  graph: Timer
+  startNode: start
+  targetNode: signal
+  category: construction-category-utilities
+  description: "A wallmounted timer for sending timed signals to things."
+  icon:
+    sprite: Structures/Wallmounts/switch.rsi
+    state: on
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+
+- type: construction
+  name: screen timer
+  id: ScreenTimer
+  graph: Timer
+  startNode: start
+  targetNode: screen
+  category: construction-category-utilities
+  description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text."
+  icon:
+    sprite: Structures/Wallmounts/textscreen.rsi
+    state: textscreen
+  objectType: Structure
+  canRotate: false
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+
+- type: construction
+  name: brig timer
+  id: BrigTimer
+  graph: Timer
+  startNode: start
+  targetNode: brig
+  category: construction-category-utilities
+  description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text and requires security access to use."
+  icon:
+    sprite: Structures/Wallmounts/textscreen.rsi
+    state: textscreen
+  objectType: Structure
+  canRotate: false
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition

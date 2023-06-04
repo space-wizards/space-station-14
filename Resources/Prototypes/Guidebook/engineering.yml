@@ -1,39 +1,53 @@
 ﻿- type: guideEntry
   id: Engineering
   name: guide-entry-engineering
-  text: "/Server Info/Guidebook/Engineering.xml"
+  text: "/ServerInfo/Guidebook/Engineering.xml"
   children:
   - Atmospherics
   - Construction
   - Power
   - ShuttleCraft
+  - Networking
 
 - type: guideEntry
   id: Construction
   name: guide-entry-construction
-  text: "/Server Info/Guidebook/Construction.xml"
+  text: "/ServerInfo/Guidebook/Construction.xml"
 
 - type: guideEntry
   id: Atmospherics
   name: guide-entry-atmospherics
-  text: "/Server Info/Guidebook/Atmospherics.xml"
+  text: "/ServerInfo/Guidebook/Atmospherics.xml"
   children:
   - Fires
 
 - type: guideEntry
   id: Fires
   name: guide-entry-fires
-  text: "/Server Info/Guidebook/Fires.xml"
+  text: "/ServerInfo/Guidebook/Fires.xml"
 
 - type: guideEntry
   id: ShuttleCraft
   name: guide-entry-shuttle-craft
-  text: "/Server Info/Guidebook/Shuttlecraft.xml"
+  text: "/ServerInfo/Guidebook/Shuttlecraft.xml"
+
+- type: guideEntry
+  id: Networking
+  name: guide-entry-networking
+  text: "/ServerInfo/Guidebook/Networking.xml"
+  children:
+  - NetworkConfigurator
+
+- type: guideEntry
+  id: NetworkConfigurator
+  name: guide-entry-network-configurator
+  text: "/ServerInfo/Guidebook/Network_Configurator.xml"
+
 
 - type: guideEntry
   id: Power
   name: guide-entry-power
-  text: "/Server Info/Guidebook/Power.xml"
+  text: "/ServerInfo/Guidebook/Power.xml"
   children:
   - AME
   - Singularity
@@ -41,9 +55,9 @@
 - type: guideEntry
   id: AME
   name: guide-entry-ame
-  text: "/Server Info/Guidebook/AME.xml"
+  text: "/ServerInfo/Guidebook/AME.xml"
   
 - type: guideEntry
   id: Singularity
   name: guide-entry-singularity
-  text: "/Server Info/Guidebook/Singularity.xml"
+  text: "/ServerInfo/Guidebook/Singularity.xml"

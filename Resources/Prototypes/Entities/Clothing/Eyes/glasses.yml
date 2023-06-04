@@ -89,6 +89,19 @@
 
 - type: entity
   parent: ClothingEyesBase
+  id: ClothingEyesGlassesOutlawGlasses
+  name: outlaw glasses
+  description: A must for every self-respecting undercover agent.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/outlawglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/outlawglasses.rsi
+  - type: VisionCorrection
+  - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingEyesBase
   id: ClothingEyesGlassesSunglasses
   name: sun glasses
   description: Useful both for security and cargonia.
@@ -111,6 +124,20 @@
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesMercenary
+  name: mercenary glasses
+  description: Glasses made for combat, to protect the eyes from bright blinding flashes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/mercglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/mercglasses.rsi
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5

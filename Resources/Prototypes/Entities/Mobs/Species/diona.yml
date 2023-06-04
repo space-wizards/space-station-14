@@ -28,7 +28,8 @@
     bloodReagent: Water
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeCircle
           radius: 0.35
         density: 300 #weighs more than humans because wood
@@ -39,6 +40,7 @@
           - MobLayer
   - type: Inventory
     templateId: diona
+  - type: InventorySlots
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
@@ -60,5 +62,6 @@
   components:
   - type: Inventory
     templateId: diona
+  - type: InventorySlots
   - type: HumanoidAppearance
     species: Diona

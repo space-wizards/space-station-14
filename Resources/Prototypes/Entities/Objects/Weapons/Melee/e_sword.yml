@@ -53,9 +53,6 @@
     malus: 0
   - type: Reflect
     enabled: false
-    energeticChance: 0.5
-    kineticChance: 0.25
-    spread: 45
 
 - type: entity
   name: pen
@@ -121,3 +118,47 @@
     - Write
   - type: DisarmMalus
     malus: 0
+
+- type: entity
+  parent: BaseItem
+  id: EnergyDaggerBox
+  name: e-dagger box
+  suffix: E-Dagger
+  description: A small box containing an e-dagger. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: e_dagger
+    netsync: false
+  - type: SpawnItemsOnUse
+    items:
+    - id: EnergyDagger
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: energy cutlass
+  parent: EnergySword
+  id: EnergyCutlass
+  description: An exotic energy weapon.
+  components:
+  - type: EnergySword
+    secret: true
+    litDamageBonus:
+        types:
+            Slash: 7.5
+            Heat: 7.5
+            Blunt: -1
+    litDisarmMalus: 0.6
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_cutlass.rsi
+    layers:
+      - state: e_cutlass
+      - state: e_cutlass_blade
+        color: "#e95151"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: Item
+    size: 5
+    sprite: Objects/Weapons/Melee/e_cutlass.rsi

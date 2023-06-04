@@ -1,14 +1,18 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -16,47 +20,23 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// Basically smoke and foam reactions.
     /// </summary>
     [UsedImplicitly]
-    [ImplicitDataDefinitionForInheritors]
-    public abstract class AreaReactionEffect : ReagentEffect, ISerializationHooks
+    [DataDefinition]
+    public sealed class AreaReactionEffect : ReagentEffect
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
-        /// <summary>
-        /// Used for calculating the spread range of the effect based on the intensity of the reaction.
-        /// </summary>
-        [DataField("rangeConstant")] private float _rangeConstant;
-        [DataField("rangeMultiplier")] private float _rangeMultiplier = 1.1f;
-        [DataField("maxRange")] private int _maxRange = 10;
-
-        /// <summary>
-        /// If true the reagents get diluted or concentrated depending on the range of the effect
-        /// </summary>
-        [DataField("diluteReagents")] private bool _diluteReagents;
-
-        /// <summary>
-        /// Used to calculate dilution. Increasing this makes the reagents more diluted.
-        /// </summary>
-        [DataField("reagentDilutionFactor")] private float _reagentDilutionFactor = 1f;
-
         /// <summary>
         /// How many seconds will the effect stay, counting after fully spreading.
         /// </summary>
         [DataField("duration")] private float _duration = 10;
 
         /// <summary>
-        /// How many seconds between each spread step.
+        /// How many units of reaction for 1 smoke entity.
         /// </summary>
-        [DataField("spreadDelay")] private float _spreadDelay = 0.5f;
+        [DataField("overflowThreshold")] public FixedPoint2 OverflowThreshold = FixedPoint2.New(2.5);
 
         /// <summary>
-        /// How many seconds between each remove step.
+        /// The entity prototype that will be spawned as the effect.
         /// </summary>
-        [DataField("removeDelay")] private float _removeDelay = 0.5f;
-
-        /// <summary>
-        /// The entity prototype that will be spawned as the effect. It needs a component derived from SolutionAreaEffectComponent.
-        /// </summary>
-        [DataField("prototypeId", required: true)]
+        [DataField("prototypeId", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string _prototypeId = default!;
 
         /// <summary>
@@ -67,55 +47,38 @@ namespace Content.Server.Chemistry.ReactionEffects
         public override bool ShouldLog => true;
         public override LogImpact LogImpact => LogImpact.High;
 
-        void ISerializationHooks.AfterDeserialization()
-        {
-            IoCManager.InjectDependencies(this);
-        }
-
         public override void Effect(ReagentEffectArgs args)
         {
             if (args.Source == null)
                 return;
 
-            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.Volume);
-            // We take the square root so it becomes harder to reach higher amount values
-            var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(args.Quantity.Float()));
-            amount = Math.Min(amount, _maxRange);
-
-            if (_diluteReagents)
-            {
-                // The maximum value of solutionFraction is _reagentMaxConcentrationFactor, achieved when amount = 0
-                // The infimum of solutionFraction is 0, which is approached when amount tends to infinity
-                // solutionFraction is equal to 1 only when amount equals _reagentDilutionStart
-                // Weird formulas here but basically when amount increases, solutionFraction gets closer to 0 in a reciprocal manner
-                // _reagentDilutionFactor defines how fast solutionFraction gets closer to 0
-                float solutionFraction = 1 / (_reagentDilutionFactor*(amount) + 1);
-                splitSolution.RemoveSolution(splitSolution.Volume * (1 - solutionFraction));
-            }
-
+            var spreadAmount = (int) Math.Max(0, Math.Ceiling((args.Quantity / OverflowThreshold).Float()));
+            var splitSolution = args.EntityManager.System<SolutionContainerSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.Volume);
             var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
+            var mapManager = IoCManager.Resolve<IMapManager>();
 
-            if (!_mapManager.TryFindGridAt(transform.MapPosition, out var grid)) return;
-
-            var coords = grid.MapToGrid(transform.MapPosition);
-
-            var ent = args.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
-
-            var areaEffectComponent = GetAreaEffectComponent(ent);
-
-            if (areaEffectComponent == null)
+            if (!mapManager.TryFindGridAt(transform.MapPosition, out _, out var grid) ||
+                !grid.TryGetTileRef(transform.Coordinates, out var tileRef) ||
+                tileRef.Tile.IsSpace())
             {
-                Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ent);
                 return;
             }
 
-            areaEffectComponent.TryAddSolution(splitSolution);
-            areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
+            var coords = grid.MapToGrid(transform.MapPosition);
+            var ent = args.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
+
+            if (!args.EntityManager.TryGetComponent<SmokeComponent>(ent, out var smokeComponent))
+            {
+                Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
+                args.EntityManager.QueueDeleteEntity(ent);
+                return;
+            }
+
+            var smoke = args.EntityManager.System<SmokeSystem>();
+            smokeComponent.SpreadAmount = spreadAmount;
+            smoke.Start(ent, smokeComponent, splitSolution, _duration);
 
             SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
-
-        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity);
     }
 }

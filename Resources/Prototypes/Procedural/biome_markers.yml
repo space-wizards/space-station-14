@@ -1,0 +1,18 @@
+- type: biomeMarkerLayer
+  id: Lizards
+  proto: MobLizard
+  groupCount: 5
+
+# TODO: Needs to be more robust
+- type: biomeMarkerLayer
+  id: Xenos
+  proto: MobXeno
+
+- type: biomeMarkerLayer
+  id: Carps
+  proto: MobCarp
+
+
+#- type: biomeMarkerLayer
+#  id: Experiment
+#  proto: DungeonMarkerExperiment

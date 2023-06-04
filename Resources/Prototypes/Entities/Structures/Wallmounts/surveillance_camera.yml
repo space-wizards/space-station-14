@@ -20,6 +20,7 @@
   - type: DeviceNetworkRequiresPower
   - type: Transform
     anchored: true
+  - type: WiresPanel
   - type: Wires
     alwaysRandomize: true
     LayoutId: SurveillanceCamera
@@ -48,6 +49,12 @@
     price: 200
   - type: Destructible
     thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 100

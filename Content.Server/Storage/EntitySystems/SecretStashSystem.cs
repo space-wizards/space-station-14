@@ -47,11 +47,11 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>True if item was hidden inside stash</returns>
         public bool TryHideItem(EntityUid uid, EntityUid userUid, EntityUid itemToHideUid,
             SecretStashComponent? component = null, ItemComponent? item = null,
-            MetaDataComponent? itemMeta = null, SharedHandsComponent? hands = null)
+            HandsComponent? hands = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
-            if (!Resolve(itemToHideUid, ref item, ref itemMeta))
+            if (!Resolve(itemToHideUid, ref item))
                 return false;
             if (!Resolve(userUid, ref hands))
                 return false;
@@ -66,11 +66,10 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             // check if item is too big to fit into secret stash
-            var itemName = itemMeta.EntityName;
             if (item.Size > component.MaxItemSize)
             {
                 var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
-                    ("item", itemName), ("stash", GetSecretPartName(uid, component)));
+                    ("item", itemToHideUid), ("stash", GetSecretPartName(uid, component)));
                 _popupSystem.PopupEntity(msg, uid, userUid);
                 return false;
             }
@@ -83,7 +82,7 @@ namespace Content.Server.Storage.EntitySystems
 
             // all done, show success message
             var successMsg = Loc.GetString("comp-secret-stash-action-hide-success",
-                ("item", itemName), ("this", GetSecretPartName(uid, component)));
+                ("item", itemToHideUid), ("this", GetSecretPartName(uid, component)));
             _popupSystem.PopupEntity(successMsg, uid, userUid);
             return true;
         }
@@ -94,7 +93,7 @@ namespace Content.Server.Storage.EntitySystems
         /// </summary>
         /// <returns>True if user received item</returns>
         public bool TryGetItem(EntityUid uid, EntityUid userUid, SecretStashComponent? component = null,
-            SharedHandsComponent? hands = null)
+            HandsComponent? hands = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
@@ -123,8 +122,7 @@ namespace Content.Server.Storage.EntitySystems
             if (stash.SecretPartName != "")
                 return Loc.GetString(stash.SecretPartName);
 
-            var meta = EntityManager.GetComponent<MetaDataComponent>(uid);
-            var entityName = Loc.GetString("comp-secret-stash-secret-part-name", ("name", meta.EntityName));
+            var entityName = Loc.GetString("comp-secret-stash-secret-part-name", ("this", uid));
 
             return entityName;
         }

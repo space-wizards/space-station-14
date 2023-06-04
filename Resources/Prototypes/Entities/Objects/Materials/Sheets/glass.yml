@@ -49,23 +49,24 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Glass: 100
-  - type: StackPrice
-    price: 5
   - type: Stack
     stackType: Glass
+    baseLayer: base
+    layerStates:
+    - glass
+    - glass_2
+    - glass_3
   - type: Sprite
     state: glass_3
+    layers:
+    - state: glass_3
+      map: ["base"]
   - type: Item
     heldPrefix: glass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - glass
-      - glass_2
-      - glass_3
   - type: FloorTile
     outputs:
     - FloorGlass
@@ -93,21 +94,24 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       ReinforcedGlass: 100
   - type: Stack
     stackType: ReinforcedGlass
+    baseLayer: base
+    layerStates:
+    - rglass
+    - rglass_2
+    - rglass_3
   - type: Sprite
     state: rglass_3
+    layers:
+    - state: rglass_3
+      map: ["base"]
   - type: Item
     heldPrefix: rglass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - rglass
-      - rglass_2
-      - rglass_3
   - type: FloorTile
     outputs:
     - FloorRGlass
@@ -135,21 +139,24 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       PlasmaGlass: 100
   - type: Stack
     stackType: PlasmaGlass
+    baseLayer: base
+    layerStates:
+    - pglass
+    - pglass_2
+    - pglass_3
   - type: Sprite
     state: pglass_3
+    layers:
+    - state: pglass_3
+      map: ["base"]
   - type: Item
     heldPrefix: pglass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - pglass
-      - pglass_2
-      - pglass_3
   - type: Construction
     graph: Glass
     node: SheetPGlass
@@ -174,21 +181,24 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       ReinforcedPlasmaGlass: 100
   - type: Stack
     stackType: ReinforcedPlasmaGlass
+    baseLayer: base
+    layerStates:
+    - rpglass
+    - rpglass_2
+    - rpglass_3
   - type: Sprite
     state: rpglass_3
+    layers:
+    - state: rpglass_3
+      map: ["base"]
   - type: Item
     heldPrefix: rpglass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - rpglass
-      - rpglass_2
-      - rpglass_3
   - type: Construction
     graph: Glass
     node: SheetRPGlass
@@ -203,4 +213,88 @@
     state: rpglass
   - type: Stack
     stackType: ReinforcedPlasmaGlass
+    count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetUGlass
+  name: uranium glass
+  description: A sheet of uranium glass.
+  suffix: Full
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      UraniumGlass: 100
+  - type: Stack
+    stackType: UraniumGlass
+    baseLayer: base
+    layerStates:
+    - uglass
+    - uglass_2
+    - uglass_3
+  - type: Sprite
+    state: uglass_3
+    layers:
+    - state: uglass_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: uglass
+  - type: Appearance
+  - type: Construction
+    graph: Glass
+    node: SheetUGlass
+
+- type: entity
+  parent: SheetUGlass
+  id: SheetUGlass1
+  name: uranium glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: uglass
+  - type: Stack
+    stackType: UraniumGlass
+    count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetRUGlass
+  name: reinforced uranium glass
+  description: A reinforced sheet of uranium.
+  suffix: Full
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      ReinforcedUraniumGlass: 100
+  - type: Stack
+    stackType: ReinforcedUraniumGlass
+    baseLayer: base
+    layerStates:
+    - ruglass
+    - ruglass_2
+    - ruglass_3
+  - type: Sprite
+    state: ruglass_3
+    layers:
+    - state: ruglass_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: ruglass
+  - type: Appearance
+  - type: Construction
+    graph: Glass
+    node: SheetRUGlass
+
+- type: entity
+  parent: SheetRUGlass
+  id: SheetRUGlass1
+  name: reinforced uranium glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: ruglass
+  - type: Stack
+    stackType: ReinforcedUraniumGlass
     count: 1

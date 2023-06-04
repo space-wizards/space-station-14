@@ -43,7 +43,7 @@ public sealed partial class TriggerSystem
         // Re-check for contacts as we cleared them.
         else if (TryComp<PhysicsComponent>(uid, out var body))
         {
-            _broadphase.RegenerateContacts(body);
+            _broadphase.RegenerateContacts(uid, body);
         }
     }
 
@@ -77,14 +77,14 @@ public sealed partial class TriggerSystem
         if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID) return;
 
         _activeProximities.Add(component);
-        component.Colliding.Add(args.OtherFixture.Body);
+        component.Colliding.Add(args.OtherBody);
     }
 
     private static void OnProximityEndCollide(EntityUid uid, TriggerOnProximityComponent component, ref EndCollideEvent args)
     {
         if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID) return;
 
-        component.Colliding.Remove(args.OtherFixture.Body);
+        component.Colliding.Remove(args.OtherBody);
     }
 
     private void SetProximityAppearance(EntityUid uid, TriggerOnProximityComponent component)

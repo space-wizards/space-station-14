@@ -22,7 +22,10 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Piercing: 2
+    attackRate: 2 #open and close that shit on their arm like hell! because you sure aren't doing any damage with this
+    soundHit:
+      path: "/Audio/Items/wirecutter.ogg"
   - type: Tool
     qualities:
       - Cutting
@@ -35,8 +38,11 @@
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
   - type: LatticeCutting
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: StaticPrice
-    price: 40
+    price: 30
 
 - type: entity
   name: screwdriver
@@ -61,10 +67,12 @@
     sprite: Objects/Tools/screwdriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1
     damage:
       types:
-        Piercing: 7
+        Piercing: 6
+    soundHit:
+      path: "/Audio/Weapons/bladeslice.ogg"
   - type: Tool
     qualities:
       - Screwing
@@ -74,8 +82,11 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           screwdriver: Rainbow
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: StaticPrice
-    price: 40
+    price: 30
 
 - type: entity
   name: wrench
@@ -100,14 +111,17 @@
     attackRate: 1.5
     damage:
       types:
-        Blunt: 6.5
+        Blunt: 4.5
   - type: Tool
     qualities:
       - Anchoring
     useSound:
       path: /Audio/Items/ratchet.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: StaticPrice
-    price: 40
+    price: 22
 
 - type: entity
   name: crowbar
@@ -132,15 +146,19 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 6
+        Structural: 3
   - type: Tool
     qualities:
       - Prying
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: TilePrying
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: StaticPrice
-    price: 40
+    price: 22
 
 - type: entity
   name: emergency crowbar
@@ -158,6 +176,11 @@
     sprite: Objects/Tools/crowbar.rsi
     size: 10
     heldPrefix: red
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8 #free man
+        Structural: 3
 
 - type: entity
   name: multitool
@@ -184,25 +207,82 @@
   - type: Tool
     qualities:
       - Pulsing
-  - type: SignalLinker
   - type: NetworkConfigurator
   - type: ActivatableUI
     key: enum.NetworkConfiguratorUiKey.List
     inHandsOnly: true
   - type: UserInterface
     interfaces:
-    - key: enum.SignalLinkerUiKey.Key
-      type: SignalPortSelectorBoundUserInterface
-    - key: enum.NetworkConfiguratorUiKey.List
-      type: NetworkConfiguratorBoundUserInterface
-    - key: enum.NetworkConfiguratorUiKey.Configure
-      type: NetworkConfiguratorBoundUserInterface
+      - key: enum.NetworkConfiguratorUiKey.List
+        type: NetworkConfiguratorBoundUserInterface
+      - key: enum.NetworkConfiguratorUiKey.Configure
+        type: NetworkConfiguratorBoundUserInterface
+      - key: enum.NetworkConfiguratorUiKey.Link
+        type: NetworkConfiguratorBoundUserInterface
   - type: Tag
     tags:
+      - Multitool
       - DroneUsable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Plastic: 100
   - type: StaticPrice
-    price: 60
+    price: 56
 
+- type: entity
+  name: network configurator
+  parent: BaseItem
+  id: NetworkConfigurator
+  description: A tool for linking devices together. Has two modes, a list mode for mass linking devices and a linking mode for advanced device linking.
+  components:
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Items/multitool_drop.ogg
+    - type: Sprite
+      sprite: Objects/Tools/network_configurator.rsi
+      layers:
+        - state: icon
+        - state: mode-link
+          map: ["enum.NetworkConfiguratorLayers.ModeLight"]
+          shader: unshaded
+    - type: Item
+      size: 5
+    - type: Clothing
+      sprite: Objects/Tools/network_configurator.rsi
+      quickEquip: false
+      slots:
+        - Belt
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.NetworkConfiguratorVisuals.Mode:
+          enum.NetworkConfiguratorLayers.ModeLight:
+            True: { state: mode-link }
+            False: { state: mode-list }
+    - type: NetworkConfigurator
+    - type: ActivatableUI
+      key: enum.NetworkConfiguratorUiKey.List
+      inHandsOnly: true
+    - type: UserInterface
+      interfaces:
+        - key: enum.NetworkConfiguratorUiKey.List
+          type: NetworkConfiguratorBoundUserInterface
+        - key: enum.NetworkConfiguratorUiKey.Configure
+          type: NetworkConfiguratorBoundUserInterface
+        - key: enum.NetworkConfiguratorUiKey.Link
+          type: NetworkConfiguratorBoundUserInterface
+    - type: Tag
+      tags:
+        - DroneUsable
+    - type: StaticPrice
+      price: 56
+    - type: GuideHelp
+      guides:
+        - NetworkConfigurator
+
+#Power tools
+#Later on these should switch probably switch damage when changing the tool behavior.
 - type: entity
   name: power drill
   parent: BaseItem
@@ -242,8 +322,19 @@
           path: /Audio/Items/drill_use.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+      Plastic: 100
   - type: StaticPrice
     price: 100
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Piercing: 8
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
 
 - type: entity
   name: RCD
@@ -252,6 +343,9 @@
   description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
+  - type: LimitedCharges
+    maxCharges: 5
+    charges: 5
   - type: UseDelay
     delay: 1.0
   - type: Sprite
@@ -264,6 +358,10 @@
     quickEquip: false
     slots:
     - Belt
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 600
+      Plastic: 100
   - type: StaticPrice
     price: 100
 
@@ -272,8 +370,19 @@
   parent: RCD
   suffix: Empty
   components:
-  - type: RCD
-    ammo: 0
+  - type: LimitedCharges
+    maxCharges: 5
+    charges: 0
+
+- type: entity
+  id: RCDExperimental
+  parent: RCD
+  suffix: Admeme
+  name: experimental rcd
+  description: A bluespace-enhanced RCD that regenerates charges passively.
+  components:
+  - type: AutoRecharge
+    rechargeDuration: 5
 
 - type: entity
   name: RCD Ammo
@@ -288,28 +397,12 @@
   - type: Item
     sprite: Objects/Tools/rcd.rsi
     heldPrefix: ammo
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Plastic: 100
   - type: StaticPrice
     price: 60
-
-- type: entity
-  name: shovel
-  parent: BaseItem
-  id: Shovel
-  description: A large tool for digging and moving dirt.
-  components:
-  - type: Tag
-    tags:
-    - Shovel
-  - type: Sprite
-    sprite: Objects/Tools/shovel.rsi
-    state: icon
-  - type: ItemCooldown
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
-  - type: Item
-    sprite: Objects/Tools/shovel.rsi
 
 - type: entity
   name: omnitool
@@ -323,13 +416,10 @@
   - type: Item
     sprite: Objects/Tools/omnitool.rsi
     size: 20
+  - type: Tag
+    tags:
+    - Multitool
   - type: TilePrying
-  - type: SignalLinker
-    requiredQuality: Pulsing
-  - type: UserInterface
-    interfaces:
-      - key: enum.SignalLinkerUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
   - type: Tool
     qualities:
       - Screwing
@@ -377,3 +467,30 @@
           state: omnitool-pulsing
         changeSound:
           path: /Audio/Items/change_drill.ogg
+
+#Other
+- type: entity
+  name: shovel
+  parent: BaseItem
+  id: Shovel
+  description: A large tool for digging and moving dirt.
+  components:
+  - type: Tag
+    tags:
+    - Shovel
+  - type: Sprite
+    sprite: Objects/Tools/shovel.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+  - type: Item
+    sprite: Objects/Tools/shovel.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Wood: 50
+  - type: StaticPrice
+    price: 25

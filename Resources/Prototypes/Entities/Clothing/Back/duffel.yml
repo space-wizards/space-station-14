@@ -26,6 +26,9 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -74,6 +77,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/security.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelBrigmedic
+  name: brigmedic duffel bag
+  description: A large duffel bag for holding extra medical related goods.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/brigmedic.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -218,3 +230,5 @@
       shader: unshaded
   - type: Storage
     capacity: 9999
+  - type: ClothingSpeedModifier
+    sprintModifier: 1 # makes its stats identical to other variants of bag of holding

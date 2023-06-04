@@ -10,15 +10,16 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.EUI;
 using Content.Server.Humanoid;
-using Content.Server.MachineLinking.System;
-using Content.Server.MachineLinking.Events;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.Materials;
-using Content.Server.Stack;
 using Content.Server.Jobs;
+using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Emag.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Zombies;
@@ -32,12 +33,18 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Doors.Components;
+using Content.Shared.Emag.Systems;
+using Robust.Shared.Audio;
+using System.Runtime.InteropServices;
+using Content.Server.Popups;
+using Content.Server.Traits.Assorted;
 
 namespace Content.Server.Cloning
 {
     public sealed class CloningSystem : EntitySystem
     {
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly EuiManager _euiManager = null!;
@@ -50,10 +57,12 @@ namespace Content.Server.Cloning
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly PuddleSystem _puddleSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
         public const float EasyModeCloningCost = 0.7f;
@@ -70,12 +79,13 @@ namespace Content.Server.Cloning
             SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<CloningPodComponent, AnchorStateChangedEvent>(OnAnchor);
             SubscribeLocalEvent<CloningPodComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<CloningPodComponent, GotEmaggedEvent>(OnEmagged);
         }
 
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
         {
             clonePod.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(clonePod.Owner, "clonepod-bodyContainer");
-            _signalSystem.EnsureReceiverPorts(uid, CloningPodComponent.PodPort);
+            _signalSystem.EnsureSinkPorts(uid, CloningPodComponent.PodPort);
         }
 
         private void OnPartsRefreshed(EntityUid uid, CloningPodComponent component, RefreshPartsEvent args)
@@ -185,6 +195,16 @@ namespace Content.Server.Cloning
             if (_configManager.GetCVar(CCVars.BiomassEasyMode))
                 cloningCost = (int) Math.Round(cloningCost * EasyModeCloningCost);
 
+            // Check if they have the uncloneable trait
+            if (TryComp<UncloneableComponent>(bodyToClone, out _))
+            {
+                if (clonePod.ConnectedConsole != null)
+                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value,
+                        Loc.GetString("cloning-console-uncloneable-trait-error"),
+                        InGameICChatType.Speak, false);
+                return false;
+            }
+
             // biomass checks
             var biomassAmount = _material.GetMaterialAmount(uid, clonePod.RequiredMaterial);
 
@@ -280,6 +300,19 @@ namespace Content.Server.Cloning
             }
         }
 
+        /// <summary>
+        /// On emag, spawns a failed clone when cloning process fails which attacks nearby crew.
+        /// </summary>
+        private void OnEmagged(EntityUid uid, CloningPodComponent clonePod, ref GotEmaggedEvent args)
+        {
+            if (!this.IsPowered(uid, EntityManager))
+                return;
+
+            _audio.PlayPvs(clonePod.SparkSound, uid);
+            _popupSystem.PopupEntity(Loc.GetString("cloning-pod-component-upgrade-emag-requirement"), uid);
+            args.Handled = true;
+        }
+
         public void Eject(EntityUid uid, CloningPodComponent? clonePod)
         {
             if (!Resolve(uid, ref clonePod))
@@ -306,6 +339,12 @@ namespace Content.Server.Cloning
 
             var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
 
+            if (HasComp<EmaggedComponent>(uid))
+            {
+                _audio.PlayPvs(clonePod.ScreamSound, uid);
+                Spawn(clonePod.MobSpawnId, transform.Coordinates);
+            }
+
             Solution bloodSolution = new();
 
             int i = 0;
@@ -316,9 +355,12 @@ namespace Content.Server.Cloning
                 if (_robustRandom.Prob(0.2f))
                     i++;
             }
-            _spillableSystem.SpillAt(uid, bloodSolution, "PuddleBlood");
+            _puddleSystem.TrySpillAt(uid, bloodSolution, out _);
 
+            if (!HasComp<EmaggedComponent>(uid))
+            {
             _material.SpawnMultipleFromMaterial(_robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)), clonePod.RequiredMaterial, Transform(uid).Coordinates);
+            }
 
             clonePod.UsedBiomass = 0;
             RemCompDeferred<ActiveCloningPodComponent>(uid);

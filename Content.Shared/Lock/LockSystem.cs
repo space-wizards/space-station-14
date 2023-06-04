@@ -1,6 +1,6 @@
-using Content.Shared.Emag.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -13,6 +13,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -25,7 +26,6 @@ namespace Content.Shared.Lock;
 public sealed class LockSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -62,6 +62,7 @@ public sealed class LockSystem : EntitySystem
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
     {
         _appearanceSystem.SetData(uid, StorageVisuals.CanLock, true);
+        _appearanceSystem.SetData(uid, StorageVisuals.Locked, lockComp.Locked);
     }
 
     private void OnActivated(EntityUid uid, LockComponent lockComp, ActivateInWorldEvent args)
@@ -86,8 +87,9 @@ public sealed class LockSystem : EntitySystem
     {
         if (!component.Locked)
             return;
-        if (!args.Silent && _net.IsServer)
-            _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid);
+
+        if (!args.Silent)
+            _sharedPopupSystem.PopupClient(Loc.GetString("entity-storage-component-locked-message"), uid, args.User);
 
         args.Cancelled = true;
     }
@@ -118,11 +120,8 @@ public sealed class LockSystem : EntitySystem
         if (!HasUserAccess(uid, user, quiet: false))
             return false;
 
-        if (_net.IsServer)
-        {
-            _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-do-lock-success",
+        _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-do-lock-success",
                 ("entityName", Identity.Name(uid, EntityManager))), uid, user);
-        }
         _audio.PlayPredicted(lockComp.LockSound, uid, user, AudioParams.Default.WithVolume(-5));
 
         lockComp.Locked = true;
@@ -145,14 +144,12 @@ public sealed class LockSystem : EntitySystem
         if (!Resolve(uid, ref lockComp))
             return;
 
-        if (_net.IsServer)
+        if (user is { Valid: true })
         {
-            if (user is { Valid: true })
-            {
-                _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-do-unlock-success",
-                    ("entityName", Identity.Name(uid, EntityManager))), uid, user.Value);
-            }
+            _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-do-unlock-success",
+                ("entityName", Identity.Name(uid, EntityManager))), uid, user.Value);
         }
+
         _audio.PlayPredicted(lockComp.UnlockSound, uid, user, AudioParams.Default.WithVolume(-5));
 
         lockComp.Locked = false;
@@ -192,7 +189,7 @@ public sealed class LockSystem : EntitySystem
     /// </summary>
     public bool CanToggleLock(EntityUid uid, EntityUid user, bool quiet = true)
     {
-        if (!HasComp<SharedHandsComponent>(user))
+        if (!HasComp<HandsComponent>(user))
             return false;
 
         var ev = new LockToggleAttemptEvent(user, quiet);
@@ -203,14 +200,14 @@ public sealed class LockSystem : EntitySystem
     private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReaderComponent? reader = null, bool quiet = true)
     {
         // Not having an AccessComponent means you get free access. woo!
-        if (!Resolve(uid, ref reader))
+        if (!Resolve(uid, ref reader, false))
             return true;
 
         if (_accessReader.IsAllowed(user, reader))
             return true;
 
-        if (!quiet && _net.IsClient && _timing.IsFirstTimePredicted)
-            _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), uid, user);
+        if (!quiet && _timing.IsFirstTimePredicted)
+            _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), uid, Filter.Local(), true);
         return false;
     }
 
@@ -226,15 +223,15 @@ public sealed class LockSystem : EntitySystem
                 () => TryLock(uid, args.User, component),
             Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock"),
             Icon = component.Locked ?
-                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")) :
-                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
+                new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")) :
+                new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
         };
         args.Verbs.Add(verb);
     }
 
     private void OnEmagged(EntityUid uid, LockComponent component, ref GotEmaggedEvent args)
     {
-        if (!component.Locked)
+        if (!component.Locked || !component.BreakOnEmag)
             return;
         _audio.PlayPredicted(component.UnlockSound, uid, null, AudioParams.Default.WithVolume(-5));
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);

@@ -18,14 +18,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.5,0.4,0.3"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.5,0.4,0.3"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Transform
     anchored: true
     noRot: true
@@ -53,6 +54,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -69,6 +76,12 @@
     totalIntensity: 200
   - type: StaticPrice
     price: 500
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
 
 # Base Wallmount Generator
 
@@ -107,9 +120,6 @@
     - state: panel
     - state: on
       shader: unshaded
-#  - type: Appearance
-#    visuals:
-#    - type: ApcVisualizer
   - type: NodeContainer
     examinable: true
     nodes:
@@ -170,6 +180,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen0_1
+  - type: WiresPanel
   - type: Wires
     BoardName: "GeneratorPlasma"
     LayoutId: GeneratorPlasma
@@ -189,6 +200,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen1_1
+  - type: WiresPanel
   - type: Wires
     BoardName: "GeneratorUranium"
     LayoutId: GeneratorUranium
@@ -244,6 +256,12 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
           - !type:PlaySoundBehavior
@@ -278,6 +296,12 @@
     intensity: 2
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50

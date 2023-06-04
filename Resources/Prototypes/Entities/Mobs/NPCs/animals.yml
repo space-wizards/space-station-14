@@ -1,6 +1,3 @@
-# Bounds Guide
-#1D2L3U4R
-
 - type: entity
   name: bat
   parent: SimpleMobBase
@@ -21,14 +18,15 @@
     speechSounds: Squeak
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.25
-      density: 10
-      mask:
-      - FlyingMobMask
-      layer:
-      - FlyingMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 10
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
   - type: DamageStateVisuals
     states:
       Alive:
@@ -73,10 +71,6 @@
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
@@ -89,14 +83,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.1
-      density: 30
-      mask:
-      - FlyingMobMask
-      layer:
-      - FlyingMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.1
+        density: 30
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -107,7 +102,6 @@
     excess: 10
   - type: Appearance
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: 0
@@ -134,10 +128,6 @@
   description: How nice a bee. Oh no, it looks angry and wants my pizza.
   components:
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -171,14 +161,15 @@
       sprite: Mobs/Animals/chicken.rsi
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 8
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 8
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -209,6 +200,9 @@
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Puller
     needsHands: true
+  - type: Faction
+    factions:
+    - Passive
 
 - type: entity
   name: mallard duck #Quack
@@ -224,14 +218,15 @@
       sprite: Mobs/Animals/duck.rsi
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 5 #They actually are pretty light, I looked it up
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 5 #They actually are pretty light, I looked it up
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -260,6 +255,9 @@
     accent: duck
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: Faction
+    factions:
+    - Passive
 
 - type: entity
   name: white duck #Quack
@@ -324,14 +322,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 7.5
-      mask:
-      - FlyingMobMask
-      layer:
-      - FlyingMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 7.5
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -374,14 +373,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.40
-      density: 1400
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 1400
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -419,7 +419,13 @@
       path: /Audio/Animals/cow_moo.ogg
   - type: Perishable
     molsPerSecondPerUnitMass: 0.0015
-
+  - type: Faction
+    factions:
+    - Passive
+  - type: Body
+    prototype: AnimalRuminant
+  - type: HTN
+    rootTask: RuminantCompound
 
 - type: entity
   name: crab
@@ -436,14 +442,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 5
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 5
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -478,14 +485,15 @@
       sprite: Mobs/Animals/goat.rsi
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 150
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -520,6 +528,13 @@
     interactFailureString: petting-failure-goat
     interactSuccessSound:
       path: /Audio/Animals/goat_bah.ogg
+  - type: Faction
+    factions:
+    - Passive
+  - type: Body
+    prototype: AnimalRuminant
+  - type: HTN
+    rootTask: RuminantCompound
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -537,14 +552,15 @@
   - type: Appearance
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 25
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 25
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: DamageStateVisuals
     states:
       Alive:
@@ -566,6 +582,9 @@
   - type: Bloodstream
     bloodMaxVolume: 100
   - type: Puller
+  - type: Faction
+    factions:
+    - Passive
 
 - type: entity
   name: gorilla
@@ -582,14 +601,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.48
-      density: 200
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.48
+        density: 200
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -614,8 +634,8 @@
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed: 4
-    baseSprintSpeed: 6
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 4.5
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -624,59 +644,77 @@
         sprite: Mobs/Animals/kangaroo.rsi
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 130
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Physics
   - type: Appearance
+  - type: Inventory
+    speciesId: kangaroo
+    templateId: kangaroo
+  - type: ReplacementAccent
+    accent: kangaroo
+  - type: InventorySlots
+  - type: Strippable
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
         Base: kangaroo
       # SKIPPY NO!
       Critical:
-        Base: kangaroo-dead
+        Base: kangaroo-crit
       Dead:
         Base: kangaroo-dead
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+  - type: GhostRole
+    prob: 0.25
+    name: ghost-role-information-kangaroo-name
+    description: ghost-role-information-kangaroo-description
+  - type: GhostTakeoverAvailable
+  - type: Vocal
+    sounds:
+      Unsexed: Kangaroo
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBounce
   - type: Puller
+    needsHands: false
+  - type: StaminaDamageOnHit
+    damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
+    # This needs to be moved to boxinggloves
+    #knockdownSound: /Audio/Weapons/boxingbell.ogg
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 0.4
+    soundHit:
+      collection: BoxingHit
+    animation: WeaponArcFist
 
 - type: entity
   name: boxing kangaroo
   parent: MobKangaroo
-  id: MobKangarooBoxer
-  description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
+  id: MobBoxingKangaroo
   components:
-  - type: CombatMode
-    disarm: null
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-      - map: ["enum.DamageStateVisualLayers.Base"]
-        state: kangaroo-boxing
-        sprite: Mobs/Animals/kangaroo.rsi
-  - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: kangaroo-boxing
-      Critical:
-        Base: kangaroo-boxing-dead
-      Dead:
-        Base: kangaroo-boxing-dead
-  - type: MeleeWeapon
-    hidden: true
-    angle: 0
-    animation: WeaponArcClaw
-    damage:
-      types:
-        Blunt: 10
-  - type: InputMover
-  - type: MobMover
+  - type: Loadout
+    prototypes: [ BoxingKangarooGear ]
   - type: HTN
     rootTask: SimpleHostileCompound
   - type: Faction
@@ -690,23 +728,26 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: CombatMode
-    disarm: null
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-primate
   - type: Inventory
     templateId: monkey
+    speciesId: monkey
+  - type: InventorySlots
+  - type: Cuffable
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 80
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -718,21 +759,34 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
+    - map: [ "jumpsuit" ]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "id" ]
+    - map: [ "outerClothing" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
   - type: Hands
+  - type: GenericVisualizer
+    visuals:
+      enum.CreamPiedVisuals.Creamed:
+        clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
+          True: {visible: true}
+          False: {visible: false}
   - type: Speech
     speechSounds: Monkey
   - type: Body
     prototype: Primate
     requiredLegs: 1 # TODO: More than 1 leg
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: monkey
-      Critical:
-        Base: dead
-      Dead:
-        Base: dead
   - type: Appearance
+  - type: CreamPied
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Monkey_burning
@@ -744,6 +798,25 @@
   - type: MonkeyAccent
   - type: Puller
   - type: CanHostGuardian
+  - type: Faction
+    factions:
+    - Passive
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    name: ghost-role-information-monkey-name
+    description: ghost-role-information-monkey-description
+  - type: GhostTakeoverAvailable
+  - type: Clumsy
+    clumsyDamage:
+      types:
+        Blunt: 5
+        Piercing: 4
+      groups:
+        Burn: 3
+    clumsySound:
+      path: /Audio/Animals/monkey_scream.ogg
+  - type: IdExaminable
 
 - type: entity
   name: guidebook monkey
@@ -760,12 +833,13 @@
   id: MobMouse
   description: Squeak!
   components:
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     allowSpeech: true
     allowMovement: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
+  - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
   - type: Sprite
@@ -782,17 +856,23 @@
     equippedPrefix: 0
     slots:
     - HEAD
+  - type: Faction
+    factions:
+      - Mouse
+  - type: HTN
+    rootTask: MouseCompound
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 100
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -834,7 +914,6 @@
     tags:
     - Trash
     - CannotSuicide
-  - type: Recyclable
   - type: Respirator
     damage:
       types:
@@ -858,15 +937,8 @@
       enabled: false
       autoPopulate: false
       name: action-name-combat
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: DiseaseCarrier #The other class lab animal and disease vector
-    naturalImmunities:
-      - AMIV
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
@@ -896,8 +968,6 @@
         Base: splat-1
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: DiseaseCarrier #Why doesn't this save if it's only on the parent wtf
-
 
 - type: entity
   parent: MobMouse
@@ -915,15 +985,13 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: mouse-1
+        Base: mouse-2
       Critical:
-        Base: dead-1
+        Base: dead-2
       Dead:
-        Base: splat-1
+        Base: splat-2
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: DiseaseCarrier
-
 
 - type: entity
   name: lizard #Weh
@@ -943,14 +1011,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -997,14 +1066,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 5
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -1043,14 +1113,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 5
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -1094,14 +1165,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.25
-      density: 10
-      mask:
-      - FlyingMobMask
-      layer:
-      - FlyingMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 10
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -1140,14 +1212,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.25
-      density: 100
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -1167,6 +1240,9 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/penguin_squawk.ogg
+  - type: Faction
+    factions:
+    - Passive
 
 - type: entity
   name: grenade penguin
@@ -1193,14 +1269,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.25
-      density: 25
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 25
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -1227,6 +1304,8 @@
     delay: 10
     beepSound:
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
+      params:
+        volume: -2
     beepInterval: 1
   - type: Explosive
     explosionType: Default
@@ -1258,14 +1337,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.25
-      density: 10
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 10
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1307,14 +1387,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 130
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -1329,10 +1410,6 @@
     - id: FoodMeatSpider
       amount: 2
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -1357,6 +1434,9 @@
   - type: NoSlip
   - type: Spider
   - type: IgnoreSpiderWeb
+  - type: Bloodstream
+    bloodMaxVolume: 150
+    bloodReagent: SpiderBlood
 
 - type: entity
   name: tarantula
@@ -1371,10 +1451,11 @@
     - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       makeSentient: true
       name: ghost-role-information-giant-spider-name
       description: ghost-role-information-giant-spider-description
+    - type: GhostTakeoverAvailable
 
 - type: entity
   name: possum
@@ -1391,18 +1472,20 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: possum
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1445,18 +1528,20 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: possum #close enough
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1499,18 +1584,20 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50 #They actually are pretty light, I looked it up
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50 #They actually are pretty light, I looked it up
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: fox
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1555,17 +1642,19 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 30
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Inventory
     speciesId: dog
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1678,6 +1767,7 @@
   - type: Inventory
     speciesId: puppy
     templateId: pet
+  - type: InventorySlots
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1705,18 +1795,20 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 15
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: cat
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1847,18 +1939,20 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 15
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: sloth
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1901,18 +1995,20 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 5
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 5
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: fox #close enough
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1947,12 +2043,13 @@
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     allowSpeech: true
     allowMovement: true
     name: ghost-role-information-hamster-name
     description: ghost-role-information-hamster-description
+  - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
   - type: Sprite
@@ -1966,14 +2063,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 120
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 120
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -1984,6 +2082,15 @@
     baseWalkSpeed : 4
     baseSprintSpeed : 4
   - type: Appearance
+  - type: Inventory
+    speciesId: hamster
+    templateId: pet
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2015,7 +2122,6 @@
     tags:
     - Trash
     - CannotSuicide
-  - type: Recyclable
   - type: Respirator
     damage:
       types:
@@ -2028,10 +2134,6 @@
       types:
         Blunt: 0.1
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
     soundHit:
@@ -2050,6 +2152,7 @@
   - type: Bloodstream
     bloodMaxVolume: 60
   - type: CanEscapeInventory
+    BaseResistTime: 3
   - type: MobPrice
     price: 60
 
@@ -2067,18 +2170,20 @@
       sprite: Mobs/Animals/pig.rsi
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 250
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 250
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: pig
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -2109,3 +2214,6 @@
     accent: pig
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: Faction
+    factions:
+    - Passive

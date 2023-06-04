@@ -1,8 +1,9 @@
-using Content.Server.MachineLinking.Events;
+
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.MachineLinking.System;
+using Content.Server.Materials;
 using Content.Server.Power.Components;
-using Content.Server.Recycling;
-using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -10,7 +11,6 @@ using Content.Shared.Physics.Controllers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Physics.Controllers;
@@ -18,8 +18,8 @@ namespace Content.Server.Physics.Controllers;
 public sealed class ConveyorController : SharedConveyorController
 {
     [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly RecyclerSystem _recycler = default!;
-    [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+    [Dependency] private readonly MaterialReclaimerSystem _materialReclaimer = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -38,7 +38,7 @@ public sealed class ConveyorController : SharedConveyorController
 
     private void OnInit(EntityUid uid, ConveyorComponent component, ComponentInit args)
     {
-        _signalSystem.EnsureReceiverPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
+        _signalSystem.EnsureSinkPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
 
         if (TryComp<PhysicsComponent>(uid, out var physics))
         {
@@ -77,7 +77,7 @@ public sealed class ConveyorController : SharedConveyorController
         _appearance.SetData(uid, ConveyorVisuals.State, component.Powered ? component.State : ConveyorState.Off);
     }
 
-    private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
+    private void OnSignalReceived(EntityUid uid, ConveyorComponent component, ref SignalReceivedEvent args)
     {
         if (args.Port == component.OffPort)
             SetState(uid, ConveyorState.Off, component);
@@ -103,15 +103,9 @@ public sealed class ConveyorController : SharedConveyorController
         component.State = state;
 
         if (TryComp<PhysicsComponent>(uid, out var physics))
-            _broadphase.RegenerateContacts(physics);
+            _broadphase.RegenerateContacts(uid, physics);
 
-        if (TryComp<RecyclerComponent>(uid, out var recycler))
-        {
-            if (component.State != ConveyorState.Off)
-                _recycler.EnableRecycler(recycler);
-            else
-                _recycler.DisableRecycler(recycler);
-        }
+        _materialReclaimer.SetReclaimerEnabled(uid, component.State != ConveyorState.Off);
 
         UpdateAppearance(uid, component);
         Dirty(component);
@@ -129,11 +123,11 @@ public sealed class ConveyorController : SharedConveyorController
         if (!xformQuery.TryGetComponent(uid, out var xform))
             return;
 
-        var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
+        var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, MapManager);
 
         if (beltTileRef != null)
         {
-            var intersecting = _lookup.GetEntitiesIntersecting(beltTileRef.Value);
+            var intersecting = Lookup.GetEntitiesIntersecting(beltTileRef.Value);
 
             foreach (var entity in intersecting)
             {
@@ -141,7 +135,7 @@ public sealed class ConveyorController : SharedConveyorController
                     continue;
 
                 if (physics.BodyType != BodyType.Static)
-                    _physics.WakeBody(entity, body: physics);
+                    Physics.WakeBody(entity, body: physics);
             }
         }
     }

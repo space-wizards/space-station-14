@@ -101,8 +101,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void SetupUser(EntityUid uid, JetpackComponent component)
     {
         var user = EnsureComp<JetpackUserComponent>(uid);
-        var relay = EnsureComp<RelayInputMoverComponent>(uid);
-        _mover.SetRelay(uid, component.Owner, relay);
+        _mover.SetRelay(uid, component.Owner);
         user.Jetpack = component.Owner;
     }
 

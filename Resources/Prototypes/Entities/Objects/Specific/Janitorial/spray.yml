@@ -24,6 +24,7 @@
   - type: DrainableSolution
     solution: spray
   - type: SolutionTransfer
+    canChangeTransferAmount: true
   - type: ItemCooldown
   - type: Spray
     transferAmount: 10
@@ -32,6 +33,29 @@
       path: /Audio/Effects/spray2.ogg
   - type: TrashOnEmpty
     solution: spray
+
+- type: entity
+  name: mega spray bottle
+  id: MegaSprayBottle
+  parent: SprayBottle
+  suffix: Empty
+  description: A huge spray bottle, capable of unrivaled janitorial power.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner_large
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 250
+  - type: Spray
+    transferAmount: 15
+    sprayedPrototype: BigVapor
+    sprayVelocity: 3
+    sprayDistance: 4.5
+    spraySound:
+      path: /Audio/Effects/spray2.ogg
 
 - type: entity
   name: spray bottle
@@ -85,7 +109,7 @@
   - type: Sprite
     netsync: false
     sprite: Effects/chempuff.rsi
-    rotation: 90
+    rotation: 180
     layers:
     - state: chempuff
       map: ["enum.VaporVisualLayers.Base"]
@@ -93,12 +117,37 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.25,0.25,0.25"
-      hard: false
-      mask:
-      - FullTileMask
-      - Opaque
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        hard: false
+        mask:
+        - FullTileMask
+        - Opaque
   - type: Appearance
   - type: VaporVisuals
+
+- type: entity
+  id: BigVapor
+  parent: Vapor
+  noSpawn: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Effects/chempuff.rsi
+    rotation: 180
+    layers:
+    - state: chempuff
+      scale: 2, 2
+      map: ["enum.VaporVisualLayers.Base"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.6,-0.6,0.6,0.6"
+        hard: false
+        mask:
+        - FullTileMask
+        - Opaque

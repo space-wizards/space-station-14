@@ -32,6 +32,11 @@
     ClothingUniformJumpskirtColorDarkBlue: 2
     ClothingUniformJumpsuitColorTeal: 2
     ClothingUniformJumpskirtColorTeal: 2
+    ClothingUniformJumpsuitHawaiBlack: 2
+    ClothingUniformJumpsuitHawaiBlue: 2
+    ClothingUniformJumpsuitHawaiRed: 2
+    ClothingUniformJumpsuitHawaiYellow: 2
+    ClothingUniformJumpsuitFlannel: 2
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
     ClothingShoesColorWhite: 3
@@ -50,13 +55,6 @@
     ClothingHeadHatRedsoft: 2
     ClothingHeadHatPurplesoft: 2
     ClothingHeadHatCorpsoft: 2
-    ClothingHeadHatBowlerHat: 2
-    ClothingHeadHatBunny: 2
-    ClothingHeadHatCake: 2
-    ClothingOuterWinterCoat: 3
     ClothingHeadFishCap: 2
     ClothingHeadRastaHat: 2
-    ClothingNeckScarfStripedRed: 3
-    ClothingNeckScarfStripedBlue: 3
-    ClothingNeckScarfStripedGreen: 3
     ClothingBeltStorageWaistbag: 3

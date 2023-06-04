@@ -1,16 +1,13 @@
 using System.IO;
 using System.Linq;
-using Content.Client.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -28,8 +25,6 @@ namespace Content.Client.Actions
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
-
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public event Action<ActionType>? ActionAdded;
         public event Action<ActionType>? ActionRemoved;
@@ -50,12 +45,22 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleComponentState);
         }
 
+        public override void Dirty(ActionType action)
+        {
+            if (_playerManager.LocalPlayer?.ControlledEntity != action.AttachedEntity)
+                return;
+
+            base.Dirty(action);
+            ActionsUpdated?.Invoke();
+        }
+
         private void HandleComponentState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not ActionsComponentState state)
                 return;
 
-            var serverActions = new SortedSet<ActionType>(state.Actions);
+            state.SortedActions ??= new SortedSet<ActionType>(state.Actions);
+            var serverActions = state.SortedActions;
             var removed = new List<ActionType>();
 
             foreach (var act in component.Actions.ToList())
@@ -73,7 +78,6 @@ namespace Content.Client.Actions
                 }
 
                 act.CopyFrom(serverAct);
-                serverActions.Remove(serverAct);
             }
 
             var added = new List<ActionType>();
@@ -81,6 +85,9 @@ namespace Content.Client.Actions
             // Anything that remains is a new action
             foreach (var newAct in serverActions)
             {
+                if (component.Actions.Contains(newAct))
+                    continue;
+
                 // We create a new action, not just sorting a reference to the state's action.
                 var action = (ActionType) newAct.Clone();
                 component.Actions.Add(action);
@@ -119,66 +126,32 @@ namespace Content.Client.Actions
 
         public override void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
         {
+            if (GameTiming.ApplyingState && !action.ClientExclusive)
+                return;
+
             if (!Resolve(uid, ref comp, false))
                 return;
 
+            dirty &= !action.ClientExclusive;
             base.AddAction(uid, action, provider, comp, dirty);
 
             if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 ActionAdded?.Invoke(action);
         }
 
-        public override void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)
+        public override void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null, bool dirty = true)
         {
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+            if (GameTiming.ApplyingState && !action.ClientExclusive)
                 return;
 
             if (!Resolve(uid, ref comp, false))
                 return;
 
-            var actionList = actions.ToList();
-            base.RemoveActions(uid, actionList, comp, dirty);
+            dirty &= !action.ClientExclusive;
+            base.RemoveAction(uid, action, comp, dirty);
 
-            foreach (var act in actionList)
-            {
-                if (act.AutoRemove)
-                    ActionRemoved?.Invoke(act);
-            }
-        }
-
-        /// <summary>
-        ///     Execute convenience functionality for actions (pop-ups, sound, speech)
-        /// </summary>
-        protected override bool PerformBasicActions(EntityUid user, ActionType action, bool predicted)
-        {
-            var performedAction = action.Sound != null
-                                  || !string.IsNullOrWhiteSpace(action.UserPopup)
-                                  || !string.IsNullOrWhiteSpace(action.Popup);
-
-            if (!GameTiming.IsFirstTimePredicted)
-                return performedAction;
-
-            if (!string.IsNullOrWhiteSpace(action.UserPopup))
-            {
-                var msg = (!action.Toggled || string.IsNullOrWhiteSpace(action.PopupToggleSuffix))
-                    ? Loc.GetString(action.UserPopup)
-                    : Loc.GetString(action.UserPopup + action.PopupToggleSuffix);
-
-                _popupSystem.PopupEntity(msg, user);
-            }
-            else if (!string.IsNullOrWhiteSpace(action.Popup))
-            {
-                var msg = (!action.Toggled || string.IsNullOrWhiteSpace(action.PopupToggleSuffix))
-                    ? Loc.GetString(action.Popup)
-                    : Loc.GetString(action.Popup + action.PopupToggleSuffix);
-
-                _popupSystem.PopupEntity(msg, user);
-            }
-
-            if (action.Sound != null)
-                SoundSystem.Play(action.Sound.GetSound(), Filter.Local(), user, action.AudioParams);
-
-            return performedAction;
+            if (action.AutoRemove && uid == _playerManager.LocalPlayer?.ControlledEntity)
+                ActionRemoved?.Invoke(action);
         }
 
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
@@ -272,7 +245,7 @@ namespace Content.Client.Actions
             if (PlayerActions == null)
                 return;
 
-            var file = new ResourcePath(path).ToRootedPath();
+            var file = new ResPath(path).ToRootedPath();
             TextReader reader = userData
                 ? _resources.UserData.OpenText(file)
                 : _resources.ContentFileReadText(file);

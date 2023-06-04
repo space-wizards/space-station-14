@@ -1,37 +1,37 @@
-using Content.Shared.Damage;
-using Content.Shared.Hands.EntitySystems;
-using Content.Server.Disease.Components;
-using Content.Server.Body.Components;
+using Content.Server.Administration.Commands;
 using Content.Server.Atmos.Components;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Chat;
+using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.Humanoid;
+using Content.Server.IdentityManagement;
+using Content.Server.Inventory;
+using Content.Server.Mind.Commands;
+using Content.Server.Mind.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
-using Content.Server.Body.Systems;
-using Content.Server.CombatMode;
-using Content.Server.Inventory;
-using Content.Server.Mind.Components;
-using Content.Server.Chat.Managers;
-using Content.Server.Ghost.Roles.Components;
-using Content.Server.Hands.Components;
-using Content.Server.Mind.Commands;
 using Content.Server.Temperature.Components;
-using Content.Shared.Movement.Components;
-using Robust.Shared.Prototypes;
-using Content.Shared.Roles;
 using Content.Server.Traitor;
-using Content.Shared.Zombies;
-using Content.Shared.Popups;
-using Content.Server.Atmos.Miasma;
-using Content.Server.Humanoid;
-using Content.Server.IdentityManagement;
+using Content.Shared.CombatMode;
+using Content.Shared.Damage;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Weapons.Melee;
-using Content.Server.Chat;
-using Content.Server.Chat.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Popups;
+using Content.Shared.Roles;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Zombies;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Zombies
 {
@@ -53,8 +53,11 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
+        [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
 
         public override void Initialize()
         {
@@ -68,8 +71,7 @@ namespace Content.Server.Zombies
         /// </summary>
         private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
         {
-            if (args.NewMobState == MobState.Dead ||
-                args.NewMobState == MobState.Critical)
+            if (args.NewMobState == MobState.Dead)
             {
                 ZombifyEntity(uid, args.Component);
             }
@@ -101,7 +103,6 @@ namespace Content.Server.Zombies
 
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, or die in space
-            RemComp<DiseaseCarrierComponent>(target);
             RemComp<RespiratorComponent>(target);
             RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
@@ -109,14 +110,12 @@ namespace Content.Server.Zombies
 
             //funny voice
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
-            var rotting = EnsureComp<RottingComponent>(target);
-            rotting.DealDamage = false;
 
             //This is needed for stupid entities that fuck up combat mode component
             //in an attempt to make an entity not attack. This is the easiest way to do it.
             RemComp<CombatModeComponent>(target);
             var combat = AddComp<CombatModeComponent>(target);
-            combat.IsInCombatMode = true;
+            _combat.SetInCombatMode(target, true, combat);
 
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
@@ -144,7 +143,7 @@ namespace Content.Server.Zombies
                 zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
                 zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
 
-                _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, humanoid: huApComp);
+                _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, verify: false, humanoid: huApComp);
                 _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
 
                 // this might not resync on clone?
@@ -185,9 +184,16 @@ namespace Content.Server.Zombies
             if (TryComp<TemperatureComponent>(target, out var tempComp))
                 tempComp.ColdDamage.ClampMax(0);
 
+            // Zombies can revive themselves
+            _mobThreshold.SetAllowRevives(target, true);
+
             //Heals the zombie from all the damage it took while human
             if (TryComp<DamageableComponent>(target, out var damageablecomp))
                 _damageable.SetAllDamage(target, damageablecomp, 0);
+
+            // Revive them now
+            if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState==MobState.Dead)
+                _mobState.ChangeMobState(target, MobState.Alive, mobstate);
 
             //gives it the funny "Zombie ___" name.
             var meta = MetaData(target);
@@ -209,10 +215,11 @@ namespace Content.Server.Zombies
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig
             {
                 //yet more hardcoding. Visit zombie.ftl for more information.
-                EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(target, out var ghostcomp);
-                ghostcomp.RoleName = Loc.GetString("zombie-generic");
-                ghostcomp.RoleDescription = Loc.GetString("zombie-role-desc");
-                ghostcomp.RoleRules = Loc.GetString("zombie-role-rules");
+                var ghostRole = EnsureComp<GhostRoleComponent>(target);
+                EnsureComp<GhostTakeoverAvailableComponent>(target);
+                ghostRole.RoleName = Loc.GetString("zombie-generic");
+                ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
+                ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
 
             //Goes through every hand, drops the items in it, then removes the hand
@@ -224,6 +231,9 @@ namespace Content.Server.Zombies
                 _sharedHands.RemoveHand(target, hand.Name);
             }
             RemComp<HandsComponent>(target);
+            // No longer waiting to become a zombie:
+            // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
+            RemCompDeferred<PendingZombieComponent>(target);
 
             //zombie gamemode stuff
             RaiseLocalEvent(new EntityZombifiedEvent(target));

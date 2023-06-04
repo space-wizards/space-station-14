@@ -6,9 +6,7 @@
   - type: StorageFill
     contents:
       - id: BoxPillCanister
-        amount: 1
       - id: BoxSyringe
-        amount: 1
       - id: EpinephrineChemistryBottle
         amount: 3
       - id: Brutepack
@@ -27,9 +25,7 @@
   - type: StorageFill
     contents:
       - id: BoxPillCanister
-        amount: 1
       - id: BoxSyringe
-        amount: 1
       - id: EpinephrineChemistryBottle
         amount: 3
       - id: Brutepack
@@ -76,10 +72,40 @@
       - id: ClothingMaskSterile
 
 - type: entity
+  parent: LockerWallMedical
   id: LockerWallMedicalDoctorFilled
   name: medical doctor's wall locker
   suffix: Filled
-  parent: ["LockerWallMedical", "LockerMedicalFilled"]
+  components:
+  - type: StorageFill
+    contents:
+      - id: HandheldHealthAnalyzer
+        prob: 0.6
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingHeadsetMedical
+     # - id: ClothingEyesHudMedical #Removed until working properly
+      - id: ClothingBeltMedical
+      - id: ClothingHeadHatSurgcapGreen
+        prob: 0.1
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapPurple
+        prob: 0.05
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapBlue
+        prob: 0.90
+        orGroup: Surgcaps
+      - id: UniformScrubsColorBlue
+        prob: 0.5
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorGreen
+        prob: 0.1
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorPurple
+        prob: 0.05
+        orGroup: Surgshrubs
+      - id: NitrousOxideTankFilled
+        prob: 0.3
+      - id: ClothingMaskSterile
 
 - type: entity
   id: LockerChemistryFilled
@@ -89,10 +115,23 @@
   - type: StorageFill
     contents:
       - id: BoxSyringe
-        amount: 1
       - id: BoxBeaker
-        amount: 1
       - id: BoxPillCanister
-        amount: 1
       - id: BoxBottle
         amount: 2
+        
+- type: entity
+  id: LockerParamedicFilled
+  suffix: Filled
+  parent: LockerParamedic
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetVoidParamed
+      - id: ClothingOuterHardsuitVoidParamed
+      - id: ClothingOuterCoatParamedicWB
+      - id: ClothingHeadHatParamedicsoft
+      - id: ClothingUniformJumpsuitParamedic
+      - id: ClothingUniformJumpskirtParamedic
+      - id: ClothingEyesHudMedical
+      

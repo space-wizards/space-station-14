@@ -1,0 +1,69 @@
+- type: entity
+  id: FloorBananiumEntity
+  name: bananium floor
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Sprite
+    netsync: false
+    sprite: Tiles/Misc/bananium.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: bananium
+  - type: Transform
+    anchored: true
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+  - type: Tag
+    tags:
+      - Catwalk
+  - type: Construction
+    graph: FloorBananium
+    node: BananiumFloor
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialBananium:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Slippery
+    paralyzeTime: 2
+    launchForwardsMultiplier: 1.5
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        hard: false
+        layer:
+        - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 1000
+        mask:
+        - ItemMask

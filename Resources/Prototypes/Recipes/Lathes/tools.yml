@@ -1,5 +1,8 @@
 - type: latheRecipe
   id: Wirecutter
+  icon:
+    sprite: Objects/Tools/wirecutters.rsi
+    state: cutters-map
   result: Wirecutter
   completetime: 2
   materials:
@@ -8,6 +11,9 @@
 
 - type: latheRecipe
   id: Screwdriver
+  icon:
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver-map
   result: Screwdriver
   completetime: 2
   materials:
@@ -75,6 +81,14 @@
 - type: latheRecipe
   id: Multitool
   result: Multitool
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 200
+
+- type: latheRecipe
+  id: NetworkConfigurator
+  result: NetworkConfigurator
   completetime: 2
   materials:
     Steel: 200
@@ -170,3 +184,21 @@
   materials:
     Steel: 500
     Plastic: 100
+
+- type: latheRecipe
+  id: WelderIndustrialAdvanced
+  result: WelderIndustrialAdvanced
+  completetime: 6
+  materials:
+    Steel: 800
+    Plasma: 200
+
+- type: latheRecipe
+  id: JawsOfLife
+  result: JawsOfLife
+  completetime: 6
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plasma: 300
+    Gold: 50

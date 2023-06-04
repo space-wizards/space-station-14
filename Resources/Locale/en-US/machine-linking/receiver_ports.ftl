@@ -1,3 +1,6 @@
+signal-port-name-autoclose = Autoclose
+signal-port-description-autoclose = Toggles whether the device should automatically close.
+
 signal-port-name-toggle = Toggle
 signal-port-description-toggle = Toggles the state of a device.
 
@@ -18,6 +21,9 @@ signal-port-description-open = Opens a device.
 
 signal-port-name-close = Close
 signal-port-description-close = Closes a device.
+
+signal-port-name-doorbolt = Door bolt
+signal-port-description-doorbolt = Toggles door bolt.
 
 signal-port-name-trigger = Trigger
 signal-port-description-trigger = Triggers some mechanism on the device.
@@ -46,8 +52,20 @@ signal-port-description-med-scanner-sender = Medical scanner signal sender
 signal-port-name-med-scanner-receiver = Medical scanner
 signal-port-description-med-scanner-receiver = Medical scanner signal receiver
 
+signal-port-name-hold-open = Hold
+signal-port-description-hold-open = Turns off automatic closing.
+
 signal-port-name-artifact-analyzer-sender = Console
 signal-port-description-artifact-analyzer-sender = Analysis console signal sender
 
 signal-port-name-artifact-analyzer-receiver = Pad
 signal-port-description-artifact-analyzer-receiver = Artifact analyzer signal receiver
+
+signal-port-name-set-particle-delta = Set particle type: delta
+signal-port-description-set-particle-delta = Sets the type of particle this device emits to delta.
+
+signal-port-name-set-particle-epsilon = Set particle type: epsilon
+signal-port-description-set-particle-epsilon = Sets the type of particle this device emits to epsilon.
+
+signal-port-name-set-particle-zeta = Set particle type: zeta
+signal-port-description-set-particle-zeta = Sets the type of particle this device emits to zeta.

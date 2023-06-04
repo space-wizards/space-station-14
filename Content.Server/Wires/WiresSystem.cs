@@ -2,11 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Logs;
-using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
-using Content.Shared.DoAfter;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools;
@@ -165,10 +165,10 @@ public sealed class WiresSystem : SharedWiresSystem
                     else
                         types.Add(actionType, 1);
 
-                    d.Id = i;
                     if (!d.Action.AddWire(d, types[actionType]))
                         d.Action = null;
                 }
+                d.Id = i;
 
                 data.Add(id, new WireLayout.WireData(d.Letter, d.Color, i));
                 wires.WiresList[i] = wireSet[id];
@@ -237,10 +237,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnWiresStartup(EntityUid uid, WiresComponent component, ComponentStartup args)
     {
-        if (!String.IsNullOrEmpty(component.LayoutId))
-            SetOrCreateWireLayout(uid, component);
-
-        UpdateUserInterface(uid);
+        EnsureComp<WiresPanelComponent>(uid);
     }
     #endregion
 
@@ -463,12 +460,16 @@ public sealed class WiresSystem : SharedWiresSystem
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
             if (TryComp(args.User, out ActorComponent? actor))
+            {
                 _uiSystem.TryOpen(uid, WiresUiKey.Key, actor.PlayerSession);
+                args.Handled = true;
+            }
         }
         else if (_toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, "Screwing", new WirePanelDoAfterEvent(), toolComponent: tool))
         {
             _adminLogger.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(args.User):user} is screwing {ToPrettyString(uid):target}'s {(panel.Open ? "open" : "closed")} maintenance panel at {Transform(uid).Coordinates:targetlocation}");
+            args.Handled = true;
         }
     }
 
@@ -494,17 +495,16 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnMapInit(EntityUid uid, WiresComponent component, MapInitEvent args)
     {
-        EnsureComp<WiresPanelComponent>(uid);
+        if (!string.IsNullOrEmpty(component.LayoutId))
+            SetOrCreateWireLayout(uid, component);
+
         if (component.SerialNumber == null)
-        {
             GenerateSerialNumber(uid, component);
-        }
 
         if (component.WireSeed == 0)
-        {
             component.WireSeed = _random.Next(1, int.MaxValue);
-            UpdateUserInterface(uid);
-        }
+
+        UpdateUserInterface(uid);
     }
     #endregion
 

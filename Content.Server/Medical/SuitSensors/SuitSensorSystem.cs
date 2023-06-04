@@ -2,6 +2,7 @@ using Content.Server.Access.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
@@ -21,23 +22,22 @@ namespace Content.Server.Medical.SuitSensors
 {
     public sealed class SuitSensorSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly CrewMonitoringServerSystem _monitoringServerSystem = default!;
+        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly CrewMonitoringServerSystem _monitoringServerSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xform = default!;
-
-        private const float UpdateRate = 1f;
-        private float _updateDif;
 
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
             SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<SuitSensorComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<SuitSensorComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
@@ -46,40 +46,42 @@ namespace Content.Server.Medical.SuitSensors
             SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
         }
 
+        private void OnUnpaused(EntityUid uid, SuitSensorComponent component, ref EntityUnpausedEvent args)
+        {
+            component.NextUpdate += args.PausedTime;
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            // check update rate
-            _updateDif += frameTime;
-            if (_updateDif < UpdateRate)
-                return;
-
-            _updateDif -= UpdateRate;
-
             var curTime = _gameTiming.CurTime;
-            var sensors = EntityManager.EntityQuery<SuitSensorComponent, DeviceNetworkComponent>();
-            foreach (var (sensor, device) in sensors)
+            var sensors = EntityManager.EntityQueryEnumerator<SuitSensorComponent, DeviceNetworkComponent>();
+
+            while (sensors.MoveNext(out var uid, out var sensor, out var device))
             {
-                if (!device.TransmitFrequency.HasValue || !sensor.StationId.HasValue)
+                if (device.TransmitFrequency is null)
                     continue;
 
                 // check if sensor is ready to update
-                if (curTime - sensor.LastUpdate < sensor.UpdateRate)
+                if (curTime < sensor.NextUpdate)
                     continue;
 
-                // Add a random offset to the next update time that isn't longer than the sensors update rate
-                sensor.LastUpdate = curTime.Add(TimeSpan.FromSeconds(_random.Next(0, sensor.UpdateRate.Seconds)));
+                if (!CheckSensorAssignedStation(uid, sensor))
+                    continue;
+
+                // TODO: This would cause imprecision at different tick rates.
+                sensor.NextUpdate = curTime + sensor.UpdateRate;
 
                 // get sensor status
-                var status = GetSensorState(sensor.Owner, sensor);
+                var status = GetSensorState(uid, sensor);
                 if (status == null)
                     continue;
 
                 //Retrieve active server address if the sensor isn't connected to a server
                 if (sensor.ConnectedServer == null)
                 {
-                    if (!_monitoringServerSystem.TryGetActiveServerAddress(sensor.StationId.Value, out var address))
+                    if (!_monitoringServerSystem.TryGetActiveServerAddress(sensor.StationId!.Value, out var address))
                         continue;
 
                     sensor.ConnectedServer = address;
@@ -95,13 +97,54 @@ namespace Content.Server.Medical.SuitSensors
                     continue;
                 }
 
-                _deviceNetworkSystem.QueuePacket(sensor.Owner, sensor.ConnectedServer, payload, device: device);
+                _deviceNetworkSystem.QueuePacket(uid, sensor.ConnectedServer, payload, device: device);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the sensor is assigned to a station or not
+        /// and tries to assign an unassigned sensor to a station if it's currently on a grid
+        /// </summary>
+        /// <returns>True if the sensor is assigned to a station or assigning it was successful. False otherwise.</returns>
+        private bool CheckSensorAssignedStation(EntityUid uid, SuitSensorComponent sensor)
+        {
+            if (!sensor.StationId.HasValue && Transform(uid).GridUid == null)
+                return false;
+
+            sensor.StationId = _stationSystem.GetOwningStation(uid);
+            return sensor.StationId.HasValue;
+        }
+
+        private void OnPlayerSpawn(PlayerSpawnCompleteEvent ev)
+        {
+            // If the player spawns in arrivals then the grid underneath them may not be appropriate.
+            // in which case we'll just use the station spawn code told us they are attached to and set all of their
+            // sensors.
+            var sensorQuery = GetEntityQuery<SuitSensorComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            RecursiveSensor(ev.Mob, ev.Station, sensorQuery, xformQuery);
+        }
+
+        private void RecursiveSensor(EntityUid uid, EntityUid stationUid, EntityQuery<SuitSensorComponent> sensorQuery, EntityQuery<TransformComponent> xformQuery)
+        {
+            var xform = xformQuery.GetComponent(uid);
+            var enumerator = xform.ChildEnumerator;
+
+            while (enumerator.MoveNext(out var child))
+            {
+                if (sensorQuery.TryGetComponent(child, out var sensor))
+                {
+                    sensor.StationId = stationUid;
+                }
+
+                RecursiveSensor(child.Value, stationUid, sensorQuery, xformQuery);
             }
         }
 
         private void OnMapInit(EntityUid uid, SuitSensorComponent component, MapInitEvent args)
         {
-            component.StationId = _stationSystem.GetOwningStation(uid);
+            // Fallback
+            component.StationId ??= _stationSystem.GetOwningStation(uid);
 
             // generate random mode
             if (component.RandomMode)
@@ -270,7 +313,7 @@ namespace Content.Server.Medical.SuitSensors
             // get health mob state
             var isAlive = false;
             if (EntityManager.TryGetComponent(sensor.User.Value, out MobStateComponent? mobState))
-                isAlive = _mobStateSystem.IsAlive(sensor.User.Value, mobState);
+                isAlive = !_mobStateSystem.IsDead(sensor.User.Value, mobState);
 
             // get mob total damage
             var totalDamage = 0;
@@ -278,9 +321,6 @@ namespace Content.Server.Medical.SuitSensors
                 totalDamage = damageable.TotalDamage.Int();
 
             // finally, form suit sensor status
-            var xForm = Transform(sensor.User.Value);
-            var xFormQuery = GetEntityQuery<TransformComponent>();
-            var coords = _xform.GetMoverCoordinates(xForm, xFormQuery);
             var status = new SuitSensorStatus(userName, userJob);
             switch (sensor.Mode)
             {
@@ -294,7 +334,26 @@ namespace Content.Server.Medical.SuitSensors
                 case SuitSensorMode.SensorCords:
                     status.IsAlive = isAlive;
                     status.TotalDamage = totalDamage;
-                    status.Coordinates = coords;
+                    EntityCoordinates coordinates;
+                    var xformQuery = GetEntityQuery<TransformComponent>();
+
+                    if (transform.GridUid != null)
+                    {
+                        coordinates = new EntityCoordinates(transform.GridUid.Value,
+                            _transform.GetInvWorldMatrix(xformQuery.GetComponent(transform.GridUid.Value), xformQuery)
+                            .Transform(_transform.GetWorldPosition(transform, xformQuery)));
+                    }
+                    else if (transform.MapUid != null)
+                    {
+                        coordinates = new EntityCoordinates(transform.MapUid.Value,
+                            _transform.GetWorldPosition(transform, xformQuery));
+                    }
+                    else
+                    {
+                        coordinates = EntityCoordinates.Invalid;
+                    }
+
+                    status.Coordinates = coordinates;
                     break;
             }
 
@@ -317,7 +376,7 @@ namespace Content.Server.Medical.SuitSensors
             if (status.TotalDamage != null)
                 payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE, status.TotalDamage);
             if (status.Coordinates != null)
-                payload.Add(SuitSensorConstants.NET_CORDINATES, status.Coordinates);
+                payload.Add(SuitSensorConstants.NET_COORDINATES, status.Coordinates);
 
 
             return payload;
@@ -341,7 +400,7 @@ namespace Content.Server.Medical.SuitSensors
 
             // try get total damage and cords (optionals)
             payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
-            payload.TryGetValue(SuitSensorConstants.NET_CORDINATES, out EntityCoordinates? cords);
+            payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out EntityCoordinates? cords);
 
             var status = new SuitSensorStatus(name, job)
             {

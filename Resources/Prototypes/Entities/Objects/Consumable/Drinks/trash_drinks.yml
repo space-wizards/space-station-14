@@ -17,6 +17,12 @@
     maxTransferAmount: 5
   - type: Drink
     isOpen: true
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: Spillable
     solution: drink
   - type: FitsInDispenser
@@ -62,7 +68,9 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
   - type: SpaceGarbage
 
 # Containers

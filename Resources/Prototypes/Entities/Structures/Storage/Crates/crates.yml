@@ -157,6 +157,18 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateChemistrySecure
+  name: secure chemistry crate
+  components:
+    - type: Icon
+      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    - type: Sprite
+      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    - type: AccessReader
+      access: [["Chemistry"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CratePrivateSecure
   name: private crate
   components:
@@ -272,14 +284,15 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.29"
-      density: 135
-      mask:
-      - LargeMobMask
-      layer:
-      - LargeMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 135
+        mask:
+        - LargeMobMask
+        layer:
+        - LargeMobLayer
   - type: Construction
     graph: CrateLivestock
     node: cratelivestock
@@ -324,14 +337,59 @@
     airtight: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.29"
-      density: 80
-      mask:
-      - LargeMobMask
-      layer:
-      - LargeMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 80
+        mask:
+        - LargeMobMask
+        layer:
+        - LargeMobLayer
   - type: StaticPrice
     price: 60
 
+- type: entity
+  parent: CrateGeneric
+  id: CratePirate
+  name: pirate chest
+  description: A space pirate chest, not for station lubbers.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    layers:
+    - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    state: crate_icon
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateDoorOpen: crate_open
+    stateDoorClosed: crate_door
+
+- type: entity
+  parent: CratePirate
+  id: CrateToyBox
+  name: toy box
+  suffix: Empty
+  description: A box overflowing with fun.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/toybox.rsi
+    layers:
+    - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/toybox.rsi
+    state: crate_icon

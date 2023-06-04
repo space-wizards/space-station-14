@@ -16,8 +16,6 @@
   - node: assembly
     entity: AirlockAssembly
     actions:
-    - !type:SpriteStateChange
-      state: assembly
     - !type:SnapToGrid {}
     - !type:SetAnchor {}
     edges:
@@ -87,7 +85,7 @@
       conditions:
       - !type:EntityAnchored {}
       - !type:DoorWelded {}
-      - !type:AirlockBolted
+      - !type:DoorBolted
         value: false
       - !type:WirePanel {}
       - !type:AllWiresCut
@@ -125,7 +123,7 @@
       conditions:
       - !type:EntityAnchored {}
       - !type:DoorWelded {}
-      - !type:AirlockBolted
+      - !type:DoorBolted
         value: false
       - !type:WirePanel {}
       - !type:AllWiresCut

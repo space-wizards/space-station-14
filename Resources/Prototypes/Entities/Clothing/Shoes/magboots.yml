@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBootsMag
   name: magboots
@@ -15,7 +15,7 @@
     - type: Magboots
       toggleAction:
         icon: { sprite: Clothing/Shoes/Boots/magboots.rsi, state: icon }
-        iconOn: Clothing/Shoes/Boots/magboots.rsi/icon-on.png
+        iconOn: { sprite : Clothing/Shoes/Boots/magboots.rsi, state: icon-on }
         name: action-name-magboot-toggle
         description: action-decription-magboot-toggle
         itemIconStyle: NoItem
@@ -58,6 +58,10 @@
     sprintModifier: 1
     enabled: false
   - type: NoSlip
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HighRiskItem
   - type: StaticPrice
     price: 750
 
@@ -68,12 +72,11 @@
   description: These would look fetching on a fetcher like you.
   components:
   - type: ClothingSpeedModifier
-    walkModifier: 2.5 #PVS isn't too much of an issue when you are blind...
-    sprintModifier: 2.5
+    walkModifier: 1.10 #PVS isn't too much of an issue when you are blind...
+    sprintModifier: 1.10
     enabled: false
   - type: StaticPrice
     price: 3000
-  - type: Blindfold
 
 - type: entity
   parent: ClothingShoesBase

@@ -133,6 +133,7 @@
   - type: MeleeChemicalInjector
     transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
     solution: food
+    pierceArmor: false
   - type: Extractable
     grindableSolutionName: food
 
@@ -187,19 +188,20 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      id: "slips"
-      hard: false
-      layer:
-      - SlipLayer
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      density: 30
-      mask:
-      - ItemMask
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
   - type: Tag
     tags:
     - Recyclable
@@ -213,8 +215,22 @@
           Quantity: 4
   - type: Extractable
     grindableSolutionName: food
-  - type: Recyclable
   - type: SpaceGarbage
+
+- type: entity
+  name: bananium peel
+  parent: TrashBananaPeel
+  id: TrashBananiumPeel
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: peel
+  - type: Item
+    sprite: Objects/Materials/materials.rsi
+    heldPrefix: peel
+  - type: Slippery
+    paralyzeTime: 4
+    launchForwardsMultiplier: 2
 
 - type: entity
   name: banana peel
@@ -503,24 +519,6 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  name: tomato
-  id: PuddleTomato
-  parent: PuddleBase
-  description: Splat.
-  components:
-  - type: Sprite
-    sprite: Fluids/tomato_splat.rsi
-    state: puddle-0
-    netsync: false
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: JuiceTomato
-          Quantity: 10
-
-- type: entity
   name: eggplant
   parent: FoodProduceBase
   id: FoodEggplant
@@ -585,12 +583,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 14
+        maxVol: 20
         reagents:
+        - ReagentId: Cornmeal
+          Quantity: 15
         - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
@@ -618,6 +616,13 @@
   - type: Tag
     tags:
       - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Cornmeal
+          Quantity: 10
 
 - type: entity
   name: onion
@@ -837,12 +842,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 22
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
         - ReagentId: Bicaridine
-          Quantity: 10
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/poppy.rsi
   - type: Produce
@@ -892,16 +897,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 24
         reagents:
         - ReagentId: Bicaridine
-          Quantity: 10
+          Quantity: 5
         - ReagentId: Kelotane
-          Quantity: 10
+          Quantity: 5
         - ReagentId: Nutriment
           Quantity: 2
         - ReagentId: Desoxyephedrine
-          Quantity: 2
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
   - type: Sprite
@@ -1096,25 +1101,7 @@
   - type: Butcherable
     butcheringType: Knife
     spawned:
-    - id: ClothingHeadClothingHeadHatWatermelon
-
-- type: entity
-  name: watermelon
-  id: PuddleWatermelon
-  parent: PuddleBase
-  description: Splat.
-  components:
-  - type: Sprite
-    sprite: Fluids/tomato_splat.rsi
-    state: puddle-0
-    netsync: false
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: JuiceWatermelon
-          Quantity: 20
+    - id: ClothingHeadHatWatermelon
 
 - type: entity
   name: watermelon slice

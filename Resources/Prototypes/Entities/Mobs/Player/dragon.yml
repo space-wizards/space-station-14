@@ -5,12 +5,13 @@
   suffix: ""
   description: A flying leviathan, loosely related to space carps.
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Space dragon
-      description: Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
+      name: ghost-role-information-space-dragon-name
+      description: ghost-role-information-space-dragon-description
+    - type: GhostTakeoverAvailable
     - type: HTN
       rootTask: XenoCompound
     - type: Faction
@@ -18,10 +19,6 @@
         - Dragon
     - type: Speech
     - type: CombatMode
-      disarmAction:
-        enabled: false
-        autoPopulate: false
-        name: action-name-disarm
     - type: MobMover
     - type: InputMover
     - type: MovementSpeedModifier
@@ -57,7 +54,8 @@
       bodyType: KinematicController
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.40
           density: 100
@@ -99,22 +97,25 @@
         types:
           Piercing: 15
           Slash: 15
-    - type: Dragon
-      spawnsLeft: 2
-      spawnsProto: MobCarpDragon
+    - type: Devourer
+      foodPreference: Humanoid
+      shouldStoreDevoured: true
+      chemical: Ichor
+      healRate: 15.0
+      whitelist:
+        components:
+          - MobState
+          - Door
+        tags:
+          - Wall
       devourAction:
-        event: !type:DragonDevourActionEvent
+        event: !type:DevourActionEvent
         icon: Interface/Actions/devour.png
         name: action-name-devour
         description: action-description-devour
-        devourChemical: Ichor
-        devourHealRate: 15.0
-        whitelist:
-          components:
-            - MobState
-            - Door
-          tags:
-            - Wall
+    - type: Dragon
+      spawnsLeft: 2
+      spawnsProto: MobCarpDragon
       spawnRiftAction:
         event: !type:DragonSpawnRiftActionEvent
         icon:

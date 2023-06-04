@@ -1,9 +1,10 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: ShardBase
   description: It's a shard of some unknown material.
   components:
+  - type: Sharp
   - type: Sprite
     layers:
       - sprite: Objects/Materials/Shards/shard.rsi
@@ -26,23 +27,25 @@
         Slash: 3.5
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
+    size: 4
   - type: CollisionWake
     enabled: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      id: "slips"
-      hard: false
-      layer:
-      - LowImpassable
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      density: 30
-      mask:
-      - ItemMask
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
   - type: DamageOtherOnHit
     damage:
       types:
@@ -50,7 +53,6 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage
   - type: Damageable
     damageContainer: Inorganic
@@ -115,7 +117,11 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 10
+        Piercing: 5
+  - type: Tag
+    tags:
+      - ReinforcedGlassShard
+      - Trash
 
 - type: entity
   parent: ShardBase
@@ -124,7 +130,7 @@
   description: A small piece of plasma glass.
   components:
   - type: Sprite
-    color: "#f3b489"
+    color: "#FF72E7"
   - type: WelderRefinable
     refineResult:
     - SheetGlass1
@@ -132,4 +138,31 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 15
+        Piercing: 5
+  - type: Tag
+    tags:
+      - PlasmaGlassShard
+      - Trash
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassUranium
+  name: uranium glass shard
+  description: A small piece of uranium glass.
+  components:
+  - type: Sprite
+    color: "#8eff7a"
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - SheetUranium1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 3
+        Radiation: 2
+  - type: Tag
+    tags:
+      - UraniumGlassShard
+      - Trash
+

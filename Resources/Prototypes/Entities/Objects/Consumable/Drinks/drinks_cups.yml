@@ -31,6 +31,12 @@
     state: icon
   - type: Spillable
     solution: drink
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: ItemCooldown
 
 - type: entity
@@ -60,6 +66,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: icon-
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
 
 - type: entity
   parent: DrinkBaseMug
@@ -124,6 +133,9 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_metal.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
 
 - type: entity
   parent: DrinkBaseMug
@@ -197,6 +209,24 @@
 
 - type: entity
   parent: DrinkBaseCup
+  id: DrinkCafeLatte
+  name: Cafe latte
+  description: A nice, strong and tasty beverage while you are reading.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: CafeLatte
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+  - type: Appearance
+  - type: TrashOnEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
   id: DrinkTeacup
   name: Teacup
   description: A plain white porcelain teacup.
@@ -206,6 +236,31 @@
       drink:
         reagents:
         - ReagentId: Tea
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkGreenTea
+  name: Green tea
+  description: A plain white porcelain teacup.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: GreenTea
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi

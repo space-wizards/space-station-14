@@ -80,6 +80,13 @@ public sealed class DoAfterArgs
     public bool BreakOnUserMove;
 
     /// <summary>
+    ///     If this is true then any movement, even when weightless, will break the doafter.
+    ///     When there is no gravity, BreakOnUserMove is ignored. If it is false to begin with nothing will change.
+    /// </summary>
+    [DataField("breakOnWeightlessMove")]
+    public bool BreakOnWeightlessMove;
+
+    /// <summary>
     ///     If do_after stops when the target moves (if there is a target)
     /// </summary>
     [DataField("breakOnTargetMove")]
@@ -127,6 +134,7 @@ public sealed class DoAfterArgs
     [DataField("blockDuplicate")]
     public bool BlockDuplicate = true;
 
+    //TODO: User pref to not cancel on second use on specific doafters
     /// <summary>
     ///     If true, this will cancel any duplicate DoAfters when attempting to add a new DoAfter. See also
     ///     <see cref="DuplicateConditions"/>.
@@ -206,6 +214,7 @@ public sealed class DoAfterArgs
 
     #endregion
 
+    //The almighty pyramid returns.......
     public DoAfterArgs(DoAfterArgs other)
     {
         User = other.User;
@@ -217,6 +226,7 @@ public sealed class DoAfterArgs
         NeedHand = other.NeedHand;
         BreakOnHandChange = other.BreakOnHandChange;
         BreakOnUserMove = other.BreakOnUserMove;
+        BreakOnWeightlessMove = other.BreakOnWeightlessMove;
         BreakOnTargetMove = other.BreakOnTargetMove;
         MovementThreshold = other.MovementThreshold;
         DistanceThreshold = other.DistanceThreshold;

@@ -15,13 +15,7 @@
       shader: unshaded
       map: ["enum.DiseaseMachineVisualLayers.IsOn"]
     netsync: false
-  - type: DiseaseDiagnoser
-  - type: DiseaseMachine
-    machineOutput: DiagnosisReportPaper
   - type: Appearance
-  - type: DiseaseMachineVisuals
-    idleState: icon
-    runningState: running
   - type: Machine
     board: DiagnoserMachineCircuitboard
 

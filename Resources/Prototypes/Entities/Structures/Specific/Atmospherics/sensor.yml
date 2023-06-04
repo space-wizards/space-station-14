@@ -22,7 +22,8 @@
       canCollide: false
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.25,-0.25,0.25,0.25"
           density: 20
@@ -62,22 +63,23 @@
         - AirSensor
     - type: AccessReader
       access: [ [ "Atmospherics" ] ]
-    - type: GenericVisualizer
-      visuals:
-        enum.PowerDeviceVisuals.Powered:
-          sensor:
-            True: { state: gsensor1 }
-            False: { state: gsensor0 }
     - type: Construction
       graph: AirSensor
       node: sensor
+    - type: Appearance
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Specific/Atmospherics/sensor.rsi
       layers:
         - state: gsensor1
-          map: [ "sensor" ]
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { state: gsensor1 }
+            False: { state: gsensor0 }
 
 - type: entity
   parent: BaseItem

@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.Fluids.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
@@ -51,7 +52,7 @@ public sealed partial class ToolSystem
         if (!TryComp<ToolComponent?>(toolEntity, out var tool) && component.ToolComponentNeeded)
             return false;
 
-        if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))
+        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out _, out var mapGrid))
             return false;
 
         var tile = mapGrid.GetTileRef(clickLocation);
@@ -66,7 +67,7 @@ public sealed partial class ToolSystem
         if (!tileDef.CanCrowbar)
             return false;
 
-        var ev = new TilePryingDoAfterEvent(clickLocation);
+        var ev = new TilePryingDoAfterEvent(coordinates);
 
         return UseTool(toolEntity, user, toolEntity, component.Delay, component.QualityNeeded, ev, toolComponent: tool);
     }

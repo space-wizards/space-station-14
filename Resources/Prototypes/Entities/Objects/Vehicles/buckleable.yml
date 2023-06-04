@@ -29,16 +29,16 @@
   - type: Clickable
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.4
-      density: 360
-      restitution: 0.0
-      mask:
-      - MobMask
-      layer:
-      - TableLayer
-  - type: VehicleVisuals
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 360
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - TableLayer
   - type: Appearance
   - type: Repairable
     fuelcost: 20
@@ -48,6 +48,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -73,6 +79,7 @@
   - type: StaticPrice
     price: 750 # Grand Theft Auto.
 
+
 - type: entity
   id: VehicleJanicart
   parent: BaseVehicle
@@ -80,6 +87,9 @@
   description: The janitor's trusty steed.
   components:
   - type: Vehicle
+    southOver: true
+    westOver: true
+    eastOver: true
     northOverride: -0.15
     southOverride: 0.22
   - type: Sprite
@@ -104,6 +114,12 @@
     autoRot: true
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 250
@@ -163,7 +179,9 @@
   description: The future of transportation. Popularized by St. James, the patron saint of security officers and internet forum moderators.
   components:
   - type: Vehicle
-    northOnly: true
+    northOver: true
+    westOver: true
+    eastOver: true
     northOverride: -0.1
     southOverride: 0.1
     hornSound:
@@ -210,6 +228,8 @@
   description: All-Tile Vehicle.
   components:
   - type: Vehicle
+    southOver: true
+    northOver: true
     northOverride: -0.1
     southOverride: 0.1
   - type: Sprite
@@ -263,7 +283,9 @@
   description: Be an enemy of the corporation, in style.
   components:
     - type: Vehicle
-      northOnly: true
+      southOver: true
+      westOver: true
+      eastOver: true
       northOverride: -0.1
       southOverride: 0.1
       hornSound:
@@ -305,6 +327,8 @@
   description: Bad to the Bone.
   components:
     - type: Vehicle
+      southOver: true
+      northOver: true
       northOverride: -0.1
       southOverride: 0.1
     - type: Sprite
@@ -348,3 +372,65 @@
             path: /Audio/Effects/Vehicle/vehiclestartup.ogg
             params:
               volume: -3
+
+- type: entity
+  id: VehicleUnicycle
+  parent: [BaseVehicle, BaseFoldable, BaseItem]
+  name: unicycle
+  description: It only has one wheel!
+  components:
+  - type: Vehicle
+    useHand: false
+    northOver: true
+    southOver: true
+    northOverride: -0.15
+    southOverride: 0.15
+    hasKey: true
+    hornSound:
+      path: /Audio/Effects/Vehicle/bicyclebell.ogg
+  - type: Sprite
+    sprite: Objects/Vehicles/unicycle.rsi
+    layers:
+    - state: vehicle
+      map: ["enum.VehicleVisualLayers.AutoAnimate", "unfoldedLayer"]
+    - state: vehicle_folded
+      map: ["foldedLayer"]
+      visible: false
+    netsync: false
+    noRot: true
+  - type: Strap
+    buckleOffset: "0.1, -0.05"
+    maxBuckleDistance: 1
+  - type: MovementSpeedModifier
+    acceleration: 1
+    friction: 0.8
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 4.3
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 240
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  parent: VehicleUnicycle
+  id: VehicleUnicycleFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true

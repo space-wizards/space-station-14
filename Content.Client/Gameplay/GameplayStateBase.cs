@@ -136,7 +136,7 @@ namespace Content.Client.Gameplay
                     return cmp;
                 }
 
-                cmp = y.bottom.CompareTo(x.bottom);
+                cmp = -y.bottom.CompareTo(x.bottom);
 
                 if (cmp != 0)
                 {
@@ -168,7 +168,8 @@ namespace Content.Client.Gameplay
                 var mousePosWorld = vp.ScreenToMap(kArgs.PointerLocation.Position);
                 entityToClick = GetClickedEntity(mousePosWorld);
 
-                coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
+                coordinates = _mapManager.TryFindGridAt(mousePosWorld, out _, out var grid) ?
+                    grid.MapToGrid(mousePosWorld) :
                     EntityCoordinates.FromMap(_mapManager, mousePosWorld);
             }
 

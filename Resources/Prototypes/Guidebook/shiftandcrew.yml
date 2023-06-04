@@ -1,14 +1,21 @@
 ﻿- type: guideEntry
   id: Jobs
   name: guide-entry-jobs
-  text: "/Server Info/Guidebook/Jobs.xml"
+  text: "/ServerInfo/Guidebook/Jobs.xml"
   children:
   - Botany
   - Engineering
   - Science
   - Security
+  - Janitorial
+  - Salvage
 
 - type: guideEntry
   id: Survival
   name: guide-entry-survival
-  text: "/Server Info/Guidebook/Survival.xml"
+  text: "/ServerInfo/Guidebook/Survival.xml"
+
+- type: guideEntry
+  id: Janitorial
+  name: guide-entry-janitorial
+  text: "/ServerInfo/Guidebook/Janitorial.xml"
