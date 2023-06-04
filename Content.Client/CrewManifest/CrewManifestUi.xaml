@@ -3,6 +3,7 @@
                Title="{Loc 'crew-manifest-window-title'}"
                SetSize="500 800">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+        <LineEdit Name="TextFilter" PlaceHolder="{Loc crew-manifest-text-filter-placeholder}"></LineEdit>
         <controls:StripeBack Name="StationNameContainer">
             <PanelContainer>
                 <Label Name="StationName" Align="Center" />

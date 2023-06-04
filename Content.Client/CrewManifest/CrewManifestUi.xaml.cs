@@ -23,6 +23,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
     [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     private readonly CrewManifestSystem _crewManifestSystem;
+    private CrewManifestEntries _sourceEntries = new CrewManifestEntries();
 
     public CrewManifestUi()
     {
@@ -31,6 +32,14 @@ public sealed partial class CrewManifestUi : DefaultWindow
         _crewManifestSystem = _entitySystemManager.GetEntitySystem<CrewManifestSystem>();
 
         StationName.AddStyleClass("LabelBig");
+
+        TextFilter.OnTextEntered += e => Populate(StationName.Text ?? "", _sourceEntries);
+        TextFilter.OnTextChanged += e => Populate(StationName.Text ?? "", _sourceEntries);
+    }
+
+    public void SetSourceEntries(CrewManifestEntries entries)
+    {
+        _sourceEntries = entries;
     }
 
     public void Populate(string name, CrewManifestEntries? entries)
@@ -43,7 +52,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
         if (entries == null) return;
 
-       var entryList = SortEntries(entries);
+       var entryList = SortEntries(FilterEntries(entries));
 
         foreach (var item in entryList)
         {
@@ -51,6 +60,26 @@ public sealed partial class CrewManifestUi : DefaultWindow
         }
     }
 
+    private CrewManifestEntries FilterEntries(CrewManifestEntries entries)
+    {
+        if (string.IsNullOrWhiteSpace(TextFilter.Text))
+        {
+            return entries;
+        }
+
+        var result = new CrewManifestEntries();
+        foreach (var entry in entries.Entries)
+        {
+            if (entry.Name.Contains(TextFilter.Text, StringComparison.OrdinalIgnoreCase)
+                || entry.JobPrototype.Contains(TextFilter.Text, StringComparison.OrdinalIgnoreCase)
+                || entry.JobTitle.Contains(TextFilter.Text, StringComparison.OrdinalIgnoreCase))
+            {
+                result.Entries.Add(entry);
+            }
+        }
+
+        return result;
+    }
     private List<(string section, List<CrewManifestEntry> entries)> SortEntries(CrewManifestEntries entries)
     {
         var entryDict = new Dictionary<string, List<CrewManifestEntry>>();
