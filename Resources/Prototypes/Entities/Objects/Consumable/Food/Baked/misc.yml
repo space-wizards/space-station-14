@@ -415,7 +415,7 @@
   description: Average recipe for meat in doughs.
   components:
   - type: Sprite
-      state: dumplings 
+    state: dumplings 
   - type: SolutionContainerManager
     solutions:
       food:
