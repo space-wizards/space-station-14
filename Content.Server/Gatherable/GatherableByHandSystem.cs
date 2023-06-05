@@ -1,7 +1,5 @@
-using Content.Server.Destructible;
 using Content.Server.Gatherable.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.EntityList;
 using Content.Shared.Interaction;
 using Content.Shared.Spaceshroom;
 using Robust.Shared.Random;
@@ -12,7 +10,6 @@ public sealed partial class GatherableByHandSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly DestructibleSystem _destructible = default!;
 
     public override void Initialize()
     {

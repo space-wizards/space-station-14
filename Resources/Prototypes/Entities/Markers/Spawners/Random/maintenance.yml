@@ -63,7 +63,6 @@
       chance: 0.6
       offset: 0.0
 
-
 - type: entity
   name: Maint Loot Spawner
   suffix: Tools+Cells+Mats
@@ -95,8 +94,6 @@
         - SheetSteel
         - SheetPlastic
         - ResearchDisk
-        - Spaceshroom
-        - Spaceshroom
         - Spaceshroom
       chance: 0.6
       offset: 0.0

@@ -17,10 +17,10 @@
     price: 150
   - type: GatherableByHand
     loot: FoodSpaceshroom
-    mindropcount: 2
-    maxdropcount: 3
-    dropradius: 0.9
-    harvesttime: 2.0
+    minDropCount: 2
+    maxDropCount: 3
+    dropRadius: 0.9
+    harvestTime: 2.0
 
 # Object
 - type: entity
@@ -53,21 +53,30 @@
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillSpaceshroom
-    quantities:
-      SpaceDrugs: 10
-      Water: 0
-      Ephedrine: 10
-      Lexorin: 10
-      Amatoxin: 15
 
-- type: weightedRandom
+- type: weightedRandomFill
   id: RandomFillSpaceshroom
-  weights:
-    SpaceDrugs: 10
-    Water: 5
-    Ephedrine: 3
-    Lexorin: 1
-    Amatoxin: 1
+  fills:
+  - quantity: 10
+    weight: 10
+    reagents:
+    - SpaceDrugs
+  - quantity: 0
+    weight: 5
+    reagents:
+    - Water
+  - quantity: 10
+    weight: 3
+    reagents:
+    - Ephedrine
+  - quantity: 10
+    weight: 1
+    reagents:
+    - Lexorin
+  - quantity: 15
+    weight: 1
+    reagents:
+    - Amatoxin
 
 # Cooked Object
 - type: entity

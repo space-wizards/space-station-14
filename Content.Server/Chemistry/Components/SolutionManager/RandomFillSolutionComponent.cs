@@ -1,5 +1,4 @@
 using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.FixedPoint;
 using Content.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -18,25 +17,8 @@ public sealed class RandomFillSolutionComponent : Component
     public string Solution { get; set; } = "default";
 
     /// <summary>
-    ///     Weighted random prototype Id. Used to pick reagent.
+    ///     Weighted random fill prototype Id. Used to pick reagent and quantity.
     /// </summary>
-    [DataField("weightedRandomId", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
+    [DataField("weightedRandomId", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomFillPrototype>))]
     public string WeightedRandomId { get; set; } = "default";
-
-    /// <summary>
-    ///     Amount of reagent to add by default.
-    /// </summary>
-    [DataField("quantity")]
-    public FixedPoint2 Quantity { get; set; } = 0;
-
-    /// <summary>
-    ///     Amount of reagent to add, keyed by reagent ID. Overrides default if specified.
-    ///     Example:
-    ///     quantities:
-    ///         Water: 0
-    ///         Amatoxin: 10
-    ///         SpaceDrugs: 15
-    /// </summary>
-    [DataField("quantities")]
-    public Dictionary<string, int> Quantities = new();
 }
