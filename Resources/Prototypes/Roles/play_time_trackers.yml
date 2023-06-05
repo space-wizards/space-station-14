@@ -137,4 +137,7 @@
   id: JobBoxer
 
 - type: playTimeTracker
+  id: Coroner
+
+- type: playTimeTracker
   id: JobZookeeper

@@ -613,3 +613,15 @@
     - type: IdCard
       jobTitle: Cluwne
     - type: Unremoveable
+
+- type: entity
+  parent: PassengerIDCard
+  id: CoronerIDCard
+  name: medical intern ID card
+  components:
+    - type: PresetIdCard
+      job: Coroner
+    - type: Sprite
+      layers:
+        - state: default
+        - state: coroner

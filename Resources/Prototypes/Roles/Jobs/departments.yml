@@ -69,6 +69,7 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
+  - Coroner
 
 - type: department
   id: Security

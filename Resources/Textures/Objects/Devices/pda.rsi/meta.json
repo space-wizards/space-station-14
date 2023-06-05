@@ -206,6 +206,9 @@
             "name": "pda-ert"
         },
         {
+            "name": "pda-coroner"
+        },
+        {
             "name": "pda-cluwne"
         }
     ]

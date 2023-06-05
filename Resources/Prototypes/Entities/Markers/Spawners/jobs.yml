@@ -563,3 +563,16 @@
       layers:
         - state: green
         - state: zookeeper
+
+- type: entity
+  id: SpawnPointCoroner
+  parent: SpawnPointAssistant
+  name: coroner
+  components:
+  - type: SpawnPoint
+    job_id: Coroner
+  - type: Sprite
+    layers:
+      - state: green
+      - state: medicalintern
+
