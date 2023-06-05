@@ -1,9 +1,4 @@
 Entries:
-- author: Kit0vras
-  changes:
-  - {message: Fixed non-appearing ERT equipment., type: Fix}
-  id: 3443
-  time: '2023-04-17T22:28:09.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixed being able to remove powercells from ninja suits., type: Fix}
@@ -2905,3 +2900,8 @@ Entries:
       instead of the Industrial welding tool, type: Fix}
   id: 3942
   time: '2023-06-04T22:23:27.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: Spears and Bats are bigger now, type: Tweak}
+  id: 3943
+  time: '2023-06-05T00:49:18.0000000+00:00'
