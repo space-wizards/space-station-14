@@ -23,7 +23,7 @@
       types:
         Piercing: 15
   - type: Item
-    size: 25
+    size: 95
   - type: Clothing
     quickEquip: false
     slots:
@@ -103,7 +103,7 @@
       types:
         Piercing: 18
   - type: Item
-    size: 25
+    size: 95
   - type: Clothing
     quickEquip: false
     slots:
@@ -183,7 +183,7 @@
       types:
         Piercing: 21
   - type: Item
-    size: 25
+    size: 95
   - type: Clothing
     quickEquip: false
     slots:
@@ -265,7 +265,7 @@
         Piercing: 12
         Radiation: 9
   - type: Item
-    size: 25
+    size: 95
   - type: Clothing
     quickEquip: false
     slots:
