@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'NanoTrasen lost a lawsuit regarding the false claims of fuel regeneration,
-      experimental welding tools now regenerate 1u of fuel every second.', type: Fix}
-  id: 3448
-  time: '2023-04-18T14:27:05.0000000+00:00'
 - author: EnDecc
   changes:
   - {message: Sinks now replenish 1u of water per second, type: Add}
@@ -2909,3 +2903,9 @@ Entries:
       guidebook when they shouldn't have been., type: Fix}
   id: 3947
   time: '2023-06-05T21:08:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added a guide for the bartender, including all the drinks and their
+      recipes.', type: Add}
+  id: 3948
+  time: '2023-06-05T22:44:43.0000000+00:00'
