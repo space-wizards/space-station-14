@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using Content.Client.Eye.Components;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Follower.Components;
 using Content.Shared.Inventory;
@@ -35,17 +36,30 @@ public sealed class EyeExposureSystem : EntitySystem
 
     private void UpdateViewportExposure(float frameTime)
     {
-        if (!_entityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out EyeComponent? eyeComp))
+        if (!TryComp<EyeComponent>(_playerManager.LocalPlayer?.ControlledEntity, out var eyeComp) || eyeComp.Eye == null)
             return;
 
-        if (eyeComp.Eye == null || eyeComp.Eye.AutoExpose == null)
+        if (!TryComp<EyeTraitsComponent>(_playerManager.LocalPlayer?.ControlledEntity, out var traits))
+        {
+            eyeComp.Eye.MeasureBrightness = false;
             return;
+        }
 
         var eye = eyeComp.Eye;
-        var auto = eye.AutoExpose;
+        var auto = traits.CurrentAutoExpose;
+
+        // Check there is an exposure system running
+        if (auto == null)
+        {
+            eyeComp.Eye.MeasureBrightness = false;
+            return;
+        }
+
+        eyeComp.Eye.MeasureBrightness = true;
 
         // Simulate an eye behind something that is reducing the light, for instance sunglasses.
-        float rawExpose = eye.Exposure * auto.Reduction;
+        // Behind sunglasses, your eyes are working harder to see well in the reduced light.
+        float rawExpose = eye.Exposure * traits.Reduction;
 
         // How close we are to full night vision as a ratio.
         float nightPortion = Math.Clamp(rawExpose / auto.Max, 0.0f, 1.0f);
@@ -56,7 +70,7 @@ public sealed class EyeExposureSystem : EntitySystem
 
         // How much should we increase or decrease brightness as a ratio to land at 80% lighting?
         // By limiting the ranges goalChange can take on and avoiding div/0 here it is much easier to tune this.
-        var goalChange = Math.Clamp(goalBright / Math.Max(0.0001f, auto.LastBrightness), 0.1f, 5.0f);
+        var goalChange = Math.Clamp(goalBright / Math.Max(0.0001f, eye.LastBrightness), 0.1f, 5.0f);
         var goalExposure = rawExpose * goalChange;
 
         if (goalChange < 1.0f)
@@ -80,7 +94,7 @@ public sealed class EyeExposureSystem : EntitySystem
         // Clamp to a range
         auto.Min = Math.Min(auto.Min, auto.Max); // Avoid a VV or other code exception here.
         rawExpose = Math.Clamp(rawExpose, auto.Min, auto.Max);
-        eye.Exposure = rawExpose / auto.Reduction;
+        eye.Exposure = rawExpose / traits.Reduction;
     }
 
 }

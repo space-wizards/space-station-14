@@ -1,5 +1,5 @@
+using Content.Client.Eye.Components;
 using Content.Shared.Eye.Blinding.Components;
-using Robust.Client.Graphics;
 
 namespace Content.Client.Eye.Blinding;
 

@@ -38,25 +38,18 @@ public sealed class EyeTraitsSystem : EntitySystem
 
     private void UpdateEyes(EyeTraitsComponent traits, EyeComponent eye)
     {
-        var oldReduction = eye.Eye?.AutoExpose?.Reduction ?? 1.0f;
-
         // Apply in preference order mask, eyes, traits
-        eye.Night = traits.MaskProtection?.Night ?? traits.EyeProtection?.Night ?? traits.Night;
-        eye.AutoExpose = traits.MaskProtection?.AutoExpose ?? traits.EyeProtection?.AutoExpose ?? traits.AutoExpose;
-
         if (eye.Eye != null)
         {
-            eye.Eye.Night = eye.Night;
-            eye.Eye.AutoExpose = eye.AutoExpose;
+            var newReduction = (traits.EyeProtection?.Reduction ?? 1.0f) * (traits.MaskProtection?.Reduction ?? 1.0f);
+            var change = traits.Reduction / newReduction;
 
-            if (eye.Eye?.AutoExpose != null)
-            {
-                var newReduction = (traits.EyeProtection?.Reduction ?? 1.0f) * (traits.MaskProtection?.Reduction ?? 1.0f);
-                var change = oldReduction / newReduction;
+            // Sunglasses reduce the apparent brightness (EyeExposureSystem will turn it back up over time)
+            eye.Eye.Exposure *= change;
+            traits.Reduction = newReduction;
 
-                eye.Eye.Exposure *= change;
-                eye.Eye.AutoExpose.Reduction = newReduction;
-            }
+            // Sunglasses make you more tolerant to very bright light in the scene.
+            eye.Eye.LightIntolerance = (traits.CurrentNight?.LightIntolerance ?? 0.5f) / newReduction;
         }
     }
 
