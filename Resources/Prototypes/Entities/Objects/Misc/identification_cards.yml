@@ -617,7 +617,7 @@
 - type: entity
   parent: PassengerIDCard
   id: CoronerIDCard
-  name: medical intern ID card
+  name: medical coroner ID card
   components:
     - type: PresetIdCard
       job: Coroner

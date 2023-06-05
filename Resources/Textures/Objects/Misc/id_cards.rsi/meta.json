@@ -202,11 +202,11 @@
     {
       "name": "syndie"
     },
+     {
+      "name": "coroner"
+    },
 	{
       "name": "idcluwne"
-    },
-    {
-      "name": "idcoroner"
     },
     {
       "name": "gold-inhand-left",
