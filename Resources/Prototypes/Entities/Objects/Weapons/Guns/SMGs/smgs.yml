@@ -18,8 +18,10 @@
   - type: AmmoCounter
   - type: Gun
     minAngle: 2
-    maxAngle: 8
+    maxAngle: 16
     fireRate: 8
+    angleIncrease: 3
+    angleDecay: 16
     selectedMode: FullAuto
     availableModes:
     - SemiAuto

@@ -74,6 +74,9 @@
   id: BulletFoam
 
 - type: Tag
+  id: BypassInteractionRangeChecks
+
+- type: Tag
   id: CableCoil
 
 - type: Tag
@@ -238,6 +241,9 @@
 
 - type: Tag
   id: DroneUsable
+
+- type: Tag
+  id: Ectoplasm
 
 - type: Tag
   id: Egg
@@ -557,6 +563,9 @@
 
 - type: Tag
   id: Plastic
+
+- type: Tag
+  id: PlushieGhost
 
 - type: Tag
   id: Powerdrill

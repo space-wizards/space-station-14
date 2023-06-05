@@ -143,6 +143,8 @@ flavor-complex-chaos = like chaos
 flavor-complex-squirming = like squirming
 flavor-complex-electrons = like electrons
 flavor-complex-parents = like someone's parents
+flavor-complex-plastic = like plastic
+flavor-complex-glue = like glue
 
 # Drink-specific flavors.
 
