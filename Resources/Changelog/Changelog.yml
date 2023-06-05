@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixed being able to remove powercells from ninja suits., type: Fix}
-  id: 3444
-  time: '2023-04-17T22:30:41.0000000+00:00'
 - author: Nimfar
   changes:
   - {message: 'Renamed Gun Safes as well as their prototypes. On each safe of the
@@ -2905,3 +2900,13 @@ Entries:
   - {message: Spears and Bats are bigger now, type: Tweak}
   id: 3943
   time: '2023-06-05T00:49:18.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: shields by default now block 50% of damage when not blocking and 100%
+      of damage when blocking., type: Tweak}
+  - {message: fixed shields affected by owner damage modifiers, type: Fix}
+  - {message: fixed shields taking damage from pressure if owner taking damage from
+      pressure (and etc.), type: Fix}
+  - {message: fixed shields making owner less resistant to damage, type: Fix}
+  id: 3944
+  time: '2023-06-05T02:23:55.0000000+00:00'
