@@ -250,7 +250,7 @@
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
       - ClothingBackpackDuffelHolding
-      - WelderIndustrialAdvanced
+      - WelderExperimental
       - JawsOfLife
 
 - type: entity
