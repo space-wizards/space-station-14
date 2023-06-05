@@ -1,9 +1,4 @@
 Entries:
-- author: EnDecc
-  changes:
-  - {message: Sinks now replenish 1u of water per second, type: Add}
-  id: 3449
-  time: '2023-04-18T20:49:17.0000000+00:00'
 - author: Whisper
   changes:
   - {message: The drunk effect of having a low blood level is now instantly removed
@@ -2909,3 +2904,10 @@ Entries:
       recipes.', type: Add}
   id: 3948
   time: '2023-06-05T22:44:43.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Added a Chemist Guidebook with a medical subsection., type: Add}
+  - {message: Guidebook Helpers have been added to the Chem Dispenser and Chem Master,
+    type: Tweak}
+  id: 3949
+  time: '2023-06-05T22:45:46.0000000+00:00'
