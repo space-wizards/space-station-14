@@ -91,6 +91,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
         foreach (var room in dungeon.Rooms)
         {
             dungeon.RoomTiles.UnionWith(room.Tiles);
+            dungeon.ExteriorTiles.UnionWith(room.Exterior);
         }
 
         // To make it slightly more deterministic treat this RNG as separate ig.

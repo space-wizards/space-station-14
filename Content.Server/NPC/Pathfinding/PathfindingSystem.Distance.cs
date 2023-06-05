@@ -16,7 +16,7 @@ public sealed partial class PathfindingSystem
         return dx + dy;
     }
 
-    public float ManhattanDistance(Vector2i start, Vector2i end)
+    public static float ManhattanDistance(Vector2i start, Vector2i end)
     {
         var distance = end - start;
         return Math.Abs(distance.X) + Math.Abs(distance.Y);
@@ -28,7 +28,7 @@ public sealed partial class PathfindingSystem
         return dx + dy + (1.41f - 2) * Math.Min(dx, dy);
     }
 
-    public float OctileDistance(Vector2i start, Vector2i end)
+    public static float OctileDistance(Vector2i start, Vector2i end)
     {
         var diff = start - end;
         var ab = Vector2.Abs(diff);

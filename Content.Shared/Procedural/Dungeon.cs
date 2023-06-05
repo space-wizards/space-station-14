@@ -8,4 +8,6 @@ public sealed class Dungeon
     /// Hashset of the tiles across all rooms.
     /// </summary>
     public readonly HashSet<Vector2i> RoomTiles = new();
+
+    public readonly HashSet<Vector2i> ExteriorTiles = new();
 }

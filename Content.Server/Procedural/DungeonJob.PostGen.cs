@@ -1,10 +1,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Light.Components;
+using Content.Server.NPC.Pathfinding;
+using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Storage;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -332,12 +335,213 @@ public sealed partial class DungeonJob
         }
     }
 
+    /// <summary>
+    /// Generates corridor connections between entrances to all the rooms.
+    /// </summary>
     private async Task PostGen(CorridorPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
     {
         // TODO: Annotate a random room middle as the entrance.
         // Ideally we'd just use markers for it.
 
         // TODO: For now just pick a random middle spot as the entrance
+        var entrances = new List<Vector2i>(dungeon.Rooms.Count);
+
+        // Grab entrances
+        // TODO: This should be a different step.
+        // Ideally we just have a "selectentrances" part of postgen where we take marked tiles and use them as entrance hints.
+        foreach (var room in dungeon.Rooms)
+        {
+            var entranceIndex = random.Next(room.Exterior.Count);
+            var index = 0;
+
+            foreach (var tile in room.Exterior)
+            {
+                if (index < entranceIndex)
+                {
+                    index++;
+                    continue;
+                }
+
+                entrances.Add(tile);
+                break;
+            }
+        }
+
+        // Generate connections between all rooms.
+        var connections = new Dictionary<Vector2i, List<(Vector2i Tile, float Distance)>>(entrances.Count);
+
+        foreach (var entrance in entrances)
+        {
+            var edgeConns = new List<(Vector2i Tile, float Distance)>(entrances.Count - 1);
+
+            foreach (var other in entrances)
+            {
+                if (entrance == other)
+                    continue;
+
+                edgeConns.Add((other, (other - entrance).Length));
+            }
+
+            // Sort these as they will be iterated many times.
+            edgeConns.Sort((x, y) => x.Distance.CompareTo(y.Distance));
+            connections.Add(entrance, edgeConns);
+        }
+
+        // Pathfind between them, lower weight for nodes we've already generated corridors for.
+
+        // MST
+        // Use Prim's algo
+        // 0. Pick random vert as seed
+        // 1. Of all the tree edges (i.e. for all verts we've added already) pick the lowest weight one and add it to the tree
+        // 2. Repeat 1. until all vertices in the tree.
+        var seedIndex = random.Next(entrances.Count);
+        var remaining = new ValueList<Vector2i>(entrances);
+        remaining.RemoveAt(seedIndex);
+
+        var edges = new List<(Vector2i Start, Vector2i End)>();
+        var cheapest = (Vector2i.Zero, Vector2i.Zero);
+
+        var seedEntrance = entrances[seedIndex];
+        var forest = new ValueList<Vector2i>(entrances.Count) { seedEntrance };
+
+        while (remaining.Count > 0)
+        {
+            // Get cheapest edge
+            var cheapestDistance = float.MaxValue;
+            cheapest = (Vector2i.Zero, Vector2i.Zero);
+
+            foreach (var node in forest)
+            {
+                foreach (var conn in connections[node])
+                {
+                    // Existing tile, skip
+                    if (forest.Contains(conn.Tile))
+                        continue;
+
+                    // Not the cheapest
+                    if (cheapestDistance < conn.Distance)
+                        continue;
+
+                    cheapestDistance = conn.Distance;
+                    cheapest = (node, conn.Tile);
+                    // List is pre-sorted so we can just breakout easily.
+                    break;
+                }
+            }
+
+            DebugTools.Assert(cheapestDistance < float.MaxValue);
+            // Add to tree
+            edges.Add(cheapest);
+            forest.Add(cheapest.Item2);
+            remaining.Remove(cheapest.Item2);
+        }
+
+        // TODO: Add in say 1/3 of edges back in to add some cyclic to it.
+
+        // Pathfind each edge
+        var corridorTiles = new HashSet<Vector2i>();
+        var frontier = new PriorityQueue<Vector2i, float>();
+        var cameFrom = new Dictionary<Vector2i, Vector2i>();
+        var costSoFar = new Dictionary<Vector2i, float>();
+        const int PathLimit = 128;
+
+        foreach (var (start, end) in edges)
+        {
+            frontier.Clear();
+            cameFrom.Clear();
+            costSoFar.Clear();
+            frontier.Enqueue(start, 0f);
+            costSoFar[start] = 0f;
+            var found = false;
+            var count = 0;
+
+            while (frontier.Count > 0 && count < PathLimit)
+            {
+                count++;
+                var node = frontier.Dequeue();
+
+                if (node == end)
+                {
+                    found = true;
+                    break;
+                }
+
+                // Foreach neighbor etc etc
+                for (var x = -1; x <= 1; x++)
+                {
+                    for (var y = -1; y <= 1; y++)
+                    {
+                        // Cardinals only.
+                        if (x != 0 && y != 0)
+                            continue;
+
+                        var neighbor = new Vector2i(node.X + x, node.Y + y);
+
+                        // FORBIDDEN
+                        if (neighbor != end &&
+                            (dungeon.RoomTiles.Contains(neighbor) ||
+                            dungeon.ExteriorTiles.Contains(neighbor)))
+                        {
+                            continue;
+                        }
+
+                        var tileCost = PathfindingSystem.OctileDistance(neighbor, end);
+                        // TODO: Corridor weighting to encourage existing ones.
+
+                        // f = g + h
+                        // gScore is distance to the start node
+                        // hScore is distance to the end node
+                        var gScore = costSoFar[node] + tileCost;
+                        if (costSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)
+                        {
+                            continue;
+                        }
+
+                        cameFrom[neighbor] = node;
+                        costSoFar[neighbor] = gScore;
+
+                        var hScore = PathfindingSystem.OctileDistance(end, neighbor) * (1.0f + 1.0f / 1000.0f);
+                        var fScore = gScore + hScore;
+                        frontier.Enqueue(neighbor, fScore);
+                    }
+                }
+            }
+
+            // Rebuild path if it's valid.
+            if (found)
+            {
+                var node = end;
+
+                while (true)
+                {
+                    node = cameFrom[node];
+
+                    // Don't want start or end nodes included.
+                    if (node == start)
+                        break;
+
+                    corridorTiles.Add(node);
+                }
+            }
+        }
+
+        var expansion = gen.Width - 2;
+
+        // Widen the path
+        if (expansion > 1)
+        {
+            // TODO:
+            // If it's on exterior or the other one then dump it.
+        }
+
+        var setTiles = new List<(Vector2i, Tile)>();
+
+        foreach (var tile in corridorTiles)
+        {
+            setTiles.Add((tile, new Tile(_tileDefManager["FloorSteel"].TileId)));
+        }
+
+        grid.SetTiles(setTiles);
     }
 
     private async Task PostGen(MiddleConnectionPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)

@@ -10,7 +10,7 @@
 
 - type: dungeonConfig
   id: ExperimentTwo
-  generator: !type:PrefabDungen
+  generator: !type:PrefabDunGen
     roomWhitelist:
       - SalvageExperiment
     presets:
