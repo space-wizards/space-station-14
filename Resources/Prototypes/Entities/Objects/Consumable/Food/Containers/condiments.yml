@@ -339,33 +339,26 @@
 # Bottles
 
 - type: entity
-  parent: BaseFoodCondiment
+  parent: BaseChemistryEmptyBottle
   id: BaseFoodCondimentBottle
   abstract: true
   name: condiment bottle
   description: A thin glass bottle used to store condiments.
   components:
   - type: Drink
-    solution: food
-    openSounds:
-      collection: pop
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-    minTransferAmount: 5
-    maxTransferAmount: 30
+    isOpen: false
   - type: Sprite
-    state: bottle-empty
-  - type: Appearance
+    sprite: Objects/Consumable/Food/condiments.rsi
+    layers:
+    - state: bottle-empty
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: bottle-alpha-
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 50
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -375,7 +368,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      food:
+      drink:
         reagents:
         - ReagentId: Frostoil
           Quantity: 30
@@ -397,7 +390,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      food:
+      drink:
         reagents:
         - ReagentId: Enzyme
           Quantity: 30
@@ -419,7 +412,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      food:
+      drink:
         reagents:
         - ReagentId: Vinegar
           Quantity: 30
@@ -441,7 +434,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      food:
+      drink:
         reagents:
         - ReagentId: Hotsauce
           Quantity: 30
@@ -463,7 +456,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      food:
+      drink:
         reagents:
         - ReagentId: Ketchup
           Quantity: 30
@@ -485,7 +478,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      food:
+      drink:
         reagents:
         - ReagentId: BbqSauce
           Quantity: 30
