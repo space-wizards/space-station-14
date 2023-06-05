@@ -41,20 +41,6 @@ public sealed class PendingZombieComponent : Component
     public float MaxInfectionLength = 120f;
 
     /// <summary>
-    /// Infection warnings are shown as popups, times are in seconds.
-    ///   -ve times shown to initial zombies (once timer counts from -ve to 0 the infection starts)
-    ///   +ve warnings are in seconds after being bitten
-    /// </summary>
-    [DataField("infectionWarnings")]
-    public Dictionary<int, string> InfectionWarnings = new()
-    {
-        {-45, "zombie-infection-warning"},
-        {-30, "zombie-infection-warning"},
-        {10, "zombie-infection-underway"},
-        {25, "zombie-infection-underway"},
-    };
-
-    /// <summary>
     /// A minimum multiplier applied to Damage once you are in crit to get you dead and ready for your next life
     ///   as fast as possible.
     /// </summary>

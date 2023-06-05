@@ -5,6 +5,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
@@ -41,42 +42,8 @@ namespace Content.Server.Zombies
     /// <remarks>
     ///     Don't Shitcode Open Inside
     /// </remarks>
-    public sealed class ZombifyOnDeathSystem : EntitySystem
+    public sealed partial class ZombieSystem
     {
-        [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-        [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly HumanoidAppearanceSystem _sharedHuApp = default!;
-        [Dependency] private readonly IdentitySystem _identity = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-        [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-        [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
-        [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-        [Dependency] private readonly IChatManager _chatMan = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
-        }
-
-        /// <summary>
-        /// Handles an entity turning into a zombie when they die or go into crit
-        /// </summary>
-        private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
-        {
-            if (args.NewMobState == MobState.Dead)
-            {
-                ZombifyEntity(uid, args.Component);
-            }
-        }
-
         /// <summary>
         ///     This is the general purpose function to call if you want to zombify an entity.
         ///     It handles both humanoid and nonhumanoid transformation and everything should be called through it.

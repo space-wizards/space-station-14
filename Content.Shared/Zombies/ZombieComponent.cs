@@ -14,11 +14,10 @@ namespace Content.Shared.Zombies
     public sealed class ZombieSettings
     {
         /// <summary>
-        /// The coefficient of the damage reduction applied when a zombie
-        /// attacks another zombie. longe name
+        /// Fraction of damage subtracted when hitting another zombie
         /// </summary>
         [DataField("otherZombieDamageCoefficient"), ViewVariables]
-        public float OtherZombieDamageCoefficient = 0.25f;
+        public float OtherZombieDamageCoefficient = 1.0f;
 
         /// <summary>
         /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
@@ -33,11 +32,16 @@ namespace Content.Shared.Zombies
         public float ZombieCritDeathChance = 0.40f;
 
         /// <summary>
-        /// Chance that this zombie will be healed (rolled each second when in crit or dead)
-        ///   3% means you have a 60% chance after 30 secs and a 84% chance after 60.
+        /// How many seconds it takes for a zombie to revive (min)
         /// </summary>
-        [DataField("zombieReviveChance"), ViewVariables(VVAccess.ReadWrite)]
-        public float ZombieReviveChance = 0.03f;
+        [DataField("zombieReviveTime"), ViewVariables(VVAccess.ReadWrite)]
+        public int ZombieReviveTime = 10;
+
+        /// <summary>
+        /// How many seconds it takes for a zombie to revive (max)
+        /// </summary>
+        [DataField("zombieReviveTimeMax"), ViewVariables(VVAccess.ReadWrite)]
+        public int ZombieReviveTimeMax = 60;
 
         /// <summary>
         /// The baseline infection chance you have if you are completely nude
@@ -64,7 +68,7 @@ namespace Content.Shared.Zombies
         /// <summary>
         /// Minimum time a zombie victim will lie dead before rising as a zombie.
         /// </summary>
-        [DataField("zombieInfectionTurnTime"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField("zombieDeadMinTurnTime"), ViewVariables(VVAccess.ReadWrite)]
         public float ZombieDeadMinTurnTime = 10.0f;
 
         /// <summary>
@@ -149,6 +153,20 @@ namespace Content.Shared.Zombies
         };
 
         /// <summary>
+        /// Infection warnings are shown as popups, times are in seconds.
+        ///   -ve times shown to initial zombies (once timer counts from -ve to 0 the infection starts)
+        ///   +ve warnings are in seconds after being bitten
+        /// </summary>
+        [DataField("infectionWarnings")]
+        public Dictionary<int, string> InfectionWarnings = new()
+        {
+            {-45, "zombie-infection-warning"},
+            {-30, "zombie-infection-warning"},
+            {10, "zombie-infection-underway"},
+            {25, "zombie-infection-underway"},
+        };
+
+        /// <summary>
         /// Number of seconds that a typical infection will last before the player is totally overwhelmed with damage and
         ///   dies.
         /// </summary>
@@ -170,13 +188,13 @@ namespace Content.Shared.Zombies
         /// If this zombie is not patient 0, this is the player who infected this zombie.
         /// </summary>
         [DataField("infector"), ViewVariables(VVAccess.ReadOnly)]
-        public EntityUid? Infector = null;
+        public EntityUid Infector = EntityUid.Invalid;
 
         /// <summary>
         /// When created by a ZombieRuleComponent, this points to the entity which unleashed this zombie horde.
         /// </summary>
         [DataField("rules"), ViewVariables(VVAccess.ReadOnly)]
-        public EntityUid? Rules = null;
+        public EntityUid Rules = EntityUid.Invalid;
 
     }
 
@@ -201,7 +219,7 @@ namespace Content.Shared.Zombies
         [DataField("family"), ViewVariables(VVAccess.ReadOnly)]
         public ZombieFamily Family = default!;
 
-        public float OtherZombieDamageCoefficient = 0.25f;
+        public float OtherZombieDamageCoefficient => Settings.OtherZombieDamageCoefficient;
 
 
         /// <summary>
@@ -215,16 +233,16 @@ namespace Content.Shared.Zombies
         public float ZombiePermadeathChance => Settings.ZombiePermadeathChance;
 
         /// <summary>
-        /// Chance that this zombie will be healed (rolled each second when in crit or dead)
-        ///   3% means you have a 60% chance after 30 secs and a 84% chance after 60.
-        /// </summary>
-        public float ZombieReviveChance => Settings.ZombieReviveChance;
-
-        /// <summary>
         /// Has this zombie stopped healing now that it's died for real?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Permadeath;
+
+        /// <summary>
+        /// Seconds until this zombie revives
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int ZombieRevivalSeconds;
 
         /// <summary>
         /// The baseline infection chance you have if you are completely nude
