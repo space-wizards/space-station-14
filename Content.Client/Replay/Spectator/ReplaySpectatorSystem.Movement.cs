@@ -4,10 +4,10 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 
-namespace Content.Client.Replay.Observer;
+namespace Content.Client.Replay.Spectator;
 
 // Partial class handles movement logic for observers.
-public sealed partial class ReplayObserverSystem
+public sealed partial class ReplaySpectatorSystem
 {
     public DirectionFlag Direction;
 
@@ -28,12 +28,12 @@ public sealed partial class ReplayObserverSystem
             .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
             .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
             .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
-            .Register<ReplayObserverSystem>();
+            .Register<ReplaySpectatorSystem>();
     }
 
     private void ShutdownMovement()
     {
-        CommandBinds.Unregister<ReplayObserverSystem>();
+        CommandBinds.Unregister<ReplaySpectatorSystem>();
     }
 
     // Normal mover code works via physics. Replays don't do prediction/physics. You can fudge it by relying on the
@@ -54,7 +54,7 @@ public sealed partial class ReplayObserverSystem
             return;
         }
 
-        if (!player.IsClientSide() || !HasComp<ReplayObserverComponent>(player))
+        if (!player.IsClientSide() || !HasComp<ReplaySpectatorComponent>(player))
         {
             // Player is trying to move -> behave like the ghost-on-move component.
             SpawnObserverGhost(new EntityCoordinates(player, default), true);
@@ -98,10 +98,10 @@ public sealed partial class ReplayObserverSystem
 
     private sealed class MoverHandler : InputCmdHandler
     {
-        private readonly ReplayObserverSystem _sys;
+        private readonly ReplaySpectatorSystem _sys;
         private readonly DirectionFlag _dir;
 
-        public MoverHandler(ReplayObserverSystem sys, DirectionFlag dir)
+        public MoverHandler(ReplaySpectatorSystem sys, DirectionFlag dir)
         {
             _sys = sys;
             _dir = dir;

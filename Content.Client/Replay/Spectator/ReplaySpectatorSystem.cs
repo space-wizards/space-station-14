@@ -13,7 +13,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Replay.Observer;
+namespace Content.Client.Replay.Spectator;
 
 /// <summary>
 /// This system handles spawning replay observer ghosts and maintaining their positions when traveling through time.
@@ -24,7 +24,7 @@ namespace Content.Client.Replay.Observer;
 /// exist, where should the observer go? This attempts to maintain their position and eye rotation or just re-spawns
 /// them as needed.
 /// </remarks>
-public sealed partial class ReplayObserverSystem : EntitySystem
+public sealed partial class ReplaySpectatorSystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IConsoleHost _conHost = default!;
@@ -42,8 +42,8 @@ public sealed partial class ReplayObserverSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
-        SubscribeLocalEvent<ReplayObserverComponent, EntityTerminatingEvent>(OnTerminating);
-        SubscribeLocalEvent<ReplayObserverComponent, PlayerDetachedEvent>(OnDetached);
+        SubscribeLocalEvent<ReplaySpectatorComponent, EntityTerminatingEvent>(OnTerminating);
+        SubscribeLocalEvent<ReplaySpectatorComponent, PlayerDetachedEvent>(OnDetached);
 
         InitializeBlockers();
         _conHost.RegisterCommand("observe", ObserveCommand);
@@ -87,7 +87,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
         _oldPosition = GetObserverPosition();
     }
 
-    private void OnDetached(EntityUid uid, ReplayObserverComponent component, PlayerDetachedEvent args)
+    private void OnDetached(EntityUid uid, ReplaySpectatorComponent component, PlayerDetachedEvent args)
     {
         if (uid.IsClientSide())
             QueueDel(uid);
@@ -164,7 +164,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
         return obs;
     }
 
-    private void OnTerminating(EntityUid uid, ReplayObserverComponent component, ref EntityTerminatingEvent args)
+    private void OnTerminating(EntityUid uid, ReplaySpectatorComponent component, ref EntityTerminatingEvent args)
     {
         if (uid != _player.LocalPlayer?.ControlledEntity)
             return;
@@ -211,7 +211,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
         }
 
         _player.LocalPlayer.AttachEntity(target, EntityManager, _client);
-        EnsureComp<ReplayObserverComponent>(target);
+        EnsureComp<ReplaySpectatorComponent>(target);
 
         if (old == null)
             return;
@@ -219,7 +219,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
         if (old.Value.IsClientSide())
             Del(old.Value);
         else
-            RemComp<ReplayObserverComponent>(old.Value);
+            RemComp<ReplaySpectatorComponent>(old.Value);
 
         _stateMan.RequestStateChange<ReplaySpectateEntityState>();
     }
@@ -233,7 +233,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
 
         var ent = Spawn("MobObserver", coords);
         _eye.SetMaxZoom(ent, Vector2.One * 5);
-        EnsureComp<ReplayObserverComponent>(ent);
+        EnsureComp<ReplaySpectatorComponent>(ent);
 
         var xform = Transform(ent);
 
@@ -247,7 +247,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
             if (old.Value.IsClientSide())
                 QueueDel(old.Value);
             else
-                RemComp<ReplayObserverComponent>(old.Value);
+                RemComp<ReplaySpectatorComponent>(old.Value);
         }
 
         _stateMan.RequestStateChange<ReplayGhostState>();
