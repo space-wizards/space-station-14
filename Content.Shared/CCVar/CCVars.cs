@@ -1586,7 +1586,6 @@ namespace Content.Shared.CCVar
          * Replays
          */
 
-        // TODO REPLAYS add some kind of replay filtering/censoring functionality for public replay distribution.
         /// <summary>
         ///     Whether or not to record admin chat. If replays are being publicly distributes, this should probably be
         ///     false.

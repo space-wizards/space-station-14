@@ -344,7 +344,7 @@ namespace Content.Client.Examine
 
             OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false, knowTarget: canSeeClearly);
             if (entity.IsClientSide()
-                || _client.RunLevel == ClientRunLevel.SinglePlayerGame) // a replay
+                || _client.RunLevel == ClientRunLevel.SinglePlayerGame) // i.e. a replay
             {
                 message = GetExamineText(entity, playerEnt);
                 UpdateTooltipInfo(playerEnt.Value, entity, message);
