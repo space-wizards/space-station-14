@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Syringe debuff of delay per 5u reduced from 1s to 0.5s, type: Tweak}
-  - {message: Syringe delay on crit patients reduced by 25%, type: Tweak}
-  id: 3447
-  time: '2023-04-18T14:23:54.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'NanoTrasen lost a lawsuit regarding the false claims of fuel regeneration,
@@ -2909,3 +2903,9 @@ Entries:
   - {message: Captain fax now captain's on Fland and Saltern, type: Tweak}
   id: 3946
   time: '2023-06-05T09:20:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed several reagents showing up in the "other" section of the chem
+      guidebook when they shouldn't have been., type: Fix}
+  id: 3947
+  time: '2023-06-05T21:08:31.0000000+00:00'
