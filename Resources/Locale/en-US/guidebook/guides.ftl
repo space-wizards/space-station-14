@@ -14,8 +14,15 @@ guide-entry-radio = Radio
 guide-entry-jobs = Jobs
 guide-entry-salvage = Salvage
 guide-entry-survival = Survival
+guide-entry-chemicals = Chemicals
 guide-entry-ss14 = Space Station 14
 guide-entry-janitorial = Janitorial
+guide-entry-chef = Chef
+guide-entry-foodrecipes = Food Recipes
+guide-entry-medical = Medical
+guide-entry-medicaldoctor = Medical Doctor
+guide-entry-cloning = Cloning
+guide-entry-cryogenics = Cryogenics
 
 guide-entry-science = Science
 guide-entry-anomalous-research = Anomalous Research

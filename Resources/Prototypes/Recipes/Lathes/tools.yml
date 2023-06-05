@@ -186,8 +186,8 @@
     Plastic: 100
 
 - type: latheRecipe
-  id: WelderIndustrialAdvanced
-  result: WelderIndustrialAdvanced
+  id: WelderExperimental
+  result: WelderExperimental
   completetime: 6
   materials:
     Steel: 800
