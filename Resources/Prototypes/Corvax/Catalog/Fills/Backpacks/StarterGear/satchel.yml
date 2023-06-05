@@ -8,3 +8,12 @@
         - id: BoxSurvival
         - id: BriefcaseIAAFilled
 
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelMedical
+  id: ClothingBackpackSatchelPsychologistFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvivalMedical
+        - id: RubberStampPsychologist
