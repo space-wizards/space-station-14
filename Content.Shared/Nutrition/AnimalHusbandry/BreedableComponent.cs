@@ -66,7 +66,7 @@ public sealed class BreedableComponent : Component
     /// When gestation will end.
     /// Null if <see cref="Gestating"/> is false
     /// </summary>
-    [DataField("gestationEndTime")]
+    [DataField("gestationEndTime"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan? GestationEndTime;
 
     /// <summary>
@@ -80,20 +80,20 @@ public sealed class BreedableComponent : Component
     /// How much hunger is consumed when an entity
     /// gives birth. A balancing tool to require feeding.
     /// </summary>
-    [DataField("hungerPerBirth")]
+    [DataField("hungerPerBirth"), ViewVariables(VVAccess.ReadWrite)]
     public float HungerPerBirth = 75f;
 
     /// <summary>
     /// Popup shown when an entity gives birth.
     /// Configurable for things like laying eggs.
     /// </summary>
-    [DataField("birthPopup")]
+    [DataField("birthPopup"), ViewVariables(VVAccess.ReadWrite)]
     public string BirthPopup = "breedable-birth-popup";
 
     /// <summary>
     /// Whether or not the offspring should be made into "infants".
     /// </summary>
-    [DataField("makeOffspringInfant")]
+    [DataField("makeOffspringInfant"), ViewVariables(VVAccess.ReadWrite)]
     public bool MakeOffspringInfant = true;
 
     /// <summary>

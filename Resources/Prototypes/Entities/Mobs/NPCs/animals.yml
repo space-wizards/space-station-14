@@ -222,6 +222,7 @@
 - type: entity
   id: FoodEggChickenFertilized
   parent: FoodEgg
+  suffix: Fertilized, Chicken
   components:
   - type: Timer
   - type: TimedSpawner
@@ -350,6 +351,7 @@
 - type: entity
   id: FoodEggDuckFertilized
   parent: FoodEgg
+  suffix: Fertilized, Duck
   components:
     - type: Timer
     - type: TimedSpawner
