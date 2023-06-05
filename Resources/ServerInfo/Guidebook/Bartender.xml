@@ -3,7 +3,7 @@
 The bartender has a pretty simple job: serve drinks. People will come up to you and request drinks, and your job is just to hand it to them.
 
 <Box>
-The materials for these drinks can be found in a various places:
+The materials for these drinks can be found in various places:
 </Box>
 <Box>
 <GuideEntityEmbed Entity="BoozeDispenser"/>
@@ -21,7 +21,7 @@ Don't forget containers to serve them in!
 </Box>
 
 ## Drinks
-Knowing how to make a requested drink is important. Here are the different drinks in the game, including their recipes.
+Knowing how to make a requested drink is important. Here are the different drinks in the game, including their recipes:
 
 <GuideReagentGroupEmbed Group="Drinks"/>
 </Document>
