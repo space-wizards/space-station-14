@@ -1,0 +1,165 @@
+- type: entity
+  parent: DrinkBase
+  id: BaseFoodCondimentBottle
+  abstract: true
+  name: condiment bottle
+  description: A thin glass bottle used to store condiments.
+  components:
+  - type: Drink
+    openSounds:
+      collection: pop
+  - type: SolutionTransfer
+    maxTransferAmount: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    layers:
+    - state: bottle-empty
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-alpha-
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+  - type: TrashOnEmpty
+    solution: drink
+  - type: StaticPrice
+    price: 0
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleColdsauce
+  name: coldsauce bottle
+  description: Leaves the tongue numb in its passage.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Frostoil
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-c
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    state: bottle-coldsauce
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleEnzyme
+  name: universal enzyme
+  description: Used in cooking various dishes.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Enzyme
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-e
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    state: bottle-enzyme
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleVinegar
+  name: vinegar bottle
+  description: Used in cooking to enhance flavor.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Vinegar
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-v
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    state: bottle-vinegar
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleHotsauce
+  name: hotsauce bottle
+  description: You can almost TASTE the stomach ulcers now!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-h
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    state: bottle-hotsauce
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleKetchup
+  name: ketchup bottle
+  description: You feel more American already.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-k
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    state: bottle-ketchup
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleBBQ
+  name: BBQ sauce bottle
+  description: Hand wipes not included.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: BbqSauce
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-b
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  # So there's no error.
+  - type: Icon
+    state: bottle-ketchup
