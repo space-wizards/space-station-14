@@ -170,6 +170,21 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Chicken
+  - type: Breedable
+    breedChance: 0.05
+    birthPopup: breedable-laid-egg-popup
+    makeOffspringInfant: false
+    partnerWhitelist:
+      tags:
+      - Chicken
+    offspring:
+    - id: FoodEggChickenFertilized
+      maxAmount: 3
+  - type: BreedingPartner
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -205,6 +220,20 @@
     - Passive
 
 - type: entity
+  id: FoodEggChickenFertilized
+  parent: FoodEgg
+  components:
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - MobChicken
+    intervalSeconds: 20
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn #delete the egg after the chicken spawns
+    lifetime: 21
+
+- type: entity
   name: mallard duck #Quack
   parent: SimpleMobBase
   id: MobDuckMallard
@@ -227,6 +256,21 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+      - Duck
+  - type: Breedable
+    breedChance: 0.05
+    birthPopup: breedable-laid-egg-popup
+    makeOffspringInfant: false
+    partnerWhitelist:
+      tags:
+      - Duck
+    offspring:
+    - id: FoodEggDuckFertilized
+      maxAmount: 3
+  - type: BreedingPartner
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -304,6 +348,22 @@
         Base: dead-2
 
 - type: entity
+  id: FoodEggDuckFertilized
+  parent: FoodEgg
+  components:
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+      - MobDuckMallard
+      - MobDuckWhite
+      - MobDuckBrown
+      intervalSeconds: 20
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1
+    - type: TimedDespawn #delete the egg after the chicken spawns
+      lifetime: 21
+
+- type: entity
   name: butterfly
   parent: SimpleMobBase
   id: MobButterfly
@@ -370,6 +430,17 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cow
       sprite: Mobs/Animals/cow.rsi
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Cow
+  - type: Breedable
+    partnerWhitelist:
+      tags:
+      - Cow
+    offspring:
+    - id: MobCow
+  - type: BreedingPartner
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -494,6 +565,17 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Goat
+  - type: Breedable
+    partnerWhitelist:
+      tags:
+      - Goat
+    offspring:
+    - id: MobGoat
+  - type: BreedingPartner
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -2183,6 +2265,17 @@
   - type: Inventory
     speciesId: pig
     templateId: pet
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Pig
+  - type: Breedable
+    partnerWhitelist:
+      tags:
+      - Pig
+    offspring:
+    - id: MobPig
+  - type: BreedingPartner
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface

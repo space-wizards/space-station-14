@@ -436,6 +436,8 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - Pig
 
 - type: entity
   name: Renault
