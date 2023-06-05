@@ -20,3 +20,6 @@
   - type: Wires
     BoardName: "SodaDispenser"
     LayoutId: SodaDispenser
+  - type: GuideHelp
+    guides:
+    - Bartender

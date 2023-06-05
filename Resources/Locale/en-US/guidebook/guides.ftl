@@ -17,6 +17,7 @@ guide-entry-survival = Survival
 guide-entry-chemicals = Chemicals
 guide-entry-ss14 = Space Station 14
 guide-entry-janitorial = Janitorial
+guide-entry-bartender = Bartender
 guide-entry-chef = Chef
 guide-entry-foodrecipes = Food Recipes
 guide-entry-medical = Medical
