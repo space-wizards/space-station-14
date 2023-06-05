@@ -306,23 +306,7 @@ public sealed class ClientClothingSystem : ClothingSystem
     /// <param name="clothing">Clothing component, to get mask sprite type</param>
     private static void SetGenderedMask(SpriteComponent sprite, HumanoidAppearanceComponent humanoid, ClothingComponent clothing)
     {
-        var layer = -1;
-
-        // Set layer to the correct gendered mask layer
-        switch (humanoid.Sex)
-        {
-            case Sex.Male:
-                sprite.LayerMapTryGet(HumanoidVisualLayers.MaleStencilMask, out layer);
-                break;
-            case Sex.Female:
-                sprite.LayerMapTryGet(HumanoidVisualLayers.FemaleStencilMask, out layer);
-                break;
-            case Sex.Unsexed:
-                sprite.LayerMapTryGet(HumanoidVisualLayers.UnisexStencilMask, out layer);
-                break;
-        }
-
-        if (layer == -1)
+        if (!sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var layer))
             return;
 
         ClothingMask? mask = null;
@@ -330,7 +314,6 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         switch (humanoid.Sex)
         {
-            // Override with gendered mask
             case Sex.Male:
                 mask = clothing.MaleMask;
                 prefix = "male_";
@@ -345,7 +328,6 @@ public sealed class ClientClothingSystem : ClothingSystem
                 break;
         }
 
-        // Use the mask override if it exists
         if (mask != null)
         {
             sprite.LayerSetState(layer, mask switch
