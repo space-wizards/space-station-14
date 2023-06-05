@@ -66,6 +66,7 @@
     fuel: 3
     time: 3
   - type: Airlock
+  - type: DoorBolt
   - type: Appearance
   - type: WiresVisuals
   - type: ApcPowerReceiver
@@ -74,16 +75,28 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
+  - type: WiresPanel
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock
   - type: DoorSignalControl
-  - type: SignalReceiver
-    inputs:
-      Open: []
-      Close: []
-      Toggle: []
-      AutoClose: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Open
+      - Close
+      - Toggle
+      - AutoClose
+      - DoorBolt
+  - type: DeviceLinkSource
+    ports:
+      - DoorStatus
+  - type: SoundOnOverload
+  - type: SpawnOnOverload
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key

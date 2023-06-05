@@ -41,7 +41,7 @@ public sealed class LightningSystem : SharedLightningSystem
             || !TryComp<BeamComponent>(lightningBeam.VirtualBeamController, out var beamController))
             return;
 
-        if (!component.CanArc && beamController.CreatedBeams.Count < component.MaxTotalArcs)
+        if (!component.CanArc || beamController.CreatedBeams.Count >= component.MaxTotalArcs)
             return;
 
         Arc(component, args.OtherEntity, lightningBeam.VirtualBeamController.Value);

@@ -73,7 +73,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, ImmovableRodComponent component, ref StartCollideEvent args)
     {
-        var ent = args.OtherFixture.Body.Owner;
+        var ent = args.OtherEntity;
 
         if (_random.Prob(component.HitSoundProbability))
         {

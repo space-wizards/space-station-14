@@ -84,6 +84,7 @@
   desc: reagent-desc-mold
   flavor: bitter
   color: "#8a9a5b"
+  recognizable: true
   physicalDesc: reagent-physical-desc-fuzzy
   metabolisms:
     Poison:
@@ -92,19 +93,6 @@
         damage:
           types:
             Poison: 1
-      - !type:ChemCauseRandomDisease
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Mold
-          min: 1
-        diseases:
-          - VentCough
-          - SpaceCold
-          - SpaceFlu
-          - BirdFlew
-          - Plague
-          - TongueTwister
-          - MemeticAmirmir
 
 - type: reagent
   id: PolytrinicAcid
@@ -193,6 +181,7 @@
   physicalDesc: reagent-physical-desc-oily
   flavor: acidic
   color: "#BF8C00"
+  recognizable: true
   boilingPoint: 337.0
   meltingPoint: 10.31
   plantMetabolism:
@@ -392,9 +381,6 @@
           damage:
             types:
               Poison: 2
-        - !type:ChemCauseDisease ##Since this mostly just comes from the event you won't ingest that much
-          causeChance: 0.6
-          disease: VentCough
 
 - type: reagent
   id: Corpium
@@ -410,9 +396,6 @@
           damage:
             types:
               Cellular: 1
-        - !type:ChemCauseDisease
-          causeChance: 1
-          disease: ActiveZombieVirus
 
 - type: reagent
   id: UncookedAnimalProteins
@@ -494,6 +477,3 @@
         damage:
           types:
             Poison: 0.06
-      - !type:ChemCauseDisease
-          causeChance: 1
-          disease: ActiveHonkVirus ##makes target honk and potential chance to be cluwned.

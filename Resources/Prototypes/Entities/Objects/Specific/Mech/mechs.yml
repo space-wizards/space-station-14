@@ -36,6 +36,7 @@
   - type: Physics
     bodyType: KinematicController
   - type: Clickable
+  - type: WiresPanel
   - type: Wires #we just want the panel
     BoardName: Mech
     LayoutId: Mech
@@ -62,6 +63,9 @@
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/mechmove03.ogg
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: MechRipley

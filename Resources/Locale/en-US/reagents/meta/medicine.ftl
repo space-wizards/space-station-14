@@ -38,7 +38,7 @@ reagent-name-inaprovaline = inaprovaline
 reagent-desc-inaprovaline = Inaprovaline is a synaptic stimulant and cardiostimulant, commonly used to treat asphyxiation damage caused during critical states and reduce bleeding. Used in many advanced medicines.
 
 reagent-name-kelotane = kelotane
-reagent-desc-kelotane = A weak yet simple and effective medicine used to aid in treating minor burn damage.
+reagent-desc-kelotane = Treats burn damage. Overdosing greatly reduces the body's ability to retain water.
 
 reagent-name-leporazine = leporazine
 reagent-desc-leporazine = A chemical used to stabilize body temperature and rapidly cure cold damage. Great for unprotected EVA travel, but prevents the use of cryogenic tubes.

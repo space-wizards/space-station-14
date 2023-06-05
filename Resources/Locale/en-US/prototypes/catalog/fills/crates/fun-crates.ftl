@@ -37,6 +37,9 @@ ent-CrateFunLightImplants = Light Implants
 ent-CrateFunParty = Party Crate
     .desc = An entire party just waiting for you to open it. Includes party favors, party beverages, and even a cake.
 
+ent-CrateFunWaterGuns = Water Gun Crate
+    .desc = A summer special with a variety of brightly colored water guns. Water not included.
+
 ent-CrateFunSyndicateSegway = Syndicate segway crate
     .desc = A crate containing a two-wheeler that will help you escape from the security officers. Or not.
 

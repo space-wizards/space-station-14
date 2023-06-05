@@ -684,8 +684,8 @@
       Potencydivisor: 50
     Bicaridine:
       Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      Max: 20
+      PotencyDivisor: 5
 
 - type: seed
   id: aloe
@@ -762,16 +762,16 @@
       PotencyDivisor: 10
     Bicaridine:
       Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      Max: 5
+      PotencyDivisor: 20
     Kelotane:
       Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Desoxyephedrine:
+      Min: 1
       Max: 10
       PotencyDivisor: 10
-    Desoxyephedrine: #Needs a small touch of spice, replace this with something better when we have more fun drugs
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
     Vitamin:
       Min: 1
       Max: 2

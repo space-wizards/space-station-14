@@ -151,6 +151,7 @@ namespace Content.Server.Power.Pow3r
 
                     slot.Generation = id.Generation;
                     slot.Value = value;
+                    slot.NextSlot = -1;
                 }
 
                 // Go through empty slots and build the free chain.
@@ -159,7 +160,7 @@ namespace Content.Server.Power.Pow3r
                 {
                     ref var slot = ref storage._storage[i];
 
-                    if (slot.Generation != 0)
+                    if (slot.NextSlot == -1)
                         // Slot in use.
                         continue;
 
@@ -170,8 +171,7 @@ namespace Content.Server.Power.Pow3r
                 storage.Count = cache.Length;
                 storage._nextFree = nextFree;
 
-                // I think there is some issue with Pow3er's Save & Load to json leading to it constructing invalid GenIdStorages from json?
-                // If you get this error, clear out your data.json
+                // Sanity check for a former bug with save/load.
                 DebugTools.Assert(storage.Values.Count() == storage.Count);
 
                 return storage;

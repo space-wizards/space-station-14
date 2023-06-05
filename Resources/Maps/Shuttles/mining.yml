@@ -1,7 +1,5 @@
 meta:
   format: 4
-  name: DemoStation
-  author: Space-Wizards
   postmapinit: false
 tilemap:
   0: Space
@@ -39,7 +37,7 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-
+    - type: SalvageShuttle
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity

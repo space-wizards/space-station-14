@@ -60,6 +60,9 @@
   - type: Sprite
     sprite: Objects/Devices/payload.rsi
     state: payload-empty
+    layers:
+    - state: payload-empty
+      map: ["base"]
   - type: ChemicalPayload
     beakerSlotA: &slotDef
       whitelist:
@@ -68,14 +71,14 @@
       swap: false
     beakerSlotB: *slotDef
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: GenericEnumVisualizer
-      key: enum.ChemicalPayloadVisuals.Slots
-      states:
-        enum.ChemicalPayloadFilledSlots.None: payload-empty
-        enum.ChemicalPayloadFilledSlots.Left: payload-chemical-left
-        enum.ChemicalPayloadFilledSlots.Right: payload-chemical-right
-        enum.ChemicalPayloadFilledSlots.Both: payload-chemical-armed
+      enum.ChemicalPayloadVisuals.Slots:
+        base:
+          None: { state: payload-empty }
+          Left: { state: payload-chemical-left }
+          Right: { state: payload-chemical-right }
+          Both: { state: payload-chemical-armed }
   - type: ItemSlots
   - type: ContainerContainer
     containers:

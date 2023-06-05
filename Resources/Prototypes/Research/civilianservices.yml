@@ -1,0 +1,165 @@
+﻿# Tier 1
+
+- type: technology
+  id: JanitorialEquipment
+  name: research-technology-janitorial-equipment
+  icon:
+    sprite: Objects/Specific/Janitorial/mop.rsi
+    state: mop
+  discipline: CivilianServices
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - MopItem
+  - Holoprojector
+  - Mousetrap
+  - LightReplacer
+  - TrashBag
+
+- type: technology
+  id: LaundryTech
+  name: research-technology-laundry-tech
+  icon:
+    sprite: Structures/Machines/uniform_printer.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - UniformPrinterMachineCircuitboard
+
+- type: technology
+  id: Hydroponics
+  name: research-technology-basic-hydroponics
+  icon:
+    sprite: Structures/Machines/seed_extractor.rsi
+    state: seedextractor
+  discipline: CivilianServices
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - SeedExtractorMachineCircuitboard
+  - HydroponicsTrayMachineCircuitboard
+
+- type: technology
+  id: FoodService
+  name: research-technology-food-service
+  icon:
+    sprite: Structures/Machines/juicer.rsi
+    state: juicer1
+  discipline: CivilianServices
+  tier: 1
+  cost: 7500
+  recipeUnlocks: #remove all of these once we have more kitchen equipment
+  - MicrowaveMachineCircuitboard
+  - ReagentGrinderMachineCircuitboard
+  - BoozeDispenserMachineCircuitboard
+  - SodaDispenserMachineCircuitboard
+
+- type: technology
+  id: AudioVisualCommunication
+  name: research-technology-audio-visual-communication
+  icon:
+    sprite: Structures/Wallmounts/camera.rsi
+    state: cameracase
+  discipline: CivilianServices
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - SurveillanceCameraRouterCircuitboard
+  - SurveillanceCameraWirelessRouterCircuitboard
+  - SurveillanceWirelessCameraMovableCircuitboard
+  - SurveillanceWirelessCameraAnchoredCircuitboard
+  - SurveillanceCameraMonitorCircuitboard
+  - SurveillanceWirelessCameraMonitorCircuitboard
+  - TelecomServerCircuitboard
+
+- type: technology
+  id: AdvancedEntertainment
+  name: research-technology-advanced-entertainment
+  icon:
+    sprite: Structures/Machines/computers.rsi
+    state: television
+  discipline: CivilianServices
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+    - ComputerTelevisionCircuitboard
+    - SynthesizerInstrument
+    - DawInstrumentMachineCircuitboard
+
+# Tier 2
+
+- type: technology
+  id: AdvancedCleaning
+  name: research-technology-advanced-cleaning
+  icon:
+    sprite: Objects/Specific/Janitorial/advmop.rsi
+    state: advmop
+  discipline: CivilianServices
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - AdvMopItem
+  - MegaSprayBottle
+  technologyPrerequisites:
+  - JanitorialEquipment
+
+- type: technology
+  id: MeatManipulation
+  name: research-technology-meat-manipulation
+  icon:
+    sprite: Structures/Machines/fat_sucker.rsi
+    state: display
+  discipline: CivilianServices
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+  - FatExtractorMachineCircuitboard
+
+- type: technology
+  id: HONKMech
+  name: research-technology-honk-mech
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: honker
+  discipline: CivilianServices
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - HonkerHarness
+  - HonkerLArm
+  - HonkerRArm
+  - HonkerLLeg
+  - HonkerRLeg
+  - HonkerCentralElectronics
+  - HonkerPeripheralsElectronics
+  - HonkerTargetingElectronics
+  - MechEquipmentHorn
+
+- type: technology
+  id: AdvancedSpray
+  name: research-technology-advanced-spray
+  icon:
+    sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - WeaponSprayNozzle
+  - ClothingBackpackWaterTank
+
+# Tier 3
+
+- type: technology
+  id: BluespaceCargoTransport
+  name: research-technology-bluespace-cargo-transport
+  icon:
+    sprite: Structures/cargo_telepad.rsi
+    state: display
+  discipline: CivilianServices
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - CargoTelepadMachineCircuitboard

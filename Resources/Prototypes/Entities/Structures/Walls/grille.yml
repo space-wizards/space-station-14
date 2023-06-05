@@ -35,6 +35,7 @@
       damageContainer: Inorganic
       damageModifierSet: FlimsyMetallic
     - type: PowerConsumer
+      showInMonitor: false
     - type: Electrified
       requirePower: true
       noWindowInTile: true

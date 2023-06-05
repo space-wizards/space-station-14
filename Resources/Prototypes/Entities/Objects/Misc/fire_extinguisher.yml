@@ -27,6 +27,7 @@
   - type: SolutionTransfer
   - type: ItemCooldown
   - type: Spray
+    transferAmount: 10
     spraySound:
       path: /Audio/Effects/extinguish.ogg
     sprayedPrototype: ExtinguisherSpray
