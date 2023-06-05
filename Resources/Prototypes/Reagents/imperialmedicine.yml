@@ -5,7 +5,7 @@
   desc: reagent-desc-adenosine
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
-  color: "#7e916e"
+  color: "#71bd85"
   metabolisms:
     Medicine:
       effects:
@@ -33,7 +33,7 @@
   desc: reagent-desc-atf
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
-  color: "#3a1d8a"
+  color: "#2bd558"
   metabolisms:
     Medicine:
       effects:
