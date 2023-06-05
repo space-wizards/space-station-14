@@ -3,7 +3,6 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.StationEvents.Metric.Components;
-using Content.Shared.chaos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;

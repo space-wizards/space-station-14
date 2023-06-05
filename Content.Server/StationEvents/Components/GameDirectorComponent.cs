@@ -1,11 +1,11 @@
 ﻿using System.Runtime.Serialization;
-using Content.Shared.chaos;
+using Content.Server.StationEvents.Metric;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(GameDirectorSystem))]
-public sealed class GameDirectorSystemComponent : Component
+public sealed class GameDirectorComponent : Component
 {
     public const float MinimumTimeUntilFirstEvent = 300;
 
@@ -27,19 +27,6 @@ public sealed class GameDirectorSystemComponent : Component
     /// </summary>
     [DataField("currChaos"), ViewVariables(VVAccess.ReadWrite)]
     public ChaosMetrics CurrChaos = new();
-
-    // Todo: A basic version of Maslow's heirachy. Focus on Extreme needs first.
-    // /// <summary>
-    // /// The level of various chaos values that then dominate all other readings
-    // /// </summary>
-    // [DataField("criticalLevels"), ViewVariables(VVAccess.ReadWrite)]
-    // public ChaosMetrics CriticalLevels = new();
-    //
-    // /// <summary>
-    // /// The level of various chaos values that then dominate somewhat
-    // /// </summary>
-    // [DataField("dangerLevels"), ViewVariables(VVAccess.ReadWrite)]
-    // public ChaosMetrics DangerLevels = new();
 
     /// <summary>
     /// The story we are currently executing from stories

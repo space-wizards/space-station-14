@@ -1,7 +1,6 @@
 ﻿using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.StationEvents.Metric.Components;
-using Content.Shared.chaos;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 

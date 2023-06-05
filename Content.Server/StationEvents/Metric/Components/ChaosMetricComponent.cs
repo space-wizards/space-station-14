@@ -1,6 +1,4 @@
-﻿using Content.Shared.chaos;
-
-namespace Content.Server.StationEvents.Metric.Components;
+﻿namespace Content.Server.StationEvents.Metric.Components;
 
 /// <summary>
 ///     Defines basic data for a station metric

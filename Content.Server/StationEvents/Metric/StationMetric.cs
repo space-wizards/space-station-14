@@ -1,13 +1,10 @@
 using Content.Server.GameTicking;
 using Content.Server.StationEvents.Metric.Components;
-using Content.Shared.chaos;
 
 namespace Content.Server.StationEvents.Metric;
 
 public abstract class StationMetric<T> : EntitySystem where T : Component
 {
-    // [Dependency] protected readonly GameTicker GameTicker = default!;
-
     public abstract ChaosMetrics CalculateChaos(EntityUid uid, T component, ChaosMetricComponent metric, CalculateChaosEvent args);
 
     public override void Initialize()
@@ -45,26 +42,4 @@ public abstract class StationMetric<T> : EntitySystem where T : Component
     {
 
     }
-
-    // /// <summary>
-    // /// Called on an active gamerule entity in the Update function
-    // /// </summary>
-    // protected virtual void ActiveTick(EntityUid uid, T component, GameRuleComponent gameRule, float frameTime)
-    // {
-    //
-    // }
-    //
-    // public override void Update(float frameTime)
-    // {
-    //     base.Update(frameTime);
-    //
-    //     var query = EntityQueryEnumerator<T, GameRuleComponent>();
-    //     while (query.MoveNext(out var uid, out var comp1, out var comp2))
-    //     {
-    //         if (!GameTicker.IsGameRuleActive(uid, comp2))
-    //             continue;
-    //
-    //         ActiveTick(uid, comp1, comp2, frameTime);
-    //     }
-    // }
 }

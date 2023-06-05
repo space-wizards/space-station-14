@@ -2,7 +2,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.StationEvents.Metric.Components;
-using Content.Shared.chaos;
 using Content.Shared.Doors.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;

@@ -7,7 +7,6 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.StationEvents.Metric;
-using Content.Shared.chaos;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
@@ -46,7 +45,7 @@ public sealed class PlayerCount
 ///        good or bad events to nudge it in the correct direction.
 /// </summary>
 [UsedImplicitly]
-public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemComponent>
+public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
@@ -67,7 +66,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         _sawmill = _log.GetSawmill("game_rule");
     }
 
-    protected override void Added(EntityUid uid, GameDirectorSystemComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    protected override void Added(EntityUid uid, GameDirectorComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         // This deletes all existing metrics and sets them up again.
         _metrics.SetupMetrics();
@@ -77,7 +76,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         LogMessage($"Started, first event in {scheduler.TimeUntilNextEvent} seconds");
     }
 
-    private void SetupEvents(GameDirectorSystemComponent scheduler, PlayerCount count)
+    private void SetupEvents(GameDirectorComponent scheduler, PlayerCount count)
     {
         scheduler.PossibleEvents.Clear();
         foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
@@ -100,13 +99,13 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         }
     }
 
-    protected override void Ended(EntityUid uid, GameDirectorSystemComponent scheduler, GameRuleComponent gameRule,
+    protected override void Ended(EntityUid uid, GameDirectorComponent scheduler, GameRuleComponent gameRule,
         GameRuleEndedEvent args)
     {
         scheduler.TimeUntilNextEvent = BasicStationEventSchedulerComponent.MinimumTimeUntilFirstEvent;
     }
 
-    protected override void ActiveTick(EntityUid uid, GameDirectorSystemComponent scheduler, GameRuleComponent gameRule, float frameTime)
+    protected override void ActiveTick(EntityUid uid, GameDirectorComponent scheduler, GameRuleComponent gameRule, float frameTime)
     {
         scheduler.BeatTime += frameTime;
         if (scheduler.TimeUntilNextEvent > 0)
@@ -216,7 +215,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
     }
     // Returns the StoryBeat that should be currently used to select events.
     // Advances the current story and picks new stories when the current beat is complete.
-    private StoryBeat DetermineNextBeat(GameDirectorSystemComponent scheduler, ChaosMetrics chaos, PlayerCount count)
+    private StoryBeat DetermineNextBeat(GameDirectorComponent scheduler, ChaosMetrics chaos, PlayerCount count)
     {
         // Potentially Complete CurrBeat, which is always scheduler.CurrStory[0]
         if (scheduler.CurrStory.Count > 0)
@@ -305,7 +304,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         return chaos.ChaosDict.Values.Sum(v => (float)(v) * (float)(v));
     }
 
-    private List<RankedEvent> ChooseEvents(GameDirectorSystemComponent scheduler, StoryBeat beat, ChaosMetrics chaos, PlayerCount count)
+    private List<RankedEvent> ChooseEvents(GameDirectorComponent scheduler, StoryBeat beat, ChaosMetrics chaos, PlayerCount count)
     {
         // TODO : Potentially filter Chaos here using CriticalLevels & DangerLevels which force us to focus on
         //        big problems (lots of hostiles, spacing) prior to smaller ones (food & drink)
@@ -327,7 +326,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
 
     // Filter only to events which improve the chaos score in alignment with desiredChange.
     //   Score them (lower is better) in how well they do this.
-    private List<RankedEvent> FilterAndScore(GameDirectorSystemComponent scheduler, ChaosMetrics chaos,
+    private List<RankedEvent> FilterAndScore(GameDirectorComponent scheduler, ChaosMetrics chaos,
         ChaosMetrics desiredChange, PlayerCount count, bool inclNoChaos = false)
     {
         var noEvent = RankChaosDelta(desiredChange);
@@ -363,9 +362,9 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
         return result;
     }
 
-    private void CopyStories(EntityUid uid, GameDirectorSystemComponent scheduler)
+    private void CopyStories(EntityUid uid, GameDirectorComponent scheduler)
     {
-        if (TryComp<GameDirectorStoriesComponent>(uid, out var stories))
+        if (TryComp<GameStoriesComponent>(uid, out var stories))
         {
             // There are some stories (probably from a prototype subclass) to copy across
             foreach (var storyBeat in stories.StoryBeats)
@@ -393,7 +392,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorSystemCompon
     }
 
     // Check that the stories have a valid configuration.
-    private void ValidateStories(GameDirectorSystemComponent scheduler)
+    private void ValidateStories(GameDirectorComponent scheduler)
     {
         if (scheduler.Stories.Count == 0)
         {

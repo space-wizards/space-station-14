@@ -4,7 +4,7 @@
   noSpawn: true
   abstract: true
   components:
-    - type: GameDirectorSystem
+    - type: GameDirector
       storyBeats:
         Peace:
           description: Minor Chaos across a wide range
@@ -82,7 +82,7 @@
   parent: GameDirector
   noSpawn: true
   components:
-    - type: GameDirectorStories
+    - type: GameStories
       stories:
         RelaxedAttack:
           description: Mostly calm with a couple of minor problems.
@@ -117,7 +117,7 @@
   parent: GameDirector
   noSpawn: true
   components:
-    - type: GameDirectorStories
+    - type: GameStories
       stories:
         Relaxed:
           description: A small attack
