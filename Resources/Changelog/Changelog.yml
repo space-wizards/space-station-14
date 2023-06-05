@@ -1,9 +1,4 @@
 Entries:
-- author: SonicDC
-  changes:
-  - {message: Changed brigmed hardsuit sprites!, type: Tweak}
-  id: 3446
-  time: '2023-04-17T22:47:09.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Syringe debuff of delay per 5u reduced from 1s to 0.5s, type: Tweak}
@@ -2909,3 +2904,8 @@ Entries:
   - {message: Added a new evacuation shuttle for Cluster, type: Add}
   id: 3945
   time: '2023-06-05T02:52:58.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Captain fax now captain's on Fland and Saltern, type: Tweak}
+  id: 3946
+  time: '2023-06-05T09:20:19.0000000+00:00'
