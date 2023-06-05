@@ -1,11 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: The drunk effect of having a low blood level is now instantly removed
-      when healthy!, type: Fix}
-  - {message: Dead bodies will persist in bleeding after death!, type: Add}
-  id: 3450
-  time: '2023-04-19T03:09:22.0000000+00:00'
 - author: Mumohan
   changes:
   - {message: Minibomb now does what it says on the tin and gibs bodies, type: Tweak}
@@ -2911,3 +2904,8 @@ Entries:
     type: Tweak}
   id: 3949
   time: '2023-06-05T22:45:46.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Added GuideHelp tags to some Medical and Kitchen objects., type: Add}
+  id: 3950
+  time: '2023-06-05T22:47:15.0000000+00:00'
