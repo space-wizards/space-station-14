@@ -273,7 +273,7 @@ public sealed class FaxSystem : EntitySystem
                         return;
 
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
-                    args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampInfo>? stampedBy);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
                     args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
 
                     var printout = new FaxPrintout(content, name, prototypeId, stampState, stampedBy);

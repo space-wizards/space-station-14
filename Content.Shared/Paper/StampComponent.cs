@@ -2,11 +2,17 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Paper
 {
+    /// <summary>
+    ///     Set of required information to draw a stamp in UIs, where
+    ///     representing the state of the stamp at the point in time
+    ///     when it was applied to a ppaer. These fields mirror the
+    ///     equivalent in the component.
+    /// </summary>
     [Serializable, NetSerializable]
-    public struct StampInfo
+    public struct StampDisplayInfo
     {
-        public string StampName;
-        public Color StampColor;
+        public string StampedName;
+        public Color StampedColor;
     };
 
     [RegisterComponent]

@@ -83,7 +83,7 @@ namespace Content.Server.Paper
 
             if (paperComp.StampedBy.Count > 0)
             {
-                string commaSeparated = string.Join(", ", paperComp.StampedBy.Select(s => Loc.GetString(s.StampName)));
+                string commaSeparated = string.Join(", ", paperComp.StampedBy.Select(s => Loc.GetString(s.StampedName)));
                 args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
@@ -123,11 +123,11 @@ namespace Content.Server.Paper
             }
         }
 
-        private StampInfo GetStampInfo(StampComponent stamp)
+        private StampDisplayInfo GetStampInfo(StampComponent stamp)
         {
-            return new StampInfo {
-                StampName = stamp.StampedName,
-                StampColor = stamp.StampedColor
+            return new StampDisplayInfo {
+                StampedName = stamp.StampedName,
+                StampedColor = stamp.StampedColor
             };
         }
 
@@ -163,7 +163,7 @@ namespace Content.Server.Paper
         /// <summary>
         ///     Accepts the name and state to be stamped onto the paper, returns true if successful.
         /// </summary>
-        public bool TryStamp(EntityUid uid, StampInfo stampInfo, string spriteStampState, PaperComponent? paperComp = null)
+        public bool TryStamp(EntityUid uid, StampDisplayInfo stampInfo, string spriteStampState, PaperComponent? paperComp = null)
         {
             if (!Resolve(uid, ref paperComp))
                 return false;

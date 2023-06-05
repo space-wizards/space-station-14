@@ -137,18 +137,18 @@ public sealed class FaxPrintout
     public string? StampState { get; }
 
     [DataField("stampedBy")]
-    public List<StampInfo> StampedBy { get; } = new();
+    public List<StampDisplayInfo> StampedBy { get; } = new();
 
     private FaxPrintout()
     {
     }
 
-    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<StampInfo>? stampedBy = null)
+    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null)
     {
         Content = content;
         Name = name;
         PrototypeId = prototypeId ?? "";
         StampState = stampState;
-        StampedBy = stampedBy ?? new List<StampInfo>();
+        StampedBy = stampedBy ?? new List<StampDisplayInfo>();
     }
 }

@@ -8,10 +8,10 @@ namespace Content.Shared.Paper
         public sealed class PaperBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly string Text;
-            public readonly List<StampInfo> StampedBy;
+            public readonly List<StampDisplayInfo> StampedBy;
             public readonly PaperAction Mode;
 
-            public PaperBoundUserInterfaceState(string text, List<StampInfo> stampedBy, PaperAction mode = PaperAction.Read)
+            public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy, PaperAction mode = PaperAction.Read)
             {
                 Text = text;
                 StampedBy = stampedBy;

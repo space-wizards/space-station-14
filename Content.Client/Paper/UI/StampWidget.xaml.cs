@@ -18,11 +18,11 @@ namespace Content.Client.Paper.UI
             set { StampedByLabel.Orientation = value; }
         }
 
-        public StampInfo StampInfo {
+        public StampDisplayInfo StampInfo {
             set {
-                StampedByLabel.Text = Loc.GetString(value.StampName);
-                StampedByLabel.FontColorOverride = value.StampColor;
-                ModulateSelfOverride = value.StampColor;
+                StampedByLabel.Text = Loc.GetString(value.StampedName);
+                StampedByLabel.FontColorOverride = value.StampedColor;
+                ModulateSelfOverride = value.StampedColor;
             }
         }
 

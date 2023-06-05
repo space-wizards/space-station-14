@@ -9,13 +9,23 @@ namespace Content.Client.Paper.UI
     [GenerateTypedNameReferences]
     public sealed partial class StampLabel : Label
     {
+        /// A scale that's applied to the text to ensure it
+        /// fits in the allowed space.
         private Vector2 _textScaling = Vector2.One;
 
+        /// Shader used to draw the stamps
+        private ShaderInstance? _stampShader;
+
+        /// Allows an additional orientation to be applied to
+        /// this control.
         public float Orientation = 0.0f;
 
         public StampLabel()
         {
             RobustXamlLoader.Load(this);
+
+            var prototypes = IoCManager.Resolve<IPrototypeManager>();
+            _stampShader = prototypes.Index<ShaderPrototype>("PaperStamp").InstanceUnique();
         }
 
         protected override Vector2 MeasureOverride(Vector2 availableSize)
@@ -32,10 +42,9 @@ namespace Content.Client.Paper.UI
         {
             var offset = new Vector2(PixelPosition.X * MathF.Cos(Orientation) - PixelPosition.Y * MathF.Sin(Orientation),
                     PixelPosition.Y * MathF.Cos(Orientation) + PixelPosition.X * MathF.Sin(Orientation));
-            var prototypes = IoCManager.Resolve<IPrototypeManager>();
-            var shader = prototypes.Index<ShaderPrototype>("PaperStamp").InstanceUnique();
-            shader.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
-            handle.UseShader(shader);
+
+            _stampShader?.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
+            handle.UseShader(_stampShader);
             handle.SetTransform(GlobalPixelPosition - PixelPosition + offset, Orientation, _textScaling);
             base.Draw(handle);
 

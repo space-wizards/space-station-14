@@ -67,9 +67,9 @@ namespace Content.Server.Nuke
                     Loc.GetString("nuke-codes-fax-paper-name"),
                     null,
                     "paper_stamp-cent",
-                    new List<StampInfo>
+                    new List<StampDisplayInfo>
                     {
-                        new StampInfo { StampName = Loc.GetString("stamp-component-stamped-name-centcom"), StampColor = Color.FromHex("#BB3232") },
+                        new StampDisplayInfo { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#BB3232") },
                     }
                 );
                 _faxSystem.Receive(faxEnt, printout, null, fax);
