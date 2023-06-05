@@ -41,8 +41,8 @@ public sealed class PlayerCount
 }
 
 /// <summary>
-///     A scheduler which tries to keep station chaos within a set bound over time with the most suitable
-///        good or bad events to nudge it in the correct direction.
+///   A scheduler which tries to keep station chaos within a set bound over time with the most suitable
+///   good or bad events to nudge it in the correct direction.
 /// </summary>
 [UsedImplicitly]
 public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>

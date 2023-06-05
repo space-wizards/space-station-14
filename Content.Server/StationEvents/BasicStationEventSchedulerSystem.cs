@@ -7,8 +7,8 @@ using Robust.Shared.Random;
 namespace Content.Server.StationEvents
 {
     /// <summary>
-    ///     The basic event scheduler rule, loosely based off of /tg/ events, which most
-    ///     game presets use.
+    ///   The basic event scheduler rule, loosely based off of /tg/ events, which most
+    ///   game presets use.
     /// </summary>
     [UsedImplicitly]
     public sealed class BasicStationEventSchedulerSystem : GameRuleSystem<BasicStationEventSchedulerComponent>

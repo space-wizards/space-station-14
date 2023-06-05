@@ -7,41 +7,41 @@ using Robust.Shared.Utility;
 namespace Content.Server.StationEvents.Metric;
 
 /// <summary>
-///     This class represents a collection of chaos
+///   This class represents a collection of chaos
 /// </summary>
 /// <remarks>
-///     This is similar to the DamageSpecifier class.
+///   This is similar to the DamageSpecifier class.
 /// </remarks>
 [DataDefinition]
 public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
 {
     /// <summary>
-    ///     Main chaos dictionary. Most ChaosMetrics functions exist to somehow modifying this.
+    ///   Main chaos dictionary. Most ChaosMetrics functions exist to somehow modifying this.
     /// </summary>
     [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<string, FixedPoint2>)), ViewVariables(VVAccess.ReadWrite)]
     public Dictionary<string, FixedPoint2> ChaosDict { get; set; } = new();
 
     /// <summary>
-    ///     Sum of the chaos values.
+    ///   Sum of the chaos values.
     /// </summary>
     [JsonIgnore]
     public FixedPoint2 Total => ChaosDict.Values.Sum();
 
     /// <summary>
-    ///     Whether this chaos specifier has any entries.
+    ///   Whether this chaos specifier has any entries.
     /// </summary>
     [JsonIgnore]
     public bool Empty => ChaosDict.Count == 0;
 
     /// <summary>
-    ///     True if any of our values are greater than other, i.e worse.
+    ///   True if any of our values are greater than other, i.e worse.
     /// </summary>
     public bool AnyWorseThan(ChaosMetrics other) => ChaosDict.Any(kvp =>
         other.ChaosDict.TryGetValue(kvp.Key, out var otherV)
         && kvp.Value > otherV);
 
     /// <summary>
-    ///     True if all of our values are less than other, i.e better.
+    ///   True if all of our values are less than other, i.e better.
     /// </summary>
     public bool AllBetterThan(ChaosMetrics other) => ChaosDict.All(kvp =>
         !other.ChaosDict.TryGetValue(kvp.Key, out var otherV)
@@ -49,12 +49,12 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
 
     #region constructors
     /// <summary>
-    ///     Constructor that just results in an empty dictionary.
+    ///   Constructor that just results in an empty dictionary.
     /// </summary>
     public ChaosMetrics() { }
 
     /// <summary>
-    ///     Constructor that takes another ChaosMetrics instance and copies it.
+    ///   Constructor that takes another ChaosMetrics instance and copies it.
     /// </summary>
     public ChaosMetrics(ChaosMetrics chaos)
     {
@@ -62,7 +62,7 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
     }
 
     /// <summary>
-    ///     Constructor that takes another ChaosMetrics instance and copies it.
+    ///   Constructor that takes another ChaosMetrics instance and copies it.
     /// </summary>
     public ChaosMetrics(Dictionary<string, FixedPoint2> chaos)
     {
@@ -80,7 +80,7 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
     }
 
     /// <summary>
-    ///     Remove any chaos entries with zero chaos.
+    ///   Remove any chaos entries with zero chaos.
     /// </summary>
     public void TrimZeros()
     {
@@ -94,7 +94,7 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
     }
 
     /// <summary>
-    ///     Clamps each chaos value to be within the given range.
+    ///   Clamps each chaos value to be within the given range.
     /// </summary>
     public void Clamp(FixedPoint2 minValue, FixedPoint2 maxValue)
     {
@@ -104,10 +104,10 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
     }
 
     /// <summary>
-    ///     Sets all chaos values to be at least as large as the given number.
+    ///   Sets all chaos values to be at least as large as the given number.
     /// </summary>
     /// <remarks>
-    ///     Note that this only acts on chaos types present in the dictionary. It will not add new chaos types.
+    ///   Note that this only acts on chaos types present in the dictionary. It will not add new chaos types.
     /// </remarks>
     public void ClampMin(FixedPoint2 minValue)
     {
@@ -121,8 +121,8 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
     }
 
     /// <summary>
-    ///     Sets all chaos values to be at most some number. Note that if a chaos type is not present in the
-    ///     dictionary, these will not be added.
+    ///   Sets all chaos values to be at most some number. Note that if a chaos type is not present in the
+    ///   dictionary, these will not be added.
     /// </summary>
     public void ClampMax(FixedPoint2 maxValue)
     {
@@ -136,8 +136,8 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
     }
 
     /// <summary>
-    ///     This adds the chaos values of some other <see cref="ChaosMetrics"/> without
-    ///     adding any new chaos types.
+    ///   This adds the chaos values of some other <see cref="ChaosMetrics"/> without
+    ///   adding any new chaos types.
     /// </summary>
     public ChaosMetrics ExclusiveAdd(ChaosMetrics other)
     {
@@ -155,8 +155,8 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
     }
 
     /// <summary>
-    ///     This subtracts the chaos values of some other <see cref="ChaosMetrics"/> without
-    ///     adding any new chaos types.
+    ///   This subtracts the chaos values of some other <see cref="ChaosMetrics"/> without
+    ///   adding any new chaos types.
     /// </summary>
     public ChaosMetrics ExclusiveSubtract(ChaosMetrics other)
     {

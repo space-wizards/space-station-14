@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.StationEvents.Metric.Components;
 
 /// <summary>
-///     Defines basic data for a station metric
+///   Defines basic data for a station metric
 /// </summary>
 [RegisterComponent]
 public sealed class ChaosMetricComponent : Component

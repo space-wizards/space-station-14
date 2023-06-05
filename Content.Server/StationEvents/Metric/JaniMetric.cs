@@ -9,10 +9,6 @@ namespace Content.Server.StationEvents.Metric;
 public sealed class JaniMetric : StationMetric<JaniMetricComponent>
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    // public override void Initialize()
-    // {
-    //     base.Initialize();
-    // }
 
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, JaniMetricComponent component, ChaosMetricComponent metric,
         CalculateChaosEvent args)

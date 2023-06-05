@@ -11,10 +11,6 @@ namespace Content.Server.StationEvents.Metric;
 public sealed class DoorMetric : StationMetric<DoorMetricComponent>
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    // public override void Initialize()
-    // {
-    //     base.Initialize();
-    // }
 
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, DoorMetricComponent component, ChaosMetricComponent metric,
         CalculateChaosEvent args)

@@ -7,19 +7,19 @@ namespace Content.Server.StationEvents.Metric.Components;
 public sealed class AnomalyMetricComponent : Component
 {
     /// <summary>
-    ///     Cost of a growing anomaly
+    ///   Cost of a growing anomaly
     /// </summary>
     [DataField("growingCost"), ViewVariables(VVAccess.ReadWrite)]
     public readonly float GrowingCost = 100.0f;
 
     /// <summary>
-    ///     Cost of a dangerous anomaly
+    ///   Cost of a dangerous anomaly
     /// </summary>
     [DataField("severityCost"), ViewVariables(VVAccess.ReadWrite)]
     public readonly float SeverityCost = 50.0f;
 
     /// <summary>
-    ///     Cost of any anomaly
+    ///   Cost of any anomaly
     /// </summary>
     [DataField("dangerCost"), ViewVariables(VVAccess.ReadWrite)]
     public readonly float BaseCost = 40.0f;
