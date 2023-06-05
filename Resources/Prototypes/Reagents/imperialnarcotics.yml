@@ -1,0 +1,17 @@
+- type: reagent
+  id: Citaloporam
+  name: reagent-name-citaloporam
+  group: Narcotics
+  desc: reagent-desc-citaloporam
+  physicalDesc: reagent-physical-desc-syrupy
+  flavor: bitter
+  color: "#417681"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 13
+        refresh: false
