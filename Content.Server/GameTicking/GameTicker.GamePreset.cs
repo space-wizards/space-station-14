@@ -17,8 +17,6 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         public const float PresetFailedCooldownIncrease = 30f;
-        // What it reverts to if it cannot start the fallback, should probably be a cvar or something
-        private const string SecondaryFallback = "Extended";
 
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
@@ -44,7 +42,7 @@ namespace Content.Server.GameTicking
 
             if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
             {
-                var fallbackPresets = new [] { _configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset) , SecondaryFallback };
+                var fallbackPresets = _configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset).Split(",");
                 var startFailed = true;
 
                 foreach (var preset in fallbackPresets)
