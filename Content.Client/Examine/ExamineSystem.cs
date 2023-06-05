@@ -327,9 +327,9 @@ namespace Content.Client.Examine
             }
         }
 
-        public void DoExamine(EntityUid entity, bool centeredOnCursor=true)
+        public void DoExamine(EntityUid entity, bool centeredOnCursor = true, EntityUid? userOverride = null)
         {
-            var playerEnt = _playerManager.LocalPlayer?.ControlledEntity;
+            var playerEnt = userOverride ?? _playerManager.LocalPlayer?.ControlledEntity;
             if (playerEnt == null)
                 return;
 

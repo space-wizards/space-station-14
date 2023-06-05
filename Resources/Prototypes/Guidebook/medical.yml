@@ -1,0 +1,23 @@
+- type: guideEntry
+  id: Medical
+  name: guide-entry-medical
+  text: "/ServerInfo/Guidebook/Medical/Medical.xml"
+  children:
+  - Medical Doctor
+  - Cloning
+  - Cryogenics
+
+- type: guideEntry
+  id: Medical Doctor
+  name: guide-entry-medicaldoctor
+  text: "/ServerInfo/Guidebook/Medical/Medical Doctor.xml"
+
+- type: guideEntry
+  id: Cloning
+  name: guide-entry-cloning
+  text: "/ServerInfo/Guidebook/Medical/Cloning.xml"
+
+- type: guideEntry
+  id: Cryogenics
+  name: guide-entry-cryogenics
+  text: "/ServerInfo/Guidebook/Medical/Cryogenics.xml"

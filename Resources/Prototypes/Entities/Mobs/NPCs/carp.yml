@@ -155,3 +155,13 @@
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask: DragonCarpCompound
+
+- type: entity
+  id: MobCarpDungeon
+  parent: MobCarp
+  suffix: Dungeon
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5
