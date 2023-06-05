@@ -174,9 +174,9 @@
     tags:
     - DoorBumpOpener
     - Chicken
-  - type: Breedable
+  - type: Reproductive
     breedChance: 0.05
-    birthPopup: breedable-laid-egg-popup
+    birthPopup: reproductive-laid-egg-popup
     makeOffspringInfant: false
     partnerWhitelist:
       tags:
@@ -184,7 +184,7 @@
     offspring:
     - id: FoodEggChickenFertilized
       maxAmount: 3
-  - type: BreedingPartner
+  - type: ReproductivePartner
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -261,9 +261,9 @@
     tags:
       - DoorBumpOpener
       - Duck
-  - type: Breedable
+  - type: Reproductive
     breedChance: 0.05
-    birthPopup: breedable-laid-egg-popup
+    birthPopup: reproductive-laid-egg-popup
     makeOffspringInfant: false
     partnerWhitelist:
       tags:
@@ -271,7 +271,7 @@
     offspring:
     - id: FoodEggDuckFertilized
       maxAmount: 3
-  - type: BreedingPartner
+  - type: ReproductivePartner
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -436,13 +436,13 @@
     tags:
     - DoorBumpOpener
     - Cow
-  - type: Breedable
+  - type: Reproductive
     partnerWhitelist:
       tags:
       - Cow
     offspring:
     - id: MobCow
-  - type: BreedingPartner
+  - type: ReproductivePartner
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -571,13 +571,13 @@
     tags:
     - DoorBumpOpener
     - Goat
-  - type: Breedable
+  - type: Reproductive
     partnerWhitelist:
       tags:
       - Goat
     offspring:
     - id: MobGoat
-  - type: BreedingPartner
+  - type: ReproductivePartner
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -2271,13 +2271,13 @@
     tags:
     - DoorBumpOpener
     - Pig
-  - type: Breedable
+  - type: Reproductive
     partnerWhitelist:
       tags:
       - Pig
     offspring:
     - id: MobPig
-  - type: BreedingPartner
+  - type: ReproductivePartner
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface

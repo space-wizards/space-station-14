@@ -2,11 +2,11 @@
 
 /// <summary>
 /// This is used for denoting entities which are
-/// valid partners for <see cref="BreedableComponent"/>.
+/// valid partners for <see cref="ReproductiveComponent"/>.
 /// This functions outside of the whitelist.
 /// </summary>
 [RegisterComponent]
-public sealed class BreedingPartnerComponent : Component
+public sealed class ReproductivePartnerComponent : Component
 {
 
 }

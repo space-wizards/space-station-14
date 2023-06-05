@@ -10,11 +10,8 @@ namespace Content.Shared.Nutrition.AnimalHusbandry;
 /// given they are next to a particular entity that fulfills a whitelist,
 /// can create several "child" entities.
 /// </summary>
-/// <remarks>
-/// A worthy foe for <see cref="CreamPiedComponent"/>.
-/// </remarks>
 [RegisterComponent]
-public sealed class BreedableComponent : Component
+public sealed class ReproductiveComponent : Component
 {
     /// <summary>
     /// The next time when breeding will be attempted.
@@ -88,7 +85,7 @@ public sealed class BreedableComponent : Component
     /// Configurable for things like laying eggs.
     /// </summary>
     [DataField("birthPopup"), ViewVariables(VVAccess.ReadWrite)]
-    public string BirthPopup = "breedable-birth-popup";
+    public string BirthPopup = "reproductive-birth-popup";
 
     /// <summary>
     /// Whether or not the offspring should be made into "infants".

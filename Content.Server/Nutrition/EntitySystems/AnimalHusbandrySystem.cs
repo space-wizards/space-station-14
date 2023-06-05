@@ -17,13 +17,8 @@ using Robust.Shared.Timing;
 namespace Content.Server.Nutrition.EntitySystems;
 
 /// <summary>
-/// This handles logic and interactions related to <see cref="BreedableComponent"/>
+/// This handles logic and interactions related to <see cref="ReproductiveComponent"/>
 /// </summary>
-/// <remarks>
-/// Yes, I partially wrote this solely to swipe the name BreedableComponent for the memes.
-/// For all of our sakes, I'll refrain from literring this code with jokes about it.
-/// - emo
-/// </remarks>
 public sealed class AnimalHusbandrySystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
@@ -40,14 +35,14 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<BreedableComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<BreedableComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<ReproductiveComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<ReproductiveComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<InfantComponent, EntityUnpausedEvent>(OnInfantUnpaused);
         SubscribeLocalEvent<InfantComponent, ComponentStartup>(OnInfantStartup);
         SubscribeLocalEvent<InfantComponent, ComponentShutdown>(OnInfantShutdown);
     }
 
-    private void OnUnpaused(EntityUid uid, BreedableComponent component, ref EntityUnpausedEvent args)
+    private void OnUnpaused(EntityUid uid, ReproductiveComponent component, ref EntityUnpausedEvent args)
     {
         component.NextBreedAttempt += args.PausedTime;
     }
@@ -58,7 +53,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     }
 
     // we express EZ-pass terminate the pregnancy if a player takes the role
-    private void OnMindAdded(EntityUid uid, BreedableComponent component, MindAddedMessage args)
+    private void OnMindAdded(EntityUid uid, ReproductiveComponent component, MindAddedMessage args)
     {
         component.Gestating = false;
         component.GestationEndTime = null;
@@ -80,17 +75,17 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     /// Attempts to breed the entity with a valid
     /// partner nearby.
     /// </summary>
-    public bool TryBreedNearby(EntityUid uid, BreedableComponent? component = null)
+    public bool TryReproduceNearby(EntityUid uid, ReproductiveComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
 
         var xform = Transform(uid);
-        var partners = _entityLookup.GetComponentsInRange<BreedingPartnerComponent>(xform.Coordinates, component.BreedRange);
+        var partners = _entityLookup.GetComponentsInRange<ReproductivePartnerComponent>(xform.Coordinates, component.BreedRange);
         foreach (var comp in partners)
         {
             var partner = comp.Owner;
-            if (TryBreed(uid, partner, component))
+            if (TryReproduce(uid, partner, component))
                 return true;
 
             // exit early if a valid attempt failed
@@ -104,7 +99,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     /// Attempts to breed an entity with
     /// the specified partner.
     /// </summary>
-    public bool TryBreed(EntityUid uid, EntityUid partner, BreedableComponent? component = null)
+    public bool TryReproduce(EntityUid uid, EntityUid partner, ReproductiveComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -112,7 +107,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (uid == partner)
             return false;
 
-        if (!CanBreed(uid, component))
+        if (!CanReproduce(uid, component))
             return false;
 
         if (!IsValidPartner(uid, partner, component))
@@ -145,7 +140,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     /// Checks if an entity satisfies
     /// the conditions to be able to breed.
     /// </summary>
-    public bool CanBreed(EntityUid uid, BreedableComponent? component = null)
+    public bool CanReproduce(EntityUid uid, ReproductiveComponent? component = null)
     {
         if (_failedAttempts.Contains(uid))
             return false;
@@ -172,12 +167,12 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     /// Checks if a given entity is a valid partner.
     /// Does not include the random check, for sane API reasons.
     /// </summary>
-    public bool IsValidPartner(EntityUid uid, EntityUid partner, BreedableComponent? component = null)
+    public bool IsValidPartner(EntityUid uid, EntityUid partner, ReproductiveComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
 
-        if (!CanBreed(partner))
+        if (!CanReproduce(partner))
             return false;
 
         return component.PartnerWhitelist.IsValid(partner);
@@ -187,7 +182,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     /// Gives birth to offspring and
     /// resets the parent entity.
     /// </summary>
-    public void Birth(EntityUid uid, BreedableComponent? component = null)
+    public void Birth(EntityUid uid, ReproductiveComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -222,23 +217,23 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         HashSet<EntityUid> birthQueue = new();
         _failedAttempts.Clear();
 
-        var query = EntityQueryEnumerator<BreedableComponent>();
-        while (query.MoveNext(out var uid, out var breedable))
+        var query = EntityQueryEnumerator<ReproductiveComponent>();
+        while (query.MoveNext(out var uid, out var reproductive))
         {
-            if (breedable.GestationEndTime != null && _timing.CurTime >= breedable.GestationEndTime)
+            if (reproductive.GestationEndTime != null && _timing.CurTime >= reproductive.GestationEndTime)
             {
                 birthQueue.Add(uid);
             }
 
-            if (_timing.CurTime < breedable.NextBreedAttempt)
+            if (_timing.CurTime < reproductive.NextBreedAttempt)
                 continue;
-            breedable.NextBreedAttempt += _random.Next(breedable.MinBreedAttemptInterval, breedable.MaxBreedAttemptInterval);
+            reproductive.NextBreedAttempt += _random.Next(reproductive.MinBreedAttemptInterval, reproductive.MaxBreedAttemptInterval);
 
             // no.
-            if (HasComp<ActorComponent>(uid))
+            if (HasComp<ActorComponent>(uid) || TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
                 continue;
 
-            TryBreedNearby(uid, breedable);
+            TryReproduceNearby(uid, reproductive);
         }
 
         foreach (var queued in birthQueue)
