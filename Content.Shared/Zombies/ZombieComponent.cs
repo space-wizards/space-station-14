@@ -153,6 +153,18 @@ namespace Content.Shared.Zombies
         };
 
         /// <summary>
+        /// Damage inflicted on the zombie whenever they attack something that is not organic.
+        /// </summary>
+        [DataField("biteMetalDamage")] public DamageSpecifier BiteMetalDamage = new()
+        {
+            DamageDict = new ()
+            {
+                { "Blunt", 5 },
+            }
+        };
+
+
+        /// <summary>
         /// Infection warnings are shown as popups, times are in seconds.
         ///   -ve times shown to initial zombies (once timer counts from -ve to 0 the infection starts)
         ///   +ve warnings are in seconds after being bitten

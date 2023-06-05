@@ -307,6 +307,7 @@ namespace Content.Server.Zombies
             return chance;
         }
 
+        // When a zombie hits a victim, process what happens next.
         private void OnMeleeHit(EntityUid uid, ZombieComponent component, MeleeHitEvent args)
         {
             if (!EntityManager.TryGetComponent<ZombieComponent>(args.User, out var zombieComp))
@@ -315,6 +316,7 @@ namespace Content.Server.Zombies
             if (!args.HitEntities.Any())
                 return;
 
+            var hitOrganic = false;
             foreach (var entity in args.HitEntities)
             {
                 if (args.User == entity)
@@ -334,6 +336,9 @@ namespace Content.Server.Zombies
                 }
                 else
                 {
+                    // Zombie hit something that is alive.
+                    hitOrganic = true;
+
                     if (_random.Prob(GetZombieInfectionChance(entity, component)) ||
                         mobState.CurrentState != MobState.Alive)
                     {
@@ -367,6 +372,11 @@ namespace Content.Server.Zombies
                     }
                 }
             }
+
+            // It hurts the zombie whenever they bite something that isn't organic. This Punishes zombies who only
+            // want to eat the station.
+            if (args.HitEntities.Count != 0 && !hitOrganic)
+                _damageable.TryChangeDamage(uid, component.Settings.BiteMetalDamage, true, false);
         }
 
         /// <summary>
