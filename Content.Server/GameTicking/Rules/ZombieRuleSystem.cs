@@ -142,11 +142,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     /// <param name="target">depending on this uid, we should care about the round ending</param>
     private void CheckRoundEnd(EntityUid target)
     {
-        var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
-
         // We only care about players, not monkeys and such.
         if (!HasComp<HumanoidAppearanceComponent>(target))
             return;
+
+        var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
 
         var fraction = 0.0f;
         List<EntityUid>? healthy = null;
@@ -193,16 +193,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 _zombie.ForceZombies(uid, zombies);
             }
 
-            if (fraction < 0.1f)
-            {
-                CheckRuleEnd(uid, zombies, gameRule);
-            }
-
+            CheckRuleEnd(uid, zombies, gameRule);
         }
     }
 
-    private void CheckRuleEnd(EntityUid ruleUid, ZombieRuleComponent zombies, GameRuleComponent gameRule)
+    public void CheckRuleEnd(EntityUid ruleUid, ZombieRuleComponent? zombies = null, GameRuleComponent? gameRule = null)
     {
+        if (!Resolve(ruleUid, ref gameRule) || !Resolve(ruleUid, ref zombies))
+            return;
+
         // Check that we've picked our zombies
         if (zombies.InfectInitialAt != TimeSpan.Zero)
             return;
@@ -509,6 +508,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             {
                 // Zombify them immediately
                 _zombie.ZombifyEntity(uid, mobState, pending);
+            }
+            else if (mobState.CurrentState == MobState.Critical)
+            {
+                // Immediately jump to an active virus now
+                pending.InfectedSecs = Math.Max(0, pending.InfectedSecs);
             }
         }
     }

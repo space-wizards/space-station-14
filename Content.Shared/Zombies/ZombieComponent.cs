@@ -68,7 +68,7 @@ namespace Content.Shared.Zombies
         /// <summary>
         /// Minimum time a zombie victim will lie dead before rising as a zombie.
         /// </summary>
-        [DataField("zombieDeadMinTurnTime"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField("deadMinTurnTime"), ViewVariables(VVAccess.ReadWrite)]
         public float DeadMinTurnTime = 10.0f;
 
         /// <summary>
@@ -154,18 +154,6 @@ namespace Content.Shared.Zombies
         };
 
         /// <summary>
-        /// Damage inflicted on the zombie whenever they attack something that is not organic.
-        /// </summary>
-        [DataField("biteMetalDamage"), ViewVariables(VVAccess.ReadWrite)] public DamageSpecifier BiteMetalDamage = new()
-        {
-            DamageDict = new ()
-            {
-                { "Blunt", 5 },
-            }
-        };
-
-
-        /// <summary>
         /// Infection warnings are shown as popups, times are in seconds.
         ///   -ve times shown to initial zombies (once timer counts from -ve to 0 the infection starts)
         ///   +ve warnings are in seconds after being bitten
@@ -225,19 +213,6 @@ namespace Content.Shared.Zombies
         [DataField("family"), ViewVariables(VVAccess.ReadOnly)]
         public ZombieFamily Family = new();
 
-        public float OtherZombieDamageCoefficient => Settings.OtherZombieDamageCoefficient;
-
-
-        /// <summary>
-        /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
-        /// </summary>
-        public float CritDeathChance => Settings.CritDeathChance;
-
-        /// <summary>
-        /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
-        /// </summary>
-        public float PermadeathChance => Settings.PermadeathChance;
-
         /// <summary>
         /// Has this zombie stopped healing now that it's died for real?
         /// </summary>
@@ -249,35 +224,6 @@ namespace Content.Shared.Zombies
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int ZombieRevivalSeconds;
-
-        /// <summary>
-        /// The baseline infection chance you have if you are completely nude
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float MaxInfectionChance => Settings.MaxInfectionChance;
-
-        /// <summary>
-        /// The minimum infection chance possible. This is simply to prevent
-        /// being invincible by bundling up.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float MinInfectionChance => Settings.MinInfectionChance;
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float MovementSpeedDebuff => Settings.MovementSpeedDebuff;
-
-        /// <summary>
-        /// How long it takes our bite victims to turn in seconds (max).
-        ///   Will roll 25% - 100% of this on bite.
-        /// </summary>
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float InfectionTurnTime => Settings.InfectionTurnTime;
-
-        /// <summary>
-        /// Healing each second
-        /// </summary>
-        public DamageSpecifier Healing => Settings.Healing;
 
         /// <summary>
         /// The EntityName of the humanoid to restore in case of cloning

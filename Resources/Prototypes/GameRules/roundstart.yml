@@ -94,9 +94,6 @@
           Slash: 13
           Piercing: 7
           Structural: 10
-      biteMetalDamage:
-        types:
-          Blunt: 2
     victimSettings:
       permadeathChance: 0.9
       critDeathChance: 0.5
@@ -119,9 +116,6 @@
           Blunt: 10
           Piercing: 4
           Structural: 5
-      biteMetalDamage:
-        types:
-          Blunt: 5
 
 # event schedulers
 - type: entity

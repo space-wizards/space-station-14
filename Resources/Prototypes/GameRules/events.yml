@@ -298,63 +298,63 @@
       turnTimeMin: 480
       nerfZombiesAt: 0.2 # Nerf at 20% infection
       earlySettings:
-        PermadeathChance: 0.6
-        CritDeathChance: 0.5
-        ReviveTime: 10
-        ReviveTimeMax: 60
+        permadeathChance: 0.6
+        critDeathChance: 0.5
+        reviveTime: 10
+        reviveTimeMax: 60
         maxInfectionChance: 0.20
-        MinInfectionChance: 0.05
-        InfectionTurnTime: 480.0
-        DeadMinTurnTime: 30.0
+        minInfectionChance: 0.05
+        infectionTurnTime: 480.0
+        deadMinTurnTime: 30.0
         healing:  # Per second
-          Blunt: -0.2
-          Slash: -0.1
-          Piercing: -0.1
-          Heat: -0.1
-          Cold: -0.1
-          Shock: -0.1
+          types:
+            Blunt: -0.2
+            Slash: -0.1
+            Piercing: -0.1
+            Heat: -0.1
+            Cold: -0.1
+            Shock: -0.1
         attackDamage:
-          Blunt: 13
-          Piercing: 7
-          Structural: 5
-        biteMetalDamage: # Pain inflicted on zombie when it bites something non-organic
-          Blunt: 5
+          types:
+            Blunt: 13
+            Piercing: 7
+            Structural: 5
       victimSettings:
-        PermadeathChance: 0.9
-        CritDeathChance: 0.8
-        ReviveTime: 30
-        ReviveTimeMax: 60
+        permadeathChance: 0.9
+        critDeathChance: 0.8
+        reviveTime: 30
+        reviveTimeMax: 60
         maxInfectionChance: 0.05
-        MinInfectionChance: 0.02
-        InfectionTurnTime: 480.0
-        DeadMinTurnTime: 20.0
+        minInfectionChance: 0.02
+        infectionTurnTime: 480.0
+        deadMinTurnTime: 20.0
         healing:  # Per second
-          Blunt: -0.1
-          Slash: -0.05
-          Piercing: -0.05
+          types:
+            Blunt: -0.1
+            Slash: -0.05
+            Piercing: -0.05
         attackDamage:
-          Blunt: 10
-          Piercing: 4
-        biteMetalDamage: # Pain inflicted on zombie when it bites something non-organic
-          Blunt: 10
+          types:
+            Blunt: 10
+            Piercing: 4
       nerfSettings:
-        MovementSpeedDebuff: 0.65
-        PermadeathChance: 1.0
-        CritDeathChance: 0.9
-        ReviveTime: 30
-        ReviveTimeMax: 60
+        movementSpeedDebuff: 0.65
+        permadeathChance: 1.0
+        critDeathChance: 0.9
+        reviveTime: 30
+        reviveTimeMax: 60
         maxInfectionChance: 0.0
-        MinInfectionChance: 0.0
-        InfectionTurnTime: 480.0
-        DeadMinTurnTime: 20.0
+        minInfectionChance: 0.0
+        infectionTurnTime: 480.0
+        deadMinTurnTime: 20.0
         meleeRange: 1.2
         healing:  # Per second
-          Blunt: -0.05
+          types:
+            Blunt: -0.05
         attackDamage:
-          Blunt: 10
-          Piercing: 4
-        biteMetalDamage: # Pain inflicted on zombie when it bites something non-organic
-          Blunt: 10
+          types:
+            Blunt: 10
+            Piercing: 4
 
 # Zombie outbreak designed to pretty much wipe the station.
 - type: entity
@@ -394,9 +394,6 @@
           Slash: 13
           Piercing: 7
           Structural: 10
-      biteMetalDamage: # Pain inflicted on zombie when it bites something non-organic
-        types:
-          Blunt: 2
     victimSettings:
       permadeathChance: 0.9
       critDeathChance: 0.5
@@ -419,9 +416,6 @@
           Blunt: 10
           Piercing: 4
           Structural: 5
-      biteMetalDamage: # Pain inflicted on zombie when it bites something non-organic
-        types:
-          Blunt: 5
 
 - type: entity
   id: LoneOpsSpawn

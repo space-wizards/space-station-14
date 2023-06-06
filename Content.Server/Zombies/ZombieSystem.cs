@@ -158,7 +158,7 @@ namespace Content.Server.Zombies
                 if (mobState.CurrentState == MobState.Alive)
                 {
                     // Gradual healing for living zombies.
-                    _damageable.TryChangeDamage(uid, comp.Healing, true, false, damage);
+                    _damageable.TryChangeDamage(uid, comp.Settings.Healing, true, false, damage);
                 }
                 else
                 {
@@ -227,13 +227,17 @@ namespace Content.Server.Zombies
 
                 // Roll to see if this zombie is not coming back.
                 //   Note that due to damage reductions it takes a lot of hits to gib a zombie without this.
-                if (_random.Prob((args.NewMobState == MobState.Dead)? component.PermadeathChance : component.CritDeathChance))
+                if (_random.Prob((args.NewMobState == MobState.Dead)? component.Settings.PermadeathChance : component.Settings.CritDeathChance))
                 {
                     // You're dead! No reviving for you.
                     // TODO: End zombie rule here if all zombies in it are dead
                     _mobThreshold.SetAllowRevives(uid, false);
                     component.Permadeath = true;
                     _popup.PopupEntity(Loc.GetString("zombie-permadeath"), uid, uid);
+
+                    // Check if this was the last zombie that just got wiped out.
+                    if (component.Family.Rules != EntityUid.Invalid)
+                        _zombieRule.CheckRuleEnd(component.Family.Rules);
                 }
                 else
                 {
@@ -261,10 +265,8 @@ namespace Content.Server.Zombies
                 if (pending.Family.Rules != EntityUid.Invalid && TryComp<ZombieRuleComponent>(pending.Family.Rules, out var rules))
                 {
                     // Check it's not too early to zombify
-                    if (rules.InfectInitialAt != TimeSpan.Zero)
+                    if (rules.FirstTurnAllowed != TimeSpan.Zero)
                     {
-                        // Delay until the virus starts before this player starts taking change damage.
-                        pending.InfectedSecs = (int)(rules.InfectInitialAt - _gameTicker.RoundDuration()).TotalSeconds;
                         return;
                     }
                 }
@@ -276,7 +278,7 @@ namespace Content.Server.Zombies
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
         {
-            var baseChance = component.MaxInfectionChance;
+            var baseChance = component.Settings.MaxInfectionChance;
 
             if (!TryComp<InventoryComponent>(uid, out var inventoryComponent))
                 return baseChance;
@@ -302,8 +304,8 @@ namespace Content.Server.Zombies
                     items++;
             }
 
-            var max = component.MaxInfectionChance;
-            var min = component.MinInfectionChance;
+            var max = component.Settings.MaxInfectionChance;
+            var min = component.Settings.MinInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
             var chance = (max-min) * ((total - items)/total) + min;
             return chance;
@@ -318,7 +320,6 @@ namespace Content.Server.Zombies
             if (!args.HitEntities.Any())
                 return;
 
-            var hitOrganic = false;
             foreach (var entity in args.HitEntities)
             {
                 if (args.User == entity)
@@ -329,7 +330,7 @@ namespace Content.Server.Zombies
 
                 if (HasComp<ZombieComponent>(entity))
                 {
-                    args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
+                    args.BonusDamage = -args.BaseDamage * zombieComp.Settings.OtherZombieDamageCoefficient;
                     if (_random.Prob(0.3f))
                     {
                         // Tell the zombo that they are eating the dead
@@ -338,15 +339,12 @@ namespace Content.Server.Zombies
                 }
                 else
                 {
-                    // Zombie hit something that is alive.
-                    hitOrganic = true;
-
                     if (_random.Prob(GetZombieInfectionChance(entity, component)) ||
                         mobState.CurrentState != MobState.Alive)
                     {
                         // On a diceroll or if critical we infect this victim
                         var pending = EnsureComp<PendingZombieComponent>(entity);
-                        pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.InfectionTurnTime;
+                        pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.Settings.InfectionTurnTime;
 
                         // Our victims inherit our settings, which defines damage and more.
                         pending.Settings = component.VictimSettings ?? component.Settings;
@@ -374,11 +372,6 @@ namespace Content.Server.Zombies
                     }
                 }
             }
-
-            // It hurts the zombie whenever they bite something that isn't organic. This Punishes zombies who only
-            // want to eat the station.
-            if (args.HitEntities.Count != 0 && !hitOrganic)
-                _damageable.TryChangeDamage(args.User, component.Settings.BiteMetalDamage, true, false);
         }
 
         /// <summary>
