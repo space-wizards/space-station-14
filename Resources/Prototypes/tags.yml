@@ -74,6 +74,9 @@
   id: BulletFoam
 
 - type: Tag
+  id: BypassInteractionRangeChecks
+
+- type: Tag
   id: CableCoil
 
 - type: Tag

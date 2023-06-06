@@ -21,6 +21,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -66,6 +67,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
@@ -254,7 +256,7 @@ namespace Content.Shared.Interaction
         {
             // This is for Admin/mapping convenience. If ever there are other ghosts that can still interact, this check
             // might need to be more selective.
-            return !HasComp<SharedGhostComponent>(user);
+            return !_tagSystem.HasTag(user, "BypassInteractionRangeChecks");
         }
 
         /// <summary>
@@ -474,6 +476,7 @@ namespace Content.Shared.Interaction
         ///     A predicate to check whether to ignore an entity or not.
         ///     If it returns true, it will be ignored.
         /// </param>
+        /// <param name="checkAccess">Perform range checks</param>
         /// <returns>
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
@@ -482,11 +485,15 @@ namespace Content.Shared.Interaction
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = InRangeUnobstructedMask,
-            Ignored? predicate = null)
+            Ignored? predicate = null,
+            bool checkAccess = true)
         {
             // Have to be on same map regardless.
             if (other.MapId != origin.MapId)
                 return false;
+
+            if (!checkAccess)
+                return true;
 
             var dir = other.Position - origin.Position;
             var length = dir.Length;
@@ -602,6 +609,11 @@ namespace Content.Shared.Interaction
                 {
                     return true;
                 }
+                // Entity can bypass range checks.
+                else if (!ShouldCheckAccess(origin))
+                {
+                    return true;
+                }
                 // Out of range so don't raycast.
                 else if (distance > range)
                 {
@@ -626,7 +638,7 @@ namespace Content.Shared.Interaction
             if (inRange)
             {
                 var rayPredicate = GetPredicate(originPos, other, targetPos, targetRot, collisionMask, combinedPredicate);
-                inRange = InRangeUnobstructed(originPos, targetPos, range, collisionMask, rayPredicate);
+                inRange = InRangeUnobstructed(originPos, targetPos, range, collisionMask, rayPredicate, ShouldCheckAccess(origin));
             }
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
@@ -772,7 +784,7 @@ namespace Content.Shared.Interaction
         {
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
             var originPosition = Transform(origin).MapPosition;
-            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicate);
+            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicate, ShouldCheckAccess(origin));
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {

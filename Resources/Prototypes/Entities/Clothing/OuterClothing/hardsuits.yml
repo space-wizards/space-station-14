@@ -152,23 +152,18 @@
 
 #The voidsuit and eva suit are not techically 'hardsuits' but this seems to be the place for all EVA-capable outer clothing. This may be worth reevaluating when we have a lot more items.
 - type: entity
-  parent: ClothingOuterHardsuitBase
-  id: IHSVoidsuit
-  name: IHS voidsuit
-  description: A special void suit that protects against hazardous, low pressure environments.
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterHardsuitAncientEVA
+  name: NTSRA voidsuit #Nanotrasen Space Research Association
+  description: An ancient space suit, designed by the NTSRA branch of CentCom. It is very finely crafted, allowing for greater mobility than most modern space suits.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/ihsvoid.rsi
+    sprite: Clothing/OuterClothing/Suits/ancientvoidsuit.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/ihsvoid.rsi
+    sprite: Clothing/OuterClothing/Suits/ancientvoidsuit.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.3
-    lowPressureMultiplier: 10000
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetIHSVoidHelm
+    walkModifier: 0.85
+    sprintModifier: 0.85
 
 - type: entity
   parent: ClothingOuterEVASuitBase

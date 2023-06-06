@@ -45,6 +45,10 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("sound", required: true)] private SoundSpecifier _sound = default!;
 
         public override bool ShouldLog => true;
+
+        protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-missing");
+
         public override LogImpact LogImpact => LogImpact.High;
 
         public override void Effect(ReagentEffectArgs args)
