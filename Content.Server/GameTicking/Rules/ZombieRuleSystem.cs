@@ -149,21 +149,26 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
 
         var fraction = 0.0f;
-        List<EntityUid>? healthy = null;
+        var healthyCount = -1;
         while (query.MoveNext(out var uid, out var zombies, out var gameRule))
         {
             if (!GameTicker.IsGameRuleActive(uid, gameRule))
                 continue;
 
-            if (healthy == null)
+            if (healthyCount == -1)
             {
                 // Code run in the first relevant zombie rule, though there might be many of them.
 
                 fraction = GetInfectedFraction();
-                healthy = GetHealthyHumans();
+                healthyCount = CountHealthyHumans();
 
-                if (healthy.Count == 1) // Only one human left. spooky
+                if (healthyCount == 1)
+                {
+                    // Only one human left. spooky
+                    var healthy = GetHealthyHumans();
                     _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
+                }
+
                 if (fraction >= 1) // Oops, all zombies
                     _roundEndSystem.EndRound();
 
@@ -199,7 +204,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
     public void CheckRuleEnd(EntityUid ruleUid, ZombieRuleComponent? zombies = null, GameRuleComponent? gameRule = null)
     {
-        if (!Resolve(ruleUid, ref gameRule) || !Resolve(ruleUid, ref zombies))
+        if (!Resolve(ruleUid, ref zombies, ref gameRule))
             return;
 
         // Check that we've picked our zombies
@@ -208,6 +213,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
         // Look for living zombies
         int livingZombies = 0;
+        int deadZombies = 0;
         var zombers = EntityQueryEnumerator<ZombieComponent, MobStateComponent>();
         while (zombers.MoveNext(out var uid, out var zombie, out var mobState))
         {
@@ -215,7 +221,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 continue;
 
             if (mobState.CurrentState != MobState.Alive && zombie.Permadeath)
+            {
+                deadZombies += 1;
                 continue;
+            }
 
             livingZombies += 1;
         }
@@ -234,6 +243,26 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         if (pendingZombies == 0 && livingZombies == 0)
         {
             GameTicker.EndGameRule(ruleUid, gameRule);
+            if (zombies.WinEndsRoundAbove < 1.0f)
+            {
+                if (zombies.WinEndsRoundAbove <= 0.0f)
+                {
+                    // Human victory (skip the check)
+                    _roundEndSystem.EndRound();
+                }
+                else
+                {
+                    // This fraction is only counting zombies from the current outbreak. See how much they outnumber
+                    // the living.
+                    var healthyCount = CountHealthyHumans();
+                    var fraction = (float)deadZombies / (float)(deadZombies + healthyCount);
+                    if (fraction > zombies.WinEndsRoundAbove)
+                    {
+                        // Human victory
+                        _roundEndSystem.EndRound();
+                    }
+                }
+            }
         }
     }
 
@@ -347,6 +376,21 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         return healthy;
     }
 
+    private int CountHealthyHumans()
+    {
+        var healthy = 0;
+        var players = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
+        var zombers = GetEntityQuery<ZombieComponent>();
+        while (players.MoveNext(out var uid, out _, out var mob))
+        {
+            if (_mobState.IsAlive(uid, mob) && !zombers.HasComponent(uid))
+            {
+                healthy += 1;
+            }
+        }
+        return healthy;
+    }
+
     public void AddToInfectedList(EntityUid uid, ZombieComponent zombie, ZombieRuleComponent rules, MindComponent? mindComponent = null)
     {
         if (!Resolve(uid, ref mindComponent))
@@ -404,6 +448,18 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                     if (pref.AntagPreferences.Contains(rules.PatientZeroPrototypeID))
                         prefList.Add(player);
                 }
+            }
+        }
+
+        // Check for mindless zombies (not attached to players) that still don't have a rules entity attached...
+        var zombers = EntityQueryEnumerator<ZombieComponent, MobStateComponent>();
+        while (zombers.MoveNext(out var zombUid, out var zombie, out var mobState))
+        {
+            if (zombie.Family.Rules == EntityUid.Invalid)
+            {
+                zombie.Family.Rules = uid;
+                zombie.Settings = rules.EarlySettings;
+                zombie.VictimSettings = rules.VictimSettings;
             }
         }
 

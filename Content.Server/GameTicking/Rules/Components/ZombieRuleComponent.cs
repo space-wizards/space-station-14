@@ -85,6 +85,12 @@ public sealed class ZombieRuleComponent : Component
     public float AnnounceChance = 0.8f;
 
     /// <summary>
+    ///   If more than this fraction of the crew get wiped by zombies, but then zombies die... end the round (win)
+    /// </summary>
+    [DataField("winEndsRoundAbove"), ViewVariables(VVAccess.ReadWrite)]
+    public float WinEndsRoundAbove = 0.6f;
+
+    /// <summary>
     ///   The minimum number of players per each one that gets infected.
     /// Will use Max( cvar zombie.players_per_infected, <this_value> )
     /// </summary>

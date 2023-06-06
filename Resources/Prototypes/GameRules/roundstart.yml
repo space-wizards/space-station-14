@@ -72,6 +72,7 @@
   noSpawn: true
   components:
   - type: ZombieRule
+    winEndsRoundAbove: -1.0 # Always end round when zombies are wiped out.
     earlySettings:
       permadeathChance: 0.6
       critDeathChance: 0.2

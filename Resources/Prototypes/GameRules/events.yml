@@ -297,6 +297,7 @@
       announceChance: 0.95
       turnTimeMin: 480
       nerfZombiesAt: 0.2 # Nerf at 20% infection
+      winEndsRoundAbove: 0.6
       earlySettings:
         permadeathChance: 0.6
         critDeathChance: 0.5
@@ -372,6 +373,7 @@
     announceMin: 240
     announceMax: 480
     turnTimeMin: 300
+    winEndsRoundAbove: 0.6
     earlySettings:
       permadeathChance: 0.6
       critDeathChance: 0.2
