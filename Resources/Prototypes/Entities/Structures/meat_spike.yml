@@ -53,3 +53,6 @@
   - type: Construction
     graph: MeatSpike
     node: MeatSpike
+  - type: GuideHelp
+    guides:
+    - Chef

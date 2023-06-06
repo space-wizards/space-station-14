@@ -34055,19 +34055,21 @@ entities:
       type: Transform
     - name: library
       type: FaxMachine
-  - uid: 9686
-    components:
-    - pos: 7.5,24.5
-      parent: 31
-      type: Transform
-    - name: captain's office
-      type: FaxMachine
   - uid: 9687
     components:
     - pos: 8.5,18.5
       parent: 31
       type: Transform
     - name: hop's office
+      type: FaxMachine
+- proto: FaxMachineCaptain
+  entities:
+  - uid: 9686
+    components:
+    - pos: 7.5,24.5
+      parent: 31
+      type: Transform
+    - name: captain's office
       type: FaxMachine
 - proto: FigureSpawner
   entities:
