@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added Stimpack sprite, type: Add}
-  id: 3452
-  time: '2023-04-19T05:41:10.0000000+00:00'
 - author: DEATHB4DEFEAT
   changes:
   - {message: Added a search bar to marking editors in character creation, type: Add}
@@ -2909,3 +2904,10 @@ Entries:
   - {message: Fixed the lobby's "Observe" button not working., type: Fix}
   id: 3951
   time: '2023-06-06T01:01:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Defibrillators no longer heal airloss damage on live targets., type: Tweak}
+  - {message: 'Rotting no longer outright blocks defibrillators, however, the attempt
+      to revive will still fail.', type: Tweak}
+  id: 3952
+  time: '2023-06-06T21:08:35.0000000+00:00'
