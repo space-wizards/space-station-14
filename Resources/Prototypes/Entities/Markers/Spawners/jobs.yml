@@ -574,5 +574,5 @@
   - type: Sprite
     layers:
       - state: green
-      - state: medicalintern
+      - state: coroner
 
