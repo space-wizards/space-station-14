@@ -155,6 +155,12 @@ namespace Content.Server.Stunnable.Systems
             {
                 _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"Stunbaton {ToPrettyString(uid)} has been rigged up to explode when used.");
             }
+
+            // You think you're funny, funny man?
+            if (comp.Activated)
+            {
+                Explode(uid, comp);
+            }
         }
 
         private void SendPowerPulse(EntityUid target, EntityUid? user, EntityUid used)
