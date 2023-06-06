@@ -337,31 +337,12 @@ public sealed partial class DungeonJob
     /// </summary>
     private async Task PostGen(CorridorPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
     {
-        // TODO: Annotate a random room middle as the entrance.
-        // Ideally we'd just use markers for it.
-
-        // TODO: For now just pick a random middle spot as the entrance
         var entrances = new List<Vector2i>(dungeon.Rooms.Count);
 
         // Grab entrances
-        // TODO: This should be a different step.
-        // Ideally we just have a "selectentrances" part of postgen where we take marked tiles and use them as entrance hints.
         foreach (var room in dungeon.Rooms)
         {
-            var entranceIndex = random.Next(room.Exterior.Count);
-            var index = 0;
-
-            foreach (var tile in room.Exterior)
-            {
-                if (index < entranceIndex)
-                {
-                    index++;
-                    continue;
-                }
-
-                entrances.Add(tile);
-                break;
-            }
+            entrances.AddRange(room.Entrances);
         }
 
         // Generate connections between all rooms.
@@ -472,6 +453,16 @@ public sealed partial class DungeonJob
         // With greedy h-score 256 should be fine for decently long distances in testing.
         var pathLimit = gen.PathLimit;
 
+        /*
+         *  - Fix entrance gen (fallback to middle bits if no markers specified)
+            - Have corridors sometimes overshoot (postgen step maybe)
+            - Do the regular gens (except also do windows / posters and shit on corridors)
+            - Generate walls for corridors
+            - Re-use the markers from above for entrance gen
+
+            - After ALL the above working, then make entirely NEW templates.
+         */
+
         foreach (var (start, end) in edges)
         {
             frontier.Clear();
@@ -525,7 +516,7 @@ public sealed partial class DungeonJob
                         // If it's next to a dungeon room then avoid it if at all possible
                         if (deterredTiles.Contains(neighbor))
                         {
-                            tileCost *= 4f;
+                            tileCost *= 2f;
                         }
 
                         // f = g + h
@@ -543,7 +534,7 @@ public sealed partial class DungeonJob
                         // Make it greedy so multiply h-score to punish further nodes.
                         // This is necessary as we might have the deterredTiles multiplying towards the end
                         // so just finish it.
-                        var hScore = PathfindingSystem.ManhattanDistance(end, neighbor) * 2f;
+                        var hScore = PathfindingSystem.ManhattanDistance(end, neighbor) * 1.5f;
                         var fScore = gScore + hScore;
                         frontier.Enqueue(neighbor, fScore);
                     }

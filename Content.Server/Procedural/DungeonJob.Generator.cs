@@ -322,6 +322,7 @@ public sealed partial class DungeonJob
                 var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);
                 var exterior = new HashSet<Vector2i>(room.Size.X * 2 + room.Size.Y * 2);
                 var tileOffset = -roomCenter + grid.TileSize / 2f;
+                Box2i? mapBounds = null;
 
                 // Load tiles
                 for (var x = 0; x < room.Size.X; x++)
@@ -335,6 +336,8 @@ public sealed partial class DungeonJob
                         var rounded = tilePos.Floored();
                         tiles.Add((rounded, tileRef.Tile));
                         roomTiles.Add(rounded);
+
+                        mapBounds = mapBounds?.Union(new Box2i(rounded, rounded + grid.TileSize)) ?? new Box2i(rounded, rounded + grid.TileSize);
                     }
                 }
 
@@ -352,6 +355,7 @@ public sealed partial class DungeonJob
                     }
                 }
 
+                var bounds = new Box2(room.Offset, room.Offset + room.Size);
                 var center = Vector2.Zero;
 
                 foreach (var tile in roomTiles)
@@ -361,7 +365,7 @@ public sealed partial class DungeonJob
 
                 center /= roomTiles.Count;
 
-                dungeon.Rooms.Add(new DungeonRoom(roomTiles, center, exterior));
+                dungeon.Rooms.Add(new DungeonRoom(roomTiles, center, mapBounds!.Value, exterior));
                 grid.SetTiles(tiles);
                 tiles.Clear();
                 var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
@@ -369,7 +373,6 @@ public sealed partial class DungeonJob
 
                 // Load entities
                 // TODO: I don't think engine supports full entity copying so we do this piece of shit.
-                var bounds = new Box2(room.Offset, room.Offset + room.Size);
 
                 foreach (var templateEnt in _lookup.GetEntitiesIntersecting(templateMapUid, bounds, LookupFlags.Uncontained))
                 {
@@ -458,8 +461,40 @@ public sealed partial class DungeonJob
         foreach (var room in dungeon.Rooms)
         {
             dungeonCenter += room.Center;
+            SetDungeonEntrance(room, random);
         }
 
         return dungeon;
+    }
+
+    private void SetDungeonEntrance(DungeonRoom room, Random random)
+    {
+        // TODO: Move to dungeonsystem.
+
+        // TODO: Look at markers and use that.
+
+        // Pick midpoints as fallback
+        if (room.Entrances.Count == 0)
+        {
+            var dir = (Direction) (random.Next(4) * 2);
+
+            switch (dir)
+            {
+                case Direction.East:
+                    room.Entrances.Add(new Vector2i(room.Bounds.Right + 1, room.Bounds.Bottom + room.Bounds.Height / 2));
+                    break;
+                case Direction.North:
+                    room.Entrances.Add(new Vector2i(room.Bounds.Left + room.Bounds.Width / 2, room.Bounds.Top + 1));
+                    break;
+                case Direction.West:
+                    room.Entrances.Add(new Vector2i(room.Bounds.Left - 1, room.Bounds.Bottom + room.Bounds.Height / 2));
+                    break;
+                case Direction.South:
+                    room.Entrances.Add(new Vector2i(room.Bounds.Left + room.Bounds.Width / 2, room.Bounds.Bottom - 1));
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }
