@@ -63,6 +63,12 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("flavor")]
         public string Flavor { get; } = default!;
 
+        /// <summary>
+        /// There must be at least this much quantity in a solution to be tasted.
+        /// </summary>
+        [DataField("flavorMinimum")]
+        public float FlavorMinimum = 0.1;
+
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
 

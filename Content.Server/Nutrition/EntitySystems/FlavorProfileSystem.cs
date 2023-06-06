@@ -91,18 +91,19 @@ public sealed class FlavorProfileSystem : EntitySystem
                 continue;
             }
 
-            // don't care if the quantity is negligible
-            if (reagent.Quantity < 0.1)
-            {
-                continue;
-            }
-
             if (flavors.Count == desiredAmount)
             {
                 break;
             }
 
-            var flavor = _prototypeManager.Index<ReagentPrototype>(reagent.ReagentId).Flavor;
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagent.ReagentId);
+            // don't care if the quantity is negligible
+            if (reagent.Quantity < proto.FlavorMinimum)
+            {
+                continue;
+            }
+
+            var flavor = proto.Flavor;
 
             flavors.Add(flavor);
         }
