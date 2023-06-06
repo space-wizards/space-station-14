@@ -121,8 +121,11 @@ public sealed class MechGrabberSystem : EntitySystem
 
     private void OnInteract(EntityUid uid, MechGrabberComponent component, InteractNoHandEvent args)
     {
-        if (args.Handled || args.Target is not {} target)
+        if (args.Handled || args.Target is not { } target ||
+            MetaData(args.User).EntityName == MetaData(target).EntityName)
+        {
             return;
+        }
 
         if (TryComp<PhysicsComponent>(target, out var physics) && physics.BodyType == BodyType.Static ||
             HasComp<WallMountComponent>(target) ||
