@@ -2,6 +2,7 @@ using Content.Server.Objectives.Interfaces;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Zombies;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
@@ -58,13 +59,21 @@ namespace Content.Server.Objectives.Conditions
 
                 if (entMan.TryGetComponent<CuffableComponent>(_mind.OwnedEntity, out var cuffed)
                     && cuffed.CuffedHandCount > 0)
+                {
                     // You're not escaping if you're restrained!
                     agentIsEscaping = false;
+                }
+                if (entMan.TryGetComponent<ZombieComponent>(_mind.OwnedEntity, out _))
+                {
+                    // You're not escaping if you're zombie
+                    agentIsEscaping = false;
+                }
 
                 // Any emergency shuttle counts for this objective.
                 foreach (var stationData in entMan.EntityQuery<StationEmergencyShuttleComponent>())
                 {
-                    if (IsAgentOnShuttle(xform, stationData.EmergencyShuttle)) {
+                    if (IsAgentOnShuttle(xform, stationData.EmergencyShuttle))
+                    {
                         shuttleContainsAgent = true;
                         break;
                     }
