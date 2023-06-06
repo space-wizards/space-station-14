@@ -50,17 +50,3 @@
   - type: PowerConsumer
     voltage: Apc
     drawRate: 50000
-
-- type: entity
-  id: VirtualElectrocutionLoadAMEngine
-  parent: VirtualElectrocutionLoadBase
-  noSpawn: true
-  components:
-  - type: NodeContainer
-    nodes:
-      electrocution: !type:ElectrocutionNode
-        nodeGroupID: AMEngine
-        needAnchored: false
-  - type: PowerConsumer
-    voltage: High
-    drawRate: 50000
