@@ -114,7 +114,6 @@ namespace Content.Server.Stunnable.Systems
             if (comp.IsRigged)
                 Explode(uid, comp, user);
 
-
             var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
