@@ -21,9 +21,9 @@
                         ToolTip="{Loc 'analysis-console-print-tooltip-info'}">
                 </Button>
                 <BoxContainer MinHeight="10"></BoxContainer>
-                <Button Name="DestroyButton"
-                        Text="{Loc 'analysis-console-destroy-button'}"
-                        ToolTip="{Loc 'analysis-console-destroy-button-info'}">
+                <Button Name="ExtractButton"
+                        Text="{Loc 'analysis-console-extract-button'}"
+                        ToolTip="{Loc 'analysis-console-extract-button-info'}">
                 </Button>
             </BoxContainer>
             <BoxContainer Orientation="Vertical">
