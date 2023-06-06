@@ -1,9 +1,13 @@
+using Content.Server.Administration.Logs;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.Events;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -20,6 +24,9 @@ namespace Content.Server.Stunnable.Systems
     {
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
 
         public override void Initialize()
         {
@@ -27,6 +34,7 @@ namespace Content.Server.Stunnable.Systems
 
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
             SubscribeLocalEvent<StunbatonComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
         }
@@ -103,6 +111,10 @@ namespace Content.Server.Stunnable.Systems
             if (comp.Activated)
                 return;
 
+            if (comp.IsRigged)
+                Explode(uid, comp, user);
+
+
             var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
@@ -120,6 +132,30 @@ namespace Content.Server.Stunnable.Systems
 
             SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
             comp.Activated = true;
+        }
+
+        private void Explode(EntityUid uid, StunbatonComponent? comp = null, EntityUid? cause = null)
+        {
+            if (!Resolve(uid, ref comp))
+                return;
+
+            if (TryComp<BatteryComponent>(uid, out var battery))
+            {
+                var radius = MathF.Min(5, MathF.Sqrt(battery.CurrentCharge) / 9);
+                 _explosionSystem.TriggerExplosive(uid, radius: radius, user:cause);
+            }
+        }
+
+        private void OnSolutionChange(EntityUid uid, StunbatonComponent comp, SolutionChangedEvent args)
+        {
+            comp.IsRigged = _solutionsSystem.TryGetSolution(uid, StunbatonComponent.SolutionName, out var solution)
+                            && solution.TryGetReagent("Plasma", out var plasma)
+                            && plasma >= 5;
+
+            if (comp.IsRigged)
+            {
+                _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"Stunbaton {ToPrettyString(uid)} has been rigged up to explode when used.");
+            }
         }
 
         private void SendPowerPulse(EntityUid target, EntityUid? user, EntityUid used)
