@@ -101,6 +101,7 @@
       bucket:
         maxVol: 600
   - type: Spillable
+    solution: bucket
     spillDelay: 3.0
   - type: DrainableSolution
     solution: bucket
@@ -278,6 +279,7 @@
           mask:
           - MobMask
     - type: Spillable
+      solution: bucket
       spillDelay: 3.0
     - type: SolutionContainerManager
       solutions:
