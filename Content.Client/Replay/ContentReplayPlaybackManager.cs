@@ -100,6 +100,8 @@ public sealed class ContentReplayPlaybackManager
     {
         switch (message)
             {
+                case BoundUserInterfaceMessage:
+                    break; // TODO REPLAYS refactor BUIs
                 case ChatMessage chat:
                     // Just pass on the chat message to the UI controller, but skip speech-bubbles if we are fast-forwarding.
                     _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: !skipEffects);
