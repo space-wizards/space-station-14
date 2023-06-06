@@ -105,6 +105,7 @@ public sealed partial class GatherableSystem : EntitySystem
         {
             if (tag != "All")
             {
+                // Exclude hand lood unless the hand is being used to gather
                 if (tag == "Hand")
                 {
                     if (!isByHand)
