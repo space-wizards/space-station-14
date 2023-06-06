@@ -84,6 +84,7 @@ public sealed partial class ReplaySpectatorSystem
 
         _stateMan.RequestStateChange<ReplayGhostState>();
 
+        _spectatorData = GetSpectatorData();
         return xform;
     }
 

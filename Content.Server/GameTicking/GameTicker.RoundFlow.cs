@@ -4,7 +4,6 @@ using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
-using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
@@ -18,7 +17,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
 
@@ -65,9 +63,6 @@ namespace Content.Server.GameTicking
                 RaiseLocalEvent(new GameRunLevelChangedEvent(old, value));
             }
         }
-
-        [ViewVariables]
-        public int RoundId { get; private set; }
 
         /// <summary>
         /// Returns true if the round's map is eligible to be updated.

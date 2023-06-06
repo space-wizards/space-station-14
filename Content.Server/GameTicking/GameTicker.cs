@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Database;
@@ -14,23 +13,17 @@ using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Robust.Server;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 #if EXCEPTION_TOLERANCE
 using Robust.Shared.Exceptions;
 #endif
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Replays;
-using Robust.Shared.Serialization.Markdown.Mapping;
-using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -68,7 +61,6 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(_prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == FallbackOverflowJobName,
                 "Overflow role does not have the correct name!");
             InitializeGameRules();
-            _replay.OnRecordingStarted += OnRecordingStart;
             _initialized = true;
         }
 
@@ -88,12 +80,6 @@ namespace Content.Server.GameTicking
             base.Shutdown();
 
             ShutdownGameRules();
-            _replay.OnRecordingStarted -= OnRecordingStart;
-        }
-
-        private void OnRecordingStart((MappingDataNode, List<object>) data)
-        {
-            data.Item1["roundId"] = new ValueDataNode(RoundId.ToString());
         }
 
         private void SendServerMessage(string message)
@@ -123,7 +109,6 @@ namespace Content.Server.GameTicking
 #if EXCEPTION_TOLERANCE
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif
-        [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
         [Dependency] private readonly StationJobsSystem _stationJobs = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -133,6 +118,5 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
         [Dependency] private readonly PlayTimeTrackingSystem _playTimeTrackings = default!;
         [Dependency] private readonly UserDbDataManager _userDb = default!;
-        [Dependency] private readonly IReplayRecordingManager _replay = default!;
     }
 }

@@ -10,11 +10,10 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
-using TerraFX.Interop.Windows;
 using static Robust.Shared.Replays.IReplayRecordingManager;
-using IResourceManager = Robust.Shared.ContentPack.IResourceManager;
 
 namespace Content.Replay.Menu;
 
@@ -94,7 +93,8 @@ public sealed class ReplayMainScreen : State
         var forkId = string.Empty;
         if (data.TryGet<ValueDataNode>(Fork, out var forkNode))
         {
-            // TODO REPLAYS somehow distribute and load from build.json?
+            // TODO Replay client build info.
+            // When distributing the client we need to distribute a build.json or provide these cvars some other way?
             var clientFork = _cfg.GetCVar(CVars.BuildForkId);
             if (string.IsNullOrWhiteSpace(clientFork))
                 forkId = forkNode.Value;
@@ -181,6 +181,7 @@ public sealed class ReplayMainScreen : State
 
         info.HorizontalAlignment = Control.HAlignment.Left;
         info.VerticalAlignment = Control.VAlignment.Top;
+
         info.SetMarkup(Loc.GetString(
             "replay-info-info",
             ("file", file),

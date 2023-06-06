@@ -1,16 +1,41 @@
 ﻿using Robust.Shared.Network;
+using Robust.Shared.Replays;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
+using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Serialization.Markdown.Value;
 
 namespace Content.Shared.GameTicking
 {
     public abstract class SharedGameTicker : EntitySystem
     {
+        [Dependency] private readonly IReplayRecordingManager _replay = default!;
+
         // See ideally these would be pulled from the job definition or something.
         // But this is easier, and at least it isn't hardcoded.
         //TODO: Move these, they really belong in StationJobsSystem or a cvar.
         public const string FallbackOverflowJob = "Passenger";
         public const string FallbackOverflowJobName = "job-name-passenger";
+
+        // TODO network.
+        // Probably most useful for replays, round end info, and probably things like lobby menus.
+        [ViewVariables]
+        public int RoundId { get; protected set; }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _replay.RecordingStarted += OnRecordingStart;
+        }
+
+        public override void Shutdown()
+        {
+            _replay.RecordingStarted -= OnRecordingStart;
+        }
+
+        private void OnRecordingStart(MappingDataNode metadata, List<object> events)
+        {
+            metadata["roundId"] = new ValueDataNode(RoundId.ToString());
+        }
     }
 
     [Serializable, NetSerializable]

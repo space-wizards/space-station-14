@@ -253,7 +253,7 @@ namespace Content.Server.Chat.Managers
             if ((channel & ChatChannel.AdminRelated) == 0 ||
                 _configurationManager.GetCVar(CCVars.ReplayRecordAdminChat))
             {
-                _replay.QueueReplayMessage(msg);
+                _replay.RecordServerMessage(msg);
             }
         }
 
@@ -271,7 +271,7 @@ namespace Content.Server.Chat.Managers
             if ((channel & ChatChannel.AdminRelated) == 0 ||
                 _configurationManager.GetCVar(CCVars.ReplayRecordAdminChat))
             {
-                _replay.QueueReplayMessage(msg);
+                _replay.RecordServerMessage(msg);
             }
         }
 
@@ -301,7 +301,7 @@ namespace Content.Server.Chat.Managers
             if ((channel & ChatChannel.AdminRelated) == 0 ||
                 _configurationManager.GetCVar(CCVars.ReplayRecordAdminChat))
             {
-                _replay.QueueReplayMessage(msg);
+                _replay.RecordServerMessage(msg);
             }
         }
 
