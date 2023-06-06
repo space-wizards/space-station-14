@@ -59,7 +59,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -214,10 +214,7 @@ namespace Content.Server.Zombies
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
 
                 // Notificate player about new role assignment
-                _audio.PlayGlobal(
-                    zombiecomp.GreetSoundNotification,
-                    session,
-                    zombiecomp.GreetSoundNotification.Params);
+                _audioSystem.PlayGlobal(zombiecomp.GreetSoundNotification, session);
             }
 
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig

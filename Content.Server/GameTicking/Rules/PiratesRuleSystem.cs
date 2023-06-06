@@ -40,7 +40,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -221,11 +221,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 pirates.Pirates.Add(newMind);
 
                 // Notificate every player about a pirate antagonist role with sound
-                _audio.PlayGlobal(
-                    pirates.PirateAlertSound,
-                    Filter.SinglePlayer(session),
-                    false,
-                    pirates.PirateAlertSound.Params);
+                _audioSystem.PlayGlobal(pirates.PirateAlertSound, session);
 
                 GameTicker.PlayerJoinGame(session);
             }
@@ -256,11 +252,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
         // Notificate every player about a pirate antagonist role with sound
         if (mind.Session != null)
         {
-            _audio.PlayGlobal(
-                pirateRule.PirateAlertSound,
-                Filter.SinglePlayer(mind.Session),
-                false,
-                pirateRule.PirateAlertSound.Params);
+            _audioSystem.PlayGlobal(pirateRule.PirateAlertSound, mind.Session);
         }
     }
 

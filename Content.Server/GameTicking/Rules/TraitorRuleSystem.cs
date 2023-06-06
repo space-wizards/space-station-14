@@ -33,7 +33,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly FactionSystem _faction = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -257,10 +257,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (mind.TryGetSession(out var session))
         {
             // Notificate player about new role assignment
-            _audio.PlayGlobal(
-                traitorRule.GreetSoundNotification,
-                session,
-                traitorRule.GreetSoundNotification.Params);
+            _audioSystem.PlayGlobal(traitorRule.GreetSoundNotification, session);
         }
 
         // Change the faction
@@ -293,10 +290,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     {
         if (mind.TryGetSession(out var session))
         {
-            var chatMgr = IoCManager.Resolve<IChatManager>();
-            chatMgr.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
-            chatMgr.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
-            chatMgr.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("", code))));
+           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
+           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
+           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("", code))));
         }
     }
 
