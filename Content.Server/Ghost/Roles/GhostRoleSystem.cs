@@ -234,7 +234,7 @@ namespace Content.Server.Ghost.Roles
 
             foreach (var (id, role) in _ghostRoles)
             {
-                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules};
+                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = Loc.GetString(role.RoleRules)};
                 i++;
             }
 
