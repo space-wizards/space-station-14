@@ -20,7 +20,7 @@
                         Text="{Loc 'analysis-console-print-button'}"
                         ToolTip="{Loc 'analysis-console-print-tooltip-info'}">
                 </Button>
-                <BoxContainer MinHeight="10"></BoxContainer>
+                <BoxContainer MinHeight="5"></BoxContainer>
                 <Button Name="ExtractButton"
                         Text="{Loc 'analysis-console-extract-button'}"
                         ToolTip="{Loc 'analysis-console-extract-button-info'}">
