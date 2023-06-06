@@ -19,7 +19,7 @@ replay-menu-none = No replays found.
 # Main Menu Info Box
 replay-info-title = Replay Information
 replay-info-none-selected = No replay selected
-replay-info-invalid = [color=red]Invalid replay selected[/color] 
+replay-info-invalid = [color=red]Invalid replay selected[/color]
 replay-info-info = {"["}color=gray]Selected:[/color]  {$name} ({$file})
                    {"["}color=gray]Time:[/color]   {$time}
                    {"["}color=gray]Round ID:[/color]   {$roundId}
@@ -32,3 +32,11 @@ replay-info-info = {"["}color=gray]Selected:[/color]  {$name} ({$file})
 
 # Replay selection window
 replay-menu-select-title = Select Replay
+
+# Replay related verbs
+replay-verb-spectate = Spectate
+
+# command
+cmd-replay-spectate-help = replay_spectate [optional entity]
+cmd-replay-spectate-desc = Attaches or detaches the local player to a given entity uid.
+cmd-replay-spectate-hint = Optional EntityUid
