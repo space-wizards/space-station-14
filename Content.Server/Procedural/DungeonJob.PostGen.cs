@@ -438,6 +438,8 @@ public sealed partial class DungeonJob
 
         // TODO: Add in say 1/3 of edges back in to add some cyclic to it.
 
+        // TODO: Probably just need to BSP it I think as the default room packs are incompatible.
+
         // Pathfind each edge
         var corridorTiles = new HashSet<Vector2i>();
         var frontier = new PriorityQueue<Vector2i, float>();
