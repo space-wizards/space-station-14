@@ -25,12 +25,12 @@ public sealed class FlavorProfileSystem : EntitySystem
     public string GetLocalizedFlavorsMessage(EntityUid uid, EntityUid user, Solution solution,
         FlavorProfileComponent? flavorProfile = null)
     {
-        var flavors = new HashSet<string>();
         if (!Resolve(uid, ref flavorProfile, false))
         {
             return Loc.GetString(BackupFlavorMessage);
         }
 
+        var flavors = new HashSet<string>();
         flavors.UnionWith(flavorProfile.Flavors);
         flavors.UnionWith(GetFlavorsFromReagents(solution, FlavorLimit - flavors.Count, flavorProfile.IgnoreReagents));
 
@@ -87,6 +87,12 @@ public sealed class FlavorProfileSystem : EntitySystem
         foreach (var reagent in solution.Contents)
         {
             if (toIgnore != null && toIgnore.Contains(reagent.ReagentId))
+            {
+                continue;
+            }
+
+            // don't care if the quantity is negligible
+            if (reagent.Quantity < 0.1)
             {
                 continue;
             }
