@@ -1,9 +1,4 @@
 Entries:
-- author: DEATHB4DEFEAT
-  changes:
-  - {message: Added a search bar to marking editors in character creation, type: Add}
-  id: 3453
-  time: '2023-04-19T05:44:37.0000000+00:00'
 - author: RickiTIkkiTawwie
   changes:
   - {message: 'Added Ian''s backpack, bark! It has a 50% chance to spawn in HoP''s
@@ -2911,3 +2906,8 @@ Entries:
       to revive will still fail.', type: Tweak}
   id: 3952
   time: '2023-06-06T21:08:35.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: You can clobber people with the seclite now, type: Tweak}
+  id: 3953
+  time: '2023-06-06T21:21:19.0000000+00:00'
