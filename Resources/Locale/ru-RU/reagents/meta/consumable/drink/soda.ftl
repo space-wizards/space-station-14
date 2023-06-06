@@ -19,7 +19,7 @@ reagent-desc-ice-cream = Ешьте скорее, пока не преврати
 reagent-name-lemon-lime = лимон-лайм
 reagent-desc-lemon-lime = Терпкая газировка из лимона и лайма
 
-reagent-name-pwr-game = Pwr Game
+reagent-name-pwr-game = pwr Game
 reagent-desc-pwr-game = Единственный напиток, обладающий СИЛОЙ, которую жаждут настоящие геймеры. Когда геймеры говорят о геймерском топливе, они имеют в виду именно это.
 
 reagent-name-root-beer = рутбир
@@ -31,14 +31,14 @@ reagent-desc-root-beer-float = Рутбир, но теперь с морожен
 reagent-name-space-mountain-wind = космический маунтин винд
 reagent-desc-space-mountain-wind = Проходит сквозь, словно космический ветер.
 
-reagent-name-space-up = спейс-ап
+reagent-name-space-up = cпейс-ап
 reagent-desc-space-up = На вкус как пробоина в корпусе у вас во рту.
 
-reagent-name-starkist = старкист
+reagent-name-starkist = cтаркист
 reagent-desc-starkist = Сладкий безалкогольный напиток со вкусом апельсина.
 
-reagent-name-fourteen-loko = фоуртин локо
+reagent-name-fourteen-loko = aоуртин локо
 reagent-desc-fourteen-loko = Сильно переработанная жидкая субстанция, едва ли соответствующая межгалактическим стандартам безопасности для безалкогольного напитка.
 
-reagent-name-shamblers-juice = сок Шамблер
+reagent-name-shamblers-juice = cок Шамблер
 reagent-desc-shamblers-juice = ~Встряхните мне немного этого сока Шамблер!~

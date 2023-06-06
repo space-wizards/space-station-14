@@ -13,7 +13,7 @@ ent-WaterTank = Водный резервуар
 ent-WaterTankFull = { ent-WaterTank }
     .desc = { ent-WaterTank.desc }
 
-ent-WaterCooler = Вулер с водой
+ent-WaterCooler = Кулер с водой
     .desc = Хорошее место, чтобы постоять и потратить время.
 
 ent-WaterTankHighCapacity = Водный резервуар большой ёмкости
