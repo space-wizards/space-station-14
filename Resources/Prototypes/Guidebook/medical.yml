@@ -4,6 +4,7 @@
   text: "/ServerInfo/Guidebook/Medical/Medical.xml"
   children:
   - Medical Doctor
+  - Chemist
   - Cloning
   - Cryogenics
 
@@ -21,3 +22,21 @@
   id: Cryogenics
   name: guide-entry-cryogenics
   text: "/ServerInfo/Guidebook/Medical/Cryogenics.xml"
+
+- type: guideEntry
+  id: Chemist
+  name: guide-entry-chemist
+  text: "/ServerInfo/Guidebook/Medical/Chemist.xml"
+  children:
+  - Medicine
+  - Botanicals
+
+- type: guideEntry
+  id: Medicine
+  name: guide-entry-medicine
+  text: "/ServerInfo/Guidebook/Medical/Medicine.xml"
+
+- type: guideEntry
+  id: Botanicals
+  name: guide-entry-botanicals
+  text: "/ServerInfo/Guidebook/Medical/Botanicals.xml"

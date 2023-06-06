@@ -165,6 +165,7 @@
 - type: reagent
   id: CapsaicinOil
   name: reagent-name-capsaicin-oil
+  group: Foods
   desc: reagent-desc-capsaicin-oil
   physicalDesc: reagent-physical-desc-oily
   flavor: spicy

@@ -1,33 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Syringe debuff of delay per 5u reduced from 1s to 0.5s, type: Tweak}
-  - {message: Syringe delay on crit patients reduced by 25%, type: Tweak}
-  id: 3447
-  time: '2023-04-18T14:23:54.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'NanoTrasen lost a lawsuit regarding the false claims of fuel regeneration,
-      experimental welding tools now regenerate 1u of fuel every second.', type: Fix}
-  id: 3448
-  time: '2023-04-18T14:27:05.0000000+00:00'
-- author: EnDecc
-  changes:
-  - {message: Sinks now replenish 1u of water per second, type: Add}
-  id: 3449
-  time: '2023-04-18T20:49:17.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: The drunk effect of having a low blood level is now instantly removed
-      when healthy!, type: Fix}
-  - {message: Dead bodies will persist in bleeding after death!, type: Add}
-  id: 3450
-  time: '2023-04-19T03:09:22.0000000+00:00'
-- author: Mumohan
-  changes:
-  - {message: Minibomb now does what it says on the tin and gibs bodies, type: Tweak}
-  id: 3451
-  time: '2023-04-19T04:36:13.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added Stimpack sprite, type: Add}
@@ -2909,3 +2880,32 @@ Entries:
   - {message: Captain fax now captain's on Fland and Saltern, type: Tweak}
   id: 3946
   time: '2023-06-05T09:20:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed several reagents showing up in the "other" section of the chem
+      guidebook when they shouldn't have been., type: Fix}
+  id: 3947
+  time: '2023-06-05T21:08:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added a guide for the bartender, including all the drinks and their
+      recipes.', type: Add}
+  id: 3948
+  time: '2023-06-05T22:44:43.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Added a Chemist Guidebook with a medical subsection., type: Add}
+  - {message: Guidebook Helpers have been added to the Chem Dispenser and Chem Master,
+    type: Tweak}
+  id: 3949
+  time: '2023-06-05T22:45:46.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Added GuideHelp tags to some Medical and Kitchen objects., type: Add}
+  id: 3950
+  time: '2023-06-05T22:47:15.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed the lobby's "Observe" button not working., type: Fix}
+  id: 3951
+  time: '2023-06-06T01:01:39.0000000+00:00'
