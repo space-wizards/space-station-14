@@ -58,12 +58,15 @@ namespace Content.Server.Zombies
         /// </remarks>
         public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null, PendingZombieComponent? pending= null)
         {
-            //Don't zombfiy zombies
+            //Don't zombify zombies
             if (HasComp<ZombieComponent>(target))
                 return;
 
             if (!Resolve(target, ref mobState, logMissing: false))
                 return;
+
+            //He's gotta have a mind
+            var mindcomp = EnsureComp<MindComponent>(target);
 
             //you're a real zombie now, son.
             var zombiecomp = AddComp<ZombieComponent>(target);
@@ -74,6 +77,19 @@ namespace Content.Server.Zombies
                 zombiecomp.Settings = pending.Settings;
                 zombiecomp.VictimSettings = pending.VictimSettings;
                 zombiecomp.Family = pending.Family;
+            }
+            else
+            {
+                // Attempt to find a zombie rule to attach this zombie to
+                var (rulesUid, rules) = _zombieRule.FindActiveRule();
+                if (rules != null)
+                {
+                    // Admin command added a new zombie to this existing rule.
+                    zombiecomp.Settings = rules.EarlySettings;
+                    zombiecomp.VictimSettings = rules.VictimSettings;
+                    zombiecomp.Family = new ZombieFamily(){ Rules = rulesUid, Generation = 0 };
+                    _zombieRule.AddToInfectedList(target, zombiecomp, rules, mindcomp);
+                }
             }
 
             //we need to basically remove all of these because zombies shouldn't
@@ -171,8 +187,6 @@ namespace Content.Server.Zombies
 
             _identity.QueueIdentityUpdate(target);
 
-            //He's gotta have a mind
-            var mindcomp = EnsureComp<MindComponent>(target);
             if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
             {
                 //Zombie role for player manifest

@@ -14,7 +14,7 @@ public abstract class SharedZombieSystem : EntitySystem
 
     private void OnRefreshSpeed(EntityUid uid, ZombieComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        var mod = component.ZombieMovementSpeedDebuff;
+        var mod = component.MovementSpeedDebuff;
         args.ModifySpeed(mod, mod);
     }
 }

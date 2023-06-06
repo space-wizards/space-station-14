@@ -144,15 +144,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
 
+        // We only care about players, not monkeys and such.
+        if (!HasComp<HumanoidAppearanceComponent>(target))
+            return;
+
         var fraction = 0.0f;
         List<EntityUid>? healthy = null;
         while (query.MoveNext(out var uid, out var zombies, out var gameRule))
         {
             if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                continue;
-
-            // We only care about players, not monkeys and such.
-            if (!HasComp<HumanoidAppearanceComponent>(target))
                 continue;
 
             if (healthy == null)
@@ -181,7 +181,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 }
             }
 
-            if (zombies.NerfSettings != null && !zombies.NerfedZombies && fraction > zombies.NerfGrowthrateAt)
+            if (zombies.NerfSettings != null && !zombies.NerfedZombies && fraction > zombies.NerfZombiesAt)
             {
                 zombies.NerfedZombies = true;
                 _zombie.NerfZombies(uid, zombies);
@@ -193,6 +193,48 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 _zombie.ForceZombies(uid, zombies);
             }
 
+            if (fraction < 0.1f)
+            {
+                CheckRuleEnd(uid, zombies, gameRule);
+            }
+
+        }
+    }
+
+    private void CheckRuleEnd(EntityUid ruleUid, ZombieRuleComponent zombies, GameRuleComponent gameRule)
+    {
+        // Check that we've picked our zombies
+        if (zombies.InfectInitialAt != TimeSpan.Zero)
+            return;
+
+        // Look for living zombies
+        int livingZombies = 0;
+        var zombers = EntityQueryEnumerator<ZombieComponent, MobStateComponent>();
+        while (zombers.MoveNext(out var uid, out var zombie, out var mobState))
+        {
+            if (zombie.Family.Rules != ruleUid)
+                continue;
+
+            if (mobState.CurrentState != MobState.Alive && zombie.Permadeath)
+                continue;
+
+            livingZombies += 1;
+        }
+
+        // Look for pending zombies
+        int pendingZombies = 0;
+        var query = EntityQueryEnumerator<PendingZombieComponent>();
+        while (query.MoveNext(out var uid, out var pending))
+        {
+            if (pending.Family.Rules != ruleUid)
+                continue;
+
+            pendingZombies += 1;
+        }
+
+        if (pendingZombies == 0 && livingZombies == 0)
+        {
+            GameTicker.EndGameRule(ruleUid, gameRule);
         }
     }
 
@@ -306,6 +348,19 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         return healthy;
     }
 
+    public void AddToInfectedList(EntityUid uid, ZombieComponent zombie, ZombieRuleComponent rules, MindComponent? mindComponent = null)
+    {
+        if (!Resolve(uid, ref mindComponent))
+            return;
+
+        var mind = mindComponent.Mind;
+        if (mind?.Session != null && mind.OwnedEntity != null)
+        {
+            var inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
+            rules.InitialInfectedNames.Add(inCharacterName, mind.Session.Name);
+        }
+    }
+
     /// <summary>
     ///     Infects the first players with the passive zombie virus.
     ///     Also records their names for the end of round screen.
@@ -320,16 +375,36 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var allPlayers = _playerManager.ServerSessions.ToList();
         var playerList = new List<IPlayerSession>();
         var prefList = new List<IPlayerSession>();
+
         foreach (var player in allPlayers)
         {
-            // TODO: A
+
             if (player.AttachedEntity != null && HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
             {
-                playerList.Add(player);
+                if (TryComp<ZombieComponent>(player.AttachedEntity, out var zombie))
+                {
+                    // This player is already a zombie. If they don't already have a rule, add them to this one.
+                    if (zombie.Family.Rules == EntityUid.Invalid)
+                    {
+                        zombie.Family.Rules = uid;
+                        zombie.Settings = rules.EarlySettings;
+                        zombie.VictimSettings = rules.VictimSettings;
 
-                var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
-                if (pref.AntagPreferences.Contains(rules.PatientZeroPrototypeID))
-                    prefList.Add(player);
+                        var mind = player.Data.ContentData()?.Mind;
+                        if (mind?.Session != null)
+                        {
+                            rules.InitialInfectedNames[zombie.BeforeZombifiedEntityName] = mind.Session.Name;
+                        }
+                    }
+                }
+                else if (!HasComp<PendingZombieComponent>(player.AttachedEntity))
+                {
+                    playerList.Add(player);
+
+                    var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
+                    if (pref.AntagPreferences.Contains(rules.PatientZeroPrototypeID))
+                        prefList.Add(player);
+                }
             }
         }
 
@@ -340,6 +415,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var maxInfected = Math.Min(rules.MaxInitialInfected, _cfg.GetCVar(CCVars.ZombieMaxInitialInfected));
 
         var numInfected = (int)Math.Clamp(Math.Floor((double) playerList.Count / playersPerInfected), 1, maxInfected);
+
+        // These are already infected (by admins probably)
+        numInfected -= rules.InitialInfectedNames.Count;
 
         // How long the zombies have as a group to decide to begin their attack.
         //   Varies randomly from 10 to 15 minutes. After this the virus begins and they start
@@ -408,7 +486,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
                 //gets the names now in case the players leave.
                 //this gets unhappy if people with the same name get chose. Probably shouldn't happen.
-                rules.InitialInfectedNames.Add(inCharacterName, mind.Session.Name);
+                rules.InitialInfectedNames[inCharacterName] = mind.Session.Name;
 
                 // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
                 // You got a free T-shirt!?!?
@@ -433,5 +511,20 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 _zombie.ZombifyEntity(uid, mobState, pending);
             }
         }
+    }
+
+    public (EntityUid, ZombieRuleComponent?) FindActiveRule()
+    {
+        var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
+
+        while (query.MoveNext(out var uid, out var zombies, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleActive(uid, gameRule))
+                continue;
+
+            return (uid, zombies);
+        }
+
+        return (EntityUid.Invalid, null);
     }
 }

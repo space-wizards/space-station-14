@@ -11,6 +11,7 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Emoting.Systems;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.IdentityManagement;
 using Content.Server.Popups;
@@ -35,30 +36,30 @@ namespace Content.Server.Zombies
 {
     public sealed partial class ZombieSystem : SharedZombieSystem
     {
+        [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _sharedHuApp = default!;
+        [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly ServerInventorySystem _inv = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
-        [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-        [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
-        [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
-        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly GameTicker _gameTicker = default!;
-
-        [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
-        [Dependency] private readonly HumanoidAppearanceSystem _sharedHuApp = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly ServerInventorySystem _inv = default!;
+        [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-        [Dependency] private readonly IChatManager _chatMan = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly ZombieRuleSystem _zombieRule = default!;
 
         public override void Initialize()
         {
@@ -88,8 +89,6 @@ namespace Content.Server.Zombies
             var query = EntityQueryEnumerator<PendingZombieComponent, DamageableComponent, MobStateComponent>();
             var curTime = _timing.CurTime;
 
-            var zombQuery = EntityQueryEnumerator<ZombieComponent, DamageableComponent, MobStateComponent>();
-
             // Hurt the living infected
             while (query.MoveNext(out var uid, out var pending, out var damage, out var mobState))
             {
@@ -113,7 +112,7 @@ namespace Content.Server.Zombies
                 }
                 if (mobState.CurrentState == MobState.Dead)
                 {
-                    if (pending.InfectedSecs >= pending.Settings.ZombieDeadMinTurnTime)
+                    if (pending.InfectedSecs >= pending.Settings.DeadMinTurnTime)
                     {
                         // You can turn into a zombie now.
                         ZombifyEntity(uid, mobState, pending);
@@ -138,6 +137,8 @@ namespace Content.Server.Zombies
                 }
                 _damageable.TryChangeDamage(uid, pending.VirusDamage * painMultiple, true, false, damage);
             }
+
+            var zombQuery = EntityQueryEnumerator<ZombieComponent, DamageableComponent, MobStateComponent>();
 
             // Heal the zombified
             while (zombQuery.MoveNext(out var uid, out var comp, out var damage, out var mobState))
@@ -191,8 +192,8 @@ namespace Content.Server.Zombies
             // If they WERE alive, it doesn't have side effects, but we can save a lookup by not checking alive / dead.
 
             // Roll this again. If the zombie was not alive, this will delay them respawning a while.
-            component.ZombieRevivalSeconds = _random.Next(component.Settings.ZombieReviveTime,
-                component.Settings.ZombieReviveTimeMax);
+            component.ZombieRevivalSeconds = _random.Next(component.Settings.ReviveTime,
+                component.Settings.ReviveTimeMax);
 
         }
 
@@ -226,17 +227,18 @@ namespace Content.Server.Zombies
 
                 // Roll to see if this zombie is not coming back.
                 //   Note that due to damage reductions it takes a lot of hits to gib a zombie without this.
-                if (_random.Prob((args.NewMobState == MobState.Dead)? component.ZombiePermadeathChance : component.ZombieCritDeathChance))
+                if (_random.Prob((args.NewMobState == MobState.Dead)? component.PermadeathChance : component.CritDeathChance))
                 {
                     // You're dead! No reviving for you.
+                    // TODO: End zombie rule here if all zombies in it are dead
                     _mobThreshold.SetAllowRevives(uid, false);
                     component.Permadeath = true;
                     _popup.PopupEntity(Loc.GetString("zombie-permadeath"), uid, uid);
                 }
                 else
                 {
-                    component.ZombieRevivalSeconds = _random.Next(component.Settings.ZombieReviveTime,
-                        component.Settings.ZombieReviveTimeMax);
+                    component.ZombieRevivalSeconds = _random.Next(component.Settings.ReviveTime,
+                        component.Settings.ReviveTimeMax);
                 }
             }
         }
@@ -274,7 +276,7 @@ namespace Content.Server.Zombies
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
         {
-            var baseChance = component.MaxZombieInfectionChance;
+            var baseChance = component.MaxInfectionChance;
 
             if (!TryComp<InventoryComponent>(uid, out var inventoryComponent))
                 return baseChance;
@@ -300,8 +302,8 @@ namespace Content.Server.Zombies
                     items++;
             }
 
-            var max = component.MaxZombieInfectionChance;
-            var min = component.MinZombieInfectionChance;
+            var max = component.MaxInfectionChance;
+            var min = component.MinInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
             var chance = (max-min) * ((total - items)/total) + min;
             return chance;
@@ -344,7 +346,7 @@ namespace Content.Server.Zombies
                     {
                         // On a diceroll or if critical we infect this victim
                         var pending = EnsureComp<PendingZombieComponent>(entity);
-                        pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.ZombieInfectionTurnTime;
+                        pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.InfectionTurnTime;
 
                         // Our victims inherit our settings, which defines damage and more.
                         pending.Settings = component.VictimSettings ?? component.Settings;
@@ -376,7 +378,7 @@ namespace Content.Server.Zombies
             // It hurts the zombie whenever they bite something that isn't organic. This Punishes zombies who only
             // want to eat the station.
             if (args.HitEntities.Count != 0 && !hitOrganic)
-                _damageable.TryChangeDamage(uid, component.Settings.BiteMetalDamage, true, false);
+                _damageable.TryChangeDamage(args.User, component.Settings.BiteMetalDamage, true, false);
         }
 
         /// <summary>
@@ -447,6 +449,7 @@ namespace Content.Server.Zombies
                     melee.WideAnimation = zombie.Settings.AttackAnimation;
                     melee.Range = zombie.Settings.MeleeRange;
                     Dirty(melee);
+                    _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
 
                     _popup.PopupEntity(Loc.GetString("zombie-nerfed"), uid, uid);
                 }

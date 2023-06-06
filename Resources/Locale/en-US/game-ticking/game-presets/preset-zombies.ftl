@@ -28,3 +28,5 @@ zombie-round-end-survivor-count = {$count ->
     *[other] There were only {$count} survivors left:
 }
 zombie-round-end-user-was-survivor = - [color=White]{$name}[/color] ([color=gray]{$username}[/color]) survived the outbreak.
+zombie-bite-infected-victim = Their fate is sealed
+zombies-will-eat-your-brains = A virus able to animate the dead has been unleashed unto the station! Work with your crewmates to contain the outbreak and survive.

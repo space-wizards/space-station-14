@@ -64,13 +64,13 @@ public sealed class ZombieRuleComponent : Component
     ///   How long between rulestart and announcing the zombie event (minimum)
     /// </summary>
     [DataField("announceMin"), ViewVariables(VVAccess.ReadWrite)]
-    public float AnnounceMin = 480;
+    public float AnnounceMin = 660;
 
     /// <summary>
     ///   How long between rulestart and announcing the zombie event (maximum)
     /// </summary>
     [DataField("announceMax"), ViewVariables(VVAccess.ReadWrite)]
-    public float AnnounceMax = 720;
+    public float AnnounceMax = 900;
 
     /// <summary>
     ///   How long the initial infected have to wait from roundstart before they are allowed to turn.
@@ -95,14 +95,14 @@ public sealed class ZombieRuleComponent : Component
     ///   The maximum infected players overall.
     /// Will use Min( cvar zombie.max_initial_infected, <this_value> )
     /// </summary>
-    [DataField("playersPerInfected"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("maxInitialInfected"), ViewVariables(VVAccess.ReadWrite)]
     public int MaxInitialInfected = 6;
 
     /// <summary>
     ///   The fraction of players at which we nerf all existing zombies if NerfSettings != null
     /// </summary>
     [DataField("nerfZombiesAt"), ViewVariables(VVAccess.ReadWrite)]
-    public float NerfGrowthrateAt = 0.3f;
+    public float NerfZombiesAt = 0.3f;
 
     /// <summary>
     ///   Ratio of infected players at which any existing initialInfected begin to turn.
@@ -130,7 +130,7 @@ public sealed class ZombieRuleComponent : Component
     [DataField("calledShuttle90"), ViewVariables(VVAccess.ReadWrite)]
     public bool CalledShuttle90 = false;
 
-    // If we have nerfed the zombies yet (applied NerfSettings)
+    // If we have nerfed the zombies yet (applied NerfSettings if it is non-null)
     [DataField("nerfedZombies"), ViewVariables(VVAccess.ReadWrite)]
     public bool NerfedZombies = false;
     // If we have forced all initialInfected
