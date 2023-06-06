@@ -47,7 +47,7 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
-                new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
+                new []{typeof(VocalSystem), typeof(BodyEmotesSystem)});
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
@@ -232,7 +232,7 @@ namespace Content.Server.Zombies
             var max = component.MaxZombieInfectionChance;
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
-            var chance = (max - min) * ((total - items) / total) + min;
+            var chance = (max-min) * ((total - items)/total) + min;
             return chance;
         }
 
