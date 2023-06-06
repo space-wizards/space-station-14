@@ -831,11 +831,12 @@ public sealed class RadioSpokeEvent : EntityEventArgs
 {
     public readonly EntityUid Source;
     public readonly string Message;
+    public readonly EntityUid[] Receivers;
 
-
-    public RadioSpokeEvent(EntityUid source, string message)
+    public RadioSpokeEvent(EntityUid source, string message, EntityUid[] receivers)
     {
         Source = source;
         Message = message;
+        Receivers = receivers;
     }
 }

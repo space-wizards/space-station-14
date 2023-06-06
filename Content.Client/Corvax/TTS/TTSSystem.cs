@@ -25,8 +25,10 @@ public sealed class TTSSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _broadPhase = default!;
     
     private ISawmill _sawmill = default!;
+
     private float _volume = 0.0f;
-    
+    private float _radioVolume = 0.0f;
+
     private readonly HashSet<AudioStream> _currentStreams = new();
     private readonly Dictionary<EntityUid, Queue<AudioStream>> _entityQueues = new();
 
@@ -34,6 +36,7 @@ public sealed class TTSSystem : EntitySystem
     {
         _sawmill = Logger.GetSawmill("tts");
         _cfg.OnValueChanged(CCCVars.TTSVolume, OnTtsVolumeChanged, true);
+        _cfg.OnValueChanged(CCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged, true);
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
     }
 
@@ -41,6 +44,7 @@ public sealed class TTSSystem : EntitySystem
     {
         base.Shutdown();
         _cfg.UnsubValueChanged(CCCVars.TTSVolume, OnTtsVolumeChanged);
+        _cfg.UnsubValueChanged(CCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged);
         EndStreams();
     }
 
@@ -99,11 +103,14 @@ public sealed class TTSSystem : EntitySystem
         _volume = volume;
     }
 
+    private void OnTtsRadioVolumeChanged(float volume)
+    {
+        _radioVolume = volume;
+    }
+
     private void OnPlayTTS(PlayTTSEvent ev)
     {
-        var volume = _volume;
-        if (ev.IsWhisper)
-            volume -= 4;
+        var volume = (ev.IsRadio ? _radioVolume : _volume) * ev.VolumeModifier;
 
         if (!TryCreateAudioSource(ev.Data, volume, out var source))
             return;

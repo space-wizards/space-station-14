@@ -14,7 +14,6 @@ using FFMpegCore.Arguments;
 using FFMpegCore.Pipes;
 using Prometheus;
 using Robust.Shared.Configuration;
-using System.Collections;
 using System.ComponentModel;
 
 namespace Content.Server.Corvax.TTS;
@@ -57,6 +56,9 @@ public sealed class TTSManager
     private readonly ConcurrentDictionary<string, byte[]> _cacheRadio = new();
     private readonly HashSet<string> _cacheRadioKeysSeq = new();
 
+    private static readonly ConcurrentDictionary<string, SemaphoreSlim> Locks = new();
+    private double _timeout = 1;
+
     private int _maxCachedCount = 200;
 
     public void Initialize()
@@ -67,6 +69,10 @@ public sealed class TTSManager
             _maxCachedCount = val;
             ResetCache();
         }, true);
+        _cfg.OnValueChanged(CCCVars.TTSRequestTimeout, val =>
+        {
+            _timeout = val;
+        });
     }
 
     /// <summary>
@@ -92,66 +98,72 @@ public sealed class TTSManager
 
         WantedCount.Inc();
         var cacheKey = GenerateCacheKey(speaker, text);
-        if (_cache.TryGetValue(cacheKey, out var data))
-        {
-            ReusedCount.Inc();
-            _sawmill.Debug($"Use cached sound for '{text}' speech by '{speaker}' speaker");
-            return data;
-        }
 
-        var body = new GenerateVoiceRequest
+        return await ExecuteWithNamedLockAsync(cacheKey, async () =>
         {
-            ApiToken = token,
-            Text = text,
-            Speaker = speaker,
-        };
-
-        var reqTime = DateTime.UtcNow;
-        try
-        {
-            var timeout = _cfg.GetCVar(CCCVars.TTSRequestTimeout);
-            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
-            var response = await _httpClient.PostAsJsonAsync(url, body, cts.Token);
-            if (!response.IsSuccessStatusCode)
+            if (_cache.TryGetValue(cacheKey, out var data))
             {
-                throw new Exception($"TTS request returned bad status code: {response.StatusCode}");
+                ReusedCount.Inc();
+                _sawmill.Debug($"Use cached sound for '{text}' speech by '{speaker}' speaker");
+                return data;
             }
 
-            var json = await response.Content.ReadFromJsonAsync<GenerateVoiceResponse>(cancellationToken: cts.Token);
-            var soundData = Convert.FromBase64String(json.Results.First().Audio);
-
-            _cache.AddOrUpdate(cacheKey, soundData, (_, __) => soundData);
-            _cacheKeysSeq.Add(cacheKey);
-            if (_cache.Count > _maxCachedCount)
+            var body = new GenerateVoiceRequest
             {
-                var firstKey = _cacheKeysSeq.First();
-                _cache.TryRemove(firstKey, out _);
-                _cacheKeysSeq.Remove(firstKey);
+                ApiToken = token,
+                Text = text,
+                Speaker = speaker,
+            };
+
+            var reqTime = DateTime.UtcNow;
+            try
+            {
+                var cts = new CancellationTokenSource(TimeSpan.FromSeconds(_timeout));
+                var response = await _httpClient.PostAsJsonAsync(url, body, cts.Token);
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"TTS request returned bad status code: {response.StatusCode}");
+                }
+
+                var json =
+                    await response.Content.ReadFromJsonAsync<GenerateVoiceResponse>(cancellationToken: cts.Token);
+                var soundData = Convert.FromBase64String(json.Results.First().Audio);
+
+                _cache.AddOrUpdate(cacheKey, soundData, (_, __) => soundData);
+                _cacheKeysSeq.Add(cacheKey);
+                if (_cache.Count > _maxCachedCount)
+                {
+                    var firstKey = _cacheKeysSeq.First();
+                    _cache.TryRemove(firstKey, out _);
+                    _cacheKeysSeq.Remove(firstKey);
+                }
+
+                _sawmill.Debug(
+                    $"Generated new sound for '{text}' speech by '{speaker}' speaker ({soundData.Length} bytes)");
+                RequestTimings.WithLabels("Success").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+
+                return soundData;
             }
-
-            _sawmill.Debug($"Generated new sound for '{text}' speech by '{speaker}' speaker ({soundData.Length} bytes)");
-            RequestTimings.WithLabels("Success").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
-
-            return soundData;
-        }
-        catch (TaskCanceledException)
-        {
-            RequestTimings.WithLabels("Timeout").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
-            _sawmill.Error($"Timeout of request generation new sound for '{text}' speech by '{speaker}' speaker");
-            throw new Exception("TTS request timeout");
-        }
-        catch (Exception e)
-        {
-            RequestTimings.WithLabels("Error").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
-            _sawmill.Error($"Failed of request generation new sound for '{text}' speech by '{speaker}' speaker\n{e}");
-            throw new Exception("TTS request failed");
-        }
+            catch (TaskCanceledException)
+            {
+                RequestTimings.WithLabels("Timeout").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+                _sawmill.Error($"Timeout of request generation new sound for '{text}' speech by '{speaker}' speaker");
+                throw new Exception("TTS request timeout");
+            }
+            catch (Exception e)
+            {
+                RequestTimings.WithLabels("Error").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+                _sawmill.Error(
+                    $"Failed of request generation new sound for '{text}' speech by '{speaker}' speaker\n{e}");
+                throw new Exception("TTS request failed");
+            }
+        });
     }
 
     public async Task<byte[]> ConvertTextToSpeechRadio(string speaker, string text)
     {
-        var soundData = await ConvertTextToSpeech(speaker, text);
         WantedRadioCount.Inc();
+
         var cacheKey = GenerateCacheKey(speaker, text);
         if (_cacheRadio.TryGetValue(cacheKey, out var cachedSoundData))
         {
@@ -159,6 +171,8 @@ public sealed class TTSManager
             _sawmill.Debug($"Use cached radio sound for '{text}' speech by '{speaker}' speaker");
             return cachedSoundData;
         }
+
+        var soundData = await ConvertTextToSpeech(speaker, text);
 
         var reqTime = DateTime.UtcNow;
         try
@@ -236,6 +250,21 @@ public sealed class TTSManager
         var sha256 = System.Security.Cryptography.SHA256.Create();
         var bytes = sha256.ComputeHash(keyData);
         return Convert.ToHexString(bytes);
+    }
+
+    private async Task<TResult> ExecuteWithNamedLockAsync<TResult>(string key, Func<Task<TResult>> function)
+    {
+        var semaphore = Locks.GetOrAdd(key, new SemaphoreSlim(1, 1));
+        await semaphore.WaitAsync();
+        try
+        {
+            return await function();
+        }
+        finally
+        {
+            semaphore.Release();
+            Locks.TryRemove(key, out _);
+        }
     }
 
     private sealed class CrusherFilterArgument : IAudioFilterArgument

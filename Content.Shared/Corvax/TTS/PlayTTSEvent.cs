@@ -8,12 +8,19 @@ public sealed class PlayTTSEvent : EntityEventArgs
 {
     public EntityUid Uid { get; }
     public byte[] Data { get; }
-    public bool IsWhisper { get; }
+    public bool IsRadio { get; }
+    public float VolumeModifier { get; set; }
 
-    public PlayTTSEvent(EntityUid uid, byte[] data, bool isWhisper = false)
+    public PlayTTSEvent(EntityUid uid, byte[] data, bool isRadio, float volumeModifier = 1f)
     {
         Uid = uid;
         Data = data;
-        IsWhisper = isWhisper;
+        IsRadio = isRadio;
+        VolumeModifier = volumeModifier;
+    }
+
+    public void SetVolumeModifier(float modifier)
+    {
+        VolumeModifier = Math.Clamp(modifier, 0, 3);
     }
 }
