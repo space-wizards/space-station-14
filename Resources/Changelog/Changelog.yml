@@ -1,9 +1,4 @@
 Entries:
-- author: Mumohan
-  changes:
-  - {message: Minibomb now does what it says on the tin and gibs bodies, type: Tweak}
-  id: 3451
-  time: '2023-04-19T04:36:13.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added Stimpack sprite, type: Add}
@@ -2909,3 +2904,8 @@ Entries:
   - {message: Added GuideHelp tags to some Medical and Kitchen objects., type: Add}
   id: 3950
   time: '2023-06-05T22:47:15.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed the lobby's "Observe" button not working., type: Fix}
+  id: 3951
+  time: '2023-06-06T01:01:39.0000000+00:00'
