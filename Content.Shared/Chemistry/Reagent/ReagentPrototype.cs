@@ -67,7 +67,7 @@ namespace Content.Shared.Chemistry.Reagent
         /// There must be at least this much quantity in a solution to be tasted.
         /// </summary>
         [DataField("flavorMinimum")]
-        public float FlavorMinimum = 0.1;
+        public float FlavorMinimum = 0.1f;
 
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
