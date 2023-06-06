@@ -140,8 +140,12 @@ namespace Content.Server.Stunnable.Systems
 
             if (TryComp<BatteryComponent>(uid, out var battery))
             {
-                var radius = MathF.Min(5, MathF.Sqrt(battery.CurrentCharge) / 9);
-                 _explosionSystem.TriggerExplosive(uid, radius: radius, user:cause);
+                if (_solutionsSystem.TryGetSolution(uid, StunbatonComponent.SolutionName, out var solution))
+                {
+                    solution.TryGetReagent("Plasma", out var plasma);
+                    var radius = MathF.Min(plasma.Value, MathF.Sqrt(battery.CurrentCharge) / 9);
+                    _explosionSystem.TriggerExplosive(uid, radius: radius, user:cause);
+                }
             }
         }
 
