@@ -1,8 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Light.Components;
 using Content.Server.NPC.Pathfinding;
-using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
@@ -11,7 +9,6 @@ using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -440,12 +437,40 @@ public sealed partial class DungeonJob
 
         // TODO: Probably just need to BSP it I think as the default room packs are incompatible.
 
-        // Pathfind each edge
+        var expansion = gen.Width - 2;
+        // Okay so tl;dr is that we don't want to cut close to rooms as it might go from 3 width to 2 width suddenly
+        // So we will add a buffer range around each room to deter pathfinding there unless necessary
+        var deterredTiles = new HashSet<Vector2i>();
+
+        if (expansion >= 1)
+        {
+            foreach (var tile in dungeon.ExteriorTiles)
+            {
+                for (var x = -expansion; x <= expansion; x++)
+                {
+                    for (var y = -expansion; y <= expansion; y++)
+                    {
+                        var neighbor = new Vector2i(tile.X + x, tile.Y + y);
+
+                        if (dungeon.RoomTiles.Contains(neighbor) ||
+                            dungeon.ExteriorTiles.Contains(neighbor))
+                        {
+                            continue;
+                        }
+
+                        deterredTiles.Add(neighbor);
+                    }
+                }
+            }
+        }
+
+        // Pathfind each entrance
         var corridorTiles = new HashSet<Vector2i>();
         var frontier = new PriorityQueue<Vector2i, float>();
         var cameFrom = new Dictionary<Vector2i, Vector2i>();
         var costSoFar = new Dictionary<Vector2i, float>();
-        const int PathLimit = 128;
+        // With greedy h-score 256 should be fine for decently long distances in testing.
+        var pathLimit = gen.PathLimit;
 
         foreach (var (start, end) in edges)
         {
@@ -456,8 +481,10 @@ public sealed partial class DungeonJob
             costSoFar[start] = 0f;
             var found = false;
             var count = 0;
+            await SuspendIfOutOfTime();
+            ValidateResume();
 
-            while (frontier.Count > 0 && count < PathLimit)
+            while (frontier.Count > 0 && count < pathLimit)
             {
                 count++;
                 var node = frontier.Dequeue();
@@ -487,8 +514,19 @@ public sealed partial class DungeonJob
                             continue;
                         }
 
-                        var tileCost = PathfindingSystem.OctileDistance(neighbor, end);
-                        // TODO: Corridor weighting to encourage existing ones.
+                        var tileCost = PathfindingSystem.ManhattanDistance(node, neighbor);
+
+                        // Weight towards existing corridors ig
+                        if (corridorTiles.Contains(neighbor))
+                        {
+                            tileCost *= 0.25f;
+                        }
+
+                        // If it's next to a dungeon room then avoid it if at all possible
+                        if (deterredTiles.Contains(neighbor))
+                        {
+                            tileCost *= 4f;
+                        }
 
                         // f = g + h
                         // gScore is distance to the start node
@@ -502,7 +540,10 @@ public sealed partial class DungeonJob
                         cameFrom[neighbor] = node;
                         costSoFar[neighbor] = gScore;
 
-                        var hScore = PathfindingSystem.OctileDistance(end, neighbor) * (1.0f + 1.0f / 1000.0f);
+                        // Make it greedy so multiply h-score to punish further nodes.
+                        // This is necessary as we might have the deterredTiles multiplying towards the end
+                        // so just finish it.
+                        var hScore = PathfindingSystem.ManhattanDistance(end, neighbor) * 2f;
                         var fScore = gScore + hScore;
                         frontier.Enqueue(neighbor, fScore);
                     }
@@ -527,13 +568,40 @@ public sealed partial class DungeonJob
             }
         }
 
-        var expansion = gen.Width - 2;
-
         // Widen the path
-        if (expansion > 1)
+        if (expansion >= 1)
         {
-            // TODO:
-            // If it's on exterior or the other one then dump it.
+            var toAdd = new ValueList<Vector2i>();
+
+            foreach (var node in corridorTiles)
+            {
+                // Uhhh not sure on the cleanest way to do this but tl;dr we don't want to hug
+                // exterior walls and make the path smaller.
+
+                for (var x = -expansion; x <= expansion; x++)
+                {
+                    for (var y = -expansion; y <= expansion; y++)
+                    {
+                        var neighbor = new Vector2i(node.X + x, node.Y + y);
+
+                        // Diagonals still matter here.
+                        if (dungeon.RoomTiles.Contains(neighbor) ||
+                            dungeon.ExteriorTiles.Contains(neighbor))
+                        {
+                            // Try
+
+                            continue;
+                        }
+
+                        toAdd.Add(neighbor);
+                    }
+                }
+            }
+
+            foreach (var node in toAdd)
+            {
+                corridorTiles.Add(node);
+            }
         }
 
         var setTiles = new List<(Vector2i, Tile)>();

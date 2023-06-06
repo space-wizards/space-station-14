@@ -11,6 +11,18 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonJob
 {
+    private async Task<Dungeon> GenerateBSPDungeon(BSPDunGen bsp, EntityUid gridUid, MapGridComponent grid, int seed)
+    {
+        // TODO:
+        var random = new Random(seed);
+
+        var rooms = new Queue<Box2i>();
+
+        var dungeonRotation = _dungeon.GetDungeonRotation(seed);
+        var dungeonTransform = Matrix3.CreateTransform(_position, dungeonRotation);
+        return new Dungeon();
+    }
+
     private async Task<Dungeon> GeneratePrefabDungeon(PrefabDunGen prefab, EntityUid gridUid, MapGridComponent grid, int seed)
     {
         var random = new Random(seed);

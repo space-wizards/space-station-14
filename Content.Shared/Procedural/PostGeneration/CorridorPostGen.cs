@@ -5,6 +5,12 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// </summary>
 public sealed class CorridorPostGen : IPostDunGen
 {
+    /// <summary>
+    /// How far we're allowed to generate a corridor before calling it.
+    /// </summary>
+    [DataField("pathLimit")]
+    public int PathLimit = 256;
+
     [DataField("method")]
     public CorridorPostGenMethod Method = CorridorPostGenMethod.MinimumSpanningTree;
 
