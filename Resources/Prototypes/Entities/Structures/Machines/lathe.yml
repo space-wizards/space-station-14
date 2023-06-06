@@ -250,7 +250,7 @@
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
       - ClothingBackpackDuffelHolding
-      - WelderIndustrialAdvanced
+      - WelderExperimental
       - JawsOfLife
 
 - type: entity
@@ -484,6 +484,8 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - Brutepack
+      - Ointment
       - HandLabeler
       - Defibrillator
       - HandheldHealthAnalyzer
