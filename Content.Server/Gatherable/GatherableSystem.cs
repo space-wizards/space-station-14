@@ -18,7 +18,6 @@ public sealed partial class GatherableSystem : EntitySystem
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
@@ -26,6 +25,7 @@ public sealed partial class GatherableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GatherableComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<GatherableComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<GatherableComponent, GatherableDoAfterEvent>(OnDoAfter);
         InitializeProjectile();
     }
@@ -49,6 +49,26 @@ public sealed partial class GatherableSystem : EntitySystem
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             MovementThreshold = 0.25f,
+            DuplicateCondition = DuplicateConditions.SameTarget,
+            BlockDuplicate = true,
+        };
+
+        _doAfterSystem.TryStartDoAfter(doAfter);
+    }
+
+    private void OnInteractHand(EntityUid uid, GatherableComponent component, InteractHandEvent args)
+    {
+        if (component.ToolWhitelist?.Tags?.Contains("Hand") == false)
+            return;
+
+        var doAfter = new DoAfterArgs(args.User, TimeSpan.FromSeconds(component.harvestTimeByHand), new GatherableDoAfterEvent(byHand: true), uid, target: uid)
+        {
+            BreakOnDamage = true,
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            MovementThreshold = 0.25f,
+            DuplicateCondition = DuplicateConditions.SameTarget,
+            BlockDuplicate = true,
         };
 
         _doAfterSystem.TryStartDoAfter(doAfter);
@@ -56,25 +76,24 @@ public sealed partial class GatherableSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, GatherableComponent component, GatherableDoAfterEvent args)
     {
-        if(!TryComp<GatheringToolComponent>(args.Args.Used, out var tool))
-            return;
+        if (TryComp<GatheringToolComponent>(args.Args.Used, out var tool))
+            tool.GatheringEntities.Remove(uid);
 
-        tool.GatheringEntities.Remove(uid);
         if (args.Handled || args.Cancelled)
             return;
 
-        Gather(uid, args.Args.Used, component, tool.GatheringSound);
+        Gather(uid, args.Args.Used, component, tool?.GatheringSound, args.ByHand);
         args.Handled = true;
     }
 
-    public void Gather(EntityUid gatheredUid, EntityUid? gatherer = null, GatherableComponent? component = null, SoundSpecifier? sound = null)
+    public void Gather(EntityUid gatheredUid, EntityUid? gatherer = null, GatherableComponent? component = null, SoundSpecifier? sound = null, bool isByHand = false)
     {
         if (!Resolve(gatheredUid, ref component))
             return;
 
         // Complete the gathering process
         _destructible.DestroyEntity(gatheredUid);
-        _audio.PlayPvs(sound, gatheredUid);
+        _audio?.PlayPvs(sound, gatheredUid);
 
         // Spawn the loot!
         if (component.MappedLoot == null)
@@ -86,13 +105,29 @@ public sealed partial class GatherableSystem : EntitySystem
         {
             if (tag != "All")
             {
-                if (gatherer != null && !_tagSystem.HasTag(gatherer.Value, tag))
-                    continue;
+                if (tag == "Hand")
+                {
+                    if (!isByHand)
+                        continue;
+                }
+                else
+                {
+                    if (isByHand)
+                        continue;
+
+                    if (gatherer != null && !_tagSystem.HasTag(gatherer.Value, tag))
+                        continue;
+                }
             }
+
             var getLoot = _prototypeManager.Index<EntityLootTablePrototype>(table);
             var spawnLoot = getLoot.GetSpawns();
-            var spawnPos = pos.Offset(_random.NextVector2(0.3f));
-            Spawn(spawnLoot[0], spawnPos);
+
+            foreach (var loot in spawnLoot)
+            {
+                var spawnPos = pos.Offset(_random.NextVector2(component.DropRadius));
+                Spawn(loot, spawnPos);
+            }
         }
     }
 }

@@ -47,6 +47,9 @@
   id: BorgRightLeg
 
 - type: Tag
+  id: BotanyScythe
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -762,3 +765,6 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: Hand

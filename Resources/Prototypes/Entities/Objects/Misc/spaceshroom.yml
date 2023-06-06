@@ -14,13 +14,49 @@
     anchored: true
   - type: InteractionOutline
   - type: StaticPrice
-    price: 150
-  - type: GatherableByHand
-    loot: FoodSpaceshroom
-    minDropCount: 2
-    maxDropCount: 3
+    price: 75
+  - type: Gatherable
+    whitelist:
+      tags:
+        - Hand
+        - Shovel
+        - BotanyHoe
+        - PlantSampleTaker
+        - BotanyScythe
+        - BotanyHatchet
+        - BotanyShovel
+    mappedLoot:
+      Hand: SpaceshroomByHand
+      Shovel: SpaceshroomByTool
+      BotanyHoe: SpaceshroomByTool
+      PlantSampleTaker: SpaceshroomByTool
+      BotanyScythe: SpaceshroomByTool
+      BotanyHatchet: SpaceshroomByTool
+      BotanyShovel: SpaceshroomByTool
     dropRadius: 0.9
-    harvestTime: 2.0
+    harvestTimeByHand: 2.0
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entityLootTable
+  id: SpaceshroomByHand
+  entries:
+  - id: FoodSpaceshroom
+    amount: 2
+    maxAmount: 3
+
+- type: entityLootTable
+  id: SpaceshroomByTool
+  entries:
+  - id: FoodSpaceshroom
+    amount: 3
+    maxAmount: 4
 
 # Object
 - type: entity
@@ -53,6 +89,8 @@
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillSpaceshroom
+  - type: StaticPrice
+    price: 20
 
 - type: weightedRandomFill
   id: RandomFillSpaceshroom
@@ -101,3 +139,5 @@
     sprite: Objects/Misc/spaceshroom.rsi
     state: object_cooked
   - type: Produce
+  - type: StaticPrice
+    price: 40

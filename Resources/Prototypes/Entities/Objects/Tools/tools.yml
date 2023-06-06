@@ -494,3 +494,9 @@
       Wood: 50
   - type: StaticPrice
     price: 25
+  - type: GatheringTool
+    damage:
+      types:
+        Structural: 50
+    gatheringTime: 0.50
+    MaxGatheringEntities: 1
