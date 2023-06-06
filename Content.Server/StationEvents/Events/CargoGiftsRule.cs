@@ -36,7 +36,7 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
     }
 
     /// <summary>
-    /// Called on an active gamerule entity in the Update function
+    ///   Called on an active gamerule entity in the Update function
     /// </summary>
     protected override void ActiveTick(EntityUid uid, CargoGiftsRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {

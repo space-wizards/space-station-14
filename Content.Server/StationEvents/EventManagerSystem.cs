@@ -47,7 +47,7 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Randomly runs a valid event.
+    ///   Randomly runs a valid event.
     /// </summary>
     public string RunRandomEvent()
     {
@@ -67,7 +67,7 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Randomly runs a valid event.
+    ///   Randomly runs a valid event.
     /// </summary>
     public string RunNamedEvent(string EventId)
     {
@@ -78,7 +78,7 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Randomly picks a valid event.
+    ///   Randomly picks a valid event.
     /// </summary>
     public string? PickRandomEvent()
     {
@@ -88,7 +88,7 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Pick a random event from the available events at this time, also considering their weightings.
+    ///   Pick a random event from the available events at this time, also considering their weightings.
     /// </summary>
     /// <returns></returns>
     private string? FindEvent(Dictionary<EntityPrototype, StationEventComponent> availableEvents)
@@ -123,7 +123,7 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the events that have met their player count, time-until start, etc.
+    ///   Gets the events that have met their player count, time-until start, etc.
     /// </summary>
     /// <param name="ignoreEarliestStart"></param>
     /// <returns></returns>

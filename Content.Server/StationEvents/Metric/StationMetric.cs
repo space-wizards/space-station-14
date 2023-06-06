@@ -36,7 +36,7 @@ public abstract class StationMetric<T> : EntitySystem where T : Component
     }
 
     /// <summary>
-    /// Called when the metric is added
+    ///   Called when the metric is added
     /// </summary>
     protected virtual void Added(EntityUid uid, T component, ChaosMetricComponent metric, AddMetric args)
     {

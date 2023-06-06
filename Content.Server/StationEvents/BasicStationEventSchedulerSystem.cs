@@ -48,7 +48,7 @@ namespace Content.Server.StationEvents
         }
 
         /// <summary>
-        /// Reset the event timer once the event is done.
+        ///   Reset the event timer once the event is done.
         /// </summary>
         private void ResetTimer(BasicStationEventSchedulerComponent component)
         {

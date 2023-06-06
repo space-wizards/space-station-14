@@ -10,7 +10,7 @@ public sealed class ChaosMetricComponent : Component
 }
 
 /// <summary>
-/// Raised to request metrics to calculate and sum their statistics
+///   Raised to request metrics to calculate and sum their statistics
 /// </summary>
 [ByRefEvent]
 public record struct CalculateChaosEvent(ChaosMetrics Metrics);

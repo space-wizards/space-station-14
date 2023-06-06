@@ -77,19 +77,19 @@ public sealed class StationEventComponent : Component
     public int? MaxOccurrences;
 
     /// <summary>
-    /// When the station event starts.
+    ///   When the station event starts.
     /// </summary>
     [DataField("startTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan StartTime;
 
     /// <summary>
-    /// When the station event ends.
+    ///   When the station event ends.
     /// </summary>
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? EndTime;
 
     /// <summary>
-    /// Expected Chaos changes when this event occurs
+    ///   Expected Chaos changes when this event occurs
     /// </summary>
     [DataField("chaos")]
     public ChaosMetrics Chaos = new ChaosMetrics();
