@@ -119,14 +119,16 @@
     sprite: Objects/Weapons/Grenades/supermattergrenade.rsi
   - type: OnUseTimerTrigger
     delay: 3
-    beepInterval: 0.25
+    beepInterval: 0.46
     beepSound:
-      path: /Audio/Effects/beep1.ogg
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
-        volume: 5
+        volume: -5
   - type: TimerTriggerVisuals
     primingSound:
-      path: /Audio/Effects/beep1.ogg
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
   - type: PointLight
     enabled: false
     color: "#ffaa44"
@@ -188,7 +190,7 @@
     sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
   - type: OnUseTimerTrigger
     delay: 3
-    beepInterval: 0.75
+    beepInterval: 0.69
   - type: GravityWell
     maxRange: 10
   - type: AmbientSound
