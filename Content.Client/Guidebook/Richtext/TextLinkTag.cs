@@ -58,8 +58,9 @@ public sealed class TextLinkTag : IMarkupTag
             if (current is not ILinkClickHandler handler)
                 continue;
             handler.HandleClick(link);
-            break;
+            return;
         }
+        Logger.Warning($"Warning! No valid ILinkClickHandler found.");
     }
 }
 
