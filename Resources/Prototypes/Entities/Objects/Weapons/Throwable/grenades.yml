@@ -121,9 +121,12 @@
     delay: 3
     beepInterval: 0.25
     beepSound:
-      path: "/Audio/Effects/beep1.ogg"
+      path: /Audio/Effects/beep1.ogg
       params:
         volume: 5
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/beep1.ogg
   - type: PointLight
     enabled: false
     color: "#ffaa44"
@@ -170,7 +173,7 @@
     secondStageComponents:
     - type: SoundOnTrigger
       sound:
-        path: /Audio/Effects/Grenades/supermatter_end.ogg
+        path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
         params:
           volume: 5
     - type: ExplodeOnTrigger
@@ -210,7 +213,7 @@
     secondStageComponents:
       - type: SoundOnTrigger
         sound:
-          path: /Audio/Effects/Grenades/supermatter_end.ogg
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
             volume: 5
       - type: DeleteOnTrigger
