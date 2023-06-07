@@ -1,20 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Implanter removal speed increased, type: Tweak}
-  id: 3455
-  time: '2023-04-19T07:41:09.0000000+00:00'
-- author: mhamster
-  changes:
-  - {message: Nanotrasen is now supplying scientists with cool new science coats instead
-      of the classic white lab coats, type: Add}
-  id: 3456
-  time: '2023-04-19T07:42:06.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Ninjas have been removed., type: Remove}
-  id: 3457
-  time: '2023-04-19T07:43:09.0000000+00:00'
 - author: Floofi
   changes:
   - {message: Added hospital gowns to the medidrobe for use in medical and for prisoners
@@ -2910,3 +2894,18 @@ Entries:
   - {message: Reduced the yield and growth rates of almost every plant., type: Tweak}
   id: 3954
   time: '2023-06-07T03:48:08.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that allowed traitors to duplicate TCs, type: Fix}
+  id: 3955
+  time: '2023-06-07T03:53:11.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Added Bingus and Space Cat spawners!, type: Add}
+  id: 3956
+  time: '2023-06-07T03:53:27.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Mice are no longer blood based juice boxes., type: Tweak}
+  id: 3957
+  time: '2023-06-07T03:53:41.0000000+00:00'
