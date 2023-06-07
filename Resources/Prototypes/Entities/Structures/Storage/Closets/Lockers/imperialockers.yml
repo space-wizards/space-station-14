@@ -1,0 +1,14 @@
+#коронер
+- type: entity
+  id: LockerCoroner
+  parent: LockerBase
+  name: coroner locker
+  description: le morgue.
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: coroner
+    stateDoorOpen: coroner_open
+    stateDoorClosed: coroner_door
+  - type: AccessReader
+    access: [ [ "Medical" ] ]

@@ -22,6 +22,8 @@
     back: ClothingBackpackMedicalFilled
     pocket1: Paper
     shoes: ClothingShoesColorBlack
+    mask: ClothingMaskSterile
+    head: ClothingHeadHatSurgcapGreen
     id: CoronerPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled

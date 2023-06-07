@@ -781,18 +781,3 @@
             - Write
     - type: Unremoveable
 
-- type: entity
-  parent: BasePDA
-  id: CoronerPDA
-  name: coroner PDA
-  description: 
-  components:
-    - type: PDA
-      id: CoronerIDCard
-      state: pda-coroner
-    - type: Icon
-      state: pda-coroner
-    - type: HealthAnalyzer
-      scanDelay: 6
-      scanningEndSound:
-        path: "/Audio/Items/Medical/healthscanner.ogg"
