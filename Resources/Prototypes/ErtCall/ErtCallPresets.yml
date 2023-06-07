@@ -1,0 +1,36 @@
+#Base ert shuttle
+- type: ertCall
+  id: ErtEmpty
+  path: "Maps/Shuttles/dart.yml"
+
+#6 crew ERT team for small problems
+#1 lead 1 med 1 eng 3 sec
+- type: ertCall
+  id: ErtSmall6Crew
+  path: ""
+
+#12 crew ERT team for NukeOps problems
+#1 lead 2 med 2 eng 10 sec
+- type: ertCall
+  id: ErtBig15Crew
+  path: ""
+
+#8 crew ERT team for station structure problems
+#1 lead 1 med 4 eng 2 junitor 1 sec
+- type: ertCall
+  id: ErtStructureHelp
+  path: ""
+
+#9 crew ERT team for Zombie problems
+#1 lead 1 med 1 eng 6 sec
+- type: ertCall
+  id: ErtZombie
+  path: ""
+
+#8 crew ERT team for problems with cats
+#1 lead 4 med 1 eng 2 sec
+- type: ertCall
+  id: ErtOwO
+  path: ""
+
+
