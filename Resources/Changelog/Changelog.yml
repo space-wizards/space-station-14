@@ -1,10 +1,4 @@
 Entries:
-- author: RickiTIkkiTawwie
-  changes:
-  - {message: 'Added Ian''s backpack, bark! It has a 50% chance to spawn in HoP''s
-      locker with a round start.', type: Add}
-  id: 3454
-  time: '2023-04-19T07:40:25.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Implanter removal speed increased, type: Tweak}
@@ -2911,3 +2905,8 @@ Entries:
   - {message: You can clobber people with the seclite now, type: Tweak}
   id: 3953
   time: '2023-06-06T21:21:19.0000000+00:00'
+- author: Stealth16
+  changes:
+  - {message: Reduced the yield and growth rates of almost every plant., type: Tweak}
+  id: 3954
+  time: '2023-06-07T03:48:08.0000000+00:00'
