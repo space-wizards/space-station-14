@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Doubled salvage expedition times., type: Tweak}
-  - {message: Fixed salvage structure localisation., type: Fix}
-  id: 3465
-  time: '2023-04-20T05:51:10.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: fixed apc toggle not working, type: Fix}
-  id: 3466
-  time: '2023-04-20T06:27:59.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'The Ripley now moves faster, but is less effective in combat and breaching.',
@@ -2906,3 +2895,15 @@ Entries:
   - {message: Added cargo pallets to the cargo product console., type: Add}
   id: 3964
   time: '2023-06-07T19:40:30.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'APCs are now limited to 24kW of power, their breakers will pop if they
+      provide more than that.', type: Tweak}
+  id: 3965
+  time: '2023-06-07T19:43:55.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed microwaves defaulting to 5 seconds when the ui said instant.,
+    type: Fix}
+  id: 3966
+  time: '2023-06-07T19:44:42.0000000+00:00'
