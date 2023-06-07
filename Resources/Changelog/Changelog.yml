@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added samurai dogi to EMAGGED Autodrobe., type: Add}
-  id: 3460
-  time: '2023-04-19T14:27:39.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added a caves biome., type: Add}
@@ -2908,3 +2903,8 @@ Entries:
   - {message: Fixed slime and diona brute damage color, type: Fix}
   id: 3959
   time: '2023-06-07T08:57:49.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed missing text for the cogchamp effect in the bar guide., type: Fix}
+  id: 3960
+  time: '2023-06-07T09:52:24.0000000+00:00'
