@@ -534,8 +534,8 @@
       amount: 1
   products:
     ManlyDorf: 3
-- type: reaction
 
+- type: reaction
   id: Margarita
   reactants:
     Tequila:
@@ -864,3 +864,31 @@
       amount: 1
   products:
     Pilk: 2
+
+- type: reaction
+  id: TheMartinez
+  reactants:
+    Cola:
+      amount: 2
+    Vodka:
+      amount: 2
+    Ice:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+  products:
+    TheMartinez: 6
+
+- type: reaction
+  id: Cola
+  reactants:
+    Ipecac:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Cola: 4

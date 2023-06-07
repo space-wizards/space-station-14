@@ -9,6 +9,9 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     size: 50
   - type: MechEquipment
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: MechEquipmentGrabber
@@ -24,3 +27,25 @@
   - type: ContainerContainer
     containers:
       item-container: !type:Container
+
+- type: entity
+  id: MechEquipmentHorn
+  parent: BaseMechEquipment
+  name: mech horn
+  description: An enhanced bike horn that plays a hilarious array of sounds for the enjoyment of the crew. HONK!
+  components:
+  - type: Sprite
+    # TODO: use own sprite
+    state: mecha_honker
+  - type: MechSoundboard
+    sounds:
+    - collection: BikeHorn
+    - collection: CluwneHorn
+    - collection: TrollAnimals
+    - collection: TrollBeeping
+    - collection: TrollEsword
+  - type: UIFragment
+    ui: !type:MechSoundboardUi
+  - type: UseDelay
+    delay: 0.5
+  # TODO: tag as being for H.O.N.K. only!!!

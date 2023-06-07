@@ -103,6 +103,7 @@
     - SciDrobeInventory
     - SecDrobeInventory
     - ViroDrobeInventory
+    - WinterDrobeInventory
   - type: Sprite
     layers:
     - state: base
@@ -438,3 +439,19 @@
     - state: green_bit
       shader: unshaded
     - state: refill_honk
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockChemVend
+  name: ChemVend restock box
+  description: A box filled with chemicals and covered in dangerous-looking NFPA diamonds. Load it into a ChemVend to begin.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - ChemVendInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_medical

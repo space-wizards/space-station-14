@@ -1,0 +1,45 @@
+- type: entity
+  parent: BaseItem
+  id: MrChips
+  name: mr chips
+  suffix: Dummy
+  description: It's a dummy, dummy!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Fun/mrchips.rsi
+    layers:
+    - state: icon
+  - type: Input
+    context: "human"
+  - type: DoAfter
+  - type: PuppetDummy
+  - type: Item
+    size: 30
+  - type: Muted
+  - type: TypingIndicator
+    proto: robot
+  - type: Actions
+  - type: MobState
+    allowedStates:
+      - Alive
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/boxingpunch1.ogg
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 2
+
+- type: entity
+  parent: MrChips
+  id: MrDips
+  name: mr dips
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Fun/mrdips.rsi
+    layers:
+    - state: icon

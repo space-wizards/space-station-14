@@ -107,6 +107,11 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
+  - type: Faction
+    factions:
+      - PetsNT
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Grammar
     attributes:
       gender: female
@@ -120,6 +125,9 @@
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
+  - type: Faction
+    factions:
+      - PetsNT
   - type: Grammar
     attributes:
       gender: male
@@ -135,14 +143,15 @@
   components:
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 40
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 40
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Grammar
     attributes:
       gender: male
@@ -178,14 +187,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 12
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 12
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: cat
@@ -236,14 +246,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 20
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: puppy
@@ -334,14 +345,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: Inventory
     speciesId: dog
@@ -494,14 +506,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 130
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -563,9 +576,110 @@
     - FootstepSound
   - type: GhostRole
     prob: 0.25
-    name: Willow the kangaroo
-    description: |
-      You're a kangaroo named willow! willow likes to box.
+    name: ghost-role-information-willow-name
+    description: ghost-role-information-willow-description
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
+
+- type: entity
+  name: Smile
+  id: MobSlimesPet
+  parent: MobAdultSlimes
+  description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/slimes.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: rainbow_baby_slime
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: aslime-_3
+      shader: unshaded
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Effects/Footsteps/slime1.ogg
+      params:
+        volume: -6
+  - type: Tag
+    tags:
+    - FootstepSound
+    - DoorBumpOpener
+    - CannotSuicide
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: rainbow_baby_slime
+        BaseUnshaded: aslime-_3
+      Dead:
+        Base: rainbow_baby_slime_dead
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodMeatSlime
+      amount: 1
+    - id: MaterialSmileExtract
+      amount: 1
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: SlimePet
+  - type: Bloodstream
+    bloodMaxVolume: 150
+    bloodReagent: Slime
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.8
+  - type: Temperature
+    heatDamageThreshold: 800
+    coldDamageThreshold: 0
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Weapons/punch3.ogg
+    angle: 0
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 1
+        Caustic: 1
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-slime
+  - type: MobPrice
+    price: 3000 # it is a truly valuable creature
+
+- type: entity
+  name: Pun Pun
+  parent: MobMonkey
+  id: MobMonkeyPunpun
+  description: A prominent representative of monkeys with unlimited access to alcohol.
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-punpun-name
+    description: ghost-role-information-punpun-description
+  - type: GhostTakeoverAvailable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    - id: DrinkTequilaBottleFull
+      amount: 1
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+  - type: Loadout
+    prototypes: [ MobMonkeyGear ]

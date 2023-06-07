@@ -168,6 +168,9 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     {
         if (Resolve(uid, ref component, false))
         {
+            if (component.Coordinates.Equals(coordinates))
+                return component;
+
             component.PathfindToken?.Cancel();
             component.PathfindToken = null;
             component.CurrentPath.Clear();
@@ -345,6 +348,17 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         }
         DebugTools.Assert(!float.IsNaN(interest[0]));
 
+        // Don't steer too frequently to avoid twitchiness.
+        // This should also implicitly solve tie situations.
+        // I think doing this after all the ops above is best?
+        // Originally I had it way above but sometimes mobs would overshoot their tile targets.
+
+        if (!forceSteer && steering.NextSteer > curTime)
+        {
+            SetDirection(mover, steering, steering.LastSteerDirection, false);
+            return;
+        }
+
         // Avoid static objects like walls
         CollisionAvoidance(uid, offsetRot, worldPos, agentRadius, layer, mask, xform, danger, dangerPoints, bodyQuery, xformQuery);
         DebugTools.Assert(!float.IsNaN(danger[0]));
@@ -371,17 +385,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         if (desiredDirection != -1)
         {
             resultDirection = new Angle(desiredDirection * InterestRadians).ToVec();
-        }
-
-        // Don't steer too frequently to avoid twitchiness.
-        // This should also implicitly solve tie situations.
-        // I think doing this after all the ops above is best?
-        // Originally I had it way above but sometimes mobs would overshoot their tile targets.
-
-        if (!forceSteer && steering.NextSteer > curTime)
-        {
-            SetDirection(mover, steering, steering.LastSteerDirection, false);
-            return;
         }
 
         steering.NextSteer = curTime + TimeSpan.FromSeconds(1f / NPCSteeringComponent.SteeringFrequency);

@@ -2,8 +2,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Content.Server.Administration.Managers;
-using Content.Server.CPUJob.JobQueues;
-using Content.Server.CPUJob.JobQueues.Queues;
+using Robust.Shared.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Content.Server.NPC.Systems;
@@ -13,6 +13,8 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.HTN;
 
@@ -21,9 +23,10 @@ public sealed class HTNSystem : EntitySystem
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
+    [Dependency] private readonly NPCUtilitySystem _utility = default!;
 
     private ISawmill _sawmill = default!;
-    private readonly JobQueue _planQueue = new();
+    private readonly JobQueue _planQueue = new(0.004);
 
     private readonly HashSet<ICommonSession> _subscribers = new();
 
@@ -205,6 +208,7 @@ public sealed class HTNSystem : EntitySystem
 
                 if (comp.Plan == null || newPlanBetter)
                 {
+                    comp.CheckServices = false;
                     comp.Plan?.CurrentTask.Operator.Shutdown(comp.Blackboard, HTNOperatorStatus.BetterPlan);
                     comp.Plan = comp.PlanningJob.Result;
 
@@ -236,6 +240,11 @@ public sealed class HTNSystem : EntitySystem
                         }, session.ConnectedClient);
                     }
                 }
+                // Keeping old plan
+                else
+                {
+                    comp.CheckServices = true;
+                }
 
                 comp.PlanningJob = null;
                 comp.PlanningToken = null;
@@ -251,7 +260,7 @@ public sealed class HTNSystem : EntitySystem
         // If it's the selected BTR then highlight.
         for (var i = 0; i < btr.Count; i++)
         {
-            text.Append('-');
+            text.Append("--");
         }
 
         text.Append(' ');
@@ -272,7 +281,7 @@ public sealed class HTNSystem : EntitySystem
             {
                 var branch = branches[i];
                 btr.Add(i);
-                text.AppendLine($" branch {string.Join(" ", btr)}:");
+                text.AppendLine($" branch {string.Join(", ", btr)}:");
 
                 foreach (var sub in branch)
                 {
@@ -313,7 +322,21 @@ public sealed class HTNSystem : EntitySystem
         {
             // Run the existing operator
             var currentOperator = component.Plan.CurrentOperator;
+            var currentTask = component.Plan.CurrentTask;
             var blackboard = component.Blackboard;
+
+            // Service still on cooldown.
+            if (component.CheckServices)
+            {
+                foreach (var service in currentTask.Services)
+                {
+                    var serviceResult = _utility.GetEntities(blackboard, service.Prototype);
+                    blackboard.SetValue(service.Key, serviceResult.GetHighest());
+                }
+
+                component.CheckServices = false;
+            }
+
             status = currentOperator.Update(blackboard, frameTime);
 
             switch (status)

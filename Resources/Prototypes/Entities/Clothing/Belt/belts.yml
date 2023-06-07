@@ -11,6 +11,7 @@
   - type: Clothing
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
+    capacity: 45
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -26,15 +27,18 @@
         - CigPack
         - Radio
         - HolofanProjector
+        - Multitool
         - AppraisalTool
       components:
         - AirlockPainter
-        - SignalLinker
+        - NetworkConfigurator
         - RCD
         - RCDAmmo
         - Welder
         - PowerCell
         - Geiger
+        - TrayScanner
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
       drill:
@@ -63,8 +67,8 @@
           - Wrench
       multitool:
         whitelist:
-          components:
-          - SignalLinker
+          tags:
+            - Multitool
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
 
@@ -79,7 +83,7 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
-    capacity: 100
+    capacity: 105
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -96,10 +100,11 @@
         - CigPack
         - Radio
         - HolofanProjector
+        - Multitool
         - AppraisalTool
       components:
         - AirlockPainter
-        - SignalLinker
+        - NetworkConfigurator
         - RCD
         - RCDAmmo
         - Welder
@@ -107,6 +112,8 @@
         - Handcuff
         - PowerCell
         - Geiger
+        - TrayScanner
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
       drill:
@@ -135,8 +142,8 @@
           - Screwdriver
       multitool:
         whitelist:
-          components:
-          - SignalLinker
+          tags:
+            - Multitool
       wrench:
         whitelist:
           tags:
@@ -243,6 +250,7 @@
         - CigPack
         - PillCanister
         - Radio
+        - DiscreteHealthAnalyzer
       components:
         - Hypospray
         - Injector
@@ -303,6 +311,7 @@
         - PlantSampleTaker
         - PlantBGone
         - Bottle
+        - Syringe
         - CigPack
       components:
         - Seed
@@ -476,6 +485,17 @@
 
 - type: entity
   parent: ClothingBeltStorageBase
+  id: ClothingBeltMercWebbing
+  name: mercenarie webbing
+  description: Ideal for storing everything from ammo to weapons and combat essentials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/mercwebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/mercwebbing.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
   id: ClothingBeltSalvageWebbing
   name: salvage rig
   description: Universal unloading system for work in space.
@@ -517,6 +537,9 @@
   name: suspenders
   description: For holding your pants up.
   components:
+  - type: Tag
+    tags:
+    - MimeBelt
   - type: Sprite
     sprite: Clothing/Belt/suspenders.rsi
     state: icon

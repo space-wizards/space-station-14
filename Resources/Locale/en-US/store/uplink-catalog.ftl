@@ -1,12 +1,12 @@
 # Weapons
 uplink-pistol-viper-name = Viper
-uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Use pistol magazines (.35 auto).
+uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses pistol magazines (.35 auto).
 
 uplink-revolver-python-name = Python
 uplink-revolver-python-desc = A loud and deadly revolver. Uses .45 Magnum.
 
 uplink-pistol-cobra-name = Cobra
-uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
+uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Uses pistol magazines (.25 caseless).
 
 uplink-rifle-mosin-name = Surplus Rifle
 uplink-rifle-mosin-desc = A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
@@ -19,6 +19,9 @@ uplink-edagger-desc = A small energy blade conveniently disguised in the form of
 
 uplink-fire-axe-flaming-name = Fire Axe
 uplink-fire-axe-flaming-desc = A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire.
+
+uplink-gloves-north-star-name = Gloves of the North Star
+uplink-gloves-north-star-desc = A pair of gloves that reduce your punching cooldown drastically, allowing you to beat people to death in a flurry of punches.
 
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
@@ -166,6 +169,12 @@ uplink-banana-peel-explosive-desc = They will burst into laughter when they slip
 uplink-hot-potato-name = Hot Potato
 uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only passed to someone else!
 
+uplink-chimp-ammo-name = Box of 10 Omega Cartridges.
+uplink-chimp-ammo-desc = A box of 10 omega particle cartridges for the CHIMP. Omega particles inflict severe burns and cause anomalies to go supercritical.
+
+uplink-proximity-mine-name = Proximity Mine
+uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
@@ -176,7 +185,7 @@ uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slip
 uplink-clothing-thieving-gloves-name = Thieving Gloves
 uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and increase your thieving technique with these fancy new gloves, all while looking like normal gloves!
 
-uplink-clothing-outer-vest-web-name = Web West
+uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
 
 uplink-hardsuit-syndie-name = Syndicate Hardsuit
@@ -217,7 +226,7 @@ uplink-stimkit-name = Stimkit
 uplink-stimkit-desc = A medkit containing 6 stimulant microinjectors, which each inject you with enough stimulants to last for a minute.
 
 uplink-experimental-stimpack-name = Experimental Stimpack
-uplink-experimental-stimpack-desc = A prototype version of the Stimpack pulled from the market due to extreme side effects. Effects include virtual immunity to stuns, massively increased movement speed, and rapid tissue regeneration, but the chemical will constantly poison you while in your bloodstream.
+uplink-experimental-stimpack-desc = A highly unstable and toxic stimpack, use at your own risk. Effects include virtual immunity to stuns, massively increased movement speed, and rapid tissue regeneration, but the chemical will constantly poison you while in your bloodstream.
 
 uplink-syndicate-segway-crate-name = Syndicate Segway
 uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
@@ -252,4 +261,10 @@ uplink-operative-skirt-desc = A skirt given to our nuclear operatives with fine 
 
 uplink-balloon-name = Syndie Balloon
 uplink-balloon-desc = Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
+
+uplink-scarf-syndie-red-name = striped syndicate red scarf
+uplink-scarf-syndie-red-desc = A stylish striped syndicate red scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
+
+uplink-scarf-syndie-green-name = striped syndicate green scarf
+uplink-scarf-syndie-green-desc = A stylish striped syndicate green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
 

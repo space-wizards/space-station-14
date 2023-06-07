@@ -4,7 +4,6 @@
   parent: SimpleMobBase
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
-  suffix: Good
   components:
   - type: Faction
     factions:
@@ -20,14 +19,15 @@
       state: blue_adult_slime
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.30
-      density: 80
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -38,6 +38,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/slime1.ogg
+      params:
+        volume: 3
   - type: Tag
     tags:
     - FootstepSound
@@ -111,15 +113,11 @@
   - type: ReplacementAccent
     accent: slimes
   - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: ghost-role-information-slimes-name
-    description: ghost-role-information-slimes-description
 
 - type: entity
   name: blue slime
-  id: MobAdultSlimesBlueGood
+  id: MobAdultSlimesBlue
   parent: MobAdultSlimes
-  suffix: Good
   components:
   - type: DamageStateVisuals
     states:
@@ -127,6 +125,10 @@
         Base: blue_adult_slime
       Dead:
         Base: blue_adult_slime_dead
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-slimes-name
+    description: ghost-role-information-slimes-description
 
 - type: entity
   name: blue slime
@@ -143,12 +145,15 @@
           Base: blue_adult_slime
         Dead:
           Base: blue_adult_slime_dead
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-slimes-name
+      description: ghost-role-information-angry-slimes-description
 
 - type: entity
   name: green slime
   parent: MobAdultSlimes
-  id: MobAdultSlimesGreenGood
-  suffix: Good
+  id: MobAdultSlimesGreen
   components:
     - type: Sprite
       layers:
@@ -167,6 +172,10 @@
           Structural: 4
           Caustic: 1
           Poison: 4
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-slimes-name
+      description: ghost-role-information-slimes-description
 
 - type: entity
   name: green slime
@@ -194,12 +203,15 @@
           Structural: 4
           Caustic: 1
           Poison: 4
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-slimes-name
+      description: ghost-role-information-angry-slimes-description
 
 - type: entity
   name: yellow slime
   parent: MobAdultSlimes
-  id: MobAdultSlimesYellowGood
-  suffix: Good
+  id: MobAdultSlimesYellow
   components:
     - type: Sprite
       layers:
@@ -218,6 +230,10 @@
           Structural: 4
           Caustic: 1
           Cellular: 3
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-slimes-name
+      description: ghost-role-information-slimes-description
 
 - type: entity
   name: yellow slime
@@ -245,3 +261,7 @@
           Structural: 4
           Caustic: 1
           Cellular: 3
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-slimes-name
+      description: ghost-role-information-angry-slimes-description

@@ -99,6 +99,9 @@
       Manipulator: 3
     materialRequirements:
       Glass: 5
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: UniformPrinterMachineCircuitboard
@@ -388,18 +391,12 @@
         MatterBin: 2
         Manipulator: 1
       tagRequirements:
-        Pipe:
-          Amount: 1
-          DefaultPrototype: GasPipeStraight
-          ExamineName: pipe
-        BorgArm:
-          Amount: 3
-          DefaultPrototype: LeftArmBorg
-          ExamineName: borg arm
         Knife:
-          Amount: 3
+          Amount: 2
           DefaultPrototype: KitchenKnife
-          ExamineName: knife
+          ExamineName: Knife
+      materialRequirements:
+        Steel: 5
 
 - type: entity
   id: HydroponicsTrayMachineCircuitboard
@@ -454,6 +451,50 @@
         Capacitor: 5
 
 - type: entity
+  id: CellRechargerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cell recharger machine board
+  description: A machine printed circuit board for a cell recharger.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+    - type: MachineBoard
+      prototype: PowerCellRecharger
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        Cable: 5
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 30
+        Plastic: 30
+    - type: StaticPrice
+      price: 15
+
+- type: entity
+  id: WeaponCapacitorRechargerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: recharger machine board
+  description: A machine printed circuit board for a recharger.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+    - type: MachineBoard
+      prototype: WeaponCapacitorRecharger
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        CableMV: 5
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 30
+        Plastic: 30
+    - type: StaticPrice
+      price: 15
+
+- type: entity
   id: SubstationMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: substation machine board
@@ -471,6 +512,8 @@
         Glass: 200
       chemicalComposition:
         Silicon: 20
+    - type: StaticPrice
+      price: 58
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -777,6 +820,21 @@
             Amount: 1
             DefaultPrototype: Beaker
             ExamineName: Glass Beaker
+
+- type: entity
+  id: CargoTelepadMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cargo telepad machine board
+  description: A machine printed circuit board for a cargo telepad.
+  components:
+    - type: Sprite
+      state: supply
+    - type: MachineBoard
+      prototype: CargoTelepad
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        Steel: 5
 
 - type: entity
   id: SodaDispenserMachineCircuitboard

@@ -75,6 +75,8 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
+  - type: ExaminableSolution
+    solution: drink
 
 # Transformable container - normal glass
 - type: entity
@@ -523,23 +525,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/chocolateglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkCafeLatte
-  name: cafe latte
-  description: A nice, strong and tasty beverage while you are reading.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: CafeLatte
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -2201,3 +2186,19 @@
           Quantity: 30
         - ReagentId: CapsaicinOil
           Quantity: 5
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkTheMartinez
+  name: The Martinez glass
+  description: The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: TheMartinez
+              Quantity: 30
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/the_martinez.rsi

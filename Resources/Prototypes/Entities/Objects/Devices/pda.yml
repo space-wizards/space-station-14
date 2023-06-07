@@ -145,6 +145,9 @@
     scanDelay: 1.4
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   parent: BasePDA
@@ -239,19 +242,20 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      id: "slips"
-      hard: false
-      layer:
-      - SlipLayer
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      density: 5
-      mask:
-      - ItemMask
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        hard: false
+        layer:
+          - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 5
+        mask:
+        - ItemMask
 
 - type: entity
   parent: BasePDA
@@ -473,7 +477,10 @@
     scanDelay: 1.2
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
-      
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
+
 - type: entity
   parent: BasePDA
   id: ParamedicPDA
@@ -492,7 +499,7 @@
     scanDelay: 0.5
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
-      
+
 - type: entity
   parent: BasePDA
   id: ChemistryPDA
