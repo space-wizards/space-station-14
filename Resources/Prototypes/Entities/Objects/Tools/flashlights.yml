@@ -33,12 +33,6 @@
         isLooped: true
         property: Radius
         enabled: false
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: ToggleableLightVisuals
     spriteLayer: light
     inhandVisuals:
@@ -111,6 +105,10 @@
         shader: unshaded
         visible: false
         map: [ "light" ]
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Item
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight

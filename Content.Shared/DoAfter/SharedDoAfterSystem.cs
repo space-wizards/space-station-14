@@ -193,12 +193,15 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         id = new DoAfterId(args.User, comp.NextId++);
         var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 
-        if (args.BreakOnUserMove)
+        if (args.BreakOnUserMove || args.BreakOnTargetMove)
             doAfter.UserPosition = Transform(args.User).Coordinates;
 
         if (args.Target != null && args.BreakOnTargetMove)
+        {
             // Target should never be null if the bool is set.
-            doAfter.TargetPosition = Transform(args.Target.Value).Coordinates;
+            var targetPosition = Transform(args.Target.Value).Coordinates;
+            doAfter.UserPosition.TryDistance(EntityManager, targetPosition, out doAfter.TargetDistance);
+        }
 
         // For this we need to stay on the same hand slot and need the same item in that hand slot
         // (or if there is no item there we need to keep it free).

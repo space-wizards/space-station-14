@@ -59,4 +59,18 @@ public sealed class BlockingComponent : Component
     /// </summary>
     [DataField("blockSound")]
     public SoundSpecifier BlockSound = new SoundPathSpecifier("/Audio/Weapons/block_metal1.ogg");
+
+    /// <summary>
+    /// Fraction of original damage shield will take instead of user
+    /// when not blocking
+    /// </summary>
+    [DataField("passiveBlockFraction"), ViewVariables(VVAccess.ReadWrite)]
+    public float PassiveBlockFraction = 0.5f;
+
+    /// <summary>
+    /// Fraction of original damage shield will take instead of user
+    /// when blocking
+    /// </summary>
+    [DataField("activeBlockFraction"), ViewVariables(VVAccess.ReadWrite)]
+    public float ActiveBlockFraction = 1.0f;
 }

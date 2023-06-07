@@ -36,19 +36,21 @@
   - type: Physics
     bodyType: KinematicController
   - type: Clickable
+  - type: WiresPanel
   - type: Wires #we just want the panel
     BoardName: Mech
     LayoutId: Mech
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      density: 1000
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 1000
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Appearance
   - type: ContainerContainer
     containers:
@@ -61,6 +63,9 @@
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/mechmove03.ogg
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   id: MechRipley

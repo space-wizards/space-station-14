@@ -27,18 +27,16 @@ namespace Content.IntegrationTests.Tests
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Destructive = true});
             var server = pairTracker.Pair.Server;
 
-            IEntityManager entityMan = null;
-            var cfg = server.ResolveDependency<IConfigurationManager>();
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
+            var entityMan = server.ResolveDependency<IEntityManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var prototypeMan = server.ResolveDependency<IPrototypeManager>();
 
             await server.WaitPost(() =>
             {
-                entityMan = IoCManager.Resolve<IEntityManager>();
-                var mapManager = IoCManager.Resolve<IMapManager>();
-                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p=>!p.Abstract)
+                    .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
                 foreach (var protoId in protoIds)
@@ -64,7 +62,6 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -74,20 +71,17 @@ namespace Content.IntegrationTests.Tests
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Destructive = true});
             var server = pairTracker.Pair.Server;
             var map = await PoolManager.CreateTestMap(pairTracker);
-            IEntityManager entityMan = null;
 
-            var cfg = server.ResolveDependency<IConfigurationManager>();
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
+            var entityMan = server.ResolveDependency<IEntityManager>();
+            var prototypeMan = server.ResolveDependency<IPrototypeManager>();
 
             await server.WaitPost(() =>
             {
-                entityMan = IoCManager.Resolve<IEntityManager>();
-                var mapManager = IoCManager.Resolve<IMapManager>();
 
-                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p=>!p.Abstract)
+                    .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
                 foreach (var protoId in protoIds)
@@ -108,7 +102,6 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -128,12 +121,12 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
             var sEntMan = server.ResolveDependency<IEntityManager>();
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, true));
             Assert.That(cfg.GetCVar(CVars.NetPVS), Is.False);
 
             var protoIds = prototypeMan
                 .EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
+                .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                 .Select(p => p.ID)
                 .ToList();
 
@@ -176,7 +169,6 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(sEntMan.EntityCount, Is.Zero);
             });
 
-            await server.WaitPost(() => cfg.SetCVar(CCVars.DisableGridFill, false));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -194,6 +186,10 @@ namespace Content.IntegrationTests.Tests
                 "MapGrid",
                 "StationData", // errors when removed mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
+                "BlobFloorPlanBuilder", // Implodes if unconfigured.
+                "DebrisFeaturePlacerController", // Above.
+                "LoadedChunk", // Worldgen chunk loading malding.
+                "BiomeSelection", // Whaddya know, requires config.
             };
 
             var testEntity = @"
@@ -219,7 +215,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["UnderPlating"];
+                var tileDefinition = tileDefinitionManager["Plating"];
                 var tile = new Tile(tileDefinition.TileId);
                 var coordinates = grid.ToCoordinates();
 
@@ -290,6 +286,10 @@ namespace Content.IntegrationTests.Tests
                 "MapGrid",
                 "StationData", // errors when deleted mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
+                "BlobFloorPlanBuilder", // Implodes if unconfigured.
+                "DebrisFeaturePlacerController", // Above.
+                "LoadedChunk", // Worldgen chunk loading malding.
+                "BiomeSelection", // Whaddya know, requires config.
             };
 
             var testEntity = @"
@@ -315,7 +315,7 @@ namespace Content.IntegrationTests.Tests
 
                 grid = mapManager.CreateGrid(mapId);
 
-                var tileDefinition = tileDefinitionManager["UnderPlating"];
+                var tileDefinition = tileDefinitionManager["Plating"];
                 var tile = new Tile(tileDefinition.TileId);
 
                 grid.SetTile(Vector2i.Zero, tile);

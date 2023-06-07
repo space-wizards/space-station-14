@@ -1,3 +1,4 @@
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -7,6 +8,9 @@ namespace Content.Server.Administration.Commands.Station;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class ListStationJobsCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entSysManager = default!;
+
     public string Command => "lsstationjobs";
 
     public string Description => "Lists all jobs on the given station.";
@@ -21,16 +25,16 @@ public sealed class ListStationJobsCommand : IConsoleCommand
             return;
         }
 
-        var stationSystem = EntitySystem.Get<StationSystem>();
-        var stationJobs = EntitySystem.Get<StationJobsSystem>();
+        var stationSystem = _entSysManager.GetEntitySystem<StationSystem>();
+        var stationJobs = _entSysManager.GetEntitySystem<StationJobsSystem>();
 
-        if (!int.TryParse(args[0], out var station) || !stationSystem.Stations.Contains(new EntityUid(station)))
+        if (!EntityUid.TryParse(args[0], out var station) || !_entityManager.HasComponent<StationJobsComponent>(station))
         {
             shell.WriteError(Loc.GetString("shell-argument-station-id-invalid", ("index", 1)));
             return;
         }
 
-        foreach (var (job, amount) in stationJobs.GetJobs(new EntityUid(station)))
+        foreach (var (job, amount) in stationJobs.GetJobs(station))
         {
             var amountText = amount is null ? "Infinite" : amount.ToString();
             shell.WriteLine($"{job}: {amountText}");

@@ -16,6 +16,7 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Weapons.Reflect;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -39,7 +40,6 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
-
 
     public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
@@ -67,8 +67,10 @@ public sealed partial class GunSystem : SharedGunSystem
     }
 
     public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
-        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null, bool throwItems = false)
+        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, out bool userImpulse, EntityUid? user = null, bool throwItems = false)
     {
+        userImpulse = true;
+
         // Try a clumsy roll
         // TODO: Who put this here
         if (TryComp<ClumsyComponent>(user, out var clumsy))
@@ -83,11 +85,12 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     // Apply salt to the wound ("Honk!")
                     Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gunUid);
-                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/bikehorn.ogg"), gunUid);
+                    Audio.PlayPvs(clumsy.ClumsySound, gunUid);
 
                     PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value);
                     _adminLogger.Add(LogType.EntityDelete, LogImpact.Medium, $"Clumsy fire by {ToPrettyString(user.Value)} deleted {ToPrettyString(gunUid)}");
                     Del(gunUid);
+                    userImpulse = false;
                     return;
                 }
             }
@@ -100,8 +103,8 @@ public sealed partial class GunSystem : SharedGunSystem
         var angle = GetRecoilAngle(Timing.CurTime, gun, mapDirection.ToAngle());
 
         // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
-        var fromEnt = MapManager.TryFindGridAt(fromMap, out var grid)
-            ? fromCoordinates.WithEntityId(grid.Owner, EntityManager)
+        var fromEnt = MapManager.TryFindGridAt(fromMap, out var gridUid, out var grid)
+            ? fromCoordinates.WithEntityId(gridUid, EntityManager)
             : new EntityCoordinates(MapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
 
         // Update shot based on the recoil
@@ -118,7 +121,7 @@ public sealed partial class GunSystem : SharedGunSystem
             // pneumatic cannon doesn't shoot bullets it just throws them, ignore ammo handling
             if (throwItems && ent != null)
             {
-                ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, user);
+                ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user);
                 continue;
             }
 
@@ -136,14 +139,14 @@ public sealed partial class GunSystem : SharedGunSystem
                             for (var i = 0; i < cartridge.Count; i++)
                             {
                                 var uid = Spawn(cartridge.Prototype, fromEnt);
-                                ShootOrThrow(uid, angles[i].ToVec(), gunVelocity, gun, user);
+                                ShootOrThrow(uid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
                                 shotProjectiles.Add(uid);
                             }
                         }
                         else
                         {
                             var uid = Spawn(cartridge.Prototype, fromEnt);
-                            ShootOrThrow(uid, mapDirection, gunVelocity, gun, user);
+                            ShootOrThrow(uid, mapDirection, gunVelocity, gun, gunUid, user);
                             shotProjectiles.Add(uid);
                         }
 
@@ -161,6 +164,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                     else
                     {
+                        userImpulse = false;
                         Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
                     }
 
@@ -175,7 +179,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     shotProjectiles.Add(ent!.Value);
                     MuzzleFlash(gunUid, newAmmo, user);
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
-                    ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, user);
+                    ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user);
                     break;
                 case HitscanPrototype hitscan:
 
@@ -185,30 +189,34 @@ public sealed partial class GunSystem : SharedGunSystem
                     var fromEffect = fromCoordinates; // can't use map coords above because funny FireEffects
                     var dir = mapDirection.Normalized;
                     var lastUser = user;
-                    for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
+
+                    if (hitscan.Reflective != ReflectType.None)
                     {
-                        var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
-                        var rayCastResults =
-                            Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
-                        if (!rayCastResults.Any())
-                            break;
+                        for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
+                        {
+                            var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
+                            var rayCastResults =
+                                Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
+                            if (!rayCastResults.Any())
+                                break;
 
-                        var result = rayCastResults[0];
-                        var hit = result.HitEntity;
-                        lastHit = hit;
+                            var result = rayCastResults[0];
+                            var hit = result.HitEntity;
+                            lastHit = hit;
 
-                        FireEffects(fromEffect, result.Distance, dir.Normalized.ToAngle(), hitscan, hit);
+                            FireEffects(fromEffect, result.Distance, dir.Normalized.ToAngle(), hitscan, hit);
 
-                        var ev = new HitScanReflectAttemptEvent(dir, false);
-                        RaiseLocalEvent(hit, ref ev);
+                            var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
+                            RaiseLocalEvent(hit, ref ev);
 
-                        if (!ev.Reflected)
-                            break;
+                            if (!ev.Reflected)
+                                break;
 
-                        fromEffect = Transform(hit).Coordinates;
-                        from = fromEffect.ToMap(EntityManager, _transform);
-                        dir = ev.Direction;
-                        lastUser = hit;
+                            fromEffect = Transform(hit).Coordinates;
+                            from = fromEffect.ToMap(EntityManager, _transform);
+                            dir = ev.Direction;
+                            lastUser = hit;
+                        }
                     }
 
                     if (lastHit != null)
@@ -219,7 +227,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         var dmg = hitscan.Damage;
 
-                        string hitName = ToPrettyString(hitEntity);
+                        var hitName = ToPrettyString(hitEntity);
                         if (dmg != null)
                             dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
 
@@ -243,7 +251,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             else
                             {
                                 Logs.Add(LogType.HitScanHit,
-                                    $"Hit {hitName:target} using hitscan and dealt {dmg.Total:damage} damage");
+                                    $"{hitName:target} hit by hitscan dealing {dmg.Total:damage} damage");
                             }
                         }
                     }
@@ -265,7 +273,7 @@ public sealed partial class GunSystem : SharedGunSystem
         });
     }
 
-    private void ShootOrThrow(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, GunComponent gun, EntityUid? user)
+    private void ShootOrThrow(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, GunComponent gun, EntityUid gunUid, EntityUid? user)
     {
         // Do a throw
         if (!HasComp<ProjectileComponent>(uid))
@@ -276,10 +284,10 @@ public sealed partial class GunSystem : SharedGunSystem
             return;
         }
 
-        ShootProjectile(uid, mapDirection, gunVelocity, user, gun.ProjectileSpeed);
+        ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, gun.ProjectileSpeed);
     }
 
-    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid? user = null, float speed = 20f)
+    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid gunUid, EntityUid? user = null, float speed = 20f)
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
         Physics.SetBodyStatus(physics, BodyStatus.InAir);
@@ -293,6 +301,7 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             var projectile = EnsureComp<ProjectileComponent>(uid);
             Projectiles.SetShooter(projectile, user.Value);
+            projectile.Weapon = gunUid;
         }
 
         TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());
@@ -394,7 +403,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         if (xformQuery.TryGetComponent(gridUid, out var gridXform))
         {
-            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridUid.Value, xformQuery);
+            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
 
             fromCoordinates = new EntityCoordinates(gridUid.Value,
                 gridInvMatrix.Transform(fromCoordinates.ToMapPos(EntityManager, TransformSystem)));
