@@ -1,10 +1,4 @@
 Entries:
-- author: BurninDreamer
-  changes:
-  - {message: The Syndicate has half-priced all of their non-bundled guns as per request
-      of several (hundred) agents., type: Tweak}
-  id: 3462
-  time: '2023-04-20T02:49:26.0000000+00:00'
 - author: Nimfar
   changes:
   - {message: Added the new elite SWAT gas mask., type: Add}
@@ -2908,3 +2902,9 @@ Entries:
       and hamster using a grinder.', type: Add}
   id: 3961
   time: '2023-06-07T13:04:37.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: The PDA ringtone now permits deleting/rewriting notes instead of requiring
+      copypasting., type: Tweak}
+  id: 3962
+  time: '2023-06-07T14:22:19.0000000+00:00'
