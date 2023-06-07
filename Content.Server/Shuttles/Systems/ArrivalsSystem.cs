@@ -154,6 +154,13 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void OnArrivalsFTL(EntityUid shuttleUid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
     {
+        if (!TryGetArrivals(out EntityUid arrivals) || !TryComp<TransformComponent>(arrivals, out var arrivalsXform))
+            return;
+
+        // Don't do anything here when leaving arrivals.
+        if (args.FromMapUid == arrivalsXform.MapUid)
+            return;
+
         // Any mob then yeet them off the shuttle.
         if (!_cfgManager.GetCVar(CCVars.ArrivalsReturns) && args.FromMapUid != null)
         {
@@ -164,13 +171,22 @@ public sealed class ArrivalsSystem : EntitySystem
             DumpChildren(shuttleUid, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
 
+        // if (!TryComp<StationDataComponent>(component.Station, out var data))
+        //     return;
+        //
+        // var targetGrid = _station.GetLargestGrid(data);
         var pendingQuery = AllEntityQuery<PendingClockInComponent, TransformComponent>();
 
         // Clock them in when they FTL
         while (pendingQuery.MoveNext(out var pUid, out _, out var xform))
         {
             // Cheaper to iterate pending arrivals than all children
-            if (xform.GridUid != shuttleUid)
+            if (xform.GridUid == shuttleUid)
+            {
+                // Teleport them on to the station.
+                TeleportToMapSpawn(pUid, component.Station, xform);
+            }
+            if (xform.MapUid == arrivalsXform.MapUid)
                 continue;
 
             RemCompDeferred<PendingClockInComponent>(pUid);
@@ -241,6 +257,41 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
+    private bool TeleportToMapSpawn(EntityUid player, EntityUid stationId, TransformComponent? transform = null)
+    {
+        if (!Resolve(player, ref transform))
+            return false;
+
+        var points = EntityQuery<SpawnPointComponent, TransformComponent>().ToList();
+        _random.Shuffle(points);
+
+        // Find a spawnpoint on the same map as the player is already on now.
+        foreach (var (spawnPoint, xform) in points)
+        {
+            if (spawnPoint.SpawnType != SpawnPointType.LateJoin || _station.GetOwningStation(spawnPoint.Owner, xform) != stationId)
+                continue;
+
+            // Move the player to the spawnpoint.
+            transform.Coordinates = xform.Coordinates;
+
+            return true;
+        }
+
+        // Spawn them at a passenger location
+        foreach (var (spawnPoint, xform) in points)
+        {
+            if (spawnPoint?.Job?.ID != "Passenger" || _station.GetOwningStation(spawnPoint.Owner, xform) != stationId)
+                continue;
+
+            // Move the player to the spawnpoint.
+            transform.Coordinates = xform.Coordinates;
+
+            return true;
+        }
+
+        return false;
+    }
+
     private void OnShuttleStartup(EntityUid uid, ArrivalsShuttleComponent component, ComponentStartup args)
     {
         EnsureComp<PreventPilotComponent>(uid);
@@ -261,6 +312,20 @@ public sealed class ArrivalsSystem : EntitySystem
         }
 
         return false;
+    }
+
+    public TimeSpan? NextShuttleArrival()
+    {
+        var query = EntityQueryEnumerator<ArrivalsShuttleComponent>();
+        var time = TimeSpan.MaxValue;
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.NextArrivalsTime < time)
+                time = comp.NextArrivalsTime;
+        }
+
+        var duration = _ticker.RoundDuration();
+        return (time < duration) ? null : time - _ticker.RoundDuration();
     }
 
     public override void Update(float frameTime)
@@ -286,11 +351,15 @@ public sealed class ArrivalsSystem : EntitySystem
                 if (comp.NextTransfer > curTime || !TryComp<StationDataComponent>(comp.Station, out var data))
                     continue;
 
+                var tripTime = ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime ;
+
                 // Go back to arrivals source
                 if (xform.MapUid != arrivalsXform.MapUid)
                 {
                     if (arrivals.IsValid())
                         _shuttles.FTLTravel(uid, shuttle, arrivals, dock: true);
+
+                    comp.NextArrivalsTime = _ticker.RoundDuration() + TimeSpan.FromSeconds(tripTime);
                 }
                 // Go to station
                 else
@@ -299,6 +368,11 @@ public sealed class ArrivalsSystem : EntitySystem
 
                     if (targetGrid != null)
                         _shuttles.FTLTravel(uid, shuttle, targetGrid.Value, dock: true);
+
+                    // The ArrivalsCooldown includes the trip there, so we only need to add the time taken for
+                    // the trip back.
+                    comp.NextArrivalsTime = _ticker.RoundDuration() +
+                         TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown) + tripTime);
                 }
 
                 comp.NextTransfer += TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
