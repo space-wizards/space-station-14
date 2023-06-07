@@ -454,6 +454,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         {
             if (zombie.Family.Rules == EntityUid.Invalid)
             {
+                // Note that we add this zombie to the new rules, but we don't count them towards the num infected. They
+                // are not inhabited by a player. Were we to count them, we should probably also check they are still
+                // alive.
                 zombie.Family.Rules = uid;
                 zombie.Settings = rules.EarlySettings;
                 zombie.VictimSettings = rules.VictimSettings;
