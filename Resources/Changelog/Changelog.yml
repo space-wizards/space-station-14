@@ -1,12 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added a caves biome., type: Add}
-  - {message: Added salvage expeditions. Salvagers can now travel to a planet for
-      a limited time and bring back loot., type: Add}
-  - {message: Added support for procedural mob spawning on planets., type: Add}
-  id: 3461
-  time: '2023-04-20T01:23:26.0000000+00:00'
 - author: BurninDreamer
   changes:
   - {message: The Syndicate has half-priced all of their non-bundled guns as per request
@@ -2908,3 +2900,11 @@ Entries:
   - {message: Fixed missing text for the cogchamp effect in the bar guide., type: Fix}
   id: 3960
   time: '2023-06-07T09:52:24.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: 'Added new reagent: Fat.', type: Add}
+  - {message: Added reactions for creating soap and meat., type: Add}
+  - {message: 'Added the ability to get fat from raw meat, cutlets, body parts, mice
+      and hamster using a grinder.', type: Add}
+  id: 3961
+  time: '2023-06-07T13:04:37.0000000+00:00'
