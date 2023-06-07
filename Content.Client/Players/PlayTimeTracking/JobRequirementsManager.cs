@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text;
+using Content.Client.Administration.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
@@ -20,6 +20,7 @@ public sealed class JobRequirementsManager
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
     private readonly List<string> _roleBans = new();
@@ -78,6 +79,10 @@ public sealed class JobRequirementsManager
         Updated?.Invoke();
     }
 
+    private bool IsBypassedChecks()
+    {
+        return _adminManager.IsActive();
+    }
     public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out string? reason)
     {
         reason = null;
@@ -106,7 +111,8 @@ public sealed class JobRequirementsManager
         {
             if (JobRequirements.TryRequirementMet(requirement, _roles, out reason, _prototypes))
                 continue;
-
+            if (IsBypassedChecks())
+                continue;
             if (!first)
                 reasonBuilder.Append('\n');
             first = false;
