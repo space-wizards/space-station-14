@@ -215,7 +215,7 @@ namespace Content.Client.Options.UI.Tabs
                 Loc.GetString("ui-options-volume-percent", ("volume", MasterVolumeSlider.Value / 100));
             MidiVolumeLabel.Text =
                 Loc.GetString("ui-options-volume-percent", ("volume", MidiVolumeSlider.Value / 100));
-           AmbientMusicVolumeLabel.Text =
+            AmbientMusicVolumeLabel.Text =
                 Loc.GetString("ui-options-volume-percent", ("volume", AmbientMusicVolumeSlider.Value / 100));
             AmbienceVolumeLabel.Text =
                 Loc.GetString("ui-options-volume-percent", ("volume", AmbienceVolumeSlider.Value / 100));

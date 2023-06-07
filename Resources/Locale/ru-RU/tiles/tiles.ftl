@@ -92,4 +92,4 @@ tiles-low-desert-floor = пол низинная пустыня
 tiles-grass-planet-floor = пол трава планеты
 tiles-basalt-floor = пол базальт
 tiles-snow-floor = пол снег
-tiles-wood3 = wood broken floor
+tiles-wood3 = пол сломанный деревянный
