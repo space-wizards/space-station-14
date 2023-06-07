@@ -1,34 +1,34 @@
 ﻿- type: typingIndicator
   id: default
   typingState: default0
-  idleState: default3 # Corvax-TypingIndicator
+  idleState: default2 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: robot
   typingState: robot0
-  idleState: robot3 # Corvax-TypingIndicator
+  idleState: robot2 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: alien
   typingState: alien0
-  idleState: alien3 # Corvax-TypingIndicator
+  idleState: alien2 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: guardian
   typingState: guardian0
-  idleState: guardian3 # Corvax-TypingIndicator
+  idleState: guardian2 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: holo
   typingState: holo0
-  idleState: holo3 # Corvax-TypingIndicator
+  idleState: holo2 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: lawyer
   typingState: lawyer0
-  idleState: lawyer3 # Corvax-TypingIndicator
+  idleState: lawyer2 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: moth
   typingState: moth0
-  idleState: moth3 # Corvax-TypingIndicator
+  idleState: moth2 # Corvax-TypingIndicator
