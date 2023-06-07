@@ -1,10 +1,4 @@
 Entries:
-- author: Floofi
-  changes:
-  - {message: Added hospital gowns to the medidrobe for use in medical and for prisoners
-      who refuse to wear clothes, type: Add}
-  id: 3458
-  time: '2023-04-19T07:43:57.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Reduced the power of anomaly vessel upgrades., type: Tweak}
@@ -2909,3 +2903,8 @@ Entries:
   - {message: Mice are no longer blood based juice boxes., type: Tweak}
   id: 3957
   time: '2023-06-07T03:53:41.0000000+00:00'
+- author: Rincew1nd
+  changes:
+  - {message: All the antag roles have briefing sounds now, type: Add}
+  id: 3958
+  time: '2023-06-07T07:15:23.0000000+00:00'
