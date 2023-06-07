@@ -43,7 +43,7 @@ public sealed class LogicGateSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushMarkup(Loc.GetString($"logic-gate-examine-{comp.Gate}"));
+        args.PushMarkup(Loc.GetString("logic-gate-examine", ("gate", comp.Gate.ToString().ToUpper())));
     }
 
     private void OnInteractUsing(EntityUid uid, LogicGateComponent comp, InteractUsingEvent args)
@@ -61,7 +61,8 @@ public sealed class LogicGateSystem : EntitySystem
 
         // notify the user
         _audio.PlayPvs(comp.CycleSound, uid);
-        _popup.PopupEntity(Loc.GetString($"logic-gate-cycle-{comp.Gate}"), uid, args.User);
+        var msg = Loc.GetString("logic-gate-cycle", ("gate", comp.Gate.ToString().ToUpper()));
+        _popup.PopupEntity(msg, uid, args.User);
         _appearance.SetData(uid, LogicGateVisuals.Gate, comp.Gate);
     }
 
