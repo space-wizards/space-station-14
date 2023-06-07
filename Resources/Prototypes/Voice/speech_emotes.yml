@@ -95,6 +95,21 @@
     - cries.
     - cries!
 
+- type: emote
+  id: Squish
+  category: Vocal
+  chatMessages: [squishing]
+  chatTriggers:
+    - squish
+    - squish.
+    - squish!
+    - squishing
+    - squishing.
+    - squishing!
+    - squishes
+    - squishes.
+    - squishes!
+
 # hand emotes
 - type: emote
   id: Clap

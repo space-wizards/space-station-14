@@ -16,6 +16,11 @@
     species: SlimePerson
   - type: Speech
     speechSounds: Slime
+  - type: Vocal
+    sounds:
+      Male: UnisexSlime
+      Female: UnisexSlime
+      Unsexed: UnisexSlime
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime

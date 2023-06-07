@@ -69,3 +69,8 @@
     - /Audio/Voice/Human/whistle_2.ogg
     - /Audio/Voice/Human/whistle_3.ogg
     - /Audio/Voice/Human/whistle_4.ogg
+
+- type: soundCollection
+  id: Squishes
+  files:
+    - /Audio/Voice/Slime/slime_squish.ogg
