@@ -48,6 +48,13 @@ public sealed class PendingZombieComponent : Component
     public float MinimumCritMultiplier = 10;
 
     /// <summary>
+    ///    When Initial Infected can first turn (copied from ZombieRuleComponent)
+    /// </summary>
+    [DataField("firstTurnAllowed"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan FirstTurnAllowed = TimeSpan.Zero;
+
+
+    /// <summary>
     /// How much the virus hurts you (base, scales rapidly)
     /// </summary>
     public DamageSpecifier VirusDamage => Settings.VirusDamage;

@@ -89,8 +89,6 @@ namespace Content.Server.Zombies
             var query = EntityQueryEnumerator<PendingZombieComponent, DamageableComponent, MobStateComponent>();
             var curTime = _timing.CurTime;
 
-            var cachedRules = new Dictionary<EntityUid, ZombieRuleComponent>();
-
             // Hurt the living infected
             while (query.MoveNext(out var uid, out var pending, out var damage, out var mobState))
             {
@@ -100,14 +98,8 @@ namespace Content.Server.Zombies
 
                 pending.NextTick = curTime;
 
-                ZombieRuleComponent? rules;
-                if (pending.Family.Rules != EntityUid.Invalid && (cachedRules.TryGetValue(pending.Family.Rules, out rules) || TryComp(pending.Family.Rules, out rules)))
-                {
-                    // Check it's not too early to zombify
-                    cachedRules[pending.Family.Rules] = rules;
-                    if (rules.FirstTurnAllowed != TimeSpan.Zero)
-                        continue;
-                }
+                if (pending.FirstTurnAllowed != TimeSpan.Zero)
+                    continue;
 
                 pending.InfectedSecs += 1;
                 // See if there should be a warning popup for the player.
@@ -267,16 +259,10 @@ namespace Content.Server.Zombies
 
         private void OnPendingMobState(EntityUid uid, PendingZombieComponent pending, MobStateChangedEvent args)
         {
-            if (args.NewMobState == MobState.Critical)
+            if (args.NewMobState != MobState.Alive)
             {
-                if (pending.Family.Rules != EntityUid.Invalid && TryComp<ZombieRuleComponent>(pending.Family.Rules, out var rules))
-                {
-                    // Check it's not too early to zombify
-                    if (rules.FirstTurnAllowed != TimeSpan.Zero)
-                    {
-                        return;
-                    }
-                }
+                if (pending.FirstTurnAllowed != TimeSpan.Zero)
+                    return;
 
                 // Immediately jump to an active virus when you crit
                 pending.InfectedSecs = Math.Max(0, pending.InfectedSecs);

@@ -340,12 +340,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
     private void OnZombifySelf(EntityUid uid, PendingZombieComponent pending, ZombifySelfActionEvent args)
     {
-        if (pending.Family.Rules != EntityUid.Invalid && TryComp<ZombieRuleComponent>(pending.Family.Rules, out var rules))
-        {
-            // Check it's not too early to zombify
-            if (rules.InfectInitialAt != TimeSpan.Zero)
-                return;
-        }
+        // Check it's not too early to zombify
+        if (pending.FirstTurnAllowed != TimeSpan.Zero)
+            return;
 
         _zombie.ZombifyEntity(uid, pending: pending);
 
@@ -522,6 +519,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 pending.Settings = rules.EarlySettings;
                 pending.VictimSettings = rules.VictimSettings;
                 pending.Family = new ZombieFamily() { Rules = uid, Generation = 0 };
+                pending.FirstTurnAllowed = rules.FirstTurnAllowed;
 
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
 
@@ -559,6 +557,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             // Don't change zombies that don't belong to these rules.
             if (pending.Family.Rules != ruleUid)
                 continue;
+
+            pending.FirstTurnAllowed = TimeSpan.Zero;
 
             if (mobState.CurrentState == MobState.Dead)
             {
