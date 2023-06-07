@@ -94,8 +94,8 @@ public sealed class CCCVars
     /// <summary>
     /// TTS request timeout in seconds.
     /// </summary>
-    public static readonly CVarDef<double> TTSRequestTimeout =
-        CVarDef.Create("tts.timeout", 5.0, CVar.SERVERONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<float> TTSRequestTimeout =
+        CVarDef.Create("tts.timeout", 5f, CVar.SERVERONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// VoiceId for Announcement TTS
