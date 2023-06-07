@@ -390,7 +390,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (base.PreventCollide(uid, comp, ref args) || args.Cancelled)
             return true;
 
-        args.Cancelled = !CanConsumeEntity(args.BodyB.Owner, comp);
+        args.Cancelled = !CanConsumeEntity(args.OtherEntity, comp);
         return false;
     }
 

@@ -1,7 +1,6 @@
 using Content.Server.Traitor;
-using Content.Shared.Roles;
 
-namespace Content.Server.Ninja;
+namespace Content.Server.Roles;
 
 /// <summary>
 /// Stores the ninja's objectives in the mind so if they die the rest of the greentext persists.

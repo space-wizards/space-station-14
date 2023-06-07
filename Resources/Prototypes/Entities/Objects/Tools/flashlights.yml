@@ -105,6 +105,10 @@
         shader: unshaded
         visible: false
         map: [ "light" ]
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Item
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight
