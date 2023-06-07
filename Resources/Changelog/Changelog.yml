@@ -1,11 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'The Ripley now moves faster, but is less effective in combat and breaching.',
-    type: Tweak}
-  - {message: The Ripley is now substantially less expensive to produce., type: Tweak}
-  id: 3467
-  time: '2023-04-20T08:04:57.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix cargo selling mobs inside of crates., type: Fix}
@@ -2907,3 +2900,8 @@ Entries:
     type: Fix}
   id: 3966
   time: '2023-06-07T19:44:42.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Changed sprites for some medipens, type: Tweak}
+  id: 3967
+  time: '2023-06-07T22:18:18.0000000+00:00'
