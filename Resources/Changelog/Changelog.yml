@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix cargo selling mobs inside of crates., type: Fix}
-  id: 3468
-  time: '2023-04-20T12:09:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix mob spawn positions and nerf mob spawn rates for salvage expeditions.,
     type: Tweak}
   id: 3469
@@ -2905,3 +2900,9 @@ Entries:
   - {message: Changed sprites for some medipens, type: Tweak}
   id: 3967
   time: '2023-06-07T22:18:18.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'You can now build logic gates and link them to some things, currently
+      doors and other logic gates.', type: Add}
+  id: 3968
+  time: '2023-06-07T23:48:43.0000000+00:00'
