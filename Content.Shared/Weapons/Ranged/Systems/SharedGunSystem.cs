@@ -226,7 +226,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         {
             User = user
         };
-        RaiseLocalEvent(gunUid, prevention);
+        RaiseLocalEvent(gunUid, ref prevention);
         if (prevention.Cancelled)
             return;
 

@@ -95,7 +95,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 #endif
     }
 
-    private void OnMeleeShotAttempted(EntityUid uid, MeleeWeaponComponent comp, ShotAttemptedEvent args)
+    private void OnMeleeShotAttempted(EntityUid uid, MeleeWeaponComponent comp, ref ShotAttemptedEvent args)
     {
         if (comp.NextAttack > Timing.CurTime)
             args.Cancel();
