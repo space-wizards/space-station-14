@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Reduced the power of anomaly vessel upgrades., type: Tweak}
-  id: 3459
-  time: '2023-04-19T10:03:08.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added samurai dogi to EMAGGED Autodrobe., type: Add}
@@ -2908,3 +2903,8 @@ Entries:
   - {message: All the antag roles have briefing sounds now, type: Add}
   id: 3958
   time: '2023-06-07T07:15:23.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Fixed slime and diona brute damage color, type: Fix}
+  id: 3959
+  time: '2023-06-07T08:57:49.0000000+00:00'
