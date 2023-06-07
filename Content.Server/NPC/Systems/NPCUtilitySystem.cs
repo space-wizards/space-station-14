@@ -121,6 +121,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
     private float GetScore(NPCBlackboard blackboard, EntityUid targetUid, UtilityConsideration consideration)
     {
+        var avoidBadFood = HasComp<IgnoreBadFoodComponent>(owner);
         switch (consideration)
         {
             case FoodValueCon:
@@ -134,7 +135,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 // no mouse don't eat the uranium-235
-                if (HasComp<BadFoodComponent>(targetUid))
+                if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
                     return 0f;
 
                 return 1f;
