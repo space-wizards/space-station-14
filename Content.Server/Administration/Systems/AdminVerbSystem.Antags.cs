@@ -36,7 +36,7 @@ public sealed partial class AdminVerbSystem
 
         Verb traitor = new()
         {
-            Text = "Make Traitor",
+            Text = Loc.GetString("admin-verb-make-traitor"),
             Category = VerbCategory.Antag,
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Structures/Wallmounts/posters.rsi"), "poster5_contraband"),
             Act = () =>
@@ -53,7 +53,7 @@ public sealed partial class AdminVerbSystem
 
         Verb zombie = new()
         {
-            Text = "Make Zombie",
+            Text = Loc.GetString("admin-verb-make-zombie"),
             Category = VerbCategory.Antag,
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Wallmounts/signs.rsi"), "bio"),
             Act = () =>
@@ -68,7 +68,7 @@ public sealed partial class AdminVerbSystem
 
         Verb nukeOp = new()
         {
-            Text = "Make nuclear operative",
+            Text = Loc.GetString("admin-verb-make-nuclear-operative"),
             Category = VerbCategory.Antag,
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Wallmounts/signs.rsi"), "radiation"),
             Act = () =>
@@ -85,7 +85,7 @@ public sealed partial class AdminVerbSystem
 
         Verb pirate = new()
         {
-            Text = "Make Pirate",
+            Text = Loc.GetString("admin-verb-make-pirate"),
             Category = VerbCategory.Antag,
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Head/Hats/pirate.rsi"), "icon"),
             Act = () =>
@@ -102,7 +102,7 @@ public sealed partial class AdminVerbSystem
 
         Verb spaceNinja = new()
         {
-            Text = "Make space ninja",
+            Text = Loc.GetString("admin-verb-make-space-ninja"),
             Category = VerbCategory.Antag,
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/energykatana.rsi"), "icon"),
             Act = () =>
