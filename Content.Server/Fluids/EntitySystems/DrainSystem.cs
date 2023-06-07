@@ -79,10 +79,6 @@ namespace Content.Server.Fluids.EntitySystems
             // try to find the drain's solution
             if (!_solutionSystem.TryGetSolution(target, DrainComponent.SolutionName, out var drainSolution))
             {
-                // If can't find, just destroy the solution
-                containerSolution.RemoveAllSolution();
-                _audioSystem.PlayPvs(drain.ManualDrainSound, target);
-                _ambientSoundSystem.SetAmbience(target, true);
                 return;
             }
 
@@ -92,8 +88,6 @@ namespace Content.Server.Fluids.EntitySystems
                 FixedPoint2.Min(containerSolution.Volume, drainSolution.AvailableVolume));
 
             _solutionSystem.TryAddSolution(target, drainSolution, transferSolution);
-            _solutionSystem.UpdateAppearance(target, drainSolution);
-            _solutionSystem.UpdateAppearance(container, containerSolution);
 
             _audioSystem.PlayPvs(drain.ManualDrainSound, target);
             _ambientSoundSystem.SetAmbience(target, true);
@@ -210,7 +204,8 @@ namespace Content.Server.Fluids.EntitySystems
         {
             if (!args.IsInDetailsRange ||
                 !TryComp(uid, out SolutionContainerManagerComponent? solutionComp) ||
-                !_solutionSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution)) { return; }
+                !_solutionSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution))
+            { return; }
 
             var text = drainSolution.AvailableVolume != 0 ?
                 Loc.GetString("drain-component-examine-volume", ("volume", drainSolution.AvailableVolume)) :
@@ -222,9 +217,10 @@ namespace Content.Server.Fluids.EntitySystems
         {
             if (!args.CanReach || args.Target == null ||
                 !_tagSystem.HasTag(args.Used, DrainComponent.PlungerTag) ||
-                !_solutionSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution)) { return; }
+                !_solutionSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution))
+            { return; }
 
-            if (drainSolution.AvailableVolume > 0 && args.User.IsValid())
+            if (drainSolution.AvailableVolume > 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-notapplicable", ("object", args.Target.Value)), args.Target.Value);
                 return;
@@ -246,23 +242,26 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void OnDoAfter(EntityUid uid, DrainComponent component, DoAfterEvent args)
         {
-            if (args.Args.Target == null)
+            if (args.Target == null)
                 return;
 
-            if (!(_random.Prob(component.UnclogProbability)))
+            if (!_random.Prob(component.UnclogProbability))
             {
-                _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-fail", ("object", args.Args.Target.Value)), args.Args.Target.Value);
+                _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-fail", ("object", args.Target.Value)), args.Target.Value);
                 return;
             }
 
 
-            if (_solutionSystem.TryGetSolution(args.Args.Target.Value, DrainComponent.SolutionName, out var drainSolution))
+            if (!_solutionSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName,
+                    out var drainSolution))
             {
-                drainSolution.RemoveAllSolution();
-                _audioSystem.PlayPvs(component.UnclogSound, args.Args.Target.Value);
-                _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-success", ("object", args.Args.Target.Value)), args.Args.Target.Value);
-                _solutionSystem.UpdateAppearance(args.Args.Target.Value, drainSolution);
+                return;
             }
+
+
+            _solutionSystem.RemoveAllSolution(args.Target.Value, drainSolution);
+            _audioSystem.PlayPvs(component.UnclogSound, args.Target.Value);
+            _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-success", ("object", args.Target.Value)), args.Target.Value);
         }
     }
 }

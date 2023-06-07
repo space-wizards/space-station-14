@@ -1,5 +1,4 @@
-﻿using Content.Server.Fluids.Components;
-using Content.Shared.DoAfter;
+﻿using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Fluids;
