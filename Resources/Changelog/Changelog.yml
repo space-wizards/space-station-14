@@ -1,11 +1,4 @@
 Entries:
-- author: Nimfar
-  changes:
-  - {message: Added the new elite SWAT gas mask., type: Add}
-  - {message: Replaced the standard issue Security gas mask in the HoS locker with
-      a SWAT gas mask., type: Tweak}
-  id: 3463
-  time: '2023-04-20T02:50:16.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix cargo shuttle FTL., type: Fix}
@@ -2908,3 +2901,8 @@ Entries:
       copypasting., type: Tweak}
   id: 3962
   time: '2023-06-07T14:22:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Defibrillators now revive people again., type: Fix}
+  id: 3963
+  time: '2023-06-07T19:12:49.0000000+00:00'
