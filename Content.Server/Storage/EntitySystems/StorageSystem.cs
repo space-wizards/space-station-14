@@ -173,8 +173,11 @@ namespace Content.Server.Storage.EntitySystems
             if (HasComp<PlaceableSurfaceComponent>(uid))
                 return;
 
-            if (PlayerInsertHeldEntity(uid, args.User, storageComp))
-                args.Handled = true;
+            PlayerInsertHeldEntity(uid, args.User, storageComp);
+            // Always handle it, even if insertion fails.
+            // We don't want to trigger any AfterInteract logic here.
+            // Example bug: placing wires if item doesn't fit in backpack.
+            args.Handled = true;
         }
 
         /// <summary>
@@ -517,11 +520,19 @@ namespace Content.Server.Storage.EntitySystems
                 return false;
             }
 
-            if (!HasComp<StackComponent>(insertEnt) && TryComp(insertEnt, out ItemComponent? itemComp) &&
+            if (TryComp(insertEnt, out ItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
             {
-                reason = "comp-storage-insufficient-capacity";
-                return false;
+                // If this is a stack, we may be able to combine it with an existing stack in the storage.
+                // If so, no extra space would be used.
+                //
+                // TODO: This doesn't allow any sort of top-up behavior.
+                // You either combine the whole stack, or insert nothing.
+                if (!TryComp(insertEnt, out StackComponent? stackComp) || !CanCombineStacks(storageComp, stackComp))
+                {
+                    reason = "comp-storage-insufficient-capacity";
+                    return false;
+                }
             }
 
             reason = null;
@@ -599,6 +610,29 @@ namespace Content.Server.Storage.EntitySystems
             return true;
         }
 
+        private bool CanCombineStacks(
+            ServerStorageComponent storageComp,
+            StackComponent stack)
+        {
+            if (storageComp.Storage == null)
+                return false;
+
+            var stackQuery = GetEntityQuery<StackComponent>();
+            var countLeft = stack.Count;
+            foreach (var ent in storageComp.Storage.ContainedEntities)
+            {
+                if (!stackQuery.TryGetComponent(ent, out var destStack))
+                    continue;
+
+                if (destStack.StackTypeId != stack.StackTypeId)
+                    continue;
+
+                countLeft -= _stack.GetAvailableSpace(stack);
+            }
+
+            return countLeft <= 0;
+        }
+
         // REMOVE: remove and drop on the ground
         public bool RemoveAndDrop(EntityUid uid, EntityUid removeEnt, ServerStorageComponent? storageComp = null)
         {
@@ -624,9 +658,15 @@ namespace Content.Server.Storage.EntitySystems
 
             var toInsert = hands.ActiveHandEntity;
 
-            if (!CanInsert(uid, toInsert.Value, out var reason, storageComp) || !_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
+            if (!CanInsert(uid, toInsert.Value, out var reason, storageComp))
             {
                 Popup(uid, player, reason ?? "comp-storage-cant-insert", storageComp);
+                return false;
+            }
+
+            if (!_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
+            {
+                PopupEnt(uid, player, "comp-storage-cant-drop", toInsert.Value, storageComp);
                 return false;
             }
 
@@ -724,6 +764,15 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             _popupSystem.PopupEntity(Loc.GetString(message), player, player);
+        }
+
+        private void PopupEnt(EntityUid uid, EntityUid player, string message, EntityUid entityUid,
+            ServerStorageComponent storageComp)
+        {
+            if (!storageComp.ShowPopup)
+                return;
+
+            _popupSystem.PopupEntity(Loc.GetString(message, ("entity", entityUid)), player, player);
         }
     }
 }

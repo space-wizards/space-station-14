@@ -372,3 +372,65 @@
             path: /Audio/Effects/Vehicle/vehiclestartup.ogg
             params:
               volume: -3
+
+- type: entity
+  id: VehicleUnicycle
+  parent: [BaseVehicle, BaseFoldable, BaseItem]
+  name: unicycle
+  description: It only has one wheel!
+  components:
+  - type: Vehicle
+    useHand: false
+    northOver: true
+    southOver: true
+    northOverride: -0.15
+    southOverride: 0.15
+    hasKey: true
+    hornSound:
+      path: /Audio/Effects/Vehicle/bicyclebell.ogg
+  - type: Sprite
+    sprite: Objects/Vehicles/unicycle.rsi
+    layers:
+    - state: vehicle
+      map: ["enum.VehicleVisualLayers.AutoAnimate", "unfoldedLayer"]
+    - state: vehicle_folded
+      map: ["foldedLayer"]
+      visible: false
+    netsync: false
+    noRot: true
+  - type: Strap
+    buckleOffset: "0.1, -0.05"
+    maxBuckleDistance: 1
+  - type: MovementSpeedModifier
+    acceleration: 1
+    friction: 0.8
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 4.3
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 240
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  parent: VehicleUnicycle
+  id: VehicleUnicycleFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true

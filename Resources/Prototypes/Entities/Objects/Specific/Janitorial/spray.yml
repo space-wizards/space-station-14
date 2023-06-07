@@ -27,6 +27,7 @@
     canChangeTransferAmount: true
   - type: ItemCooldown
   - type: Spray
+    transferAmount: 10
     sprayVelocity: 2
     spraySound:
       path: /Audio/Effects/spray2.ogg
@@ -49,8 +50,10 @@
       spray:
         maxVol: 250
   - type: Spray
+    transferAmount: 15
     sprayedPrototype: BigVapor
-    sprayVelocity: 5
+    sprayVelocity: 3
+    sprayDistance: 4.5
     spraySound:
       path: /Audio/Effects/spray2.ogg
 
@@ -106,7 +109,7 @@
   - type: Sprite
     netsync: false
     sprite: Effects/chempuff.rsi
-    rotation: 90
+    rotation: 180
     layers:
     - state: chempuff
       map: ["enum.VaporVisualLayers.Base"]
@@ -133,7 +136,7 @@
   - type: Sprite
     netsync: false
     sprite: Effects/chempuff.rsi
-    rotation: 90
+    rotation: 180
     layers:
     - state: chempuff
       scale: 2, 2

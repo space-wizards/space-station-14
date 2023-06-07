@@ -79,6 +79,9 @@
   - type: Construction
     graph: bed
     node: medicalbed
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   parent: Bed

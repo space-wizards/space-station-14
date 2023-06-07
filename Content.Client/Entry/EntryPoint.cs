@@ -19,6 +19,7 @@ using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
 using Content.Client.Radiation.Overlays;
+using Content.Client.Replay;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.Stylesheets;
@@ -71,6 +72,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly JoinQueueManager _queueManager = default!; // Corvax-Queue
         [Dependency] private readonly TTSManager _ttsManager = default!; // Corvax-TTS
         [Dependency] private readonly DiscordAuthManager _discordAuthManager = default!; // Corvax-DiscordAuth
+        [Dependency] private readonly ContentReplayPlaybackManager _playbackMan = default!;
 
         public override void Init()
         {
@@ -142,6 +144,7 @@ namespace Content.Client.Entry
             _ghostKick.Initialize();
             _extendedDisconnectInformation.Initialize();
             _jobRequirements.Initialize();
+            _playbackMan.Initialize();
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
@@ -165,7 +168,6 @@ namespace Content.Client.Entry
             _overlayManager.AddOverlay(new SingularityOverlay());
             _overlayManager.AddOverlay(new FlashOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
-
             _chatManager.Initialize();
             _clientPreferencesManager.Initialize();
             _euiManager.Initialize();

@@ -10,6 +10,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
 using Content.Server.Nuke;
 using Content.Server.Preferences.Managers;
+using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -200,8 +201,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", component.TargetStation.Value)));
             filter.AddPlayer(actor.PlayerSession);
         }
-
-        _audioSystem.PlayGlobal(component.GreetSound, filter, recordReplay: false);
     }
 
     private void OnRoundEnd(EntityUid uid, NukeopsRuleComponent? component = null)
@@ -589,7 +588,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             {
                 role ??= nukeops.OperativeRoleProto;
 
-                mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
+                mind.AddRole(new NukeopsRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
                 nukeops.OperativeMindPendingData.Remove(uid);
             }
 
@@ -605,10 +604,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (GameTicker.RunLevel != GameRunLevel.InRound)
                 return;
 
-            _audioSystem.PlayGlobal(nukeops.GreetSound, playerSession);
-
             if (nukeops.TargetStation != null && !string.IsNullOrEmpty(Name(nukeops.TargetStation.Value)))
+            {
                 _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", nukeops.TargetStation.Value)));
+
+                 // Notificate player about new role assignment
+                 _audioSystem.PlayGlobal(component.GreetSoundNotification, playerSession);
+            }
         }
     }
 
@@ -766,7 +768,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                     CharacterName = spawnDetails.Name
                 };
                 newMind.ChangeOwningPlayer(session.UserId);
-                newMind.AddRole(new TraitorRole(newMind, nukeOpsAntag));
+                newMind.AddRole(new NukeopsRole(newMind, nukeOpsAntag));
 
                 newMind.TransferTo(mob);
             }
@@ -814,7 +816,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         //ok hardcoded value bad but so is everything else here
-        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>("Nukeops")));
+        mind.AddRole(new NukeopsRole(mind, _prototypeManager.Index<AntagPrototype>("Nukeops")));
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "SyndicateOperativeGearFull", EntityManager);
     }
 

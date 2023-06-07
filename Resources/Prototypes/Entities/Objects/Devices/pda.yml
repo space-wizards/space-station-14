@@ -157,6 +157,9 @@
     scanDelay: 1.4
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   parent: BasePDA
@@ -486,6 +489,9 @@
     scanDelay: 1.2
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   parent: BasePDA

@@ -1628,5 +1628,16 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> GCMaximumTimeMs =
             CVarDef.Create("entgc.maximum_time_ms", 5, CVar.SERVERONLY);
+
+        /*
+         * Replays
+         */
+
+        /// <summary>
+        ///     Whether or not to record admin chat. If replays are being publicly distributes, this should probably be
+        ///     false.
+        /// </summary>
+        public static readonly CVarDef<bool> ReplayRecordAdminChat =
+            CVarDef.Create("replay.record_admin_chat", false, CVar.SERVERONLY);
     }
 }

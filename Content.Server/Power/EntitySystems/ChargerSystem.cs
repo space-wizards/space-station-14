@@ -37,7 +37,7 @@ internal sealed class ChargerSystem : EntitySystem
 
     private void OnChargerExamine(EntityUid uid, ChargerComponent component, ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", component.ChargeRate)));
+        args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int) component.ChargeRate)));
     }
 
     public override void Update(float frameTime)

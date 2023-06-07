@@ -26,7 +26,8 @@
   - type: Item
     heldPrefix: ointment
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
       types:
         Heat: -5
@@ -44,6 +45,14 @@
     price: 10
 
 - type: entity
+  id: Ointment1
+  parent: Ointment
+  components:
+  - type: Stack
+    stackType: Ointment
+    count: 1
+
+- type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: BaseHealingItem
@@ -55,7 +64,8 @@
   - type: Sprite
     state: brutepack
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
@@ -70,6 +80,14 @@
     price: 10
 
 - type: entity
+  id: Brutepack1
+  parent: Brutepack
+  components:
+  - type: Stack
+    stackType: Brutepack
+    count: 1
+
+- type: entity
   name: blood pack
   description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
   parent: BaseHealingItem
@@ -81,7 +99,8 @@
   - type: Sprite
     state: bloodpack
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
       types:
         Bloodloss: -0.5 #lowers bloodloss damage
@@ -111,7 +130,8 @@
     graph: Gauze
     node: gauze
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
       types:
         Slash: -2.5

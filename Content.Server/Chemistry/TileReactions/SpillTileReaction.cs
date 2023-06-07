@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
@@ -39,9 +40,7 @@ namespace Content.Server.Chemistry.TileReactions
 
                 var slow = entityManager.EnsureComponent<SlowContactsComponent>(puddleUid);
                 var speedModifier = 1 - reagent.Viscosity;
-                slow.WalkSpeedModifier = speedModifier;
-                slow.SprintSpeedModifier = speedModifier;
-                entityManager.Dirty(slow);
+                entityManager.EntitySysManager.GetEntitySystem<SlowContactsSystem>().ChangeModifiers(puddleUid, speedModifier, slow);
 
                 return reactVolume;
             }

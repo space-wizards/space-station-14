@@ -22,6 +22,7 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Module;
 using Content.Client.Guidebook;
+using Content.Client.Replay;
 using Content.Shared.Administration.Managers;
 
 namespace Content.Client.IoC
@@ -52,6 +53,7 @@ namespace Content.Client.IoC
             IoCManager.Register<TTSManager>(); // Corvax-TTS
             IoCManager.Register<DiscordAuthManager>(); // Corvax-DiscordAuth
             IoCManager.Register<DocumentParsingManager>();
+            IoCManager.Register<ContentReplayPlaybackManager, ContentReplayPlaybackManager>();
         }
     }
 }
