@@ -89,6 +89,8 @@ namespace Content.Server.Zombies
             var query = EntityQueryEnumerator<PendingZombieComponent, DamageableComponent, MobStateComponent>();
             var curTime = _timing.CurTime;
 
+            var cachedRules = new Dictionary<EntityUid, ZombieRuleComponent>();
+
             // Hurt the living infected
             while (query.MoveNext(out var uid, out var pending, out var damage, out var mobState))
             {
@@ -97,6 +99,15 @@ namespace Content.Server.Zombies
                     continue;
 
                 pending.NextTick = curTime;
+
+                ZombieRuleComponent? rules;
+                if (pending.Family.Rules != EntityUid.Invalid && (cachedRules.TryGetValue(pending.Family.Rules, out rules) || TryComp(pending.Family.Rules, out rules)))
+                {
+                    // Check it's not too early to zombify
+                    cachedRules[pending.Family.Rules] = rules;
+                    if (rules.FirstTurnAllowed != TimeSpan.Zero)
+                        continue;
+                }
 
                 pending.InfectedSecs += 1;
                 // See if there should be a warning popup for the player.
@@ -107,6 +118,13 @@ namespace Content.Server.Zombies
 
                 if (pending.InfectedSecs < 0)
                 {
+                    if (mobState.CurrentState != MobState.Alive)
+                    {
+                        // Should already have been set to 0 on state change, can happen during edge cases around
+                        //   FirstTurnAllowed
+                        pending.InfectedSecs = 0;
+                    }
+
                     // This zombie has a latent virus, probably set up by ZombieRuleSystem. No damage yet.
                     continue;
                 }
@@ -249,18 +267,7 @@ namespace Content.Server.Zombies
 
         private void OnPendingMobState(EntityUid uid, PendingZombieComponent pending, MobStateChangedEvent args)
         {
-            if (args.NewMobState == MobState.Dead)
-            {
-                if (pending.Family.Rules != EntityUid.Invalid && TryComp<ZombieRuleComponent>(pending.Family.Rules, out var rules))
-                {
-                    // Check it's not too early to zombify
-                    if (rules.InfectInitialAt != TimeSpan.Zero)
-                        return;
-                }
-
-                ZombifyEntity(uid, args.Component);
-            }
-            else if (args.NewMobState == MobState.Critical)
+            if (args.NewMobState == MobState.Critical)
             {
                 if (pending.Family.Rules != EntityUid.Invalid && TryComp<ZombieRuleComponent>(pending.Family.Rules, out var rules))
                 {
@@ -358,13 +365,7 @@ namespace Content.Server.Zombies
                         _popup.PopupEntity(Loc.GetString("zombie-bite-infected-victim"), uid, uid);
                     }
 
-                    // Zombify the dead right now. (Usually that occurs on the critical -> dead transition)
-                    if (mobState.CurrentState == MobState.Dead)
-                    {
-                        ZombifyEntity(entity);
-                        args.BonusDamage = -args.BaseDamage;
-                    }
-                    else if (mobState.CurrentState == MobState.Alive) //heals when zombies bite live entities
+                    if (mobState.CurrentState == MobState.Alive) //heals when zombies bite live entities
                     {
                         var healingSolution = new Solution();
                         healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
