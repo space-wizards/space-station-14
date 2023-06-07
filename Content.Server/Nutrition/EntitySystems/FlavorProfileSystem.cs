@@ -30,8 +30,7 @@ public sealed class FlavorProfileSystem : EntitySystem
             return Loc.GetString(BackupFlavorMessage);
         }
 
-        var flavors = new HashSet<string>();
-        flavors.UnionWith(flavorProfile.Flavors);
+        var flavors = new HashSet<string>(flavorProfile.Flavors);
         flavors.UnionWith(GetFlavorsFromReagents(solution, FlavorLimit - flavors.Count, flavorProfile.IgnoreReagents));
 
         var ev = new FlavorProfileModificationEvent(user, flavors);
