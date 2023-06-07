@@ -35,7 +35,7 @@ public sealed class TwoStagedGrenadeComponent : Component
     #region PrivateFields
     [DataField("ambienceStartTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan AmbienceStartTime = TimeSpan.Zero;
-    [DataField("timeOfExplosion")]
+    [DataField("timeOfExplosion", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan TimeOfExplosion = TimeSpan.Zero;
     [DataField("isSecondStageSoundBegan")]
     public bool IsSecondStageSoundBegan = false;
