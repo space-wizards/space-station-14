@@ -89,6 +89,16 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceBoxes
+  icon:
+    sprite: Objects/Storage/boxes.rsi
+    state: box
+  product: CrateServiceBox
+  cost: 400
+  category: Service
+  group: market
+
+- type: cargoProduct
   id: ServiceJanitorBiosuit
   icon:
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi

@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Singularity.Events;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
@@ -5,6 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Content.Server.Popups;
 using Content.Shared.Construction.Components;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -15,6 +17,7 @@ namespace Content.Server.Singularity.EntitySystems;
 
 public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
@@ -38,7 +41,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var generator in EntityQuery<ContainmentFieldGeneratorComponent>())
+        var query = EntityQueryEnumerator<ContainmentFieldGeneratorComponent>();
+        while (query.MoveNext(out var uid, out var generator))
         {
             if (generator.PowerBuffer <= 0) //don't drain power if there's no power, or if it's somehow less than 0.
                 continue;
@@ -47,7 +51,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
             if (generator.Accumulator >= generator.Threshold)
             {
-                LosePower(generator.PowerLoss, generator);
+                LosePower(uid, generator.PowerLoss, generator);
                 generator.Accumulator -= generator.Threshold;
             }
         }
@@ -60,7 +64,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// </summary>
     private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, ref StartCollideEvent args)
     {
-        if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
+        if (_tags.HasTag(args.OtherEntity, component.IDTag))
         {
             ReceivePower(component.PowerReceived, component);
             component.Accumulator = 0f;
@@ -99,12 +103,12 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
-            RemoveConnections(component);
+            RemoveConnections(uid, component);
     }
 
     private void OnReanchorEvent(EntityUid uid, ContainmentFieldGeneratorComponent component, ref ReAnchorEvent args)
     {
-        GridCheck(component);
+        GridCheck(uid, component);
     }
 
     private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component,
@@ -133,13 +137,13 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
     {
-        RemoveConnections(component);
+        RemoveConnections(uid, component);
     }
 
     /// <summary>
     /// Deletes the fields and removes the respective connections for the generators.
     /// </summary>
-    private void RemoveConnections(ContainmentFieldGeneratorComponent component)
+    private void RemoveConnections(EntityUid uid, ContainmentFieldGeneratorComponent component)
     {
         foreach (var (direction, value) in component.Connections)
         {
@@ -161,6 +165,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         component.IsConnected = false;
         ChangeOnLightVisualizer(component);
         ChangeFieldVisualizer(component);
+        _adminLogger.Add(LogType.FieldGeneration, LogImpact.Medium, $"{ToPrettyString(uid)} lost field connections"); // Ideally LogImpact would depend on if there is a singulo nearby
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, PopupType.LargeCaution);
     }
 
@@ -195,13 +200,13 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         ChangePowerVisualizer(power, component);
     }
 
-    public void LosePower(int power, ContainmentFieldGeneratorComponent component)
+    public void LosePower(EntityUid uid, int power, ContainmentFieldGeneratorComponent component)
     {
         component.PowerBuffer -= power;
 
         if (component.PowerBuffer < component.PowerMinimum && component.Connections.Count != 0)
         {
-            RemoveConnections(component);
+            RemoveConnections(uid, component);
         }
 
         ChangePowerVisualizer(power, component);
@@ -329,7 +334,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// <summary>
     /// Checks to see if this or the other gens connected to a new grid. If they did, remove connection.
     /// </summary>
-    public void GridCheck(ContainmentFieldGeneratorComponent component)
+    public void GridCheck(EntityUid uid, ContainmentFieldGeneratorComponent component)
     {
         var xFormQuery = GetEntityQuery<TransformComponent>();
 
@@ -339,7 +344,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             var gent2ParentGrid = xFormQuery.GetComponent(generators.Item1.Owner).ParentUid;
 
             if (gen1ParentGrid != gent2ParentGrid)
-                RemoveConnections(component);
+                RemoveConnections(uid, component);
         }
     }
 

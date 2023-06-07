@@ -1,5 +1,4 @@
 using Content.Shared.Movement.Components;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -20,9 +19,6 @@ public sealed class SlowContactsSystem : EntitySystem
         SubscribeLocalEvent<SlowContactsComponent, StartCollideEvent>(OnEntityEnter);
         SubscribeLocalEvent<SlowContactsComponent, EndCollideEvent>(OnEntityExit);
         SubscribeLocalEvent<SlowedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
-
-        SubscribeLocalEvent<SlowContactsComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<SlowContactsComponent, ComponentGetState>(OnGetState);
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }
@@ -46,18 +42,20 @@ public sealed class SlowContactsSystem : EntitySystem
         _toUpdate.Clear();
     }
 
-    private void OnGetState(EntityUid uid, SlowContactsComponent component, ref ComponentGetState args)
+    public void ChangeModifiers(EntityUid uid, float speed, SlowContactsComponent? component = null)
     {
-        args.State = new SlowContactsComponentState(component.WalkSpeedModifier, component.SprintSpeedModifier);
+        ChangeModifiers(uid, speed, speed, component);
     }
 
-    private void OnHandleState(EntityUid uid, SlowContactsComponent component, ref ComponentHandleState args)
+    public void ChangeModifiers(EntityUid uid, float walkSpeed, float sprintSpeed, SlowContactsComponent? component = null)
     {
-        if (args.Current is not SlowContactsComponentState state)
+        if (!Resolve(uid, ref component))
+        {
             return;
-
-        component.WalkSpeedModifier = state.WalkSpeedModifier;
-        component.SprintSpeedModifier = state.SprintSpeedModifier;
+        }
+        component.WalkSpeedModifier = walkSpeed;
+        component.SprintSpeedModifier = sprintSpeed;
+        Dirty(component);
     }
 
     private void MovementSpeedCheck(EntityUid uid, SlowedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -69,9 +67,8 @@ public sealed class SlowContactsSystem : EntitySystem
         var sprintSpeed = 1.0f;
 
         bool remove = true;
-        foreach (var colliding in _physics.GetContactingEntities(physicsComponent))
+        foreach (var ent in _physics.GetContactingEntities(uid, physicsComponent))
         {
-            var ent = colliding.Owner;
             if (!TryComp<SlowContactsComponent>(ent, out var slowContactsComponent))
                 continue;
 
@@ -92,14 +89,14 @@ public sealed class SlowContactsSystem : EntitySystem
 
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, ref EndCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
         if (HasComp<MovementSpeedModifierComponent>(otherUid))
             _toUpdate.Add(otherUid);
     }
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, ref StartCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
         if (!HasComp<MovementSpeedModifierComponent>(otherUid))
             return;
 

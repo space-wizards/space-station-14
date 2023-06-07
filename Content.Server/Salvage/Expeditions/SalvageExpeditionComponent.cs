@@ -39,6 +39,15 @@ public sealed class SalvageExpeditionComponent : Component
     /// Countdown audio stream.
     /// </summary>
     public IPlayingAudioStream? Stream = null;
+
+    /// <summary>
+    /// Sound that plays when the mission end is imminent.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
+    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Misc/tension_session.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-15),
+    };
 }
 
 public enum ExpeditionStage : byte

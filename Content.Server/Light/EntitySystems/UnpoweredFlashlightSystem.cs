@@ -1,21 +1,26 @@
-using Content.Server.Light.Components;
 using Content.Server.Light.Events;
 using Content.Server.Mind.Components;
 using Content.Shared.Actions;
+using Content.Shared.Decals;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Light;
+using Content.Shared.Light.Component;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
 {
     public sealed class UnpoweredFlashlightSystem : EntitySystem
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -25,6 +30,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<UnpoweredFlashlightComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<UnpoweredFlashlightComponent, ToggleActionEvent>(OnToggleAction);
             SubscribeLocalEvent<UnpoweredFlashlightComponent, MindAddedMessage>(OnMindAdded);
+            SubscribeLocalEvent<UnpoweredFlashlightComponent, GotEmaggedEvent>(OnGotEmagged);
         }
 
         private void OnToggleAction(EntityUid uid, UnpoweredFlashlightComponent component, ToggleActionEvent args)
@@ -47,11 +53,13 @@ namespace Content.Server.Light.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            ActivationVerb verb = new();
-            verb.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
-            verb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png"));
-            verb.Act = () => ToggleLight(uid, component);
-            verb.Priority = -1; // For things like PDA's, Open-UI and other verbs that should be higher priority.
+            ActivationVerb verb = new()
+            {
+                Text = Loc.GetString("toggle-flashlight-verb-get-data-text"),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
+                Act = () => ToggleLight(uid, component),
+                Priority = -1 // For things like PDA's, Open-UI and other verbs that should be higher priority.
+            };
 
             args.Verbs.Add(verb);
         }
@@ -60,20 +68,35 @@ namespace Content.Server.Light.EntitySystems
         {
             _actionsSystem.AddAction(uid, component.ToggleAction, null);
         }
+
+        private void OnGotEmagged(EntityUid uid, UnpoweredFlashlightComponent component, ref GotEmaggedEvent args)
+        {
+            if (!TryComp<PointLightComponent>(uid, out var light))
+                return;
+
+            if (_prototypeManager.TryIndex<ColorPalettePrototype>(component.EmaggedColorsPrototype, out var possibleColors))
+            {
+                var pick = _random.Pick(possibleColors.Colors.Values);
+                light.Color = pick;
+            }
+
+            args.Repeatable = true;
+            args.Handled = true;
+        }
+
         public void ToggleLight(EntityUid uid, UnpoweredFlashlightComponent flashlight)
         {
-            if (!EntityManager.TryGetComponent(flashlight.Owner, out PointLightComponent? light))
+            if (!TryComp<PointLightComponent>(uid, out var light))
                 return;
 
             flashlight.LightOn = !flashlight.LightOn;
             light.Enabled = flashlight.LightOn;
 
-            if (EntityManager.TryGetComponent(flashlight.Owner, out AppearanceComponent? appearance))
-                _appearance.SetData(uid, UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn, appearance);
+            _appearance.SetData(uid, UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
 
-            SoundSystem.Play(flashlight.ToggleSound.GetSound(), Filter.Pvs(light.Owner), flashlight.Owner);
+            _audioSystem.PlayPvs(flashlight.ToggleSound, uid);
 
-            RaiseLocalEvent(flashlight.Owner, new LightToggleEvent(flashlight.LightOn), true);
+            RaiseLocalEvent(uid, new LightToggleEvent(flashlight.LightOn), true);
             _actionsSystem.SetToggled(flashlight.ToggleAction, flashlight.LightOn);
         }
     }

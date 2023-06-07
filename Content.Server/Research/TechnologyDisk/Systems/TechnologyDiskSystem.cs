@@ -4,6 +4,8 @@ using Content.Server.Research.Systems;
 using Content.Server.Research.TechnologyDisk.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Prototypes;
@@ -38,12 +40,11 @@ public sealed class TechnologyDiskSystem : EntitySystem
         {
             foreach (var recipe in component.Recipes)
             {
-                _research.AddLatheRecipe(target, recipe, database, false);
+                _research.AddLatheRecipe(target, recipe, database);
             }
-            Dirty(database);
         }
         _popup.PopupEntity(Loc.GetString("tech-disk-inserted"), target, args.User);
-        EntityManager.DeleteEntity(uid);
+        QueueDel(uid);
         args.Handled = true;
     }
 
@@ -67,27 +68,25 @@ public sealed class TechnologyDiskSystem : EntitySystem
         if (component.Recipes != null)
             return;
 
+        var weightedRandom = _prototype.Index<WeightedRandomPrototype>(component.TierWeightPrototype);
+        var tier = int.Parse(weightedRandom.Pick(_random));
+
         //get a list of every distinct recipe in all the technologies.
-        var allTechs = new List<string>();
+        var techs = new List<string>();
         foreach (var tech in _prototype.EnumeratePrototypes<TechnologyPrototype>())
         {
-            allTechs.AddRange(tech.UnlockedRecipes);
-        }
-        allTechs = allTechs.Distinct().ToList();
+            if (tech.Tier != tier)
+                continue;
 
-        //get a list of every distinct unlocked tech across all databases
-        var allUnlocked = new List<string>();
-        foreach (var database in EntityQuery<TechnologyDatabaseComponent>())
-        {
-            allUnlocked.AddRange(database.RecipeIds);
+            techs.AddRange(tech.RecipeUnlocks);
         }
-        allUnlocked = allUnlocked.Distinct().ToList();
+        techs = techs.Distinct().ToList();
 
-        //make a list of every single non-unlocked tech
-        var validTechs = allTechs.Where(tech => !allUnlocked.Contains(tech)).ToList();
+        if (!techs.Any())
+            return;
 
         //pick one
         component.Recipes = new();
-        component.Recipes.Add(_random.Pick(validTechs));
+        component.Recipes.Add(_random.Pick(techs));
     }
 }

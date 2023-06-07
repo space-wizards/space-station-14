@@ -16,7 +16,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 12
     soundHit:
       path: "/Audio/Weapons/smash.ogg"
   - type: Tag
@@ -83,7 +83,7 @@
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
   - type: Storage
-    capacity: 120
+    capacity: 170 # this seems silly high
   - type: MeleeWeapon
     damage:
       types:

@@ -29,18 +29,54 @@
 - type: entity
   id: PuddleEgg
   parent: PuddleTemporary
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        puddle:
+          maxVol: 1000
+          reagents:
+            - ReagentId: Egg
+              Quantity: 6 # same as when cooking
 
 - type: entity
   id: PuddleTomato
   parent: PuddleTemporary
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        puddle:
+          maxVol: 1000
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 5
+            - ReagentId: Water
+              Quantity: 5
 
 - type: entity
   id: PuddleWatermelon
   parent: PuddleTemporary
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        puddle:
+          maxVol: 1000
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 15
+            - ReagentId: Water
+              Quantity: 15
 
 - type: entity
   id: PuddleFlour
   parent: PuddleTemporary
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        puddle:
+          maxVol: 1000
+          reagents:
+            - ReagentId: Flour
+              Quantity: 15
 
 - type: entity
   id: PuddleSparkle
@@ -74,6 +110,8 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepWater
+        params:
+          volume: 6
     - type: Slippery
       launchForwardsMultiplier: 2.0
     - type: Transform
@@ -83,14 +121,13 @@
       layers:
         - sprite: Fluids/puddle.rsi
           state: splat0
-      netsync: false
       drawdepth: FloorObjects
       color: "#FFFFFF80"
     - type: Physics
       bodyType: Static
     - type: Fixtures
       fixtures:
-        - id: slipFixture
+        slipFixture:
           shape:
             !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"
@@ -115,3 +152,11 @@
         puddle:
           !type:SpreaderNode
           nodeGroupID: Spreader
+    - type: Drink
+      isOpen: true
+      delay: 3
+      transferAmount: 1
+      solution: puddle
+      examinable: false
+    - type: ExaminableSolution
+      solution: puddle
