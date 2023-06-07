@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix cargo shuttle FTL., type: Fix}
-  id: 3464
-  time: '2023-04-20T03:28:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Doubled salvage expedition times., type: Tweak}
   - {message: Fixed salvage structure localisation., type: Fix}
   id: 3465
@@ -2906,3 +2901,8 @@ Entries:
   - {message: Defibrillators now revive people again., type: Fix}
   id: 3963
   time: '2023-06-07T19:12:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added cargo pallets to the cargo product console., type: Add}
+  id: 3964
+  time: '2023-06-07T19:40:30.0000000+00:00'
