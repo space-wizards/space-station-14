@@ -75,6 +75,16 @@
   categories:
   - UplinkWeapons
 
+- type: listing
+  id: UplinkGlovesNorthStar
+  name: uplink-gloves-north-star-name
+  description: uplink-gloves-north-star-desc
+  productEntity: ClothingHandsGlovesNorthStar
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkWeapons
+
 # Explosives
 
 - type: listing
@@ -884,7 +894,7 @@
   description: uplink-experimental-stimpack-desc
   productEntity: StimpackExperimental
   cost:
-    Telecrystal: 15
+    Telecrystal: 8
   categories:
   - UplinkMisc
   conditions:
@@ -1010,3 +1020,23 @@
     Telecrystal: 20
   categories:
   - UplinkPointless
+
+- type: listing
+  id: UplinkScarfSyndieRed
+  name: uplink-scarf-syndie-red-name
+  description: uplink-scarf-syndie-red-desc
+  productEntity: ClothingNeckScarfStripedSyndieRed
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkScarfSyndieGreen
+  name: uplink-scarf-syndie-green-name
+  description: uplink-scarf-syndie-green-desc
+  productEntity: ClothingNeckScarfStripedSyndieGreen
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless

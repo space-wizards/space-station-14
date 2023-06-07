@@ -4,8 +4,7 @@
   sprite: /Textures/Tiles/steel.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -19,8 +18,7 @@
   sprite: /Textures/Tiles/steel_mini.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -34,8 +32,7 @@
   sprite: /Textures/Tiles/steel_pavement.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -49,8 +46,7 @@
   sprite: /Textures/Tiles/steel_diagonal.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -64,8 +60,7 @@
   sprite: /Textures/Tiles/steel_offset.png
   variants: 1
   placementVariants: [0]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -79,8 +74,7 @@
   sprite: /Textures/Tiles/steel_mono.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -95,8 +89,7 @@
   sprite: /Textures/Tiles/steel_pavement_vertical.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -111,8 +104,7 @@
   sprite: /Textures/Tiles/steel_herringbone.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -127,8 +119,7 @@
   sprite: /Textures/Tiles/steel_diagonal_mini.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -143,8 +134,7 @@
   sprite: /Textures/Tiles/plastic.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -158,8 +148,7 @@
   sprite: /Textures/Tiles/wood.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -175,8 +164,7 @@
   sprite: /Textures/Tiles/white.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -191,8 +179,7 @@
   sprite: /Textures/Tiles/white_mini.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -207,8 +194,7 @@
   sprite: /Textures/Tiles/white_pavement.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -223,8 +209,7 @@
   sprite: /Textures/Tiles/white_diagonal.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -239,8 +224,7 @@
   sprite: /Textures/Tiles/white_offset.png
   variants: 1
   placementVariants: [0]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -255,8 +239,7 @@
   sprite: /Textures/Tiles/white_mono.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -271,8 +254,7 @@
   sprite: /Textures/Tiles/white_pavement_vertical.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -287,8 +269,7 @@
   sprite: /Textures/Tiles/white_herringbone.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -303,8 +284,7 @@
   sprite: /Textures/Tiles/white_diagonal_mini.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -319,8 +299,7 @@
   sprite: /Textures/Tiles/white_plastic.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -335,8 +314,7 @@
   sprite: /Textures/Tiles/dark.png
   variants: 4
   placementVariants: [ 0, 1, 2, 3 ]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -350,8 +328,7 @@
   sprite: /Textures/Tiles/dark_mini.png
   variants: 4
   placementVariants: [ 0, 1, 2, 3 ]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -365,8 +342,7 @@
   sprite: /Textures/Tiles/dark_pavement.png
   variants: 4
   placementVariants: [ 0, 1, 2, 3 ]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -380,8 +356,7 @@
   sprite: /Textures/Tiles/dark_diagonal.png
   variants: 4
   placementVariants: [ 0, 1, 2, 3 ]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -395,8 +370,7 @@
   sprite: /Textures/Tiles/dark_offset.png
   variants: 1
   placementVariants: [0]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -411,8 +385,7 @@
   sprite: /Textures/Tiles/dark_mono.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -427,8 +400,7 @@
   sprite: /Textures/Tiles/dark_pavement_vertical.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -443,8 +415,7 @@
   sprite: /Textures/Tiles/dark_herringbone.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -459,8 +430,7 @@
   sprite: /Textures/Tiles/dark_diagonal_mini.png
   variants: 4
   placementVariants: [0,1,2,3]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -475,8 +445,7 @@
   sprite: /Textures/Tiles/dark_plastic.png
   variants: 4
   placementVariants: [ 0, 1, 2, 3 ]
-  baseTurfs:
-    - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -488,8 +457,7 @@
   id: FloorTechMaint
   name: tiles-techmaint-floor
   sprite: /Textures/Tiles/tech_maint.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -501,8 +469,7 @@
   id: FloorReinforced
   name: tiles-reinforced-floor
   sprite: /Textures/Tiles/reinforced.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -514,8 +481,7 @@
   id: FloorMono
   name: tiles-mono-floor
   sprite: /Textures/Tiles/mono.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -527,8 +493,7 @@
   id: FloorLino
   name: tiles-linoleum-floor
   sprite: /Textures/Tiles/lino.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -540,8 +505,7 @@
   id: FloorSteelDirty
   name: tiles-dirty-steel-floor
   sprite: /Textures/Tiles/steel_dirty.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -553,8 +517,7 @@
   id: FloorElevatorShaft
   name: tiles-elevator-shaft
   sprite: /Textures/Tiles/elevator_shaft.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -566,8 +529,7 @@
   id: FloorMetalDiamond
   name: tiles-diamond-plate-floor
   sprite: /Textures/Tiles/metaldiamond.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -579,8 +541,7 @@
   id: FloorRockVault
   name: tiles-rock-floor
   sprite: /Textures/Tiles/rock_vault.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -592,8 +553,7 @@
   id: FloorBlue
   name: tiles-blue-tile
   sprite: /Textures/Tiles/blue.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -606,8 +566,7 @@
   id: FloorFreezer
   name: tiles-freezer
   sprite: /Textures/Tiles/freezer.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -619,8 +578,7 @@
   id: FloorShowroom
   name: tiles-showroom-floor
   sprite: /Textures/Tiles/showroom.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -632,8 +590,7 @@
   id: FloorHydro
   name: tiles-hydro-floor
   sprite: /Textures/Tiles/hydro.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -647,8 +604,7 @@
   sprite: /Textures/Tiles/bar.png
   variants: 4
   placementVariants: [ 0, 1, 2, 3 ]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -660,8 +616,7 @@
   id: FloorClown
   name: tiles-clown-floor
   sprite: /Textures/Tiles/clown.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -673,8 +628,7 @@
   id: FloorMime
   name: tiles-mime-floor
   sprite: /Textures/Tiles/mime.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -686,8 +640,7 @@
   id: FloorKitchen
   name: tiles-kitchen-floor
   sprite: /Textures/Tiles/kitchen.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -699,8 +652,7 @@
   id: FloorLaundry
   name: tiles-laundry-floor
   sprite: /Textures/Tiles/laundry.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -713,8 +665,7 @@
   id: FloorArcadeBlue
   name: tiles-blue-arcade-floor
   sprite: /Textures/Tiles/arcadeblue.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -729,8 +680,7 @@
   id: FloorArcadeBlue2
   name: tiles-blue-arcade-floor
   sprite: /Textures/Tiles/arcadeblue2.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -745,8 +695,7 @@
   id: FloorArcadeRed
   name: tiles-red-arcade-floor
   sprite: /Textures/Tiles/arcadered.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -761,8 +710,7 @@
   id: FloorEighties
   name: tiles-eighties-floor
   sprite: /Textures/Tiles/eighties.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -777,8 +725,7 @@
   id: FloorCarpetClown
   name: tiles-clown-carpet-floor
   sprite: /Textures/Tiles/carpetclown.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -793,8 +740,7 @@
   id: FloorCarpetOffice
   name: tiles-office-carpet-floor
   sprite: /Textures/Tiles/carpetoffice.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -811,8 +757,7 @@
   sprite: /Textures/Tiles/boxing.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -827,8 +772,7 @@
   sprite: /Textures/Tiles/gym.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -842,8 +786,7 @@
   id: FloorShuttleWhite
   name: tiles-white-shuttle-floor
   sprite: /Textures/Tiles/shuttlewhite.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -855,8 +798,7 @@
   id: FloorShuttleBlue
   name: tiles-blue-shuttle-floor
   sprite: /Textures/Tiles/shuttleblue.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -868,8 +810,7 @@
   id: FloorShuttleOrange
   name: tiles-orange-shuttle-floor
   sprite: /Textures/Tiles/shuttleorange.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -881,8 +822,7 @@
   id: FloorShuttlePurple
   name: tiles-purple-shuttle-floor
   sprite: /Textures/Tiles/shuttlepurple.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -894,8 +834,7 @@
   id: FloorShuttleRed
   name: tiles-red-shuttle-floor
   sprite: /Textures/Tiles/shuttlered.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -909,8 +848,7 @@
   id: FloorGold
   name: tiles-gold-tile
   sprite: /Textures/Tiles/gold.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -922,8 +860,7 @@
   id: FloorSilver
   name: tiles-silver-tile
   sprite: /Textures/Tiles/silver.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -935,8 +872,7 @@
   id: FloorGlass
   name: tiles-glass-floor
   sprite: /Textures/Tiles/glass.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -948,8 +884,7 @@
   id: FloorRGlass
   name: tiles-reinforced-glass-floor
   sprite: /Textures/Tiles/rglass.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -962,8 +897,7 @@
   id: FloorGreenCircuit
   name: tiles-green-circuit-floor
   sprite: /Textures/Tiles/green_circuit.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -975,8 +909,7 @@
   id: FloorBlueCircuit
   name: tiles-blue-circuit-floor
   sprite: /Textures/Tiles/blue_circuit.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -989,8 +922,7 @@
   id: FloorGrass
   name: tiles-planet-grass-floor
   sprite: /Textures/Tiles/grass.png
-  baseTurfs:
-  - FloorDirt
+  baseTurf: FloorDirt
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1003,8 +935,7 @@
   id: FloorGrassJungle
   name: tiles-jungle-grass-floor
   sprite: /Textures/Tiles/grassjungle.png
-  baseTurfs:
-  - FloorDirt
+  baseTurf: FloorDirt
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1019,8 +950,7 @@
   sprite: /Textures/Tiles/grassdark.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - FloorDirt
+  baseTurf: FloorDirt
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1034,8 +964,7 @@
   sprite: /Textures/Tiles/grasslight.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - FloorDirt
+  baseTurf: FloorDirt
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1049,8 +978,7 @@
   sprite: /Textures/Tiles/dirt.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1063,8 +991,7 @@
   id: FloorAsteroidSand
   name: tiles-asteroid-floor
   sprite: /Textures/Tiles/Asteroid/asteroid_sand.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1076,8 +1003,7 @@
   id: FloorAsteroidTile
   name: tiles-asteroid-tile
   sprite: /Textures/Tiles/Asteroid/asteroid_tile.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -1091,8 +1017,7 @@
   sprite: /Textures/Tiles/Asteroid/asteroid_coarse_sand.png
   variants: 3
   placementVariants: [ 0, 1, 2 ]
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1116,8 +1041,7 @@
   id: FloorAsteroidCoarseSandDug
   name: tiles-asteroid-dug-coarse-sand
   sprite: /Textures/Tiles/Asteroid/asteroid_coarse_sand_dug.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1129,8 +1053,7 @@
   id: FloorAsteroidIronsand1
   name: tiles-asteroid-ironsand
   sprite: /Textures/Tiles/ironsand1.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1142,8 +1065,7 @@
   id: FloorAsteroidIronsand2
   name: tiles-asteroid-ironsand-pebbles
   sprite: /Textures/Tiles/ironsand2.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1155,8 +1077,7 @@
   id: FloorAsteroidIronsand3
   name: tiles-asteroid-ironsand-pebbles
   sprite: /Textures/Tiles/ironsand3.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1168,8 +1089,7 @@
   id: FloorAsteroidIronsand4
   name: tiles-asteroid-ironsand-rock
   sprite: /Textures/Tiles/ironsand4.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1184,8 +1104,7 @@
   sprite: /Textures/Tiles/cave.png
   variants: 7
   placementVariants: [0, 1, 2, 3, 4, 5, 6]
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1198,8 +1117,7 @@
   sprite: /Textures/Tiles/cavedrought.png
   variants: 8
   placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -1212,8 +1130,7 @@
   sprite: /Textures/Tiles/meat.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -1225,8 +1142,7 @@
   id: FloorTechMaint2
   name: tiles-techmaint2-floor
   sprite: /Textures/Tiles/steel_maint.png
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -1240,8 +1156,7 @@
   sprite: /Textures/Tiles/grating_maint.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -1255,8 +1170,7 @@
   sprite: /Textures/Tiles/wood_tile.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
+  baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -1264,4 +1178,20 @@
   barestepSounds:
     collection: BarestepWood
   itemDrop: FloorTileItemWoodPattern
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorBrokenWood
+  name: tiles-wood3
+  sprite: /Textures/Tiles/wood_broken.png
+  variants: 7
+  placementVariants: [0, 1, 2, 3, 4, 5, 6]
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000

@@ -33,22 +33,24 @@
   components:
   - type: Stack
     stackType: MetalRod
+    baseLayer: base
+    layerStates:
+    - rods
+    - rods_2
+    - rods_3
+    - rods_4
+    - rods_5
   - type: Sprite
     state: rods_5
+    layers:
+    - state: rods_5
+      map: ["base"]
 #  - type: Item
 #    heldPrefix: rods
   - type: Construction
     graph: MetalRod
     node: MetalRod
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - rods
-      - rods_2
-      - rods_3
-      - rods_4
-      - rods_5
   - type: FloorTile
     outputs:
     - Lattice

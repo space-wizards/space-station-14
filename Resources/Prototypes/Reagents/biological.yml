@@ -5,6 +5,7 @@
   desc: reagent-desc-blood
   flavor: metallic
   color: "#800000"
+  recognizable: true
   physicalDesc: reagent-physical-desc-ferrous
   slippery: false
   metabolisms:
@@ -24,6 +25,7 @@
   desc: reagent-desc-slime
   flavor: slimy
   color: "#2cf274"
+  recognizable: true
   physicalDesc: reagent-physical-desc-viscous
   slippery: false
   viscosity: 0.25
@@ -43,6 +45,7 @@
   desc: reagent-desc-spider-blood
   flavor: metallic
   color: "#162581"
+  recognizable: true
   physicalDesc: reagent-physical-desc-ferrous
   slippery: false
   metabolisms:
@@ -63,6 +66,7 @@
   physicalDesc: reagent-physical-desc-roaring
   flavor: metallic
   color: "#f4692e"
+  recognizable: true
   metabolisms:
     Drink:
       effects:

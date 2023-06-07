@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: soda
   color: "#422912"
+  recognizable: true
 
 - type: reagent
   id: ChangelingSting
@@ -59,6 +60,7 @@
   physicalDesc: reagent-physical-desc-creamy
   flavor: icecream
   color: "#fffbd6"
+  recognizable: true
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/icecreamglass.rsi
     state: icon
@@ -101,7 +103,7 @@
   name: reagent-name-root-beer-float
   parent: BaseSoda
   desc: reagent-desc-root-beer-float
-  physicalDesc: reagent-physical-desc-fizzy and creamy
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
   flavor: soda
   color: "#4f361f"
   metamorphicSprite:

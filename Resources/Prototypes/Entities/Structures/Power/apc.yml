@@ -90,6 +90,7 @@
     supplyRampTolerance: 1000
     supplyRampRate: 500
   - type: WallMount
+  - type: WiresPanel
   - type: Wires
     BoardName: "APC"
     LayoutId: APC
@@ -117,6 +118,13 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: StationInfiniteBatteryTarget
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    mediumVoltageNode: input
+    lowVoltageNode: output
   - type: StaticPrice
     price: 500
 

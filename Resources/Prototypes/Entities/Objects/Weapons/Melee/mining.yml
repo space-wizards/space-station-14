@@ -14,6 +14,7 @@
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
   - type: PointLight
+    color: "#ffeead"
     enabled: false
     radius: 4
 

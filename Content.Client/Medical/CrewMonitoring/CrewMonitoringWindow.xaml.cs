@@ -112,7 +112,7 @@ namespace Content.Client.Medical.CrewMonitoring
 
                 if (sensor.Coordinates != null && NavMap.Visible)
                 {
-                    NavMap.TrackedCoordinates.Add(sensor.Coordinates.Value, (true, Color.FromHex("#B02E26")));
+                    NavMap.TrackedCoordinates.TryAdd(sensor.Coordinates.Value, (true, Color.FromHex("#B02E26")));
                     nameLabel.MouseFilter = MouseFilterMode.Stop;
 
                     // Hide all others upon mouseover.

@@ -12,7 +12,7 @@
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     layers:
     - state: bag
-      map: ["unfoldedLayer"]
+      map: ["unfoldedLayer", "enum.StorageVisualLayers.Base"]
     - state: bag_folded
       map: ["foldedLayer"]
       visible: false
@@ -58,9 +58,8 @@
         components:
         - Paper
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: open_overlay
+  - type: EntityStorageVisuals
+    stateDoorOpen: open_overlay
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:
@@ -124,3 +123,27 @@
   - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
+
+- type: entity
+  parent: Ash
+  id: Ectoplasm
+  name: ectoplasm
+  description: Much less deadly in this form.
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Mobs/Ghosts/revenant.rsi
+      state: ectoplasm
+    - type: Tag
+      tags:
+        - Trash
+        - Ectoplasm
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 50
+          reagents:
+            - ReagentId: Ash
+              Quantity: 5
+            - ReagentId: SpaceLube
+              Quantity: 5

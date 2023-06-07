@@ -14,6 +14,7 @@ research-technology-rapid-construction = Rapid Construction
 research-technology-shuttlecraft = Shuttlecraft
 research-technology-ripley-aplu = Ripley APLU
 research-technology-advanced-atmospherics = Advanced Atmospherics
+research-technology-advanced-tools = Advanced Tools
 research-technology-super-powercells = Super Powercells
 research-technology-bluespace-storage = Bluespace Storage
 
@@ -33,7 +34,9 @@ research-technology-basic-xenoarcheology = Basic XenoArcheology
 research-technology-alternative-research = Alternative Research
 research-technology-magnets-tech = Localized Magnetism
 research-technology-advanced-parts = Advanced Parts
+research-technology-grappling = Grappling
 research-technology-abnormal-artifact-manipulation = Abnormal Artifact Manipulation
+research-technology-gravity-manipulation = Gravity Manipulation
 research-technology-mobile-anomaly-tech = Mobile Anomaly Tech
 research-technology-rped = Rapid Part Exchange
 research-technology-super-parts = Super Parts
@@ -48,4 +51,4 @@ research-technology-advanced-cleaning = Advanced Cleaning
 research-technology-meat-manipulation = Meat Manipulation
 research-technology-honk-mech = H.O.N.K. Mech
 research-technology-advanced-spray = Advanced Spray
-
+research-technology-bluespace-cargo-transport = Bluespace Cargo Transport
