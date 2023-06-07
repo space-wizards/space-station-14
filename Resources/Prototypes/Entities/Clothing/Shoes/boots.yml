@@ -19,6 +19,9 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHeavy
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -52,6 +55,9 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/combatboots.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHeavy
   - type: Storage
     whitelist:
       tags:

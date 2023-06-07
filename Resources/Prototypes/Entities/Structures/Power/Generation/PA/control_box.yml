@@ -14,9 +14,8 @@
           shader: unshaded
           visible: false
     - type: Appearance
-      visuals:
-        - type: ParticleAcceleratorPartVisualizer
-          baseState: unlit
+    - type: ParticleAcceleratorPartVisuals
+      stateBase: unlit
     - type: ApcPowerReceiver
       powerLoad: 250
     - type: ExtensionCableReceiver

@@ -244,3 +244,14 @@
   - type: Unremoveable
   - type: AddAccentClothing
     accent: StutteringAccent
+
+- type: entity
+  parent: ClothingMaskGasExplorer
+  id: ClothingMaskGasSwat
+  name: swat gas mask
+  description: A elite issue Security gas mask.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/swat.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/swat.rsi

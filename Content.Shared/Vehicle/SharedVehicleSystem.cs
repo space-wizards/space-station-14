@@ -11,6 +11,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Containers;
 using Content.Shared.Tag;
 using Content.Shared.Audio;
+using Serilog;
 
 namespace Content.Shared.Vehicle;
 
@@ -50,7 +51,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     private void OnEntInserted(EntityUid uid, VehicleComponent component, EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID != KeySlot ||
-            !_tagSystem.HasTag(args.Entity, "VehicleKey")) return;
+            !_tagSystem.HasTag(args.Entity, "VehicleKey"))
+            return;
 
         // Enable vehicle
         var inVehicle = EnsureComp<InVehicleComponent>(args.Entity);
@@ -107,7 +109,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         }
 
         UpdateBuckleOffset(args.Component, component);
-        UpdateDrawDepth(uid, GetDrawDepth(args.Component, component.NorthOnly));
+        if (TryComp<InputMoverComponent>(uid, out var mover))
+            UpdateDrawDepth(uid, GetDrawDepth(args.Component, component, mover.RelativeRotation));
     }
 
     private void OnVehicleStartup(EntityUid uid, VehicleComponent component, ComponentStartup args)
@@ -129,25 +132,35 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// change its draw depth. Vehicles can choose between special drawdetph
     /// when facing north or south. East and west are easy.
     /// </summary>
-    protected int GetDrawDepth(TransformComponent xform, bool northOnly)
+    protected int GetDrawDepth(TransformComponent xform, VehicleComponent component, Angle cameraAngle)
     {
-        // TODO: I can't even
-        if (northOnly)
+        var itemDirection = cameraAngle.GetDir() switch
         {
-            return xform.LocalRotation.Degrees switch
-            {
-                < 135f => (int) DrawDepth.DrawDepth.Doors,
-                <= 225f => (int) DrawDepth.DrawDepth.WallMountedItems,
-                _ => 5
-            };
-        }
-        return xform.LocalRotation.Degrees switch
+            Direction.South => xform.LocalRotation.GetDir(),
+            Direction.North => xform.LocalRotation.RotateDir(Direction.North),
+            Direction.West => xform.LocalRotation.RotateDir(Direction.East),
+            Direction.East => xform.LocalRotation.RotateDir(Direction.West),
+            _ => Direction.South
+        };
+
+        return itemDirection switch
         {
-            < 45f =>  (int) DrawDepth.DrawDepth.Doors,
-            <= 315f =>  (int) DrawDepth.DrawDepth.WallMountedItems,
-            _ =>  (int) DrawDepth.DrawDepth.Doors,
+            Direction.North => component.NorthOver
+                ? (int) DrawDepth.DrawDepth.Doors
+                : (int) DrawDepth.DrawDepth.WallMountedItems,
+            Direction.South => component.SouthOver
+                ? (int) DrawDepth.DrawDepth.Doors
+                : (int) DrawDepth.DrawDepth.WallMountedItems,
+            Direction.West => component.WestOver
+                ? (int) DrawDepth.DrawDepth.Doors
+                : (int) DrawDepth.DrawDepth.WallMountedItems,
+            Direction.East => component.EastOver
+                ? (int) DrawDepth.DrawDepth.Doors
+                : (int) DrawDepth.DrawDepth.WallMountedItems,
+            _ => (int) DrawDepth.DrawDepth.WallMountedItems
         };
     }
+
 
     /// <summary>
     /// Change the buckle offset based on what direction the vehicle is facing and

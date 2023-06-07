@@ -162,8 +162,9 @@ public sealed class HTNSystem : EntitySystem
     public void UpdateNPC(ref int count, int maxUpdates, float frameTime)
     {
         _planQueue.Process();
+        var query = EntityQueryEnumerator<ActiveNPCComponent, HTNComponent>();
 
-        foreach (var (_, comp) in EntityQuery<ActiveNPCComponent, HTNComponent>())
+        while(query.MoveNext(out var uid, out _, out var comp))
         {
             // If we're over our max count or it's not MapInit then ignore the NPC.
             if (count >= maxUpdates)
@@ -173,10 +174,10 @@ public sealed class HTNSystem : EntitySystem
             {
                 if (comp.PlanningJob.Exception != null)
                 {
-                    _sawmill.Fatal($"Received exception on planning job for {comp.Owner}!");
-                    _npc.SleepNPC(comp.Owner);
+                    _sawmill.Fatal($"Received exception on planning job for {uid}!");
+                    _npc.SleepNPC(uid);
                     var exc = comp.PlanningJob.Exception;
-                    RemComp<HTNComponent>(comp.Owner);
+                    RemComp<HTNComponent>(uid);
                     throw exc;
                 }
 
@@ -231,7 +232,7 @@ public sealed class HTNSystem : EntitySystem
 
                         RaiseNetworkEvent(new HTNMessage()
                         {
-                            Uid = comp.Owner,
+                            Uid = uid,
                             Text = text.ToString(),
                         }, session.ConnectedClient);
                     }

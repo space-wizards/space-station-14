@@ -88,3 +88,12 @@
       hard: false
       layer:
       - LowImpassable
+  # pet fish before rehydrating and he will be nice to you
+  - type: FactionException
+  - type: PettableFriend
+    successString: petting-success-dehydrated-carp
+    failureString: petting-failure-dehydrated-carp
+  - type: EmitSoundOnUse
+    handle: false
+    sound:
+      path: /Audio/Effects/bite.ogg

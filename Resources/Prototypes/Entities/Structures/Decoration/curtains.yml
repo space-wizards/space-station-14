@@ -12,6 +12,7 @@
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
   - type: Fixtures
     fixtures:
     - shape:
@@ -36,9 +37,6 @@
     closeSound:
       path: /Audio/Effects/curtain_openclose.ogg
   - type: Appearance
-    visuals:
-      - type: AirlockVisualizer
-        simpleVisuals: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood

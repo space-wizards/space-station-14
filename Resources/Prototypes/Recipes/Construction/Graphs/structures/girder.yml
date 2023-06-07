@@ -301,11 +301,6 @@
       entity: WallSolidRust
       edges:
         - to: wall
-          completed:
-            - !type:SpawnPrototype
-              prototype: WallSolid
-              amount: 1
-            - !type:DeleteEntity {}
           steps:
             - tool: Welding
               doAfter: 5

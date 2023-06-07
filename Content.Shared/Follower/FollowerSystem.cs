@@ -38,7 +38,7 @@ public sealed class FollowerSystem : EntitySystem
             }),
             Impact = LogImpact.Low,
             Text = Loc.GetString("verb-follow-text"),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
         };
 
         ev.Verbs.Add(verb);

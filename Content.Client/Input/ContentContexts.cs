@@ -22,6 +22,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.FocusDeadChat);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelForward);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelBackward);
+            common.AddFunction(ContentKeyFunctions.EscapeContext);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
             common.AddFunction(ContentKeyFunctions.OpenAHelp);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);

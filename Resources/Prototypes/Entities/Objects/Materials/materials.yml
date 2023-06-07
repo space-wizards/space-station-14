@@ -62,6 +62,17 @@
   name: cloth
   suffix: Full
   components:
+  - type: Healing
+    damageContainer: Biological
+    damage:
+      types:
+        Slash: -0.5
+        Piercing: -0.5
+    bloodlossModifier: -4
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: Cloth
   - type: Material

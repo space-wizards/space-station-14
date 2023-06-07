@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
@@ -127,7 +128,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (tool.Qualities.Contains(door.PryingQuality))
         {
-            args.Handled = TryPryDoor(uid, args.Used, args.User, door);
+            args.Handled = TryPryDoor(uid, args.Used, args.User, door, out _);
         }
     }
 
@@ -164,7 +165,7 @@ public sealed class DoorSystem : SharedDoorSystem
         {
             Text = Loc.GetString("door-pry"),
             Impact = LogImpact.Low,
-            Act = () => TryPryDoor(uid, args.User, args.User, component, true),
+            Act = () => TryPryDoor(uid, args.User, args.User, component, out _, force: true),
         });
     }
 
@@ -172,8 +173,10 @@ public sealed class DoorSystem : SharedDoorSystem
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
-    public bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
+    public bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, out DoAfterId? id, bool force = false)
     {
+        id = null;
+
         if (door.State == DoorState.Welded)
             return false;
 
@@ -191,7 +194,7 @@ public sealed class DoorSystem : SharedDoorSystem
         var modEv = new DoorGetPryTimeModifierEvent(user);
         RaiseLocalEvent(target, modEv, false);
 
-        _toolSystem.UseTool(tool, user, target, modEv.PryTimeModifier * door.PryTime, door.PryingQuality, new DoorPryDoAfterEvent());
+        _toolSystem.UseTool(tool, user, target, TimeSpan.FromSeconds(modEv.PryTimeModifier * door.PryTime), new[] {door.PryingQuality}, new DoorPryDoAfterEvent(), out id);
         return true; // we might not actually succeeded, but a do-after has started
     }
 

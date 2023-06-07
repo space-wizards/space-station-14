@@ -82,11 +82,12 @@
         Base: dead
       Dead:
         Base: dead
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: Rat King
     description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
     rules: You are an antagonist, scavenge, attack, and grow your hoard!
+  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide
@@ -283,11 +284,12 @@
       Female: Mouse
       Unsexed: Mouse
     wilhelmProbability: 0.001
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: Rat Servant
     description: You are a Rat Servant. You must follow your king's orders.
     rules: You are an antagonist, scavenge, attack, and serve your king!
+  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide

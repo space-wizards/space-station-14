@@ -126,6 +126,15 @@
   id: CigPack
 
 - type: Tag
+  id: HardsuitEVA
+
+- type: Tag
+  id: HelmetEVA
+
+- type: Tag
+  id: ClownRecorder
+
+- type: Tag
   id: ClownRubberStamp
 
 - type: Tag

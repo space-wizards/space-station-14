@@ -93,7 +93,7 @@ namespace Content.Client.Lobby
             _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
 
-            _lobby!.VoteContainer.Orphan();
+            _voteManager.ClearPopupContainer();
 
             _lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
             _lobby!.ReadyButton.OnPressed -= OnReadyPressed;

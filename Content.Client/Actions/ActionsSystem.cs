@@ -272,7 +272,7 @@ namespace Content.Client.Actions
             if (PlayerActions == null)
                 return;
 
-            var file = new ResourcePath(path).ToRootedPath();
+            var file = new ResPath(path).ToRootedPath();
             TextReader reader = userData
                 ? _resources.UserData.OpenText(file)
                 : _resources.ContentFileReadText(file);

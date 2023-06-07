@@ -1,6 +1,7 @@
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Damage;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Shuttles.Components
@@ -42,7 +43,8 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         public bool IsOn;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        // Need to serialize this because RefreshParts isn't called on Init and this will break post-mapinit maps!
+        [ViewVariables(VVAccess.ReadWrite), DataField("thrust")]
         public float Thrust;
 
         [DataField("baseThrust"), ViewVariables(VVAccess.ReadWrite)]
@@ -72,6 +74,12 @@ namespace Content.Server.Shuttles.Components
         public List<EntityUid> Colliding = new();
 
         public bool Firing = false;
+
+        /// <summary>
+        /// Next time we tick damage for anyone colliding.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("nextFire", customTypeSerializer:typeof(TimeOffsetSerializer))]
+        public TimeSpan NextFire;
 
         [DataField("machinePartThrust", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
         public string MachinePartThrust = "Laser";

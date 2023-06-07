@@ -49,7 +49,7 @@ namespace Content.Server.Light.EntitySystems
 
             ActivationVerb verb = new();
             verb.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
-            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/light.svg.192dpi.png"));
+            verb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png"));
             verb.Act = () => ToggleLight(uid, component);
             verb.Priority = -1; // For things like PDA's, Open-UI and other verbs that should be higher priority.
 

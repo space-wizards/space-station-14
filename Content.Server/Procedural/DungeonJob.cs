@@ -28,7 +28,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
     private readonly DungeonConfigPrototype _gen;
     private readonly int _seed;
-    private readonly Vector2 _position;
+    private readonly Vector2i _position;
 
     private readonly MapGridComponent _grid;
     private readonly EntityUid _gridUid;
@@ -51,7 +51,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
         MapGridComponent grid,
         EntityUid gridUid,
         int seed,
-        Vector2 position,
+        Vector2i position,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _sawmill = sawmill;

@@ -78,7 +78,7 @@
     delay: 10
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
+    explosionType: Minibomb
     totalIntensity: 200
     intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
     maxIntensity: 60

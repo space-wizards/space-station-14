@@ -54,7 +54,7 @@ public sealed partial class ToolSystem
 
     private bool TryCut(EntityUid toolEntity, EntityUid user, LatticeCuttingComponent component, EntityCoordinates clickLocation)
     {
-        if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))
+        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out var mapGrid))
             return false;
 
         var tile = mapGrid.GetTileRef(clickLocation);
@@ -71,7 +71,7 @@ public sealed partial class ToolSystem
             || tile.IsBlockedTurf(true))
             return false;
 
-        var ev = new LatticeCuttingCompleteEvent(clickLocation);
+        var ev = new LatticeCuttingCompleteEvent(coordinates);
         return UseTool(toolEntity, user, toolEntity, component.Delay, component.QualityNeeded, ev);
     }
 }

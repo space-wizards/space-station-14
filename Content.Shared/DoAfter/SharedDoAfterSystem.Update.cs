@@ -117,7 +117,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         doAfter.Completed = true;
+
         RaiseDoAfterEvents(doAfter, component);
+
+        if (doAfter.Args.Event.Repeat)
+        {
+            doAfter.StartTime = GameTiming.CurTime;
+            doAfter.Completed = false;
+        }
     }
 
     private bool ShouldCancel(DoAfter doAfter,

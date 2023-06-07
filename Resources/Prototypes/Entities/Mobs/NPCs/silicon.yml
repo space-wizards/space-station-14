@@ -132,10 +132,11 @@
   - type: Construction
     graph: HonkBot
     node: bot
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: honkbot
     description: An artificial being of pure evil.
+  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-honkbot
     interactFailureString: petting-failure-honkbot

@@ -14,9 +14,8 @@
           shader: unshaded
           visible: false
     - type: Appearance
-      visuals:
-        - type: ParticleAcceleratorPartVisualizer
-          baseState: unlit
+    - type: ParticleAcceleratorPartVisuals
+      stateBase: unlit
     - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Left
@@ -43,13 +42,11 @@
           shader: unshaded
           visible: false
     - type: Appearance
-      visuals:
-        - type: ParticleAcceleratorPartVisualizer
-          baseState: unlit
+    - type: ParticleAcceleratorPartVisuals
+      stateBase: unlit
     - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Center
-    - type: Construction
       graph: ParticleAcceleratorEmitterCenter
       node: completed
     - type: GuideHelp
@@ -71,9 +68,8 @@
           shader: unshaded
           visible: false
     - type: Appearance
-      visuals:
-        - type: ParticleAcceleratorPartVisualizer
-          baseState: unlit
+    - type: ParticleAcceleratorPartVisuals
+      stateBase: unlit
     - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEmitter
       emitterType: Right

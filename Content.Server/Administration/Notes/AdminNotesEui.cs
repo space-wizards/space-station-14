@@ -117,13 +117,19 @@ public sealed class AdminNotesEui : BaseEui
 
     private void NoteModified(SharedAdminNote note)
     {
+        if (note.Player != NotedPlayer)
+            return;
+
         Notes[note.Id] = note;
         StateDirty();
     }
 
-    private void NoteDeleted(int id)
+    private void NoteDeleted(SharedAdminNote note)
     {
-        Notes.Remove(id);
+        if (note.Player != NotedPlayer)
+            return;
+
+        Notes.Remove(note.Id);
         StateDirty();
     }
 

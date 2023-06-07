@@ -674,6 +674,23 @@
         Cable: 2
 
 - type: entity
+  id: FatExtractorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: lipid extractor machine board
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: FatExtractor
+      requirements:
+        Laser: 1
+      componentRequirements:
+        Utensil:
+          Amount: 1
+          DefaultPrototype: ForkPlastic
+          ExamineName: Utensil
+
+- type: entity
   id: EmitterCircuitboard
   parent: BaseMachineCircuitboard
   name: emitter machine board

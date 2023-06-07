@@ -232,7 +232,7 @@ public partial class SharedBodySystem
         return true;
     }
 
-    public virtual bool DropPart(EntityUid? partId, [NotNullWhen(true)] BodyPartComponent? part = null)
+    public virtual bool DropPart(EntityUid? partId, BodyPartComponent? part = null)
     {
         if (partId == null ||
             !Resolve(partId.Value, ref part, false) ||

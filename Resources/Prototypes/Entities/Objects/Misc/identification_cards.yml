@@ -400,6 +400,18 @@
 
 - type: entity
   parent: IDCardStandard
+  id: BrigmedIDCard
+  name: brigmedic ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idbrigmedic
+  - type: PresetIdCard
+    job: Brigmedic
+
+- type: entity
+  parent: IDCardStandard
   id: CentcomIDCard
   name: command officer ID card
   components:

@@ -76,8 +76,8 @@
 - type: entity
   id: MechRipley
   parent: BaseMech
-  name: ripley
-  description: Cargo's favorite robotic box hauling friend.
+  name: Ripley APLU
+  description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Atonomous Power Loading Unit.
   components:
   - type: FootstepModifier
     footstepSoundCollection:
@@ -86,7 +86,16 @@
     baseState: ripley
     openState: ripley-open
     brokenState: ripley-broken
-    mechToPilotDamageMultiplier: 0.5
+    mechToPilotDamageMultiplier: 0.75
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 14 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea.
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6
 
 - type: entity
   id: MechRipleyBattery
@@ -98,4 +107,13 @@
     openState: ripley-open
     brokenState: ripley-broken
     startingBattery: PowerCellHigh
-    mechToPilotDamageMultiplier: 0.5
+    mechToPilotDamageMultiplier: 0.75
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 14
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6

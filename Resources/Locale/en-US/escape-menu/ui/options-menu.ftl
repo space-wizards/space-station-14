@@ -138,6 +138,7 @@ ui-options-function-open-guidebook = Open guidebook
 ui-options-function-window-close-all = Close all windows
 ui-options-function-window-close-recent = Close recent window
 ui-options-function-show-escape-menu = Toggle game menu
+ui-options-function-escape-context = Close recent window or toggle game menu
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
