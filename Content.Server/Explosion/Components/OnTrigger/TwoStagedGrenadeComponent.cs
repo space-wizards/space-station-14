@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Explosion.Components;
 
 /// <summary>
-/// This component after trigger starts timer to trigger for second time to explode or delete self.
+/// This component after trigger starts timer to trigger for second time to add more components and start ambience.
 /// 
 /// For example this is controlling process of exploding of supermatter grenade,
 /// first trigger enables GravityWell, and second makes grenade explode.
@@ -18,7 +18,7 @@ public sealed class TwoStagedGrenadeComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("explosionDelay")]
-    public float ExplosionDelay = 0f;
+    public float ExplosionDelay = 10f;
     /// <summary>
     /// Offset when AmbienceComponent will be enabled after first trigger.
     /// </summary>
@@ -26,23 +26,16 @@ public sealed class TwoStagedGrenadeComponent : Component
     [DataField("ambienceSoundOffset")]
     public float AmbienceSoundOffset = 0f;
     /// <summary>
-    /// true => After second stage grenade will explode. Require ExplosiveComponent.
-    /// false => Grenade will just pull things in heap and delete itself.
+    /// This list of components that will be added on second trigger
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("explodeAfterGravityPull")]
-    public bool ExplodeAfterGravityPull = false;
-    /// <summary>
-    /// Sound that plays on the end of second stage
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("endSound")]
-    public SoundSpecifier? EndSound = new SoundPathSpecifier("/Audio/Effects/Grenades/supermatter_end.ogg");
+    [DataField("secondStageComponents")]
+    public ComponentRegistry SecondStageComponents = new();
 
     #region PrivateFields
     [DataField("ambienceStartTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan AmbienceStartTime = TimeSpan.Zero;
-    [DataField("ambienceStartTime")]
+    [DataField("timeOfExplosion")]
     public TimeSpan TimeOfExplosion = TimeSpan.Zero;
     [DataField("isSecondStageSoundBegan")]
     public bool IsSecondStageSoundBegan = false;
@@ -50,5 +43,7 @@ public sealed class TwoStagedGrenadeComponent : Component
     public bool IsSecondStageBegan = false;
     [DataField("isSecondStageEnded")]
     public bool IsSecondStageEnded = false;
+    [DataField("isComponentsLoaded")]
+    public bool IsComponentsLoaded = false;
     #endregion
 }
