@@ -32,7 +32,7 @@
   categories:
   - UplinkWeapons
 
-# Poor accuracy, slow to fire, cheap option
+# Poor accuracy, slow to fire, cheap option.
 - type: listing
   id: UplinkRifleMosin
   name: uplink-rifle-mosin-name
