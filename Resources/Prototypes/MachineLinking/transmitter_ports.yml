@@ -17,6 +17,11 @@
   defaultLinks: [ Off, Close ]
 
 - type: transmitterPort
+  id: Status
+  name: signal-port-name-status-transmitter
+  description: signal-port-description-status-transmitter
+
+- type: transmitterPort
   id: Left
   name: signal-port-name-left
   description: signal-port-description-left
