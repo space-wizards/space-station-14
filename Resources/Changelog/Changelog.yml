@@ -2904,3 +2904,9 @@ Entries:
       in the game., type: Tweak}
   id: 3972
   time: '2023-06-08T07:16:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The R&D server can be deconstructed. Be warned: this resets all unlocked
+      technology, points, and the current discipline.', type: Add}
+  id: 3973
+  time: '2023-06-08T07:39:29.0000000+00:00'
