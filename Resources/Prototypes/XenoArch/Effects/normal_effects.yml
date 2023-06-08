@@ -390,35 +390,14 @@
     maxSpawns: 10
     spawns:
     - id: QuadraticCapacitorStockPart
-      prob: 0.3
-      maxAmount: 2
-    - id: TriphasicScanningModuleStockPart
-      prob: 0.3
-      maxAmount: 2
+      prob: 0.5
+      maxAmount: 3
     - id: FemtoManipulatorStockPart
-      prob: 0.3
-      maxAmount: 2
-    - id: QuadUltraMicroLaserStockPart
-      prob: 0.3
-      maxAmount: 2
+      prob: 0.5
+      maxAmount: 3
     - id: BluespaceMatterBinStockPart
-      prob: 0.3
-      maxAmount: 2
-
-- type: artifactEffect
-  id: EffectDisease
-  targetDepth: 3
-  effectHint: artifact-effect-hint-biochemical
-  components:
-  - type: DiseaseArtifact
-    diseasePrototypes:
-    - VanAusdallsRobovirus
-    - OwOnavirus
-    - BleedersBite
-    - Ultragigacancer
-    - MemeticAmirmir
-    - TongueTwister
-    - AMIV
+      prob: 0.5
+      maxAmount: 3
 
 - type: artifactEffect
   id: EffectRareMaterialSpawn

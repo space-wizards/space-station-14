@@ -111,21 +111,6 @@
     lowPressureMultiplier: 1000
 
 - type: entity
-  parent: HatBase
-  id: ClothingHeadHelmetIHSVoidHelm
-  noSpawn: true
-  name: IHS voidhelm
-  description: A robust, tactical IHS helmet.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ihsvoid.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ihsvoid.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.3
-    lowPressureMultiplier: 10000
-
-- type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitMedical
   noSpawn: true
@@ -141,8 +126,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 5500
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -233,15 +216,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitBrigmed
+  id: ClothingHeadHelmetHardsuitBrigmedic
   noSpawn: true
-  name: brigmed hardsuit helmet
-  description: The lightweight helmet of the brigmed hardsuit. Protects against viruses, and clowns.
+  name: brigmedic hardsuit helmet
+  description: The lightweight helmet of the brigmedic hardsuit. Protects against viruses, and clowns.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/brigmed.rsi
+    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/brigmed.rsi
+    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
   - type: PointLight
     color: "#00FFFF"
   - type: Armor
@@ -256,8 +239,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 5500
-  - type: DiseaseProtection
-    protection: 0.15
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -517,7 +498,7 @@
 
 #ERT
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: ClothingHeadHelmetHardsuitSyndieCommander
   id: ClothingHeadHelmetHardsuitERTLeader
   noSpawn: true
   name: ERT leader hardsuit helmet
@@ -531,7 +512,7 @@
     color: "#addbff"
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTEngineer
   noSpawn: true
   name: ERT engineer hardsuit helmet
@@ -544,7 +525,7 @@
     color: "#f4ffad"
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndieElite
   id: ClothingHeadHelmetHardsuitERTMedical
   noSpawn: true
   name: ERT medic hardsuit helmet
@@ -557,7 +538,7 @@
     color: "#adffec"
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTSecurity
   noSpawn: true
   name: ERT security hardsuit helmet
@@ -570,7 +551,7 @@
     color: "#ffadc6"
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitERTLeader
+  parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTJanitor
   noSpawn: true
   name: ERT janitor hardsuit helmet

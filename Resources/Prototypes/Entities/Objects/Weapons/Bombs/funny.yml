@@ -1,0 +1,70 @@
+- type: entity
+  name: hot potato
+  description: Once activated, you can't drop this time bomb - hit someone else with it to save yourself! Don't burn your hands!
+  parent: BaseItem
+  id: HotPotato
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Bombs/hot_potato.rsi
+      state: icon
+      netsync: false
+      layers:
+      - state: icon
+        map: ["base"]
+    - type: Item
+      sprite: Objects/Weapons/Bombs/hot_potato.rsi
+      size: 5
+    - type: AmbientSound
+      enabled: false
+      range: 8
+      sound:
+        path: /Audio/Effects/lightburn.ogg
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 5
+    - type: OnUseTimerTrigger
+      delay: 180
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg
+      params:
+        volume: -2
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 8
+      intensitySlope: 5
+      totalIntensity: 20
+      canCreateVacuum: false
+    - type: DeleteOnTrigger
+    - type: HotPotato
+    - type: DamageOnHolding
+      enabled: false
+      damage:
+        types:
+          Heat: 1
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.Trigger.TriggerVisuals.VisualState:
+          base:
+            Primed: { state: activated }
+            Unprimed: { state: complete }
+
+- type: entity
+  id: HotPotatoEffect
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.6
+  - type: Sprite
+    netsync: false
+    noRot: true
+    drawdepth: Effects
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+    scale: "0.15, 0.15"
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer

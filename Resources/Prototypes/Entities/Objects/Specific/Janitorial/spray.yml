@@ -50,10 +50,10 @@
       spray:
         maxVol: 250
   - type: Spray
+    transferAmount: 15
     sprayedPrototype: BigVapor
-    transferAmount: 10
-    sprayVelocity: 5
-    sprayAliveTime: 1.5
+    sprayVelocity: 3
+    sprayDistance: 4.5
     spraySound:
       path: /Audio/Effects/spray2.ogg
 
@@ -109,7 +109,7 @@
   - type: Sprite
     netsync: false
     sprite: Effects/chempuff.rsi
-    rotation: 90
+    rotation: 180
     layers:
     - state: chempuff
       map: ["enum.VaporVisualLayers.Base"]
@@ -117,13 +117,14 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.25,0.25,0.25"
-      hard: false
-      mask:
-      - FullTileMask
-      - Opaque
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        hard: false
+        mask:
+        - FullTileMask
+        - Opaque
   - type: Appearance
   - type: VaporVisuals
 
@@ -135,17 +136,18 @@
   - type: Sprite
     netsync: false
     sprite: Effects/chempuff.rsi
-    rotation: 90
+    rotation: 180
     layers:
     - state: chempuff
       scale: 2, 2
       map: ["enum.VaporVisualLayers.Base"]
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.6,-0.6,0.6,0.6"
-      hard: false
-      mask:
-      - FullTileMask
-      - Opaque
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.6,-0.6,0.6,0.6"
+        hard: false
+        mask:
+        - FullTileMask
+        - Opaque

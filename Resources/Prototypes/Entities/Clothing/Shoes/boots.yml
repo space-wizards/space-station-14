@@ -19,9 +19,6 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepHeavy
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -55,9 +52,21 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/combatboots.rsi
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepHeavy
+  - type: Storage
+    whitelist:
+      tags:
+        - Knife
+
+- type: entity
+  parent: ClothingShoesStorageBase
+  id: ClothingShoesBootsMerc
+  name: mercenary boots
+  description: Boots that have gone through many conflicts and that have proven their combat reliability.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/mercboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/mercboots.rsi
   - type: Storage
     whitelist:
       tags:

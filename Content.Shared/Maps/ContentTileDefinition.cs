@@ -33,7 +33,8 @@ namespace Content.Shared.Maps
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
-        [DataField("baseTurfs")] public List<string> BaseTurfs { get; } = new();
+        [DataField("baseTurf")]
+        public string BaseTurf { get; } = string.Empty;
 
         [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
 

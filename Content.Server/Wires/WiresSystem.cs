@@ -165,10 +165,10 @@ public sealed class WiresSystem : SharedWiresSystem
                     else
                         types.Add(actionType, 1);
 
-                    d.Id = i;
                     if (!d.Action.AddWire(d, types[actionType]))
                         d.Action = null;
                 }
+                d.Id = i;
 
                 data.Add(id, new WireLayout.WireData(d.Letter, d.Color, i));
                 wires.WiresList[i] = wireSet[id];
@@ -237,10 +237,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnWiresStartup(EntityUid uid, WiresComponent component, ComponentStartup args)
     {
-        if (!String.IsNullOrEmpty(component.LayoutId))
-            SetOrCreateWireLayout(uid, component);
-
-        UpdateUserInterface(uid);
+        EnsureComp<WiresPanelComponent>(uid);
     }
     #endregion
 
@@ -498,17 +495,16 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnMapInit(EntityUid uid, WiresComponent component, MapInitEvent args)
     {
-        EnsureComp<WiresPanelComponent>(uid);
+        if (!string.IsNullOrEmpty(component.LayoutId))
+            SetOrCreateWireLayout(uid, component);
+
         if (component.SerialNumber == null)
-        {
             GenerateSerialNumber(uid, component);
-        }
 
         if (component.WireSeed == 0)
-        {
             component.WireSeed = _random.Next(1, int.MaxValue);
-            UpdateUserInterface(uid);
-        }
+
+        UpdateUserInterface(uid);
     }
     #endregion
 

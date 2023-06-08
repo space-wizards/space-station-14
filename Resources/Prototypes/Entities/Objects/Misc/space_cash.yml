@@ -5,41 +5,41 @@
   description: You gotta have money.
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Credit: 1
   - type: StaticPrice
     price: 0
   - type: Stack
     stackType: Credit
     count: 1
+    baseLayer: base
+    layerStates:
+    - cash
+    - cash_10
+    - cash_100
+    - cash_500
+    - cash_1000
+    - cash_1000000
   - type: Sprite
     sprite: Objects/Economy/cash.rsi
     netsync: false
     state: cash
+    layers:
+    - state: cash
+      map: ["base"]
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - density: 30
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.35,-0.2,0.25,0.1"
-      mask:
-      - ItemMask
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      # TODO: This won't work because stackvisualizer works based off of an even count and not denominations.
-      # Ideally we'd just be able to specify at what count does the new layer take place e.g.
-      # - 10: cash_10
-      # - 100: cash_100
-      stackLayers:
-      - cash
-      - cash_10
-      - cash_100
-      - cash_500
-      - cash_1000
-      - cash_1000000
 
 - type: material
   id: Credit

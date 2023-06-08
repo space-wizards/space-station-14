@@ -28,14 +28,15 @@
   - type: Airtight
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-      density: 100
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: IconSmooth
     key: walls
     base: rock_
@@ -83,7 +84,8 @@
     - type: Airtight
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
           density: 100
@@ -113,7 +115,7 @@
 - type: entity
   id: WallRockGold
   parent: WallRock
-  description: An ore vein rich with gold
+  description: An ore vein rich with gold.
   suffix: Gold
   components:
     - type: OreVein
@@ -135,7 +137,7 @@
 - type: entity
   id: WallRockPlasma
   parent: WallRock
-  description: An ore vein rich with plasma
+  description: An ore vein rich with plasma.
   suffix: Plasma
   components:
     - type: OreVein
@@ -157,7 +159,7 @@
 - type: entity
   id: WallRockQuartz
   parent: WallRock
-  description: An ore vein rich with quartz
+  description: An ore vein rich with quartz.
   suffix: Quartz
   components:
     - type: OreVein
@@ -179,7 +181,7 @@
 - type: entity
   id: WallRockSilver
   parent: WallRock
-  description: An ore vein rich with silver
+  description: An ore vein rich with silver.
   suffix: Silver
   components:
     - type: OreVein
@@ -202,7 +204,7 @@
 - type: entity
   id: WallRockTin
   parent: WallRock
-  description: An ore vein rich with steel
+  description: An ore vein rich with steel.
   suffix: Steel
   components:
     - type: OreVein
@@ -224,7 +226,7 @@
 - type: entity
   id: WallRockUranium
   parent: WallRock
-  description: An ore vein rich with uranium
+  description: An ore vein rich with uranium.
   suffix: Uranium
   components:
     - type: OreVein
@@ -242,3 +244,26 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_west
         - state: rock_uranium
+
+
+- type: entity
+  id: WallRockBananium
+  parent: WallRock
+  description: An ore vein rich with bananium.
+  suffix: Bananium
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreBananium
+    - type: Sprite
+      layers:
+        - state: rock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_west
+        - state: rock_bananium

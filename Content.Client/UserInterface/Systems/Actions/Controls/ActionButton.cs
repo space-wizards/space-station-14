@@ -95,6 +95,7 @@ public sealed class ActionButton : Control
             HorizontalExpand = true,
             VerticalExpand = true,
             Scale = (2, 2),
+            SetSize = (64, 64),
             Visible = false,
             OverrideDirection = Direction.South,
         };
@@ -157,6 +158,7 @@ public sealed class ActionButton : Control
 
     protected override void OnThemeUpdated()
     {
+        base.OnThemeUpdated();
         Button.Texture = Theme.ResolveTexture("SlotBackground");
         Label.FontColorOverride = Theme.ResolveColorOrSpecified("whiteText");
     }

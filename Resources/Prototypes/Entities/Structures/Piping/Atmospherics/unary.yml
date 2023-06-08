@@ -16,8 +16,6 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: CollideOnAnchor
-    - type: StaticPrice
-      price: 200
 
 - type: entity
   parent: GasUnaryBase
@@ -81,7 +79,7 @@
       node: ventpump
     - type: VentCritterSpawnLocation
     - type: AmbientSound
-      enabled: false
+      enabled: true
       volume: -12
       range: 5
       sound:
@@ -173,7 +171,7 @@
       graph: GasUnary
       node: ventscrubber
     - type: AmbientSound
-      enabled: false
+      enabled: true
       volume: -12
       range: 5
       sound:
@@ -230,7 +228,7 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-      noRot: true
+      snapCardinals: true
     - type: Appearance
     - type: PipeColorVisuals
     - type: Rotatable
@@ -244,17 +242,17 @@
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
+    - type: WiresPanel
     - type: Wires
       BoardName: "Thermomachine"
       LayoutId: Thermomachine
+    - type: WiresVisuals
     - type: NodeContainer
       nodes:
         pipe:
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
-    - type: StaticPrice
-      price: 500
     - type: Transform
       noRot: false
 
@@ -267,21 +265,37 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
+      granularLayersRendering: true
       layers:
-        - state: freezer_off
-          map: [ "enabled" ]
+        - state: freezerOff
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: freezerPanelOpen
+          map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
+          renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
-        enum.ThermoMachineVisuals.Enabled:
-          enabled:
-            True: { state: freezer_on }
-            False: { state: freezer_off }
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { state: freezerOn }
+            False: { state: freezerOff }
     - type: GasThermoMachine
       mode: Freezer
+    - type: ApcPowerReceiver
+      powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
+
+- type: entity
+  parent: GasThermoMachineFreezer
+  id: GasThermoMachineFreezerEnabled
+  suffix: Enabled
+  components:
+  - type: GasThermoMachine
+    enabled: true
+  - type: ApcPowerReceiver
+    powerDisabled: false
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -292,18 +306,34 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
+      granularLayersRendering : true
       layers:
-        - state: heater_off
-          map: [ "enabled" ]
+        - state: heaterOff
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: heaterPanelOpen
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
+          renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
-        enum.ThermoMachineVisuals.Enabled:
-          enabled:
-            True: { state: heater_on }
-            False: { state: heater_off }
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { state: heaterOn }
+            False: { state: heaterOff }
     - type: GasThermoMachine
       mode: Heater
+    - type: ApcPowerReceiver
+      powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
+
+- type: entity
+  parent: GasThermoMachineHeater
+  id: GasThermoMachineHeaterEnabled
+  suffix: Enabled
+  components:
+  - type: GasThermoMachine
+    enabled: true
+  - type: ApcPowerReceiver
+    powerDisabled: false
