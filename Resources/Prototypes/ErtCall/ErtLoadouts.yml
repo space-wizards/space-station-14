@@ -13,7 +13,7 @@
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityFilled
-    pocket1: Flare
+    pocket1: BaseErtUplinkRadio20TC
 #Medic
 
 #Security

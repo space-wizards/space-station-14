@@ -3,16 +3,16 @@
   id: ErtCallUplinkPreset
   storeName: ErtUplinkFull
   categories:
-  - ErtUplinkWeapons
-  - ErtUplinkAmmo
-  - ErtUplinkExplosives
-  - ErtUplinkMisc
-  - UplinkBundles
-  - UplinkTools
-  - UplinkUtility
-  - UplinkImplants
-  - UplinkJob
-  - UplinkArmor
-  - UplinkPointless
+  - ERTUplinkMelee
+  - ERTUplikWeaponCombat
+  - ERTUplinkAmmoCombat
+  - ERTUplinkWeaponNonCombat
+  - ERTUplinkAmmoNonCombat
+  - ERTUplinkExplosives
+  - ERTUplinkMedial
+  - ERTUplinkEngineering
+  - ERTUplinkUtilities
+  - ERTUplinkJunitor
+  - ERTUplinkPointless
   currencyWhitelist:
   - Telecrystal

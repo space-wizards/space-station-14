@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
-  id: BaseUplinkRadio
-  name: syndicate uplink
-  description: Suspiciously looking old radio...
+  id: BaseErtUplinkRadio
+  name: ert uplink
+  description: super ert uplink
   suffix: Empty
   components:
   - type: Sprite
@@ -20,19 +20,17 @@
   - type: ActivatableUI
     key: enum.StoreUiKey.Key
   - type: Store
-    preset: StorePresetUplink
+    preset: ErtCallUplinkPreset
     balance:
       Telecrystal: 0
 
 - type: entity
-  parent: BaseUplinkRadio
-  id: BaseUplinkRadio40TC
-  suffix: 40 TC, NukeOps
+  parent: BaseErtUplinkRadio
+  id: BaseErtUplinkRadio20TC
+  suffix: 20 TC, ert
   components:
   - type: Store
-    preset: StorePresetUplink
+    preset: ErtCallUplinkPreset
     balance:
-      Telecrystal: 40
-  - type: Tag
-    tags:
-    - NukeOpsUplink
+      Telecrystal: 20
+
