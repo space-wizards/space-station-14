@@ -36,7 +36,6 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    netsync: false
     sprite: Objects/Specific/Mech/ripley_construction.rsi
 
 - type: entity
@@ -293,7 +292,6 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    netsync: false
     sprite: Objects/Specific/Mech/hamtr_construction.rsi
 
 - type: entity
@@ -456,13 +454,7 @@
     sprite: Objects/Specific/Mech/vim_construction.rsi
   - type: ContainerContainer
     containers:
-      battery-container: !type:Container
-  - type: MechAssemblyVisuals
-    statePrefix: vim
-  - type: Construction
-    graph: Vim
-    node: start
-    defaultTarget: vim
+      mech-assembly-container: !type:Container
   - type: MechAssembly
     finishedPrototype: VimChassis
     requiredParts:
