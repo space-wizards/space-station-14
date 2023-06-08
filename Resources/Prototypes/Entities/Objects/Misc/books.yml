@@ -37,6 +37,9 @@
     sprite: Objects/Misc/books.rsi
     layers:
     - state: book_chemistry
+  - type: Tag
+    tags:
+    - Book
   - type: GuideHelp
     openOnActivation: true
     guides:
