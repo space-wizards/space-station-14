@@ -1,21 +1,5 @@
 #Misc outfit startingGear definitions.
 
-#IHS Void Suit Outfit
-- type: startingGear
-  id: IHSGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlack
-    back: ClothingBackpackFilled
-    head: ClothingHeadHelmetIHSVoidHelm
-    gloves: ClothingHandsGlovesIhscombat
-    outerClothing: IHSVoidsuit
-    shoes: ClothingShoesBootsJack
-    id: PassengerPDA
-    ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtColorBlack
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
-
 #Skeleton Biker
 - type: startingGear
   id: SkeletonBiker
@@ -52,9 +36,9 @@
 
 #Deathsquad Outfit
 - type: startingGear
-  id: DeadsquadGear
+  id: DeathSquadGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlack
+    jumpsuit: ClothingUniformJumpsuitDeathSquad
     back: ClothingBackpackDuffelSyndicateAmmo
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
@@ -62,7 +46,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
     suitstorage: YellowOxygenTankFilled
-    shoes: ClothingShoesChameleonNoSlips
+    shoes: ClothingShoesBootsMagAdv
     id: CentcomPDA
     pocket1: EnergySword
     belt: ClothingBeltChiefEngineerFilled
@@ -183,3 +167,30 @@
   id: BoxingKangarooGear
   equipment:
     gloves: ClothingHandsGlovesBoxingBlue
+
+- type: startingGear
+  id: MobMonkeyGear
+  equipment:
+    head: ClothingHeadHatTophat
+    jumpsuit: ClothingUniformJumpsuitJacketMonkey
+    id: BartenderIDCard
+
+#Brigmedic
+
+- type: startingGear
+  id: BrigmedicGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBrigmedic
+    outerClothing: ClothingOuterCoatAMG
+    back: ClothingBackpackBrigmedicFilled
+    shoes: ClothingShoesColorRed
+    gloves: ClothingHandsGlovesNitrile
+    eyes: ClothingEyesHudMedical
+    head: ClothingHeadHatBeretBrigmedic
+    id: BrigmedicPDA
+    ears: ClothingHeadsetBrigmedic
+    mask: ClothingMaskBreathMedicalSecurity
+    belt: ClothingBeltMedicalFilled
+  innerclothingskirt: ClothingUniformJumpskirtBrigmedic
+  satchel: ClothingBackpackSatchelBrigmedicFilled
+  duffelbag: ClothingBackpackDuffelBrigmedicFilled

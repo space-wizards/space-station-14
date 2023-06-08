@@ -16,8 +16,13 @@
       - id: PlushieRouny
       - id: PlushieRatvar
       - id: PlushieSharkBlue
+        orGroup: PlushieShark
+      - id: PlushieSharkGrey
+        orGroup: PlushieShark
       - id: PlushieAtmosian
       - id: PlushieDiona
+      - id: PlushieXeno
+      - id: PlushieHampter
 
 - type: entity
   id: CrateFunInstrumentsVariety
@@ -187,6 +192,16 @@
       - id: KnifePlastic
 
 - type: entity
+  id: CrateFunWaterGuns
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponWaterBlaster
+      - id: WeaponWaterPistol
+        amount: 5
+
+- type: entity
   id: CrateFunSyndicateSegway
   parent: CrateLivestock
   components:
@@ -225,3 +240,24 @@
       - id: HatBandRed
       - id: FoamCutlass
         amount: 2
+
+- type: entity
+  id: CrateFunToyBox
+  parent: CrateToyBox
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrazyGlue
+        amount: 2
+      - id: PlasticBanana
+      - id: WhoopieCushion
+      - id: ToyHammer
+      - id: MrChips
+        orGroup: GiftPool
+      - id: MrDips
+        orGroup: Giftpool
+      - id: RevolverCapGun
+      - id: VehicleUnicycleFolded
+      - id: ClothingShoesClownLarge
+      - id: ClothingHeadHatMagician

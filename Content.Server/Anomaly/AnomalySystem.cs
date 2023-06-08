@@ -27,6 +27,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -44,6 +45,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         InitializeGenerator();
         InitializeScanner();
         InitializeVessel();
+        InitializeCommands();
     }
 
     private void OnMapInit(EntityUid uid, AnomalyComponent component, MapInitEvent args)
@@ -66,7 +68,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
     private void OnStartCollide(EntityUid uid, AnomalyComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<AnomalousParticleComponent>(args.OtherFixture.Body.Owner, out var particle))
+        if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
             return;
 
         if (args.OtherFixture.ID != particle.FixtureId)
@@ -75,15 +77,15 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         // small function to randomize because it's easier to read like this
         float VaryValue(float v) => v * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
 
-        if (particle.ParticleType == component.DestabilizingParticleType)
+        if (particle.ParticleType == component.DestabilizingParticleType || particle.DestabilzingOverride)
         {
             ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerDestabilizingHit), component);
         }
-        else if (particle.ParticleType == component.SeverityParticleType)
+        if (particle.ParticleType == component.SeverityParticleType || particle.SeverityOverride)
         {
             ChangeAnomalySeverity(uid, VaryValue(particle.SeverityPerSeverityHit), component);
         }
-        else if (particle.ParticleType == component.WeakeningParticleType)
+        if (particle.ParticleType == component.WeakeningParticleType || particle.WeakeningOverride)
         {
             ChangeAnomalyHealth(uid, VaryValue(particle.HealthPerWeakeningeHit), component);
             ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerWeakeningeHit), component);

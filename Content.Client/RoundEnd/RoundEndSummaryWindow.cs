@@ -12,6 +12,7 @@ namespace Content.Client.RoundEnd
     public sealed class RoundEndSummaryWindow : DefaultWindow
     {
         private readonly IEntityManager _entityManager;
+        public int RoundId;
 
         public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId,
             RoundEndMessageEvent.RoundEndPlayerInfo[] info, IEntityManager entityManager)
@@ -28,6 +29,7 @@ namespace Content.Client.RoundEnd
             // "clown slipped the crew x times.", "x shots were fired this round.", etc.
             // Also good for serious info.
 
+            RoundId = roundId;
             var roundEndTabs = new TabContainer();
             roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
             roundEndTabs.AddChild(MakePlayerManifestoTab(info));
@@ -129,6 +131,7 @@ namespace Content.Client.RoundEnd
                         Sprite = sprite,
                         OverrideDirection = Direction.South,
                         VerticalAlignment = VAlignment.Center,
+                        SetSize = (32, 32),
                         VerticalExpand = true,
                     });
                 }

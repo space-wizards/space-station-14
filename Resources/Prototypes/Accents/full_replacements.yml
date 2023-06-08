@@ -99,3 +99,12 @@
   - accent-words-kangaroo-2
   - accent-words-kangaroo-3
   - accent-words-kangaroo-4
+
+- type: accent
+  id: slimes
+  fullReplacements:
+  - accent-words-slimes-1
+  - accent-words-slimes-2
+  - accent-words-slimes-3
+  - accent-words-slimes-4
+  - accent-words-slimes-5

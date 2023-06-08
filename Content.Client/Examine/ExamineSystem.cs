@@ -15,6 +15,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Threading;
+using Content.Shared.Eye.Blinding.Components;
+using Robust.Client;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -27,6 +29,7 @@ namespace Content.Client.Examine
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
+        [Dependency] private readonly IBaseClient _client = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -206,6 +209,7 @@ namespace Content.Client.Examine
                 hBox.AddChild(new SpriteView
                 {
                     Sprite = sprite, OverrideDirection = Direction.South,
+                    SetSize = (32, 32),
                     Margin = new Thickness(2, 0, 2, 0),
                 });
             }
@@ -325,9 +329,9 @@ namespace Content.Client.Examine
             }
         }
 
-        public void DoExamine(EntityUid entity, bool centeredOnCursor=true)
+        public void DoExamine(EntityUid entity, bool centeredOnCursor = true, EntityUid? userOverride = null)
         {
-            var playerEnt = _playerManager.LocalPlayer?.ControlledEntity;
+            var playerEnt = userOverride ?? _playerManager.LocalPlayer?.ControlledEntity;
             if (playerEnt == null)
                 return;
 
@@ -339,10 +343,10 @@ namespace Content.Client.Examine
                 canSeeClearly = false;
 
             OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false, knowTarget: canSeeClearly);
-            if (entity.IsClientSide())
+            if (entity.IsClientSide()
+                || _client.RunLevel == ClientRunLevel.SinglePlayerGame) // i.e. a replay
             {
                 message = GetExamineText(entity, playerEnt);
-
                 UpdateTooltipInfo(playerEnt.Value, entity, message);
             }
             else

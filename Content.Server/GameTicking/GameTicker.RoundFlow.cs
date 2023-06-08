@@ -254,7 +254,7 @@ namespace Content.Server.GameTicking
                     return;
                 }
 
-                _sawmill.Warning($"Exception caught while trying to start the round! Restarting round...");
+                _sawmill.Error($"Exception caught while trying to start the round! Restarting round...");
                 _runtimeLog.LogException(e, nameof(GameTicker));
                 _startingRound = false;
                 RestartRound();
@@ -456,7 +456,6 @@ namespace Content.Server.GameTicking
             // Clear up any game rules.
             ClearGameRules();
 
-            _addedGameRules.Clear();
             _allPreviousGameRules.Clear();
 
             // Round restart cleanup event, so entity systems can reset.
@@ -525,19 +524,18 @@ namespace Content.Server.GameTicking
         {
             if (Preset == null) return;
 
-            foreach (var proto in _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>())
-            {
-                if (!proto.GamePresets.Contains(Preset.ID)) continue;
+            var options = _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>().ToList();
 
-                if (proto.Message != null)
-                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
+            if (options.Count == 0)
+                return;
 
-                if (proto.Sound != null)
-                    SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
+            var proto = _robustRandom.Pick(options);
 
-                // Only play one because A
-                break;
-            }
+            if (proto.Message != null)
+                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
+
+            if (proto.Sound != null)
+                SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
         }
     }
 

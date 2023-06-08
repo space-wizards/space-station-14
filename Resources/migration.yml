@@ -1,0 +1,76 @@
+﻿# basic dictionary that maps old entity ids to new entity ids.
+# an empty or "null" string results in the entity getting deleted.
+
+# e.g., you can swap all walls with windows and delete all tables by adding lines like:
+#
+# Window: WallSolid
+# WallSolid: Window
+# Table: null
+#
+chem_dispenser: ChemDispenser
+KvassTankFull: null
+DrinkKvassGlass: null
+KvassTank: null
+
+# 2023-05-03
+SpawnPointBrigmedic: null
+ClothingHeadsetBrigmedic: null
+ClothingHeadHatBeretBrigmedic: null
+ClothingHeadHelmetHardsuitBrigmedic: null
+ClothingOuterHardsuitBrigmedic: null
+ClothingOuterCoatAMG: null
+ClothingBackpackBrigmedic: null
+ClothingBackpackBrigmedicFilled: null
+ClothingBackpackSatchelBrigmedic: null
+ClothingBackpackSatchelBrigmedicFilled: null
+ClothingBackpackDuffelBrigmedic: null
+ClothingBackpackDuffelBrigmedicFilled: null
+BrigmedicIDCard: null
+BrigmedicPDA: null
+BoxSurvivalBrigmedic: null
+LockerBrigmedic: null
+LockerBrigmedicFilled: null
+BedsheetBrigmedic: null
+
+# 2023-05-04
+BoxMagazineMagnumSubMachineGun: BoxMagazinePistolSubMachineGun
+BoxMagazineMagnumSubMachineGunPractice: BoxMagazinePistolSubMachineGunPractice
+BoxMagazineMagnumSubMachineGunRubber: BoxMagazinePistolSubMachineGunRubber
+
+MagazineMagnumSubMachineGun: MagazinePistolSubMachineGun
+MagazineMagnumSubMachineGunHighVelocity: MagazinePistolSubMachineGunHighVelocity
+MagazineMagnumSubMachineGunPractice: MagazinePistolSubMachineGunPractice
+MagazineMagnumSubMachineGunRubber: MagazinePistolSubMachineGunRubber
+WeaponSubMachineGunVector: WeaponSubMachineGunDrozd
+WeaponSubMachineGunVectorRubber: WeaponSubMachineGunDrozdRubber
+
+MagazineBoxAntiMaterial: MagazineBoxAntiMateriel
+CartridgeAntiMaterial: CartridgeAntiMateriel
+BulletAntiMaterial: BulletAntiMateriel
+
+# 2023-05-10
+FoodCondimentBottleSmallHotsauce: FoodCondimentBottleHotsauce
+FoodBakedCookieFortune: FoodSnackCookieFortune
+GunSafeSubMachineGunVector: GunSafeSubMachineGunDrozd
+
+# 2023-05-29
+OrGate: null
+
+# 2023-05-31
+IHSVoidsuit: null
+ClothingHeadHelmetIHSVoidHelm: null
+ClothingHandsGlovesIhscombat: null
+
+# 2023-06-02
+# Yes, this is right. They were, in fact, reversed because the default orientation of the particle accelerator was _down_ relative to the screen.
+# This resulted in the parts being named assuming that the person building the accelerator treated it like a rocket with the particles coming out the _back_.
+# As this was confusing they were converted to nautical orientation with forward being towards the emitters.
+MachineParticleAcceleratorEmitterCenterCircuitboard: MachineParticleAcceleratorEmitterForeCircuitboard
+MachineParticleAcceleratorEmitterLeftCircuitboard: MachineParticleAcceleratorEmitterStarboardCircuitboard
+MachineParticleAcceleratorEmitterRightCircuitboard: MachineParticleAcceleratorEmitterPortCircuitboard
+ParticleAcceleratorEmitterCenter: ParticleAcceleratorEmitterFore
+ParticleAcceleratorEmitterCenterUnfinished: ParticleAcceleratorEmitterForeUnfinished
+ParticleAcceleratorEmitterLeft: ParticleAcceleratorEmitterStarboard
+ParticleAcceleratorEmitterLeftUnfinished: ParticleAcceleratorEmitterStarboardUnfinished
+ParticleAcceleratorEmitterRight: ParticleAcceleratorEmitterPort
+ParticleAcceleratorEmitterRightUnfinished: ParticleAcceleratorEmitterPortUnfinished

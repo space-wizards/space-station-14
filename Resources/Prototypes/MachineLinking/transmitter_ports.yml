@@ -35,6 +35,12 @@
   defaultLinks: [ Off, Close ]
 
 - type: transmitterPort
+  id: DoorStatus
+  name: signal-port-name-doorstatus
+  description: signal-port-description-doorstatus
+  defaultLinks: [ DoorBolt ]
+
+- type: transmitterPort
   id: OrderSender
   name: signal-port-name-order-sender
   description: signal-port-description-order-sender
@@ -49,7 +55,7 @@
   id: MedicalScannerSender
   name: signal-port-name-med-scanner-sender
   description: signal-port-description-med-scanner-sender
-  
+
 - type: transmitterPort
   id: Timer
   name: signal-port-name-timer-trigger
@@ -67,3 +73,18 @@
   name: signal-port-name-artifact-analyzer-sender
   description: signal-port-description-artifact-analyzer-sender
   defaultLinks: [ ArtifactAnalyzerReceiver ]
+
+- type: transmitterPort
+  id: Output
+  name: signal-port-name-logic-output
+  description: signal-port-description-logic-output
+
+- type: transmitterPort
+  id: OutputHigh
+  name: signal-port-name-logic-output-high
+  description: signal-port-description-logic-output-high
+
+- type: transmitterPort
+  id: OutputLow
+  name: signal-port-name-logic-output-low
+  description: signal-port-description-logic-output-low

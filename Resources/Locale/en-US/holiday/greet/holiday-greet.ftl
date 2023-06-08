@@ -29,6 +29,7 @@ holiday-name-labor-day = Labor Day
 holiday-name-firefighter-day = Firefighter's Day
 holiday-name-mothers-day = Mother's Day
 holiday-name-owl-and-pussycat-day = Owl and Pussycat Day
+holiday-name-towel-day = Towel Day
 holiday-name-mommi-day = MoMMI Day
 holiday-name-garbage-day = Garbage Day
 holiday-name-international-picnic-day = International Picnic Day

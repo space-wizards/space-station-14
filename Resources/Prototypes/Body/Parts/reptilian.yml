@@ -16,6 +16,13 @@
   - type: Tag
     tags:
       - Trash
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
 
 - type: entity
   id: TorsoReptilian
@@ -31,6 +38,13 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
 
 - type: entity
   id: HeadReptilian
@@ -49,14 +63,16 @@
     vital: true
   - type: Input
     context: "ghost"
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 0
-    baseSprintSpeed: 0
-  - type: InputMover
-  - type: GhostOnMove
   - type: Tag
     tags:
       - Head
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: Blood
+        Quantity: 10
 
 - type: entity
   id: LeftArmReptilian
@@ -137,9 +153,9 @@
   - type: BodyPart
     partType: Leg
     symmetry: Left
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2.7
-    baseSprintSpeed : 4.5
+  - type: MovementBodyPart
+    walkSpeed : 2.7
+    sprintSpeed : 4.5
 
 - type: entity
   id: RightLegReptilian
@@ -156,9 +172,9 @@
   - type: BodyPart
     partType: Leg
     symmetry: Right
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2.7
-    baseSprintSpeed : 4.5
+  - type: MovementBodyPart
+    walkSpeed : 2.7
+    sprintSpeed : 4.5
 
 - type: entity
   id: LeftFootReptilian
