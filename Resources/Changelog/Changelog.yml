@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Our beloved Ian is getting some days off. Lisa and Old Ian agreed to
-      work as his replacement., type: Add}
-  id: 3470
-  time: '2023-04-20T23:47:04.0000000+00:00'
 - author: Kit0vras
   changes:
   - {message: Added forensic gloves for the detective. They do not leave fibers and
@@ -2905,3 +2899,14 @@ Entries:
   - {message: Added new emotion sound, type: Add}
   id: 3969
   time: '2023-06-08T06:22:02.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'Central has distributed a new subversion of the standard particle accelerators.
+      Nothing exciting, but they have brought back the old wiring layout. Apparently
+      some of the newer versions were having firmware issues and it was more reliable.
+      Keep on eye on it while it''s running will you? We don''t want an intern disabling
+      the safeties and frying their face off.', type: Add}
+  - {message: Some components of the particle accelerator have been relabeled to make
+      their orientation more obvious., type: Tweak}
+  id: 3970
+  time: '2023-06-08T06:25:59.0000000+00:00'
