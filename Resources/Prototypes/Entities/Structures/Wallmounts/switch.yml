@@ -56,6 +56,7 @@
   - type: SignalSwitch
     onPort: Pressed
     offPort: Pressed
+    statusPort: Pressed
   - type: Rotatable
   - type: Construction
     graph: SignalButtonGraph

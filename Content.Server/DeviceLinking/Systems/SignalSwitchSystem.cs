@@ -38,7 +38,11 @@ public sealed class SignalSwitchSystem : EntitySystem
             [DeviceNetworkConstants.LogicState] = comp.State ? SignalState.High : SignalState.Low
         };
 
-        _deviceLink.InvokePort(uid, comp.StatusPort, data);
+        // only send status if it's a toggle switch and not a button
+        if (comp.OnPort != comp.OffPort)
+        {
+            _deviceLink.InvokePort(uid, comp.StatusPort, data);
+        }
 
         _audio.PlayPvs(comp.ClickSound, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
 

@@ -25,7 +25,8 @@ public sealed class SignalSwitchComponent : Component
     public string OffPort = "Off";
 
     /// <summary>
-    ///     The port that gets signaled with the switch's current status
+    ///     The port that gets signaled with the switch's current status.
+    ///     This is only used if OnPort is different from OffPort, not in the case of a toggle switch.
     /// </summary>
     [DataField("statusPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
     public string StatusPort = "Status";
