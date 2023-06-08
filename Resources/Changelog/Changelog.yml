@@ -1,12 +1,4 @@
 Entries:
-- author: Kade
-  changes:
-  - {message: Uniform printers have been updated to include more of a variety of winter
-      coats and a couple new jumpsuits., type: Add}
-  - {message: Non head winter coats now only cost 500 Cloth instead of 300 cloth and
-      300 Durathread., type: Tweak}
-  id: 3474
-  time: '2023-04-20T23:58:03.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: 'Thanks to improved emitter technology, emitter and APE projectiles
@@ -2910,3 +2902,9 @@ Entries:
       technology, points, and the current discipline.', type: Add}
   id: 3973
   time: '2023-06-08T07:39:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the chemical compendium, a book containing all chemistry recipes
+      and effects. Find it in the library today.', type: Add}
+  id: 3974
+  time: '2023-06-08T14:47:54.0000000+00:00'
