@@ -61,16 +61,33 @@ public abstract class SharedStealthSystem : EntitySystem
         if (!_mobState.IsDead(uid) && value == false)
             return;
 
+        if (component.Enabled == value)
+            return;
+
         component.Enabled = value;
         Dirty(component);
+
+        if (value == false && _mobState.IsDead(uid))
+        {
+            RemComp(uid, component);
+        }
     }
 
     private void OnMobStateChanged(EntityUid uid, StealthComponent component, MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Dead)
         {
-            RemComp(uid, component);
+            SetEnabled(uid, false, component);
+            return;
         }
+
+        if (args.NewMobState == MobState.Alive)
+        {
+            SetEnabled(uid, true, component);
+            return;
+        }
+
+        Dirty(component);
     }
 
     private void OnPaused(EntityUid uid, StealthComponent component, ref EntityPausedEvent args)
@@ -88,7 +105,7 @@ public abstract class SharedStealthSystem : EntitySystem
 
     protected virtual void OnInit(EntityUid uid, StealthComponent component, ComponentInit args)
     {
-        if (component.LastUpdated != null || Paused(uid))
+        if (component.LastUpdated != null && Paused(uid))
             return;
 
         component.LastUpdated = _timing.CurTime;
