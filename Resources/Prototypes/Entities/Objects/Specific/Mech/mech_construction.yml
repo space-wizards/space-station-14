@@ -180,26 +180,10 @@
   id: HonkerHarness
   name: H.O.N.K. harness
   description: The core of the H.O.N.K. mech
->>>>>>> a9be0b2ba4933263f9d28b07a160841a52e3ce02
   components:
   - type: Appearance
   - type: ItemMapper
     mapLayers:
-<<<<<<< HEAD
-      helmet:
-        whitelist:
-          tags:
-          - HelmetEVA
-      left_leg:
-        whitelist:
-          tags:
-          - BorgLeftLeg
-      right_leg:
-        whitelist:
-          tags:
-          - BorgRightLeg
-    sprite: Objects/Specific/Mech/vim_construction.rsi
-=======
       honker_l_arm+o:
         whitelist:
           tags:
@@ -455,6 +439,21 @@
   description: A small mounting bracket for vim parts.
   components:
   - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      helmet:
+        whitelist:
+          tags:
+          - HelmetEVA
+      left_leg:
+        whitelist:
+          tags:
+          - BorgLeftLeg
+      right_leg:
+        whitelist:
+          tags:
+          - BorgRightLeg
+    sprite: Objects/Specific/Mech/vim_construction.rsi
   - type: ContainerContainer
     containers:
       battery-container: !type:Container
