@@ -15,6 +15,9 @@
       - id: HandLabeler
       - id: ClothingHandsGlovesNitrile
       - id: BoxFolderBlue
+      - id: Dropper
+      - id: BoxSyringe
+      - id: BoxBodyBag
       - id: Paper
         amount: 10
       - id: MedkitOxygenFilled

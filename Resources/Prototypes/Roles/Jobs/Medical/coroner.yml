@@ -18,7 +18,7 @@
 - type: startingGear
   id: CoronerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlack
+    jumpsuit: ClothingUniformJumpsuitCoroner
     back: ClothingBackpackMedicalFilled
     pocket1: Paper
     shoes: ClothingShoesColorBlack
@@ -27,6 +27,6 @@
     id: CoronerPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
-  innerclothingskirt: ClothingUniformJumpskirtColorBlack
+  innerclothingskirt: ClothingUniformJumpskirtCoroner
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

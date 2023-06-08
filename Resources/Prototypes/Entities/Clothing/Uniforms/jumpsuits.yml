@@ -1021,6 +1021,8 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
 
+  
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTSecurity
