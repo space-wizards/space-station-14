@@ -3,18 +3,27 @@
 
 AUTOTELL ON STANDBY. YOUR OBJECTIVES ARE SIMPLE. DELIVER THE PAYLOAD AND GET OUT BEFORE THE PAYLOAD DETONATES. BEGIN MISSION.
 
-If you hear this message on roundstart then congratulations! You have just been chosen to be a nuclear operative for the syndicate. You have one goal, to blow up the space station with a nuclear fission explosive.
+If you hear this message on round start then congratulations! You have just been chosen to be a nuclear operative for the syndicate. You have one goal, to blow up the space station with a nuclear fission explosive.
 
 ## Operatives
 
-Your team will usually consist of three to five operatives. There is one commander, one agent, and the rest are normal. You can identify your commander and agent by their unique suits. The commander will create or approve of your plan and wears the red [color=#a4885c]Commander Hardsuit[/color]. The agent will usually act as a combat medic and wears the black [color=#a4885c]Elite Hardsuit[/color].
-If you have been selected for either of these special roles but don't feel ready, one of your teammates can take responsibility.
-
+Your team consists of three to five operatives, two of which have a special role:
+- The [color=#a4885c]Nukie Commander[/color] wears the unique commander’s hardsuit, and will create or approve of the battle plan.
 <Box>
 <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieCommander" Caption="Commander Hardsuit"/>
-<GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieElite" Caption="Agent Hardsuit"/>
-<GuideEntityEmbed Entity="ClothingOuterHardsuitSyndie" Caption="Regular Hardsuit"/>
 </Box>
+
+- The [color=#a4885c]Nukie Agent[/color] wears the black elite hardsuit, and can act as a combat medic for the mission.
+<Box>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieElite" Caption="Agent Hardsuit"/>
+</Box> 
+
+- There are one to three [color=#a4885c]Nuclear Operatives[/color], who have the normal blood red hardsuit.
+<Box>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitSyndie" Caption="Blood Red Hardsuit"/>
+</Box>
+
+If you have been selected for either of these special roles but don't feel ready, one of your teammates can take responsibility.
 
 ## Preparation
 
@@ -43,11 +52,36 @@ The nuke disk belongs to the captain, they will almost always have it on them. F
 
 On your shuttle you will find one of two [color=#a4885c]Nuclear Fission Explosives[/color] and a paper with the nuke codes. The paper will tell you which explosive it corresponds to. If the ID is the same as the one on your nuke, the codes will only work for it. If it is not, then they will only work for the explosive in the station's vault.
 
-When you acquire the nuke disk, put it into the explosives and use the code to arm the nuke. It takes 30 seconds for a crewmember to disarm, and will count down from 300. Be prepared to defend the nuke for as long as possible, remember that escaping alive isn't necessary, but recommended.
+Once you acquire the nuke disk, put it into the nuke and use the code to arm it. It takes 30 seconds for a crewmember to disarm it, and it will count down from 300. Be prepared to defend the nuke for as long as possible, remember that escaping alive isn't necessary, but recommended.
 
 <Box>
 <GuideEntityEmbed Entity="NuclearBomb" Caption="The Nuclear Fission Explosive"/>
 </Box>
 
-If you manage to complete all these steps, then congratulations operative! You have succeeded in your mission.
+## Victories
+
+The “victor” of the round is announced on the round end screen, as well as how much they won by. The scale of the victory depends on circumstances at the end of the round.
+
+[color=#a4885c]Syndicate Major Victory[/color]
+  - The nuke detonates on station
+  - The crew escapes on the evac shuttle, but the nuke was armed
+  - The nuke was armed and delivered to central command on the evac shuttle
+    
+[color=#a4885c]Syndicate Minor Victory[/color]
+  - The crew escapes on evac, but every nukie survives
+  - The crew escapes and some nukies die, but the crew loses the disk
+
+[color=#a4885c]Neutral Victory[/color]
+  - The nuke detonates off station
+
+[color=#a4885c]Crew Minor Victory[/color]
+  - The crew escapes on evac and some nukies die, but the crew keeps the disk
+
+[color=#a4885c]Crew Major Victory[/color]
+  - All nuclear operatives die
+  - The crew blow up the nukie outpost with the nuke
+
+If you feel that you can't completely succeed in your mission to protect or destroy the station, keep these in mind and consider a compromise to get the best victory possible.
 </Document>
+
+
