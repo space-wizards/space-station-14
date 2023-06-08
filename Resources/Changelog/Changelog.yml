@@ -1,10 +1,4 @@
 Entries:
-- author: Kit0vras
-  changes:
-  - {message: Added forensic gloves for the detective. They do not leave fibers and
-      fingerprints., type: Add}
-  id: 3471
-  time: '2023-04-20T23:47:48.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: Ian will no longer get hurt by mouse traps, type: Tweak}
@@ -2910,3 +2904,8 @@ Entries:
       their orientation more obvious., type: Tweak}
   id: 3970
   time: '2023-06-08T06:25:59.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: HAMTR mech has been added., type: Add}
+  id: 3971
+  time: '2023-06-08T06:33:36.0000000+00:00'
