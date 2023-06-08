@@ -32,6 +32,6 @@ namespace Content.Shared.Paper
         /// The color of the ink used by the stamp in UIs
         /// </summary>
         [DataField("stampedColor")]
-        public Color StampedColor { get; set; } = Color.FromHex("#BB3232"); // StyleNano.DangerousRedFore
+        public Color StampedColor = Color.FromHex("#BB3232"); // StyleNano.DangerousRedFore
     }
 }

@@ -48,7 +48,8 @@ namespace Content.Client.Paper.UI
             handle.SetTransform(GlobalPixelPosition - PixelPosition + offset, Orientation, _textScaling);
             base.Draw(handle);
 
-            // Restore shader
+            // Restore a sane transform+shader
+            handle.SetTransform(Matrix3.Identity);
             handle.UseShader(null);
         }
     }

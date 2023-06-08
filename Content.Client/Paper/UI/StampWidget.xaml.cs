@@ -12,10 +12,12 @@ namespace Content.Client.Paper.UI
     public sealed partial class StampWidget : PanelContainer
     {
         private StyleBoxTexture _borderTexture;
+        private ShaderInstance? _stampShader;
 
-        public float Orientation {
-            get { return StampedByLabel.Orientation; }
-            set { StampedByLabel.Orientation = value; }
+        public float Orientation
+        {
+            get => StampedByLabel.Orientation;
+            set => StampedByLabel.Orientation = value;
         }
 
         public StampDisplayInfo StampInfo {
@@ -37,16 +39,20 @@ namespace Content.Client.Paper.UI
             };
             _borderTexture.SetPatchMargin(StyleBoxTexture.Margin.All, 7.0f);
             PanelOverride = _borderTexture;
+
+            var prototypes = IoCManager.Resolve<IPrototypeManager>();
+            _stampShader = prototypes.Index<ShaderPrototype>("PaperStamp").InstanceUnique();
         }
 
         protected override void Draw(DrawingHandleScreen handle)
         {
-            var prototypes = IoCManager.Resolve<IPrototypeManager>();
-            var shader = prototypes.Index<ShaderPrototype>("PaperStamp").InstanceUnique();
-            shader.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
-            handle.UseShader(shader);
+            _stampShader?.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
+            handle.UseShader(_stampShader);
             handle.SetTransform(GlobalPosition * UIScale, Orientation, Vector2.One);
             base.Draw(handle);
+
+            // Restore a sane transform+shader
+            handle.SetTransform(Matrix3.Identity);
             handle.UseShader(null);
         }
     }
