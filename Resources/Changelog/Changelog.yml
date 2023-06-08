@@ -1,10 +1,4 @@
 Entries:
-- author: AsikKEsel
-  changes:
-  - {message: 'added Cargo medal, engineer medal, medical meda, security medal, science
-      medal, case with all medals and... clown medal?', type: Add}
-  id: 3473
-  time: '2023-04-20T23:54:31.0000000+00:00'
 - author: Kade
   changes:
   - {message: Uniform printers have been updated to include more of a variety of winter
@@ -2910,3 +2904,11 @@ Entries:
       in the game., type: Tweak}
   id: 3972
   time: '2023-06-08T07:16:18.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: Added fun!, type: Add}
+  - {message: Removed fun!, type: Remove}
+  - {message: Changed fun!, type: Tweak}
+  - {message: Fixed fun!, type: Fix}
+  id: 3973
+  time: '2023-06-08T07:22:34.0000000+00:00'
