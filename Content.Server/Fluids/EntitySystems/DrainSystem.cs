@@ -58,7 +58,7 @@ namespace Content.Server.Fluids.EntitySystems
                     Empty(args.Using.Value, spillable, args.Target, drain);
                 },
                 Impact = LogImpact.Low,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png"))
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png"))
 
             };
             args.Verbs.Add(verb);
