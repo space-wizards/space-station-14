@@ -11,6 +11,9 @@
             "name": "base"
         },
         {
+            "name": "open-bolt"
+        },
+        {
             "name": "inhand-left",
             "directions": 4
         },
