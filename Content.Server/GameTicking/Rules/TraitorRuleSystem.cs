@@ -73,7 +73,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             var minPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
             if (!ev.Forced && ev.Players.Length < minPlayers)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-not-enough-ready-players",
+                _chatManager.SendAdminAnnouncement(Loc.GetString("traitor-not-enough-ready-players",
                     ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
                 ev.Cancel();
                 continue;
