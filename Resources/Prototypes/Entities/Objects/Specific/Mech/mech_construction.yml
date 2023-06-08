@@ -459,9 +459,6 @@
       battery-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: vim
-  - type: Sprite
-    noRot: true
-    state: vim0
   - type: Construction
     graph: Vim
     node: start
