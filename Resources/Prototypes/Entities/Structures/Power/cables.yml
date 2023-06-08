@@ -17,7 +17,6 @@
     canCollide: false
   - type: Fixtures
   - type: Sprite
-    netsync: false
     drawdepth: ThinWire
     visible: false
   - type: Damageable
