@@ -2769,7 +2769,7 @@ Entries:
 - author: Owai-Seek
   changes:
   - {message: Added a Chemist Guidebook with a medical subsection., type: Add}
-  - {message: Guidebook Helpers have been added to the Chem Dispenser and Chem Master,
+  - {message: Guidebook Helpers have been added to the Chem Dispenser and Chem Master.,
     type: Tweak}
   id: 3949
   time: '2023-06-05T22:45:46.0000000+00:00'
@@ -2792,7 +2792,7 @@ Entries:
   time: '2023-06-06T21:08:35.0000000+00:00'
 - author: HerCoyote23
   changes:
-  - {message: You can clobber people with the seclite now, type: Tweak}
+  - {message: You can clobber people with the seclite now., type: Tweak}
   id: 3953
   time: '2023-06-06T21:21:19.0000000+00:00'
 - author: Stealth16
@@ -2802,7 +2802,7 @@ Entries:
   time: '2023-06-07T03:48:08.0000000+00:00'
 - author: ElectroJr
   changes:
-  - {message: Fixed a bug that allowed traitors to duplicate TCs, type: Fix}
+  - {message: Fixed a bug that allowed traitors to duplicate TCs., type: Fix}
   id: 3955
   time: '2023-06-07T03:53:11.0000000+00:00'
 - author: Velcroboy
@@ -2817,12 +2817,12 @@ Entries:
   time: '2023-06-07T03:53:41.0000000+00:00'
 - author: Rincew1nd
   changes:
-  - {message: All the antag roles have briefing sounds now, type: Add}
+  - {message: All the antag roles have briefing sounds now., type: Add}
   id: 3958
   time: '2023-06-07T07:15:23.0000000+00:00'
 - author: lzk
   changes:
-  - {message: Fixed slime and diona brute damage color, type: Fix}
+  - {message: Fixed slime and diona brute damage color., type: Fix}
   id: 3959
   time: '2023-06-07T08:57:49.0000000+00:00'
 - author: EmoGarbage404
@@ -2868,7 +2868,7 @@ Entries:
   time: '2023-06-07T19:44:42.0000000+00:00'
 - author: lzk
   changes:
-  - {message: Changed sprites for some medipens, type: Tweak}
+  - {message: Changed sprites for some medipens., type: Tweak}
   id: 3967
   time: '2023-06-07T22:18:18.0000000+00:00'
 - author: deltanedas
@@ -2904,11 +2904,3 @@ Entries:
       in the game., type: Tweak}
   id: 3972
   time: '2023-06-08T07:16:18.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - {message: Added fun!, type: Add}
-  - {message: Removed fun!, type: Remove}
-  - {message: Changed fun!, type: Tweak}
-  - {message: Fixed fun!, type: Fix}
-  id: 3973
-  time: '2023-06-08T07:22:34.0000000+00:00'
