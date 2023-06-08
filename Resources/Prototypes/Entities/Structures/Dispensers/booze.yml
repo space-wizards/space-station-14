@@ -20,3 +20,6 @@
   - type: Wires
     BoardName: "BoozeDispenser"
     LayoutId: BoozeDispenser
+  - type: GuideHelp
+    guides:
+    - Bartender
