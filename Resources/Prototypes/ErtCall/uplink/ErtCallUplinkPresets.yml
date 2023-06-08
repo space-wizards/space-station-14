@@ -1,0 +1,18 @@
+#temp
+- type: storePreset
+  id: ErtCallUplinkPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ErtUplinkWeapons
+  - ErtUplinkAmmo
+  - ErtUplinkExplosives
+  - ErtUplinkMisc
+  - UplinkBundles
+  - UplinkTools
+  - UplinkUtility
+  - UplinkImplants
+  - UplinkJob
+  - UplinkArmor
+  - UplinkPointless
+  currencyWhitelist:
+  - Telecrystal
