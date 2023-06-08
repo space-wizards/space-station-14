@@ -36,20 +36,22 @@
   components:
   - type: Stack
     stackType: CableHV
+    baseLayer: base
+    layerStates:
+    - coilhv-10
+    - coilhv-20
+    - coilhv-30
   - type: Sprite
     state: coilhv-30
+    layers:
+    - state: coilhv-30
+      map: ["base"]
   - type: Item
     heldPrefix: coilhv
   - type: CablePlacer
     cablePrototypeID: CableHV
     blockingWireType: HighVoltage
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - coilhv-10
-          - coilhv-20
-          - coilhv-30
 
 - type: entity
   parent: CableHVStack
@@ -70,20 +72,22 @@
   components:
   - type: Stack
     stackType: CableMV
+    baseLayer: base
+    layerStates:
+    - coilmv-10
+    - coilmv-20
+    - coilmv-30
   - type: Sprite
     state: coilmv-30
+    layers:
+    - state: coilmv-30
+      map: ["base"]
   - type: Item
     heldPrefix: coilmv
   - type: CablePlacer
     cablePrototypeID: CableMV
     blockingWireType: MediumVoltage
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - coilmv-10
-          - coilmv-20
-          - coilmv-30
 
 - type: entity
   parent: CableMVStack
@@ -104,18 +108,21 @@
   components:
   - type: Sprite
     state: coillv-30
+    layers:
+    - state: coillv-30
+      map: ["base"]
   - type: Item
     heldPrefix: coillv
+  - type: Stack
+    baseLayer: base
+    layerStates:
+    - coillv-10
+    - coillv-20
+    - coillv-30
   - type: CablePlacer
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - coillv-10
-          - coillv-20
-          - coillv-30
 
 - type: entity
   parent: CableApcStack

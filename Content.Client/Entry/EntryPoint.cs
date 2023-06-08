@@ -14,6 +14,7 @@ using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
 using Content.Client.Radiation.Overlays;
+using Content.Client.Replay;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.Stylesheets;
@@ -52,19 +53,17 @@ namespace Content.Client.Entry
         [Dependency] private readonly ViewportManager _viewportManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IClientPreferencesManager _clientPreferencesManager = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
-        [Dependency] private readonly NetworkResourceManager _networkResources = default!;
         [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
-        [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+        [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
         [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
+        [Dependency] private readonly ContentReplayPlaybackManager _playbackMan = default!;
 
         public override void Init()
         {
@@ -133,7 +132,8 @@ namespace Content.Client.Entry
             _viewportManager.Initialize();
             _ghostKick.Initialize();
             _extendedDisconnectInformation.Initialize();
-            _playTimeTracking.Initialize();
+            _jobRequirements.Initialize();
+            _playbackMan.Initialize();
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
@@ -157,13 +157,10 @@ namespace Content.Client.Entry
             _overlayManager.AddOverlay(new SingularityOverlay());
             _overlayManager.AddOverlay(new FlashOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
-
             _chatManager.Initialize();
             _clientPreferencesManager.Initialize();
             _euiManager.Initialize();
             _voteManager.Initialize();
-            _gamePrototypeLoadManager.Initialize();
-            _networkResources.Initialize();
             _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
             _documentParsingManager.Initialize();
 

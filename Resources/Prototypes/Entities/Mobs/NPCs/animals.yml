@@ -426,6 +426,9 @@
     prototype: AnimalRuminant
   - type: HTN
     rootTask: RuminantCompound
+  - type: GuideHelp
+    guides:
+    - Chef
 
 - type: entity
   name: crab
@@ -802,6 +805,7 @@
     factions:
     - Passive
   - type: GhostRole
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
@@ -899,10 +903,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Blood
-          Quantity: 50
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -2110,7 +2112,9 @@
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Blood
-          Quantity: 60
+          Quantity: 55
+        - ReagentId: Fat
+          Quantity: 5
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -2121,6 +2125,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - Hamster
   - type: Respirator
     damage:
       types:

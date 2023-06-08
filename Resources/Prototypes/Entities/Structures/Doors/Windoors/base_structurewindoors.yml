@@ -112,9 +112,11 @@
     openUnlitVisible: true
     # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
     safety: false
+  - type: DoorBolt
   - type: Electrified
     enabled: false
     usesApcPower: true
+  - type: WiresPanel
   - type: Wires
     BoardName: "Windoor Control"
     LayoutId: Airlock
