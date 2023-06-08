@@ -1,10 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: 'Thanks to improved emitter technology, emitter and APE projectiles
-      will now go through glass!', type: Fix}
-  id: 3475
-  time: '2023-04-21T00:26:40.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix NPCs prying doors., type: Fix}
@@ -2908,3 +2902,9 @@ Entries:
       and effects. Find it in the library today.', type: Add}
   id: 3974
   time: '2023-06-08T14:47:54.0000000+00:00'
+- author: Ahion
+  changes:
+  - {message: Fixed O2 tanks in oxygen deprivation treatment kit spawning empty.,
+    type: Fix}
+  id: 3975
+  time: '2023-06-08T15:10:27.0000000+00:00'
