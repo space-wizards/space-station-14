@@ -1,0 +1,113 @@
+#Leader
+- type: entity
+  noSpawn: true
+  parent: MobHuman
+  id: ERTLeaderPreset
+  name: ERT leader
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitaryLeader
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertleadereva
+    - type: Loadout
+      prototypes: [ ERTLeaderPresetGear ]
+
+#Medic
+- type: entity
+  noSpawn: true
+  parent: MobHuman
+  id: ERTMedicPreset
+  name: ERT medic
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitaryLeader
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertmedicaleva
+    - type: Loadout
+      prototypes: [ ERTMedicalGearEVA ]
+
+#Security
+- type: entity
+  noSpawn: true
+  parent: MobHuman
+  id: ERTSecurityPreset
+  name: ERT security
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitaryLeader
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertsecurityeva
+    - type: Loadout
+      prototypes: [ ERTSecurityGearEVA ]
+
+#Engineer
+- type: entity
+  noSpawn: true
+  parent: MobHuman
+  id: ERTEngineerPreset
+  name: ERT engineer
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitaryLeader
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertengineereva
+    - type: Loadout
+      prototypes: [ ERTEngineerGearEVA ]
+
+#Junitor
+- type: entity
+  noSpawn: true
+  parent: MobHuman
+  id: ERTJunitorPreset
+  name: ERT junitor
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitaryLeader
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertjanitoreva
+    - type: Loadout
+      prototypes: [ ERTJanitorGearEVA ]
+
+#CBURN
+- type: entity
+  noSpawn: true
+  parent: MobHuman
+  id: CBURNPreset
+  name: CBURN
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitaryLeader
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: cburn
+    - type: Loadout
+      prototypes: [ CBURNGear ]

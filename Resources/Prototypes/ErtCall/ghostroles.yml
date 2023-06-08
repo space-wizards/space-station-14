@@ -1,0 +1,122 @@
+#Leader
+- type: entity
+  #noSpawn: true
+  id: SpawnERTLeaderPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-leader-eva-name
+      description: ertcall-leader-eva-desc
+      rules: ertcall-leader-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: ERTLeaderPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertleadereva
+
+#Medic
+
+- type: entity
+  #noSpawn: true
+  id: SpawnERTMedicPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-medic-eva-name
+      description: ertcall-medic-eva-desc
+      rules: ertcall-medic-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: ERTMedicPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertmedicaleva
+
+#Security
+- type: entity
+  #noSpawn: true
+  id: SpawnERTSecurityPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-security-eva-name
+      description: ertcall-security-eva-desc
+      rules: ertcall-security-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: ERTSecurityPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertsecurityeva
+
+#Engineer
+- type: entity
+  #noSpawn: true
+  id: SpawnERTEngineerPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-engineer-eva-name
+      description: ertcall-engineer-eva-desc
+      rules: ertcall-engineer-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: ERTEngineerPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertengineereva
+
+#Junitor
+- type: entity
+  #noSpawn: true
+  id: SpawnERTJunitorPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-junitor-eva-name
+      description: ertcall-junitor-eva-desc
+      rules: ertcall-junitor-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: ERTJunitorPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertjanitoreva
+
+#CBURN
+- type: entity
+  #noSpawn: true
+  id: SpawnCBURNPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-cburn-eva-name
+      description: ertcall-cburn-eva-desc
+      rules: ertcall-cburn-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: CBURNPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: cburn
+
+
