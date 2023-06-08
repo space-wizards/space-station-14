@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix mob spawn positions and nerf mob spawn rates for salvage expeditions.,
-    type: Tweak}
-  id: 3469
-  time: '2023-04-20T13:32:06.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Our beloved Ian is getting some days off. Lisa and Old Ian agreed to
@@ -2906,3 +2900,8 @@ Entries:
       doors and other logic gates.', type: Add}
   id: 3968
   time: '2023-06-07T23:48:43.0000000+00:00'
+- author: Sanchez_
+  changes:
+  - {message: Added new emotion sound, type: Add}
+  id: 3969
+  time: '2023-06-08T06:22:02.0000000+00:00'
