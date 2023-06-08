@@ -1,9 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: Ian will no longer get hurt by mouse traps, type: Tweak}
-  id: 3472
-  time: '2023-04-20T23:51:11.0000000+00:00'
 - author: AsikKEsel
   changes:
   - {message: 'added Cargo medal, engineer medal, medical meda, security medal, science
@@ -2909,3 +2904,9 @@ Entries:
   - {message: HAMTR mech has been added., type: Add}
   id: 3971
   time: '2023-06-08T06:33:36.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: The game will now fall back to Traitor if there are more than 5 people
+      in the game., type: Tweak}
+  id: 3972
+  time: '2023-06-08T07:16:18.0000000+00:00'
