@@ -2272,10 +2272,10 @@
     accent: pig
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: Faction
+    factions:
+    - Passive
   - type: Tag
     tags:
     - CannotSuicide
     - VimPilot
-  - type: Faction
-    factions:
-    - Passive
