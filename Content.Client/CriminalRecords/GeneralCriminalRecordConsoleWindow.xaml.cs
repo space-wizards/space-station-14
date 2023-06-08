@@ -132,13 +132,6 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 
         if ((state.CriminalRecord != null) & (state.StationRecord != null))
         {
-            ReasonLineEdit.Visible = state.SelectedKey != null;
-            ArrestButton.Visible = state.SelectedKey != null;
-            CriminalDivider.Visible = state.SelectedKey != null;
-            StatusOptionButton.Visible = state.SelectedKey != null;
-
-            StatusOptionButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.Detained;
-
             if (!StatusOptionButton.Disabled)
             {
                 StatusOptionButton.Clear();
