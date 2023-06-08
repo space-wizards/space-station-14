@@ -88,3 +88,6 @@
   - type: EmptyOnMachineDeconstruct
     containers:
     - scanner-bodyContainer
+  - type: GuideHelp
+    guides:
+    - Cloning
