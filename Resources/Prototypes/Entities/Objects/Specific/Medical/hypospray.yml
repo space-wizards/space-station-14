@@ -57,7 +57,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
-    netsync: false
     layers:
     - state: medipen
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -135,7 +134,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
-    netsync: false
     layers:
     - state: hypovolemic
       map: [ "enum.SolutionContainerLayers.Fill" ]
@@ -258,7 +256,6 @@
   - type: Sprite
     sprite: Objects/Storage/penbox.rsi
     state: hypopen
-    netsync: false
   - type: SpawnItemsOnUse
     items:
     - id: Hypopen

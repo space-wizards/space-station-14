@@ -7,7 +7,6 @@
   - type: CargoPallet
   - type: Sprite
     drawdepth: FloorTiles
-    netsync: false
     layers:
     - sprite: Structures/catwalk.rsi
       state: catwalk_preview

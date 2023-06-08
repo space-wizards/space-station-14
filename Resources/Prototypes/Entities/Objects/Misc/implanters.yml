@@ -21,7 +21,6 @@
             - SubdermalImplant
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
-      netsync: false
       state: syringe_base0
       layers:
         - state: syringe2
@@ -61,7 +60,6 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
-      netsync: false
       state: syringe_base0
       layers:
         - state: syringe2

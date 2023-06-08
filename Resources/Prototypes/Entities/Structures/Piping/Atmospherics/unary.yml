@@ -54,7 +54,6 @@
       tags:
         - GasVent
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
@@ -95,7 +94,6 @@
   components:
     # TODO ATMOS: Find sprite for this.
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
@@ -145,7 +143,6 @@
       tags:
         - GasScrubber
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/scrubber.rsi
       layers:
@@ -187,7 +184,6 @@
   components:
     - type: Sprite
       drawdepth: FloorObjects
-      netsync: false
       sprite: Structures/Piping/Atmospherics/outletinjector.rsi
       layers:
         - state: pipeHalf
@@ -226,7 +222,6 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
       snapCardinals: true
     - type: Appearance

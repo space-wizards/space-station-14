@@ -11,7 +11,6 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     snapCardinals: true
     layers:

@@ -14,7 +14,6 @@
     soundEject:
       collection: ShellEject
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     layers:
       - state: base
