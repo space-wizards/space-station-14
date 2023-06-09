@@ -22,6 +22,15 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     [Dependency] private readonly MarkingManager _markingManager = default!;
 
     public const string DefaultSpecies = "Human";
+    // Corvax-TTS-Start
+    public const string DefaultVoice = "Garithos";
+    public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
+    {
+        {Sex.Male, "Garithos"},
+        {Sex.Female, "Maiev"},
+        {Sex.Unsexed, "Myron"},
+    };
+    // Corvax-TTS-End
 
     public override void Initialize()
     {
@@ -40,7 +49,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             component.Age,
             component.Species,
             component.SkinColor,
-            component.EyeColor);
+            component.EyeColor,
+            component.SpeakerColor); // Corvax-SpeakerColor
     }
 
     /// <summary>
