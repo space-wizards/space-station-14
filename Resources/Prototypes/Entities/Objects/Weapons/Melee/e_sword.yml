@@ -170,22 +170,25 @@
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
   - type: Wieldable
-    wieldTime: .75
+    wieldTime: 1
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 14
-            Heat: 14
+            Slash: 6.5
+            Heat: 6.5
             Structural: 6
-            Blunt: -8.5
+            Blunt: -4.5
     litDisarmMalus: 0.6
   - type: MeleeWeapon
-    attackRate: 1.8
+    attackRate: 1.7
+    angle: 100
+    heavyWindupModifier: .8
+    heavyDamageModifier: 1.5
     soundHit:
       path: /Audio/Weapons/eblade1.ogg
     damage:
       types:
-        Blunt: 8.5
+        Blunt: 4.5
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
     layers:
@@ -200,4 +203,5 @@
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
   - type: Reflect
     enabled: true
-    reflectProb: .35
+    reflectProb: .50
+    spread: 75
