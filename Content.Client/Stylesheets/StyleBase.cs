@@ -24,6 +24,7 @@ namespace Content.Client.Stylesheets
         public const string ButtonOpenLeft = "OpenLeft";
         public const string ButtonOpenBoth = "OpenBoth";
         public const string ButtonSquare = "ButtonSquare";
+        public const string RaisedSquareHighlight = "RaisedSquareHighlight";
 
         public const string ButtonCaution = "Caution";
 

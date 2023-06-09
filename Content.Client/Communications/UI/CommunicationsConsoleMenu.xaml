@@ -54,73 +54,81 @@
         </BoxContainer>
 
         <!-- Second column: Call emergency shuttle button -->
-        <ui:StripeBack HasTopEdge="False" HasBottomEdge="False" StyleClasses="StripeWarning" Margin="0 0 6 0" HorizontalExpand="False" HorizontalAlignment="Center">
-            <ui:ForegroundImageContainer
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Margin="12 24 12 12" >
-                    <PanelContainer StyleClasses="AngleRect"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch">
-                         <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom" VerticalExpand="True">
-                            <ui:BracketedContainer Margin="6 12 6 0" VerticalAlignment="Bottom">
-                                <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
-                            </ui:BracketedContainer>
-                            <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
-                                Margin="12" SetSize="80 80"
-                                StyleClasses="TemptingRedButton" />
-                        </BoxContainer>
-                    </PanelContainer>
-            </ui:ForegroundImageContainer>
-        </ui:StripeBack>
+        <ui:ForegroundImageContainer ForegroundPanelStyle="PanelRaisedHighlight" Margin="0 0 6 0">
+            <ui:StripeBack HasTopEdge="False" HasBottomEdge="False" StyleClasses="StripeWarning" HorizontalExpand="False" HorizontalAlignment="Center">
+                <ui:ForegroundImageContainer
+                    ForegroundPanelStyle="AngleRectEmbedded"
+                    ForegroundMargin="10 10 10 10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Margin="12 24 12 12" >
+                        <PanelContainer StyleClasses="AngleRect"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
+                             <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom" VerticalExpand="True">
+                                <ui:BracketedContainer Margin="6 12 6 0" VerticalAlignment="Bottom">
+                                    <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
+                                </ui:BracketedContainer>
+                                <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
+                                    Margin="12" SetSize="80 80"
+                                    StyleClasses="TemptingRedButton" />
+                            </BoxContainer>
+                        </PanelContainer>
+                </ui:ForegroundImageContainer>
+            </ui:StripeBack>
+        </ui:ForegroundImageContainer>
 
         <!-- Third column: Shuttle state indicators and recall shuttle button -->
-        <ui:StripeBack HasTopEdge="False" HasBottomEdge="False" StyleClasses="StripeWarning" HorizontalExpand="False" HorizontalAlignment="Center" Margin="6 0 0 0">
-            <BoxContainer Orientation="Vertical">
-                <!-- This contains the shuttle state indicators -->
-                <ui:ForegroundImageContainer Margin="12 12 12 16">
-                    <PanelContainer StyleClasses="AngleRect">
-                        <BoxContainer Orientation="Vertical">
-                            <!-- "Shuttle is incoming" light in here -->
-                            <ui:BracketedContainer HorizontalExpand="True">
-                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                                    <Label Text="{Loc 'comms-shuttle-incoming-label'}" Margin="0 0 6 0" />
-                                    <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right">
-                                        <TextureButton Name="ShuttleIncomingLight" StyleClasses="LightUnlit" SetSize="18 18" Margin="0 0 4 0"/>
+        <ui:ForegroundImageContainer ForegroundPanelStyle="PanelRaisedHighlight" Margin="6 0 0 0">
+            <ui:StripeBack HasTopEdge="False" HasBottomEdge="False" StyleClasses="StripeWarning" HorizontalExpand="False" HorizontalAlignment="Center">
+                <BoxContainer Orientation="Vertical">
+                    <!-- This contains the shuttle state indicators -->
+                    <ui:ForegroundImageContainer Margin="12 12 12 16" ForegroundPanelStyle="AngleRectEmbedded" ForegroundMargin="10 10 10 10">
+                        <PanelContainer StyleClasses="AngleRect">
+                            <BoxContainer Orientation="Vertical">
+                                <!-- "Shuttle is incoming" light in here -->
+                                <ui:BracketedContainer HorizontalExpand="True">
+                                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                        <Label Text="{Loc 'comms-shuttle-incoming-label'}" Margin="0 0 6 0" />
+                                        <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right">
+                                            <TextureButton Name="ShuttleIncomingLight" StyleClasses="LightUnlit" SetSize="18 18" Margin="0 0 4 0"/>
+                                        </BoxContainer>
                                     </BoxContainer>
-                                </BoxContainer>
-                            </ui:BracketedContainer>
+                                </ui:BracketedContainer>
 
-                            <!-- Shuttle "arriving in" label here -->
-                            <ui:BracketedContainer HorizontalExpand="True">
-                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 6 0 6">
-                                    <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" Margin="0 0 6 0" />
-                                    <PanelContainer StyleClasses="PanelBackgroundBaseDark" HorizontalExpand="True" HorizontalAlignment="Right" Margin="0 0 4 0">
-                                        <Label Name="CountdownLabel" StyleClasses="LabelLCDBig"/>
-                                    </PanelContainer>
-                                </BoxContainer>
-                            </ui:BracketedContainer>
-                        </BoxContainer>
-                    </PanelContainer>
-                </ui:ForegroundImageContainer>
+                                <!-- Shuttle "arriving in" label here -->
+                                <ui:BracketedContainer HorizontalExpand="True">
+                                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 6 0 6">
+                                        <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" Margin="0 0 6 0" />
+                                        <PanelContainer StyleClasses="PanelBackgroundBaseDark" HorizontalExpand="True" HorizontalAlignment="Right" Margin="0 0 4 0">
+                                            <Label Name="CountdownLabel" StyleClasses="LabelLCDBig"/>
+                                        </PanelContainer>
+                                    </BoxContainer>
+                                </ui:BracketedContainer>
+                            </BoxContainer>
+                        </PanelContainer>
+                    </ui:ForegroundImageContainer>
 
-                <!-- Button to recall shuttle -->
-                <ui:ForegroundImageContainer Margin="12 24 12 12"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        VerticalExpand="True">
-                    <PanelContainer StyleClasses="AngleRect">
-                        <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
-                            <ui:BracketedContainer Margin="6 12 6 0">
-                                <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
-                            </ui:BracketedContainer>
-                            <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
-                                Margin="12" SetSize="80 80"
-                                StyleClasses="TemptingRedButton" />
-                        </BoxContainer>
-                    </PanelContainer>
-                </ui:ForegroundImageContainer>
-            </BoxContainer>
-        </ui:StripeBack>
+                    <!-- Button to recall shuttle -->
+                    <ui:ForegroundImageContainer Margin="12 24 12 12"
+                            ForegroundPanelStyle="AngleRectEmbedded"
+                            ForegroundMargin="10 10 10 10"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            VerticalExpand="True">
+                        <PanelContainer StyleClasses="AngleRect">
+                            <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
+                                <ui:BracketedContainer Margin="6 12 6 0">
+                                    <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
+                                </ui:BracketedContainer>
+                                <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
+                                    Margin="12" SetSize="80 80"
+                                    StyleClasses="TemptingRedButton" />
+                            </BoxContainer>
+                        </PanelContainer>
+                    </ui:ForegroundImageContainer>
+                </BoxContainer>
+            </ui:StripeBack>
+        </ui:ForegroundImageContainer>
     </BoxContainer>
 </ui:FancyWindow>

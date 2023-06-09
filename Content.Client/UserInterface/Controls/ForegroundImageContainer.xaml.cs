@@ -7,10 +7,24 @@ namespace Content.Client.UserInterface.Controls
     [GenerateTypedNameReferences]
     public partial class ForegroundImageContainer : Container
     {
+        // PanelRaisedHighlight
+        // AngleRectEmbedded
+        public string ForegroundPanelStyle
+        {
+            set => ForegroundContainer.SetOnlyStyleClass(value);
+        }
+
+        public Thickness ForegroundMargin
+        {
+            get => ContentsContainer.Margin;
+            set => ContentsContainer.Margin = value;
+        }
+
         public ForegroundImageContainer()
         {
             RobustXamlLoader.Load(this);
             XamlChildren = ContentsContainer.Children;
         }
+
     }
 }

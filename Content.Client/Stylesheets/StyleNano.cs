@@ -42,6 +42,7 @@ namespace Content.Client.Stylesheets
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
+        public const string StyleClassRaisedHighlightBox = "RaisedHighlightBox";
         public const string StyleClassInventorySlotBackground = "InventorySlotBackground";
         public const string StyleClassHandSlotHighlight = "HandSlotHighlight";
         public const string StyleClassChatSubPanel = "ChatSubPanel";
@@ -503,6 +504,12 @@ namespace Content.Client.Stylesheets
                 Modulate = Color.FromHex("#202023"),
             };
             insetBack.SetPatchMargin(StyleBox.Margin.All, 10);
+
+            var raiseHighlightStyleBox = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/Interface/Nano/raised_highlight_box.svg.96dpi.png"),
+            };
+            raiseHighlightStyleBox.SetPatchMargin(StyleBox.Margin.All, 15.0f);
 
             // Default paper background:
             var paperBackground = new StyleBoxTexture
@@ -1349,6 +1356,9 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>().Class("PanelBackgroundBaseDark")
                     .Prop("panel", new StyleBoxTexture(BaseButtonOpenBoth) { Padding = default })
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
+
+                Element<PanelContainer>().Class("PanelRaisedHighlight")
+                    .Prop(PanelContainer.StylePropertyPanel, raiseHighlightStyleBox),
 
                 // Window Footer
                 Element<TextureRect>().Class("NTLogoDark")
