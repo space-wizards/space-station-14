@@ -112,6 +112,9 @@
       icon: Interface/Actions/devour.png
       name: action-name-devour
       description: action-description-devour
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   parent: BaseMobDragon
