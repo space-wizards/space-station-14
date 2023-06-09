@@ -10,13 +10,26 @@ namespace Content.Shared.Construction.Conditions
     {
         [DataField("filterMobs")] private bool _filterMobs = false;
         [DataField("failIfSpace")] private bool _failIfSpace = true;
+        [DataField("failIfNotSturdy")] private bool _failIfNotSturdy = true;
 
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var tileRef = location.GetTileRef();
 
-            if (tileRef == null || tileRef.Value.IsSpace())
-                return !_failIfSpace;
+            if (tileRef == null)
+            {
+                return false;
+            }
+
+            if (tileRef.Value.IsSpace() && _failIfSpace)
+            {
+                return false;
+            }
+
+            if (!tileRef.Value.GetContentTileDefinition().Sturdy && _failIfNotSturdy)
+            {
+                return false;
+            }
 
             return !tileRef.Value.IsBlockedTurf(_filterMobs);
         }
