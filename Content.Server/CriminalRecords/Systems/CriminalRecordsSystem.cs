@@ -8,6 +8,11 @@ namespace Content.Server.CriminalRecords.Systems;
 
 /// <summary>
 ///     Criminal records
+///
+///     Criminal Records inherit Station Records' core and add roleplaying tools for Security:
+///         - Ability to track a person's status (Detained/Wanted/None)
+///         - See security officers' actions in Criminal Records in the radio
+///         - See reasons for any action with no need to ask the officer personally
 /// </summary>
 public sealed class CriminalRecordsSystem : EntitySystem
 {
