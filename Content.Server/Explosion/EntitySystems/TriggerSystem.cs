@@ -5,22 +5,18 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
-using Content.Server.Singularity.Components;
 using Content.Shared.Database;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Payload.Components;
-using Content.Shared.Singularity.Components;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Trigger;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -57,7 +53,6 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-        [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
 
         public override void Initialize()
         {
@@ -84,35 +79,6 @@ namespace Content.Server.Explosion.EntitySystems
 
             SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(OnAnchorTrigger);
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(OnSoundTrigger);
-            SubscribeLocalEvent<PointLightEnableOnTriggerComponent, TriggerEvent>(OnPointLightTrigger);
-            SubscribeLocalEvent<GravityWellOnTriggerComponent, TriggerEvent>(OnGravityWellTrigger);
-            SubscribeLocalEvent<SingularityDistortionOnTriggerComponent, TriggerEvent>(OnDistortionTrigger);
-        }
-
-        private void OnDistortionTrigger(EntityUid uid, SingularityDistortionOnTriggerComponent component, TriggerEvent args)
-        {
-            var singulo = EnsureComp<SingularityDistortionComponent>(uid);
-
-            singulo.Intensity = component.Intensity;
-            if (component.RemoveOnTrigger)
-                RemCompDeferred<SingularityDistortionOnTriggerComponent>(uid);
-        }
-
-        private void OnGravityWellTrigger(EntityUid uid, GravityWellOnTriggerComponent component, TriggerEvent args)
-        {
-            var well = EnsureComp<GravityWellComponent>(uid);
-            well.BaseRadialAcceleration = component.RadialAcceleration;
-            well.BaseTangentialAcceleration = component.TangentialAcceleration;
-            if (component.RemoveOnTrigger)
-                RemCompDeferred<GravityWellOnTriggerComponent>(uid);
-        }
-
-        private void OnPointLightTrigger(EntityUid uid, PointLightEnableOnTriggerComponent component, TriggerEvent args)
-        {
-            if (TryComp<PointLightComponent>(uid, out var comp))
-                _pointLightSystem.SetEnabled(uid, true, comp);
-            if (component.RemoveOnTrigger)
-                RemCompDeferred<PointLightEnableOnTriggerComponent>(uid);
         }
 
         private void OnSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
@@ -124,8 +90,9 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
         {
-            _container.TryRemoveFromContainer(uid, true);
-            _transformSystem.AnchorEntity(uid, Transform(uid));
+            if (!(_container.IsEntityInContainer(uid)) || _container.TryRemoveFromContainer(uid, true))
+                _transformSystem.AnchorEntity(uid, Transform(uid));
+
             if(component.RemoveOnTrigger)
                 RemCompDeferred<AnchorOnTriggerComponent>(uid);
         }
