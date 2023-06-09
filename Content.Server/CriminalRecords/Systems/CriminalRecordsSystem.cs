@@ -46,7 +46,8 @@ public sealed class CriminalRecordsSystem : EntitySystem
         if (!TryComp<StationRecordsComponent>(station, out var stationRecordsComponent))
             return false;
 
-        _stationRecordsSystem.TryGetRecord(station, key, out GeneralCriminalRecord? record, stationRecordsComponent);
+        if (!_stationRecordsSystem.TryGetRecord(station, key, out GeneralCriminalRecord? record, stationRecordsComponent))
+            return false;
 
         if (status == record!.Status)
             return false;
@@ -68,7 +69,9 @@ public sealed class CriminalRecordsSystem : EntitySystem
         if (!TryComp<StationRecordsComponent>(station, out var stationRecordsComponent))
             return false;
 
-        _stationRecordsSystem.TryGetRecord(station, key, out GeneralCriminalRecord? record, stationRecordsComponent);
+        if (!_stationRecordsSystem.TryGetRecord(station, key, out GeneralCriminalRecord? record,
+                stationRecordsComponent))
+            return false;
 
         record!.Status = record.Status == SecurityStatus.Detained ? SecurityStatus.None : SecurityStatus.Detained;
         record.Reason = (record.Status == SecurityStatus.None ? string.Empty : reason)!;
