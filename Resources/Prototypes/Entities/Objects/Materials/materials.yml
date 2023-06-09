@@ -71,7 +71,8 @@
     - DroneUsable
     - Gauze
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
       types:
         Slash: -0.5
@@ -202,6 +203,9 @@
     sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
     color: "#8A9A5B"
+  - type: GuideHelp
+    guides:
+    - Cloning
 
 - type: entity
   parent: MaterialBiomass

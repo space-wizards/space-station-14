@@ -313,10 +313,12 @@ namespace Content.Shared.Damage
         // Whenever locational damage is a thing, this should just check only that bit of armour.
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
+        public readonly DamageSpecifier OriginalDamage;
         public DamageSpecifier Damage;
 
         public DamageModifyEvent(DamageSpecifier damage)
         {
+            OriginalDamage = damage;
             Damage = damage;
         }
     }

@@ -52,3 +52,6 @@
         density: 190
         mask:
         - LowImpassable
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
