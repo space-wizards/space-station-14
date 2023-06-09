@@ -1314,6 +1314,12 @@ namespace Content.Client.Stylesheets
                     .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
 
+                Element<PanelContainer>().Class(ClassAngleRectRaised)
+                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRectShaded),
+
+                Element<PanelContainer>().Class(ClassAngleRectEmbedded)
+                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRectEmbedded),
+
                 Element<PanelContainer>().Class(ClassLowDivider)
                     .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
                     {

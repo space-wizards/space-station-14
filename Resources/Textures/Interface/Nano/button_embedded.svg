@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 21.166665 21.166667"
+   version="1.1"
+   id="svg1055"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="button_embedded.svg"
+   inkscape:export-filename="button_embedded.svg.96dpi.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs1049">
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter84330"
+       x="-0.11768057"
+       y="-0.11768051"
+       width="1.2353611"
+       height="1.235361">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.5568156"
+         id="feGaussianBlur84332" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath84334">
+      <path
+         style="opacity:1;vector-effect:none;fill:#ff2a2a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.26057;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 82.494336,136.58461 v 10.58333 l 5.291667,5.29167 h 10.583333 v -10.58333 l -5.291667,-5.29167 z"
+         id="path84336"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc"
+         inkscape:export-filename="/ssdhome/pj/Projects/space-station-14-content/Resources/Textures/Interface/Nano/button.svg.96dpi.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+    </clipPath>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter84707"
+       x="-0.076792687"
+       y="-0.066776254"
+       width="1.1535854"
+       height="1.1335525">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.84658631"
+         id="feGaussianBlur84709" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath84713">
+      <path
+         style="opacity:1;vector-effect:none;fill:#ff2a2a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.26057;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 82.494336,136.58461 v 10.58333 l 5.291667,5.29167 h 10.583333 v -10.58333 l -5.291667,-5.29167 z"
+         id="path84715"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc"
+         inkscape:export-filename="/ssdhome/pj/Projects/space-station-14-content/Resources/Textures/Interface/Nano/button.svg.96dpi.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96"
+         inkscape:label="Base" />
+    </clipPath>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter88393"
+       x="-0.17566759"
+       y="-0.1951862"
+       width="1.3261464"
+       height="1.362385">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.49426071"
+         id="feGaussianBlur88395" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter88399"
+       x="-0.27672525"
+       y="-0.30439801"
+       width="1.5963194"
+       height="1.6559517">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.0503607"
+         id="feGaussianBlur88401" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8"
+     inkscape:cx="19.0625"
+     inkscape:cy="41.9375"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:pagecheckerboard="true"
+     inkscape:window-width="1916"
+     inkscape:window-height="1034"
+     inkscape:window-x="0"
+     inkscape:window-y="44"
+     inkscape:window-maximized="1"
+     units="px"
+     inkscape:snap-page="true"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid81425"
+       originx="0"
+       originy="0" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata1052">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-79.848503,-133.93878)">
+    <path
+       style="display:none;opacity:1;vector-effect:none;fill:#ff2a2a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.26057;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 82.494336,136.58461 v 10.58333 l 5.291667,5.29167 h 10.583333 v -10.58333 l -5.291667,-5.29167 z"
+       id="rect1684"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc"
+       inkscape:export-filename="/ssdhome/pj/Projects/space-station-14-content/Resources/Textures/Interface/Nano/button.svg.96dpi.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:label="Base" />
+    <path
+       id="rect81500"
+       style="display:none;opacity:0.460575;mix-blend-mode:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.06216;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter84330)"
+       d="m 76.673505,131.29294 v 31.75001 H 108.4235 v -31.75001 z m 2.645833,2.64583 h 10.583333 l 5.291667,5.29167 v 10.58333 H 84.611005 l -5.291667,-5.29166 z"
+       sodipodi:nodetypes="cccccccccccc"
+       clip-path="url(#clipPath84334)"
+       inkscape:label="Shadow" />
+    <path
+       id="rect84338"
+       style="display:none;opacity:1;mix-blend-mode:normal;fill:#ffffff;fill-opacity:0.492915;stroke:none;stroke-width:2.06216;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter84707)"
+       d="m 81.171419,135.2617 v 30.42709 H 107.62976 V 135.2617 Z m 2.645833,2.64583 h 15.875 l 5.291668,5.29167 v 19.84375 H 89.108919 l -5.291667,-14.55208 z"
+       sodipodi:nodetypes="cccccccccccc"
+       clip-path="url(#clipPath84713)"
+       inkscape:label="Highlight" />
+    <path
+       style="opacity:0.103037;mix-blend-mode:normal;fill:none;fill-opacity:0.492915;stroke:#ffffff;stroke-width:2.27542;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter88393)"
+       d="m 83.817253,148.49086 -1.322917,-1.32291 v -10.58334 h 10.583333 l 2.645833,2.64584"
+       id="path84753"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="opacity:0.914688;mix-blend-mode:normal;fill:none;stroke:#000000;stroke-width:4.25979;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter88399)"
+       d="m 83.817253,148.49086 3.96875,3.96875 h 10.583333 v -10.58333 l -2.645834,-2.64583"
+       id="path88397"
+       sodipodi:nodetypes="ccccc" />
+  </g>
+</svg>

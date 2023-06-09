@@ -17,6 +17,8 @@ namespace Content.Client.Stylesheets
         public const string StyleClassItalic = "Italic";
 
         public const string ClassAngleRect = "AngleRect";
+        public const string ClassAngleRectRaised = "AngleRectRaised";
+        public const string ClassAngleRectEmbedded = "AngleRectEmbedded";
 
         public const string ButtonOpenRight = "OpenRight";
         public const string ButtonOpenLeft = "OpenLeft";
@@ -38,6 +40,8 @@ namespace Content.Client.Stylesheets
         protected StyleBoxTexture BaseButtonSquare { get; }
 
         protected StyleBoxTexture BaseAngleRect { get; }
+        protected StyleBoxTexture BaseAngleRectShaded { get; }
+        protected StyleBoxTexture BaseAngleRectEmbedded { get; }
         protected StyleBoxTexture AngleBorderRect { get; }
 
         protected StyleBase(IResourceCache resCache)
@@ -66,6 +70,8 @@ namespace Content.Client.Stylesheets
 
             // Button styles.
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+            var shadedButtonTex = resCache.GetTexture("/Textures/Interface/Nano/button_shaded.svg.96dpi.png");
+            var embeddedButtonTex = resCache.GetTexture("/Textures/Interface/Nano/button_embedded.svg.96dpi.png");
             BaseButton = new StyleBoxTexture
             {
                 Texture = buttonTex,
@@ -114,6 +120,19 @@ namespace Content.Client.Stylesheets
                 Texture = buttonTex,
             };
             BaseAngleRect.SetPatchMargin(StyleBox.Margin.All, 10);
+
+            BaseAngleRectShaded = new StyleBoxTexture
+            {
+                Texture = shadedButtonTex,
+            };
+            BaseAngleRectShaded.SetPatchMargin(StyleBox.Margin.All, 10);
+
+            BaseAngleRectEmbedded = new StyleBoxTexture
+            {
+                Texture = embeddedButtonTex,
+            };
+            BaseAngleRectEmbedded.SetPatchMargin(StyleBox.Margin.All, 30);
+
 
             AngleBorderRect = new StyleBoxTexture
             {
