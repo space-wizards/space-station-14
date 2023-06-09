@@ -4,6 +4,7 @@
   suffix: ""
   name: space dragon
   description: A flying leviathan, loosely related to space carps.
+  abstract: true
   components:
   - type: GhostRole
     allowMovement: true
