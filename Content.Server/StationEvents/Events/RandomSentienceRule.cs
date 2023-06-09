@@ -55,7 +55,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
                     ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
                     ("data", Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}")),
                     ("strength", Loc.GetString($"random-sentience-event-strength-{RobustRandom.Next(1, 8)}"))),
-                playDefaultSound: false,
+                playSound: false,
                 colorOverride: Color.Gold
             );
         }

@@ -164,75 +164,81 @@ public sealed class TTSManager
     {
         WantedRadioCount.Inc();
 
-        var cacheKey = GenerateCacheKey(speaker, text);
-        if (_cacheRadio.TryGetValue(cacheKey, out var cachedSoundData))
+        var cacheKey = GenerateCacheKey($"radio-{speaker}", text);
+        return await ExecuteWithNamedLockAsync(cacheKey, async () =>
         {
-            ReusedRadioCount.Inc();
-            _sawmill.Debug($"Use cached radio sound for '{text}' speech by '{speaker}' speaker");
-            return cachedSoundData;
-        }
+            if (_cacheRadio.TryGetValue(cacheKey, out var cachedSoundData))
+            {
+                ReusedRadioCount.Inc();
+                _sawmill.Debug($"Use cached radio sound for '{text}' speech by '{speaker}' speaker");
+                return cachedSoundData;
+            }
 
-        var soundData = await ConvertTextToSpeech(speaker, text);
+            var soundData = await ConvertTextToSpeech(speaker, text);
 
-        var reqTime = DateTime.UtcNow;
-        try
-        {
-            var outputFilename = Path.GetTempPath() + Guid.NewGuid() + ".ogg";
-            await FFMpegArguments
-                .FromPipeInput(new StreamPipeSource(new MemoryStream(soundData)))
-                .OutputToFile(outputFilename, true, options =>
-                    options.WithAudioFilters(filterOptions =>
-                        {
-                            filterOptions
-                                .HighPass(frequency: 1000D)
-                                .LowPass();
-                            filterOptions.Arguments.Add(
-                                new CrusherFilterArgument(levelIn: 1, levelOut: 1, bits: 50, mix: 0, mode: "log")
-                            );
-                        }
-                    )
-                ).ProcessAsynchronously();
-            soundData = await File.ReadAllBytesAsync(outputFilename);
+            var reqTime = DateTime.UtcNow;
             try
             {
-                File.Delete(outputFilename);
-            }
-            catch (Exception _)
-            {
-                // ignored
-            }
-            _cacheRadio.AddOrUpdate(cacheKey, soundData, (_, __) => soundData);
-            _cacheRadioKeysSeq.Add(cacheKey);
-            if (_cacheRadio.Count > _maxCachedCount)
-            {
-                var firstKey = _cacheRadioKeysSeq.First();
-                _cacheRadio.TryRemove(firstKey, out _);
-                _cacheRadioKeysSeq.Remove(firstKey);
-            }
+                var outputFilename = Path.GetTempPath() + Guid.NewGuid() + ".ogg";
+                await FFMpegArguments
+                    .FromPipeInput(new StreamPipeSource(new MemoryStream(soundData)))
+                    .OutputToFile(outputFilename, true, options =>
+                        options.WithAudioFilters(filterOptions =>
+                            {
+                                filterOptions
+                                    .HighPass(frequency: 1000D)
+                                    .LowPass();
+                                filterOptions.Arguments.Add(
+                                    new CrusherFilterArgument(levelIn: 1, levelOut: 1, bits: 50, mix: 0, mode: "log")
+                                );
+                            }
+                        )
+                    ).ProcessAsynchronously();
+                soundData = await File.ReadAllBytesAsync(outputFilename);
+                try
+                {
+                    File.Delete(outputFilename);
+                }
+                catch (Exception _)
+                {
+                    // ignored
+                }
 
-            _sawmill.Debug(
-                $"Generated new radio sound for '{text}' speech by '{speaker}' speaker ({soundData.Length} bytes)");
-            RequestTimings.WithLabels("Success").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+                _cacheRadio.AddOrUpdate(cacheKey, soundData, (_, __) => soundData);
+                _cacheRadioKeysSeq.Add(cacheKey);
+                if (_cacheRadio.Count > _maxCachedCount)
+                {
+                    var firstKey = _cacheRadioKeysSeq.First();
+                    _cacheRadio.TryRemove(firstKey, out _);
+                    _cacheRadioKeysSeq.Remove(firstKey);
+                }
 
-            return soundData;
-        }
-        catch (TaskCanceledException)
-        {
-            RequestTimings.WithLabels("Timeout").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
-            _sawmill.Error($"Timeout of request generation new radio sound for '{text}' speech by '{speaker}' speaker");
-            throw new Exception("TTS request timeout");
-        }
-        catch (Win32Exception e)
-        {
-            _sawmill.Error($"FFMpeg is not installed");
-            throw new Exception("ffmpeg is not installed!");
-        }
-        catch (Exception e)
-        {
-            RequestTimings.WithLabels("Error").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
-            _sawmill.Error($"Failed of request generation new radio sound for '{text}' speech by '{speaker}' speaker\n{e}");
-            throw new Exception("TTS request failed");
-        }
+                _sawmill.Debug(
+                    $"Generated new radio sound for '{text}' speech by '{speaker}' speaker ({soundData.Length} bytes)");
+                RequestTimings.WithLabels("Success").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+
+                return soundData;
+            }
+            catch (TaskCanceledException)
+            {
+                RequestTimings.WithLabels("Timeout").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+                _sawmill.Error(
+                    $"Timeout of request generation new radio sound for '{text}' speech by '{speaker}' speaker");
+                throw new Exception("TTS request timeout");
+            }
+            catch (Win32Exception e)
+            {
+                _sawmill.Error($"FFMpeg is not installed");
+                throw new Exception("ffmpeg is not installed!");
+            }
+            catch (Exception e)
+            {
+                RequestTimings.WithLabels("Error").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
+                _sawmill.Error(
+                    $"Failed of request generation new radio sound for '{text}' speech by '{speaker}' speaker\n{e}");
+                throw new Exception("TTS request failed");
+            }
+        });
     }
 
     public void ResetCache()

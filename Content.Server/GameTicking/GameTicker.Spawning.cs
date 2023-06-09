@@ -204,7 +204,7 @@ namespace Content.Server.GameTicking
                     ("gender", character.Gender), // Corvax-LastnameGender
                     ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
                     ), Loc.GetString("latejoin-arrival-sender"),
-                    playDefaultSound: false);
+                    playSound: false);
             }
 
             if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))

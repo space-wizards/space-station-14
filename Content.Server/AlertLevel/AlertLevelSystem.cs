@@ -12,6 +12,7 @@ public sealed class AlertLevelSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _sharedAudioSystem = default!;
 
     // Until stations are a prototype, this is how it's going to have to be.
     public const string DefaultAlertLevelSet = "stationAlerts";
@@ -171,7 +172,7 @@ public sealed class AlertLevelSystem : EntitySystem
             if (detail.Sound != null)
             {
                 var filter = _stationSystem.GetInOwningStation(station);
-                SoundSystem.Play(detail.Sound.GetSound(), filter, detail.Sound.Params);
+                _sharedAudioSystem.PlayGlobal(detail.Sound, filter, false);
             }
             else
             {
@@ -181,7 +182,7 @@ public sealed class AlertLevelSystem : EntitySystem
 
         if (announce)
         {
-            _chatSystem.DispatchStationAnnouncement(station, announcementFull, playDefaultSound: playDefault,
+            _chatSystem.DispatchStationAnnouncement(station, announcementFull, playSound: playDefault,
                 colorOverride: detail.Color, sender: stationName);
         }
 

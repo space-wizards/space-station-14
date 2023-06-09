@@ -149,7 +149,6 @@ namespace Content.Server.RoundEnd
                     ("units", Loc.GetString(units))),
                     Loc.GetString("Station"),
                     false,
-                    null,
                     Color.Gold);
                 SoundSystem.Play("/Audio/Corvax/Announcements/crew_s_called.ogg", Filter.Broadcast(), AudioParams.Default.AddVolume(-4)); // Corvax-Announcements
             }
@@ -160,7 +159,6 @@ namespace Content.Server.RoundEnd
                     ("units", Loc.GetString(units))),
                     Loc.GetString("Station"),
                     false,
-                    null,
                     Color.Gold);
             }
 

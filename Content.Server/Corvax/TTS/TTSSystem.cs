@@ -113,7 +113,7 @@ public sealed partial class TTSSystem : EntitySystem
         if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
             return;
 
-        if (args.ObfuscatedMessage != null)
+        if (args.ObfuscatedMessage != null && !args.IsRadio)
         {
             HandleWhisper(uid, args.Message, args.ObfuscatedMessage, protoVoice.Speaker);
             return;

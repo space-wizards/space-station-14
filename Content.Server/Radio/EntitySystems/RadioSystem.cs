@@ -77,7 +77,7 @@ public sealed class RadioSystem : EntitySystem
             Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name), ("message", FormattedMessage.EscapeText(message))),
             EntityUid.Invalid);
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
+        var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg, new());
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
         RaiseLocalEvent(ref sendAttemptEv);
@@ -91,7 +91,6 @@ public sealed class RadioSystem : EntitySystem
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
         var sentAtLeastOnce = false;
-        var ttsReceivers = new List<EntityUid>();
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
             if (!radio.Channels.Contains(channel.ID))
@@ -115,16 +114,10 @@ public sealed class RadioSystem : EntitySystem
             // send the message
             RaiseLocalEvent(receiver, ref ev);
             sentAtLeastOnce = true;
-
-            var actorUid = Transform(receiver).ParentUid;
-            if (actorUid != messageSource)
-            {
-                ttsReceivers.Add(actorUid);
-            }
         }
 
         // Dispatch TTS radio speech event for every receiver
-        RaiseLocalEvent(new RadioSpokeEvent(messageSource, message, ttsReceivers.ToArray()));
+        RaiseLocalEvent(new RadioSpokeEvent(messageSource, message, ev.Receivers.ToArray()));
 
         if (!sentAtLeastOnce)
             _popup.PopupEntity(Loc.GetString("failed-to-send-message"), messageSource, messageSource, PopupType.MediumCaution);
