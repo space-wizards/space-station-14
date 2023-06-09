@@ -672,6 +672,10 @@
   - !type:BuyerJobCondition
     whitelist:
     - Clown
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: uplinkHotPotato
