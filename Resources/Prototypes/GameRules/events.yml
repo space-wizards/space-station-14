@@ -277,90 +277,10 @@
         amount: 4
         maxAmount: 8
 
-# Zombie outbreak designed to be a minor annoyance at most, less infected, less powerful, nerf at 20%
-- type: entity
-  id: ZombieMinor
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-    - type: StationEvent
-      earliestStart: 20
-      weight: 2.5
-      duration: 1
-      minimumPlayers: 25
-    - type: ZombieRule
-      PlayersPerInfected: 20
-      MaxInitialInfected: 3
-      initialInfectDelaySecs: 5
-      announceMin: 240
-      announceMax: 480
-      announceChance: 0.95
-      turnTimeMin: 480
-      nerfZombiesAt: 0.2 # Nerf at 20% infection
-      winEndsRoundAbove: 0.6
-      earlySettings:
-        permadeathChance: 0.6
-        critDeathChance: 0.5
-        reviveTime: 10
-        reviveTimeMax: 60
-        maxInfectionChance: 0.20
-        minInfectionChance: 0.05
-        infectionTurnTime: 480.0
-        deadMinTurnTime: 30.0
-        healing:  # Per second
-          types:
-            Blunt: -0.2
-            Slash: -0.1
-            Piercing: -0.1
-            Heat: -0.1
-            Cold: -0.1
-            Shock: -0.1
-        attackDamage:
-          types:
-            Blunt: 13
-            Piercing: 7
-            Structural: 5
-      victimSettings:
-        permadeathChance: 0.9
-        critDeathChance: 0.8
-        reviveTime: 30
-        reviveTimeMax: 60
-        maxInfectionChance: 0.05
-        minInfectionChance: 0.02
-        infectionTurnTime: 480.0
-        deadMinTurnTime: 20.0
-        healing:  # Per second
-          types:
-            Blunt: -0.1
-            Slash: -0.05
-            Piercing: -0.05
-        attackDamage:
-          types:
-            Blunt: 10
-            Piercing: 4
-      nerfSettings:
-        movementSpeedDebuff: 0.65
-        permadeathChance: 1.0
-        critDeathChance: 0.9
-        reviveTime: 30
-        reviveTimeMax: 60
-        maxInfectionChance: 0.0
-        minInfectionChance: 0.0
-        infectionTurnTime: 480.0
-        deadMinTurnTime: 20.0
-        meleeRange: 1.2
-        healing:  # Per second
-          types:
-            Blunt: -0.05
-        attackDamage:
-          types:
-            Blunt: 10
-            Piercing: 4
-
 # Zombie outbreak designed to pretty much wipe the station.
 - type: entity
   id: ZombieOutbreak
-  parent: BaseGameRule
+  parent: Zombie
   noSpawn: true
   components:
   - type: StationEvent
@@ -370,54 +290,9 @@
     minimumPlayers: 40
   - type: ZombieRule
     initialInfectDelaySecs: 5
-    announceMin: 240
-    announceMax: 480
     turnTimeMin: 300
-    winEndsRoundAbove: 0.6
-    earlySettings:
-      permadeathChance: 0.6
-      critDeathChance: 0.2
-      reviveTime: 5
-      reviveTimeMax: 30
-      maxInfectionChance: 0.40
-      minInfectionChance: 0.10
-      infectionTurnTime: 240.0
-      deadMinTurnTime: 10.0
-      healing:  # Per second
-        types:
-          Blunt: -0.4
-          Slash: -0.2
-          Piercing: -0.2
-          Heat: -0.2
-          Cold: -0.2
-          Shock: -0.2
-      attackDamage:
-        types:
-          Slash: 13
-          Piercing: 7
-          Structural: 10
-    victimSettings:
-      permadeathChance: 0.9
-      critDeathChance: 0.5
-      reviveTime: 20
-      reviveTimeMax: 60
-      maxInfectionChance: 0.10
-      minInfectionChance: 0.02
-      infectionTurnTime: 480.0
-      deadMinTurnTime: 20.0
-      healing:  # Per second
-        types:
-          Blunt: -0.3
-          Slash: -0.15
-          Piercing: -0.15
-          Heat: -0.15
-          Cold: -0.15
-          Shock: -0.15
-      attackDamage:
-        types:
-          Blunt: 10
-          Piercing: 4
-          Structural: 5
+    winEndsRoundAbove: 0.4
+
 
 - type: entity
   id: LoneOpsSpawn

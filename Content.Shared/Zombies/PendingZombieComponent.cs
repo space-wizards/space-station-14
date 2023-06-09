@@ -1,9 +1,7 @@
 using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
-using Content.Shared.Zombies;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Zombies;
+namespace Content.Shared.Zombies;
 
 /// <summary>
 /// Does increasing damage to the subject over time until they turn into a zombie.
@@ -31,6 +29,12 @@ public sealed class PendingZombieComponent : Component
     /// </summary>
     [DataField("minimumCritMultiplier")]
     public float MinimumCritMultiplier = 10;
+
+    /// <summary>
+    /// Minimum time this zombie victim will lie dead before rising as a zombie.
+    /// </summary>
+    [DataField("deadMinTurnTime"), ViewVariables(VVAccess.ReadWrite)]
+    public float DeadMinTurnTime = 10.0f;
 
     /// <summary>
     /// How much the virus hurts you (base, scales rapidly). Is copied from ZombieSettings.

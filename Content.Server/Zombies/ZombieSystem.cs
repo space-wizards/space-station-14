@@ -57,6 +57,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly BurstHealSystem _burstHealSystem = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -96,10 +97,26 @@ namespace Content.Server.Zombies
             args.Handled = _chat.TryPlayEmoteSound(uid, component.Settings.EmoteSounds, args.Emote);
         }
 
-        private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
+        private void OnMobState(EntityUid uid, ZombieComponent zombie, MobStateChangedEvent args)
         {
+            if (!HasComp<LivingZombieComponent>(uid))
+            {
+                // We have a very specific edge case. Zombies who we marked as dead (no revive) can come back
+                // if they still have Bicardine in their system from biting someone. Or someone foolishly
+                // healed them.
+                if (HasComp<PendingZombieComponent>(uid) || HasComp<InitialInfectedComponent>(uid))
+                {
+                    // Handle those elsewhere
+                    return;
+                }
+
+                // Handle zombies who came back here.
+                EnsureComp<LivingZombieComponent>(uid);
+            }
+
             if (args.NewMobState == MobState.Alive)
             {
+                // Don't run this routine for zombies who are still transforming...
                 // Groaning when damaged
                 EnsureComp<EmoteOnDamageComponent>(uid);
                 _emoteOnDamage.AddEmote(uid, "Scream");
@@ -111,7 +128,7 @@ namespace Content.Server.Zombies
                 // LivingZombieComponent might get removed by zombie death roll below but if the zombie comes back to
                 //   life somehow we must put it back.
                 EnsureComp<LivingZombieComponent>(uid);
-                _passiveHeal.BeginHealing(uid, component.Settings.HealingPerSec);
+                _passiveHeal.BeginHealing(uid, zombie.Settings.HealingPerSec);
             }
             else
             {
@@ -121,22 +138,22 @@ namespace Content.Server.Zombies
                 // Stop random groaning
                 _autoEmote.RemoveEmote(uid, "ZombieGroan");
 
+                RemComp<PassiveHealComponent>(uid);
+
                 // Roll to see if this zombie is not coming back.
-                //   Note that due to damage reductions it takes a lot of hits to gib a zombie without this.
-                if (args.NewMobState == MobState.Dead || _random.Prob(component.Settings.PermadeathChance))
+                if ((args.NewMobState == MobState.Dead) || _random.Prob(zombie.Settings.PermadeathChance))
                 {
                     // You're dead! No reviving for you.
                     RemComp<LivingZombieComponent>(uid);
-                    RemComp<PassiveHealComponent>(uid);
                     _popup.PopupEntity(Loc.GetString("zombie-permadeath"), uid, uid);
 
                     // Check if this was the last zombie that just got wiped out.
-                    if (component.Family.Rules != EntityUid.Invalid)
-                        _zombieRule.CheckRuleEnd(component.Family.Rules);
+                    if (zombie.Family.Rules != EntityUid.Invalid)
+                        _zombieRule.CheckRuleEnd(zombie.Family.Rules);
                 }
                 else
                 {
-                    _burstHealSystem.QueueBurstHeal(uid, component.Settings.ReviveTime, component.Settings.ReviveTimeMax);
+                    _burstHealSystem.QueueBurstHeal(uid, zombie.Settings.ReviveTime, zombie.Settings.ReviveTimeMax);
                 }
             }
         }
@@ -213,9 +230,14 @@ namespace Content.Server.Zombies
                 if (!TryComp<MobStateComponent>(entity, out var mobState) || HasComp<DroneComponent>(entity))
                     continue;
 
-                if (HasComp<LivingZombieComponent>(entity))
+                if (HasComp<ZombieComponent>(entity))
                 {
-                    args.BonusDamage = -args.BaseDamage * zombieComp.Settings.OtherZombieDamageCoefficient;
+                    if (HasComp<LivingZombieComponent>(entity))
+                    {
+                        // Reduce damage to living zombies.
+                        args.BonusDamage = -args.BaseDamage * zombieComp.Settings.OtherZombieDamageCoefficient;
+                    }
+
                     if (_random.Prob(0.3f))
                     {
                         // Tell the zombo that they are eating the dead
@@ -236,6 +258,7 @@ namespace Content.Server.Zombies
                                 _random.NextFloat(0.25f, 1.0f) * component.Settings.InfectionTurnTime;
                             pending.InfectionStarted = _timing.CurTime;
                             pending.VirusDamage = zombie.Settings.VirusDamage;
+                            pending.DeadMinTurnTime = zombie.Settings.DeadMinTurnTime;
 
                             // Our victims inherit our settings, which defines damage and more.
                             zombie.Settings = component.VictimSettings ?? component.Settings;

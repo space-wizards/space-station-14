@@ -49,7 +49,7 @@ public class PassiveHealSystem : EntitySystem
             if (damage.TotalDamage > 0.01)
             {
                 // Autoheal a mix of damage to achieve a health improvement of heal.PointsPerSec
-                var multiplier = Math.Max(1.0f, (float) (heal.PointsPerSec / damage.TotalDamage ));
+                var multiplier = Math.Min(1.0f, (float) (heal.PointsPerSec / damage.TotalDamage ));
                 _damageable.TryChangeDamage(uid, -damage.Damage * multiplier, true, false, damage);
 
                 // Don't heal again for a while.

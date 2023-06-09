@@ -31,6 +31,7 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 {
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -191,9 +192,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         // Look for living zombies
         var livingQuery = GetEntityQuery<LivingZombieComponent>();
         var initialQuery = GetEntityQuery<InitialInfectedComponent>();
+        var pendingQuery = GetEntityQuery<PendingZombieComponent>();
         int livingZombies = 0;
         int deadZombies = 0;
         int initialZombies = 0;
+        int pendingZombies = 0;
         var zombers = EntityQueryEnumerator<ZombieComponent>();
         while (zombers.MoveNext(out var uid, out var zombie))
         {
@@ -202,11 +205,18 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
             if (livingQuery.HasComponent(uid))
             {
+                // Living ones
                 livingZombies += 1;
             }
             else if (initialQuery.HasComponent(uid))
             {
+                // Living pre-zombie ones
                 initialZombies += 1;
+            }
+            else if (pendingQuery.HasComponent(uid))
+            {
+                // Ones waiting to die and turn as zombies
+                pendingZombies += 1;
             }
             else
             {
@@ -214,7 +224,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             }
         }
 
-        if (initialZombies == 0 && livingZombies == 0)
+        // Wonder if we should store these stats somewhere...
+        if (initialZombies + livingZombies + pendingZombies == 0)
         {
             GameTicker.EndGameRule(ruleUid, gameRule);
             if (zombies.WinEndsRoundAbove < 1.0f)
@@ -271,9 +282,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         base.Started(uid, component, gameRule, args);
         var curTime = _timing.CurTime;
 
-        component.AnnounceAt = curTime +
-                               TimeSpan.FromSeconds(_random.NextFloat(component.AnnounceMin,
-                                   component.AnnounceMax));
         component.InfectInitialAt = curTime + TimeSpan.FromSeconds(component.InitialInfectDelaySecs);
 
         component.FirstTurnAllowed = curTime + TimeSpan.FromSeconds(component.TurnTimeMin);
@@ -297,16 +305,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             // Time to infect the initial players
             InfectInitialPlayers(uid, component);
             component.InfectInitialAt = TimeSpan.Zero;
-        }
-
-        if (component.AnnounceAt != TimeSpan.Zero && component.AnnounceAt < curTime)
-        {
-            // Announce the brain eating about to commence
-            if (_random.Prob(component.AnnounceChance))
-            {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("zombies-will-eat-your-brains"));
-            }
-            component.AnnounceAt = TimeSpan.Zero;
         }
 
         if (component.FirstTurnAllowed != TimeSpan.Zero && component.FirstTurnAllowed < curTime)
@@ -541,6 +539,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 // You got a free T-shirt!?!?
                 _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
                    wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Plum);
+
+                // Notify player about new role assignment with a sound effect
+                _audioSystem.PlayGlobal(rules.EarlySettings.GreetSoundNotification, mind.Session);
             }
         }
     }
@@ -571,6 +572,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 pending.VirusDamage = zombie.Settings.VirusDamage;
 
                 RemCompDeferred<InitialInfectedComponent>(uid);
+            }
+            else
+            {
+                _popup.PopupEntity(Loc.GetString("zombie-infection-ready"), uid, uid);
             }
         }
     }

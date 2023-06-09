@@ -1,5 +1,4 @@
-﻿using Content.Server.Zombies;
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Systems;
@@ -36,7 +35,7 @@ public abstract class SharedPendingZombieSystem : EntitySystem
                 pending.NextTick = curTime + TimeSpan.FromSeconds(1);
             }
 
-            var infectedSecs = (int)(pending.InfectionStarted - curTime).TotalSeconds;
+            var infectedSecs = (int)(curTime - pending.InfectionStarted).TotalSeconds;
 
             // See if there should be a warning popup for the player.
             if (zombie.Settings.InfectionWarnings.TryGetValue(infectedSecs, out var popupStr))
@@ -48,7 +47,7 @@ public abstract class SharedPendingZombieSystem : EntitySystem
             if (mobState.CurrentState == MobState.Dead)
             {
                 // NB: This removes PendingZombieComponent
-                if (infectedSecs > zombie.Settings.DeadMinTurnTime)
+                if (infectedSecs > pending.DeadMinTurnTime)
                     ZombifyNow(uid, pending, zombie, mobState);
                 continue;
             }

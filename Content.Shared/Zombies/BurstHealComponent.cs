@@ -35,13 +35,13 @@ namespace Content.Shared.Zombies
         /// <summary>
         /// Each time we suffer damage, we reset the revive to a range between MinReviveTime-MaxReviveTime
         /// </summary>
-        [DataField("minReviveTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+        [DataField("minHealTime"), ViewVariables(VVAccess.ReadWrite)]
         public float MinHealTime;
 
         /// <summary>
         /// Each time we suffer damage, we reset the revive to a range between MinReviveTime-MaxReviveTime
         /// </summary>
-        [DataField("maxReviveTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+        [DataField("maxReviveTime"), ViewVariables(VVAccess.ReadWrite)]
         public float MaxHealTime;
 
     }

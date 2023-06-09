@@ -110,18 +110,15 @@ namespace Content.Server.Zombies
             melee.Range = zombiecomp.Settings.MeleeRange;
             Dirty(melee);
 
-            if (mobState.CurrentState == MobState.Alive)
-            {
-                // Groaning when damaged
-                EnsureComp<EmoteOnDamageComponent>(target);
-                _emoteOnDamage.AddEmote(target, "Scream");
+            // Groaning when damaged
+            EnsureComp<EmoteOnDamageComponent>(target);
+            _emoteOnDamage.AddEmote(target, "Scream");
 
-                // Random groaning
-                EnsureComp<AutoEmoteComponent>(target);
-                _autoEmote.AddEmote(target, "ZombieGroan");
+            // Random groaning
+            EnsureComp<AutoEmoteComponent>(target);
+            _autoEmote.AddEmote(target, "ZombieGroan");
 
-                _passiveHeal.BeginHealing(target, zombiecomp.Settings.HealingPerSec);
-            }
+            _passiveHeal.BeginHealing(target, zombiecomp.Settings.HealingPerSec);
 
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
@@ -189,12 +186,12 @@ namespace Content.Server.Zombies
             if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
             {
                 //Zombie role for player manifest
-                mindcomp.Mind.AddRole(new TraitorRole(mindcomp.Mind, _proto.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
+                mindcomp.Mind.AddRole(new ZombieRole(mindcomp.Mind, _proto.Index<AntagPrototype>(zombiecomp.Settings.ZombieRoleId)));
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
 
-                // Notificate player about new role assignment
-                _audioSystem.PlayGlobal(zombiecomp.GreetSoundNotification, session);
+                // Notify player about new role assignment
+                _audioSystem.PlayGlobal(zombiecomp.Settings.GreetSoundNotification, session);
             }
 
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig

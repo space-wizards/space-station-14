@@ -152,6 +152,13 @@ namespace Content.Shared.Zombies
             {25, "zombie-infection-underway"},
         };
 
+        /// <summary>
+        ///     Path to antagonist alert sound.
+        /// </summary>
+        [DataField("greetSoundNotification")]
+        public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
+
+
     }
 
     [DataDefinition, NetworkedComponent]

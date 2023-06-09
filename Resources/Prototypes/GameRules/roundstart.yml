@@ -75,21 +75,13 @@
     winEndsRoundAbove: -1.0 # Always end round when zombies are wiped out.
     earlySettings:
       permadeathChance: 0.6
-      critDeathChance: 0.2
       reviveTime: 5
       reviveTimeMax: 30
       maxInfectionChance: 0.40
       minInfectionChance: 0.10
       infectionTurnTime: 240.0
       deadMinTurnTime: 10.0
-      healing:  # Per second
-        types:
-          Blunt: -0.4
-          Slash: -0.2
-          Piercing: -0.2
-          Heat: -0.2
-          Cold: -0.2
-          Shock: -0.2
+      healingPerSec: 0.6
       attackDamage:
         types:
           Slash: 13
@@ -104,14 +96,7 @@
       minInfectionChance: 0.02
       infectionTurnTime: 480.0
       deadMinTurnTime: 20.0
-      healing:  # Per second
-        types:
-          Blunt: -0.3
-          Slash: -0.15
-          Piercing: -0.15
-          Heat: -0.15
-          Cold: -0.15
-          Shock: -0.15
+      healingPerSec: 0.4
       attackDamage:
         types:
           Blunt: 10
