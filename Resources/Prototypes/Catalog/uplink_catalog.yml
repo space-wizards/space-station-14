@@ -459,6 +459,17 @@
   - UplinkBundles
 
 - type: listing
+  id: UplinkCarpBundle
+  name: uplink-carp-bundle-name
+  description: uplink-carp-bundle-desc
+  icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: carpplush }
+  productEntity: ClothingBackpackDuffelSyndicateFilledCarp
+  cost:
+    Telecrystal: 38
+  categories:
+  - UplinkBundles
+
+- type: listing
   id: UplinkL6SawBundle
   name: uplink-l6-saw-bundle-name
   description: uplink-l6-saw-bundle-desc

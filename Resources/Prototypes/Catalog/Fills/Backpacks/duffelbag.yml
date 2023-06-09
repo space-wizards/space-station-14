@@ -279,3 +279,14 @@
       - id: WeaponPistolViper
       - id: PinpointerNuclear
       - id: HandheldHealthAnalyzer
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  id: ClothingBackpackDuffelSyndicateFilledCarp
+  name: carp bundle
+  description: "If you're reading this, it's already too late. RUN"
+  components:
+  - type: StorageFill
+    contents:
+    - id: DehydratedSpaceCarp
+      amount: 26

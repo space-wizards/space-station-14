@@ -119,6 +119,9 @@ uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundle
 uplink-buldog-bundle-name = Bulldog Bundle
 uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums.
 
+uplink-carp-bundle-name = Carp Bundle
+uplink-carp-bundle-desc = A duffelbag filled to the brim with space carp, truly devastating for fishops. Water not included.
+
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
 uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 8 rounds of various destruction capability.
 
