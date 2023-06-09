@@ -25,7 +25,6 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -53,7 +52,9 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+        [Dependency] private readonly PassiveHealSystem _passiveHeal = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly BurstHealSystem _burstHealSystem = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
@@ -72,10 +73,9 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
             SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
-            SubscribeLocalEvent<ZombieComponent, DamageChangedEvent>(OnDamageChanged);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
-            SubscribeLocalEvent<PendingZombieComponent, MobStateChangedEvent>(OnPendingMobState);
+            SubscribeLocalEvent<InitialInfectedComponent, MobStateChangedEvent>(OnInitialMobState);
         }
 
         private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
@@ -83,128 +83,9 @@ namespace Content.Server.Zombies
             component.NextTick = _timing.CurTime;
         }
 
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-            var query = EntityQueryEnumerator<PendingZombieComponent, DamageableComponent, MobStateComponent>();
-            var curTime = _timing.CurTime;
-
-            // Hurt the living infected
-            while (query.MoveNext(out var uid, out var pending, out var damage, out var mobState))
-            {
-                // Process only once per second
-                if (pending.NextTick + TimeSpan.FromSeconds(1) > curTime)
-                    continue;
-
-                pending.NextTick = curTime;
-
-                if (pending.FirstTurnAllowed != TimeSpan.Zero)
-                    continue;
-
-                pending.InfectedSecs += 1;
-                // See if there should be a warning popup for the player.
-                if (pending.Settings.InfectionWarnings.TryGetValue(pending.InfectedSecs, out var popupStr))
-                {
-                    _popup.PopupEntity(Loc.GetString(popupStr), uid, uid);
-                }
-
-                if (pending.InfectedSecs < 0)
-                {
-                    if (mobState.CurrentState != MobState.Alive)
-                    {
-                        // Should already have been set to 0 on state change, can happen during edge cases around
-                        //   FirstTurnAllowed
-                        pending.InfectedSecs = 0;
-                    }
-
-                    // This zombie has a latent virus, probably set up by ZombieRuleSystem. No damage yet.
-                    continue;
-                }
-                if (mobState.CurrentState == MobState.Dead)
-                {
-                    if (pending.InfectedSecs >= pending.Settings.DeadMinTurnTime)
-                    {
-                        // You can turn into a zombie now.
-                        ZombifyEntity(uid, mobState, pending);
-                    }
-
-                    // No need to compute extra damage if you are already dead.
-                    continue;
-                }
-
-                // Pain of becoming a zombie grows over time
-                // By scaling the number of seconds we have an accessible way to scale this exponential function.
-                //   The function was hand tuned to 120 seconds, hence the 120 constant here.
-                var scaledSeconds = (120.0f / pending.MaxInfectionLength) * pending.InfectedSecs;
-
-                // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s. Limit at 20x so we don't gib you.
-                var painMultiple = Math.Min(20f, 0.1f + 0.02f * scaledSeconds + 0.0005f * scaledSeconds * scaledSeconds);
-                if (mobState.CurrentState == MobState.Critical)
-                {
-                    // Speed up their transformation when they are (or have been) in crit by ensuring their damage
-                    //   multiplier is at least 10x
-                    painMultiple = Math.Max(pending.MinimumCritMultiplier, painMultiple);
-                }
-                _damageable.TryChangeDamage(uid, pending.VirusDamage * painMultiple, true, false, damage);
-            }
-
-            var zombQuery = EntityQueryEnumerator<ZombieComponent, DamageableComponent, MobStateComponent>();
-
-            // Heal the zombified
-            while (zombQuery.MoveNext(out var uid, out var comp, out var damage, out var mobState))
-            {
-                // Process only once per second
-                if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
-                    continue;
-
-                comp.NextTick = curTime;
-
-                if (comp.Permadeath)
-                {
-                    // No healing
-                    continue;
-                }
-
-                if (mobState.CurrentState == MobState.Alive)
-                {
-                    // Gradual healing for living zombies.
-                    _damageable.TryChangeDamage(uid, comp.Settings.Healing, true, false, damage);
-                }
-                else
-                {
-                    comp.ZombieRevivalSeconds -= 1;
-                    if (comp.ZombieRevivalSeconds == 5)
-                    {
-                        _popup.PopupEntity(Loc.GetString("zombie-revive-5sec"), uid, uid);
-                    }
-
-                    if (comp.ZombieRevivalSeconds <= 0)
-                    {
-                        // After a while, some zombies (which didn't roll permadeath) jump back up to live again.
-                        var multiplier = Math.Max(0.7f, (float)((damage.TotalDamage - 50.0f) / damage.TotalDamage));
-                        _damageable.TryChangeDamage(uid, -damage.Damage * multiplier, true, false, damage);
-                    }
-                }
-            }
-        }
-
         private void OnSleepAttempt(EntityUid uid, ZombieComponent component, ref TryingToSleepEvent args)
         {
             args.Cancelled = true;
-        }
-
-        private void OnDamageChanged(EntityUid uid, ZombieComponent component, DamageChangedEvent args)
-        {
-            if (component.Permadeath)
-                return;
-
-            // Avoid checking MobState here, it's not actually important.
-            // If they WERE alive, it doesn't have side effects, but we can save a lookup by not checking alive / dead.
-
-            // Roll this again. If the zombie was not alive, this will delay them respawning a while.
-            component.ZombieRevivalSeconds = _random.Next(component.Settings.ReviveTime,
-                component.Settings.ReviveTimeMax);
-
         }
 
         private void OnEmote(EntityUid uid, ZombieComponent component, ref EmoteEvent args)
@@ -226,6 +107,11 @@ namespace Content.Server.Zombies
                 // Random groaning
                 EnsureComp<AutoEmoteComponent>(uid);
                 _autoEmote.AddEmote(uid, "ZombieGroan");
+
+                // LivingZombieComponent might get removed by zombie death roll below but if the zombie comes back to
+                //   life somehow we must put it back.
+                EnsureComp<LivingZombieComponent>(uid);
+                _passiveHeal.BeginHealing(uid, component.Settings.HealingPerSec);
             }
             else
             {
@@ -237,12 +123,11 @@ namespace Content.Server.Zombies
 
                 // Roll to see if this zombie is not coming back.
                 //   Note that due to damage reductions it takes a lot of hits to gib a zombie without this.
-                if (_random.Prob((args.NewMobState == MobState.Dead)? component.Settings.PermadeathChance : component.Settings.CritDeathChance))
+                if (args.NewMobState == MobState.Dead || _random.Prob(component.Settings.PermadeathChance))
                 {
                     // You're dead! No reviving for you.
-                    // TODO: End zombie rule here if all zombies in it are dead
-                    _mobThreshold.SetAllowRevives(uid, false);
-                    component.Permadeath = true;
+                    RemComp<LivingZombieComponent>(uid);
+                    RemComp<PassiveHealComponent>(uid);
                     _popup.PopupEntity(Loc.GetString("zombie-permadeath"), uid, uid);
 
                     // Check if this was the last zombie that just got wiped out.
@@ -251,22 +136,29 @@ namespace Content.Server.Zombies
                 }
                 else
                 {
-                    component.ZombieRevivalSeconds = _random.Next(component.Settings.ReviveTime,
-                        component.Settings.ReviveTimeMax);
+                    _burstHealSystem.QueueBurstHeal(uid, component.Settings.ReviveTime, component.Settings.ReviveTimeMax);
                 }
             }
         }
 
-        private void OnPendingMobState(EntityUid uid, PendingZombieComponent pending, MobStateChangedEvent args)
+        private void OnInitialMobState(EntityUid uid, InitialInfectedComponent initial, MobStateChangedEvent args)
         {
-            if (args.NewMobState != MobState.Alive)
-            {
-                if (pending.FirstTurnAllowed != TimeSpan.Zero)
-                    return;
+            if (args.NewMobState == MobState.Alive)
+                return;
 
-                // Immediately jump to an active virus when you crit
-                pending.InfectedSecs = Math.Max(0, pending.InfectedSecs);
-            }
+            if (initial.FirstTurnAllowed < _timing.CurTime)
+                return;
+
+            if (!TryComp<ZombieComponent>(uid, out var zombie))
+                return;
+
+            // Immediately jump to an active virus when initial players crit
+            var pending = EnsureComp<PendingZombieComponent>(uid);
+            pending.MaxInfectionLength = zombie.Settings.InfectionTurnTime;
+            pending.InfectionStarted = _timing.CurTime;
+            pending.VirusDamage = zombie.Settings.VirusDamage;
+
+            RemCompDeferred<InitialInfectedComponent>(uid);
         }
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
@@ -321,7 +213,7 @@ namespace Content.Server.Zombies
                 if (!TryComp<MobStateComponent>(entity, out var mobState) || HasComp<DroneComponent>(entity))
                     continue;
 
-                if (HasComp<ZombieComponent>(entity))
+                if (HasComp<LivingZombieComponent>(entity))
                 {
                     args.BonusDamage = -args.BaseDamage * zombieComp.Settings.OtherZombieDamageCoefficient;
                     if (_random.Prob(0.3f))
@@ -332,21 +224,29 @@ namespace Content.Server.Zombies
                 }
                 else
                 {
+                    // On a diceroll or if critical we infect this victim
                     if (_random.Prob(GetZombieInfectionChance(entity, component)) ||
                         mobState.CurrentState != MobState.Alive)
                     {
-                        // On a diceroll or if critical we infect this victim
-                        var pending = EnsureComp<PendingZombieComponent>(entity);
-                        pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.Settings.InfectionTurnTime;
-
-                        // Our victims inherit our settings, which defines damage and more.
-                        pending.Settings = component.VictimSettings ?? component.Settings;
-
-                        // Track who infected this new zombo
-                        pending.Family = new ZombieFamily()
+                        if (!HasComp<ZombieComponent>(entity))
                         {
-                            Rules = component.Family.Rules, Generation = component.Family.Generation + 1, Infector = uid
-                        };
+                            var pending = EnsureComp<PendingZombieComponent>(entity);
+                            var zombie = EnsureComp<ZombieComponent>(entity);
+                            pending.MaxInfectionLength =
+                                _random.NextFloat(0.25f, 1.0f) * component.Settings.InfectionTurnTime;
+                            pending.InfectionStarted = _timing.CurTime;
+                            pending.VirusDamage = zombie.Settings.VirusDamage;
+
+                            // Our victims inherit our settings, which defines damage and more.
+                            zombie.Settings = component.VictimSettings ?? component.Settings;
+
+                            // Track who infected this new zombo
+                            zombie.Family = new ZombieFamily()
+                            {
+                                Rules = component.Family.Rules, Generation = component.Family.Generation + 1,
+                                Infector = uid
+                            };
+                        }
 
                         _popup.PopupEntity(Loc.GetString("zombie-bite-infected-victim"), uid, uid);
                     }
@@ -383,6 +283,13 @@ namespace Content.Server.Zombies
             _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
 
             MetaData(target).EntityName = zombiecomp.BeforeZombifiedEntityName;
+
+            // You're cured!
+            RemComp<InitialInfectedComponent>(target);
+            RemComp<PendingZombieComponent>(target);
+            RemCompDeferred<ZombieComponent>(target);
+            RemComp<LivingZombieComponent>(target);
+
             return true;
         }
 
@@ -392,50 +299,6 @@ namespace Content.Server.Zombies
                 args.NameHandled = true;
         }
 
-        // Downgrade all existing and future zombies in this rule.
-        // Ensure that the zombie virus dies out / part of the crew survives. Do this by downgrading the zombies
-        // when the pass a certain threshold of the crew. Useful for mid-round zombie events when you don't want
-        // them to easily wipe the station.
-        public void NerfZombies(EntityUid ruleUid, ZombieRuleComponent zombies)
-        {
-            if (zombies.NerfSettings == null)
-                return;
-
-            // Nerf pending (future) zombies
-            var pendingQuery = EntityQueryEnumerator<PendingZombieComponent>();
-            while (pendingQuery.MoveNext(out var uid, out var pending))
-            {
-                if (pending.Family.Rules == ruleUid)
-                {
-                    pending.Settings = zombies.NerfSettings;
-                    pending.VictimSettings = null;
-
-                    // These settings will be used when the player is zombified.
-                }
-            }
-
-            // Nerf existing zombies
-            var zombQuery = EntityQueryEnumerator<ZombieComponent>();
-            while (zombQuery.MoveNext(out var uid, out var zombie))
-            {
-                if (zombie.Family.Rules == ruleUid)
-                {
-                    zombie.Settings = zombies.NerfSettings;
-                    zombie.VictimSettings = null;
-
-                    // Replace the zombie attack with the nerfed version.
-                    var melee = EnsureComp<MeleeWeaponComponent>(uid);
-                    melee.ClickAnimation = zombie.Settings.AttackAnimation;
-                    melee.WideAnimation = zombie.Settings.AttackAnimation;
-                    melee.Range = zombie.Settings.MeleeRange;
-                    Dirty(melee);
-                    _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-
-                    _popup.PopupEntity(Loc.GetString("zombie-nerfed"), uid, uid);
-                }
-            }
-        }
-
         // Force every existing zombie in this rule to turn very soon.
         //
         // Some players were "forgetting" that they were initial infected and playing most or all of the round
@@ -443,16 +306,18 @@ namespace Content.Server.Zombies
         // hold, all possible zombies convert.
         public void ForceZombies(EntityUid ruleUid, ZombieRuleComponent zombies)
         {
-            if (zombies.NerfSettings == null)
-                return;
-
-            var pendingQuery = EntityQueryEnumerator<PendingZombieComponent>();
-            while (pendingQuery.MoveNext(out var uid, out var pending))
+            var pendingQuery = EntityQueryEnumerator<InitialInfectedComponent, ZombieComponent>();
+            while (pendingQuery.MoveNext(out var uid, out var initial, out var zombie))
             {
-                if (pending.Family.Rules == ruleUid)
+                if (zombie.Family.Rules == ruleUid)
                 {
-                    pending.InfectedSecs = Math.Min(pending.InfectedSecs,
-                        _random.Next(10, Math.Max(20, (int) zombies.PlayerZombieForceVariationSecs)));
+                    // Immediately jump to an active virus for initial players
+                    var pending = EnsureComp<PendingZombieComponent>(uid);
+                    pending.MaxInfectionLength = zombie.Settings.InfectionTurnTime;
+                    pending.InfectionStarted = _timing.CurTime;
+                    pending.VirusDamage = zombie.Settings.VirusDamage;
+
+                    RemCompDeferred<InitialInfectedComponent>(uid);
 
                     _popup.PopupEntity(Loc.GetString("zombie-forced"), uid, uid);
                 }

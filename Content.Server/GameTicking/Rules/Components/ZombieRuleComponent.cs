@@ -48,41 +48,16 @@ public sealed class ZombieRuleComponent : Component
     public ZombieSettings VictimSettings = default!;
 
     /// <summary>
-    ///   Settings for all players once the nerf player threshold is met
-    ///     (Note, not all settings are applied to the given zombies)
-    /// </summary>
-    [DataField("nerfSettings"), ViewVariables(VVAccess.ReadWrite)]
-    public ZombieSettings? NerfSettings = null;
-
-    /// <summary>
     ///   Don't pick patient 0 for this long after rule start (probably since round start)
     /// </summary>
     [DataField("initialInfectDelaySecs"), ViewVariables(VVAccess.ReadWrite)]
     public float InitialInfectDelaySecs = 300;
 
     /// <summary>
-    ///   How long between rulestart and announcing the zombie event (minimum)
-    /// </summary>
-    [DataField("announceMin"), ViewVariables(VVAccess.ReadWrite)]
-    public float AnnounceMin = 660;
-
-    /// <summary>
-    ///   How long between rulestart and announcing the zombie event (maximum)
-    /// </summary>
-    [DataField("announceMax"), ViewVariables(VVAccess.ReadWrite)]
-    public float AnnounceMax = 900;
-
-    /// <summary>
     ///   How long the initial infected have to wait from roundstart before they are allowed to turn.
     /// </summary>
     [DataField("turnTimeMin"), ViewVariables(VVAccess.ReadWrite)]
     public float TurnTimeMin = 600;
-
-    /// <summary>
-    ///   The probability that the zombie round is going to get announced at all
-    /// </summary>
-    [DataField("announceChance"), ViewVariables(VVAccess.ReadWrite)]
-    public float AnnounceChance = 0.8f;
 
     /// <summary>
     ///   If more than this fraction of the crew get wiped by zombies, but then zombies die... end the round (win)
@@ -105,22 +80,18 @@ public sealed class ZombieRuleComponent : Component
     public int MaxInitialInfected = 6;
 
     /// <summary>
-    ///   The fraction of players at which we nerf all existing zombies if NerfSettings != null
-    /// </summary>
-    [DataField("nerfZombiesAt"), ViewVariables(VVAccess.ReadWrite)]
-    public float NerfZombiesAt = 0.3f;
-
-    /// <summary>
     ///   Ratio of infected players at which any existing initialInfected begin to turn.
     /// </summary>
     [DataField("forceZombiesAt"), ViewVariables(VVAccess.ReadWrite)]
-    public float ForceZombiesAt = 0.3f;
+    public float ForceZombiesAt = 0.5f;
+
+    /// <summary>
+    ///   Remaining shuttle calls (each is a ratio of infection)
+    /// </summary>
+    [DataField("shuttleCalls"), ViewVariables(VVAccess.ReadWrite)]
+    public List<float> ShuttleCalls = new(){0.75f, 0.90f};
 
     // -- Params below here are not really meant to be modified in YML
-    // When we roll to announce the zombie event
-    [DataField("announceAt"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan AnnounceAt = TimeSpan.Zero;
-
     // When we infect the initial infected and tell them
     [DataField("infectInitialAt"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan InfectInitialAt = TimeSpan.Zero;
@@ -129,16 +100,6 @@ public sealed class ZombieRuleComponent : Component
     [DataField("firstTurnAllowed"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan FirstTurnAllowed = TimeSpan.Zero;
 
-    // If we have called a shuttle due to > 75% infection
-    [DataField("calledShuttle75"), ViewVariables(VVAccess.ReadWrite)]
-    public bool CalledShuttle75 = false;
-    // If we have called a shuttle due to > 90% infection (in case 75% one cancelled)
-    [DataField("calledShuttle90"), ViewVariables(VVAccess.ReadWrite)]
-    public bool CalledShuttle90 = false;
-
-    // If we have nerfed the zombies yet (applied NerfSettings if it is non-null)
-    [DataField("nerfedZombies"), ViewVariables(VVAccess.ReadWrite)]
-    public bool NerfedZombies = false;
     // If we have forced all initialInfected
     [DataField("forcedZombies"), ViewVariables(VVAccess.ReadWrite)]
     public bool ForcedZombies = false;

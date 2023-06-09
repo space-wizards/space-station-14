@@ -41,7 +41,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -52,7 +52,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
 
         SubscribeLocalEvent<EntityZombifiedEvent>(OnEntityZombified);
-        SubscribeLocalEvent<PendingZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
+        SubscribeLocalEvent<InitialInfectedComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -110,18 +110,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
     }
 
-    // private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
-    // {
-    //     var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
-    //     while (query.MoveNext(out var uid, out var zombies, out var gameRule))
-    //     {
-    //         if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-    //             continue;
-    //
-    //         InfectInitialPlayers(zombies);
-    //     }
-    // }
-
     /// <remarks>
     ///     This is just checked if the last human somehow dies
     ///     by starving or flying off into space.
@@ -172,24 +160,12 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 if (fraction >= 1) // Oops, all zombies
                     _roundEndSystem.EndRound();
 
-                if (fraction >= 0.75f && !zombies.CalledShuttle75)
+                if (zombies.ShuttleCalls.Count > 0 && fraction >= zombies.ShuttleCalls[0])
                 {
                     // Call shuttle if not called
-                    zombies.CalledShuttle75 = true;
+                    zombies.ShuttleCalls.RemoveAt(0);
                     _roundEndSystem.RequestRoundEnd(uid);
                 }
-                else if (fraction >= 0.90f && !zombies.CalledShuttle90)
-                {
-                    // Call shuttle if not called (This is here in case shuttle is canceled at 75%)
-                    zombies.CalledShuttle90 = true;
-                    _roundEndSystem.RequestRoundEnd(uid);
-                }
-            }
-
-            if (zombies.NerfSettings != null && !zombies.NerfedZombies && fraction > zombies.NerfZombiesAt)
-            {
-                zombies.NerfedZombies = true;
-                _zombie.NerfZombies(uid, zombies);
             }
 
             if (!zombies.ForcedZombies && fraction > zombies.ForceZombiesAt)
@@ -212,35 +188,32 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             return;
 
         // Look for living zombies
+        var livingQuery = GetEntityQuery<LivingZombieComponent>();
+        var initialQuery = GetEntityQuery<InitialInfectedComponent>();
         int livingZombies = 0;
         int deadZombies = 0;
-        var zombers = EntityQueryEnumerator<ZombieComponent, MobStateComponent>();
-        while (zombers.MoveNext(out var uid, out var zombie, out var mobState))
+        int initialZombies = 0;
+        var zombers = EntityQueryEnumerator<ZombieComponent>();
+        while (zombers.MoveNext(out var uid, out var zombie))
         {
             if (zombie.Family.Rules != ruleUid)
                 continue;
 
-            if (mobState.CurrentState != MobState.Alive && zombie.Permadeath)
+            if (livingQuery.HasComponent(uid))
+            {
+                livingZombies += 1;
+            }
+            else if (initialQuery.HasComponent(uid))
+            {
+                initialZombies += 1;
+            }
+            else
             {
                 deadZombies += 1;
-                continue;
             }
-
-            livingZombies += 1;
         }
 
-        // Look for pending zombies
-        int pendingZombies = 0;
-        var query = EntityQueryEnumerator<PendingZombieComponent>();
-        while (query.MoveNext(out var uid, out var pending))
-        {
-            if (pending.Family.Rules != ruleUid)
-                continue;
-
-            pendingZombies += 1;
-        }
-
-        if (pendingZombies == 0 && livingZombies == 0)
+        if (initialZombies == 0 && livingZombies == 0)
         {
             GameTicker.EndGameRule(ruleUid, gameRule);
             if (zombies.WinEndsRoundAbove < 1.0f)
@@ -293,13 +266,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
+        var curTime = _timing.CurTime;
 
-        component.AnnounceAt = GameTicker.RoundDuration() +
+        component.AnnounceAt = curTime +
                                TimeSpan.FromSeconds(_random.NextFloat(component.AnnounceMin,
                                    component.AnnounceMax));
-        component.InfectInitialAt = GameTicker.RoundDuration() + TimeSpan.FromSeconds(component.InitialInfectDelaySecs);
+        component.InfectInitialAt = curTime + TimeSpan.FromSeconds(component.InitialInfectDelaySecs);
 
-        component.FirstTurnAllowed = GameTicker.RoundDuration() + TimeSpan.FromSeconds(component.TurnTimeMin);
+        component.FirstTurnAllowed = curTime + TimeSpan.FromSeconds(component.TurnTimeMin);
 
         if (component.EarlySettings.EmoteSoundsId != null)
         {
@@ -314,14 +288,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule,
         float frameTime)
     {
-        if (component.InfectInitialAt != TimeSpan.Zero && component.InfectInitialAt < GameTicker.RoundDuration())
+        var curTime = _timing.CurTime;
+        if (component.InfectInitialAt != TimeSpan.Zero && component.InfectInitialAt < curTime)
         {
             // Time to infect the initial players
             InfectInitialPlayers(uid, component);
             component.InfectInitialAt = TimeSpan.Zero;
         }
 
-        if (component.AnnounceAt != TimeSpan.Zero && component.AnnounceAt < GameTicker.RoundDuration())
+        if (component.AnnounceAt != TimeSpan.Zero && component.AnnounceAt < curTime)
         {
             // Announce the brain eating about to commence
             if (_random.Prob(component.AnnounceChance))
@@ -331,20 +306,35 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             component.AnnounceAt = TimeSpan.Zero;
         }
 
-        if (component.FirstTurnAllowed != TimeSpan.Zero && component.FirstTurnAllowed < GameTicker.RoundDuration())
+        if (component.FirstTurnAllowed != TimeSpan.Zero && component.FirstTurnAllowed < curTime)
         {
             ActivateZombifyOnDeath(uid, component);
             component.FirstTurnAllowed = TimeSpan.Zero;
         }
+
+        var query = EntityQueryEnumerator<InitialInfectedComponent, ZombieComponent>();
+        while (query.MoveNext(out var initialUid, out var initial, out var zombie))
+        {
+            if (initial.TurnForced < curTime)
+            {
+                // Time to begin forcing this initial infected to turn.
+                var pending = EnsureComp<PendingZombieComponent>(initialUid);
+                pending.MaxInfectionLength = zombie.Settings.InfectionTurnTime;
+                pending.InfectionStarted = _timing.CurTime;
+                pending.VirusDamage = zombie.Settings.VirusDamage;
+
+                RemCompDeferred<InitialInfectedComponent>(initialUid);
+            }
+        }
     }
 
-    private void OnZombifySelf(EntityUid uid, PendingZombieComponent pending, ZombifySelfActionEvent args)
+    private void OnZombifySelf(EntityUid uid, InitialInfectedComponent initial, ZombifySelfActionEvent args)
     {
         // Check it's not too early to zombify
-        if (pending.FirstTurnAllowed != TimeSpan.Zero)
+        if (initial.FirstTurnAllowed != TimeSpan.Zero)
             return;
 
-        _zombie.ZombifyEntity(uid, pending: pending);
+        _zombie.ZombifyEntity(uid);
 
         var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombieRuleComponent.ZombifySelfActionPrototype));
         _action.RemoveAction(uid, action);
@@ -362,7 +352,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         var healthy = new List<EntityUid>();
         var players = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
-        var zombers = GetEntityQuery<ZombieComponent>();
+        var zombers = GetEntityQuery<LivingZombieComponent>();
         while (players.MoveNext(out var uid, out _, out var mob))
         {
             if (_mobState.IsAlive(uid, mob) && !zombers.HasComponent(uid))
@@ -377,7 +367,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         var healthy = 0;
         var players = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
-        var zombers = GetEntityQuery<ZombieComponent>();
+        var zombers = GetEntityQuery<LivingZombieComponent>();
         while (players.MoveNext(out var uid, out _, out var mob))
         {
             if (_mobState.IsAlive(uid, mob) && !zombers.HasComponent(uid))
@@ -437,7 +427,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                         }
                     }
                 }
-                else if (!HasComp<PendingZombieComponent>(player.AttachedEntity))
+                else
                 {
                     playerList.Add(player);
 
@@ -449,8 +439,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         }
 
         // Check for mindless zombies (not attached to players) that still don't have a rules entity attached...
-        var zombers = EntityQueryEnumerator<ZombieComponent, MobStateComponent>();
-        while (zombers.MoveNext(out var zombUid, out var zombie, out var mobState))
+        var zombers = EntityQueryEnumerator<ZombieComponent, LivingZombieComponent>();
+        while (zombers.MoveNext(out var zombUid, out var zombie, out var living))
         {
             if (zombie.Family.Rules == EntityUid.Invalid)
             {
@@ -470,6 +460,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var maxInfected = Math.Min(rules.MaxInitialInfected, _cfg.GetCVar(CCVars.ZombieMaxInitialInfected));
 
         var numInfected = (int)Math.Clamp(Math.Floor((double) playerList.Count / playersPerInfected), 1, maxInfected);
+        var curTime = _timing.CurTime;
 
         // These are already infected (by admins probably)
         numInfected -= rules.InitialInfectedNames.Count;
@@ -480,7 +471,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var groupTimelimit = _random.NextFloat(rules.MinZombieForceSecs, rules.MaxZombieForceSecs);
         for (var i = 0; i < numInfected; i++)
         {
-            IPlayerSession zombie;
+            IPlayerSession zombiePlayer;
             if (prefList.Count == 0)
             {
                 if (playerList.Count == 0)
@@ -488,17 +479,17 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                     Logger.InfoS("preset", "Insufficient number of players. stopping selection.");
                     break;
                 }
-                zombie = _random.PickAndTake(playerList);
+                zombiePlayer = _random.PickAndTake(playerList);
                 Logger.InfoS("preset", "Insufficient preferred patient 0, picking at random.");
             }
             else
             {
-                zombie = _random.PickAndTake(prefList);
-                playerList.Remove(zombie);
+                zombiePlayer = _random.PickAndTake(prefList);
+                playerList.Remove(zombiePlayer);
                 Logger.InfoS("preset", "Selected a patient 0.");
             }
 
-            var mind = zombie.Data.ContentData()?.Mind;
+            var mind = zombiePlayer.Data.ContentData()?.Mind;
             if (mind == null)
             {
                 Logger.ErrorS("preset", "Failed getting mind for picked patient 0.");
@@ -514,24 +505,23 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             var personalDelay = _random.NextFloat(0.0f, rules.PlayerZombieForceVariationSecs);
             if (mind.OwnedEntity != null)
             {
-                var pending = EnsureComp<PendingZombieComponent>(mind.OwnedEntity.Value);
+                var initial = EnsureComp<InitialInfectedComponent>(mind.OwnedEntity.Value);
+                initial.FirstTurnAllowed = rules.FirstTurnAllowed;
                 // Only take damage after this many seconds
-                pending.InfectedSecs = -(int)(groupTimelimit + personalDelay);
+                initial.TurnForced = curTime + TimeSpan.FromSeconds(groupTimelimit + personalDelay);
 
+                var zombie = EnsureComp<ZombieComponent>(mind.OwnedEntity.Value);
                 // Patient zero zombies get one set of zombie settings, later zombies get a different (less powerful) set.
-                pending.Settings = rules.EarlySettings;
-                pending.VictimSettings = rules.VictimSettings;
-                pending.Family = new ZombieFamily() { Rules = uid, Generation = 0 };
-                pending.FirstTurnAllowed = rules.FirstTurnAllowed;
+                zombie.Settings = rules.EarlySettings;
+                zombie.VictimSettings = rules.VictimSettings;
+                zombie.Family = new ZombieFamily() { Rules = uid, Generation = 0 };
 
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
 
                 var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombieRuleComponent.ZombifySelfActionPrototype));
-                var curTime = _gameTiming.CurTime;
 
                 // Set a cooldown on the action here that reflects the time until initial infection.
                 action.Cooldown = (curTime, rules.FirstTurnAllowed);
-
                 _action.AddAction(mind.OwnedEntity.Value, action, null);
             }
 
@@ -554,24 +544,30 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
     private void ActivateZombifyOnDeath(EntityUid ruleUid, ZombieRuleComponent component)
     {
-        var query = EntityQueryEnumerator<PendingZombieComponent, MobStateComponent>();
-        while (query.MoveNext(out var uid, out var pending, out var mobState))
+        var query = EntityQueryEnumerator<InitialInfectedComponent, ZombieComponent, MobStateComponent>();
+        while (query.MoveNext(out var uid, out var initial, out var zombie, out var mobState))
         {
             // Don't change zombies that don't belong to these rules.
-            if (pending.Family.Rules != ruleUid)
+            if (zombie.Family.Rules != ruleUid)
                 continue;
 
-            pending.FirstTurnAllowed = TimeSpan.Zero;
+            // This is probably already in the past, but just in case the rule has had a time shortened, set it now.
+            initial.FirstTurnAllowed = TimeSpan.Zero;
 
             if (mobState.CurrentState == MobState.Dead)
             {
                 // Zombify them immediately
-                _zombie.ZombifyEntity(uid, mobState, pending);
+                _zombie.ZombifyEntity(uid, mobState);
             }
             else if (mobState.CurrentState == MobState.Critical)
             {
                 // Immediately jump to an active virus now
-                pending.InfectedSecs = Math.Max(0, pending.InfectedSecs);
+                var pending = EnsureComp<PendingZombieComponent>(uid);
+                pending.MaxInfectionLength = zombie.Settings.InfectionTurnTime;
+                pending.InfectionStarted = _timing.CurTime;
+                pending.VirusDamage = zombie.Settings.VirusDamage;
+
+                RemCompDeferred<InitialInfectedComponent>(uid);
             }
         }
     }

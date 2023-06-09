@@ -58,8 +58,8 @@ namespace Content.Server.Zombies
         /// </remarks>
         public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null, PendingZombieComponent? pending= null)
         {
-            //Don't zombify zombies
-            if (HasComp<ZombieComponent>(target))
+            //Don't zombify living zombies
+            if (HasComp<LivingZombieComponent>(target))
                 return;
 
             if (!Resolve(target, ref mobState, logMissing: false))
@@ -68,17 +68,10 @@ namespace Content.Server.Zombies
             //He's gotta have a mind
             var mindcomp = EnsureComp<MindComponent>(target);
 
-            //you're a real zombie now, son.
-            var zombiecomp = AddComp<ZombieComponent>(target);
+            //you're a real zombie now, son. Probably had this already.
+            var zombiecomp = EnsureComp<ZombieComponent>(target);
 
-            if (Resolve(target, ref pending, logMissing: false))
-            {
-                // Created by a standard zombie bite (rather than a manual invocation like admin)
-                zombiecomp.Settings = pending.Settings;
-                zombiecomp.VictimSettings = pending.VictimSettings;
-                zombiecomp.Family = pending.Family;
-            }
-            else
+            if (zombiecomp.Family.Rules == EntityUid.Invalid)
             {
                 // Attempt to find a zombie rule to attach this zombie to
                 var (rulesUid, rules) = _zombieRule.FindActiveRule();
@@ -125,12 +118,15 @@ namespace Content.Server.Zombies
                 // Random groaning
                 EnsureComp<AutoEmoteComponent>(target);
                 _autoEmote.AddEmote(target, "ZombieGroan");
+
+                _passiveHeal.BeginHealing(target, zombiecomp.Settings.HealingPerSec);
             }
 
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
             {
                 //store some values before changing them in case the humanoid get cloned later
+                // If somehow a dead zombie gets zombified again, this data might get damaged.
                 zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
                 zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
 
@@ -169,7 +165,7 @@ namespace Content.Server.Zombies
             if (TryComp<TemperatureComponent>(target, out var tempComp))
                 tempComp.ColdDamage.ClampMax(0);
 
-            // Zombies can revive themselves
+            // Begin a revive here
             _mobThreshold.SetAllowRevives(target, true);
 
             //Heals the zombie from all the damage it took while human
@@ -179,6 +175,8 @@ namespace Content.Server.Zombies
             // Revive them now
             if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState==MobState.Dead)
                 _mobState.ChangeMobState(target, MobState.Alive, mobstate);
+
+            _mobThreshold.SetAllowRevives(target, false);
 
             //gives it the funny "Zombie ___" name.
             var meta = MetaData(target);
@@ -200,7 +198,7 @@ namespace Content.Server.Zombies
                 //yet more hardcoding. Visit zombie.ftl for more information.
                 var ghostRole = EnsureComp<GhostRoleComponent>(target);
                 EnsureComp<GhostTakeoverAvailableComponent>(target);
-                ghostRole.RoleName = Loc.GetString("zombie-generic");
+                ghostRole.RoleName = Loc.GetString(huApComp == null? "zombie-generic-animal": "zombie-generic");
                 ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
                 ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
@@ -215,8 +213,10 @@ namespace Content.Server.Zombies
             }
             RemComp<HandsComponent>(target);
             // No longer waiting to become a zombie:
-            // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
+            // Requires deferral one of these are (probably) the cause of the call to ZombifyEntity in the first place.
             RemCompDeferred<PendingZombieComponent>(target);
+            RemCompDeferred<InitialInfectedComponent>(target);
+            EnsureComp<LivingZombieComponent>(target);
 
             //zombie gamemode stuff
             RaiseLocalEvent(new EntityZombifiedEvent(target));

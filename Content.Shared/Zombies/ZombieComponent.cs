@@ -23,25 +23,19 @@ namespace Content.Shared.Zombies
         /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
         /// </summary>
         [DataField("permadeathChance"), ViewVariables(VVAccess.ReadWrite)]
-        public float PermadeathChance = 0.80f;
-
-        /// <summary>
-        /// Chance that this zombie be permanently killed (rolled once on alive->crit transition)
-        /// </summary>
-        [DataField("critDeathChance"), ViewVariables(VVAccess.ReadWrite)]
-        public float CritDeathChance = 0.40f;
+        public float PermadeathChance = 0.50f;
 
         /// <summary>
         /// How many seconds it takes for a zombie to revive (min)
         /// </summary>
         [DataField("reviveTime"), ViewVariables(VVAccess.ReadWrite)]
-        public int ReviveTime = 10;
+        public float ReviveTime = 10;
 
         /// <summary>
         /// How many seconds it takes for a zombie to revive (max)
         /// </summary>
         [DataField("reviveTimeMax"), ViewVariables(VVAccess.ReadWrite)]
-        public int ReviveTimeMax = 60;
+        public float ReviveTimeMax = 60;
 
         /// <summary>
         /// The baseline infection chance you have if you are completely nude
@@ -115,18 +109,8 @@ namespace Content.Shared.Zombies
         /// <summary>
         /// Healing each second
         /// </summary>
-        [DataField("healing"), ViewVariables(VVAccess.ReadWrite)] public DamageSpecifier Healing = new()
-        {
-            DamageDict = new ()
-            {
-                { "Blunt", -0.4 },
-                { "Slash", -0.2 },
-                { "Piercing", -0.2 },
-                { "Heat", -0.2 },
-                { "Cold", -0.2 },
-                { "Shock", -0.2 },
-            }
-        };
+        [DataField("healingPerSec"), ViewVariables(VVAccess.ReadWrite)]
+        public float HealingPerSec = 0.6f;
 
         /// <summary>
         /// How much the virus hurts you (base, scales rapidly)
@@ -214,18 +198,6 @@ namespace Content.Shared.Zombies
         public ZombieFamily Family = new();
 
         /// <summary>
-        /// Has this zombie stopped healing now that it's died for real?
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Permadeath;
-
-        /// <summary>
-        /// Seconds until this zombie revives
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int ZombieRevivalSeconds;
-
-        /// <summary>
         /// The EntityName of the humanoid to restore in case of cloning
         /// </summary>
         [DataField("beforeZombifiedEntityName"), ViewVariables(VVAccess.ReadOnly)]
@@ -242,10 +214,5 @@ namespace Content.Shared.Zombies
         /// </summary>
         [DataField("beforeZombifiedSkinColor")]
         public Color BeforeZombifiedSkinColor;
-
-        [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
-        public TimeSpan NextTick;
-
-
     }
 }
