@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Doors.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -20,7 +19,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Blocking;
 
-public sealed partial class BlockingSystem : EntitySystem
+public abstract partial class SharedBlockingSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
