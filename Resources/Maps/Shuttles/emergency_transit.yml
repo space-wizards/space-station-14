@@ -458,8 +458,6 @@ entities:
       pos: 13.5,-15.5
       parent: 2
       type: Transform
-    - nextSound: 33.6518485
-      type: EmitSoundOnCollide
 - proto: BedsheetMedical
   entities:
   - uid: 18
@@ -468,16 +466,12 @@ entities:
       pos: 11.5,-4.5
       parent: 2
       type: Transform
-    - nextSound: 3257.5560695
-      type: EmitSoundOnCollide
   - uid: 19
     components:
     - rot: -1.5707963267948966 rad
       pos: 11.5,-3.5
       parent: 2
       type: Transform
-    - nextSound: 3258.0080385
-      type: EmitSoundOnCollide
 - proto: BoxSyringe
   entities:
   - uid: 579
@@ -485,8 +479,6 @@ entities:
     - pos: 8.410651,-3.2939768
       parent: 2
       type: Transform
-    - nextSound: 328.6298029
-      type: EmitSoundOnCollide
 - proto: BrigTimer
   entities:
   - uid: 592
@@ -2018,8 +2010,6 @@ entities:
     - pos: 8.623848,-9.36953
       parent: 2
       type: Transform
-    - nextSound: 1051.5237623
-      type: EmitSoundOnCollide
 - proto: DefibrillatorCabinetFilled
   entities:
   - uid: 1
@@ -2043,8 +2033,6 @@ entities:
       type: Transform
     - nextAttack: 401.8711134
       type: MeleeWeapon
-    - nextSound: 402.0711134
-      type: EmitSoundOnCollide
 - proto: ExtinguisherCabinetFilled
   entities:
   - uid: 193
@@ -2203,8 +2191,6 @@ entities:
       type: Transform
     - nextAttack: 756.8198121
       type: MeleeWeapon
-    - nextSound: 757.0198121
-      type: EmitSoundOnCollide
   - uid: 209
     components:
     - pos: 11.787855,-11.508917
@@ -2212,8 +2198,6 @@ entities:
       type: Transform
     - nextAttack: 757.7026162
       type: MeleeWeapon
-    - nextSound: 757.9026162
-      type: EmitSoundOnCollide
 - proto: FlashlightSeclite
   entities:
   - uid: 210
@@ -2221,8 +2205,6 @@ entities:
     - pos: 12.444105,-11.36624
       parent: 2
       type: Transform
-    - nextSound: 763.7946382
-      type: EmitSoundOnCollide
 - proto: GasOutletInjector
   entities:
   - uid: 211
@@ -2231,8 +2213,6 @@ entities:
       pos: 11.5,-20.5
       parent: 2
       type: Transform
-    - nextSound: 332.0444447
-      type: EmitSoundOnCollide
 - proto: GasPassiveVent
   entities:
   - uid: 212
@@ -2240,8 +2220,6 @@ entities:
     - pos: 16.5,-15.5
       parent: 2
       type: Transform
-    - nextSound: 3520.8746969
-      type: EmitSoundOnCollide
 - proto: GasPipeBend
   entities:
   - uid: 214
@@ -2252,87 +2230,65 @@ entities:
       type: Transform
     - enabled: True
       type: AmbientSound
-    - nextSound: 2745.0333529
-      type: EmitSoundOnCollide
   - uid: 215
     components:
     - rot: -1.5707963267948966 rad
       pos: 8.5,-20.5
       parent: 2
       type: Transform
-    - nextSound: 2746.3998907
-      type: EmitSoundOnCollide
   - uid: 216
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,-20.5
       parent: 2
       type: Transform
-    - nextSound: 2763.8009526
-      type: EmitSoundOnCollide
   - uid: 217
     components:
     - rot: 3.141592653589793 rad
       pos: 4.5,-2.5
       parent: 2
       type: Transform
-    - nextSound: 2862.0320468
-      type: EmitSoundOnCollide
   - uid: 218
     components:
     - pos: 5.5,-2.5
       parent: 2
       type: Transform
-    - nextSound: 2864.2346577
-      type: EmitSoundOnCollide
   - uid: 219
     components:
     - rot: -1.5707963267948966 rad
       pos: 6.5,-8.5
       parent: 2
       type: Transform
-    - nextSound: 3808.2789299
-      type: EmitSoundOnCollide
   - uid: 220
     components:
     - rot: -1.5707963267948966 rad
       pos: 13.5,-8.5
       parent: 2
       type: Transform
-    - nextSound: 3789.6431486
-      type: EmitSoundOnCollide
   - uid: 221
     components:
     - rot: 1.5707963267948966 rad
       pos: 11.5,-17.5
       parent: 2
       type: Transform
-    - nextSound: 3436.9734529
-      type: EmitSoundOnCollide
   - uid: 222
     components:
     - rot: -1.5707963267948966 rad
       pos: 13.5,-12.5
       parent: 2
       type: Transform
-    - nextSound: 2919.8903554
-      type: EmitSoundOnCollide
   - uid: 223
     components:
     - rot: 1.5707963267948966 rad
       pos: 7.5,-8.5
       parent: 2
       type: Transform
-    - nextSound: 2940.8780546
-      type: EmitSoundOnCollide
   - uid: 224
     components:
     - rot: 1.5707963267948966 rad
       pos: 13.5,-1.5
       parent: 2
       type: Transform
-    - nextSound: 2947.9853152
-      type: EmitSoundOnCollide
   - uid: 425
     components:
     - rot: -1.5707963267948966 rad
@@ -2341,8 +2297,6 @@ entities:
       type: Transform
     - enabled: True
       type: AmbientSound
-    - nextSound: 116.4599338
-      type: EmitSoundOnCollide
 - proto: GasPipeStraight
   entities:
   - uid: 225
@@ -2351,136 +2305,102 @@ entities:
       pos: 15.5,-17.5
       parent: 2
       type: Transform
-    - nextSound: 3259.4144722
-      type: EmitSoundOnCollide
   - uid: 226
     components:
     - rot: 1.5707963267948966 rad
       pos: 12.5,-17.5
       parent: 2
       type: Transform
-    - nextSound: 3439.0915485
-      type: EmitSoundOnCollide
   - uid: 227
     components:
     - rot: -1.5707963267948966 rad
       pos: 10.5,-19.5
       parent: 2
       type: Transform
-    - nextSound: 2735.3529557
-      type: EmitSoundOnCollide
   - uid: 228
     components:
     - rot: -1.5707963267948966 rad
       pos: 11.5,-19.5
       parent: 2
       type: Transform
-    - nextSound: 2736.4209284
-      type: EmitSoundOnCollide
   - uid: 229
     components:
     - rot: -1.5707963267948966 rad
       pos: 12.5,-19.5
       parent: 2
       type: Transform
-    - nextSound: 2737.1415893
-      type: EmitSoundOnCollide
   - uid: 230
     components:
     - rot: -1.5707963267948966 rad
       pos: 7.5,-20.5
       parent: 2
       type: Transform
-    - nextSound: 2749.2023971
-      type: EmitSoundOnCollide
   - uid: 231
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,-19.5
       parent: 2
       type: Transform
-    - nextSound: 2766.0358716
-      type: EmitSoundOnCollide
   - uid: 232
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,-18.5
       parent: 2
       type: Transform
-    - nextSound: 2766.4522386
-      type: EmitSoundOnCollide
   - uid: 233
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,-17.5
       parent: 2
       type: Transform
-    - nextSound: 2766.9361892
-      type: EmitSoundOnCollide
   - uid: 234
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,-16.5
       parent: 2
       type: Transform
-    - nextSound: 2768.3859822
-      type: EmitSoundOnCollide
   - uid: 235
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,-15.5
       parent: 2
       type: Transform
-    - nextSound: 2768.9356168
-      type: EmitSoundOnCollide
   - uid: 236
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,-14.5
       parent: 2
       type: Transform
-    - nextSound: 2769.3037298
-      type: EmitSoundOnCollide
   - uid: 237
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,-13.5
       parent: 2
       type: Transform
-    - nextSound: 2769.6707009
-      type: EmitSoundOnCollide
   - uid: 238
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,-12.5
       parent: 2
       type: Transform
-    - nextSound: 2770.0400471
-      type: EmitSoundOnCollide
   - uid: 239
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,-10.5
       parent: 2
       type: Transform
-    - nextSound: 2770.8037341
-      type: EmitSoundOnCollide
   - uid: 240
     components:
     - rot: 1.5707963267948966 rad
       pos: 6.5,-11.5
       parent: 2
       type: Transform
-    - nextSound: 2785.9704616
-      type: EmitSoundOnCollide
   - uid: 241
     components:
     - rot: 1.5707963267948966 rad
       pos: 7.5,-11.5
       parent: 2
       type: Transform
-    - nextSound: 2786.8402523
-      type: EmitSoundOnCollide
   - uid: 242
     components:
     - rot: 1.5707963267948966 rad
@@ -2489,150 +2409,110 @@ entities:
       type: Transform
     - enabled: True
       type: AmbientSound
-    - nextSound: 2787.4241659
-      type: EmitSoundOnCollide
   - uid: 243
     components:
     - pos: 5.5,-3.5
       parent: 2
       type: Transform
-    - nextSound: 2866.5868302
-      type: EmitSoundOnCollide
   - uid: 244
     components:
     - pos: 5.5,-4.5
       parent: 2
       type: Transform
-    - nextSound: 2866.8861006
-      type: EmitSoundOnCollide
   - uid: 245
     components:
     - pos: 5.5,-5.5
       parent: 2
       type: Transform
-    - nextSound: 2867.219399
-      type: EmitSoundOnCollide
   - uid: 246
     components:
     - pos: 5.5,-6.5
       parent: 2
       type: Transform
-    - nextSound: 2867.5026555
-      type: EmitSoundOnCollide
   - uid: 247
     components:
     - pos: 5.5,-7.5
       parent: 2
       type: Transform
-    - nextSound: 2868.9569832
-      type: EmitSoundOnCollide
   - uid: 248
     components:
     - pos: 5.5,-9.5
       parent: 2
       type: Transform
-    - nextSound: 2869.5535296
-      type: EmitSoundOnCollide
   - uid: 249
     components:
     - rot: 1.5707963267948966 rad
       pos: 14.5,-17.5
       parent: 2
       type: Transform
-    - nextSound: 3258.9290278
-      type: EmitSoundOnCollide
   - uid: 250
     components:
     - rot: 1.5707963267948966 rad
       pos: 13.5,-17.5
       parent: 2
       type: Transform
-    - nextSound: 3258.3464976
-      type: EmitSoundOnCollide
   - uid: 251
     components:
     - rot: 1.5707963267948966 rad
       pos: 12.5,-18.5
       parent: 2
       type: Transform
-    - nextSound: 3434.8174886
-      type: EmitSoundOnCollide
   - uid: 252
     components:
     - rot: -1.5707963267948966 rad
       pos: 9.5,-18.5
       parent: 2
       type: Transform
-    - nextSound: 2895.3162421
-      type: EmitSoundOnCollide
   - uid: 253
     components:
     - rot: 1.5707963267948966 rad
       pos: 8.5,-18.5
       parent: 2
       type: Transform
-    - nextSound: 2901.1193949
-      type: EmitSoundOnCollide
   - uid: 254
     components:
     - pos: 7.5,-17.5
       parent: 2
       type: Transform
-    - nextSound: 2902.2234064
-      type: EmitSoundOnCollide
   - uid: 255
     components:
     - pos: 7.5,-16.5
       parent: 2
       type: Transform
-    - nextSound: 2902.7058364
-      type: EmitSoundOnCollide
   - uid: 256
     components:
     - pos: 7.5,-15.5
       parent: 2
       type: Transform
-    - nextSound: 2903.5576273
-      type: EmitSoundOnCollide
   - uid: 257
     components:
     - pos: 7.5,-14.5
       parent: 2
       type: Transform
-    - nextSound: 2904.0580693
-      type: EmitSoundOnCollide
   - uid: 258
     components:
     - rot: -1.5707963267948966 rad
       pos: 12.5,-12.5
       parent: 2
       type: Transform
-    - nextSound: 2921.6079142
-      type: EmitSoundOnCollide
   - uid: 259
     components:
     - rot: -1.5707963267948966 rad
       pos: 11.5,-12.5
       parent: 2
       type: Transform
-    - nextSound: 2921.9939065
-      type: EmitSoundOnCollide
   - uid: 260
     components:
     - rot: -1.5707963267948966 rad
       pos: 10.5,-12.5
       parent: 2
       type: Transform
-    - nextSound: 2922.442441
-      type: EmitSoundOnCollide
   - uid: 261
     components:
     - rot: -1.5707963267948966 rad
       pos: 9.5,-12.5
       parent: 2
       type: Transform
-    - nextSound: 2922.9107558
-      type: EmitSoundOnCollide
   - uid: 262
     components:
     - rot: -1.5707963267948966 rad
@@ -2641,124 +2521,92 @@ entities:
       type: Transform
     - enabled: True
       type: AmbientSound
-    - nextSound: 2923.9607105
-      type: EmitSoundOnCollide
   - uid: 263
     components:
     - pos: 7.5,-13.5
       parent: 2
       type: Transform
-    - nextSound: 2933.219682
-      type: EmitSoundOnCollide
   - uid: 264
     components:
     - pos: 7.5,-11.5
       parent: 2
       type: Transform
-    - nextSound: 2935.4727276
-      type: EmitSoundOnCollide
   - uid: 265
     components:
     - pos: 7.5,-10.5
       parent: 2
       type: Transform
-    - nextSound: 2936.3696832
-      type: EmitSoundOnCollide
   - uid: 266
     components:
     - pos: 7.5,-9.5
       parent: 2
       type: Transform
-    - nextSound: 2936.7906055
-      type: EmitSoundOnCollide
   - uid: 267
     components:
     - rot: 1.5707963267948966 rad
       pos: 8.5,-8.5
       parent: 2
       type: Transform
-    - nextSound: 2942.3644129
-      type: EmitSoundOnCollide
   - uid: 268
     components:
     - rot: 1.5707963267948966 rad
       pos: 9.5,-8.5
       parent: 2
       type: Transform
-    - nextSound: 2942.6298983
-      type: EmitSoundOnCollide
   - uid: 269
     components:
     - rot: 1.5707963267948966 rad
       pos: 10.5,-8.5
       parent: 2
       type: Transform
-    - nextSound: 2942.9461865
-      type: EmitSoundOnCollide
   - uid: 270
     components:
     - rot: 1.5707963267948966 rad
       pos: 11.5,-8.5
       parent: 2
       type: Transform
-    - nextSound: 2944.1823101
-      type: EmitSoundOnCollide
   - uid: 271
     components:
     - rot: 3.141592653589793 rad
       pos: 13.5,-2.5
       parent: 2
       type: Transform
-    - nextSound: 2956.6935576
-      type: EmitSoundOnCollide
   - uid: 272
     components:
     - rot: 3.141592653589793 rad
       pos: 13.5,-3.5
       parent: 2
       type: Transform
-    - nextSound: 2957.1949697
-      type: EmitSoundOnCollide
   - uid: 273
     components:
     - rot: 3.141592653589793 rad
       pos: 13.5,-4.5
       parent: 2
       type: Transform
-    - nextSound: 2957.761478
-      type: EmitSoundOnCollide
   - uid: 274
     components:
     - rot: 3.141592653589793 rad
       pos: 13.5,-5.5
       parent: 2
       type: Transform
-    - nextSound: 2958.6292957
-      type: EmitSoundOnCollide
   - uid: 275
     components:
     - rot: 3.141592653589793 rad
       pos: 13.5,-6.5
       parent: 2
       type: Transform
-    - nextSound: 2959.1127075
-      type: EmitSoundOnCollide
   - uid: 276
     components:
     - rot: 3.141592653589793 rad
       pos: 13.5,-7.5
       parent: 2
       type: Transform
-    - nextSound: 2959.663946
-      type: EmitSoundOnCollide
   - uid: 278
     components:
     - rot: -1.5707963267948966 rad
       pos: 10.5,-18.5
       parent: 2
       type: Transform
-    - nextSound: 3715.165827
-      type: EmitSoundOnCollide
 - proto: GasPipeTJunction
   entities:
   - uid: 279
@@ -2766,64 +2614,48 @@ entities:
     - pos: 9.5,-19.5
       parent: 2
       type: Transform
-    - nextSound: 2732.0367839
-      type: EmitSoundOnCollide
   - uid: 280
     components:
     - rot: 3.141592653589793 rad
       pos: 6.5,-20.5
       parent: 2
       type: Transform
-    - nextSound: 2761.7328809
-      type: EmitSoundOnCollide
   - uid: 281
     components:
     - rot: 1.5707963267948966 rad
       pos: 5.5,-11.5
       parent: 2
       type: Transform
-    - nextSound: 2782.2203814
-      type: EmitSoundOnCollide
   - uid: 282
     components:
     - rot: 1.5707963267948966 rad
       pos: 5.5,-8.5
       parent: 2
       type: Transform
-    - nextSound: 3811.6990956
-      type: EmitSoundOnCollide
   - uid: 283
     components:
     - rot: 3.141592653589793 rad
       pos: 11.5,-18.5
       parent: 2
       type: Transform
-    - nextSound: 3432.5829122
-      type: EmitSoundOnCollide
   - uid: 284
     components:
     - rot: 1.5707963267948966 rad
       pos: 7.5,-18.5
       parent: 2
       type: Transform
-    - nextSound: 2897.885693
-      type: EmitSoundOnCollide
   - uid: 285
     components:
     - rot: 1.5707963267948966 rad
       pos: 7.5,-12.5
       parent: 2
       type: Transform
-    - nextSound: 2927.7827324
-      type: EmitSoundOnCollide
   - uid: 286
     components:
     - rot: 3.141592653589793 rad
       pos: 12.5,-8.5
       parent: 2
       type: Transform
-    - nextSound: 2951.2359978
-      type: EmitSoundOnCollide
 - proto: GasPort
   entities:
   - uid: 287
@@ -2832,8 +2664,6 @@ entities:
       pos: 12.5,-20.5
       parent: 2
       type: Transform
-    - nextSound: 888.1016216
-      type: EmitSoundOnCollide
 - proto: GasVentPump
   entities:
   - uid: 288
@@ -2843,8 +2673,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 2795.0326697
-      type: EmitSoundOnCollide
   - uid: 289
     components:
     - rot: -1.5707963267948966 rad
@@ -2853,8 +2681,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 2796.7162828
-      type: EmitSoundOnCollide
   - uid: 290
     components:
     - rot: 1.5707963267948966 rad
@@ -2863,8 +2689,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 698.8129273
-      type: EmitSoundOnCollide
   - uid: 291
     components:
     - rot: -1.5707963267948966 rad
@@ -2873,8 +2697,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 852.7424978
-      type: EmitSoundOnCollide
   - uid: 292
     components:
     - pos: 6.5,-7.5
@@ -2882,8 +2704,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 3591.9398823
-      type: EmitSoundOnCollide
   - uid: 293
     components:
     - rot: 3.141592653589793 rad
@@ -2892,8 +2712,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 675.905591
-      type: EmitSoundOnCollide
 - proto: GasVentScrubber
   entities:
   - uid: 294
@@ -2904,8 +2722,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 684.3802735
-      type: EmitSoundOnCollide
   - uid: 295
     components:
     - rot: -1.5707963267948966 rad
@@ -2914,8 +2730,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 701.9492997
-      type: EmitSoundOnCollide
   - uid: 296
     components:
     - rot: -1.5707963267948966 rad
@@ -2924,8 +2738,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 851.091997
-      type: EmitSoundOnCollide
   - uid: 297
     components:
     - pos: 12.5,-7.5
@@ -2933,8 +2745,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 3639.3711351
-      type: EmitSoundOnCollide
   - uid: 298
     components:
     - pos: 13.5,-11.5
@@ -2942,8 +2752,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 3618.7997382
-      type: EmitSoundOnCollide
 - proto: GeneratorUranium
   entities:
   - uid: 300
@@ -3218,8 +3026,6 @@ entities:
       pos: 11.6196575,-17.425388
       parent: 2
       type: Transform
-    - nextSound: 596.1093703
-      type: EmitSoundOnCollide
 - proto: InflatableWallStack
   entities:
   - uid: 343
@@ -3228,8 +3034,6 @@ entities:
       pos: 11.218833,-17.441013
       parent: 2
       type: Transform
-    - nextSound: 593.5400327
-      type: EmitSoundOnCollide
 - proto: LockerMedicineFilled
   entities:
   - uid: 344
@@ -3264,8 +3068,6 @@ entities:
       pos: 8.954886,-3.3356583
       parent: 2
       type: Transform
-    - nextSound: 610.1077468
-      type: EmitSoundOnCollide
 - proto: MedkitOxygenFilled
   entities:
   - uid: 348
@@ -3274,8 +3076,6 @@ entities:
       pos: 9.470511,-3.4919083
       parent: 2
       type: Transform
-    - nextSound: 612.4253881
-      type: EmitSoundOnCollide
 - proto: PlasmaReinforcedWindowDirectional
   entities:
   - uid: 349
@@ -3311,8 +3111,6 @@ entities:
       type: Transform
     - nextAttack: 5292.589895
       type: MeleeWeapon
-    - nextSound: 5292.7898951
-      type: EmitSoundOnCollide
 - proto: PortableScrubber
   entities:
   - uid: 354

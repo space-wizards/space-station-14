@@ -2125,6 +2125,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - Hamster
   - type: Respirator
     damage:
       types:
