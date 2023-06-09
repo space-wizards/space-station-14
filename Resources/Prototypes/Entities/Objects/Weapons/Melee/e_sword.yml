@@ -174,8 +174,8 @@
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 12
-            Heat: 12
+            Slash: 14
+            Heat: 14
             Structural: 6
             Blunt: -8.5
     litDisarmMalus: 0.6
