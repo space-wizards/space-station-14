@@ -13991,8 +13991,6 @@ entities:
       type: Transform
     - lastUseAttempt: 60.8172325
       type: NetworkConfigurator
-    - nextSound: 61.0172325
-      type: EmitSoundOnCollide
 - proto: Ointment
   entities:
   - uid: 2074

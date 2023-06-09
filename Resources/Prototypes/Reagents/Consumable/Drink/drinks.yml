@@ -111,6 +111,25 @@
         amount: 0.05
 
 - type: reagent
+  id: JuiceBerryPoison
+  name: reagent-name-juice-berry-poison
+  group: Drinks
+  desc: reagent-desc-juice-berry-poison
+  physicalDesc: reagent-physical-desc-sickly
+  flavor: bitter
+  color: "#6600CC"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+
+- type: reagent
   id: Lemonade
   name: reagent-name-lemonade
   group: Drinks

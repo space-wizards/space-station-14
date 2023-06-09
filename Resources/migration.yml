@@ -53,7 +53,24 @@ FoodCondimentBottleSmallHotsauce: FoodCondimentBottleHotsauce
 FoodBakedCookieFortune: FoodSnackCookieFortune
 GunSafeSubMachineGunVector: GunSafeSubMachineGunDrozd
 
+# 2023-05-29
+OrGate: null
+
 # 2023-05-31
 IHSVoidsuit: null
 ClothingHeadHelmetIHSVoidHelm: null
 ClothingHandsGlovesIhscombat: null
+
+# 2023-06-02
+# Yes, this is right. They were, in fact, reversed because the default orientation of the particle accelerator was _down_ relative to the screen.
+# This resulted in the parts being named assuming that the person building the accelerator treated it like a rocket with the particles coming out the _back_.
+# As this was confusing they were converted to nautical orientation with forward being towards the emitters.
+MachineParticleAcceleratorEmitterCenterCircuitboard: MachineParticleAcceleratorEmitterForeCircuitboard
+MachineParticleAcceleratorEmitterLeftCircuitboard: MachineParticleAcceleratorEmitterStarboardCircuitboard
+MachineParticleAcceleratorEmitterRightCircuitboard: MachineParticleAcceleratorEmitterPortCircuitboard
+ParticleAcceleratorEmitterCenter: ParticleAcceleratorEmitterFore
+ParticleAcceleratorEmitterCenterUnfinished: ParticleAcceleratorEmitterForeUnfinished
+ParticleAcceleratorEmitterLeft: ParticleAcceleratorEmitterStarboard
+ParticleAcceleratorEmitterLeftUnfinished: ParticleAcceleratorEmitterStarboardUnfinished
+ParticleAcceleratorEmitterRight: ParticleAcceleratorEmitterPort
+ParticleAcceleratorEmitterRightUnfinished: ParticleAcceleratorEmitterPortUnfinished

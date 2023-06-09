@@ -107,6 +107,27 @@
             Quantity: 10
 
 - type: entity
+  parent: BasePlushie
+  id: PlushieHampter
+  name: hampter plushie
+  description: A cute stuffed toy that resembles a hamster. Its face looks squished.
+  components:
+  - type: Sprite
+    state: plushie_hampter
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+
+- type: entity
   parent: PlushieBee
   id: PlushieRGBee
   name: RGBee plushie
@@ -987,3 +1008,160 @@
     tags:
     - ClownRecorder
 
+- type: entity
+  parent: BaseItem
+  id: ToyHammer
+  name: rubber hammer
+  description: A brightly colored hammer made of rubber.
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/rubber_hammer.rsi
+      layers:
+        - state: icon
+          shader: unshaded
+    - type: WeaponRandom
+      damageBonus:
+          types:
+              Blunt: 1000
+    - type: StaminaDamageOnHit
+      damage: 8
+    - type: Item
+      size: 5
+      sprite: Objects/Fun/rubber_hammer.rsi
+    - type: Appearance
+    - type: DisarmMalus
+      malus: 0
+    - type: MeleeWeapon
+      soundHit:
+        collection: RubberHammer
+        params:
+            variation: 0.03
+            volume: 3
+      soundNoDamage:
+        collection: RubberHammer
+        params:
+            variation: 0.03
+            volume: 3
+      damage:
+        types:
+          Blunt: 0
+
+- type: entity
+  parent: BaseItem
+  id: WhoopieCushion
+  name: whoopie cushion
+  description: A practical joke device involving flatulence humour.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/whoopie.rsi
+    state: icon
+    quickEquip: false
+  - type: ItemCooldown
+  - type: EmitSoundOnUse
+    sound:
+      collection: Parp
+      params:
+        variation: 0.125
+  - type: UseDelay
+    delay: 0.8
+  - type: Slippery
+    paralyzeTime: 0
+    slipSound:
+      collection: Parp
+      params:
+        variation: 0.125
+  - type: MeleeWeapon
+    soundHit:
+      collection: Parp
+      params:
+        variation: 0.125
+    damage:
+      types:
+        Blunt: 0
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 1
+  - type: TriggerOnStepTrigger
+  - type: Appearance
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+
+- type: entity
+  name: banana
+  parent: FoodProduceBase
+  id: PlasticBanana
+  description: A plastic banana.
+  suffix: Plastic
+  components:
+  - type: FlavorProfile
+    flavors:
+      - plastic
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nothing
+          Quantity: 100
+
+- type: entity
+  parent: FoodProduceBase
+  id: CrazyGlue
+  name: crazy glue
+  description:  A bottle of crazy glue manufactured by Honk! Co.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - glue
+  - type: Food
+    trash: CrazyGlueEmpty
+  - type: Sprite
+    sprite: Objects/Fun/glue.rsi
+    state: icon-0
+  - type: Appearance
+  - type: Glue
+  - type: Item
+    sprite: Objects/Fun/glue.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: SpaceGlue
+          Quantity: 6
+
+- type: entity
+  name: empty crazy glue
+  parent: BaseItem
+  id: CrazyGlueEmpty
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/glue.rsi
+    state: icon-1
+  - type: Item
+    sprite: Objects/Fun/glue.rsi
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+  - type: SpaceGarbage

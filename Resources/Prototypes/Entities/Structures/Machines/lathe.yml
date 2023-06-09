@@ -250,7 +250,7 @@
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
       - ClothingBackpackDuffelHolding
-      - WelderIndustrialAdvanced
+      - WelderExperimental
       - JawsOfLife
 
 - type: entity
@@ -320,6 +320,8 @@
       - HonkerCentralElectronics
       - HonkerPeripheralsElectronics
       - HonkerTargetingElectronics
+      - HamtrCentralElectronics
+      - HamtrPeripheralsElectronics
       - GeneratorPlasmaMachineCircuitboard
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
@@ -386,6 +388,12 @@
     - HonkerLLeg
     - HonkerRLeg
     - MechEquipmentHorn
+    - MechEquipmentGrabberSmall
+    - HamtrHarness
+    - HamtrLArm
+    - HamtrRArm
+    - HamtrLLeg
+    - HamtrRLeg
   - type: MaterialStorage
     whitelist:
       tags:

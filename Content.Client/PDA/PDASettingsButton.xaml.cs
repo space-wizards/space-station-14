@@ -42,7 +42,7 @@ public sealed partial class PDASettingsButton : ContainerButton
     {
         get => OptionName.FontColorOverride;
 
-            set
+        set
         {
             OptionName.FontColorOverride = value;
             OptionDescription.FontColorOverride = value;
