@@ -1,4 +1,4 @@
-﻿using Content.Server.Popups;
+using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech.Components;
@@ -40,7 +40,7 @@ public sealed class MechEquipmentSystem : EntitySystem
         if (mechComp.EquipmentContainer.ContainedEntities.Count >= mechComp.MaxEquipmentAmount)
             return;
 
-        if (mechComp.EquipmentWhitelist != null && !mechComp.EquipmentWhitelist.IsValid(uid))
+        if (mechComp.EquipmentWhitelist != null && !mechComp.EquipmentWhitelist.IsValid(args.Used))
             return;
 
         _popup.PopupEntity(Loc.GetString("mech-equipment-begin-install", ("item", uid)), mech);

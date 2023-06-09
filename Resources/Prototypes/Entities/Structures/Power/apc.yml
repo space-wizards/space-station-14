@@ -70,6 +70,9 @@
     voltage: Medium
   - type: PowerProvider
     voltage: Apc
+  - type: Breaker
+    # 100A at 240V - 24kW
+    limit: 24000
   - type: Apc
     voltage: Apc
   - type: ExtensionCableProvider
