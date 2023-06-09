@@ -57,3 +57,29 @@
           Off: { state: pai-off-overlay }
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
+
+- type: entity
+  parent: personalAI
+  id: SyndicatePersonalAI
+  name: syndicate ai device
+  description: Your electronic pal made by syndicate!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Fun/Spai.rsi
+    layers:
+    - state: Spai-base
+    - state: Spai-off-overlay
+      shader: unshaded
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: Appearance
+    visuals:
+      - type: GenericEnumVisualizer
+        key: enum.PAIVisuals.Status
+        layer: 1
+        states:
+          enum.PAIStatus.Off: Spai-off-overlay
+          enum.PAIStatus.Searching: Spai-searching-overlay
+          enum.PAIStatus.On: Spai-on-overlay
