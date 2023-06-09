@@ -378,6 +378,24 @@
     Glass: 900
     Bananium: 100
 
+- type: latheRecipe
+  id: HamtrCentralElectronics
+  result: HamtrCentralElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
+  id: HamtrPeripheralsElectronics
+  result: HamtrPeripheralsElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
 # Power
 - type: latheRecipe
   id: APCElectronics

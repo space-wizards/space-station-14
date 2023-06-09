@@ -283,3 +283,132 @@
     graph: Honker
     node: start
     defaultTarget: honker
+
+# H.A.M.T.R.
+
+- type: entity
+  id: BaseHamtrPart
+  parent: BaseMechPart
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Items
+    noRot: false
+    netsync: false
+    sprite: Objects/Specific/Mech/hamtr_construction.rsi
+
+- type: entity
+  id: BaseHamtrPartItem
+  parent: BaseHamtrPart
+  abstract: true
+  components:
+  - type: Item
+    size: 50
+
+- type: entity
+  parent: BaseHamtrPart
+  id: HamtrHarness
+  name: HAMTR harness
+  description: The core of the HAMTR.
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      hamtr_l_arm+o:
+        whitelist:
+          tags:
+          - HamtrLArm
+      hamtr_r_arm+o:
+        whitelist:
+          tags:
+          - HamtrRArm
+      hamtr_l_leg+o:
+        whitelist:
+          tags:
+          - HamtrLLeg
+      hamtr_r_leg+o:
+        whitelist:
+          tags:
+          - HamtrRLeg
+    sprite: Objects/Specific/Mech/hamtr_construction.rsi
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+  - type: MechAssembly
+    finishedPrototype: HamtrChassis
+    requiredParts:
+      HamtrLArm: false
+      HamtrRArm: false
+      HamtrLLeg: false
+      HamtrRLeg: false
+  - type: Sprite
+    state: hamtr_harness+o
+    noRot: true
+
+- type: entity
+  parent: BaseHamtrPartItem
+  id: HamtrLArm
+  name: HAMTR left arm
+  description: The left arm of the HAMTR. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: hamtr_l_arm
+  - type: Tag
+    tags:
+    - HamtrLArm
+
+- type: entity
+  parent: BaseHamtrPartItem
+  id: HamtrLLeg
+  name: HAMTR left leg
+  description: The left leg of the HAMTR. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: hamtr_l_leg
+  - type: Tag
+    tags:
+    - HamtrLLeg
+
+- type: entity
+  parent: BaseHamtrPartItem
+  id: HamtrRLeg
+  name: HAMTR right leg
+  description: The right leg of the HAMTR. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: hamtr_r_leg
+  - type: Tag
+    tags:
+    - HamtrRLeg
+
+- type: entity
+  parent: BaseHamtrPartItem
+  id: HamtrRArm
+  name: HAMTR right arm
+  description: The right arm of the HAMTR. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: hamtr_r_arm
+  - type: Tag
+    tags:
+    - HamtrRArm
+
+- type: entity
+  id: HamtrChassis
+  parent: BaseHamtrPart
+  name: HAMTR chassis
+  description: An in-progress construction of the HAMTR mech.
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: hamtr
+  - type: Sprite
+    noRot: true
+    state: hamtr0
+  - type: Construction
+    graph: Hamtr
+    node: start
+    defaultTarget: hamtr

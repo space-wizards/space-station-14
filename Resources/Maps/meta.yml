@@ -13487,8 +13487,6 @@ entities:
       type: Transform
     - nextAttack: 1374.3738653
       type: MeleeWeapon
-    - nextSound: 1374.5738653
-      type: EmitSoundOnCollide
   - uid: 16484
     components:
     - pos: -54.463097,-54.219025
@@ -13718,8 +13716,6 @@ entities:
     - pos: 7.5,48.5
       parent: 5350
       type: Transform
-    - nextSound: 628.1351528
-      type: EmitSoundOnCollide
 - proto: BedsheetIan
   entities:
   - uid: 2132
@@ -14592,8 +14588,6 @@ entities:
     - pos: -20.447704,-24.341528
       parent: 5350
       type: Transform
-    - nextSound: 2093.8614743
-      type: EmitSoundOnCollide
 - proto: BoxCardboard
   entities:
   - uid: 17303
@@ -14945,8 +14939,6 @@ entities:
     - pos: -14.519806,-23.287313
       parent: 5350
       type: Transform
-    - nextSound: 1384.6868007
-      type: EmitSoundOnCollide
 - proto: BoxShotgunIncendiary
   entities:
   - uid: 3116
@@ -14996,8 +14988,6 @@ entities:
     - pos: -14.978954,-22.357153
       parent: 5350
       type: Transform
-    - nextSound: 2123.2502699
-      type: EmitSoundOnCollide
   - uid: 16477
     components:
     - pos: -53.400597,-49.464725
@@ -75376,15 +75366,11 @@ entities:
     - pos: -15.538786,-28.297867
       parent: 5350
       type: Transform
-    - nextSound: 3848.7096444
-      type: EmitSoundOnCollide
   - uid: 24834
     components:
     - pos: -14.570036,-28.313492
       parent: 5350
       type: Transform
-    - nextSound: 3849.8777048
-      type: EmitSoundOnCollide
 - proto: chem_master
   entities:
   - uid: 15620
@@ -75428,8 +75414,6 @@ entities:
       type: Transform
     - nextAttack: 2104.5674098
       type: MeleeWeapon
-    - nextSound: 2104.7674099
-      type: EmitSoundOnCollide
   - uid: 14385
     components:
     - pos: -15.525829,-22.169653
@@ -75437,8 +75421,6 @@ entities:
       type: Transform
     - nextAttack: 2105.0638582
       type: MeleeWeapon
-    - nextSound: 2105.2638582
-      type: EmitSoundOnCollide
   - uid: 14857
     components:
     - pos: -15.400829,-22.419653
@@ -75446,8 +75428,6 @@ entities:
       type: Transform
     - nextAttack: 2107.2619066
       type: MeleeWeapon
-    - nextSound: 2107.4619066
-      type: EmitSoundOnCollide
   - uid: 14858
     components:
     - pos: -15.291454,-22.138403
@@ -75455,8 +75435,6 @@ entities:
       type: Transform
     - nextAttack: 2108.9662715
       type: MeleeWeapon
-    - nextSound: 2109.1662715
-      type: EmitSoundOnCollide
 - proto: ChemistryHotplate
   entities:
   - uid: 16075
@@ -79082,8 +79060,6 @@ entities:
     - pos: -6.641705,-35.38392
       parent: 5350
       type: Transform
-    - nextSound: 3591.6612488
-      type: EmitSoundOnCollide
 - proto: ClothingMaskGas
   entities:
   - uid: 1306
@@ -81826,8 +81802,6 @@ entities:
     - pos: 36.416473,8.580251
       parent: 5350
       type: Transform
-    - nextSound: 99.0619643
-      type: EmitSoundOnCollide
 - proto: CrewMonitoringServer
   entities:
   - uid: 26528
@@ -81842,8 +81816,6 @@ entities:
     - pos: 36.65085,8.408376
       parent: 5350
       type: Transform
-    - nextSound: 96.2223844
-      type: EmitSoundOnCollide
 - proto: Crowbar
   entities:
   - uid: 10811
@@ -81938,8 +81910,6 @@ entities:
       type: Transform
     - nextUpdate: 27.5632284
       type: PowerCellDraw
-    - nextSound: 27.7632284
-      type: EmitSoundOnCollide
   - uid: 18423
     components:
     - pos: -25.546011,-49.44246
@@ -81947,8 +81917,6 @@ entities:
       type: Transform
     - nextUpdate: 28.9164612
       type: PowerCellDraw
-    - nextSound: 29.1164612
-      type: EmitSoundOnCollide
 - proto: DefibrillatorCabinetFilled
   entities:
   - uid: 5343
@@ -82037,8 +82005,6 @@ entities:
       type: Transform
     - nextAttack: 3033.0467846
       type: MeleeWeapon
-    - nextSound: 3033.2467846
-      type: EmitSoundOnCollide
 - proto: DiceBag
   entities:
   - uid: 2761
@@ -88522,15 +88488,11 @@ entities:
     - pos: -16.332306,-26.537313
       parent: 5350
       type: Transform
-    - nextSound: 1371.519596
-      type: EmitSoundOnCollide
   - uid: 15955
     components:
     - pos: -16.41043,-26.443563
       parent: 5350
       type: Transform
-    - nextSound: 1371.24935
-      type: EmitSoundOnCollide
   - uid: 16482
     components:
     - pos: -54.41622,-54.48465
@@ -89020,15 +88982,11 @@ entities:
     - pos: -5.756453,-32.373886
       parent: 5350
       type: Transform
-    - nextSound: 3613.9261102
-      type: EmitSoundOnCollide
   - uid: 24647
     components:
     - pos: -5.490828,-32.63951
       parent: 5350
       type: Transform
-    - nextSound: 3614.5913902
-      type: EmitSoundOnCollide
 - proto: Emitter
   entities:
   - uid: 23610
@@ -92346,8 +92304,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 52.3237081
-      type: EmitSoundOnCollide
 - proto: GasMinerCarbonDioxide
   entities:
   - uid: 11596
@@ -93498,16 +93454,12 @@ entities:
       pos: -27.5,-27.5
       parent: 5350
       type: Transform
-    - nextSound: 62.4746905
-      type: EmitSoundOnCollide
   - uid: 10389
     components:
     - rot: -1.5707963267948966 rad
       pos: -25.5,-27.5
       parent: 5350
       type: Transform
-    - nextSound: 63.9590385
-      type: EmitSoundOnCollide
   - uid: 10661
     components:
     - pos: -35.5,34.5
@@ -93901,15 +93853,11 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 635.2541359
-      type: EmitSoundOnCollide
   - uid: 14293
     components:
     - pos: -25.5,-26.5
       parent: 5350
       type: Transform
-    - nextSound: 63.3084474
-      type: EmitSoundOnCollide
   - uid: 14355
     components:
     - rot: -1.5707963267948966 rad
@@ -93918,8 +93866,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 3179.2638913
-      type: EmitSoundOnCollide
   - uid: 14414
     components:
     - rot: -1.5707963267948966 rad
@@ -93928,8 +93874,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 3178.8134799
-      type: EmitSoundOnCollide
   - uid: 14617
     components:
     - rot: 3.141592653589793 rad
@@ -93997,8 +93941,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 3202.0457682
-      type: EmitSoundOnCollide
   - uid: 16357
     components:
     - rot: 1.5707963267948966 rad
@@ -94879,8 +94821,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 640.3680686
-      type: EmitSoundOnCollide
   - uid: 14471
     components:
     - pos: -1.5,-35.5
@@ -94888,8 +94828,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 3192.9561126
-      type: EmitSoundOnCollide
   - uid: 14606
     components:
     - pos: -28.5,-32.5
@@ -96617,8 +96555,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 3196.8125696
-      type: EmitSoundOnCollide
   - uid: 505
     components:
     - rot: 1.5707963267948966 rad
@@ -102843,8 +102779,6 @@ entities:
       type: AtmosPipeColor
     - enabled: True
       type: AmbientSound
-    - nextSound: 612.0310314
-      type: EmitSoundOnCollide
   - uid: 5743
     components:
     - pos: -18.5,-22.5
@@ -102852,8 +102786,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 616.1400618
-      type: EmitSoundOnCollide
   - uid: 5811
     components:
     - pos: -61.5,-10.5
@@ -103038,8 +102970,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 616.1400618
-      type: EmitSoundOnCollide
   - uid: 6516
     components:
     - pos: 0.5,48.5
@@ -111108,8 +111038,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 3196.8125696
-      type: EmitSoundOnCollide
   - uid: 14192
     components:
     - rot: -1.5707963267948966 rad
@@ -111118,8 +111046,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 631.5348866
-      type: EmitSoundOnCollide
   - uid: 14253
     components:
     - pos: -19.5,-25.5
@@ -111127,8 +111053,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 677.3387234
-      type: EmitSoundOnCollide
   - uid: 14257
     components:
     - rot: -1.5707963267948966 rad
@@ -111137,8 +111061,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 3198.3459635
-      type: EmitSoundOnCollide
   - uid: 14258
     components:
     - rot: -1.5707963267948966 rad
@@ -111147,8 +111069,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 3196.8125696
-      type: EmitSoundOnCollide
   - uid: 14347
     components:
     - pos: -16.5,-21.5
@@ -111158,8 +111078,6 @@ entities:
       type: AtmosPipeColor
     - enabled: True
       type: AmbientSound
-    - nextSound: 675.3889509
-      type: EmitSoundOnCollide
   - uid: 14372
     components:
     - rot: 1.5707963267948966 rad
@@ -111168,8 +111086,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 612.0310314
-      type: EmitSoundOnCollide
   - uid: 14373
     components:
     - rot: 1.5707963267948966 rad
@@ -111178,8 +111094,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 612.0310314
-      type: EmitSoundOnCollide
   - uid: 14374
     components:
     - pos: -21.5,-27.5
@@ -111187,8 +111101,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 614.1239326
-      type: EmitSoundOnCollide
   - uid: 14387
     components:
     - pos: -16.5,-20.5
@@ -111196,8 +111108,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 675.3889509
-      type: EmitSoundOnCollide
   - uid: 14395
     components:
     - rot: 1.5707963267948966 rad
@@ -111206,8 +111116,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 409.2915274
-      type: EmitSoundOnCollide
   - uid: 14404
     components:
     - rot: 1.5707963267948966 rad
@@ -111216,8 +111124,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 408.8245944
-      type: EmitSoundOnCollide
   - uid: 14418
     components:
     - rot: -1.5707963267948966 rad
@@ -111226,8 +111132,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 3196.8125696
-      type: EmitSoundOnCollide
   - uid: 14423
     components:
     - rot: 1.5707963267948966 rad
@@ -111236,8 +111140,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 612.0310314
-      type: EmitSoundOnCollide
   - uid: 14451
     components:
     - rot: 3.141592653589793 rad
@@ -111754,8 +111656,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 675.3889509
-      type: EmitSoundOnCollide
   - uid: 14625
     components:
     - pos: -18.5,-21.5
@@ -111765,8 +111665,6 @@ entities:
       type: AtmosPipeColor
     - enabled: True
       type: AmbientSound
-    - nextSound: 616.1400618
-      type: EmitSoundOnCollide
   - uid: 14627
     components:
     - pos: -21.5,-26.5
@@ -111774,8 +111672,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 614.1239326
-      type: EmitSoundOnCollide
   - uid: 14636
     components:
     - rot: 1.5707963267948966 rad
@@ -111784,8 +111680,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 683.870756
-      type: EmitSoundOnCollide
   - uid: 14643
     components:
     - rot: 1.5707963267948966 rad
@@ -111914,8 +111808,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 675.3889509
-      type: EmitSoundOnCollide
   - uid: 14671
     components:
     - pos: -21.5,-28.5
@@ -111925,8 +111817,6 @@ entities:
       type: AtmosPipeColor
     - enabled: True
       type: AmbientSound
-    - nextSound: 614.1239326
-      type: EmitSoundOnCollide
   - uid: 14672
     components:
     - rot: 1.5707963267948966 rad
@@ -111935,8 +111825,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 682.9731937
-      type: EmitSoundOnCollide
   - uid: 14676
     components:
     - rot: 1.5707963267948966 rad
@@ -112301,8 +112189,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 616.1400618
-      type: EmitSoundOnCollide
   - uid: 14796
     components:
     - rot: 1.5707963267948966 rad
@@ -112311,8 +112197,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 610.0532352
-      type: EmitSoundOnCollide
   - uid: 14799
     components:
     - rot: 3.141592653589793 rad
@@ -112321,8 +112205,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 609.4226598
-      type: EmitSoundOnCollide
   - uid: 14848
     components:
     - rot: -1.5707963267948966 rad
@@ -112331,8 +112213,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 631.2566316
-      type: EmitSoundOnCollide
   - uid: 14940
     components:
     - rot: 3.141592653589793 rad
@@ -113085,8 +112965,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 384.8237549
-      type: EmitSoundOnCollide
   - uid: 15656
     components:
     - rot: 1.5707963267948966 rad
@@ -113095,8 +112973,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 612.0310314
-      type: EmitSoundOnCollide
   - uid: 15673
     components:
     - rot: -1.5707963267948966 rad
@@ -113105,8 +112981,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 3198.3459635
-      type: EmitSoundOnCollide
   - uid: 16076
     components:
     - rot: -1.5707963267948966 rad
@@ -113115,8 +112989,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 3196.8125696
-      type: EmitSoundOnCollide
   - uid: 16116
     components:
     - pos: -19.5,-26.5
@@ -113124,8 +112996,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 676.9593747
-      type: EmitSoundOnCollide
   - uid: 16133
     components:
     - pos: -16.5,-19.5
@@ -113133,8 +113003,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 675.3889509
-      type: EmitSoundOnCollide
   - uid: 16359
     components:
     - rot: -1.5707963267948966 rad
@@ -113400,8 +113268,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 3198.3459635
-      type: EmitSoundOnCollide
   - uid: 16722
     components:
     - rot: 3.141592653589793 rad
@@ -114658,8 +114524,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 676.4559179
-      type: EmitSoundOnCollide
   - uid: 18973
     components:
     - rot: 1.5707963267948966 rad
@@ -115263,16 +115127,12 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 3198.9965569
-      type: EmitSoundOnCollide
   - uid: 20588
     components:
     - rot: 1.5707963267948966 rad
       pos: 11.5,-37.5
       parent: 5350
       type: Transform
-    - nextSound: 57.8095235
-      type: EmitSoundOnCollide
   - uid: 20637
     components:
     - pos: 3.5,-21.5
@@ -123044,8 +122904,6 @@ entities:
     - pos: -27.5,-26.5
       parent: 5350
       type: Transform
-    - nextSound: 59.9870155
-      type: EmitSoundOnCollide
   - uid: 14299
     components:
     - pos: -18.5,-20.5
@@ -123053,8 +122911,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 619.9404564
-      type: EmitSoundOnCollide
   - uid: 14300
     components:
     - rot: -1.5707963267948966 rad
@@ -123063,16 +122919,12 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 3194.2355657
-      type: EmitSoundOnCollide
   - uid: 14472
     components:
     - rot: 3.141592653589793 rad
       pos: -26.5,-26.5
       parent: 5350
       type: Transform
-    - nextSound: 56.9739351
-      type: EmitSoundOnCollide
   - uid: 14545
     components:
     - rot: 3.141592653589793 rad
@@ -123127,8 +122979,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 628.4020389
-      type: EmitSoundOnCollide
   - uid: 14594
     components:
     - rot: -1.5707963267948966 rad
@@ -123167,8 +123017,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 680.0391749
-      type: EmitSoundOnCollide
   - uid: 14630
     components:
     - pos: -12.5,-25.5
@@ -123176,8 +123024,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 606.6620432
-      type: EmitSoundOnCollide
   - uid: 14640
     components:
     - rot: 3.141592653589793 rad
@@ -123250,8 +123096,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 620.8352687
-      type: EmitSoundOnCollide
   - uid: 14883
     components:
     - pos: -27.5,-34.5
@@ -123572,8 +123416,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 681.190219
-      type: EmitSoundOnCollide
   - uid: 18967
     components:
     - rot: -1.5707963267948966 rad
@@ -126070,8 +125912,6 @@ entities:
       type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 691.8720776
-      type: EmitSoundOnCollide
   - uid: 14575
     components:
     - pos: -14.5,-28.5
@@ -126258,8 +126098,6 @@ entities:
       type: AmbientSound
     - color: '#0335FCFF'
       type: AtmosPipeColor
-    - nextSound: 3205.5125594
-      type: EmitSoundOnCollide
   - uid: 16393
     components:
     - pos: -42.5,-45.5
@@ -127988,8 +127826,6 @@ entities:
       type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 1677.9862642
-      type: EmitSoundOnCollide
   - uid: 14660
     components:
     - rot: -1.5707963267948966 rad
@@ -128069,8 +127905,6 @@ entities:
       type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 3207.7285738
-      type: EmitSoundOnCollide
   - uid: 15262
     components:
     - rot: 3.141592653589793 rad
@@ -128188,8 +128022,6 @@ entities:
       type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 688.6901338
-      type: EmitSoundOnCollide
   - uid: 16399
     components:
     - rot: 1.5707963267948966 rad
@@ -128598,8 +128430,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-    - nextSound: 61.2336348
-      type: EmitSoundOnCollide
 - proto: GasVolumePump
   entities:
   - uid: 10948
@@ -136246,8 +136076,6 @@ entities:
     - pos: -23.526802,-27.385204
       parent: 5350
       type: Transform
-    - nextSound: 1261.038068
-      type: EmitSoundOnCollide
   - uid: 16498
     components:
     - pos: -51.556847,-56.500275
@@ -137543,8 +137371,6 @@ entities:
       type: Transform
     - nextAttack: 1376.471092
       type: MeleeWeapon
-    - nextSound: 1376.671092
-      type: EmitSoundOnCollide
   - uid: 16481
     components:
     - pos: -54.57247,-49.0741
@@ -140916,8 +140742,6 @@ entities:
       type: Transform
     - nextAttack: 3595.5228284
       type: MeleeWeapon
-    - nextSound: 3595.7228284
-      type: EmitSoundOnCollide
 - proto: NuclearBomb
   entities:
   - uid: 1933
@@ -153114,8 +152938,6 @@ entities:
         - 24656
         - 24685
       type: DeviceLinkSource
-    - nextSound: 3462.6238852
-      type: EmitSoundOnCollide
 - proto: ResearchAndDevelopmentServer
   entities:
   - uid: 19540
@@ -159167,15 +158989,11 @@ entities:
     - pos: -23.50021,-26.435328
       parent: 5350
       type: Transform
-    - nextSound: 1265.5030081
-      type: EmitSoundOnCollide
   - uid: 14664
     components:
     - pos: -23.34396,-26.607203
       parent: 5350
       type: Transform
-    - nextSound: 1265.2407713
-      type: EmitSoundOnCollide
   - uid: 22264
     components:
     - pos: 8.169342,-38.333675
@@ -165534,8 +165352,6 @@ entities:
     - pos: -7.4760914,-35.418602
       parent: 5350
       type: Transform
-    - nextSound: 3430.7235268
-      type: EmitSoundOnCollide
 - proto: VehicleKeyJanicart
   entities:
   - uid: 9290
@@ -184417,8 +184233,6 @@ entities:
       type: Transform
     - nextFire: 647.0521771
       type: Gun
-    - nextSound: 647.2521771
-      type: EmitSoundOnCollide
 - proto: WeaponLaserCarbine
   entities:
   - uid: 24712
@@ -184445,8 +184259,6 @@ entities:
       type: Transform
     - nextFire: 641.3845071
       type: Gun
-    - nextSound: 641.5845071
-      type: EmitSoundOnCollide
 - proto: WeaponRevolverDeckard
   entities:
   - uid: 1942

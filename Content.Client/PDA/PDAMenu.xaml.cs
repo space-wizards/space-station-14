@@ -37,11 +37,11 @@ namespace Content.Client.PDA
 
             ViewContainer.OnChildAdded += control => control.Visible = false;
 
-            HomeButton.IconTexture = new SpriteSpecifier.Texture(new ("/Textures/Interface/home.png"));
-            FlashLightToggleButton.IconTexture = new SpriteSpecifier.Texture(new ("/Textures/Interface/light.png"));
-            EjectPenButton.IconTexture = new SpriteSpecifier.Texture(new ("/Textures/Interface/pencil.png"));
-            EjectIdButton.IconTexture = new SpriteSpecifier.Texture(new ("/Textures/Interface/eject.png"));
-            ProgramCloseButton.IconTexture = new SpriteSpecifier.Texture(new ("/Textures/Interface/Nano/cross.svg.png"));
+            HomeButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/home.png"));
+            FlashLightToggleButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/light.png"));
+            EjectPenButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/pencil.png"));
+            EjectIdButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/eject.png"));
+            ProgramCloseButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/Nano/cross.svg.png"));
 
 
             HomeButton.OnPressed += _ => ToHomeScreen();
@@ -102,8 +102,8 @@ namespace Content.Client.PDA
             if (state.PDAOwnerInfo.IdOwner != null || state.PDAOwnerInfo.JobTitle != null)
             {
                 IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
-                    ("owner",state.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
-                    ("jobTitle",state.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
+                    ("owner", state.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
+                    ("jobTitle", state.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
             }
             else
             {
@@ -111,7 +111,7 @@ namespace Content.Client.PDA
             }
 
             StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station",
-                ("station",state.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
+                ("station", state.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
 
             var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
 
@@ -263,7 +263,7 @@ namespace Content.Client.PDA
             _currentView = view;
         }
 
-        private BoxContainer CreateProgramListRow()
+        private static BoxContainer CreateProgramListRow()
         {
             return new BoxContainer()
             {

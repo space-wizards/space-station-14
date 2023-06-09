@@ -28,6 +28,24 @@
     contentMargin: 20.0, 20.0, 20.0, 20.0
 
 - type: entity
+  id: BookChemicalCompendium
+  parent: BaseItem
+  name: chemical compendium
+  description: A comprehensive guide written by some old skeleton of a professor about chemical synthesis.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_chemistry
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Chemicals
+
+- type: entity
   parent: BookBase
   id: BookRandom
   suffix: random

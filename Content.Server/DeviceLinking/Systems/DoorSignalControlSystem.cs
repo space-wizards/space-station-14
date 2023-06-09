@@ -65,21 +65,21 @@ namespace Content.Server.DeviceLinking.Systems
             }
             else if (args.Port == component.InBolt)
             {
-                if (state == SignalState.High)
+                if (!TryComp<DoorBoltComponent>(uid, out var bolts))
+                    return;
+
+                // if its a pulse toggle, otherwise set bolts to high/low
+                bool bolt;
+                if (state == SignalState.Momentary)
                 {
-                    if(TryComp<DoorBoltComponent>(uid, out var bolts))
-                        _bolts.SetBoltsWithAudio(uid, bolts, true);
-                }
-                else if (state == SignalState.Momentary)
-                {
-                    if (TryComp<DoorBoltComponent>(uid, out var bolts))
-                        _bolts.SetBoltsWithAudio(uid, bolts, newBolts: !bolts.BoltsDown);
+                    bolt = !bolts.BoltsDown;
                 }
                 else
                 {
-                    if(TryComp<DoorBoltComponent>(uid, out var bolts))
-                        _bolts.SetBoltsWithAudio(uid, bolts, false);
+                    bolt = state == SignalState.High;
                 }
+
+                _bolts.SetBoltsWithAudio(uid, bolts, bolt);
             }
         }
 

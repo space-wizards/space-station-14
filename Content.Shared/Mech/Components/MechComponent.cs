@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -92,6 +92,9 @@ public sealed class MechComponent : Component
     /// </summary>
     [DataField("equipmentWhitelist")]
     public EntityWhitelist? EquipmentWhitelist;
+
+    [DataField("pilotWhitelist")]
+    public EntityWhitelist? PilotWhitelist;
 
     /// <summary>
     /// A container for storing the equipment entities.

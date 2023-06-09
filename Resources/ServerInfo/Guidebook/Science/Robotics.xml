@@ -34,6 +34,7 @@
 <Box>
 <GuideEntityEmbed Entity="MechRipley" Caption="Ripley APLU"/>
 <GuideEntityEmbed Entity="MechHonker" Caption="H.O.N.K."/>
+<GuideEntityEmbed Entity="MechHamtr" Caption="HAMTR"/>
 </Box>
   [color=#a4885c]Мехи[/color] — это металлические громадины, предназначенные для выполнения различных задач в зависимости от модели. Они управляются игроками и для нуждаются и энергетических ячейках для работы.
 

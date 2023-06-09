@@ -29,7 +29,7 @@ public sealed partial class NPCCombatSystem
             var cdRemaining = weapon.NextAttack - _timing.CurTime;
 
             // If CD remaining then backup.
-            if (cdRemaining < TimeSpan.FromSeconds(1f / weapon.AttackRate) * 0.5f)
+            if (cdRemaining < TimeSpan.FromSeconds(1f / _melee.GetAttackRate(component.Weapon, uid, weapon)) * 0.5f)
                 return;
 
             if (!_physics.TryGetNearestPoints(uid, component.Target, out var pointA, out var pointB))

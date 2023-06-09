@@ -1,7 +1,54 @@
 # Last match in file takes precedence.
 
-# Ping for all PRs
-* @Morb0
+# Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short.
+# You need to add your name to these entries, not make a new one, if you care about them.
+/Content.*/Bql/ @moonheart08
+/Content.*/Administration/ @moonheart08 @PaulRitter @DrSmugleaf
+/Content.*/Station/ @moonheart08
+/Content.*/Maps/ @moonheart08
+/Content.*/GameTicking/ @moonheart08
+/Resources/Server\ Info/ @moonheart08
+/Resources/engineCommandPerms.yml @moonheart08
+/Resources/clientCommandPerms.yml @moonheart08
+/Resources/Prototypes/species.yml @moonheart08
+/Resources/Prototypes/Body/ @moonheart08 @mirrorcult @DrSmugleaf # suffering
+/Resources/Prototypes/Maps/ @moonheart08 @Emisse
+/Resources/Prototypes/Entities/Mobs/Player/ @moonheart08 @mirrorcult @DrSmugleaf
+/Resources/Prototypes/Entities/Mobs/Species/ @moonheart08 @mirrorcult @DrSmugleaf
 
-# Ping for all PRs that include translations/editing fluent strings
-*.ftl @ficcialfaint
+/Content.*/Body/ @mirrorcult @DrSmugleaf
+/Content.*/Chemistry/ @mirrorcult
+/Content.*/StatusEffect/ @mirrorcult
+/Content.*/Whitelist/ @mirrorcult
+/Resources/Prototypes/Reagents/ @mirrorcult
+/Resources/Prototypes/Recipes/Reactions @mirrorcult
+/Resources/Prototypes/Chemistry @mirrorcult
+
+/Content.*/Verbs/ @ElectroJr
+/Content.Client/ContextMenu/ @ElectroJr
+/Content.Shared/Damage/ @ElectroJr @DrSmugleaf
+/Content.Shared/Containers/ItemSlot/ @ElectroJr
+/Content.*/PowerCell/ @ElectroJr
+/Content.*/Doors/ @ElectroJr
+/Content.*/Interaction/ @ElectroJr
+/Content.*/Hands/ @ElectroJr
+/Content.*/Actions/ @ElectroJr
+/Content.*/Explosion/ @ElectroJr
+
+/Content.YAMLLinter @PaulRitter @DrSmugleaf
+/Content.*/Inventory @PaulRitter
+/Content.*/Arcade @PaulRitter
+/Content.*/Conveyor @PaulRitter
+/Content.*/Decals @PaulRitter
+/Content.*/Objectives @PaulRitter
+/Content.*/MachineLinking @PaulRitter
+/Content.*/Crayon @PaulRitter
+/Content.*/Clothing @PaulRitter
+
+# Be they Fluent translations or Freemarker templates, I know them both!
+*.ftl @RemieRichards
+
+# SKREEEE
+/Content.*.Database/ @PJB3005 @DrSmugleaf
+/Pow3r/ @PJB3005
+/Content.Server/Power/Pow3r/ @PJB3005

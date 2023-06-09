@@ -48,9 +48,9 @@
 </Box>
 
 <Box>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft" Caption="Emitter L"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter" Caption="Emitter C"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight" Caption="Emitter R"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterStarboard" Caption="Starboard Emitter"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterFore" Caption="Fore Emitter"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterPort" Caption="Port Emitter"/>
 </Box>
 
 Ускоритель частиц (УЧ) - это мультиблоковое устройство, запускающее ускоренные частицы из своих излучателей. Излучатели всегда должны быть обращены к генератору гравитационной сингулярности.

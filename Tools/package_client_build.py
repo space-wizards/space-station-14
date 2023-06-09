@@ -45,6 +45,7 @@ CLIENT_IGNORED_RESOURCES = {
 }
 
 CLIENT_CONTENT_ASSEMBLIES = [
+    # IF YOU ADD SOMETHING HERE, ADD IT TO MANIFEST.YML TOO.
     "Content.Client",
     "Content.Shared",
     "Content.Shared.Database"

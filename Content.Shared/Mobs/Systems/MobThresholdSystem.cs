@@ -291,6 +291,7 @@ public sealed class MobThresholdSystem : EntitySystem
             return;
         component.AllowRevives = val;
         Dirty(component);
+        VerifyThresholds(uid, component);
     }
 
     #endregion
