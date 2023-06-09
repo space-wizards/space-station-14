@@ -57,6 +57,12 @@ namespace Content.Client.UserInterface.Controls
             }
         }
 
+        public Color? ForegroundModulate
+        {
+            get => ForegroundContainer.ModulateSelfOverride;
+            set => ForegroundContainer.ModulateSelfOverride = value;
+        }
+
         private void recalculateStyleBox()
         {
             if (_foregroundImagePath == null)
