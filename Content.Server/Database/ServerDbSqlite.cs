@@ -312,8 +312,9 @@ namespace Content.Server.Database
                 uid,
                 ban.Address,
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
-                ban.BanTime,
-                ban.ExpirationTime,
+                // SQLite apparently always reads DateTime as unspecified, but we always write as UTC.
+                DateTime.SpecifyKind(ban.BanTime, DateTimeKind.Utc),
+                ban.ExpirationTime == null ? null : DateTime.SpecifyKind(ban.ExpirationTime.Value, DateTimeKind.Utc),
                 ban.Reason,
                 aUid,
                 unban,
@@ -336,7 +337,8 @@ namespace Content.Server.Database
             return new ServerRoleUnbanDef(
                 unban.Id,
                 aUid,
-                unban.UnbanTime);
+                // SQLite apparently always reads DateTime as unspecified, but we always write as UTC.
+                DateTime.SpecifyKind(unban.UnbanTime, DateTimeKind.Utc));
         }
         #endregion
 
@@ -377,8 +379,9 @@ namespace Content.Server.Database
                 uid,
                 ban.Address,
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
-                ban.BanTime,
-                ban.ExpirationTime,
+                // SQLite apparently always reads DateTime as unspecified, but we always write as UTC.
+                DateTime.SpecifyKind(ban.BanTime, DateTimeKind.Utc),
+                ban.ExpirationTime == null ? null : DateTime.SpecifyKind(ban.ExpirationTime.Value, DateTimeKind.Utc),
                 ban.Reason,
                 aUid,
                 unban);
@@ -400,7 +403,8 @@ namespace Content.Server.Database
             return new ServerUnbanDef(
                 unban.Id,
                 aUid,
-                unban.UnbanTime);
+                // SQLite apparently always reads DateTime as unspecified, but we always write as UTC.
+                DateTime.SpecifyKind(unban.UnbanTime, DateTimeKind.Utc));
         }
 
         public override async Task<int>  AddConnectionLogAsync(

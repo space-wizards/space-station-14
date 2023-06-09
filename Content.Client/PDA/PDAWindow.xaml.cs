@@ -22,7 +22,7 @@ public partial class PDAWindow : BaseWindow
 
         set
         {
-            AccentH.ModulateSelfOverride = Color. FromHex(value, Color.White);
+            AccentH.ModulateSelfOverride = Color.FromHex(value, Color.White);
             AccentH.Visible = value != null;
         }
     }
@@ -33,7 +33,7 @@ public partial class PDAWindow : BaseWindow
 
         set
         {
-            AccentV.ModulateSelfOverride = Color. FromHex(value, Color.White);
+            AccentV.ModulateSelfOverride = Color.FromHex(value, Color.White);
             AccentV.Visible = value != null;
         }
     }

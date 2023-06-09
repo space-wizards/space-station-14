@@ -1,0 +1,26 @@
+﻿- type: constructionGraph
+  id: LogicGate
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: logic_gate
+      steps:
+      - material: Steel
+        amount: 3
+        doAfter: 1
+      - material: Cable
+        amount: 2
+        doAfter: 1
+    - to: edge_detector
+      steps:
+      - material: Steel
+        amount: 3
+        doAfter: 1
+      - material: Cable
+        amount: 2
+        doAfter: 1
+  - node: logic_gate
+    entity: LogicGate
+  - node: edge_detector
+    entity: EdgeDetector
