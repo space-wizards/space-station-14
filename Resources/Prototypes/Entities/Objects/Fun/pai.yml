@@ -59,7 +59,7 @@
           On: { state: pai-on-overlay }
 
 - type: entity
-  parent: personalAI
+  parent: PersonalAI
   id: SyndicatePersonalAI
   name: syndicate ai device
   description: Your electronic pal made by syndicate!
