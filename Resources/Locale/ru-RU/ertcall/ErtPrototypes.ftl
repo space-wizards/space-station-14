@@ -1,24 +1,24 @@
 ent-ERTLeaderPreset = Лидер ОБР
-    .desc = Он лидирует
+    .desc = Лидер отряда ОБР
     .suffix = ERTCALL
 
 ent-ERTMedicPreset = Медик ОБР
-    .desc = Он лечит
+    .desc = Медик отряда ОБР
     .suffix = ERTCALL
 
 ent-ERTSecurityPreset = Боец ОБР
-    .desc = Он атакует
+    .desc = Боец отряда ОБР
     .suffix = ERTCALL
 
 ent-ERTEngineerPreset = Инженер ОБР
-    .desc = Он чинит
+    .desc = Инженер отряда ОБР
     .suffix = ERTCALL
 
 ent-ERTJunitorPreset = Уборщик ОБР
-    .desc = Он убирает
+    .desc = Уборщик отряда ОБР
     .suffix = ERTCALL
 
 ent-CBURNPreset = РХБЗЗ
-    .desc = Он ликвидирует
+    .desc = Разбирается с особыми проблемами
     .suffix = ERTCALL
 
