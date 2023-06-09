@@ -26,6 +26,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskerComponent, GotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OnSetName);
         // SubscribeLocalEvent<VoiceMaskerComponent, GetVerbsEvent<AlternativeVerb>>(GetVerbs);
+        InitializeTTS(); // Corvax-TTS
     }
 
     private void OnSetName(VoiceMaskSetNameEvent ev)
@@ -86,7 +87,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
             return;
         }
 
-        _uiSystem.GetUiOrNull(owner, VoiceMaskUIKey.Key)?.SetState(new VoiceMaskBuiState(component.VoiceName));
+        _uiSystem.GetUiOrNull(owner, VoiceMaskUIKey.Key)?.SetState(new VoiceMaskBuiState(component.VoiceName, component.VoiceId)); // Corvax-TTS
     }
 }
 
