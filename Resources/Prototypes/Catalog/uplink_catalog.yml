@@ -210,12 +210,12 @@
   categories:
   - UplinkAmmo
 
-# For the mosin and AKMS
+# For the mosin
 - type: listing
-  id: UplinkMagazineRifle
-  name: uplink-rifle-ammo-name
-  description: uplink-rifle-ammo-desc
-  productEntity: MagazineRifle
+  id: UplinkMosinAmmo
+  name: uplink-mosin-ammo-name
+  description: uplink-mosin-ammo-desc
+  productEntity: BoxMagazineLightRifle
   cost:
     Telecrystal: 1
   categories:
