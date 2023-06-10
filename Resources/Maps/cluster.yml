@@ -8360,15 +8360,11 @@ entities:
     - pos: 13.624326,-23.294518
       parent: 1
       type: Transform
-    - nextSound: 82.5513579
-      type: EmitSoundOnCollide
   - uid: 7305
     components:
     - pos: 13.389951,-23.325768
       parent: 1
       type: Transform
-    - nextSound: 83.5003739
-      type: EmitSoundOnCollide
   - uid: 7401
     components:
     - pos: 5.547744,-21.14656
@@ -8525,8 +8521,6 @@ entities:
     - pos: -22.431108,11.63326
       parent: 1
       type: Transform
-    - nextSound: 10.3167538
-      type: EmitSoundOnCollide
 - proto: BoxSyringe
   entities:
   - uid: 5919
@@ -40109,15 +40103,11 @@ entities:
     - pos: -22.134233,11.75826
       parent: 1
       type: Transform
-    - nextSound: 13.4897019
-      type: EmitSoundOnCollide
   - uid: 7681
     components:
     - pos: -22.212358,11.492635
       parent: 1
       type: Transform
-    - nextSound: 14.5347566
-      type: EmitSoundOnCollide
 - proto: EmergencyRollerBed
   entities:
   - uid: 5862
@@ -65177,8 +65167,6 @@ entities:
       type: Transform
     - lastUseAttempt: 436.1594336
       type: NetworkConfigurator
-    - nextSound: 436.3594336
-      type: EmitSoundOnCollide
 - proto: NitrogenCanister
   entities:
   - uid: 6803
@@ -65857,22 +65845,16 @@ entities:
     - pos: 13.624326,-23.419518
       parent: 1
       type: Transform
-    - nextSound: 85.35635
-      type: EmitSoundOnCollide
   - uid: 7394
     components:
     - pos: 13.561826,-23.419518
       parent: 1
       type: Transform
-    - nextSound: 85.7753503
-      type: EmitSoundOnCollide
   - uid: 7396
     components:
     - pos: 13.499326,-23.419518
       parent: 1
       type: Transform
-    - nextSound: 86.1964001
-      type: EmitSoundOnCollide
   - uid: 7406
     components:
     - pos: 5.516494,-21.287186

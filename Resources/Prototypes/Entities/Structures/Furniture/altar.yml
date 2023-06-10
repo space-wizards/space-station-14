@@ -7,7 +7,6 @@
   components:
   - type: Anchorable
   - type: Transform
-    noRot: true
   - type: Prayable
   - type: Damageable
     damageContainer: Inorganic
@@ -25,7 +24,6 @@
         layer:
         - TableLayer
   - type: Sprite
-    netsync: false
     snapCardinals: true
   - type: Climbable
   - type: Clickable

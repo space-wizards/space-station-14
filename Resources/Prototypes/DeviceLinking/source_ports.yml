@@ -37,7 +37,8 @@
 - type: sourcePort
   id: DoorStatus
   name: signal-port-name-doorstatus
-  description: signal-port-description-status
+  description: signal-port-description-doorstatus
+  defaultLinks: [ DoorBolt ]
 
 - type: sourcePort
   id: OrderSender
@@ -74,11 +75,16 @@
   defaultLinks: [ Close, Off ]
 
 - type: sourcePort
-  id: O1
-  name: "Output 1"
-  description: "Output 1"
+  id: Output
+  name: signal-port-name-logic-output
+  description: signal-port-description-logic-output
 
 - type: sourcePort
-  id: O2
-  name: "Output 2"
-  description: "Output 2"
+  id: OutputHigh
+  name: signal-port-name-logic-output-high
+  description: signal-port-description-logic-output-high
+
+- type: sourcePort
+  id: OutputLow
+  name: signal-port-name-logic-output-low
+  description: signal-port-description-logic-output-low
