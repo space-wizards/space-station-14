@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
-    netsync: false
     layers:
     - state: book0
       map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -26,6 +25,24 @@
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
     backgroundPatchMargin: 23.0, 16.0, 14.0, 15.0
     contentMargin: 20.0, 20.0, 20.0, 20.0
+
+- type: entity
+  id: BookChemicalCompendium
+  parent: BaseItem
+  name: chemical compendium
+  description: A comprehensive guide written by some old skeleton of a professor about chemical synthesis.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_chemistry
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Chemicals
 
 - type: entity
   parent: BookBase

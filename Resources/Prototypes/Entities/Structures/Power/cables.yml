@@ -15,7 +15,6 @@
     bodyType: Static
     canCollide: false
   - type: Sprite
-    netsync: false
     drawdepth: ThinWire
     visible: false
   - type: Damageable
