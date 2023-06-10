@@ -39,8 +39,6 @@ namespace Content.Server.Glue
                 return;
             }
 
-
-
             if (HasComp<ItemComponent>(target))
             {
                 _audio.PlayPvs(component.Squeeze, uid);
