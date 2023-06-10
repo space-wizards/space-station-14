@@ -671,7 +671,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (button.Action == null)
             {
                 var ev = new FillActionSlotEvent();
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, ev);
+                EntityManager.EventBus.RaiseEvent(EventSource.Local, ev);
                 if (ev.Action != null)
                     SetAction(button, ev.Action);
             }
