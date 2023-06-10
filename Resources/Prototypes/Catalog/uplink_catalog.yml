@@ -32,7 +32,7 @@
   categories:
   - UplinkWeapons
 
-# Poor accuracy, slow to fire, cheap option
+# Poor accuracy, slow to fire, cheap option.
 - type: listing
   id: UplinkRifleMosin
   name: uplink-rifle-mosin-name
@@ -210,12 +210,12 @@
   categories:
   - UplinkAmmo
 
-# For the mosin
+# For the mosin and AKMS
 - type: listing
-  id: UplinkMosinAmmo
-  name: uplink-mosin-ammo-name
-  description: uplink-mosin-ammo-desc
-  productEntity: BoxMagazineLightRifle
+  id: UplinkMagazineRifle
+  name: uplink-rifle-ammo-name
+  description: uplink-rifle-ammo-desc
+  productEntity: MagazineRifle
   cost:
     Telecrystal: 1
   categories:
