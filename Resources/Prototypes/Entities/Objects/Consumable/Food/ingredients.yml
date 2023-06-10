@@ -10,7 +10,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Food/ingredients.rsi
   - type: SolutionContainerManager
     solutions:
@@ -328,7 +327,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/ingredients.rsi
-    netsync: false
   - type: Food
   - type: SolutionContainerManager
     solutions:
@@ -572,3 +570,6 @@
           Quantity: 2
         - ReagentId: Toxin
           Quantity: 3
+  - type: Tag
+    tags:
+    - Trash

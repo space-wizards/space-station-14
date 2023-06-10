@@ -197,11 +197,23 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             case SalvageMissionType.Destruction:
                 await SetupStructure(mission, dungeon, mapUid, grid, random);
                 break;
+            case SalvageMissionType.Elimination:
+                await SetupElimination(mission, dungeon, mapUid, grid, random);
+                break;
             default:
                 throw new NotImplementedException();
         }
 
         // Handle loot
+        // We'll always add this loot if possible
+        foreach (var lootProto in _prototypeManager.EnumeratePrototypes<SalvageLootPrototype>())
+        {
+            if (!lootProto.Guaranteed)
+                continue;
+
+            await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
+        }
+
         foreach (var (loot, count) in mission.Loot)
         {
             for (var i = 0; i < count; i++)
@@ -337,9 +349,34 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         }
     }
 
-    private async Task SpawnMobsRandomRooms(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random)
+    private async Task SetupElimination(
+        SalvageMission mission,
+        Dungeon dungeon,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Random random)
     {
-        var groupSpawns = _salvage.GetSpawnCount(mission.Difficulty);
+        // spawn megafauna in a random place
+        var roomIndex = random.Next(dungeon.Rooms.Count);
+        var room = dungeon.Rooms[roomIndex];
+        var tile = room.Tiles.ElementAt(random.Next(room.Tiles.Count));
+        var position = grid.GridTileToLocal(tile);
+
+        var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
+        var prototype = faction.Configs["Megafauna"];
+        var uid = _entManager.SpawnEntity(prototype, position);
+        // not removing ghost role since its 1 megafauna, expect that you won't be able to cheese it.
+        var eliminationComp = _entManager.EnsureComponent<SalvageEliminationExpeditionComponent>(gridUid);
+        eliminationComp.Megafauna.Add(uid);
+
+        // spawn less mobs than usual since there's megafauna to deal with too
+        await SpawnMobsRandomRooms(mission, dungeon, faction, grid, random, 0.5f);
+    }
+
+    private async Task SpawnMobsRandomRooms(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random, float scale = 1f)
+    {
+        // scale affects how many groups are spawned, not the size of the groups themselves
+        var groupSpawns = _salvage.GetSpawnCount(mission.Difficulty) * scale;
         var groupSum = faction.MobGroups.Sum(o => o.Prob);
 
         for (var i = 0; i < groupSpawns; i++)

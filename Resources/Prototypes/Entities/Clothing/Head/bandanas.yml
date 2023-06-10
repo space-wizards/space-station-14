@@ -97,3 +97,13 @@
   - type: Clothing
     sprite: Clothing/Head/Bandanas/merc.rsi
 
+- type: entity
+  parent: ClothingHeadBaseButcherable
+  id: HatBandBrown
+  name: brown bandana
+  description: A brown bandana to make you look cool.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Bandanas/brown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Bandanas/brown.rsi

@@ -35,5 +35,5 @@ public sealed class PDAShowMusicMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage
 {
-    public PDARequestUpdateInterfaceMessage()  { }
+    public PDARequestUpdateInterfaceMessage() { }
 }

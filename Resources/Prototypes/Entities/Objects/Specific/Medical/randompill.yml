@@ -50,7 +50,6 @@
     quantity: 20
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills.rsi
-    netsync: false
     layers:
     - state: pill1
       map: [ "enum.DamageStateVisualLayers.Base" ]
