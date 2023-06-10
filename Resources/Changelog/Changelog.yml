@@ -1,9 +1,4 @@
 Entries:
-- author: qtqt
-  changes:
-  - {message: Added song for salvage at the 2 minute timer (for expeditions)., type: Add}
-  id: 3478
-  time: '2023-04-21T05:06:35.0000000+00:00'
 - author: emisse
   changes:
   - {message: Added a shuttle for salvage., type: Add}
@@ -2909,3 +2904,9 @@ Entries:
   - {message: Fix cargo pallet collision when anchored., type: Fix}
   id: 3977
   time: '2023-06-10T09:43:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Paused entities will no longer show as ghost roles (no more taking xeno
+      / dragon on expeditions and waiting for the crew to arrive)., type: Tweak}
+  id: 3978
+  time: '2023-06-10T12:24:35.0000000+00:00'
