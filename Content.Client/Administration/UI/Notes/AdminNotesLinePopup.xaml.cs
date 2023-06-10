@@ -14,6 +14,8 @@ public sealed partial class AdminNotesLinePopup : Popup
     public event Action<int, NoteType>? OnEditPressed;
     public event Action<int, NoteType>? OnDeletePressed;
 
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+
     public AdminNotesLinePopup(SharedAdminNote note, string playerName, bool showDelete, bool showEdit)
     {
         RobustXamlLoader.Load(this);
@@ -52,7 +54,7 @@ public sealed partial class AdminNotesLinePopup : Popup
 
     private int NoteId { get; }
     private NoteType NoteType { get; }
-    private double? LastDeletePressedSeconds { get; set; }
+    private TimeSpan? DeleteResetOn { get; set; }
 
     private void EditPressed(ButtonEventArgs args)
     {
@@ -62,9 +64,9 @@ public sealed partial class AdminNotesLinePopup : Popup
 
     private void DeletePressed(ButtonEventArgs args)
     {
-        if (LastDeletePressedSeconds is null)
+        if (DeleteResetOn is null)
         {
-            LastDeletePressedSeconds = 0;
+            DeleteResetOn = _gameTiming.CurTime.Add(TimeSpan.FromSeconds(3));
             DeleteButton.Text = Loc.GetString("admin-notes-delete-confirm");
             DeleteButton.ModulateSelfOverride = Color.Red;
             return;
@@ -78,11 +80,11 @@ public sealed partial class AdminNotesLinePopup : Popup
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-        LastDeletePressedSeconds += args.DeltaSeconds;
-        if (LastDeletePressedSeconds > 3)
+        // This checks for null for free, do not invert it as null always produces a false value
+        if (DeleteResetOn < _gameTiming.CurTime)
         {
             ResetDeleteButton();
-            LastDeletePressedSeconds = null;
+            DeleteResetOn = null;
         }
     }
 

@@ -13,6 +13,7 @@ namespace Content.Client.Administration.UI.Notes;
 [GenerateTypedNameReferences]
 public sealed partial class NoteEdit : FancyWindow
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IClientConsoleHost _console = default!;
 
     public event Action<int, NoteType, string, NoteSeverity?, bool, DateTime?>? SubmitPressed;
@@ -90,7 +91,7 @@ public sealed partial class NoteEdit : FancyWindow
     private NoteType NoteType { get; set; }
     private NoteSeverity? NoteSeverity { get; set; } = Shared.Database.NoteSeverity.None;
     private DateTime? ExpiryTime { get; set; }
-    private double? LastDeletePressedSeconds { get; set; }
+    private TimeSpan? DeleteResetOn { get; set; }
 
     private void OnTypeChanged(OptionButton.ItemSelectedEventArgs args)
     {
@@ -160,9 +161,9 @@ public sealed partial class NoteEdit : FancyWindow
     {
         if (!ParseExpiryTime())
             return;
-        if (LastDeletePressedSeconds is null)
+        if (DeleteResetOn is null)
         {
-            LastDeletePressedSeconds = 0;
+            DeleteResetOn = _gameTiming.CurTime.Add(TimeSpan.FromSeconds(3));
             SubmitButton.Text = Loc.GetString("admin-note-editor-submit-confirm");
             SubmitButton.ModulateSelfOverride = Color.Red;
             // Task.Delay(3000).ContinueWith(_ => ResetSubmitButton()); // TODO: fix
@@ -183,11 +184,11 @@ public sealed partial class NoteEdit : FancyWindow
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-        LastDeletePressedSeconds += args.DeltaSeconds;
-        if (LastDeletePressedSeconds > 3)
+        // This checks for null for free, do not invert it as null always produces a false value
+        if (DeleteResetOn > _gameTiming.CurTime)
         {
             ResetSubmitButton();
-            LastDeletePressedSeconds = null;
+            DeleteResetOn = null;
         }
     }
 

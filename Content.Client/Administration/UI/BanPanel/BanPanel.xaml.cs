@@ -1,5 +1,7 @@
 using System.Globalization;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Stylesheets;
@@ -21,26 +23,23 @@ namespace Content.Client.Administration.UI.BanPanel;
 [GenerateTypedNameReferences]
 public sealed partial class BanPanel : DefaultWindow
 {
-    public event Action<string?, string?, bool, byte[]?, bool, uint, string, NoteSeverity, string[]?>? BanSubmitted;
+    public event Action<string?, (IPAddress, int)?, bool, byte[]?, bool, uint, string, NoteSeverity, string[]?>? BanSubmitted;
     public event Action<string>? PlayerChanged;
     private string? PlayerUsername { get; set; }
-    private string? IpAddress { get; set; }
+    private (IPAddress, int)? IpAddress { get; set; }
     private byte[]? Hwid { get; set; }
     private double TimeEntered { get; set; }
     private uint Multiplier { get; set; }
     private bool HasBanFlag { get; set; }
-    private double? LastButtonReset { get; set; }
+    private TimeSpan? ButtonResetOn { get; set; }
     // This is less efficient than just holding a reference to the root control and enumerating children, but you
     // have to know how the controls are nested, which makes the code more complicated.
     private readonly List<CheckBox> _roleCheckboxes = new();
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("GeneratedRegex", "SYSLIB1045:Convert to 'GeneratedRegexAttribute'.", Justification = "Sandbox violation")]
-    private static readonly Regex IPRegex = new(
-        pattern: @"((^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\s*$)|(^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$))",
-        options: RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("GeneratedRegex", "SYSLIB1045:Convert to 'GeneratedRegexAttribute'.", Justification = "Sandbox violation")]
     private static readonly Regex HwidRegex = new(@"^[0-9a-f]{64}$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private enum TabNumbers
     {
@@ -297,8 +296,7 @@ public sealed partial class BanPanel : DefaultWindow
 
     private void OnIpChanged()
     {
-        IpAddress = IpLine.Text;
-        if (LastConnCheckbox.Pressed && string.IsNullOrEmpty(IpAddress) || !IpCheckbox.Pressed)
+        if (LastConnCheckbox.Pressed && IpAddress is null || !IpCheckbox.Pressed)
         {
             IpAddress = null;
             ErrorLevel &= ~ErrorLevelEnum.IpAddress;
@@ -315,8 +313,7 @@ public sealed partial class BanPanel : DefaultWindow
             hid = split[1];
         }
 
-        // IPAddress.TryParse is considered a sandbox violation :[
-        if (!IPRegex.IsMatch(ip) || !uint.TryParse(hid, out var hidInt) || hidInt > 128 || hidInt > 32 && !ip.Contains(':'))
+        if (!IPAddress.TryParse(ip, out var parsedIp) || !byte.TryParse(hid, out var hidInt) || hidInt > 128 || hidInt > 32 && parsedIp.AddressFamily == AddressFamily.InterNetwork)
         {
             ErrorLevel |= ErrorLevelEnum.IpAddress;
             IpLine.ModulateSelfOverride = Color.Red;
@@ -324,6 +321,9 @@ public sealed partial class BanPanel : DefaultWindow
             return;
         }
 
+        if (hidInt == 0)
+            hidInt = (byte) (parsedIp.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32);
+        IpAddress = (parsedIp, hidInt);
         ErrorLevel &= ~ErrorLevelEnum.IpAddress;
         IpLine.ModulateSelfOverride = null;
         UpdateSubmitEnabled();
@@ -332,7 +332,7 @@ public sealed partial class BanPanel : DefaultWindow
     private void OnHwidChanged()
     {
         var hwidString = HwidLine.Text;
-        if (HwidCheckbox.Pressed && !(string.IsNullOrEmpty(hwidString) && LastConnCheckbox.Pressed) && !HwidRegex.IsMatch(hwidString) )
+        if (HwidCheckbox.Pressed && !(string.IsNullOrEmpty(hwidString) && LastConnCheckbox.Pressed) && !HwidRegex.IsMatch(hwidString))
         {
             ErrorLevel |= ErrorLevelEnum.Hwid;
             HwidLine.ModulateSelfOverride = Color.Red;
@@ -349,9 +349,7 @@ public sealed partial class BanPanel : DefaultWindow
             Hwid = null;
             return;
         }
-        Hwid = Enumerable.Range(0, hwidString.Length / 2)
-            .Select(x => byte.Parse(hwidString.Substring(x * 2, 2), NumberStyles.HexNumber))
-            .ToArray();
+        Hwid = Convert.FromHexString(hwidString);
     }
 
     private void OnTypeChanged()
@@ -431,9 +429,9 @@ public sealed partial class BanPanel : DefaultWindow
             return;
         }
 
-        if (LastButtonReset is null)
+        if (ButtonResetOn is null)
         {
-            LastButtonReset = 0;
+            ButtonResetOn = _gameTiming.CurTime.Add(TimeSpan.FromSeconds(3));
             SubmitButton.ModulateSelfOverride = Color.Red;
             SubmitButton.Text = Loc.GetString("ban-panel-confirm");
             return;
@@ -450,14 +448,12 @@ public sealed partial class BanPanel : DefaultWindow
     {
         base.FrameUpdate(args);
 
-        if (LastButtonReset is null)
-            return;
-
-        LastButtonReset += args.DeltaSeconds;
-        if (LastButtonReset < 3)
-            return;
-        LastButtonReset = null;
-        SubmitButton.ModulateSelfOverride = null;
-        SubmitButton.Text = Loc.GetString("ban-panel-submit");
+        // This checks for null for free, do not invert it as null always produces a false value
+        if (_gameTiming.CurTime > ButtonResetOn)
+        {
+            ButtonResetOn = null;
+            SubmitButton.ModulateSelfOverride = null;
+            SubmitButton.Text = Loc.GetString("ban-panel-submit");
+        }
     }
 }
