@@ -511,6 +511,14 @@ namespace Content.Client.Stylesheets
             };
             raiseHighlightStyleBox.SetPatchMargin(StyleBox.Margin.All, 15.0f);
 
+            var squareShadowStyleBox = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/Interface/Nano/square_blurred.svg.96dpi.png"),
+                TextureScale = new Vector2(2.0f, 2.0f),
+            };
+            squareShadowStyleBox.SetPatchMargin(StyleBox.Margin.All, 8.0f);
+
+
             var panelMountBorderStyleBox = new StyleBoxTexture
             {
                 Texture = resCache.GetTexture("/Textures/Interface/CommsConsole/PanelMountBorder.svg.96dpi.png"),
@@ -1394,7 +1402,7 @@ namespace Content.Client.Stylesheets
                     .Prop("panel", new StyleBoxTexture(BaseButtonOpenBoth) { Padding = default })
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
 
-                Element<PanelContainer>().Class("PanelRaisedHighlight")
+                Element<PanelContainer>().Class("SquareBevelHighlight")
                     .Prop(PanelContainer.StylePropertyPanel, raiseHighlightStyleBox),
 
                 Element<PanelContainer>().Class("PanelMountBorder")
@@ -1403,19 +1411,32 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>().Class("PanelMountBorderSmall")
                     .Prop(PanelContainer.StylePropertyPanel, panelMountBorderSmallStyleBox),
 
-                Element<ForegroundImageContainer>().Class("AngleRectEmbedded")
-                    .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, ClassAngleRectEmbedded)
-                    .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(10)),
-                Element<ForegroundImageContainer>().Class("PanelRaisedHighlight")
-                    .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, "PanelRaisedHighlight"),
+               // Highlight top-left and darken top-right of a square UI element
+                Element<ForegroundImageContainer>().Class("SquareBevelHighlight")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, "SquareBevelHighlight"),
+                // Gives a small outline shadow to a square UI element
+                Element<ForegroundImageContainer>().Class("SquareOutlineShadow")
+                    .Prop(ForegroundImageContainer.StylePropertyBackgroundStyleBox, squareShadowStyleBox)
+                    .Prop(ForegroundImageContainer.StylePropertyBackgroundModulate, new Color(0, 0, 0, 0.2f))
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(8, 8, 8, 8)),
+                // Gives a small drop-shadow on the bottom-right of a UI element
+                 Element<ForegroundImageContainer>().Class("SquareDropShadow")
+                    .Prop(ForegroundImageContainer.StylePropertyBackgroundStyleBox, squareShadowStyleBox)
+                    .Prop(ForegroundImageContainer.StylePropertyBackgroundModulate, new Color(0, 0, 0, 0.2f))
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(0, 0, 8, 8)),
+                 // Adds a raised border with rounded corners around a UI element
                 Element<ForegroundImageContainer>().Class("PanelMountBorder")
                     .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, "PanelMountBorder")
                     .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(10, 10, 16, 16)),
+                 // Adds a thin raised border with rounded corners around a UI element
                 Element<ForegroundImageContainer>().Class("PanelMountBorderSmall")
                     .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, "PanelMountBorderSmall")
                     .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(5, 5, 8, 8)),
-
-
+                // Adds a bevel around an anglerect, which bleeds into the outer container, giving
+                // the impression that the child components are moulded into the panel.
+                Element<ForegroundImageContainer>().Class("AngleRectEmbedded")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, ClassAngleRectEmbedded)
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(10)),
 
                 // Window Footer
                 Element<TextureRect>().Class("NTLogoDark")

@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.UserInterface.Controls
 {
     [GenerateTypedNameReferences]
+    //<todo.eoin Delete this, make ForegroundImageContainer
     public partial class BracketedContainer : Container
     {
         public BracketedContainer()

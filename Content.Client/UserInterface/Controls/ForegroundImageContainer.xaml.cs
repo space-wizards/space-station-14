@@ -7,14 +7,16 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.UserInterface.Controls
 {
     [GenerateTypedNameReferences]
-    public partial class ForegroundImageContainer : Container
+    public partial class ForegroundImageContainer : Container //<todo.eoin Rename this
     {
         public const string StylePropertyForegroundPanelStyle = "ForegroundPanelStyle";
         public const string StylePropertyForegroundContentMargin = "ForegroundContentMargin";
+        public const string StylePropertyBackgroundStyleBox = "BackgroundStyleBox";
+        public const string StylePropertyBackgroundModulate = "BackgroundModulate";
 
         private string? _foregroundImagePath = null;
         private Thickness _foregroundPatch = new();
-        private Vector2 _foregroundScale = Vector2.One;
+        private Vector2 _foregroundScale = Vector2.One; //<todo.eoin Would like this to be able to override the stylebox
         private StyleBoxTexture? _styleBox = null;
 
         // PanelRaisedHighlight
@@ -95,15 +97,28 @@ namespace Content.Client.UserInterface.Controls
 
         protected override void StylePropertiesChanged()
         {
-            if(TryGetStyleProperty<string>(StylePropertyForegroundPanelStyle, out var foregroundStyle))
+            //<todo.eoin Make a stylebox, instead
+            if (TryGetStyleProperty<string>(StylePropertyForegroundPanelStyle, out var foregroundStyle))
             {
                 ForegroundPanelStyle = foregroundStyle;
             }
 
-            if(TryGetStyleProperty<Thickness>(StylePropertyForegroundContentMargin, out var foregroundMargin))
+            //<todo.eoin Rename
+            if (TryGetStyleProperty<Thickness>(StylePropertyForegroundContentMargin, out var foregroundMargin))
             {
                 ForegroundMargin = foregroundMargin;
             }
+
+            if (TryGetStyleProperty<StyleBox>(StylePropertyBackgroundStyleBox, out var backgroundStyleBox))
+            {
+                BackgroundContainer.PanelOverride = backgroundStyleBox;
+            }
+
+            if (TryGetStyleProperty<Color>(StylePropertyBackgroundModulate, out var backgroundModulate))
+            {
+                BackgroundContainer.ModulateSelfOverride = backgroundModulate;
+            }
+
          }
 
     }

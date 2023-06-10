@@ -11,81 +11,86 @@
         <!-- First column: Announcements and station alert level controls -->
         <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="12 12 6 12">
             <!-- Announcement controls -->
-            <ui:ForegroundImageContainer
-                StyleClasses="PanelRaisedHighlight"
-                ForegroundModulate="#ffffff40"
+            <ui:ForegroundImageContainer StyleClasses="SquareOutlineShadow"
                 VerticalExpand="True"
                 VerticalAlignment="Top"
                 Margin="0 0 0 6">
-                <PanelContainer StyleClasses="PanelBackgroundBaseDark">
-                    <BoxContainer Orientation="Vertical" Margin="12">
-                        <ui:ForegroundImageContainer
-                            StyleClasses="PanelMountBorder"
-                            HorizontalAlignment="Stretch"
-                            VerticalExpand="True"
-                            VerticalAlignment="Stretch">
-                            <TextEdit Name="MessageInput" MinHeight="100" Margin="6" />
-                        </ui:ForegroundImageContainer>
-                        <ui:HSpacer Spacing="10"/>
-                        <Button Name="AnnounceButton" Access="Public"
-                            Text="{Loc 'comms-console-menu-announcement-button'}" />
-                    </BoxContainer>
-                </PanelContainer>
+
+                <ui:ForegroundImageContainer
+                    StyleClasses="SquareBevelHighlight"
+                    ForegroundModulate="#ffffff40">
+                    <PanelContainer StyleClasses="PanelBackgroundBaseDark">
+                        <BoxContainer Orientation="Vertical" Margin="12">
+                            <ui:ForegroundImageContainer
+                                StyleClasses="PanelMountBorder"
+                                HorizontalAlignment="Stretch"
+                                VerticalExpand="True"
+                                VerticalAlignment="Stretch">
+                                <TextEdit Name="MessageInput" MinHeight="100" Margin="6" />
+                            </ui:ForegroundImageContainer>
+                            <ui:HSpacer Spacing="10"/>
+                            <Button Name="AnnounceButton" Access="Public"
+                                Text="{Loc 'comms-console-menu-announcement-button'}" />
+                        </BoxContainer>
+                    </PanelContainer>
+                </ui:ForegroundImageContainer>
             </ui:ForegroundImageContainer>
 
-            <ui:ForegroundImageContainer
-                StyleClasses="PanelRaisedHighlight"
-                ForegroundModulate="#ffffff40"
-                VerticalExpand="True"
-                VerticalAlignment="Bottom">
-                <PanelContainer StyleClasses="PanelBackgroundBaseDark">
-                    <BoxContainer Orientation="Vertical">
-                        <ui:BracketedContainer Margin="6 12 6 0"  HorizontalAlignment="Center">
-                            <Label Text="{Loc 'comms-console-alert-level-label'}"  Margin="6 0 6 0" />
-                        </ui:BracketedContainer>
-                        <GridContainer Columns="2">
-                            <!-- Row with alert level light and label -->
-                            <ui:ForegroundImageContainer
-                                StyleClasses="PanelMountBorderSmall"
-                                HorizontalAlignment="Center"
-                                Margin="6 6 6 2"
-                                SetSize="60 35"
-                                VerticalAlignment="Center">
-                                <TextureButton Name="AlertLevelLight"
-                                    TexturePath="/Textures/Interface/Nano/square.png"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch" />
-                            </ui:ForegroundImageContainer>
+            <ui:ForegroundImageContainer StyleClasses="SquareOutlineShadow">
+                <ui:ForegroundImageContainer
+                    StyleClasses="SquareBevelHighlight"
+                    ForegroundModulate="#ffffff40"
+                    VerticalExpand="True"
+                    VerticalAlignment="Bottom">
+                    <PanelContainer StyleClasses="PanelBackgroundBaseDark">
+                        <BoxContainer Orientation="Vertical">
+                            <ui:BracketedContainer Margin="6 12 6 0"  HorizontalAlignment="Center">
+                                <Label Text="{Loc 'comms-console-alert-level-label'}"  Margin="6 0 6 0" />
+                            </ui:BracketedContainer>
+                            <GridContainer Columns="2">
+                                <!-- Row with alert level light and label -->
+                                <ui:ForegroundImageContainer
+                                    StyleClasses="PanelMountBorderSmall"
+                                    HorizontalAlignment="Center"
+                                    Margin="6 6 6 2"
+                                    SetSize="60 35"
+                                    VerticalAlignment="Center">
+                                    <TextureButton Name="AlertLevelLight"
+                                        TexturePath="/Textures/Interface/Nano/square.png"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch" />
+                                </ui:ForegroundImageContainer>
 
-                            <Label Name="CurrentAlertLabel" HorizontalAlignment="Center"/>
+                                <Label Name="CurrentAlertLabel" HorizontalAlignment="Center"/>
 
-                            <!-- Row with a visual seperator line -->
-                            <PanelContainer>
-                                <PanelContainer.PanelOverride>
-                                    <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
-                                </PanelContainer.PanelOverride>
-                                <ui:HSpacer Spacing="2"/>
-                            </PanelContainer>
-                            <!-- A little horizontal gap appears here. Can it be removed somehow?-->
-                            <PanelContainer>
-                                <PanelContainer.PanelOverride>
-                                    <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
-                                </PanelContainer.PanelOverride>
-                                <ui:HSpacer Spacing="2"/>
-                            </PanelContainer>
+                                <!-- Row with a visual seperator line -->
+                                <PanelContainer>
+                                    <PanelContainer.PanelOverride>
+                                        <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
+                                    </PanelContainer.PanelOverride>
+                                    <ui:HSpacer Spacing="2"/>
+                                </PanelContainer>
+                                <!-- A little horizontal gap appears here. Can it be removed somehow?-->
+                                <PanelContainer>
+                                    <PanelContainer.PanelOverride>
+                                        <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
+                                    </PanelContainer.PanelOverride>
+                                    <ui:HSpacer Spacing="2"/>
+                                </PanelContainer>
 
-                            <!-- Row with controls to change alert level -->
-                            <OptionButton Name="AlertLevelOptions" MinWidth="100" Access="Public" VerticalAlignment="Center"/>
-                            <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" Margin="6"/>
-                        </GridContainer>
-                    </BoxContainer>
-                </PanelContainer>
+                                <!-- Row with controls to change alert level -->
+                                <OptionButton Name="AlertLevelOptions" MinWidth="100" Access="Public" VerticalAlignment="Center"/>
+                                <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" Margin="6"/>
+                            </GridContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+                </ui:ForegroundImageContainer>
             </ui:ForegroundImageContainer>
         </BoxContainer>
 
         <!-- Second column: Shuttle state indicators and call/recall buttons -->
         <Control Margin="6 12 12 12">
-            <ui:ForegroundImageContainer StyleClasses="PanelRaisedHighlight" Margin="6 0 0 0">
+            <ui:ForegroundImageContainer StyleClasses="SquareBevelHighlight" Margin="6 0 0 0">
                 <ui:StripeBack
                     HasTopEdge="False" HasBottomEdge="False"
                     StyleClasses="StripeWarning" HorizontalExpand="False"
@@ -153,7 +158,7 @@
                                                     StyleClasses="PanelBackgroundBaseDark"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch">
-                                                    <Label Name="CountdownLabel" StyleClasses="LabelLCDBig" Margin="2 2 2 2"/>
+                                                    <Label Name="CountdownLabel" StyleClasses="LabelLCDBig" Margin="2"/>
                                                 </PanelContainer>
                                             </ui:ForegroundImageContainer>
                                         </BoxContainer>
