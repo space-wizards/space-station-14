@@ -511,6 +511,25 @@ namespace Content.Client.Stylesheets
             };
             raiseHighlightStyleBox.SetPatchMargin(StyleBox.Margin.All, 15.0f);
 
+            var panelMountBorderStyleBox = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/Interface/CommsConsole/PanelMountBorder.svg.96dpi.png"),
+                PatchMarginLeft = 16,
+                PatchMarginTop = 16,
+                PatchMarginRight = 24,
+                PatchMarginBottom = 24
+                    //ForegroundMargin="10 10 16 16"
+            };
+            var panelMountBorderSmallStyleBox = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/Interface/CommsConsole/PanelMountBorder.svg.96dpi.png"),
+                TextureScale = new Vector2(0.5f, 0.5f),
+                PatchMarginLeft = 16,
+                PatchMarginTop = 16,
+                PatchMarginRight = 24,
+                PatchMarginBottom = 24
+            };
+
             var bracketedContainerBeginStyleBox = new StyleBoxTexture
             {
                 Texture = resCache.GetTexture("/Textures/Interface/Nano/open_widget_grouping.svg.192dpi.png"),
@@ -1377,6 +1396,26 @@ namespace Content.Client.Stylesheets
 
                 Element<PanelContainer>().Class("PanelRaisedHighlight")
                     .Prop(PanelContainer.StylePropertyPanel, raiseHighlightStyleBox),
+
+                Element<PanelContainer>().Class("PanelMountBorder")
+                    .Prop(PanelContainer.StylePropertyPanel, panelMountBorderStyleBox),
+
+                Element<PanelContainer>().Class("PanelMountBorderSmall")
+                    .Prop(PanelContainer.StylePropertyPanel, panelMountBorderSmallStyleBox),
+
+                Element<ForegroundImageContainer>().Class("AngleRectEmbedded")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, ClassAngleRectEmbedded)
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(10)),
+                Element<ForegroundImageContainer>().Class("PanelRaisedHighlight")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, "PanelRaisedHighlight"),
+                Element<ForegroundImageContainer>().Class("PanelMountBorder")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, "PanelMountBorder")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(10, 10, 16, 16)),
+                Element<ForegroundImageContainer>().Class("PanelMountBorderSmall")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, "PanelMountBorderSmall")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(5, 5, 8, 8)),
+
+
 
                 // Window Footer
                 Element<TextureRect>().Class("NTLogoDark")

@@ -9,6 +9,9 @@ namespace Content.Client.UserInterface.Controls
     [GenerateTypedNameReferences]
     public partial class ForegroundImageContainer : Container
     {
+        public const string StylePropertyForegroundPanelStyle = "ForegroundPanelStyle";
+        public const string StylePropertyForegroundContentMargin = "ForegroundContentMargin";
+
         private string? _foregroundImagePath = null;
         private Thickness _foregroundPatch = new();
         private Vector2 _foregroundScale = Vector2.One;
@@ -89,6 +92,19 @@ namespace Content.Client.UserInterface.Controls
             RobustXamlLoader.Load(this);
             XamlChildren = ContentsContainer.Children;
         }
+
+        protected override void StylePropertiesChanged()
+        {
+            if(TryGetStyleProperty<string>(StylePropertyForegroundPanelStyle, out var foregroundStyle))
+            {
+                ForegroundPanelStyle = foregroundStyle;
+            }
+
+            if(TryGetStyleProperty<Thickness>(StylePropertyForegroundContentMargin, out var foregroundMargin))
+            {
+                ForegroundMargin = foregroundMargin;
+            }
+         }
 
     }
 }
