@@ -40,10 +40,10 @@ namespace Content.Server.Glue
             }
 
 
+
             if (HasComp<ItemComponent>(target))
             {
                 _audio.PlayPvs(component.Squeeze, uid);
-                EnsureComp<UnremoveableComponent>(target);
                 _popup.PopupEntity(Loc.GetString("glue-success", ("target", Identity.Entity(target, EntityManager))), args.User,
                 args.User, PopupType.Medium);
                 EnsureComp<GluedComponent>(target);
