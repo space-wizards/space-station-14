@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.Linq;
-using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind.Components;
@@ -9,9 +8,8 @@ using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
-using Content.Server.Traitor;
+using Content.Server.StationEvents.Components;
 using Content.Server.Zombies;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
@@ -48,7 +46,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
 
@@ -59,9 +56,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     private void OnUnpause(EntityUid uid, ZombieRuleComponent component, ref EntityUnpausedEvent args)
     {
         if (component.FirstTurnAllowed != null)
-            component.FirstTurnAllowed += args.PausedTime;
+            component.FirstTurnAllowed = (TimeSpan)component.FirstTurnAllowed + args.PausedTime;
         if (component.InfectInitialAt != null)
-            component.InfectInitialAt += args.PausedTime;
+            component.InfectInitialAt = (TimeSpan)component.InfectInitialAt + args.PausedTime;
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -193,7 +190,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             return;
 
         // Check that we've picked our zombies
-        if (zombies.InfectInitialAt != TimeSpan.Zero)
+        if (zombies.InfectInitialAt != null)
             return;
 
         // Look for living zombies
@@ -252,30 +249,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
     }
 
-    private void OnStartAttempt(RoundStartAttemptEvent ev)
+    private bool HaveEnoughPlayers(EntityUid uid, StationEventComponent? stationEvent = null)
     {
-        var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var zombies, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
+        if (!Resolve(uid, ref stationEvent))
+            return false;
 
-            var minPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);
-            if (!ev.Forced && ev.Players.Length < minPlayers)
-            {
-                _chatManager.SendAdminAnnouncement(Loc.GetString("zombie-not-enough-ready-players",
-                    ("readyPlayersCount", ev.Players.Length),
-                    ("minimumPlayers", minPlayers)));
-                ev.Cancel();
-                continue;
-            }
+        var living = CountHealthyHumans();
+        var players = _playerManager.PlayerCount;
 
-            if (ev.Players.Length == 0)
-            {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("zombie-no-one-ready"));
-                ev.Cancel();
-            }
-        }
+        return (Math.Min(living, players) >= stationEvent.MinimumPlayers);
     }
 
     protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -284,7 +266,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var curTime = _timing.CurTime;
 
         component.InfectInitialAt = curTime + TimeSpan.FromSeconds(component.InitialInfectDelaySecs);
-        component.FirstTurnAllowed = curTime + TimeSpan.FromSeconds(component.TurnTimeMin);
 
         if (component.EarlySettings.EmoteSoundsId != null)
         {
@@ -302,9 +283,18 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var curTime = _timing.CurTime;
         if (component.InfectInitialAt != null && component.InfectInitialAt < curTime)
         {
-            // Time to infect the initial players
-            InfectInitialPlayers(uid, component);
-            component.InfectInitialAt = null;
+            if (HaveEnoughPlayers(uid))
+            {
+                // Time to infect the initial players
+                InfectInitialPlayers(uid, component);
+                component.InfectInitialAt = null;
+                component.FirstTurnAllowed = curTime + TimeSpan.FromSeconds(component.TurnTimeMin);
+            }
+            else
+            {
+                // Wait 2 additional minutes for more players.
+                component.InfectInitialAt = curTime + TimeSpan.FromMinutes(2);
+            }
         }
 
         if (component.FirstTurnAllowed != null && component.FirstTurnAllowed < curTime)
@@ -430,10 +420,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         if (playerList.Count == 0)
             return;
 
-        var playersPerInfected = Math.Max(rules.PlayersPerInfected, _cfg.GetCVar(CCVars.ZombiePlayersPerInfected));
-        var maxInfected = Math.Min(rules.MaxInitialInfected, _cfg.GetCVar(CCVars.ZombieMaxInitialInfected));
-
-        var numInfected = (int)Math.Clamp(Math.Floor((double) playerList.Count / playersPerInfected), 1, maxInfected);
+        var numInfected = (int)Math.Clamp(
+            Math.Floor((double) playerList.Count / rules.PlayersPerInfected),
+            1, rules.MaxInitialInfected);
 
         // These are already infected (by admins probably)
         numInfected -= rules.InitialInfectedNames.Count;

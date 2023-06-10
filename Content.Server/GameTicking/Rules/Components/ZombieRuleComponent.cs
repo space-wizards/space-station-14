@@ -50,15 +50,16 @@ public sealed class ZombieRuleComponent : Component
 
     /// <summary>
     ///   Don't pick patient 0 for this long after rule start (probably since round start)
+    ///   If there are insufficient players, it might take longer than this. We will retry every 2 minutes.
     /// </summary>
     [DataField("initialInfectDelaySecs"), ViewVariables(VVAccess.ReadWrite)]
     public float InitialInfectDelaySecs = 300;
 
     /// <summary>
-    ///   How long the initial infected have to wait from roundstart before they are allowed to turn.
+    ///   How long the initial infected have to wait from player selection to before they are allowed to turn.
     /// </summary>
     [DataField("turnTimeMin"), ViewVariables(VVAccess.ReadWrite)]
-    public float TurnTimeMin = 600;
+    public float TurnTimeMin = 300;
 
     /// <summary>
     ///   If more than this fraction of the crew get wiped by zombies, but then zombies die... end the round (win)

@@ -71,6 +71,8 @@
   parent: BaseGameRule
   noSpawn: true
   components:
+  - type: StationEvent
+    minimumPlayers: 20
   - type: ZombieRule
     winEndsRoundAbove: -1.0 # Always end round when zombies are wiped out.
     earlySettings:
@@ -89,7 +91,6 @@
           Structural: 10
     victimSettings:
       permadeathChance: 0.9
-      critDeathChance: 0.5
       reviveTime: 20
       reviveTimeMax: 60
       maxInfectionChance: 0.10

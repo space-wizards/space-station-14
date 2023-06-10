@@ -110,16 +110,6 @@ namespace Content.Server.Zombies
             melee.Range = zombie.Settings.MeleeRange;
             Dirty(melee);
 
-            // Groaning when damaged
-            EnsureComp<EmoteOnDamageComponent>(target);
-            _emoteOnDamage.AddEmote(target, "Scream");
-
-            // Random groaning
-            EnsureComp<AutoEmoteComponent>(target);
-            _autoEmote.AddEmote(target, "ZombieGroan");
-
-            _passiveHeal.BeginHealing(target, zombie.Settings.HealingPerSec);
-
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
             {
@@ -203,6 +193,25 @@ namespace Content.Server.Zombies
                 ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
                 ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
+
+            if (zombie.Settings.EmoteSounds == null && zombie.Settings.EmoteSoundsId != null)
+            {
+                // If an admin created this zombie, the rule hasn't had a chance to set up the sounds yet. Do that here.
+                _proto.TryIndex(zombie.Settings.EmoteSoundsId, out zombie.Settings.EmoteSounds);
+            }
+
+            // Groaning when damaged
+            EnsureComp<EmoteOnDamageComponent>(target);
+            _emoteOnDamage.AddEmote(target, "Scream");
+
+            // Random groaning
+            EnsureComp<AutoEmoteComponent>(target);
+            _autoEmote.AddEmote(target, "ZombieGroan");
+
+            // Make an emote on returning to life
+            _chat.TryEmoteWithoutChat(target, "ZombieGroan");
+
+            _passiveHeal.BeginHealing(target, zombie.Settings.HealingPerSec);
 
             // Goes through every hand, drops the items in it, then removes the hand
             // may become the source of various bugs.

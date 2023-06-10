@@ -1,10 +1,10 @@
 # Zombie
 - type: autoEmote
   id: ZombieGroan
-  emote: Scream
+  emote: ZombieGroan
   interval: 5.0
   chance: 0.2
-  withChat: false
+  withChat: true
 # Cluwne
 - type: autoEmote
   id: CluwneGiggle

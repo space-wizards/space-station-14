@@ -11,7 +11,6 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Emoting.Systems;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.IdentityManagement;
 using Content.Server.Popups;
 using Content.Server.Speech.EntitySystems;
@@ -23,7 +22,6 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -121,6 +119,9 @@ namespace Content.Server.Zombies
                 // Random groaning
                 EnsureComp<AutoEmoteComponent>(uid);
                 _autoEmote.AddEmote(uid, "ZombieGroan");
+
+                // Make an emote on returning to life
+                _chat.TryEmoteWithoutChat(uid, "ZombieGroan");
 
                 // LivingZombieComponent might get removed by zombie death roll below but if the zombie comes back to
                 //   life somehow we must put it back.
@@ -244,7 +245,7 @@ namespace Content.Server.Zombies
                 else
                 {
                     // On a diceroll or if critical we infect this victim
-                    if (_random.Prob(GetZombieInfectionChance(entity, component)) ||
+                    if (_random.Prob(GetZombieInfectionChance(entity, zombieAttacker)) ||
                         mobState.CurrentState != MobState.Alive)
                     {
                         if (!HasComp<ZombieComponent>(entity))

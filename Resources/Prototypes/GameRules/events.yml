@@ -287,10 +287,9 @@
     earliestStart: 60
     weight: 2.5
     duration: 1
-    minimumPlayers: 40
+    minimumPlayers: 30
   - type: ZombieRule
     initialInfectDelaySecs: 5
-    turnTimeMin: 300
     winEndsRoundAbove: 0.4
 
 

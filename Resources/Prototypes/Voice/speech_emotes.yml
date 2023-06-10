@@ -154,3 +154,8 @@
     - salutes.
     - salutes!
 
+# Required for zombie noises
+- type: emote
+  id: ZombieGroan
+  category: Vocal
+  chatMessages: [Mrrrr, Brains..., Hissss]
