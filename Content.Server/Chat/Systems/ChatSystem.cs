@@ -170,7 +170,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             message = message[1..];
         }
 
-        hideGlobalGhostChat |= hideChat;
+        //hideGlobalGhostChat |= hideChat;
         bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
         bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
 
