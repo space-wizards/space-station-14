@@ -163,7 +163,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                     _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
                 }
 
-                if (fraction >= 1) // Oops, all zombies
+                if (healthyCount == 0) // Oops, all zombies
                     _roundEndSystem.EndRound();
 
                 if (zombies.ShuttleCalls.Count > 0 && fraction >= zombies.ShuttleCalls[0])
@@ -184,6 +184,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         }
     }
 
+    // See if the zombie infection controlled by this rule has completely died out. End rule if it has.
     public void CheckRuleEnd(EntityUid ruleUid, ZombieRuleComponent? zombies = null, GameRuleComponent? gameRule = null)
     {
         if (!Resolve(ruleUid, ref zombies, ref gameRule))
@@ -193,7 +194,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         if (zombies.InfectInitialAt != null)
             return;
 
-        // Look for living zombies
+        // Look for initial infected, pending or living zombies.
+        // Any of those mean: leave rule running
         var livingQuery = GetEntityQuery<LivingZombieComponent>();
         var initialQuery = GetEntityQuery<InitialInfectedComponent>();
         var pendingQuery = GetEntityQuery<PendingZombieComponent>();
@@ -223,7 +225,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             deadZombies += 1;
         }
 
-        // If we reached here then there were no living zombies in this rule.
+        // If we reached here then there were no current or future zombies in this rule.
         GameTicker.EndGameRule(ruleUid, gameRule);
 
         if (zombies.WinEndsRoundAbove < 1.0f)

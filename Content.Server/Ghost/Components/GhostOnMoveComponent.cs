@@ -9,6 +9,11 @@ namespace Content.Server.Ghost.Components
         public bool MustBeDead = false;
     }
 
+    /// <summary>
+    ///   Triggered when a player tries to move out of a dead body and become a ghost.
+    ///   Give systems (such as PendingZombieSystem) a chance to cancel this.
+    ///   Does not affect the use of the "ghost" console command.
+    /// </summary>
     public sealed class GhostMoveAttempt : CancellableEntityEventArgs
     {
         public Mind.Mind Mind { get; }

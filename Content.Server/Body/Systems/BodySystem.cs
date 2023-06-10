@@ -49,6 +49,9 @@ public sealed class BodySystem : SharedBodySystem
             {
                 mind.Mind.TimeOfDeath = _gameTiming.RealTime;
             }
+
+            // Note: GhostSystem.OnRelayMoveInput handles turning players who move into ghosts as long as they have
+            // GhostOnMoveComponent.
         }
     }
 

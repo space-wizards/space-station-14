@@ -95,6 +95,9 @@ namespace Content.Server.Zombies
         {
             if (!HasComp<LivingZombieComponent>(uid))
             {
+                if (args.NewMobState != MobState.Alive)
+                    return;
+
                 // We have a very specific edge case. Zombies who we marked as "dead" (no burst heal) can come back
                 // if they still have Bicardine in their system from biting someone. Or someone foolishly
                 // healed them.
