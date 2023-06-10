@@ -9,7 +9,6 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
-      netsync: false
     - type: PhysicalComposition
       materialComposition:
         Glass: 50
@@ -28,7 +27,6 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
-      netsync: false
     - type: Tag
       tags:
         - DroneUsable
@@ -44,7 +42,6 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
-      netsync: false
     - type: Tag
       tags:
         - DroneUsable
@@ -60,7 +57,6 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
-      netsync: false
     - type: Tag
       tags:
         - DroneUsable
@@ -76,7 +72,6 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: generic
-      netsync: false
     - type: Tag
       tags:
         - DroneUsable
