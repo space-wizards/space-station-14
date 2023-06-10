@@ -541,13 +541,22 @@ namespace Content.Client.Stylesheets
             var bracketedContainerStyleBox = new StyleBoxTexture
             {
                 Texture = resCache.GetTexture("/Textures/Interface/Nano/angle_bracket_grouping.svg.192dpi.png"),
-                TextureScale = new Vector2(0.5f, 0.5f),
                 PatchMarginTop = 20,
                 PatchMarginBottom = 20,
                 PatchMarginLeft = 20,
                 PatchMarginRight = 20,
                 Mode = StyleBoxTexture.StretchMode.Tile
             };
+            var bracketedContainerEmbossedStyleBox = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/Interface/Nano/angle_bracket_grouping_embossed_highlight.svg.192dpi.png"),
+                PatchMarginTop = 20,
+                PatchMarginBottom = 20,
+                PatchMarginLeft = 20,
+                PatchMarginRight = 20,
+                Mode = StyleBoxTexture.StretchMode.Tile
+            };
+
 
             // Default paper background:
             var paperBackground = new StyleBoxTexture
@@ -1437,6 +1446,12 @@ namespace Content.Client.Stylesheets
                     .Prop(ForegroundImageContainer.StylePropertyForegroundStyleBox, bracketedContainerStyleBox)
                     .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(10))
                     .Prop(ForegroundImageContainer.StylePropertyForegroundModulate, Color.FromHex("#343647")),
+                Element<ForegroundImageContainer>().Class("BracketedContainerEmbossed")
+                    .Prop(ForegroundImageContainer.StylePropertyBackgroundStyleBox, bracketedContainerStyleBox)
+                    .Prop(ForegroundImageContainer.StylePropertyBackgroundModulate, Color.FromHex("#343647"))
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundStyleBox, bracketedContainerEmbossedStyleBox)
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(20)),
+
 
 
 
