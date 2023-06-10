@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Disabled ghost roles for salvage expeditions., type: Tweak}
-  id: 3477
-  time: '2023-04-21T05:06:22.0000000+00:00'
 - author: qtqt
   changes:
   - {message: Added song for salvage at the 2 minute timer (for expeditions)., type: Add}
@@ -2909,3 +2904,8 @@ Entries:
       personnel., type: Tweak}
   id: 3976
   time: '2023-06-10T02:58:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cargo pallet collision when anchored., type: Fix}
+  id: 3977
+  time: '2023-06-10T09:43:55.0000000+00:00'
