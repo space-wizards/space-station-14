@@ -19,6 +19,26 @@ public sealed class InitialInfectedSystem : SharedInitialInfectedSystem
         base.Initialize();
 
         SubscribeLocalEvent<ZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
+        SubscribeLocalEvent<InitialInfectedComponent, MobStateChangedEvent>(OnMobState);
+    }
+
+    // If they crit or die while Initially infected, switch to an active virus.
+    private void OnMobState(EntityUid uid, InitialInfectedComponent initial, MobStateChangedEvent args)
+    {
+        // Check if too soon to become a zombie
+        if (initial.FirstTurnAllowed > Timing.CurTime)
+            return;
+
+        if (args.NewMobState == MobState.Dead)
+        {
+            // Zombify them immediately
+            _zombie.ZombifyEntity(uid);
+        }
+        else if (args.NewMobState == MobState.Critical)
+        {
+            // Immediately jump to an active virus now
+            ForceInfection(uid);
+        }
     }
 
     // Both allowed and forced should be times relative to curTime.
@@ -99,12 +119,7 @@ public sealed class InitialInfectedSystem : SharedInitialInfectedSystem
             else if (mobState.CurrentState == MobState.Critical)
             {
                 // Immediately jump to an active virus now
-                var pending = EnsureComp<PendingZombieComponent>(uid);
-                pending.MaxInfectionLength = zombie.Settings.InfectionTurnTime;
-                pending.InfectionStarted = Timing.CurTime;
-                pending.VirusDamage = zombie.Settings.VirusDamage;
-
-                RemCompDeferred<InitialInfectedComponent>(uid);
+                ForceInfection(uid, zombie);
             }
             else
             {

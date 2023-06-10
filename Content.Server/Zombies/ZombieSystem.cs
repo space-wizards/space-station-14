@@ -71,7 +71,6 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
-            SubscribeLocalEvent<InitialInfectedComponent, MobStateChangedEvent>(OnInitialMobState);
         }
 
         private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
@@ -156,26 +155,6 @@ namespace Content.Server.Zombies
             }
         }
 
-        private void OnInitialMobState(EntityUid uid, InitialInfectedComponent initial, MobStateChangedEvent args)
-        {
-            if (args.NewMobState == MobState.Alive)
-                return;
-
-            if (initial.FirstTurnAllowed < _timing.CurTime)
-                return;
-
-            if (!TryComp<ZombieComponent>(uid, out var zombie))
-                return;
-
-            // Immediately jump to an active virus when initial players crit
-            var pending = EnsureComp<PendingZombieComponent>(uid);
-            pending.MaxInfectionLength = zombie.Settings.InfectionTurnTime;
-            pending.InfectionStarted = _timing.CurTime;
-            pending.VirusDamage = zombie.Settings.VirusDamage;
-
-            RemCompDeferred<InitialInfectedComponent>(uid);
-        }
-
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
         {
             var baseChance = component.Settings.MaxInfectionChance;
@@ -251,13 +230,13 @@ namespace Content.Server.Zombies
                         if (!HasComp<ZombieComponent>(entity))
                         {
                             var pending = EnsureComp<PendingZombieComponent>(entity);
-                            var zombie = EnsureComp<ZombieComponent>(entity);
                             pending.MaxInfectionLength =
                                 _random.NextFloat(0.25f, 1.0f) * zombieAttacker.Settings.InfectionTurnTime;
                             pending.InfectionStarted = _timing.CurTime;
-                            pending.VirusDamage = zombie.Settings.VirusDamage;
-                            pending.DeadMinTurnTime = zombie.Settings.DeadMinTurnTime;
+                            pending.VirusDamage = zombieAttacker.Settings.VirusDamage;
+                            pending.DeadMinTurnTime = zombieAttacker.Settings.DeadMinTurnTime;
 
+                            var zombie = EnsureComp<ZombieComponent>(entity);
                             // Our victims inherit our settings, which defines damage and more.
                             zombie.Settings = zombieAttacker.VictimSettings ?? zombieAttacker.Settings;
 

@@ -288,7 +288,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 // Time to infect the initial players
                 InfectInitialPlayers(uid, component);
                 component.InfectInitialAt = null;
-                component.FirstTurnAllowed = curTime + TimeSpan.FromSeconds(component.TurnTimeMin);
             }
             else
             {
@@ -299,6 +298,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
         if (component.FirstTurnAllowed != null && component.FirstTurnAllowed < curTime)
         {
+            // Shouldn't usually be necessary but a good forcing function especially if an admin uses VV on the
+            // rules to decrease the FirstTurnAllowed time.
             _initialZombie.ActivateZombifyOnDeath(uid, component);
             component.FirstTurnAllowed = null;
         }
@@ -428,6 +429,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         numInfected -= rules.InitialInfectedNames.Count;
 
         var curTime = _timing.CurTime;
+        rules.FirstTurnAllowed ??= curTime + TimeSpan.FromSeconds(rules.TurnTimeMin);
 
         // How long the zombies have as a group to decide to begin their attack.
         //   Varies randomly from 10 to 15 minutes. After this the virus begins and they start

@@ -22,15 +22,6 @@ public abstract class SharedPendingZombieSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<PendingZombieComponent, EntityUnpausedEvent>(OnUnpause);
-        SubscribeLocalEvent<PendingZombieComponent, ComponentAdd>(OnAddComponent);
-    }
-
-    private void OnAddComponent(EntityUid uid, PendingZombieComponent component, ComponentAdd args)
-    {
-        // Mark the zombie as being allowed to revive, as a "revive" is exactly what will happen when it dies.
-        // This prevents the game expecting the ghost to come out on death and avoids a race condition when the
-        // client thinks the ghost should leave the body while the server is making them into a zombie.
-        _mobThreshold.SetAllowRevives(uid, true);
     }
 
     // Hurt them each second. Once they die, PendingZombieSystem will call Zombify and remove PendingZombieComponent

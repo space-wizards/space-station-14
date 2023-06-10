@@ -4,7 +4,7 @@
   emote: ZombieGroan
   interval: 5.0
   chance: 0.2
-  withChat: true
+  withChat: false
 # Cluwne
 - type: autoEmote
   id: CluwneGiggle

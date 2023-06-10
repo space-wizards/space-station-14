@@ -1,4 +1,6 @@
-﻿using Content.Shared.Mobs;
+﻿using Content.Server.GameTicking;
+using Content.Server.Ghost.Components;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Zombies;
 
@@ -12,6 +14,13 @@ public class PendingZombieSystem : SharedPendingZombieSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PendingZombieComponent, GhostMoveAttempt>(OnAttemptGhost);
+    }
+
+    private void OnAttemptGhost(EntityUid uid, PendingZombieComponent component, GhostMoveAttempt args)
+    {
+        // Don't allow ghosting through movement while waiting to zombify
+        args.Cancel();
     }
 
     protected override void ZombifyNow(EntityUid uid, PendingZombieComponent pending, ZombieComponent zombie, MobStateComponent mobState)

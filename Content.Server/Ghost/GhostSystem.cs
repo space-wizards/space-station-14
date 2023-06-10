@@ -98,6 +98,12 @@ namespace Content.Server.Ghost
             if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
                 return;
 
+            // Check that no systems (eg PendingZombieSystem) want to block the player from turning into a ghost.
+            var attemptMove = new GhostMoveAttempt(mind.Mind);
+            RaiseLocalEvent(uid, attemptMove);
+            if (attemptMove.Cancelled)
+                return;
+
             _ticker.OnGhostAttempt(mind.Mind!, component.CanReturn);
         }
 

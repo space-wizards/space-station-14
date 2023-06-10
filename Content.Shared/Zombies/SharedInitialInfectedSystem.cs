@@ -37,8 +37,11 @@ public abstract class SharedInitialInfectedSystem : EntitySystem
         }
     }
 
-    protected void ForceInfection(EntityUid uid, ZombieComponent zombie)
+    protected void ForceInfection(EntityUid uid, ZombieComponent? zombie = null)
     {
+        if (!Resolve(uid, ref zombie))
+            return;
+
         // Time to begin forcing this initial infected to turn.
         var pending = EnsureComp<PendingZombieComponent>(uid);
         pending.MaxInfectionLength = zombie.Settings.InfectionTurnTime;

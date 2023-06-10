@@ -49,8 +49,6 @@ public sealed class BodySystem : SharedBodySystem
             {
                 mind.Mind.TimeOfDeath = _gameTiming.RealTime;
             }
-
-            _ticker.OnGhostAttempt(mind.Mind!, true);
         }
     }
 
