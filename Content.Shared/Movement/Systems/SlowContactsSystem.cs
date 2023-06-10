@@ -64,8 +64,11 @@ public sealed class SlowContactsSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, SlowContactsComponent component, ComponentShutdown args)
     {
+        if (!TryComp(uid, out PhysicsComponent? phys))
+            return;
+
         // Note that the entity may not be getting deleted here. E.g., glue puddles.
-        _toUpdate.UnionWith(_physics.GetContactingEntities(uid));
+        _toUpdate.UnionWith(_physics.GetContactingEntities(uid, phys));
     }
 
     private void MovementSpeedCheck(EntityUid uid, SlowedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
